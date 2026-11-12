@@ -10,7 +10,7 @@
   <text x="385.02" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">pods-ready: 147 s</text>
   <circle cx="588.46" cy="58" r="4" fill="var(--m-green-ink, #336b40)"/>
   <text x="596.46" y="44" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">200, count=4</text>
-  <text x="488.8" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-rose-ink, #b0344d)">r1 not served</text>
+  <text x="488.8" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-rose-ink, #b0344d)">r1 not served for 90 s</text>
   <text x="216" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">docker restart kind-control-plane</text>
   <line x1="40" y1="96" x2="590" y2="96" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <line x1="128.66" y1="92" x2="128.66" y2="100" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
@@ -34,7 +34,7 @@
   <line x1="120" y1="226" x2="120" y2="242" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
   <text x="125" y="252" font-size="11" fill="var(--m-amber-ink, #85590c)">ACTOR_STATE_CRASHED</text>
   <line x1="348.8" y1="226" x2="348.8" y2="242" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
-  <text x="353.8" y="252" font-size="11" fill="var(--m-amber-ink, #85590c)">revert actor: SUSPENDED</text>
+  <text x="353.8" y="252" font-size="11" fill="var(--m-amber-ink, #85590c)">RevertActor: ACTOR_STATE_SUSPENDED</text>
   <text x="353.8" y="270" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 after 5.06 s: no worker has room</text>
   <line x1="40" y1="290" x2="600" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <line x1="40" y1="286" x2="40" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>

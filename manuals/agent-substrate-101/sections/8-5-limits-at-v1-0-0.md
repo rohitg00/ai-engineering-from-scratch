@@ -60,6 +60,16 @@ The right column is our reading of the request path, except for the Postgres row
 
 Substrate marks an actor crashed when its sandbox dies or when the kernel kills it for memory. It does not notice a process that exits inside a sandbox that still runs. [Section 8.3](#s-symptom-cause-fix) shows that actor: RUNNING for at least 14 s, with a 503 on every request. A design for this detection is open in the public issues.
 
+It also does not mark a running actor whose node stops. On a cluster with two worker nodes, that actor read RUNNING for the 10 minutes of our probe. Each of 150 requests got a 503.
+
+### An actor does not leave a dead node by itself
+
+A suspended actor is bound to the node of its last suspend, and Substrate v1.0.0 did not release it when that node stopped.
+
+**We measured** this on the second x86 server guest (16 vCPU, 23 GB), with two worker nodes and one actor for each of four cases. An actor with a complete snapshot in the object store stayed in RESUMING on the stopped node for 5 min 33 s. Then it was crashed. The other node had two free workers. A `revert` during the outage failed or had no lasting effect in 3 of 3 attempts.
+
+The workers of a stopped node were listed as active for 43 to 51 s after the stop command. A new resume can go to a dead node in that time. Kubernetes moved the worker pods to the other node after 5 minutes and did not move them back. [Section 4.3](#s-placement) has the timeline. We did not verify whether a `revert` sent after the workers are marked unavailable frees the actor.
+
 ### Access is coarse at the router
 
 The ingress allowlist holds client identities, and each listed client can reach every actor in every atespace. Access policies for each atespace govern the API calls, as [section 5.2](#s-access-policies) explains. They do not govern requests through the router at v1.0.0.
@@ -92,17 +102,17 @@ To use one, start every component with `--preview` and its name, and pass `--pre
 
 ## What we did not test
 
-Every measured number in this manual came from clusters with one kind node, an object store in the same cluster, and one of two dataplanes. This is the full list of what we did not run.
+Most measured numbers in this manual came from clusters with one kind node. One cluster had one control plane node and two worker nodes. Every cluster had an object store in the same cluster and one of two dataplanes. This is the full list of what we did not run.
 
 | Area | Not tested |
 |---|---|
 | Clouds | GKE, and every other managed Kubernetes service |
 | Storage | Google Cloud Storage, Amazon S3, any bucket across a network, an external Postgres, a restore of either store |
-| Scale | more than 131 actors in one cluster, more than 24 parallel turns, more than one worker node beyond what [section 4.3](#s-placement) reports |
-| Sandbox | the microVM class beyond what [section 4.2](#s-sandbox-classes) reports, images with an init system, non-root images, large root filesystems |
+| Scale | more than 131 actors in one cluster, more than 24 parallel turns, more than two worker nodes, more than 20 actors across nodes |
+| Sandbox | the microVM class on arm64, with agentgateway, with a resume from the object store, above 500 MiB, and across CPU models. Also images with an init system, non-root images, large root filesystems |
 | Agents | a real model behind kagent, the codex and claude harnesses, MCP servers through the egress gateway |
 | Lifecycle | an upgrade, a key rotation, a worker drain, tags that you create from a suspended actor |
-| Failure | the three outages on agentgateway, egress during an outage, a router restart, an egress restart, a `RevertActor` on an actor in RESUMING |
+| Failure | the three outages on agentgateway, egress during an outage, a router restart, an egress restart, a `RevertActor` sent after the workers of a stopped node are marked unavailable, a node that is alive and unreachable, a node loss on the microVM class, a pool with spare workers on a third node |
 | Apple silicon | actors above 200 MiB, a resume from the object store |
 | Preview | all three preview features |
 
@@ -112,9 +122,10 @@ Where a section states a fact from these areas, it comes from the code or the do
 - Build the suspend call into your harness first, because Substrate never suspends an idle actor.
 - Scale a WorkerPool on free worker slots, never on CPU use.
 - Run more than one router replica before you depend on the cluster, and test it.
-- Watch for the `upstream connect error` 503 to find a dead process.
+- Watch for the `upstream connect error` 503 to find a dead process or a dead node.
+- Plan for a stopped node as an outage, because no actor left a dead node by itself.
 - Leave preview features off unless you accept that this manual did not test them.
 - Read each claim about GKE, remote buckets, and upgrades as documentation, not as a measurement.
 ```
 
-Sources: api/ateapi/v1/ateapi.proto (Resources, RequestActorSuspend, AccessPolicy), internal/preview/preview.go, api/infra/k8s/ate/v1/workerpool_types.go (replicas and the scale subresource), manifests/ate-install/ate-api-server.yaml, ate-idp-server.yaml, atenet-router.yaml, atenet-egress.yaml, ate-controller.yaml, pod-certificate-controller.yaml and postgres/postgres.yaml (replica counts), cmd/kubectl-ate/internal/cmd/admin.go, cmd/ate-setup/commands.md (the ingress allowlist) at v1.0.0; docs/guides/actor-jwt-key-rotation.md, docs/dev/preview-gates.md, docs/reference/api-guide.md and docs/reference/sandbox-classes.md at v1.0.0; issues #3775 and #2972 (dead process detection), #3441 (overcommit), #3589 (ingress authorization), #3203 (storage plugins), #3602 (durable directory size), #3347 (name reuse), #3285 (open connections); capture/lab/B-lifecycle/10-trace.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/parallel/, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/kagent-turns-x86.json.
+Sources: api/ateapi/v1/ateapi.proto (Resources, RequestActorSuspend, AccessPolicy), internal/preview/preview.go, api/infra/k8s/ate/v1/workerpool_types.go (replicas and the scale subresource), manifests/ate-install/ate-api-server.yaml, ate-idp-server.yaml, atenet-router.yaml, atenet-egress.yaml, ate-controller.yaml, pod-certificate-controller.yaml and postgres/postgres.yaml (replica counts), cmd/kubectl-ate/internal/cmd/admin.go, cmd/ate-setup/commands.md (the ingress allowlist) at v1.0.0; docs/guides/actor-jwt-key-rotation.md, docs/dev/preview-gates.md, docs/reference/api-guide.md and docs/reference/sandbox-classes.md at v1.0.0; issues #3775 and #2972 (dead process detection), #3441 (overcommit), #3589 (ingress authorization), #3203 (storage plugins), #3602 (durable directory size), #3347 (name reuse), #3285 (open connections); capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/96-controller-events.log, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/summary/microvm-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/parallel/, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/kagent-turns-x86.json.

@@ -1,52 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-5-3-title fig-5-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 348" role="img" aria-labelledby="fig-5-3-title fig-5-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-5-3-title">How an actor JWT reaches the service that an actor calls</title>
   <desc id="fig-5-3-desc">A sequence with four lifelines: the actor session-01a1cf43, the egress gateway atenet-egress, ate-api-server, and the service kagent-controller on port 8083. The actor sends a plain HTTP request. The gateway matches the egress rule, calls MintActorJwt with the audience kagent-runtime and 300 seconds, replaces the authorization header with the token, and sends the request on. The service answers 200. The actor never holds the token.</desc>
   <defs><marker id="fig-5-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
-  <rect x="10" y="16" width="140" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="80" y="33.1" font-size="12" text-anchor="middle" font-weight="700">actor</text>
-  <text x="80" y="50.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">session-01a1cf43</text>
-  <line x1="80" y1="60" x2="80" y2="316" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="170" y="16" width="140" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="240" y="33.1" font-size="12" text-anchor="middle" font-weight="700">atenet-egress</text>
-  <text x="240" y="50.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">egress gateway</text>
-  <line x1="240" y1="60" x2="240" y2="316" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="330" y="16" width="140" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="400" y="33.1" font-size="12" text-anchor="middle" font-weight="700">ate-api-server</text>
-  <text x="400" y="50.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">signs with ES256</text>
-  <line x1="400" y1="60" x2="400" y2="316" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="34" y="16" width="140" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="104" y="33.1" font-size="12" text-anchor="middle" font-weight="700">actor</text>
+  <text x="104" y="50.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">session-01a1cf43</text>
+  <line x1="104" y1="60" x2="104" y2="340" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="186" y="16" width="140" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="256" y="33.1" font-size="12" text-anchor="middle" font-weight="700">atenet-egress</text>
+  <text x="256" y="50.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">egress gateway</text>
+  <line x1="256" y1="60" x2="256" y2="340" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="338" y="16" width="140" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="408" y="33.1" font-size="12" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="408" y="50.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">signs with ES256</text>
+  <line x1="408" y1="60" x2="408" y2="340" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
   <rect x="490" y="16" width="140" height="44" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
   <text x="560" y="33.1" font-size="12" text-anchor="middle" font-weight="700">kagent-controller</text>
   <text x="560" y="50.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">port 8083</text>
-  <line x1="560" y1="60" x2="560" y2="316" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="560" y1="60" x2="560" y2="340" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
   <circle cx="20" cy="92" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="20" y="96" font-size="11" text-anchor="middle">1</text>
-  <line x1="80" y1="92" x2="239" y2="92" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
-  <rect class="m-knock" x="115.1" y="75.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="159.5" y="86" font-size="11.5" text-anchor="middle">HTTP request</text>
-  <rect class="m-knock" x="117.89" y="96.42" width="83.22" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="159.5" y="107" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no credential</text>
-  <circle cx="228" cy="142" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="228" y="146" font-size="11" text-anchor="middle">2</text>
-  <rect class="m-knock" x="247" y="127.42" width="178.26" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="250" y="138" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rule matches: http, port 8083</text>
-  <rect class="m-knock" x="247" y="143.42" width="101.04" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="250" y="154" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">effect: actorJwt</text>
-  <circle cx="20" cy="190" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="20" y="194" font-size="11" text-anchor="middle">3</text>
-  <line x1="240" y1="190" x2="399" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
-  <rect class="m-knock" x="275.1" y="173.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="319.5" y="184" font-size="11.5" text-anchor="middle">MintActorJwt</text>
-  <rect class="m-knock" x="254.13" y="194.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="319.5" y="205" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kagent-runtime, 300 s</text>
-  <line x1="400" y1="230" x2="241" y2="230" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
-  <rect class="m-knock" x="300.25" y="213.03" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="320.5" y="224" font-size="11.5" text-anchor="middle">token</text>
-  <circle cx="20" cy="270" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="20" y="274" font-size="11" text-anchor="middle">4</text>
-  <line x1="240" y1="270" x2="559" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
-  <rect class="m-knock" x="303.85" y="253.03" width="192.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="400" y="264" font-size="11.5" text-anchor="middle">authorization: Bearer token</text>
-  <line x1="560" y1="304" x2="81" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
-  <rect class="m-knock" x="146.65" y="287.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="160" y="298" font-size="11.5" text-anchor="middle">200</text>
+  <line x1="104" y1="92" x2="255" y2="92" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect class="m-knock" x="135.1" y="75.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="179.5" y="86" font-size="11.5" text-anchor="middle">HTTP request</text>
+  <rect class="m-knock" x="137.89" y="96.42" width="83.22" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="179.5" y="107" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no credential</text>
+  <circle cx="20" cy="148" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="152" font-size="11" text-anchor="middle">2</text>
+  <rect x="161" y="126" width="190" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="256" y="141.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rule matches: http, port 8083</text>
+  <text x="256" y="156.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">effect: actorJwt</text>
+  <circle cx="20" cy="204" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="208" font-size="11" text-anchor="middle">3</text>
+  <line x1="256" y1="204" x2="407" y2="204" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect class="m-knock" x="287.1" y="187.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="331.5" y="198" font-size="11.5" text-anchor="middle">MintActorJwt</text>
+  <rect class="m-knock" x="266.13" y="208.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="331.5" y="219" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kagent-runtime, 300 s</text>
+  <line x1="408" y1="248" x2="257" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect class="m-knock" x="312.25" y="231.03" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="332.5" y="242" font-size="11.5" text-anchor="middle">token</text>
+  <circle cx="20" cy="290" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="294" font-size="11" text-anchor="middle">4</text>
+  <line x1="256" y1="290" x2="559" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect class="m-knock" x="311.85" y="273.03" width="192.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="408" y="284" font-size="11.5" text-anchor="middle">authorization: Bearer token</text>
+  <line x1="560" y1="326" x2="105" y2="326" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-3-head-ink)"/>
+  <rect class="m-knock" x="166.65" y="309.03" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="180" y="320" font-size="11.5" text-anchor="middle">200</text>
 </svg>

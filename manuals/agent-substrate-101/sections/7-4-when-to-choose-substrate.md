@@ -43,7 +43,7 @@ id: fig-7-4
 kind: decision
 title: five questions that decide if Substrate fits
 claim: Substrate fits only when all five answers are yes, and each no names a simpler choice that fits better.
-caption: Read top to bottom. A no leaves the column to the right, to the choice in rose. Five yes answers end at Agent Substrate. From our positions in this manual and the documentation of each alternative.
+caption: Read top to bottom. The line under each question is the fact or the run behind it. A no leaves the column to the right, to a simpler choice. Five yes answers end at Agent Substrate. From capture/lab/summary/resume-x86.json, capture/lab/summary/dependency-loss-x86.json, capture/lab/summary/failures-x86.json, capture/lab/summary/kagent-turns-x86.json, and the documentation of each alternative.
 ```
 
 1. **Does the agent run on CPU only?** If it needs a GPU, Substrate cannot run it.

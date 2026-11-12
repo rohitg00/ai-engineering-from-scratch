@@ -20,7 +20,7 @@ const source = [
 const total = rows => rows.reduce((sum, [, row]) => sum + row.seconds, 0);
 
 module.exports = figure('fig-2-1', {
-  height: 330,
+  height: 358,
   title: 'Install steps from the release images and from source',
   desc: `Two groups of horizontal bars with the seconds of each install step. From the release images on an x86 guest with 16 vCPU: ${release.map(([name, row]) => `${name} ${row.seconds} s`).join(', ')}, ${total(release)} s in all. Built from source on an x86 guest with 24 vCPU: ${source.map(([name, row]) => `${name} ${row.seconds} s${row.exit ? ' and failed' : ''}`).join(', ')}, ${total(source)} s in all. The failed step is rose and stopped on the missing Docker buildx plugin.`,
 }, f => {
@@ -33,15 +33,21 @@ module.exports = figure('fig-2-1', {
       f.rect(x0, y, row.seconds * scale, 18, { fill: color(`${hue}-ink`), stroke: 'none' });
       f.text(x0 + row.seconds * scale + 8, y + 13, row.exit ? `${row.seconds} s, exit 1: no buildx` : `${row.seconds} s`, { size: 11.5, hue: hue === 'grey' ? 'ink-soft' : hue });
     });
-    f.rule(x0, top - 6, x0, top + rows.length * 28 - 4, { hue: 'ink' });
+    const base = top + rows.length * 28 - 2;
+    f.rule(x0, top - 6, x0, base, { hue: 'ink' });
+    f.rule(x0, base, x0 + 300 * scale, base, { hue: 'ink' });
+    for (const tick of [0, 100, 200, 300]) {
+      f.rule(x0 + tick * scale, base, x0 + tick * scale, base + 4, { hue: 'ink' });
+      f.text(x0 + tick * scale, base + 16, tick === 300 ? '300 s' : String(tick), { size: 11, anchor: 'middle', hue: 'ink-soft' });
+    }
   };
   f.kicker(20, 18, 'from the release images · x86 guest, 16 vCPU');
   f.text(620, 18, `${total(release)} s in all`, { size: 11.5, anchor: 'end', weight: 700 });
   draw(release, 34);
-  f.rule(20, 132, 620, 132, { dash: 'dashed' });
-  f.kicker(20, 156, 'built from source · x86 guest, 24 vCPU');
-  f.text(620, 156, `${total(source)} s in all`, { size: 11.5, anchor: 'end', weight: 700 });
-  draw(source, 172);
-  f.text(20, 304, 'The source build made the Envoy image with docker buildx and compiled a Rust module.', { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, 320, 'In both installs the demo step built the worker and counter images with ko.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.rule(20, 146, 620, 146, { dash: 'dashed' });
+  f.kicker(20, 170, 'built from source · x86 guest, 24 vCPU');
+  f.text(620, 170, `${total(source)} s in all`, { size: 11.5, anchor: 'end', weight: 700 });
+  draw(source, 186);
+  f.text(20, 334, 'The source build made the Envoy image with docker buildx and compiled a Rust module.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 350, 'In both installs the demo step built the worker and counter images with ko.', { size: 11, serif: true, hue: 'ink-soft' });
 });

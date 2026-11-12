@@ -1,0 +1,6 @@
+node multi-worker 10
+node multi-worker2 10
+worker lab-n/ballast-5d6cf97747-xlw7d 6
+worker lab-n/ballast-5d6cf97747-dpjlc 5
+worker lab-n/ballast-5d6cf97747-5cmpq 5
+worker lab-n/ballast-5d6cf97747-67bkm 4

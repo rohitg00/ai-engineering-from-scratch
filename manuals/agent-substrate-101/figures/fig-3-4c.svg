@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 282" role="img" aria-labelledby="fig-3-4c-title fig-3-4c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-4c-title">Disk use of 25 suspended actors, and what a delete gives back</title>
+  <desc id="fig-3-4c-desc">Horizontal bars with the MiB that du reports in three places on the x86 server guest, with 25 suspended actors that hold 8,750 MiB of memory together and again after we deleted the actors. Snapshots on the node: 8,801 MiB, then 1 MiB. Snapshot cache on the node: 1,765 MiB, then 1,765 MiB. Object store: 10,824 MiB, then 2,064 MiB, which are the golden snapshots of the five templates. A dashed line marks 8,750 MiB.</desc>
+  <rect x="20" y="10" width="14" height="10" fill="var(--m-ink-soft, #4a4a4a)"/>
+  <text x="40" y="19" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">with 25 suspended actors</text>
+  <rect x="250" y="10" width="14" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-soft, #4a4a4a)"/>
+  <text x="270" y="19" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">after we deleted the actors</text>
+  <line x1="472.33" y1="34" x2="472.33" y2="216" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="466.33" y="46" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">8,750 MiB: the memory the 25 actors hold</text>
+  <text x="194" y="72" font-size="11.5" text-anchor="end" font-weight="700">snapshots on the node</text>
+  <text x="194" y="88" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">gone with the actors</text>
+  <rect x="204" y="60" width="269.9" height="15" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="479.9" y="72" font-size="11.5" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">8,801</text>
+  <rect x="204" y="78" width="1" height="15" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="210.03" y="90" font-size="11.5" fill="var(--m-violet-ink, #5b4fa3)">1</text>
+  <text x="194" y="124" font-size="11.5" text-anchor="end" font-weight="700">snapshot cache on the node</text>
+  <text x="194" y="140" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">did not shrink</text>
+  <rect x="204" y="112" width="54.13" height="15" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect class="m-knock" x="261.13" y="113.03" width="40.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="264.13" y="124" font-size="11.5" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">1,765</text>
+  <rect x="204" y="130" width="54.13" height="15" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="264.13" y="142" font-size="11.5" fill="var(--m-violet-ink, #5b4fa3)">1,765</text>
+  <text x="194" y="176" font-size="11.5" text-anchor="end" font-weight="700">object store</text>
+  <text x="194" y="192" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">golden snapshots stay</text>
+  <rect x="204" y="164" width="331.94" height="15" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="541.94" y="176" font-size="11.5" font-weight="700" fill="var(--m-teal-ink, #18696a)">10,824</text>
+  <rect x="204" y="182" width="63.3" height="15" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="273.3" y="194" font-size="11.5" fill="var(--m-teal-ink, #18696a)">2,064</text>
+  <line x1="204" y1="34" x2="204" y2="216" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="204" y1="216" x2="572" y2="216" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="204" y1="216" x2="204" y2="220" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="204" y="233" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="265.33" y1="216" x2="265.33" y2="220" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="265.33" y="233" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2,000</text>
+  <line x1="326.67" y1="216" x2="326.67" y2="220" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="326.67" y="233" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4,000</text>
+  <line x1="388" y1="216" x2="388" y2="220" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="388" y="233" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6,000</text>
+  <line x1="449.33" y1="216" x2="449.33" y2="220" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="449.33" y="233" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8,000</text>
+  <line x1="510.67" y1="216" x2="510.67" y2="220" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="510.67" y="233" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10,000</text>
+  <line x1="572" y1="216" x2="572" y2="220" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="572" y="233" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">12,000</text>
+  <text x="602" y="233" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MiB</text>
+  <text x="20" y="256" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Five actors for each of 0, 50, 200, 500, and 1,000 MiB of random bytes, each 3 to 8 minutes old.</text>
+  <text x="20" y="272" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The object store holds one snapshot for each actor and one golden snapshot for each template.</text>
+</svg>

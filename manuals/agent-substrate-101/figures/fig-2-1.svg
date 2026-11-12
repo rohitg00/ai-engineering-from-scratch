@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 358" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-2-1-title">Install steps from the release images and from source</title>
   <desc id="fig-2-1-desc">Two groups of horizontal bars with the seconds of each install step. From the release images on an x86 guest with 16 vCPU: kind cluster 55 s, deploy ate-system 162 s, deploy demo counter 94 s, 311 s in all. Built from source on an x86 guest with 24 vCPU: kind cluster 56 s, deploy ate-system 163 s and failed, the same step again 266 s, deploy demo counter 47 s, 532 s in all. The failed step is rose and stopped on the missing Docker buildx plugin.</desc>
   <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FROM THE RELEASE IMAGES · X86 GUEST, 16 VCPU</text>
@@ -12,23 +12,41 @@
   <text x="180" y="103" font-size="11.5" text-anchor="end">deploy demo counter</text>
   <rect x="190" y="90" width="117.5" height="18" fill="var(--m-violet-ink, #5b4fa3)"/>
   <text x="315.5" y="103" font-size="11.5" fill="var(--m-violet-ink, #5b4fa3)">94 s</text>
-  <line x1="190" y1="28" x2="190" y2="114" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="20" y1="132" x2="620" y2="132" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
-  <text x="20" y="156" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BUILT FROM SOURCE · X86 GUEST, 24 VCPU</text>
-  <text x="620" y="156" font-size="11.5" text-anchor="end" font-weight="700">532 s in all</text>
-  <text x="180" y="185" font-size="11.5" text-anchor="end">kind cluster</text>
-  <rect x="190" y="172" width="70" height="18" fill="var(--m-grey-ink, #5e5e59)"/>
-  <text x="268" y="185" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">56 s</text>
-  <text x="180" y="213" font-size="11.5" text-anchor="end">deploy ate-system</text>
-  <rect x="190" y="200" width="203.75" height="18" fill="var(--m-rose-ink, #b0344d)"/>
-  <text x="401.75" y="213" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">163 s, exit 1: no buildx</text>
-  <text x="180" y="241" font-size="11.5" text-anchor="end">the same step again</text>
-  <rect x="190" y="228" width="332.5" height="18" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="530.5" y="241" font-size="11.5" fill="var(--m-blue-ink, #2f5d9a)">266 s</text>
-  <text x="180" y="269" font-size="11.5" text-anchor="end">deploy demo counter</text>
-  <rect x="190" y="256" width="58.75" height="18" fill="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="256.75" y="269" font-size="11.5" fill="var(--m-violet-ink, #5b4fa3)">47 s</text>
-  <line x1="190" y1="166" x2="190" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="20" y="304" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The source build made the Envoy image with docker buildx and compiled a Rust module.</text>
-  <text x="20" y="320" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">In both installs the demo step built the worker and counter images with ko.</text>
+  <line x1="190" y1="28" x2="190" y2="116" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="190" y1="116" x2="565" y2="116" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="190" y1="116" x2="190" y2="120" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="190" y="132" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="315" y1="116" x2="315" y2="120" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="315" y="132" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="440" y1="116" x2="440" y2="120" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="440" y="132" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="565" y1="116" x2="565" y2="120" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="565" y="132" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300 s</text>
+  <line x1="20" y1="146" x2="620" y2="146" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="170" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BUILT FROM SOURCE · X86 GUEST, 24 VCPU</text>
+  <text x="620" y="170" font-size="11.5" text-anchor="end" font-weight="700">532 s in all</text>
+  <text x="180" y="199" font-size="11.5" text-anchor="end">kind cluster</text>
+  <rect x="190" y="186" width="70" height="18" fill="var(--m-grey-ink, #5e5e59)"/>
+  <text x="268" y="199" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">56 s</text>
+  <text x="180" y="227" font-size="11.5" text-anchor="end">deploy ate-system</text>
+  <rect x="190" y="214" width="203.75" height="18" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="401.75" y="227" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">163 s, exit 1: no buildx</text>
+  <text x="180" y="255" font-size="11.5" text-anchor="end">the same step again</text>
+  <rect x="190" y="242" width="332.5" height="18" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="530.5" y="255" font-size="11.5" fill="var(--m-blue-ink, #2f5d9a)">266 s</text>
+  <text x="180" y="283" font-size="11.5" text-anchor="end">deploy demo counter</text>
+  <rect x="190" y="270" width="58.75" height="18" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="256.75" y="283" font-size="11.5" fill="var(--m-violet-ink, #5b4fa3)">47 s</text>
+  <line x1="190" y1="180" x2="190" y2="296" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="190" y1="296" x2="565" y2="296" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="190" y1="296" x2="190" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="190" y="312" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="315" y1="296" x2="315" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="315" y="312" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="440" y1="296" x2="440" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="440" y="312" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="565" y1="296" x2="565" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="565" y="312" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300 s</text>
+  <text x="20" y="334" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The source build made the Envoy image with docker buildx and compiled a Rust module.</text>
+  <text x="20" y="350" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">In both installs the demo step built the worker and counter images with ko.</text>
 </svg>

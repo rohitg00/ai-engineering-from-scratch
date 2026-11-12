@@ -1,0 +1,22 @@
+kube-system                        49m         Warning   FailedScheduling          pod/coredns-559f6c778d-xs9vd                                     0/1 nodes are available: 1 node(s) had untolerated t
+kube-system                        49m         Warning   FailedScheduling          pod/coredns-559f6c778d-2xsv2                                     0/1 nodes are available: 1 node(s) had untolerated t
+local-path-storage                 49m         Warning   FailedScheduling          pod/local-path-provisioner-75f7fc7dc5-s5jjd                      0/1 nodes are available: 1 node(s) had untolerated t
+podcertificate-controller-system   49m         Warning   FailedScheduling          pod/podcertificate-controller-57c94fb5b-wtgps                    0/3 nodes are available: 1 node(s) were unschedulabl
+lab-n                              43m         Warning   NodeNotReady              pod/ballast-5d6cf97747-xlw7d                                     Node is not ready
+lab-n                              43m         Warning   NodeNotReady              pod/ballast-5d6cf97747-67bkm                                     Node is not ready
+lab-n                              38m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-67bkm                                     Marking for deletion Pod lab-n/ballast-5d6cf97747-67
+lab-n                              38m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-xlw7d                                     Marking for deletion Pod lab-n/ballast-5d6cf97747-xl
+lab-n                              24m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-mcbjt                                     Cancelling deletion of Pod lab-n/ballast-5d6cf97747-
+lab-n                              24m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-l7jm8                                     Cancelling deletion of Pod lab-n/ballast-5d6cf97747-
+lab-n                              23m         Warning   NodeNotReady              pod/ballast-5d6cf97747-mcbjt                                     Node is not ready
+lab-n                              23m         Warning   NodeNotReady              pod/ballast-5d6cf97747-l7jm8                                     Node is not ready
+lab-n                              18m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-mcbjt                                     Marking for deletion Pod lab-n/ballast-5d6cf97747-mc
+lab-n                              18m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-l7jm8                                     Marking for deletion Pod lab-n/ballast-5d6cf97747-l7
+lab-n                              10m         Warning   NodeNotReady              pod/ballast-5d6cf97747-zjz8n                                     Node is not ready
+kube-system                        10m         Warning   NodeNotReady              pod/kindnet-qpscg                                                Node is not ready
+ate-system                         10m         Warning   NodeNotReady              pod/atelet-gsmxg                                                 Node is not ready
+lab-n                              10m         Warning   NodeNotReady              pod/ballast-5d6cf97747-4dhz2                                     Node is not ready
+kube-system                        10m         Warning   NodeNotReady              pod/kube-proxy-x5hc4                                             Node is not ready
+default                            10m         Normal    NodeNotReady              node/multi-worker2                                               Node multi-worker2 status is now: NodeNotReady
+lab-n                              5m55s       Normal    TaintManagerEviction      pod/ballast-5d6cf97747-zjz8n                                     Marking for deletion Pod lab-n/ballast-5d6cf97747-zj
+lab-n                              5m55s       Normal    TaintManagerEviction      pod/ballast-5d6cf97747-4dhz2                                     Marking for deletion Pod lab-n/ballast-5d6cf97747-4d

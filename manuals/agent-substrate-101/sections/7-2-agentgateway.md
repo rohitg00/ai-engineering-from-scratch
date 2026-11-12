@@ -11,7 +11,7 @@ id: fig-7-2
 kind: flow
 title: three places for agentgateway
 claim: In places A and B agentgateway enforces the Substrate policy, and only in place C does it read model and tool traffic.
-caption: Each row is one request path, read left to right. Indigo boxes are the Substrate dataplane. The dashed box is a gateway that you deploy yourself. From capture/lab/G-dataplane, capture/lab/K-kagent, and the agentgateway source at v1.7.0.
+caption: Each row is one request path, read left to right. Indigo boxes are the Substrate dataplane. The bold line under a row says what agentgateway decides in that place. The dashed box is a gateway that you deploy yourself. From capture/lab/G-dataplane, capture/lab/K-kagent, and the agentgateway source at v1.7.0.
 ```
 
 | Place | Who installs it | What it decides | What we ran |

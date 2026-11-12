@@ -1,0 +1,16 @@
+    Image:           localhost:5001/ateworker-microvm@sha256:d4b76fde69ca4c4747d5d33423952aa4890b5a8e537207916b7214a914049d56
+    Limits:
+      cpu:          1
+      memory:       1Gi
+    Requests:
+      cpu:          250m
+      memory:       1Gi
+    Mounts:
+    Image:           localhost:5001/ateworker-microvm@sha256:d4b76fde69ca4c4747d5d33423952aa4890b5a8e537207916b7214a914049d56
+    Limits:
+      cpu:          1
+      memory:       1Gi
+    Requests:
+      cpu:          250m
+      memory:       1Gi
+    Mounts:

@@ -1,0 +1,12 @@
+ts	event	http	seconds	detail
+2026-11-12T11:56:40.271Z	create	-	0.220	cli
+2026-11-12T11:56:41.206Z	first-call	200	0.809462	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1
+2026-11-12T11:56:42.035Z	warm	200	0.078550	preserved memory count: 2 | preserved file counter: 2 | preserved rootfs counter: 2
+2026-11-12T11:56:42.134Z	warm	200	0.074199	preserved memory count: 3 | preserved file counter: 3 | preserved rootfs counter: 3
+2026-11-12T11:56:42.229Z	warm	200	0.068517	preserved memory count: 4 | preserved file counter: 4 | preserved rootfs counter: 4
+2026-11-12T11:56:43.042Z	suspend-async	-	0.409	ATESPACE                   NAME           TEMPLATE                                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-co
+2026-11-12T11:56:44.054Z	resume-local	200	0.393000	preserved memory count: 5 | preserved file counter: 5 | preserved rootfs counter: 5
+2026-11-12T11:56:44.890Z	suspend-async	-	0.425	ATESPACE                   NAME           TEMPLATE                                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-co
+2026-11-12T11:56:45.903Z	resume-local	200	0.405104	preserved memory count: 6 | preserved file counter: 6 | preserved rootfs counter: 6
+2026-11-12T11:56:46.771Z	suspend-async	-	0.446	ATESPACE                   NAME           TEMPLATE                                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-co
+2026-11-12T11:56:47.783Z	resume-local	200	0.375504	preserved memory count: 7 | preserved file counter: 7 | preserved rootfs counter: 7

@@ -25,7 +25,7 @@ id: fig-1-1
 kind: flow
 title: what Substrate does and what it leaves to you
 claim: Substrate resumes an actor onto a worker when a request arrives, and the call that suspends it again must come from you.
-caption: The top row is the WorkerPool of the counter demo. The dashed pods run no actor. The two lists at the bottom divide the work between Substrate and you. From capture/lab/A-quickstart/60-state.log and capture/lab/B-lifecycle/13-workers.txt.
+caption: The top row is the WorkerPool of the counter demo, and the dashed pods run no actor. The amber arrow is the resume, which Substrate does. The thick teal arrow is the suspend, which you call. The two lists at the bottom divide the work, with the seconds from our run. From capture/lab/A-quickstart/60-state.log, capture/lab/B-lifecycle/13-workers.txt, capture/lab/B-lifecycle/10-trace.tsv, and capture/lab/B-lifecycle/20-trace-ops.tsv.
 ```
 
 So a pool of three workers can hold hundreds of sessions, as long as few of them run at one time. That is the whole offer. The cost is the time to resume, and [section 3.3](#s-suspendactor-and-resumeactor) measures it against the memory an actor holds.
@@ -37,7 +37,7 @@ Substrate gives you five things with fixed names.
 - **One API.** `ate-api-server` serves one gRPC service for atespaces, templates, actors, snapshots, workers, and policies. The `kubectl ate` plugin is its client {{code}}.
 - **One lifecycle.** An actor has seven states, and five operations move it between them: create, resume, suspend, revert, and delete. [Section 3.2](#s-actor-states) draws them.
 - **One way to reach an actor.** A client sends a request to `atenet-router` with the header `ate-target-actor` and a client certificate. The router finds the worker {{docs}}.
-- **Two sandbox classes.** An actor runs under gVisor or in a microVM, and the WorkerPool decides which one {{docs}}.
+- **Two sandbox classes.** An actor runs under gVisor or in a microVM, and the WorkerPool decides which one {{docs}}. We ran both on one machine, and [section 4.2](#s-sandbox-classes) compares them.
 - **One egress rule.** An actor reaches no host until an egress policy names that host. [Section 6.2](#s-egresspolicy-and-default-deny) shows the denial.
 
 The project states that it keeps this API compatible from v1.0.0 {{docs}}. That promise covers the API. It does not cover the jobs below.
@@ -67,6 +67,10 @@ Substrate v1.0.0 does not give an actor a GPU. The API guide marks devices as no
 ### Recovery
 
 Substrate marks an actor as crashed, and then it waits for you. A crashed actor returns 503 on every request until a caller sends `RevertActor`. In one case it is not marked at all: a process that exits leaves the actor in `ACTOR_STATE_RUNNING`. [Section 3.5](#s-crashed-and-revertactor) shows both cases.
+
+Substrate also does not move an actor off a node that stops.
+
+**We measured** this on a second x86 server guest (16 vCPU, 23 GB), on a cluster with two worker nodes, one run for each case. A suspended actor with its snapshot in the object store stayed in `ACTOR_STATE_RESUMING` on the stopped node for 5 min 33 s. Then it was crashed. A running actor read `ACTOR_STATE_RUNNING` for the 10 minutes of our probe. The other node had free workers the whole time. [Section 4.3](#s-placement) has the four cases.
 
 Substrate also has no opinion about the agent. It does not choose a model, run a tool, or keep a conversation. Those belong to the harness.
 
@@ -101,4 +105,4 @@ Substrate fits sessions that keep state and are idle most of the time. It does n
 - Check each of the eight positions on your own cluster before you depend on it.
 ```
 
-Sources: capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/13-workers.txt, capture/lab/A-quickstart/60-state.log, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/summary/parking-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/resume-x86.json, capture/lab/summary/install-steps.json, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/J-container-death/10-trace.tsv; api/ateapi/v1/ateapi.proto, docs/reference/api-guide.md, docs/get-started/quickstart.md, docs/reference/sandbox-classes.md, and README.md at v1.0.0.
+Sources: capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/13-workers.txt, capture/lab/A-quickstart/60-state.log, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/summary/parking-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/resume-x86.json, capture/lab/summary/install-steps.json, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/J-container-death/10-trace.tsv, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/summary/microvm-x86.json; api/ateapi/v1/ateapi.proto, docs/reference/api-guide.md, docs/get-started/quickstart.md, docs/reference/sandbox-classes.md, and README.md at v1.0.0.

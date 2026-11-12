@@ -1,0 +1,14 @@
+ts	event	detail
+2026-11-12T12:47:19.090Z	actors	ATESPACE   NAME   TEMPLATE           STATE                  WORKER POD   WORKER IPS   VERSION   AGE;lab-n      p3     lab-n/ballast-50   ACTOR_STATE_DELETING   <none>                    13        24m;lab-n      q2     lab-n/ballast-50   ACTOR_STATE_DELETING   <none>                    10        12m;lab-n      ub1    lab-n/ballast-50   ACTOR_STATE_DELETING   <none>                    11        28m;
+2026-11-12T12:47:19.511Z	p3-state	ACTOR_STATE_DELETING <none>
+2026-11-12T12:47:19.721Z	p3-revert	Error: failed to revert actor: rpc error: code = FailedPrecondition desc = Actor lab-n/p3 is not in a revertable state (got: ACTOR_STATE_DELETING, want one of [ACTOR_STATE_RUNNING ACTOR_STATE_CRASHED], or ACTOR_STATE_SUS
+2026-11-12T12:47:19.949Z	p3-resume	Error: failed to resume actor: rpc error: code = FailedPrecondition desc = AssignWorker prerequisite not met for Actor: lab-n/p3 (got: ACTOR_STATE_DELETING, want ACTOR_STATE_SUSPENDED) 
+2026-11-12T12:47:24.345Z	p3-call	node=multi-worker2 actor lab-n/p3 unavailable: AssignWorker prerequisite not met for Actor: lab-n/p3 (got: ACTOR_STATE_DELETING, want ACTOR_STATE_SUSPENDED) -> 503 0.078148s
+2026-11-12T12:47:24.948Z	q2-state	ACTOR_STATE_DELETING <none>
+2026-11-12T12:47:25.171Z	q2-revert	Error: failed to revert actor: rpc error: code = FailedPrecondition desc = Actor lab-n/q2 is not in a revertable state (got: ACTOR_STATE_DELETING, want one of [ACTOR_STATE_RUNNING ACTOR_STATE_CRASHED], or ACTOR_STATE_SUS
+2026-11-12T12:47:25.395Z	q2-resume	Error: failed to resume actor: rpc error: code = FailedPrecondition desc = AssignWorker prerequisite not met for Actor: lab-n/q2 (got: ACTOR_STATE_DELETING, want ACTOR_STATE_SUSPENDED) 
+2026-11-12T12:47:29.842Z	q2-call	node=multi-worker2 actor lab-n/q2 unavailable: AssignWorker prerequisite not met for Actor: lab-n/q2 (got: ACTOR_STATE_DELETING, want ACTOR_STATE_SUSPENDED) -> 503 0.064410s
+2026-11-12T12:47:30.401Z	ub1-state	ACTOR_STATE_DELETING <none>
+2026-11-12T12:47:30.610Z	ub1-revert	Error: failed to revert actor: rpc error: code = FailedPrecondition desc = Actor lab-n/ub1 is not in a revertable state (got: ACTOR_STATE_DELETING, want one of [ACTOR_STATE_RUNNING ACTOR_STATE_CRASHED], or ACTOR_STATE_SU
+2026-11-12T12:47:30.837Z	ub1-resume	Error: failed to resume actor: rpc error: code = FailedPrecondition desc = AssignWorker prerequisite not met for Actor: lab-n/ub1 (got: ACTOR_STATE_DELETING, want ACTOR_STATE_SUSPENDED) 
+2026-11-12T12:47:35.264Z	ub1-call	node=multi-worker2 actor lab-n/ub1 unavailable: AssignWorker prerequisite not met for Actor: lab-n/ub1 (got: ACTOR_STATE_DELETING, want ACTOR_STATE_SUSPENDED) -> 503 0.063169s

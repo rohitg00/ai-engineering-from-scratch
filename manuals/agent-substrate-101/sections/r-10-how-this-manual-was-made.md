@@ -26,8 +26,8 @@ Our runs rank first. Where a run and the documentation disagree, the manual repo
 
 | Name in the manual | Machine | What ran on it |
 |---|---|---|
-| an x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on a shared x86 server, Ubuntu 24.04, Docker 29.1.3, Go 1.27.3 | Agent Substrate built from source, the Envoy dataplane, gVisor: experiments A, B, C, D, I, and J |
-| a second x86 server guest (16 vCPU, 23 GB) | a guest on the same server | Agent Substrate from the release images, Envoy and then agentgateway v1.7.0: experiments E, F, and G |
+| an x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on a shared x86 server, Ubuntu 24.04, Docker 29.1.3, Go 1.27.3 | Agent Substrate built from source, the Envoy dataplane, gVisor: experiments A, B, C, D, I, and J. Also the microVM class and the second node restart of experiment L |
+| a second x86 server guest (16 vCPU, 23 GB) | a guest on the same server | Agent Substrate from the release images, Envoy and then agentgateway v1.7.0: experiments E, F, and G. Also a second cluster with three kind nodes for experiment L |
 | an x86 server guest for kagent (16 vCPU, 31 GB) | a guest on the same server | kagent v1.0.0 with its own distribution of Substrate, and a mock model: experiment K |
 | an Apple silicon laptop under Docker Desktop | 10 CPUs and 8 GB given to Docker | Agent Substrate from the release images, gVisor only: experiment M |
 
@@ -37,7 +37,7 @@ The server and the laptop are different machines. The laptop was two to three ti
 
 - **One guest for each track.** Each line of work had its own virtual machine, so that a destructive test in one could not change a number in another. Nothing was installed on the server itself.
 - **Disks in memory.** Each guest kept its disk in the memory of the server. Disk writes were faster than on a cloud volume, so our suspend and upload times are lower limits for a real disk.
-- **One node.** Every cluster had one kind node. Placement across nodes and the loss of one node among several are outside our results, except where [section 4.3](#s-placement) reports a run.
+- **One node, with one exception.** Every cluster but one had one kind node. The exception had one control plane node and two worker nodes. It gave the placement and node loss results of [section 4.3](#s-placement).
 - **An object store in the cluster.** Snapshots went to rustfs on the same node and the same disk. A bucket across a network adds time to every upload and every resume from the bucket.
 - **Two install paths.** We installed once from source, as the quickstart documents, and once from the release images. The two paths gave us the buildx failure and the install times of [section 2.1](#s-install-with-ate-setup).
 - **A mock model for kagent.** A small server in the cluster answered each model call with a fixed reply. Turn times in [section 7.1](#s-kagent-on-substrate) therefore hold almost no model time. A real model adds its own seconds to each turn.
@@ -58,9 +58,10 @@ The server and the laptop are different machines. The laptop was two to three ti
 | I | What does a client see when a pool is full? | A 503 after about 5 s, or a served request if a worker becomes free in that time. |
 | J | Does Substrate notice a process that dies in a sandbox? | A memory kill in about 4 s. A clean exit never, until something calls suspend. |
 | K | How does kagent 1.0 use Substrate? | One actor for each session, resumed and suspended on every turn, 98 of 98. |
+| L | How does the microVM class compare with gVisor? What happens on two worker nodes when one stops? How do workers recover after a node restart? | A microVM resume cost about 1 ms for each MiB, against about 2 ms. No actor left a stopped node by itself. After a restart, resumes failed for 10 to 30 s after the control plane returned. |
 | M | Does v1.0.0 work on Apple silicon? | Yes for gVisor actors up to 200 MiB. No KVM, so no microVM class. |
 
-The letters H and L are not in the table. H was a single check that a plain `scratch` image works as an actor. Where later runs on the microVM class and on more nodes exist, the sections of Part 4 report them.
+The letter H is not in the table. H was a single check that a plain `scratch` image works as an actor. Experiment L ran last. It closed three gaps of the earlier runs, and the sections of Part 4 report it.
 
 ## The capture kit
 
@@ -89,9 +90,9 @@ Your seconds will differ from ours. The states, the error texts, and the order o
 | Subject | Measured in a run | Read in the code or the documentation only |
 |---|---|---|
 | Install | source build, release images, the switch to agentgateway, the kagent install, Apple silicon | GKE, the settings for large clusters |
-| Lifecycle | create, resume, both suspend modes, revert, delete, crash by pod loss, node restart, memory kill, process exit | tags, a worker drain, the wakeup probe timeout |
-| Snapshots | times and sizes for memory fidelity, the two timers, the files that a volumes snapshot keeps | root filesystem fidelity, restore across runtime versions |
-| Capacity | a full pool, request parking, 8 and 24 parallel kagent turns | autoscaling, reservation below the limit |
+| Lifecycle | create, resume, both suspend modes, revert, delete, crash by pod loss, node restart, the loss of one worker node of two, memory kill, process exit | tags, a worker drain, the wakeup probe timeout |
+| Snapshots | times and sizes for memory fidelity on both sandbox classes, the two timers, the files that a volumes snapshot keeps | root filesystem fidelity, restore across runtime versions |
+| Capacity | a full pool, request parking, placement of 20 actors on two worker nodes, 8 and 24 parallel kagent turns | autoscaling, reservation below the limit |
 | Network | default deny, the DNS relay, interception, pass-through, injection, a removed rule with an open connection | external egress processors, federation of actor JWTs |
 | Identity | the ingress certificate check on both dataplanes, the shared identity warning | access policies, token files, key rotation |
 | Dependencies | the loss of Postgres, of `ate-api-server`, and of the Kubernetes API server, on Envoy | the same on agentgateway, an external Postgres, a remote bucket |
@@ -99,4 +100,4 @@ Your seconds will differ from ours. The states, the error texts, and the order o
 
 [Section 8.5](#s-limits-at-v1-0-0) holds the full list of what we did not test.
 
-Sources: manual.json (pin, sources); capture/README.md, capture/run.py, capture/lab/REDACTIONS.txt, capture/lab/summary/install-steps.json, capture/lab/summary/resume-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/summary/dependency-loss-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/A-quickstart/02-steps.tsv, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/M-mac-arm64/02-steps.tsv, capture/lab/K-kagent/install/steps.tsv; docs/get-started/quickstart.md at v1.0.0.
+Sources: manual.json (pin, sources); capture/lab/summary/microvm-x86.json, capture/lab/L-gaps/microvm/49-summary.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/restart/10-poll.tsv, capture/README.md, capture/run.py, capture/lab/REDACTIONS.txt, capture/lab/summary/install-steps.json, capture/lab/summary/resume-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/summary/dependency-loss-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/A-quickstart/02-steps.tsv, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/M-mac-arm64/02-steps.tsv, capture/lab/K-kagent/install/steps.tsv; docs/get-started/quickstart.md at v1.0.0.

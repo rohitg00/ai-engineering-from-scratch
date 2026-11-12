@@ -26,10 +26,10 @@
   <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M490 51 L519 51" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
   </g>
   <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
-  <rect x="20" y="98" width="600" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <rect x="20" y="98" width="600" height="46" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-dasharray="5 4"/>
   <text x="32" y="116.1" font-size="12" font-weight="700">acting as system:serviceaccount:ate-system:ate-client</text>
   <text x="32" y="133.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the shared identity of every caller that passes no --token-file</text>
-  <line x1="95" y1="74" x2="95" y2="98" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="95" y1="74" x2="95" y2="98" stroke="var(--m-olive-ink, #515f26)" stroke-width="1" stroke-dasharray="5 4"/>
   </g>
   <line x1="20" y1="168" x2="620" y2="168" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
   <text x="20" y="192" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WORKERPOOL, SANDBOXCONFIG, CSIDRIVERCONFIG</text>

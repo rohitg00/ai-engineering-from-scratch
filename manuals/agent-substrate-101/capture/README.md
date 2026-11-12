@@ -15,14 +15,14 @@ The check rebuilds the summaries in a temporary folder and compares them with th
 
 | Name in the manual | Machine | Software |
 |---|---|---|
-| the x86 server guest | a KVM guest on an x86 server, 24 vCPU, 47 GB, nested KVM, Ubuntu 24.04 | Docker 29.1.3, Go 1.27.3, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor |
-| the second x86 guest | 16 vCPU, 23 GB, same host | Agent Substrate v1.0.0 from the release images, Envoy and then agentgateway v1.7.0 |
+| the x86 server guest | a KVM guest on an x86 server, 24 vCPU, 47 GB, nested KVM, Ubuntu 24.04 | Docker 29.1.3, Go 1.27.3, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor, and the microVM class for `L-gaps/microvm` |
+| the second x86 guest | 16 vCPU, 23 GB, same host | Agent Substrate v1.0.0 from the release images, Envoy and then agentgateway v1.7.0. For `L-gaps/multinode`, a second kind cluster with one control plane node and two worker nodes |
 | the kagent guest | 16 vCPU, 31 GB, same host | kagent v1.0.0 with its own Substrate distribution, a mock model server in the cluster |
 | the Mac | an Apple silicon laptop under Docker Desktop, 10 CPU and 8 GB for Docker | Agent Substrate v1.0.0 from the release images, gVisor only |
 
 The guests and the Mac are different machines. Do not compare a number from one with a number from another.
 
-Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node. The object store was rustfs in the same cluster.
+Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node, except the cluster of `L-gaps/multinode`. The object store was rustfs in the same cluster.
 
 ## What each folder proves
 
@@ -125,6 +125,30 @@ The credential values in this folder are test values that we made up: `sk-mock-n
 | `parallel/` | 8 and 24 turns at the same time on one worker |
 | `probes/` | ingress probes, egress denials, object store use |
 
+### L-gaps: the microVM class, two worker nodes, and worker recovery
+
+| File | What it shows |
+|---|---|
+| `microvm/40-microvm-local.tsv`, `microvm/49-summary.tsv` | create, first call, warm call, both suspend modes, and resume from the node, for a microVM actor that holds 0, 200, and 500 MiB |
+| `microvm/20-counter-trace.tsv`, `microvm/24-lifecycle-counter.log` | the counter demo on a microVM pool |
+| `microvm/30-pool.yaml`, `microvm/32-tmpl-*.yaml` | the microVM WorkerPool and its three templates |
+| `microvm/26-actor-suspended.yaml`, `microvm/43-actor-v*-1-suspended.json` | actor objects with the runtime attributes of a microVM snapshot |
+| `microvm/41-node-processes-v*-1.txt`, `microvm/23-node-processes-counter.txt`, `microvm/50-gvisor-rss.txt` | the processes on the node for one actor of each class, with resident memory |
+| `microvm/44-snapdir-v*-1.txt` | the size and the files of a node-local microVM snapshot |
+| `microvm/42-workers-v*-1.txt` | the memory that a worker books for one microVM actor |
+| `multinode/01-kind-multi.yaml`, `multinode/02-steps.tsv`, `multinode/11-nodes.txt` | the cluster with two worker nodes and its install times |
+| `multinode/50-placement.tsv`, `multinode/52-placement-counts.txt` | where 20 actors went |
+| `multinode/60-sticky-cordon.tsv` | resumes on the node of the last suspend, also while the node is cordoned |
+| `multinode/70-stop-after-upload.tsv`, `multinode/71-workers.txt` | a node stopped under an actor with a COMPLETED snapshot, with a request every few seconds |
+| `multinode/75-stop-after-upload-revert.tsv` | the same with a revert before the first request |
+| `multinode/80-stop-before-upload.tsv` | a node stopped under an actor with a PENDING snapshot, and two reverts that were refused |
+| `multinode/90-stop-while-running.tsv` | a node stopped under a RUNNING actor, 150 requests, and one revert |
+| `multinode/85-node-return.tsv`, `multinode/93-after-node-return.tsv` | the node after it started again |
+| `multinode/96-controller-events.log`, `multinode/98-worker-state-rpcs.log`, `multinode/97-k8s-node-events.txt` | when the workers were marked unavailable and when Kubernetes evicted their pods |
+| `_scripts/` | the six scripts that made these recordings |
+| `restart/10-poll.tsv`, `restart/11-workers-each-poll.txt` | one node restart with a resume attempt and a worker list every 2 to 3 s |
+| `restart/23-ateapi.log`, `restart/25-events.txt` | the `ate-api-server` log and the Kubernetes events of that restart |
+
 ### M-mac-arm64: Apple silicon
 
 | File | What it shows |
@@ -143,7 +167,7 @@ The shell scripts that made the recordings. Each one ran inside a guest, or on t
 
 | File | Fields |
 |---|---|
-| `resume-x86.json` | `node_local`, `object_store`, `object_store_default_timers`, `new_actor_first_call`, `warm_call`, `create_actor`, `detach_wait`. Each has `points`: `[{x, seconds, failed}]`, where `x` is MiB held |
+| `resume-x86.json` | `node_local`, `object_store`, `object_store_default_timers`, `new_actor_first_call`, `warm_call`, `create_actor`, `detach_wait`. Each has `points`: `[{x, seconds, runs, failed}]`, where `x` is MiB held and `runs` lists every run in seconds |
 | `resume-mac.json` | `node_local`, `new_actor_first_call`, `suspend_async`, `warm_call`, same `points` shape |
 | `suspend-x86.json` | `async`, `sync`, same `points` shape |
 | `footprint-x86.json` | `local_snapshot_per_actor`: `[{x, kib, mib}]`. `with_25_suspended_actors` and `after_delete`: `node_snapshots_mib`, `node_snapshot_cache_mib`, `object_store_mib` |
@@ -153,6 +177,7 @@ The shell scripts that made the recordings. Each one ran inside a guest, or on t
 | `dependency-loss-x86.json` | `outages.postgres`, `outages.ate-api-server`, `outages.kube-apiserver`. Each has `outage_seconds`, `dependency_ready_t`, `summary.<stream>`, and `per_second.<stream>`: `[{t, code, seconds, ok}]`. The streams are `running`, `suspended`, and `proxy` |
 | `kagent-turns-x86.json` | `client_seconds.<series>`, `server_turn_seconds.<series>`, `resume_seconds.turns_only`, `resume_seconds.all`, `suspend_seconds` |
 | `install-steps.json` | `source_build`, `release_images`, `release_images_mac`, `kagent`. Each has `machine` and `steps`: `[{step, exit, seconds}]` |
+| `microvm-x86.json` | `node_local`, `new_actor_first_call`, `suspend_async`, `suspend_sync`, `warm_call`, `create_actor`, with the `points` shape of `resume-x86.json`. `local_snapshot_per_actor`: `[{x, kib, mib}]`. `resident_memory`: `microvm` and `gvisor_same_node`, each a list of `{process, kib, mib}` |
 
 ## What was removed
 

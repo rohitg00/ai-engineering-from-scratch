@@ -1,42 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 318" role="img" aria-labelledby="fig-4-4-title fig-4-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
-  <title id="fig-4-4-title">Four requests against the 5 second parking budget</title>
-  <desc id="fig-4-4-desc">Four horizontal bars on a time axis from 0 to 6 seconds, with a dashed line at the 5 second parking budget. A request to a pool with a free worker returns 200 in 0.36 s. A request to a full pool waits 5.06 s and returns 503. The same request returns 200 in 2.65 s when a worker becomes free 2.37 s into the wait. The slowest served request of the 30 second load run took 4.27 s.</desc>
-  <line x1="530" y1="24" x2="530" y2="236" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <text x="530" y="16" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">budget 5 s</text>
-  <text x="20" y="49" font-size="12" font-weight="700">free worker</text>
-  <text x="20" y="65" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">p1, not parked</text>
-  <rect x="150" y="40" width="27.2" height="18" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="185.2" y="53" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">200 in 0.36 s</text>
-  <text x="20" y="99" font-size="12" font-weight="700">full pool</text>
-  <text x="20" y="115" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">p3, nothing frees</text>
-  <rect x="150" y="90" width="384.53" height="18" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
-  <text x="542.53" y="103" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">503 in 5.06 s</text>
-  <text x="20" y="149" font-size="12" font-weight="700">full pool</text>
-  <text x="20" y="165" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">p3, p1 suspends</text>
-  <rect x="150" y="140" width="201.21" height="18" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="359.21" y="153" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">200 in 2.65 s</text>
-  <line x1="330.12" y1="134" x2="330.12" y2="164" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.4"/>
-  <text x="330.12" y="178" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">worker free at 2.37 s</text>
-  <text x="20" y="199" font-size="12" font-weight="700">load run</text>
-  <text x="20" y="215" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">slowest served</text>
-  <rect x="150" y="190" width="324.44" height="18" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="466.44" y="203" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-green-ink, #336b40)">200 in 4.27 s</text>
-  <line x1="150" y1="236" x2="606" y2="236" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="150" y1="236" x2="150" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="150" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
-  <line x1="226" y1="236" x2="226" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="226" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
-  <line x1="302" y1="236" x2="302" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="302" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
-  <line x1="378" y1="236" x2="378" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="378" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
-  <line x1="454" y1="236" x2="454" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="454" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
-  <line x1="530" y1="236" x2="530" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="530" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5</text>
-  <line x1="606" y1="236" x2="606" y2="241" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="606" y="254" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
-  <text x="378" y="272" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds from the start of the request</text>
-  <text x="20" y="300" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LOAD RUN, 30 S</text>
-  <text x="150" y="300" font-size="11.5">92 requests to 4 actors on 2 workers: 90 served, 2 shed with 503</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-4-4-title fig-4-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4-title">Requests to a full pool against the 5 second parking budget</title>
+  <desc id="fig-4-4-desc">Four rows on a time axis from 0 to 6 seconds, with a dashed line at the 5 second parking budget. Two requests to a pool with a free worker return 200 in 0.32 and 0.36 seconds. 9 requests to a full pool each wait 5.05 to 5.06 seconds and return 503. One parked request returns 200 in 2.65 seconds, because a worker became free 2.37 seconds into its wait. In a 30 second load run, 90 of 92 requests were served, in 0.85 seconds on average and 4.27 seconds at the slowest.</desc>
+  <line x1="244" y1="34" x2="244" y2="252" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="318" y1="34" x2="318" y2="252" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="392" y1="34" x2="392" y2="252" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="466" y1="34" x2="466" y2="252" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="540" y1="34" x2="540" y2="252" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="614" y1="34" x2="614" y2="252" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <line x1="540" y1="26" x2="540" y2="252" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="534" y="22" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">parking budget 5 s</text>
+  <text x="20" y="56" font-size="12" font-weight="700">free worker</text>
+  <text x="20" y="72" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">p1 and p2, no wait</text>
+  <rect x="170" y="48" width="26.49" height="16" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <circle cx="196.49" cy="56" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="193.93" cy="56" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <rect class="m-knock" x="203.49" y="49.03" width="157.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="206.49" y="60" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">200 in 0.32 and 0.36 s</text>
+  <text x="20" y="108" font-size="12" font-weight="700">full pool</text>
+  <text x="20" y="124" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">9 requests, no worker</text>
+  <rect x="170" y="100" width="374.63" height="16" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="544.46" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="544.14" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="544.37" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="544.39" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="544.24" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="544.43" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="544.63" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="543.91" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="544.41" cy="108" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect class="m-knock" x="384.1" y="83.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="532" y="94" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">503 in 5.05 to 5.06 s</text>
+  <text x="20" y="160" font-size="12" font-weight="700">full pool</text>
+  <text x="20" y="176" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">p3, then p1 suspends</text>
+  <rect x="170" y="152" width="195.91" height="16" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <circle cx="365.91" cy="160" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <rect class="m-knock" x="372.91" y="153.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="375.91" y="164" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">200 in 2.65 s</text>
+  <line x1="345.38" y1="147" x2="345.38" y2="173" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.6"/>
+  <rect class="m-knock" x="203.78" y="175.42" width="283.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="345.38" y="186" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">worker free at 2.37 s, answer 0.28 s later</text>
+  <text x="20" y="212" font-size="12" font-weight="700">load run, 30 s</text>
+  <text x="20" y="228" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">90 of 92 served</text>
+  <rect x="170" y="204" width="315.91" height="16" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <circle cx="485.91" cy="212" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <rect class="m-knock" x="492.91" y="205.03" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="495.91" y="216" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">slowest 4.27 s</text>
+  <line x1="232.68" y1="199" x2="232.68" y2="225" stroke="var(--m-green-ink, #336b40)" stroke-width="1.6"/>
+  <rect class="m-knock" x="235.68" y="227.42" width="98.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="238.68" y="238" font-size="11" fill="var(--m-green-ink, #336b40)">average 0.85 s</text>
+  <line x1="170" y1="34" x2="170" y2="252" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="170" y1="252" x2="614" y2="252" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="170" y1="252" x2="170" y2="257" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="170" y="270" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="244" y1="252" x2="244" y2="257" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="244" y="270" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="318" y1="252" x2="318" y2="257" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="318" y="270" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="392" y1="252" x2="392" y2="257" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="392" y="270" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="466" y1="252" x2="466" y2="257" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="466" y="270" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="540" y1="252" x2="540" y2="257" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="540" y="270" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="614" y1="252" x2="614" y2="257" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="614" y="270" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <text x="392" y="290" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds from the start of the request to its answer</text>
 </svg>

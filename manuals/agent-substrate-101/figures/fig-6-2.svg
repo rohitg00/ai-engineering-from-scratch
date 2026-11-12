@@ -1,52 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 318" role="img" aria-labelledby="fig-6-2-title fig-6-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 296" role="img" aria-labelledby="fig-6-2-title fig-6-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-6-2-title">Where an outgoing connection from an actor is decided</title>
-  <desc id="fig-6-2-desc">The actor f-main at 169.254.17.2/30 sends DNS queries to the DNS relay at 169.254.17.1 and every TCP connection to the TCP tunnel. Both are parts of atunnel in the worker pod. The relay forwards names that the policy lists to the cluster DNS and answers NXDOMAIN for other names. The tunnel opens an mTLS CONNECT to atenet-egress, which reads the policy of f-main from ate-api-server and connects to the upstream host. The upstream sees 10.244.0.22. A request outside the policy gets 403 or a reset.</desc>
+  <desc id="fig-6-2-desc">The actor f-main at 169.254.17.2/30 sends DNS queries to the DNS relay at 169.254.17.1 and every TCP connection to atunnel. Both are in the worker pod. The relay forwards names that the policy lists to the cluster DNS and answers NXDOMAIN for other names. atunnel opens a mutual TLS CONNECT to atenet-egress, which checks the request and connects to the upstream host whoami. The upstream sees 10.244.0.22. A request outside the policy gets 403 or a reset. Both checks read the EgressPolicy of f-main from ate-api-server, and the relay keeps it in a cache for 5 seconds.</desc>
   <defs><marker id="fig-6-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-2-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
-  <rect x="160" y="26" width="172" height="216" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-dasharray="5 4"/>
-  <text x="170" y="44" font-size="11" letter-spacing="1.2" fill="var(--m-violet-ink, #5b4fa3)">WORKER POD: ATUNNEL</text>
-  <rect x="16" y="112" width="120" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="76" y="132.25" font-size="12.5" text-anchor="middle" font-weight="700">actor f-main</text>
-  <text x="76" y="149.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">169.254.17.2/30</text>
-  <rect x="172" y="58" width="148" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="246" y="76.25" font-size="12.5" text-anchor="middle" font-weight="700">DNS relay</text>
-  <text x="246" y="93.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">169.254.17.1:53</text>
-  <rect x="172" y="170" width="148" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="246" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">TCP tunnel</text>
-  <text x="246" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">actor certificate</text>
-  <rect x="384" y="58" width="130" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <text x="449" y="76.25" font-size="12.5" text-anchor="middle" font-weight="700">cluster DNS</text>
-  <text x="449" y="93.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CoreDNS</text>
-  <rect x="384" y="170" width="130" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="449" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">atenet-egress</text>
-  <text x="449" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reads the policy</text>
-  <rect x="540" y="170" width="88" height="46" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
-  <text x="584" y="188.25" font-size="12.5" text-anchor="middle" font-weight="700">whoami</text>
-  <text x="584" y="205.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">upstream</text>
-  <rect x="384" y="262" width="130" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="449" y="279.25" font-size="12.5" text-anchor="middle" font-weight="700">ate-api-server</text>
-  <text x="449" y="296.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">policy of f-main</text>
-  <path d="M76 112 V81 H171" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-2-head-ink)"/>
-  <text x="16" y="74" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">DNS query</text>
-  <path d="M76 162 V193 H171" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-2-head-ink)"/>
-  <text x="16" y="212" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every TCP</text>
-  <text x="16" y="226" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">connection</text>
-  <line x1="320" y1="81" x2="383" y2="81" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
-  <rect class="m-knock" x="328.3" y="64.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="352" y="75" font-size="11.5" text-anchor="middle">listed</text>
-  <text x="172" y="122" font-size="11" fill="var(--m-rose-ink, #b0344d)">other names: NXDOMAIN</text>
-  <line x1="320" y1="193" x2="383" y2="193" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-6-2-head-indigo)"/>
-  <rect class="m-knock" x="335.2" y="176.03" width="33.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="352" y="187" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">mTLS</text>
-  <text x="352" y="212" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CONNECT</text>
-  <line x1="514" y1="193" x2="539" y2="193" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
-  <text x="584" y="232" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sees 10.244.0.22</text>
-  <line x1="420" y1="216" x2="420" y2="261" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
-  <rect class="m-knock" x="425" y="227.53" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="428" y="238.5" font-size="11.5">policy</text>
-  <text x="528" y="274" font-size="11" fill="var(--m-rose-ink, #b0344d)">outside the</text>
-  <text x="528" y="288" font-size="11" fill="var(--m-rose-ink, #b0344d)">policy: 403</text>
-  <text x="528" y="302" font-size="11" fill="var(--m-rose-ink, #b0344d)">or reset</text>
-  <path d="M384 284 H246 V217" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-6-2-head-ink)"/>
-  <text x="238" y="262" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">policy,</text>
-  <text x="238" y="276" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cached 5 s</text>
+  <rect x="240" y="20" width="200" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="340" y="38.25" font-size="12.5" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="340" y="55.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">EgressPolicy default of f-main</text>
+  <rect x="160" y="92" width="174" height="180" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-dasharray="5 4"/>
+  <text x="170" y="110" font-size="11" letter-spacing="1.2" fill="var(--m-violet-ink, #5b4fa3)">WORKER POD</text>
+  <rect x="16" y="163" width="124" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="78" y="184.25" font-size="12.5" text-anchor="middle" font-weight="700">actor f-main</text>
+  <text x="78" y="201.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">169.254.17.2/30</text>
+  <rect x="172" y="120" width="150" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="247" y="138.25" font-size="12.5" text-anchor="middle" font-weight="700">DNS relay</text>
+  <text x="247" y="155.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">169.254.17.1:53</text>
+  <rect x="172" y="212" width="150" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="247" y="230.25" font-size="12.5" text-anchor="middle" font-weight="700">atunnel</text>
+  <text x="247" y="247.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">actor certificate</text>
+  <rect x="450" y="120" width="120" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="510" y="138.25" font-size="12.5" text-anchor="middle" font-weight="700">cluster DNS</text>
+  <text x="510" y="155.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CoreDNS</text>
+  <rect x="400" y="212" width="120" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="460" y="230.25" font-size="12.5" text-anchor="middle" font-weight="700">atenet-egress</text>
+  <text x="460" y="247.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">checks the request</text>
+  <rect x="548" y="212" width="80" height="46" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="588" y="230.25" font-size="12.5" text-anchor="middle" font-weight="700">whoami</text>
+  <text x="588" y="247.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">upstream</text>
+  <path d="M78 163 V143 H171" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-2-head-ink)"/>
+  <text x="84" y="136" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">DNS query</text>
+  <path d="M78 215 V235 H171" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-2-head-ink)"/>
+  <text x="16" y="253" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every TCP connection</text>
+  <line x1="322" y1="143" x2="449" y2="143" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
+  <rect class="m-knock" x="335.6" y="126.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="380" y="137" font-size="11.5" text-anchor="middle">listed names</text>
+  <text x="172" y="183" font-size="11" fill="var(--m-rose-ink, #b0344d)">other names: NXDOMAIN</text>
+  <line x1="322" y1="235" x2="399" y2="235" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-6-2-head-indigo)"/>
+  <rect class="m-knock" x="339.85" y="218.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="367" y="229" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">CONNECT</text>
+  <rect class="m-knock" x="334.3" y="239.42" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="367" y="250" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mutual TLS</text>
+  <line x1="520" y1="235" x2="547" y2="235" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-2-head-ink)"/>
+  <text x="588" y="203" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sees 10.244.0.22</text>
+  <text x="400" y="276" font-size="11" fill="var(--m-rose-ink, #b0344d)">outside the policy: 403 or reset</text>
+  <line x1="280" y1="66" x2="280" y2="119" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-2-head-ink)"/>
+  <text x="288" y="84" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">policy, cached 5 s</text>
+  <line x1="432" y1="66" x2="432" y2="211" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-2-head-ink)"/>
+  <text x="440" y="192" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">policy</text>
 </svg>

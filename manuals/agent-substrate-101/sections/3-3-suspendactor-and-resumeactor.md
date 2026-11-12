@@ -67,7 +67,7 @@ id: fig-3-3b
 kind: chart
 title: asynchronous against synchronous suspend
 claim: At 1,000 MiB a synchronous suspend took 6.4 seconds, and the default asynchronous suspend took 2.0 seconds.
-caption: Each line is the median and each band runs from the fastest to the slowest suspend. Violet returns with the snapshot on the node, and teal returns after the upload. Measured on the x86 server guest. From capture/lab/summary/suspend-x86.json.
+caption: Each dot is one suspend, and each line joins the medians of one mode. Violet returns with the snapshot on the node, and teal returns after the upload. Measured on the x86 server guest. From capture/lab/summary/suspend-x86.json.
 ```
 
 ## ResumeActor: who calls it and where it runs
@@ -85,7 +85,7 @@ id: fig-3-3
 kind: chart
 title: resume time against memory held, from the node and from the object store
 claim: A resume from the node took 2.2 seconds at 1,000 MiB, and a resume from the object store took 4.7 seconds.
-caption: Each line is the median and each band runs from the fastest to the slowest resume. Violet restores the snapshot on the node, and teal downloads it from the object store first. The dashed line marks 0.5 seconds. Measured on the x86 server guest. From capture/lab/summary/resume-x86.json.
+caption: Each dot is one resume, and each line joins the medians of one path. Violet restores the snapshot on the node, and teal downloads it from the object store first. The dashed line marks 0.5 seconds. The first resume from the node at 1,000 MiB took 5.09 seconds, and the other nine took at most 2.45 seconds. Measured on the x86 server guest. From capture/lab/summary/resume-x86.json.
 ```
 
 | Memory held | From the node, median | Range of 10 | From the object store, median | Range of 5 |
@@ -115,7 +115,7 @@ Our rule of thumb for this machine has two numbers. A resume costs a fixed 0.2 s
 
 - The memory was random, so no layer could compress it. Real heaps compress, and we did not measure how much that helps.
 - The object store ran in the same cluster and on the same disk. We did not test a remote bucket, which adds its own transfer time.
-- The sandbox was gVisor. [Section 4.2](#s-sandbox-classes) covers the microVM class.
+- The sandbox was gVisor. On the microVM class the same test cost a fixed 0.3 seconds plus about 1 ms for each MiB, up to 500 MiB. [Section 4.2](#s-sandbox-classes) has the comparison.
 - The machine was a nested guest on a server CPU from 2019.
 
 The project states that a resume takes less than 500 ms, and it gives no actor size and no machine. On our guest, that holds up to about 200 MiB from the node and up to about 50 MiB from the object store.

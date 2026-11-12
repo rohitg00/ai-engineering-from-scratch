@@ -1,0 +1,12 @@
+NAME                                   POOL              STATE                 ACTORS   CPU(MILLICORES)   MEMORY         POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-ffxwt                   108m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-fps97                   91m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-p6g2q                   108m
+06eed6fe-8962-4239-8cea-95da20bd6ea7   counter-microvm   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-km4nl   5m35s
+3c8a7e58-2aea-46d7-82d9-7e5200c9bfb5   counter-microvm   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-ncw2s   5m35s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-475hq                   29m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-l6mxf                   29m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi       lab-c/ballast-65cf95d875-bzgjd                              105m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_ACTIVE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-f65dl                              105m
+3a6e1c2a-5741-4187-8def-ed0b433ef9dc   ballast-mvm       WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-jjgdn                          4m50s
+a44c9f2a-e430-4cf3-b1bc-0f536df13159   ballast-mvm       WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-tms47                          4m50s

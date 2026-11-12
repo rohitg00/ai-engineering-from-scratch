@@ -39,7 +39,7 @@ id: fig-1-2
 kind: sequence
 title: the first request to my-counter-1
 claim: The first request to a suspended actor makes the router call ResumeActor, and ate-api-server restores the actor before the request reaches it.
-caption: Read the rows from top to bottom. Row 2 is the only one that passes kube-apiserver. Rows 4 to 6 happen once, and a request to a running actor skips rows 5 and 6. From capture/lab/B-lifecycle/10-trace.tsv and capture/lab/B-lifecycle/12-actor-running.json.
+caption: Read the rows from top to bottom. Row 2 is the only one that passes kube-apiserver. Rows 5 and 6 have amber numbers because a request to a running actor skips them. The note under row 6 is the restore time of a later resume of the same actor. From capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/12-actor-running.json, and capture/lab/B-lifecycle/27-lifecycle.log.
 ```
 
 1. `curl` sends the request to `127.0.0.1:8000`, where `kubectl ate proxy` listens.
@@ -117,14 +117,14 @@ The install runs one `atenet-router` pod and one Postgres pod. Every request to 
 
 ## The actor stays up
 
-After the fifth request we sent nothing for 900 s. [Figure 1.2b](#fig-1-2b) shows all six requests of the recording.
+After the fifth request we sent nothing for 900 s. [Figure 1.2b](#fig-1-2b) shows all six requests of the recording, and every state sample between the last two.
 
 ```figure
 id: fig-1-2b
 kind: chart
-title: six requests to my-counter-1
+title: six requests to my-counter-1, and its state for 900 idle seconds
 claim: Only the first request paid for a resume, and the request after 900 idle seconds was as fast as the others because the actor never stopped.
-caption: Each bar is the time of one request at the client. The amber bar includes the resume from the golden snapshot. From capture/lab/B-lifecycle/10-trace.tsv.
+caption: Each bar is the time of one request at the client. The amber bar includes the resume from the golden snapshot, and the dashed line is the median of requests 2 to 5. Each dot in the lower part is one state sample from the 900 seconds with no request. From capture/lab/B-lifecycle/10-trace.tsv.
 ```
 
 The sixth request took 0.080 s and returned count 6. A resume would have cost about 0.36 s. The actor was never suspended, and it held its worker for the whole 15 minutes. [Section 1.1](#s-what-substrate-does-and-what-it-leaves-to-you) names this as the first job that Substrate leaves to you.

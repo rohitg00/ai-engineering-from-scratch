@@ -41,7 +41,7 @@ id: fig-6-1
 kind: sequence
 title: one request through the router
 claim: The router calls ResumeActor for every request, also when the actor already runs, and only then opens a tunnel to the worker.
-caption: Read from top to bottom. Step 2 happens for each request, which puts ate-api-server and Postgres on the path of each one. From capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt and capture/lab/E-dependency-loss/15-T2-router-during.log.
+caption: Read from top to bottom. Step 2 happens for each request, which puts ate-api-server and Postgres on the path of each one. The bracket is the time from step 2 to step 4 for this request, from the router log. From capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt and capture/lab/G-dataplane/envoy/ingress-auth/52-router-log-atenet-router.log.
 ```
 
 The router log shows the call for an actor that was already `ACTOR_STATE_RUNNING`. Our prober sent one request per second, and each one produced this pair.
@@ -58,7 +58,7 @@ note: Two lines for one request. The trace fields at the end of each line are cu
 
 This design has a cost on the warm path. A running actor is only as available as `ate-api-server` and Postgres. We scaled `ate-api-server` to zero for 60 seconds. The running actor returned `503` with the body `actor lab-e/e-run unavailable` for 60 requests in a row. [Section 8.2](#s-when-a-dependency-is-down) has the full timeline.
 
-**We measured** the allowed path on a second x86 server guest (16 vCPU, 23 GB, Envoy dataplane), one request each. A request on port 443 to a running actor took 0.037 s. The same request through `CONNECT` on port 8444 took 0.032 s. On the agentgateway dataplane the two requests took 0.035 s and 0.029 s.
+**We measured** the allowed path on a second x86 server guest (16 vCPU, 23 GB, Envoy dataplane), one request each. A request on port 443 to a running actor took 0.037 s. The router log gives 9.2 ms of that to the `ResumeActor` call. The same request through `CONNECT` on port 8444 took 0.032 s. On the agentgateway dataplane the two requests took 0.035 s and 0.029 s.
 
 When no worker has room, the router holds the request and tries again. [Section 4.4](#s-request-parking) covers that wait.
 
@@ -83,9 +83,9 @@ We sent the same request from three pods. The first had no client certificate. T
 ```figure
 id: fig-6-1b
 kind: decision
-title: three callers at the router
+title: what a caller of the router sees on each dataplane
 claim: Both dataplanes refuse a caller with no certificate or the wrong SPIFFE ID in the TLS layer, so the caller gets no HTTP status.
-caption: Read each row from the caller to the outcome. The rose boxes are refusals and the green box is the one request that reached the actor. From capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt and capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt.
+caption: Read each row from the request to its outcome on each dataplane. A dashed rose box is a refusal with no HTTP status. A solid rose box is a 404 with a body. A green box is a request that reached the actor, with the time at the caller. From capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, and capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt.
 ```
 
 ```listing
@@ -138,4 +138,4 @@ Do not copy that into production. The quickstart identity is one name that every
 - Keep `ate-api-server` and Postgres as available as the actors, because each request needs both.
 ```
 
-Sources: capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/00-serviceaccounts.txt, capture/lab/G-dataplane/envoy/ingress-auth/50-create-sa.log, capture/lab/G-dataplane/envoy/06-services.txt, capture/lab/G-dataplane/envoy/03-containers-atenet-router.tsv, capture/lab/G-dataplane/envoy/11-listening.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/14-probe-no-allowlist.txt, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/30-config-diff.txt, capture/lab/E-dependency-loss/15-T2-router-during.log, capture/lab/E-dependency-loss/20-analysis.txt, cmd/atenet/internal/router/README.md, cmd/atenet/internal/router/ingress/ingress.go, docs/guides/api-guide.md and docs/guides/quickstart.md at v1.0.0.
+Sources: capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/52-router-log-atenet-router.log, capture/lab/G-dataplane/envoy/ingress-auth/00-serviceaccounts.txt, capture/lab/G-dataplane/envoy/ingress-auth/50-create-sa.log, capture/lab/G-dataplane/envoy/06-services.txt, capture/lab/G-dataplane/envoy/03-containers-atenet-router.tsv, capture/lab/G-dataplane/envoy/11-listening.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/14-probe-no-allowlist.txt, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/30-config-diff.txt, capture/lab/E-dependency-loss/15-T2-router-during.log, capture/lab/E-dependency-loss/20-analysis.txt, cmd/atenet/internal/router/README.md, cmd/atenet/internal/router/ingress/ingress.go, docs/guides/api-guide.md and docs/guides/quickstart.md at v1.0.0.

@@ -19,7 +19,7 @@ module.exports = figure('fig-8-2b', {
   f.text(main(159.1) - 5, 44, 'pods-ready: 147 s', { size: 11, anchor: 'end', hue: 'ink-soft' });
   f.dot(main(249.3), 58, { hue: 'green', r: 4 });
   f.text(main(249.3) + 8, 44, '200, count=4', { size: 11, anchor: 'end', hue: 'green' });
-  f.text(main(204), 82, 'r1 not served', { size: 11, serif: true, anchor: 'middle', hue: 'rose' });
+  f.text(main(204), 82, `r1 not served for ${Math.round(249.3 - 159.1)} s`, { size: 11, serif: true, anchor: 'middle', hue: 'rose' });
   f.text(main(80), 82, 'docker restart kind-control-plane', { size: 11, serif: true, anchor: 'middle', hue: 'ink-soft' });
   f.rule(main(0), 96, main(250), 96, { hue: 'ink' });
   [['11:42', 40.3], ['11:43', 100.3], ['11:44', 160.3], ['11:45', 220.3]].forEach(([label, s]) => {
@@ -41,7 +41,7 @@ module.exports = figure('fig-8-2b', {
   f.rule(zoom(2.0), 226, zoom(2.0), 242, { hue: 'amber' });
   f.text(zoom(2.0) + 5, 252, 'ACTOR_STATE_CRASHED', { size: 11, hue: 'amber' });
   f.rule(zoom(7.72), 226, zoom(7.72), 242, { hue: 'amber' });
-  f.text(zoom(7.72) + 5, 252, 'revert actor: SUSPENDED', { size: 11, hue: 'amber' });
+  f.text(zoom(7.72) + 5, 252, 'RevertActor: ACTOR_STATE_SUSPENDED', { size: 11, hue: 'amber' });
   f.text(zoom(7.72) + 5, 270, '503 after 5.06 s: no worker has room', { size: 11, hue: 'rose' });
 
   f.rule(zoom(0), 290, zoom(14), 290, { hue: 'ink' });

@@ -57,9 +57,9 @@ The parking demo of Substrate creates a pool of two workers with room for one ac
 ```figure
 id: fig-4-4
 kind: timeline
-title: four requests against the 5 second parking budget
+title: requests to a full pool against the 5 second parking budget
 claim: A parked request is served when a worker becomes free inside the 5 second budget, and it gets a 503 when none does.
-caption: Each bar is one request, from its start to its answer. Green is a 200 and rose is a 503. The violet mark is the moment when the suspend of p1 freed a worker. From capture/lab/summary/parking-x86.json.
+caption: Each bar runs from the start of a request to its answer, and each dot is one request. Green is a 200 and rose is a 503. The violet mark is the moment when the suspend of p1 freed a worker. The dashed bar is the load run, with its average and its slowest served request. From capture/lab/summary/parking-x86.json and capture/lab/I-capacity/01-unplanned-full-pool-503.tsv.
 ```
 
 ```listing

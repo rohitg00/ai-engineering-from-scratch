@@ -1,0 +1,3 @@
+NAME                               READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+counter-microvm-59f65968fb-km4nl   1/1     Running   0          34s   10.244.0.27   kind-control-plane   <none>           <none>
+counter-microvm-59f65968fb-ncw2s   1/1     Running   0          34s   10.244.0.28   kind-control-plane   <none>           <none>

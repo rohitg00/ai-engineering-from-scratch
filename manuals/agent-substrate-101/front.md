@@ -55,7 +55,7 @@ We hold eight positions, and each one comes from a run. [Section 1.1](#s-what-su
 
 ## What we did not test
 
-All our clusters had one kind node, and the sandbox class was gVisor in every run behind Parts 1 and 2. We did not run Agent Substrate on GKE. We did not use a real model behind kagent, and we did not use an object store outside the cluster. Each section says so where one of those limits applies. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines, the method, and the full list.
+All our clusters but one had one kind node, and the sandbox class was gVisor in every run behind Parts 1 and 2. We did not run Agent Substrate on GKE. We did not use a real model behind kagent, and we did not use an object store outside the cluster. Each section says so where one of those limits applies. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines, the method, and the full list.
 
 ## How the parts are ordered
 

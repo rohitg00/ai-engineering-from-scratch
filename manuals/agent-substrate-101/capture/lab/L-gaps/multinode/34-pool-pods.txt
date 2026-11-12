@@ -1,0 +1,5 @@
+NAME                       READY   STATUS    RESTARTS   AGE   IP            NODE            NOMINATED NODE   READINESS GATES
+ballast-5d6cf97747-5cmpq   1/1     Running   0          24s   10.244.2.21   multi-worker    <none>           <none>
+ballast-5d6cf97747-67bkm   1/1     Running   0          24s   10.244.1.3    multi-worker2   <none>           <none>
+ballast-5d6cf97747-dpjlc   1/1     Running   0          24s   10.244.2.20   multi-worker    <none>           <none>
+ballast-5d6cf97747-xlw7d   1/1     Running   0          24s   10.244.1.4    multi-worker2   <none>           <none>

@@ -1,0 +1,3 @@
+NAME                           READY   STATUS    RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ballast-mvm-65c7469b7b-jjgdn   1/1     Running   0          2m54s   10.244.0.30   kind-control-plane   <none>           <none>
+ballast-mvm-65c7469b7b-tms47   1/1     Running   0          2m54s   10.244.0.29   kind-control-plane   <none>           <none>

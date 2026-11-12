@@ -1,26 +1,132 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" role="img" aria-labelledby="fig-1-2b-title fig-1-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
-  <title id="fig-1-2b-title">Six requests to my-counter-1 through kubectl ate proxy</title>
-  <desc id="fig-1-2b-desc">Six horizontal bars with the client time of each request on the x86 server guest: request 1 0.358 s, request 2 0.091 s, request 3 0.067 s, request 4 0.062 s, request 5 0.068 s, after 900 s idle 0.080 s. The first bar is amber because it includes the resume from the golden snapshot. The other bars are green because the actor was already running. The actor was in ACTOR_STATE_RUNNING in all 60 samples of the idle period.</desc>
-  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CLIENT TIME OF EACH REQUEST, SECONDS</text>
-  <text x="160" y="47" font-size="11.5" text-anchor="end">request 1</text>
-  <rect x="170" y="34" width="322.54" height="18" fill="var(--m-amber-ink, #85590c)"/>
-  <text x="500.54" y="47" font-size="11.5" fill="var(--m-amber-ink, #85590c)">0.358 s</text>
-  <text x="160" y="77" font-size="11.5" text-anchor="end">request 2</text>
-  <rect x="170" y="64" width="81.69" height="18" fill="var(--m-green-ink, #336b40)"/>
-  <text x="259.69" y="77" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.091 s</text>
-  <text x="160" y="107" font-size="11.5" text-anchor="end">request 3</text>
-  <rect x="170" y="94" width="60.21" height="18" fill="var(--m-green-ink, #336b40)"/>
-  <text x="238.21" y="107" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.067 s</text>
-  <text x="160" y="137" font-size="11.5" text-anchor="end">request 4</text>
-  <rect x="170" y="124" width="55.66" height="18" fill="var(--m-green-ink, #336b40)"/>
-  <text x="233.66" y="137" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.062 s</text>
-  <text x="160" y="167" font-size="11.5" text-anchor="end">request 5</text>
-  <rect x="170" y="154" width="61.25" height="18" fill="var(--m-green-ink, #336b40)"/>
-  <text x="239.25" y="167" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.068 s</text>
-  <text x="160" y="197" font-size="11.5" text-anchor="end">after 900 s idle</text>
-  <rect x="170" y="184" width="72.34" height="18" fill="var(--m-green-ink, #336b40)"/>
-  <text x="250.34" y="197" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.080 s</text>
-  <line x1="170" y1="28" x2="170" y2="214" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="500.54" y="63" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">includes the resume</text>
-  <text x="20" y="238" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Between request 5 and the last one: 60 state samples in 900 s, all ACTOR_STATE_RUNNING</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 336" role="img" aria-labelledby="fig-1-2b-title fig-1-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-2b-title">Six requests to my-counter-1, and its state in the 900 seconds between the last two</title>
+  <desc id="fig-1-2b-desc">The upper part has six horizontal bars with the client time of each request through kubectl ate proxy on the x86 server guest: request 1 0.358 s, request 2 0.091 s, request 3 0.067 s, request 4 0.062 s, request 5 0.068 s, request 6 0.080 s. The first bar is amber because it includes the resume from the golden snapshot, which adds about 0.29 s. The other bars are green because the actor was already running. The lower part is a time axis of the 913 seconds with no request between request 5 and request 6. It has one dot for each of the 60 state samples, and all 60 are in the row ACTOR_STATE_RUNNING. The row ACTOR_STATE_SUSPENDED is empty.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CLIENT TIME OF EACH REQUEST</text>
+  <text x="160" y="42" font-size="11.5" text-anchor="end">request 1</text>
+  <rect x="170" y="30" width="358.38" height="15" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="536.38" y="42" font-size="11.5" font-weight="700" fill="var(--m-amber-ink, #85590c)">0.358 s</text>
+  <text x="160" y="64" font-size="11.5" text-anchor="end">request 2</text>
+  <rect x="170" y="52" width="90.77" height="15" fill="var(--m-green-ink, #336b40)"/>
+  <text x="268.77" y="64" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.091 s</text>
+  <text x="160" y="86" font-size="11.5" text-anchor="end">request 3</text>
+  <rect x="170" y="74" width="66.9" height="15" fill="var(--m-green-ink, #336b40)"/>
+  <text x="244.9" y="86" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.067 s</text>
+  <text x="160" y="108" font-size="11.5" text-anchor="end">request 4</text>
+  <rect x="170" y="96" width="61.84" height="15" fill="var(--m-green-ink, #336b40)"/>
+  <text x="239.84" y="108" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.062 s</text>
+  <text x="160" y="130" font-size="11.5" text-anchor="end">request 5</text>
+  <rect x="170" y="118" width="68.05" height="15" fill="var(--m-green-ink, #336b40)"/>
+  <text x="246.05" y="130" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.068 s</text>
+  <text x="160" y="152" font-size="11.5" text-anchor="end">request 6</text>
+  <rect x="170" y="140" width="80.38" height="15" fill="var(--m-green-ink, #336b40)"/>
+  <text x="258.38" y="152" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.080 s</text>
+  <text x="160" y="166" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">after 900 s idle</text>
+  <line x1="237.48" y1="26" x2="237.48" y2="166" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <polyline points="380,80 380,46" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="380" cy="46" r="2" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="94" font-size="11" class="m-serif" fill="var(--m-amber-ink, #85590c)">about 0.29 s more than requests 2 to 5:</text>
+  <text x="320" y="108" font-size="11" class="m-serif" fill="var(--m-amber-ink, #85590c)">the resume from the golden snapshot</text>
+  <line x1="320" y1="136" x2="340" y2="136" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="348" y="140" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.067 s, the median of requests 2 to 5</text>
+  <line x1="170" y1="166" x2="570" y2="166" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="170" y1="26" x2="170" y2="166" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="170" y1="166" x2="170" y2="170" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="170" y="183" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="270" y1="166" x2="270" y2="170" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="270" y="183" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0.1</text>
+  <line x1="370" y1="166" x2="370" y2="170" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="370" y="183" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0.2</text>
+  <line x1="470" y1="166" x2="470" y2="170" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="470" y="183" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0.3</text>
+  <line x1="570" y1="166" x2="570" y2="170" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="570" y="183" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0.4</text>
+  <text x="582" y="183" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds</text>
+  <text x="20" y="216" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">STATE OF MY-COUNTER-1 BETWEEN REQUEST 5 AND REQUEST 6</text>
+  <text x="620" y="216" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-green-ink, #336b40)">60 of 60 samples</text>
+  <line x1="170" y1="252" x2="600" y2="252" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="170" y1="276" x2="600" y2="276" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="160" y="256" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-green-ink, #336b40)">ACTOR_STATE_RUNNING</text>
+  <text x="160" y="280" font-size="11" text-anchor="end" fill="var(--m-ink-mute, #6f6f6a)">ACTOR_STATE_SUSPENDED</text>
+  <circle cx="176.94" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="183.97" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="191.01" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="198.04" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="205.07" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="212.11" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="219.16" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="226.19" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="233.2" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="240.23" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="247.27" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="254.3" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="261.35" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="268.38" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="275.42" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="282.46" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="289.49" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="296.53" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="303.56" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="310.64" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="317.67" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="324.7" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="331.73" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="338.77" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="345.81" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="352.87" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="359.92" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="366.94" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="373.97" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="381.01" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="388.1" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="395.14" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="402.19" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="409.29" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="416.32" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="423.37" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="430.4" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="437.44" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="444.47" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="451.5" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="458.54" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="465.58" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="472.61" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="479.65" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="486.68" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="493.71" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="500.75" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="507.8" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="514.83" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="521.87" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="528.91" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="535.92" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="542.94" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="549.97" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="557.01" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="564.05" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="571.09" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="578.13" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="585.17" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="592.2" cy="252" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <rect class="m-knock" x="251.32" y="269.42" width="267.36" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="385" y="280" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 samples: no idle timer suspended the actor</text>
+  <line x1="170" y1="230" x2="170" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="592.3" y1="230" x2="592.3" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="176" y="238" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">request 5</text>
+  <text x="586.3" y="238" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">request 6, 0.080 s</text>
+  <line x1="170" y1="290" x2="600" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="170" y1="290" x2="170" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="170" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="239.35" y1="290" x2="239.35" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="239.35" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">150</text>
+  <line x1="308.71" y1="290" x2="308.71" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="308.71" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="378.06" y1="290" x2="378.06" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="378.06" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">450</text>
+  <line x1="447.42" y1="290" x2="447.42" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="447.42" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">600</text>
+  <line x1="516.77" y1="290" x2="516.77" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="516.77" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">750</text>
+  <line x1="586.13" y1="290" x2="586.13" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="586.13" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">900</text>
+  <text x="385" y="326" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds with no request, one state sample every 15 s</text>
 </svg>

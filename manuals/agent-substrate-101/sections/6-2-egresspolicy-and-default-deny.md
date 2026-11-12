@@ -36,7 +36,7 @@ id: fig-6-2
 kind: flow
 title: where an outgoing connection is decided
 claim: A connection from an actor passes two checks, the DNS relay for the name and atenet-egress for the request, and each one reads the same policy.
-caption: Read from left to right. The upper path is a name lookup and the lower path is the connection itself. The upstream host sees the IP of atenet-egress, never the actor. From capture/lab/F-egress/envoy/20-results.txt and the atunnel and router sources at v1.0.0.
+caption: Read from left to right. The upper path is a name lookup and the lower path is the connection itself. The dashed arrows from the top are the policy that each check reads. The upstream host sees the IP of atenet-egress, never the actor. From capture/lab/F-egress/envoy/20-results.txt and the atunnel and router sources at v1.0.0.
 ```
 
 The upstream host never sees the actor. In our run the test server reported the caller as `10.244.0.22`, the pod IP of `atenet-egress`. Actor networking is IPv4 only at this version {{docs}}.

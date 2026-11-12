@@ -1,0 +1,25 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+- role: worker
+  extraMounts:
+  - hostPath: /dev/kvm
+    containerPath: /dev/kvm
+- role: worker
+  extraMounts:
+  - hostPath: /dev/kvm
+    containerPath: /dev/kvm
+featureGates:
+  ClusterTrustBundle: true
+  ClusterTrustBundleProjection: true
+  PodCertificateRequest: true
+runtimeConfig:
+  "certificates.k8s.io/v1beta1": "true"
+networking:
+  ipFamily: ipv4
+kubeadmConfigPatches:
+- |
+  kind: KubeletConfiguration
+  serializeImagePulls: false
+  maxParallelImagePulls: 4

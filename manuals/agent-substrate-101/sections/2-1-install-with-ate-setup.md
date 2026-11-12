@@ -78,7 +78,7 @@ note: Seven lines from 140. The settings table, the secrets, and the other rollo
   (rollout status deployment/k8s-credential-provider took 0.003s)
 ```
 
-The first two lines show a download that the release images do not remove. The installer fetches the guest files of the microVM class from GitHub on every install. The installer documents `--sandbox-classes=gvisor` to install gVisor only {{docs}}. We did not run that flag.
+The first two lines show a download that the release images do not remove. The installer fetches the guest files of the microVM class from GitHub on every install. The installer documents `--sandbox-classes=gvisor` to install gVisor only {{docs}}. We ran that flag for one install, on a cluster with three kind nodes, and the system step took 114 s.
 
 ## Deploy the counter demo
 
@@ -99,7 +99,7 @@ id: fig-2-1
 kind: chart
 title: install steps from the release images and from source
 claim: From the release images deploy ate-system took 162 s, and from source it failed after 163 s and then took 266 s.
-caption: Each bar is one step of one install. The two installs ran on two x86 guests of different sizes. The rose bar is the failed step. From capture/lab/summary/install-steps.json.
+caption: Each bar is one step of one install, on an axis in seconds. The two installs ran on two x86 guests of different sizes. The rose bar is the failed step. From capture/lab/summary/install-steps.json.
 ```
 
 **We measured** the release-image install once on an x86 server guest with 16 vCPU and 23 GB. The kind cluster took 55 s, `deploy ate-system` took 162 s, and `deploy demo counter` took 94 s. The disk held 13 GB afterwards.
@@ -190,4 +190,4 @@ Old guides for v0.x use install scripts that no longer exist. [Section 8.4](#s-u
 - Pin the kubectl context to kind-kind before you test.
 ```
 
-Sources: capture/lab/summary/install-steps.json, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/G-dataplane/00-install/20-deploy-ate-system-prebuilt.log, capture/lab/G-dataplane/00-install/60-state.log, capture/lab/G-dataplane/01-switch-in-place/11-timing.txt, capture/lab/A-quickstart/02-steps.tsv, capture/lab/A-quickstart/20-deploy-ate-system.FAILED-no-buildx.log, capture/lab/A-quickstart/21-install-buildx.log, capture/lab/A-quickstart/22-deploy-ate-system-retry.log, capture/lab/A-quickstart/30-deploy-counter.log, capture/lab/A-quickstart/60-state.log, capture/lab/M-mac-arm64/02-steps.tsv, capture/lab/M-mac-arm64/20-deploy-ate-system.log, capture/lab/M-mac-arm64/60-state.log, capture/lab/_scripts/a1-provision.sh, capture/lab/_scripts/a2-quickstart.sh, capture/lab/_scripts/a3-retry.sh, capture/lab/_scripts/g2-install-envoy.sh, capture/lab/_scripts/g6-switch-agw.sh, capture/lab/_scripts/m2-install.sh; docs/get-started/quickstart.md, cmd/ate-setup/README.md, cmd/ate-setup/commands.md, hack/create-kind-cluster.sh, and go.mod at v1.0.0.
+Sources: capture/lab/L-gaps/multinode/02-steps.tsv, capture/lab/L-gaps/_scripts/g2a-multi-setup.sh, capture/lab/summary/install-steps.json, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/G-dataplane/00-install/20-deploy-ate-system-prebuilt.log, capture/lab/G-dataplane/00-install/60-state.log, capture/lab/G-dataplane/01-switch-in-place/11-timing.txt, capture/lab/A-quickstart/02-steps.tsv, capture/lab/A-quickstart/20-deploy-ate-system.FAILED-no-buildx.log, capture/lab/A-quickstart/21-install-buildx.log, capture/lab/A-quickstart/22-deploy-ate-system-retry.log, capture/lab/A-quickstart/30-deploy-counter.log, capture/lab/A-quickstart/60-state.log, capture/lab/M-mac-arm64/02-steps.tsv, capture/lab/M-mac-arm64/20-deploy-ate-system.log, capture/lab/M-mac-arm64/60-state.log, capture/lab/_scripts/a1-provision.sh, capture/lab/_scripts/a2-quickstart.sh, capture/lab/_scripts/a3-retry.sh, capture/lab/_scripts/g2-install-envoy.sh, capture/lab/_scripts/g6-switch-agw.sh, capture/lab/_scripts/m2-install.sh; docs/get-started/quickstart.md, cmd/ate-setup/README.md, cmd/ate-setup/commands.md, hack/create-kind-cluster.sh, and go.mod at v1.0.0.

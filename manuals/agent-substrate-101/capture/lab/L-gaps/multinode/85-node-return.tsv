@@ -1,0 +1,26 @@
+ts	event	detail
+2026-11-12T12:15:17.542Z	node-start	multi-worker2
+2026-11-12T12:15:19.124Z	waiting	t=2s node=Ready lastplacement=multi-worker workers_active=4
+2026-11-12T12:15:55.628Z	waiting	t=38s node=Ready lastplacement=multi-worker workers_active=4
+2026-11-12T12:16:31.821Z	waiting	t=74s node=Ready lastplacement=multi-worker workers_active=4
+2026-11-12T12:17:08.026Z	waiting	t=111s node=Ready lastplacement=multi-worker workers_active=4
+2026-11-12T12:17:44.252Z	waiting	t=147s node=Ready lastplacement=multi-worker workers_active=4
+2026-11-12T12:18:20.200Z	waiting	t=183s node=Ready lastplacement=multi-worker workers_active=4
+2026-11-12T12:18:40.382Z	node-start	multi-worker2
+2026-11-12T12:18:55.634Z	pool-pods-on-returned-node	0 of 4
+2026-11-12T12:19:07.183Z	rebalanced	pool pods on multi-worker2 now 2
+2026-11-12T12:19:09.021Z	first-actor-on-returned-node	t=29s after 1 tries
+2026-11-12T12:22:20.170Z	node-start	multi-worker2
+2026-11-12T12:22:37.550Z	pool-pods-on-returned-node	2 of 4
+2026-11-12T12:22:39.367Z	waiting	t=19s node=Ready lastplacement=multi-worker workers_active=3
+2026-11-12T12:22:43.259Z	first-actor-on-returned-node	t=23s after 2 tries
+2026-11-12T12:34:26.899Z	node-start	multi-worker2
+2026-11-12T12:34:46.394Z	pool-pods-on-returned-node	0 of 4
+2026-11-12T12:34:52.271Z	rebalanced	pool pods on multi-worker2 now 2
+2026-11-12T12:34:53.912Z	waiting	t=27s node=Ready lastplacement=multi-worker workers_active=4
+2026-11-12T12:35:01.339Z	first-actor-on-returned-node	t=35s after 3 tries
+2026-11-12T12:46:24.152Z	node-start	multi-worker2
+2026-11-12T12:46:41.512Z	pool-pods-on-returned-node	0 of 4
+2026-11-12T12:46:47.392Z	rebalanced	pool pods on multi-worker2 now 2
+2026-11-12T12:46:49.021Z	waiting	t=25s node=Ready lastplacement=multi-worker workers_active=4
+2026-11-12T12:46:56.428Z	first-actor-on-returned-node	t=32s after 3 tries

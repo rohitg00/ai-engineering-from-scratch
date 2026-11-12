@@ -1,41 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 232" role="img" aria-labelledby="fig-6-1b-title fig-6-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
-  <title id="fig-6-1b-title">Three callers at atenet-router on each dataplane</title>
-  <desc id="fig-6-1b-desc">Three rows, one for each caller, with the outcome on the Envoy dataplane and on the agentgateway dataplane. A caller with no client certificate gets a cut connection on Envoy and the TLS alert certificate required on agentgateway. A caller whose identity is not on the list gets the TLS alert certificate unknown on Envoy and a connection reset on agentgateway. A caller with the allowed identity atenet-client gets 200 from my-counter-1 on port 443 and through port 8444 on both.</desc>
-  <defs><marker id="fig-6-1b-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-6-1b-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
-  <text x="16" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CALLER</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 358" role="img" aria-labelledby="fig-6-1b-title fig-6-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-1b-title">What a caller of atenet-router sees on each dataplane</title>
+  <desc id="fig-6-1b-desc">Five rows in two groups, with the outcome on the Envoy dataplane and on the agentgateway dataplane. In the first group the router refuses the caller in the TLS layer and the caller gets no HTTP status: with no client certificate, Envoy cuts the connection and agentgateway sends the alert certificate required. With an identity that is not on the list, Envoy sends the alert certificate unknown and agentgateway resets the connection. In the second group the caller has the allowed identity atenet-client and gets an HTTP answer: 200 from my-counter-1 in 0.037 seconds on Envoy and 0.035 seconds on agentgateway, 404 for an actor that does not exist, and 404 for a request with no routing header.</desc>
+  <text x="16" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE REQUEST</text>
   <text x="232" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ENVOY DATAPLANE</text>
   <text x="438" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENTGATEWAY DATAPLANE</text>
-  <rect x="16" y="28" width="196" height="50" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
-  <text x="114" y="47.95" font-size="11.5" text-anchor="middle" font-weight="700">no client certificate</text>
-  <text x="114" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a pod with no certificate</text>
-  <rect x="232" y="28" width="186" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
-  <text x="325" y="47.95" font-size="11.5" text-anchor="middle" font-weight="700">connection cut</text>
-  <text x="325" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">curl: Broken pipe</text>
-  <rect x="438" y="28" width="186" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
-  <text x="531" y="47.95" font-size="11.5" text-anchor="middle" font-weight="700">TLS alert</text>
-  <text x="531" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">certificate required</text>
-  <line x1="212" y1="53" x2="231" y2="53" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1b-head-rose)"/>
-  <line x1="418" y1="53" x2="437" y2="53" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1b-head-rose)"/>
-  <rect x="16" y="96" width="196" height="50" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
-  <text x="114" y="115.95" font-size="11.5" text-anchor="middle" font-weight="700">identity not on the list</text>
-  <text x="114" y="133.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ns/probe/sa/default</text>
-  <rect x="232" y="96" width="186" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
-  <text x="325" y="115.95" font-size="11.5" text-anchor="middle" font-weight="700">TLS alert</text>
-  <text x="325" y="133.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">certificate unknown</text>
-  <rect x="438" y="96" width="186" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
-  <text x="531" y="115.95" font-size="11.5" text-anchor="middle" font-weight="700">connection reset</text>
-  <text x="531" y="133.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reset by peer, no alert</text>
-  <line x1="212" y1="121" x2="231" y2="121" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1b-head-rose)"/>
-  <line x1="418" y1="121" x2="437" y2="121" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1b-head-rose)"/>
-  <rect x="16" y="164" width="196" height="50" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
-  <text x="114" y="183.95" font-size="11.5" text-anchor="middle" font-weight="700">allowed identity</text>
-  <text x="114" y="201.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ns/ate-system/sa/atenet-client</text>
-  <rect x="232" y="164" width="186" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="325" y="183.95" font-size="11.5" text-anchor="middle" font-weight="700">200 from my-counter-1</text>
-  <text x="325" y="201.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on 443 and through 8444</text>
-  <rect x="438" y="164" width="186" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="531" y="183.95" font-size="11.5" text-anchor="middle" font-weight="700">200 from my-counter-1</text>
-  <text x="531" y="201.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on 443 and through 8444</text>
-  <line x1="212" y1="189" x2="231" y2="189" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1b-head-ink)"/>
-  <line x1="418" y1="189" x2="437" y2="189" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1b-head-ink)"/>
+  <line x1="16" y1="34" x2="624" y2="34" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="16" y="50" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">Refused in the TLS layer: no HTTP status</text>
+  <rect x="16" y="60" width="196" height="44" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="114" y="76.95" font-size="11.5" text-anchor="middle" font-weight="700">no client certificate</text>
+  <text x="114" y="94.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a pod with no certificate</text>
+  <rect x="232" y="60" width="186" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="325" y="76.95" font-size="11.5" text-anchor="middle" font-weight="700">connection cut</text>
+  <text x="325" y="94.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">curl: Broken pipe</text>
+  <rect x="438" y="60" width="186" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="531" y="76.95" font-size="11.5" text-anchor="middle" font-weight="700">TLS alert</text>
+  <text x="531" y="94.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">certificate required</text>
+  <rect x="16" y="112" width="196" height="44" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="114" y="128.95" font-size="11.5" text-anchor="middle" font-weight="700">identity not on the list</text>
+  <text x="114" y="146.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ns/probe/sa/default</text>
+  <rect x="232" y="112" width="186" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="325" y="128.95" font-size="11.5" text-anchor="middle" font-weight="700">TLS alert</text>
+  <text x="325" y="146.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">certificate unknown</text>
+  <rect x="438" y="112" width="186" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="531" y="128.95" font-size="11.5" text-anchor="middle" font-weight="700">connection reset</text>
+  <text x="531" y="146.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reset by peer, no alert</text>
+  <line x1="16" y1="172" x2="624" y2="172" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="16" y="188" font-size="11.5" font-weight="700">Allowed identity atenet-client: an HTTP answer</text>
+  <rect x="16" y="198" width="196" height="44" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="114" y="214.95" font-size="11.5" text-anchor="middle" font-weight="700">actor my-counter-1</text>
+  <text x="114" y="232.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACTOR_STATE_RUNNING</text>
+  <rect x="232" y="198" width="186" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="325" y="214.95" font-size="11.5" text-anchor="middle" font-weight="700">200 in 0.037 s</text>
+  <text x="325" y="232.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.032 s through 8444</text>
+  <rect x="438" y="198" width="186" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="531" y="214.95" font-size="11.5" text-anchor="middle" font-weight="700">200 in 0.035 s</text>
+  <text x="531" y="232.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.029 s through 8444</text>
+  <rect x="16" y="250" width="196" height="44" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="114" y="266.95" font-size="11.5" text-anchor="middle" font-weight="700">actor does-not-exist</text>
+  <text x="114" y="284.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no such actor in the atespace</text>
+  <rect x="232" y="250" width="186" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="325" y="266.95" font-size="11.5" text-anchor="middle" font-weight="700">404 in 0.024 s</text>
+  <text x="325" y="284.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body: actor not found</text>
+  <rect x="438" y="250" width="186" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="531" y="266.95" font-size="11.5" text-anchor="middle" font-weight="700">404 in 0.022 s</text>
+  <text x="531" y="284.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body: ingress failed</text>
+  <rect x="16" y="302" width="196" height="44" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="114" y="318.95" font-size="11.5" text-anchor="middle" font-weight="700">no routing header</text>
+  <text x="114" y="336.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ate-target-actor is absent</text>
+  <rect x="232" y="302" width="186" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="325" y="318.95" font-size="11.5" text-anchor="middle" font-weight="700">404 in 0.018 s</text>
+  <text x="325" y="336.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body: invalid actor reference</text>
+  <rect x="438" y="302" width="186" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="531" y="318.95" font-size="11.5" text-anchor="middle" font-weight="700">404 in 0.018 s</text>
+  <text x="531" y="336.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">body: ingress failed</text>
 </svg>

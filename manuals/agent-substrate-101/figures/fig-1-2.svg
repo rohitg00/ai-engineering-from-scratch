@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" role="img" aria-labelledby="fig-1-2-title fig-1-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 522" role="img" aria-labelledby="fig-1-2-title fig-1-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-1-2-title">The first request to my-counter-1</title>
-  <desc id="fig-1-2-desc">Six lifelines: curl, kubectl ate proxy actor, atenet-router, ate-api-server, Postgres, and the worker pod. Nine numbered exchanges: curl sends POST to 127.0.0.1:8000, the proxy opens an mTLS CONNECT to router port 8444 through a kube-apiserver port-forward, the router calls ResumeActor, ate-api-server reads the actor row and finds it suspended, takes the lease and binds a worker, has atelet restore the golden snapshot so the actor goes from SUSPENDED to RUNNING, and returns worker 10.244.0.23 to the router. The router opens a CONNECT to worker port 8443, and curl gets 200 with count 1 after 0.358 seconds.</desc>
+  <desc id="fig-1-2-desc">Six lifelines: curl, kubectl ate proxy actor, atenet-router, ate-api-server, Postgres, and the worker pod. Nine numbered exchanges: curl sends POST to 127.0.0.1:8000, the proxy opens an mTLS CONNECT to router port 8444 through a kube-apiserver port-forward, the router calls ResumeActor, ate-api-server reads the actor row and finds it suspended, takes the lease and binds a worker, has atelet restore the golden snapshot so the actor goes from SUSPENDED to RUNNING, and returns worker 10.244.0.23 to the router. The router opens a CONNECT to worker port 8443, and curl gets 200 with count 1 after 0.358 seconds. Steps 5 and 6 have amber numbers because they happen only when the actor is suspended. In a later resume of the same actor the restore took 0.25 seconds, and a request to the running actor took 0.067 seconds.</desc>
   <defs><marker id="fig-1-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-1-2-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="fig-1-2-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-1-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
   <rect x="10" y="8" width="100" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
   <text x="60" y="22.8" font-size="11" text-anchor="middle" font-weight="700">curl</text>
@@ -31,8 +31,8 @@
   <text x="16" y="86" font-size="11" text-anchor="middle">1</text>
   <line x1="60" y1="82" x2="163" y2="82" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-2-head-ink)"/>
   <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M60 82 L163 82" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="25.7" y="65.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="111.5" y="76" font-size="11.5" text-anchor="middle">POST / on 127.0.0.1:8000</text>
+  <rect class="m-knock" x="39.5" y="65.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="111.5" y="76" font-size="11.5" text-anchor="middle">POST localhost:8000/</text>
   </g>
   <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="128" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
@@ -65,22 +65,22 @@
   <text x="423.5" y="235" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACTOR_STATE_SUSPENDED</text>
   </g>
   <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
-  <circle cx="16" cy="266" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="16" y="270" font-size="11" text-anchor="middle">5</text>
+  <circle cx="16" cy="266" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="16" y="270" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">5</text>
   <line x1="372" y1="266" x2="475" y2="266" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-1-2-head-teal)"/>
   <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M372 266 L475 266" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
   <rect class="m-knock" x="320.45" y="249.03" width="206.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
   <text x="423.5" y="260" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">take the lease, bind a worker</text>
   </g>
   <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
-  <circle cx="16" cy="312" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="16" y="316" font-size="11" text-anchor="middle">6</text>
+  <circle cx="16" cy="312" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="16" y="316" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">6</text>
   <line x1="372" y1="312" x2="579" y2="312" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2-head-amber)"/>
   <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M372 312 L579 312" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
   <rect class="m-knock" x="351.75" y="295.03" width="247.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
   <text x="475.5" y="306" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">atelet restores the golden snapshot</text>
-  <rect class="m-knock" x="413.1" y="316.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="475.5" y="327" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SUSPENDED to RUNNING</text>
+  <rect class="m-knock" x="335.88" y="316.42" width="279.24" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="475.5" y="327" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SUSPENDED to RUNNING, 0.25 s in a later resume</text>
   </g>
   <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="358" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
@@ -112,4 +112,10 @@
   <rect class="m-knock" x="47.13" y="454.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
   <text x="112.5" y="465" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.358 s at the client</text>
   </g>
+  <circle cx="16" cy="506" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="16" y="510" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">5</text>
+  <circle cx="38" cy="506" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="38" y="510" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">6</text>
+  <rect class="m-knock" x="51" y="499.42" width="504.96" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="54" y="510" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">only when the actor is suspended. A running actor skips them and answers in 0.067 s.</text>
 </svg>

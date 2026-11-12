@@ -18,8 +18,8 @@ module.exports = figure('fig-2-2', {
   f.beat(2);
   f.arrow(api.right(), [pg.x - 1, cli.cy], { style: 'call' });
   f.beat(3);
-  f.box({ x: 20, y: 98, w: 600, h: 46, hue: 'rose', align: 'left', title: 'acting as system:serviceaccount:ate-system:ate-client', sub: 'the shared identity of every caller that passes no --token-file', titleSize: 12, dash: 'dashed' });
-  f.rule(95, 74, 95, 98, { hue: 'rose', dash: 'dashed' });
+  f.box({ x: 20, y: 98, w: 600, h: 46, hue: 'olive', align: 'left', title: 'acting as system:serviceaccount:ate-system:ate-client', sub: 'the shared identity of every caller that passes no --token-file', titleSize: 12, dash: 'dashed' });
+  f.rule(95, 74, 95, 98, { hue: 'olive', dash: 'dashed' });
   f.beat(0);
   f.rule(20, 168, 620, 168, { dash: 'dashed' });
   f.kicker(20, 192, 'WorkerPool, SandboxConfig, CSIDriverConfig');

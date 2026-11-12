@@ -65,8 +65,8 @@ The enum `ActorState` has seven values at v1.0.0 {{code}}. The architecture page
 | `ACTOR_STATE_RUNNING` | A sandbox on a worker | The actor answers |
 | `ACTOR_STATE_SUSPENDING` | A worker, and a checkpoint that is not complete | We did not test this case |
 | `ACTOR_STATE_CRASHED` | No sandbox, and a `crash` record | 503 at once, with the state in the text |
-| `ACTOR_STATE_REVERTING` | A revert that is not complete | We did not test this case |
-| `ACTOR_STATE_DELETING` | A delete that is not complete | We did not test this case |
+| `ACTOR_STATE_REVERTING` | A revert that is not complete | 503 at once, with the state in the text |
+| `ACTOR_STATE_DELETING` | A delete that is not complete | 503 at once, with the state in the text |
 
 Three of these states are stable. `ACTOR_STATE_SUSPENDED` and `ACTOR_STATE_CRASHED` last until a call arrives. `ACTOR_STATE_RUNNING` lasts until a caller suspends the actor, and [section 3.3](#s-suspendactor-and-resumeactor) proves that Substrate does not do it. The other four states are steps of one operation.
 
@@ -77,7 +77,7 @@ id: fig-3-2
 kind: state
 title: the seven actor states
 claim: An actor leaves ACTOR_STATE_CRASHED only through RevertActor or DeleteActor, and no request can resume it.
-caption: Read the top row left to right for a resume, and follow the right edge down for a suspend. Amber and rose arrows are transitions from our traces. The dotted grey arrow comes from the code only. From capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/D-durability/30-local-loss.tsv, capture/lab/J-container-death/10-trace.tsv, and capture/lab/K-kagent/logs/actor-state-changes.tsv.
+caption: Read the top row left to right for a resume, and follow the right edge down for a suspend. The thick arrow is the only one that leaves the rose state. Amber and rose arrows are transitions from our traces, and the dotted grey arrow comes from the code only. The two times are medians from the kagent guest. From capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/D-durability/30-local-loss.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, and capture/lab/summary/kagent-turns-x86.json.
 ```
 
 ## The transitions we saw
@@ -134,4 +134,4 @@ Our position: read the state before you debug the network. `kubectl ate get acto
 - Expect only your own calls to move an actor out of RUNNING or CRASHED.
 ```
 
-Sources: capture/lab/summary/kagent-turns-x86.json, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/00-actor-before.json, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/summary/failures-x86.json. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorState, ActorStatus, Actor), cmd/ateapi/internal/controlapi/workflow_resume.go, workflow_suspend.go, workflow_revert.go, docs/reference/api-guide.md (ResumeActor, SuspendActor, RevertActor, DeleteActor), docs/concepts/architecture.md (the state diagram).
+Sources: capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/93-after-node-return.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/00-actor-before.json, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/summary/failures-x86.json. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorState, ActorStatus, Actor), cmd/ateapi/internal/controlapi/workflow_resume.go, workflow_suspend.go, workflow_revert.go, docs/reference/api-guide.md (ResumeActor, SuspendActor, RevertActor, DeleteActor), docs/concepts/architecture.md (the state diagram).

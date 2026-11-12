@@ -53,7 +53,7 @@ claim: Only SNAPSHOT_FIDELITY_MEMORY keeps the processes, and the two lower leve
 caption: Read each column top to bottom. Teal layers are in the snapshot, and grey layers are lost at the suspend. The last row says what we saw in our runs. From capture/lab/K-kagent/session1/turn2.out and capture/lab/B-lifecycle/20-trace-ops.tsv.
 ```
 
-`preferredFidelity` is an upper limit, and a memory snapshot can restore as less. A memory snapshot records the CPU architecture, the CPU features, and the sandbox build of the worker that took it. It restores only on a worker that matches. If no such worker has room, Substrate restores the files on another worker and boots the processes new {{docs}}. We ran one node, so we did not see that downgrade. Write your actor so that it survives a boot from its files, also at the memory level.
+`preferredFidelity` is an upper limit, and a memory snapshot can restore as less. A memory snapshot records the CPU architecture, the CPU features, and the sandbox build of the worker that took it. It restores only on a worker that matches. If no such worker has room, Substrate restores the files on another worker and boots the processes new {{docs}}. We did not see that downgrade in any run. Write your actor so that it survives a boot from its files, also at the memory level.
 
 ## A snapshot is as large as the memory held
 
@@ -87,6 +87,14 @@ The object store did not make them smaller. Substrate compresses each object bef
 | Object store | 10,824 MiB | 2,064 MiB |
 
 **We measured** this footprint on the x86 server guest with five actors for each of the five sizes, which hold 8,750 MiB together. Each actor was 3 to 8 minutes old. The 2,064 MiB that stayed in the object store belong to golden snapshots. A template keeps its golden snapshot until you delete the template.
+
+```figure
+id: fig-3-4c
+kind: chart
+title: disk use of 25 suspended actors, and after their delete
+claim: 25 suspended actors that held 8,750 MiB of memory used 8,801 MiB on the node and 10,824 MiB in the object store.
+caption: Each pair of bars is one place. The full bar is the size with the 25 suspended actors, and the outlined bar is the size after we deleted them. The dashed line marks the memory that the actors hold together. Measured on the x86 server guest. From capture/lab/summary/footprint-x86.json.
+```
 
 An actor owns one snapshot in the object store. Its next successful suspend replaces that snapshot, and a delete of the actor removes it {{docs}}. So plan the object store for the memory of all suspended actors, plus one golden snapshot for each template. Plan the node disk for the actors that were suspended in the last 30 minutes.
 
@@ -132,7 +140,7 @@ id: fig-3-4
 kind: timeline
 title: where a snapshot lives after an asynchronous suspend
 claim: For the first five minutes after an asynchronous suspend, the only copy of the new snapshot is on one node.
-caption: Each row is one actor, with its memory in MiB. Rose is the time with one copy, violet is the time with two, and teal is the time with the object store copy only. The amber dot is the resume that ended our watch. From capture/lab/summary/timers-x86.json.
+caption: Each row is one actor, with its memory in MiB. Rose is the time with one copy, violet is the time with two, and teal is the time with the object store copy only. The amber dot is the resume that ended our watch, with its time at the client. The dots under the rows are the size of the snapshots on the node disk. From capture/lab/summary/timers-x86.json and capture/lab/summary/resume-x86.json.
 ```
 
 The three periods mean three different things for you.

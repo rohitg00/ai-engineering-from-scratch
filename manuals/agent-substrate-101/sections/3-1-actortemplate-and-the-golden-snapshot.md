@@ -174,7 +174,7 @@ id: fig-3-1b
 kind: chart
 title: the first call of a new actor against its memory
 claim: At 1,000 MiB the first call of a new actor took 3.5 to 12.7 seconds, and a later resume took 2.2 seconds.
-caption: The teal line is the median first call of five new actors, and the band runs from the fastest to the slowest. The violet line is a later resume of the same actor from the node. Measured on the x86 server guest. From capture/lab/summary/resume-x86.json.
+caption: Each teal dot is the first call of one new actor, five for each size, and the teal line joins the medians. The violet line is the median of ten later resumes of one actor from the node. Measured on the x86 server guest. From capture/lab/summary/resume-x86.json.
 ```
 
 Up to 200 MiB the first call costs about the same as a later resume. At 500 MiB and above it costs three to five times more, and the spread is wide. We did not find the cause of that spread. We can say where the node kept data. Its `snapshot-cache` directory held 1,765 MiB, and the five snapshot sizes of our templates add up to 1,760 MiB.

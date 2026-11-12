@@ -51,7 +51,7 @@ def by_size(rel):
 
 
 def points(group):
-    return [{"x": mb, "seconds": stat(entry["ok"]), "failed": entry["failed"]} for mb, entry in sorted(group.items()) if entry["ok"]]
+    return [{"x": mb, "seconds": stat(entry["ok"]), "runs": [round(v, 3) for v in entry["ok"]], "failed": entry["failed"]} for mb, entry in sorted(group.items()) if entry["ok"]]
 
 
 def snapshot_sizes():
@@ -349,6 +349,12 @@ def kagent_x86():
             elif state == "suspended" and op == "suspend" and "suspend" in last:
                 suspend.append(when - last.pop("suspend"))
     turns = [value for value in resume if value < 5]
+    workers = []
+    for line in (LAB / "K-kagent/parallel/workers-during.txt").read_text(encoding="utf-8").splitlines():
+        match = re.match(r"(\S+) N=(\d+) actors=(\d+)/\d+ cpu=(\d+)/(\d+)", line)
+        if match:
+            workers.append({"t": match.group(1), "turns_started": int(match.group(2)), "actors": int(match.group(3)), "cpu_millicores": int(match.group(4)), "cpu_capacity_millicores": int(match.group(5))})
+    listed = lambda values: [round(value, 3) for value in values]
     return {
         "machine": GUEST_K,
         "note": "the model is a mock server in the cluster, so model time is near zero. Every turn resumes the session actor and suspends it again.",
@@ -357,6 +363,13 @@ def kagent_x86():
         "server_turn_seconds": {key: stat(values) for key, values in sorted(server.items())},
         "resume_seconds": {"all": stat(resume), "turns_only": stat(turns), "note": "resuming to running in the ate-api log. The values of 5 s or more are golden snapshot builds, left out of turns_only."},
         "suspend_seconds": stat(suspend),
+        "runs": {
+            "client_seconds": {key: listed(values) for key, values in sorted(client.items())},
+            "server_turn_seconds": {key: listed(values) for key, values in sorted(server.items())},
+            "resume_seconds_turns_only": listed(turns),
+            "suspend_seconds": listed(suspend),
+        },
+        "parallel_workers": workers,
     }
 
 
@@ -366,6 +379,45 @@ def steps(rel):
         if len(row) >= 3 and row[1].lstrip("-").isdigit():
             out.append({"step": row[0], "exit": int(row[1]), "seconds": float(row[2])})
     return out
+
+
+def microvm_x86():
+    base = "L-gaps/microvm"
+    local = by_size(f"{base}/40-microvm-local.tsv")
+    sizes = (0, 200, 500)
+    snapshots = []
+    resident = []
+    for mb in sizes:
+        first = (LAB / f"{base}/44-snapdir-v{mb}-1.txt").read_text(encoding="utf-8").splitlines()[0]
+        kib = int(first.split()[0])
+        snapshots.append({"x": mb, "kib": kib, "mib": round(kib / 1024, 1)})
+    for mb in (0, 200):
+        for line in (LAB / f"{base}/41-node-processes-v{mb}-1.txt").read_text(encoding="utf-8").splitlines():
+            parts = line.split()
+            if len(parts) > 3 and parts[3].endswith("/cloud-hypervisor"):
+                resident.append({"x": mb, "process": "cloud-hypervisor", "kib": int(parts[1]), "mib": round(int(parts[1]) / 1024, 1)})
+    gvisor = []
+    for line in (LAB / f"{base}/50-gvisor-rss.txt").read_text(encoding="utf-8").splitlines():
+        parts = line.split()
+        if len(parts) > 3 and parts[3] in ("runsc-sandbox", "runsc-gofer"):
+            gvisor.append({"process": parts[3], "kib": int(parts[1]), "mib": round(int(parts[1]) / 1024, 1)})
+    files = [f"capture/lab/{base}/40-microvm-local.tsv", f"capture/lab/{base}/50-gvisor-rss.txt"]
+    files += [f"capture/lab/{base}/44-snapdir-v{mb}-1.txt" for mb in sizes]
+    files += [f"capture/lab/{base}/41-node-processes-v{mb}-1.txt" for mb in (0, 200)]
+    return {
+        "machine": GUEST_A.replace(", gVisor", ", microVM class"),
+        "actor": "ballast: a Go server in a scratch image that holds x MiB of random bytes, fidelity SNAPSHOT_FIDELITY_MEMORY, sandbox class microvm",
+        "unit": {"x": "MiB of memory the actor holds", "seconds": "client time through kubectl ate proxy, CLI time for create and suspend"},
+        "sources": files,
+        "node_local": {"note": "async suspend, 1 s wait, one request", "points": points(local["resume-local"])},
+        "new_actor_first_call": {"note": "create an actor, first request restores the golden snapshot", "points": points(local["first-call-golden"])},
+        "suspend_async": {"points": points(local["suspend-async"])},
+        "suspend_sync": {"points": points(local["suspend-sync"])},
+        "warm_call": {"points": points(local["warm-call"])},
+        "create_actor": {"points": points(local["create-actor"])},
+        "local_snapshot_per_actor": snapshots,
+        "resident_memory": {"note": "resident set size from ps on the node, one sample per process", "microvm": resident, "gvisor_same_node": sorted(gvisor, key=lambda item: (item["process"], -item["kib"]))},
+    }
 
 
 def install_steps():
@@ -390,6 +442,7 @@ BUILDERS = {
     "dependency-loss-x86.json": dependency_x86,
     "kagent-turns-x86.json": kagent_x86,
     "install-steps.json": install_steps,
+    "microvm-x86.json": microvm_x86,
 }
 
 

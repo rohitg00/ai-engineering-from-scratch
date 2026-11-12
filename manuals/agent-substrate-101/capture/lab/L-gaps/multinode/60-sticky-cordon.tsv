@@ -1,0 +1,27 @@
+ts	event	detail
+2026-11-12T12:02:16.175Z	actor	s1 on multi-worker2 pod lab-n/ballast-5d6cf97747-67bkm
+2026-11-12T12:02:16.273Z	call	200	0.075349	count=1 mb=50 sum=6613 process_age_s=4.1
+2026-11-12T12:02:16.362Z	call	200	0.065619	count=2 mb=50 sum=6613 process_age_s=4.2
+2026-11-12T12:02:17.430Z	suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:multi-worker2
+2026-11-12T12:02:17.850Z	resume-call	200	0.399056	count=3 mb=50 sum=6613 process_age_s=4.6
+2026-11-12T12:02:18.252Z	resumed-on	multi-worker2 pod lab-n/ballast-5d6cf97747-67bkm
+2026-11-12T12:02:19.224Z	suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:multi-worker2
+2026-11-12T12:02:19.567Z	resume-call	200	0.320943	count=4 mb=50 sum=6613 process_age_s=5.3
+2026-11-12T12:02:19.953Z	resumed-on	multi-worker2 pod lab-n/ballast-5d6cf97747-xlw7d
+2026-11-12T12:02:21.069Z	suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen4:multi-worker2
+2026-11-12T12:02:21.332Z	resume-call	200	0.239806	count=5 mb=50 sum=6613 process_age_s=6.0
+2026-11-12T12:02:21.745Z	resumed-on	multi-worker2 pod lab-n/ballast-5d6cf97747-xlw7d
+2026-11-12T12:02:22.812Z	suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen5:multi-worker2
+2026-11-12T12:02:23.224Z	resume-call	200	0.388707	count=6 mb=50 sum=6613 process_age_s=6.8
+2026-11-12T12:02:23.646Z	resumed-on	multi-worker2 pod lab-n/ballast-5d6cf97747-67bkm
+2026-11-12T12:02:24.655Z	suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen6:multi-worker2
+2026-11-12T12:02:24.968Z	resume-call	200	0.292159	count=7 mb=50 sum=6613 process_age_s=7.5
+2026-11-12T12:02:25.373Z	resumed-on	multi-worker2 pod lab-n/ballast-5d6cf97747-67bkm
+2026-11-12T12:02:26.423Z	suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen7:multi-worker2
+2026-11-12T12:02:26.555Z	cordon	multi-worker2
+2026-11-12T12:02:26.986Z	resume-call-while-cordoned	200	0.408920	count=8 mb=50 sum=6613 process_age_s=8.2
+2026-11-12T12:02:27.433Z	resumed-on	multi-worker2 pod lab-n/ballast-5d6cf97747-xlw7d
+2026-11-12T12:02:28.977Z	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen8:multi-worker2
+2026-11-12T12:02:29.292Z	resume-call-while-cordoned	200	0.293103	count=9 mb=50 sum=6613 process_age_s=9.0
+2026-11-12T12:02:29.727Z	resumed-on	multi-worker2 pod lab-n/ballast-5d6cf97747-xlw7d
+2026-11-12T12:02:29.870Z	uncordon	multi-worker2

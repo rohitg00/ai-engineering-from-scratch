@@ -1,0 +1,5 @@
+2026-11-12T12:01:41.006Z docker restart kind-control-plane
+2026-11-12T12:01:51.670Z restart returned after 10s
+2026-11-12T12:01:57.913Z all pods Running at t=10
+2026-11-12T12:04:36.709Z first successful resume at t=174
+DONE

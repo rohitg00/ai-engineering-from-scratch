@@ -89,9 +89,9 @@ The actor is created in `ACTOR_STATE_SUSPENDED`, and kagent does not resume it. 
 ```figure
 id: fig-7-1
 kind: sequence
-title: one kagent turn, from the message to the answer
-claim: Every turn resumes the Session actor through the router, and kagent suspends it again before the client has the answer.
-caption: Read top to bottom. Amber arrows are state changes, with the median time of each. The model was a mock server. From capture/lab/summary/kagent-turns-x86.json and capture/lab/K-kagent/logs/actor-state-changes.tsv.
+title: one recorded kagent turn, from the message to the answer
+claim: Every turn resumes the Session actor through the router, and kagent calls SuspendActor as soon as the task completes.
+caption: Read top to bottom. The left column is the time of each step in one recorded turn, counted from the message. Amber arrows are state changes. The model was a mock server. From capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, and capture/lab/summary/kagent-turns-x86.json.
 ```
 
 The log of `ate-api-server` shows the cycle. These lines are one Session: the create, then two turns that were 4 s apart.
@@ -120,9 +120,9 @@ All 98 turns of our run had this shape: resume, run, suspend. Substrate does not
 ```figure
 id: fig-7-1b
 kind: chart
-title: resume, suspend, and turn times with kagent
+title: every resume, suspend, and turn of the kagent run
 claim: A turn that follows the last one with no pause costs the same as a turn 4 s later, because every turn resumes the actor.
-caption: Each bar is a median. Amber bars are the two state changes inside a turn. Plum bars are the whole turn as kagent reports it. From capture/lab/summary/kagent-turns-x86.json.
+caption: Each dot is one run, and each column is sorted from the fastest run to the slowest. The black line is the median. Amber columns are the two state changes inside a turn. Plum columns are the whole turn as kagent reports it. From capture/lab/summary/kagent-turns-x86.json.
 ```
 
 **We measured** 98 turns on an x86 server guest with 16 vCPU and 31 GB, with a mock model. The resume took 0.380 s at the median, from 0.216 to 0.542 s. The suspend took 0.142 s at the median over 99 suspends, from 0.120 to 0.398 s. A whole turn took 0.726 s in the cluster and 1.224 s at the client, over 20 turns spaced 4 s apart.
@@ -212,6 +212,14 @@ Everything else was denied. A request to `example.com` failed in DNS. A request 
 The worker pod of the install has no resource limits, so it reports the whole node: 16,000 millicores. Each actor reserves 1 CPU. The worker therefore ran at most 16 actors at one time.
 
 **We measured** this on the same x86 server guest with one worker. Eight turns that started together all completed, in 2.47 to 3.57 s. Twenty-four turns that started together all completed, in 4.25 to 7.85 s. The worker showed 16 running actors, and the other 8 turns waited. [Sizing a pool](#s-sizing-a-pool) gives the arithmetic.
+
+```figure
+id: fig-7-1c
+kind: chart
+title: 8 and 24 kagent turns at one time on one worker
+claim: Sixteen of 24 parallel turns ended within 5.45 s, and the other eight waited for a free CPU and ended up to 2.4 s later.
+caption: Each dot is one turn, sorted by its time at the client. The violet band holds the turns that waited while the worker ran 16 actors. The dashed line is one turn alone. From capture/lab/summary/kagent-turns-x86.json and capture/lab/K-kagent/parallel/workers-during.txt.
+```
 
 ## The CLI port-forward collision
 

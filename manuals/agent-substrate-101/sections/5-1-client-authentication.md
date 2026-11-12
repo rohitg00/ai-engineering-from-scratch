@@ -75,14 +75,14 @@ A network rule stands before all of this. In our kagent run, a pod in the namesp
 
 A request to an actor does not go to the API. It goes to `atenet-router`, and the router demands a client certificate whose SPIFFE ID is on its list. The list is the router flag `--ingress-allowed-spiffe-ids`. In our installs it held one identity, `spiffe://cluster.local/ns/ate-system/sa/atenet-client`.
 
-We sent the same request from three clients, on the Envoy dataplane and then on the agentgateway dataplane. The target was the actor `my-counter-1` in the atespace `ate-demo-counter`.
+We sent the same request from three clients, on the Envoy dataplane and then on the agentgateway dataplane. The target was the actor `my-counter-1` in the atespace `ate-demo-counter`. The figure sets the two checks side by side, with the results of the Envoy dataplane.
 
 ```figure
 id: fig-5-1
-kind: decision
-title: three clients at the router, on both dataplanes
-claim: Both dataplanes refuse a client with no certificate and a client with the wrong identity, and both serve the one allowed identity.
-caption: Read each column from the client down. Rose is a refused connection and green is a served request. The refusals differ in form and not in result. From capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt and capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt.
+kind: flow
+title: the two places that check a client
+claim: The API and the router check a client separately: the shared ate-client token owns every actor, and the router serves any identity on its one list.
+caption: Read each band from left to right. Olive is the client, blue is the API, and indigo is the router. Green is what the client reaches, and rose is a refused connection. The refusals are those of the Envoy dataplane. From capture/lab/A-quickstart/22-deploy-ate-system-retry.log, capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, and capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt.
 ```
 
 ```listing

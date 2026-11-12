@@ -1,0 +1,243 @@
+### t=10 2026-11-12T12:01:57.752Z
+Error: failed to connect to ate-api-server: port forwarding: error upgrading connection: unable to upgrade streaming request: websocket: bad handshake (500 Internal Server Error): pod not found ("ate-
+### t=18 2026-11-12T12:02:00.490Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=21 2026-11-12T12:02:03.151Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=24 2026-11-12T12:02:05.848Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=26 2026-11-12T12:02:08.532Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=29 2026-11-12T12:02:11.221Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=32 2026-11-12T12:02:13.927Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=35 2026-11-12T12:02:16.616Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=37 2026-11-12T12:02:19.304Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=40 2026-11-12T12:02:22.006Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=43 2026-11-12T12:02:24.713Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=45 2026-11-12T12:02:27.388Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=48 2026-11-12T12:02:30.118Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=51 2026-11-12T12:02:32.849Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=53 2026-11-12T12:02:35.584Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=56 2026-11-12T12:02:38.308Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=59 2026-11-12T12:02:41.022Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=62 2026-11-12T12:02:43.745Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=64 2026-11-12T12:02:46.446Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=67 2026-11-12T12:02:49.127Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=70 2026-11-12T12:02:51.832Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=72 2026-11-12T12:02:54.552Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=75 2026-11-12T12:02:57.263Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=78 2026-11-12T12:03:00.059Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=81 2026-11-12T12:03:02.718Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=83 2026-11-12T12:03:05.490Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=86 2026-11-12T12:03:08.197Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=89 2026-11-12T12:03:10.907Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=92 2026-11-12T12:03:13.614Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=94 2026-11-12T12:03:16.328Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=97 2026-11-12T12:03:19.044Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=100 2026-11-12T12:03:21.751Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=102 2026-11-12T12:03:24.492Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=105 2026-11-12T12:03:27.230Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=108 2026-11-12T12:03:29.983Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=111 2026-11-12T12:03:32.713Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=113 2026-11-12T12:03:35.434Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=116 2026-11-12T12:03:38.142Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=119 2026-11-12T12:03:40.862Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=121 2026-11-12T12:03:43.600Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=124 2026-11-12T12:03:46.356Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=127 2026-11-12T12:03:49.086Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=130 2026-11-12T12:03:51.821Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=132 2026-11-12T12:03:54.551Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=135 2026-11-12T12:03:57.275Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=138 2026-11-12T12:04:00.022Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=141 2026-11-12T12:04:02.740Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=143 2026-11-12T12:04:05.463Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=146 2026-11-12T12:04:08.183Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=149 2026-11-12T12:04:10.884Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=152 2026-11-12T12:04:13.595Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=154 2026-11-12T12:04:16.338Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=157 2026-11-12T12:04:19.061Z
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+### t=160 2026-11-12T12:04:21.881Z
+NAME                                   POOL              STATE                 ACTORS   CPU(MILLICORES)   MEMORY         POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+06eed6fe-8962-4239-8cea-95da20bd6ea7   counter-microvm   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-km4nl   8m16s
+3c8a7e58-2aea-46d7-82d9-7e5200c9bfb5   counter-microvm   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-ncw2s   8m16s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi       lab-c/ballast-65cf95d875-bzgjd                              108m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_ACTIVE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-f65dl                              108m
+3a6e1c2a-5741-4187-8def-ed0b433ef9dc   ballast-mvm       WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-jjgdn                          7m31s
+a44c9f2a-e430-4cf3-b1bc-0f536df13159   ballast-mvm       WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-tms47                          7m31s
+### t=163 2026-11-12T12:04:24.821Z
+NAME                                   POOL              STATE                      ACTORS   CPU(MILLICORES)   MEMORY         POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -              ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   1s
+06eed6fe-8962-4239-8cea-95da20bd6ea7   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-km4nl   8m19s
+3c8a7e58-2aea-46d7-82d9-7e5200c9bfb5   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-ncw2s   8m19s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_UNAVAILABLE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              108m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_UNAVAILABLE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-f65dl                              108m
+3a6e1c2a-5741-4187-8def-ed0b433ef9dc   ballast-mvm       WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-jjgdn                          7m34s
+### t=166 2026-11-12T12:04:27.711Z
+NAME                                   POOL              STATE                      ACTORS   CPU(MILLICORES)   MEMORY         POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -              ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   3s
+06eed6fe-8962-4239-8cea-95da20bd6ea7   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-km4nl   8m22s
+3c8a7e58-2aea-46d7-82d9-7e5200c9bfb5   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-ncw2s   8m22s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_UNAVAILABLE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              108m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_UNAVAILABLE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-f65dl                              108m
+3a6e1c2a-5741-4187-8def-ed0b433ef9dc   ballast-mvm       WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-jjgdn                          7m37s
+e7c6bf72-8efa-49e9-93ef-edfa49dabf1a   ballast-mvm       WORKER_STATE_UNAVAILABLE   0/0      -                 -              lab-m/ballast-mvm-65c7469b7b-phw8g                          0s
+### t=168 2026-11-12T12:04:30.562Z
+NAME                                   POOL              STATE                      ACTORS   CPU(MILLICORES)   MEMORY         POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -              ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   6s
+06eed6fe-8962-4239-8cea-95da20bd6ea7   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-km4nl   8m25s
+3c8a7e58-2aea-46d7-82d9-7e5200c9bfb5   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-ncw2s   8m25s
+c9f320d2-eb4d-42ce-bfc6-4325de3feeb4   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -              ate-demo-counter-microvm/counter-microvm-59f65968fb-wljrg   0s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_UNAVAILABLE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              108m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_UNAVAILABLE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-f65dl                              108m
+3a6e1c2a-5741-4187-8def-ed0b433ef9dc   ballast-mvm       WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-jjgdn                          7m40s
+e7c6bf72-8efa-49e9-93ef-edfa49dabf1a   ballast-mvm       WORKER_STATE_UNAVAILABLE   0/0      -                 -              lab-m/ballast-mvm-65c7469b7b-phw8g                          3s
+### t=171 2026-11-12T12:04:33.464Z
+NAME                                   POOL              STATE                      ACTORS   CPU(MILLICORES)   MEMORY         POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -              ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   9s
+06eed6fe-8962-4239-8cea-95da20bd6ea7   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-km4nl   8m28s
+3c8a7e58-2aea-46d7-82d9-7e5200c9bfb5   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-ncw2s   8m28s
+c9f320d2-eb4d-42ce-bfc6-4325de3feeb4   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -              ate-demo-counter-microvm/counter-microvm-59f65968fb-wljrg   3s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_UNAVAILABLE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              108m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_UNAVAILABLE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-f65dl                              108m
+3a6e1c2a-5741-4187-8def-ed0b433ef9dc   ballast-mvm       WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-jjgdn                          7m43s
+e7c6bf72-8efa-49e9-93ef-edfa49dabf1a   ballast-mvm       WORKER_STATE_UNAVAILABLE   0/0      -                 -              lab-m/ballast-mvm-65c7469b7b-phw8g                          6s
+### t=174 2026-11-12T12:04:36.345Z
+NAME                                   POOL              STATE                      ACTORS   CPU(MILLICORES)   MEMORY         POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -              ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   12s
+06eed6fe-8962-4239-8cea-95da20bd6ea7   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-km4nl   8m31s
+3c8a7e58-2aea-46d7-82d9-7e5200c9bfb5   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-counter-microvm/counter-microvm-59f65968fb-ncw2s   8m31s
+c9f320d2-eb4d-42ce-bfc6-4325de3feeb4   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -              ate-demo-counter-microvm/counter-microvm-59f65968fb-wljrg   6s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi        ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_ACTIVE        1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              108m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/3008Mi       lab-c/ballast-65cf95d875-f65dl                              108m
+3a6e1c2a-5741-4187-8def-ed0b433ef9dc   ballast-mvm       WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi       lab-m/ballast-mvm-65c7469b7b-jjgdn                          7m46s
+e7c6bf72-8efa-49e9-93ef-edfa49dabf1a   ballast-mvm       WORKER_STATE_UNAVAILABLE   0/0      -                 -              lab-m/ballast-mvm-65c7469b7b-phw8g                          9s
+### t=178 2026-11-12T12:04:40.599Z
+NAME                                   POOL              STATE                      ACTORS   CPU(MILLICORES)   MEMORY     POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -          ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   16s
+c9f320d2-eb4d-42ce-bfc6-4325de3feeb4   counter-microvm   WORKER_STATE_UNAVAILABLE   0/0      -                 -          ate-demo-counter-microvm/counter-microvm-59f65968fb-wljrg   10s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              108m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-f65dl                              108m
+e7c6bf72-8efa-49e9-93ef-edfa49dabf1a   ballast-mvm       WORKER_STATE_UNAVAILABLE   0/0      -                 -          lab-m/ballast-mvm-65c7469b7b-phw8g                          13s
+7a5ceebc-3177-4c08-a739-7097daeac693   ballast-mvm       WORKER_STATE_UNAVAILABLE   0/0      -                 -          lab-m/ballast-mvm-65c7469b7b-tdqqr                          1s
+### t=183 2026-11-12T12:04:44.855Z
+NAME                                   POOL              STATE                      ACTORS   CPU(MILLICORES)   MEMORY     POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   21s
+c9f320d2-eb4d-42ce-bfc6-4325de3feeb4   counter-microvm   WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi    ate-demo-counter-microvm/counter-microvm-59f65968fb-wljrg   15s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              108m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-f65dl                              108m
+e7c6bf72-8efa-49e9-93ef-edfa49dabf1a   ballast-mvm       WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/3008Mi   lab-m/ballast-mvm-65c7469b7b-phw8g                          18s
+7a5ceebc-3177-4c08-a739-7097daeac693   ballast-mvm       WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/3008Mi   lab-m/ballast-mvm-65c7469b7b-tdqqr                          6s
+### t=187 2026-11-12T12:04:49.061Z
+NAME                                   POOL              STATE                      ACTORS   CPU(MILLICORES)   MEMORY     POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   25s
+c9f320d2-eb4d-42ce-bfc6-4325de3feeb4   counter-microvm   WORKER_STATE_UNAVAILABLE   0/1000   0/1000            0/960Mi    ate-demo-counter-microvm/counter-microvm-59f65968fb-wljrg   19s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_ACTIVE        0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              109m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-f65dl                              109m
+e7c6bf72-8efa-49e9-93ef-edfa49dabf1a   ballast-mvm       WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi   lab-m/ballast-mvm-65c7469b7b-phw8g                          22s
+7a5ceebc-3177-4c08-a739-7097daeac693   ballast-mvm       WORKER_STATE_ACTIVE        0/1000   0/2000            0/3008Mi   lab-m/ballast-mvm-65c7469b7b-tdqqr                          10s
+### t=191 2026-11-12T12:04:53.262Z
+NAME                                   POOL              STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-ffxwt                   111m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-fps97                   94m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-p6g2q                   111m
+40c25a2c-381f-44d7-90a8-5ab98a4c3b7d   counter-microvm   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-counter-microvm/counter-microvm-59f65968fb-4n8ns   29s
+c9f320d2-eb4d-42ce-bfc6-4325de3feeb4   counter-microvm   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-counter-microvm/counter-microvm-59f65968fb-wljrg   23s
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-475hq                   32m
+7437427a-2039-44a3-afb8-c3419a071755   parking           WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-l6mxf                   32m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast           WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-bzgjd                              109m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast           WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-f65dl                              109m
+e7c6bf72-8efa-49e9-93ef-edfa49dabf1a   ballast-mvm       WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi   lab-m/ballast-mvm-65c7469b7b-phw8g                          26s
+7a5ceebc-3177-4c08-a739-7097daeac693   ballast-mvm       WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi   lab-m/ballast-mvm-65c7469b7b-tdqqr                          14s

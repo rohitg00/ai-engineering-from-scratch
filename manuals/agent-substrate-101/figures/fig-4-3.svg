@@ -7,17 +7,17 @@
   <text x="95" y="56.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">actor is SUSPENDED</text>
   <text x="210" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SIX CHECKS FOR EACH WORKER</text>
   <rect x="210" y="28" width="410" height="28" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="222" y="45.6" font-size="12" font-weight="400">registered and WORKER_STATE_ACTIVE</text>
+  <text x="222" y="45.6" font-size="12" font-weight="400">1  registered and WORKER_STATE_ACTIVE</text>
   <rect x="210" y="62" width="410" height="28" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="222" y="79.6" font-size="12" font-weight="400">sandbox class of the snapshot</text>
+  <text x="222" y="79.6" font-size="12" font-weight="400">2  sandbox class of the snapshot</text>
   <rect x="210" y="96" width="410" height="28" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
-  <text x="222" y="113.6" font-size="12" font-weight="400">node of a local snapshot, if one exists</text>
+  <text x="222" y="113.6" font-size="12" font-weight="400">3  node of a local snapshot, if one exists</text>
   <rect x="210" y="130" width="410" height="28" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="222" y="147.6" font-size="12" font-weight="400">runtime that can restore the memory</text>
+  <text x="222" y="147.6" font-size="12" font-weight="400">4  runtime that can restore the memory</text>
   <rect x="210" y="164" width="410" height="28" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <text x="222" y="181.6" font-size="12" font-weight="400">labels: workerSelector of template and actor</text>
+  <text x="222" y="181.6" font-size="12" font-weight="400">5  labels: workerSelector of template and actor</text>
   <rect x="210" y="198" width="410" height="28" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="222" y="215.6" font-size="12" font-weight="400">room for the limits of the actor</text>
+  <text x="222" y="215.6" font-size="12" font-weight="400">6  room for the limits of the actor</text>
   <line x1="170" y1="44" x2="209" y2="44" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-ink)"/>
   <rect x="20" y="262" width="230" height="66" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
   <text x="135" y="282.75" font-size="12.5" text-anchor="middle" font-weight="700">no candidate</text>
@@ -31,7 +31,9 @@
   <text x="545" y="282.75" font-size="12.5" text-anchor="middle" font-weight="700">bind</text>
   <text x="545" y="300.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one transaction</text>
   <text x="545" y="315.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in Postgres</text>
-  <path d="M300 227 V246 H135 V261" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-4-3-head-rose)"/>
+  <path d="M230 227 V244 H135 V261" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-4-3-head-rose)"/>
+  <text x="127" y="240" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-rose-ink, #b0344d)">no worker passes</text>
+  <text x="368" y="248" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the workers that pass</text>
   <line x1="360" y1="227" x2="360" y2="261" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-ink)"/>
   <line x1="440" y1="295" x2="469" y2="295" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-4-3-head-teal)"/>
   <text x="545" y="346" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">ACTOR_STATE_RESUMING</text>

@@ -73,7 +73,7 @@ id: fig-8-4
 kind: flow
 title: the four steps of a supported upgrade
 claim: Only the worker step interrupts running actors, and each actor then has 30 minutes to be suspended by its caller.
-caption: Read left to right. Each box is one step with the components that move in it, and the line under it says what a running actor sees. From the upgrade page and the version skew policy at v1.0.0.
+caption: Read top to bottom. Each row is one step. The left box holds the components that move, and the right box says what a running actor sees. From the upgrade page and the version skew policy at v1.0.0.
 ```
 
 1. `podcertificate-controller`, which signs the certificates that components show each other. Running actors see nothing.

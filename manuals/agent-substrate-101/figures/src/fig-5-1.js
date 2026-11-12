@@ -3,31 +3,31 @@
 const { figure } = require('../../../_shared/figkit.js');
 
 module.exports = figure('fig-5-1', {
-  height: 300,
-  title: 'Three clients at the router, on both dataplanes',
-  desc: 'Three columns show three clients that call atenet-router on port 443: one with no certificate, one with a certificate for spiffe://cluster.local/ns/probe/sa/default, and one with a certificate for the allowed identity spiffe://cluster.local/ns/ate-system/sa/atenet-client. Two rows show the answer of each dataplane. Envoy closes the connection, sends the TLS alert certificate unknown, and returns 200. agentgateway sends the TLS alert certificate required, resets the connection, and returns 200.',
+  height: 356,
+  title: 'The two places that check a client, and what each one decides',
+  desc: 'Two bands. In the upper band, kubectl ate with no token file presents the shared identity ate-client to ate-api-server, which accepts a certificate or a bearer JWT and then applies access policies. That identity is a bootstrap owner, so it can manage every actor. In the lower band, three pods call atenet-router, which demands a client certificate whose SPIFFE ID is on one list. The identity atenet-client is on the list and gets 200 from my-counter-1, in an atespace where it holds no role. The identity ns/probe/sa/default gets the TLS alert certificate unknown. A pod with no certificate gets a closed connection.',
 }, f => {
-  const cols = [
-    { x: 130, title: 'no certificate', sub: ['a plain pod'] },
-    { x: 300, title: 'wrong identity', sub: ['ns/probe/sa/default'] },
-    { x: 470, title: 'allowed identity', sub: ['ns/ate-system', 'sa/atenet-client'] },
-  ];
-  f.kicker(20, 18, 'Client');
-  cols.forEach(col => f.box({ x: col.x, y: 28, w: 150, h: 62, hue: 'olive', title: col.title, sub: col.sub }));
+  f.kicker(20, 18, 'The API: who can manage actors');
+  const cli = f.box({ x: 20, y: 28, w: 200, h: 64, hue: 'olive', pad: 8, title: 'kubectl ate', sub: ['no --token-file, so it acts as', 'ate-system:ate-client'] });
+  const api = f.box({ x: 250, y: 28, w: 180, h: 64, hue: 'blue', pad: 8, title: 'ate-api-server', sub: ['certificate or bearer JWT', 'then the access policies'] });
+  const owner = f.box({ x: 460, y: 28, w: 160, h: 64, hue: 'green', pad: 6, title: 'every actor', sub: ['a bootstrap owner', 'of all atespaces'] });
+  f.arrow(cli.right(), [api.x - 1, cli.cy], { style: 'call' });
+  f.arrow(api.right(), [owner.x - 1, api.cy], { style: 'call' });
 
+  f.kicker(20, 130, 'The router: who can call an actor');
+  const router = f.box({ x: 250, y: 140, w: 180, h: 180, hue: 'indigo', pad: 6, title: 'atenet-router', sub: ['client certificate, and', 'its SPIFFE ID on one list:', '--ingress-allowed-spiffe-ids'] });
   const rows = [
-    { y: 130, name: 'Envoy', cells: [['connection closed', 'curl: Broken pipe', 'rose'], ['TLS alert', 'certificate unknown', 'rose'], ['200', 'on 443 and on 8444', 'green']] },
-    { y: 214, name: 'agentgateway', cells: [['TLS alert', 'certificate required', 'rose'], ['connection reset', 'by peer', 'rose'], ['200', 'on 443 and on 8444', 'green']] },
+    { title: 'allowed identity', sub: 'ns/ate-system/sa/atenet-client', out: ['200 from my-counter-1', 'any actor in any atespace', 'green'] },
+    { title: 'identity not on the list', sub: 'ns/probe/sa/default', out: ['TLS alert', 'certificate unknown', 'rose'] },
+    { title: 'no client certificate', sub: 'a plain pod', out: ['connection closed', 'curl: Broken pipe', 'rose'] },
   ];
-  rows.forEach(row => {
-    f.text(20, row.y + 24, row.name, { size: 12, weight: 700, hue: 'indigo' });
-    f.text(20, row.y + 40, 'atenet-router', { size: 11, serif: true, hue: 'ink-soft' });
-    row.cells.forEach(([title, sub, hue], index) => {
-      f.box({ x: cols[index].x, y: row.y, w: 150, h: 56, pad: 8, hue, title, sub, dash: hue === 'rose' ? 'dashed' : undefined });
-    });
+  rows.forEach((row, index) => {
+    const y = 140 + index * 64;
+    const client = f.box({ x: 20, y, w: 200, h: 52, hue: 'olive', pad: 8, titleSize: 11.5, title: row.title, sub: row.sub });
+    const [title, sub, hue] = row.out;
+    const out = f.box({ x: 460, y, w: 160, h: 52, hue, pad: 5, titleSize: 11.5, title, sub, dash: hue === 'rose' ? 'dashed' : undefined });
+    f.arrow(client.right(), [router.x - 1, client.cy], { style: 'call' });
+    f.arrow([router.x + router.w, client.cy], [out.x - 1, client.cy], { style: hue === 'rose' ? 'fail' : 'call' });
   });
-  cols.forEach((col, index) => {
-    f.arrow([col.x + 75, 90], [col.x + 75, 129], { style: index === 2 ? 'call' : 'fail' });
-  });
-  f.text(20, 290, 'target in every probe: ate-demo-counter/my-counter-1', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 344, 'The refusals are those of the Envoy dataplane. The list names identities and no atespaces.', { size: 11, serif: true, hue: 'ink-soft' });
 });

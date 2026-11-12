@@ -1,0 +1,4 @@
+NAME                  STATUS     ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION              CONTAINER-RUNTIME
+multi-control-plane   NotReady   control-plane   18s   v1.37.0   172.18.0.5    <none>        Debian GNU/Linux 13 (trixie)   6.8.0-147-generic (amd64)   containerd://2.3.4
+multi-worker          NotReady   <none>          2s    v1.37.0   172.18.0.6    <none>        Debian GNU/Linux 13 (trixie)   6.8.0-147-generic (amd64)   containerd://2.3.4
+multi-worker2         NotReady   <none>          2s    v1.37.0   172.18.0.4    <none>        Debian GNU/Linux 13 (trixie)   6.8.0-147-generic (amd64)   containerd://2.3.4

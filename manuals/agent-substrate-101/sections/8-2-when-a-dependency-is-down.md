@@ -23,7 +23,7 @@ id: fig-8-2
 kind: timeline
 title: three outages, second by second
 claim: Requests failed without Postgres and without ate-api-server, and every request from inside the cluster succeeded without the Kubernetes API server.
-caption: Read each panel left to right. Zero is the second the dependency went away, and the grey band is the outage. A bar is green while requests succeeded and rose while they failed. From capture/lab/summary/dependency-loss-x86.json.
+caption: Read each panel left to right. Zero is the second the dependency went away, and the grey band is the outage. A bar is green while requests succeeded and rose while they failed. The number at the end of each row counts the failed requests. From capture/lab/summary/dependency-loss-x86.json.
 ```
 
 ## Postgres down: a hang, then 500
@@ -60,6 +60,16 @@ We scaled the `ate-api-server` Deployment to zero for 60 s. Every stream returne
 The first failure came 6 s after the scale-down, and the last came 5 s after the scale-up. Recovery needs no action. The router finds the new pods by itself.
 
 Compare the two patterns. Without Postgres the client waits past its timeout. Without `ate-api-server` the client gets a 503 within 5 s. A 503 with the word `unavailable` and nothing after it means the router could not get an answer from the API server.
+
+[Figure 8.2c](#fig-8-2c) plots the delay of every request in the running stream.
+
+```figure
+id: fig-8-2c
+kind: chart
+title: the delay of each request during the three outages
+claim: Without Postgres a failed request took the full 9 s of the client timeout, and without ate-api-server it took 5 s at most.
+caption: Each rose dot is one failed request to the running actor, at the second it was sent. The height is the time until the answer. The green line is the requests that returned 200. From capture/lab/summary/dependency-loss-x86.json.
+```
 
 ## Kubernetes API server down: nothing, except the proxy
 
@@ -136,9 +146,28 @@ note: The crash field of the actor r1 after the first request.
 
 A running pod is not a registered worker. The worker process must register with `ate-api-server` again before it accepts an actor. A request that arrives too early after a node restart can crash a suspended actor. A revert then returns it to the last durable snapshot.
 
-We did not find the cause of the third result. The worker list at the later time showed every worker as active with no actors. The 503 fits workers that were still registering, and we did not verify that. Plan for the delay, and do not read this 503 as a full pool.
+A second restart, with one resume attempt every 2 to 3 s, gave the cause of the third result.
+
+**We measured** it on the same x86 server guest (24 vCPU, 47 GB, nested KVM), one run. `ate-api-server` first answered 160 s after the restart command, and it listed all 11 workers as active. From 163 to 171 s it marked each of those workers `WORKER_STATE_UNAVAILABLE`. The first resume worked at 174 s, and all 11 workers were active again at 191 s.
+
+The control plane returns with the worker list from before the restart. Then it marks each of those workers unavailable, until the worker registers again. In that window the pool has no active worker, so a resume fails for lack of room or with the text `is unavailable`. The window was 10 to 30 s.
+
+Our retry in the first run came 78 s later, so the window looked longer than it was. Plan for the delay, and do not read this 503 as a full pool. [Section 4.3](#s-placement) has the full timeline.
 
 An actor that was RUNNING during the restart, `my-counter-1`, was `ACTOR_STATE_CRASHED` afterwards. It returned the `AssignWorker prerequisite` 503 until a revert.
+
+## A node that stops and does not return
+
+A restart ends. A node that stops and stays down is a different failure, and Substrate v1.0.0 did not repair it in our runs. On a cluster with two worker nodes, we stopped one of them four times. The other node had free workers each time.
+
+| The actor when the node stopped | Result |
+|---|---|
+| Suspended with `--mode sync`, snapshot in the bucket | `RESUMING` on the stopped node from the first request. 504 and 503 for 5 min 44 s, then `CRASHED`. It did not move to the other node. |
+| The same, with a `revert` before any request | The revert returned `SUSPENDED`. The next request bound the actor to the stopped node again. |
+| Suspended in the default mode, snapshot pending | `RESUMING` for more than 10 min. Two reverts were refused. The next request moved it to `CRASHED`. |
+| Running | `RUNNING` for the 10 min of our probe, with 503 `upstream connect error` on each request. A revert left it in `REVERTING`. |
+
+**We measured** these cases on the second x86 server guest (16 vCPU, 23 GB), with gVisor and one actor for each row. The workers of the stopped node were listed as active for 43 to 51 s after the stop command. Kubernetes evicted their pods 5 minutes after that. [Section 4.3](#s-placement) has the timeline and the open question about `revert`. [Section 3.5](#s-crashed-and-revertactor) has the error texts.
 
 ## What we did not test
 
@@ -152,6 +181,7 @@ All three outages ran on the Envoy dataplane with one node. We did not repeat th
 - List actors after a database outage and look for `ACTOR_STATE_RESUMING`.
 - After a node restart, hold client requests until `kubectl ate get worker` shows the workers as active.
 - Run `kubectl ate revert actor` on each actor that the restart crashed.
+- Treat a stopped node as an outage for its actors, because none moved to another node.
 ```
 
-Sources: capture/lab/E-dependency-loss/10-timeline.tsv, capture/lab/E-dependency-loss/12-probe-incluster.tsv, capture/lab/E-dependency-loss/12-probe-proxy.tsv, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/E-dependency-loss/14-T1-pods-during.txt, capture/lab/E-dependency-loss/14-T1-cli-during.txt, capture/lab/E-dependency-loss/16-T3-kubectl-during.txt, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/E-dependency-loss/22-actors-5min-later.txt, capture/lab/summary/dependency-loss-x86.json, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/summary/failures-x86.json; cmd/atenet/internal/router/ingress/parking.go (the 5 s parking budget) and cmd/ateapi/internal/controlapi/workflow_resume.go at v1.0.0.
+Sources: capture/lab/E-dependency-loss/10-timeline.tsv, capture/lab/E-dependency-loss/12-probe-incluster.tsv, capture/lab/E-dependency-loss/12-probe-proxy.tsv, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/E-dependency-loss/14-T1-pods-during.txt, capture/lab/E-dependency-loss/14-T1-cli-during.txt, capture/lab/E-dependency-loss/16-T3-kubectl-during.txt, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/E-dependency-loss/22-actors-5min-later.txt, capture/lab/summary/dependency-loss-x86.json, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/summary/failures-x86.json, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/L-gaps/restart/11-workers-each-poll.txt, capture/lab/L-gaps/restart/23-ateapi.log, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/96-controller-events.log; cmd/atenet/internal/router/ingress/parking.go (the 5 s parking budget) and cmd/ateapi/internal/controlapi/workflow_resume.go at v1.0.0.

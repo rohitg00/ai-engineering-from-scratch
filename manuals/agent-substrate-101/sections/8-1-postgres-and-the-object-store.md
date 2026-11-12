@@ -121,6 +121,14 @@ A snapshot with memory fidelity is as large as the memory that the actor holds. 
 | Node, `/var/lib/ate/snapshot-cache` | 1,765 MiB | 1,765 MiB |
 | Bucket, `ate-snapshots` | 10,824 MiB | 2,064 MiB |
 
+```figure
+id: fig-8-1b
+kind: chart
+title: disk use with 25 suspended actors, and after their deletion
+claim: The node copy was as large as the memory that the actors held, and the bucket kept 2,064 MiB of golden snapshots after the delete.
+caption: Each place has two bars. The solid bar is the disk use with 25 suspended actors, and the light bar is the use after their deletion. The dashed line is the memory that the actors held. From capture/lab/summary/footprint-x86.json.
+```
+
 The node held one copy of each snapshot, 8,801 MiB for 8,750 MiB of actor memory. The bucket held the same data plus 2,064 MiB of golden snapshots, which stay as long as their templates exist. The snapshot cache did not shrink when the actors went away. `atelet` trims it on its own schedule.
 
 The node copy is the part that people forget. After an asynchronous suspend, `atelet` keeps the files on the node for 30 minutes, as [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) shows. Those files sit in a host directory that Kubernetes charges to no pod. A public issue reports a node that crossed its disk pressure threshold this way, after which the kubelet evicted the worker pods.

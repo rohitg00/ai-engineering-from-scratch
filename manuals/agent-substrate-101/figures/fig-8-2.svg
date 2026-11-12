@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-8-2-title fig-8-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 392" role="img" aria-labelledby="fig-8-2-title fig-8-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-8-2-title">Three outages, second by second</title>
-  <desc id="fig-8-2-desc">Three panels, one for each dependency that was taken away: Postgres for 61 seconds, ate-api-server for 60 seconds, and the Kubernetes API server for 86 seconds. Requests to a running actor and new resumes fail in the first two panels and all succeed in the third, where only requests through kubectl ate proxy fail.</desc>
+  <desc id="fig-8-2-desc">Three panels, one for each dependency that was taken away: Postgres for 61 seconds, ate-api-server for 60 seconds, and the Kubernetes API server for 86 seconds. Requests to a running actor and new resumes fail in the first two panels and all succeed in the third, where only requests through kubectl ate proxy fail. The count of failed requests is at the end of each row.</desc>
   <rect x="20" y="14" width="12" height="8" fill="var(--m-green-ink, #336b40)"/>
   <text x="38" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">request returned 200</text>
   <rect x="190" y="14" width="12" height="8" fill="var(--m-rose-ink, #b0344d)"/>
@@ -9,82 +9,69 @@
   <text x="338" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">dependency away</text>
   <line x1="468" y1="12" x2="468" y2="24" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
   <text x="476" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">ready again</text>
-  <text x="20" y="48" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">POSTGRES AWAY, 61 S</text>
-  <rect x="152" y="54" width="207.4" height="62" fill="var(--m-grey-fill, #ecebe3)"/>
-  <text x="20" y="71" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running actor</text>
-  <rect x="118" y="62" width="37.4" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="155.4" y="62" width="224.4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="379.8" y="62" width="112.2" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="495.4" y="62" width="10.2" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <text x="20" y="89" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new resume</text>
-  <rect x="118" y="80" width="34" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="152" y="80" width="323" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="475" y="80" width="17" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="495.4" y="80" width="17" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <text x="20" y="107" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through proxy</text>
-  <rect x="118" y="98" width="27.2" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="148.6" y="98" width="6.8" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="155.4" y="98" width="81.6" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="240.4" y="98" width="102" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="345.8" y="98" width="34" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="379.8" y="98" width="34" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="417.2" y="98" width="57.8" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="478.4" y="98" width="27.2" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <line x1="366.2" y1="54" x2="366.2" y2="116" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
-  <text x="20" y="144" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ATE-API-SERVER AWAY, 60 S</text>
-  <rect x="152" y="150" width="204" height="62" fill="var(--m-grey-fill, #ecebe3)"/>
-  <text x="20" y="167" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running actor</text>
-  <rect x="118" y="158" width="54.4" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="172.4" y="158" width="204" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="376.4" y="158" width="153" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <text x="20" y="185" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new resume</text>
-  <rect x="124.8" y="176" width="51" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="175.8" y="176" width="204" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="379.8" y="176" width="153" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <text x="20" y="203" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through proxy</text>
-  <rect x="118" y="194" width="13.6" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="135" y="194" width="34" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="169" y="194" width="20.4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="192.8" y="194" width="57.8" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="254" y="194" width="54.4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="311.8" y="194" width="54.4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="369.6" y="194" width="10.2" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="379.8" y="194" width="40.8" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="424" y="194" width="51" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="478.4" y="194" width="51" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <line x1="390" y1="150" x2="390" y2="212" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
-  <text x="20" y="240" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KUBE-APISERVER AWAY, 86 S</text>
-  <rect x="152" y="246" width="292.4" height="62" fill="var(--m-grey-fill, #ecebe3)"/>
-  <text x="20" y="263" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running actor</text>
-  <rect x="118" y="254" width="227.8" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="349.2" y="254" width="251.6" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <text x="20" y="281" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new resume</text>
-  <rect x="121.4" y="272" width="238" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="362.8" y="272" width="238" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <text x="20" y="299" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through proxy</text>
-  <rect x="118" y="290" width="20.4" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="141.8" y="290" width="10.2" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="152" y="290" width="37.4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="192.8" y="290" width="44.2" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="240.4" y="290" width="44.2" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="288" y="290" width="44.2" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="335.6" y="290" width="44.2" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="383.2" y="290" width="44.2" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="430.8" y="290" width="40.8" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="475" y="290" width="40.8" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="519.2" y="290" width="17" height="10" fill="var(--m-rose-ink, #b0344d)"/>
-  <rect x="536.2" y="290" width="23.8" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="563.4" y="290" width="37.4" height="10" fill="var(--m-green-ink, #336b40)"/>
-  <line x1="461.4" y1="246" x2="461.4" y2="308" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
-  <line x1="118" y1="326" x2="611" y2="326" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="152" y1="322" x2="152" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="152" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
-  <line x1="254" y1="322" x2="254" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="254" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30 s</text>
-  <line x1="356" y1="322" x2="356" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="356" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">60 s</text>
-  <line x1="458" y1="322" x2="458" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="458" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">90 s</text>
-  <line x1="560" y1="322" x2="560" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="560" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">120 s</text>
+  <text x="20" y="50" font-size="11" letter-spacing="1.2" fill="var(--m-ink-soft, #4a4a4a)">POSTGRES AWAY, 61 S</text>
+  <text x="620" y="50" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a timeout at 9 s, then 500. New resumes fail for 27 s after ready.</text>
+  <rect x="151" y="58" width="201.3" height="64" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="75" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running actor</text>
+  <rect x="118" y="66" width="36.3" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="154.3" y="66" width="217.8" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="372.1" y="66" width="122.1" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="75" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">66 failed</text>
+  <text x="20" y="93" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new resume</text>
+  <rect x="118" y="84" width="33" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="151" y="84" width="313.5" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="464.5" y="84" width="36.3" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="93" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">19 failed</text>
+  <text x="20" y="111" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through proxy</text>
+  <rect x="118" y="102" width="36.3" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="154.3" y="102" width="217.8" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="372.1" y="102" width="122.1" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="111" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">64 failed</text>
+  <line x1="358.9" y1="58" x2="358.9" y2="122" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="150" font-size="11" letter-spacing="1.2" fill="var(--m-ink-soft, #4a4a4a)">ATE-API-SERVER AWAY, 60 S</text>
+  <text x="620" y="150" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">503 within 5 s. The router finds the new pods by itself.</text>
+  <rect x="151" y="158" width="198" height="64" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="175" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running actor</text>
+  <rect x="118" y="166" width="52.8" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="170.8" y="166" width="198" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="368.8" y="166" width="148.5" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="175" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">60 failed</text>
+  <text x="20" y="193" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new resume</text>
+  <rect x="124.6" y="184" width="49.5" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="174.1" y="184" width="198" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="372.1" y="184" width="148.5" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="193" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">12 failed</text>
+  <text x="20" y="211" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through proxy</text>
+  <rect x="118" y="202" width="49.5" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="167.5" y="202" width="204.6" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="372.1" y="202" width="145.2" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="211" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">58 failed</text>
+  <line x1="382" y1="158" x2="382" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="250" font-size="11" letter-spacing="1.2" fill="var(--m-ink-soft, #4a4a4a)">KUBE-APISERVER AWAY, 86 S</text>
+  <text x="620" y="250" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">86 of 86 requests and 17 of 17 new resumes served.</text>
+  <rect x="151" y="258" width="283.8" height="64" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="275" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running actor</text>
+  <rect x="118" y="266" width="429" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="275" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">0 failed</text>
+  <text x="20" y="293" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new resume</text>
+  <rect x="121.3" y="284" width="425.7" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="293" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">0 failed</text>
+  <text x="20" y="311" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through proxy</text>
+  <rect x="118" y="302" width="33" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="151" y="302" width="372.9" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="523.9" y="302" width="23.1" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="311" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">105 failed</text>
+  <line x1="451.3" y1="258" x2="451.3" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="118" y1="344" x2="547" y2="344" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="151" y1="340" x2="151" y2="348" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="151" y="362" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
+  <line x1="250" y1="340" x2="250" y2="348" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="250" y="362" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30 s</text>
+  <line x1="349" y1="340" x2="349" y2="348" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="349" y="362" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">60 s</text>
+  <line x1="448" y1="340" x2="448" y2="348" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="448" y="362" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">90 s</text>
+  <line x1="547" y1="340" x2="547" y2="348" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="547" y="362" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">120 s</text>
+  <text x="332.5" y="380" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds since the dependency went away</text>
 </svg>

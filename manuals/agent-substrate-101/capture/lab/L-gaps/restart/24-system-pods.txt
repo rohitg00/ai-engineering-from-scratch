@@ -1,0 +1,13 @@
+NAME                                      READY   STATUS      RESTARTS       AGE    IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-api-server-696d95dd66-9q7f8           2/2     Running     5 (3m4s ago)   113m   10.244.0.30   kind-control-plane   <none>           <none>
+ate-api-server-696d95dd66-t85dd           2/2     Running     5 (3m4s ago)   113m   10.244.0.28   kind-control-plane   <none>           <none>
+ate-controller-7479ff54f-jrrtc            1/1     Running     2 (3m4s ago)   113m   10.244.0.19   kind-control-plane   <none>           <none>
+ate-idp-server-7c46c85d94-66sf2           1/1     Running     2 (3m4s ago)   113m   10.244.0.17   kind-control-plane   <none>           <none>
+ate-idp-server-7c46c85d94-cfbt4           1/1     Running     2 (3m4s ago)   113m   10.244.0.16   kind-control-plane   <none>           <none>
+atelet-b69fk                              2/2     Running     4 (3m4s ago)   23m    10.244.0.18   kind-control-plane   <none>           <none>
+atenet-egress-78f759fcb8-74d4m            3/3     Running     6 (3m4s ago)   112m   10.244.0.29   kind-control-plane   <none>           <none>
+atenet-router-86454b57f5-7vtp5            2/2     Running     4 (3m4s ago)   113m   10.244.0.26   kind-control-plane   <none>           <none>
+k8s-credential-provider-8df9859f8-jcfll   1/1     Running     2 (3m4s ago)   112m   10.244.0.27   kind-control-plane   <none>           <none>
+postgres-0                                2/2     Running     4 (3m4s ago)   118m   10.244.0.20   kind-control-plane   <none>           <none>
+rustfs-54c86945fb-w9pnn                   1/1     Running     2 (3m4s ago)   113m   10.244.0.2    kind-control-plane   <none>           <none>
+rustfs-bucket-init-bvq6z                  0/1     Completed   0              113m   <none>        kind-control-plane   <none>           <none>

@@ -42,10 +42,10 @@ We captured the same inventory and ran the same probes on each dataplane, on one
 
 ```figure
 id: fig-6-6
-kind: comparison
-title: the containers of each dataplane
+kind: chart
+title: idle memory of each dataplane, container by container
 claim: The Envoy dataplane spreads its work over five containers and 91 MB, and agentgateway uses two containers and 38 MB with the CA key inside one.
-caption: Read each column as the two pods of one dataplane. The number in each box is the idle memory of that container, from one sample soon after start. From capture/lab/G-dataplane/envoy/13-crictl-stats-atenet.txt and capture/lab/G-dataplane/agentgateway/13-crictl-stats-atenet.txt.
+caption: Each bar is one dataplane, each box is one container, and each bracket is one pod. The width of a box is the idle memory of that container in MB, from one sample soon after start. The heavy outline marks the container that holds the CA key. From capture/lab/G-dataplane/envoy/13-crictl-stats-atenet.txt and capture/lab/G-dataplane/agentgateway/13-crictl-stats-atenet.txt.
 ```
 
 **We measured** idle memory with one sample for each container, soon after start, on the second x86 server guest. The five Envoy dataplane containers held 25.6, 21.6, 22.8, 12.0, and 8.9 MB. The two agentgateway containers held 19.9 and 17.8 MB. We did not measure memory, latency, or throughput under load on either dataplane.
@@ -79,7 +79,7 @@ id: fig-6-6b
 kind: timeline
 title: after a rule is removed
 claim: Both dataplanes refused new requests within 6 seconds of the removal, and neither closed a connection that was already open.
-caption: Read each track from left to right, with the removal at zero. Rose marks a refusal of new work. Green bars are open connections that still carried data. The 39 s and 18 s ends are the ends of our test responses, not a limit of the gateway. From capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/40-supplement.txt, and capture/lab/F-egress/agentgateway/40-supplement.txt.
+caption: Read each track from left to right, with the removal at zero. Each dot is one sample, green for served and rose for refused. A bar is a connection that was open before the removal and still carried data. The 39 s and 18 s ends are the ends of our test responses, not a limit of the gateway. From capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/40-supplement.txt, and capture/lab/F-egress/agentgateway/40-supplement.txt.
 ```
 
 ```listing

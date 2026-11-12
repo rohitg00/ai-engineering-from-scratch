@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lab-m
+---
+apiVersion: ate.dev/v1
+kind: WorkerPool
+metadata:
+  name: ballast-mvm
+  namespace: lab-m
+  labels:
+    workload: ballast-mvm
+spec:
+  replicas: 2
+  workerImage: localhost:5001/ateworker-microvm@sha256:d4b76fde69ca4c4747d5d33423952aa4890b5a8e537207916b7214a914049d56
+  sandboxClasses:
+  - name: microvm
+    configRef:
+      name: microvm
+  template:
+    resources:
+      limits:
+        cpu: "2"
+        memory: 3Gi
+      requests:
+        cpu: 500m
+        memory: 3Gi

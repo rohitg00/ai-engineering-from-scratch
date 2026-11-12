@@ -1,51 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-1-title fig-4-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 346" role="img" aria-labelledby="fig-4-1-title fig-4-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-4-1-title">From a WorkerPool to two registered workers</title>
-  <desc id="fig-4-1-desc">The WorkerPool ballast in namespace lab-c asks for two replicas with a limit of 2 CPUs and 3 GiB. ate-controller reads it, writes a Deployment, and creates one Worker record in ate-api-server for each pod. atelet registers each worker. Each of the two worker pods then reports 2 of 1000 actors, 2000 of 2000 millicores and 512Mi of 3008Mi.</desc>
+  <desc id="fig-4-1-desc">The WorkerPool ballast in namespace lab-c asks for two replicas with a limit of 2 CPUs and 3 GiB. ate-controller reads it, writes a Deployment, and creates one Worker record in ate-api-server for each pod. atelet on the node registers each worker, and the record becomes WORKER_STATE_ACTIVE. Each of the two worker pods then reports 2 of 1000 actors, 2000 of 2000 millicores and 512Mi of 3008Mi.</desc>
   <defs><marker id="fig-4-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-4-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
   <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">YOU WRITE</text>
-  <text x="250" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SUBSTRATE RECONCILES</text>
-  <rect x="20" y="28" width="190" height="62" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <text x="115" y="46.75" font-size="12.5" text-anchor="middle" font-weight="700">WorkerPool ballast</text>
-  <text x="115" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">replicas: 2</text>
-  <text x="115" y="79.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">limits: cpu 2, memory 3Gi</text>
-  <rect x="250" y="28" width="150" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="325" y="54.25" font-size="12.5" text-anchor="middle" font-weight="700">ate-controller</text>
-  <text x="325" y="71.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one replica</text>
-  <rect x="450" y="28" width="170" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="535" y="46.75" font-size="12.5" text-anchor="middle" font-weight="700">ate-api-server</text>
-  <text x="535" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Worker b17a6492</text>
-  <text x="535" y="79.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Worker ee4ba8b4</text>
-  <line x1="210" y1="59" x2="249" y2="59" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
-  <rect class="m-knock" x="202.35" y="42.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="229.5" y="53" font-size="11.5" text-anchor="middle">1 reads</text>
-  <line x1="400" y1="59" x2="449" y2="59" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-teal)"/>
-  <rect class="m-knock" x="390.45" y="42.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="424.5" y="53" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">2 creates</text>
-  <rect x="235" y="132" width="180" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <text x="325" y="149.25" font-size="12.5" text-anchor="middle" font-weight="700">Deployment ballast</text>
-  <text x="325" y="166.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">label ate.dev/worker-pool</text>
-  <line x1="325" y1="90" x2="325" y2="131" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
-  <rect class="m-knock" x="330" y="99.53" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="333" y="110.5" font-size="11.5">writes</text>
-  <text x="20" y="206" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE NODE</text>
-  <rect x="20" y="216" width="200" height="96" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="120" y="244.25" font-size="12.5" text-anchor="middle" font-weight="700">worker pod bzgjd</text>
-  <text x="120" y="261.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACTORS 2/1000</text>
-  <text x="120" y="276.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CPU 2000/2000</text>
-  <text x="120" y="291.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MEMORY 512Mi/3008Mi</text>
-  <rect x="235" y="216" width="200" height="96" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="335" y="244.25" font-size="12.5" text-anchor="middle" font-weight="700">worker pod f65dl</text>
-  <text x="335" y="261.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACTORS 2/1000</text>
-  <text x="335" y="276.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CPU 2000/2000</text>
-  <text x="335" y="291.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MEMORY 512Mi/3008Mi</text>
-  <rect x="470" y="232" width="150" height="64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="545" y="251.75" font-size="12.5" text-anchor="middle" font-weight="700">atelet</text>
-  <text x="545" y="269.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">registers each worker</text>
-  <text x="545" y="284.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reports its runtimes</text>
-  <path d="M235 154 H120 V215" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-ink)"/>
-  <line x1="335" y1="176" x2="335" y2="215" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
-  <line x1="545" y1="232" x2="545" y2="91" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-teal)"/>
-  <rect class="m-knock" x="550" y="150.53" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="553" y="161.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">3 registers</text>
-  <text x="545" y="318" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">WORKER_STATE_ACTIVE</text>
+  <text x="260" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SUBSTRATE RECONCILES</text>
+  <rect x="20" y="28" width="170" height="62" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="105" y="46.75" font-size="12.5" text-anchor="middle" font-weight="700">WorkerPool ballast</text>
+  <text x="105" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">replicas: 2</text>
+  <text x="105" y="79.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">limits: cpu 2, memory 3Gi</text>
+  <rect x="260" y="28" width="140" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="330" y="54.25" font-size="12.5" text-anchor="middle" font-weight="700">ate-controller</text>
+  <text x="330" y="71.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one replica</text>
+  <rect x="470" y="28" width="150" height="62" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="545" y="46.75" font-size="12.5" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="545" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Worker b17a6492</text>
+  <text x="545" y="79.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Worker ee4ba8b4</text>
+  <line x1="190" y1="59" x2="259" y2="59" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect class="m-knock" x="197.35" y="42.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="224.5" y="53" font-size="11.5" text-anchor="middle">1 reads</text>
+  <line x1="400" y1="59" x2="469" y2="59" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-teal)"/>
+  <rect class="m-knock" x="400.45" y="42.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="434.5" y="53" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">2 creates</text>
+  <rect x="240" y="128" width="180" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="330" y="145.25" font-size="12.5" text-anchor="middle" font-weight="700">Deployment ballast</text>
+  <text x="330" y="162.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">label ate.dev/worker-pool</text>
+  <line x1="330" y1="90" x2="330" y2="127" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect class="m-knock" x="335" y="97.53" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="338" y="108.5" font-size="11.5">1 writes</text>
+  <rect x="20" y="212" width="600" height="122" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="32" y="230" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE NODE</text>
+  <rect x="32" y="240" width="186" height="82" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="125" y="261.25" font-size="12.5" text-anchor="middle" font-weight="700">worker pod bzgjd</text>
+  <text x="125" y="278.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACTORS 2/1000</text>
+  <text x="125" y="293.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CPU 2000/2000</text>
+  <text x="125" y="308.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MEMORY 512Mi/3008Mi</text>
+  <rect x="230" y="240" width="186" height="82" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="323" y="261.25" font-size="12.5" text-anchor="middle" font-weight="700">worker pod f65dl</text>
+  <text x="323" y="278.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACTORS 2/1000</text>
+  <text x="323" y="293.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CPU 2000/2000</text>
+  <text x="323" y="308.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MEMORY 512Mi/3008Mi</text>
+  <rect x="458" y="248" width="150" height="66" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="533" y="268.75" font-size="12.5" text-anchor="middle" font-weight="700">atelet</text>
+  <text x="533" y="286.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">registers each worker</text>
+  <text x="533" y="301.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reports its runtimes</text>
+  <path d="M240 150 H125 V239" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-4-1-head-ink)"/>
+  <line x1="323" y1="172" x2="323" y2="239" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-ink)"/>
+  <rect class="m-knock" x="328" y="185.42" width="53.52" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="331" y="196" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">two pods</text>
+  <line x1="545" y1="248" x2="545" y2="91" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-4-1-head-teal)"/>
+  <rect class="m-knock" x="550" y="158.53" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="553" y="169.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">3 registers</text>
+  <text x="537" y="122" font-size="11" text-anchor="end" fill="var(--m-amber-ink, #85590c)">4 WORKER_STATE_ACTIVE</text>
 </svg>

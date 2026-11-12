@@ -1,0 +1,3 @@
+  17919 599112 1066852 /var/lib/ate/actors/1d439934-0e5e-4a30-90dd-9640341efe07/sandbox-assets/cloud-hypervisor --api-socket /run/vc/vm/1d439934-0e5e-4a30-90dd-9640341efe07/clh-api-restore.sock
+  17918  2480 783332 /var/lib/ate/actors/1d439934-0e5e-4a30-90dd-9640341efe07/sandbox-assets/virtiofsd --socket-path=/run/vc/vm/1d439934-0e5e-4a30-90dd-9640341efe07/virtiofsd.sock --shared-dir=/run/ka
+  17916  2204   2960 /var/lib/ate/actors/1d439934-0e5e-4a30-90dd-9640341efe07/sandbox-assets/virtiofsd --socket-path=/run/vc/vm/1d439934-0e5e-4a30-90dd-9640341efe07/virtiofsd.sock --shared-dir=/run/ka
