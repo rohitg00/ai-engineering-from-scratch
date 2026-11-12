@@ -70,7 +70,7 @@ caption: Read top to bottom. The line under each question is the fact or the run
 
 **A hosted sandbox** fits a team that wants an API and no cluster. You give up control of the control plane, and you get no Postgres to operate. Google announced such a service, Agent Compute Engine, on 2026-10-22. It was not open for use on 2026-11-12.
 
-Two more open-source projects sit next to Substrate and do not replace it. NVIDIA OpenShell checks what one agent is allowed to touch, with kernel controls and a policy check on egress. Its README describes no memory snapshot. kagent is a harness on top of Substrate, and [kagent 1.0 on Substrate](#s-kagent-on-substrate) shows what it adds.
+Two more open-source projects sit next to Substrate and do not replace it. NVIDIA OpenShell checks what one agent is allowed to touch, with kernel controls and a policy check on egress. Its README describes no memory snapshot. kagent is a harness on top of Substrate, and [kagent 1.0 on Substrate](#s-kagent-on-substrate) shows what it adds. The project site names a second system that is built on Substrate, Agent Executor from Google. It runs one task as one actor and does not send the suspend for you. We read its code and did not run it, and [Agent Executor on Substrate](#s-agent-executor) has the details.
 
 ## Our recommendation for each situation
 

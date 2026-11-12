@@ -14,6 +14,7 @@ The ranks match [how this manual was made](#s-ref-how-this-manual-was-made). Whe
 | 4 | Agent Substrate issues and pull requests on GitHub | known failures, limits, and the history of a feature |
 | 5 | the kagent source code at its tag v1.0.0 | how a session becomes an actor, and the egress policy that kagent writes |
 | 6 | the agentgateway source code at its tag v1.7.0 | the Substrate policies of the agentgateway dataplane |
+| 7 | the Agent Executor code and documentation at one commit, read and not run | how a task becomes an actor in [7.5](#s-agent-executor) |
 
 Our runs rank above the code on purpose. The code says what the system is built to do. A run says what it did on a real cluster, with the timers, the images, and the installer of the release. Where a run contradicts the documentation, the section reports both.
 
@@ -49,6 +50,8 @@ The manual reads seven parts of the Substrate code most. They are the API defini
 ## Rank 3: documentation at the tag
 
 These pages of the Agent Substrate documentation are cited by their titles. We checked each statement that we repeat against the code, and against a run where we had one.
+
+The project site, ate.dev, serves the same pages at version 1.0. We read all 48 pages of the site on 2026-11-12 and compared the 38 that have a file at the tag with that file. We found differences in rendering only, such as link text and placeholders, and no difference in content. The first page of the site is a source of its own, because it states results with no conditions. [What Substrate does, and what it leaves to you](#s-what-substrate-does-and-what-it-leaves-to-you) sets each of those statements beside our runs.
 
 | Page | Used in |
 |---|---|

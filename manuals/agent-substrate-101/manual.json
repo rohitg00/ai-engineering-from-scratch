@@ -94,6 +94,16 @@
       "name": "agentgateway source at its release tag",
       "path": "github.com/agentgateway/agentgateway v1.7.0",
       "usedFor": "the Substrate policies of the agentgateway dataplane"
+    },
+    {
+      "name": "The Agent Substrate project site at version 1.0",
+      "path": "ate.dev, read 2026-11-12",
+      "usedFor": "the headline claims that section 1.1 sets beside our runs, checked against the docs at the tag"
+    },
+    {
+      "name": "Agent Executor source and documentation",
+      "path": "github.com/google/ax, read 2026-11-12",
+      "usedFor": "section 7.5, read and not run"
     }
   ],
   "quoteSources": {
@@ -285,7 +295,7 @@
       "number": 7,
       "title": "Integrations",
       "thesis": "kagent does the suspending that Substrate leaves to you, and agentgateway can carry the traffic in both directions.",
-      "summary": "kagent 1.0 on Substrate, agentgateway with Substrate, Substrate on GKE, and when Substrate is the right choice.",
+      "summary": "kagent 1.0 on Substrate, agentgateway with Substrate, Substrate on GKE, when Substrate is the right choice, and Agent Executor.",
       "accent": "plum",
       "sections": [
         {
@@ -303,6 +313,10 @@
         {
           "id": "7.4",
           "file": "sections/7-4-when-to-choose-substrate.md"
+        },
+        {
+          "id": "7.5",
+          "file": "sections/7-5-agent-executor.md"
         }
       ]
     },

@@ -117,7 +117,7 @@ The project site, ate.dev, reached version 1.0 with the release. We read it on 2
 | Worker state is scrubbed between runs | Not tested. The security page lists this guarantee as in progress. | no section |
 | JWTs federate with every cloud provider | We decoded one token. We did not test federation. | [5.3](#s-actor-jwts) |
 
-Three statements match our runs as written. Four hold under a condition that the site does not state. Two did not match what we saw, and four we did not test. The two that did not match are the ones to plan for. You must send the suspend, and you must move actors off a dead node.
+Three statements match our runs as written. Four hold under a condition that the site does not state. Two did not match what we saw, and four we did not test. The two that did not match are the ones to plan for. You must send the suspend, and you must act when a node stops.
 
 ## When this is the wrong tool
 
