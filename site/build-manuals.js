@@ -288,6 +288,10 @@ function measuredEvidence(doc, manual) {
     } else if (mac && !l4 && !gb10) rel = folder('capture/out/') ? 'capture/out' : null;
     if (!rel && (l4 || gb10) && folder('capture/gpu/')) rel = 'capture/gpu';
     if (!rel && !l4 && !gb10 && !mac) rel = folder('capture/gpu/') ? 'capture/gpu' : folder('capture/out/') ? 'capture/out' : null;
+    if (!rel && folder('capture/lab/')) {
+      const lab = [...paths].filter(p => p.startsWith('capture/lab/'));
+      rel = lab.find(p => (mac ? /mac/i.test(p) : p.startsWith('capture/lab/summary/'))) || 'capture/lab';
+    }
     block.evidence = rel ? evidenceUrl(path.join(manual.dir, rel), docLine(doc, block.line)) : null;
   }
 }
