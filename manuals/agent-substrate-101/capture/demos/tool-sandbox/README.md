@@ -29,7 +29,7 @@ cat out/tasks.tsv
 5. Do 2 seconds of CPU work on the 500 millicore limit.
 6. Allocate more memory than the 256 MiB limit.
 
-After each task, `run.sh` reverts the actor and checks that `/work` is empty again. Our recorded run is in `capture/lab/N-demos/tool-sandbox/`.
+After each task, `run.sh` reverts the actor and checks that `/work` is empty again. Our recorded run is in `capture/lab/N-demos/tool-sandbox/`. Two changes came after it. `setup` now stops at the first step that fails. The sandbox now keeps only the last 2,000 characters of output while a command runs, where it held all output in memory. The recorded tasks printed less, so their results are the same.
 
 ## Limits
 

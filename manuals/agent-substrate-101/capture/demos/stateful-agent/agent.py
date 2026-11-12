@@ -84,16 +84,15 @@ class Handler(http.server.BaseHTTPRequestHandler):
             self.reply(404, {"error": "use /chat, /note, /history"})
             return
         with chat:
-            memory.append({"role": "user", "content": text})
+            turn = {"role": "user", "content": text}
             try:
-                answer = ask_model(memory)
+                answer = ask_model(memory + [turn])
             except OSError as error:
-                memory.pop()
                 self.reply(502, {"error": f"model call failed: {error}"})
                 return
-            memory.append({"role": "assistant", "content": answer})
             with database() as connection:
                 connection.executemany("insert into turns (role, content) values (?, ?)", [("user", text), ("assistant", answer)])
+            memory.extend([turn, {"role": "assistant", "content": answer}])
             self.reply(200, {"reply": answer, **status()})
 
 

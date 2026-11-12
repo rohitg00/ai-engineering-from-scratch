@@ -78,7 +78,7 @@ class Front(http.server.BaseHTTPRequestHandler):
             reply = upstream.getresponse()
             status, payload = reply.status, reply.read()
             upstream.close()
-        except OSError as error:
+        except (OSError, http.client.HTTPException) as error:
             status, payload = 502, str(error).encode()
         with lock:
             actor["open"] -= 1

@@ -131,9 +131,9 @@ This result differs from the kagent run in [kagent 1.0 on Substrate](#s-kagent-o
 
 ## What to change for production
 
-Keep the write to the durable directory even when you choose memory fidelity. A crashed actor returns to its last durable snapshot, and a revert can drop the newest memory. The file is the record that you control.
+Keep the write to the durable directory even when you choose memory fidelity. A crashed actor returns to its last durable snapshot, and a revert can drop the newest memory. The durable directory is part of that snapshot, so the file goes back with it. A turn is safe only after the next synchronous suspend, or in a store outside the actor.
 
-Choose memory fidelity when a user waits for the first answer after a pause, and your agent holds little memory. Choose volumes fidelity when the agent holds much memory or when you want a clean process for each turn. Then make the image start fast.
+Choose memory fidelity when a user waits for the first answer after a pause, and your agent holds little memory. Choose volumes fidelity when the agent holds much memory or when you want a clean process after each suspend. For a clean process on every turn, the harness must suspend the actor between turns. Then make the image start fast.
 
 ```takeaways
 - Write each turn to a durable directory, and load it when the process starts.

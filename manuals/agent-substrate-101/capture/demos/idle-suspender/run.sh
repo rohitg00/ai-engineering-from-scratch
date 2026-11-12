@@ -8,22 +8,39 @@ MINUTES=${MINUTES:-10}
 HERE=$(cd "$(dirname "$0")" && pwd)
 mkdir -p "$OUT"
 
-K() { kubectl ate "$@" 2>&1 | grep -v '^Warning: no --token-file'; }
+K() {
+  local out code
+  out=$(kubectl ate "$@" 2>&1)
+  code=$?
+  [ -n "$out" ] && printf '%s\n' "$out" | grep -v '^Warning: no --token-file'
+  return "$code"
+}
+must() { "$@" || { echo "failed: $*" >&2; exit 1; }; }
+create() {
+  local out
+  out=$(K create "$@") && return 0
+  case "$out" in *AlreadyExists* | *"already exists"*) return 0 ;; esac
+  echo "$out" >&2
+  return 1
+}
 stamp() { date -u +%FT%T.%3NZ; }
+
+template_ready() { K get actor-templates -a "$SPACE" | awk '$2 == "counter" && $3 ~ /-/' | grep -q .; }
 
 setup() {
   local image
-  image=$(docker inspect --format '{{index .RepoDigests 0}}' "$REGISTRY/drill-actor:v1")
-  kubectl apply -f "$HERE/pool.yaml" > /dev/null
-  K create atespace "$SPACE" > /dev/null
+  image=$(must docker inspect --format '{{index .RepoDigests 0}}' "$REGISTRY/drill-actor:v1") || exit 1
+  must kubectl apply -f "$HERE/pool.yaml" > /dev/null
+  must create atespace "$SPACE"
   sed "s#IMAGE#$image#" "$HERE/template.yaml" > /tmp/idle-template.yaml
-  K create actor-template -f /tmp/idle-template.yaml > /dev/null
-  kubectl -n "$SPACE" rollout status deploy/idle --timeout=180s > /dev/null
+  must create actor-template -f /tmp/idle-template.yaml
+  must kubectl -n "$SPACE" rollout status deploy/idle --timeout=180s > /dev/null
   for _ in $(seq 1 60); do
-    K get actor-templates -a "$SPACE" | awk '$2 == "counter" && $3 ~ /-/' | grep -q . && break
+    template_ready && break
     sleep 2
   done
-  for name in busy bursty rare; do K create actor "$name" -a "$SPACE" --template counter > /dev/null; done
+  must template_ready
+  for name in busy bursty rare; do must create actor "$name" -a "$SPACE" --template counter; done
 }
 
 request() {

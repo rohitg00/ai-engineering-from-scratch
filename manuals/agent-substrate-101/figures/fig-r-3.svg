@@ -56,8 +56,8 @@
   <line x1="480" y1="277" x2="391" y2="277" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-rose)"/>
   <rect class="m-knock" x="392.9" y="260.42" width="85.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
   <text x="435.5" y="271" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">sandbox lost</text>
-  <rect class="m-knock" x="390.92" y="281.42" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="435.5" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">pod, OOM, node</text>
+  <rect class="m-knock" x="402.8" y="281.42" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="435.5" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">pod or OOM</text>
   <line x1="320" y1="298" x2="320" y2="321" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-amber)"/>
   <rect class="m-knock" x="325" y="298.92" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
   <text x="328" y="309.5" font-size="11" fill="var(--m-amber-ink, #85590c)">RevertActor</text>

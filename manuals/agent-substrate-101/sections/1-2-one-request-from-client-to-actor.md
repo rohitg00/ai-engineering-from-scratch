@@ -97,7 +97,7 @@ That share grows with the actor. A restore reads the memory that the actor held,
 
 ## A request to a running actor
 
-A request to a running actor still does steps 1 to 4. `ate-api-server` reads the row, finds `ACTOR_STATE_RUNNING`, and returns at once {{code}}. Steps 5 and 6 do not happen. So each request costs one call to `ate-api-server` and one read from Postgres, also when nothing is resumed.
+A request to a running actor still does steps 1 to 4. `ate-api-server` reads the row, finds `ACTOR_STATE_RUNNING`, and returns at once {{code}}. Steps 5 and 6 do not happen. So a request costs one call to `ate-api-server` and one read from Postgres, also when nothing is resumed. Requests that arrive together for one actor share that call.
 
 Most of the 0.06 s in our recording is the proxy, not Substrate.
 

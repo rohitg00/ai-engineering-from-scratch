@@ -168,7 +168,9 @@ code=404
 
 **We measured** this path on a second x86 server guest (16 vCPU, 23 GB), once on each dataplane. The backend `mock-a` received the model `small-1`, the provider key of the gateway, and the Secret value in `X-Lab`. With `"model":"smart"`, the backend `mock-b` received `big-1` and the second provider key. The placeholder of the actor reached no backend, in 0 log lines. A request for `"model":"other"` returned 404 with `model_not_found` from the model gateway.
 
-So the model gateway selects the model, and the egress policy does not. Two keys are in the path, and the actor holds neither. The egress gateway injects the header that identifies the caller. The model gateway replaces `Authorization` with its own provider key. A credential for the model gateway itself must therefore travel in another header. We did not configure client authentication on the model gateway, and we did not use an Actor JWT here.
+So the model gateway selects the model, and the egress policy does not. Two keys are in the path, and the actor sends neither. Our mock backend printed both in its reply, so the actor read them there. A real backend must not return a credential.
+
+The egress gateway injects the header that identifies the caller. The model gateway replaces `Authorization` with its own provider key. A credential for the model gateway itself must therefore travel in another header. We did not configure client authentication on the model gateway, and we did not use an Actor JWT here.
 
 **The private CA failed at first.** With the default install, the request through the `https` rule returned 503 on both dataplanes. The egress gateway verifies the upstream certificate against the system roots of its own container, and it did not know our CA. [TLS interception](#s-tls-interception) has the two error texts and the patch that fixed it. The patch is lost when the installer runs again.
 

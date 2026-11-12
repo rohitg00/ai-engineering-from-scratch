@@ -3,14 +3,15 @@
   <desc id="fig-8-2b-desc">A timeline of a kind node restart. The Kubernetes API answers again after 8 seconds and all pods run after 147 seconds. The first request to the actor r1 then returns 500, the second returns 503 because the actor is crashed, and after a revert the third waits 5.06 seconds and returns 503 because no worker has room. A request 78 seconds later returns 200.</desc>
   <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE NODE, BY CLOCK TIME</text>
   <rect x="40" y="52" width="350.02" height="12" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <rect x="390.02" y="52" width="198.44" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="390.02" y="52" width="28.16" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="418.18" y="52" width="170.28" height="12" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
   <line x1="82.68" y1="44" x2="82.68" y2="72" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="87.68" y="44" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">kube-api-back: 8 s</text>
   <line x1="390.02" y1="44" x2="390.02" y2="72" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="385.02" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">pods-ready: 147 s</text>
   <circle cx="588.46" cy="58" r="4" fill="var(--m-green-ink, #336b40)"/>
   <text x="596.46" y="44" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">200, count=4</text>
-  <text x="488.8" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-rose-ink, #b0344d)">r1 not served for 90 s</text>
+  <text x="588.46" y="82" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-rose-ink, #b0344d)">3 failed requests, then none sent until +90 s</text>
   <text x="216" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">docker restart kind-control-plane</text>
   <line x1="40" y1="96" x2="590" y2="96" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <line x1="128.66" y1="92" x2="128.66" y2="100" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>

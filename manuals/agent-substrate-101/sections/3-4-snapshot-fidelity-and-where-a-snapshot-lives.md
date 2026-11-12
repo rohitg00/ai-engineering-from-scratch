@@ -135,7 +135,7 @@ caption: Each pair of bars is one place. The full bar is the size with the 25 su
 
 An actor owns one snapshot in the object store, or two after an asynchronous suspend. A synchronous suspend deletes the earlier snapshot. An asynchronous suspend keeps it, because the new snapshot is not yet durable. The first suspend after the new snapshot is durable deletes the old one, and a delete of the actor removes both {{docs}}.
 
-So plan the object store for up to two times the memory that holds data in all suspended actors. Add one golden snapshot for each template. Plan the node disk for the actors that were suspended in the last 30 minutes.
+So plan the object store for up to two times the memory that holds data in all suspended actors. Add one golden snapshot for each template. Plan the node disk for the actors that were suspended in the last 30 minutes. Add the snapshot cache, which still held 1,765 MiB here after we deleted all 25 actors.
 
 ## Two timers decide where the snapshot is
 
@@ -190,7 +190,7 @@ The three periods mean three different things for you.
 
 The documentation promises neither the start nor the end of the upload {{docs}}. Treat 5 minutes as the shortest exposure, not as a limit.
 
-Our position: do not accept the first period for state that matters. A synchronous suspend closes it for one actor. A shorter `--snapshot-upload-delay` on atelet closes it for the cluster. We ran atelet with 3 seconds and 10 seconds for one test, and all 55 requests of that test succeeded. A short detach delay saves node disk and makes every resume a download.
+Our position: do not accept the first period for state that matters. A synchronous suspend closes it for one actor. A shorter `--snapshot-upload-delay` on atelet makes it shorter for the cluster, and does not close it. We ran atelet with 3 seconds and 10 seconds for one test, and all 55 requests of that test succeeded. A short detach delay saves node disk and makes every resume a download.
 
 ## A tag is a copy that does not depend on the node
 

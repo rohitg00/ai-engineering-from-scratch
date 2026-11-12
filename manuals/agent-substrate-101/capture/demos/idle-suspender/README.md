@@ -26,7 +26,7 @@ It prints one tab-separated line for each event: `watch`, `request` (with `resum
 
 `run.sh setup` makes a pool with room for two actors and creates three. `run.sh record` sends ten minutes of traffic with the suspender, then two minutes without it. The files are in `capture/lab/N-demos/idle-suspender/`.
 
-Two changes came after the recording. A request now waits for a suspend in progress, and no request met a suspend in the recording. The run without the suspender now ends after two minutes. In the recording its dry-run log continues for about 400 seconds.
+Two changes came after the recording. A request now waits for a suspend in progress, and no request met a suspend in the recording. The run without the suspender now ends after two minutes. In the recording its dry-run log continues for about 400 seconds. `setup` now stops at the first step that fails, and a reply that breaks off returns 502 to the caller.
 
 ## Limits
 

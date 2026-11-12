@@ -3,7 +3,7 @@
 const { figure } = require('../../../_shared/figkit.js');
 
 const lanes = [
-  { title: 'actor f-main', sub: 'holds no secret', hue: 'green' },
+  { title: 'actor f-main', sub: 'sends no secret', hue: 'green' },
   { title: 'atenet-egress', sub: 'one http rule', hue: 'indigo' },
   { title: 'credential', sub: 'provider k8s.io', hue: 'blue' },
   { title: 'Secret', sub: 'cred-ns/api-token', hue: 'grey' },

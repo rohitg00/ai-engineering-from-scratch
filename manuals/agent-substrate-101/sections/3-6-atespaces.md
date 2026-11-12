@@ -173,7 +173,7 @@ We saw three details that the layout does not tell you.
 
 The atespace is in the path for a reason. An object store can grant access by path prefix, so you can give one team read access to the snapshots of one atespace {{docs}}. We did not test such a grant.
 
-Our position: use one name for the atespace and the namespace when one team owns both, as the demos do. Then treat the labels of your pools as the real boundary. Choose them on purpose, and check which templates name them.
+Our position: use one name for the atespace and the namespace when one team owns both, as the demos do. Then treat the labels of your pools as placement, and not as a fence. Any atespace can name them, and we found no setting at v1.0.0 that limits a pool to one atespace. Choose the labels on purpose, and check which templates name them.
 
 ```takeaways
 - Create the atespace before the first template, with kubectl ate create atespace.

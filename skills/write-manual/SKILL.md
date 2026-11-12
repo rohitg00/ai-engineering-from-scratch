@@ -264,8 +264,8 @@ Audit the tree that you commit, not the tree on your disk. An ignore rule can dr
 
 ```bash
 git add manuals/<id>
-git checkout-index -a --prefix="$TMPDIR/staged/"
-cd "$TMPDIR/staged" && node scripts/audit_manuals.js --manual <id>
+STAGED=$(mktemp -d)
+git checkout-index -a --prefix="$STAGED/" && (cd "$STAGED" && node scripts/audit_manuals.js --manual <id>)
 ```
 
 Inside the repo, also do these before the first push:

@@ -212,17 +212,17 @@ claim: The text of the error tells you the state of the actor, and the state tel
 caption: Read each row left to right. Rose boxes are errors and failed states, and the last row is a full pool with a healthy actor. Seconds are from our runs on the x86 server guest. From capture/lab/D-durability/30-local-loss.tsv, capture/lab/J-container-death/10-trace.tsv, and capture/lab/D-durability/10-watch-part1.tsv.
 ```
 
-Our position: decide in your harness what a crash means, because Substrate will not. After our node restart, `my-counter-1` stayed crashed until we reverted it by hand. A revert is safe to automate for an actor whose last calls can be sent again. For any other actor, suspend with `--mode sync` at each point that you cannot lose.
+Our position: decide in your harness what a crash means, because Substrate will not. After our node restart, `my-counter-1` stayed crashed until we reverted it by hand. A revert is safe to automate for an actor whose last calls can be sent again without a second effect. A tool call that already ran stays done, so the tool must ignore a repeat. For any other actor, suspend with `--mode sync` at each point that you cannot lose.
 
 ```takeaways
-- Read the error text first: AssignWorker means crashed, and upstream connect error means a dead process or a dead node.
+- Read the error text first: AssignWorker names the state after got, upstream connect error means a dead process or node.
 - Call kubectl ate revert actor for a crashed actor, because resume is refused.
 - Call SuspendActor on a running actor that returns 503, so that Substrate marks it crashed.
 - Count the calls since the last COMPLETED snapshot as lost after a revert.
 - Wait until workers are registered before you send requests after a node restart.
 - Keep the crashed 503 out of the retry loop that you use for a full pool.
 - Treat an actor that stays in RESUMING as an actor on a dead node, and check its worker.
-- Send no revert to an actor on a stopped node, unless it is quiet and its workers are unavailable.
+- Revert an actor on a stopped node only after a sync suspend with no later request, and with workers unavailable.
 - After the node returns, send the revert again if the actor is still in REVERTING.
 - Never revert an actor that you suspended in the default mode while its node is down.
 ```

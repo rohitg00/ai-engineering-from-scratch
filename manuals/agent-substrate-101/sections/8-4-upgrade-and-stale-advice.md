@@ -89,7 +89,7 @@ Step 3 is the one that costs you work. Each actor on an old worker receives `SIG
 
 Step 4 has one action that cannot be undone. The first new `ate-api-server` pod migrates the database schema, and a rollback leaves the new schema in place. Take a database backup before step 4. You can roll back to the release you came from and no further.
 
-**Our position:** before any worker upgrade, suspend every actor with `--mode sync` yourself. A synchronous suspend puts the snapshot in the bucket before it returns. Then step 3 finds no running actors, and the 30 minutes do not matter.
+**Our position:** before any worker upgrade, stop new requests and wait for the open ones. Then suspend every actor with `--mode sync` yourself. Keep requests stopped until the workers are replaced, because a request resumes an actor. A synchronous suspend puts the snapshot in the bucket before it returns. Then step 3 finds no running actors, and the 30 minutes do not matter.
 
 ## What we did not test
 

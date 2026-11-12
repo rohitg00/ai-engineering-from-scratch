@@ -152,7 +152,7 @@ Add your own actor to the drill. Replace the image in the template with yours, a
 ```takeaways
 - Run the drill on a test cluster before your first incident, and keep the log.
 - Match the error text to the fix: revert a crashed actor, and suspend another actor when the pool is full.
-- Call suspend on an actor that returns a 503 while its state is running, then revert it.
+- Suspend, then revert, an actor that returns the upstream connect error while it reads running and Postgres is up.
 - Run the drill again after each upgrade, and compare the symptom texts.
 ```
 

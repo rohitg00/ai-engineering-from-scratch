@@ -11,7 +11,7 @@ const four = of(4);
 const at = (points, x) => points.find(point => point.x === x);
 const two = value => value.toFixed(2);
 const one = value => value.toFixed(1);
-const cores = points => points.map(point => `${two(point.host_cores_used.median)} at ${point.x}`).join(', ');
+const cores = points => points.map(point => `${two(point.host_cores_used.median)} cores at ${point.x}`).join(', ');
 const slow = at(single, 250).wall_seconds.median / at(single, 1000).wall_seconds.median;
 const seen = runs.seen_inside_the_actor['250'].num_cpu;
 const total = runs.points.reduce((sum, point) => sum + point.runs.length, 0);

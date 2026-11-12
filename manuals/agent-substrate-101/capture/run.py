@@ -471,8 +471,11 @@ def drill_cases():
         answered = re.search(r"(\d{3}) in ([\d.]+) s", text)
         after = re.search(r"after ([\d.]+) s", text)
         took = re.search(r"\(([\d.]+) s\)", text)
+        gave_up = re.search(r"did not answer in ([\d.]+) s", text)
         if key == "symptom" and answered:
             case["symptoms"].append({"http": int(answered.group(1)), "seconds": round(float(answered.group(2)), 3)})
+        elif key == "detect" and text.startswith("no "):
+            case["detect_timed_out"] = True
         elif key == "detect" and after:
             case["detect_seconds"] = float(after.group(1))
         elif key == "fix":
@@ -482,6 +485,8 @@ def drill_cases():
             case["recoveries"].append({"http": int(answered.group(1)), "seconds": round(float(answered.group(2)), 3)})
         elif key == "recover" and after:
             case["recoveries"].append({"http": 200, "seconds": float(after.group(1))})
+        elif key == "recover" and gave_up:
+            case["recoveries"].append({"http": 0, "seconds": float(gave_up.group(1))})
         elif key == "state" and "state" not in case:
             case["state"] = text
     return cases
@@ -535,7 +540,11 @@ def sandbox_tasks():
         elif row[1] == "revert":
             task["revert_seconds"] = float(row[4])
         else:
-            task.update({"clean_check_seconds": float(row[4]), "files_after_revert": int(json.loads(row[5])["stdout"])})
+            task["clean_check_seconds"] = float(row[4])
+            if int(row[3]) == 200:
+                task["files_after_revert"] = int(json.loads(row[5])["stdout"])
+            else:
+                task["clean_check_error"] = row[5][:200]
     return list(tasks.values())
 
 

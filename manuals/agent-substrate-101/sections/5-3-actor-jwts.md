@@ -1,8 +1,8 @@
 # Actor JWTs
 
-> An actor never holds its own identity token: the egress gateway mints an actor JWT and puts it in a header that an egress rule names.
+> An actor does not store its own identity token: the egress gateway mints an actor JWT and puts it in a header that an egress rule names.
 
-Your actor calls a service that you run, and the service must know which actor is calling. The usual answer is a secret inside the workload. An actor is a bad place for a secret, because its memory goes into every snapshot and any editor can copy it. Substrate gives the actor an identity that the actor cannot read.
+Your actor calls a service that you run, and the service must know which actor is calling. The usual answer is a secret inside the workload. An actor is a bad place for a secret, because its memory goes into every snapshot and any editor can copy it. Substrate gives the actor an identity that the actor does not store. The actor can still read the token when a service returns it.
 
 When you finish this section, you can write the egress rule that attaches an actor JWT and list the claims in the token. You can also say what a service must check before it trusts one.
 
@@ -18,7 +18,7 @@ No API lets an actor request its own token. The token appears only on outbound r
 id: fig-5-3
 kind: sequence
 title: how an actor JWT reaches the service that an actor calls
-claim: The egress gateway mints the token and replaces a header with it, so the service receives an identity that the actor never held.
+claim: The egress gateway mints the token and replaces a header with it, so the service receives an identity that the actor did not send.
 caption: Read from the top down. Green is the actor, indigo is the egress gateway, blue is the control plane, plum is the kagent controller. The names and the numbers are from the policy of one kagent session. From capture/lab/K-kagent/session1/egress-policy-actor.yaml.
 ```
 
@@ -165,12 +165,12 @@ Three things stay unverified after our run. We did not check the signature with 
 
 ## Our position
 
-Use the actor JWT for calls from an actor to services that you control. It removes a secret from the actor, and the 300 second lifetime bounds the damage of a leak. Treat the audience as the real access decision: every atespace editor can write a rule that sends a token to any host. So give each service its own audience, and make each service refuse every other one.
+Use the actor JWT for calls from an actor to services that you control. It removes a secret from the actor, and the 300 second lifetime bounds the damage of a leak. Do not treat the audience as the whole access decision. Every atespace editor can write a rule that sends a token with any audience to any host. So give each service its own audience, and make each service refuse every other one. Each service must also decide which actors in `sub` it serves.
 
 ```takeaways
 - Attach an actor JWT with an actorJwt effect under replaceHeaders in an egress rule.
 - Keep expirationSeconds at 300 unless a service needs a longer token.
-- Check iss, signature, aud, exp, and that sub starts with actor/.
+- Check iss, signature, aud, exp, nbf, and that sub starts with actor/.
 - Bind to actorUID in actor.ate.dev when a name can be used again.
 - Use one audience for each service, and refuse tokens for other audiences.
 ```

@@ -58,7 +58,7 @@ module.exports = figure('fig-r-3', {
   f.text(429, ROWS[1] - 7, 'suspend failed', { size: 11, serif: true, hue: 'ink-soft', anchor: 'end' });
 
   f.arrow([320, ROWS[1] + H], [320, ROWS[2] - 1], { style: 'fail', label: 'resume failed', labelSize: 11 });
-  f.arrow([R, mid(2) + 10], [M + W + 1, mid(2) + 10], { style: 'fail', label: 'sandbox lost', labelSize: 11, note: 'pod, OOM, node' });
+  f.arrow([R, mid(2) + 10], [M + W + 1, mid(2) + 10], { style: 'fail', label: 'sandbox lost', labelSize: 11, note: 'pod or OOM' });
   f.arrow([320, ROWS[2] + H], [320, ROWS[3] - 1], { style: 'state', label: 'RevertActor', labelSize: 11 });
 
   f.arrow([M, ROWS[3] + 18], [L + W + 1, ROWS[3] + 18], { style: 'state', label: 'reverted', labelSize: 11 });

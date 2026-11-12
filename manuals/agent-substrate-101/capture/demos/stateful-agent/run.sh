@@ -6,24 +6,45 @@ OUT=${OUT:-./out}
 HERE=$(cd "$(dirname "$0")" && pwd)
 mkdir -p "$OUT"
 
-K() { kubectl ate "$@" 2>&1 | grep -v '^Warning: no --token-file'; }
+K() {
+  local out code
+  out=$(kubectl ate "$@" 2>&1)
+  code=$?
+  [ -n "$out" ] && printf '%s\n' "$out" | grep -v '^Warning: no --token-file'
+  return "$code"
+}
+must() { "$@" || { echo "failed: $*" >&2; exit 1; }; }
+create() {
+  local out
+  out=$(K create "$@") && return 0
+  case "$out" in *AlreadyExists* | *"already exists"*) return 0 ;; esac
+  echo "$out" >&2
+  return 1
+}
 
 setup() {
-  docker build -q -t "$REGISTRY/stateful-agent:v1" "$HERE" > /dev/null
-  docker push -q "$REGISTRY/stateful-agent:v1" > /dev/null
+  must docker build -q -t "$REGISTRY/stateful-agent:v1" "$HERE" > /dev/null
+  must docker push -q "$REGISTRY/stateful-agent:v1" > /dev/null
   local image
-  image=$(docker inspect --format '{{index .RepoDigests 0}}' "$REGISTRY/stateful-agent:v1")
-  sed "s#IMAGE#$image#" "$HERE/cluster.yaml" | kubectl apply -f - > /dev/null
+  image=$(must docker inspect --format '{{index .RepoDigests 0}}' "$REGISTRY/stateful-agent:v1") || exit 1
+  sed "s#IMAGE#$image#" "$HERE/cluster.yaml" | must kubectl apply -f - > /dev/null
+  local others
+  others=$(kubectl -n ate-system get configmap k8s-credential-provider-namespace-policy -o jsonpath='{.data.namespace-policy\.yaml}' 2> /dev/null \
+    | grep -E '^[[:space:]]*- atespace:' | grep -v "atespace: $SPACE\$")
+  if [ -n "$others" ]; then
+    echo "the namespace policy grants other atespaces; add the entry of provider-policy.yaml to it by hand" >&2
+    exit 1
+  fi
   kubectl -n ate-system create configmap k8s-credential-provider-namespace-policy \
-    --from-file=namespace-policy.yaml="$HERE/provider-policy.yaml" --dry-run=client -o yaml | kubectl apply -f - > /dev/null 2>&1
-  kubectl -n ate-system rollout restart deploy/k8s-credential-provider > /dev/null
-  kubectl -n ate-system rollout status deploy/k8s-credential-provider --timeout=120s > /dev/null
-  kubectl -n "$SPACE" rollout status deploy/mock-llm --timeout=180s > /dev/null
-  kubectl -n "$SPACE" rollout status deploy/agent --timeout=180s > /dev/null
-  K create atespace "$SPACE" > /dev/null
+    --from-file=namespace-policy.yaml="$HERE/provider-policy.yaml" --dry-run=client -o yaml | must kubectl apply -f - > /dev/null 2>&1
+  must kubectl -n ate-system rollout restart deploy/k8s-credential-provider > /dev/null
+  must kubectl -n ate-system rollout status deploy/k8s-credential-provider --timeout=120s > /dev/null
+  must kubectl -n "$SPACE" rollout status deploy/mock-llm --timeout=180s > /dev/null
+  must kubectl -n "$SPACE" rollout status deploy/agent --timeout=180s > /dev/null
+  must create atespace "$SPACE"
   for pair in memory:SNAPSHOT_FIDELITY_MEMORY volumes:SNAPSHOT_FIDELITY_VOLUMES; do
     sed -e "s#IMAGE#$image#" -e "s#FIDELITY_NAME#${pair%%:*}#" -e "s#FIDELITY_VALUE#${pair##*:}#" "$HERE/template.yaml" > "/tmp/agent-${pair%%:*}.yaml"
-    K create actor-template -f "/tmp/agent-${pair%%:*}.yaml" > /dev/null
+    must create actor-template -f "/tmp/agent-${pair%%:*}.yaml"
   done
   sleep 30
   K get actor-templates -a "$SPACE"
@@ -36,8 +57,9 @@ post() {
 
 session() {
   local kind=$1 port=$2 name=agent-$1-1 log="$OUT/session-$1.tsv"
-  K create actor "$name" -a "$SPACE" --template "agent-$kind" > /dev/null
-  K create egress-policy "$name" -a "$SPACE" -f "$HERE/egress-policy.yaml" > "$OUT/egress-policy-$kind.txt"
+  must create actor "$name" -a "$SPACE" --template "agent-$kind"
+  K create egress-policy "$name" -a "$SPACE" -f "$HERE/egress-policy.yaml" > "$OUT/egress-policy-$kind.txt" \
+    || must grep -q -e AlreadyExists -e 'already exists' "$OUT/egress-policy-$kind.txt"
   kubectl ate proxy actor "$name" -a "$SPACE" "$port:80" > "/tmp/agent-proxy-$kind.log" 2>&1 &
   for _ in $(seq 1 40); do grep -q Proxying "/tmp/agent-proxy-$kind.log" 2>/dev/null && break; sleep 0.3; done
   printf 'step\thttp\tseconds\treply\n' > "$log"

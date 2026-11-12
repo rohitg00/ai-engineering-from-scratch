@@ -68,7 +68,7 @@ The enum `ActorState` has seven values at v1.0.0 {{code}}. The state diagram on 
 | `ACTOR_STATE_REVERTING` | A revert that is not complete | 503 at once, with the state in the text |
 | `ACTOR_STATE_DELETING` | A delete that is not complete | 503 at once, with the state in the text |
 
-Three of these states are stable. `ACTOR_STATE_SUSPENDED` and `ACTOR_STATE_CRASHED` last until a call arrives. `ACTOR_STATE_RUNNING` lasts until a caller suspends the actor, and [section 3.3](#s-suspendactor-and-resumeactor) proves that Substrate does not do it. The other four states are steps of one operation.
+Three of these states are stable. `ACTOR_STATE_SUSPENDED` lasts until a request or a resume call arrives. `ACTOR_STATE_CRASHED` lasts until a revert or a delete, and a request does not end it. `ACTOR_STATE_RUNNING` lasts until a caller suspends the actor or Substrate marks it crashed. [Section 3.3](#s-suspendactor-and-resumeactor) proves that Substrate does not suspend it. The other four states are steps of one operation.
 
 `ACTOR_STATE_RUNNING` does not prove that the process is alive. Two actors whose process had exited read `ACTOR_STATE_RUNNING` for the 20 minutes of our watch. [Section 3.5](#s-crashed-and-revertactor) shows that run.
 
@@ -133,7 +133,7 @@ Our position: read the state before you debug the network. `kubectl ate get acto
 - Use the enum in the proto as the list of states, not the diagram in the docs.
 - Watch metadata.version to see if an actor changed between two reads.
 - Send a request to start a suspended actor, because the router calls ResumeActor.
-- Expect only your own calls to move an actor out of RUNNING or CRASHED.
+- Expect only your own calls to end CRASHED, and only a call or a crash to end RUNNING.
 ```
 
 Sources: capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/93-after-node-return.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/00-actor-before.json, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/summary/failures-x86.json. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorState, ActorStatus, Actor), cmd/ateapi/internal/controlapi/workflow_resume.go, workflow_suspend.go, workflow_revert.go, docs/reference/api-guide.md (ResumeActor, SuspendActor, RevertActor, DeleteActor), docs/concepts/architecture.md (the state diagram).

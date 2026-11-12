@@ -159,7 +159,7 @@ The project site states `500+/s` suspend and resume activations. We did not test
 
 ```takeaways
 - Read a 503 after 5 seconds with the text no worker has room as a pool that is too small.
-- Read a 503 in under 0.1 seconds as a crashed actor, and revert it.
+- Read the text of a fast 503 before you act: it names a crashed state or a full router.
 - Set the client timeout to 10 seconds or more for actors that can be suspended.
 - Alert on atenet.router.parking.active, and add workers when it stays above zero.
 - Retry a capacity 503 with a pause, never in a tight loop.

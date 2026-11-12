@@ -22,7 +22,7 @@ export REGISTRY=localhost:5001
 OUT=./out ./run.sh record
 ```
 
-`setup` replaces the namespace policy of the bundled credential provider. Use a test cluster.
+`setup` replaces the namespace policy of the bundled credential provider. It stops when that policy already grants another atespace, so that it removes no grant. Add the entry of `provider-policy.yaml` by hand in that case.
 
 ## What to look at
 
@@ -31,7 +31,7 @@ OUT=./out ./run.sh record
 - `process_age_s`: it keeps growing under memory fidelity and starts again under volumes fidelity.
 - `rehydrated_from_db`: the turns the agent loaded from SQLite when its process started.
 
-Our recorded run is in `capture/lab/N-demos/stateful-agent/`. The agent now handles one chat turn at a time. The recording sent one turn at a time, so it is the same.
+Our recorded run is in `capture/lab/N-demos/stateful-agent/`. The agent now handles one chat turn at a time. The recording sent one turn at a time, so it is the same. The agent now adds a turn to its memory after SQLite stored it, and `setup` stops at the first step that fails.
 
 ## Needs
 

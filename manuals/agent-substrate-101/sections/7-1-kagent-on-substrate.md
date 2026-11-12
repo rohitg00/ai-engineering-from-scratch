@@ -20,6 +20,19 @@ The documented CLI path worked with no fix. We used a kind cluster on Kubernetes
 
 **We measured** each step once, on a second x86 server guest (16 vCPU, 31 GB). The install command took 216 s and ended with exit code 0.
 
+The install command reads one small file.
+
+```listing
+title: the installer configuration that we used
+source: capture/lab/K-kagent/install/kagent-config.yaml
+lang: yaml
+note: The complete file. The values file that it names holds one setting, grpcReflection true under config.server.
+---
+install:
+  kagent:
+    valuesFiles: [kagent-values.yaml]
+```
+
 kagent does not use a Substrate that you installed before. It installs its own distribution of Substrate, from images named `ghcr.io/kagent-dev/substrate/*:v1.0.0`. The install made six Helm releases: `kagent-crds`, `substrate-crds`, `substrate-podcert`, `substrate-atelet`, `substrate`, and `kagent`. In this distribution, `atenet-router` and `atenet-egress` each run one agentgateway v1.7.0 container. It has no Envoy.
 
 The Substrate charts are not in the kagent repository. The installer pulls them from the chart registry of the kagent project. The kagent code builds against the kagent copy of the Substrate repository at v1.0.0 {{kagent}}. The installer also sets four Substrate values that change how the install behaves {{kagent}}.

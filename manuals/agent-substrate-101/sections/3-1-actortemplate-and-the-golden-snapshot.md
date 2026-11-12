@@ -1,6 +1,6 @@
 # ActorTemplate and the golden snapshot
 
-> Substrate snapshots each ActorTemplate once, and every new actor starts suspended from that snapshot, so its first call pays a restore.
+> Substrate snapshots each ActorTemplate once, and an actor created after that starts suspended from the snapshot, so its first call pays a restore.
 
 Your agent image takes several seconds to import its libraries and load its tools. With a Deployment, every new pod pays those seconds again. Substrate moves that cost to the template. It starts the image once, takes a snapshot, and creates every new actor from that snapshot. The cost does not disappear: the first request to a new actor restores the snapshot, and the restore grows with the memory in it.
 
@@ -63,7 +63,7 @@ note: One line of the trace. The time and the event name at the start of the lin
 …Error: failed to update actor: rpc error: code = FailedPrecondition desc = actor must be ACTOR_STATE_SUSPENDED to change its actor template (got: ACTOR_STATE_RUNNING) 
 ```
 
-On the suspended actor the update was accepted, and the next call ran the new image. The count in memory started again at 1, and so did the count on the root filesystem. The count on the `durableDir` volume continued at 4. So a move keeps the volumes and drops the old memory snapshot. Suspend first, and expect a cold start of the new image on the next call.
+On the suspended actor the update was accepted, and the next call ran the new image. The count in memory started again at 1, and so did the count on the root filesystem. The count on the `durableDir` volume continued at 4. So this move kept the `durableDir` volume and dropped the old memory snapshot. We did not test a move with an external volume. Suspend first, and expect a cold start of the new image on the next call.
 
 ## The golden snapshot is built once
 
@@ -140,7 +140,7 @@ You can turn the golden snapshot off with `snapshotConfig.goldenSnapshotConfig.m
 
 ## A new actor starts suspended
 
-`kubectl ate create actor` writes one row in Postgres and touches no worker, so its time does not depend on the template. The new actor is suspended, and it already has a snapshot.
+`kubectl ate create actor` writes one row in Postgres and touches no worker, so its time does not depend on the template. The new actor is suspended. It already has a snapshot when the template had its golden tag at that moment.
 
 ```listing
 title: the actor my-counter-1 directly after create
@@ -187,7 +187,7 @@ Read three fields. `state` is `ACTOR_STATE_SUSPENDED`, so no sandbox exists yet.
 id: fig-3-1
 kind: flow
 title: from ActorTemplate to the first call
-claim: Substrate builds one golden snapshot for each template, and every new actor starts suspended from it.
+claim: Substrate builds one golden snapshot for each template, and an actor created after that starts suspended from it.
 caption: Read the top row once for each template and the bottom row once for each actor. The numbers match the key. Names and seconds are from our resume tests on the x86 server guest. From capture/lab/C-resume-vs-size/10-local.tsv and capture/lab/C-resume-vs-size/02-templates.txt.
 ```
 
@@ -215,14 +215,14 @@ caption: Each teal dot is the first call of one new actor, five for each size, a
 
 Up to 200 MiB the first call costs about the same as a later resume. At 500 MiB and above it costs three to five times more, and the spread is wide. We did not find the cause of that spread. We can say where the node kept data. Its `snapshot-cache` directory held 1,765 MiB, and the five snapshot sizes of our templates add up to 1,760 MiB.
 
-Our position: the golden snapshot is a good place for slow start code and a bad place for large memory. If your template holds more than about 200 MiB, send one request to each new actor before a user does. Then suspend it. Every later resume follows the lower line.
+Our position: the golden snapshot is a good place for slow start code and a bad place for large memory. If your template holds more than about 200 MiB, send one request to each new actor before a user does. Use a request that changes no state: our counter adds one on every call. Then suspend it. A later resume from the node copy follows the lower line.
 
 ```takeaways
 - Pin the image of a template by digest, and set both resource limits.
 - Give every container a wakeupProbe, so the golden snapshot needs no extra 20 seconds.
 - Wait for the GOLDEN TAG column before you create the first actor.
 - Create a new template for new code, suspend each actor, and then move it.
-- Send one request to a large new actor before a user does.
+- Send one request that changes no state to a large new actor before a user does.
 ```
 
 Sources: capture/lab/summary/resume-x86.json, capture/lab/C-resume-vs-size/tmpl-200.yaml, capture/lab/C-resume-vs-size/02-templates.txt, capture/lab/C-resume-vs-size/09-templates-at-start.txt, capture/lab/C-resume-vs-size/10-local.tsv, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/00-image.txt, capture/lab/B-lifecycle/00-actor-before.json, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/footprint-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/V-validation/02-python-runtime/10-python.tsv, capture/lab/V-validation/05-golden-race/10-race.tsv, capture/lab/V-validation/06-template-move/10-move.tsv. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorTemplate, GoldenSnapshotMode, Snapshot, SnapshotOwner), cmd/ateapi/internal/controlapi/template_reconciler.go (goldenSnapshotWarmup), docs/reference/api-guide.md (The Golden Snapshot, Container Wakeup Probe, UpdateActor).

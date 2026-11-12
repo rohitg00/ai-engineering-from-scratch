@@ -15,13 +15,19 @@ const panels = ['postgres', 'ate-api-server', 'kube-apiserver'].map((key, index)
   const failed = points.filter(point => !point.ok);
   const served = points.filter(point => point.ok);
   const sorted = served.map(point => point.seconds).sort((a, b) => a - b);
-  return { key, x: 52 + index * 196, data: outages[key], failed, served, slowest: failed.length ? Math.max(...failed.map(point => point.seconds)) : 0, median: sorted[Math.floor(sorted.length / 2)] };
+  return { key, x: 52 + index * 196, data: outages[key], points, failed, slowest: failed.length ? Math.max(...failed.map(point => point.seconds)) : 0, median: sorted[Math.floor(sorted.length / 2)] };
 });
 function stretches(points) {
   const out = [];
+  let joined = false;
   points.forEach((point, index) => {
-    if (index && point.t - points[index - 1].t <= 2) out[out.length - 1].push(point);
+    if (!point.ok) {
+      joined = false;
+      return;
+    }
+    if (joined && point.t - points[index - 1].t <= 2) out[out.length - 1].push(point);
     else out.push([point]);
+    joined = true;
   });
   return out;
 }
@@ -48,7 +54,7 @@ module.exports = figure('fig-8-2c', {
     const c = chart(f, { x: panel.x, y: TOP, w: WIDTH, h: HEIGHT, xDomain: [FIRST, LAST], yDomain: [0, 10], xTicks: [0, 30, 60, 90], yTicks: [0, 3, 6, 9], xFormat: t => `${t}`, yLabel: index ? undefined : 'seconds until the answer' });
     f.kicker(panel.x, 48, names[panel.key], { hue: 'ink-soft' });
     f.rule(c.px(panel.data.dependency_ready_t), TOP, c.px(panel.data.dependency_ready_t), TOP + HEIGHT, { hue: 'ink', dash: 'dashed' });
-    for (const run of stretches(panel.served)) c.series(run.map(point => [point.t, point.seconds]), { hue: 'green', dots: run.length === 1, width: 2.2, r: 2 });
+    for (const run of stretches(panel.points)) c.series(run.map(point => [point.t, point.seconds]), { hue: 'green', dots: run.length === 1, width: 2.2, r: 2 });
     for (const point of panel.failed) f.dot(c.px(point.t), c.py(point.seconds), { hue: 'rose', r: 2 });
     panel.c = c;
   });

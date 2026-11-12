@@ -98,7 +98,7 @@ Read the address from left to right: the snapshot location, `atespaces`, the ate
 
 On kind the bucket is rustfs, an S3-compatible server that runs as one pod in `ate-system`. The address still starts with `gs://`. The scheme names the location that the installer set, and the object store plugin decides which service receives the bytes. Do not read the scheme as proof that data went to Google Cloud.
 
-Two more facts come from the code and the documentation at the tag. An actor owns one durable snapshot at a time, and the next successful suspend releases the one before it. `ate-api-server` deletes the objects before it drops the row, so a failure between the two steps can leave objects with no owner. It cannot leave a row that points at nothing.
+Two more facts come from the code and the documentation at the tag. An actor owns one durable snapshot at a time, and the next successful suspend releases the one before it. `ate-api-server` deletes the objects before it drops the row. A failure between the two steps leaves the row in `ACTOR_STATE_DELETING` with its objects gone, and a repeated delete finishes the work. It does not leave objects with no row.
 
 [Figure 8.1](#fig-8-1) puts the three places together.
 
@@ -128,11 +128,11 @@ The node held one copy of each snapshot, 8,801 MiB for 8,750 MiB of actor memory
 
 The node copy is the part that people forget. After an asynchronous suspend, `atelet` keeps the files on the node for 30 minutes, as [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) shows. Those files sit in a host directory that Kubernetes charges to no pod. A public issue reports a node that crossed its disk pressure threshold this way, after which the kubelet evicted the worker pods.
 
-**Our position:** size the node disk for the memory of every actor that can suspend on that node inside 30 minutes, plus the snapshot cache. Size the bucket for the memory of every suspended actor, plus one golden snapshot for each template. Both numbers are upper limits for memory fidelity, because only the memory that holds data counts. A files-only snapshot is far smaller. For an actor with one small file in its volume, it was 44 KiB on the node and 48 KiB in the bucket.
+**Our position:** size the node disk for the memory of every actor that can suspend on that node inside 30 minutes, plus the snapshot cache. Size the bucket for the memory of every suspended actor, plus one golden snapshot for each template. For memory fidelity, count the memory that holds data and add about 1 percent: our node held 8,801 MiB for 8,750 MiB. Keep free space above both numbers. A files-only snapshot is far smaller. For an actor with one small file in its volume, it was 44 KiB on the node and 48 KiB in the bucket.
 
 ## What we did not test
 
-Our object store was rustfs in the same cluster and on the same disk as the node. We did not test Google Cloud Storage, Amazon S3, or any bucket across a network. We did not test an external Postgres, a Postgres restore, or a bucket restore.
+Our object store was rustfs in the same cluster and on the same disk as the node. We did not test Google Cloud Storage, Amazon S3, or any bucket across a network. We did not test an external Postgres, a Postgres restore, or a bucket restore. So we give no tested backup procedure. Two backups at the same clock time are not one consistent backup. A suspend or a delete between them leaves rows and objects out of step.
 
 ```takeaways
 - List actors with `kubectl ate get actor`, because Kubernetes holds no actor object.

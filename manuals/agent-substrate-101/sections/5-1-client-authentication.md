@@ -61,6 +61,8 @@ kubectl create token alice -n ate-users --audience api.ate-system.svc --duration
 kubectl ate --token-file alice.token get actors -a lab-v
 ```
 
+The file holds a bearer token. Run `umask 077` before you create it, so that no other user of the machine can read it.
+
 The principal is then `system:serviceaccount:ate-users:alice`. It can do nothing until an access policy grants it a role. The server accepted the token and refused the call.
 
 ```listing
@@ -84,7 +86,7 @@ We ran each row once on the x86 server guest. The second row is the mistake to e
 
 Three facts from the documentation limit how far you can trust this setup:
 
-- **A token outlives its ServiceAccount.** The server checks the signature and the expiry, and it does not ask Kubernetes if the account still exists. The token works until its expiry time plus five minutes, which the server allows for clock differences. To stop a person at once, remove the person from the access policies.
+- **A token outlives its ServiceAccount.** The server checks the signature and the expiry, and it does not ask Kubernetes if the account still exists. The token works until its expiry time plus five minutes, which the server allows for clock differences. To stop a person at once, remove the person from the access policies. A bootstrap owner is in no policy: remove it from the server flag and restart `ate-api-server`.
 - **The CLI needs port-forward rights.** Without `--endpoint`, `kubectl ate` opens a port-forward into `ate-system`. In practice that right covers every pod and port in the namespace, so it also reaches the admin ports of the dataplane.
 - **Issuers are not part of the principal.** If you trust two issuers, either one can issue a token with the `sub` of a principal from the other.
 

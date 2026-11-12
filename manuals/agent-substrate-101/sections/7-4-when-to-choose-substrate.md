@@ -36,7 +36,7 @@ One limit of this section comes first. We ran Substrate and kagent. We did not r
 
 **We measured** 13 node-stop cases on a second x86 server guest (16 vCPU, 23 GB), once each, on a cluster with two worker nodes. No actor left the stopped node by itself. A new actor from a tag that existed before the stop served its first request after 1.2 s, in 3 of 3 rescues. One `revert` freed a quiet actor in 7.1 s, and a `revert` in any other situation left the actor in `ACTOR_STATE_REVERTING`. After an outage of more than 6 minutes, the returned node had no pool pod in 7 of 7 returns. [When a dependency is down](#s-when-a-dependency-is-down) has the runbook.
 
-A pod per agent does not have this cost in the same form. Kubernetes starts a new pod on another node, and the state in memory is lost with the old one. With Substrate the state can survive, if you made a tag or a synchronous suspend, and if your operator follows the runbook.
+A pod per agent does not have this cost in the same form. With a Deployment or a StatefulSet, Kubernetes starts a new pod on another node, and the state in memory is lost with the old one. With Substrate the state can survive, if you made a tag or a synchronous suspend, and if your operator follows the runbook.
 
 **No GPU.** At v1.0.0 an actor cannot use a GPU.
 
@@ -92,7 +92,7 @@ Two more open-source projects sit next to Substrate and do not replace it. NVIDI
 | A rule for each model or each tool | Substrate and a second gateway | The egress policy stops at hosts, ports, and one header. See [agentgateway with Substrate](#s-agentgateway). |
 | State that must not lose the last 5 minutes | Substrate with the synchronous suspend | The default suspend uploads later. The synchronous suspend makes the snapshot durable, and no more. See [SuspendActor and ResumeActor](#s-suspendactor-and-resumeactor). |
 
-The last row is about data, and not about availability. A synchronous suspend puts the snapshot in the object store before the call returns. It does not make the actor available after a node loss or a cordon.
+The last row is about data, and not about availability. A synchronous suspend puts the snapshot in the object store before the call returns. It does not make the actor available after a node loss or a cordon. It also protects only what the actor held at that suspend. Work after the next resume is exposed until the next synchronous suspend, so suspend as often as your loss limit asks.
 
 **We measured** this on a second x86 server guest (16 vCPU, 23 GB), on a cluster with two worker nodes, one run for each case. An actor that we suspended with `--mode sync` stayed bound to its node. It resumed on that node while the node was cordoned. When the node stopped, its requests failed, and it became `ACTOR_STATE_CRASHED` 5 min 44 s after the stop command. The other node had free workers the whole time.
 

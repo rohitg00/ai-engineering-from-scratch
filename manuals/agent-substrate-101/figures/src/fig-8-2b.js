@@ -12,14 +12,15 @@ module.exports = figure('fig-8-2b', {
 }, f => {
   f.kicker(20, 20, 'the node, by clock time');
   f.rect(main(0), 52, main(159.1) - main(0), 12, { hue: 'grey' });
-  f.rect(main(159.1), 52, main(249.3) - main(159.1), 12, { hue: 'rose' });
+  f.rect(main(159.1), 52, main(171.9) - main(159.1), 12, { hue: 'rose' });
+  f.rect(main(171.9), 52, main(249.3) - main(171.9), 12, { hue: 'grey', dash: 'dashed' });
   f.rule(main(19.4), 44, main(19.4), 72, { hue: 'ink' });
   f.text(main(19.4) + 5, 44, 'kube-api-back: 8 s', { size: 11, hue: 'ink-soft' });
   f.rule(main(159.1), 44, main(159.1), 72, { hue: 'ink' });
   f.text(main(159.1) - 5, 44, 'pods-ready: 147 s', { size: 11, anchor: 'end', hue: 'ink-soft' });
   f.dot(main(249.3), 58, { hue: 'green', r: 4 });
   f.text(main(249.3) + 8, 44, '200, count=4', { size: 11, anchor: 'end', hue: 'green' });
-  f.text(main(204), 82, `r1 not served for ${Math.round(249.3 - 159.1)} s`, { size: 11, serif: true, anchor: 'middle', hue: 'rose' });
+  f.text(main(249.3), 82, `3 failed requests, then none sent until +${Math.round(249.3 - 159.1)} s`, { size: 11, serif: true, anchor: 'end', hue: 'rose' });
   f.text(main(80), 82, 'docker restart kind-control-plane', { size: 11, serif: true, anchor: 'middle', hue: 'ink-soft' });
   f.rule(main(0), 96, main(250), 96, { hue: 'ink' });
   [['11:42', 40.3], ['11:43', 100.3], ['11:44', 160.3], ['11:45', 220.3]].forEach(([label, s]) => {

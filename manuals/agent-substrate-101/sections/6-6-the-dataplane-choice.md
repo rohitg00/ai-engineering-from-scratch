@@ -118,7 +118,7 @@ note: Requests 6 to 9 of 20 on one connection. The field new_conns=0 and the sam
 …
 ```
 
-So the rule is: a removal stops requests, and it does not stop a response that is streaming or a pass-through connection. Removing a rule is therefore not a way to cut off an actor now. To do that, remove the rule and then suspend the actor.
+So the rule is: a removal stops requests, and it does not stop a response that is streaming or a pass-through connection. Removing a rule is therefore not a way to cut off an actor now. For an `http` rule, remove the rule and then suspend the actor.
 
 **We measured** that cut-off once on each dataplane, on the same guest (16 vCPU, 23 GB). The actor held one open HTTP response from a host that writes one chunk each second. An asynchronous `suspend actor` returned in 0.64 s on agentgateway and in 0.54 s on Envoy. The upstream saw the connection gone 2.2 s and 1.3 s after the suspend call began. It writes once each second, so the real close can be up to 1 s earlier.
 

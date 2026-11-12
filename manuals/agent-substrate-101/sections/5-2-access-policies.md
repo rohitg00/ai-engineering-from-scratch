@@ -18,7 +18,7 @@ Most of our runs used the default owner. For this section we used one ServiceAcc
 
 In every other case the call fails with `PermissionDenied`. Authorization cannot be turned off. The model runs inside `ate-api-server` on an embedded OpenFGA engine, and it stores its data in the same Postgres database as the actors.
 
-**Access policy:** the list of role bindings for one scope. Each scope has exactly one policy, and its name is `default`.
+**Access policy:** the list of role bindings for one scope. Each scope has at most one policy, and its name is `default`.
 
 ```figure
 id: fig-5-2
@@ -79,12 +79,17 @@ bindings:
   - user:system:serviceaccount:ate-users:alice
 ```
 
-A member is the principal with the prefix `user:`. The four commands follow the pattern of the other `kubectl ate` objects:
+A member is the principal with the prefix `user:`. Three commands create, read, and change a policy. They follow the pattern of the other `kubectl ate` objects:
 
 ```bash
 kubectl ate create access-policy -a lab-v -f policy-viewer.yaml
 kubectl ate get access-policy -a lab-v -o yaml > current.yaml
 kubectl ate update access-policy -a lab-v -f current.yaml
+```
+
+The fourth command removes every binding of the scope. Run it only when you mean that:
+
+```bash
 kubectl ate delete access-policy -a lab-v
 ```
 

@@ -127,7 +127,7 @@ After 60 seconds both places were still taken by `busy` and `bursty`, and `burst
 - **It sees only its own traffic.** A request that reaches the router another way does not reset the timer. Send all traffic through the suspender, or the suspender stops an actor that is in use.
 - **Idle means no request, not no work.** An actor that computes after it answers looks idle. The usage events can cover that case, at a delay of one minute.
 - **One process holds the state.** A restart forgets the last request times. The demo then reads the state of each actor and starts its timers again.
-- **A request can arrive during a suspend.** The demo checks for an open request before it calls suspend, and not during the call. We did not test a request that arrives in that half second.
+- **A request can arrive during a suspend.** The demo holds a new request until its suspend call ends, and then forwards it. Your own suspender needs the same rule for each actor. A request that reaches the router another way still gets a 503.
 - **The demo uses the CLI.** Each suspend starts one process and uses the shared identity of the CLI.
 
 ## What to change for production

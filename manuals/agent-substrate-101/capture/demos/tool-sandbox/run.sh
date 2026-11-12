@@ -7,28 +7,45 @@ PORT=8901
 HERE=$(cd "$(dirname "$0")" && pwd)
 mkdir -p "$OUT"
 
-K() { kubectl ate "$@" 2>&1 | grep -v '^Warning: no --token-file'; }
+K() {
+  local out code
+  out=$(kubectl ate "$@" 2>&1)
+  code=$?
+  [ -n "$out" ] && printf '%s\n' "$out" | grep -v '^Warning: no --token-file'
+  return "$code"
+}
+must() { "$@" || { echo "failed: $*" >&2; exit 1; }; }
+create() {
+  local out
+  out=$(K create "$@") && return 0
+  case "$out" in *AlreadyExists* | *"already exists"*) return 0 ;; esac
+  echo "$out" >&2
+  return 1
+}
 now() { date +%s.%N; }
 since() { awk -v a="$1" -v b="$(now)" 'BEGIN { printf "%.2f", b - a }'; }
 state() { kubectl ate get actor task-1 -a "$SPACE" -o json 2>/dev/null | jq -r '.status.state | sub("ACTOR_STATE_"; "")'; }
 
+template_ready() { K get actor-templates -a "$SPACE" | awk '$2 == "sandbox" && $3 ~ /-/' | grep -q .; }
+
 setup() {
-  docker build -q -t "$REGISTRY/tool-sandbox:v1" "$HERE" > /dev/null
-  docker push -q "$REGISTRY/tool-sandbox:v1" > /dev/null
+  must docker build -q -t "$REGISTRY/tool-sandbox:v1" "$HERE" > /dev/null
+  must docker push -q "$REGISTRY/tool-sandbox:v1" > /dev/null
   local image
-  image=$(docker inspect --format '{{index .RepoDigests 0}}' "$REGISTRY/tool-sandbox:v1")
-  sed "s#IMAGE#$image#" "$HERE/cluster.yaml" | kubectl apply -f - > /dev/null
-  kubectl -n "$SPACE" rollout status deploy/pkg-mirror --timeout=180s > /dev/null
-  kubectl -n "$SPACE" rollout status deploy/tools --timeout=180s > /dev/null
-  K create atespace "$SPACE" > /dev/null
+  image=$(must docker inspect --format '{{index .RepoDigests 0}}' "$REGISTRY/tool-sandbox:v1") || exit 1
+  sed "s#IMAGE#$image#" "$HERE/cluster.yaml" | must kubectl apply -f - > /dev/null
+  must kubectl -n "$SPACE" rollout status deploy/pkg-mirror --timeout=180s > /dev/null
+  must kubectl -n "$SPACE" rollout status deploy/tools --timeout=180s > /dev/null
+  must create atespace "$SPACE"
   sed "s#IMAGE#$image#" "$HERE/template.yaml" > /tmp/sandbox-template.yaml
-  K create actor-template -f /tmp/sandbox-template.yaml > /dev/null
+  must create actor-template -f /tmp/sandbox-template.yaml
   for _ in $(seq 1 60); do
-    K get actor-templates -a "$SPACE" | awk '$2 == "sandbox" && $3 ~ /-/' | grep -q . && break
+    template_ready && break
     sleep 2
   done
-  K create actor task-1 -a "$SPACE" --template sandbox > /dev/null
-  K create egress-policy task-1 -a "$SPACE" -f "$HERE/egress-policy.yaml" > /dev/null
+  must template_ready
+  must create actor task-1 -a "$SPACE" --template sandbox
+  must create egress-policy task-1 -a "$SPACE" -f "$HERE/egress-policy.yaml"
 }
 
 task() {

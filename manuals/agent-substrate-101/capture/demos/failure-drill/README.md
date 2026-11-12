@@ -21,6 +21,8 @@ export KIND_NODE=kind-control-plane
 
 Compare `my-drill.log` with our recorded run in `capture/lab/N-demos/failure-drill/drill-run.log`.
 
+Three changes came after the recording. `setup` now stops at the first step that fails. A wait that times out now prints `no CRASHED state in` or `did not answer in`, where it printed the elapsed time as a success. An interrupt during case 6 now scales Postgres back to one replica. A run with no failure prints the same lines as the recording.
+
 ## The six cases
 
 1. A worker pod is deleted under a running actor.

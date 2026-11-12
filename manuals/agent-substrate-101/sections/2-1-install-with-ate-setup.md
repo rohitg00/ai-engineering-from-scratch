@@ -169,8 +169,8 @@ go run ./cmd/ate-setup deploy ate-system \
 | What you see | Cause | Fix |
 |---|---|---|
 | `unknown flag: --platform`, then `exit status 125` | A build from source without the Docker buildx plugin | Install the plugin, or install from the release images |
-| The installer stops and prints `retry with: ate-setup deploy ate-system --config` and a file | A step failed, and the installer saved the settings of the run | Fix the cause, then run the printed command |
-| `kubectl` shows pods you do not know | The kubeconfig context is not `kind-kind` | Run `kubectl config use-context kind-kind` |
+| The installer stops and prints `retry with: ate-setup deploy ate-system --config` and a file | A step failed, and the installer saved the settings of the run | Fix the cause, then run the printed command. Start it with `go run ./cmd/ate-setup`, because the release has no `ate-setup` binary |
+| `kubectl` shows pods you do not know | The kubeconfig context is not the one of your kind cluster | Run `kubectl config use-context kind-kind`. With your own `KIND_CLUSTER_NAME`, the context is `kind-` and that name |
 
 The last row happened to us on the laptop. After a restart of Docker Desktop, `kubectl` pointed at the cluster that Docker Desktop includes, and our first test ran there.
 

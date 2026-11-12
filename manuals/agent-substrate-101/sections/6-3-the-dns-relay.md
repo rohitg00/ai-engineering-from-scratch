@@ -119,7 +119,7 @@ One run did not fit. On the Envoy dataplane we added a rule for `example.com`, a
 id: fig-6-3b
 kind: timeline
 title: DNS answers after a policy change
-claim: In our polled runs a new rule reached DNS within 2 seconds, and in one unpolled run on Envoy the name stayed unresolved for 16 seconds.
+claim: In our polled runs a new rule reached DNS within 3 seconds, and in one unpolled run on Envoy the name stayed unresolved for 16 seconds.
 caption: Read each track from left to right. Zero is the moment the update command returned. Rose marks failed lookups and violet marks answers. From capture/lab/F-egress/envoy/40-supplement.txt, capture/lab/F-egress/agentgateway/40-supplement.txt, and capture/lab/F-egress/envoy/20-results.txt.
 ```
 
@@ -128,7 +128,7 @@ Plan for the slow case, because many tools report a DNS failure once and stop. W
 One behaviour we did not test, and you should know it from the code. When the relay cannot refresh the policy, it keeps the last policy that it read and answers from it {{code}}. The gateway does the opposite and refuses requests when it cannot read the policy. A removed host can therefore keep its DNS answer during a control plane outage, and the connection still fails at the gateway.
 
 ```takeaways
-- Read `NXDOMAIN` or `bad address` inside an actor as a name that no rule lists.
+- Read `NXDOMAIN` or `bad address` inside an actor as a name that no rule lists, or that does not exist.
 - Add a rule for each cluster Service that the actor needs, with its full name.
 - Give agents full Service names, and never the short form.
 - Do not point a tool at a public resolver, because the query times out.

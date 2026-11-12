@@ -73,7 +73,7 @@ note: Three consecutive lines. The actor j1 received a request that made its pro
 
 A process that the kernel killed for memory was different. That actor read `ACTOR_STATE_CRASHED` at the second sample, 4 s after the kill.
 
-**Our position:** do not wait for Substrate to report a dead process. Have your harness treat this exact 503 body as a crash, and run the suspend and the revert itself.
+**Our position:** do not wait for Substrate to report a dead process. Have your harness check two things when it sees this 503 body: the actor reads `ACTOR_STATE_RUNNING`, and its worker is active. Then the harness runs the suspend and the revert itself. With the worker `WORKER_STATE_UNAVAILABLE` the node is down, and a revert makes the case worse.
 
 ## The install fails
 

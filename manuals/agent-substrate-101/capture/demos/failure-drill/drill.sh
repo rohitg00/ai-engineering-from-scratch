@@ -6,7 +6,21 @@ REGISTRY=${REGISTRY:-localhost:5001}
 HERE=$(cd "$(dirname "$0")" && pwd)
 BODY=$(mktemp)
 
-K() { kubectl ate "$@" 2>&1 | grep -v '^Warning: no --token-file'; }
+K() {
+  local out code
+  out=$(kubectl ate "$@" 2>&1)
+  code=$?
+  [ -n "$out" ] && printf '%s\n' "$out" | grep -v '^Warning: no --token-file'
+  return "$code"
+}
+must() { "$@" || { echo "failed: $*" >&2; exit 1; }; }
+create() {
+  local out
+  out=$(K create "$@") && return 0
+  case "$out" in *AlreadyExists* | *"already exists"*) return 0 ;; esac
+  echo "$out" >&2
+  return 1
+}
 now() { date +%s.%N; }
 since() { awk -v a="$1" -v b="$(now)" 'BEGIN { printf "%.1f s", b - a }'; }
 state() { kubectl ate get actor "$1" -a "$SPACE" -o json 2>/dev/null | jq -r .status.state; }
@@ -22,24 +36,32 @@ wait_state() {
   local start
   start=$(now)
   for _ in $(seq 1 240); do
-    [ "$(state "$1")" = "$2" ] && break
+    if [ "$(state "$1")" = "$2" ]; then
+      echo "${2#ACTOR_STATE_} after $(since "$start")"
+      return 0
+    fi
     sleep 0.25
   done
-  since "$start"
+  echo "no ${2#ACTOR_STATE_} state in $(since "$start"), state $(state "$1")"
+  return 1
 }
 
 wait_ok() {
   local start
   start=$(now)
   for _ in $(seq 1 180); do
-    [ "$(curl -s -m 5 -o /dev/null -w '%{http_code}' "http://127.0.0.1:$1/")" = "200" ] && break
+    if [ "$(curl -s -m 5 -o /dev/null -w '%{http_code}' "http://127.0.0.1:$1/")" = "200" ]; then
+      echo "$2 answers after $(since "$start")"
+      return 0
+    fi
     sleep 1
   done
-  since "$start"
+  echo "$2 did not answer in $(since "$start")"
+  return 1
 }
 
 actor() {
-  K create actor "$1" -a "$SPACE" --template drill > /dev/null
+  must create actor "$1" -a "$SPACE" --template drill
   kubectl ate proxy actor "$1" -a "$SPACE" "$2:80" > "/tmp/drill-proxy-$1.log" 2>&1 &
   for _ in $(seq 1 40); do
     grep -q Proxying "/tmp/drill-proxy-$1.log" 2>/dev/null && break
@@ -54,20 +76,23 @@ drop() {
   done
 }
 
+template_ready() { K get actor-templates -a "$SPACE" | awk '$2 == "drill" && $3 ~ /-/' | grep -q .; }
+
 setup() {
-  docker build -q -t "$REGISTRY/drill-actor:v1" "$HERE" > /dev/null
-  docker push -q "$REGISTRY/drill-actor:v1" > /dev/null
+  must docker build -q -t "$REGISTRY/drill-actor:v1" "$HERE" > /dev/null
+  must docker push -q "$REGISTRY/drill-actor:v1" > /dev/null
   local image
-  image=$(docker inspect --format '{{index .RepoDigests 0}}' "$REGISTRY/drill-actor:v1")
-  kubectl apply -f "$HERE/pool.yaml" > /dev/null
-  K create atespace "$SPACE" > /dev/null
+  image=$(must docker inspect --format '{{index .RepoDigests 0}}' "$REGISTRY/drill-actor:v1") || exit 1
+  must kubectl apply -f "$HERE/pool.yaml" > /dev/null
+  must create atespace "$SPACE"
   sed "s#IMAGE#$image#" "$HERE/template.yaml" > /tmp/drill-template.yaml
-  K create actor-template -f /tmp/drill-template.yaml > /dev/null
-  kubectl -n "$SPACE" rollout status deploy/drill --timeout=180s > /dev/null
+  must create actor-template -f /tmp/drill-template.yaml
+  must kubectl -n "$SPACE" rollout status deploy/drill --timeout=180s > /dev/null
   for _ in $(seq 1 60); do
-    K get actor-templates -a "$SPACE" | awk '$2 == "drill" && $3 ~ /-/' | grep -q . && break
+    template_ready && break
     sleep 2
   done
+  must template_ready
   echo "setup done: image $image"
 }
 
@@ -79,7 +104,7 @@ worker_pod_deleted() {
   local pod start
   pod=$(K get actor d1 -a "$SPACE" | awk 'NR == 2 { print $5 }' | cut -d/ -f2)
   kubectl -n "$SPACE" delete pod "$pod" --grace-period=0 --force > /dev/null 2>&1
-  report detect "CRASHED after $(wait_state d1 ACTOR_STATE_CRASHED)"
+  report detect "$(wait_state d1 ACTOR_STATE_CRASHED)"
   report symptom "$(call 8701 /)"
   report state "$(state d1)"
   start=$(now)
@@ -134,7 +159,7 @@ out_of_memory() {
   actor d4 8704
   call 8704 / > /dev/null
   call 8704 /oom > /dev/null
-  report detect "CRASHED after $(wait_state d4 ACTOR_STATE_CRASHED)"
+  report detect "$(wait_state d4 ACTOR_STATE_CRASHED)"
   report symptom "$(call 8704 /)"
   report state "$(state d4)"
   local start
@@ -162,6 +187,8 @@ full_pool() {
   drop d5a d5b d5c
 }
 
+restore_postgres() { kubectl -n ate-system scale statefulset postgres --replicas=1 > /dev/null; }
+
 postgres_down() {
   echo "== 6 Postgres is away for 30 s"
   actor d6 8708
@@ -169,6 +196,8 @@ postgres_down() {
   call 8708 / > /dev/null
   call 8709 / > /dev/null
   K suspend actor d6s -a "$SPACE" --mode sync > /dev/null
+  trap 'restore_postgres; exit 1' INT TERM
+  trap restore_postgres EXIT
   kubectl -n ate-system scale statefulset postgres --replicas=0 > /dev/null
   sleep 5
   report symptom "running actor: $(call 8708 / 12)"
@@ -177,11 +206,12 @@ postgres_down() {
   sleep 12
   local start
   start=$(now)
-  kubectl -n ate-system scale statefulset postgres --replicas=1 > /dev/null
+  restore_postgres
   kubectl -n ate-system rollout status statefulset/postgres --timeout=180s > /dev/null
+  trap - INT TERM EXIT
   report fix "kubectl -n ate-system scale statefulset postgres --replicas=1 (ready after $(since "$start"))"
-  report recover "running actor answers after $(wait_ok 8708)"
-  report recover "suspended actor answers after $(wait_ok 8709)"
+  report recover "$(wait_ok 8708 'running actor')"
+  report recover "$(wait_ok 8709 'suspended actor')"
   report state "d6 $(state d6), d6s $(state d6s)"
   drop d6 d6s
 }

@@ -23,7 +23,7 @@ So a statement that Substrate is a managed capability of Google Cloud goes furth
 
 ## What the installer creates
 
-The installer is an interactive program that runs on your machine. It needs `git` and Go. It also needs Docker with the buildx plugin, because it builds the Substrate images from source and pushes them to your project. It cannot run in Cloud Shell, because the disk there is too small {{docs}}.
+The installer is an interactive program that runs on your machine. It needs `git`, Go, `make`, `kubectl`, the `gcloud` CLI, and `gke-gcloud-auth-plugin`. It also needs Docker with the buildx plugin, because it builds the Substrate images from source and pushes them to your project. It cannot run in Cloud Shell, because the disk there is too small {{docs}}.
 
 ```figure
 id: fig-7-3
@@ -48,7 +48,7 @@ Four details of the install will cost you time if you miss them.
 |---|---|
 | Cluster mode | GKE Standard. Autopilot is not supported. |
 | Version | Control plane and all node pools at 1.37 or later. The Extended release channel is not supported. |
-| Cluster features | Dataplane V2, Workload Identity Federation for GKE, and Managed OpenTelemetry. The installer turns them on. |
+| Cluster features | Dataplane V2, Workload Identity Federation for GKE, and Managed OpenTelemetry. The installer turns them on in a cluster that it creates. An existing cluster must already use Dataplane V2. |
 | Worker nodes | x86 only, `c3-standard-4` or larger. E2 machine types are not supported. |
 | GKE Sandbox | Must be off on the node pools that hold workers. |
 | microVM class | Nested virtualization, or an x86 metal machine type. You can set nested virtualization only when you create the node pool. |
@@ -72,7 +72,7 @@ The documentation names these numbers {{docs}}. We did not test them.
 | Boot disk of a node | 100 GiB, 3,600 IOPS, 290 MiB each second | Node copies of snapshots use this disk unless you mount another. |
 | Snapshot upload delay, node copy | 5 minutes, 30 minutes | The same defaults that we measured on kind. |
 
-The token quota is easy to miss. It is shared with every other workload in the project that uses Workload Identity Federation. At 200 resumes each second you need 12,000 requests each minute, which is twice the default. Ask for more quota before the load test.
+The token quota is easy to miss. It is shared with every other workload in the project that uses Workload Identity Federation. At 200 resumes each second you need 12,000 requests each minute for Substrate alone, which is twice the default. Add the peak of the other workloads. Ask for more quota before the load test.
 
 A pool of microVM workers has one more limit. A microVM worker pod requests the resource `ate.dev/kvm`, and node auto-provisioning cannot see that resource on a pool with zero nodes. Such a pool does not grow from zero. The documentation gives three patterns that keep a node or a buffer ready.
 
@@ -100,7 +100,7 @@ Our times do not transfer. Our object store was in the cluster, on the same disk
 - Plan staff for the control plane and PostgreSQL, because Google does not operate them.
 - Check the cluster against the requirements table before you run the installer.
 - Enter the tag v1.0.0 when the installer asks for a version.
-- Raise the token exchange quota to 60 times your peak resumes each second.
+- Raise the token exchange quota to 60 times your peak resumes each second, plus the use of other workloads.
 - Delete the PostgreSQL disk yourself after a cleanup.
 - Measure resume time on your own cluster, with your own bucket.
 ```
