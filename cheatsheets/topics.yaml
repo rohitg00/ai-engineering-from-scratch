@@ -344,6 +344,7 @@
     - phases/13-tools-and-protocols/05-tool-schema-design
     - phases/19-capstone-projects/21-tool-registry-schema-validation
     - phases/19-capstone-projects/23-function-call-dispatcher
+    - projects/tool-contract-migration-checker
 
 - id: transformers-attention
   title: Transformers and Attention
