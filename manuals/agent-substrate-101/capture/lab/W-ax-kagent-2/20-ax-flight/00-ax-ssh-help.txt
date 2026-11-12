@@ -1,0 +1,10 @@
+Usage:
+  ax ssh <task-name> [-- command...]
+
+Run a command inside a running task's container, or /bin/sh when no command is
+given. The task must be Running and have spec.debug: true.
+
+Examples:
+  ax ssh task123
+  ax ssh task123 -- ls -la /workspace
+  ax ssh -a my-atespace task123 -- python3 main.py

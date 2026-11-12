@@ -26,7 +26,7 @@ The guests and the Mac are different machines. Do not compare a number from one 
 |---|---|
 | `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart`, `U-pg-upgrade-scale` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
 | `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode`, `P-node-loss`, `Q-network`, `T-drain-store` | a second x86 server guest (16 vCPU, 23 GB) |
-| `K-kagent`, `N-demos`, `R-agent-executor`, `S-ax-model` | a second x86 server guest (16 vCPU, 31 GB) |
+| `K-kagent`, `N-demos`, `R-agent-executor`, `S-ax-model`, `W-ax-kagent-2` | a second x86 server guest (16 vCPU, 31 GB) |
 | `M-mac-arm64` | the Mac |
 
 Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node, except the cluster of `L-gaps/multinode`, `P-node-loss`, and `T-drain-store`. The object store was rustfs in the same cluster. In part of `T-drain-store` it was rustfs in a container on the same guest, outside the cluster.
@@ -214,6 +214,25 @@ All steps ran on a second x86 server guest (16 vCPU, 31 GB), after `R-agent-exec
 
 In `per-turn.tsv`, a resume or suspend of 0 means that the saved log window held no record for that turn. The row `C-1p5b-first-4` holds the model seconds of the request that it waited behind, so its model seconds are larger than its wall seconds. `run.py` leaves both cases out of the statistics.
 
+### W-ax-kagent-2: a bound on a kagent turn, and four more open items of Agent Executor
+
+All steps ran on a second x86 server guest (16 vCPU, 31 GB), after a restart of the guest, on the two clusters of `S-ax-model` and with the same model server. kagent used `qwen2.5:1.5b`, and Agent Executor used `qwen2.5:3b`. Two containers of another experiment ran on the same guest, so read the seconds as indicative. What a model wrote or decided in these files is a result about that small model.
+
+| Folder | What it shows |
+|---|---|
+| `10-kagent-bound/00-explain-*.txt`, `01-bounded.yaml` | the three ModelConfig fields as the cluster describes them, and the two ModelConfig objects with one bound each |
+| `10-kagent-bound/events.log` | one line for the start and the end of each turn: 7 turns with a prompt that the model ended by itself, 10 tool turns with each bound, and 10 first turns with no bound |
+| `11-long-prompt/results.tsv` | three prompts sent to the model server directly, to find one that keeps the model writing |
+| `12-kagent-bound-long/events.log`, `timings.tsv`, `ollama-gin.log`, `*.after.log` | the count prompt with `maxTokens: 128`, with `timeout: 20`, and with no bound: the result of each turn, the request seconds at the model server, and the actor state and the CPU of the model server after the turn |
+| `20-ax-flight/w-fl1/`, `w-fl2/` | a worker pod deleted while two `ax ssh` commands were open, 12 s and 329 s after the last suspend: each line that the open command printed, both client errors, the actor state changes, and the workspace after `ax resume task` |
+| `30-ax-mcp-skills/` | a Workspace with a skills path, registries, and four MCP server entries: what `ax` accepted, the command line that the agent received, the warnings of the runner, the skills directory, and the log of the MCP server |
+| `31-ax-mcp-call/w-mcp2/`, `w-mcp3/` | two tasks whose prompt names the MCP tool, with the tool call in the log of the MCP server |
+| `40-ax-example/` | the Claude Code example of the repository with its own prompt and repository: the three changed values, the failed resume at 4Gi, the refused second apply, the run at 1536Mi, the report, and the state of the checkout |
+| `40-ax-example-attempt1/` | the resume that failed once after the delete and the new create, with the worker list |
+| `50-ax-clone-2/`, `51-ax-agent-image-2/` | second runs of the clone on resume and of the short agent prompt |
+
+In `20-ax-flight/`, the exit code in `20-inflight-sleep.end` is 0 beside an error text. We do not trust it, so `run.py` does not read it. In `40-ax-example/26b-egress-hosts.log`, one line is wrapped inside a host name.
+
 ### T-drain-store: a drain, a full node, and a bucket outside the cluster
 
 All runs used a second x86 server guest (16 vCPU, 23 GB), on the cluster with two worker nodes, with the Envoy dataplane and gVisor. Each case ran once. The test actor holds a counter and 50 MB in memory. The column `t` is seconds from the drain command, the stop command, or the moment the bucket went away.
@@ -371,6 +390,8 @@ The shell scripts that made the recordings. Each one ran inside a guest, or on t
 | `kagent-turns-x86.json` | `client_seconds.<series>`, `server_turn_seconds.<series>`, `resume_seconds.turns_only`, `resume_seconds.all`, `suspend_seconds` |
 | `kagent-model-x86.json` | `models.<name>`: `size`, `tokens_per_second`, `tool_call`. `series.<name>`: `n`, `completed`, `clean`, and `wall_seconds`, `model_seconds`, `model_share`, `resume_seconds`, `suspend_seconds` as `{median, min, max, n}`. `runs.<name>`: one entry for each turn. `turn_that_did_not_end` |
 | `agent-executor-followups-x86.json` | `clone`, `worker_loss.snapshot_pending`, `worker_loss.snapshot_durable`, `model_call`, `agent_image`, `release_v0_3_1` |
+| `kagent-bound-x86.json` | `modelconfig_fields`, `settings`, `prompts`, `direct_requests_to_the_model`. `series.<name>`: `bound`, `prompt`, `n`, `completed`, `exit_codes`, `wall_seconds` as `{median, min, max, n}`, and `runs` with one entry for each turn. `timeout_failure`, `unbounded_turn` |
+| `agent-executor-second-x86.json` | `worker_loss_in_flight.snapshot_pending` and `snapshot_durable`, `skills`, `mcp`, `example`, `clone_second_run`, `agent_image_second_run` |
 | `install-steps.json` | `source_build`, `release_images`, `release_images_mac`, `kagent`. Each has `machine` and `steps`: `[{step, exit, seconds}]` |
 | `microvm-x86.json` | `node_local`, `new_actor_first_call`, `suspend_async`, `suspend_sync`, `warm_call`, `create_actor`, with the `points` shape of `resume-x86.json`. `local_snapshot_per_actor`: `[{x, kib, mib}]`. `resident_memory`: `microvm` and `gvisor_same_node`, each a list of `{process, kib, mib}` |
 | `validation-memory-x86.json` | `actors`: one entry for each of six templates, with `fill` (`zero`, `mixed`, `rand`), `x` in MiB, `node_snapshot` and `object_store_copy` as `{kib, mib}`, and `resume_node`, `resume_after_sync`, `suspend_async`, `suspend_sync`, `new_actor_first_call`, `warm_call`, each `{seconds, runs, failed}`. `python`: the same fields for the Python actor, with `template_to_golden_ready`, `peak_rss_mib`, `image_bytes`, and the process age at its first and last request |

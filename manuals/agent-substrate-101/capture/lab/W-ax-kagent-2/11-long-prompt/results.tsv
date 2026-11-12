@@ -1,0 +1,3 @@
+p1-count	rc=28	75.0s	finish=	completion_tokens=	chars=
+p2-story	rc=28	75.0s	finish=	completion_tokens=	chars=
+p3-count-bounded	rc=0	1.1s	finish=stop	completion_tokens=14	chars=48

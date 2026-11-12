@@ -1,0 +1,11 @@
+step	rc	seconds
+05-apply-workspace	0	0.040
+06-describe-workspace	0	0.034
+06b-get-workspace	0	0.034
+10-apply-task	0	0.099
+11-create-egress	0	0.221
+12-resume-first	0	9.660
+17-describe	0	0.037
+18-inside	0	0.943
+19-task-metadata	0	0.806
+22-suspend	0	0.267

@@ -1,0 +1,15 @@
+GROUP:      api.kagent.dev
+KIND:       ModelConfig
+VERSION:    v1alpha3
+
+FIELD: maxCompletionTokens <integer>
+
+
+DESCRIPTION:
+    Maximum completion tokens to generate. Sent as the OpenAI
+    `max_completion_tokens` request parameter (an upper bound on visible
+    output plus reasoning tokens). This is the parameter reasoning models
+    (GPT-5 / o-series) require in place of the deprecated maxTokens.
+    Mutually exclusive with maxTokens.
+    
+

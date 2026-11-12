@@ -1,0 +1,9 @@
+rules:
+- http:
+    hostnames: ["ollama.ax-system.svc.cluster.local"]
+    ports:
+      numbers: [11434]
+- tlsPassthrough:
+    hostnames: ["github.com", "pypi.org", "files.pythonhosted.org"]
+    ports:
+      numbers: [443]

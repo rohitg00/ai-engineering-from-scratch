@@ -1,0 +1,8 @@
+{"actor":"spiffe://substrate-actor.local/worker-for-actor/default/w-clone2","bytes_rcvd":1552,"bytes_sent":846341,"dialed":"<public-ip>:443","duration_ms":2404,"flags":"-","leg":"passthrough","sni":"github.com","termin
+{"actor":"spiffe://substrate-actor.local/worker-for-actor/default/w-mcp","bytes_rcvd":1552,"bytes_sent":846213,"dialed":"<public-ip>:443","duration_ms":2998,"flags":"-","leg":"passthrough","sni":"github.com","terminati
+{"actor":"spiffe://substrate-actor.local/worker-for-actor/default/w-mcp2","bytes_rcvd":1552,"bytes_sent":846409,"dialed":"<public-ip>:443","duration_ms":3205,"flags":"-","leg":"passthrough","sni":"github.com","terminat
+{"actor":"spiffe://substrate-actor.local/worker-for-actor/default/w-mcp3","bytes_rcvd":1552,"bytes_sent":846251,"dialed":"<public-ip>:443","duration_ms":2836,"flags":"-","leg":"passthrough","sni":"github.com","terminat
+{"actor":"spiffe://substrate-actor.local/worker-for-actor/default/claude-code","bytes_rcvd":1552,"bytes_sent":846260,"dialed":"<public-ip>:443","duration_ms":1787,"flags":"-","leg":"passthrough","sni":"github.com","ter
+{"actor":"spiffe://substrate-actor.local/worker-for-actor/default/claude-code","bytes_rcvd":2235,"bytes_sent":45991,"dialed":"<public-ip>:443","duration_ms":78,"flags":"-","leg":"passthrough","sni":"pypi.org","termina
+{"actor":"spiffe://substrate-actor.local/worker-for-actor/default/claude-code","bytes_rcvd":7818,"bytes_sent":1868753,"dialed":"<public-ip>:443","duration_ms":4323,"flags":"-","leg":"passthrough","sni":"files.pythonh
+{"actor":"spiffe://substrate-actor.local/worker-for-actor/default/claude-code","bytes_rcvd":4786,"bytes_sent":109179,"dialed":"<public-ip>:443","duration_ms":5054,"flags":"-","leg":"passthrough","sni":"pypi.org","termi

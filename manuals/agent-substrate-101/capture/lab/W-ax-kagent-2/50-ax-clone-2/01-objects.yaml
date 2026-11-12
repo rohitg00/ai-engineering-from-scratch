@@ -1,0 +1,21 @@
+apiVersion: ax.io/v1alpha1
+kind: Workspace
+metadata:
+  name: w-ws-clone
+  atespace: default
+spec:
+  git:
+    - name: origin
+      repo: "https://github.com/pallets/itsdangerous.git"
+      branch: "main"
+---
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: w-clone2
+  atespace: default
+spec:
+  debug: true
+  command: ["sleep", "infinity"]
+  workspace:
+    name: w-ws-clone

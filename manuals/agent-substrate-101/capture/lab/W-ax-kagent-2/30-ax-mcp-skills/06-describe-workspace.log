@@ -1,0 +1,14 @@
+Name:         w-ws
+Atespace:     default
+Git Repositories:
+  - origin (https://github.com/pallets/itsdangerous.git, branch: main)
+MCP Registries:
+  - Provider: google, Query: "mcp.tags:build"
+MCP Servers:
+  - docs: http://lab-mcp.ax-system.svc.cluster.local:8080/mcp
+  - missing-command: no-such-mcp-binary [--repo /workspace]
+  - neither:  []
+  - docs: http://duplicate.invalid/mcp
+Skill Registries:
+  - Provider: google, Query: "skills.tags:nodejs"
+Skills Path:      /.agents/skills

@@ -1,0 +1,2 @@
+{"jsonrpc": "2.0", "id": 1, "result": {"protocolVersion": "2025-03-26", "capabilities": {"tools": {}}, "serverInfo": {"name": "lab-docs", "version": "0.1"}}}
+{"jsonrpc": "2.0", "id": 2, "result": {"tools": [{"name": "lab_fact", "description": "Returns the lab fact. Call it when you are asked for the lab fact.", "inputSchema": {"type": "object", "properties": {}, "additionalProperties": false}}]}}

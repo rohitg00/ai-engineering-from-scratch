@@ -1,0 +1,102 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# A Task that runs Claude Code headlessly against a cloned repository.
+#
+# The Workspace clones the repo and drops a CLAUDE.md into it so the agent
+# starts with project guidance. The Task uses the Claude Code image
+# (Dockerfile.claude-code), whose runner turns spec.config into one
+# non-interactive `claude --print` session in /workspace. The prompt asks the
+# agent to write its report to /workspace/claude-output.md. spec.command is
+# left empty so the runner builds the command itself.
+#
+# Before applying:
+#
+# 1. Build and push the image, then pin its digest in spec.image below.
+#    Substrate rejects tag-only image references.
+#
+#      make push-claude-code-image CLAUDE_CODE_REPO=<your-registry>/<image>
+#
+# 2. Credentials. The control plane only injects GEMINI_API_KEY from a Model
+#    resource; an Anthropic Model is not injected into the task container yet.
+#    So ANTHROPIC_API_KEY has to be set through spec.env. Substitute it at
+#    apply time instead of committing it:
+#
+#      ANTHROPIC_API_KEY=sk-ant-... envsubst < examples/claude-code/task.yaml | ax apply -f -
+#
+#   ax describe task claude-code
+#   ax ssh claude-code -- cat /workspace/claude-output.md
+#   ax ssh claude-code -- git -C /workspace diff
+apiVersion: ax.io/v1alpha1
+kind: Workspace
+metadata:
+  name: itsdangerous
+  atespace: default
+spec:
+  git:
+    - name: origin
+      repo: "https://github.com/pallets/itsdangerous.git"
+      branch: "main"
+  files:
+    - path: "CLAUDE.md"
+      content: |
+        # Working in this repo
+        - Pure-Python library. Install with `pip install -e . pytest`, test with `pytest`.
+        - Keep changes small and focused; do not add runtime dependencies.
+        - Do not push or open pull requests. Leave changes in the working tree.
+  # MCP servers declared here are passed to Claude Code with --mcp-config.
+  # mcp:
+  #   servers:
+  #     - name: docs
+  #       endpoint: "http://docs-mcp.default.svc.cluster.local:8080/mcp"
+---
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: claude-code
+  atespace: default
+spec:
+  # Built from Dockerfile.claude-code; replace the digest with the one
+  # `make push-claude-code-image` prints.
+  image: "gcr.io/ax-images/ax-images@sha256:REPLACE_WITH_PUSHED_DIGEST"
+  # The prompt and claude's flags from `claude --help`, in camelCase
+  # (maxTurns is --max-turns). The runner runs:
+  #   claude --print --<flag>=<value>... -- <prompt>
+  config:
+    prompt: |
+      Read the repository, install it with its test dependencies, and run the
+      test suite. Fix any failing or flaky tests you find. If everything passes,
+      make one small, clearly correct improvement to the README. Finish by
+      writing a short markdown report of what you checked and what you changed
+      to /workspace/claude-output.md.
+    model: claude-opus-5-5
+    maxTurns: 50
+    # Grant every permission: all tools run without approval. The sandbox is
+    # the isolation boundary and nobody is there to answer a prompt. The image
+    # sets IS_SANDBOX=1, which this flag requires when running as root.
+    dangerouslySkipPermissions: true
+    # Passed as JSON; any Claude Code setting works here.
+    settings:
+      includeCoAuthoredBy: false
+  env:
+    # TODO: Inject the ANTHROPIC_API_KEY to the outbound calls automatically.
+    - name: ANTHROPIC_API_KEY
+      value: "${ANTHROPIC_API_KEY}"
+  resources:
+    limits:
+      cpu: "2"
+      memory: "4Gi"
+  workspace:
+    name: itsdangerous
+  debug: true # serve guest services so `ax ssh` works; off by default

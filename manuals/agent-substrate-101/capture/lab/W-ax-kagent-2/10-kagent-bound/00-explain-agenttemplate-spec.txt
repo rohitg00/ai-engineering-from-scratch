@@ -1,0 +1,50 @@
+GROUP:      api.kagent.dev
+KIND:       AgentTemplate
+VERSION:    v1alpha3
+
+FIELD: spec <Object>
+
+
+DESCRIPTION:
+    AgentTemplateSpec defines portable agent behavior.
+    
+FIELDS:
+  description	<string>
+    <no description>
+
+  modelConfig	<Object>
+    ModelConfig is required by managed harnesses and optional for BYO harnesses.
+
+  outputSchema	<Object>
+    OutputSchema constrains successful terminal output when this template is
+    compiled as the root agent.
+
+  outputSchemaFrom	<Object>
+    OutputSchemaFrom references a JSON Schema stored as JSON in a
+    same-namespace ConfigMap key.
+
+  outputSchemaStrict	<boolean>
+    OutputSchemaStrict tells OpenAI, Azure OpenAI, and Foundry (openai format)
+    to limit generation to the output schema. kagent then checks the schema
+    against OpenAI's strict mode rules on every provider.
+
+  plugins	<[]Object>
+    <no description>
+
+  promptTemplate	<Object>
+    AgentTemplatePromptTemplateSpec enables Go template rendering and ConfigMap
+    includes.
+
+  skills	<[]Object>
+    <no description>
+
+  systemPrompt	<string>
+    <no description>
+
+  systemPromptFrom	<Object>
+    SystemPromptFrom references prompt text in a same-namespace ConfigMap.
+
+  tools	<[]Object>
+    <no description>
+
+

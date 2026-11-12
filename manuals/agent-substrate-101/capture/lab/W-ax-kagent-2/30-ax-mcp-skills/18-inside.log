@@ -1,0 +1,47 @@
+== workspace
+total 1
+drwxrwxrwx 4 root root 100 Nov 12 18:42 .
+drwxr-xr-x 1 root root 140 Nov 12 18:42 ..
+drwxr-xr-x 2 root root  60 Nov 12 18:42 .ax
+-rw-r--r-- 1 root root  83 Nov 12 18:42 CLAUDE.md
+drwxr-xr-x 8 root root 340 Nov 12 18:42 itsdangerous
+cat: /workspace/mcp-result.txt: No such file or directory
+== result
+
+== skills
+/.agents:
+total 0
+drwxr-xr-x 1 root root  60 Nov 12 18:42 .
+drwxr-xr-x 1 root root 140 Nov 12 18:42 ..
+drwxr-xr-x 1 root root  40 Nov 12 18:42 skills
+
+/.agents/skills:
+total 0
+drwxr-xr-x 1 root root 40 Nov 12 18:42 .
+drwxr-xr-x 1 root root 60 Nov 12 18:42 ..
+== ax
+total 2
+drwxr-xr-x 1 root root   60 Nov 12 18:42 .
+drwxr-xr-x 1 root root  140 Nov 12 18:42 ..
+-rw-r--r-- 1 root root 1281 Nov 12 18:42 git-success.log
+== mcp files
+ls: cannot access '/workspace/.mcp.json': No such file or directory
+-rw------- 1 root root 944 Nov 12 18:42 /root/.claude.json
+== env
+        - name: ANTHROPIC_BASE_URL
+        - path: CLAUDE.md
+ANTHROPIC_BASE_URL=http://ollama.ax-system.svc.cluster.local:11434
+AX_METADATA_URL=http://127.0.0.1:8099
+AX_TASK_YAML=apiVersion: ax.io/v1alpha1
+AX_WORKSPACE_YAML=apiVersion: ax.io/v1alpha1
+CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1
+IS_SANDBOX=1
+== git
+672971d66a2ef9f85151e53283113f33d642dabd
+  PID ELAPSED COMMAND
+    1     174 /usr/local/bin/ax-task-runner
+   23     170 [git] <defunct>
+  135       0 sh -c echo == workspace; ls -la /workspace | head -30; echo == result; cat /workspace/mcp-result.txt; echo; echo == skills; ls -la /.agents /.agents/skills 2>&1; echo == ax; ls -la /ax 2
+  148       0 ps -eo pid,etimes,args
+  149       0 cut -c1-200
+  150       0 head -12

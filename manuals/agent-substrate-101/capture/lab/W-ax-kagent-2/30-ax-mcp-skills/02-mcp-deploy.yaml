@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: lab-mcp, namespace: ax-system}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: lab-mcp}}
+  template:
+    metadata: {labels: {app: lab-mcp}}
+    spec:
+      containers:
+      - name: mcp
+        image: localhost:5002/tool-sandbox:v1
+        command: ["python3", "/code/server.py"]
+        ports: [{containerPort: 8080}]
+        volumeMounts: [{name: code, mountPath: /code}]
+      volumes: [{name: code, configMap: {name: lab-mcp-code}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: lab-mcp, namespace: ax-system}
+spec:
+  selector: {app: lab-mcp}
+  ports: [{name: http, port: 8080, targetPort: 8080}]

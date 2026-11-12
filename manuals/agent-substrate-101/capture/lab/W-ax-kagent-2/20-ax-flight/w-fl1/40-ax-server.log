@@ -1,0 +1,65 @@
+{"time":"2026-11-12T18:01:33.874586661Z","level":"INFO","msg":"tracing initialized","export":false}
+{"time":"2026-11-12T18:01:33.875267138Z","level":"INFO","msg":"metrics initialized","export":false}
+{"time":"2026-11-12T18:01:33.87528108Z","level":"INFO","msg":"OTLP logs export disabled","exporter":"none"}
+{"time":"2026-11-12T18:01:33.875597991Z","level":"INFO","msg":"starting ax-server","listenAddr":":8080","metricsAddr":":9090","store":"ax@ax-postgres.ax-system.svc.cluster.local:5432/ax","substrateEndpoint":"api.ate-system.svc.cluster.local:443","template":"default-template","defaultTaskImage":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:32.430077373Z","level":"INFO","msg":"reconciling task","name":"w-flight1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:32.444936012Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:32.482480982Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-flight1-tmpl-e7ac67a6"}
+{"time":"2026-11-12T18:05:32.488864423Z","level":"INFO","msg":"suspending actor on Substrate","actor":"w-flight1"}
+{"time":"2026-11-12T18:05:32.499404319Z","level":"INFO","msg":"task successfully suspended","name":"w-flight1","actor":"w-flight1"}
+{"time":"2026-11-12T18:05:32.568059399Z","level":"INFO","msg":"reconciling task","name":"w-flight1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:32.575476289Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:32.579711934Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-flight1-tmpl-e7ac67a6"}
+{"time":"2026-11-12T18:05:32.590394397Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"w-flight1"}
+{"time":"2026-11-12T18:05:36.777798685Z","level":"INFO","msg":"task successfully resumed","name":"w-flight1","actor":"w-flight1","workerIP":"10.244.0.17","workspaceReady":true}
+{"time":"2026-11-12T18:05:38.029405063Z","level":"INFO","msg":"reconciling task","name":"w-flight1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:38.033676971Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:38.039125299Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-flight1-tmpl-e7ac67a6"}
+{"time":"2026-11-12T18:05:38.057497401Z","level":"INFO","msg":"suspending actor on Substrate","actor":"w-flight1"}
+{"time":"2026-11-12T18:05:38.185928982Z","level":"INFO","msg":"task successfully suspended","name":"w-flight1","actor":"w-flight1"}
+{"time":"2026-11-12T18:05:41.528191436Z","level":"INFO","msg":"reconciling task","name":"w-flight1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:41.531548915Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:41.551915126Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-flight1-tmpl-e7ac67a6"}
+{"time":"2026-11-12T18:05:41.566441236Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"w-flight1"}
+{"time":"2026-11-12T18:05:41.761401291Z","level":"INFO","msg":"task successfully resumed","name":"w-flight1","actor":"w-flight1","workerIP":"10.244.0.28","workspaceReady":true}
+{"time":"2026-11-12T18:05:42.033884495Z","level":"INFO","msg":"reconciling task","name":"w-flight2","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:42.036540956Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:42.043358386Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-flight2-tmpl-2ced619c"}
+{"time":"2026-11-12T18:05:42.048433551Z","level":"INFO","msg":"suspending actor on Substrate","actor":"w-flight2"}
+{"time":"2026-11-12T18:05:42.054735198Z","level":"INFO","msg":"task successfully suspended","name":"w-flight2","actor":"w-flight2"}
+{"time":"2026-11-12T18:05:42.104659915Z","level":"INFO","msg":"reconciling task","name":"w-flight2","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:42.107200048Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:42.11047471Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-flight2-tmpl-2ced619c"}
+{"time":"2026-11-12T18:05:42.126410936Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"w-flight2"}
+{"time":"2026-11-12T18:05:44.302071305Z","level":"INFO","msg":"task successfully resumed","name":"w-flight2","actor":"w-flight2","workerIP":"10.244.0.17","workspaceReady":true}
+{"time":"2026-11-12T18:05:45.086006734Z","level":"INFO","msg":"reconciling task","name":"w-flight2","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:45.092292581Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:05:45.095802796Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-flight2-tmpl-2ced619c"}
+{"time":"2026-11-12T18:05:45.164212593Z","level":"INFO","msg":"suspending actor on Substrate","actor":"w-flight2"}
+{"time":"2026-11-12T18:05:45.275369117Z","level":"INFO","msg":"task successfully suspended","name":"w-flight2","actor":"w-flight2"}
+{"time":"2026-11-12T18:07:38.868866302Z","level":"INFO","msg":"reconciling task","name":"w-fl1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:07:38.87198933Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:07:38.881008104Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-fl1-tmpl-4b80bdaf"}
+{"time":"2026-11-12T18:07:38.888666411Z","level":"INFO","msg":"suspending actor on Substrate","actor":"w-fl1"}
+{"time":"2026-11-12T18:07:38.895154203Z","level":"INFO","msg":"task successfully suspended","name":"w-fl1","actor":"w-fl1"}
+{"time":"2026-11-12T18:07:38.94707838Z","level":"INFO","msg":"reconciling task","name":"w-fl1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:07:38.95022042Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:07:38.954104929Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-fl1-tmpl-4b80bdaf"}
+{"time":"2026-11-12T18:07:38.970989714Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"w-fl1"}
+{"time":"2026-11-12T18:07:41.152387392Z","level":"INFO","msg":"task successfully resumed","name":"w-fl1","actor":"w-fl1","workerIP":"10.244.0.17","workspaceReady":true}
+{"time":"2026-11-12T18:07:41.955102038Z","level":"INFO","msg":"reconciling task","name":"w-fl1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:07:41.958950067Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:07:41.96303932Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-fl1-tmpl-4b80bdaf"}
+{"time":"2026-11-12T18:07:41.974210045Z","level":"INFO","msg":"suspending actor on Substrate","actor":"w-fl1"}
+{"time":"2026-11-12T18:07:42.077176948Z","level":"INFO","msg":"task successfully suspended","name":"w-fl1","actor":"w-fl1"}
+{"time":"2026-11-12T18:07:45.428926316Z","level":"INFO","msg":"reconciling task","name":"w-fl1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:07:45.431956756Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:07:45.436089951Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-fl1-tmpl-4b80bdaf"}
+{"time":"2026-11-12T18:07:45.446342586Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"w-fl1"}
+{"time":"2026-11-12T18:07:45.617789368Z","level":"INFO","msg":"task successfully resumed","name":"w-fl1","actor":"w-fl1","workerIP":"10.244.0.17","workspaceReady":true}
+{"time":"2026-11-12T18:08:39.781936699Z","level":"INFO","msg":"reconciling task","name":"w-fl1","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:08:39.785568326Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T18:08:39.791166535Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"w-fl1-tmpl-4b80bdaf"}
+{"time":"2026-11-12T18:08:39.835993497Z","level":"WARN","msg":"existing actor is crashed, reverted to its last snapshot","actor":"w-fl1"}
+{"time":"2026-11-12T18:08:39.836064938Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"w-fl1"}
+{"time":"2026-11-12T18:08:40.007936068Z","level":"INFO","msg":"task successfully resumed","name":"w-fl1","actor":"w-fl1","workerIP":"10.244.0.34","workspaceReady":true}

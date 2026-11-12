@@ -1,0 +1,1 @@
+BOOT_IMAGE=/vmlinuz-4.19.0-gvisor quiet

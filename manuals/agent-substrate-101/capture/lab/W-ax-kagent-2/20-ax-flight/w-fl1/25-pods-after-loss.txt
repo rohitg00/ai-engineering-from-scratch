@@ -1,0 +1,5 @@
+NAME                         READY   STATUS    RESTARTS        AGE    IP            NODE                 NOMINATED NODE   READINESS GATES
+ax-pool-588b78fd54-p4gfv     1/1     Running   1 (8m16s ago)   108m   10.244.0.28   demo-control-plane   <none>           <none>
+ax-pool-588b78fd54-whzfr     1/1     Running   0               45s    10.244.0.34   demo-control-plane   <none>           <none>
+ax-postgres-0                1/1     Running   1 (8m16s ago)   169m   10.244.0.15   demo-control-plane   <none>           <none>
+ax-server-786f5878b4-g7qr8   1/1     Running   1 (8m16s ago)   168m   10.244.0.16   demo-control-plane   <none>           <none>

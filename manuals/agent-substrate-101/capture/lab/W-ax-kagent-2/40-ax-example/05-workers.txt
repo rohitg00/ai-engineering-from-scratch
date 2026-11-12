@@ -1,0 +1,9 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                                  AGE
+dad34232-e780-48d4-b295-1e42bee60c00   ax-pool   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   ax-system/ax-pool-588b78fd54-7g668   34m
+20a1da8c-0f6c-4283-a8c9-abbe5752cdda   ax-pool   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   ax-system/ax-pool-588b78fd54-p4gfv   149m
+12da49c6-6c52-4758-a19d-706e025f181c   agent     WORKER_STATE_ACTIVE   0/1000   0/2000            0/960Mi    demo-agent/agent-845f48c9bf-75gl8    33m
+c3452c93-be94-45d4-9af4-de2ddd46b340   drill     WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    demo-drill/drill-8bc8cbccc-49cqz     33m
+65b89e4b-17db-44a5-8e0d-0163f2218e00   drill     WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    demo-drill/drill-8bc8cbccc-vdn67     33m
+0934f957-2477-42c4-9f19-d512f2d700a1   idle      WORKER_STATE_ACTIVE   0/1000   0/2000            0/960Mi    demo-idle/idle-846d566ff4-w9j72      33m
+0966490e-bf3b-45bb-a6ac-9f3fc41a7657   tools     WORKER_STATE_ACTIVE   0/1000   0/2000            0/960Mi    demo-tools/tools-5b5f9c9fb7-4bddc    33m

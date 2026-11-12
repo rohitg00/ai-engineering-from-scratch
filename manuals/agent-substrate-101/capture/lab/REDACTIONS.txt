@@ -666,3 +666,160 @@ note	T-drain-store	addresses in these files are inside the kind cluster and the 
 note	U-pg-upgrade-scale	the external Postgres was a container on the test guest; its passwords and CA key were never copied, and connection strings appear with <user> and <password> only
 redacted	U-pg-upgrade-scale/40-scale/10-run/12-crictl-stats-system.txt	terminal escape codes removed
 redacted	U-pg-upgrade-scale/40-scale/10-run/40-crictl-stats-all-at-stop.txt	terminal escape codes removed
+dropped	W-ax-kagent-2/10-kagent-bound/A2-tok-long-2.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A2-tok-long-2.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A2-tok-long-2.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A2-tok-long-3.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A2-tok-long-3.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A2-tok-long-3.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A3-time-long-2.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A3-time-long-2.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A3-time-long-2.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A3-time-long-3.after.log	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A3-time-long-3.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A3-time-long-3.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/A3-time-long-3.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-2.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-2.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-2.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-3.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-3.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-3.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-4.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-4.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-4.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-5.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-5.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-time-tool-5.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-2.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-2.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-2.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-3.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-3.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-3.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-4.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-4.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-4.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-5.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-5.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/B-tok-tool-5.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-02.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-02.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-02.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-03.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-03.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-03.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-04.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-04.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-04.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-05.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-05.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-05.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-06.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-06.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-06.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-07.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-07.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-07.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-08.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-08.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-08.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-09.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-09.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-09.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-10.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-10.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/C-free-tool-10.sid	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/kagent-controller.log	controller log over 200 KB, no finding in it; the turn results are in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/ollama.log	model server log of 164 KB; the request lines of the bound runs are in 12-kagent-bound-long/ollama-gin.log
+dropped	W-ax-kagent-2/10-kagent-bound/port-forward.log	transient helper output
+dropped	W-ax-kagent-2/10-kagent-bound/session-A2-tok-long-2.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-A2-tok-long-2.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-A2-tok-long-3.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-A2-tok-long-3.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-A3-time-long-2.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-A3-time-long-2.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-A3-time-long-3.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-A3-time-long-3.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-time-tool-2.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-time-tool-2.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-time-tool-3.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-time-tool-3.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-time-tool-4.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-time-tool-4.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-time-tool-5.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-time-tool-5.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-tok-tool-2.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-tok-tool-2.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-tok-tool-3.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-tok-tool-3.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-tok-tool-4.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-tok-tool-4.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-tok-tool-5.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-B-tok-tool-5.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-02.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-02.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-03.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-03.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-04.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-04.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-05.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-05.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-06.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-06.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-07.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-07.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-08.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-08.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-09.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-09.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-10.err	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/10-kagent-bound/session-C-free-tool-10.json	per-turn bulk output; one sample of each series kept, every turn is a line in events.log
+dropped	W-ax-kagent-2/12-kagent-bound-long/kagent-controller.log	controller log over 200 KB, no finding in it; the turn results are in events.log
+dropped	W-ax-kagent-2/20-ax-flight/05-pool-replicas-saved.done	transient helper output
+dropped	W-ax-kagent-2/20-ax-flight/w-fl1/stop-poll	transient helper output
+dropped	W-ax-kagent-2/20-ax-flight/w-fl2/stop-poll	transient helper output
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/08-task.yaml	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/09-apply.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/10-resume-first.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/11-write-note.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/12-suspend.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/12b-snapshots-before-resume.txt	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/12c-actor-suspended.yaml	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/13-resume.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/15-describe-before.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/17-worker-pod.tsv	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/18-SKIPPED.txt	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/21-events.tsv	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight1/steps.tsv	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight2/08-task.yaml	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight2/09-apply.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight2/10-resume-first.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight2/11-write-note.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight2/12-suspend.log	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight2/21-events.tsv	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/20-ax-flight/w-flight2/steps.tsv	first attempt that stopped before the pod delete, because the task was not on the pool of the test; the two runs are in w-fl1 and w-fl2
+dropped	W-ax-kagent-2/40-ax-example-attempt1/01-original.yaml	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/02-diff-from-original.txt	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/02-task-4gi.yaml	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/03-diff-memory.txt	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/03-task-1536mi.yaml	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/04-egress.yaml	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/06-apply-4gi.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/07-create-egress.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/08-resume-4gi.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/09-describe-4gi.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/10-apply-1536mi.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/11-describe-after-apply.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/12-resume-1536mi.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/13-delete-task.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/14-apply-1536mi-fresh.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/15-create-egress-fresh.log	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/17-t0.txt	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/18-events.tsv	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/40-ax-example-attempt1/19-poll.tsv	first attempt of the example, the same files as 40-ax-example up to the resume that failed; the failed resume and the worker list are kept
+dropped	W-ax-kagent-2/FINDINGS.md	internal findings note, restated in sections 7.1 and 7.5
+redacted	W-ax-kagent-2/40-ax-example/26b-egress-hosts.log	public addresses of the hosts that the task reached are replaced with <public-ip>; the host name is in the sni field
+note	W-ax-kagent-2	no provider key was used. The token of each agent task is a made-up string, and the model server was a container on the test guest
+note	W-ax-kagent-2	pod, Service, and container addresses in these files are addresses inside the kind clusters and the container network of the test guest
+redacted	W-ax-kagent-2/31-ax-mcp-call/w-mcp2/16-actor.log, w-mcp3/16-actor.log	three lines of final text that the 3b model wrote in the form of a commit trailer are replaced with a marker; the model made no commit

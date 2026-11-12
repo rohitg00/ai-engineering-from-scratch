@@ -1,0 +1,4 @@
+2026-11-12T18:09:04.389Z	suspended, waiting 320 s
+2026-11-12T18:14:33.290Z	delete-pod ax-system/ax-pool-588b78fd54-whzfr
+2026-11-12T18:15:18.425Z	after-45s
+2026-11-12T18:15:19.070Z	ax-resume-1

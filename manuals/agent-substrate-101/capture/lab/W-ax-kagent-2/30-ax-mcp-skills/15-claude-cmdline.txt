@@ -1,0 +1,9 @@
+claude
+--print
+--dangerously-skip-permissions
+--max-turns=6
+--model=qwen2.5:3b
+--system-prompt=You are a coding agent in a Linux sandbox. Use the tools to do what the user asks.
+--mcp-config={"mcpServers":{"docs":{"type":"http","url":"http://lab-mcp.ax-system.svc.cluster.local:8080/mcp"},"missing-command":{"args":["--repo","/workspace"],"command":"no-such-mcp-binary","type":"stdio"}}}
+--
+Call the tool lab_fact from the docs MCP server. Then use the Bash tool to write exactly the text that the tool returned into the file /workspace/mcp-result.txt . Then answer with the single word done.

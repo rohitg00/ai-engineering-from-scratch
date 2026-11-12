@@ -1,0 +1,81 @@
+apiVersion: v1
+items:
+- apiVersion: api.kagent.dev/v1alpha3
+  kind: ModelConfig
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"api.kagent.dev/v1alpha3","kind":"ModelConfig","metadata":{"annotations":{},"name":"w-tok","namespace":"kagent"},"spec":{"apiKeySecret":"kagent-openai","apiKeySecretKey":"OPENAI_API_KEY","model":"qwen2.5:1.5b","openAI":{"baseUrl":"http://ollama.kagent.svc.cluster.local:11434/v1","maxTokens":128},"provider":"OpenAI","stream":true}}
+    creationTimestamp: "2026-11-12T18:04:48Z"
+    generation: 1
+    name: w-tok
+    namespace: kagent
+    resourceVersion: "58303"
+    uid: ca84fb40-3242-4e06-a49f-8eab3a337dcd
+  spec:
+    apiKeySecret: kagent-openai
+    apiKeySecretKey: OPENAI_API_KEY
+    model: qwen2.5:1.5b
+    openAI:
+      apiFormat: chatCompletions
+      baseUrl: http://ollama.kagent.svc.cluster.local:11434/v1
+      maxTokens: 128
+    provider: OpenAI
+    stream: true
+  status:
+    conditions:
+    - lastTransitionTime: "2026-11-12T18:04:48Z"
+      message: ModelConfig configuration accepted
+      observedGeneration: 1
+      reason: Accepted
+      status: "True"
+      type: Accepted
+    - lastTransitionTime: "2026-11-12T18:04:48Z"
+      message: All referenced secrets and config maps resolved
+      observedGeneration: 1
+      reason: Resolved
+      status: "True"
+      type: ResolvedRefs
+    observedGeneration: 1
+    secretHash: c03a5d1bc2ab9ec29616da255dff117e71968081014e054d454ab9cfaffcf576
+- apiVersion: api.kagent.dev/v1alpha3
+  kind: ModelConfig
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"api.kagent.dev/v1alpha3","kind":"ModelConfig","metadata":{"annotations":{},"name":"w-time","namespace":"kagent"},"spec":{"apiKeySecret":"kagent-openai","apiKeySecretKey":"OPENAI_API_KEY","model":"qwen2.5:1.5b","openAI":{"baseUrl":"http://ollama.kagent.svc.cluster.local:11434/v1","timeout":20},"provider":"OpenAI","stream":true}}
+    creationTimestamp: "2026-11-12T18:04:48Z"
+    generation: 1
+    name: w-time
+    namespace: kagent
+    resourceVersion: "58308"
+    uid: b8124715-3476-443a-b371-3a39881e6434
+  spec:
+    apiKeySecret: kagent-openai
+    apiKeySecretKey: OPENAI_API_KEY
+    model: qwen2.5:1.5b
+    openAI:
+      apiFormat: chatCompletions
+      baseUrl: http://ollama.kagent.svc.cluster.local:11434/v1
+      timeout: 20
+    provider: OpenAI
+    stream: true
+  status:
+    conditions:
+    - lastTransitionTime: "2026-11-12T18:04:48Z"
+      message: ModelConfig configuration accepted
+      observedGeneration: 1
+      reason: Accepted
+      status: "True"
+      type: Accepted
+    - lastTransitionTime: "2026-11-12T18:04:48Z"
+      message: All referenced secrets and config maps resolved
+      observedGeneration: 1
+      reason: Resolved
+      status: "True"
+      type: ResolvedRefs
+    observedGeneration: 1
+    secretHash: c03a5d1bc2ab9ec29616da255dff117e71968081014e054d454ab9cfaffcf576
+kind: List
+metadata:
+  resourceVersion: ""

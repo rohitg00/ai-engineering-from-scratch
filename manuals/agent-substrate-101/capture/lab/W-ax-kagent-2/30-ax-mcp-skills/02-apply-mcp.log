@@ -1,0 +1,5 @@
+configmap/lab-mcp-code created
+deployment.apps/lab-mcp created
+service/lab-mcp created
+Waiting for deployment "lab-mcp" rollout to finish: 0 of 1 updated replicas are available...
+deployment "lab-mcp" successfully rolled out

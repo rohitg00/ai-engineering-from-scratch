@@ -1,0 +1,7 @@
+2026-11-12T18:42:05Z 10.244.0.42 POST /mcp method=initialize id=1 name=
+2026-11-12T18:42:05Z 10.244.0.42 POST /mcp method=tools/list id=2 name=
+2026-11-12T18:42:16Z 10.244.0.27 POST /mcp method=server/discover id=server-discover-probe-1 name=
+2026-11-12T18:42:16Z 10.244.0.27 POST /mcp method=initialize id=0 name=
+2026-11-12T18:42:16Z 10.244.0.27 POST /mcp method=notifications/initialized id=None name=
+2026-11-12T18:42:16Z 10.244.0.27 GET /mcp get
+2026-11-12T18:42:16Z 10.244.0.27 POST /mcp method=tools/list id=1 name=

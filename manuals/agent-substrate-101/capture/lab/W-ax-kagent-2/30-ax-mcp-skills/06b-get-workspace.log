@@ -1,0 +1,4 @@
+NAME         ATESPACE   GIT-REPOS   MCP-SERVERS
+w-ws         default    1           4
+w-ws-clone   default    1           0
+s-ws         default    1           0

@@ -1,0 +1,3 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+NAME                                   POOL             STATE                 ACTORS   CPU(MILLICORES)   MEMORY         POD                                      AGE
+6dfb9d1d-cce7-4e42-af53-799a4132fa5d   kagent-default   WORKER_STATE_ACTIVE   0/1000   0/16000           0/32797740Ki   kagent/kagent-default-679c58c6cb-pljdk   7h51m

@@ -195,9 +195,64 @@ In the third new Session of the 1.5b series, the model did not stop. It had prod
 
 Nothing ended the turn before the client did. The Session actor was `ACTOR_STATE_RUNNING` 193 s into the turn, and it held its worker CPU for all that time. The next turn waited behind the same model request, because the server took one request at a time. That turn completed after 189.8 s.
 
-This is one event with one small model, and a larger model is less likely to run away. The cost of the event does not depend on the model. An actor that waits for a model is `RUNNING`, and kagent suspends it only when the turn completes. We did not find a setting of kagent v1.0.0 that limits the tokens or the seconds of a turn, and we did not test one.
+This is one event with one small model, and a larger model is less likely to run away. The cost of the event does not depend on the model. An actor that waits for a model is `RUNNING`, and kagent suspends it only when the turn completes. Nothing bounds a turn by default. Two settings of the ModelConfig do, and we tested both in a later run.
 
-**Our position:** set a limit on the output tokens at the model server or at the model gateway, and set a timeout in your client. Then count how many Sessions can wait for the model at one time, because each one holds 1 CPU of a worker. The subsection on parallel turns below has that arithmetic.
+### Two settings that bound a turn
+
+The ModelConfig of kagent v1.0.0 has three fields for this under `spec.openAI`: `maxTokens`, `maxCompletionTokens`, and `timeout` {{kagent}}. The `timeout` is in seconds, and it is the timeout of the HTTP client that calls the model. The two token fields exclude each other. The Agent, the AgentTemplate, and the Harness have no field for the seconds of a turn or for the number of model calls. The kagent CLI has `--timeout`, with a default of 5 minutes.
+
+```listing
+title: two ModelConfig objects, one with each bound
+source: capture/lab/W-ax-kagent-2/10-kagent-bound/01-bounded.yaml
+lang: yaml
+note: The AgentTemplate and Agent objects that use each ModelConfig are cut.
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: ModelConfig
+metadata: {name: w-tok, namespace: kagent}
+spec:
+  provider: OpenAI
+  model: qwen2.5:1.5b
+  apiKeySecret: kagent-openai
+  apiKeySecretKey: OPENAI_API_KEY
+  stream: true
+  openAI:
+    baseUrl: http://ollama.kagent.svc.cluster.local:11434/v1
+    maxTokens: 128
+…
+apiVersion: api.kagent.dev/v1alpha3
+kind: ModelConfig
+metadata: {name: w-time, namespace: kagent}
+spec:
+  provider: OpenAI
+  model: qwen2.5:1.5b
+  apiKeySecret: kagent-openai
+  apiKeySecretKey: OPENAI_API_KEY
+  stream: true
+  openAI:
+    baseUrl: http://ollama.kagent.svc.cluster.local:11434/v1
+    timeout: 20
+```
+
+We first tried to get the runaway back, and it did not come. The first turns of 10 new Sessions on the 1.5b agent with no bound all completed, in 5.9 to 11.5 s. So we forced a long answer with a prompt that asks for the numbers 1 to 3000, one on each line. Sent to the model server directly, that prompt was still producing text when our request ended at 75 s. An earlier prompt asked for one word 5000 times, and the model stopped by itself in 7 of 7 turns.
+
+**We measured** each row below on the same second x86 server guest (16 vCPU, 31 GB), after a restart of the guest. Every turn was the first turn of a new Session with the count prompt and the 1.5b model.
+
+| Setting | Turns | Result | Turn at the client | The actor and the model afterwards |
+|---|---|---|---|---|
+| `maxTokens: 128` | 3 | `TASK_STATE_COMPLETED`, with 128 output tokens and an answer that ends at 46 | 15.6, 19.0, and 19.4 s | `ACTOR_STATE_SUSPENDED` at the end of each turn |
+| `timeout: 20` | 3 | `TASK_STATE_FAILED`, and the CLI ended with exit code 1 | 20.8, 20.9, and 21.2 s | `ACTOR_STATE_SUSPENDED` 5 s later, with the model server at 0% CPU |
+| no bound, and `--timeout 60s` at the CLI | 1 | the CLI ended at 60.12 s with `context deadline exceeded` | not ended | `ACTOR_STATE_RUNNING` in all 8 samples over 240 s, with the model server at about 1,200% CPU |
+
+With `timeout: 20`, the task failed with this text: `llm error response (code STREAM_ERROR): "context deadline exceeded (Client.Timeout or context cancellation while reading body)"`. The model server logged each of those three requests at 19.9 s. The Session was still usable. The next turn in one of those Sessions completed in 17.1 s, in one try.
+
+Neither bound broke a normal tool turn. With `maxTokens: 128`, 5 of 5 tool turns completed, in 5.5 to 8.0 s. With `timeout: 20`, 5 of 5 completed, in 5.8 to 12.1 s. On our slow model server, a tool turn of 12.1 s is close to a bound of 20 s. Choose the seconds from the speed of your model.
+
+The row with no bound shows what a client timeout does not do. After the CLI gave up, the model request ran on for 10 minutes and 10 s, until we restarted the model server. A turn on a new Session waited behind it and reached the CLI default at 300.13 s. A second turn on the first Session returned `resource conflict` after 0.13 s. The timeout of the client stops the client. It does not stop the model call, and it does not suspend the actor.
+
+We did not see a runaway happen by itself while a bound was set, and we did not test `maxCompletionTokens`.
+
+**Our position:** set `timeout` on every ModelConfig, because it also ends a model call that stalls. Add `maxTokens` when a cut answer is better for your users than a failed turn. Do not count the client timeout as a bound. Then count how many Sessions can wait for the model at one time, because each one holds 1 CPU of a worker. The subsection on parallel turns below has that arithmetic.
 
 ## What the snapshot keeps
 
@@ -311,9 +366,9 @@ Start one `kubectl port-forward` to the controller yourself, and point every CLI
 - Write the Harness yourself at v1.0.0.
 - Write every file that the next turn needs under /data.
 - Add about 0.5 s of resume and suspend to the model time of each turn.
-- Limit the output tokens of the model, because a turn that waits for the model holds its worker CPU.
+- Set timeout and maxTokens on the ModelConfig, because nothing bounds a turn by default.
 - Use full DNS names for model and tool hosts.
 - Keep one standing port-forward for parallel CLI calls.
 ```
 
-Sources: capture/lab/summary/demos-x86.json, capture/lab/K-kagent/install/steps.tsv, capture/lab/K-kagent/install/commands.log, capture/lab/K-kagent/install/40-kagent-install.log, capture/lab/K-kagent/inventory/images.tsv, capture/lab/K-kagent/inventory/helm-list.yaml, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/agent/lab-agent.yaml, capture/lab/K-kagent/agent/objects.txt, capture/lab/K-kagent/agent/agent-conditions.trace, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/install-steps.json, capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/latency/D-par-2.err, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/timings.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/k8s-egresspolicies.yaml, capture/lab/K-kagent/session1/turn5-egress.out, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/parallel/workers-during.txt; capture/lab/summary/kagent-model-x86.json; capture/lab/S-ax-model/10-model/10-bench.tsv, 06-list.txt, 02-image.txt, 12-ollama-ps.txt; capture/lab/S-ax-model/20-kagent/01-real-model.yaml, 04-ready.txt; capture/lab/S-ax-model/20-kagent/loop/per-turn.tsv, summary.txt, timings.tsv, events.log, prompt.txt, ollama.excerpt.log, ate-api.log, C-1p5b-first-3.err, stuck-turn-01-time.txt, stuck-turn-02-actor.yaml, stuck-turn-05-ollama-runaway.log, stuck-turn-06-restart-note.txt; capture/lab/S-ax-model/_scripts/s01-model.sh, s11-kagent-loop.sh, s12-kagent-analyze.py; kagent v1.0.0 source: go/api/v1alpha3 (Harness, AgentTemplate, Agent), go/core/internal/substrate (client.go, actor_template.go), go/core/internal/controller/translator, go/core/pkg/install/charts.go, go/core/pkg/install/plan.go (the Substrate values), go/core/pkg/config/defaults.go (the chart registry), go/go.mod; kagent docs/architecture/runtime-and-lifecycle.md at v1.0.0; agentgateway v1.7.0 crates/agentgateway/src/http/substrate/egress.rs (the credential cache).
+Sources: capture/lab/summary/demos-x86.json, capture/lab/K-kagent/install/steps.tsv, capture/lab/K-kagent/install/commands.log, capture/lab/K-kagent/install/40-kagent-install.log, capture/lab/K-kagent/inventory/images.tsv, capture/lab/K-kagent/inventory/helm-list.yaml, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/agent/lab-agent.yaml, capture/lab/K-kagent/agent/objects.txt, capture/lab/K-kagent/agent/agent-conditions.trace, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/install-steps.json, capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/latency/D-par-2.err, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/timings.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/k8s-egresspolicies.yaml, capture/lab/K-kagent/session1/turn5-egress.out, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/parallel/workers-during.txt; capture/lab/summary/kagent-model-x86.json; capture/lab/S-ax-model/10-model/10-bench.tsv, 06-list.txt, 02-image.txt, 12-ollama-ps.txt; capture/lab/S-ax-model/20-kagent/01-real-model.yaml, 04-ready.txt; capture/lab/S-ax-model/20-kagent/loop/per-turn.tsv, summary.txt, timings.tsv, events.log, prompt.txt, ollama.excerpt.log, ate-api.log, C-1p5b-first-3.err, stuck-turn-01-time.txt, stuck-turn-02-actor.yaml, stuck-turn-05-ollama-runaway.log, stuck-turn-06-restart-note.txt; capture/lab/S-ax-model/_scripts/s01-model.sh, s11-kagent-loop.sh, s12-kagent-analyze.py; capture/lab/summary/kagent-bound-x86.json; capture/lab/W-ax-kagent-2/10-kagent-bound/01-bounded.yaml, 00-explain-maxTokens.txt, 00-explain-maxCompletionTokens.txt, 00-explain-timeout.txt, 00-explain-agent-spec.txt, 00-explain-agenttemplate-spec.txt, events.log; capture/lab/W-ax-kagent-2/11-long-prompt/results.tsv; capture/lab/W-ax-kagent-2/12-kagent-bound-long/events.log, timings.tsv, ollama-gin.log, T-tok-count-1.json, U-time-count-1.json, U-time-count-1.after.log, F-free-count-1.after.log, prompt-count.txt; capture/lab/W-ax-kagent-2/_scripts/w10-kagent-bound.sh, w12-kagent-bound2.sh; kagent v1.0.0 source: go/api/v1alpha3 (Harness, AgentTemplate, Agent, and modelconfig_types.go for maxTokens, maxCompletionTokens, and timeout), go/core/internal/substrate (client.go, actor_template.go), go/core/internal/controller/translator, go/core/pkg/install/charts.go, go/core/pkg/install/plan.go (the Substrate values), go/core/pkg/config/defaults.go (the chart registry), go/go.mod; kagent docs/architecture/runtime-and-lifecycle.md at v1.0.0; agentgateway v1.7.0 crates/agentgateway/src/http/substrate/egress.rs (the credential cache).

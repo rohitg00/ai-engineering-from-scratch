@@ -1495,6 +1495,302 @@ def agent_executor_followups_x86():
     }
 
 
+BOUND_SERIES = {
+    "A2-tok-long": ("maxTokens 128", "word"),
+    "A3-time-long": ("timeout 20", "word"),
+    "A1-free-long": ("none", "word"),
+    "A1-next-turn": ("none", "tool"),
+    "B-tok-tool": ("maxTokens 128", "tool"),
+    "B-time-tool": ("timeout 20", "tool"),
+    "C-free-tool": ("none", "tool"),
+    "T-tok-count": ("maxTokens 128", "count"),
+    "U-time-count": ("timeout 20", "count"),
+    "U2-next-same-session": ("timeout 20", "tool"),
+    "F-free-count": ("none", "count"),
+    "F-next-turn": ("none", "tool"),
+    "F-next-same-session": ("none", "tool"),
+}
+
+
+def bound_turns(rel):
+    started = {}
+    out = []
+    for line in lines(rel):
+        start = re.match(r"\S+ (\S+) start agent=(\S+) sid=\S+ timeout=(\S+)", line)
+        if start:
+            started[start.group(1)] = {"agent": start.group(2), "client_timeout": start.group(3)}
+            continue
+        end = re.match(r"\S+ (\S+) (?:end )?rc=(\d+) dur=([\d.]+) task=(\S*)", line)
+        if not end:
+            continue
+        tokens = re.search(r"outputTokens=(\d+)", line)
+        error = re.search(r"err=(\S.*?)\s*$", line)
+        out.append({
+            "turn": end.group(1),
+            **started.get(end.group(1), {}),
+            "exit": int(end.group(2)),
+            "wall_seconds": round(float(end.group(3)), 3),
+            "task_state": end.group(4) or None,
+            "output_tokens": int(tokens.group(1)) if tokens else None,
+            "actor_state_at_end": re.search(r"actor=(\S+)", line).group(1),
+            "error": re.sub(r"session task \S+", "session task <id>", error.group(1)) if error else None,
+        })
+    return out
+
+
+def watch_samples(rel):
+    out = []
+    for line in lines(rel):
+        match = re.match(r"\S+ \+(\d+)s actor=(\S+) ollama_cpu=([\d.]+)%", line)
+        if match:
+            out.append({"seconds_after_turn": int(match.group(1)), "actor_state": match.group(2), "model_server_cpu_percent": float(match.group(3))})
+    return out
+
+
+def kagent_bound_x86():
+    base = "W-ax-kagent-2"
+    first, second = f"{base}/10-kagent-bound", f"{base}/12-kagent-bound-long"
+    grouped = {}
+    for turn in bound_turns(f"{first}/events.log") + bound_turns(f"{second}/events.log"):
+        grouped.setdefault(re.sub(r"-\d+$", "", turn["turn"]), []).append(turn)
+    series = {}
+    for name, turns in grouped.items():
+        bound, prompt = BOUND_SERIES[name]
+        series[name] = {
+            "bound": bound,
+            "prompt": prompt,
+            "n": len(turns),
+            "completed": sum(1 for turn in turns if turn["task_state"] == "TASK_STATE_COMPLETED"),
+            "exit_codes": tally([str(turn["exit"]) for turn in turns]),
+            "wall_seconds": stat([turn["wall_seconds"] for turn in turns]),
+            "runs": turns,
+        }
+    bounded = read(f"{first}/01-bounded.yaml")
+    fields = [re.search(r"FIELD: (\w+)", read(f"{first}/00-explain-{name}.txt")).group(1) for name in ("maxTokens", "maxCompletionTokens", "timeout")]
+    requests = model_requests(f"{second}/ollama-gin.log", "/v1/chat/completions")
+    longest = max(requests, key=lambda item: item["seconds"])
+    answer = re.search(r'"text":"((?:[^"\\]|\\.)*)"', read(f"{second}/T-tok-count-1.json")).group(1)
+    failure = re.search(r'llm error response \(code (\w+)\): \\"([^\\]+)\\"', read(f"{second}/U-time-count-1.json"))
+    direct = []
+    for row in rows(f"{base}/11-long-prompt/results.tsv"):
+        direct.append({"prompt": row[0], "curl_exit": int(row[1].split("=")[1]), "seconds": float(row[2].rstrip("s")), "finish": row[3].split("=")[1] or None})
+    free = series["F-free-count"]["runs"][0]
+    new_session = series["F-next-turn"]["runs"][0]
+    same_session = series["F-next-same-session"]["runs"][0]
+    return {
+        "machine": GUEST_S + ". The guest had been restarted, and two containers of another experiment ran on it.",
+        "note": "the model is qwen2.5:1.5b, a small open model on CPU. Each turn is the first turn of a new session unless its name says next. The word prompt asks for one word 5000 times, the count prompt asks for the numbers 1 to 3000, and the tool prompt asks for one bash call. wall_seconds is the time of the kagent client command.",
+        "sources": [
+            f"capture/lab/{first}/01-bounded.yaml",
+            f"capture/lab/{first}/00-explain-maxTokens.txt",
+            f"capture/lab/{first}/00-explain-maxCompletionTokens.txt",
+            f"capture/lab/{first}/00-explain-timeout.txt",
+            f"capture/lab/{first}/events.log",
+            f"capture/lab/{base}/11-long-prompt/results.tsv",
+            f"capture/lab/{second}/events.log",
+            f"capture/lab/{second}/ollama-gin.log",
+            f"capture/lab/{second}/T-tok-count-1.json",
+            f"capture/lab/{second}/U-time-count-1.json",
+            f"capture/lab/{second}/U-time-count-1.after.log",
+            f"capture/lab/{second}/F-free-count-1.after.log",
+        ],
+        "modelconfig_fields": fields,
+        "settings": {
+            "maxTokens": int(re.search(r"maxTokens: (\d+)", bounded).group(1)),
+            "timeout_seconds": int(re.search(r"timeout: (\d+)", bounded).group(1)),
+        },
+        "prompts": {"word": lines(f"{first}/prompt-long.txt")[0], "count": lines(f"{second}/prompt-count.txt")[0], "tool": lines(f"{second}/prompt-tool.txt")[0]},
+        "direct_requests_to_the_model": direct,
+        "series": series,
+        "max_tokens_answer_ends_with": answer.split("\\n")[-1],
+        "timeout_failure": {"code": failure.group(1), "text": failure.group(2), "after_the_turn": watch_samples(f"{second}/U-time-count-1.after.log")},
+        "unbounded_turn": {
+            "client_timeout": free["client_timeout"],
+            "client_seconds": free["wall_seconds"],
+            "client_error": free["error"],
+            "after_the_client_gave_up": watch_samples(f"{second}/F-free-count-1.after.log"),
+            "model_request_seconds": longest["seconds"],
+            "model_request_code": longest["code"],
+            "ended_by": "restart of the model server container",
+            "turn_on_a_new_session_seconds": new_session["wall_seconds"],
+            "turn_on_a_new_session_error": new_session["error"],
+            "turn_on_the_same_session_seconds": same_session["wall_seconds"],
+            "turn_on_the_same_session_error": same_session["error"],
+        },
+    }
+
+
+def flight_run(run):
+    events = {row[1].split()[0].rstrip(","): stamp(row[0]) for row in rows(f"{run}/21-events.tsv")}
+    deleted = events["delete-pod"]
+    changes = [(stamp(row[0]), row[1]) for row in rows(f"{run}/19-poll-changes.tsv")]
+    crashed = next(when for when, state in changes if state == "ACTOR_STATE_CRASHED")
+    ticks = [row for row in rows(f"{run}/20-inflight-stream.tsv") if row[1].startswith("tick")]
+    stream = rows(f"{run}/20-inflight-stream.end")[0]
+    sleeper = rows(f"{run}/20-inflight-sleep.end")[0]
+    taken = step_seconds(f"{run}/steps.tsv")
+    describe = read(f"{run}/23-describe-after-loss.log")
+    after = read(f"{run}/28-files-after-resume.log")
+    return {
+        "suspend_to_loss_seconds": round(deleted - events["suspended"], 1),
+        "durable_snapshot_at_last_suspend": re.search(r"state: (SNAPSHOT_STORAGE_STATE_\w+)", read(f"{run}/12c-actor-suspended.yaml")).group(1),
+        "ticks_received": len(ticks),
+        "tick_seconds_from_delete": [round(stamp(row[0]) - deleted, 2) for row in ticks],
+        "stream_ended_after_delete_seconds": round(stamp(stream[0]) - deleted, 2),
+        "stream_exit": int(stream[2].split("=")[1]),
+        "stream_error": lines(f"{run}/20-inflight-stream.err")[0],
+        "sleep_request_ended_after_delete_seconds": round(stamp(sleeper[0]) - deleted, 2),
+        "sleep_request_error": lines(f"{run}/20-inflight-sleep.out")[0],
+        "crashed_seen_after_seconds": round(crashed - deleted, 1),
+        "phase_after_loss": re.search(r"Phase: +(\w+)", describe).group(1),
+        "message_after_loss": re.search(r"Ready +False +\w+ +(.+)", describe).group(1).strip(),
+        "ssh_while_failed": lines(f"{run}/25b-ssh-while-crashed.log")[0],
+        "watched_with_no_command_seconds": round(events["ax-resume-1"] - deleted, 1),
+        "ax_resume_seconds": taken["26-resume-after-loss"]["seconds"],
+        "ax_resume_exit": taken["26-resume-after-loss"]["exit"],
+        "file_from_before_last_suspend_kept": "note-saved-by-suspend" in after,
+        "file_of_the_command_in_flight_kept": "progress.txt: No such file" not in after,
+        "seconds_since_start_of_pid_1": float(lines(f"{run}/28-files-after-resume.log")[-1].split()[0]),
+    }
+
+
+def agent_command(rel):
+    log = [json.loads(line) for line in lines(rel) if line.startswith("{")]
+    started = next(stamp(item["time"]) for item in log if "started task command" in item["message"])
+    ended = next(stamp(item["time"]) for item in log if "task command completed" in item["message"])
+    said = [item["message"] for item in log if "span_id" not in item and not item["message"].startswith(("time=", "Claude Code doesn't recognize", "[claude-code:"))]
+    return started, ended, said
+
+
+def mcp_methods(rel, since=""):
+    return tally([re.search(r"method=(\S+)", line).group(1) for line in lines(rel) if "method=" in line and line.split()[0] >= since])
+
+
+def mcp_call_run(run):
+    started, ended, said = agent_command(f"{run}/16-actor.log")
+    call = next(line.split()[0] for line in lines(f"{run}/20-mcp-server.log") if "method=tools/call" in line)
+    return {
+        "first_resume_seconds": step_seconds(f"{run}/steps.tsv")["12-resume-first"]["seconds"],
+        "methods_seen_by_the_server": mcp_methods(f"{run}/20-mcp-server.log"),
+        "tool_call_seconds_after_command_start": round(stamp(call) - started),
+        "command_seconds": round(ended - started, 1),
+        "model_requests": model_requests(f"{run}/21-ollama-gin.log", "/v1/messages"),
+        "final_text_is_the_tool_result": any("lab fact" in text.lower() for text in said),
+    }
+
+
+def agent_executor_second_x86():
+    base = "W-ax-kagent-2"
+    mcp, example, attempt = f"{base}/30-ax-mcp-skills", f"{base}/40-ax-example", f"{base}/40-ax-example-attempt1"
+    clone, image = f"{base}/50-ax-clone-2", f"{base}/51-ax-agent-image-2"
+    inside = read(f"{mcp}/18-inside.log")
+    skills = [line for line in inside.split("/.agents/skills:")[1].split("==")[0].splitlines() if line.startswith(("d", "-", "l")) and not line.endswith((" .", " .."))]
+    declared = next(int(line.split()[3]) for line in lines(f"{mcp}/06b-get-workspace.log") if line.startswith("w-ws "))
+    passed = json.loads(next(line for line in lines(f"{mcp}/15-claude-cmdline.txt") if line.startswith("--mcp-config=")).split("=", 1)[1])["mcpServers"]
+    first_log = [json.loads(line) for line in lines(f"{mcp}/16-actor.log") if line.startswith("{")]
+    skipped = [re.search(r'msg="([^"]+)" name=(\S+)', item["message"]).groups() for item in first_log if "skipping MCP server" in item["message"]]
+    first_start, first_end, first_said = agent_command(f"{mcp}/16-actor.log")
+    ex_steps = step_seconds(f"{example}/steps.tsv")
+    ex_start, ex_end, ex_said = agent_command(f"{example}/20-actor.log")
+    resumed = next(stamp(row[0]) for row in rows(f"{example}/18-events.tsv") if row[1] == "resumed")
+    report_seen = next(stamp(row[0]) for row in rows(f"{example}/19-poll.tsv") if "HAS-REPORT" in row[2])
+    ex_inside = read(f"{example}/22-inside.log")
+    git = [line for line in ex_inside.split("== git")[1].split("== tools")[0].splitlines() if line.strip()]
+    allowed = re.findall(r'"([a-z.]+\.[a-z]+)"', read(f"{example}/04-egress.yaml").split("tlsPassthrough")[1])
+    hosts = tally([next(host for host in allowed if host.startswith(seen)) for seen in re.findall(r'"sni":"([a-z.]+)', read(f"{example}/26b-egress-hosts.log"))])
+    cycles = rows(f"{clone}/10-cycles-after-clone.tsv")
+    im_start, im_end, im_said = agent_command(f"{image}/19-actor.log")
+    return {
+        "machine": GUEST_R + ", Ollama 0.40.16 in a container on the guest with 12 CPUs and no GPU. The guest had been restarted, and two containers of another experiment ran on it.",
+        "agent_executor_commit": "a72b8ca4",
+        "model": "qwen2.5:3b, a small open model on CPU. What the model wrote or decided is a result about this model. What the task received and what the runner did is a result about Agent Executor.",
+        "unit": {"seconds": "wall time of the ax command at the client, on the guest that runs the cluster, unless a field says otherwise"},
+        "sources": [
+            f"capture/lab/{base}/20-ax-flight/w-fl1/21-events.tsv",
+            f"capture/lab/{base}/20-ax-flight/w-fl1/20-inflight-stream.tsv",
+            f"capture/lab/{base}/20-ax-flight/w-fl1/28-files-after-resume.log",
+            f"capture/lab/{base}/20-ax-flight/w-fl2/21-events.tsv",
+            f"capture/lab/{base}/20-ax-flight/w-fl2/20-inflight-stream.tsv",
+            f"capture/lab/{base}/20-ax-flight/w-fl2/28-files-after-resume.log",
+            f"capture/lab/{mcp}/04-workspace.yaml",
+            f"capture/lab/{mcp}/06b-get-workspace.log",
+            f"capture/lab/{mcp}/15-claude-cmdline.txt",
+            f"capture/lab/{mcp}/16-actor.log",
+            f"capture/lab/{mcp}/18-inside.log",
+            f"capture/lab/{mcp}/20-mcp-server.log",
+            f"capture/lab/{base}/31-ax-mcp-call/w-mcp2/20-mcp-server.log",
+            f"capture/lab/{base}/31-ax-mcp-call/w-mcp3/20-mcp-server.log",
+            f"capture/lab/{example}/steps.tsv",
+            f"capture/lab/{example}/08-resume-4gi.log",
+            f"capture/lab/{example}/10-apply-1536mi.log",
+            f"capture/lab/{example}/20-actor.log",
+            f"capture/lab/{example}/22-inside.log",
+            f"capture/lab/{example}/24-ollama-gin.log",
+            f"capture/lab/{example}/26b-egress-hosts.log",
+            f"capture/lab/{attempt}/steps.tsv",
+            f"capture/lab/{clone}/steps.tsv",
+            f"capture/lab/{clone}/10-cycles-after-clone.tsv",
+            f"capture/lab/{image}/steps.tsv",
+            f"capture/lab/{image}/19-actor.log",
+            f"capture/lab/{image}/21-workspace.log",
+        ],
+        "worker_loss_in_flight": {
+            "note": "two ax ssh commands were open when the worker pod was deleted: one prints a tick each second and writes /workspace/progress.txt, the other is sleep 120. Each run is one task.",
+            "snapshot_pending": flight_run(f"{base}/20-ax-flight/w-fl1"),
+            "snapshot_durable": flight_run(f"{base}/20-ax-flight/w-fl2"),
+        },
+        "skills": {"path": re.search(r'path: "([^"]+)"', read(f"{mcp}/04-workspace.yaml").split("skills:")[1]).group(1), "entries_in_the_directory": len(skills)},
+        "mcp": {
+            "note": "one Workspace with four server entries and one registry. The server named docs is a small HTTP server in the cluster with one tool.",
+            "servers_counted_by_ax_get": declared,
+            "servers_passed_to_the_agent": {name: entry["type"] for name, entry in sorted(passed.items())},
+            "servers_skipped": [{"name": name, "warning": warning} for warning, name in skipped],
+            "general_prompt": {
+                "first_resume_seconds": step_seconds(f"{mcp}/steps.tsv")["12-resume-first"]["seconds"],
+                "methods_seen_by_the_server": mcp_methods(f"{mcp}/20-mcp-server.log", lines(f"{mcp}/09-t0.txt")[0]),
+                "command_seconds": round(first_end - first_start, 1),
+                "model_requests": model_requests(f"{mcp}/21-ollama-gin.log", "/v1/messages"),
+                "final_text": first_said[-1],
+                "result_file_written": "mcp-result.txt: No such file" not in inside,
+            },
+            "prompt_that_names_the_tool": [mcp_call_run(f"{base}/31-ax-mcp-call/{name}") for name in ("w-mcp2", "w-mcp3")],
+        },
+        "example": {
+            "note": "examples/claude-code/task.yaml with the image digest, the model name, and the provider key changed. One run.",
+            "resume_with_documented_memory_exit": ex_steps["08-resume-4gi"]["exit"],
+            "resume_with_documented_memory_error": re.search(r"code = (ResourceExhausted desc = .+)$", lines(f"{example}/08-resume-4gi.log")[0]).group(1),
+            "worker_memory": next(line.split()[5].split("/")[1] for line in lines(f"{example}/05-workers.txt") if " ax-pool " in line),
+            "second_apply_exit": ex_steps["10-apply-1536mi"]["exit"],
+            "second_apply_error": re.search(r"desc = (.+)$", lines(f"{example}/10-apply-1536mi.log")[-1]).group(1),
+            "first_try_resume_after_recreate_exit": step_seconds(f"{attempt}/steps.tsv")["16-resume-fresh"]["exit"],
+            "resume_after_recreate_seconds": ex_steps["16-resume-fresh"]["seconds"],
+            "passthrough_hosts_in_the_rule": allowed,
+            "hosts_in_the_gateway_log": hosts,
+            "command_seconds": round(ex_end - ex_start, 1),
+            "model_requests": model_requests(f"{example}/24-ollama-gin.log", "/v1/messages"),
+            "report_first_seen_seconds_after_resume": round(report_seen - resumed),
+            "report_says_all_tests_passed": "all tests passed" in ex_inside,
+            "last_message_names_import_errors": any("import errors" in text for text in ex_said),
+            "lines_of_git_status_and_diff": len(git) - 1,
+            "phase_after_command_ended": re.search(r"Phase: +(\w+)", read(f"{example}/21-describe.log")).group(1),
+        },
+        "clone_second_run": {
+            "first_resume_with_passthrough_rule_seconds": step_seconds(f"{clone}/steps.tsv")["06-resume-first-with-clone"]["seconds"],
+            "suspend_seconds": stat([float(row[1]) for row in cycles]),
+            "resume_after_clone": {"seconds": stat([float(row[2]) for row in cycles]), "runs": rounded([float(row[2]) for row in cycles])},
+            "commits_seen": tally([row[3] for row in cycles]),
+        },
+        "agent_image_second_run": {
+            "first_resume_seconds": step_seconds(f"{image}/steps.tsv")["16-resume"]["seconds"],
+            "command_seconds": round(im_end - im_start, 1),
+            "model_requests": model_requests(f"{image}/22-ollama-gin.log", "/v1/messages"),
+            "final_text": im_said[-1],
+            "file_written": "agent-output.txt: No such file" not in read(f"{image}/21-workspace.log"),
+            "phase_after_command_ended": re.search(r"Phase: +(\w+)", read(f"{image}/20-describe.log")).group(1),
+        },
+    }
+
+
 DRAIN_CASES = [
     ("a", "RUNNING, one request about each second", "10-a-running.tsv", "return-a.tsv"),
     ("b", "SUSPENDED with --mode sync, no request during the drain", "20-b-suspended-sync-quiet.tsv", "return-b.tsv"),
@@ -2046,6 +2342,8 @@ BUILDERS = {
     "upgrade-x86.json": upgrade_x86,
     "scale-x86.json": scale_x86,
     "kagent-model-x86.json": kagent_model_x86,
+    "kagent-bound-x86.json": kagent_bound_x86,
+    "agent-executor-second-x86.json": agent_executor_second_x86,
     "agent-executor-followups-x86.json": agent_executor_followups_x86,
     "agent-executor-x86.json": agent_executor_x86,
     "node-loss-x86.json": node_loss_x86,

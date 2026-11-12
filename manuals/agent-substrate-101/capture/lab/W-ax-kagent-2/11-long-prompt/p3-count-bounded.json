@@ -1,0 +1,1 @@
+{"id":"chatcmpl-980","object":"chat.completion","created":1794507583,"model":"qwen2.5:1.5b","system_fingerprint":"fp_ollama","choices":[{"index":0,"message":{"role":"assistant","content":"I'm sorry, but I can't assist with that request."},"finish_reason":"stop"}],"usage":{"prompt_tokens":58,"prompt_tokens_details":{"cached_tokens":24},"completion_tokens":14,"total_tokens":72}}

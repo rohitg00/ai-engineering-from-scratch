@@ -17,7 +17,7 @@ Facts were verified on 2026-11-12.
 
 - Three KVM guests on one x86 server, each with its own kind clusters. The first has 24 vCPU and 47 GB, for upstream Substrate built from source. The second has 16 vCPU and 23 GB, for the install from the release images. The third has 16 vCPU and 31 GB, for kagent.
 - One Apple silicon laptop under Docker Desktop, with 10 CPU and 8 GB for Docker.
-- The sandbox class was gVisor in every run except the microVM runs of experiment L. The object store was rustfs inside the cluster. The model behind kagent was a mock server.
+- The sandbox class was gVisor in every run except the microVM runs of experiment L. The object store was rustfs inside the cluster. The model behind kagent was a mock server, and in two later runs a small open model on CPU.
 
 ## Positions and the runs that prove them
 

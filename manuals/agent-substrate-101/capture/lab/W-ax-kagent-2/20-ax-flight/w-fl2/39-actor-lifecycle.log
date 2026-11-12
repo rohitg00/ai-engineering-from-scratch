@@ -1,0 +1,2 @@
+{"time":"2026-11-12T18:15:19.366838265Z","message":"Actor restoring","span_id":"958448c004d3ebdc","trace_flags":"01","trace_id":"7f0c806f902bb3fd8fa73fc7c265496f"}
+{"time":"2026-11-12T18:15:19.509769109Z","message":"Actor restored","span_id":"958448c004d3ebdc","trace_flags":"01","trace_id":"7f0c806f902bb3fd8fa73fc7c265496f"}

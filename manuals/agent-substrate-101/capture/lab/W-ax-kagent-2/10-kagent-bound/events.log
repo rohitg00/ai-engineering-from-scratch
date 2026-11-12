@@ -1,0 +1,64 @@
+2026-11-12T18:05:03.799Z phase A2: token bound, long prompt
+2026-11-12T18:05:04.004Z A2-tok-long-1 start agent=w-tok sid=01a1d0ef-4437-7c77-980b-8c83eb852c2a timeout=5m
+2026-11-12T18:05:21.652Z A2-tok-long-1 end rc=0 dur=17.477672135 task=TASK_STATE_COMPLETED chars=403 actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:05:25.866Z A2-tok-long-2 start agent=w-tok sid=01a1d0ef-9998-7069-8dfc-b8f6c0962cba timeout=5m
+2026-11-12T18:05:47.719Z A2-tok-long-2 end rc=0 dur=21.621670039 task=TASK_STATE_COMPLETED chars=406 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:05:51.985Z A2-tok-long-3 start agent=w-tok sid=01a1d0ef-ff74-71b6-8cee-138ed94608c6 timeout=5m
+2026-11-12T18:06:04.927Z A2-tok-long-3 end rc=0 dur=12.703904033 task=TASK_STATE_COMPLETED chars=411 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:06:08.935Z phase A3: time bound, long prompt
+2026-11-12T18:06:09.178Z A3-time-long-1 start agent=w-time sid=01a1d0f0-42a9-707e-b3f1-e0664e3b8d67 timeout=5m
+2026-11-12T18:06:24.517Z A3-time-long-1 end rc=0 dur=15.128404664 task=TASK_STATE_COMPLETED chars=403 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:06:28.772Z A3-time-long-2 start agent=w-time sid=01a1d0f0-8f2a-7ae0-ba56-f1024980cbe6 timeout=5m
+2026-11-12T18:06:39.240Z A3-time-long-2 end rc=0 dur=10.259513744 task=TASK_STATE_COMPLETED chars=403 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:06:43.568Z A3-time-long-3 start agent=w-time sid=01a1d0f0-c8b0-780a-ad3a-4e92e12808ea timeout=5m
+2026-11-12T18:06:54.056Z A3-time-long-3 end rc=0 dur=10.261921588 task=TASK_STATE_COMPLETED chars=410 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:07:59.823Z phase B: bounded configs, tool prompt
+2026-11-12T18:07:59.981Z B-tok-tool-1 start agent=w-tok sid=01a1d0f1-f3b3-7df4-a302-ec1a00593156 timeout=5m
+2026-11-12T18:08:05.667Z B-tok-tool-1 end rc=0 dur=5.507618796 task=TASK_STATE_COMPLETED chars=205 actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:08:08.868Z B-tok-tool-2 start agent=w-tok sid=01a1d0f2-1666-7ba1-bb21-b65483c17b4b timeout=5m
+2026-11-12T18:08:15.579Z B-tok-tool-2 end rc=0 dur=6.516303920 task=TASK_STATE_COMPLETED chars=244 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:08:18.771Z B-tok-tool-3 start agent=w-tok sid=01a1d0f2-3d14-71d9-9991-3757ea5521cd timeout=5m
+2026-11-12T18:08:26.299Z B-tok-tool-3 end rc=0 dur=7.363748760 task=TASK_STATE_COMPLETED chars=285 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:08:29.592Z B-tok-tool-4 start agent=w-tok sid=01a1d0f2-66fc-7d1e-86bf-502aa6061693 timeout=5m
+2026-11-12T18:08:36.074Z B-tok-tool-4 end rc=0 dur=6.305757388 task=TASK_STATE_COMPLETED chars=226 actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:08:39.281Z B-tok-tool-5 start agent=w-tok sid=01a1d0f2-8d27-7185-b43a-48dacf337895 timeout=5m
+2026-11-12T18:08:47.459Z B-tok-tool-5 end rc=0 dur=7.983771513 task=TASK_STATE_COMPLETED chars=285 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:08:50.674Z B-time-tool-1 start agent=w-time sid=01a1d0f2-b9a1-7663-851c-3696ee114c5c timeout=5m
+2026-11-12T18:09:02.925Z B-time-tool-1 end rc=0 dur=12.068194586 task=TASK_STATE_COMPLETED chars=295 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:09:06.189Z B-time-tool-2 start agent=w-time sid=01a1d0f2-f608-7987-bbc2-a19ea1092ae3 timeout=5m
+2026-11-12T18:09:13.883Z B-time-tool-2 end rc=0 dur=7.513012825 task=TASK_STATE_COMPLETED chars=301 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:09:17.080Z B-time-tool-3 start agent=w-time sid=01a1d0f3-20d6-7859-b95d-d87939baf554 timeout=5m
+2026-11-12T18:09:23.101Z B-time-tool-3 end rc=0 dur=5.814816372 task=TASK_STATE_COMPLETED chars=257 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:09:26.290Z B-time-tool-4 start agent=w-time sid=01a1d0f3-44d7-71d1-a821-5b3837600444 timeout=5m
+2026-11-12T18:09:33.583Z B-time-tool-4 end rc=0 dur=7.126903839 task=TASK_STATE_COMPLETED chars=300 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:09:36.774Z B-time-tool-5 start agent=w-time sid=01a1d0f3-6dcd-7361-9cf7-2c6300d765dd timeout=5m
+2026-11-12T18:09:48.229Z B-time-tool-5 end rc=0 dur=11.293048744 task=TASK_STATE_COMPLETED chars=205 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:09:51.235Z phase C: unbounded 1.5b, tool prompt, first turn of 10 new sessions, client timeout 120 s
+2026-11-12T18:09:51.471Z C-free-tool-01 start agent=real-1p5b sid=01a1d0f3-a70a-7618-89ea-5921ac854f94 timeout=120s
+2026-11-12T18:10:03.115Z C-free-tool-01 end rc=0 dur=11.465673141 task=TASK_STATE_COMPLETED chars=238 actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:10:06.366Z C-free-tool-02 start agent=real-1p5b sid=01a1d0f3-e126-7c1c-8f96-c0f75775a8ea timeout=120s
+2026-11-12T18:10:15.153Z C-free-tool-02 end rc=0 dur=8.612430558 task=TASK_STATE_COMPLETED chars=374 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:10:18.368Z C-free-tool-03 start agent=real-1p5b sid=01a1d0f4-1034-76c8-8930-33659c95817a timeout=120s
+2026-11-12T18:10:25.402Z C-free-tool-03 end rc=0 dur=6.844322183 task=TASK_STATE_COMPLETED chars=281 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:10:28.668Z C-free-tool-04 start agent=real-1p5b sid=01a1d0f4-3837-7e5f-9234-85f294e82ca5 timeout=120s
+2026-11-12T18:10:39.588Z C-free-tool-04 end rc=0 dur=10.718511556 task=TASK_STATE_COMPLETED chars=480 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:10:42.778Z C-free-tool-05 start agent=real-1p5b sid=01a1d0f4-6fa1-71d1-a947-df36dd159ab2 timeout=120s
+2026-11-12T18:10:48.926Z C-free-tool-05 end rc=0 dur=5.958344770 task=TASK_STATE_COMPLETED chars=226 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:10:52.367Z C-free-tool-06 start agent=real-1p5b sid=01a1d0f4-941a-70e6-aef6-443d09131040 timeout=120s
+2026-11-12T18:10:59.454Z C-free-tool-06 end rc=0 dur=6.911114272 task=TASK_STATE_COMPLETED chars=282 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:11:02.682Z C-free-tool-07 start agent=real-1p5b sid=01a1d0f4-bd36-70f8-9ef3-cc55b34370a0 timeout=120s
+2026-11-12T18:11:09.173Z C-free-tool-07 end rc=0 dur=6.315752571 task=TASK_STATE_COMPLETED chars=264 actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:11:12.664Z C-free-tool-08 start agent=real-1p5b sid=01a1d0f4-e333-7de9-b976-9f3222d64ed4 timeout=120s
+2026-11-12T18:11:20.951Z C-free-tool-08 end rc=0 dur=8.084382872 task=TASK_STATE_COMPLETED chars=268 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:11:24.146Z C-free-tool-09 start agent=real-1p5b sid=01a1d0f5-1132-7d41-8de6-121b45ce38e6 timeout=120s
+2026-11-12T18:11:31.423Z C-free-tool-09 end rc=0 dur=7.117136283 task=TASK_STATE_COMPLETED chars=291 actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:11:34.770Z C-free-tool-10 start agent=real-1p5b sid=01a1d0f5-3a1b-7d7b-a55a-59d2bd695634 timeout=120s
+2026-11-12T18:11:40.877Z C-free-tool-10 end rc=0 dur=5.934973330 task=TASK_STATE_COMPLETED chars=226 actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:11:43.884Z phase A1: unbounded, long prompt, client timeout 90 s
+2026-11-12T18:11:44.087Z A1-free-long-1 start agent=real-1p5b sid=01a1d0f5-5f10-767e-b7a6-cf77b5ac7904 timeout=90s
+2026-11-12T18:12:07.775Z A1-free-long-1 end rc=0 dur=23.532485234 task=TASK_STATE_COMPLETED chars=403 actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:16:14.117Z A1 next turn on a second session while the first may still generate
+2026-11-12T18:16:14.359Z A1-next-turn start agent=real-1p5b sid=01a1d0f9-7e9c-7d78-9de3-495997a5d30b timeout=120s
+2026-11-12T18:16:27.238Z A1-next-turn end rc=0 dur=12.702692452 task=TASK_STATE_COMPLETED chars=291 actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:16:27.391Z A1 final actor=ACTOR_STATE_SUSPENDED
+2026-11-12T18:16:28.192Z DONE

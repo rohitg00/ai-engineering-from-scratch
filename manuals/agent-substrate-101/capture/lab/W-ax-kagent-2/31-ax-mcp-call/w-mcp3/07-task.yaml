@@ -1,0 +1,26 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: w-mcp3
+  atespace: default
+spec:
+  image: "localhost:5002/ax-claude-code@sha256:73fbd85b498dacfde3660cb9c5cc4c27f279a2bb2b9638e783dbf81d15919d35"
+  config:
+    prompt: "Use the tool mcp__docs__lab_fact now. After it returns, reply with exactly the text that it returned and nothing else."
+    model: "qwen2.5:3b"
+    maxTurns: 4
+    dangerouslySkipPermissions: true
+    systemPrompt: "You are an agent in a Linux sandbox. You must call a tool when the user names one."
+    tools: "Bash"
+  env:
+    - name: ANTHROPIC_BASE_URL
+      value: "http://ollama.ax-system.svc.cluster.local:11434"
+    - name: ANTHROPIC_AUTH_TOKEN
+      value: "ollama"
+  resources:
+    limits:
+      cpu: "2"
+      memory: "1536Mi"
+  workspace:
+    name: w-ws
+  debug: true

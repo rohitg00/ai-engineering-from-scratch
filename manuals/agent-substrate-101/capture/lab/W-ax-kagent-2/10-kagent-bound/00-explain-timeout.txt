@@ -1,0 +1,11 @@
+GROUP:      api.kagent.dev
+KIND:       ModelConfig
+VERSION:    v1alpha3
+
+FIELD: timeout <integer>
+
+
+DESCRIPTION:
+    Timeout
+    
+

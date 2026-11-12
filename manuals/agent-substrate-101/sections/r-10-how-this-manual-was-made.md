@@ -28,7 +28,7 @@ Our runs rank first. Where a run and the documentation disagree, the manual repo
 |---|---|---|
 | an x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on a shared x86 server, Ubuntu 24.04, Docker 29.1.3, Go 1.27.3 | Agent Substrate built from source, the Envoy dataplane, gVisor: experiments A, B, C, D, I, J, and V. Also the microVM class and the second node restart of experiment L. Last, new kind clusters from the release images for experiment U |
 | a second x86 server guest (16 vCPU, 23 GB) | a guest on the same server | Agent Substrate from the release images, Envoy and then agentgateway v1.7.0: experiments E, F, and G. Also a second cluster with three kind nodes for experiment L. Later, at the same time, experiment P on the cluster with three nodes and experiment Q on the cluster with one node. Last, experiment T on the cluster with three nodes |
-| a second x86 server guest (16 vCPU, 31 GB) | a guest on the same server | Two clusters, one after the other. kagent v1.0.0 with its own distribution of Substrate, and a mock model: experiment K. Then a separate install of Agent Substrate from the release images, with the Envoy dataplane, for the four demos of Part 9: experiment N. Then Agent Executor at one commit on that second cluster: experiment R. Last, a small open model on CPU in a container on the guest, for kagent and for Agent Executor on the two clusters: experiment S |
+| a second x86 server guest (16 vCPU, 31 GB) | a guest on the same server | Two clusters, one after the other. kagent v1.0.0 with its own distribution of Substrate, and a mock model: experiment K. Then a separate install of Agent Substrate from the release images, with the Envoy dataplane, for the four demos of Part 9: experiment N. Then Agent Executor at one commit on that second cluster: experiment R. Last, a small open model on CPU in a container on the guest, for kagent and for Agent Executor on the two clusters: experiment S. After a restart of the guest, the same two clusters and the same model: experiment W |
 | an Apple silicon laptop under Docker Desktop | 10 CPUs and 8 GB given to Docker | Agent Substrate from the release images, gVisor only: experiment M |
 
 The four are different machines. Two of them have 16 vCPU, so every measured paragraph gives the memory size too. A number from one machine is never a controlled comparison with a number from another.
@@ -71,6 +71,7 @@ Three sections show numbers from two machines side by side. [Section 2.1](#s-ins
 | T | What do a drain, a full node, and a bucket outside the cluster do to an actor? | A drain crashes a running actor and does not disturb a suspended one. The fourth table below has one row for each item. |
 | U | Do an outside Postgres, an upgrade, and a larger count of actors work as the project says? | The install needed one fix, the upgrade crashed the running actor, and one node finished about 37 resumes each second. The fourth table below has the rows. |
 | V | Do twelve statements that the first draft marked as not tested hold in a run? | The first table below has one row for each. |
+| W | Can a kagent turn be bounded, and do four more open statements about Agent Executor hold in a run? | Two settings of the ModelConfig bound a turn. The fifth table below has one row for each item. |
 
 The letters H and O are not in the table. H was a single check that a plain `scratch` image works as an actor, and we did not use the letter O. Experiment L closed three gaps of the earlier runs, and the sections of Part 4 report it.
 
@@ -131,6 +132,18 @@ Experiments T and U ran after S, at the same time on two guests. T ran on the cl
 | U, scale | Do the scale statements of the project site hold on one node? | A single resume stayed at 0.36 s up to 10,750 actor rows. One node finished 36 to 39 resumes each second. The ramp stopped at the disk of the guest. | [4.5](#s-sizing-a-pool), [1.1](#s-what-substrate-does-and-what-it-leaves-to-you) |
 
 The first attempt at two cases of T sent its requests to the wrong port, and we ran both again. One pass of the bucket outage has rows with a client error, and the summary leaves those rows out. The capture kit names each file that we did not use.
+
+Experiment W ran last, on the guest with 31 GB, after a restart of that guest. It took four things that this page and [section 7.5](#s-agent-executor) listed as not run. The models were the same two small models on CPU.
+
+| Item of W | Question | Result | Section |
+|---|---|---|---|
+| bound | Does a setting of kagent bound a turn? | Yes, two on the ModelConfig. With `maxTokens: 128` the turn completed with a cut answer, in 3 of 3 turns. With `timeout: 20` the turn failed after about 21 s and the actor was suspended, in 3 of 3. A client timeout alone left the actor `RUNNING` and the model busy for 10 minutes. | [7.1](#s-kagent-on-substrate) |
+| open command | What happens to an open `ax ssh` command when the worker goes away? | It ended with an error within 0.2 s, in 2 of 2 runs, and nothing sent it again. `ax resume task` repaired the task. | [7.5](#s-agent-executor) |
+| skills, MCP | What reaches the agent from the skills and MCP fields of a workspace? | An empty skills directory. Two of four MCP servers, as a flag of the agent command. The agent reached an HTTP MCP server in 3 of 3 tasks, with an egress rule that we set on the actor. | [7.5](#s-agent-executor) |
+| example | Does the documented example run with its own prompt and repository? | Yes, after two fixes: a smaller memory limit, and a delete, because a task cannot be changed. The 3b model then wrote a report that was false. | [7.5](#s-agent-executor) |
+| second runs | Do two results of S with one run repeat? | The clone did, in 5.47 s. The agent image did not write its file in the second run, so 1 of 2 runs did. | [7.5](#s-agent-executor) |
+
+In W, the first two tries at the worker loss stopped before the delete, because the task was not on the pool of the test. We ran both again. The first try at the example stopped at a failed resume that we did not explain. The capture kit names each file that we left out.
 
 ## The capture kit
 

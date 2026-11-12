@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 230" role="img" aria-labelledby="fig-7-5d-title fig-7-5d-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-5d-title">An open ax ssh command when the worker pod is deleted</title>
+  <desc id="fig-7-5d-desc">Two runs, one row each. In each run an ax ssh command printed one line each second, and the worker pod of the task was deleted after 8 lines. The command ended with an error 0.17 seconds after the delete in the first run and 0.16 seconds after it in the second. The actor was seen as CRASHED after 1.9 and 0.6 seconds. Nothing started the command again. After ax resume task, the file that the command had written was gone in both runs. The note from before the last suspend was gone in the first run, where the snapshot was PENDING, and kept in the second, where it was COMPLETED.</desc>
+  <rect x="20" y="14" width="4" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="30" y="23" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">one line from the command</text>
+  <rect x="214" y="14" width="4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="224" y="23" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">the command ends with an error</text>
+  <line x1="440" y1="12" x2="440" y2="26" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="448" y="23" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">actor seen as CRASHED</text>
+  <text x="20" y="62" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">Run 3,</text>
+  <text x="20" y="77" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">last suspend 12 s before</text>
+  <line x1="168" y1="80" x2="388" y2="80" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <rect x="183.89" y="56" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="205.47" y="56" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="227.05" y="56" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="248.63" y="56" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="270.21" y="56" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="291.8" y="56" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="313.38" y="56" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="334.96" y="56" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="337.68" y="52" width="3" height="22" fill="var(--m-rose-ink, #b0344d)"/>
+  <line x1="375.43" y1="48" x2="375.43" y2="84" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="402" y="62" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">error after 0.17 s, no retry</text>
+  <text x="402" y="77" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">PENDING: note lost, new file lost</text>
+  <text x="20" y="120" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">Run 4,</text>
+  <text x="20" y="135" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">last suspend 329 s before</text>
+  <line x1="168" y1="138" x2="388" y2="138" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <rect x="183.05" y="114" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="204.42" y="114" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="226.21" y="114" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="247.8" y="114" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="269.38" y="114" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="290.96" y="114" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="312.33" y="114" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="333.91" y="114" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="337.47" y="110" width="3" height="22" fill="var(--m-rose-ink, #b0344d)"/>
+  <line x1="348.19" y1="106" x2="348.19" y2="142" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="402" y="120" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">error after 0.16 s, no retry</text>
+  <text x="402" y="135" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">COMPLETED: note kept, new file lost</text>
+  <line x1="168" y1="172" x2="388" y2="172" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="209.9" y1="168" x2="209.9" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="209.9" y="190" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">-6 s</text>
+  <line x1="251.81" y1="168" x2="251.81" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="251.81" y="190" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">-4 s</text>
+  <line x1="293.71" y1="168" x2="293.71" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="293.71" y="190" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">-2 s</text>
+  <line x1="335.62" y1="168" x2="335.62" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="335.62" y="190" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
+  <line x1="377.52" y1="168" x2="377.52" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="377.52" y="190" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2 s</text>
+  <text x="278" y="210" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds since the delete of the worker pod</text>
+</svg>

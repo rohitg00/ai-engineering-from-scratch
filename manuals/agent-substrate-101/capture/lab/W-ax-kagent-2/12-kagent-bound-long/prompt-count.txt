@@ -1,0 +1,1 @@
+Do not use any tool. Count from 1 to 3000. Write every number on its own line. Do not skip any number and do not summarize.

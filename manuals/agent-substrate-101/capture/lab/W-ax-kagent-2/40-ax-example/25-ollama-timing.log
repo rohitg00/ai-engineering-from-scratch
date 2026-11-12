@@ -1,0 +1,15 @@
+2026-11-12T18:52:14.110595459Z slot print_timing: id  0 | task 246 | prompt eval time =  124913.65 ms /  9997 tokens (   12.50 ms per token,    80.03 tokens per second)
+2026-11-12T18:52:14.111247681Z slot print_timing: id  0 | task 246 |        eval time =   35391.46 ms /   168 tokens (  211.92 ms per token,     4.72 tokens per second)
+2026-11-12T18:52:14.112618689Z slot      release: id  0 | task 246 | stop processing: n_tokens = 10187, truncated = 0
+2026-11-12T18:52:14.405769246Z slot   operator(): id  0 | task 424 | new prompt, n_ctx_slot = 32768, n_keep = 4, task.n_tokens = 10418
+2026-11-12T18:52:54.938026396Z slot print_timing: id  0 | task 424 | prompt eval time =    7738.99 ms /   384 tokens (   20.15 ms per token,    49.62 tokens per second)
+2026-11-12T18:52:54.938066387Z slot print_timing: id  0 | task 424 |        eval time =   32794.17 ms /   153 tokens (  215.75 ms per token,     4.63 tokens per second)
+2026-11-12T18:52:54.939645139Z slot      release: id  0 | task 424 | stop processing: n_tokens = 10570, truncated = 0
+2026-11-12T18:53:00.257587016Z slot   operator(): id  0 | task 578 | new prompt, n_ctx_slot = 32768, n_keep = 4, task.n_tokens = 11076
+2026-11-12T18:53:42.868438449Z slot print_timing: id  0 | task 578 | prompt eval time =   11465.51 ms /   526 tokens (   21.80 ms per token,    45.88 tokens per second)
+2026-11-12T18:53:42.870662924Z slot print_timing: id  0 | task 578 |        eval time =   31144.80 ms /   148 tokens (  211.87 ms per token,     4.72 tokens per second)
+2026-11-12T18:53:42.870724705Z slot      release: id  0 | task 578 | stop processing: n_tokens = 11223, truncated = 0
+2026-11-12T18:53:43.125107121Z slot   operator(): id  0 | task 727 | new prompt, n_ctx_slot = 32768, n_keep = 4, task.n_tokens = 12135
+2026-11-12T18:54:35.048590512Z slot print_timing: id  0 | task 727 | prompt eval time =   19316.61 ms /  1000 tokens (   19.32 ms per token,    51.77 tokens per second)
+2026-11-12T18:54:35.049295266Z slot print_timing: id  0 | task 727 |        eval time =   32608.84 ms /   154 tokens (  213.13 ms per token,     4.69 tokens per second)
+2026-11-12T18:54:35.050803385Z slot      release: id  0 | task 727 | stop processing: n_tokens = 12288, truncated = 0

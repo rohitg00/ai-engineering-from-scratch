@@ -1,0 +1,56 @@
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: ModelConfig
+metadata: {name: w-tok, namespace: kagent}
+spec:
+  provider: OpenAI
+  model: qwen2.5:1.5b
+  apiKeySecret: kagent-openai
+  apiKeySecretKey: OPENAI_API_KEY
+  stream: true
+  openAI:
+    baseUrl: http://ollama.kagent.svc.cluster.local:11434/v1
+    maxTokens: 128
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: AgentTemplate
+metadata: {name: w-tok-template, namespace: kagent}
+spec:
+  description: Lab agent with a bound on the model call
+  modelConfig: {name: w-tok}
+  systemPrompt: You are a lab agent. Use the bash tool when the user asks you to run a command. Answer in one short sentence.
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: Agent
+metadata: {name: w-tok, namespace: kagent}
+spec:
+  template: {ref: {name: w-tok-template}}
+  harnessRef: {name: lab-harness}
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: ModelConfig
+metadata: {name: w-time, namespace: kagent}
+spec:
+  provider: OpenAI
+  model: qwen2.5:1.5b
+  apiKeySecret: kagent-openai
+  apiKeySecretKey: OPENAI_API_KEY
+  stream: true
+  openAI:
+    baseUrl: http://ollama.kagent.svc.cluster.local:11434/v1
+    timeout: 20
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: AgentTemplate
+metadata: {name: w-time-template, namespace: kagent}
+spec:
+  description: Lab agent with a bound on the model call
+  modelConfig: {name: w-time}
+  systemPrompt: You are a lab agent. Use the bash tool when the user asks you to run a command. Answer in one short sentence.
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: Agent
+metadata: {name: w-time, namespace: kagent}
+spec:
+  template: {ref: {name: w-time-template}}
+  harnessRef: {name: lab-harness}
