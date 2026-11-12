@@ -1,0 +1,2 @@
+marker (the injected client credential) seen by backends: mock-a=3 mock-b=0
+placeholder seen by backends: 0

@@ -1,0 +1,11 @@
+system roots: 121 certificates; combined: 122
+configmap/egress-extra-roots created
+deployment.apps/atenet-egress patched
+Waiting for deployment "atenet-egress" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "atenet-egress" rollout to finish: 1 old replicas are pending termination...
+deployment "atenet-egress" successfully rolled out
+NAME                            READY   STATUS        RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+atenet-egress-5bf5cf48d-ps9tp   1/1     Running       0          2s    10.244.0.64   kind-control-plane   <none>           <none>
+atenet-egress-9fbd685d5-5q98b   1/1     Terminating   0          96m   10.244.0.49   kind-control-plane   <none>           <none>
+atenet-egress-5bf5cf48d-ps9tp              1/1     Running       0          2s
+atenet-egress-9fbd685d5-5q98b              1/1     Terminating   0          96m

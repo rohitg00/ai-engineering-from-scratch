@@ -39,7 +39,7 @@ id: fig-1-2
 kind: sequence
 title: the first request to my-counter-1
 claim: The first request to a suspended actor makes the router call ResumeActor, and ate-api-server restores the actor before the request reaches it.
-caption: Read the rows from top to bottom. Row 2 is the only one that passes kube-apiserver. Rows 5 and 6 have amber numbers because a request to a running actor skips them. The note under row 6 is the restore time of a later resume of the same actor. From capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/12-actor-running.json, and capture/lab/B-lifecycle/27-lifecycle.log.
+caption: Read the rows from top to bottom. The drawing above each lifeline is its party, with the mark of its project. Row 2 is the only one that passes kube-apiserver. Rows 5 and 6 have amber numbers because a request to a running actor skips them. The note under row 6 is the restore time of a later resume of the same actor. From capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/12-actor-running.json, and capture/lab/B-lifecycle/27-lifecycle.log.
 ```
 
 1. `curl` sends the request to `127.0.0.1:8000`, where `kubectl ate proxy` listens.

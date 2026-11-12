@@ -1,0 +1,17 @@
+Name:         ax-install-check
+Atespace:     default
+Phase:        Running
+Actor:        ax-install-check
+Worker IP:    10.244.0.31
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE            STATUS  REASON         MESSAGE
+  WorkspaceReady  True    SetupComplete  Workspace setup completed at 10.244.0.25
+  Ready           True    TaskRunning    Task is running and its workspace is ready
+total 1
+drwxrwxrwx 3 root root 100 Nov 12 15:34 .
+drwxr-xr-x 1 root root 100 Nov 12 15:21 ..
+drwxr-xr-x 2 root root  60 Nov 12 15:20 .ax
+-rw-r--r-- 1 root root  16 Nov 12 15:21 note.txt
+-rw-r--r-- 1 root root  27 Nov 12 15:34 unsaved.txt

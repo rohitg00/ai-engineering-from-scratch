@@ -100,7 +100,7 @@ id: fig-7-1
 kind: sequence
 title: one recorded kagent turn, from the message to the answer
 claim: Every turn resumes the Session actor through the router, and kagent calls SuspendActor as soon as the task completes.
-caption: Read top to bottom. The left column is the time of each step in one recorded turn, counted from the message. Amber arrows are state changes. The model was a mock server. From capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, and capture/lab/summary/kagent-turns-x86.json.
+caption: Read top to bottom. The drawing above each lifeline is its party, with the mark of its project. The left column is the time of each step in one recorded turn, counted from the message. Amber arrows are state changes. The model was a mock server. From capture/lab/K-kagent/latency/timings.tsv, capture/lab/K-kagent/latency/server-times.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, and capture/lab/summary/kagent-turns-x86.json.
 ```
 
 The log of `ate-api-server` shows the cycle. These lines are one Session: the create, then two turns that were 4 s apart.
@@ -216,7 +216,7 @@ rules:
 
 The actor never had the key. Its environment held `OPENAI_API_KEY=kagent-credential-injected`, and the mock model received the real value on all 10 calls.
 
-A rotated key is slower here than on Envoy. The gateway, agentgateway v1.7.0, keeps each fetched credential for 300 seconds. So a new value of the Secret can take up to 5 minutes to reach the model calls {{agentgateway}}. This is from the code. A measured check is in progress, and we have no number yet.
+A rotated key is slower here than on Envoy. The gateway, agentgateway v1.7.0, keeps each fetched credential for 300 seconds. So a new value of the Secret can take up to 5 minutes to reach the model calls {{agentgateway}}. We measured that delay on the agentgateway dataplane of upstream Substrate, and not in the kagent cluster. Three changes of a Secret reached the upstream after 280.5, 200.9, and 100.6 s, and no request failed. [Credential injection](#s-credential-injection) has that run.
 
 Everything else was denied. A request to `example.com` failed in DNS. A request to the IP address `1.1.1.1` returned 403. The short name `mock-llm.kagent` also returned 403, and only the full name `mock-llm.kagent.svc.cluster.local` returned 200. Give kagent full DNS names for model and tool hosts.
 

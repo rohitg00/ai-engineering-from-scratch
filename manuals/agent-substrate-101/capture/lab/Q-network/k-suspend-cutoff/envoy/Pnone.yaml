@@ -1,0 +1,2 @@
+rules:
+- http: {hostnames: ["unused.egress-target.svc.cluster.local"]}

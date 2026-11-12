@@ -1,0 +1,20 @@
+apiVersion: ate.dev/v1
+kind: WorkerPool
+metadata:
+  name: ax-pool
+  namespace: ax-system
+  labels:
+    workload: ax
+spec:
+  replicas: 2
+  workerImage: ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0
+  sandboxClasses:
+    - name: gvisor
+  template:
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "2Gi"
+      limits:
+        cpu: "2"
+        memory: "2Gi"

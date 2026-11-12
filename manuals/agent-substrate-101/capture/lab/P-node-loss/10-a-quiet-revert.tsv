@@ -1,0 +1,13 @@
+ts	t	event	detail
+2026-11-12T12:53:31.722Z	t=-	actor	a1 on multi-worker2 pod lab-n/ballast-5d6cf97747-zvzjw
+2026-11-12T12:53:31.812Z	t=-	call	200	0.068394	count=1 mb=50 sum=6613 process_age_s=4.4
+2026-11-12T12:53:31.894Z	t=-	call	200	0.060539	count=2 mb=50 sum=6613 process_age_s=4.5
+2026-11-12T12:53:31.978Z	t=-	call	200	0.064083	count=3 mb=50 sum=6613 process_age_s=4.5
+2026-11-12T12:53:33.673Z	t=-	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T12:53:33.677Z	t=-	node-stop	docker stop multi-worker2
+2026-11-12T12:53:34.330Z	t=0.7	node-stopped	multi-worker2
+2026-11-12T12:54:18.228Z	t=44.6	workers-of-stopped-node-not-active	      2 WORKER_STATE_ACTIVE       2 WORKER_STATE_UNAVAILABLE 
+2026-11-12T12:54:25.821Z	t=52.1	revert	7.1 s | ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      a1     lab-n/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    8         56s 
+2026-11-12T12:54:26.017Z	t=52.3	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T12:54:26.821Z	t=53.1	first-request	200	0.560088	count=4 mb=50 sum=6613 process_age_s=4.9	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T12:54:27.351Z	t=53.7	second-request	200	0.067173	count=5 mb=50 sum=6613 process_age_s=5.2	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:- pod lab-n/ballast-5d6cf97747-gz4kr

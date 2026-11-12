@@ -1,0 +1,31 @@
+ts	t	event	detail
+2026-11-12T14:26:06.784Z	t=-	actor	u1 on multi-worker2 pod lab-n/ballast-5d6cf97747-88557
+2026-11-12T14:26:06.887Z	t=-	call	200	0.077987	count=1 mb=50 sum=6613 process_age_s=4.4
+2026-11-12T14:26:06.977Z	t=-	call	200	0.066029	count=2 mb=50 sum=6613 process_age_s=4.5
+2026-11-12T14:26:07.073Z	t=-	call	200	0.070600	count=3 mb=50 sum=6613 process_age_s=4.6
+2026-11-12T14:26:08.873Z	t=-	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:26:09.483Z	t=-	create-tag	ATESPACE   NAME      SCOPE                STATE   SNAPSHOT                                                                       FIDELITY                   AGE lab-n      keep-u1   TAG_SCOPE_ATESPACE 
+2026-11-12T14:26:09.865Z	t=-	call	200	0.357753	count=4 mb=50 sum=6613 process_age_s=4.9
+2026-11-12T14:26:09.955Z	t=-	call	200	0.067211	count=5 mb=50 sum=6613 process_age_s=5.0
+2026-11-12T14:26:11.061Z	t=-	suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:multi-worker2
+2026-11-12T14:26:12.195Z	t=-	tag-attempt-on-pending-snapshot	ATESPACE   NAME      SCOPE                STATE   SNAPSHOT                                                                       FIDELITY                   AGE lab-n      pend-u1   TAG_SCOPE_ATESPACE   Ready   gs://ate-s
+2026-11-12T14:26:12.675Z	t=-	call	200	0.455166	count=6 mb=50 sum=6613 process_age_s=5.4
+2026-11-12T14:26:12.765Z	t=-	call	200	0.065873	count=7 mb=50 sum=6613 process_age_s=5.5
+2026-11-12T14:26:12.978Z	t=-	running	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:26:12.983Z	t=-	node-stop	docker stop multi-worker2
+2026-11-12T14:26:23.349Z	t=10.4	node-stopped	multi-worker2
+2026-11-12T14:26:28.674Z	t=15.7	probe	503	5.066448	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:26:35.993Z	t=23.0	probe	503	5.060867	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:26:43.318Z	t=30.3	probe	503	5.063918	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:26:50.647Z	t=37.7	probe	503	5.068472	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:26:57.962Z	t=45.0	probe	503	5.060416	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:27:02.699Z	t=49.7	probe	503	2.478944	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:27:06.531Z	t=53.5	probe	503	1.580095	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:27:09.615Z	t=56.6	probe	503	0.819489	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:27:13.588Z	t=60.6	create-from-tag	keep-u1 | ATESPACE   NAME        TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      r-keep-u1   lab-n/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    1 
+2026-11-12T14:27:15.039Z	t=62.1	probe	503	3.173948	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:27:15.348Z	t=62.4	rescue-first-request	keep-u1 | 1.2 s after create | 200	0.481833	count=4 mb=50 sum=6613 process_age_s=4.9	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T14:27:15.842Z	t=62.9	create-from-tag	pend-u1 | ATESPACE   NAME        TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      r-pend-u1   lab-n/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    1 
+2026-11-12T14:27:17.660Z	t=64.7	rescue-first-request	pend-u1 | 1.2 s after create | 200	0.514960	count=6 mb=50 sum=6613 process_age_s=5.3	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T14:27:18.117Z	t=65.1	probe	503	0.820726	upstream connect error or disconnect/reset before headers. reset reason: connection termination	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2
+2026-11-12T14:27:20.975Z	t=68.0	original-final	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:multi-worker2

@@ -1,0 +1,4 @@
+ax-pool-588b78fd54-29xgr	worker	ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0	ghcr.io/agent-substrate/substrate/ateworker-gvisor@sha256:f8987236c6256f58c4b2625e543b43f4ae4bdded6ee6821c03d966effb7c0f17
+ax-pool-588b78fd54-88rc7	worker	ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0	ghcr.io/agent-substrate/substrate/ateworker-gvisor@sha256:f8987236c6256f58c4b2625e543b43f4ae4bdded6ee6821c03d966effb7c0f17
+ax-postgres-0	postgres	docker.io/library/postgres:17-alpine	docker.io/library/postgres@sha256:e5d2edd28b1f8d40a0a6c0c9cdc545b19b56a0d5d88f94bc11a97d970d4700d0
+ax-server-786f5878b4-g7qr8	ax-server	sha256:12ebcf7f8bc4a02b11b85e9d67b4559a5beae84c33e565d9f11694624ac04a71	localhost:5002/ax-server@sha256:d3965c00e8af250e60d0e281e961753d6655c9e3c9a9b53bb8339824c9bc92c6

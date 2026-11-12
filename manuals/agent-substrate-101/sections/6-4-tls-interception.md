@@ -159,6 +159,38 @@ The same process accepts connections from every actor, parses their requests, an
 
 We do not know of an attack that reads the key through agentgateway. Our point is about the size of the loss if one appears. On Envoy a memory disclosure bug in the proxy exposes traffic. On agentgateway the same class of bug exposes the CA. On either dataplane, limit who can read Secrets in `ate-system`, because the Secret is the same.
 
+## Which upstream certificates the gateway trusts
+
+Interception has a second TLS connection, from the gateway to the real host. The actor trusts the gateway through the bundle. The gateway must trust the host by itself. On both dataplanes it reads the roots from one file in its own container, `/etc/ssl/certs/ca-certificates.crt`. The agentgateway configuration names that file as `backendTLS.root`, and the Envoy configuration names it as `trusted_ca`. Substrate v1.0.0 has no flag and no documented setting for one more upstream CA.
+
+So a host with a certificate from a private CA fails under an `https` rule. We ran a gateway in the cluster with such a certificate, and an actor called it through an `https` rule.
+
+**We measured** this once on each dataplane, on a second x86 server guest (16 vCPU, 23 GB), with 30 requests each. With the default install, 0 of 30 requests succeeded on either one. On agentgateway the actor got 503 with the body `upstream connection failed`, and the gateway logged `invalid peer certificate: UnknownIssuer`. On Envoy the actor got 503 with `upstream connect error or disconnect/reset before headers. reset reason: remote connection failure`. The Envoy log had `CERTIFICATE_VERIFY_FAILED`.
+
+The fix that worked is a mount over the root file. We put the public roots and our CA in one ConfigMap, 122 certificates in all, and mounted it in the proxy container of `atenet-egress`.
+
+```listing
+title: the patch that adds a private CA to the egress gateway
+source: capture/lab/Q-network/i-model-gateway/43-trust-patch.json
+lang: json
+note: The complete JSON patch for the Deployment atenet-egress. Container 0 is the proxy container on both dataplanes.
+---
+[
+  {"op": "add", "path": "/spec/template/spec/volumes/-", "value": {"name": "extra-roots", "configMap": {"name": "egress-extra-roots"}}},
+  {"op": "add", "path": "/spec/template/spec/containers/0/volumeMounts/-", "value": {"name": "extra-roots", "mountPath": "/etc/ssl/certs/ca-certificates.crt", "subPath": "ca-certificates.crt"}}
+]
+```
+
+With the patch, the same requests returned 200 on both dataplanes, 30 of 30. The patch is outside the installer, and it does not last. After a later `ate-setup deploy ate-system` run, the proxy container had no such mount. Apply the patch again after each installer run, and test one request to the private host each time.
+
+The actor never sees the private CA. It sees a leaf for the host name that the interception CA minted, and it verifies that leaf with the projected bundle.
+
+## What a new intercepted connection costs
+
+**We measured** the same private host on the same guest (16 vCPU, 23 GB), with a request of 60 bytes. With a new connection for each request, the median was 618 ms on agentgateway and 614 ms on Envoy, with n=10 each. The TLS handshake with the interception endpoint took 606 and 600 ms of that. On one reused connection, the median was 10.0 and 11.9 ms, with n=30 each. An `http` rule to a host in the cluster cost 23 to 28 ms for a new connection.
+
+So interception is cheap for each request and costly for each connection, about 0.6 s on both dataplanes. A client that opens one HTTPS connection for each call pays it each time. Keep connections open, or use a client with a pool. We did not find which step inside the handshake takes the time. [agentgateway with Substrate](#s-agentgateway) has the full table.
+
 ```takeaways
 - Use an `https` rule for a host that needs a credential or a check for each request.
 - Use a `tlsPassthrough` rule for a client that pins certificates, and accept one check for each connection.
@@ -166,6 +198,8 @@ We do not know of an attack that reads the key through agentgateway. Our point i
 - Set `SSL_CERT_FILE` and the variable of your runtime to the bundle path in the template.
 - Never copy the bundle into an image.
 - Count the location of the CA key when you choose a dataplane.
+- Mount your private CA into the root file of `atenet-egress`, and again after each installer run.
+- Reuse HTTPS connections under an `https` rule, because each new one cost about 0.6 s.
 ```
 
-Sources: capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/40-supplement.txt, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/F-egress/agentgateway/40-supplement.txt, capture/lab/F-egress/envoy/shell-template.yaml, capture/lab/F-egress/envoy/05-template.yaml, capture/lab/G-dataplane/envoy/03-containers-atenet-egress.tsv, capture/lab/G-dataplane/envoy/04-volumes-atenet-egress.json, capture/lab/G-dataplane/envoy/05-sec-res-atenet-egress.json, capture/lab/G-dataplane/agentgateway/03-containers-atenet-egress.tsv, capture/lab/G-dataplane/agentgateway/04-volumes-atenet-egress.json, capture/lab/G-dataplane/agentgateway/05-sec-res-atenet-egress.json, capture/lab/G-dataplane/agentgateway/10-atenet-egress-agentgateway-substrate-config.yaml, manifests/ate-install/atenet-egress.yaml, manifests/ate-install/components/agentgateway-egress/kustomization.yaml, api/ateapi/v1/ateapi.proto, docs/guides/egress-trust-bundle.md and docs/guides/network-egress.md at v1.0.0.
+Sources: capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/40-supplement.txt, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/F-egress/agentgateway/40-supplement.txt, capture/lab/F-egress/envoy/shell-template.yaml, capture/lab/F-egress/envoy/05-template.yaml, capture/lab/G-dataplane/envoy/03-containers-atenet-egress.tsv, capture/lab/G-dataplane/envoy/04-volumes-atenet-egress.json, capture/lab/G-dataplane/envoy/05-sec-res-atenet-egress.json, capture/lab/G-dataplane/agentgateway/03-containers-atenet-egress.tsv, capture/lab/G-dataplane/agentgateway/04-volumes-atenet-egress.json, capture/lab/G-dataplane/agentgateway/05-sec-res-atenet-egress.json, capture/lab/G-dataplane/agentgateway/10-atenet-egress-agentgateway-substrate-config.yaml, capture/lab/G-dataplane/envoy/10-atenet-egress.yaml, capture/lab/Q-network/i-model-gateway/40-egress-agentgateway-config.yaml, capture/lab/Q-network/i-model-gateway/41-egress-503-line.log, capture/lab/Q-network/i-model-gateway/44-envoy-egress-503.excerpt.log, capture/lab/Q-network/i-model-gateway/20-results-agentgateway.txt, capture/lab/Q-network/i-model-gateway/20-results-envoy.txt, capture/lab/Q-network/i-model-gateway/31-latency-agentgateway.tsv, capture/lab/Q-network/i-model-gateway/31-latency-envoy.tsv, capture/lab/Q-network/i-model-gateway/43-trust-patch.json, capture/lab/Q-network/i-model-gateway/43-trust-patch.log, capture/lab/Q-network/i-model-gateway/45-trust-patch-envoy.log, capture/lab/Q-network/i-model-gateway/31-latency-agentgateway-private-ca-trusted.tsv, capture/lab/Q-network/i-model-gateway/31-latency-envoy-private-ca-trusted.tsv, capture/lab/Q-network/i-model-gateway/51-connection-cost-agentgateway.tsv, capture/lab/Q-network/i-model-gateway/51-connection-cost-envoy-private-ca-trusted.tsv, capture/lab/Q-network/00-dataplane-switch-to-agentgateway/17-after-rerun-rust-log-and-roots.json, capture/lab/Q-network/00-dataplane-switch-to-envoy/15-egress-mounts-after-switch.json, capture/lab/summary/network-x86.json, manifests/ate-install/atenet-egress.yaml, manifests/ate-install/components/agentgateway-egress/kustomization.yaml, api/ateapi/v1/ateapi.proto, docs/guides/egress-trust-bundle.md and docs/guides/network-egress.md at v1.0.0.

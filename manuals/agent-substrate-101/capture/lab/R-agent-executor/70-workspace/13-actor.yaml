@@ -1,0 +1,36 @@
+actorTemplate:
+  atespace: default
+  name: ax-ws-task-tmpl-5fd7c4b9
+metadata:
+  atespace: default
+  createTime: "2026-11-12T15:32:23.272052539Z"
+  name: ax-ws-task
+  uid: 19d17e73-c4e2-4e05-9532-484bbf811bf7
+  updateTime: "2026-11-12T15:32:33.692679399Z"
+  version: "3"
+status:
+  assignedNode: demo-control-plane
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: demo-control-plane
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: fd9cf386-1eff-45b6-9bfa-13703bdd04f4
+    workerEpoch: "1"
+    workerNamespace: ax-system
+    workerPod: ax-pool-588b78fd54-29xgr
+    workerPodIps:
+    - 10.244.0.40
+    workerPodUid: fd9cf386-1eff-45b6-9bfa-13703bdd04f4
+    workerPool: ax-pool
+    workerSpiffeId: spiffe://cluster.local/ns/ax-system/sa/ateworker

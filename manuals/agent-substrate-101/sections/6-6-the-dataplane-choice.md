@@ -75,13 +75,17 @@ Two mechanisms are behind it. The gateway keeps the policy of an actor in a cach
 | New pass-through connection | refused at the first sample, under 2 s | refused at the first sample, under 2 s |
 | HTTP response that had already started | ran to its end, 39 s after removal | ran to its end, 18 s after removal |
 | Second request on an open pass-through connection, 20 s later | `200` | `200` |
+| Next request on a reused HTTP/1.1 connection of an `http` rule | `200` at 6.5 s, `403` from 8.5 s | `403` from the first request, at 0.8 s |
+| Next request on a reused HTTP/2 connection of an `https` rule | `200` at 4.6 s, `403` from 6.6 s | `403` from the first request, at 0.7 s |
+
+**We measured** the last two rows in a later run on the same guest (16 vCPU, 23 GB), once for each dataplane and each protocol. One curl process in the actor sent 20 requests on one connection, one every 2 s. We removed the rule about 13 s after the start. The start time of each run has a resolution of 1 s, so each time in those rows can be up to 1 s later.
 
 ```figure
 id: fig-6-6b
 kind: timeline
 title: after a rule is removed
-claim: Both dataplanes refused new requests within 6 seconds of the removal, and neither closed a connection that was already open.
-caption: Read each track from left to right, with the removal at zero. Each dot is one sample, green for served and rose for refused. A bar is a connection that was open before the removal and still carried data. The 39 s and 18 s ends are the ends of our test responses, not a limit of the gateway. From capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/40-supplement.txt, and capture/lab/F-egress/agentgateway/40-supplement.txt.
+claim: Both dataplanes refused new requests and requests on a reused connection within 9 seconds, and neither closed an open response or pass-through connection.
+caption: Read each track from left to right, with the removal at zero. Each dot is one sample, green for served and rose for refused. A bar is a connection that was open before the removal and still carried data. The 39 s and 18 s ends are the ends of our test responses, not a limit of the gateway. From capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/40-supplement.txt, capture/lab/F-egress/agentgateway/40-supplement.txt, and capture/lab/summary/network-x86.json.
 ```
 
 ```listing
@@ -99,9 +103,26 @@ end=10:58:17
 
 The 39 s and the 18 s mark the ends of our test responses. In no run did the gateway end an open connection, so we have no upper limit to give you. An actor that keeps one pass-through connection open keeps its access.
 
-We did not test one case: a new request on a reused keep-alive connection of an `http` rule, sent after the removal.
+A reused connection is a different case, and it does not keep a removed rule alive. Under an `http` or an `https` rule, both dataplanes check the policy for each request. The next request on the open connection got `403`, over HTTP/1.1 and over HTTP/2. The delay was the same as for a new request: about 1 s on agentgateway, and 5 to 9 s on Envoy. A new connection after the removal failed earlier, because the name did not resolve.
 
-Removing a rule is therefore not a way to cut off an actor now. To do that, remove the rule and then suspend the actor. We did not test that sequence. A suspended actor has no running process that can use a connection.
+```listing
+title: one HTTP/1.1 connection across the removal, agentgateway dataplane
+source: capture/lab/Q-network/h-keepalive/agentgateway/results.txt
+lang: text
+note: Requests 6 to 9 of 20 on one connection. The field new_conns=0 and the same local port show that curl reused the connection. The other requests are cut.
+---
+200 http=1.1 new_conns=0 lport=50509 t=0.012208
+200 http=1.1 new_conns=0 lport=50509 t=0.008836
+403 http=1.1 new_conns=0 lport=50509 t=0.007677
+403 http=1.1 new_conns=0 lport=50509 t=0.009808
+…
+```
+
+So the rule is: a removal stops requests, and it does not stop a response that is streaming or a pass-through connection. Removing a rule is therefore not a way to cut off an actor now. To do that, remove the rule and then suspend the actor.
+
+**We measured** that cut-off once on each dataplane, on the same guest (16 vCPU, 23 GB). The actor held one open HTTP response from a host that writes one chunk each second. An asynchronous `suspend actor` returned in 0.64 s on agentgateway and in 0.54 s on Envoy. The upstream saw the connection gone 2.2 s and 1.3 s after the suspend call began. It writes once each second, so the real close can be up to 1 s earlier.
+
+The connection does not come back. After a resume, no new chunk reached the actor. The curl processes were still in the process list of the actor, restored from memory with sockets that no longer work. An application that you suspend must be able to reconnect. We used an `http` rule in this test, and we did not repeat it with a `tlsPassthrough` connection.
 
 ## Our verdict
 
@@ -109,7 +130,15 @@ Choose Envoy, the default, for a cluster where actors run code that you do not t
 
 Choose agentgateway in three cases. You run kagent, which installs it. You run small clusters where 53 MB for each cluster matters. Or you already operate agentgateway and want one proxy to know. [Section 7.2](#s-agentgateway) covers that last case.
 
-If you choose agentgateway, do three things. Limit who can read Secrets in `ate-system` and who can open a shell in `atenet-egress`. Send the egress logs to a store with access rules. And plan to lower `RUST_LOG`, a change that we did not test.
+If you choose agentgateway, do three things. Limit who can read Secrets in `ate-system` and who can open a shell in `atenet-egress`. Send the egress logs to a store with access rules. And set `RUST_LOG=info` on the egress Deployment.
+
+**We measured** that setting with 100 requests at each level, on the same guest (16 vCPU, 23 GB), in one run. At `debug`, the installer default, the gateway wrote 4,380 lines and 1,590,006 bytes. In 200 of those lines it printed the value of a custom header that the actor sent. At `info` it wrote 100 lines and 46,300 bytes, one line for each request, and no header value. At `warn` it wrote no line. All requests returned 200 at every level.
+
+```bash
+kubectl -n ate-system set env deploy/atenet-egress RUST_LOG=info
+```
+
+The command restarts the egress pod. The installer writes `debug` again at its next run, so the setting is yours to keep. We did not change the level of `atenet-router`, and we did not check that `info` logs enough to debug a denied request.
 
 Do not choose on speed. One allowed request took 0.037 s on Envoy and 0.035 s on agentgateway in our probes, and one request each proves nothing about load.
 
@@ -118,8 +147,9 @@ Do not choose on speed. One allowed request took 0.037 s on Envoy and 0.035 s on
 - Choose agentgateway with kagent, or where 53 MB less memory for each cluster matters.
 - Treat agentgateway egress logs as sensitive, because they hold request headers.
 - Search for both sets of error text when a tool reports a refused request.
-- Do not rely on a removed rule to stop an open connection.
-- Suspend the actor when it must stop talking to a host now.
+- Do not rely on a removed rule to stop a streaming response or a pass-through connection.
+- Suspend the actor when it must stop talking to a host now, and expect dead sockets after a resume.
+- Set `RUST_LOG=info` on `atenet-egress` with agentgateway, and set it again after each installer run.
 ```
 
-Sources: capture/lab/G-dataplane/envoy/01-pods.txt, capture/lab/G-dataplane/envoy/03-containers-atenet-router.tsv, capture/lab/G-dataplane/envoy/03-containers-atenet-egress.tsv, capture/lab/G-dataplane/envoy/05-sec-res-atenet-router.json, capture/lab/G-dataplane/envoy/05-sec-res-atenet-egress.json, capture/lab/G-dataplane/envoy/06-services.txt, capture/lab/G-dataplane/envoy/13-crictl-stats-atenet.txt, capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/agentgateway/01-pods.txt, capture/lab/G-dataplane/agentgateway/03-containers-atenet-router.tsv, capture/lab/G-dataplane/agentgateway/03-containers-atenet-egress.tsv, capture/lab/G-dataplane/agentgateway/05-sec-res-atenet-router.json, capture/lab/G-dataplane/agentgateway/05-sec-res-atenet-egress.json, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/13-crictl-stats-atenet.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/01-switch-in-place/11-timing.txt, capture/lab/G-dataplane/01-switch-in-place/10-deploy-agentgateway-in-place.log, capture/lab/F-egress/agentgateway/00-actors-after-switch.txt, capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/40-supplement.txt, capture/lab/F-egress/envoy/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/F-egress/agentgateway/40-supplement.txt, capture/lab/F-egress/agentgateway/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/50-custom-header.txt, cmd/atenet/internal/router/cmd.go, cmd/atenet/internal/router/egress/policycache.go, cmd/ate-setup/internal/config/load.go, manifests/ate-install/components/agentgateway/kustomization.yaml, docs/guides/network-egress.md at v1.0.0, issue #3285.
+Sources: capture/lab/G-dataplane/envoy/01-pods.txt, capture/lab/G-dataplane/envoy/03-containers-atenet-router.tsv, capture/lab/G-dataplane/envoy/03-containers-atenet-egress.tsv, capture/lab/G-dataplane/envoy/05-sec-res-atenet-router.json, capture/lab/G-dataplane/envoy/05-sec-res-atenet-egress.json, capture/lab/G-dataplane/envoy/06-services.txt, capture/lab/G-dataplane/envoy/13-crictl-stats-atenet.txt, capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/agentgateway/01-pods.txt, capture/lab/G-dataplane/agentgateway/03-containers-atenet-router.tsv, capture/lab/G-dataplane/agentgateway/03-containers-atenet-egress.tsv, capture/lab/G-dataplane/agentgateway/05-sec-res-atenet-router.json, capture/lab/G-dataplane/agentgateway/05-sec-res-atenet-egress.json, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/13-crictl-stats-atenet.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/01-switch-in-place/11-timing.txt, capture/lab/G-dataplane/01-switch-in-place/10-deploy-agentgateway-in-place.log, capture/lab/F-egress/agentgateway/00-actors-after-switch.txt, capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/40-supplement.txt, capture/lab/F-egress/envoy/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/F-egress/agentgateway/40-supplement.txt, capture/lab/F-egress/agentgateway/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/50-custom-header.txt, capture/lab/Q-network/h-keepalive/agentgateway/results.txt, capture/lab/Q-network/h-keepalive/envoy/results.txt, capture/lab/Q-network/k-suspend-cutoff/agentgateway/10-events.tsv, capture/lab/Q-network/k-suspend-cutoff/envoy/10-events.tsv, capture/lab/Q-network/k-suspend-cutoff/agentgateway/results.txt, capture/lab/Q-network/k-suspend-cutoff/envoy/results.txt, capture/lab/Q-network/k-suspend-cutoff/agentgateway/12-drip-server-after-suspend.log, capture/lab/Q-network/j-log-level/10-volume.tsv, capture/lab/Q-network/j-log-level/set-info.log, capture/lab/Q-network/00-dataplane-switch-to-agentgateway/17-after-rerun-rust-log-and-roots.json, capture/lab/summary/network-x86.json, cmd/atenet/internal/router/cmd.go, cmd/atenet/internal/router/egress/policycache.go, cmd/ate-setup/internal/config/load.go, manifests/ate-install/components/agentgateway/kustomization.yaml, docs/guides/network-egress.md at v1.0.0, issue #3285.

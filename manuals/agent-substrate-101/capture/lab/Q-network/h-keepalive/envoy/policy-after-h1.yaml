@@ -1,0 +1,14 @@
+metadata:
+  atespace: lab-f
+  createTime: "2026-11-12T10:45:59.339191794Z"
+  name: default
+  uid: 06d478d7-7a70-4ca0-91f8-4524c40ea9bc
+  updateTime: "2026-11-12T13:17:40.686174492Z"
+  version: "49"
+rules:
+- http:
+    hostnames:
+    - unused.egress-target.svc.cluster.local
+    ports:
+      numbers:
+      - 80

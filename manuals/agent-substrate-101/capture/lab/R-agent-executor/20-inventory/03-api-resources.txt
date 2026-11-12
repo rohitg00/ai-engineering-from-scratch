@@ -1,0 +1,2 @@
+NAME                                SHORTNAMES        APIVERSION                        NAMESPACED   KIND
+namespaces                          ns                v1                                false        Namespace

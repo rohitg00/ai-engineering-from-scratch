@@ -111,11 +111,13 @@ memory hog on a 256 MiB limit	clean-check	RUNNING	200	0.44	{"exit": 0, "stdout":
 
 The memory limit works as a hard stop. A command that allocated 640 MiB ended the whole sandbox. The client got a 503 after 4.52 seconds, the actor was `CRASHED`, and one revert returned a clean actor.
 
-The CPU limit did not slow the command in our run. A loop that used 2.0 seconds of CPU time finished in 2.38 seconds on a limit of 500 millicores. A hard limit of half a CPU would need about 4 seconds.
+The CPU line of this demo does not show what it seems to show. The command runs a loop until the process has used 2.0 seconds of CPU time, and it reads that time inside the sandbox. It finished in 2.38 seconds on a limit of 500 millicores. Our first reading was that the limit did not slow the command. That reading was wrong, and a later test supersedes it.
 
-That result disagrees with the code and the documentation. The worker writes a CPU quota from `cpuMillicores` into the sandbox. For this template the quota is 50 ms of CPU time in each 100 ms period {{code}}. The documentation says that the node kernel slows a gVisor actor to its quota {{docs}}.
+The CPU limit is a hard cap. The worker writes a CPU quota from `cpuMillicores` into a cgroup for the actor. For this template the quota is 50 ms of CPU time in each 100 ms period {{code}}. CPU time that a program reads inside a throttled sandbox is too high. So the loop of the demo stopped early, after less real work than 2.0 seconds of one core.
 
-We have one run, on one kind node, and we did not find the cause. Read it as an unexplained result that is under test, not as a rule. Until you measure the quota on your own nodes, do not count on it to slow a busy command.
+**We measured** the cap on a second x86 server guest (16 vCPU, 23 GB), with fixed work and three runs for each limit. Work that took 4.9 to 5.4 seconds at 1000 millicores took 12.7 to 13.1 seconds at 500 and 27.1 to 27.6 seconds at 250. The actor used 0.50 host cores at 500 millicores, with 1 thread and with 4. At 250 millicores the program reported 22 to 24 seconds of CPU time for a run that used 6.9 seconds on the host. [WorkerPool](#s-workerpool) has the table and the chart.
+
+For a tool sandbox this is the result that you want. A busy command cannot take more CPU than its limit, and it cannot starve the next actor on the worker. Measure work in a sandbox with a fixed task and a wall clock, and never with the CPU time that the task reports.
 
 ## What a revert costs
 
@@ -142,7 +144,7 @@ Write the egress policy before the first command runs. An actor with no policy c
 - Revert the actor after each task, and check that the work directory is empty.
 - Delete and recreate the actor when a suspend could have made the state of a task durable.
 - Set a memory limit that fits the largest tool, and expect a crash above it.
-- Measure the CPU quota on your own nodes before you count on it to slow a command.
+- Count on `cpuMillicores` as a hard cap, and time sandbox work with a wall clock on a fixed task.
 ```
 
-Sources: capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/N-demos/tool-sandbox/egress-policy-live.yaml, capture/lab/N-demos/tool-sandbox/lifecycle.log, capture/lab/summary/demos-x86.json, capture/demos/tool-sandbox/sandbox.py, capture/demos/tool-sandbox/template.yaml, capture/demos/tool-sandbox/run.sh; api/ateapi/v1/ateapi.proto (RevertActor, EgressRule), internal/ocispec/ocispec.go (the CPU quota), docs/reference/sandbox-classes.md and docs/guides/egress-trust-bundle.md at v1.0.0
+Sources: capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/N-demos/tool-sandbox/egress-policy-live.yaml, capture/lab/N-demos/tool-sandbox/lifecycle.log, capture/lab/summary/demos-x86.json, capture/lab/Q-network/n-cpu-limit/40-work.tsv, capture/lab/summary/cpu-limit-x86.json, capture/demos/tool-sandbox/sandbox.py, capture/demos/tool-sandbox/template.yaml, capture/demos/tool-sandbox/run.sh; api/ateapi/v1/ateapi.proto (RevertActor, EgressRule), internal/ocispec/ocispec.go (the CPU quota), docs/reference/sandbox-classes.md and docs/guides/egress-trust-bundle.md at v1.0.0

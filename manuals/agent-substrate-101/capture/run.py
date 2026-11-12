@@ -14,13 +14,24 @@ GUEST_A = "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernete
 GUEST_B = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images"
 GUEST_K = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, kagent v1.0.0 with its Substrate distribution, mock model server"
 GUEST_D = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor"
+GUEST_R = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, Agent Executor built from source at one commit"
 MAC = "Apple silicon laptop, Docker Desktop with 10 CPU and 8 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images"
+GUEST_P = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, one control plane node and two worker nodes, default atelet timers, pool of 4 worker pods"
+GUEST_Q = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, one kind node, agentgateway v1.7.0 and Envoy switched in place"
 VALIDATION_MACHINE = GUEST_A + ", pool of 2 workers with 8 CPU and 8 GiB each"
 TIMED_REQUESTS = ("first-call-golden", "warm-call", "resume-local", "resume-after-sync")
 
 
+def read(rel):
+    return (LAB / rel).read_text(encoding="utf-8")
+
+
+def read_json(rel):
+    return json.loads(read(rel))
+
+
 def lines(rel):
-    return (LAB / rel).read_text(encoding="utf-8").splitlines()
+    return read(rel).splitlines()
 
 
 def rows(rel):
@@ -239,13 +250,10 @@ def failures_x86():
     start = next(i for i, row in enumerate(lifecycle) if len(row) > 1 and row[1] == "idle-watch-start")
     end = next(i for i, row in enumerate(lifecycle) if len(row) > 1 and row[1] == "idle-watch-end")
     watch = [row for row in lifecycle[start:end] if len(row) > 2 and row[1] == "state"]
-    counts = {}
-    for row in watch:
-        counts[row[2]] = counts.get(row[2], 0) + 1
     return {
         "machine": GUEST_A,
         "sources": ["capture/lab/B-lifecycle/10-trace.tsv", "capture/lab/B-lifecycle/20-trace-ops.tsv", "capture/lab/D-durability/30-local-loss.tsv", "capture/lab/D-durability/40-node-reboot.tsv", "capture/lab/J-container-death/10-trace.tsv"],
-        "idle_watch": {"seconds": 900, "samples_after_last_request": len(watch), "states": counts, "all_samples": len(idle)},
+        "idle_watch": {"seconds": 900, "samples_after_last_request": len(watch), "states": tally(row[2] for row in watch), "all_samples": len(idle)},
         "lifecycle_ops": trace("B-lifecycle/20-trace-ops.tsv", False),
         "local_snapshot_loss": trace("D-durability/30-local-loss.tsv", True),
         "node_restart": trace("D-durability/40-node-reboot.tsv", False),
@@ -254,7 +262,7 @@ def failures_x86():
 
 
 def parking_x86():
-    text = (LAB / "I-capacity/16-load-30s.log").read_text(encoding="utf-8")
+    text = read("I-capacity/16-load-30s.log")
     def grab(pattern):
         return re.search(pattern, text).group(1)
     full = []
@@ -281,8 +289,16 @@ def parking_x86():
 
 
 def dependency_x86():
+    return dependency_loss("E-dependency-loss", GUEST_B)
+
+
+def dependency_agw_x86():
+    return dependency_loss("Q-network/g-dependency-loss-agw", GUEST_Q + ", agentgateway dataplane for this run")
+
+
+def dependency_loss(folder, machine):
     marks = {}
-    for row in rows("E-dependency-loss/10-timeline.tsv"):
+    for row in rows(f"{folder}/10-timeline.tsv"):
         if len(row) >= 3 and row[0].isdigit():
             marks[row[2].split(" ")[0]] = int(row[0])
     outages = [
@@ -291,7 +307,7 @@ def dependency_x86():
         ("kube-apiserver", "T3-kube-apiserver-manifest-moved-out", "T3-kube-apiserver-manifest-moved-back", "T3-kube-apiserver-livez-200"),
     ]
     probes = []
-    for rel in ("E-dependency-loss/12-probe-incluster.tsv", "E-dependency-loss/12-probe-proxy.tsv"):
+    for rel in (f"{folder}/12-probe-incluster.tsv", f"{folder}/12-probe-proxy.tsv"):
         for row in rows(rel):
             if len(row) >= 5 and row[0].isdigit():
                 probes.append((int(row[0]), row[1], row[3], float(row[4])))
@@ -322,9 +338,9 @@ def dependency_x86():
             "per_second": streams,
         }
     return {
-        "machine": GUEST_B,
+        "machine": machine,
         "note": "one request per second to a RUNNING actor from a pod (stream running) and through kubectl ate proxy (stream proxy), one fresh SUSPENDED actor every 5 s (stream suspended). t is seconds from the moment the dependency was taken away. Code 000 is a client timeout at 9 s.",
-        "sources": ["capture/lab/E-dependency-loss/10-timeline.tsv", "capture/lab/E-dependency-loss/12-probe-incluster.tsv", "capture/lab/E-dependency-loss/12-probe-proxy.tsv", "capture/lab/E-dependency-loss/20-analysis.txt"],
+        "sources": [f"capture/lab/{folder}/10-timeline.tsv", f"capture/lab/{folder}/12-probe-incluster.tsv", f"capture/lab/{folder}/12-probe-proxy.tsv", f"capture/lab/{folder}/20-analysis.txt"],
         "outages": out,
     }
 
@@ -451,18 +467,18 @@ def drill_cases():
         if not field or not cases:
             continue
         case, key, text = cases[-1], field.group(1), field.group(2)
-        timed = re.search(r"(\d{3}) in ([\d.]+) s", text)
+        answered = re.search(r"(\d{3}) in ([\d.]+) s", text)
         after = re.search(r"after ([\d.]+) s", text)
         took = re.search(r"\(([\d.]+) s\)", text)
-        if key == "symptom" and timed:
-            case["symptoms"].append({"http": int(timed.group(1)), "seconds": round(float(timed.group(2)), 3)})
+        if key == "symptom" and answered:
+            case["symptoms"].append({"http": int(answered.group(1)), "seconds": round(float(answered.group(2)), 3)})
         elif key == "detect" and after:
             case["detect_seconds"] = float(after.group(1))
         elif key == "fix":
             case["fix"] = re.sub(r"\s*\(.*\)$", "", text)
             case["fix_seconds"] = float(took.group(1)) if took else float(after.group(1))
-        elif key == "recover" and timed:
-            case["recoveries"].append({"http": int(timed.group(1)), "seconds": round(float(timed.group(2)), 3)})
+        elif key == "recover" and answered:
+            case["recoveries"].append({"http": int(answered.group(1)), "seconds": round(float(answered.group(2)), 3)})
         elif key == "recover" and after:
             case["recoveries"].append({"http": 200, "seconds": float(after.group(1))})
         elif key == "state" and "state" not in case:
@@ -640,7 +656,7 @@ def validation_memory_x86():
     py = validation_rows(py_rel)["pyagent"]
     ages = [detail_field(d, "process_age_s") for d in py["first-call-golden"]["details"][:1] + py["resume-local"]["details"] + py["resume-after-sync"]["details"]]
     rss = {int(detail_field(d, "maxrss_mib")) for d in py["resume-local"]["details"]}
-    image_bytes = int((LAB / "V-validation/02-python-runtime/02-image.txt").read_text(encoding="utf-8").split()[1])
+    image_bytes = int(read("V-validation/02-python-runtime/02-image.txt").split()[1])
     return {
         "machine": VALIDATION_MACHINE,
         "actor": "ballast v3: a Go server in a scratch image that holds x MiB of zero bytes, random bytes, or half of each, fidelity SNAPSHOT_FIDELITY_MEMORY",
@@ -725,7 +741,7 @@ def validation_parallel_x86():
             "levels": parallel_levels(f"{base}/10-parallel-first-run-n16-n32.tsv"),
         },
         "workers_before": worker_slots(f"{base}/21-workers-before.txt"),
-        "ate_api_error_lines_during_bursts": int((LAB / f"{base}/12-ateapi-error-lines-during-bursts.txt").read_text(encoding="utf-8").strip()),
+        "ate_api_error_lines_during_bursts": int(read(f"{base}/12-ateapi-error-lines-during-bursts.txt").strip()),
     }
 
 
@@ -759,7 +775,489 @@ def validation_fidelity_x86():
     }
 
 
+NODE_LOSS_CASES = [
+    ("a", "suspended with --mode sync, no request, one revert after the workers were unavailable", "10-a-quiet-revert.tsv", "return-a.tsv"),
+    ("a2", "suspended with --mode sync, no request, first revert before the workers were unavailable", "74-second-revert.tsv", "return-rev.tsv"),
+    ("b", "suspended with --mode sync, requests during the outage, a tag made before the stop", "80-tag-rescue.tsv", "return-tag.tsv"),
+    ("b2-early", "suspended with --mode sync, requests and a revert every 15 s from 60 s", "20-b60-requests-revert-loop.tsv", "return-b60.tsv"),
+    ("b2-evicted", "suspended with --mode sync, requests, reverts only after the pods were evicted", "30-bevict-requests-revert-after-eviction.tsv", "return-bevict.tsv"),
+    ("c-quiet", "suspended in the default mode with a PENDING snapshot, no request, one revert after the workers were unavailable", "50-c-pending-snapshot.tsv", "return-cquiet.tsv"),
+    ("c-requests", "suspended in the default mode with a PENDING snapshot, requests and reverts", "55-c-pending-snapshot-with-requests.tsv", "return-creq.tsv"),
+    ("c-return", "two actors suspended in the default mode with a PENDING snapshot, no command until the node was back", "88-pending-snapshot-node-returns.tsv", "return-pend.tsv"),
+    ("d", "running, with one tag from a sync suspend and one from an async suspend", "85-tag-rescue-running-and-pending.tsv", "return-tag2.tsv"),
+    ("d2", "running, reverts during the outage, then suspend and delete", "60-d-running.tsv", "return-drun.tsv"),
+    ("e", "suspended with --mode sync, 4 running actors on the other node, one revert", "70-e-no-spare-then-scale.tsv", "return-escale.tsv"),
+    ("e2", "suspended with --mode sync, 11 running actors on the other node, one revert", "72-e2-survivor-full-then-scale.tsv", "return-e2scale.tsv"),
+    ("f", "suspended with --mode sync, requests, then suspend, resume and delete", "40-balt-suspend-resume-delete.tsv", "return-balt.tsv"),
+]
+COMMAND_ERRORS = [
+    ("while calling atelet Terminate", "atelet_terminate"),
+    ("not in a revertable state", "not_revertable"),
+    ("another operation is in progress", "operation_in_progress"),
+    ("to be tagged", "not_suspended"),
+    ("MarkSuspending prerequisite", "mark_suspending"),
+    ("is unavailable", "worker_unavailable"),
+    ("AlreadyExists", "already_exists"),
+]
+COMMAND_WORDS = ("revert", "suspend-attempt", "resume-attempt", "delete", "recreate", "tag-attempt", "create-from-tag", "create-tag")
+
+
+def node_rows(rel):
+    out = []
+    for row in rows(rel)[1:]:
+        if len(row) < 3:
+            continue
+        out.append({"t": None if row[1] == "t=-" else float(row[1][2:]), "event": row[2], "fields": row[3:], "text": "\t".join(row[3:])})
+    return out
+
+
+def actor_state(text):
+    found = re.findall(r"ACTOR_STATE_[A-Z]+", text)
+    return found[-1] if found else None
+
+
+def is_command(event):
+    if re.search(r"request|state|deleted|recovered", event):
+        return False
+    return any(word in event for word in COMMAND_WORDS)
+
+
+def command(item):
+    text = item["text"]
+    took = re.search(r"(?:^|: )([\d.]+) s \|", text)
+    before = re.search(r"state(?:-before)?=(ACTOR_STATE_[A-Z]+)", text)
+    out = {"t": item["t"], "event": item["event"], "ok": "Error" not in text}
+    if took:
+        out["seconds"] = float(took.group(1))
+    if before:
+        out["state_before"] = before.group(1)
+    if not out["ok"]:
+        out["error"] = next((name for needle, name in COMMAND_ERRORS if needle in text), "other")
+    return out
+
+
+def served(item):
+    match = re.search(r"(?:^|\t| )200\t([\d.]+)\tcount=(\d+)", item["text"])
+    if not match:
+        return None
+    out = {"t": item["t"], "event": item["event"], "seconds": round(float(match.group(1)), 3), "count": int(match.group(2))}
+    node = re.search(r"ACTOR_STATE_RUNNING\t(\S+)", item["text"])
+    if node:
+        out["node"] = node.group(1)
+    after = re.search(r"([\d.]+) s after create", item["text"])
+    if after:
+        out["seconds_after_create"] = float(after.group(1))
+    tag = re.match(r"([\w-]+) \| ", item["text"])
+    if tag and after:
+        out["tag"] = tag.group(1)
+    return out
+
+
+def tally(values):
+    out = {}
+    for value in values:
+        out[value] = out.get(value, 0) + 1
+    return dict(sorted(out.items()))
+
+
+def node_loss_case(key, title, rel):
+    items = node_rows(f"P-node-loss/{rel}")
+    during = [item for item in items if item["t"] is not None]
+    probes = [item for item in during if item["event"] in ("probe", "request", "first-request", "second-request", "request-after-recreate") and item["fields"] and re.fullmatch(r"\d{3}", item["fields"][0])]
+    commands = [command(item) for item in during if is_command(item["event"])]
+    requests_ok = [entry for entry in (served(item) for item in during) if entry]
+    failed_seconds = [float(item["fields"][1]) for item in probes if item["fields"][0] != "200"]
+    first = lambda name: next((item["t"] for item in during if item["event"] == name), None)
+    crashed = next((item["t"] for item in during if item["event"] in ("probe", "state-before-revert-5", "state") and actor_state(item["text"]) == "ACTOR_STATE_CRASHED"), None)
+    start = next((item for item in during if item["event"] == "node-start"), None)
+    states = [actor_state(item["text"]) for item in during if actor_state(item["text"])]
+    return {
+        "case": key,
+        "situation": title,
+        "source": f"capture/lab/P-node-loss/{rel}",
+        "calls_before_stop": sum(1 for item in items if item["t"] is None and item["event"].endswith("call")),
+        "node_stopped_t": first("node-stopped"),
+        "workers_unavailable_t": first("workers-of-stopped-node-not-active"),
+        "pods_evicted_t": first("pods-evicted"),
+        "actor_crashed_t": crashed,
+        "node_start_t": start["t"] if start else None,
+        "watched_seconds": during[-1]["t"],
+        "probes": {
+            "requests": len(probes),
+            "ok": sum(1 for item in probes if item["fields"][0] == "200"),
+            "codes": tally(item["fields"][0] for item in probes),
+            "actor_states": tally(actor_state(item["text"]) or "none" for item in probes),
+            "failed_seconds": stat(failed_seconds) if failed_seconds else None,
+        },
+        "commands": {
+            "total": len(commands),
+            "ok": sum(1 for entry in commands if entry["ok"]),
+            "errors": tally(f"{entry['event'].split('-attempt')[0]}:{entry.get('state_before', 'any')}:{entry['error']}" for entry in commands if not entry["ok"]),
+            "runs": commands,
+        },
+        "served": requests_ok,
+        "last_state": states[-1] if states else None,
+    }
+
+
+def node_return(key, rel, case):
+    items = node_rows(f"P-node-loss/{rel}")
+    by_event = {}
+    for item in items:
+        by_event.setdefault(item["event"], []).append(item)
+    outage = float(re.search(r"outage of ([\d.]+) s", by_event["node-start"][0]["text"]).group(1))
+    late = outage == 0
+    if late and case["node_start_t"] is not None:
+        outage = case["node_start_t"]
+    watches = by_event.get("watch", [])
+    pods = [int(re.search(r"pool-pods-running-on-node=(\d+)", item["text"]).group(1)) for item in watches]
+    active = next((item["t"] for item in watches if "workers-active-on-node=0" not in item["text"]), None)
+    first_actor = by_event.get("first-actor-on-returned-node")
+    final = by_event.get("final-state")
+    reverts = [command(item) for item in by_event.get("revert-after-node-return", [])]
+    requests_ok = [entry for entry in (served(item) for item in by_event.get("request-after-revert", [])) if entry]
+    return {
+        "case": key,
+        "source": f"capture/lab/P-node-loss/{rel}",
+        "outage_seconds": round(outage, 1),
+        "after_eviction": case["pods_evicted_t"] is not None or outage > 360,
+        "node_ready_t": by_event["node-ready"][0]["t"],
+        "pool_pods_on_node_at_end": pods[-1] if pods else None,
+        "workers_active_t": active,
+        "first_new_actor_on_node_t": first_actor[0]["t"] if first_actor and not late else None,
+        "trace_started_after_the_node": late,
+        "watched_seconds": watches[-1]["t"] if watches else None,
+        "moved_pods_by_hand": "rebalanced-by-hand" in by_event,
+        "actor_state_at_end": actor_state(final[0]["text"]) if final else None,
+        "revert_after_return": reverts,
+        "served_after_return": requests_ok,
+    }
+
+
+def spread(values):
+    values = [value for value in values if value is not None]
+    return {**stat(values), "runs": rounded(values)} if values else None
+
+
+def node_loss_x86():
+    cases = [node_loss_case(key, title, rel) for key, title, rel, _ in NODE_LOSS_CASES]
+    by_key = {case["case"]: case for case in cases}
+    returns = [node_return(key, rel, by_key[key]) for key, _, _, rel in NODE_LOSS_CASES]
+    rescues = []
+    for case in cases:
+        for entry in case["served"]:
+            if "seconds_after_create" in entry:
+                rescues.append({"case": case["case"], "tag": entry.get("tag", "keep-t1"), "seconds_after_create": entry["seconds_after_create"], "request_seconds": entry["seconds"], "count": entry["count"], "node": entry.get("node")})
+    second_rows = node_rows("P-node-loss/74-second-revert.tsv")
+    second = [command(item) for item in second_rows if item["t"] is not None and re.match(r"revert-\d", item["event"])]
+    for entry, state in zip(second, [actor_state(item["text"]) for item in second_rows if item["event"] == "state"]):
+        entry["state_after"] = state
+    golden = lines("P-node-loss/96-golden-tag-deleted.txt")
+    early = [r for r in returns if not r["after_eviction"] and not r["trace_started_after_the_node"]]
+    late = [r for r in returns if r["after_eviction"]]
+    return {
+        "machine": GUEST_P,
+        "note": "one run for each case. t is seconds from the docker stop command of the node multi-worker2. Requests go through kubectl ate proxy. The actor holds a counter and 50 MB in memory.",
+        "sources": [case["source"] for case in cases] + [r["source"] for r in returns] + ["capture/lab/P-node-loss/96-golden-tag-deleted.txt", "capture/lab/P-node-loss/01-atelet-args.txt"],
+        "detection": {
+            "workers_unavailable_t": spread(case["workers_unavailable_t"] for case in cases),
+            "pods_evicted_t": spread(case["pods_evicted_t"] for case in cases),
+            "actor_crashed_t_while_down": spread(case["actor_crashed_t"] for case in cases if case["node_start_t"] is None or (case["actor_crashed_t"] or 0) < case["node_start_t"]),
+        },
+        "cases": cases,
+        "tag_rescue": rescues,
+        "second_revert": second,
+        "node_return": {
+            "before_eviction": {"first_new_actor_on_node_t": spread(r["first_new_actor_on_node_t"] for r in early), "outage_seconds": spread(r["outage_seconds"] for r in early), "pool_pods_on_node_at_end": [r["pool_pods_on_node_at_end"] for r in early]},
+            "after_eviction": {"first_new_actor_on_node_t": spread(r["first_new_actor_on_node_t"] for r in late), "outage_seconds": spread(r["outage_seconds"] for r in late), "watched_seconds": spread(r["watched_seconds"] for r in late), "pool_pods_on_node_at_end": [r["pool_pods_on_node_at_end"] for r in late], "still_reverting_or_deleting": sum(1 for r in late if r["actor_state_at_end"] in ("ACTOR_STATE_REVERTING", "ACTOR_STATE_DELETING"))},
+            "runs": returns,
+        },
+        "golden_tag_deleted": {
+            "create_actor_error": next(line for line in golden if line.startswith("Error")),
+            "templates_still_listed_with_tag": sum(1 for line in golden[2:5] if re.search(r"ballast-\d+\s+[0-9a-f-]{36}", line)),
+        },
+    }
+
+
+def rotation_x86():
+    out = {}
+    for name in ("agentgateway", "envoy"):
+        base = f"Q-network/l-credential-rotation/{name}"
+        changes = []
+        for row in rows(f"{base}/20-rotations.tsv"):
+            if row[0].isdigit():
+                changes.append({"change": int(row[0]), "wait_before_seconds": int(row[1]), "secret_changed_epoch": float(row[2]), "first_seen_epoch": float(row[3]), "seconds": float(row[4]), "requests_with_old_value": int(row[5])})
+        probe = [row for row in rows(f"{base}/10-probe.tsv") if len(row) == 2 and row[0] != "epoch"]
+        seen = [entry["first_seen_epoch"] for entry in changes]
+        out[name] = {
+            "changes": changes,
+            "seconds": stat([entry["seconds"] for entry in changes]),
+            "probe_requests": len(probe),
+            "values_seen": tally(row[1].split(": ", 1)[1] for row in probe),
+            "empty_or_placeholder_values": sum(1 for row in probe if "rot-value-" not in row[1]),
+            "seconds_between_first_seen": rounded([b - a for a, b in zip(seen, seen[1:])]),
+        }
+    return {
+        "machine": GUEST_Q,
+        "note": "one running actor, one http rule with replaceHeaders from a Kubernetes Secret, one request about each second to an echo service in the cluster. The Secret was changed three times on each dataplane. The values are made-up test strings.",
+        "unit": {"seconds": "from the change of the Secret to the first request in which the upstream saw the new value"},
+        "sources": [f"capture/lab/Q-network/l-credential-rotation/{name}/{leaf}" for name in ("agentgateway", "envoy") for leaf in ("20-rotations.tsv", "10-probe.tsv")],
+        "dataplanes": out,
+    }
+
+
+def cpu_limit_x86():
+    base = "Q-network/n-cpu-limit"
+    groups = {}
+    for row in rows(f"{base}/40-work.tsv"):
+        if row[0].isdigit():
+            groups.setdefault((int(row[0]), int(row[1])), []).append([float(value) for value in row[3:]])
+    results = []
+    for (limit, threads), runs in sorted(groups.items()):
+        column = lambda i: [run[i] for run in runs]
+        results.append({
+            "x": limit,
+            "threads": threads,
+            "wall_seconds": stat(column(1)),
+            "host_cpu_seconds": stat(column(3)),
+            "host_cores_used": stat(column(4)),
+            "cpu_seconds_reported_inside": stat(column(2)),
+            "periods": stat(column(5)),
+            "throttled_periods": stat(column(6)),
+            "runs": [{"wall_seconds": run[1], "cpu_seconds_reported_inside": run[2], "host_cpu_seconds": run[3], "host_cores_used": run[4], "periods": int(run[5]), "throttled_periods": int(run[6])} for run in runs],
+        })
+    seen = {str(limit): read_json(f"{base}/41-info-{limit}.json") for limit in (250, 500, 1000, 2000)}
+    quotas = {}
+    for line in lines(f"{base}/42-cgroup-after.txt"):
+        parts = line.split()
+        if len(parts) > 1 and parts[0].isdigit():
+            quotas[parts[0]] = parts[1]
+    first = []
+    for row in rows(f"{base}/10-burn.tsv"):
+        if row[0].isdigit():
+            first.append({"x": int(row[0]), "threads": int(row[1]), "wall_seconds": float(row[4]), "effective_cores_not_valid": float(row[7])})
+    worker = read_json(f"{base}/03-worker-pod-resources.json")
+    return {
+        "machine": GUEST_Q + ", pool of one worker pod with a Kubernetes limit of 6 CPU",
+        "note": "a fixed number of loop steps (38,928 blocks of 200,000 steps, about 5 s on one free core) on 1 thread or on 4 threads, three runs for each row. Host CPU time is read from the cgroup of the actor on the node.",
+        "unit": {"x": "resources.limits.cpuMillicores of the template", "host_cores_used": "host CPU seconds divided by wall seconds"},
+        "sources": [f"capture/lab/{base}/40-work.tsv", f"capture/lab/{base}/42-cgroup-after.txt", f"capture/lab/{base}/41-info-250.json", f"capture/lab/{base}/03-worker-pod-resources.json", f"capture/lab/{base}/10-burn.tsv"],
+        "points": results,
+        "seen_inside_the_actor": seen,
+        "cgroup_cpu_max_of_actor": quotas,
+        "worker_pod_limits": worker["resources"]["limits"],
+        "superseded_first_test": {"note": "each run stopped when the CPU time read inside the sandbox reached 10 s, so effective_cores is not valid", "source": f"capture/lab/{base}/10-burn.tsv", "runs": first},
+    }
+
+
+def keepalive(name):
+    text = lines(f"Q-network/h-keepalive/{name}/results.txt")
+    tests = {}
+    removed = []
+    current = None
+    for line in text:
+        head = re.match(r"### \[(\d\d):(\d\d):([\d.]+)\] (.+)", line)
+        if head:
+            clock = int(head.group(1)) * 3600 + int(head.group(2)) * 60 + float(head.group(3))
+            label = head.group(4)
+            if "Pnone.yaml" in label:
+                removed.append(clock)
+            current = tests.setdefault(label, {"codes": [], "seconds": [], "new_connections": 0}) if label.startswith(("h1-http11", "h2-https")) else None
+            continue
+        if current is None:
+            continue
+        start = re.match(r"start=(\d\d):(\d\d):(\d\d)", line)
+        if start:
+            current["start"] = int(start.group(1)) * 3600 + int(start.group(2)) * 60 + int(start.group(3))
+        row = re.match(r"(\d{3}) http=(\S+) new_conns=(\d+) lport=(\d+) t=([\d.]+)", line)
+        if row:
+            current["codes"].append(row.group(1))
+            current["http"] = row.group(2)
+            current["new_connections"] += int(row.group(3))
+            current["seconds"].append(float(row.group(5)))
+    out = {}
+    for (label, test), gone in zip(tests.items(), removed):
+        refused = test["codes"].index("403") + 1
+        out[label.split("-")[0]] = {
+            "test": label,
+            "http": test["http"],
+            "requests": len(test["codes"]),
+            "new_connections": test["new_connections"],
+            "ok": test["codes"].count("200"),
+            "refused_403": test["codes"].count("403"),
+            "first_refused_request": refused,
+            "rule_removed_seconds_after_start": round(gone - test["start"], 1),
+            "last_ok_seconds_after_removal": round(test["start"] + 2 * (refused - 2) - gone, 1),
+            "first_refused_seconds_after_removal": round(test["start"] + 2 * (refused - 1) - gone, 1),
+            "runs": {"codes": test["codes"], "seconds": rounded(test["seconds"])},
+        }
+    return out
+
+
+def suspend_cutoff(name):
+    marks = {}
+    for row in rows(f"Q-network/k-suspend-cutoff/{name}/10-events.tsv"):
+        marks[row[1]] = row
+    begin = stamp(marks["suspend-call-start"][0])
+    gone = marks["drip-log-read"][2].split(" ")[0]
+    return {
+        "suspend_call_seconds": round(stamp(marks["suspend-call-returned"][0]) - begin, 2),
+        "upstream_saw_connection_gone_seconds": round(stamp(gone) - begin, 1),
+        "state_before_resume": marks["state-before-resume"][2],
+        "state_after_request": marks["resumed-by-request"][2],
+    }
+
+
+def table(rel):
+    data = rows(rel)
+    head = data[0]
+    out = []
+    for row in data[1:]:
+        item = {}
+        for key, value in zip(head, row):
+            try:
+                item[key] = float(value) if "." in value else int(value)
+            except ValueError:
+                item[key] = value
+        out.append(item)
+    return out
+
+
+def router_ports(name):
+    base = f"Q-network/m-router-ports/{name}"
+    service = [int(value) for value in re.findall(r"^\s+port: (\d+)", read(f"{base}/00-service.yaml"), re.M)]
+    containers = read_json(f"{base}/02-router-containers.json")
+    probes = []
+    for row in rows(f"{base}/10-port-probes.tsv")[1:]:
+        entry = {"from": row[0], "target": row[1], "port": int(row[2])}
+        for cell in row[3:]:
+            match = re.match(r"([\w-]+): (\d{3}) exit=(\d+) err=([^|]*)", cell)
+            if match:
+                entry[match.group(1).replace("-", "_")] = {"code": match.group(2), "curl_exit": int(match.group(3)), "error": match.group(4).strip()[:120]}
+        probes.append(entry)
+    extra = {}
+    for line in lines(f"{base}/11-port-probes-supplement.txt"):
+        label, _, rest = line.partition(": ")
+        parts = rest.strip().split("|")
+        code = parts[0].split(" ")[0]
+        entry = {"code": code}
+        if label.startswith("stats") and code == "200" and len(parts) > 2 and parts[1].isdigit():
+            entry["bytes"] = int(parts[1])
+            if parts[2].isdigit():
+                entry["metric_families"] = int(parts[2])
+        elif code != "000" and len(parts) > 1 and not label.startswith("stats"):
+            entry["body"] = parts[1][:80]
+        extra[label.strip()] = entry
+    return {
+        "service_ports": service,
+        "container_ports": {item["name"]: item["ports"] for item in containers},
+        "probes": probes,
+        "more_probes": extra,
+    }
+
+
+def network_x86():
+    base = "Q-network"
+    gateway = {}
+    for name in ("agentgateway", "envoy"):
+        marks = lines(f"{base}/i-model-gateway/24-marker-counts-{name}-private-ca-trusted.txt")
+        counts = re.search(r"mock-a=(\d+) mock-b=(\d+)", marks[0])
+        cost = "51-connection-cost-agentgateway.tsv" if name == "agentgateway" else "51-connection-cost-envoy-private-ca-trusted.tsv"
+        gateway[name] = {
+            "default_install_tls_gateway": next(item for item in table(f"{base}/i-model-gateway/31-latency-{name}.tsv") if item["path"] == "actor-l3-via-tls-gw"),
+            "new_connection_each_request_ms": table(f"{base}/i-model-gateway/31-latency-{name}-private-ca-trusted.tsv"),
+            "connection_cost_ms": table(f"{base}/i-model-gateway/{cost}"),
+            "injected_credential_seen_by": {"mock-a": int(counts.group(1)), "mock-b": int(counts.group(2))},
+            "placeholder_seen_by_backends": int(marks[1].rsplit(" ", 1)[1]),
+        }
+    levels = []
+    for row in rows(f"{base}/j-log-level/10-volume.tsv"):
+        fields = dict(cell.split("=", 1) for cell in row[1:])
+        ok = re.search(r"(\d+) of (\d+)", fields["requests_ok"])
+        levels.append({"rust_log": row[0], "lines": int(fields["lines"]), "bytes": int(fields["bytes"]), "lines_with_header_value": int(fields["lines_with_header_marker"]), "lines_with_authorization_value": int(fields["lines_with_auth_marker"]), "requests_ok": int(ok.group(1)), "requests": int(ok.group(2))})
+    after = read_json(f"{base}/00-dataplane-switch-to-agentgateway/17-after-rerun-rust-log-and-roots.json")
+    switches = {}
+    for name in ("agentgateway", "envoy"):
+        timing = re.search(r"rc=(\d+) seconds=(\d+)", lines(f"{base}/00-dataplane-switch-to-{name}/11-timing.txt")[0])
+        switches[f"to_{name}"] = {"exit": int(timing.group(1)), "seconds": int(timing.group(2))}
+    return {
+        "machine": GUEST_Q,
+        "note": "a three-node cluster on the same guest ran the node-stop tests at the same time, so read differences of a few milliseconds as noise. Each test ran once on each dataplane.",
+        "sources": [
+            f"capture/lab/{base}/h-keepalive/agentgateway/results.txt",
+            f"capture/lab/{base}/h-keepalive/envoy/results.txt",
+            f"capture/lab/{base}/k-suspend-cutoff/agentgateway/10-events.tsv",
+            f"capture/lab/{base}/k-suspend-cutoff/envoy/10-events.tsv",
+            f"capture/lab/{base}/j-log-level/10-volume.tsv",
+            f"capture/lab/{base}/i-model-gateway/31-latency-agentgateway-private-ca-trusted.tsv",
+            f"capture/lab/{base}/i-model-gateway/31-latency-envoy-private-ca-trusted.tsv",
+            f"capture/lab/{base}/i-model-gateway/51-connection-cost-agentgateway.tsv",
+            f"capture/lab/{base}/i-model-gateway/51-connection-cost-envoy-private-ca-trusted.tsv",
+            f"capture/lab/{base}/m-router-ports/agentgateway/10-port-probes.tsv",
+            f"capture/lab/{base}/m-router-ports/envoy/10-port-probes.tsv",
+            f"capture/lab/{base}/00-dataplane-switch-to-agentgateway/17-after-rerun-rust-log-and-roots.json",
+        ],
+        "keepalive_after_rule_removal": {"note": "one curl process, 20 requests 2 s apart on one connection. The start time has a resolution of 1 s, so each time after the removal can be up to 1 s later.", "agentgateway": keepalive("agentgateway"), "envoy": keepalive("envoy")},
+        "suspend_cutoff": {"note": "the upstream writes one chunk each second, so the close can be up to 1 s earlier", "agentgateway": suspend_cutoff("agentgateway"), "envoy": suspend_cutoff("envoy")},
+        "egress_log_level": {"note": "100 requests at each level on agentgateway", "levels": levels, "rust_log_after_installer_rerun": after["rust_log"]},
+        "model_gateway": gateway,
+        "router_ports": {"agentgateway": router_ports("agentgateway"), "envoy": router_ports("envoy")},
+        "dataplane_switch": switches,
+    }
+
+
+def step_seconds(rel):
+    return {item["step"]: item for item in steps(rel)}
+
+
+def agent_executor_x86():
+    base = "R-agent-executor"
+    cycles = {}
+    failed = 0
+    for row in rows(f"{base}/40-lifecycle/30-cycles.tsv")[1:]:
+        if row[2] != "0":
+            failed += 1
+            continue
+        cycles.setdefault(row[1], []).append(float(row[3]))
+    watch = [row for row in rows(f"{base}/50-idle/10-idle-watch.tsv") if len(row) >= 2 and row[1].startswith("ACTOR_STATE_")]
+    workspace = step_seconds(f"{base}/70-workspace/steps.tsv")
+    plain = step_seconds(f"{base}/90-nodebug/steps.tsv")
+    removal = step_seconds(f"{base}/99-delete/steps.tsv")
+    network = step_seconds(f"{base}/80-networking/steps.tsv")
+    return {
+        "machine": GUEST_R,
+        "agent_executor_commit": lines(f"{base}/10-install/00-ax-commit.txt")[0].split()[0],
+        "model": "none. Every task ran the command sleep infinity, and no model request was sent.",
+        "unit": {"seconds": "wall time of the ax command at the client, on the guest that runs the cluster"},
+        "sources": [
+            f"capture/lab/{base}/10-install/steps.tsv",
+            f"capture/lab/{base}/40-lifecycle/30-cycles.tsv",
+            f"capture/lab/{base}/50-idle/10-idle-watch.tsv",
+            f"capture/lab/{base}/70-workspace/steps.tsv",
+            f"capture/lab/{base}/80-networking/steps.tsv",
+            f"capture/lab/{base}/90-nodebug/steps.tsv",
+            f"capture/lab/{base}/99-delete/steps.tsv",
+        ],
+        "install_steps": steps(f"{base}/10-install/steps.tsv"),
+        "cycles": {"note": "10 cycles of ax suspend task, 1 s wait, ax resume task, ax ssh, ax describe on one task with no workspace", "failed": failed, "seconds": {name: stat(values) for name, values in cycles.items()}, "runs": {name: rounded(values) for name, values in cycles.items()}},
+        "idle_watch": {"note": "one running task with no request, sampled every 15 s", "samples": len(watch), "span_seconds": round(stamp(watch[-1][0]) - stamp(watch[0][0]), 1), "states": tally([row[1] for row in watch])},
+        "first_resume": {
+            "no_workspace": plain["03-resume"]["seconds"],
+            "workspace_clone_blocked": workspace["06-resume-first"]["seconds"],
+            "workspace_clone_blocked_second": workspace["17-resume-second"]["seconds"],
+        },
+        "router_plain_http": {"exit": network["02-in-cluster-curl-http"]["exit"], "seconds": network["02-in-cluster-curl-http"]["seconds"]},
+        "delete_task_seconds": [removal["04-delete-task-nodebug"]["seconds"], removal["05-delete-task-ws"]["seconds"]],
+    }
+
+
 BUILDERS = {
+    "agent-executor-x86.json": agent_executor_x86,
+    "node-loss-x86.json": node_loss_x86,
+    "rotation-x86.json": rotation_x86,
+    "cpu-limit-x86.json": cpu_limit_x86,
+    "network-x86.json": network_x86,
+    "dependency-loss-agw-x86.json": dependency_agw_x86,
     "resume-x86.json": resume_x86,
     "suspend-x86.json": suspend_x86,
     "resume-mac.json": resume_mac,

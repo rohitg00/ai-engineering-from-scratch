@@ -1,0 +1,41 @@
+cycle	op	rc	seconds	detail
+1	suspend	0	0.220	task.ax.io/ax-install-check suspended 
+1	resume	0	0.223	task.ax.io/ax-install-check resumed 
+1	ssh	0	0.753	note-from-run-1 
+1	describe	0	0.035	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+2	suspend	0	0.173	task.ax.io/ax-install-check suspended 
+2	resume	0	0.246	task.ax.io/ax-install-check resumed 
+2	ssh	0	0.739	note-from-run-1 
+2	describe	0	0.032	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+3	suspend	0	0.172	task.ax.io/ax-install-check suspended 
+3	resume	0	0.242	task.ax.io/ax-install-check resumed 
+3	ssh	0	0.734	note-from-run-1 
+3	describe	0	0.038	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+4	suspend	0	0.183	task.ax.io/ax-install-check suspended 
+4	resume	0	0.324	task.ax.io/ax-install-check resumed 
+4	ssh	0	0.747	note-from-run-1 
+4	describe	0	0.034	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+5	suspend	0	0.208	task.ax.io/ax-install-check suspended 
+5	resume	0	0.234	task.ax.io/ax-install-check resumed 
+5	ssh	0	0.728	note-from-run-1 
+5	describe	0	0.035	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+6	suspend	0	0.167	task.ax.io/ax-install-check suspended 
+6	resume	0	0.297	task.ax.io/ax-install-check resumed 
+6	ssh	0	0.731	note-from-run-1 
+6	describe	0	0.033	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+7	suspend	0	0.206	task.ax.io/ax-install-check suspended 
+7	resume	0	0.226	task.ax.io/ax-install-check resumed 
+7	ssh	0	0.734	note-from-run-1 
+7	describe	0	0.033	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+8	suspend	0	0.163	task.ax.io/ax-install-check suspended 
+8	resume	0	0.231	task.ax.io/ax-install-check resumed 
+8	ssh	0	0.743	note-from-run-1 
+8	describe	0	0.037	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+9	suspend	0	0.168	task.ax.io/ax-install-check suspended 
+9	resume	0	0.334	task.ax.io/ax-install-check resumed 
+9	ssh	0	0.736	note-from-run-1 
+9	describe	0	0.033	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25
+10	suspend	0	0.200	task.ax.io/ax-install-check suspended 
+10	resume	0	0.280	task.ax.io/ax-install-check resumed 
+10	ssh	0	0.751	note-from-run-1 
+10	describe	0	0.036	Phase: Running  WorkspaceReady True SetupComplete Workspace setup completed at 10.244.0.25

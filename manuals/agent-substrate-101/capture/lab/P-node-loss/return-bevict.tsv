@@ -1,0 +1,43 @@
+ts	t	event	detail
+2026-11-12T13:19:54.366Z	t=0.3	node-start	multi-worker2 after outage of 603.0 s
+2026-11-12T13:19:58.782Z	t=4.7	node-ready	multi-worker2
+2026-11-12T13:20:01.493Z	t=7.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:07.746Z	t=13.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:13.911Z	t=19.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:20.065Z	t=26.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:26.147Z	t=32.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:32.354Z	t=38.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:38.488Z	t=44.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:44.633Z	t=50.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:50.810Z	t=56.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:20:57.014Z	t=62.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:03.204Z	t=69.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:09.301Z	t=75.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:15.398Z	t=81.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:21.523Z	t=87.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:27.640Z	t=93.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:33.773Z	t=99.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:39.857Z	t=105.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:46.019Z	t=112.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:52.181Z	t=118.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:21:58.331Z	t=124.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:04.423Z	t=130.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:10.546Z	t=136.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:16.733Z	t=142.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:22.937Z	t=148.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:29.202Z	t=155.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:35.555Z	t=161.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:41.622Z	t=167.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:47.710Z	t=173.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:22:54.022Z	t=180.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:23:00.178Z	t=186.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:23:06.259Z	t=192.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:23:12.375Z	t=198.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:23:18.467Z	t=204.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:23:24.516Z	t=210.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:23:30.557Z	t=216.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:23:36.802Z	t=222.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | c3: ACTOR_STATE_REVERTING multi-worker2
+2026-11-12T13:23:40.826Z	t=226.8	no-actor-on-returned-node	after 226.7 s, pool pods on node: 0
+2026-11-12T13:23:41.047Z	t=227.0	final-state	c3: ACTOR_STATE_REVERTING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:23:48.689Z	t=234.6	rebalanced-by-hand	pool pods on multi-worker2 now 2 (setup for the next case)
+2026-11-12T13:23:49.867Z	t=235.8	ready-for-next-case	workers active on multi-worker2: 2

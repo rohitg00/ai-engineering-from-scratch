@@ -192,6 +192,53 @@ The documentation promises neither the start nor the end of the upload {{docs}}.
 
 Our position: do not accept the first period for state that matters. A synchronous suspend closes it for one actor. A shorter `--snapshot-upload-delay` on atelet closes it for the cluster. We ran atelet with 3 seconds and 10 seconds for one test, and all 55 requests of that test succeeded. A short detach delay saves node disk and makes every resume a download.
 
+## A tag is a copy that does not depend on the node
+
+**Tag:** a named copy of the durable snapshot of a suspended actor. `kubectl ate create tag <name> --actor <actor>` makes one. If the snapshot is not uploaded yet, the call uploads it first {{code}}. `kubectl ate create actor <new> --tag <name>` creates a new actor that starts from the copy.
+
+A tag has its own object in the object store, under the atespace and outside the folder of the actor. So it does not need the node of the actor, and it does not change when the actor runs on. That makes a tag the one way to move the state of an actor off a node that has stopped.
+
+```listing
+title: the tags of one atespace
+source: capture/lab/P-node-loss/86-tags.txt
+lang: text
+note: The complete file. The first two tags are the golden tags of two templates, and the other three are tags that we made of two actors.
+---
+ATESPACE   NAME                                   SCOPE                 STATE   SNAPSHOT                                                                       FIDELITY                   AGE
+lab-n      09fee120-cd19-4121-8bae-5623fcbe70eb   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/lab-n/tags/1010ca2e-25b0-44d6-864f-a31a80da48c2   SNAPSHOT_FIDELITY_MEMORY   147m
+lab-n      d8328610-2fdb-4974-a6ab-7c8671586d37   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/lab-n/tags/8d60620d-653e-469f-9dd1-9f11a89ce7e0   SNAPSHOT_FIDELITY_MEMORY   147m
+lab-n      keep-t1                                TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/lab-n/tags/aca8c8e0-6dfd-4ee5-9e55-ced17f7c346e   SNAPSHOT_FIDELITY_MEMORY   12m
+lab-n      keep-u1                                TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/lab-n/tags/13e4dabd-ad64-417f-95a5-ec1d5909c786   SNAPSHOT_FIDELITY_MEMORY   72s
+lab-n      pend-u1                                TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/lab-n/tags/cfefcc57-5a75-418c-ae29-424958706266   SNAPSHOT_FIDELITY_MEMORY   69s
+```
+
+**We measured** three tags in the node-stop cases, on a second x86 server guest (16 vCPU, 23 GB), with one run for each case. A tag of an actor that was suspended with `--mode sync` was `Ready` in less than 1 s. So was a tag of an actor whose newest snapshot was still `PENDING` on the node, and it held that newest state. Then we stopped the node. A new actor from each tag served its first request 1.2 s after the create command, on the other node. That first request took 0.48 to 0.58 s.
+
+A tag has three limits. It is as old as the suspend that it copied, so later work is not in it. The actor that you create from it has a new name. And you cannot make it after the fact: `create tag` on an actor that was held on the stopped node failed with `must be ACTOR_STATE_SUSPENDED to be tagged`. [Section 8.2](#s-when-a-dependency-is-down) uses tags in its runbook for a stopped node.
+
+### Do not delete a golden tag
+
+The golden tag of a template is in the same list. Its scope is `TAG_SCOPE_PUBLISHED`, and its name is a uid. `kubectl ate delete tag` accepts it, and our own clean-up made that mistake. It deleted every tag of the atespace, and the golden tags of two templates went with them.
+
+```listing
+title: a template after its golden tag was deleted
+source: capture/lab/P-node-loss/96-golden-tag-deleted.txt
+lang: text
+note: Eight lines of the file. The lines that create two new templates are cut.
+---
+## get actor-templates
+ATESPACE   NAME         GOLDEN TAG                             ERROR   AGE
+lab-n      ballast-0    d8328610-2fdb-4974-a6ab-7c8671586d37           170m
+lab-n      ballast-50   09fee120-cd19-4121-8bae-5623fcbe70eb           170m
+## get tags
+ATESPACE   NAME   SCOPE   STATE   SNAPSHOT   FIDELITY   AGE
+## create actor from template ballast-50
+Error: failed to create actor: rpc error: code = FailedPrecondition desc = Tag not found
+…
+```
+
+The template looks healthy and is broken. `get actor-templates` still lists the old golden tag id, and the `ERROR` column is empty. Each `create actor --template` fails with `Tag not found`. We saw this once, on the same guest. We made new templates to continue, and we did not test whether a golden tag can be restored.
+
 ```takeaways
 - Choose SNAPSHOT_FIDELITY_MEMORY only when the processes must continue.
 - Keep files that must survive in a durableDir volume at the two lower levels.
@@ -200,6 +247,8 @@ Our position: do not accept the first period for state that matters. A synchrono
 - Expect a full application start at every resume under the two lower levels.
 - Treat a PENDING snapshot as one copy on one node.
 - Lower --snapshot-upload-delay, or suspend with --mode sync, for state that you cannot lose.
+- Tag a suspended actor whose state you must be able to move off its node.
+- Delete tags by name, and never a tag with TAG_SCOPE_PUBLISHED that a template lists.
 ```
 
-Sources: capture/lab/summary/timers-x86.json, capture/lab/summary/footprint-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/summary/demos-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/V-validation/01-compressible/10-compressible.tsv, capture/lab/V-validation/02-python-runtime/10-python.tsv, capture/lab/V-validation/04-fidelity/10-fidelity.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/D-durability/10-watch-part2.tsv, capture/lab/D-durability/00-atelet-args.txt, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/C-resume-vs-size/snapdir-b200-1.txt, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/C-resume-vs-size/32-object-store.tsv, capture/lab/K-kagent/session1/turn1.txt, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/actor-template.yaml, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/22-actor-after-async-suspend.yaml. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (SnapshotFidelity, Snapshot, SnapshotStorageState), cmd/atelet/internal/snapshottracker/background.go (the two delays), internal/objectstoreplugin/node.go (compressed objects), docs/reference/api-guide.md (Snapshot Storage Layout, Snapshot lifetime, Eviction).
+Sources: capture/lab/summary/timers-x86.json, capture/lab/summary/footprint-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/summary/demos-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/V-validation/01-compressible/10-compressible.tsv, capture/lab/V-validation/02-python-runtime/10-python.tsv, capture/lab/V-validation/04-fidelity/10-fidelity.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/D-durability/10-watch-part2.tsv, capture/lab/D-durability/00-atelet-args.txt, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/C-resume-vs-size/snapdir-b200-1.txt, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/C-resume-vs-size/32-object-store.tsv, capture/lab/K-kagent/session1/turn1.txt, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/actor-template.yaml, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/22-actor-after-async-suspend.yaml, capture/lab/P-node-loss/86-tags.txt, capture/lab/P-node-loss/80-tag-rescue.tsv, capture/lab/P-node-loss/85-tag-rescue-running-and-pending.tsv, capture/lab/P-node-loss/96-golden-tag-deleted.txt, capture/lab/summary/node-loss-x86.json. Agent Substrate v1.0.0: cmd/ateapi/internal/controlapi (CreateTag, DeleteTag), api/ateapi/v1/ateapi.proto (SnapshotFidelity, Snapshot, SnapshotStorageState), cmd/atelet/internal/snapshottracker/background.go (the two delays), internal/objectstoreplugin/node.go (compressed objects), docs/reference/api-guide.md (Snapshot Storage Layout, Snapshot lifetime, Eviction).

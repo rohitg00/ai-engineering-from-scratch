@@ -1,0 +1,259 @@
+apiVersion: v1
+items:
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:07Z"
+    generation: 1
+    name: ate-api-server
+    namespace: ate-system
+    resourceVersion: "934"
+    uid: 207f5aef-0474-43a9-a6a7-6c38e04ab466
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - ate-controller
+            - atelet
+            - atenet-egress
+            - atenet-router
+      - namespaceSelector:
+          matchLabels:
+            ate.dev/api-access: "true"
+        podSelector:
+          matchExpressions:
+          - key: ate.dev/worker-pool
+            operator: DoesNotExist
+      ports:
+      - port: 443
+        protocol: TCP
+    - from:
+      - podSelector:
+          matchLabels:
+            app: atelet
+      ports:
+      - port: 8445
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: ate-api-server
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:08Z"
+    generation: 1
+    name: ate-idp-server
+    namespace: ate-system
+    resourceVersion: "939"
+    uid: 690c7be1-8392-4935-8987-36a2eec13760
+  spec:
+    ingress:
+    - ports:
+      - port: https
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: ate-idp-server
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:08Z"
+    generation: 1
+    name: ate-system-observability
+    namespace: ate-system
+    resourceVersion: "943"
+    uid: aad77451-8fd3-44c3-aac1-751655603049
+  spec:
+    ingress:
+    - ports:
+      - port: metrics
+        protocol: TCP
+      - port: prometheus
+        protocol: TCP
+      - port: envoy-metrics
+        protocol: TCP
+      - port: health
+        protocol: TCP
+      - port: healthz
+        protocol: TCP
+      - port: stats
+        protocol: TCP
+      - port: readiness
+        protocol: TCP
+    podSelector:
+      matchExpressions:
+      - key: app
+        operator: NotIn
+        values:
+        - k8s-credential-provider
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:07Z"
+    generation: 1
+    name: atelet
+    namespace: ate-system
+    resourceVersion: "937"
+    uid: f6b6e77c-fb65-44e0-98f6-31f93034fe28
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: ate-api-server
+      ports:
+      - port: grpc
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: atelet
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:08Z"
+    generation: 1
+    name: atenet-egress
+    namespace: ate-system
+    resourceVersion: "941"
+    uid: 800e1e2f-5c7c-48c9-bef6-e510d1490588
+  spec:
+    ingress:
+    - from:
+      - namespaceSelector: {}
+        podSelector:
+          matchExpressions:
+          - key: ate.dev/worker-pool
+            operator: Exists
+      ports:
+      - port: https
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: atenet-egress
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:08Z"
+    generation: 5
+    name: atenet-router
+    namespace: ate-system
+    resourceVersion: "25680"
+    uid: 268bb170-c226-427e-8eaa-ded30be384df
+  spec:
+    ingress:
+    - ports:
+      - port: https
+        protocol: TCP
+      - port: connect-tls
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: atenet-router
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:07Z"
+    generation: 1
+    name: default-deny-ingress
+    namespace: ate-system
+    resourceVersion: "932"
+    uid: cdcbff6a-6d49-4c8b-820d-4d6fe5e3dbcc
+  spec:
+    podSelector: {}
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:13Z"
+    generation: 1
+    name: k8s-credential-provider
+    namespace: ate-system
+    resourceVersion: "1100"
+    uid: 3158f50d-b621-4388-a32b-f14df8f41add
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: atenet-egress
+      ports:
+      - port: 50051
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: k8s-credential-provider
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:07Z"
+    generation: 1
+    name: postgres
+    namespace: ate-system
+    resourceVersion: "936"
+    uid: ef927a43-3a1f-4e9b-a592-e1389f961b48
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: ate-api-server
+      ports:
+      - port: postgres
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: postgres
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:09Z"
+    generation: 1
+    name: rustfs
+    namespace: ate-system
+    resourceVersion: "977"
+    uid: e8b2362d-5228-4eb9-916c-d36ecc1e2bbc
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - ate-api-server
+            - atelet
+      - podSelector:
+          matchLabels:
+            batch.kubernetes.io/job-name: rustfs-bucket-init
+      ports:
+      - port: api
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: rustfs
+    policyTypes:
+    - Ingress
+kind: List
+metadata:
+  resourceVersion: ""

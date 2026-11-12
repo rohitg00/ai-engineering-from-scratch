@@ -1,0 +1,2 @@
+NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)            AGE    SELECTOR
+atenet-router   ClusterIP   10.96.134.206   <none>        443/TCP,8444/TCP   171m   app=atenet-router

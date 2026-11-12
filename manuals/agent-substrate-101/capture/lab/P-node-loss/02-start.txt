@@ -1,0 +1,65 @@
+### start 2026-11-12T12:53:28.820Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ballast-5d6cf97747-5rglr Running multi-worker2
+ballast-5d6cf97747-gz4kr Running multi-worker
+ballast-5d6cf97747-ktm7z Running multi-worker
+ballast-5d6cf97747-zvzjw Running multi-worker2
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                              AGE
+3ad3e307-8d24-426f-aac7-00c22f22be13   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-5rglr   6m47s
+b44893b3-25c3-4658-afba-1f11a2543ad5   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-gz4kr   45m
+364d9017-9406-47be-80f5-05efcc3ef958   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-ktm7z   45m
+8b9f8898-7ddc-4365-8495-adc720d88b9b   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zvzjw   6m47s
+### start 2026-11-12T12:55:59.224Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ballast-5d6cf97747-jbl7x Running multi-worker2
+ballast-5d6cf97747-jkk87 Running multi-worker
+ballast-5d6cf97747-k8qrf Running multi-worker
+ballast-5d6cf97747-lcbcg Running multi-worker2
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                              AGE
+3e4300bc-b35c-4cb0-b321-d9876dda8ed2   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-jbl7x   12s
+8a214578-4835-426e-b9a6-668509022369   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-jkk87   12s
+324be43a-ebf7-4a14-bc28-3cf92c42cb7b   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-k8qrf   12s
+be7154ae-09c7-43c4-aaaa-e8f5779ce560   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-lcbcg   12s
+### start 2026-11-12T14:15:10.882Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ballast-5d6cf97747-2vzqf Running 3m42s
+ballast-5d6cf97747-mmgjz Running 3m42s
+ballast-5d6cf97747-zxzvv Running multi-worker
+ballast-5d6cf97747-zzzdn Running multi-worker
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                              AGE
+67bd9a81-04f9-4dd8-b392-1b39a5248765   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-2vzqf   3m41s
+7c332a63-3889-41c2-b8fe-fd5ca281b4bb   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-mmgjz   3m41s
+e46a2421-df57-4c7c-aba7-7118e9098828   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zxzvv   27m
+7acbf84d-e26f-45fd-88aa-08a1b9d816ec   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zzzdn   73m
+### start 2026-11-12T14:33:11.493Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ballast-5d6cf97747-88557 Running 7m21s
+ballast-5d6cf97747-nsbsx Running 7m21s
+ballast-5d6cf97747-zxzvv Running multi-worker
+ballast-5d6cf97747-zzzdn Running multi-worker
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                              AGE
+d0cd74ab-225a-4e05-b0c7-05250913aae8   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-88557   7m21s
+2508f1c9-8027-4382-9d20-fa798edfc39c   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-nsbsx   7m21s
+e46a2421-df57-4c7c-aba7-7118e9098828   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zxzvv   45m
+7acbf84d-e26f-45fd-88aa-08a1b9d816ec   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zzzdn   91m
+### start 2026-11-12T14:50:07.049Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ballast-5d6cf97747-88557 Running 24m
+ballast-5d6cf97747-nsbsx Running 24m
+ballast-5d6cf97747-zxzvv Running multi-worker
+ballast-5d6cf97747-zzzdn Running multi-worker
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                              AGE
+d0cd74ab-225a-4e05-b0c7-05250913aae8   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-88557   24m
+2508f1c9-8027-4382-9d20-fa798edfc39c   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-nsbsx   24m
+e46a2421-df57-4c7c-aba7-7118e9098828   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zxzvv   62m
+7acbf84d-e26f-45fd-88aa-08a1b9d816ec   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zzzdn   108m

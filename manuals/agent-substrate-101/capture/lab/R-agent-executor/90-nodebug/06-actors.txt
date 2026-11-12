@@ -1,0 +1,4 @@
+ATESPACE   NAME               TEMPLATE                                 STATE                 WORKER POD                           WORKER IPS    VERSION   AGE
+default    ax-install-check   default/ax-install-check-tmpl-b08f2422   ACTOR_STATE_RUNNING   demo-tools/tools-5b5f9c9fb7-nhsjh    10.244.0.31   48        13m
+default    ax-nodebug         default/ax-nodebug-tmpl-4a67c8d7         ACTOR_STATE_RUNNING   demo-drill/drill-8bc8cbccc-jk55c     10.244.0.24   3         2s
+default    ax-ws-task         default/ax-ws-task-tmpl-5fd7c4b9         ACTOR_STATE_RUNNING   ax-system/ax-pool-588b78fd54-29xgr   10.244.0.40   7         58s

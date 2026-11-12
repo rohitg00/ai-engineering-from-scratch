@@ -1,0 +1,4 @@
+/home/lab/ax/internal/tunnel/router_tls.go:41:	routerServerName      = "atenet-router.ate-system.svc"
+/home/lab/ax/internal/tunnel/router_tls.go:57:// atenet-router over mTLS. It fetches the router's serving CA from the live
+/home/lab/ax/internal/substrate/client.go:80:		opts.Target = "api.ate-system.svc.cluster.local:443"
+/home/lab/ax/internal/substrate/client.go:159:			target = "api.ate-system.svc.cluster.local:443"

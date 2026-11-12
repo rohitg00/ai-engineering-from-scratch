@@ -4,7 +4,9 @@
 
 `ate-api-server` serves both services on one port, 443 in the Service named `api` in `ate-system`. The proto package is `substrate.ateapi.v1`, so the full name of a method is `/substrate.ateapi.v1.Control/GetActor`. The Go package is `go.ate.dev/substrate/api/ateapi/v1`. A client authenticates as [section 5.1](#s-client-authentication) describes, and each `Control` method is checked against the access policies of [section 5.2](#s-access-policies).
 
-The tables give each method, what it does at v1.0.0, and the `kubectl ate` command that calls it. A dash means that the CLI has no command for it. Our runs called every actor method, the egress policy methods, and the create, get, and list methods for templates, atespaces, and workers. `UpdateActor` ran in the template move of [section 3.1](#s-actortemplate-and-the-golden-snapshot). Our runs also created, replaced, and deleted an atespace access policy and read the global one, in [section 5.2](#s-access-policies). Our runs created no tag.
+The tables give each method, what it does at v1.0.0, and the `kubectl ate` command that calls it. A dash means that the CLI has no command for it. Our runs called every actor method, the egress policy methods, and the create, get, and list methods for templates, atespaces, and workers. `UpdateActor` ran in the template move of [section 3.1](#s-actortemplate-and-the-golden-snapshot). Our runs also created, replaced, and deleted an atespace access policy and read the global one, in [section 5.2](#s-access-policies).
+
+Our runs created three tags, started three actors from them, and deleted tags, in [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives). They did not change the scope of a tag.
 
 ## Control: actors
 
@@ -16,7 +18,7 @@ The tables give each method, what it does at v1.0.0, and the `kubectl ate` comma
 | `UpdateActor` | Changes the template or the worker selector of an actor. Needs the `uid` and the `version`. | `update actor` |
 | `SuspendActor` | Checkpoints a running actor to a new snapshot. A suspended actor is returned unchanged. `options.mode` is asynchronous by default. | `suspend actor` |
 | `ResumeActor` | Resumes a suspended actor from its latest snapshot. A running actor is returned unchanged, with `resumed=false`. The router calls it for every request and relies on that reply. | `resume actor` |
-| `RevertActor` | Returns an actor to `ACTOR_STATE_SUSPENDED` at its durable snapshot. Accepts a crashed actor, a running actor, and a suspended actor with a node-local snapshot. Also accepts an actor already in `ACTOR_STATE_REVERTING`, for a retry. That last case is from the code, and a run is in progress. | `revert actor` |
+| `RevertActor` | Returns an actor to `ACTOR_STATE_SUSPENDED` at its durable snapshot. Accepts a crashed actor, a running actor, and a suspended actor with a node-local snapshot. Also accepts an actor already in `ACTOR_STATE_REVERTING`, for a retry. In our run that retry worked only after the node of the actor was back. Every revert needs `atelet` on the node of the actor. | `revert actor` |
 | `DeleteActor` | Stops the workload, releases the worker, and removes the record. Accepts any state. | `delete actor` |
 | `MintActorJwt` | Issues a token that states the identity of an actor. Only the egress gateway is allowed to call it. | - |
 
@@ -43,7 +45,7 @@ An egress policy is one object under one actor. [Section 6.2](#s-egresspolicy-an
 | `GetTag` | Returns one tag. | `get tag <name>` |
 | `ListTags` | Lists tags. | `get tag` |
 | `UpdateTag` | Changes the scope of a tag between `atespace` and `published`. | `update tag --scope` |
-| `DeleteTag` | Deletes a tag and its snapshot. Actors that still start from the tag cannot resume afterwards. | `delete tag` |
+| `DeleteTag` | Deletes a tag and its snapshot. Actors that still start from the tag cannot resume afterwards. It accepts the golden tag of a template, and `create actor` for that template then fails with `Tag not found`. | `delete tag` |
 | `CreateAtespace` | Creates an atespace. | `create atespace` |
 | `GetAtespace` | Returns one atespace. | `get atespace <name>` |
 | `ListAtespaces` | Lists atespaces. | `get atespace` |
@@ -114,4 +116,4 @@ Substrate calls these services over gRPC. The repository includes one implementa
 - **Deadline:** the server ends any call after 10 minutes.
 - **Preview fields:** a field behind a preview feature is rejected unless the server enables it and the client sends the header `Ate-Preview-Allowed: true`.
 
-Sources: api/ateapi/v1/ateapi.proto (services Control and WorkerService, and the request messages), api/objectstore/v1/objectstore.proto, api/credprovider/v1/credprovider.proto, cmd/ateapi/main.go (the port and the deadline), cmd/kubectl-ate/internal/cmd/ (the command for each method) and docs/dev/preview-gates.md at v1.0.0; capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/F-egress/envoy/20-results.txt, capture/lab/A-quickstart/60-state.log, capture/lab/K-kagent/session1/ (the methods that our runs called).
+Sources: capture/lab/P-node-loss/86-tags.txt, capture/lab/P-node-loss/74-second-revert.tsv, capture/lab/P-node-loss/96-golden-tag-deleted.txt, api/ateapi/v1/ateapi.proto (services Control and WorkerService, and the request messages), api/objectstore/v1/objectstore.proto, api/credprovider/v1/credprovider.proto, cmd/ateapi/main.go (the port and the deadline), cmd/kubectl-ate/internal/cmd/ (the command for each method) and docs/dev/preview-gates.md at v1.0.0; capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/F-egress/envoy/20-results.txt, capture/lab/A-quickstart/60-state.log, capture/lab/K-kagent/session1/ (the methods that our runs called).

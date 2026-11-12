@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 346" role="img" aria-labelledby="fig-7-5b-title fig-7-5b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-5b-title">Agent Executor commands on a task with no workspace, and the first resume</title>
+  <desc id="fig-7-5b-desc">Two charts from one run with no model. On the left, every run of 10 cycles on one task with no workspace, one dot each: ax suspend task took a median of 0.18 s, ax resume task 0.24 s, and one command through ax ssh 0.74 s. On the right, one run each of the first ax resume task: 2.29 s for a task with no workspace, 12.35 s for a task whose Git clone was blocked, and 10.37 s for the next resume of that task, which tried the clone again.</desc>
+  <line x1="56" y1="274" x2="326" y2="274" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="278" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="56" y1="221.5" x2="326" y2="221.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="225.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.25</text>
+  <line x1="56" y1="169" x2="326" y2="169" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="173" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="56" y1="116.5" x2="326" y2="116.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="120.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.75</text>
+  <line x1="56" y1="64" x2="326" y2="64" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="68" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="56" y1="274" x2="326" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="56" y1="64" x2="56" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="191" y="308" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ax command, 10 runs each</text>
+  <text x="56" y="52" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds at the client, each run</text>
+  <line x1="380" y1="274" x2="614" y2="274" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="374" y="278" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="380" y1="244" x2="614" y2="244" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="374" y="248" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="380" y1="214" x2="614" y2="214" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="374" y="218" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="380" y1="184" x2="614" y2="184" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="374" y="188" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="380" y1="154" x2="614" y2="154" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="374" y="158" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="380" y1="124" x2="614" y2="124" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="374" y="128" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="380" y1="94" x2="614" y2="94" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="374" y="98" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">12</text>
+  <line x1="380" y1="64" x2="614" y2="64" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="374" y="68" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">14</text>
+  <line x1="380" y1="274" x2="614" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="380" y1="64" x2="380" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="497" y="308" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Git clone when the task starts</text>
+  <text x="380" y="52" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds, one run each</text>
+  <text x="191" y="24" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-amber-ink, #85590c)">AFTER THE FIRST RESUME</text>
+  <text x="497" y="24" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-rose-ink, #b0344d)">RESUME WITH A START TO WAIT FOR</text>
+  <line x1="59" y1="236.62" x2="143" y2="236.62" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.4"/>
+  <circle cx="67" cy="239.77" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="74.56" cy="238.93" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="82.11" cy="238.72" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="89.67" cy="237.88" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="97.22" cy="237.67" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="104.78" cy="235.57" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="112.33" cy="232" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="119.89" cy="230.74" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="127.44" cy="230.32" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="135" cy="227.8" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <rect class="m-knock" x="76.4" y="206.44" width="49.2" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="101" y="217.8" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0.18 s</text>
+  <text x="101" y="292" font-size="11" text-anchor="middle">suspend</text>
+  <line x1="149" y1="222.76" x2="233" y2="222.76" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.4"/>
+  <circle cx="157" cy="227.17" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="164.56" cy="226.54" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="172.11" cy="225.49" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="179.67" cy="224.86" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="187.22" cy="223.18" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="194.78" cy="222.34" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="202.33" cy="215.2" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="209.89" cy="211.63" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="217.44" cy="205.96" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="225" cy="203.86" r="2.2" fill="var(--m-amber-ink, #85590c)"/>
+  <rect class="m-knock" x="166.4" y="182.5" width="49.2" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="191" y="193.86" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0.24 s</text>
+  <text x="191" y="292" font-size="11" text-anchor="middle">resume</text>
+  <line x1="239" y1="119.02" x2="323" y2="119.02" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.4"/>
+  <circle cx="247" cy="121.12" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="254.56" cy="120.49" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="262.11" cy="119.86" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="269.67" cy="119.86" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="277.22" cy="119.44" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="284.78" cy="118.81" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="292.33" cy="117.97" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="299.89" cy="117.13" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="307.44" cy="116.29" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="315" cy="115.87" r="2.2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <rect class="m-knock" x="256.4" y="94.51" width="49.2" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="281" y="105.87" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">0.74 s</text>
+  <text x="281" y="292" font-size="11" text-anchor="middle">ssh, 1 command</text>
+  <rect x="401" y="239.67" width="36" height="34.34" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect class="m-knock" x="394.4" y="220.31" width="49.2" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="419" y="231.67" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">2.29 s</text>
+  <text x="419" y="292" font-size="11" text-anchor="middle">no repo</text>
+  <rect x="479" y="88.75" width="36" height="185.25" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect class="m-knock" x="468.8" y="69.39" width="56.4" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="497" y="80.75" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">12.35 s</text>
+  <text x="497" y="292" font-size="11" text-anchor="middle">blocked</text>
+  <rect x="557" y="118.49" width="36" height="155.51" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect class="m-knock" x="546.8" y="99.13" width="56.4" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="575" y="110.49" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">10.37 s</text>
+  <text x="575" y="292" font-size="11" text-anchor="middle">2nd resume</text>
+  <text x="56" y="336" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one dot: one run. black line: the median. Every task ran sleep infinity, with no model.</text>
+</svg>

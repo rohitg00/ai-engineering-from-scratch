@@ -32,6 +32,36 @@ note: One line. The columns for the external IP, the age, and the selector are c
 atenet-router             ClusterIP   10.96.5.247     <none>        443/TCP,8444/TCP,15020/TCP,80/TCP,8081/TCP …
 ```
 
+A later probe tried every port from two pods. One was in another namespace and had no certificate. The other was in `ate-system` and held the allowed identity.
+
+| Port | Envoy dataplane | agentgateway dataplane |
+|---|---|---|
+| Service 443, container 8443 | TLS. The connection is closed without a client certificate. With the allowed identity and the routing header: `200`. Without the header: `404`, `invalid actor reference` | TLS. Without a client certificate: the alert `certificate required`. With the allowed identity and the routing header: `200`. Without the header: `404`, `ingress failed` |
+| Service 8444 | TLS. The connection is closed without a client certificate. A `POST` with the identity gets `404` | TLS, with the same alert. A `POST` with the identity gets `405`, `method not allowed`, because the listener accepts `CONNECT` only |
+| Service 80, container 8080 | not in the Service, timeout | in the Service, connection refused, no listener |
+| Service 8081 | not in the Service, timeout | in the Service, connection refused, no listener |
+| Service 15020, stats | not in the Service, timeout | open with no TLS and no credentials. `/metrics` returns `200` to a pod in another namespace |
+| Pod port 15021 | timeout | `404` on plain HTTP, the readiness listener |
+| Pod port 15000 | timeout | timeout |
+
+**We measured** each port once on each dataplane, on a second x86 server guest (16 vCPU, 23 GB), with a client timeout of 4 s. Ports 443 and 8444 need a client certificate on both dataplanes. With agentgateway the Service has five ports and the container declares six, and the rendered configuration binds 8443 and 8444 for callers. Ports 80 and 8081 are dead entries in the Service. With Envoy the Service has two ports.
+
+```listing
+title: three more probes on the agentgateway dataplane
+source: capture/lab/Q-network/m-router-ports/agentgateway/11-port-probes-supplement.txt
+lang: text
+note: Three lines of the file. The first is from a pod in another namespace, and the other two used the allowed client certificate. The fields after the status are the size in bytes, the number of metric families, and the first line of the body.
+---
+stats 15020 /metrics from another namespace: 200|13394|58|# HELP agentgateway_substrate_request_parking_active Number of requests waiting for a Substrate actor to become routable.|
+…
+service 8444 with allowed client cert, POST with routing header: 405 exit=0 err=|method not allowed
+service 443 with allowed client cert, no routing header: 404|ingress failed
+```
+
+**Security note: the stats port of agentgateway needs no credentials.** Any pod that can reach the Service can read `/metrics` on port 15020, in plain HTTP. Our pod in another namespace got 13,394 bytes with 58 metric families, and the names include request parking for actors. We found no actor name and no header value in that output, and we did not read the content of every label. Until you have read your own output, treat the port as readable by every tenant of the cluster. A NetworkPolicy for port 15020 of the router pods closes it.
+
+Use the short name of the Service. The router certificate is valid for `atenet-router.ate-system.svc`. The longer name `atenet-router.ate-system.svc.cluster.local` failed the certificate name check on both dataplanes.
+
 ## One request, step by step
 
 The router keeps no table of running actors. For each request it asks `ate-api-server` where the actor is, with the same `ResumeActor` call that wakes a suspended actor. The answer carries the state, the worker IP, and the worker identity. Then the router opens a mutual TLS tunnel to that worker and forwards the request.
@@ -132,10 +162,11 @@ Do not copy that into production. The quickstart identity is one name that every
 ```takeaways
 - Send `ate-target-actor: <atespace>/<actor>` to `atenet-router.ate-system.svc` on port 443.
 - Use `CONNECT` on port 8444 only for an actor port other than 80.
+- On agentgateway, limit port 15020 of the router with a NetworkPolicy, because `/metrics` needs no credentials.
 - Read a handshake failure at the router as a missing or unlisted client identity.
 - Give each calling service its own ServiceAccount and add its SPIFFE ID to the allowlist.
 - Put your own authorization service before the router when callers must not reach all actors.
 - Keep `ate-api-server` and Postgres as available as the actors, because each request needs both.
 ```
 
-Sources: capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/52-router-log-atenet-router.log, capture/lab/G-dataplane/envoy/ingress-auth/00-serviceaccounts.txt, capture/lab/G-dataplane/envoy/ingress-auth/50-create-sa.log, capture/lab/G-dataplane/envoy/06-services.txt, capture/lab/G-dataplane/envoy/03-containers-atenet-router.tsv, capture/lab/G-dataplane/envoy/11-listening.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/14-probe-no-allowlist.txt, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/30-config-diff.txt, capture/lab/E-dependency-loss/15-T2-router-during.log, capture/lab/E-dependency-loss/20-analysis.txt, cmd/atenet/internal/router/README.md, cmd/atenet/internal/router/ingress/ingress.go, docs/reference/api-guide.md and docs/get-started/quickstart.md at v1.0.0.
+Sources: capture/lab/Q-network/m-router-ports/agentgateway/00-service.yaml, capture/lab/Q-network/m-router-ports/agentgateway/02-router-containers.json, capture/lab/Q-network/m-router-ports/agentgateway/06-config-binds.txt, capture/lab/Q-network/m-router-ports/agentgateway/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/agentgateway/11-port-probes-supplement.txt, capture/lab/Q-network/m-router-ports/envoy/00-service.yaml, capture/lab/Q-network/m-router-ports/envoy/02-router-containers.json, capture/lab/Q-network/m-router-ports/envoy/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/envoy/11-port-probes-supplement.txt, capture/lab/summary/network-x86.json, capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/52-router-log-atenet-router.log, capture/lab/G-dataplane/envoy/ingress-auth/00-serviceaccounts.txt, capture/lab/G-dataplane/envoy/ingress-auth/50-create-sa.log, capture/lab/G-dataplane/envoy/06-services.txt, capture/lab/G-dataplane/envoy/03-containers-atenet-router.tsv, capture/lab/G-dataplane/envoy/11-listening.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/14-probe-no-allowlist.txt, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/30-config-diff.txt, capture/lab/E-dependency-loss/15-T2-router-during.log, capture/lab/E-dependency-loss/20-analysis.txt, cmd/atenet/internal/router/README.md, cmd/atenet/internal/router/ingress/ingress.go, docs/reference/api-guide.md and docs/get-started/quickstart.md at v1.0.0.

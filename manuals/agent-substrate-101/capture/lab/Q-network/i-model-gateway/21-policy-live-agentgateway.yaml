@@ -1,0 +1,35 @@
+metadata:
+  atespace: lab-f
+  createTime: "2026-11-12T10:45:59.339191794Z"
+  name: default
+  uid: 06d478d7-7a70-4ca0-91f8-4524c40ea9bc
+  updateTime: "2026-11-12T13:05:24.506453068Z"
+  version: "39"
+rules:
+- http:
+    hostnames:
+    - whoami.egress-target.svc.cluster.local
+    - mock-a.model-gw.svc.cluster.local
+    ports:
+      numbers:
+      - 80
+- http:
+    effects:
+      replaceHeaders:
+      - credentialUri: ate-secret://k8s.io/default/cred-ns/gw-client-key/token
+        header: X-Lab
+    hostnames:
+    - modelgw-plain.model-gw.svc.cluster.local
+    ports:
+      numbers:
+      - 80
+- https:
+    effects:
+      replaceHeaders:
+      - credentialUri: ate-secret://k8s.io/default/cred-ns/gw-client-key/token
+        header: X-Lab
+    hostnames:
+    - modelgw.model-gw.svc.cluster.local
+    ports:
+      numbers:
+      - 443

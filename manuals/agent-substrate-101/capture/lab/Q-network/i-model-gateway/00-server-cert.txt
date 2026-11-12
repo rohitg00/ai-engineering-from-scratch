@@ -1,0 +1,6 @@
+subject=CN = modelgw.model-gw.svc.cluster.local
+issuer=CN = lab-private-ca
+X509v3 Subject Alternative Name: 
+    DNS:modelgw.model-gw.svc.cluster.local, DNS:modelgw.model-gw.svc, DNS:modelgw
+notBefore=Nov 12 13:04:35 2026 GMT
+notAfter=Dec 12 13:04:35 2026 GMT

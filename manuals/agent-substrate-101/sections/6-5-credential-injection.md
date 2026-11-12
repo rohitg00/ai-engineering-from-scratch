@@ -79,10 +79,40 @@ The provider reads the Secret for each call that it gets and keeps no copy {{cod
 
 | Dataplane | What the gateway does | A rotated Secret takes effect |
 |---|---|---|
-| Envoy | It calls the provider for each request that carries the header, and it keeps no copy {{code}}. | on the next request |
-| agentgateway v1.7.0 | It keeps each fetched credential for 300 seconds, for one actor and one reference. `ate-setup` sets no other value {{agentgateway}}. | after up to 5 minutes |
+| Envoy | It calls the provider for each request that carries the header, and it keeps no copy {{code}}. | on the next request, or the one after it: 1.0 to 1.6 s in our run |
+| agentgateway v1.7.0 | It keeps each fetched credential for 300 seconds, for one actor and one reference. `ate-setup` sets no other value {{agentgateway}}. | after the time that is left of those 300 seconds: 100.6 to 280.5 s in our run |
 
-The agentgateway row covers every kagent install, because that distribution runs agentgateway. Both rows are from the code. A measured check of the rotation delay is in progress, and we have no number yet. Until you have measured it, plan for 5 minutes on agentgateway. Keep the old secret valid at the upstream for that time when you rotate.
+The agentgateway row covers every kagent install, because that distribution runs agentgateway. We read both rows in the code first, and then we measured them.
+
+**We measured** three changes of one Secret on each dataplane, on a second x86 server guest (16 vCPU, 23 GB). One running actor had one `http` rule with the effect. It sent one request about each second to an echo service in the cluster. We recorded when that service first saw each new value.
+
+**We measured** these lags in that run on the same guest (16 vCPU, 23 GB), with n=3 changes for each dataplane. On agentgateway the lag was 280.5, 200.9, and 100.6 s. In those times 233, 168, and 84 requests still carried the old value. On Envoy the lag was 1.0, 1.0, and 1.6 s, and one request in all carried an old value. No request failed on either dataplane, in 759 and 275 requests.
+
+```listing
+title: three changes of the Secret on agentgateway
+source: capture/lab/Q-network/l-credential-rotation/agentgateway/20-rotations.tsv
+lang: text
+note: The complete table of the file. The first three columns are the change, the wait before it, and the time of the change. The fourth is the time the upstream first saw the new value. The last two are the lag in seconds and the requests that still carried the old value.
+---
+rotation	wait_before_s	secret_changed_epoch	first_seen_epoch	lag_s	old_values_after_change
+1	5	1794493351.752	1794493632.272	280.5	233
+2	100	1794493732.380	1794493933.328	200.9	168
+3	200	1794494133.509	1794494234.122	100.6	84
+```
+
+```figure
+id: fig-6-5b
+kind: chart
+title: seconds until the upstream saw a changed credential
+claim: A changed Secret reached the upstream in 1.0 to 1.6 s on Envoy and in 100.6 to 280.5 s on agentgateway.
+caption: Read each line left to right over the three changes. The time axis is logarithmic. The solid line is agentgateway, the dashed line is Envoy, and the rose line marks 300 s. From capture/lab/summary/rotation-x86.json.
+```
+
+The three lags on agentgateway are not random. The upstream first saw a new value at three moments that were 301 s apart. So the gateway fetched the credential again each time its copy was 300 s old. The lag after a change is the time left until that moment. It can be any value from 0 to about 300 s. On Envoy our probe sent one request each second, so we cannot state a lag below 1 s.
+
+During a change the upstream saw the old value or the new one. It never saw an empty header, and it never saw the placeholder of the actor. That is why no request failed. It also means that a secret which you revoke stays in use on agentgateway for up to 5 minutes. Revoke the old value at the upstream when you must stop its use at once. When you rotate without an incident, keep the old value valid at the upstream for 5 minutes after the change.
+
+We tested one Secret and one actor. We did not test whether a restart of `atenet-egress` forces a new fetch.
 
 On Envoy, the cost is one call to the provider and one read of the Kubernetes API for each request that carries the header. On agentgateway, most requests make no call to the provider.
 
@@ -175,9 +205,10 @@ We ran kagent against a mock model over HTTP in the cluster. We did not test a r
 - Grant each atespace one namespace, and keep only agent Secrets in it.
 - Restart `k8s-credential-provider` after you edit the namespace grant.
 - Keep a rotated secret valid for 5 more minutes at the upstream when the dataplane is agentgateway.
+- Revoke a leaked secret at the upstream too, because agentgateway can send it for 5 more minutes.
 - Make each client send the placeholder header, and read a `401` as a missing placeholder.
 - Name exact hosts in a rule that carries a credential, never `*`.
 - Assume that the agent can learn any credential whose upstream returns request headers.
 ```
 
-Sources: capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/P4.yaml, capture/lab/F-egress/envoy/policy-f-main-P4-live.yaml, capture/lab/F-egress/envoy/provider-policy.yaml, capture/lab/F-egress/envoy/04-provider-policy-apply.log, capture/lab/F-egress/envoy/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/F-egress/agentgateway/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/50-custom-header.txt, capture/lab/G-dataplane/agentgateway/03-containers-atenet-egress.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/actor-template.yaml, api/ateapi/v1/ateapi.proto (HttpRuleEffects, CredentialHeader), cmd/atenet/internal/router/egress/credentials.go, cmd/credential-provider/kubernetes-secrets/kubeprovider.go, cmd/ate-setup/internal/steps/overlay.go, docs/guides/egress-credential-injection.md at v1.0.0; agentgateway v1.7.0 crates/agentgateway/src/http/substrate/egress.rs (the credential cache of 300 seconds).
+Sources: capture/lab/F-egress/envoy/20-results.txt, capture/lab/F-egress/envoy/P4.yaml, capture/lab/F-egress/envoy/policy-f-main-P4-live.yaml, capture/lab/F-egress/envoy/provider-policy.yaml, capture/lab/F-egress/envoy/04-provider-policy-apply.log, capture/lab/F-egress/envoy/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/F-egress/agentgateway/32-marker-in-logs.txt, capture/lab/F-egress/agentgateway/50-custom-header.txt, capture/lab/G-dataplane/agentgateway/03-containers-atenet-egress.tsv, capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/mock.log, capture/lab/K-kagent/session1/turn2.out, capture/lab/K-kagent/session1/actor-template.yaml, capture/lab/Q-network/l-credential-rotation/agentgateway/20-rotations.tsv, capture/lab/Q-network/l-credential-rotation/envoy/20-rotations.tsv, capture/lab/Q-network/l-credential-rotation/agentgateway/10-probe.tsv, capture/lab/Q-network/l-credential-rotation/envoy/10-probe.tsv, capture/lab/Q-network/l-credential-rotation/agentgateway/01-policy-live.yaml, capture/lab/summary/rotation-x86.json, api/ateapi/v1/ateapi.proto (HttpRuleEffects, CredentialHeader), cmd/atenet/internal/router/egress/credentials.go, cmd/credential-provider/kubernetes-secrets/kubeprovider.go, cmd/ate-setup/internal/steps/overlay.go, docs/guides/egress-credential-injection.md at v1.0.0; agentgateway v1.7.0 crates/agentgateway/src/http/substrate/egress.rs (the credential cache of 300 seconds).

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Namespace
+metadata: {name: lab-cpu}
+---
+apiVersion: ate.dev/v1
+kind: WorkerPool
+metadata:
+  name: burn
+  namespace: lab-cpu
+  labels: {workload: burn}
+spec:
+  replicas: 1
+  workerImage: localhost:5001/ateworker-gvisor@sha256:ad6957f41bccaa8bb5f3eb5b34b7812babb862f1a3187a11578c21a7d799491c
+  sandboxClasses:
+  - name: gvisor
+  template:
+    resources:
+      limits: {cpu: "6", memory: 2Gi}
+      requests: {cpu: 500m, memory: 1Gi}

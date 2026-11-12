@@ -119,7 +119,53 @@ The booked side is the sum of the limits that each running actor declares in its
 
 `cpuMillicores` has two jobs. The worker books it for placement, and the worker also writes it into the sandbox as a CPU quota for each 100 ms period {{code}}. The documentation says that the node kernel slows the actor to that quota {{docs}}.
 
-**We measured** one command on a second x86 server guest (16 vCPU, 31 GB), with n=1. It used 2.0 seconds of CPU time and finished in 2.38 seconds under a value of 500 millicores. A quota of half a CPU predicts about 4 seconds. We did not find the cause, and the result is under test. Do not conclude from this one run that the value never slows an actor. [A tool sandbox](#s-a-tool-sandbox) shows that run.
+The quota is a hard cap. We tested it with a program that runs a fixed number of loop steps, about 5 seconds of work on one free core. It ran on 1 thread and on 4 threads, under four templates. We read the CPU time of the actor from its cgroup on the node, before and after each run.
+
+**We measured** three runs for each row on a second x86 server guest (16 vCPU, 23 GB). The pool had one worker pod with a Kubernetes limit of 6 CPU.
+
+| `cpuMillicores` | Threads | Wall time, s | Host cores used |
+|---|---|---|---|
+| 250 | 1 | 27.1 to 27.6 | 0.25 |
+| 250 | 4 | 26.5 to 27.9 | 0.25 |
+| 500 | 1 | 12.7 to 13.1 | 0.50 to 0.51 |
+| 500 | 4 | 12.4 to 12.8 | 0.50 |
+| 1000 | 1 | 4.9 to 5.4 | 1.01 |
+| 1000 | 4 | 5.3 to 5.5 | 1.00 to 1.01 |
+| 2000 | 1 | 4.1 to 4.5 | 1.12 |
+| 2000 | 4 | 1.38 to 1.42 | 1.96 to 2.01 |
+
+```figure
+id: fig-4-1b
+kind: chart
+title: host cores an actor used at four CPU limits
+claim: An actor used 0.25, 0.50, 1.0, and 2.0 host cores at limits of 250, 500, 1000, and 2000 millicores, and more threads gave no more CPU.
+caption: Read the cores on the vertical axis against the limit of the template. The solid line is 1 thread and the dashed line is 4 threads, with one dot for each run. The thin dashed line is the limit itself. From capture/lab/summary/cpu-limit-x86.json.
+```
+
+The actor used as many host cores as its limit, and no more. Four threads did not get more CPU than one thread. The same work took 5.4 times longer at 250 millicores than at 1000. In one row the limit was not the bound: one thread at 2000 millicores used 1.12 cores, because one thread fills one core.
+
+The cap is a cgroup for each actor, inside the cgroup of the worker pod. The worker pod had `cpu.max=600000 100000`, which is its Kubernetes limit of 6 CPU. Inside it we found one cgroup for each actor, named with the uid of the actor and the suffix `_sandbox`. Its `cpu.max` was the template limit, and the gVisor processes of the actor ran in it.
+
+```listing
+title: the CPU quota of four actors, as the node reports it
+source: capture/lab/Q-network/n-cpu-limit/42-cgroup-after.txt
+lang: text
+note: The complete file, read after the runs. The columns are the limit in millicores, the quota and the period in microseconds, and the counters of the cgroup.
+---
+250 25000/100000 usage_usec 41467478 nr_periods 1672 nr_throttled 1649 throttled_usec 428931388 
+500 50000/100000 usage_usec 38723256 nr_periods 793 nr_throttled 765 throttled_usec 157096786 
+1000 100000/100000 usage_usec 31895780 nr_periods 345 nr_throttled 312 throttled_usec 30529410 
+2000 200000/100000 usage_usec 23220151 nr_periods 204 nr_throttled 38 throttled_usec 854079 
+```
+
+Two facts about the inside of the sandbox follow, and both can mislead you.
+
+- **The actor does not see its limit.** The program counted 2 CPUs at all four limits, and it could not read the cgroup files. A runtime that sizes a thread pool from the CPU count gets 2 at 250 millicores.
+- **CPU time read inside a throttled sandbox is wrong.** At 250 millicores with 1 thread, the program reported 22 to 24 seconds of CPU time. The same run used 6.9 seconds on the host. Do not use `getrusage` or `/proc` inside an actor to measure CPU use. Read the cgroup on the node.
+
+The second fact explains an earlier reading of ours. A demo command reported 2.0 seconds of CPU time in 2.38 seconds under 500 millicores, which looked like no cap. That CPU time came from inside the sandbox, so it does not count. [A tool sandbox](#s-a-tool-sandbox) has that run and the correction.
+
+We tested one actor at a time. We did not test memory limits, or CPU limits with several busy actors on one worker. One row is not explained. Four threads at 2000 millicores used 2.8 seconds of host CPU, and 1 thread used 4.6 to 5.1 seconds for the same work.
 
 A suspended actor books nothing. The command counts running actors only.
 
@@ -151,7 +197,9 @@ One more fact matters before you give a pool to a team. A worker pod runs as roo
 - Put the selector label under metadata.labels of the pool, where templates match it.
 - Set CPU and memory limits on every pool, with the memory request equal to the limit.
 - Read each pair in kubectl ate get workers as booked, then capacity.
+- Treat cpuMillicores as a hard cap for each actor, and set thread counts in the template yourself.
+- Measure the CPU use of an actor from its cgroup on the node, never inside the sandbox.
 - Expect a pool rollout to wait up to 30 minutes for running actors.
 ```
 
-Sources: capture/lab/summary/demos-x86.json, capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/A-quickstart/60-state.log, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/I-capacity/14-workers-full.txt, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/inventory/worker-pod-spec.json; api/infra/k8s/ate/v1/workerpool_types.go, cmd/atecontroller/internal/controllers/workerpool_apply.go, cmd/atecontroller/internal/workersync/syncer.go, cmd/ateworker-gvisor/main.go, cmd/ateworker-gvisor/memory.go, api/ateapi/v1/ateapi.proto (Worker, WorkerStatus, WorkerState), cmd/kubectl-ate/internal/cmd/worker.go at v1.0.0; docs/reference/api-guide.md at v1.0.0; issue https://github.com/agent-substrate/substrate/issues/3479.
+Sources: capture/lab/summary/demos-x86.json, capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/summary/cpu-limit-x86.json, capture/lab/Q-network/n-cpu-limit/40-work.tsv, capture/lab/Q-network/n-cpu-limit/42-cgroup-after.txt, capture/lab/Q-network/n-cpu-limit/22-cgroup-250.txt, capture/lab/Q-network/n-cpu-limit/41-info-250.json, capture/lab/Q-network/n-cpu-limit/03-worker-pod-resources.json, capture/lab/Q-network/n-cpu-limit/10-burn.tsv, capture/lab/A-quickstart/60-state.log, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/I-capacity/14-workers-full.txt, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/inventory/worker-pod-spec.json; api/infra/k8s/ate/v1/workerpool_types.go, cmd/atecontroller/internal/controllers/workerpool_apply.go, cmd/atecontroller/internal/workersync/syncer.go, cmd/ateworker-gvisor/main.go, cmd/ateworker-gvisor/memory.go, api/ateapi/v1/ateapi.proto (Worker, WorkerStatus, WorkerState), cmd/kubectl-ate/internal/cmd/worker.go at v1.0.0; docs/reference/api-guide.md at v1.0.0; issue https://github.com/agent-substrate/substrate/issues/3479.

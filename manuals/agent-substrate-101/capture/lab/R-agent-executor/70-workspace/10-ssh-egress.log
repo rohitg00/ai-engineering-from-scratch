@@ -1,0 +1,6 @@
+fatal: unable to access 'https://github.com/chalk/chalk.git/': Could not resolve host: github.com
+rc=0
+rc=2
+nameserver 169.254.17.1
+search ax-system.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5

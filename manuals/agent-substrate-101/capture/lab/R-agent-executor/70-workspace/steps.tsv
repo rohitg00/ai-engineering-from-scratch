@@ -1,0 +1,11 @@
+step	rc	seconds
+03-apply-missing-workspace	1	0.032
+04-apply	0	0.076
+05-describe-after-apply	0	0.078
+06-resume-first	0	12.350
+08-describe-after-resume	0	0.040
+09-ssh-ls	0	0.911
+10-ssh-egress	0	0.977
+16-suspend	0	0.178
+17-resume-second	0	10.367
+18-ssh-after-second	2	0.748

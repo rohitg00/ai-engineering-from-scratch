@@ -1,0 +1,32 @@
+ts	t	event	detail
+2026-11-12T14:50:31.892Z	t=-	actor	i9 on multi-worker2 pod lab-n/ballast-5d6cf97747-88557
+2026-11-12T14:50:31.991Z	t=-	call	200	0.074877	count=1 mb=50 sum=6665 process_age_s=3.8
+2026-11-12T14:50:32.085Z	t=-	call	200	0.067585	count=2 mb=50 sum=6665 process_age_s=3.9
+2026-11-12T14:50:32.179Z	t=-	call	200	0.070382	count=3 mb=50 sum=6665 process_age_s=3.9
+2026-11-12T14:50:33.823Z	t=-	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:50:34.231Z	t=-	call	200	0.383603	count=4 mb=50 sum=6665 process_age_s=4.4
+2026-11-12T14:50:34.324Z	t=-	call	200	0.068596	count=5 mb=50 sum=6665 process_age_s=4.5
+2026-11-12T14:50:34.557Z	t=-	resume-on-running-table	ATESPACE   NAME   TEMPLATE      STATE                 WORKER POD                       WORKER IPS   VERSION   AGE lab-n      i9     lab-n/nb-50   ACTOR_STATE_RUNNING   lab-n/ballast-5d6cf97747-88557   10.244.1.2   7     
+2026-11-12T14:50:34.765Z	t=-	resume-on-running-json	{  "actorTemplate": {    "atespace": "lab-n",    "name": "nb-50"  },  "metadata": {    "atespace": "lab-n",    "createTime": "2026-11-12T14:50:29.628031330Z",    "name": "i9",    "uid": "4febb3e6-5cb1-442e-b66c-f27c58a05111",    "updateTime": "2026-11-12T14:50:34.132893904Z",    "version": "7"  },  "status": {    "assignedNode": "multi-worker2",    "lastAssignedGeneration": 2,    "snapshots": [   
+2026-11-12T14:50:34.859Z	t=-	call-after-resume-on-running	200	0.068861	count=6 mb=50 sum=6665 process_age_s=5.0
+2026-11-12T14:50:34.863Z	t=-	node-stop	docker stop multi-worker2
+2026-11-12T14:50:45.238Z	t=10.4	node-stopped	multi-worker2
+2026-11-12T14:51:05.501Z	t=30.6	revert-1-right-after-stop	20.2 s | Error: failed to revert actor: rpc error: code = Unavailable desc = while calling atelet Terminate: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 10.244.1.3:21998: i/o time
+2026-11-12T14:51:05.730Z	t=30.9	state	ACTOR_STATE_REVERTING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:51:24.610Z	t=49.7	workers-of-stopped-node-not-active	      2 WORKER_STATE_ACTIVE       2 WORKER_STATE_UNAVAILABLE 
+2026-11-12T14:51:24.853Z	t=50.0	revert-2-after-workers-unavailable	0.2 s | Error: failed to revert actor: rpc error: code = Unavailable desc = while calling atelet Terminate: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 10.244.1.3:21998: connect:
+2026-11-12T14:51:25.079Z	t=50.2	state	ACTOR_STATE_REVERTING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:51:45.323Z	t=70.5	revert-3-twenty-seconds-later	0.2 s | Error: failed to revert actor: rpc error: code = Unavailable desc = while calling atelet Terminate: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 10.244.1.3:21998: connect:
+2026-11-12T14:51:45.562Z	t=70.7	state	ACTOR_STATE_REVERTING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:51:45.885Z	t=71.0	request	503	0.064552	actor lab-n/i9 unavailable: AssignWorker prerequisite not met for Actor: lab-n/i9 (got: ACTOR_STATE_REVERTING, want ACTOR_STATE_SUSPENDED)	|	ACTOR_STATE_REVERTING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:56:25.285Z	t=350.4	pods-evicted	      4 WORKER_STATE_ACTIVE       2 WORKER_STATE_DRAINING 
+2026-11-12T14:56:45.527Z	t=370.7	revert-4-after-eviction	0.2 s | Error: failed to revert actor: rpc error: code = Unavailable desc = while calling atelet Terminate: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 10.244.1.3:21998: connect:
+2026-11-12T14:56:45.747Z	t=370.9	state	ACTOR_STATE_REVERTING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:56:46.036Z	t=371.2	request	503	0.071896	actor lab-n/i9 unavailable: AssignWorker prerequisite not met for Actor: lab-n/i9 (got: ACTOR_STATE_REVERTING, want ACTOR_STATE_SUSPENDED)	|	ACTOR_STATE_REVERTING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:56:46.319Z	t=371.5	node-start	after 371.4 s
+2026-11-12T14:57:00.955Z	t=386.1	atelet-on-node-running	atelet-gsmxg:Running atelet-tfq5g:Running 
+2026-11-12T14:57:01.180Z	t=386.3	state-before-revert-5	ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:57:01.440Z	t=386.6	revert-5-after-node-return	0.2 s | ATESPACE   NAME   TEMPLATE      STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      i9     lab-n/nb-50   ACTOR_STATE_SUSPENDED   <none>                    11        6m31s 
+2026-11-12T14:57:01.660Z	t=386.8	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T14:57:03.568Z	t=388.7	request-after-revert-5	200	0.468644	count=4 mb=50 sum=6665 process_age_s=4.3	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:- pod lab-n/ballast-5d6cf97747-b86xw
+2026-11-12T14:57:03.865Z	t=389.0	request-after-revert-5	200	0.061460	count=5 mb=50 sum=6665 process_age_s=4.8	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-

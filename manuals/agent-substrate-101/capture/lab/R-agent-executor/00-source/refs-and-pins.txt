@@ -1,0 +1,22 @@
+head: a72b8ca46cb54a6f9bd53c8bb349d3a2089e7735 2026-11-11T22:07:45-08:00
+tags: v0.1.0 v0.2.0 v0.2.1 v0.2.2 v0.2.3 v0.3.0 v0.3.1 
+== v0.3.0 2026-09-19T20:27:51-07:00
+   go 1.27.1
+   	github.com/agent-substrate/env v0.0.11-0.20260912052224-4468a200b170
+   	github.com/agent-substrate/substrate v0.0.0-20260911232748-672533541dbf
+deploy/ax-controller.yaml deploy/ax-server.yaml deploy/redis.yaml 
+== v0.3.1 2026-09-25T06:18:14-07:00
+   go 1.27.1
+   	github.com/agent-substrate/env v0.0.11-0.20260912052224-4468a200b170
+   	github.com/agent-substrate/substrate v0.0.0-20260911232748-672533541dbf
+deploy/ax-controller.yaml deploy/ax-server.yaml deploy/redis.yaml 
+== a496fc1ff1cf9bea4c34924348e4119172cfea5b 2026-10-28T09:55:23-07:00
+   go 1.27.1
+   	github.com/agent-substrate/env v0.0.11-0.20260912052224-4468a200b170
+   	go.ate.dev/substrate v0.6.0
+deploy/ax-server.yaml deploy/postgres.yaml 
+== a72b8ca46cb54a6f9bd53c8bb349d3a2089e7735 2026-11-11T22:07:45-08:00
+   go 1.27.1
+   	github.com/agent-substrate/env v0.0.11-0.20260912052224-4468a200b170
+   	go.ate.dev/substrate v1.0.0
+deploy/ax-server.yaml deploy/postgres.yaml 

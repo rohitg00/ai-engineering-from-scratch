@@ -1,0 +1,15 @@
+NAME                                       READY   STATUS      RESTARTS   AGE
+ate-api-server-59dcf8d6bf-nz9kb            2/2     Running     0          100s
+ate-api-server-59dcf8d6bf-rw5vc            2/2     Running     0          100s
+ate-controller-7984566f8d-wqg7s            1/1     Running     0          148m
+ate-idp-server-dcd5f565f-9fdns             1/1     Running     0          148m
+ate-idp-server-dcd5f565f-qdhl8             1/1     Running     0          148m
+atelet-rc4mn                               2/2     Running     0          148m
+atenet-egress-9fbd685d5-5q98b              1/1     Running     0          89m
+atenet-router-7c5c864d47-9gztj             1/1     Running     0          109m
+e-prober                                   1/1     Running     0          5m52s
+k8s-credential-provider-85dc8799f8-hjrbm   1/1     Running     0          136m
+postgres-0                                 2/2     Running     0          4m15s
+right-id                                   1/1     Running     0          142m
+rustfs-54c86945fb-lst2f                    1/1     Running     0          148m
+rustfs-bucket-init-kjhfs                   0/1     Completed   0          148m

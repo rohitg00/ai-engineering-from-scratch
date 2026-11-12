@@ -1,0 +1,6 @@
+NAME            ATESPACE   EGRESS-RULES
+review-bot-gw   default    1
+Name:         review-bot-gw
+Atespace:     default
+Egress Rules:
+  - https: github.com, api.github.com, *.githubusercontent.com

@@ -431,3 +431,23 @@ split	D-durability/10-watch.tsv	over 200 KB; split verbatim into -part1 and -par
 note	F-egress, K-kagent	the strings sk-mock-not-a-real-key, lab-granted-marker-<digits>, placeholder-custom-header and kagent-credential-injected are test values that we made up; they are kept on purpose
 note	M-mac-arm64/failed-wrong-context	the folder was empty in the evidence: the files of the first run against the wrong kubectl context were overwritten by the second run, so no proof file exists
 note	K-kagent/inventory/kagent-configmaps.yaml	holds one public CA certificate of the test cluster, no key
+dropped	P-node-loss/proxy-*.log	transient helper output of kubectl ate proxy, 17 files
+dropped	P-node-loss/FINDINGS.md, Q-network/FINDINGS.md	working notes of the experiment, not a recording
+dropped	Q-network/*/proxy-*.log	transient helper output of kubectl ate proxy, in each test folder
+dropped	Q-network/h-keepalive/*/t-*.json, Q-network/i-model-gateway/t-*.json, Q-network/j-log-level/t-*.json, Q-network/k-suspend-cutoff/*/t-*.json	per-request reply files of the test helper; the same replies are in results.txt of each folder
+dropped	Q-network/i-model-gateway/00-private-ca.crt	the certificate of the private test CA that we made with openssl; the fields of the server certificate are kept in 00-server-cert.txt, and no key was stored
+excerpt	Q-network/g-dependency-loss-agw/18-router-full.log	original over 200 KB; kept 382 of 1351 lines verbatim as 18-router-full.excerpt.log, and a shorter cut of 150 lines as 18-router-full.log.excerpt
+note	Q-network/j-log-level/log-*.excerpt.log	the test script stored only the first 6000 bytes of each egress log; the line and byte counts of the full logs are in 10-volume.tsv
+redacted	Q-network/m-router-ports/agentgateway/10-port-probes.tsv	the test script wrote <router-pod-ip> in place of the address of the router pod
+note	Q-network	the strings placeholder-from-actor, provider-key-for-backend-a, provider-key-for-backend-b, lab-gw-client-credential-<digits>, lab-header-marker-123, lab-auth-marker-456, rot-value-agentgateway-<n> and rot-value-envoy-<n> are test values that we made up; they are kept on purpose
+note	Q-network/i-model-gateway	the variables KEY_A and KEY_B in gw-tls.yaml and gw-plain.yaml stand for the two made-up provider keys above; no real provider key was used
+dropped	R-agent-executor/10-install/40-namespace-and-secret.log	names the database Secret of the test install
+dropped	R-agent-executor/10-install/20-make-images.log	build output of the second try, no finding in it
+dropped	R-agent-executor/10-install/60-substrate-grant.log	installer output, the result is in 61-substrate-after-grant.txt
+dropped	R-agent-executor/40-lifecycle/10-state-poll.tsv	every poll sample, the changes are in 11-state-changes.tsv
+dropped	R-agent-executor/40-lifecycle/33-ateapi-calls.log	API server log lines, no finding in them
+dropped	R-agent-executor/50-idle/12-ax-server-during-idle.log	server log lines, no finding in them
+dropped	R-agent-executor/70-workspace/11-actor-logs.log	the same log as 20-runner-log-lines.log with the gVisor lines
+dropped	R-agent-executor/70-workspace/14-workers-json-shape.txt	transient helper output
+note	R-agent-executor/98-model	the Secret value was the made-up string not-a-real-key, and the Secret was deleted after the test; no provider key was used
+note	P-node-loss, Q-network	pod and Service addresses in these files are addresses inside the two kind clusters of the test guest

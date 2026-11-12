@@ -32,6 +32,12 @@ One limit of this section comes first. We ran Substrate and kagent. We did not r
 
 **A snapshot is not safe at once.** After the default suspend, the snapshot is on one node for 5 minutes before the upload. Lose that node copy, and the actor is `ACTOR_STATE_CRASHED` until you revert it. The calls since the last uploaded snapshot are gone.
 
+**You own the recovery from a node loss.** Substrate does not move an actor off a node that stops, and it does not move pool pods back to a node that returns. Your runbook must do it, and a wrong command during the outage makes it worse.
+
+**We measured** 13 node-stop cases on a second x86 server guest (16 vCPU, 23 GB), once each, on a cluster with two worker nodes. No actor left the stopped node by itself. A new actor from a tag that existed before the stop served its first request after 1.2 s, in 3 of 3 rescues. One `revert` freed a quiet actor in 7.1 s, and a `revert` in any other situation left the actor in `ACTOR_STATE_REVERTING`. After an outage of more than 6 minutes, the returned node had no pool pod in 7 of 7 returns. [When a dependency is down](#s-when-a-dependency-is-down) has the runbook.
+
+A pod per agent does not have this cost in the same form. Kubernetes starts a new pod on another node, and the state in memory is lost with the old one. With Substrate the state can survive, if you made a tag or a synchronous suspend, and if your operator follows the runbook.
+
 **No GPU.** At v1.0.0 an actor cannot use a GPU.
 
 **Privileged workers.** The worker pod of our kagent install ran as root, with the `SYS_ADMIN` and `NET_ADMIN` capabilities. A namespace with a strict pod security policy rejects such a pod.
@@ -70,7 +76,7 @@ caption: Read top to bottom. The line under each question is the fact or the run
 
 **A hosted sandbox** fits a team that wants an API and no cluster. You give up control of the control plane, and you get no Postgres to operate. Google announced such a service, Agent Compute Engine, on 2026-10-22. It was not open for use on 2026-11-12.
 
-Two more open-source projects sit next to Substrate and do not replace it. NVIDIA OpenShell checks what one agent is allowed to touch, with kernel controls and a policy check on egress. Its README describes no memory snapshot. kagent is a harness on top of Substrate, and [kagent 1.0 on Substrate](#s-kagent-on-substrate) shows what it adds. The project site names a second system that is built on Substrate, Agent Executor from Google. It runs one task as one actor and does not send the suspend for you. We read its code and did not run it, and [Agent Executor on Substrate](#s-agent-executor) has the details.
+Two more open-source projects sit next to Substrate and do not replace it. NVIDIA OpenShell checks what one agent is allowed to touch, with kernel controls and a policy check on egress. Its README describes no memory snapshot. kagent is a harness on top of Substrate, and [kagent 1.0 on Substrate](#s-kagent-on-substrate) shows what it adds. The project site names a second system that is built on Substrate, Agent Executor from Google. It runs one task as one actor and does not send the suspend for you. We ran one commit of it on Substrate v1.0.0 with no model, and [Agent Executor on Substrate](#s-agent-executor) has the run.
 
 ## Our recommendation for each situation
 
@@ -90,7 +96,7 @@ The last row is about data, and not about availability. A synchronous suspend pu
 
 **We measured** this on a second x86 server guest (16 vCPU, 23 GB), on a cluster with two worker nodes, one run for each case. An actor that we suspended with `--mode sync` stayed bound to its node. It resumed on that node while the node was cordoned. When the node stopped, its requests failed, and it became `ACTOR_STATE_CRASHED` 5 min 44 s after the stop command. The other node had free workers the whole time.
 
-We did not test a drain. [Placement](#s-placement) has every case and what the operator must do.
+We did not test a drain. [Placement](#s-placement) has these cases, and [When a dependency is down](#s-when-a-dependency-is-down) has what the operator must do in each one.
 
 Our view after these runs: Substrate at v1.0.0 does what it says for small, idle, CPU-only actors. With kagent, you need no suspend code of your own. It is a second control plane with its own database. Adopt it when the idle capacity that you free is worth more than the work of operating that control plane.
 
@@ -101,6 +107,7 @@ Our view after these runs: Substrate at v1.0.0 does what it says for small, idle
 - Measure resume time at the memory size of your real agent.
 - Plan who operates Postgres, because every request depends on it.
 - Use the synchronous suspend to make a snapshot durable, and plan an operator action for a node loss.
+- Count a node-loss runbook and tags for important actors as part of the price of Substrate.
 ```
 
-Sources: capture/lab/summary/resume-x86.json, capture/lab/summary/dependency-loss-x86.json, capture/lab/summary/failures-x86.json, capture/lab/summary/parking-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/timers-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/D-durability/30-local-loss.tsv, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/A-quickstart/60-state.log, capture/lab/K-kagent/inventory/worker-pod-spec.json, capture/lab/K-kagent/parallel/workers-during.txt, capture/lab/L-gaps/multinode/60-sticky-cordon.tsv, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv; Agent Substrate v1.0.0 documentation (architecture, API guide); Google Cloud documentation "Plan an architecture for AI agent workloads on GKE", read 2026-11-12; kubernetes-sigs/agent-sandbox v1.0.10 README and roadmap; NVIDIA OpenShell v0.1.8 README; Google Cloud blog posts on Agent Compute Engine, 2026-10-22 and 2026-10-23.
+Sources: capture/lab/summary/node-loss-x86.json, capture/lab/P-node-loss/10-a-quiet-revert.tsv, capture/lab/P-node-loss/80-tag-rescue.tsv, capture/lab/summary/resume-x86.json, capture/lab/summary/dependency-loss-x86.json, capture/lab/summary/failures-x86.json, capture/lab/summary/parking-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/timers-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/D-durability/30-local-loss.tsv, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/A-quickstart/60-state.log, capture/lab/K-kagent/inventory/worker-pod-spec.json, capture/lab/K-kagent/parallel/workers-during.txt, capture/lab/L-gaps/multinode/60-sticky-cordon.tsv, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv; Agent Substrate v1.0.0 documentation (architecture, API guide); Google Cloud documentation "Plan an architecture for AI agent workloads on GKE", read 2026-11-12; kubernetes-sigs/agent-sandbox v1.0.10 README and roadmap; NVIDIA OpenShell v0.1.8 README; Google Cloud blog posts on Agent Compute Engine, 2026-10-22 and 2026-10-23.

@@ -1,0 +1,3 @@
+rules:
+- http: {hostnames: ["whoami.egress-target.svc.cluster.local", "drip.egress-target.svc.cluster.local"]}
+- https: {hostnames: ["example.com"]}

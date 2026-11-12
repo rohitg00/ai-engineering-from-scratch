@@ -1,0 +1,11 @@
+==> Installing ax CLI to /home/lab/go/bin...
+go install -trimpath -ldflags="-s -w" ./cmd/ax
+go: downloading google.golang.org/grpc v1.83.2
+go: downloading google.golang.org/protobuf v1.36.12
+go: downloading gopkg.in/yaml.v3 v3.0.1
+go: downloading github.com/agent-substrate/env v0.0.11-0.20260912052224-4468a200b170
+go: downloading go.ate.dev/substrate v1.0.0
+go: downloading google.golang.org/genproto/googleapis/rpc v0.0.0-20260803160001-6ac0973c030d
+go: downloading golang.org/x/sys v0.48.0
+go: downloading golang.org/x/net v0.60.0
+go: downloading golang.org/x/text v0.42.0

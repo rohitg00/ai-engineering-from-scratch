@@ -1,0 +1,17 @@
+== after resume
+ls: cannot access '/tmp/scratch.txt': No such file or directory
+ls: cannot access '/root-marker.txt': No such file or directory
+/workspace:
+total 1
+drwxrwxrwx 3 root root  80 Nov 12 15:21 .
+drwxr-xr-x 1 root root 100 Nov 12 15:21 ..
+drwxr-xr-x 2 root root  60 Nov 12 15:20 .ax
+-rw-r--r-- 1 root root  16 Nov 12 15:21 note.txt
+note-from-run-1
+  PID ELAPSED COMMAND
+    1       0 /usr/local/bin/ax-task-runner
+    9       0 sleep infinity
+   11       0 sh -c ls -la /workspace /tmp/scratch.txt /root-marker.txt 2>&1; cat /workspace/note.txt 2>&1; ps -eo pid,etimes,args | head -12; cat /proc/uptime
+   15       0 ps -eo pid,etimes,args
+   16       0 head -12
+1.06 0.00

@@ -1,0 +1,21 @@
+== before suspend
+-rw-r--r-- 1 root root  7 Nov 12 15:21 /root-marker.txt
+-rw-r--r-- 1 root root  8 Nov 12 15:21 /tmp/scratch.txt
+
+/workspace:
+total 1
+drwxrwxrwx 3 root root  80 Nov 12 15:21 .
+drwxr-xr-x 1 root root 120 Nov 12 15:21 ..
+drwxr-xr-x 2 root root  60 Nov 12 15:20 .ax
+-rw-r--r-- 1 root root  16 Nov 12 15:21 note.txt
+  PID ELAPSED COMMAND
+    1      57 /usr/local/bin/ax-task-runner
+    9      57 sleep infinity
+   13       0 sh -c echo note-from-run-1 > /workspace/note.txt; echo scratch > /tmp/scratch.txt; echo rootfs > /root-marker.txt; (nohup sleep 100000 >/dev/null 2>&1 &); sleep 0.3; ls -la /workspace /tmp/scratch.txt /root-marker.txt; ps -eo pid,etimes,args | head -12; cat /proc/uptime; df -h /workspace | tail -1; mount | grep -E " /workspace| / " | head -3
+   15       0 sleep 100000
+   18       0 ps -eo pid,etimes,args
+   19       0 head -12
+57.45 0.00
+none            8.0E  8.0K  8.0E   1% /workspace
+none on / type overlay (rw)
+none on /workspace type tmpfs (rw,mode=0777)

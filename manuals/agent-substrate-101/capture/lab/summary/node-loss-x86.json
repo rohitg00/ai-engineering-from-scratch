@@ -1,0 +1,2273 @@
+{
+  "cases": [
+    {
+      "actor_crashed_t": null,
+      "calls_before_stop": 3,
+      "case": "a",
+      "commands": {
+        "errors": {},
+        "ok": 1,
+        "runs": [
+          {
+            "event": "revert",
+            "ok": true,
+            "seconds": 7.1,
+            "t": 52.1
+          }
+        ],
+        "total": 1
+      },
+      "last_state": "ACTOR_STATE_RUNNING",
+      "node_start_t": null,
+      "node_stopped_t": 0.7,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_RUNNING": 2
+        },
+        "codes": {
+          "200": 2
+        },
+        "failed_seconds": null,
+        "ok": 2,
+        "requests": 2
+      },
+      "served": [
+        {
+          "count": 4,
+          "event": "first-request",
+          "node": "multi-worker",
+          "seconds": 0.56,
+          "t": 53.1
+        },
+        {
+          "count": 5,
+          "event": "second-request",
+          "node": "multi-worker",
+          "seconds": 0.067,
+          "t": 53.7
+        }
+      ],
+      "situation": "suspended with --mode sync, no request, one revert after the workers were unavailable",
+      "source": "capture/lab/P-node-loss/10-a-quiet-revert.tsv",
+      "watched_seconds": 53.7,
+      "workers_unavailable_t": 44.6
+    },
+    {
+      "actor_crashed_t": 386.3,
+      "calls_before_stop": 5,
+      "case": "a2",
+      "commands": {
+        "errors": {
+          "revert-1-right-after-stop:any:atelet_terminate": 1,
+          "revert-2-after-workers-unavailable:any:atelet_terminate": 1,
+          "revert-3-twenty-seconds-later:any:atelet_terminate": 1,
+          "revert-4-after-eviction:any:atelet_terminate": 1
+        },
+        "ok": 1,
+        "runs": [
+          {
+            "error": "atelet_terminate",
+            "event": "revert-1-right-after-stop",
+            "ok": false,
+            "seconds": 20.2,
+            "t": 30.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-2-after-workers-unavailable",
+            "ok": false,
+            "seconds": 0.2,
+            "t": 50.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-3-twenty-seconds-later",
+            "ok": false,
+            "seconds": 0.2,
+            "t": 70.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-4-after-eviction",
+            "ok": false,
+            "seconds": 0.2,
+            "t": 370.7
+          },
+          {
+            "event": "revert-5-after-node-return",
+            "ok": true,
+            "seconds": 0.2,
+            "t": 386.6
+          }
+        ],
+        "total": 5
+      },
+      "last_state": "ACTOR_STATE_RUNNING",
+      "node_start_t": 371.5,
+      "node_stopped_t": 10.4,
+      "pods_evicted_t": 350.4,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_REVERTING": 2
+        },
+        "codes": {
+          "503": 2
+        },
+        "failed_seconds": {
+          "max": 0.072,
+          "median": 0.068,
+          "min": 0.065,
+          "n": 2
+        },
+        "ok": 0,
+        "requests": 2
+      },
+      "served": [
+        {
+          "count": 4,
+          "event": "request-after-revert-5",
+          "node": "multi-worker",
+          "seconds": 0.469,
+          "t": 388.7
+        },
+        {
+          "count": 5,
+          "event": "request-after-revert-5",
+          "node": "multi-worker",
+          "seconds": 0.061,
+          "t": 389.0
+        }
+      ],
+      "situation": "suspended with --mode sync, no request, first revert before the workers were unavailable",
+      "source": "capture/lab/P-node-loss/74-second-revert.tsv",
+      "watched_seconds": 389.0,
+      "workers_unavailable_t": 49.7
+    },
+    {
+      "actor_crashed_t": 350.2,
+      "calls_before_stop": 3,
+      "case": "b",
+      "commands": {
+        "errors": {
+          "tag:ACTOR_STATE_CRASHED:not_suspended": 1,
+          "tag:ACTOR_STATE_RESUMING:not_suspended": 3,
+          "tag:ACTOR_STATE_RESUMING:operation_in_progress": 1
+        },
+        "ok": 1,
+        "runs": [
+          {
+            "error": "operation_in_progress",
+            "event": "tag-attempt-on-stuck-actor",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 30.6
+          },
+          {
+            "error": "not_suspended",
+            "event": "tag-attempt-on-stuck-actor",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 60.4
+          },
+          {
+            "event": "create-from-tag",
+            "ok": true,
+            "t": 60.7
+          },
+          {
+            "error": "not_suspended",
+            "event": "tag-attempt-on-stuck-actor",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 120.5
+          },
+          {
+            "error": "not_suspended",
+            "event": "tag-attempt-on-stuck-actor",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 240.7
+          },
+          {
+            "error": "not_suspended",
+            "event": "tag-attempt-on-stuck-actor",
+            "ok": false,
+            "state_before": "ACTOR_STATE_CRASHED",
+            "t": 400.5
+          }
+        ],
+        "total": 6
+      },
+      "last_state": "ACTOR_STATE_CRASHED",
+      "node_start_t": null,
+      "node_stopped_t": 0.7,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_CRASHED": 22,
+          "ACTOR_STATE_RESUMING": 45
+        },
+        "codes": {
+          "000": 2,
+          "503": 65
+        },
+        "failed_seconds": {
+          "max": 10.003,
+          "median": 5.057,
+          "min": 0.06,
+          "n": 67
+        },
+        "ok": 0,
+        "requests": 67
+      },
+      "served": [
+        {
+          "count": 4,
+          "event": "rescue-first-request",
+          "node": "multi-worker",
+          "seconds": 0.582,
+          "seconds_after_create": 1.2,
+          "t": 62.5
+        },
+        {
+          "count": 5,
+          "event": "rescue-second-request",
+          "node": "multi-worker",
+          "seconds": 0.064,
+          "t": 63.0
+        }
+      ],
+      "situation": "suspended with --mode sync, requests during the outage, a tag made before the stop",
+      "source": "capture/lab/P-node-loss/80-tag-rescue.tsv",
+      "watched_seconds": 403.8,
+      "workers_unavailable_t": null
+    },
+    {
+      "actor_crashed_t": 348.7,
+      "calls_before_stop": 3,
+      "case": "b2-early",
+      "commands": {
+        "errors": {
+          "revert:ACTOR_STATE_CRASHED:atelet_terminate": 1,
+          "revert:ACTOR_STATE_RESUMING:not_revertable": 19,
+          "revert:ACTOR_STATE_REVERTING:atelet_terminate": 13
+        },
+        "ok": 0,
+        "runs": [
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 60.5
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 76.0
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 91.4
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 106.8
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 122.3
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 137.7
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 153.2
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 168.6
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 184.1
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 199.5
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 215.0
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 230.4
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 245.9
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 261.3
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 276.8
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 292.2
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 307.6
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 323.1
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 338.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_CRASHED",
+            "t": 354.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 369.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 384.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 400.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 415.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 431.2
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 446.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 462.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 477.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 493.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 508.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 523.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 539.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 554.8
+          }
+        ],
+        "total": 33
+      },
+      "last_state": "ACTOR_STATE_REVERTING",
+      "node_start_t": null,
+      "node_stopped_t": 10.3,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_CRASHED": 3,
+          "ACTOR_STATE_RESUMING": 45,
+          "ACTOR_STATE_REVERTING": 96
+        },
+        "codes": {
+          "000": 1,
+          "503": 143
+        },
+        "failed_seconds": {
+          "max": 10.002,
+          "median": 0.068,
+          "min": 0.051,
+          "n": 144
+        },
+        "ok": 0,
+        "requests": 144
+      },
+      "served": [],
+      "situation": "suspended with --mode sync, requests and a revert every 15 s from 60 s",
+      "source": "capture/lab/P-node-loss/20-b60-requests-revert-loop.tsv",
+      "watched_seconds": 579.2,
+      "workers_unavailable_t": null
+    },
+    {
+      "actor_crashed_t": 342.1,
+      "calls_before_stop": 3,
+      "case": "b2-evicted",
+      "commands": {
+        "errors": {
+          "revert:ACTOR_STATE_CRASHED:atelet_terminate": 1,
+          "revert:ACTOR_STATE_REVERTING:atelet_terminate": 15
+        },
+        "ok": 0,
+        "runs": [
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_CRASHED",
+            "t": 345.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 361.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 376.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 392.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 407.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 423.2
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 438.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 454.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 469.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 485.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 500.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 515.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 531.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 546.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 562.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 577.8
+          }
+        ],
+        "total": 16
+      },
+      "last_state": "ACTOR_STATE_REVERTING",
+      "node_start_t": null,
+      "node_stopped_t": 10.4,
+      "pods_evicted_t": 341.8,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_CRASHED": 2,
+          "ACTOR_STATE_RESUMING": 43,
+          "ACTOR_STATE_REVERTING": 110
+        },
+        "codes": {
+          "000": 2,
+          "503": 153
+        },
+        "failed_seconds": {
+          "max": 10.003,
+          "median": 0.069,
+          "min": 0.059,
+          "n": 155
+        },
+        "ok": 0,
+        "requests": 155
+      },
+      "served": [],
+      "situation": "suspended with --mode sync, requests, reverts only after the pods were evicted",
+      "source": "capture/lab/P-node-loss/30-bevict-requests-revert-after-eviction.tsv",
+      "watched_seconds": 602.3,
+      "workers_unavailable_t": null
+    },
+    {
+      "actor_crashed_t": null,
+      "calls_before_stop": 5,
+      "case": "c-quiet",
+      "commands": {
+        "errors": {
+          "revert-quiet:any:atelet_terminate": 1,
+          "revert:ACTOR_STATE_REVERTING:atelet_terminate": 28
+        },
+        "ok": 0,
+        "runs": [
+          {
+            "error": "atelet_terminate",
+            "event": "revert-quiet",
+            "ok": false,
+            "seconds": 0.8,
+            "t": 53.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 54.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 69.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 85.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 100.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 115.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 131.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 146.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 162.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 177.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 193.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 208.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 224.2
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 239.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 255.2
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 270.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 286.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 301.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 317.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 332.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 348.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 363.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 378.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 394.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 409.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 425.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 440.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 456.2
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 471.7
+          }
+        ],
+        "total": 29
+      },
+      "last_state": "ACTOR_STATE_REVERTING",
+      "node_start_t": null,
+      "node_stopped_t": 10.4,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_REVERTING": 190
+        },
+        "codes": {
+          "503": 190
+        },
+        "failed_seconds": {
+          "max": 0.084,
+          "median": 0.065,
+          "min": 0.058,
+          "n": 190
+        },
+        "ok": 0,
+        "requests": 190
+      },
+      "served": [],
+      "situation": "suspended in the default mode with a PENDING snapshot, no request, one revert after the workers were unavailable",
+      "source": "capture/lab/P-node-loss/50-c-pending-snapshot.tsv",
+      "watched_seconds": 490.3,
+      "workers_unavailable_t": 52.3
+    },
+    {
+      "actor_crashed_t": 347.4,
+      "calls_before_stop": 5,
+      "case": "c-requests",
+      "commands": {
+        "errors": {
+          "revert:ACTOR_STATE_CRASHED:atelet_terminate": 1,
+          "revert:ACTOR_STATE_RESUMING:not_revertable": 19,
+          "revert:ACTOR_STATE_REVERTING:atelet_terminate": 13
+        },
+        "ok": 0,
+        "runs": [
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 60.6
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 76.0
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 91.5
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 107.0
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 122.4
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 137.9
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 153.3
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 168.8
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 184.2
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 199.7
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 215.1
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 230.6
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 246.0
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 261.5
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 276.9
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 292.4
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 307.8
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 323.2
+          },
+          {
+            "error": "not_revertable",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 338.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_CRASHED",
+            "t": 354.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 369.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 385.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 400.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 415.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 431.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 446.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 462.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 477.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 493.2
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 508.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 524.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 539.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 555.0
+          }
+        ],
+        "total": 33
+      },
+      "last_state": "ACTOR_STATE_REVERTING",
+      "node_start_t": null,
+      "node_stopped_t": 10.4,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_CRASHED": 3,
+          "ACTOR_STATE_RESUMING": 44,
+          "ACTOR_STATE_REVERTING": 97
+        },
+        "codes": {
+          "000": 2,
+          "503": 142
+        },
+        "failed_seconds": {
+          "max": 10.002,
+          "median": 0.066,
+          "min": 0.056,
+          "n": 144
+        },
+        "ok": 0,
+        "requests": 144
+      },
+      "served": [],
+      "situation": "suspended in the default mode with a PENDING snapshot, requests and reverts",
+      "source": "capture/lab/P-node-loss/55-c-pending-snapshot-with-requests.tsv",
+      "watched_seconds": 579.5,
+      "workers_unavailable_t": null
+    },
+    {
+      "actor_crashed_t": null,
+      "calls_before_stop": 10,
+      "case": "c-return",
+      "commands": {
+        "errors": {},
+        "ok": 1,
+        "runs": [
+          {
+            "event": "v3-revert",
+            "ok": true,
+            "seconds": 0.0,
+            "t": 108.1
+          }
+        ],
+        "total": 1
+      },
+      "last_state": "ACTOR_STATE_RUNNING",
+      "node_start_t": 81.4,
+      "node_stopped_t": 0.7,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {},
+        "codes": {},
+        "failed_seconds": null,
+        "ok": 0,
+        "requests": 0
+      },
+      "served": [
+        {
+          "count": 6,
+          "event": "w1-request-without-revert",
+          "node": "multi-worker2",
+          "seconds": 0.357,
+          "t": 107.5
+        },
+        {
+          "count": 7,
+          "event": "w1-second-request",
+          "node": "multi-worker2",
+          "seconds": 0.065,
+          "t": 107.8
+        },
+        {
+          "count": 4,
+          "event": "v3-request-after-revert",
+          "node": "multi-worker",
+          "seconds": 0.488,
+          "t": 109.8
+        }
+      ],
+      "situation": "two actors suspended in the default mode with a PENDING snapshot, no command until the node was back",
+      "source": "capture/lab/P-node-loss/88-pending-snapshot-node-returns.tsv",
+      "watched_seconds": 109.8,
+      "workers_unavailable_t": null
+    },
+    {
+      "actor_crashed_t": null,
+      "calls_before_stop": 7,
+      "case": "d",
+      "commands": {
+        "errors": {},
+        "ok": 2,
+        "runs": [
+          {
+            "event": "create-from-tag",
+            "ok": true,
+            "t": 60.6
+          },
+          {
+            "event": "create-from-tag",
+            "ok": true,
+            "t": 62.9
+          }
+        ],
+        "total": 2
+      },
+      "last_state": "ACTOR_STATE_RUNNING",
+      "node_start_t": null,
+      "node_stopped_t": 10.4,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_RUNNING": 10
+        },
+        "codes": {
+          "503": 10
+        },
+        "failed_seconds": {
+          "max": 5.068,
+          "median": 4.117,
+          "min": 0.819,
+          "n": 10
+        },
+        "ok": 0,
+        "requests": 10
+      },
+      "served": [
+        {
+          "count": 4,
+          "event": "rescue-first-request",
+          "node": "multi-worker",
+          "seconds": 0.482,
+          "seconds_after_create": 1.2,
+          "t": 62.4,
+          "tag": "keep-u1"
+        },
+        {
+          "count": 6,
+          "event": "rescue-first-request",
+          "node": "multi-worker",
+          "seconds": 0.515,
+          "seconds_after_create": 1.2,
+          "t": 64.7,
+          "tag": "pend-u1"
+        }
+      ],
+      "situation": "running, with one tag from a sync suspend and one from an async suspend",
+      "source": "capture/lab/P-node-loss/85-tag-rescue-running-and-pending.tsv",
+      "watched_seconds": 68.0,
+      "workers_unavailable_t": null
+    },
+    {
+      "actor_crashed_t": null,
+      "calls_before_stop": 5,
+      "case": "d2",
+      "commands": {
+        "errors": {
+          "delete:any:atelet_terminate": 1,
+          "recreate:any:already_exists": 1,
+          "revert:ACTOR_STATE_REVERTING:atelet_terminate": 27,
+          "revert:ACTOR_STATE_RUNNING:atelet_terminate": 1,
+          "suspend:ACTOR_STATE_REVERTING:mark_suspending": 1
+        },
+        "ok": 0,
+        "runs": [
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RUNNING",
+            "t": 63.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 79.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 94.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 109.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 125.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 140.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 156.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 171.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 187.0
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 202.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 217.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 233.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 248.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 264.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 279.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 295.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 310.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 325.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 341.3
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 356.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 372.2
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 387.6
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 403.1
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 418.5
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 433.9
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 449.4
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 464.8
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "revert-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 480.3
+          },
+          {
+            "error": "mark_suspending",
+            "event": "suspend-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_REVERTING",
+            "t": 495.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "delete",
+            "ok": false,
+            "t": 509.1
+          },
+          {
+            "error": "already_exists",
+            "event": "recreate",
+            "ok": false,
+            "t": 708.7
+          }
+        ],
+        "total": 31
+      },
+      "last_state": "ACTOR_STATE_DELETING",
+      "node_start_t": null,
+      "node_stopped_t": 10.3,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_DELETING": 1,
+          "ACTOR_STATE_REVERTING": 193,
+          "ACTOR_STATE_RUNNING": 7
+        },
+        "codes": {
+          "503": 201
+        },
+        "failed_seconds": {
+          "max": 5.06,
+          "median": 0.061,
+          "min": 0.054,
+          "n": 201
+        },
+        "ok": 0,
+        "requests": 201
+      },
+      "served": [],
+      "situation": "running, reverts during the outage, then suspend and delete",
+      "source": "capture/lab/P-node-loss/60-d-running.tsv",
+      "watched_seconds": 717.7,
+      "workers_unavailable_t": null
+    },
+    {
+      "actor_crashed_t": null,
+      "calls_before_stop": 3,
+      "case": "e",
+      "commands": {
+        "errors": {},
+        "ok": 1,
+        "runs": [
+          {
+            "event": "revert",
+            "ok": true,
+            "t": 47.8
+          }
+        ],
+        "total": 1
+      },
+      "last_state": "ACTOR_STATE_RUNNING",
+      "node_start_t": null,
+      "node_stopped_t": 10.3,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {},
+        "codes": {},
+        "failed_seconds": null,
+        "ok": 0,
+        "requests": 0
+      },
+      "served": [
+        {
+          "count": 4,
+          "event": "request-no-spare",
+          "node": "multi-worker",
+          "seconds": 0.494,
+          "t": 48.8
+        },
+        {
+          "count": 5,
+          "event": "request-no-spare",
+          "node": "multi-worker",
+          "seconds": 0.066,
+          "t": 49.0
+        },
+        {
+          "count": 6,
+          "event": "probe-after-scale",
+          "node": "multi-worker",
+          "seconds": 0.073,
+          "t": 49.5
+        }
+      ],
+      "situation": "suspended with --mode sync, 4 running actors on the other node, one revert",
+      "source": "capture/lab/P-node-loss/70-e-no-spare-then-scale.tsv",
+      "watched_seconds": 50.5,
+      "workers_unavailable_t": 44.5
+    },
+    {
+      "actor_crashed_t": null,
+      "calls_before_stop": 3,
+      "case": "e2",
+      "commands": {
+        "errors": {},
+        "ok": 1,
+        "runs": [
+          {
+            "event": "revert",
+            "ok": true,
+            "t": 55.7
+          }
+        ],
+        "total": 1
+      },
+      "last_state": "ACTOR_STATE_RUNNING",
+      "node_start_t": null,
+      "node_stopped_t": 10.3,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {},
+        "codes": {},
+        "failed_seconds": null,
+        "ok": 0,
+        "requests": 0
+      },
+      "served": [
+        {
+          "count": 4,
+          "event": "request-no-spare",
+          "node": "multi-worker",
+          "seconds": 0.712,
+          "t": 56.9
+        },
+        {
+          "count": 5,
+          "event": "request-no-spare",
+          "node": "multi-worker",
+          "seconds": 0.066,
+          "t": 57.2
+        },
+        {
+          "count": 6,
+          "event": "probe-after-scale",
+          "node": "multi-worker",
+          "seconds": 0.096,
+          "t": 57.7
+        }
+      ],
+      "situation": "suspended with --mode sync, 11 running actors on the other node, one revert",
+      "source": "capture/lab/P-node-loss/72-e2-survivor-full-then-scale.tsv",
+      "watched_seconds": 58.8,
+      "workers_unavailable_t": 52.4
+    },
+    {
+      "actor_crashed_t": null,
+      "calls_before_stop": 3,
+      "case": "f",
+      "commands": {
+        "errors": {
+          "delete:any:atelet_terminate": 1,
+          "recreate:any:already_exists": 1,
+          "resume:ACTOR_STATE_RESUMING:worker_unavailable": 4,
+          "suspend:ACTOR_STATE_RESUMING:mark_suspending": 4
+        },
+        "ok": 0,
+        "runs": [
+          {
+            "error": "mark_suspending",
+            "event": "suspend-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 60.5
+          },
+          {
+            "error": "worker_unavailable",
+            "event": "resume-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 61.0
+          },
+          {
+            "error": "mark_suspending",
+            "event": "suspend-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 76.4
+          },
+          {
+            "error": "worker_unavailable",
+            "event": "resume-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 76.9
+          },
+          {
+            "error": "mark_suspending",
+            "event": "suspend-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 92.4
+          },
+          {
+            "error": "worker_unavailable",
+            "event": "resume-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 92.8
+          },
+          {
+            "error": "mark_suspending",
+            "event": "suspend-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 108.3
+          },
+          {
+            "error": "worker_unavailable",
+            "event": "resume-attempt",
+            "ok": false,
+            "state_before": "ACTOR_STATE_RESUMING",
+            "t": 108.7
+          },
+          {
+            "error": "atelet_terminate",
+            "event": "delete",
+            "ok": false,
+            "t": 127.1
+          },
+          {
+            "error": "already_exists",
+            "event": "recreate",
+            "ok": false,
+            "t": 260.8
+          }
+        ],
+        "total": 10
+      },
+      "last_state": "ACTOR_STATE_DELETING",
+      "node_start_t": null,
+      "node_stopped_t": 10.3,
+      "pods_evicted_t": null,
+      "probes": {
+        "actor_states": {
+          "ACTOR_STATE_DELETING": 2,
+          "ACTOR_STATE_RESUMING": 14
+        },
+        "codes": {
+          "000": 2,
+          "503": 14
+        },
+        "failed_seconds": {
+          "max": 10.002,
+          "median": 5.06,
+          "min": 0.07,
+          "n": 16
+        },
+        "ok": 0,
+        "requests": 16
+      },
+      "served": [],
+      "situation": "suspended with --mode sync, requests, then suspend, resume and delete",
+      "source": "capture/lab/P-node-loss/40-balt-suspend-resume-delete.tsv",
+      "watched_seconds": 262.9,
+      "workers_unavailable_t": null
+    }
+  ],
+  "detection": {
+    "actor_crashed_t_while_down": {
+      "max": 350.2,
+      "median": 348.05,
+      "min": 342.1,
+      "n": 4,
+      "runs": [
+        350.2,
+        348.7,
+        342.1,
+        347.4
+      ]
+    },
+    "pods_evicted_t": {
+      "max": 350.4,
+      "median": 346.1,
+      "min": 341.8,
+      "n": 2,
+      "runs": [
+        350.4,
+        341.8
+      ]
+    },
+    "workers_unavailable_t": {
+      "max": 52.4,
+      "median": 49.7,
+      "min": 44.5,
+      "n": 5,
+      "runs": [
+        44.6,
+        49.7,
+        52.3,
+        44.5,
+        52.4
+      ]
+    }
+  },
+  "golden_tag_deleted": {
+    "create_actor_error": "Error: failed to create actor: rpc error: code = FailedPrecondition desc = Tag not found",
+    "templates_still_listed_with_tag": 2
+  },
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, one control plane node and two worker nodes, default atelet timers, pool of 4 worker pods",
+  "node_return": {
+    "after_eviction": {
+      "first_new_actor_on_node_t": null,
+      "outage_seconds": {
+        "max": 718.2,
+        "median": 580.0,
+        "min": 371.5,
+        "n": 7,
+        "runs": [
+          371.5,
+          404.1,
+          580.2,
+          603.0,
+          490.8,
+          580.0,
+          718.2
+        ]
+      },
+      "pool_pods_on_node_at_end": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "still_reverting_or_deleting": 5,
+      "watched_seconds": {
+        "max": 222.7,
+        "median": 219.2,
+        "min": 215.5,
+        "n": 7,
+        "runs": [
+          215.5,
+          219.4,
+          218.2,
+          222.7,
+          218.4,
+          219.2,
+          219.9
+        ]
+      }
+    },
+    "before_eviction": {
+      "first_new_actor_on_node_t": {
+        "max": 44.5,
+        "median": 25.0,
+        "min": 23.0,
+        "n": 5,
+        "runs": [
+          23.0,
+          24.4,
+          37.7,
+          25.0,
+          44.5
+        ]
+      },
+      "outage_seconds": {
+        "max": 263.2,
+        "median": 59.1,
+        "min": 50.8,
+        "n": 5,
+        "runs": [
+          54.2,
+          68.5,
+          50.8,
+          59.1,
+          263.2
+        ]
+      },
+      "pool_pods_on_node_at_end": [
+        0,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "runs": [
+      {
+        "actor_state_at_end": "ACTOR_STATE_RUNNING",
+        "after_eviction": false,
+        "case": "a",
+        "first_new_actor_on_node_t": 23.0,
+        "moved_pods_by_hand": false,
+        "node_ready_t": 2.6,
+        "outage_seconds": 54.2,
+        "pool_pods_on_node_at_end": 0,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-a.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 71.4,
+        "workers_active_t": null
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_RUNNING",
+        "after_eviction": true,
+        "case": "a2",
+        "first_new_actor_on_node_t": null,
+        "moved_pods_by_hand": true,
+        "node_ready_t": 0.2,
+        "outage_seconds": 371.5,
+        "pool_pods_on_node_at_end": 0,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-rev.tsv",
+        "trace_started_after_the_node": true,
+        "watched_seconds": 215.5,
+        "workers_active_t": null
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_CRASHED",
+        "after_eviction": true,
+        "case": "b",
+        "first_new_actor_on_node_t": null,
+        "moved_pods_by_hand": true,
+        "node_ready_t": 2.6,
+        "outage_seconds": 404.1,
+        "pool_pods_on_node_at_end": 0,
+        "revert_after_return": [
+          {
+            "event": "revert-after-node-return",
+            "ok": true,
+            "seconds": 0.3,
+            "t": 224.2
+          }
+        ],
+        "served_after_return": [
+          {
+            "count": 4,
+            "event": "request-after-revert",
+            "node": "multi-worker",
+            "seconds": 0.903,
+            "t": 226.4
+          },
+          {
+            "count": 5,
+            "event": "request-after-revert",
+            "node": "multi-worker",
+            "seconds": 0.068,
+            "t": 226.7
+          }
+        ],
+        "source": "capture/lab/P-node-loss/return-tag.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 219.4,
+        "workers_active_t": null
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_REVERTING",
+        "after_eviction": true,
+        "case": "b2-early",
+        "first_new_actor_on_node_t": null,
+        "moved_pods_by_hand": true,
+        "node_ready_t": 4.7,
+        "outage_seconds": 580.2,
+        "pool_pods_on_node_at_end": 0,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-b60.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 218.2,
+        "workers_active_t": null
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_REVERTING",
+        "after_eviction": true,
+        "case": "b2-evicted",
+        "first_new_actor_on_node_t": null,
+        "moved_pods_by_hand": true,
+        "node_ready_t": 4.7,
+        "outage_seconds": 603.0,
+        "pool_pods_on_node_at_end": 0,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-bevict.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 222.7,
+        "workers_active_t": null
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_REVERTING",
+        "after_eviction": true,
+        "case": "c-quiet",
+        "first_new_actor_on_node_t": null,
+        "moved_pods_by_hand": true,
+        "node_ready_t": 2.6,
+        "outage_seconds": 490.8,
+        "pool_pods_on_node_at_end": 0,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-cquiet.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 218.4,
+        "workers_active_t": null
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_REVERTING",
+        "after_eviction": true,
+        "case": "c-requests",
+        "first_new_actor_on_node_t": null,
+        "moved_pods_by_hand": true,
+        "node_ready_t": 2.6,
+        "outage_seconds": 580.0,
+        "pool_pods_on_node_at_end": 0,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-creq.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 219.2,
+        "workers_active_t": null
+      },
+      {
+        "actor_state_at_end": null,
+        "after_eviction": false,
+        "case": "c-return",
+        "first_new_actor_on_node_t": null,
+        "moved_pods_by_hand": false,
+        "node_ready_t": 0.2,
+        "outage_seconds": 81.4,
+        "pool_pods_on_node_at_end": 2,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-pend.tsv",
+        "trace_started_after_the_node": true,
+        "watched_seconds": 72.0,
+        "workers_active_t": 2.5
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_CRASHED",
+        "after_eviction": false,
+        "case": "d",
+        "first_new_actor_on_node_t": 24.4,
+        "moved_pods_by_hand": false,
+        "node_ready_t": 2.6,
+        "outage_seconds": 68.5,
+        "pool_pods_on_node_at_end": 2,
+        "revert_after_return": [
+          {
+            "event": "revert-after-node-return",
+            "ok": true,
+            "seconds": 0.3,
+            "t": 77.1
+          }
+        ],
+        "served_after_return": [
+          {
+            "count": 6,
+            "event": "request-after-revert",
+            "node": "multi-worker2",
+            "seconds": 0.482,
+            "t": 78.8
+          },
+          {
+            "count": 7,
+            "event": "request-after-revert",
+            "node": "multi-worker2",
+            "seconds": 0.064,
+            "t": 79.1
+          }
+        ],
+        "source": "capture/lab/P-node-loss/return-tag2.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 76.3,
+        "workers_active_t": 24.3
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_DELETING",
+        "after_eviction": true,
+        "case": "d2",
+        "first_new_actor_on_node_t": null,
+        "moved_pods_by_hand": true,
+        "node_ready_t": 2.6,
+        "outage_seconds": 718.2,
+        "pool_pods_on_node_at_end": 0,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-drun.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 219.9,
+        "workers_active_t": null
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_RUNNING",
+        "after_eviction": false,
+        "case": "e",
+        "first_new_actor_on_node_t": 37.7,
+        "moved_pods_by_hand": false,
+        "node_ready_t": 2.6,
+        "outage_seconds": 50.8,
+        "pool_pods_on_node_at_end": 2,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-escale.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 76.8,
+        "workers_active_t": 24.6
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_RUNNING",
+        "after_eviction": false,
+        "case": "e2",
+        "first_new_actor_on_node_t": 25.0,
+        "moved_pods_by_hand": false,
+        "node_ready_t": 2.6,
+        "outage_seconds": 59.1,
+        "pool_pods_on_node_at_end": 2,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-e2scale.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 77.3,
+        "workers_active_t": 25.0
+      },
+      {
+        "actor_state_at_end": "ACTOR_STATE_DELETING",
+        "after_eviction": false,
+        "case": "f",
+        "first_new_actor_on_node_t": 44.5,
+        "moved_pods_by_hand": false,
+        "node_ready_t": 2.6,
+        "outage_seconds": 263.2,
+        "pool_pods_on_node_at_end": 2,
+        "revert_after_return": [],
+        "served_after_return": [],
+        "source": "capture/lab/P-node-loss/return-balt.tsv",
+        "trace_started_after_the_node": false,
+        "watched_seconds": 77.1,
+        "workers_active_t": 31.4
+      }
+    ]
+  },
+  "note": "one run for each case. t is seconds from the docker stop command of the node multi-worker2. Requests go through kubectl ate proxy. The actor holds a counter and 50 MB in memory.",
+  "second_revert": [
+    {
+      "error": "atelet_terminate",
+      "event": "revert-1-right-after-stop",
+      "ok": false,
+      "seconds": 20.2,
+      "state_after": "ACTOR_STATE_REVERTING",
+      "t": 30.6
+    },
+    {
+      "error": "atelet_terminate",
+      "event": "revert-2-after-workers-unavailable",
+      "ok": false,
+      "seconds": 0.2,
+      "state_after": "ACTOR_STATE_REVERTING",
+      "t": 50.0
+    },
+    {
+      "error": "atelet_terminate",
+      "event": "revert-3-twenty-seconds-later",
+      "ok": false,
+      "seconds": 0.2,
+      "state_after": "ACTOR_STATE_REVERTING",
+      "t": 70.5
+    },
+    {
+      "error": "atelet_terminate",
+      "event": "revert-4-after-eviction",
+      "ok": false,
+      "seconds": 0.2,
+      "state_after": "ACTOR_STATE_REVERTING",
+      "t": 370.7
+    },
+    {
+      "event": "revert-5-after-node-return",
+      "ok": true,
+      "seconds": 0.2,
+      "state_after": "ACTOR_STATE_SUSPENDED",
+      "t": 386.6
+    }
+  ],
+  "sources": [
+    "capture/lab/P-node-loss/10-a-quiet-revert.tsv",
+    "capture/lab/P-node-loss/74-second-revert.tsv",
+    "capture/lab/P-node-loss/80-tag-rescue.tsv",
+    "capture/lab/P-node-loss/20-b60-requests-revert-loop.tsv",
+    "capture/lab/P-node-loss/30-bevict-requests-revert-after-eviction.tsv",
+    "capture/lab/P-node-loss/50-c-pending-snapshot.tsv",
+    "capture/lab/P-node-loss/55-c-pending-snapshot-with-requests.tsv",
+    "capture/lab/P-node-loss/88-pending-snapshot-node-returns.tsv",
+    "capture/lab/P-node-loss/85-tag-rescue-running-and-pending.tsv",
+    "capture/lab/P-node-loss/60-d-running.tsv",
+    "capture/lab/P-node-loss/70-e-no-spare-then-scale.tsv",
+    "capture/lab/P-node-loss/72-e2-survivor-full-then-scale.tsv",
+    "capture/lab/P-node-loss/40-balt-suspend-resume-delete.tsv",
+    "capture/lab/P-node-loss/return-a.tsv",
+    "capture/lab/P-node-loss/return-rev.tsv",
+    "capture/lab/P-node-loss/return-tag.tsv",
+    "capture/lab/P-node-loss/return-b60.tsv",
+    "capture/lab/P-node-loss/return-bevict.tsv",
+    "capture/lab/P-node-loss/return-cquiet.tsv",
+    "capture/lab/P-node-loss/return-creq.tsv",
+    "capture/lab/P-node-loss/return-pend.tsv",
+    "capture/lab/P-node-loss/return-tag2.tsv",
+    "capture/lab/P-node-loss/return-drun.tsv",
+    "capture/lab/P-node-loss/return-escale.tsv",
+    "capture/lab/P-node-loss/return-e2scale.tsv",
+    "capture/lab/P-node-loss/return-balt.tsv",
+    "capture/lab/P-node-loss/96-golden-tag-deleted.txt",
+    "capture/lab/P-node-loss/01-atelet-args.txt"
+  ],
+  "tag_rescue": [
+    {
+      "case": "b",
+      "count": 4,
+      "node": "multi-worker",
+      "request_seconds": 0.582,
+      "seconds_after_create": 1.2,
+      "tag": "keep-t1"
+    },
+    {
+      "case": "d",
+      "count": 4,
+      "node": "multi-worker",
+      "request_seconds": 0.482,
+      "seconds_after_create": 1.2,
+      "tag": "keep-u1"
+    },
+    {
+      "case": "d",
+      "count": 6,
+      "node": "multi-worker",
+      "request_seconds": 0.515,
+      "seconds_after_create": 1.2,
+      "tag": "pend-u1"
+    }
+  ]
+}

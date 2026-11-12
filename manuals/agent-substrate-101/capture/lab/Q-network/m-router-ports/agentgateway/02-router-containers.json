@@ -1,0 +1,1 @@
+[{"name":"agentgateway","image":"cr.agentgateway.dev/agentgateway:v1.7.0","ports":[8080,8443,8081,8444,15021,15020],"args":"-f /etc/agentgateway/config.yaml"}]

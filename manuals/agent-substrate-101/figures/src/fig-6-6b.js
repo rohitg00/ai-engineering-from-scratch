@@ -5,6 +5,11 @@ const path = require('path');
 const { figure, color } = require('../../../_shared/figkit.js');
 
 const lab = path.join(__dirname, '../../capture/lab/F-egress');
+const kept = JSON.parse(fs.readFileSync(path.join(__dirname, '../../capture/lab/summary/network-x86.json'), 'utf8')).keepalive_after_rule_removal;
+const reused = (dataplane, test) => {
+  const run = kept[dataplane][test];
+  return run.runs.codes.map((code, index) => ({ t: 2 * index - run.rule_removed_seconds_after_start, ok: code === '200' }));
+};
 const clock = text => {
   const [h, m, s] = text.split(':').map(Number);
   return h * 3600 + m * 60 + s;
@@ -23,6 +28,8 @@ function samples(dataplane) {
     dns: rows(partC, /^(\d\d:\d\d:\d\d) dns=status: ([A-Z]+) http=/gm, 'NOERROR'),
     http: rows(partC, /^(\d\d:\d\d:\d\d) dns=status: [A-Z]+ http=(\d+)/gm, '200'),
     conn: rows(partB, /^(\d\d:\d\d:\d\d) dns=status: [A-Z]+ newconn_certs=(\d)/gm, '1'),
+    h1: reused(dataplane, 'h1'),
+    h2: reused(dataplane, 'h2'),
   };
 }
 
@@ -39,18 +46,20 @@ const first = points => points.find(point => !point.ok && point.t >= 0).t;
 const lastServed = points => Math.max(...points.filter(point => point.ok).map(point => point.t));
 
 module.exports = figure('fig-6-6b', {
-  height: 394,
+  height: 490,
   title: 'New work and open connections after a rule is removed',
-  desc: `Two groups of five tracks over a time axis from ${FROM} to ${END} seconds, where zero is the removal of the rule. Each dot is one sample, about every 2 seconds. On the Envoy dataplane, the first sample after the removal is a refusal for a new DNS lookup and for a new pass-through connection. New HTTP requests are served until ${Math.round(lastServed(groups[0].data.http))} seconds and refused from ${Math.round(first(groups[0].data.http))} seconds. An HTTP response that was open ran until the server ended it at 39 seconds, and an open pass-through connection served a second request at 20 seconds. On the agentgateway dataplane, the first sample after the removal is a refusal for all three kinds of new work. An open HTTP response ran until the server ended it at 18 seconds, and an open pass-through connection served a second request at 20 seconds.`,
+  desc: `Two groups of seven tracks over a time axis from ${FROM} to ${END} seconds, where zero is the removal of the rule. Each dot is one sample, about every 2 seconds. On the Envoy dataplane, the first sample after the removal is a refusal for a new DNS lookup and for a new pass-through connection. New HTTP requests are served until ${Math.round(lastServed(groups[0].data.http))} seconds and refused from ${Math.round(first(groups[0].data.http))} seconds. A request on a reused HTTP/1.1 connection is refused from ${Math.round(first(groups[0].data.h1))} seconds, and on a reused HTTP/2 connection of an https rule from ${Math.round(first(groups[0].data.h2))} seconds. An HTTP response that was open ran until the server ended it at 39 seconds, and an open pass-through connection served a second request at 20 seconds. On the agentgateway dataplane, the first sample after the removal is a refusal for all three kinds of new work and for the next request on both reused connections. An open HTTP response ran until the server ended it at 18 seconds, and an open pass-through connection served a second request at 20 seconds.`,
 }, f => {
-  const lastGroupBottom = 30 + groups.length * 156;
+  const lastGroupBottom = 30 + groups.length * 204;
   groups.forEach((group, g) => {
-    const top = 30 + g * 156;
+    const top = 30 + g * 204;
     f.kicker(16, top, group.name);
     const tracks = [
       ['new DNS lookup', group.data.dns],
       ['new HTTP request', group.data.http],
       ['new pass-through connection', group.data.conn],
+      ['reused HTTP/1.1 connection', group.data.h1],
+      ['reused HTTP/2, https rule', group.data.h2],
     ];
     tracks.forEach(([label, points], index) => {
       const y = top + 26 + index * 24;
@@ -69,7 +78,7 @@ module.exports = figure('fig-6-6b', {
       ['open pass-through', 20, 'second request served at 20 s'],
     ];
     open.forEach(([label, end, note], index) => {
-      const y = top + 26 + (index + 3) * 24;
+      const y = top + 26 + (index + 5) * 24;
       f.text(16, y + 4, label, { size: 11, serif: true, hue: 'ink-soft' });
       f.rect(px(FROM), y - 5, (end - FROM) * PER, 10, { fill: color('green-fill'), stroke: color('green-ink') });
       f.dot(px(end), y, { hue: 'green', r: 3.2 });

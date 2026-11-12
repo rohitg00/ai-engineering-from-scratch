@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 394" role="img" aria-labelledby="fig-6-6b-title fig-6-6b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 490" role="img" aria-labelledby="fig-6-6b-title fig-6-6b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-6-6b-title">New work and open connections after a rule is removed</title>
-  <desc id="fig-6-6b-desc">Two groups of five tracks over a time axis from -6 to 40 seconds, where zero is the removal of the rule. Each dot is one sample, about every 2 seconds. On the Envoy dataplane, the first sample after the removal is a refusal for a new DNS lookup and for a new pass-through connection. New HTTP requests are served until 3 seconds and refused from 6 seconds. An HTTP response that was open ran until the server ended it at 39 seconds, and an open pass-through connection served a second request at 20 seconds. On the agentgateway dataplane, the first sample after the removal is a refusal for all three kinds of new work. An open HTTP response ran until the server ended it at 18 seconds, and an open pass-through connection served a second request at 20 seconds.</desc>
+  <desc id="fig-6-6b-desc">Two groups of seven tracks over a time axis from -6 to 40 seconds, where zero is the removal of the rule. Each dot is one sample, about every 2 seconds. On the Envoy dataplane, the first sample after the removal is a refusal for a new DNS lookup and for a new pass-through connection. New HTTP requests are served until 3 seconds and refused from 6 seconds. A request on a reused HTTP/1.1 connection is refused from 9 seconds, and on a reused HTTP/2 connection of an https rule from 7 seconds. An HTTP response that was open ran until the server ended it at 39 seconds, and an open pass-through connection served a second request at 20 seconds. On the agentgateway dataplane, the first sample after the removal is a refusal for all three kinds of new work and for the next request on both reused connections. An open HTTP response ran until the server ended it at 18 seconds, and an open pass-through connection served a second request at 20 seconds.</desc>
   <text x="16" y="30" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ENVOY DATAPLANE</text>
   <text x="16" y="60" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new DNS lookup</text>
   <line x1="190" y1="56" x2="622.4" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
@@ -89,134 +89,210 @@
   <circle cx="591.1" cy="104" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
   <circle cx="609.9" cy="104" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
   <text x="252.4" y="96" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused at the first sample</text>
-  <text x="16" y="132" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open HTTP response</text>
-  <rect x="190" y="123" width="423" height="10" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <circle cx="613" cy="128" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <text x="613" y="119" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">the server ended it at 39 s</text>
-  <text x="16" y="156" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open pass-through</text>
-  <rect x="190" y="147" width="244.4" height="10" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <circle cx="434.4" cy="152" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <text x="444.4" y="156" font-size="11" fill="var(--m-green-ink, #336b40)">second request served at 20 s</text>
-  <text x="16" y="186" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENTGATEWAY DATAPLANE</text>
-  <text x="16" y="216" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new DNS lookup</text>
-  <line x1="190" y1="212" x2="622.4" y2="212" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
-  <circle cx="200.77" cy="212" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <circle cx="228.97" cy="212" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <circle cx="247.77" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="266.57" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="275.97" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="294.77" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="304.17" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="322.97" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="332.37" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="351.17" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="360.57" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="379.37" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="388.77" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="407.57" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="416.97" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="435.77" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="445.17" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="463.97" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="473.37" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="492.17" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="501.57" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="520.37" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="529.77" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="548.57" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="557.97" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="576.77" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="586.17" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="604.97" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="614.37" cy="212" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <text x="252.4" y="204" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused at the first sample</text>
-  <text x="16" y="240" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new HTTP request</text>
-  <line x1="190" y1="236" x2="622.4" y2="236" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
-  <circle cx="200.77" cy="236" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <circle cx="228.97" cy="236" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <circle cx="247.77" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="266.57" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="275.97" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="294.77" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="304.17" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="322.97" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="332.37" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="351.17" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="360.57" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="379.37" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="388.77" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="407.57" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="416.97" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="435.77" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="445.17" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="463.97" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="473.37" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="492.17" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="501.57" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="520.37" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="529.77" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="548.57" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="557.97" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="576.77" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="586.17" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="604.97" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="614.37" cy="236" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <text x="252.4" y="228" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused at the first sample</text>
-  <text x="16" y="264" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new pass-through connection</text>
+  <text x="16" y="132" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reused HTTP/1.1 connection</text>
+  <line x1="190" y1="128" x2="622.4" y2="128" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
+  <circle cx="194.7" cy="128" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="213.5" cy="128" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="232.3" cy="128" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="251.1" cy="128" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="269.9" cy="128" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="288.7" cy="128" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="307.5" cy="128" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="326.3" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="345.1" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="363.9" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="382.7" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="401.5" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="420.3" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="439.1" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="457.9" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="476.7" cy="128" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="321.3" y="120" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused from 9 s</text>
+  <text x="16" y="156" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reused HTTP/2, https rule</text>
+  <line x1="190" y1="152" x2="622.4" y2="152" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
+  <circle cx="195.64" cy="152" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="214.44" cy="152" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="233.24" cy="152" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="252.04" cy="152" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="270.84" cy="152" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="289.64" cy="152" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="308.44" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="327.24" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="346.04" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364.84" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="383.64" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="402.44" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="421.24" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="440.04" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="458.84" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="477.64" cy="152" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="303.44" y="144" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused from 7 s</text>
+  <text x="16" y="180" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open HTTP response</text>
+  <rect x="190" y="171" width="423" height="10" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <circle cx="613" cy="176" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="613" y="167" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">the server ended it at 39 s</text>
+  <text x="16" y="204" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open pass-through</text>
+  <rect x="190" y="195" width="244.4" height="10" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <circle cx="434.4" cy="200" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="444.4" y="204" font-size="11" fill="var(--m-green-ink, #336b40)">second request served at 20 s</text>
+  <text x="16" y="234" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENTGATEWAY DATAPLANE</text>
+  <text x="16" y="264" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new DNS lookup</text>
   <line x1="190" y1="260" x2="622.4" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
-  <circle cx="213.47" cy="260" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <circle cx="232.27" cy="260" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <circle cx="251.07" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="269.87" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="288.67" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="307.47" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="326.27" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="345.07" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="363.87" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="382.67" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="401.47" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="420.27" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="439.07" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="457.87" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="476.67" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="495.47" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="514.27" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="533.07" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="551.87" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="570.67" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="589.47" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <circle cx="608.27" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="200.77" cy="260" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="228.97" cy="260" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="247.77" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="266.57" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="275.97" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="294.77" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="304.17" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="322.97" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="332.37" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="351.17" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="360.57" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="379.37" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="388.77" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="407.57" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="416.97" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="435.77" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="445.17" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="463.97" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="473.37" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="492.17" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="501.57" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="520.37" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="529.77" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="548.57" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="557.97" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="576.77" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="586.17" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="604.97" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="614.37" cy="260" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
   <text x="252.4" y="252" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused at the first sample</text>
-  <text x="16" y="288" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open HTTP response</text>
-  <rect x="190" y="279" width="225.6" height="10" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <circle cx="415.6" cy="284" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <text x="425.6" y="288" font-size="11" fill="var(--m-green-ink, #336b40)">the server ended it at 18 s</text>
-  <text x="16" y="312" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open pass-through</text>
-  <rect x="190" y="303" width="244.4" height="10" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <circle cx="434.4" cy="308" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <text x="444.4" y="312" font-size="11" fill="var(--m-green-ink, #336b40)">second request served at 20 s</text>
-  <line x1="246.4" y1="22" x2="246.4" y2="342" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="16" y="288" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new HTTP request</text>
+  <line x1="190" y1="284" x2="622.4" y2="284" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
+  <circle cx="200.77" cy="284" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="228.97" cy="284" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="247.77" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="266.57" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="275.97" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="294.77" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="304.17" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="322.97" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="332.37" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="351.17" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="360.57" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="379.37" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="388.77" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="407.57" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="416.97" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="435.77" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="445.17" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="463.97" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="473.37" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="492.17" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="501.57" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="520.37" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="529.77" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="548.57" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="557.97" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="576.77" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="586.17" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="604.97" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="614.37" cy="284" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="252.4" y="276" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused at the first sample</text>
+  <text x="16" y="312" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new pass-through connection</text>
+  <line x1="190" y1="308" x2="622.4" y2="308" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
+  <circle cx="213.47" cy="308" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="232.27" cy="308" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="251.07" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="269.87" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="288.67" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="307.47" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="326.27" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="345.07" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="363.87" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="382.67" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="401.47" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="420.27" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="439.07" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="457.87" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="476.67" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="495.47" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="514.27" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="533.07" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="551.87" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="570.67" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="589.47" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="608.27" cy="308" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="252.4" y="300" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused at the first sample</text>
+  <text x="16" y="336" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reused HTTP/1.1 connection</text>
+  <line x1="190" y1="332" x2="622.4" y2="332" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
+  <circle cx="197.52" cy="332" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="216.32" cy="332" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="235.12" cy="332" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="253.92" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="272.72" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="291.52" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="310.32" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="329.12" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="347.92" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="366.72" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="385.52" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="404.32" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="423.12" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="441.92" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="460.72" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="479.52" cy="332" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="252.4" y="324" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused at the first sample</text>
+  <text x="16" y="360" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reused HTTP/2, https rule</text>
+  <line x1="190" y1="356" x2="622.4" y2="356" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.35"/>
+  <circle cx="196.58" cy="356" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="215.38" cy="356" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="234.18" cy="356" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="252.98" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="271.78" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="290.58" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="309.38" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="328.18" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="346.98" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="365.78" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="384.58" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="403.38" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="422.18" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="440.98" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="459.78" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="478.58" cy="356" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="252.4" y="348" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">refused at the first sample</text>
+  <text x="16" y="384" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open HTTP response</text>
+  <rect x="190" y="375" width="225.6" height="10" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <circle cx="415.6" cy="380" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="425.6" y="384" font-size="11" fill="var(--m-green-ink, #336b40)">the server ended it at 18 s</text>
+  <text x="16" y="408" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open pass-through</text>
+  <rect x="190" y="399" width="244.4" height="10" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <circle cx="434.4" cy="404" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="444.4" y="408" font-size="11" fill="var(--m-green-ink, #336b40)">second request served at 20 s</text>
+  <line x1="246.4" y1="22" x2="246.4" y2="438" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
   <text x="252.4" y="20" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">rule removed</text>
-  <line x1="190" y1="342" x2="622.4" y2="342" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="199.4" y1="342" x2="199.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="246.4" y1="342" x2="246.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="246.4" y="360" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
-  <line x1="293.4" y1="342" x2="293.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="340.4" y1="342" x2="340.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="340.4" y="360" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
-  <line x1="387.4" y1="342" x2="387.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="434.4" y1="342" x2="434.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="434.4" y="360" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">20</text>
-  <line x1="481.4" y1="342" x2="481.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="528.4" y1="342" x2="528.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="528.4" y="360" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30</text>
-  <line x1="575.4" y1="342" x2="575.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="622.4" y1="342" x2="622.4" y2="347" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="622.4" y="360" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">40</text>
-  <text x="16" y="360" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds after the removal</text>
-  <circle cx="194" cy="376" r="3.2" fill="var(--m-green-ink, #336b40)"/>
-  <text x="202" y="380" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">served</text>
-  <circle cx="264" cy="376" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
-  <text x="272" y="380" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
-  <text x="340" y="380" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bar: a connection opened before the removal</text>
+  <line x1="190" y1="438" x2="622.4" y2="438" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="199.4" y1="438" x2="199.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="246.4" y1="438" x2="246.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="246.4" y="456" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="293.4" y1="438" x2="293.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="340.4" y1="438" x2="340.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="340.4" y="456" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="387.4" y1="438" x2="387.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="434.4" y1="438" x2="434.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="434.4" y="456" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="481.4" y1="438" x2="481.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="528.4" y1="438" x2="528.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="528.4" y="456" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="575.4" y1="438" x2="575.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="622.4" y1="438" x2="622.4" y2="443" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="622.4" y="456" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <text x="16" y="456" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds after the removal</text>
+  <circle cx="194" cy="472" r="3.2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="202" y="476" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">served</text>
+  <circle cx="264" cy="472" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="272" y="476" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+  <text x="340" y="476" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bar: a connection opened before the removal</text>
 </svg>

@@ -85,6 +85,45 @@ The proxy stream is the exception. `kubectl ate proxy` reaches the router throug
 
 **Our position:** never judge the health of your actors through `kubectl ate proxy`. Probe from a pod inside the cluster with a client certificate, as [section 5.1](#s-client-authentication) describes. A probe through the proxy reports a Kubernetes outage that your users did not see.
 
+## The same three outages on agentgateway
+
+We repeated the three outages on the agentgateway dataplane, with the same three streams. The claim holds on both dataplanes. Postgres and `ate-api-server` are on every request path, and the Kubernetes API server is on none. Two things differ: the body of a failure, and the time until a running actor answers again.
+
+**We measured** one run for each outage on a second x86 server guest (16 vCPU, 23 GB), with one kind node and agentgateway v1.7.0. Before the outages, the median was 21 ms for the running stream (n=29) and 470 ms for a fresh resume (n=6). Postgres was away for 61 s. The running stream failed from 6 s, in 81 of 160 requests. A failed request took a median of 3.0 s and at most 5.0 s. The last failure came 21 s after Postgres was ready, against 3 s on Envoy.
+
+**We measured** the other streams in the same run on that guest, n=1 for each outage. New resumes failed from 1 s without Postgres, in 19 of 32 requests, until 26 s after it was ready. Without `ate-api-server` for 61 s, the running stream failed from 17 s, in 70 of 166 requests. Its last failure came 15 s after the API pods were ready. The Kubernetes API server was away for 87 s. In the whole window of that outage, 188 of 188 requests to the running actor and 38 of 38 new resumes were served.
+
+```listing
+title: every failure on agentgateway has the same body
+source: capture/lab/Q-network/g-dependency-loss-agw/12-probe-incluster.tsv
+lang: text
+note: One line for each status code of the Postgres outage. The columns are the start time, the stream, the actor, the status code, the seconds, and the body.
+---
+1794488149	running	e-run	500	0.043341	ingress failed
+…
+1794488157	running	e-run	504	3.010174	ingress failed
+…
+1794488178	running	e-run	503	2.009588	ingress failed
+…
+1794488174	suspended	e-s-013	503	5.018422	ingress failed
+```
+
+On Envoy the body named the actor and gave a hint: `actor lab-e/e-run unavailable`, or `error resuming actor`. On agentgateway every failure body was `ingress failed`, with status 500, 504, or 503. A client cannot tell the cause from the body. Read the status code and the delay, and check Postgres and the `ate-api-server` pods each time.
+
+[Figure 8.2e](#fig-8-2e) puts the running stream of both dataplanes on one time axis.
+
+```figure
+id: fig-8-2e
+kind: timeline
+title: the running actor in three outages, on each dataplane
+claim: A running actor answered again 3 s after Postgres was ready on Envoy and 21 s after it on agentgateway, in one run each.
+caption: Read each pair of rows left to right. Zero is the second the dependency went away, the grey band is the outage, and the dashed line is the second it was ready. A bar is green while requests succeeded and rose while they failed. From capture/lab/summary/dependency-loss-x86.json and capture/lab/summary/dependency-loss-agw-x86.json.
+```
+
+Plan for the longer recovery, and do not read it as a law of the dataplane. Each dataplane had one run. On the agentgateway run, a second cluster ran node tests on the same guest at the same time. We also did not find why the first failure after the `ate-api-server` scale-down came at 17 s here and at 6 s on Envoy.
+
+The proxy stream failed here in the same way as on Envoy. Through `kubectl ate proxy`, 103 of 173 requests failed during the Kubernetes API outage and for 19 s after it.
+
 ## One actor stayed in RESUMING
 
 One request started a resume in the second that Postgres went away. That actor, `e-s-007`, never left the state it was in.
@@ -162,20 +201,64 @@ An actor that was RUNNING during the restart, `my-counter-1`, was `ACTOR_STATE_C
 
 ## A node that stops and does not return
 
-A restart ends. A node that stops and stays down is a different failure, and Substrate v1.0.0 did not repair it in our runs. On a cluster with two worker nodes, we stopped one of them four times. The other node had free workers each time.
+A restart ends. A node that stops and stays down is a different failure, and Substrate v1.0.0 does not repair it. On a cluster with two worker nodes, we stopped one of them in 13 cases. No actor left the stopped node by itself in any of them. This subsection is the runbook, and [section 4.3](#s-placement) explains the placement rule behind it.
 
-| The actor when the node stopped | Result |
-|---|---|
-| Suspended with `--mode sync`, snapshot in the bucket | `RESUMING` on the stopped node from the first request. 504 and 503 for 5 min 33 s from that request, then `CRASHED`, 5 min 44 s after the stop command. It did not move to the other node. |
-| The same, with a `revert` before any request | The revert returned `SUSPENDED`. The next request bound the actor to the stopped node again. |
-| Suspended in the default mode, snapshot pending | `RESUMING` for more than 10 min. Two reverts were refused. It was `CRASHED` at the next request, 0.6 s after the second revert attempt. |
-| Running | `RUNNING` for the 10 min of our probe, with 503 `upstream connect error` on each request. A revert left it in `REVERTING`. |
+**We measured** each case once, on a second x86 server guest (16 vCPU, 23 GB), with the Envoy dataplane, gVisor, and the default timers. The pool had two worker pods on each worker node, and the other node had free workers in every case. The test actor held a counter and 50 MB in memory, so the count in a reply shows which snapshot it came from. The workers of the stopped node showed `WORKER_STATE_UNAVAILABLE` 45 to 52 s after the stop command, in five cases. Kubernetes evicted the pool pods after 342 to 350 s, in two cases. An actor that was `ACTOR_STATE_RESUMING` on the node became `ACTOR_STATE_CRASHED` at 342 to 350 s, in four cases.
 
-**We measured** these cases on the second x86 server guest (16 vCPU, 23 GB), with gVisor and one actor for each row. The workers of the stopped node were listed as active for 43 to 51 s after the stop command. Kubernetes evicted their pods 5 minutes after that. [Section 4.3](#s-placement) has the timeline and the open question about `revert`. [Section 3.5](#s-crashed-and-revertactor) has the error texts.
+| The actor when the node stopped | What the client sees | The sequence that worked | Time to recover | What is lost |
+|---|---|---|---|---|
+| Suspended with `--mode sync`, and no request during the outage | Nothing, because no request is sent | Wait until `kubectl ate get worker` shows the workers of the node as `UNAVAILABLE`. Then `revert actor`, then send the request | Revert 7.1 s. First request 200 in 0.56 s, on the other node | Nothing. The count continued from the snapshot |
+| The same, with a `revert` before the workers show `UNAVAILABLE` | The `revert` waits 20.2 s and fails on `atelet Terminate`. The actor is `REVERTING`, and a request gets 503 at once | None during the outage: 4 of 4 reverts failed. After the node and its `atelet` were back, one `revert` (0.2 s) and then the request | The outage, plus 17 s. The request returned 200 in 0.47 s | Nothing from the snapshot |
+| Suspended, and a request arrives during the outage | A client timeout at 10 s, then 503 `actor ... unavailable` after about 5 s each. The actor is `RESUMING` on the stopped node, then `CRASHED` at about 345 s | Fast: `create actor <new> --template <t> --tag <tag>` with a tag from before the stop, then send requests to the new name. Slow: send no revert, wait for the node, then `revert` and request | With a tag: first request 200 in 0.58 s, 1.2 s after the create command. Without: the outage, then revert 0.3 s and request 200 in 0.90 s | With a tag: nothing after the tagged snapshot, and the actor has a new name. Without: nothing |
+| The same, and a `revert` during the outage | The `revert` is refused while `RESUMING`, 19 of 19 times: `not in a revertable state`. At `CRASHED` one revert fails on `atelet Terminate`, and the actor is `REVERTING`. 0 of 144 requests were served | None during the outage. In two runs, 13 and 15 more reverts failed | Not recovered in the 579 and 602 s that we watched | The actor is not usable until the node returns |
+| Suspended in the default mode, with its newest snapshot still `PENDING` on the node | A `revert` after `UNAVAILABLE` fails in 0.8 s on `atelet Terminate`. The actor is `REVERTING`, and a request gets 503 | Send no command during the outage. After the node returns, send the request with no revert | The workers were active 25 s after the node start. The request returned 200 in 0.36 s | Nothing: the count was 6 after 5. With a `revert` first, the two calls after the last durable snapshot are lost |
+| `RUNNING` | 503 `upstream connect error or disconnect/reset before headers`. The state stays `RUNNING` | Fast: a new actor from a tag that you made earlier. It works while the original is still `RUNNING`. Slow: wait for the node. The actor was `CRASHED` 18 s after the node start. Then `revert` and request | With a tag: 200 in 0.48 and 0.51 s, 1.2 s after each create command. Without: the outage, then revert 0.3 s and request 200 in 0.48 s | All work after the snapshot or the tag that you use |
+| `RUNNING`, and a `revert` during the outage | The revert fails on `atelet Terminate`, and the actor is `REVERTING`. 27 more reverts failed | None during the outage | Not recovered in the 718 s of the outage | The actor is not usable until the node returns |
+| Any actor on the node, and you send `suspend`, `resume`, or `delete` | `suspend`: `MarkSuspending prerequisite not met`. `resume`: `worker ... assigned to actor ... is unavailable`. `delete`: fails on `atelet Terminate`, and the actor is `DELETING` | None | Not during the outage. A new actor with the same name gets `AlreadyExists` | The name, until the node returns |
+
+The pattern behind the table is one call. Every command that changes an actor on the stopped node calls `atelet` on that node: `revert`, `suspend`, `resume`, and `delete`. While the node is down, that call fails. A failed `revert` or `delete` also leaves the actor in `ACTOR_STATE_REVERTING` or `ACTOR_STATE_DELETING`, and that state stays until the node is back. Three rules follow.
+
+**Wait for `UNAVAILABLE` before a `revert` on a quiet actor.** A quiet actor is suspended with `--mode sync` and has had no request since the stop. One `revert`, sent 45 s after the stop command, freed such an actor, and its next request ran on the other node. In another run we sent the revert 10 s after the stop command. It failed after 20.2 s, and the actor was in `ACTOR_STATE_REVERTING` until the node came back.
+
+**Never `revert` or `delete` an actor that receives requests during the outage.** The first request binds the actor to a worker of the stopped node, and from then on no command helps. The same rule covers an actor that was suspended in the default mode. Its newest state is on the node and comes back with the node, so a `revert` only throws that state away.
+
+**Make a tag before you need it.** `kubectl ate create tag <name> --actor <a>` works on a suspended actor and returned `Ready` in less than 1 s. It also worked while the newest snapshot of the actor was still `PENDING`. `create actor --tag` was the one rescue that worked in every case, 3 of 3. The new actor served its first request 1.2 s after the create command, on the other node. The price is a new actor name, so your client must be able to change the name that it calls.
+
+```listing
+title: a rescue from a tag, while the original actor cannot resume
+source: capture/lab/P-node-loss/80-tag-rescue.tsv
+lang: text
+note: Three lines of the trace, 60 s after the stop command. The columns are the time, the seconds from the stop command, the event, and its detail.
+---
+2026-11-12T14:16:17.202Z	t=60.4	tag-attempt-on-stuck-actor	state=ACTOR_STATE_RESUMING | Error: failed to create tag: rpc error: code = FailedPrecondition desc = Actor lab-n/t1 must be ACTOR_STATE_SUSPENDED to be tagged (got: ACTOR_STATE_RESUMING) 
+…
+2026-11-12T14:16:19.269Z	t=62.5	rescue-first-request	1.2 s after create | 200	0.581895	count=4 mb=50 sum=6613 process_age_s=4.9	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T14:16:19.765Z	t=63.0	rescue-second-request	200	0.064394	count=5 mb=50 sum=6613 process_age_s=5.2	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:- pod lab-n/ballast-5d6cf97747-zzzdn
+```
+
+The first line is the reason for the third rule. A tag cannot be made after the fact. On the original actor, `create tag` failed with `another operation is in progress for this actor`, and then with the text in the listing. [Figure 8.2d](#fig-8-2d) puts the runbook on one page.
+
+```figure
+id: fig-8-2d
+kind: decision
+title: a node stopped, what to do with one actor
+claim: A tag made before the stop gave a working actor in 1.2 s, and every other path waits for the workers or for the node.
+caption: Read each row left to right: the actor when the node stopped, what to do, and what we measured. In the two rose rows, a command during the outage does not help. The dashed row is the state that such a command leaves. From capture/lab/summary/node-loss-x86.json.
+```
+
+### When the node comes back
+
+**We measured** the return of the node in the same cases, on the same guest (16 vCPU, 23 GB), one return for each case. Kubernetes reported the node `Ready` 2.6 to 4.7 s after the start. After an outage shorter than the eviction time, 51 to 263 s, the node still had its two pool pods. Its workers were active again after 24 to 31 s, in four returns. The first new actor went to the node 23 to 45 s after the start, in five returns.
+
+**We measured** seven returns after an outage longer than the eviction time, 372 to 718 s, on the same guest. The node came back with no pool pod. The replacement pods ran on the other node and stayed there. No new actor went to the returned node in the 216 to 223 s that we watched. We deleted pods ourselves, so that each node had two again.
+
+So Substrate does not rebalance a pool. After a long outage the returned node stays empty until someone moves pods. An actor that a command left in `ACTOR_STATE_REVERTING` needs one more `revert` after the return, and [section 3.5](#s-crashed-and-revertactor) has that result and its caveat.
 
 ## What we did not test
 
-All three outages ran on the Envoy dataplane with one node. We did not repeat them on agentgateway. We did not test egress from an actor during an outage, or a connection that stays open across one.
+Each outage and each node-stop case ran once. The dependency outages ran on one kind node, on each dataplane. We did not test egress from an actor during an outage, or a connection that stays open across one.
+
+The node-stop cases have five gaps. We did not get a case where the other node had no free capacity: two tries left room, and the revert worked both times. A stop here was `docker stop`, which ends the kubelet and `atelet` cleanly, so a power loss or a network loss can differ. We did not change the node timers of Kubernetes, use more than two worker nodes, or repeat the cases on agentgateway.
 
 ```takeaways
 - Read a client timeout followed by `error resuming actor` as a database outage.
@@ -185,7 +268,11 @@ All three outages ran on the Envoy dataplane with one node. We did not repeat th
 - List actors after a database outage and look for `ACTOR_STATE_RESUMING`.
 - After a node restart, hold client requests until `kubectl ate get worker` shows the workers as active.
 - Run `kubectl ate revert actor` on each actor that the restart crashed.
-- Treat a stopped node as an outage for its actors, because none moved to another node.
+- On agentgateway, read the status code and the delay, because every failure body is `ingress failed`.
+- Make a tag of each suspended actor that you cannot lose, before a node stops.
+- When a node stops, wait for `WORKER_STATE_UNAVAILABLE` before you revert a quiet actor.
+- Send no `revert` or `delete` to an actor that got a request during the outage.
+- After a long node outage, move pool pods back to the returned node by hand.
 ```
 
-Sources: capture/lab/N-demos/failure-drill/drill-run.log, capture/lab/summary/demos-x86.json, capture/lab/E-dependency-loss/10-timeline.tsv, capture/lab/E-dependency-loss/12-probe-incluster.tsv, capture/lab/E-dependency-loss/12-probe-proxy.tsv, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/E-dependency-loss/14-T1-pods-during.txt, capture/lab/E-dependency-loss/14-T1-cli-during.txt, capture/lab/E-dependency-loss/16-T3-kubectl-during.txt, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/E-dependency-loss/22-actors-5min-later.txt, capture/lab/summary/dependency-loss-x86.json, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/summary/failures-x86.json, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/L-gaps/restart/11-workers-each-poll.txt, capture/lab/L-gaps/restart/23-ateapi.log, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/96-controller-events.log; cmd/atenet/internal/router/ingress/parking.go (the 5 s parking budget) and cmd/ateapi/internal/controlapi/workflow_resume.go at v1.0.0.
+Sources: capture/lab/N-demos/failure-drill/drill-run.log, capture/lab/summary/demos-x86.json, capture/lab/E-dependency-loss/10-timeline.tsv, capture/lab/E-dependency-loss/12-probe-incluster.tsv, capture/lab/E-dependency-loss/12-probe-proxy.tsv, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/E-dependency-loss/14-T1-pods-during.txt, capture/lab/E-dependency-loss/14-T1-cli-during.txt, capture/lab/E-dependency-loss/16-T3-kubectl-during.txt, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/E-dependency-loss/22-actors-5min-later.txt, capture/lab/summary/dependency-loss-x86.json, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/summary/failures-x86.json, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/L-gaps/restart/11-workers-each-poll.txt, capture/lab/L-gaps/restart/23-ateapi.log, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/96-controller-events.log, capture/lab/Q-network/g-dependency-loss-agw/12-probe-incluster.tsv, capture/lab/Q-network/g-dependency-loss-agw/12-probe-proxy.tsv, capture/lab/Q-network/g-dependency-loss-agw/20-analysis.txt, capture/lab/summary/dependency-loss-agw-x86.json, capture/lab/summary/node-loss-x86.json, capture/lab/P-node-loss/10-a-quiet-revert.tsv, capture/lab/P-node-loss/74-second-revert.tsv, capture/lab/P-node-loss/80-tag-rescue.tsv, capture/lab/P-node-loss/20-b60-requests-revert-loop.tsv, capture/lab/P-node-loss/30-bevict-requests-revert-after-eviction.tsv, capture/lab/P-node-loss/40-balt-suspend-resume-delete.tsv, capture/lab/P-node-loss/50-c-pending-snapshot.tsv, capture/lab/P-node-loss/55-c-pending-snapshot-with-requests.tsv, capture/lab/P-node-loss/88-pending-snapshot-node-returns.tsv, capture/lab/P-node-loss/60-d-running.tsv, capture/lab/P-node-loss/85-tag-rescue-running-and-pending.tsv, capture/lab/P-node-loss/return-tag.tsv, capture/lab/P-node-loss/return-tag2.tsv, capture/lab/P-node-loss/return-b60.tsv, capture/lab/P-node-loss/return-balt.tsv; cmd/atenet/internal/router/ingress/parking.go (the 5 s parking budget) and cmd/ateapi/internal/controlapi/workflow_resume.go at v1.0.0.

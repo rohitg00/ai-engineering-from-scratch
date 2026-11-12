@@ -1,0 +1,1 @@
+{"containers":[{"name":"agentgateway","image":"cr.agentgateway.dev/agentgateway:v1.7.0"}],"has_extra_roots":1}

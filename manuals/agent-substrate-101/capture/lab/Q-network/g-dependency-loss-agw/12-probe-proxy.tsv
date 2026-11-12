@@ -1,0 +1,490 @@
+1794488113	proxy	e-run	200	0.063083	preserved memory count: 3 | preserved file counter: 3 | preserved rootfs counter: 3 
+1794488114	proxy	e-run	200	0.059223	preserved memory count: 5 | preserved file counter: 5 | preserved rootfs counter: 5 
+1794488116	proxy	e-run	200	0.063716	preserved memory count: 7 | preserved file counter: 7 | preserved rootfs counter: 7 
+1794488117	proxy	e-run	200	0.054821	preserved memory count: 9 | preserved file counter: 9 | preserved rootfs counter: 9 
+1794488118	proxy	e-run	200	0.057437	preserved memory count: 11 | preserved file counter: 11 | preserved rootfs counter: 11 
+1794488119	proxy	e-run	200	0.072734	preserved memory count: 13 | preserved file counter: 13 | preserved rootfs counter: 13 
+1794488120	proxy	e-run	200	0.059705	preserved memory count: 15 | preserved file counter: 15 | preserved rootfs counter: 15 
+1794488121	proxy	e-run	200	0.059975	preserved memory count: 17 | preserved file counter: 17 | preserved rootfs counter: 17 
+1794488122	proxy	e-run	200	0.060200	preserved memory count: 19 | preserved file counter: 19 | preserved rootfs counter: 19 
+1794488123	proxy	e-run	200	0.061648	preserved memory count: 21 | preserved file counter: 21 | preserved rootfs counter: 21 
+1794488124	proxy	e-run	200	0.063322	preserved memory count: 23 | preserved file counter: 23 | preserved rootfs counter: 23 
+1794488125	proxy	e-run	200	0.062123	preserved memory count: 25 | preserved file counter: 25 | preserved rootfs counter: 25 
+1794488126	proxy	e-run	200	0.056290	preserved memory count: 27 | preserved file counter: 27 | preserved rootfs counter: 27 
+1794488127	proxy	e-run	200	0.057313	preserved memory count: 29 | preserved file counter: 29 | preserved rootfs counter: 29 
+1794488128	proxy	e-run	200	0.058653	preserved memory count: 31 | preserved file counter: 31 | preserved rootfs counter: 31 
+1794488129	proxy	e-run	200	0.063180	preserved memory count: 34 | preserved file counter: 34 | preserved rootfs counter: 34 
+1794488131	proxy	e-run	200	0.060845	preserved memory count: 36 | preserved file counter: 36 | preserved rootfs counter: 36 
+1794488132	proxy	e-run	200	0.062501	preserved memory count: 38 | preserved file counter: 38 | preserved rootfs counter: 38 
+1794488133	proxy	e-run	200	0.056425	preserved memory count: 40 | preserved file counter: 40 | preserved rootfs counter: 40 
+1794488134	proxy	e-run	200	0.057069	preserved memory count: 42 | preserved file counter: 42 | preserved rootfs counter: 42 
+1794488135	proxy	e-run	200	0.062198	preserved memory count: 44 | preserved file counter: 44 | preserved rootfs counter: 44 
+1794488136	proxy	e-run	200	0.079215	preserved memory count: 46 | preserved file counter: 46 | preserved rootfs counter: 46 
+1794488137	proxy	e-run	200	0.060419	preserved memory count: 48 | preserved file counter: 48 | preserved rootfs counter: 48 
+1794488138	proxy	e-run	200	0.058329	preserved memory count: 50 | preserved file counter: 50 | preserved rootfs counter: 50 
+1794488139	proxy	e-run	200	0.059389	preserved memory count: 52 | preserved file counter: 52 | preserved rootfs counter: 52 
+1794488140	proxy	e-run	200	0.063834	preserved memory count: 54 | preserved file counter: 54 | preserved rootfs counter: 54 
+1794488141	proxy	e-run	200	0.051733	preserved memory count: 56 | preserved file counter: 56 | preserved rootfs counter: 56 
+1794488142	proxy	e-run	200	0.055177	preserved memory count: 58 | preserved file counter: 58 | preserved rootfs counter: 58 
+1794488143	proxy	e-run	200	0.062196	preserved memory count: 60 | preserved file counter: 60 | preserved rootfs counter: 60 
+1794488144	proxy	e-run	200	0.056523	preserved memory count: 62 | preserved file counter: 62 | preserved rootfs counter: 62 
+1794488145	proxy	e-run	500	0.078132	ingress failed
+1794488147	proxy	e-run	504	5.042673	ingress failed
+1794488149	proxy	e-run	504	2.912633	ingress failed
+1794488148	proxy	e-run	504	3.979706	ingress failed
+1794488151	proxy	e-run	504	0.774541	ingress failed
+1794488150	proxy	e-run	504	1.846520	ingress failed
+1794488155	proxy	e-run	504	1.897742	ingress failed
+1794488152	proxy	e-run	504	5.055160	ingress failed
+1794488156	proxy	e-run	504	0.857105	ingress failed
+1794488154	proxy	e-run	504	2.935889	ingress failed
+1794488153	proxy	e-run	504	3.993278	ingress failed
+1794488157	proxy	e-run	500	0.042839	ingress failed
+1794488162	proxy	e-run	504	0.862968	ingress failed
+1794488159	proxy	e-run	504	3.987798	ingress failed
+1794488160	proxy	e-run	504	2.949275	ingress failed
+1794488161	proxy	e-run	504	1.904235	ingress failed
+1794488158	proxy	e-run	504	5.032398	ingress failed
+1794488163	proxy	e-run	500	0.048126	ingress failed
+1794488164	proxy	e-run	500	0.067077	ingress failed
+1794488165	proxy	e-run	500	0.065782	ingress failed
+1794488167	proxy	e-run	504	5.058889	ingress failed
+1794488169	proxy	e-run	504	2.981054	ingress failed
+1794488168	proxy	e-run	504	4.023586	ingress failed
+1794488171	proxy	e-run	504	0.906767	ingress failed
+1794488170	proxy	e-run	504	1.943251	ingress failed
+1794488172	proxy	e-run	500	0.061955	ingress failed
+1794488173	proxy	e-run	503	5.052423	ingress failed
+1794488177	proxy	e-run	503	0.769924	ingress failed
+1794488174	proxy	e-run	503	3.980389	ingress failed
+1794488175	proxy	e-run	503	2.915908	ingress failed
+1794488176	proxy	e-run	503	1.837487	ingress failed
+1794488182	proxy	e-run	503	0.772082	ingress failed
+1794488178	proxy	e-run	503	5.057135	ingress failed
+1794488180	proxy	e-run	503	2.912710	ingress failed
+1794488181	proxy	e-run	503	1.839019	ingress failed
+1794488179	proxy	e-run	503	3.982919	ingress failed
+1794488187	proxy	e-run	503	1.835256	ingress failed
+1794488188	proxy	e-run	503	0.769700	ingress failed
+1794488183	proxy	e-run	503	5.051955	ingress failed
+1794488185	proxy	e-run	503	3.980945	ingress failed
+1794488186	proxy	e-run	503	2.908199	ingress failed
+1794488193	proxy	e-run	503	0.780326	ingress failed
+1794488192	proxy	e-run	503	1.846909	ingress failed
+1794488190	proxy	e-run	503	3.985318	ingress failed
+1794488189	proxy	e-run	503	5.057793	ingress failed
+1794488191	proxy	e-run	503	2.914536	ingress failed
+1794488196	proxy	e-run	503	2.913997	ingress failed
+1794488195	proxy	e-run	503	3.983084	ingress failed
+1794488198	proxy	e-run	503	0.769410	ingress failed
+1794488194	proxy	e-run	503	5.056995	ingress failed
+1794488197	proxy	e-run	503	1.845100	ingress failed
+1794488202	proxy	e-run	503	2.913857	ingress failed
+1794488201	proxy	e-run	503	3.980935	ingress failed
+1794488204	proxy	e-run	503	0.773703	ingress failed
+1794488200	proxy	e-run	503	5.053279	ingress failed
+1794488203	proxy	e-run	503	1.844110	ingress failed
+1794488205	proxy	e-run	503	5.058671	ingress failed
+1794488209	proxy	e-run	503	0.781039	ingress failed
+1794488206	proxy	e-run	503	3.993265	ingress failed
+1794488207	proxy	e-run	503	2.924802	ingress failed
+1794488208	proxy	e-run	503	1.847203	ingress failed
+1794488213	proxy	e-run	503	1.840344	ingress failed
+1794488210	proxy	e-run	503	5.053953	ingress failed
+1794488212	proxy	e-run	503	2.915347	ingress failed
+1794488211	proxy	e-run	503	3.990016	ingress failed
+1794488215	proxy	e-run	503	0.774886	ingress failed
+1794488218	proxy	e-run	503	2.925846	ingress failed
+1794488217	proxy	e-run	503	3.991408	ingress failed
+1794488219	proxy	e-run	503	1.854645	ingress failed
+1794488216	proxy	e-run	503	5.058573	ingress failed
+1794488220	proxy	e-run	503	0.786852	ingress failed
+1794488223	proxy	e-run	503	2.933825	ingress failed
+1794488222	proxy	e-run	503	3.992256	ingress failed
+1794488225	proxy	e-run	503	0.795253	ingress failed
+1794488224	proxy	e-run	503	1.864030	ingress failed
+1794488221	proxy	e-run	503	5.060867	ingress failed
+1794488231	proxy	e-run	503	0.771279	ingress failed
+1794488226	proxy	e-run	503	5.053286	ingress failed
+1794488228	proxy	e-run	503	2.909184	ingress failed
+1794488227	proxy	e-run	503	3.977603	ingress failed
+1794488229	proxy	e-run	503	1.837480	ingress failed
+1794488232	proxy	e-run	200	2.621098	preserved memory count: 67 | preserved file counter: 67 | preserved rootfs counter: 67 
+1794488233	proxy	e-run	200	1.547502	preserved memory count: 68 | preserved file counter: 68 | preserved rootfs counter: 68 
+1794488234	proxy	e-run	200	0.476462	preserved memory count: 69 | preserved file counter: 69 | preserved rootfs counter: 69 
+1794488235	proxy	e-run	200	0.055526	preserved memory count: 76 | preserved file counter: 76 | preserved rootfs counter: 76 
+1794488236	proxy	e-run	200	0.064331	preserved memory count: 78 | preserved file counter: 78 | preserved rootfs counter: 78 
+1794488237	proxy	e-run	200	0.059273	preserved memory count: 80 | preserved file counter: 80 | preserved rootfs counter: 80 
+1794488238	proxy	e-run	200	0.059093	preserved memory count: 82 | preserved file counter: 82 | preserved rootfs counter: 82 
+1794488239	proxy	e-run	200	0.055805	preserved memory count: 84 | preserved file counter: 84 | preserved rootfs counter: 84 
+1794488240	proxy	e-run	200	0.069527	preserved memory count: 86 | preserved file counter: 86 | preserved rootfs counter: 86 
+1794488241	proxy	e-run	200	0.056517	preserved memory count: 88 | preserved file counter: 88 | preserved rootfs counter: 88 
+1794488242	proxy	e-run	200	0.061351	preserved memory count: 90 | preserved file counter: 90 | preserved rootfs counter: 90 
+1794488243	proxy	e-run	200	0.061637	preserved memory count: 92 | preserved file counter: 92 | preserved rootfs counter: 92 
+1794488244	proxy	e-run	200	0.057067	preserved memory count: 94 | preserved file counter: 94 | preserved rootfs counter: 94 
+1794488246	proxy	e-run	200	0.061719	preserved memory count: 96 | preserved file counter: 96 | preserved rootfs counter: 96 
+1794488247	proxy	e-run	200	0.056362	preserved memory count: 98 | preserved file counter: 98 | preserved rootfs counter: 98 
+1794488248	proxy	e-run	200	0.060753	preserved memory count: 100 | preserved file counter: 100 | preserved rootfs counter: 100 
+1794488249	proxy	e-run	200	0.058615	preserved memory count: 102 | preserved file counter: 102 | preserved rootfs counter: 102 
+1794488250	proxy	e-run	200	0.056026	preserved memory count: 104 | preserved file counter: 104 | preserved rootfs counter: 104 
+1794488251	proxy	e-run	200	0.066171	preserved memory count: 107 | preserved file counter: 107 | preserved rootfs counter: 107 
+1794488252	proxy	e-run	200	0.057145	preserved memory count: 109 | preserved file counter: 109 | preserved rootfs counter: 109 
+1794488253	proxy	e-run	200	0.057586	preserved memory count: 111 | preserved file counter: 111 | preserved rootfs counter: 111 
+1794488254	proxy	e-run	200	0.055763	preserved memory count: 113 | preserved file counter: 113 | preserved rootfs counter: 113 
+1794488255	proxy	e-run	200	0.056347	preserved memory count: 115 | preserved file counter: 115 | preserved rootfs counter: 115 
+1794488256	proxy	e-run	200	0.064628	preserved memory count: 117 | preserved file counter: 117 | preserved rootfs counter: 117 
+1794488257	proxy	e-run	200	0.057894	preserved memory count: 119 | preserved file counter: 119 | preserved rootfs counter: 119 
+1794488258	proxy	e-run	200	0.056077	preserved memory count: 121 | preserved file counter: 121 | preserved rootfs counter: 121 
+1794488259	proxy	e-run	200	0.062471	preserved memory count: 123 | preserved file counter: 123 | preserved rootfs counter: 123 
+1794488261	proxy	e-run	200	0.063747	preserved memory count: 125 | preserved file counter: 125 | preserved rootfs counter: 125 
+1794488262	proxy	e-run	200	0.066695	preserved memory count: 127 | preserved file counter: 127 | preserved rootfs counter: 127 
+1794488263	proxy	e-run	200	0.056079	preserved memory count: 129 | preserved file counter: 129 | preserved rootfs counter: 129 
+1794488264	proxy	e-run	200	0.056312	preserved memory count: 131 | preserved file counter: 131 | preserved rootfs counter: 131 
+1794488265	proxy	e-run	200	0.055260	preserved memory count: 133 | preserved file counter: 133 | preserved rootfs counter: 133 
+1794488266	proxy	e-run	200	0.058875	preserved memory count: 135 | preserved file counter: 135 | preserved rootfs counter: 135 
+1794488267	proxy	e-run	200	0.083624	preserved memory count: 138 | preserved file counter: 138 | preserved rootfs counter: 138 
+1794488268	proxy	e-run	200	0.056120	preserved memory count: 140 | preserved file counter: 140 | preserved rootfs counter: 140 
+1794488269	proxy	e-run	200	0.054142	preserved memory count: 142 | preserved file counter: 142 | preserved rootfs counter: 142 
+1794488270	proxy	e-run	200	0.058012	preserved memory count: 144 | preserved file counter: 144 | preserved rootfs counter: 144 
+1794488271	proxy	e-run	200	0.055655	preserved memory count: 146 | preserved file counter: 146 | preserved rootfs counter: 146 
+1794488272	proxy	e-run	200	0.065285	preserved memory count: 148 | preserved file counter: 148 | preserved rootfs counter: 148 
+1794488273	proxy	e-run	200	0.054019	preserved memory count: 150 | preserved file counter: 150 | preserved rootfs counter: 150 
+1794488274	proxy	e-run	200	0.054045	preserved memory count: 152 | preserved file counter: 152 | preserved rootfs counter: 152 
+1794488276	proxy	e-run	200	0.056149	preserved memory count: 154 | preserved file counter: 154 | preserved rootfs counter: 154 
+1794488277	proxy	e-run	200	0.055030	preserved memory count: 156 | preserved file counter: 156 | preserved rootfs counter: 156 
+1794488278	proxy	e-run	200	0.061863	preserved memory count: 158 | preserved file counter: 158 | preserved rootfs counter: 158 
+1794488279	proxy	e-run	200	0.060566	preserved memory count: 160 | preserved file counter: 160 | preserved rootfs counter: 160 
+1794488280	proxy	e-run	200	0.056570	preserved memory count: 162 | preserved file counter: 162 | preserved rootfs counter: 162 
+1794488281	proxy	e-run	200	0.054540	preserved memory count: 164 | preserved file counter: 164 | preserved rootfs counter: 164 
+1794488282	proxy	e-run	200	0.055054	preserved memory count: 167 | preserved file counter: 167 | preserved rootfs counter: 167 
+1794488283	proxy	e-run	200	0.058598	preserved memory count: 169 | preserved file counter: 169 | preserved rootfs counter: 169 
+1794488284	proxy	e-run	200	0.059403	preserved memory count: 171 | preserved file counter: 171 | preserved rootfs counter: 171 
+1794488285	proxy	e-run	200	0.060468	preserved memory count: 173 | preserved file counter: 173 | preserved rootfs counter: 173 
+1794488286	proxy	e-run	200	0.056444	preserved memory count: 175 | preserved file counter: 175 | preserved rootfs counter: 175 
+1794488287	proxy	e-run	200	0.064378	preserved memory count: 177 | preserved file counter: 177 | preserved rootfs counter: 177 
+1794488288	proxy	e-run	200	0.063615	preserved memory count: 179 | preserved file counter: 179 | preserved rootfs counter: 179 
+1794488290	proxy	e-run	200	0.059125	preserved memory count: 181 | preserved file counter: 181 | preserved rootfs counter: 181 
+1794488291	proxy	e-run	200	0.055124	preserved memory count: 183 | preserved file counter: 183 | preserved rootfs counter: 183 
+1794488292	proxy	e-run	200	0.061102	preserved memory count: 185 | preserved file counter: 185 | preserved rootfs counter: 185 
+1794488293	proxy	e-run	200	0.054758	preserved memory count: 187 | preserved file counter: 187 | preserved rootfs counter: 187 
+1794488294	proxy	e-run	200	0.061933	preserved memory count: 189 | preserved file counter: 189 | preserved rootfs counter: 189 
+1794488295	proxy	e-run	200	0.055391	preserved memory count: 191 | preserved file counter: 191 | preserved rootfs counter: 191 
+1794488296	proxy	e-run	200	0.051314	preserved memory count: 193 | preserved file counter: 193 | preserved rootfs counter: 193 
+1794488297	proxy	e-run	200	0.080860	preserved memory count: 196 | preserved file counter: 196 | preserved rootfs counter: 196 
+1794488298	proxy	e-run	200	0.058567	preserved memory count: 198 | preserved file counter: 198 | preserved rootfs counter: 198 
+1794488299	proxy	e-run	200	0.086045	preserved memory count: 200 | preserved file counter: 200 | preserved rootfs counter: 200 
+1794488300	proxy	e-run	200	0.053534	preserved memory count: 202 | preserved file counter: 202 | preserved rootfs counter: 202 
+1794488301	proxy	e-run	200	0.055313	preserved memory count: 204 | preserved file counter: 204 | preserved rootfs counter: 204 
+1794488302	proxy	e-run	200	0.059239	preserved memory count: 206 | preserved file counter: 206 | preserved rootfs counter: 206 
+1794488303	proxy	e-run	200	0.054100	preserved memory count: 208 | preserved file counter: 208 | preserved rootfs counter: 208 
+1794488305	proxy	e-run	200	0.063526	preserved memory count: 210 | preserved file counter: 210 | preserved rootfs counter: 210 
+1794488306	proxy	e-run	200	0.057051	preserved memory count: 212 | preserved file counter: 212 | preserved rootfs counter: 212 
+1794488307	proxy	e-run	200	0.055532	preserved memory count: 214 | preserved file counter: 214 | preserved rootfs counter: 214 
+1794488308	proxy	e-run	200	0.054783	preserved memory count: 216 | preserved file counter: 216 | preserved rootfs counter: 216 
+1794488309	proxy	e-run	200	0.053278	preserved memory count: 218 | preserved file counter: 218 | preserved rootfs counter: 218 
+1794488310	proxy	e-run	200	0.060750	preserved memory count: 220 | preserved file counter: 220 | preserved rootfs counter: 220 
+1794488311	proxy	e-run	200	0.056275	preserved memory count: 222 | preserved file counter: 222 | preserved rootfs counter: 222 
+1794488312	proxy	e-run	200	0.128085	preserved memory count: 225 | preserved file counter: 225 | preserved rootfs counter: 225 
+1794488313	proxy	e-run	200	0.056283	preserved memory count: 227 | preserved file counter: 227 | preserved rootfs counter: 227 
+1794488314	proxy	e-run	200	0.055801	preserved memory count: 229 | preserved file counter: 229 | preserved rootfs counter: 229 
+1794488315	proxy	e-run	504	5.052630	ingress failed
+1794488320	proxy	e-run	504	0.740559	ingress failed
+1794488316	proxy	e-run	504	3.975830	ingress failed
+1794488319	proxy	e-run	504	1.815324	ingress failed
+1794488317	proxy	e-run	504	2.898800	ingress failed
+1794488323	proxy	e-run	504	2.905849	ingress failed
+1794488322	proxy	e-run	504	3.978371	ingress failed
+1794488324	proxy	e-run	504	1.833515	ingress failed
+1794488325	proxy	e-run	504	0.753771	ingress failed
+1794488321	proxy	e-run	504	5.059708	ingress failed
+1794488330	proxy	e-run	503	0.749244	ingress failed
+1794488328	proxy	e-run	503	2.900153	ingress failed
+1794488326	proxy	e-run	503	5.056122	ingress failed
+1794488327	proxy	e-run	503	3.979812	ingress failed
+1794488329	proxy	e-run	503	1.824264	ingress failed
+1794488333	proxy	e-run	503	3.982069	ingress failed
+1794488334	proxy	e-run	503	2.910794	ingress failed
+1794488335	proxy	e-run	503	1.829179	ingress failed
+1794488331	proxy	e-run	503	5.053092	ingress failed
+1794488336	proxy	e-run	503	0.750758	ingress failed
+1794488339	proxy	e-run	503	2.895838	ingress failed
+1794488341	proxy	e-run	503	0.740276	ingress failed
+1794488338	proxy	e-run	503	3.968162	ingress failed
+1794488337	proxy	e-run	503	5.049445	ingress failed
+1794488340	proxy	e-run	503	1.816805	ingress failed
+1794488343	proxy	e-run	503	3.973450	ingress failed
+1794488344	proxy	e-run	503	2.902173	ingress failed
+1794488347	proxy	e-run	503	0.756791	ingress failed
+1794488342	proxy	e-run	503	5.052763	ingress failed
+1794488345	proxy	e-run	503	1.828986	ingress failed
+1794488350	proxy	e-run	503	2.903416	ingress failed
+1794488349	proxy	e-run	503	3.980360	ingress failed
+1794488352	proxy	e-run	503	0.751466	ingress failed
+1794488348	proxy	e-run	503	5.054175	ingress failed
+1794488351	proxy	e-run	503	1.827044	ingress failed
+1794488354	proxy	e-run	503	3.976281	ingress failed
+1794488356	proxy	e-run	503	1.829872	ingress failed
+1794488355	proxy	e-run	503	2.900224	ingress failed
+1794488357	proxy	e-run	503	0.749466	ingress failed
+1794488353	proxy	e-run	503	5.052753	ingress failed
+1794488358	proxy	e-run	503	5.053188	ingress failed
+1794488363	proxy	e-run	503	0.761925	ingress failed
+1794488362	proxy	e-run	503	1.831746	ingress failed
+1794488361	proxy	e-run	503	2.909790	ingress failed
+1794488359	proxy	e-run	503	3.981574	ingress failed
+1794488368	proxy	e-run	503	0.749996	ingress failed
+1794488365	proxy	e-run	503	3.978437	ingress failed
+1794488367	proxy	e-run	503	1.824835	ingress failed
+1794488366	proxy	e-run	503	2.909724	ingress failed
+1794488364	proxy	e-run	503	5.053626	ingress failed
+1794488370	proxy	e-run	503	3.974144	ingress failed
+1794488372	proxy	e-run	503	1.825726	ingress failed
+1794488371	proxy	e-run	503	2.897424	ingress failed
+1794488373	proxy	e-run	503	0.744964	ingress failed
+1794488369	proxy	e-run	503	5.053626	ingress failed
+1794488376	proxy	e-run	503	3.974246	ingress failed
+1794488375	proxy	e-run	503	5.054437	ingress failed
+1794488377	proxy	e-run	503	2.900125	ingress failed
+1794488378	proxy	e-run	503	1.817017	ingress failed
+1794488379	proxy	e-run	503	0.740385	ingress failed
+1794488383	proxy	e-run	503	1.824323	ingress failed
+1794488384	proxy	e-run	503	0.751249	ingress failed
+1794488382	proxy	e-run	503	2.901700	ingress failed
+1794488380	proxy	e-run	503	5.057677	ingress failed
+1794488381	proxy	e-run	503	3.983800	ingress failed
+1794488385	proxy	e-run	200	1.254632	preserved memory count: 230 | preserved file counter: 230 | preserved rootfs counter: 230 
+1794488386	proxy	e-run	200	0.180137	preserved memory count: 231 | preserved file counter: 231 | preserved rootfs counter: 231 
+1794488387	proxy	e-run	200	0.107862	preserved memory count: 235 | preserved file counter: 235 | preserved rootfs counter: 235 
+1794488388	proxy	e-run	200	0.057089	preserved memory count: 237 | preserved file counter: 237 | preserved rootfs counter: 237 
+1794488390	proxy	e-run	200	0.055026	preserved memory count: 239 | preserved file counter: 239 | preserved rootfs counter: 239 
+1794488391	proxy	e-run	200	0.058846	preserved memory count: 241 | preserved file counter: 241 | preserved rootfs counter: 241 
+1794488392	proxy	e-run	200	0.067210	preserved memory count: 243 | preserved file counter: 243 | preserved rootfs counter: 243 
+1794488393	proxy	e-run	200	0.134023	preserved memory count: 245 | preserved file counter: 245 | preserved rootfs counter: 245 
+1794488394	proxy	e-run	200	0.056087	preserved memory count: 247 | preserved file counter: 247 | preserved rootfs counter: 247 
+1794488395	proxy	e-run	200	0.054225	preserved memory count: 249 | preserved file counter: 249 | preserved rootfs counter: 249 
+1794488396	proxy	e-run	200	0.058755	preserved memory count: 251 | preserved file counter: 251 | preserved rootfs counter: 251 
+1794488397	proxy	e-run	200	0.070550	preserved memory count: 253 | preserved file counter: 253 | preserved rootfs counter: 253 
+1794488398	proxy	e-run	200	0.057663	preserved memory count: 255 | preserved file counter: 255 | preserved rootfs counter: 255 
+1794488399	proxy	e-run	200	0.056085	preserved memory count: 257 | preserved file counter: 257 | preserved rootfs counter: 257 
+1794488400	proxy	e-run	200	0.054043	preserved memory count: 259 | preserved file counter: 259 | preserved rootfs counter: 259 
+1794488401	proxy	e-run	200	0.055243	preserved memory count: 261 | preserved file counter: 261 | preserved rootfs counter: 261 
+1794488402	proxy	e-run	200	0.060668	preserved memory count: 264 | preserved file counter: 264 | preserved rootfs counter: 264 
+1794488404	proxy	e-run	200	0.056366	preserved memory count: 266 | preserved file counter: 266 | preserved rootfs counter: 266 
+1794488405	proxy	e-run	200	0.055837	preserved memory count: 268 | preserved file counter: 268 | preserved rootfs counter: 268 
+1794488406	proxy	e-run	200	0.058451	preserved memory count: 270 | preserved file counter: 270 | preserved rootfs counter: 270 
+1794488407	proxy	e-run	200	0.057004	preserved memory count: 272 | preserved file counter: 272 | preserved rootfs counter: 272 
+1794488408	proxy	e-run	200	0.068405	preserved memory count: 274 | preserved file counter: 274 | preserved rootfs counter: 274 
+1794488409	proxy	e-run	200	0.055384	preserved memory count: 276 | preserved file counter: 276 | preserved rootfs counter: 276 
+1794488410	proxy	e-run	200	0.050930	preserved memory count: 278 | preserved file counter: 278 | preserved rootfs counter: 278 
+1794488411	proxy	e-run	200	0.055045	preserved memory count: 280 | preserved file counter: 280 | preserved rootfs counter: 280 
+1794488412	proxy	e-run	200	0.055020	preserved memory count: 282 | preserved file counter: 282 | preserved rootfs counter: 282 
+1794488413	proxy	e-run	200	0.060462	preserved memory count: 284 | preserved file counter: 284 | preserved rootfs counter: 284 
+1794488414	proxy	e-run	200	0.056523	preserved memory count: 286 | preserved file counter: 286 | preserved rootfs counter: 286 
+1794488415	proxy	e-run	200	0.055087	preserved memory count: 288 | preserved file counter: 288 | preserved rootfs counter: 288 
+1794488417	proxy	e-run	200	0.095321	preserved memory count: 291 | preserved file counter: 291 | preserved rootfs counter: 291 
+1794488418	proxy	e-run	200	0.056587	preserved memory count: 293 | preserved file counter: 293 | preserved rootfs counter: 293 
+1794488419	proxy	e-run	200	0.064174	preserved memory count: 295 | preserved file counter: 295 | preserved rootfs counter: 295 
+1794488420	proxy	e-run	200	0.056323	preserved memory count: 297 | preserved file counter: 297 | preserved rootfs counter: 297 
+1794488421	proxy	e-run	200	0.057107	preserved memory count: 299 | preserved file counter: 299 | preserved rootfs counter: 299 
+1794488422	proxy	e-run	200	0.055378	preserved memory count: 301 | preserved file counter: 301 | preserved rootfs counter: 301 
+1794488423	proxy	e-run	200	0.056697	preserved memory count: 303 | preserved file counter: 303 | preserved rootfs counter: 303 
+1794488424	proxy	e-run	200	0.059047	preserved memory count: 305 | preserved file counter: 305 | preserved rootfs counter: 305 
+1794488425	proxy	e-run	200	0.051866	preserved memory count: 307 | preserved file counter: 307 | preserved rootfs counter: 307 
+1794488426	proxy	e-run	200	0.054654	preserved memory count: 309 | preserved file counter: 309 | preserved rootfs counter: 309 
+1794488427	proxy	e-run	200	0.059033	preserved memory count: 311 | preserved file counter: 311 | preserved rootfs counter: 311 
+1794488428	proxy	e-run	200	0.053242	preserved memory count: 313 | preserved file counter: 313 | preserved rootfs counter: 313 
+1794488429	proxy	e-run	200	0.062593	preserved memory count: 315 | preserved file counter: 315 | preserved rootfs counter: 315 
+1794488431	proxy	e-run	200	0.059586	preserved memory count: 318 | preserved file counter: 318 | preserved rootfs counter: 318 
+1794488432	proxy	e-run	200	0.057828	preserved memory count: 320 | preserved file counter: 320 | preserved rootfs counter: 320 
+1794488433	proxy	e-run	200	0.055490	preserved memory count: 322 | preserved file counter: 322 | preserved rootfs counter: 322 
+1794488434	proxy	e-run	200	0.055222	preserved memory count: 324 | preserved file counter: 324 | preserved rootfs counter: 324 
+1794488435	proxy	e-run	200	0.056767	preserved memory count: 326 | preserved file counter: 326 | preserved rootfs counter: 326 
+1794488436	proxy	e-run	200	0.054389	preserved memory count: 328 | preserved file counter: 328 | preserved rootfs counter: 328 
+1794488437	proxy	e-run	200	0.087197	preserved memory count: 330 | preserved file counter: 330 | preserved rootfs counter: 330 
+1794488438	proxy	e-run	200	0.051249	preserved memory count: 332 | preserved file counter: 332 | preserved rootfs counter: 332 
+1794488439	proxy	e-run	200	0.050924	preserved memory count: 334 | preserved file counter: 334 | preserved rootfs counter: 334 
+1794488440	proxy	e-run	200	0.056351	preserved memory count: 336 | preserved file counter: 336 | preserved rootfs counter: 336 
+1794488441	proxy	e-run	200	0.052722	preserved memory count: 338 | preserved file counter: 338 | preserved rootfs counter: 338 
+1794488442	proxy	e-run	200	0.051024	preserved memory count: 340 | preserved file counter: 340 | preserved rootfs counter: 340 
+1794488444	proxy	e-run	200	0.050468	preserved memory count: 342 | preserved file counter: 342 | preserved rootfs counter: 342 
+1794488445	proxy	e-run	200	0.060314	preserved memory count: 345 | preserved file counter: 345 | preserved rootfs counter: 345 
+1794488446	proxy	e-run	200	0.057281	preserved memory count: 347 | preserved file counter: 347 | preserved rootfs counter: 347 
+1794488447	proxy	e-run	200	0.060448	preserved memory count: 349 | preserved file counter: 349 | preserved rootfs counter: 349 
+1794488448	proxy	e-run	200	0.051514	preserved memory count: 351 | preserved file counter: 351 | preserved rootfs counter: 351 
+1794488449	proxy	e-run	200	0.054698	preserved memory count: 353 | preserved file counter: 353 | preserved rootfs counter: 353 
+1794488450	proxy	e-run	200	0.051631	preserved memory count: 355 | preserved file counter: 355 | preserved rootfs counter: 355 
+1794488451	proxy	e-run	200	0.058480	preserved memory count: 357 | preserved file counter: 357 | preserved rootfs counter: 357 
+1794488452	proxy	e-run	200	0.056232	preserved memory count: 359 | preserved file counter: 359 | preserved rootfs counter: 359 
+1794488453	proxy	e-run	200	0.055466	preserved memory count: 361 | preserved file counter: 361 | preserved rootfs counter: 361 
+1794488454	proxy	e-run	200	0.057415	preserved memory count: 363 | preserved file counter: 363 | preserved rootfs counter: 363 
+1794488455	proxy	e-run	200	0.055485	preserved memory count: 365 | preserved file counter: 365 | preserved rootfs counter: 365 
+1794488456	proxy	e-run	200	0.058243	preserved memory count: 367 | preserved file counter: 367 | preserved rootfs counter: 367 
+1794488458	proxy	e-run	200	0.050657	preserved memory count: 369 | preserved file counter: 369 | preserved rootfs counter: 369 
+1794488459	proxy	e-run	200	0.050178	preserved memory count: 371 | preserved file counter: 371 | preserved rootfs counter: 371 
+1794488460	proxy	e-run	000	9.002172	
+1794488461	proxy	e-run	000	9.002574	
+1794488462	proxy	e-run	000	9.002305	
+1794488463	proxy	e-run	000	9.002564	
+1794488464	proxy	e-run	000	9.002953	
+1794488465	proxy	e-run	000	9.002110	
+1794488466	proxy	e-run	000	9.002220	
+1794488467	proxy	e-run	000	9.002021	
+1794488468	proxy	e-run	000	9.002416	
+1794488469	proxy	e-run	000	9.002531	
+1794488471	proxy	e-run	000	9.002048	
+1794488472	proxy	e-run	000	9.002465	
+1794488473	proxy	e-run	000	9.002921	
+1794488474	proxy	e-run	000	9.002140	
+1794488475	proxy	e-run	000	9.002213	
+1794488476	proxy	e-run	000	9.002435	
+1794488477	proxy	e-run	000	9.003023	
+1794488478	proxy	e-run	000	9.002213	
+1794488479	proxy	e-run	000	9.002343	
+1794488480	proxy	e-run	000	9.002390	
+1794488481	proxy	e-run	000	9.003064	
+1794488482	proxy	e-run	000	9.002926	
+1794488484	proxy	e-run	000	9.002577	
+1794488485	proxy	e-run	000	9.002680	
+1794488486	proxy	e-run	000	9.001834	
+1794488487	proxy	e-run	000	9.002993	
+1794488488	proxy	e-run	000	9.002456	
+1794488489	proxy	e-run	000	9.002017	
+1794488490	proxy	e-run	000	9.003033	
+1794488491	proxy	e-run	000	9.002534	
+1794488492	proxy	e-run	000	9.002090	
+1794488493	proxy	e-run	000	9.002330	
+1794488494	proxy	e-run	000	9.001967	
+1794488495	proxy	e-run	000	9.002735	
+1794488497	proxy	e-run	000	9.002438	
+1794488498	proxy	e-run	000	9.002275	
+1794488499	proxy	e-run	000	9.001956	
+1794488500	proxy	e-run	000	9.002383	
+1794488501	proxy	e-run	000	9.002633	
+1794488502	proxy	e-run	000	9.002087	
+1794488503	proxy	e-run	000	9.002334	
+1794488504	proxy	e-run	000	9.002562	
+1794488505	proxy	e-run	000	9.002178	
+1794488506	proxy	e-run	000	9.001904	
+1794488507	proxy	e-run	000	9.002108	
+1794488508	proxy	e-run	000	9.002078	
+1794488510	proxy	e-run	000	9.002755	
+1794488511	proxy	e-run	000	9.002263	
+1794488512	proxy	e-run	000	9.002196	
+1794488513	proxy	e-run	000	9.002239	
+1794488514	proxy	e-run	000	9.002713	
+1794488515	proxy	e-run	000	9.002093	
+1794488516	proxy	e-run	000	9.002035	
+1794488517	proxy	e-run	000	9.001993	
+1794488518	proxy	e-run	000	9.002425	
+1794488519	proxy	e-run	000	9.001910	
+1794488520	proxy	e-run	000	9.002116	
+1794488521	proxy	e-run	000	9.001400	
+1794488523	proxy	e-run	000	9.002128	
+1794488524	proxy	e-run	000	9.002709	
+1794488525	proxy	e-run	000	9.001811	
+1794488526	proxy	e-run	000	9.002928	
+1794488527	proxy	e-run	000	9.002153	
+1794488528	proxy	e-run	000	9.002017	
+1794488529	proxy	e-run	000	9.002364	
+1794488530	proxy	e-run	000	9.002156	
+1794488531	proxy	e-run	000	9.001442	
+1794488532	proxy	e-run	000	9.002399	
+1794488533	proxy	e-run	000	9.002628	
+1794488534	proxy	e-run	000	9.002571	
+1794488536	proxy	e-run	000	9.002618	
+1794488537	proxy	e-run	000	9.002688	
+1794488538	proxy	e-run	000	9.002584	
+1794488539	proxy	e-run	000	9.001926	
+1794488540	proxy	e-run	000	9.001956	
+1794488541	proxy	e-run	000	9.001528	
+1794488542	proxy	e-run	000	9.002117	
+1794488543	proxy	e-run	000	9.002289	
+1794488544	proxy	e-run	000	9.002565	
+1794488545	proxy	e-run	000	9.002025	
+1794488546	proxy	e-run	000	9.002993	
+1794488547	proxy	e-run	000	9.002019	
+1794488549	proxy	e-run	000	9.002073	
+1794488550	proxy	e-run	000	9.001811	
+1794488551	proxy	e-run	000	9.002952	
+1794488552	proxy	e-run	000	9.002700	
+1794488553	proxy	e-run	000	9.002083	
+1794488554	proxy	e-run	000	9.002471	
+1794488555	proxy	e-run	000	9.001947	
+1794488556	proxy	e-run	000	9.002221	
+1794488557	proxy	e-run	000	9.002112	
+1794488558	proxy	e-run	000	9.002171	
+1794488559	proxy	e-run	000	9.002958	
+1794488561	proxy	e-run	000	9.002709	
+1794488562	proxy	e-run	000	9.002260	
+1794488563	proxy	e-run	000	9.002808	
+1794488564	proxy	e-run	000	9.002414	
+1794488565	proxy	e-run	000	9.002499	
+1794488566	proxy	e-run	000	9.002380	
+1794488567	proxy	e-run	000	9.002168	
+1794488568	proxy	e-run	000	9.001148	
+1794488569	proxy	e-run	000	9.002161	
+1794488570	proxy	e-run	000	9.001619	
+1794488571	proxy	e-run	200	8.402411	preserved memory count: 493 | preserved file counter: 493 | preserved rootfs counter: 493 
+1794488572	proxy	e-run	200	7.737428	preserved memory count: 495 | preserved file counter: 495 | preserved rootfs counter: 495 
+1794488574	proxy	e-run	200	6.803246	preserved memory count: 496 | preserved file counter: 496 | preserved rootfs counter: 496 
+1794488575	proxy	e-run	200	6.128034	preserved memory count: 497 | preserved file counter: 497 | preserved rootfs counter: 497 
+1794488576	proxy	e-run	200	5.479085	preserved memory count: 499 | preserved file counter: 499 | preserved rootfs counter: 499 
+1794488577	proxy	e-run	200	4.553527	preserved memory count: 500 | preserved file counter: 500 | preserved rootfs counter: 500 
+1794488578	proxy	e-run	200	3.857211	preserved memory count: 501 | preserved file counter: 501 | preserved rootfs counter: 501 
+1794488579	proxy	e-run	200	2.971048	preserved memory count: 502 | preserved file counter: 502 | preserved rootfs counter: 502 
+1794488580	proxy	e-run	200	2.274897	preserved memory count: 504 | preserved file counter: 504 | preserved rootfs counter: 504 
+1794488581	proxy	e-run	200	1.399640	preserved memory count: 505 | preserved file counter: 505 | preserved rootfs counter: 505 
+1794488582	proxy	e-run	200	0.713490	preserved memory count: 506 | preserved file counter: 506 | preserved rootfs counter: 506 
+1794488583	proxy	e-run	200	0.057620	preserved memory count: 508 | preserved file counter: 508 | preserved rootfs counter: 508 
+1794488584	proxy	e-run	200	0.054362	preserved memory count: 510 | preserved file counter: 510 | preserved rootfs counter: 510 
+1794488586	proxy	e-run	200	0.062709	preserved memory count: 512 | preserved file counter: 512 | preserved rootfs counter: 512 
+1794488587	proxy	e-run	200	0.052444	preserved memory count: 514 | preserved file counter: 514 | preserved rootfs counter: 514 
+1794488588	proxy	e-run	200	0.051391	preserved memory count: 516 | preserved file counter: 516 | preserved rootfs counter: 516 
+1794488589	proxy	e-run	200	0.053416	preserved memory count: 518 | preserved file counter: 518 | preserved rootfs counter: 518 
+1794488590	proxy	e-run	200	0.056465	preserved memory count: 520 | preserved file counter: 520 | preserved rootfs counter: 520 
+1794488591	proxy	e-run	200	0.063815	preserved memory count: 522 | preserved file counter: 522 | preserved rootfs counter: 522 
+1794488592	proxy	e-run	200	0.056924	preserved memory count: 524 | preserved file counter: 524 | preserved rootfs counter: 524 
+1794488593	proxy	e-run	200	0.059086	preserved memory count: 527 | preserved file counter: 527 | preserved rootfs counter: 527 
+1794488594	proxy	e-run	200	0.057986	preserved memory count: 529 | preserved file counter: 529 | preserved rootfs counter: 529 
+1794488595	proxy	e-run	200	0.057005	preserved memory count: 531 | preserved file counter: 531 | preserved rootfs counter: 531 
+1794488596	proxy	e-run	200	0.063169	preserved memory count: 533 | preserved file counter: 533 | preserved rootfs counter: 533 
+1794488598	proxy	e-run	200	0.054502	preserved memory count: 535 | preserved file counter: 535 | preserved rootfs counter: 535 
+1794488599	proxy	e-run	200	0.056899	preserved memory count: 537 | preserved file counter: 537 | preserved rootfs counter: 537 
+1794488600	proxy	e-run	200	0.053605	preserved memory count: 539 | preserved file counter: 539 | preserved rootfs counter: 539 
+1794488601	proxy	e-run	200	0.054753	preserved memory count: 541 | preserved file counter: 541 | preserved rootfs counter: 541 
+1794488602	proxy	e-run	200	0.060554	preserved memory count: 543 | preserved file counter: 543 | preserved rootfs counter: 543 
+1794488603	proxy	e-run	200	0.065627	preserved memory count: 545 | preserved file counter: 545 | preserved rootfs counter: 545 
+1794488604	proxy	e-run	200	0.056576	preserved memory count: 547 | preserved file counter: 547 | preserved rootfs counter: 547 
+1794488605	proxy	e-run	200	0.058497	preserved memory count: 549 | preserved file counter: 549 | preserved rootfs counter: 549 
+1794488606	proxy	e-run	200	0.096493	preserved memory count: 552 | preserved file counter: 552 | preserved rootfs counter: 552 
+1794488607	proxy	e-run	200	0.059548	preserved memory count: 554 | preserved file counter: 554 | preserved rootfs counter: 554 
+1794488608	proxy	e-run	200	0.062577	preserved memory count: 556 | preserved file counter: 556 | preserved rootfs counter: 556 
+1794488609	proxy	e-run	200	0.058743	preserved memory count: 558 | preserved file counter: 558 | preserved rootfs counter: 558 
+1794488611	proxy	e-run	200	0.058626	preserved memory count: 560 | preserved file counter: 560 | preserved rootfs counter: 560 
+1794488612	proxy	e-run	200	0.056239	preserved memory count: 562 | preserved file counter: 562 | preserved rootfs counter: 562 
+1794488613	proxy	e-run	200	0.140671	preserved memory count: 564 | preserved file counter: 564 | preserved rootfs counter: 564 
+1794488614	proxy	e-run	200	0.057577	preserved memory count: 566 | preserved file counter: 566 | preserved rootfs counter: 566 
+1794488615	proxy	e-run	200	0.058403	preserved memory count: 568 | preserved file counter: 568 | preserved rootfs counter: 568 
+1794488616	proxy	e-run	200	0.058680	preserved memory count: 570 | preserved file counter: 570 | preserved rootfs counter: 570 
+1794488617	proxy	e-run	200	0.064426	preserved memory count: 572 | preserved file counter: 572 | preserved rootfs counter: 572 
+1794488618	proxy	e-run	200	0.064592	preserved memory count: 574 | preserved file counter: 574 | preserved rootfs counter: 574 
+1794488619	proxy	e-run	200	0.055408	preserved memory count: 577 | preserved file counter: 577 | preserved rootfs counter: 577 
+1794488620	proxy	e-run	200	0.057757	preserved memory count: 579 | preserved file counter: 579 | preserved rootfs counter: 579 
+1794488621	proxy	e-run	200	0.054807	preserved memory count: 581 | preserved file counter: 581 | preserved rootfs counter: 581 
+1794488623	proxy	e-run	200	0.057189	preserved memory count: 583 | preserved file counter: 583 | preserved rootfs counter: 583 
+1794488624	proxy	e-run	200	0.062843	preserved memory count: 585 | preserved file counter: 585 | preserved rootfs counter: 585 
+1794488625	proxy	e-run	200	0.054876	preserved memory count: 587 | preserved file counter: 587 | preserved rootfs counter: 587 
+1794488626	proxy	e-run	200	0.055741	preserved memory count: 589 | preserved file counter: 589 | preserved rootfs counter: 589 
+1794488627	proxy	e-run	200	0.059802	preserved memory count: 591 | preserved file counter: 591 | preserved rootfs counter: 591 
+1794488628	proxy	e-run	200	0.055274	preserved memory count: 593 | preserved file counter: 593 | preserved rootfs counter: 593 
+1794488629	proxy	e-run	200	0.065951	preserved memory count: 595 | preserved file counter: 595 | preserved rootfs counter: 595 
+1794488630	proxy	e-run	200	0.055954	preserved memory count: 597 | preserved file counter: 597 | preserved rootfs counter: 597 
+1794488631	proxy	e-run	200	0.083141	preserved memory count: 600 | preserved file counter: 600 | preserved rootfs counter: 600 
+1794488632	proxy	e-run	200	0.056188	preserved memory count: 602 | preserved file counter: 602 | preserved rootfs counter: 602 
+1794488634	proxy	e-run	200	0.059033	preserved memory count: 604 | preserved file counter: 604 | preserved rootfs counter: 604 
+1794488635	proxy	e-run	200	0.062447	preserved memory count: 606 | preserved file counter: 606 | preserved rootfs counter: 606 
+1794488636	proxy	e-run	200	0.057854	preserved memory count: 608 | preserved file counter: 608 | preserved rootfs counter: 608 
+1794488637	proxy	e-run	200	0.055360	preserved memory count: 610 | preserved file counter: 610 | preserved rootfs counter: 610 
+1794488638	proxy	e-run	200	0.058261	preserved memory count: 612 | preserved file counter: 612 | preserved rootfs counter: 612 
+1794488639	proxy	e-run	200	0.055456	preserved memory count: 614 | preserved file counter: 614 | preserved rootfs counter: 614 
+1794488640	proxy	e-run	200	0.062290	preserved memory count: 616 | preserved file counter: 616 | preserved rootfs counter: 616 

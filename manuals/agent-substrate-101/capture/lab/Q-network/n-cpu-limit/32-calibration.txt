@@ -1,0 +1,1 @@
+calibration on a 2000 millicore actor: 4000 chunks of 200000 steps in 0.51376655 s; test uses 38928 chunks (about 5 s of one unthrottled core)

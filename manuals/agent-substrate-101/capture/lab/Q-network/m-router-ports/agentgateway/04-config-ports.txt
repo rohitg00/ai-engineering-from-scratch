@@ -1,0 +1,23 @@
+16:    protocol: grpc
+21:    port: 8443
+22:    protocol: HTTPS
+29:- name: dynamic
+46:- name: substrate-actors
+48:  - https
+50:  - path:
+55:      connectTargetPort: 8443
+62:  - backend: /dynamic
+63:- name: substrate-actors-grpc
+65:  - https
+67:  - method: POST
+69:    - name: content-type
+74:  - backend: /dynamic
+79:binds:
+80:- port: 8444
+81:  tunnelProtocol: connect
+82:  listeners:
+83:  - protocol: HTTPS
+87:  listeners:
+88:  - protocol: HTTP
+90:    - name: substrate-actors-tunneled
+97:    - name: substrate-actors-tunneled-grpc

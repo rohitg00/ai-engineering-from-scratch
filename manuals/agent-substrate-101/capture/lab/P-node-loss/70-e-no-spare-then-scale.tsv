@@ -1,0 +1,18 @@
+ts	t	event	detail
+2026-11-12T14:11:41.444Z	t=-	actor	h2 on multi-worker2 pod lab-n/ballast-5d6cf97747-mmgjz
+2026-11-12T14:11:41.536Z	t=-	call	200	0.070542	count=1 mb=50 sum=6613 process_age_s=4.4
+2026-11-12T14:11:41.627Z	t=-	call	200	0.067029	count=2 mb=50 sum=6613 process_age_s=4.5
+2026-11-12T14:11:41.716Z	t=-	call	200	0.064968	count=3 mb=50 sum=6613 process_age_s=4.5
+2026-11-12T14:11:43.547Z	t=-	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:11:57.179Z	t=-	survivor-filled	4 running actors on multi-worker
+2026-11-12T14:11:57.633Z	t=-	node-stop	docker stop multi-worker2
+2026-11-12T14:12:07.962Z	t=10.3	node-stopped	multi-worker2
+2026-11-12T14:12:42.158Z	t=44.5	workers-of-stopped-node-not-active	      2 WORKER_STATE_ACTIVE       2 WORKER_STATE_UNAVAILABLE 
+2026-11-12T14:12:45.457Z	t=47.8	revert	ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      h2     lab-n/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    8         66s 
+2026-11-12T14:12:45.669Z	t=48.0	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T14:12:46.403Z	t=48.8	request-no-spare	200	0.494186	count=4 mb=50 sum=6613 process_age_s=4.8	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T14:12:46.676Z	t=49.0	request-no-spare	200	0.066317	count=5 mb=50 sum=6613 process_age_s=5.1	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T14:12:46.826Z	t=49.2	scale-up	workerpool.ate.dev/ballast scaled 
+2026-11-12T14:12:47.134Z	t=49.5	probe-after-scale	0.2 s after scale	200	0.072633	count=6 mb=50 sum=6613 process_age_s=5.6	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T14:12:47.277Z	t=49.6	pods	ballast-5d6cf97747-2vzqf:Running:multi-worker2 ballast-5d6cf97747-76zj2:ContainerCreating:multi-worker ballast-5d6cf97747-mmgjz:Running:multi-worker2 ballast-5d6cf97747-pxkn7:ContainerCreating:multi-worker ballast-5d6cf97747-zxzvv:Running:multi-worker ballast-5d6cf97747-zzzdn:Running:multi-worker 
+2026-11-12T14:12:48.148Z	t=50.5	final	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:- pod lab-n/ballast-5d6cf97747-zxzvv

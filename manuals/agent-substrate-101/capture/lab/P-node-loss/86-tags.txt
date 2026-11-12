@@ -1,0 +1,6 @@
+ATESPACE   NAME                                   SCOPE                 STATE   SNAPSHOT                                                                       FIDELITY                   AGE
+lab-n      09fee120-cd19-4121-8bae-5623fcbe70eb   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/lab-n/tags/1010ca2e-25b0-44d6-864f-a31a80da48c2   SNAPSHOT_FIDELITY_MEMORY   147m
+lab-n      d8328610-2fdb-4974-a6ab-7c8671586d37   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/lab-n/tags/8d60620d-653e-469f-9dd1-9f11a89ce7e0   SNAPSHOT_FIDELITY_MEMORY   147m
+lab-n      keep-t1                                TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/lab-n/tags/aca8c8e0-6dfd-4ee5-9e55-ced17f7c346e   SNAPSHOT_FIDELITY_MEMORY   12m
+lab-n      keep-u1                                TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/lab-n/tags/13e4dabd-ad64-417f-95a5-ec1d5909c786   SNAPSHOT_FIDELITY_MEMORY   72s
+lab-n      pend-u1                                TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/lab-n/tags/cfefcc57-5a75-418c-ae29-424958706266   SNAPSHOT_FIDELITY_MEMORY   69s

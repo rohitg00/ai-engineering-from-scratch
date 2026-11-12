@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 498" role="img" aria-labelledby="fig-8-2d-title fig-8-2d-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-2d-title">A node stopped: what to do with one actor</title>
+  <desc id="fig-8-2d-desc">A decision figure with five rows, from the node-stop runs on a cluster with two worker nodes. Row one: with a tag made before the stop, a new actor from the tag served its first request 1.2 seconds after the create command, in 3 of 3 rescues. Row two: an actor suspended with mode sync that got no request can be reverted after the workers show UNAVAILABLE, 45 to 52 seconds after the stop, and the revert took 7.1 seconds. Row three: an actor suspended in the default mode with a pending snapshot needs no command and served a request 26 seconds after the node start. Row four: an actor that got a request or was running needs the node back and then one revert. Row five: an actor left in REVERTING or DELETING by a command during the outage stays there until the node returns.</desc>
+  <defs><marker id="fig-8-2d-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-8-2d-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-8-2d-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE ACTOR AT THE STOP</text>
+  <text x="212" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT TO DO</text>
+  <text x="404" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT WE MEASURED</text>
+  <rect x="20" y="28" width="178" height="72" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="29" y="57.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">any state, with a tag</text>
+  <text x="29" y="72.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">made before the stop</text>
+  <rect x="212" y="28" width="178" height="72" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="221" y="51.45" font-size="11.5" font-weight="700">create actor --tag</text>
+  <text x="221" y="68.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a new actor from the tag,</text>
+  <text x="221" y="83.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">then send requests to it</text>
+  <rect x="404" y="28" width="216" height="72" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="412" y="51.3" font-size="11" font-weight="700">200 after 1.2 s</text>
+  <text x="412" y="68.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">3 of 3 rescues, on the</text>
+  <text x="412" y="83.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">other node. New actor name</text>
+  <line x1="198" y1="64" x2="211" y2="64" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-2d-head-ink)"/>
+  <line x1="390" y1="64" x2="403" y2="64" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-2d-head-amber)"/>
+  <rect x="20" y="118" width="178" height="72" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="29" y="147.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SUSPENDED, --mode sync,</text>
+  <text x="29" y="162.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no request since the stop</text>
+  <rect x="212" y="118" width="178" height="72" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="221" y="141.45" font-size="11.5" font-weight="700">wait, then one revert</text>
+  <text x="221" y="158.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">for workers UNAVAILABLE,</text>
+  <text x="221" y="173.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">45 to 52 s after the stop</text>
+  <rect x="404" y="118" width="216" height="72" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="412" y="141.3" font-size="11" font-weight="700">revert 7.1 s, 200 in 0.56 s</text>
+  <text x="412" y="158.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on the other node</text>
+  <text x="412" y="173.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">nothing lost</text>
+  <line x1="198" y1="154" x2="211" y2="154" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-2d-head-ink)"/>
+  <line x1="390" y1="154" x2="403" y2="154" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-2d-head-amber)"/>
+  <rect x="20" y="208" width="178" height="72" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="29" y="237.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SUSPENDED in the default</text>
+  <text x="29" y="252.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mode, snapshot PENDING</text>
+  <rect x="212" y="208" width="178" height="72" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="221" y="231.45" font-size="11.5" font-weight="700">send no command</text>
+  <text x="221" y="248.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">wait for the node, then</text>
+  <text x="221" y="263.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">send the request only</text>
+  <rect x="404" y="208" width="216" height="72" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="412" y="231.3" font-size="11" font-weight="700">200 in 0.36 s</text>
+  <text x="412" y="248.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">26 s after the node start.</text>
+  <text x="412" y="263.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A revert first loses 2 calls</text>
+  <line x1="198" y1="244" x2="211" y2="244" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-2d-head-ink)"/>
+  <line x1="390" y1="244" x2="403" y2="244" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-2d-head-amber)"/>
+  <rect x="20" y="298" width="178" height="72" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="29" y="327.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">got a request: RESUMING,</text>
+  <text x="29" y="342.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">then CRASHED. Or RUNNING</text>
+  <rect x="212" y="298" width="178" height="72" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="221" y="321.45" font-size="11.5" font-weight="700">no revert, no delete</text>
+  <text x="221" y="338.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">wait for the node, then</text>
+  <text x="221" y="353.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one revert</text>
+  <rect x="404" y="298" width="216" height="72" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="412" y="321.3" font-size="11" font-weight="700">revert 0.3 s, 200 in 0.90 s</text>
+  <text x="412" y="338.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">RUNNING: 200 in 0.48 s, work</text>
+  <text x="412" y="353.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">since the snapshot is lost</text>
+  <line x1="198" y1="334" x2="211" y2="334" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-2d-head-ink)"/>
+  <line x1="390" y1="334" x2="403" y2="334" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-2d-head-amber)"/>
+  <rect x="20" y="388" width="178" height="72" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="29" y="417.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">REVERTING or DELETING,</text>
+  <text x="29" y="432.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from an earlier command</text>
+  <rect x="212" y="388" width="178" height="72" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="221" y="411.45" font-size="11.5" font-weight="700">wait for the node</text>
+  <text x="221" y="428.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">4 of 4 reverts failed.</text>
+  <text x="221" y="443.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">With atelet back: revert</text>
+  <rect x="404" y="388" width="216" height="72" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="412" y="411.3" font-size="11" font-weight="700">revert 0.2 s, 200 in 0.47 s</text>
+  <text x="412" y="428.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in 1 run. In 4 runs: still</text>
+  <text x="412" y="443.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">REVERTING 210 s after return</text>
+  <line x1="198" y1="424" x2="211" y2="424" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-2d-head-ink)"/>
+  <line x1="390" y1="424" x2="403" y2="424" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-2d-head-rose)"/>
+  <text x="20" y="484" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One run for each case on two worker nodes, Envoy dataplane, default timers.</text>
+</svg>

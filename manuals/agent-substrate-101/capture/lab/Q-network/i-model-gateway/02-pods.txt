@@ -1,0 +1,6 @@
+NAME                             READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+client                           1/1     Running   0          1s    10.244.0.61   kind-control-plane   <none>           <none>
+mock-a-5cc9d49b46-nbfl6          1/1     Running   0          1s    10.244.0.57   kind-control-plane   <none>           <none>
+mock-b-6854756976-bqv2h          1/1     Running   0          1s    10.244.0.58   kind-control-plane   <none>           <none>
+modelgw-598469b995-zvmbg         1/1     Running   0          1s    10.244.0.59   kind-control-plane   <none>           <none>
+modelgw-plain-598dc5856b-8frvc   1/1     Running   0          1s    10.244.0.60   kind-control-plane   <none>           <none>

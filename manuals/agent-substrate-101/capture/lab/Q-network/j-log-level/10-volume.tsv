@@ -1,0 +1,3 @@
+debug	lines=4380	bytes=1590006	lines_with_header_marker=200	lines_with_auth_marker=0	lines_with_header_name=200	requests_ok=ok=100 of 100
+info	lines=100	bytes=46300	lines_with_header_marker=0	lines_with_auth_marker=0	lines_with_header_name=0	requests_ok=ok=100 of 100
+warn	lines=0	bytes=0	lines_with_header_marker=0	lines_with_auth_marker=0	lines_with_header_name=0	requests_ok=ok=100 of 100

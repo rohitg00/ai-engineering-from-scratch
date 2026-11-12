@@ -1,0 +1,5 @@
+rotation	wait_before_s	secret_changed_epoch	first_seen_epoch	lag_s	old_values_after_change
+1	5	1794493351.752	1794493632.272	280.5	233
+2	100	1794493732.380	1794493933.328	200.9	168
+3	200	1794494133.509	1794494234.122	100.6	84
+ROTATION-agentgateway-DONE

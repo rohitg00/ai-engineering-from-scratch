@@ -1,0 +1,11 @@
+pod-ip 8443 plain: 000 exit=52 err=Empty reply from server|# HELP agentgateway_config_synchronized Whether the last con
+pod-ip 8443 tls:   000 exit=55 err=Send failure: Broken pipe|# HELP agentgateway_config_synchronized Whether the last con
+pod-ip 15021 plain: 000 exit=28 err=Connection timed out after 4001 milliseconds|# HELP agentgateway_config_synchronized Whether the last con
+pod-ip 15021 tls:   000 exit=28 err=Connection timed out after 4002 milliseconds|# HELP agentgateway_config_synchronized Whether the last con
+pod-ip 15000 plain: 000 exit=28 err=Connection timed out after 4002 milliseconds|# HELP agentgateway_config_synchronized Whether the last con
+pod-ip 15000 tls:   000 exit=28 err=Connection timed out after 4002 milliseconds|# HELP agentgateway_config_synchronized Whether the last con
+stats 15020 /metrics from another namespace: 000|13394|58|# HELP agentgateway_substrate_request_parking_active Number of requests waiting for a Substrate actor to become routable.|
+stats 15020 /stats/prometheus: 000|13394|
+service 443 with allowed client cert, POST with routing header: 200 exit=0 err=|preserved memory count: 10 | preserved file counter: 10 | preserved rootfs counter: 10|
+service 8444 with allowed client cert, POST with routing header: 404 exit=0 err=|
+service 443 with allowed client cert, no routing header: 404|invalid actor reference

@@ -1,0 +1,3 @@
+customresourcedefinition.apiextensions.k8s.io/csidriverconfigs.ate.dev
+customresourcedefinition.apiextensions.k8s.io/sandboxconfigs.ate.dev
+customresourcedefinition.apiextensions.k8s.io/workerpools.ate.dev

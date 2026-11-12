@@ -1,0 +1,11 @@
+Name:         ax-nodebug
+Atespace:     default
+Phase:        Running
+Actor:        ax-nodebug
+Worker IP:    10.244.0.24
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE            STATUS  REASON         MESSAGE
+  WorkspaceReady  True    SetupComplete  Workspace setup completed at 10.244.0.24
+  Ready           True    TaskRunning    Task is running and its workspace is ready

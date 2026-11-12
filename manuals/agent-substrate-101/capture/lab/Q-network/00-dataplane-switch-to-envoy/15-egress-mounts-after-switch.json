@@ -1,0 +1,1 @@
+[{"name":"envoy","mounts":["/etc/envoy","/run/servicedns.podcert.ate.dev","/run/podidentity.podcert.ate.dev","/run/actor-id-ca-certs","/var/run/atenet","/var/run/sdsmint"]},{"name":"ext-proc","mounts":["/run/servicedns.podcert.ate.dev","/run/podidentity.podcert.ate.dev","/run/actor-id-ca-certs","/var/run/atenet"]}]

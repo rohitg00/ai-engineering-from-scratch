@@ -1,0 +1,8 @@
+{
+  "command": [
+    "sh",
+    "-c",
+    "curl -s -m 3 -H 'X-Lab: placeholder-from-actor' http://whoami.egress-target.svc.cluster.local/ | grep -i '^X-Lab' | tr -d '\\r'"
+  ],
+  "timeout": "8s"
+}

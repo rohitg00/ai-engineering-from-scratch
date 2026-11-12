@@ -1,0 +1,1 @@
+{"namespace-policy.yaml":"policies:\n- atespace: lab-f\n  allowedNamespaces:\n  - cred-ns\n"}

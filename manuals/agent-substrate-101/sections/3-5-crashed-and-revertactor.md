@@ -158,13 +158,37 @@ Three rules follow from these runs.
 - **A running actor on a stopped node is not marked crashed.** The caller gets the text of a process that exited. To tell the two cases apart, run `kubectl ate get workers`. On a stopped node the worker is `WORKER_STATE_UNAVAILABLE`, or it is not in the list.
 - **A revert did not help while the node was down.** It failed or had no lasting effect in 4 of 4 attempts on three actors. The revert of the running actor left it in `ACTOR_STATE_REVERTING`. Each request then got 503 with `(got: ACTOR_STATE_REVERTING, want ACTOR_STATE_SUSPENDED)`.
 
-A second revert is the way out of `ACTOR_STATE_REVERTING` that lasts. `RevertActor` also accepts an actor that is already in that state, and it continues from the step where the earlier attempt stopped {{code}}. Send the revert again when the node or its `atelet` is back. This statement is from the code. Our runs did not send that second revert, and a run of this path is in progress.
+A second revert is the way out of `ACTOR_STATE_REVERTING`, and only after the node is back. `RevertActor` accepts an actor that is already in that state, and it continues from the step where the earlier attempt stopped {{code}}. A later set of node-stop cases tested it.
 
-We have not verified one more path. A revert that you send after the workers are marked unavailable can perhaps free a suspended actor for another node. Our reverts came too early or met a state that refused them.
+**We measured** one actor that was suspended with `--mode sync`, on a second x86 server guest (16 vCPU, 23 GB), in one run with five reverts. The first revert started 10 s after the stop command, failed after 20.2 s, and left the actor in `ACTOR_STATE_REVERTING`. Three more failed in 0.2 s each, at 50 s, at 71 s, and at 371 s. Then we started the node. Its `atelet` ran 15 s later, and the actor was `ACTOR_STATE_CRASHED` by then. The fifth revert returned in 0.2 s, and the next request returned 200 in 0.47 s on the other node.
+
+```listing
+title: four reverts fail while the node is down, and the fifth works
+source: capture/lab/P-node-loss/74-second-revert.tsv
+lang: text
+note: Six lines for the actor i9. The columns are the time, the seconds from the stop command, the event, and its detail. Each error is cut after the name of the call that failed, and the actor row of the fifth revert is cut.
+---
+2026-11-12T14:51:05.501Z	t=30.6	revert-1-right-after-stop	20.2 s | Error: failed to revert actor: rpc error: code = Unavailable desc = while calling atelet Terminate: …
+2026-11-12T14:51:24.853Z	t=50.0	revert-2-after-workers-unavailable	0.2 s | Error: failed to revert actor: rpc error: code = Unavailable desc = while calling atelet Terminate: …
+…
+2026-11-12T14:56:45.527Z	t=370.7	revert-4-after-eviction	0.2 s | Error: failed to revert actor: rpc error: code = Unavailable desc = while calling atelet Terminate: …
+…
+2026-11-12T14:57:00.955Z	t=386.1	atelet-on-node-running	atelet-gsmxg:Running atelet-tfq5g:Running 
+2026-11-12T14:57:01.180Z	t=386.3	state-before-revert-5	ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:57:01.440Z	t=386.6	revert-5-after-node-return	0.2 s | ATESPACE   NAME   TEMPLATE      STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      i9     lab-n/nb-50   ACTOR_STATE_SUSPENDED   <none> …
+```
+
+So a repeated revert does not finish the job while the node is down. In the other cases, 3 to 28 more reverts of an actor in `ACTOR_STATE_REVERTING` all failed. Each failed revert is one more call to an `atelet` that is not there.
+
+The result after the return has a caveat. In four earlier cases the actor still showed `ACTOR_STATE_REVERTING` 216 to 223 s after the node start, and we sent no command in that time. In those cases the pool pods had been evicted, and the node came back with no pool pod. Our clean-up then removed those actors, and we did not record each result. So the state cleared by itself after the return in one run, and it did not in four. After a node returns, look at the state, and send the revert again if it is still `ACTOR_STATE_REVERTING`.
+
+The path that the first runs left open is also measured. A revert that waits until the workers show `WORKER_STATE_UNAVAILABLE` frees one kind of actor: suspended with `--mode sync`, and with no request since the stop. It took 7.1 s, and the next request ran on the other node. [Section 8.2](#s-when-a-dependency-is-down) has the runbook for every case.
+
+**Do not revert an actor that you suspended in the default mode.** Its newest snapshot is still `PENDING` on the stopped node, and it comes back with the node. In one run the node returned after 81 s. A request with no revert then returned 200 in 0.36 s, with count 6 after 5. A second actor in the same state got a revert first. Its next reply had count 4, so the two calls after its last durable snapshot were lost.
 
 ## RevertActor
 
-**RevertActor:** the call that discards the current execution of an actor and returns it to `ACTOR_STATE_SUSPENDED` at its last completed durable snapshot. It accepts a crashed actor, a running actor, and a suspended actor whose newest snapshot is on a node {{docs}}. It also accepts an actor in `ACTOR_STATE_REVERTING`, so that you can send a revert again {{code}}.
+**RevertActor:** the call that discards the current execution of an actor and returns it to `ACTOR_STATE_SUSPENDED` at its last completed durable snapshot. It accepts a crashed actor, a running actor, and a suspended actor whose newest snapshot is on a node {{docs}}. It also accepts an actor in `ACTOR_STATE_REVERTING`, so that you can send a revert again {{code}}. In our run that second revert worked only after the node of the actor was back.
 
 A revert stops any sandbox, removes the snapshot files on the node, and deletes an upload that was not complete {{docs}}. The actor comes back with no assigned node, and the next request resumes it from the object store.
 
@@ -198,6 +222,9 @@ Our position: decide in your harness what a crash means, because Substrate will 
 - Wait until workers are registered before you send requests after a node restart.
 - Keep the crashed 503 out of the retry loop that you use for a full pool.
 - Treat an actor that stays in RESUMING as an actor on a dead node, and check its worker.
+- Send no revert to an actor on a stopped node, unless it is quiet and its workers are unavailable.
+- After the node returns, send the revert again if the actor is still in REVERTING.
+- Never revert an actor that you suspended in the default mode while its node is down.
 ```
 
-Sources: capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/D-durability/32-x1-after-loss.yaml, capture/lab/D-durability/34-x2-atelet-restart.log, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/J-container-death/14-j2-after-oom.yaml, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/98-worker-state-rpcs.log. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorStatus.crash, RevertActorRequest, ReportActorCrashed), cmd/ateapi/internal/controlapi/workflow_revert.go, docs/reference/api-guide.md (ResumeActor, RevertActor, Eviction).
+Sources: capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/D-durability/32-x1-after-loss.yaml, capture/lab/D-durability/34-x2-atelet-restart.log, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/J-container-death/14-j2-after-oom.yaml, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/98-worker-state-rpcs.log, capture/lab/P-node-loss/74-second-revert.tsv, capture/lab/P-node-loss/10-a-quiet-revert.tsv, capture/lab/P-node-loss/88-pending-snapshot-node-returns.tsv, capture/lab/P-node-loss/return-b60.tsv, capture/lab/P-node-loss/return-bevict.tsv, capture/lab/P-node-loss/return-cquiet.tsv, capture/lab/P-node-loss/return-creq.tsv, capture/lab/summary/node-loss-x86.json. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorStatus.crash, RevertActorRequest, ReportActorCrashed), cmd/ateapi/internal/controlapi/workflow_revert.go, docs/reference/api-guide.md (ResumeActor, RevertActor, Eviction).

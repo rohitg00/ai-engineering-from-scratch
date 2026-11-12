@@ -1,0 +1,17 @@
+ts	t	event	detail
+2026-11-12T12:54:27.865Z	t=0.3	node-start	multi-worker2 after outage of 54.2 s
+2026-11-12T12:54:30.119Z	t=2.6	node-ready	multi-worker2
+2026-11-12T12:54:32.457Z	t=4.9	watch	pool-pods-running-on-node=2 workers-active-on-node=0 placement=multi-worker | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:54:38.447Z	t=10.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:54:44.481Z	t=16.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:54:50.557Z	t=23.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker2 | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:54:50.568Z	t=23.0	first-actor-on-returned-node	no pods moved by hand
+2026-11-12T12:54:56.613Z	t=29.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker2 | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:55:02.777Z	t=35.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker2 | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:55:08.836Z	t=41.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker2 | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:55:14.886Z	t=47.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker2 | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:55:20.913Z	t=53.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker2 | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:55:26.848Z	t=59.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:55:32.854Z	t=65.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker2 | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:55:38.925Z	t=71.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | a1: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T12:55:39.160Z	t=71.6	final-state	a1: ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-

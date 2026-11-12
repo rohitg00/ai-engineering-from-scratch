@@ -80,7 +80,7 @@ The meanings come from the Agent Substrate source and documentation at v1.0.0 an
 | Suspend | Write a snapshot of a running actor and release its worker | [3.3](#s-suspendactor-and-resumeactor) |
 | `SuspendActor` | The call that checkpoints a running actor, stops its sandbox, and frees its place on the worker | [3.3](#s-suspendactor-and-resumeactor) |
 | Synchronous suspend | A suspend that returns after the snapshot is in the bucket | [3.3](#s-suspendactor-and-resumeactor) |
-| Tag | A named copy of the snapshot of a suspended actor, from which new actors can start | [the API reference](#s-ref-api-methods) |
+| Tag | A named copy of the snapshot of a suspended actor, from which new actors can start | [3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives), [the API reference](#s-ref-api-methods) |
 | TLS interception | The egress gateway ends the TLS connection of the actor and opens its own to the host, so that it can read the request | [6.4](#s-tls-interception) |
 | TLS pass-through | The egress gateway forwards the TLS connection unread, after it checks the server name | [6.4](#s-tls-interception) |
 | Trust bundle | The file that holds the interception CA certificate, so that the actor can verify intercepted connections. A sandbox has it only when its template mounts a `systemInfo` volume with a `trustBundle` source, and the code in the actor must be set to trust it. | [6.4](#s-tls-interception) |

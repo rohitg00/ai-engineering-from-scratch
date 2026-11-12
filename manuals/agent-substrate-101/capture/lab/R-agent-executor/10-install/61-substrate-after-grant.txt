@@ -1,0 +1,19 @@
+--authz-bootstrap-owners=system:serviceaccount:ate-system:ate-client,system:serviceaccount:ax-system:ax-server
+--ingress-allowed-spiffe-ids=spiffe://cluster.local/ns/ate-system/sa/atenet-client,spiffe://cluster.local/ns/ax-system/sa/ax-server
+NAME                                       READY   STATUS        RESTARTS   AGE
+ate-api-server-58dcdf8cd8-mqrmq            2/2     Running       0          11s
+ate-api-server-58dcdf8cd8-t24jd            2/2     Running       0          20s
+ate-api-server-59dcf8d6bf-mh5l5            2/2     Terminating   0          158m
+ate-api-server-59dcf8d6bf-zpbjs            1/2     Terminating   0          158m
+ate-controller-7984566f8d-lt98s            1/1     Running       0          158m
+ate-idp-server-dcd5f565f-4f985             1/1     Running       0          158m
+ate-idp-server-dcd5f565f-6qwl8             1/1     Running       0          158m
+atelet-vvfqq                               2/2     Running       0          158m
+atenet-egress-7758c8fb4-57tvm              3/3     Terminating   0          158m
+atenet-egress-c887f566d-ssttc              3/3     Running       0          7s
+atenet-router-59ff5854dd-wzbsf             2/2     Running       0          15s
+atenet-router-d844d4995-qpzn5              1/2     Terminating   0          158m
+k8s-credential-provider-7749f7b874-h8575   1/1     Running       0          152m
+postgres-0                                 2/2     Running       0          154m
+rustfs-54c86945fb-q8bw9                    1/1     Running       0          158m
+rustfs-bucket-init-mrktw                   0/1     Completed     0          158m

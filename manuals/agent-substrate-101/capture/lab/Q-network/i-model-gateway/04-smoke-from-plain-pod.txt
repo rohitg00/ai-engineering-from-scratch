@@ -1,0 +1,27 @@
+### plain gateway, model=fast
+{"model":"small-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-a model=small-1 authorization=Bearer provider-key-for-backend-a x_lab=from-client","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794488679}
+code=200 t=0.017022
+### TLS gateway with the private CA, model=fast
+{"model":"small-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-a model=small-1 authorization=Bearer provider-key-for-backend-a x_lab=from-client","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794488679}
+code=200 t=0.028220
+### plain gateway, model=smart
+{"model":"big-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-b model=big-1 authorization=Bearer provider-key-for-backend-b x_lab=from-client","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794488679}
+code=200 t=0.011667
+### TLS gateway with the private CA, model=smart
+{"model":"big-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-b model=big-1 authorization=Bearer provider-key-for-backend-b x_lab=from-client","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794488680}
+code=200 t=0.023689
+### plain gateway, model=other
+{"error":{"message":"Model not found","type":"invalid_request_error","code":"model_not_found"}}
+code=404 t=0.003726
+### TLS gateway with the private CA, model=other
+{"error":{"message":"Model not found","type":"invalid_request_error","code":"model_not_found"}}
+code=404 t=0.013402
+### TLS gateway without the private CA
+curl: (60) SSL certificate problem: unable to get local issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the webpage mentioned above.
+code=000
+command terminated with exit code 60

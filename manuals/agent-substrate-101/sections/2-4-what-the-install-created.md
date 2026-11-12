@@ -62,6 +62,14 @@ One more pod runs in its own namespace. `podcertificate-controller` signs the ce
 
 Count the pods in the listing. `ate-api-server` and `ate-idp-server` have two. Everything else has one.
 
+```figure
+id: fig-2-4b
+kind: layers
+title: the pods of ate-system, one object for each pod
+claim: In ate-system only ate-api-server and ate-idp-server run two pods, and every other workload, the router and Postgres among them, runs one.
+caption: Each object is one pod of our install, on the tile of its namespace and the slab of its node. A tower is a server, and a low unit with ports is a gateway. The cylinder is Postgres, the bucket is the object store, and the dashed outline is the finished Job. A mark names the project that a program comes from. From capture/lab/A-quickstart/60-state.log.
+```
+
 That matters for three of them. Every request to every actor passes `atenet-router`, and `ate-api-server` reads Postgres for each one. [Section 1.2](#s-one-request-from-client-to-actor) shows the path. So one router pod and one Postgres pod are in front of all your actors. The bundled Postgres has no second replica and no failover {{code}}.
 
 For a kind cluster on your machine, that is fine. For anything that people depend on, read [section 8.1](#s-postgres-and-the-object-store) before you go further. It covers an external database and what a Postgres outage does to requests.

@@ -1,0 +1,43 @@
+ts	t	event	detail
+2026-11-12T14:57:04.128Z	t=0.0	node-start	multi-worker2 after outage of 0.0 s
+2026-11-12T14:57:04.252Z	t=0.2	node-ready	multi-worker2
+2026-11-12T14:57:06.308Z	t=2.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:57:12.496Z	t=8.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:57:18.525Z	t=14.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:57:24.612Z	t=20.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:57:30.570Z	t=26.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:57:36.585Z	t=32.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:57:42.655Z	t=38.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:57:48.748Z	t=44.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:57:54.796Z	t=50.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:00.942Z	t=56.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:07.087Z	t=63.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:13.173Z	t=69.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:19.295Z	t=75.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:25.442Z	t=81.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:31.533Z	t=87.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:37.616Z	t=93.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:43.749Z	t=99.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:49.898Z	t=105.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:58:56.077Z	t=112.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:02.044Z	t=118.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:08.160Z	t=124.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:14.266Z	t=130.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:20.394Z	t=136.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:26.475Z	t=142.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:32.552Z	t=148.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:38.629Z	t=154.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:44.731Z	t=160.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:50.798Z	t=166.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:59:56.954Z	t=172.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T15:00:03.002Z	t=178.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T15:00:09.048Z	t=185.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T15:00:15.203Z	t=191.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T15:00:21.290Z	t=197.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T15:00:27.433Z	t=203.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T15:00:33.517Z	t=209.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T15:00:39.614Z	t=215.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | i9: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T15:00:43.639Z	t=219.6	no-actor-on-returned-node	after 219.5 s, pool pods on node: 0
+2026-11-12T15:00:43.864Z	t=219.8	final-state	i9: ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T15:00:57.174Z	t=233.1	rebalanced-by-hand	pool pods on multi-worker2 now 2 (setup for the next case)
+2026-11-12T15:00:58.354Z	t=234.3	ready-for-next-case	workers active on multi-worker2: 2

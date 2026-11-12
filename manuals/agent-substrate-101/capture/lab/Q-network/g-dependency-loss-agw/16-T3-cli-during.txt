@@ -1,0 +1,1 @@
+Error: failed to connect to ate-api-server: getting api service: Get "https://127.0.0.1:44015/api/v1/namespaces/ate-system/services/api": EOF

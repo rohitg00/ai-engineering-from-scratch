@@ -1,0 +1,15 @@
+NAME                                       READY   STATUS      RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-api-server-59dcf8d6bf-nz9kb            2/2     Running     0          98m     10.244.0.56   kind-control-plane   <none>           <none>
+ate-api-server-59dcf8d6bf-rw5vc            2/2     Running     0          98m     10.244.0.55   kind-control-plane   <none>           <none>
+ate-controller-7984566f8d-wqg7s            1/1     Running     0          4h5m    10.244.0.9    kind-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-9fdns             1/1     Running     0          4h5m    10.244.0.13   kind-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-qdhl8             1/1     Running     0          4h5m    10.244.0.12   kind-control-plane   <none>           <none>
+atelet-rc4mn                               2/2     Running     0          4h5m    10.244.0.11   kind-control-plane   <none>           <none>
+atenet-egress-6c5bfd659d-4bfkq             1/1     Running     0          69m     10.244.0.73   kind-control-plane   <none>           <none>
+atenet-router-7c5c864d47-c5glg             1/1     Running     0          69m     10.244.0.71   kind-control-plane   <none>           <none>
+e-prober                                   1/1     Running     0          102m    10.244.0.53   kind-control-plane   <none>           <none>
+k8s-credential-provider-85dc8799f8-hjrbm   1/1     Running     0          3h52m   10.244.0.32   kind-control-plane   <none>           <none>
+postgres-0                                 2/2     Running     0          100m    10.244.0.54   kind-control-plane   <none>           <none>
+right-id                                   1/1     Running     0          3h59m   10.244.0.27   kind-control-plane   <none>           <none>
+rustfs-54c86945fb-lst2f                    1/1     Running     0          4h5m    10.244.0.20   kind-control-plane   <none>           <none>
+rustfs-bucket-init-kjhfs                   0/1     Completed   0          4h5m    10.244.0.15   kind-control-plane   <none>           <none>

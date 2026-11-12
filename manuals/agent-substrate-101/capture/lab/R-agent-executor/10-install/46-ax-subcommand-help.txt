@@ -1,0 +1,25 @@
+=== ax apply --help
+Error: missing required flag: -f <file>
+=== ax get --help
+Error: unknown resource "--help"
+=== ax describe --help
+Error: usage: ax describe <task|workspace|gateway|model> <name>
+=== ax resume --help
+Error: resuming task: rpc error: code = NotFound desc = task "--help" not found in atespace "default"
+=== ax suspend --help
+Error: suspending task: rpc error: code = NotFound desc = task "--help" not found in atespace "default"
+=== ax ssh --help
+Usage:
+  ax ssh <task-name> [-- command...]
+
+Run a command inside a running task's container, or /bin/sh when no command is
+given. The task must be Running and have spec.debug: true.
+
+Examples:
+  ax ssh task123
+  ax ssh task123 -- ls -la /workspace
+  ax ssh -a my-atespace task123 -- python3 main.py
+=== ax delete --help
+Error: usage: ax delete <task|workspace|gateway|model> <name>
+=== ax tunnel --help
+Error: unknown tunnel subcommand: --help (available: list, stop)

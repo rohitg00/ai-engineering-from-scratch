@@ -1,0 +1,19 @@
+config: {}
+llm:
+  port: 8443
+  tls:
+    cert: /tls/tls.crt
+    key: /tls/tls.key
+  models:
+  - name: fast
+    provider: openAI
+    params:
+      model: small-1
+      hostOverride: mock-a.model-gw.svc.cluster.local:80
+      apiKey: $KEY_A
+  - name: smart
+    provider: openAI
+    params:
+      model: big-1
+      hostOverride: mock-b.model-gw.svc.cluster.local:80
+      apiKey: $KEY_B

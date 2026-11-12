@@ -1,0 +1,3 @@
+a72b8ca46cb54a6f9bd53c8bb349d3a2089e7735
+go.ate.dev/substrate v1.0.0
+github.com/agent-substrate/env v0.0.11-0.20260912052224-4468a200b170

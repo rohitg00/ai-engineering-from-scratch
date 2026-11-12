@@ -1,0 +1,15 @@
+6:      # /quitquitquit, /drain_listeners, /runtime_modify and /config_dump,
+23:- name: envoy.bootstrap.internal_listener
+39:        cluster_name: xds_cluster
+49:  listeners:
+50:  - name: envoy_metrics
+59:      - name: envoy.filters.network.http_connection_manager
+64:            name: envoy_metrics
+66:            - name: envoy_metrics
+72:                  - name: ":method"
+78:                  - name: ":method"
+82:          - name: envoy.filters.http.router
+86:  - name: envoy_admin
+90:      cluster_name: envoy_admin
+98:  - name: xds_cluster
+108:      cluster_name: xds_cluster

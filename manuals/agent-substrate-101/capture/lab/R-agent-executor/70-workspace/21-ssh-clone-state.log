@@ -1,0 +1,21 @@
+total 0
+drwxr-xr-x 3 root root  60 Nov 12 15:32 .
+drwxrwxrwx 3 root root  80 Nov 12 15:32 ..
+drwxr-xr-x 7 root root 220 Nov 12 15:32 .git
+total 2
+drwxr-xr-x 7 root root 220 Nov 12 15:32 .
+drwxr-xr-x 3 root root  60 Nov 12 15:32 ..
+-rw-r--r-- 1 root root   0 Nov 12 15:32 FETCH_HEAD
+-rw-r--r-- 1 root root  23 Nov 12 15:32 HEAD
+drwxr-xr-x 2 root root  40 Nov 12 15:32 branches
+-rw-r--r-- 1 root root 197 Nov 12 15:32 config
+-rw-r--r-- 1 root root  73 Nov 12 15:32 description
+drwxr-xr-x 2 root root 320 Nov 12 15:32 hooks
+drwxr-xr-x 2 root root  60 Nov 12 15:32 info
+ls: cannot access '/var/lib/ax': No such file or directory
+ls: cannot access '/.ax': No such file or directory
+/ax:
+total 1
+drwxr-xr-x 1 root root  60 Nov 12 15:32 .
+drwxr-xr-x 1 root root 100 Nov 12 15:32 ..
+-rw-r--r-- 1 root root 242 Nov 12 15:32 git-error.log

@@ -1,0 +1,11 @@
+Found 2 pods, using pod/ax-server-786f5878b4-g7qr8
+{"time":"2026-11-12T15:20:08.991871447Z","level":"INFO","msg":"tracing initialized","export":false}
+{"time":"2026-11-12T15:20:08.992366596Z","level":"INFO","msg":"metrics initialized","export":false}
+{"time":"2026-11-12T15:20:08.992387646Z","level":"INFO","msg":"OTLP logs export disabled","exporter":"none"}
+{"time":"2026-11-12T15:20:08.99258241Z","level":"INFO","msg":"starting ax-server","listenAddr":":8080","metricsAddr":":9090","store":"ax@ax-postgres.ax-system.svc.cluster.local:5432/ax","substrateEndpoint":"api.ate-system.svc.cluster.local:443","template":"default-template","defaultTaskImage":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:20:14.503604316Z","level":"INFO","msg":"deleting Substrate actor for task","atespace":"default","task":"ax-install-check"}
+{"time":"2026-11-12T15:20:14.565086476Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:20:14.569321387Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:20:14.58372476Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:20:14.594831365Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:20:14.605715328Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}

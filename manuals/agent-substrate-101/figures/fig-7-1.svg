@@ -1,99 +1,136 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 508" role="img" aria-labelledby="fig-7-1-title fig-7-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 546" role="img" aria-labelledby="fig-7-1-title fig-7-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-7-1-title">One recorded kagent turn resumes the Session actor, runs, and suspends it again</title>
-  <desc id="fig-7-1-desc">Five lifelines: the client, the kagent controller, atenet-router, ate-api-server, and the actor named session-uuid. Nine numbered exchanges show one recorded turn, each with its time from the moment the client sent the message. The router asks for ResumeActor and the actor is RUNNING 0.41 s later. The turn runs. kagent calls SuspendActor, the client has its answer after 1.26 s, and the actor is SUSPENDED after 1.36 s.</desc>
+  <desc id="fig-7-1-desc">Five lifelines, each under a small drawing of its party: the client as a terminal, the kagent controller as a server with the kagent mark, atenet-router as a gateway with the agentgateway mark, ate-api-server as a server with the Agent Substrate mark, and the actor named session-uuid as three layers. Nine numbered exchanges show one recorded turn, each with its time from the moment the client sent the message. The router asks for ResumeActor and the actor is RUNNING 0.41 s later. The turn runs. kagent calls SuspendActor, the client has its answer after 1.26 s, and the actor is SUSPENDED after 1.36 s.</desc>
   <defs><marker id="fig-7-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-7-1-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
-  <text x="30" y="30" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TIME</text>
-  <rect x="90" y="10" width="104" height="46" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
-  <text x="142" y="27.8" font-size="11" text-anchor="middle" font-weight="700">client</text>
-  <text x="142" y="44.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kagent CLI</text>
-  <line x1="142" y1="56" x2="142" y2="462" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="200" y="10" width="104" height="46" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
-  <text x="252" y="27.8" font-size="11" text-anchor="middle" font-weight="700">kagent</text>
-  <text x="252" y="44.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">controller :8083</text>
-  <line x1="252" y1="56" x2="252" y2="462" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="310" y="10" width="104" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="362" y="27.8" font-size="11" text-anchor="middle" font-weight="700">atenet-router</text>
-  <text x="362" y="44.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agentgateway</text>
-  <line x1="362" y1="56" x2="362" y2="462" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="420" y="10" width="104" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="472" y="27.8" font-size="11" text-anchor="middle" font-weight="700">ate-api-server</text>
-  <text x="472" y="44.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ate-system</text>
-  <line x1="472" y1="56" x2="472" y2="462" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="530" y="10" width="104" height="46" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="582" y="27.8" font-size="11" text-anchor="middle" font-weight="700">actor</text>
-  <text x="582" y="44.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">session-&lt;uuid&gt;</text>
-  <line x1="582" y1="56" x2="582" y2="462" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <circle cx="14" cy="96" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="14" y="100" font-size="11" text-anchor="middle">1</text>
-  <text x="30" y="100" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+0.00 s</text>
-  <line x1="142" y1="96" x2="251" y2="96" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
-  <rect class="m-knock" x="169.85" y="79.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="197" y="90" font-size="11.5" text-anchor="middle">message</text>
-  <rect class="m-knock" x="122.72" y="100.42" width="148.56" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="197" y="111" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A2A, with the Session id</text>
-  <circle cx="14" cy="138" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="14" y="142" font-size="11" text-anchor="middle">2</text>
-  <text x="30" y="142" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+0.32 s</text>
-  <line x1="252" y1="138" x2="361" y2="138" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
-  <rect class="m-knock" x="248.8" y="121.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="307" y="132" font-size="11.5" text-anchor="middle">ate-target-actor</text>
-  <rect class="m-knock" x="262.42" y="142.42" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="307" y="153" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mTLS, port 443</text>
-  <circle cx="14" cy="180" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="14" y="184" font-size="11" text-anchor="middle">3</text>
-  <text x="30" y="184" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+0.47 s</text>
-  <line x1="362" y1="180" x2="471" y2="180" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
-  <rect class="m-knock" x="376.05" y="163.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="417" y="174" font-size="11.5" text-anchor="middle">ResumeActor</text>
-  <rect class="m-knock" x="369.45" y="184.42" width="95.1" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="417" y="195" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the router asks</text>
-  <circle cx="14" cy="222" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
-  <text x="14" y="226" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">4</text>
-  <text x="30" y="226" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">+0.88 s</text>
-  <line x1="472" y1="222" x2="581" y2="222" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-amber)"/>
-  <rect class="m-knock" x="499.85" y="205.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="527" y="216" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">RUNNING</text>
-  <rect class="m-knock" x="473.51" y="226.42" width="106.98" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="527" y="237" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumed in 0.41 s</text>
-  <circle cx="14" cy="264" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="14" y="268" font-size="11" text-anchor="middle">5</text>
-  <line x1="362" y1="264" x2="581" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
-  <rect class="m-knock" x="441.4" y="247.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="472" y="258" font-size="11.5" text-anchor="middle">the turn</text>
-  <rect class="m-knock" x="385.84" y="268.42" width="172.32" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="472" y="279" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">gRPC to port 80 of the actor</text>
-  <circle cx="14" cy="306" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="14" y="310" font-size="11" text-anchor="middle">6</text>
-  <text x="30" y="310" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+1.07 s</text>
-  <line x1="582" y1="306" x2="253" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-ink)"/>
-  <rect class="m-knock" x="345" y="289.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="417" y="300" font-size="11.5" text-anchor="middle">TASK_STATE_COMPLETED</text>
-  <rect class="m-knock" x="357.57" y="310.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="417" y="321" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the turn ran 0.19 s</text>
-  <circle cx="14" cy="348" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="14" y="352" font-size="11" text-anchor="middle">7</text>
-  <text x="30" y="352" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+1.23 s</text>
-  <line x1="252" y1="348" x2="471" y2="348" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
-  <rect class="m-knock" x="317.6" y="331.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="362" y="342" font-size="11.5" text-anchor="middle">SuspendActor</text>
-  <rect class="m-knock" x="290.69" y="352.42" width="142.62" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="362" y="363" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">synchronous, files only</text>
-  <circle cx="14" cy="390" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="14" y="394" font-size="11" text-anchor="middle">8</text>
-  <text x="30" y="394" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+1.26 s</text>
-  <line x1="252" y1="390" x2="143" y2="390" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-ink)"/>
-  <rect class="m-knock" x="173.3" y="373.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="197" y="384" font-size="11.5" text-anchor="middle">answer</text>
-  <rect class="m-knock" x="134.6" y="394.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="197" y="405" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1.26 s at the client</text>
-  <circle cx="14" cy="432" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
-  <text x="14" y="436" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">9</text>
-  <text x="30" y="436" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">+1.36 s</text>
-  <line x1="472" y1="432" x2="581" y2="432" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-amber)"/>
-  <rect class="m-knock" x="492.95" y="415.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="527" y="426" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">SUSPENDED</text>
-  <rect class="m-knock" x="467.57" y="436.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="527" y="447" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">suspended in 0.13 s</text>
-  <text x="20" y="480" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One recorded turn of 98. Over all of them the resume took 0.380 s at the median,</text>
-  <text x="20" y="496" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and the suspend took 0.142 s. The model was a mock server.</text>
+  <text x="30" y="88" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TIME</text>
+  <polygon points="120,24 164,24 164,50 120,50" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="120,24 164,24 164,50 120,50" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="120,24 164,24 164,29 120,29" fill="var(--m-olive-ink, #515f26)" fill-opacity="0.8"/>
+  <path d="M125 34L129 37L125 40" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-linejoin="round"/>
+  <polygon points="133,35.8 155,35.8 155,38.3 133,38.3" fill="var(--m-olive-ink, #515f26)" fill-opacity="0.75"/>
+  <polygon points="125,43 145,43 145,45.5 125,45.5" fill="var(--m-olive-ink, #515f26)" fill-opacity="0.4"/>
+  <polygon points="125,53 159,53 164,58 120,58" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.1" stroke-linejoin="round"/>
+  <text x="142" y="74" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-olive-ink, #515f26)">client</text>
+  <text x="142" y="88" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kagent CLI</text>
+  <line x1="142" y1="94" x2="142" y2="500" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <polygon points="231,10 273,10 273,58 231,58" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="231,10 273,10 273,58 231,58" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M242 10L242 58" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-linejoin="round"/>
+  <path d="M231 26L242 26" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-linejoin="round"/>
+  <path d="M231 42L242 42" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="234.5,16 238.5,16 238.5,20 234.5,20" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.85"/>
+  <polygon points="234.5,32 238.5,32 238.5,36 234.5,36" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.85"/>
+  <polygon points="234.5,48 238.5,48 238.5,52 234.5,52" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.85"/>
+  <path d="M264.3 37.4l-3.4 0 0-3.4 3.4 0zM257.5 37.4l-3.4 0 0-3.4 3.4 0zM271 30.6l0 10.2-3.4 0 0-10.2-16.8 0 0 10.2 13.5 0 3.3 0 0 3.4-16.8 0-6.8-6.8 0-6.8 3.4 0 0-3.4 3.4 0 0-3.4 13.5 0 3.3 3.4z" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="252" y="74" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">kagent</text>
+  <text x="252" y="88" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">controller :8083</text>
+  <line x1="252" y1="94" x2="252" y2="500" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <polygon points="334,14 390,14 390,58 334,58" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="334,14 390,14 390,58 334,58" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="339,48 345,48 345,54 339,54" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.75"/>
+  <polygon points="349,48 355,48 355,54 349,54" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.75"/>
+  <polygon points="359,48 365,48 365,54 359,54" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.75"/>
+  <polygon points="369,48 375,48 375,54 369,54" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.75"/>
+  <polygon points="379,48 385,48 385,54 379,54" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.75"/>
+  <path d="M339 44L385 44" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-linejoin="round"/>
+  <path d="M360.8 23l-1-.7-.7-1-.2-1.2 .2-1.2 .7-1 1-.7 1.2-.2 1.2 .2 1 .7 .7 1 .2 1.2-.2 1.2-.7 1-1 .7-1.2 .2zM360.8 32.4l-1-.7-.7-1-.2-1.2 .2-1.2 .7-1 1-.7 1.2-.2 1.2 .2 1 .7 .7 1 .2 1.2-.2 1.2-.7 1-1 .7-1.2 .2zM364 26.4l.7 1.5-2.7 1.6-2.7-1.6 .7-1.5 .2-1.6-.2-1.6-.7-1.5 2.7-1.6 2.7 1.6-.7 1.5-.2 1.6zM368.5 27.7l-1-.7-.7-1-.2-1.2 .2-1.2 .7-1 1-.7 1.2-.2 1.2 .2 1 .7 .7 1 .2 1.2-.2 1.2-.7 1-1 .7-1.2 .2zM368.5 37.1l-1-.7-.7-1-.2-1.2 .2-1.2 .7-1 1-.7 1.2-.2 1.2 .2 1 .7 .7 1 .2 1.2-.2 1.2-.7 1-1 .7-1.2 .2zM371.7 31.1l.6 1.5-2.6 1.6-2.7-1.6 .7-1.5 .2-1.6-.2-1.6-.7-1.5 2.7-1.6 2.6 1.6-.6 1.5-.2 1.6zM353.1 27.7l-1-.7-.7-1-.2-1.2 .2-1.2 .7-1 1-.7 1.2-.2 1.2 .2 1 .7 .7 1 .2 1.2-.2 1.2-.7 1-1 .7-1.2 .2zM353.1 37.1l-1-.7-.7-1-.2-1.2 .2-1.2 .7-1 1-.7 1.2-.2 1.2 .2 1 .7 .7 1 .2 1.2-.2 1.2-.7 1-1 .7-1.2 .2zM356.3 31.1l.7 1.5-2.7 1.6-2.6-1.6 .6-1.5 .2-1.6-.2-1.6-.6-1.5 2.6-1.6 2.7 1.6-.7 1.5-.2 1.6zM360.8 41.8l-1-.7-.7-1-.2-1.2 .2-1.2 .7-1 1-.7 1.2-.2 1.2 .2 1 .7 .7 1 .2 1.2-.2 1.2-.7 1-1 .7-1.2 .2z" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="362" y="74" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">atenet-router</text>
+  <text x="362" y="88" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agentgateway</text>
+  <line x1="362" y1="94" x2="362" y2="500" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <polygon points="451,10 493,10 493,58 451,58" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="451,10 493,10 493,58 451,58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M462 10L462 58" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-linejoin="round"/>
+  <path d="M451 26L462 26" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-linejoin="round"/>
+  <path d="M451 42L462 42" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="454.5,16 458.5,16 458.5,20 454.5,20" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.85"/>
+  <polygon points="454.5,32 458.5,32 458.5,36 454.5,36" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.85"/>
+  <polygon points="454.5,48 458.5,48 458.5,52 454.5,52" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.85"/>
+  <path d="M478.7 23.8l2 .8 1.5 1.4 1 1.7 .4 1.9-.2 2-.8 1.8-1.4 1.6 1.3 .1 1-1.8 .4-.3 .5 .7 0 1.7 .5-.1 .7-.6 .6-1 .1-2.2 .6 0 .6 .9 .2 1.9-1 2.1-1.7 1.3-2.3 .6 1.5 1.2 1.3 .3 1.6-.3 1.5-1.5 .4 .4-.2 1.1-1 1-1.5 .7-1.6 .2-1.5-.2-1.5-.5-2.8-2.3 .5 3.3 .4-.9 .9-.5 1 .5 .5 .9 .1 1-.3 .8-.6 .7-.8 .4-1.7-.3-1.8-1.1-.9-1.3-.4-2.1-.5 1.7-.9 1.3-1.3 .9-1.5 .3-.9-.3-.6-.8-.1-1.1 .5-.8-1.8 .5-1.8-.1-1.5-.9-.7-1.1 .3-1.4 1-.8 .9 .1 .9 .6 0 1-1.2 .5 .6 .2 1.8-.4 1.6-1.6-2.5-.4-2.6-1.8-.6-1.4 .6-1.9-.4-.7 .1-.6 .9-.2 .9 .6 .2 2.9 .6-1.2 .8-.4 .3 .4 0 1.6 .7 .3 1 .1-1.1-1.5-.7-1.9 0-2.1 .6-1.9 1.3-1.8 1.6-1.2 2.1-.9 2.2-.2zM489.2 28.7l.4 .4 0 2-.3 .5-.6 .1-2.2-.4-.7-.4-.1-.5 .5-1.6 .9-.5zM467.4 26.7l.5 1.9-.1 .6-.7 .3-2.2 .1-.6-.2-.3-.5 0-1.6 .8-.7zM466.8 28.7l.6 .5 .2 2.5-.4 .6-1.7 .2-.7-.5-.2-2.5 .3-.5 .5-.2zM488.3 30.8l.4 .7-.4 2.5-.7 .6-1.4-.3-.4-.7 .4-2.6 1-.4zM491 36.4l-.1 .5-.8 1.4-.6 0-1.8-1.3 0-.5 .7-1 .6-.3zM489.7 37.4l.2 .7-1 1.8-.7 .2-1-.5-.2-.7 1.1-1.8 .8-.1zM489.7 38.8l.1 .9-.7 .2-2.4-1.4-.1-.8 .8-.2z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M473.8 30.7l-.3 .9-.9 .4-1-.4-.3-.9 .3-.9 1-.4 .9 .4zM480.7 30.7l-.4 .9-.9 .4-1-.4-.3-.9 .3-.9 1-.4 .9 .4zM476.8 31.3l-.6 .4-.5-.1-.4-.5 .1-1.1 1.4-.1z" fill="var(--m-paper, #fafaf5)"/>
+  <text x="472" y="74" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">ate-api-server</text>
+  <text x="472" y="88" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ate-system</text>
+  <line x1="472" y1="94" x2="472" y2="500" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <polygon points="574.4,21 589.6,21 589.6,32.7 574.4,32.7" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="574.4,21 589.6,21 589.6,32.7 574.4,32.7" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="1.4" stroke-linejoin="round"/>
+  <polygon points="567.7,33.7 596.3,33.7 596.3,45.3 567.7,45.3" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="567.7,33.7 596.3,33.7 596.3,45.3 567.7,45.3" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="1.4" stroke-linejoin="round"/>
+  <polygon points="561,46.3 603,46.3 603,58 561,58" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="561,46.3 603,46.3 603,58 561,58" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M570.7 39.5L593.3 39.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.7" stroke-linejoin="round"/>
+  <text x="582" y="74" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">actor</text>
+  <text x="582" y="88" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">session-&lt;uuid&gt;</text>
+  <line x1="582" y1="94" x2="582" y2="500" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <circle cx="14" cy="134" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="14" y="138" font-size="11" text-anchor="middle">1</text>
+  <text x="30" y="138" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+0.00 s</text>
+  <line x1="142" y1="134" x2="251" y2="134" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="169.85" y="117.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="197" y="128" font-size="11.5" text-anchor="middle">message</text>
+  <rect class="m-knock" x="122.72" y="138.42" width="148.56" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="197" y="149" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A2A, with the Session id</text>
+  <circle cx="14" cy="176" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="14" y="180" font-size="11" text-anchor="middle">2</text>
+  <text x="30" y="180" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+0.32 s</text>
+  <line x1="252" y1="176" x2="361" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="248.8" y="159.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="307" y="170" font-size="11.5" text-anchor="middle">ate-target-actor</text>
+  <rect class="m-knock" x="262.42" y="180.42" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="307" y="191" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mTLS, port 443</text>
+  <circle cx="14" cy="218" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="14" y="222" font-size="11" text-anchor="middle">3</text>
+  <text x="30" y="222" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+0.47 s</text>
+  <line x1="362" y1="218" x2="471" y2="218" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="376.05" y="201.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="417" y="212" font-size="11.5" text-anchor="middle">ResumeActor</text>
+  <rect class="m-knock" x="369.45" y="222.42" width="95.1" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="417" y="233" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the router asks</text>
+  <circle cx="14" cy="260" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="14" y="264" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">4</text>
+  <text x="30" y="264" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">+0.88 s</text>
+  <line x1="472" y1="260" x2="581" y2="260" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-amber)"/>
+  <rect class="m-knock" x="499.85" y="243.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="527" y="254" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">RUNNING</text>
+  <rect class="m-knock" x="473.51" y="264.42" width="106.98" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="527" y="275" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumed in 0.41 s</text>
+  <circle cx="14" cy="302" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="14" y="306" font-size="11" text-anchor="middle">5</text>
+  <line x1="362" y1="302" x2="581" y2="302" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="441.4" y="285.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="472" y="296" font-size="11.5" text-anchor="middle">the turn</text>
+  <rect class="m-knock" x="385.84" y="306.42" width="172.32" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="472" y="317" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">gRPC to port 80 of the actor</text>
+  <circle cx="14" cy="344" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="14" y="348" font-size="11" text-anchor="middle">6</text>
+  <text x="30" y="348" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+1.07 s</text>
+  <line x1="582" y1="344" x2="253" y2="344" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="345" y="327.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="417" y="338" font-size="11.5" text-anchor="middle">TASK_STATE_COMPLETED</text>
+  <rect class="m-knock" x="357.57" y="348.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="417" y="359" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the turn ran 0.19 s</text>
+  <circle cx="14" cy="386" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="14" y="390" font-size="11" text-anchor="middle">7</text>
+  <text x="30" y="390" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+1.23 s</text>
+  <line x1="252" y1="386" x2="471" y2="386" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="317.6" y="369.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="362" y="380" font-size="11.5" text-anchor="middle">SuspendActor</text>
+  <rect class="m-knock" x="290.69" y="390.42" width="142.62" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="362" y="401" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">synchronous, files only</text>
+  <circle cx="14" cy="428" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="14" y="432" font-size="11" text-anchor="middle">8</text>
+  <text x="30" y="432" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">+1.26 s</text>
+  <line x1="252" y1="428" x2="143" y2="428" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-ink)"/>
+  <rect class="m-knock" x="173.3" y="411.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="197" y="422" font-size="11.5" text-anchor="middle">answer</text>
+  <rect class="m-knock" x="134.6" y="432.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="197" y="443" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1.26 s at the client</text>
+  <circle cx="14" cy="470" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="14" y="474" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">9</text>
+  <text x="30" y="474" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">+1.36 s</text>
+  <line x1="472" y1="470" x2="581" y2="470" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-1-head-amber)"/>
+  <rect class="m-knock" x="492.95" y="453.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="527" y="464" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">SUSPENDED</text>
+  <rect class="m-knock" x="467.57" y="474.42" width="118.86" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="527" y="485" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">suspended in 0.13 s</text>
+  <text x="20" y="518" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One recorded turn of 98. Over all of them the resume took 0.380 s at the median,</text>
+  <text x="20" y="534" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and the suspend took 0.142 s. The model was a mock server.</text>
 </svg>

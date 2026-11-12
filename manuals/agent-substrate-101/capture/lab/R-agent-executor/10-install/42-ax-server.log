@@ -1,0 +1,9 @@
+namespace/ax-system configured
+serviceaccount/ax-server created
+clusterrole.rbac.authorization.k8s.io/ax-server created
+clusterrolebinding.rbac.authorization.k8s.io/ax-server created
+configmap/ax-otel-config created
+deployment.apps/ax-server created
+service/ax-server created
+Waiting for deployment "ax-server" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ax-server" successfully rolled out

@@ -107,7 +107,7 @@ id: fig-8-1
 kind: structure
 title: the three places that hold an actor
 claim: Postgres holds the record of each actor, the bucket holds its durable snapshot, and the node disk holds a second copy for 30 minutes.
-caption: Read left to right. Each panel is one store, with the names it uses and the size we measured with 25 suspended actors. From capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, and the schema migration at v1.0.0.
+caption: The cylinder is Postgres, the bucket is the object store, and the tray on the node is the node disk. The labels of each store give its names and the size we measured with 25 suspended actors. From capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, and the schema migration at v1.0.0.
 ```
 
 ## What 25 suspended actors cost in disk

@@ -1,0 +1,11 @@
+20-  https:
+21:    port: 8443
+22-    protocol: HTTPS
+23-    tls: &ingress-tls
+24-      cert: /run/servicedns.podcert.ate.dev/credential-bundle.pem
+--
+79-binds:
+80:- port: 8444
+81-  tunnelProtocol: connect
+82-  listeners:
+83-  - protocol: HTTPS

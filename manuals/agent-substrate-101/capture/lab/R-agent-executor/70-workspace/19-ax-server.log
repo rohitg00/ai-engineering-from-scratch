@@ -1,0 +1,20 @@
+{"time":"2026-11-12T15:32:23.253590895Z","level":"INFO","msg":"reconciling task","name":"ax-ws-task","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:32:23.257731806Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:32:23.267088401Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-ws-task-tmpl-5fd7c4b9"}
+{"time":"2026-11-12T15:32:23.274191172Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-ws-task"}
+{"time":"2026-11-12T15:32:23.281539057Z","level":"INFO","msg":"task successfully suspended","name":"ax-ws-task","actor":"ax-ws-task"}
+{"time":"2026-11-12T15:32:23.414833719Z","level":"INFO","msg":"reconciling task","name":"ax-ws-task","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:32:23.418116642Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:32:23.422433019Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-ws-task-tmpl-5fd7c4b9"}
+{"time":"2026-11-12T15:32:23.432927676Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-ws-task"}
+{"time":"2026-11-12T15:32:35.718211826Z","level":"INFO","msg":"task successfully resumed","name":"ax-ws-task","actor":"ax-ws-task","workerIP":"10.244.0.40","workspaceReady":true}
+{"time":"2026-11-12T15:32:46.923832374Z","level":"INFO","msg":"reconciling task","name":"ax-ws-task","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:32:46.92820576Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:32:46.932527146Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-ws-task-tmpl-5fd7c4b9"}
+{"time":"2026-11-12T15:32:46.942025424Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-ws-task"}
+{"time":"2026-11-12T15:32:47.058939017Z","level":"INFO","msg":"task successfully suspended","name":"ax-ws-task","actor":"ax-ws-task"}
+{"time":"2026-11-12T15:32:47.106369086Z","level":"INFO","msg":"reconciling task","name":"ax-ws-task","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:32:47.10912121Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:32:47.112506218Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-ws-task-tmpl-5fd7c4b9"}
+{"time":"2026-11-12T15:32:47.121412514Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-ws-task"}
+{"time":"2026-11-12T15:32:57.431432778Z","level":"INFO","msg":"task successfully resumed","name":"ax-ws-task","actor":"ax-ws-task","workerIP":"10.244.0.40","workspaceReady":true}

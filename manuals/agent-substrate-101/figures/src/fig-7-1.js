@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { figure } = require('../../../_shared/figkit.js');
 const { load } = require('../../../_shared/chart.js');
+const { flat } = require('../../../_shared/forms.js');
 
 const lab = path.join(__dirname, '../../capture/lab');
 const summary = load(path.join(lab, 'summary/kagent-turns-x86.json'));
@@ -28,12 +29,13 @@ const at = state => changes.find(change => change.state === state).t;
 const plus = t => `+${(t - sent).toFixed(2)} s`;
 const span = (a, b) => `${(b - a).toFixed(2)} s`;
 
+const BASE = 58;
 const lanes = [
-  { x: 142, name: 'client', sub: 'kagent CLI', hue: 'olive' },
-  { x: 252, name: 'kagent', sub: 'controller :8083', hue: 'plum' },
-  { x: 362, name: 'atenet-router', sub: 'agentgateway', hue: 'indigo' },
-  { x: 472, name: 'ate-api-server', sub: 'ate-system', hue: 'blue' },
-  { x: 582, name: 'actor', sub: 'session-<uuid>', hue: 'green' },
+  { x: 142, name: 'client', sub: 'kagent CLI', hue: 'olive', draw: (f, x) => flat.terminal(f, x, BASE - 34, 'olive') },
+  { x: 252, name: 'kagent', sub: 'controller :8083', hue: 'plum', draw: (f, x) => flat.tower(f, x, BASE - 48, 'plum', { mark: 'kagent' }) },
+  { x: 362, name: 'atenet-router', sub: 'agentgateway', hue: 'indigo', draw: (f, x) => flat.gateway(f, x, BASE - 44, 'indigo', { h: 44, mark: 'agentgateway' }) },
+  { x: 472, name: 'ate-api-server', sub: 'ate-system', hue: 'blue', draw: (f, x) => flat.tower(f, x, BASE - 48, 'blue', { mark: 'substrate' }) },
+  { x: 582, name: 'actor', sub: 'session-<uuid>', hue: 'green', draw: (f, x) => flat.stack(f, x, BASE - 38, 'green', { w: 42, h: 38 }) },
 ];
 const steps = [
   { t: sent, from: 0, to: 1, style: 'call', label: 'message', note: 'A2A, with the Session id' },
@@ -47,18 +49,20 @@ const steps = [
   { t: at('suspended'), from: 3, to: 4, style: 'state', label: 'SUSPENDED', note: `suspended in ${span(at('suspending'), at('suspended'))}`, bold: true },
 ];
 const ROW = 42;
-const FIRST = 96;
+const FIRST = 134;
 const END = FIRST + (steps.length - 1) * ROW + 30;
 
 module.exports = figure('fig-7-1', {
   height: END + 46,
   title: 'One recorded kagent turn resumes the Session actor, runs, and suspends it again',
-  desc: `Five lifelines: the client, the kagent controller, atenet-router, ate-api-server, and the actor named session-uuid. Nine numbered exchanges show one recorded turn, each with its time from the moment the client sent the message. The router asks for ResumeActor and the actor is RUNNING ${span(at('resuming'), at('running'))} later. The turn runs. kagent calls SuspendActor, the client has its answer after ${span(sent, answered)}, and the actor is SUSPENDED after ${span(sent, at('suspended'))}.`,
+  desc: `Five lifelines, each under a small drawing of its party: the client as a terminal, the kagent controller as a server with the kagent mark, atenet-router as a gateway with the agentgateway mark, ate-api-server as a server with the Agent Substrate mark, and the actor named session-uuid as three layers. Nine numbered exchanges show one recorded turn, each with its time from the moment the client sent the message. The router asks for ResumeActor and the actor is RUNNING ${span(at('resuming'), at('running'))} later. The turn runs. kagent calls SuspendActor, the client has its answer after ${span(sent, answered)}, and the actor is SUSPENDED after ${span(sent, at('suspended'))}.`,
 }, f => {
-  f.kicker(30, 30, 'time', { hue: 'ink-mute' });
+  f.kicker(30, BASE + 30, 'time', { hue: 'ink-mute' });
   for (const lane of lanes) {
-    f.box({ x: lane.x, y: 10, w: 104, h: 46, hue: lane.hue, title: lane.name, titleSize: 11, sub: lane.sub, anchor: 'middle', pad: 4 });
-    f.lifeline(lane.x, 56, END);
+    lane.draw(f, lane.x);
+    f.text(lane.x, BASE + 16, lane.name, { size: 11, weight: 700, hue: lane.hue, anchor: 'middle' });
+    f.text(lane.x, BASE + 30, lane.sub, { size: 11, serif: true, hue: 'ink-soft', anchor: 'middle' });
+    f.lifeline(lane.x, BASE + 36, END);
   }
   steps.forEach((step, index) => {
     const y = FIRST + index * ROW;

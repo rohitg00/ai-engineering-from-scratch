@@ -1,0 +1,1 @@
+{"containers":[{"name":"envoy","image":"ghcr.io/agent-substrate/substrate/envoy-dataplane:v1.0.0"},{"name":"ext-proc","image":"ghcr.io/agent-substrate/substrate/atenet:v1.0.0"}],"has_extra_roots":1}

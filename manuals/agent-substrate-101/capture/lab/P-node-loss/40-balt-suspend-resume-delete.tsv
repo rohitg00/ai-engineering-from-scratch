@@ -1,0 +1,37 @@
+ts	t	event	detail
+2026-11-12T13:23:55.351Z	t=-	actor	d2 on multi-worker2 pod lab-n/ballast-5d6cf97747-7ndhn
+2026-11-12T13:23:55.456Z	t=-	call	200	0.076951	count=1 mb=50 sum=6613 process_age_s=4.4
+2026-11-12T13:23:55.546Z	t=-	call	200	0.065942	count=2 mb=50 sum=6613 process_age_s=4.5
+2026-11-12T13:23:55.639Z	t=-	call	200	0.069752	count=3 mb=50 sum=6613 process_age_s=4.5
+2026-11-12T13:23:57.473Z	t=-	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:23:57.477Z	t=-	node-stop	docker stop multi-worker2
+2026-11-12T13:24:07.817Z	t=10.3	node-stopped	multi-worker2
+2026-11-12T13:24:19.087Z	t=21.6	probe	000	10.002209	count=3 mb=50 sum=6613 process_age_s=4.5	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:24:28.137Z	t=30.7	probe	503	6.808075	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:24:41.406Z	t=43.9	probe	000	10.002055	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:24:50.572Z	t=53.1	probe	503	6.923829	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:24:57.871Z	t=60.4	probe	503	5.056851	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:24:57.997Z	t=60.5	suspend-attempt	state-before=ACTOR_STATE_RESUMING | Error: failed to suspend actor: rpc error: code = FailedPrecondition desc = MarkSuspending prerequisite not met for Actor: lab-n/d2 (got: ACTOR_STATE_RESUMING, want ACTOR_STATE_RUNNING) 
+2026-11-12T13:24:58.447Z	t=61.0	resume-attempt	state-before=ACTOR_STATE_RESUMING | Error: failed to resume actor: rpc error: code = Unavailable desc = worker 742e2f1c-dcb3-46ec-955b-f1570bb1bbf7 assigned to actor lab-n/d2 is unavailable 
+2026-11-12T13:25:05.173Z	t=67.7	probe	503	5.062504	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:25:12.485Z	t=75.0	probe	503	5.059637	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:25:13.915Z	t=76.4	suspend-attempt	state-before=ACTOR_STATE_RESUMING | Error: failed to suspend actor: rpc error: code = FailedPrecondition desc = MarkSuspending prerequisite not met for Actor: lab-n/d2 (got: ACTOR_STATE_RESUMING, want ACTOR_STATE_RUNNING) 
+2026-11-12T13:25:14.390Z	t=76.9	resume-attempt	state-before=ACTOR_STATE_RESUMING | Error: failed to resume actor: rpc error: code = Unavailable desc = worker 742e2f1c-dcb3-46ec-955b-f1570bb1bbf7 assigned to actor lab-n/d2 is unavailable 
+2026-11-12T13:25:19.783Z	t=82.3	probe	503	5.055612	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:25:27.102Z	t=89.6	probe	503	5.055366	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:25:29.832Z	t=92.4	suspend-attempt	state-before=ACTOR_STATE_RESUMING | Error: failed to suspend actor: rpc error: code = FailedPrecondition desc = MarkSuspending prerequisite not met for Actor: lab-n/d2 (got: ACTOR_STATE_RESUMING, want ACTOR_STATE_RUNNING) 
+2026-11-12T13:25:30.284Z	t=92.8	resume-attempt	state-before=ACTOR_STATE_RESUMING | Error: failed to resume actor: rpc error: code = Unavailable desc = worker 742e2f1c-dcb3-46ec-955b-f1570bb1bbf7 assigned to actor lab-n/d2 is unavailable 
+2026-11-12T13:25:34.421Z	t=96.9	probe	503	5.059837	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:25:41.746Z	t=104.3	probe	503	5.057693	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:25:45.745Z	t=108.3	suspend-attempt	state-before=ACTOR_STATE_RESUMING | Error: failed to suspend actor: rpc error: code = FailedPrecondition desc = MarkSuspending prerequisite not met for Actor: lab-n/d2 (got: ACTOR_STATE_RESUMING, want ACTOR_STATE_RUNNING) 
+2026-11-12T13:25:46.200Z	t=108.7	resume-attempt	state-before=ACTOR_STATE_RESUMING | Error: failed to resume actor: rpc error: code = Unavailable desc = worker 742e2f1c-dcb3-46ec-955b-f1570bb1bbf7 assigned to actor lab-n/d2 is unavailable 
+2026-11-12T13:25:49.056Z	t=111.6	probe	503	5.059532	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:25:56.357Z	t=118.9	probe	503	5.056352	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:26:03.662Z	t=126.2	probe	503	5.062787	actor lab-n/d2 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:26:04.571Z	t=127.1	delete	Error: rpc error: code = Unavailable desc = while calling atelet Terminate: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 10.244.1.2:21998: co
+2026-11-12T13:28:18.061Z	t=260.6	deleted	after 133.6 s; ACTOR_STATE_DELETING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:28:18.297Z	t=260.8	recreate	Error: failed to create actor: rpc error: code = AlreadyExists desc = Actor d2 already exists 
+2026-11-12T13:28:19.552Z	t=262.1	request-after-recreate	503	0.072912	actor lab-n/d2 unavailable: AssignWorker prerequisite not met for Actor: lab-n/d2 (got: ACTOR_STATE_DELETING, want ACTOR_STATE_SUSPENDED)	|	ACTOR_STATE_DELETING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2 pod lab-n/ballast-5d6cf97747-7ndhn
+2026-11-12T13:28:19.862Z	t=262.4	request-after-recreate	503	0.069647	actor lab-n/d2 unavailable: AssignWorker prerequisite not met for Actor: lab-n/d2 (got: ACTOR_STATE_DELETING, want ACTOR_STATE_SUSPENDED)	|	ACTOR_STATE_DELETING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T13:28:19.883Z	t=262.4	recovered-by-delete	service back 135.7 s after delete; state lost (count restarts at 1)
+2026-11-12T13:28:20.348Z	t=262.9	final	ACTOR_STATE_DELETING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2 pod lab-n/ballast-5d6cf97747-7ndhn

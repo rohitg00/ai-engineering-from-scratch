@@ -1,0 +1,145 @@
+### [13:23:16.189] c1-tls-gw-new-connection-each
+$ for i in 1 2 3 4 5 6 7 8 9 10; do curl -s -m 10 -o /dev/null --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '%{http_code} total=%{time_total} dns=%{time_namelookup} connect=%{time_connect} tls=%{time_appconnect} first_byte=%{time_starttransfer} new_conns=%{num_connects}\n' -H 'content-type: application/json' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions; done
+exit=0
+200 total=0.529859 dns=0.019932 connect=0.020969 tls=0.515344 first_byte=0.529466 new_conns=1
+200 total=0.606097 dns=0.007868 connect=0.074501 tls=0.591919 first_byte=0.605558 new_conns=1
+200 total=0.616601 dns=0.007800 connect=0.008825 tls=0.602145 first_byte=0.616198 new_conns=1
+200 total=0.620440 dns=0.009800 connect=0.011053 tls=0.606480 first_byte=0.620014 new_conns=1
+200 total=0.687969 dns=0.072567 connect=0.074410 tls=0.674286 first_byte=0.687644 new_conns=1
+200 total=0.621964 dns=0.008685 connect=0.009651 tls=0.607938 first_byte=0.621635 new_conns=1
+200 total=0.614549 dns=0.007139 connect=0.075281 tls=0.600490 first_byte=0.614165 new_conns=1
+200 total=0.532767 dns=0.021039 connect=0.022392 tls=0.519344 first_byte=0.532370 new_conns=1
+200 total=0.600429 dns=0.006955 connect=0.072169 tls=0.586492 first_byte=0.600058 new_conns=1
+200 total=0.612688 dns=0.007883 connect=0.009086 tls=0.598987 first_byte=0.612184 new_conns=1
+
+
+### [13:23:17.566] c2-tls-gw-one-connection
+$ curl -s -m 60 -o /dev/null --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '%{http_code} total=%{time_total} dns=%{time_namelookup} connect=%{time_connect} tls=%{time_appconnect} first_byte=%{time_starttransfer} new_conns=%{num_connects}\n' -H 'content-type: application/json' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' 'https://modelgw.model-gw.svc.cluster.local/v1/chat/completions?i=[1-30]'
+exit=0
+200 total=0.622946 dns=0.009510 connect=0.010880 tls=0.608849 first_byte=0.622576 new_conns=1
+200 total=0.011514 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011108 new_conns=0
+200 total=0.011110 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010721 new_conns=0
+200 total=0.053324 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.052967 new_conns=0
+200 total=0.012317 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011953 new_conns=0
+200 total=0.010763 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010444 new_conns=0
+200 total=0.011429 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011091 new_conns=0
+200 total=0.011038 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010622 new_conns=0
+200 total=0.010440 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010131 new_conns=0
+200 total=0.011513 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011169 new_conns=0
+200 total=0.011332 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010883 new_conns=0
+200 total=0.012130 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011790 new_conns=0
+200 total=0.012645 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.012180 new_conns=0
+200 total=0.012722 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.012098 new_conns=0
+200 total=0.011648 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011376 new_conns=0
+200 total=0.011859 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011300 new_conns=0
+200 total=0.026346 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.026030 new_conns=0
+200 total=0.010939 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010558 new_conns=0
+200 total=0.011426 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011115 new_conns=0
+200 total=0.012405 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.012119 new_conns=0
+200 total=0.013743 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.013311 new_conns=0
+200 total=0.012122 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011814 new_conns=0
+200 total=0.013963 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.013608 new_conns=0
+200 total=0.011969 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011648 new_conns=0
+200 total=0.013994 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.012418 new_conns=0
+200 total=0.012661 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.012320 new_conns=0
+200 total=0.011281 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010983 new_conns=0
+200 total=0.012199 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011824 new_conns=0
+200 total=0.010550 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010288 new_conns=0
+200 total=0.010564 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010208 new_conns=0
+
+
+### [13:23:19.373] c3-plain-gw-new-connection-each
+$ for i in 1 2 3 4 5 6 7 8 9 10; do curl -s -m 10 -o /dev/null -w '%{http_code} total=%{time_total} dns=%{time_namelookup} connect=%{time_connect} tls=%{time_appconnect} first_byte=%{time_starttransfer} new_conns=%{num_connects}\n' -H 'content-type: application/json' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions; done
+exit=0
+200 total=0.027325 dns=0.007931 connect=0.009150 tls=0.000000 first_byte=0.026831 new_conns=1
+200 total=0.027449 dns=0.007698 connect=0.009076 tls=0.000000 first_byte=0.026891 new_conns=1
+200 total=0.031691 dns=0.009064 connect=0.010392 tls=0.000000 first_byte=0.030892 new_conns=1
+200 total=0.024763 dns=0.007520 connect=0.008296 tls=0.000000 first_byte=0.024263 new_conns=1
+200 total=0.026870 dns=0.007408 connect=0.008308 tls=0.000000 first_byte=0.026108 new_conns=1
+200 total=0.027412 dns=0.008181 connect=0.009334 tls=0.000000 first_byte=0.026946 new_conns=1
+200 total=0.025552 dns=0.006727 connect=0.007735 tls=0.000000 first_byte=0.025078 new_conns=1
+200 total=0.025938 dns=0.007303 connect=0.008107 tls=0.000000 first_byte=0.025338 new_conns=1
+200 total=0.093846 dns=0.074882 connect=0.076235 tls=0.000000 first_byte=0.093281 new_conns=1
+200 total=0.028004 dns=0.007807 connect=0.008856 tls=0.000000 first_byte=0.027482 new_conns=1
+
+
+### [13:23:20.063] c4-plain-gw-one-connection
+$ curl -s -m 60 -o /dev/null -w '%{http_code} total=%{time_total} dns=%{time_namelookup} connect=%{time_connect} tls=%{time_appconnect} first_byte=%{time_starttransfer} new_conns=%{num_connects}\n' -H 'content-type: application/json' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' 'http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions?i=[1-30]'
+exit=0
+200 total=0.028737 dns=0.008679 connect=0.009748 tls=0.000000 first_byte=0.028236 new_conns=1
+200 total=0.009569 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009201 new_conns=0
+200 total=0.010219 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009792 new_conns=0
+200 total=0.010199 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009785 new_conns=0
+200 total=0.028540 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.027956 new_conns=0
+200 total=0.010637 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010182 new_conns=0
+200 total=0.009600 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009092 new_conns=0
+200 total=0.010071 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009180 new_conns=0
+200 total=0.011439 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010892 new_conns=0
+200 total=0.010554 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010115 new_conns=0
+200 total=0.010050 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009540 new_conns=0
+200 total=0.025109 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.024653 new_conns=0
+200 total=0.011195 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010658 new_conns=0
+200 total=0.009547 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009123 new_conns=0
+200 total=0.010965 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010051 new_conns=0
+200 total=0.010378 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009951 new_conns=0
+200 total=0.009975 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009508 new_conns=0
+200 total=0.010449 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010088 new_conns=0
+200 total=0.033277 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.032910 new_conns=0
+200 total=0.009653 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009247 new_conns=0
+200 total=0.010494 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010130 new_conns=0
+200 total=0.010503 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009990 new_conns=0
+200 total=0.010645 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010149 new_conns=0
+200 total=0.010064 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009721 new_conns=0
+200 total=0.011852 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011367 new_conns=0
+200 total=0.010161 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009748 new_conns=0
+200 total=0.010734 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010213 new_conns=0
+200 total=0.010086 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.009717 new_conns=0
+200 total=0.011882 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.011499 new_conns=0
+200 total=0.011122 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.010573 new_conns=0
+
+
+### [13:23:20.677] c5-direct-mock-one-connection
+$ curl -s -m 60 -o /dev/null -w '%{http_code} total=%{time_total} dns=%{time_namelookup} connect=%{time_connect} tls=%{time_appconnect} first_byte=%{time_starttransfer} new_conns=%{num_connects}\n' -H 'content-type: application/json' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' 'http://mock-a.model-gw.svc.cluster.local/v1/chat/completions?i=[1-30]'
+exit=0
+200 total=0.020691 dns=0.007983 connect=0.009012 tls=0.000000 first_byte=0.020146 new_conns=1
+200 total=0.004435 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003933 new_conns=0
+200 total=0.004374 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004042 new_conns=0
+200 total=0.003773 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003476 new_conns=0
+200 total=0.003874 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003487 new_conns=0
+200 total=0.007122 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.006172 new_conns=0
+200 total=0.004841 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004375 new_conns=0
+200 total=0.004848 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004359 new_conns=0
+200 total=0.004867 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004303 new_conns=0
+200 total=0.005127 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004689 new_conns=0
+200 total=0.004051 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003616 new_conns=0
+200 total=0.003897 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003373 new_conns=0
+200 total=0.051324 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.050942 new_conns=0
+200 total=0.004635 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004200 new_conns=0
+200 total=0.004464 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004065 new_conns=0
+200 total=0.004153 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003757 new_conns=0
+200 total=0.004211 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003870 new_conns=0
+200 total=0.004255 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003853 new_conns=0
+200 total=0.003758 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003395 new_conns=0
+200 total=0.004381 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003841 new_conns=0
+200 total=0.005001 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004612 new_conns=0
+200 total=0.005533 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.005030 new_conns=0
+200 total=0.005158 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004768 new_conns=0
+200 total=0.004546 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.004145 new_conns=0
+200 total=0.004203 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003824 new_conns=0
+200 total=0.003962 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003672 new_conns=0
+200 total=0.004104 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003755 new_conns=0
+200 total=0.004092 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003709 new_conns=0
+200 total=0.004042 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.003636 new_conns=0
+200 total=0.057178 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.056694 new_conns=0
+
+
+### [13:23:21.472] c6-public-https-new-connection-each
+$ for i in 1 2 3 4 5; do curl -s -m 15 -o /dev/null --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '%{http_code} total=%{time_total} dns=%{time_namelookup} connect=%{time_connect} tls=%{time_appconnect} first_byte=%{time_starttransfer} new_conns=%{num_connects}\n' https://example.com/; done
+exit=6
+000 total=0.004850 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.000000 new_conns=0
+000 total=0.005422 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.000000 new_conns=0
+000 total=0.004480 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.000000 new_conns=0
+000 total=0.005722 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.000000 new_conns=0
+000 total=0.006046 dns=0.000000 connect=0.000000 tls=0.000000 first_byte=0.000000 new_conns=0
+
+

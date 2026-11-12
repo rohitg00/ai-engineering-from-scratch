@@ -1,0 +1,2 @@
+ATESPACE   NAME                             GOLDEN TAG                             ERROR   AGE
+default    ax-install-check-tmpl-b08f2422   921c52be-e85f-4bac-a5ab-1dd5700530a2           57s

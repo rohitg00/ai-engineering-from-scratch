@@ -1,6 +1,13 @@
 'use strict';
 
+const path = require('path');
 const { figure } = require('../../../_shared/figkit.js');
+const { load } = require('../../../_shared/chart.js');
+
+const gateway = load(path.join(__dirname, '../../capture/lab/summary/network-x86.json')).model_gateway;
+const cost = (side, name) => gateway[side].connection_cost_ms.find(item => item.case === name).median_total_ms;
+const fresh = ['agentgateway', 'envoy'].map(side => Math.round(cost(side, 'c1-tls-gw-new-connection-each')));
+const reused = ['agentgateway', 'envoy'].map(side => Math.round(cost(side, 'c2-tls-gw-one-connection')));
 
 const xs = [20, 144, 268, 392, 516];
 const rows = [
@@ -32,14 +39,14 @@ const rows = [
   },
   {
     y: 322,
-    decides: 'decides: models, tools, budgets',
+    decides: 'decides: the model, and the key that the provider gets',
     kicker: 'C · a gateway that the actor calls through an egress rule',
-    note: 'dashed: your own workload, behind one egress allow rule. We did not run it.',
+    note: `Ran over TLS with two mock models. A new connection: ${fresh[0]} ms. A reused one: ${reused[0]} ms.`,
     boxes: [
-      { hue: 'green', title: 'actor', sub: 'session-<uuid>' },
-      { hue: 'indigo', title: 'atenet-egress', sub: 'one allow rule' },
+      { hue: 'green', title: 'actor', sub: 'f-main' },
+      { hue: 'indigo', title: 'atenet-egress', sub: 'one https rule' },
       { hue: 'grey', title: 'agentgateway', sub: 'model gateway', dash: 'dashed', strokeWidth: 1.8 },
-      { hue: 'plum', title: 'model', sub: 'the provider' },
+      { hue: 'plum', title: 'model', sub: 'mock-a, mock-b' },
     ],
   },
 ];
@@ -47,7 +54,7 @@ const rows = [
 module.exports = figure('fig-7-2', {
   height: 432,
   title: 'Three places where agentgateway can sit next to Substrate',
-  desc: 'Three rows. Row A: agentgateway is the proxy in atenet-router and atenet-egress when you install Substrate with the agentgateway dataplane. Row B: the kagent distribution installs the same two proxies and has no Envoy option. Row C: a separate agentgateway is a model gateway that the actor reaches through one egress rule, and that gateway selects models and tools.',
+  desc: `Three rows. Row A: agentgateway is the proxy in atenet-router and atenet-egress when you install Substrate with the agentgateway dataplane. Row B: the kagent distribution installs the same two proxies and has no Envoy option. Row C: a separate agentgateway is a model gateway that the actor reaches through one egress rule, and that gateway selects the model. In our run with two mock backends, a request on a new intercepted TLS connection took ${fresh[0]} milliseconds on the agentgateway dataplane and ${fresh[1]} on Envoy, and a request on a reused connection took ${reused[0]} and ${reused[1]} milliseconds.`,
 }, f => {
   for (const row of rows) {
     f.kicker(20, row.y - 10, row.kicker);

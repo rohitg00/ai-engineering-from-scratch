@@ -178,13 +178,33 @@ note: Seven lines of the trace. The 40 requests between the second request and t
 
 A `revert` did not free the actor either, in 4 of 4 attempts in three runs. In the second run it came too early. The workers of the stopped node were still listed as active, and the next request chose one of them. In the third run the resume that was in progress blocked both attempts. In the fourth run the revert needed `atelet` on the stopped node, and the actor stayed in `ACTOR_STATE_REVERTING`.
 
-One question is open. Does a `revert` that you send after the workers are marked unavailable let the actor resume on the other node from its durable snapshot? We have not verified that. Until someone does, treat a stopped node as an outage for every actor that is bound to it.
+Those four runs left one question: does a `revert` help when you send it after the workers are marked unavailable? A second set of 13 node-stop cases answered it. Yes, for one kind of actor only.
+
+**We measured** each case once, on a second x86 server guest (16 vCPU, 23 GB). The cluster had two worker nodes, the Envoy dataplane, and the default timers. In the first case, an actor was suspended with `--mode sync` and got no request after the stop. The workers of the node showed `WORKER_STATE_UNAVAILABLE` at 45 s. One `revert` then took 7.1 s and returned the actor with no node. The next request resumed it on the other node in 0.56 s, and the count continued from the snapshot.
+
+```listing
+title: the one revert that worked while the node was down
+source: capture/lab/P-node-loss/10-a-quiet-revert.tsv
+lang: text
+note: Four lines of the trace. The columns are the time, the seconds from the stop command, the event, and its detail. The actor row that the revert printed is cut.
+---
+2026-11-12T12:53:34.330Z	t=0.7	node-stopped	multi-worker2
+2026-11-12T12:54:18.228Z	t=44.6	workers-of-stopped-node-not-active	      2 WORKER_STATE_ACTIVE       2 WORKER_STATE_UNAVAILABLE 
+2026-11-12T12:54:25.821Z	t=52.1	revert	7.1 s | ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      a1     lab-n/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    8         56s 
+2026-11-12T12:54:26.821Z	t=53.1	first-request	200	0.560088	count=4 mb=50 sum=6613 process_age_s=4.9	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+```
+
+The condition is narrow. The same kind of actor, reverted 10 s after the stop command, went to `ACTOR_STATE_REVERTING` and stayed there until the node was back. An actor that had got a request was refused 19 of 19 times while it was `ACTOR_STATE_RESUMING`. An actor with a `PENDING` snapshot, and a `RUNNING` actor, went to `ACTOR_STATE_REVERTING` at the first revert. In all of these cases the revert calls `atelet` on the stopped node, and that call fails.
+
+One path worked in every state: a tag that exists before the node stops. A new actor from the tag served its first request on the other node 1.2 s after the create command, in 3 of 3 rescues. [Section 8.2](#s-when-a-dependency-is-down) has the runbook for each case, and [figure 8.2d](#fig-8-2d) puts it on one page. Without a tag, treat a stopped node as an outage for every actor that got a request.
 
 A `RUNNING` actor on a dead node is the worst case to see. Its state did not change in 10 minutes, so a list of actors shows nothing wrong. [CRASHED and RevertActor](#s-crashed-and-revertactor) has the error texts for each case.
 
 When the node returned, it was `Ready` within seconds. It had none of the four pool pods in three of the four returns, because the new pods ran on the other node. Kubernetes does not move them back, and no new actor went to the returned node for more than 3 minutes. After we deleted two pool pods by hand, the first actor went to the returned node 23 to 35 seconds after the node start.
 
-We did not test a pool with spare workers on a third node, or a node loss with the microVM class. We also did not test a node that is alive and unreachable.
+The second set of cases gave the same split, with more returns. After an outage shorter than the eviction time, the node kept its pool pods. The first new actor went to it 23 to 45 seconds after the start, in five returns. After a longer outage the node had no pool pod, in seven of seven returns. No new actor went to it in the 216 to 223 seconds that we watched. Substrate does not rebalance a pool.
+
+We did not test a pool with spare workers on a third node, or a node loss with the microVM class. We also did not test a node that is alive and unreachable, or a case where the other node has no room.
 
 ## After a node restart
 
@@ -229,8 +249,10 @@ There is no way to pin one actor to one worker, and no priority between actors. 
 - Expect an actor on a different worker after each resume.
 - Keep free workers on every node, because a suspended actor resumes only on its last node.
 - Do not expect a cordon or a synchronous suspend to move a suspended actor.
-- Treat a stopped node as an outage for each actor that is bound to it.
+- Treat a stopped node as an outage for each actor that got a request after the stop.
+- Revert a quiet, sync-suspended actor only after its workers show `WORKER_STATE_UNAVAILABLE`.
+- Keep a tag of each actor that you cannot lose, and rescue it with `create actor --tag`.
 - After a node restart, wait until ate-api-server answers, then retry resumes for 30 seconds.
 ```
 
-Sources: capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/I-capacity/14-workers-full.txt, capture/lab/I-capacity/15-actors-after.txt, capture/lab/B-lifecycle/22-actor-after-async-suspend.yaml, capture/lab/A-quickstart/60-state.log, capture/lab/D-durability/10-watch-part2.tsv, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/summary/timers-x86.json, capture/lab/summary/failures-x86.json, capture/lab/L-gaps/multinode/50-placement.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/60-sticky-cordon.tsv, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/71-workers.txt, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/L-gaps/multinode/96-controller-events.log, capture/lab/L-gaps/multinode/97-k8s-node-events.txt, capture/lab/L-gaps/multinode/98-worker-state-rpcs.log, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/L-gaps/restart/11-workers-each-poll.txt, capture/lab/L-gaps/restart/23-ateapi.log; cmd/ateapi/internal/scheduling/scheduling.go, cmd/ateapi/internal/controlapi/workflow_resume.go, cmd/ateapi/internal/controlapi/workflow_resume_detach.go, cmd/ateapi/internal/store/atepg/worker_assignment.go, cmd/atelet/main.go at v1.0.0; docs/reference/api-guide.md, docs/reference/sandbox-classes.md at v1.0.0.
+Sources: capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/I-capacity/14-workers-full.txt, capture/lab/I-capacity/15-actors-after.txt, capture/lab/B-lifecycle/22-actor-after-async-suspend.yaml, capture/lab/A-quickstart/60-state.log, capture/lab/D-durability/10-watch-part2.tsv, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/summary/timers-x86.json, capture/lab/summary/failures-x86.json, capture/lab/L-gaps/multinode/50-placement.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/60-sticky-cordon.tsv, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/71-workers.txt, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/L-gaps/multinode/96-controller-events.log, capture/lab/L-gaps/multinode/97-k8s-node-events.txt, capture/lab/L-gaps/multinode/98-worker-state-rpcs.log, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/L-gaps/restart/11-workers-each-poll.txt, capture/lab/L-gaps/restart/23-ateapi.log, capture/lab/P-node-loss/10-a-quiet-revert.tsv, capture/lab/P-node-loss/74-second-revert.tsv, capture/lab/P-node-loss/20-b60-requests-revert-loop.tsv, capture/lab/P-node-loss/50-c-pending-snapshot.tsv, capture/lab/P-node-loss/60-d-running.tsv, capture/lab/P-node-loss/80-tag-rescue.tsv, capture/lab/P-node-loss/85-tag-rescue-running-and-pending.tsv, capture/lab/summary/node-loss-x86.json; cmd/ateapi/internal/scheduling/scheduling.go, cmd/ateapi/internal/controlapi/workflow_resume.go, cmd/ateapi/internal/controlapi/workflow_resume_detach.go, cmd/ateapi/internal/store/atepg/worker_assignment.go, cmd/atelet/main.go at v1.0.0; docs/reference/api-guide.md, docs/reference/sandbox-classes.md at v1.0.0.
