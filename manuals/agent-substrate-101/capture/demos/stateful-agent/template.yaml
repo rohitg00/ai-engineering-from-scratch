@@ -1,0 +1,28 @@
+metadata:
+  atespace: demo-agent
+  name: agent-FIDELITY_NAME
+workerSelector:
+  matchLabels:
+    workload: agent
+containers:
+- name: agent
+  image: IMAGE
+  env:
+  - name: MODEL_URL
+    value: http://mock-llm.demo-agent.svc.cluster.local/v1/chat/completions
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+  volumeMounts:
+  - name: data
+    mountPath: /data
+resources:
+  limits:
+    cpuMillicores: 1000
+    memoryBytes: 268435456
+snapshotConfig:
+  preferredFidelity: FIDELITY_VALUE
+volumes:
+- name: data
+  durableDir: {}

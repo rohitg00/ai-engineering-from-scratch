@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-agent
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-agent-secrets
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: model-key
+  namespace: demo-agent-secrets
+stringData:
+  token: sk-demo-not-a-real-key
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mock-llm
+  namespace: demo-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mock-llm
+  template:
+    metadata:
+      labels:
+        app: mock-llm
+    spec:
+      containers:
+      - name: mock-llm
+        image: IMAGE
+        command: ["python3", "-u", "/app/mock_llm.py"]
+        env:
+        - name: EXPECTED_KEY
+          value: sk-demo-not-a-real-key
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mock-llm
+  namespace: demo-agent
+spec:
+  selector:
+    app: mock-llm
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: ate.dev/v1
+kind: WorkerPool
+metadata:
+  name: agent
+  namespace: demo-agent
+  labels:
+    workload: agent
+spec:
+  replicas: 1
+  workerImage: ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0
+  sandboxClasses:
+  - name: gvisor
+  template:
+    resources:
+      limits:
+        cpu: "2"
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi

@@ -1,0 +1,3 @@
+rules:
+- http:
+    hostnames: ["pkg-mirror.demo-tools.svc.cluster.local"]
