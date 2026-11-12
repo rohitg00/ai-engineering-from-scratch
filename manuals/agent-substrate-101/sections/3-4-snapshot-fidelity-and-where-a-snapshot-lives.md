@@ -186,7 +186,7 @@ The three periods mean three different things for you.
 
 1. In the first 5 minutes, the node holds the only copy. If that copy is lost, the actor is `ACTOR_STATE_CRASHED`, and the work since the last durable snapshot is gone. [Section 3.5](#s-crashed-and-revertactor) shows that loss.
 2. From 5 to 30 minutes, both copies exist. A resume uses the node and takes the lower line of [section 3.3](#s-suspendactor-and-resumeactor).
-3. After 30 minutes, only the object store has the snapshot. A resume downloads it first and takes about twice as long for each MiB.
+3. After 30 minutes, only the object store has the snapshot. A resume downloads it first and takes about twice as long for each MiB. That number is for a bucket in the cluster, and [section 8.1](#s-postgres-and-the-object-store) shows a bucket that is 20 ms away.
 
 The documentation promises neither the start nor the end of the upload {{docs}}. Treat 5 minutes as the shortest exposure, not as a limit.
 

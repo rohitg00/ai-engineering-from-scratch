@@ -1,0 +1,18 @@
+ts	t	event	detail
+2026-11-12T16:29:28.233Z	t=-	actor	h1 on multi-worker2 pod lab-n/ballast-5d6cf97747-lsvlf
+2026-11-12T16:29:28.328Z	t=-	call	200	0.067501	count=1 mb=50 sum=6512 process_age_s=3.6
+2026-11-12T16:29:28.413Z	t=-	call	200	0.064071	count=2 mb=50 sum=6512 process_age_s=3.7
+2026-11-12T16:29:28.495Z	t=-	call	200	0.060165	count=3 mb=50 sum=6512 process_age_s=3.8
+2026-11-12T16:29:29.964Z	t=-	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T16:29:34.545Z	t=-	survivor-filled	fillers on multi-worker: fill1-3 fill2-1 | workers: clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:1/1000:1900Mi/1984Mi 
+2026-11-12T16:29:34.744Z	t=-	both-nodes-up	workers: clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:1/1000:1900Mi/1984Mi 
+2026-11-12T16:29:35.506Z	t=-	v-filler	vfill1: ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T16:29:36.233Z	t=-	v-filler	vfill2: ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T16:29:36.429Z	t=-	all-four-workers-full	workers: clh8q:ACTIVE:1/1000:1900Mi/1984Mi lsvlf:ACTIVE:1/1000:1900Mi/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:1/1000:1900Mi/1984Mi 
+2026-11-12T16:29:41.697Z	t=-	request-pool-full-1	503	5.054304	actor lab-n/h1 unavailable: no worker has room for the actor	|	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T16:29:46.953Z	t=-	request-pool-full-2	503	5.048381	actor lab-n/h1 unavailable: no worker has room for the actor	|	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T16:29:47.155Z	t=-	resume-command	Error: failed to resume actor: rpc error: code = ResourceExhausted desc = no worker has room for the actor 
+2026-11-12T16:29:47.559Z	t=-	free-worker-on-other-node	suspend --mode sync of fill1-3: lab-n      fill1-3   lab-n/tb-big   ACTOR_STATE_SUSPENDED   <none>                    5         14s
+2026-11-12T16:29:48.396Z	t=-	request-after-free-on-other-node	1.0 s	200	0.608235	count=4 mb=50 sum=6512 process_age_s=4.2	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T16:29:48.952Z	t=-	final	h1: ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:- pod lab-n/ballast-5d6cf97747-zzzdn | workers: clh8q:ACTIVE:1/1000:1900Mi/1984Mi lsvlf:ACTIVE:1/1000:1900Mi/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:1/1000:250Mi/1984Mi 
+2026-11-12T16:29:49.111Z	t=-	local-snapshots	104 MiB on multi-worker2, 2 MiB on multi-worker

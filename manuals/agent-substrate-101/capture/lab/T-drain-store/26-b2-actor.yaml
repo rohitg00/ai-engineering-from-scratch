@@ -1,0 +1,58 @@
+actorTemplate:
+  atespace: lab-n
+  name: tb-50
+metadata:
+  atespace: lab-n
+  createTime: "2026-11-12T16:15:58.743003435Z"
+  name: e3
+  uid: 1a928171-e606-486e-b7a5-25cdb3b9d8df
+  updateTime: "2026-11-12T16:16:05.256378907Z"
+  version: "8"
+status:
+  assignedNode: multi-worker
+  lastAssignedGeneration: 2
+  snapshots:
+  - actorTemplateUid: e0166532-008a-4281-bb95-9b7c51662d90
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-n/actors/1a928171-e606-486e-b7a5-25cdb3b9d8df/snapshots/5af32d83-6b53-405e-b0e7-dca190abcbcc
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 2
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 5af32d83-6b53-405e-b0e7-dca190abcbcc
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: multi-worker
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: f74b0c1f-5078-41d3-98f3-94b4c87ec2f1
+    workerEpoch: "1"
+    workerNamespace: lab-n
+    workerPod: ballast-5d6cf97747-7p7vj
+    workerPodIps:
+    - 10.244.2.52
+    workerPodUid: f74b0c1f-5078-41d3-98f3-94b4c87ec2f1
+    workerPool: ballast
+    workerSpiffeId: spiffe://cluster.local/ns/lab-n/sa/ateworker

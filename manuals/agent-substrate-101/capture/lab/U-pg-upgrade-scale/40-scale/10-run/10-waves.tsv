@@ -1,0 +1,4 @@
+wave	population_before	create_s	create_fail	burst	suspend_s	suspend_fail	disk_free_mb	mem_avail_mb	snap_mb	pg_db_mb	actors_rows
+1	300	1.830	0	wave1	n=150	ok=150	wall=4.44	rate=33.8/s	p50=4.118	p95=4.413	max=4.420	codes={'200': 150}	connects=2	http=2	5.562	0	7774	36879	2326	11	750
+2	450	1.842	0	wave2	n=150	ok=150	wall=3.91	rate=38.4/s	p50=3.225	p95=3.864	max=3.893	codes={'200': 150}	connects=2	http=2	5.758	0	5839	36658	4261	12	900
+3	600	1.865	0	wave3	n=150	ok=150	wall=3.92	rate=38.3/s	p50=3.229	p95=3.835	max=3.884	codes={'200': 150}	connects=2	http=2	4.831	0	3880	36439	6195	12	1050

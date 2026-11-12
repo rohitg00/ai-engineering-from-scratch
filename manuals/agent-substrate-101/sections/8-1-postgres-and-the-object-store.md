@@ -62,7 +62,39 @@ The manifests give the bundled database no replica and no failover. `ate-api-ser
 
 ## Use an external Postgres
 
-We did not test an external database. This part comes from the code and the documentation at the tag.
+We ran one install against a Postgres outside the cluster. The bullets after the run come from the code and the documentation at the tag.
+
+**We measured** this once on the x86 server guest (24 vCPU, 47 GB, nested KVM), on a new kind cluster from the release images. Postgres 18 ran in a container on the guest, outside the kind network, with TLS and password logins. The install took three tries. The first was our mistake with an installer variable. The second failed in the database step, and `ate-setup deploy ate-system` then failed after 198 s. The third deploy took 29 s.
+
+```listing
+title: the database script, run without a transaction
+source: capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup-attempt2-no-transaction.log
+lang: text
+note: Five lines of the output of psql. The script built a role name from a setting that was already gone.
+---
+ERROR:  zero-length delimited identifier at or near """"
+LINE 1: CREATE ROLE "" NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE N...
+                    ^
+QUERY:  CREATE ROLE "" NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION
+CONTEXT:  PL/pgSQL function inline_code_block line 28 at EXECUTE
+```
+
+The database guide tells you to run `setup.sql` with an administrator connection {{docs}}. The script stores its inputs with `set_config` in a form that lasts for one transaction {{code}}. Run from a pipe, each statement is its own transaction, so the role name was empty when the script used it. With `psql --single-transaction` the same file ran with no error. The installer wraps the script in `BEGIN` and `COMMIT` for the bundled database {{code}}. The guide does not say that you must do the same.
+
+While the roles were missing, `ate-api-server` logged `password authentication failed` every 2 s. Read that line as a database that was never set up, and not only as a wrong password.
+
+Four things differed from the bundled install:
+
+- Two environment variables carry the connection strings: `ATE_API_POSTGRES_READ_WRITE_CONNECTION_STRING` and `ATE_API_POSTGRES_OWNER_CONNECTION_STRING`. The flag `--ateapi-postgres-server-ca-file` gives the CA of the server.
+- `sslmode=verify-full` worked with an IP address in the server certificate. All 14 connections of `ate-api-server` used TLS 1.3.
+- The install deployed no `postgres` StatefulSet. It still deployed the `postgres` NetworkPolicy, which then selects no pod.
+- The install record on disk held no connection string, and the installer asks for both strings again on a retry.
+
+**We measured** the lifecycle on that cluster. `create actor` took 0.24 s and the first request 0.48 s, once each. A synchronous suspend took a median of 0.86 s (0.59 to 1.16), and the resume after it 0.31 s (0.25 to 0.74), in 10 cycles. Another install ran on the guest in those minutes, so read these times as upper values. The count continued across every suspend.
+
+**We measured** one outage of that database, 60.6 s long. A running actor failed 62 of 211 requests: 54 client timeouts at 9 s and 8 answers of 500. It answered again 0.7 s after the database was ready. New resumes failed in 19 of 43 requests, and the last failed one was sent 28.7 s after ready. The bundled database gave the same pattern, 66 of 158 requests and 27 s, as [section 8.2](#s-when-a-dependency-is-down) shows. So an outside Postgres removes the single pod, and it does not shorten an outage by itself.
+
+The rest of this part comes from the code and the documentation at the tag.
 
 - `ate-api-server` takes two connection strings: `--postgres-owner-connection-string` and `--postgres-read-write-connection-string`. The owner role runs migrations, and the read-write role serves requests. The default role names are `substrate_owner` and `substrate_readwrite`.
 - The repository includes an overlay for Cloud SQL through its proxy. Any other PostgreSQL service is yours to connect.
@@ -130,9 +162,44 @@ The node copy is the part that people forget. After an asynchronous suspend, `at
 
 **Our position:** size the node disk for the memory of every actor that can suspend on that node inside 30 minutes, plus the snapshot cache. Size the bucket for the memory of every suspended actor, plus one golden snapshot for each template. For memory fidelity, count the memory that holds data and add about 1 percent: our node held 8,801 MiB for 8,750 MiB. Keep free space above both numbers. A files-only snapshot is far smaller. For an actor with one small file in its volume, it was 44 KiB on the node and 48 KiB in the bucket.
 
+## A bucket outside the cluster, and what distance costs
+
+Every other run in this manual used a bucket in the cluster. For this part we moved the bucket out and added network delay. [Figure 8.1b](#fig-8-1b) shows every cycle.
+
+```figure
+id: fig-8-1b
+kind: chart
+title: a bucket outside the cluster, with 20 and 100 ms of added round trip
+claim: With 20 ms of added round trip, a resume of 1,000 MiB from the bucket took 10.2 s and not 4.8 s.
+caption: Read each panel left to right, from the bucket in the cluster to the bucket outside it with more delay. Each dot is one cycle, and a line joins the medians of one size. The steps on the horizontal axis are not to scale. From capture/lab/summary/object-store-x86.json.
+```
+
+**We measured** this on the second x86 server guest (16 vCPU, 23 GB), with five cycles for each cell unless the table says less. One cycle is a suspend with `--mode sync`, a wait until the node copy is gone, and one request. `atelet` ran with an upload delay of 3 s and a detach delay of 10 s, for these runs only. The outside bucket was rustfs in a container on the same guest, outside the kind network. We added the delay with `tc netem`, and a connection from a node then took 20.3 and 100.4 ms. All 49 requests returned 200.
+
+| Bucket | Added round trip | Data in memory | Synchronous suspend, median (range) | Resume from the bucket, median (range) |
+|---|---|---|---|---|
+| In the cluster | none | 0 MiB | 0.52 s (0.44 to 0.55) | 0.25 s (0.22 to 0.28) |
+| In the cluster | none | 200 MiB | 2.07 s (1.83 to 2.21) | 1.04 s (0.91 to 1.09) |
+| In the cluster | none | 1,000 MiB | 6.44 s (5.32 to 7.11) | 4.50 s (4.49 to 4.84) |
+| Outside | none | 0 MiB | 0.47 s (0.45 to 0.55) | 0.25 s (0.22 to 0.34) |
+| Outside | none | 200 MiB | 2.14 s (1.84 to 2.31) | 1.08 s (1.03 to 1.10) |
+| Outside | none | 1,000 MiB | 7.09 s (5.80 to 7.23) | 4.79 s (4.54 to 4.95) |
+| Outside | 20 ms | 0 MiB | 0.66 s (0.61 to 0.76) | 0.37 s (0.35 to 0.45) |
+| Outside | 20 ms | 200 MiB | 2.70 s (2.44 to 2.81) | 2.50 s (2.49 to 2.71) |
+| Outside | 20 ms | 1,000 MiB, 4 cycles | 8.39 s (7.17 to 8.90) | 10.24 s (9.62 to 10.87) |
+| Outside | 100 ms | 0 MiB | 1.53 s (1.41 to 1.59) | 0.94 s (0.86 to 1.06) |
+
+Three results come out of the table. Moving the bucket out of the cluster, with no delay, changed little. A round trip of 20 ms more than doubled the resume at 200 and at 1,000 MiB, and the suspend grew less. At 100 ms even an actor with no data paid: its resume went from 0.25 s to 0.94 s.
+
+Read the limits before you use these numbers. The bucket ran on the same guest, so the delay was emulated, and the bucket shared one disk and one CPU with the node. Bandwidth was not limited. Three cells are missing: 200 and 1,000 MiB at 100 ms, and the fifth cycle of 1,000 MiB at 20 ms. We did not test a bucket on another machine, or a cloud bucket.
+
+**Our position:** measure the round trip from your nodes to your bucket before you promise a resume time. Keep the bucket in the region of the cluster. An actor that must wake fast needs its node copy. Set the detach delay to the longest idle time of that actor, as [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) describes.
+
 ## What we did not test
 
-Our object store was rustfs in the same cluster and on the same disk as the node. We did not test Google Cloud Storage, Amazon S3, or any bucket across a network. We did not test an external Postgres, a Postgres restore, or a bucket restore. So we give no tested backup procedure. Two backups at the same clock time are not one consistent backup. A suspend or a delete between them leaves rows and objects out of step.
+Our object store was rustfs, in the cluster or in a container on the same guest. We did not test Google Cloud Storage, Amazon S3, or a bucket on another machine. Our outside Postgres ran on the same guest too. We did not test a Postgres restore or a bucket restore.
+
+So we give no tested backup procedure. Two backups at the same clock time are not one consistent backup. A suspend or a delete between them leaves rows and objects out of step.
 
 ```takeaways
 - List actors with `kubectl ate get actor`, because Kubernetes holds no actor object.
@@ -140,6 +207,8 @@ Our object store was rustfs in the same cluster and on the same disk as the node
 - Replace the bundled single-replica Postgres before people depend on the cluster.
 - Read the atespace and the actor uid from `snapshotUri` when you look for a snapshot in the bucket.
 - Size node disk for the memory of all actors that suspend there in 30 minutes.
+- Run `setup.sql` in one transaction when you prepare an outside Postgres.
+- Measure the round trip from your nodes to the bucket before you promise a resume time.
 ```
 
-Sources: capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/A-quickstart/60-state.log, capture/lab/B-lifecycle/23-actor-after-sync-suspend.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/K-kagent/inventory/workloads.txt (the PostgreSQL Deployment); go/core/pkg/install/bundled_postgres.yaml at kagent v1.0.0 (the trust setting); cmd/ateapi/main.go (the Postgres flags), docs/dev/cloud-sql-scaling-guide.md and issue #3702 (the load report); cmd/ateapi/internal/store/atepg/migrations/000001_initial.sql (the tables), cmd/ateapi/internal/store/atepg/lease.go (the lease), manifests/ate-install/postgres/postgres.yaml (replicas, image, volume claim), manifests/ate-install/ate-api-server.yaml (replicas) and manifests/ate-install/kind/ at v1.0.0; docs/guides/postgres.md, docs/guides/node-storage.md and docs/reference/api-guide.md (snapshot layout, delete order) at v1.0.0; issue #3101 (disk pressure from node-local snapshots).
+Sources: capture/lab/summary/external-postgres-x86.json, capture/lab/summary/object-store-x86.json, capture/lab/U-pg-upgrade-scale/10-extpg-install/steps.tsv, capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup-attempt2-no-transaction.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/29-deploy-diff.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/31-api-server-log-db-not-provisioned.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/30-deploy-attempt2-db-not-provisioned.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/41-ate-system-objects.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/43-pg-connections-and-tables.txt, capture/lab/T-drain-store/90-store-cycles.tsv, capture/lab/T-drain-store/83-netem-rtt.txt, capture/lab/T-drain-store/82-atelet-args-patched.txt, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/A-quickstart/60-state.log, capture/lab/B-lifecycle/23-actor-after-sync-suspend.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/K-kagent/inventory/workloads.txt (the PostgreSQL Deployment); go/core/pkg/install/bundled_postgres.yaml at kagent v1.0.0 (the trust setting); cmd/ateapi/main.go (the Postgres flags), docs/dev/cloud-sql-scaling-guide.md and issue #3702 (the load report); cmd/ateapi/internal/store/atepg/migrations/000001_initial.sql (the tables), cmd/ateapi/internal/store/atepg/lease.go (the lease), manifests/ate-install/postgres/postgres.yaml (replicas, image, volume claim), manifests/ate-install/ate-api-server.yaml (replicas) and manifests/ate-install/kind/ at v1.0.0; docs/guides/postgres.md, docs/guides/node-storage.md and docs/reference/api-guide.md (snapshot layout, delete order) at v1.0.0; issue #3101 (disk pressure from node-local snapshots).

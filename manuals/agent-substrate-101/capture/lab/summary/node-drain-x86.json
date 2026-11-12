@@ -1,0 +1,868 @@
+{
+  "after_uncordon": {
+    "new_actors_on_the_node": 0,
+    "new_actors_placed": 75,
+    "pool_pods_on_node_max": 0,
+    "returns": 5,
+    "watched_seconds": {
+      "max": 86.7,
+      "median": 86.1,
+      "min": 86.0,
+      "n": 5,
+      "runs": [
+        86.1,
+        86.1,
+        86.7,
+        86.5,
+        86.0
+      ]
+    }
+  },
+  "cases": [
+    {
+      "actor_crashed_seen_t": 6.7,
+      "calls_lost": 6,
+      "case": "a",
+      "count_before_drain": 9,
+      "drain_returned_seconds": 2.2,
+      "failed_after_drain": 46,
+      "failure_bodies": {
+        "actor lab-n/<actor> unavailable: AssignWorker prerequisite not met for": 44,
+        "upstream connect error or disconnect/reset before headers. reset reaso": 2
+      },
+      "first_count_after": 4,
+      "first_failure_t": 0.4,
+      "first_ok_seconds": 0.568,
+      "first_ok_t": 65.6,
+      "last_failure_t": 63.8,
+      "node_at_end": "multi-worker",
+      "ok_after_drain": 16,
+      "pods_settled_event_t": 64.5,
+      "probes": [
+        {
+          "code": "503",
+          "seconds": 0.081,
+          "t": 0.4
+        },
+        {
+          "code": "503",
+          "seconds": 5.055,
+          "t": 6.7
+        },
+        {
+          "code": "503",
+          "seconds": 0.069,
+          "t": 8.1
+        },
+        {
+          "code": "503",
+          "seconds": 0.076,
+          "t": 9.4
+        },
+        {
+          "code": "503",
+          "seconds": 0.075,
+          "t": 10.7
+        },
+        {
+          "code": "503",
+          "seconds": 0.067,
+          "t": 12.0
+        },
+        {
+          "code": "503",
+          "seconds": 0.071,
+          "t": 13.3
+        },
+        {
+          "code": "503",
+          "seconds": 0.066,
+          "t": 14.6
+        },
+        {
+          "code": "503",
+          "seconds": 0.073,
+          "t": 16.0
+        },
+        {
+          "code": "503",
+          "seconds": 0.061,
+          "t": 17.2
+        },
+        {
+          "code": "503",
+          "seconds": 0.067,
+          "t": 18.5
+        },
+        {
+          "code": "503",
+          "seconds": 0.068,
+          "t": 19.8
+        },
+        {
+          "code": "503",
+          "seconds": 0.063,
+          "t": 21.1
+        },
+        {
+          "code": "503",
+          "seconds": 0.058,
+          "t": 22.4
+        },
+        {
+          "code": "503",
+          "seconds": 0.061,
+          "t": 23.7
+        },
+        {
+          "code": "503",
+          "seconds": 0.066,
+          "t": 25.0
+        },
+        {
+          "code": "503",
+          "seconds": 0.063,
+          "t": 26.3
+        },
+        {
+          "code": "503",
+          "seconds": 0.064,
+          "t": 27.5
+        },
+        {
+          "code": "503",
+          "seconds": 0.065,
+          "t": 28.8
+        },
+        {
+          "code": "503",
+          "seconds": 0.066,
+          "t": 30.1
+        },
+        {
+          "code": "503",
+          "seconds": 0.066,
+          "t": 31.4
+        },
+        {
+          "code": "503",
+          "seconds": 0.069,
+          "t": 32.7
+        },
+        {
+          "code": "503",
+          "seconds": 0.058,
+          "t": 34.0
+        },
+        {
+          "code": "503",
+          "seconds": 0.065,
+          "t": 35.3
+        },
+        {
+          "code": "503",
+          "seconds": 0.064,
+          "t": 36.6
+        },
+        {
+          "code": "503",
+          "seconds": 0.061,
+          "t": 37.9
+        },
+        {
+          "code": "503",
+          "seconds": 0.065,
+          "t": 39.2
+        },
+        {
+          "code": "503",
+          "seconds": 0.058,
+          "t": 40.4
+        },
+        {
+          "code": "503",
+          "seconds": 0.066,
+          "t": 41.7
+        },
+        {
+          "code": "503",
+          "seconds": 0.064,
+          "t": 43.0
+        },
+        {
+          "code": "503",
+          "seconds": 0.069,
+          "t": 44.3
+        },
+        {
+          "code": "503",
+          "seconds": 0.058,
+          "t": 45.6
+        },
+        {
+          "code": "503",
+          "seconds": 0.068,
+          "t": 46.9
+        },
+        {
+          "code": "503",
+          "seconds": 0.069,
+          "t": 48.3
+        },
+        {
+          "code": "503",
+          "seconds": 0.065,
+          "t": 49.6
+        },
+        {
+          "code": "503",
+          "seconds": 0.069,
+          "t": 50.9
+        },
+        {
+          "code": "503",
+          "seconds": 0.064,
+          "t": 52.2
+        },
+        {
+          "code": "503",
+          "seconds": 0.064,
+          "t": 53.5
+        },
+        {
+          "code": "503",
+          "seconds": 0.061,
+          "t": 54.8
+        },
+        {
+          "code": "503",
+          "seconds": 0.064,
+          "t": 56.1
+        },
+        {
+          "code": "503",
+          "seconds": 0.058,
+          "t": 57.4
+        },
+        {
+          "code": "503",
+          "seconds": 0.063,
+          "t": 58.7
+        },
+        {
+          "code": "503",
+          "seconds": 0.06,
+          "t": 59.9
+        },
+        {
+          "code": "503",
+          "seconds": 0.067,
+          "t": 61.2
+        },
+        {
+          "code": "503",
+          "seconds": 0.068,
+          "t": 62.5
+        },
+        {
+          "code": "503",
+          "seconds": 0.071,
+          "t": 63.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.568,
+          "t": 65.6
+        },
+        {
+          "code": "200",
+          "seconds": 0.067,
+          "t": 66.9
+        },
+        {
+          "code": "200",
+          "seconds": 0.066,
+          "t": 68.3
+        },
+        {
+          "code": "200",
+          "seconds": 0.06,
+          "t": 69.6
+        },
+        {
+          "code": "200",
+          "seconds": 0.072,
+          "t": 70.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.062,
+          "t": 72.1
+        },
+        {
+          "code": "200",
+          "seconds": 0.062,
+          "t": 73.4
+        },
+        {
+          "code": "200",
+          "seconds": 0.062,
+          "t": 74.7
+        },
+        {
+          "code": "200",
+          "seconds": 0.061,
+          "t": 76.0
+        },
+        {
+          "code": "200",
+          "seconds": 0.06,
+          "t": 77.3
+        },
+        {
+          "code": "200",
+          "seconds": 0.061,
+          "t": 78.6
+        },
+        {
+          "code": "200",
+          "seconds": 0.057,
+          "t": 79.9
+        },
+        {
+          "code": "200",
+          "seconds": 0.055,
+          "t": 81.1
+        },
+        {
+          "code": "200",
+          "seconds": 0.06,
+          "t": 82.4
+        },
+        {
+          "code": "200",
+          "seconds": 0.066,
+          "t": 83.7
+        },
+        {
+          "code": "200",
+          "seconds": 0.091,
+          "t": 85.0
+        }
+      ],
+      "requests_after_drain": 62,
+      "return": {
+        "cordoned_seconds": 88.8,
+        "new_actors_on_the_node": 0,
+        "new_actors_placed": 15,
+        "pool_pods_on_node_max": 0,
+        "request_after_uncordon": "200",
+        "source": "capture/lab/T-drain-store/return-a.tsv",
+        "watched_seconds": 86.1
+      },
+      "revert": {
+        "first_ok_seconds": 0.568,
+        "first_ok_t": 65.6,
+        "seconds": 0.2,
+        "seconds_to_first_ok": 0.8,
+        "t": 64.8
+      },
+      "situation": "RUNNING, one request about each second",
+      "source": "capture/lab/T-drain-store/10-a-running.tsv"
+    },
+    {
+      "actor_crashed_seen_t": null,
+      "calls_lost": 0,
+      "case": "b",
+      "count_before_drain": 3,
+      "drain_returned_seconds": 1.2,
+      "failed_after_drain": 0,
+      "failure_bodies": {},
+      "first_count_after": 4,
+      "first_failure_t": null,
+      "first_ok_seconds": 0.578,
+      "first_ok_t": 6.8,
+      "last_failure_t": null,
+      "node_at_end": null,
+      "ok_after_drain": 2,
+      "pods_settled_event_t": 2.5,
+      "probes": [
+        {
+          "code": "200",
+          "seconds": 0.578,
+          "t": 6.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.063,
+          "t": 7.1
+        }
+      ],
+      "requests_after_drain": 2,
+      "return": {
+        "cordoned_seconds": 7.6,
+        "new_actors_on_the_node": 0,
+        "new_actors_placed": 15,
+        "pool_pods_on_node_max": 0,
+        "request_after_uncordon": "200",
+        "source": "capture/lab/T-drain-store/return-b.tsv",
+        "watched_seconds": 86.1
+      },
+      "revert": null,
+      "situation": "SUSPENDED with --mode sync, no request during the drain",
+      "source": "capture/lab/T-drain-store/20-b-suspended-sync-quiet.tsv"
+    },
+    {
+      "actor_crashed_seen_t": null,
+      "calls_lost": 0,
+      "case": "b2",
+      "count_before_drain": 3,
+      "drain_returned_seconds": 2.2,
+      "failed_after_drain": 0,
+      "failure_bodies": {},
+      "first_count_after": 4,
+      "first_failure_t": null,
+      "first_ok_seconds": 0.488,
+      "first_ok_t": 2.7,
+      "last_failure_t": null,
+      "node_at_end": "multi-worker",
+      "ok_after_drain": 30,
+      "pods_settled_event_t": 34.5,
+      "probes": [
+        {
+          "code": "200",
+          "seconds": 0.488,
+          "t": 2.7
+        },
+        {
+          "code": "200",
+          "seconds": 0.076,
+          "t": 4.0
+        },
+        {
+          "code": "200",
+          "seconds": 0.058,
+          "t": 5.3
+        },
+        {
+          "code": "200",
+          "seconds": 0.064,
+          "t": 6.6
+        },
+        {
+          "code": "200",
+          "seconds": 0.062,
+          "t": 7.9
+        },
+        {
+          "code": "200",
+          "seconds": 0.077,
+          "t": 9.3
+        },
+        {
+          "code": "200",
+          "seconds": 0.064,
+          "t": 10.6
+        },
+        {
+          "code": "200",
+          "seconds": 0.066,
+          "t": 11.9
+        },
+        {
+          "code": "200",
+          "seconds": 0.063,
+          "t": 13.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.072,
+          "t": 14.5
+        },
+        {
+          "code": "200",
+          "seconds": 0.06,
+          "t": 15.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.066,
+          "t": 17.1
+        },
+        {
+          "code": "200",
+          "seconds": 0.052,
+          "t": 18.4
+        },
+        {
+          "code": "200",
+          "seconds": 0.054,
+          "t": 19.7
+        },
+        {
+          "code": "200",
+          "seconds": 0.063,
+          "t": 21.0
+        },
+        {
+          "code": "200",
+          "seconds": 0.067,
+          "t": 22.3
+        },
+        {
+          "code": "200",
+          "seconds": 0.064,
+          "t": 23.6
+        },
+        {
+          "code": "200",
+          "seconds": 0.055,
+          "t": 24.9
+        },
+        {
+          "code": "200",
+          "seconds": 0.067,
+          "t": 26.3
+        },
+        {
+          "code": "200",
+          "seconds": 0.062,
+          "t": 27.6
+        },
+        {
+          "code": "200",
+          "seconds": 0.087,
+          "t": 28.9
+        },
+        {
+          "code": "200",
+          "seconds": 0.057,
+          "t": 30.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.064,
+          "t": 31.5
+        },
+        {
+          "code": "200",
+          "seconds": 0.063,
+          "t": 32.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.063,
+          "t": 34.1
+        },
+        {
+          "code": "200",
+          "seconds": 0.064,
+          "t": 35.4
+        },
+        {
+          "code": "200",
+          "seconds": 0.058,
+          "t": 36.7
+        },
+        {
+          "code": "200",
+          "seconds": 0.061,
+          "t": 38.0
+        },
+        {
+          "code": "200",
+          "seconds": 0.062,
+          "t": 39.4
+        },
+        {
+          "code": "200",
+          "seconds": 0.06,
+          "t": 40.6
+        }
+      ],
+      "requests_after_drain": 30,
+      "return": {
+        "cordoned_seconds": 44.3,
+        "new_actors_on_the_node": 0,
+        "new_actors_placed": 15,
+        "pool_pods_on_node_max": 0,
+        "request_after_uncordon": "200",
+        "source": "capture/lab/T-drain-store/return-b2.tsv",
+        "watched_seconds": 86.7
+      },
+      "revert": null,
+      "situation": "SUSPENDED with --mode sync, one request about each second from 2 s after the drain",
+      "source": "capture/lab/T-drain-store/25-b2-suspended-sync-requests-during-drain.tsv"
+    },
+    {
+      "actor_crashed_seen_t": null,
+      "calls_lost": 0,
+      "case": "c",
+      "count_before_drain": 5,
+      "drain_returned_seconds": 1.2,
+      "failed_after_drain": 0,
+      "failure_bodies": {},
+      "first_count_after": 6,
+      "first_failure_t": null,
+      "first_ok_seconds": 1.193,
+      "first_ok_t": 7.4,
+      "last_failure_t": null,
+      "node_at_end": "multi-worker",
+      "ok_after_drain": 2,
+      "pods_settled_event_t": 2.5,
+      "probes": [
+        {
+          "code": "200",
+          "seconds": 1.193,
+          "t": 7.4
+        },
+        {
+          "code": "200",
+          "seconds": 0.075,
+          "t": 7.7
+        }
+      ],
+      "requests_after_drain": 2,
+      "return": {
+        "cordoned_seconds": 8.0,
+        "new_actors_on_the_node": 0,
+        "new_actors_placed": 15,
+        "pool_pods_on_node_max": 0,
+        "request_after_uncordon": "200",
+        "source": "capture/lab/T-drain-store/return-c.tsv",
+        "watched_seconds": 86.5
+      },
+      "revert": null,
+      "situation": "SUSPENDED in the default mode, newest snapshot still PENDING on the node",
+      "source": "capture/lab/T-drain-store/30-c-suspended-async-pending.tsv"
+    },
+    {
+      "actor_crashed_seen_t": 4.3,
+      "calls_lost": 2,
+      "case": "d",
+      "count_before_drain": 5,
+      "drain_returned_seconds": 2.2,
+      "failed_after_drain": 16,
+      "failure_bodies": {
+        "actor lab-n/<actor> unavailable: AssignWorker prerequisite not met for": 16
+      },
+      "first_count_after": 4,
+      "first_failure_t": 4.3,
+      "first_ok_seconds": 0.494,
+      "first_ok_t": 25.5,
+      "last_failure_t": 23.8,
+      "node_at_end": "multi-worker",
+      "ok_after_drain": 14,
+      "pods_settled_event_t": 24.5,
+      "probes": [
+        {
+          "code": "503",
+          "seconds": 0.065,
+          "t": 4.3
+        },
+        {
+          "code": "503",
+          "seconds": 0.058,
+          "t": 5.6
+        },
+        {
+          "code": "503",
+          "seconds": 0.077,
+          "t": 6.9
+        },
+        {
+          "code": "503",
+          "seconds": 0.064,
+          "t": 8.1
+        },
+        {
+          "code": "503",
+          "seconds": 0.063,
+          "t": 9.4
+        },
+        {
+          "code": "503",
+          "seconds": 0.066,
+          "t": 10.8
+        },
+        {
+          "code": "503",
+          "seconds": 0.064,
+          "t": 12.1
+        },
+        {
+          "code": "503",
+          "seconds": 0.058,
+          "t": 13.3
+        },
+        {
+          "code": "503",
+          "seconds": 0.059,
+          "t": 14.6
+        },
+        {
+          "code": "503",
+          "seconds": 0.072,
+          "t": 16.0
+        },
+        {
+          "code": "503",
+          "seconds": 0.061,
+          "t": 17.3
+        },
+        {
+          "code": "503",
+          "seconds": 0.071,
+          "t": 18.6
+        },
+        {
+          "code": "503",
+          "seconds": 0.069,
+          "t": 19.9
+        },
+        {
+          "code": "503",
+          "seconds": 0.068,
+          "t": 21.2
+        },
+        {
+          "code": "503",
+          "seconds": 0.063,
+          "t": 22.5
+        },
+        {
+          "code": "503",
+          "seconds": 0.061,
+          "t": 23.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.494,
+          "t": 25.5
+        },
+        {
+          "code": "200",
+          "seconds": 0.057,
+          "t": 26.7
+        },
+        {
+          "code": "200",
+          "seconds": 0.061,
+          "t": 28.1
+        },
+        {
+          "code": "200",
+          "seconds": 0.059,
+          "t": 29.4
+        },
+        {
+          "code": "200",
+          "seconds": 0.062,
+          "t": 30.7
+        },
+        {
+          "code": "200",
+          "seconds": 0.066,
+          "t": 31.9
+        },
+        {
+          "code": "200",
+          "seconds": 0.061,
+          "t": 33.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.061,
+          "t": 34.5
+        },
+        {
+          "code": "200",
+          "seconds": 0.065,
+          "t": 35.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.068,
+          "t": 37.1
+        },
+        {
+          "code": "200",
+          "seconds": 0.063,
+          "t": 38.5
+        },
+        {
+          "code": "200",
+          "seconds": 0.064,
+          "t": 39.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.058,
+          "t": 41.1
+        },
+        {
+          "code": "200",
+          "seconds": 0.051,
+          "t": 42.3
+        }
+      ],
+      "request_in_flight": {
+        "body": "upstream connect error or disconnect/reset before headers. reset reason: connection termination",
+        "code": "503",
+        "returned_t": 0.4,
+        "seconds": 3.207,
+        "sent_t": -3.0
+      },
+      "requests_after_drain": 30,
+      "return": {
+        "cordoned_seconds": 46.8,
+        "new_actors_on_the_node": 0,
+        "new_actors_placed": 15,
+        "pool_pods_on_node_max": 0,
+        "request_after_uncordon": "200",
+        "source": "capture/lab/T-drain-store/return-d.tsv",
+        "watched_seconds": 86.0
+      },
+      "revert": {
+        "first_ok_seconds": 0.494,
+        "first_ok_t": 25.5,
+        "seconds": 0.2,
+        "seconds_to_first_ok": 0.7,
+        "t": 24.8
+      },
+      "situation": "RUNNING, one request of 120 s in flight",
+      "source": "capture/lab/T-drain-store/40-d-mid-request.tsv"
+    }
+  ],
+  "command": "kubectl drain multi-worker2 --ignore-daemonsets --delete-emptydir-data --force --timeout=600s",
+  "drain_returned_seconds": {
+    "max": 2.2,
+    "median": 2.2,
+    "min": 1.2,
+    "n": 5,
+    "runs": [
+      2.2,
+      1.2,
+      2.2,
+      1.2,
+      2.2
+    ]
+  },
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, one control plane node and two worker nodes, default atelet timers, pool of 4 worker pods",
+  "note": "one run for each case. t is seconds from the kubectl drain command for the node multi-worker2. Requests go through kubectl ate proxy. The actor holds a counter and 50 MB in memory. In cases a and d the revert was sent by the script after a fixed wait.",
+  "running_actors_crashed": 2,
+  "sources": [
+    "capture/lab/T-drain-store/10-a-running.tsv",
+    "capture/lab/T-drain-store/20-b-suspended-sync-quiet.tsv",
+    "capture/lab/T-drain-store/25-b2-suspended-sync-requests-during-drain.tsv",
+    "capture/lab/T-drain-store/30-c-suspended-async-pending.tsv",
+    "capture/lab/T-drain-store/40-d-mid-request.tsv",
+    "capture/lab/T-drain-store/return-a.tsv",
+    "capture/lab/T-drain-store/return-b.tsv",
+    "capture/lab/T-drain-store/return-b2.tsv",
+    "capture/lab/T-drain-store/return-c.tsv",
+    "capture/lab/T-drain-store/return-d.tsv",
+    "capture/lab/T-drain-store/04-pdb-and-grace.txt"
+  ],
+  "suspended_actors_served_with_no_command": 3
+}

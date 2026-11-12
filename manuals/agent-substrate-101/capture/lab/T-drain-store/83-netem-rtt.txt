@@ -1,0 +1,44 @@
+### netem 0 ms 2026-11-12T16:35:26.717Z
+qdisc noqueue 0: root refcnt 2 
+connect=0.000293 total=0.000826 code=403
+connect=0.000307 total=0.000864 code=403
+connect=0.000279 total=0.000849 code=403
+connect=0.000392 total=0.000920 code=403
+connect=0.000197 total=0.000869 code=403
+### netem 0 ms 2026-11-12T16:36:23.168Z
+qdisc noqueue 0: root refcnt 2 
+connect=0.000291 total=0.000976 code=403
+connect=0.000308 total=0.000950 code=403
+connect=0.000544 total=0.001085 code=403
+connect=0.000301 total=0.001083 code=403
+connect=0.000284 total=0.000938 code=403
+### netem 20 ms 2026-11-12T16:41:22.202Z
+qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+qdisc netem 30: parent 1:3 limit 1000 delay 20ms
+connect=0.020360 total=0.041193 code=403
+connect=0.020262 total=0.041026 code=403
+connect=0.020314 total=0.040932 code=403
+connect=0.020336 total=0.040969 code=403
+connect=0.020364 total=0.041027 code=403
+### netem 100 ms 2026-11-12T16:47:22.882Z
+qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+qdisc netem 30: parent 1:3 limit 1000 delay 100ms
+connect=0.100424 total=0.201325 code=403
+connect=0.100391 total=0.201185 code=403
+connect=0.100279 total=0.201168 code=403
+connect=0.100412 total=0.201116 code=403
+connect=0.100466 total=0.201123 code=403
+### netem 0 ms 2026-11-12T16:48:44.366Z
+qdisc noqueue 0: root refcnt 2 
+connect=0.000279 total=0.001230 code=403
+connect=0.000259 total=0.000910 code=403
+connect=0.000292 total=0.001070 code=403
+connect=0.000310 total=0.000941 code=403
+connect=0.000327 total=0.001071 code=403
+### netem 0 ms 2026-11-12T17:02:34.056Z
+qdisc noqueue 0: root refcnt 2 
+connect=0.000253 total=0.001874 code=403
+connect=0.000315 total=0.000911 code=403
+connect=0.000309 total=0.001017 code=403
+connect=0.000317 total=0.000980 code=403
+connect=0.000347 total=0.000980 code=403

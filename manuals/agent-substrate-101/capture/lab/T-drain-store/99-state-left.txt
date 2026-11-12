@@ -1,0 +1,45 @@
+### state left 2026-11-12T17:09:09Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ATESPACE   NAME   TEMPLATE   STATE   WORKER POD   WORKER IPS   VERSION   AGE
+ATESPACE NAME
+lab-n ballast-0
+lab-n ballast-50
+lab-n nb-0
+lab-n nb-50
+lab-n tb-0
+lab-n tb-1000
+lab-n tb-200
+lab-n tb-50
+lab-n tb-big
+ATESPACE NAME SCOPE
+lab-n 20146d73-350e-4da3-8f82-8153e837b07b TAG_SCOPE_PUBLISHED
+lab-n 9d19e8bf-0e00-4545-96cb-cfdd1545f933 TAG_SCOPE_PUBLISHED
+lab-n a4d47db7-39ce-4bbd-8969-2d738787c09e TAG_SCOPE_PUBLISHED
+lab-n b15f9995-908a-4aa3-bf00-3f888c307fd5 TAG_SCOPE_PUBLISHED
+lab-n e0166532-008a-4281-bb95-9b7c51662d90 TAG_SCOPE_PUBLISHED
+lab-n e95e9f47-4cbf-4e2a-b3ed-e76ad3a4bac0 TAG_SCOPE_PUBLISHED
+lab-n ee988cc1-0e22-4c30-bd89-e3e9fa0ea4ba TAG_SCOPE_PUBLISHED
+STATE ACTORS POD
+WORKER_STATE_ACTIVE 0/1000 lab-n/ballast-5d6cf97747-fj7wt
+WORKER_STATE_ACTIVE 0/1000 lab-n/ballast-5d6cf97747-rcwgm
+WORKER_STATE_ACTIVE 0/1000 lab-n/ballast-5d6cf97747-zxzvv
+WORKER_STATE_ACTIVE 0/1000 lab-n/ballast-5d6cf97747-zzzdn
+4 replicas
+--localhost-registry-replacement=kind-registry:5000 --grpc-server-cred-bundle=/run/podidentity.podcert.ate.dev/credential-bundle.pem --client-ca-certs=/run/podidentity.podcert.ate.dev/trust-bundle.pem --log-level=debug --preview=
+http://rustfs.ate-system.svc:9000
+http://rustfs.ate-system.svc:9000
+t-store Exited (0) 5 minutes ago
+kind-control-plane Up 7 hours
+kind-registry Up 7 hours
+t-store-data
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          10        3         2.716GB   1.954GB (71%)
+Containers      6         5         8.503MB   20.48kB (0%)
+Local Volumes   6         6         177.6GB   0B (0%)
+Build Cache     19        0         142.7MB   81.24MB
+qdisc noqueue 0: root refcnt 2 
+0
+/dev/vda1        38G   26G   13G  67% /
+Mem:              23           8           6           0          10          15

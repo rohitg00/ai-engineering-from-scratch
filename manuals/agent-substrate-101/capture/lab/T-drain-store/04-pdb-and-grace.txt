@@ -1,0 +1,7 @@
+NAMESPACE    NAME             MIN AVAILABLE   MAX UNAVAILABLE   ALLOWED DISRUPTIONS   AGE
+ate-system   ate-api-server   N/A             1                 1                     4h11m
+ate-system   ate-idp-server   N/A             1                 1                     4h11m
+ballast-5d6cf97747-7s65c	multi-worker2	3600		ReplicaSet
+ballast-5d6cf97747-9qhp8	multi-worker2	3600		ReplicaSet
+ballast-5d6cf97747-zxzvv	multi-worker	3600		ReplicaSet
+ballast-5d6cf97747-zzzdn	multi-worker	3600		ReplicaSet

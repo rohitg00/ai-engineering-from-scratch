@@ -1,0 +1,4 @@
+16:35:54 start disk=9787MB mem=37798MB snap=379MB
+16:36:01 wave 1 done states:     150 ACTOR_STATE_SUSPENDED 
+16:36:08 wave 2 done states:     300 ACTOR_STATE_SUSPENDED 
+16:36:16 wave 3 done states:     450 ACTOR_STATE_SUSPENDED 

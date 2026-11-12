@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 346" role="img" aria-labelledby="fig-8-4-title fig-8-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-8-4-title">The four steps of a supported upgrade</title>
-  <desc id="fig-8-4-desc">Four upgrade steps from top to bottom: the podcertificate-controller, atelet on each node, the workers, and then the API server with the controller and the dataplane. Running actors see nothing in the first two steps. In the worker step each actor gets SIGTERM and 30 minutes, and an actor that nothing suspends becomes crashed. The last step migrates the database schema, which a rollback does not undo.</desc>
+  <desc id="fig-8-4-desc">Four upgrade steps from top to bottom: the podcertificate-controller, atelet on each node, the workers, and then the API server with the controller and the dataplane. Running actors keep running in the first two steps, and in one run suspends and resumes failed for 24 seconds in the atelet step. In the worker step each actor gets SIGTERM, with 30 minutes only if its process survives the signal, and an actor that nothing suspends becomes crashed. The last step migrates the database schema, which a rollback does not undo.</desc>
   <defs><marker id="fig-8-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-8-4-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-8-4-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-8-4-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
   <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT MOVES, IN THIS ORDER</text>
   <text x="310" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT A RUNNING ACTOR SEES</text>
@@ -24,12 +24,13 @@
   <text x="465" y="55.25" font-size="12.5" text-anchor="middle" font-weight="700">nothing</text>
   <text x="465" y="72.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the actor keeps running</text>
   <rect x="310" y="110" width="310" height="60" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="465" y="135.25" font-size="12.5" text-anchor="middle" font-weight="700">nothing</text>
-  <text x="465" y="152.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the actor keeps running</text>
+  <text x="465" y="127.75" font-size="12.5" text-anchor="middle" font-weight="700">keeps running</text>
+  <text x="465" y="145.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in our run, suspends and resumes</text>
+  <text x="465" y="160.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on the node failed for 24 s</text>
   <rect x="310" y="190" width="176" height="60" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-width="2"/>
-  <text x="398" y="207.6" font-size="12" text-anchor="middle" font-weight="700">SIGTERM, 30 minutes</text>
-  <text x="398" y="224.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">your harness must call</text>
-  <text x="398" y="239.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SuspendActor in that time</text>
+  <text x="398" y="207.6" font-size="12" text-anchor="middle" font-weight="700">SIGTERM</text>
+  <text x="398" y="224.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">30 minutes to suspend, if</text>
+  <text x="398" y="239.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the process survives it</text>
   <rect x="514" y="190" width="106" height="60" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
   <text x="567" y="207.6" font-size="12" text-anchor="middle" font-weight="700">CRASHED</text>
   <text x="567" y="224.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">if nothing</text>

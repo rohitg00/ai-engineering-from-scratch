@@ -1,0 +1,16 @@
+level	rep	result
+1	1	c1-r1	n=1	ok=1	wall=0.39	rate=2.6/s	p50=0.375	p95=0.375	max=0.375	codes={'200': 1}	connects=1	http=2	disk=7758
+10	1	c10-r1	n=10	ok=10	wall=0.44	rate=22.7/s	p50=0.380	p95=0.427	max=0.427	codes={'200': 10}	connects=1	http=2	disk=7754
+50	1	c50-r1	n=50	ok=50	wall=1.31	rate=38.2/s	p50=1.188	p95=1.250	max=1.291	codes={'200': 50}	connects=1	http=2	disk=7677
+100	1	c100-r1	n=100	ok=100	wall=2.64	rate=37.9/s	p50=2.254	p95=2.616	max=2.618	codes={'200': 100}	connects=1	http=2	disk=7576
+150	1	c150-r1	n=150	ok=150	wall=4.11	rate=36.5/s	p50=3.410	p95=4.059	max=4.080	codes={'200': 150}	connects=2	http=2	disk=7474
+1	2	c1-r2	n=1	ok=1	wall=0.36	rate=2.8/s	p50=0.345	p95=0.345	max=0.345	codes={'200': 1}	connects=1	http=2	disk=7723
+10	2	c10-r2	n=10	ok=10	wall=0.42	rate=23.8/s	p50=0.375	p95=0.411	max=0.411	codes={'200': 10}	connects=1	http=2	disk=7726
+50	2	c50-r2	n=50	ok=50	wall=1.39	rate=36.0/s	p50=1.162	p95=1.373	max=1.375	codes={'200': 50}	connects=1	http=2	disk=7650
+100	2	c100-r2	n=100	ok=100	wall=2.76	rate=36.2/s	p50=2.263	p95=2.665	max=2.734	codes={'200': 100}	connects=1	http=2	disk=7548
+150	2	c150-r2	n=150	ok=150	wall=3.95	rate=38.0/s	p50=3.162	p95=3.908	max=3.923	codes={'200': 150}	connects=2	http=2	disk=7451
+1	3	c1-r3	n=1	ok=1	wall=0.36	rate=2.8/s	p50=0.341	p95=0.341	max=0.341	codes={'200': 1}	connects=1	http=2	disk=7698
+10	3	c10-r3	n=10	ok=10	wall=0.42	rate=23.8/s	p50=0.399	p95=0.411	max=0.411	codes={'200': 10}	connects=1	http=2	disk=7701
+50	3	c50-r3	n=50	ok=50	wall=1.36	rate=36.8/s	p50=1.339	p95=1.342	max=1.342	codes={'200': 50}	connects=1	http=2	disk=7625
+100	3	c100-r3	n=100	ok=100	wall=2.59	rate=38.6/s	p50=2.206	p95=2.564	max=2.566	codes={'200': 100}	connects=1	http=2	disk=7535
+150	3	c150-r3	n=150	ok=150	wall=4.16	rate=36.1/s	p50=3.421	p95=4.119	max=4.140	codes={'200': 150}	connects=2	http=2	disk=7439

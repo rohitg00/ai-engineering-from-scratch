@@ -5,7 +5,7 @@ const { figure } = require('../../../_shared/figkit.js');
 module.exports = figure('fig-8-4', {
   height: 346,
   title: 'The four steps of a supported upgrade',
-  desc: 'Four upgrade steps from top to bottom: the podcertificate-controller, atelet on each node, the workers, and then the API server with the controller and the dataplane. Running actors see nothing in the first two steps. In the worker step each actor gets SIGTERM and 30 minutes, and an actor that nothing suspends becomes crashed. The last step migrates the database schema, which a rollback does not undo.',
+  desc: 'Four upgrade steps from top to bottom: the podcertificate-controller, atelet on each node, the workers, and then the API server with the controller and the dataplane. Running actors keep running in the first two steps, and in one run suspends and resumes failed for 24 seconds in the atelet step. In the worker step each actor gets SIGTERM, with 30 minutes only if its process survives the signal, and an actor that nothing suspends becomes crashed. The last step migrates the database schema, which a rollback does not undo.',
 }, f => {
   const LEFT = 20;
   const WIDE = 240;
@@ -26,8 +26,8 @@ module.exports = figure('fig-8-4', {
   });
   const across = (index, style) => f.arrow([LEFT + WIDE, row(index) + TALL / 2], [RIGHT - 1, row(index) + TALL / 2], { style });
   f.box({ x: RIGHT, y: row(0), w: 310, h: TALL, hue: 'green', title: 'nothing', sub: ['the actor keeps running'] });
-  f.box({ x: RIGHT, y: row(1), w: 310, h: TALL, hue: 'green', title: 'nothing', sub: ['the actor keeps running'] });
-  f.box({ x: RIGHT, y: row(2), w: 176, h: TALL, hue: 'amber', title: 'SIGTERM, 30 minutes', sub: ['your harness must call', 'SuspendActor in that time'], titleSize: 12, pad: 6, strokeWidth: 2 });
+  f.box({ x: RIGHT, y: row(1), w: 310, h: TALL, hue: 'green', title: 'keeps running', sub: ['in our run, suspends and resumes', 'on the node failed for 24 s'] });
+  f.box({ x: RIGHT, y: row(2), w: 176, h: TALL, hue: 'amber', title: 'SIGTERM', sub: ['30 minutes to suspend, if', 'the process survives it'], titleSize: 12, pad: 6, strokeWidth: 2 });
   f.box({ x: RIGHT + 204, y: row(2), w: 106, h: TALL, hue: 'rose', title: 'CRASHED', sub: ['if nothing', 'suspends it'], titleSize: 12, pad: 6 });
   f.box({ x: RIGHT, y: row(3), w: 310, h: TALL, hue: 'teal', title: 'the schema migrates', sub: ['API calls can be cut once', 'a rollback does not undo the migration'] });
   across(0, 'call');

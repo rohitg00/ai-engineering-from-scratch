@@ -15,21 +15,21 @@ The check rebuilds the summaries in a temporary folder and compares them with th
 
 | Name in the manual | Machine | Software |
 |---|---|---|
-| the x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on an x86 server, 24 vCPU, 47 GB, nested KVM, Ubuntu 24.04 | Docker 29.1.3, Go 1.27.3, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor, and the microVM class for `L-gaps/microvm` |
-| a second x86 server guest (16 vCPU, 23 GB) | 16 vCPU, 23 GB, same host | Agent Substrate v1.0.0 from the release images, Envoy and then agentgateway v1.7.0. For `L-gaps/multinode` and `P-node-loss`, a second kind cluster with one control plane node and two worker nodes. `P-node-loss` and `Q-network` ran at the same time, each on its own cluster |
+| the x86 server guest (24 vCPU, 47 GB, nested KVM) | a KVM guest on an x86 server, 24 vCPU, 47 GB, nested KVM, Ubuntu 24.04 | Docker 29.1.3, Go 1.27.3, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor, and the microVM class for `L-gaps/microvm`. For `U-pg-upgrade-scale`, new kind clusters from the release images |
+| a second x86 server guest (16 vCPU, 23 GB) | 16 vCPU, 23 GB, same host | Agent Substrate v1.0.0 from the release images, Envoy and then agentgateway v1.7.0. For `L-gaps/multinode` and `P-node-loss`, a second kind cluster with one control plane node and two worker nodes. `P-node-loss` and `Q-network` ran at the same time, each on its own cluster. `T-drain-store` ran later on the cluster with two worker nodes |
 | a second x86 server guest (16 vCPU, 31 GB) | 16 vCPU, 31 GB, same host | Two clusters, one after the other. For `K-kagent`: kagent v1.0.0 with its own Substrate distribution, a mock model server in the cluster. For `N-demos`: Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor. For `R-agent-executor`: Agent Executor from source on the cluster of `N-demos`. For `S-ax-model`: a small open model on CPU in a container on the guest, used from both clusters |
 | the Mac | an Apple silicon laptop under Docker Desktop, 10 CPU and 8 GB for Docker | Agent Substrate v1.0.0 from the release images, gVisor only |
 
-The guests and the Mac are different machines. Do not compare a number from one with a number from another. Two guests have 16 vCPU, so the manual names each one with its memory: 23 GB for `E`, `F`, `G`, `L-gaps/multinode`, `P-node-loss`, and `Q-network`, and 31 GB for `K-kagent`, `N-demos`, `R-agent-executor`, and `S-ax-model`.
+The guests and the Mac are different machines. Do not compare a number from one with a number from another. Two guests have 16 vCPU, so the manual names each one with its memory: 23 GB for `E`, `F`, `G`, `L-gaps/multinode`, `P-node-loss`, `Q-network`, and `T-drain-store`, and 31 GB for `K-kagent`, `N-demos`, `R-agent-executor`, and `S-ax-model`.
 
 | Folder | Machine |
 |---|---|
-| `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
-| `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode`, `P-node-loss`, `Q-network` | a second x86 server guest (16 vCPU, 23 GB) |
+| `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart`, `U-pg-upgrade-scale` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
+| `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode`, `P-node-loss`, `Q-network`, `T-drain-store` | a second x86 server guest (16 vCPU, 23 GB) |
 | `K-kagent`, `N-demos`, `R-agent-executor`, `S-ax-model` | a second x86 server guest (16 vCPU, 31 GB) |
 | `M-mac-arm64` | the Mac |
 
-Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node, except the cluster of `L-gaps/multinode` and `P-node-loss`. The object store was rustfs in the same cluster.
+Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node, except the cluster of `L-gaps/multinode`, `P-node-loss`, and `T-drain-store`. The object store was rustfs in the same cluster. In part of `T-drain-store` it was rustfs in a container on the same guest, outside the cluster.
 
 ## What each folder proves
 
@@ -214,6 +214,54 @@ All steps ran on a second x86 server guest (16 vCPU, 31 GB), after `R-agent-exec
 
 In `per-turn.tsv`, a resume or suspend of 0 means that the saved log window held no record for that turn. The row `C-1p5b-first-4` holds the model seconds of the request that it waited behind, so its model seconds are larger than its wall seconds. `run.py` leaves both cases out of the statistics.
 
+### T-drain-store: a drain, a full node, and a bucket outside the cluster
+
+All runs used a second x86 server guest (16 vCPU, 23 GB), on the cluster with two worker nodes, with the Envoy dataplane and gVisor. Each case ran once. The test actor holds a counter and 50 MB in memory. The column `t` is seconds from the drain command, the stop command, or the moment the bucket went away.
+
+| File | What it shows |
+|---|---|
+| `00-run.log`, `09-start.txt`, `04-pdb-and-grace.txt`, `05-atelet-args.txt` | the order of the runs, the state at the start, the disruption budgets, the grace period of the pool pods, and the atelet arguments |
+| `10-a-running.tsv`, `40-d-mid-request.tsv` | a drain under a running actor, with one request each second, and with one request of 120 s open |
+| `20-b-suspended-sync-quiet.tsv`, `25-b2-suspended-sync-requests-during-drain.tsv` | a drain under an actor that was suspended with `--mode sync`, with no request and with requests |
+| `30-c-suspended-async-pending.tsv` | a drain under an actor whose newest snapshot was PENDING on the node |
+| `drain-*.log`, `return-*.tsv`, `workers-*.txt` | the output of each drain, the node after each uncordon with the placement of 15 new actors, and the worker list |
+| `52-f1b-survivor-full-then-free-a-worker.tsv`, `62-f2b-survivor-full-then-scale-pool.tsv` | a node stop with the other node full, ended by a freed worker and by a larger pool |
+| `70-f3-survivor-full-no-revert-request-only.tsv`, `78-control-plane-events.log` | both nodes up and all four workers full, with the log lines of the step `DetachFromFullNode` |
+| `80-store-run.log`, `81-patches.log`, `82-atelet-args-patched.txt`, `86-store-container.log` | the bucket outside the cluster and the shortened atelet timers |
+| `83-netem-rtt.txt` | the connect time from a node to the bucket at each added delay |
+| `90-store-cycles.tsv` | every cycle of a synchronous suspend and a resume from the bucket |
+| `95-store-unreachable.tsv`, `96-store-unreachable-logs.log`, `97-store-unreachable-recovery.tsv` | the bucket away with refused connections and with dropped packets, and the recovery |
+| `98-atelet-args-restored.txt`, `99-state-left.txt` | the cluster after the runs |
+| `_scripts/` | the scripts that made these recordings |
+
+Three parts of these files are not valid, and `summary/object-store-x86.json` does not use them. In `95-store-unreachable.tsv`, the request rows after 16:50:45 UTC with code `000` come from a client error. The row `blackhole-request-new-actor` in that file has code 200 and is used. In `97-store-unreachable-recovery.tsv`, the rows from `refused-prepared` to the end are not valid, because the bucket was away for less than 1 s. The first attempts `50-f1` and `60-f2` sent requests to port 0 and are not in this folder.
+
+The bucket outside the cluster ran on the same guest. The delay of `tc netem` was set in one direction, so the value is the added round trip.
+
+### U-pg-upgrade-scale: a Postgres outside the cluster, one upgrade, and bursts on one node
+
+All runs used the x86 server guest (24 vCPU, 47 GB, nested KVM), on new kind clusters with one node, from the release images, with the Envoy dataplane and gVisor. The cluster of the earlier experiments was idle on the same guest. Each install, outage, and upgrade step ran once.
+
+| File | What it shows |
+|---|---|
+| `10-extpg-install/steps.tsv`, `10-extpg-install/30-deploy-*.log` | three tries of the install against a Postgres outside the cluster |
+| `10-extpg-install/20-pg-setup-attempt2-no-transaction.log`, `10-extpg-install/20-pg-setup.log` | the database script without and with one transaction |
+| `10-extpg-install/29-deploy-diff.txt`, `41-ate-system-objects.txt`, `43-pg-connections-and-tables.txt`, `45-install-record.yaml` | the settings that differ, the objects of the install, the TLS connections, and the install record |
+| `20-extpg-tests/10-lifecycle.txt`, `20-extpg-tests/11-cycles.tsv` | create, request, both suspend modes, and ten cycles of suspend and resume |
+| `20-extpg-tests/30-timeline.tsv`, `33-probe.tsv`, `34-api-server-log.excerpt.txt` | the database stopped for 60.6 s, one request each second, and the log lines of the worker cache |
+| `30-upgrade-v0.6.0/` | an install of v0.6.0 from the release images, which fails with a 404, and the release tags that the registry holds |
+| `30-upgrade-v1.0.0-rc.3/00-install-v1.0.0-rc.3/`, `10-before/` | the install of the release candidate and one actor of each kind before the upgrade |
+| `30-upgrade-v1.0.0-rc.3/20-upgrade/00-timeline-steps.tsv` | each upgrade step with its begin, end, and seconds |
+| `30-upgrade-v1.0.0-rc.3/20-upgrade/02-cycle-stream.tsv`, `03-api-stream.tsv`, `05-running-stream.tsv` | the three streams during the upgrade |
+| `30-upgrade-v1.0.0-rc.3/30-after/10-actors-after.txt` | one request to each actor after the upgrade |
+| `30-upgrade-v1.0.0-rc.3/40-worker-roll-on-v1.0.0/` | a second roll of the pool, with one actor that exits on SIGTERM and one that handles it |
+| `40-scale/00-setup/` | one node with a pod limit of 250 and a pool of 200 workers |
+| `40-scale/10-run/20-concurrency.tsv`, `40-scale/10-run/bursts/c*-r*.tsv` | bursts of 1 to 150 resumes, three for each size, and every request of each burst |
+| `40-scale/10-run/10-waves.tsv`, `40-scale/10-run/30-rows.tsv`, `31-resume-with-rows.tsv` | three waves of 150 new actors, and resumes with 1,750 to 10,750 actor rows |
+| `40-scale/05-first-attempt-client-error/` | a first attempt whose bursts failed on a client setting. It left 300 actors that never ran |
+
+The connection strings in these files show `<user>` and `<password>`. The passwords and the CA key of the lab database were never copied. `10-run/33-pg-tables-at-stop.txt` holds only an SQL error of ours.
+
 ### P-node-loss: a worker node that stops and stays down
 
 All cases ran on a second x86 server guest (16 vCPU, 23 GB), on the cluster with two worker nodes, with the Envoy dataplane and the default atelet timers. Each case ran once. The pool `ballast` had two worker pods on each worker node. The column `t` is seconds from the `docker stop` command of the node `multi-worker2`. The test actor holds a counter and 50 MB, so `count` in a reply shows which snapshot the actor came from.
@@ -311,6 +359,12 @@ The shell scripts that made the recordings. Each one ran inside a guest, or on t
 | `dependency-loss-x86.json` | `outages.postgres`, `outages.ate-api-server`, `outages.kube-apiserver`. Each has `outage_seconds`, `dependency_ready_t`, `summary.<stream>`, and `per_second.<stream>`: `[{t, code, seconds, ok}]`. The streams are `running`, `suspended`, and `proxy` |
 | `dependency-loss-agw-x86.json` | the same fields as `dependency-loss-x86.json`, for the run on agentgateway |
 | `node-loss-x86.json` | `detection`: `workers_unavailable_t`, `pods_evicted_t`, `actor_crashed_t_while_down`, each `{median, min, max, n, runs}`. `cases`: one entry for each case, with `probes` (`requests`, `ok`, `codes`, `actor_states`), `commands` (`total`, `ok`, `errors`, `runs`), and `served`. `tag_rescue`, `second_revert`, `node_return` (`before_eviction`, `after_eviction`, `runs`), and `golden_tag_deleted` |
+| `node-drain-x86.json` | `cases`: one entry for each of five drains, with `drain_returned_seconds`, `requests_after_drain`, `failed_after_drain`, `actor_crashed_seen_t`, `revert`, `first_ok_seconds`, `calls_lost`, `probes`: `[{t, code, seconds}]`, and `return`. `after_uncordon` |
+| `full-node-x86.json` | `node_stopped_other_node_full`: two runs with `revert`, `blocked_requests`, `resume_command_error`, `unblock`, `served_after_unblock`. `both_nodes_up_all_workers_full` |
+| `object-store-x86.json` | `cycles`: `[{store, added_round_trip_ms, mib, suspend_sync_seconds, resume_from_store_seconds}]`, each with `{median, min, max, n, runs}`. `delay_check`. `store_unreachable.refused` and `store_unreachable.packets_dropped`. `not_recorded` |
+| `external-postgres-x86.json` | `install`, `lifecycle`, `cycles`, and `outage` with `summary.<stream>` and `per_second.<stream>`: `[{t, code, seconds}]` |
+| `upgrade-x86.json` | `steps`: `[{step, begin_t, end_t, seconds, exit}]`. `suspend_resume_stream`, `list_actors_stream`, `running_actor`, `actors_after_upgrade`, `worker_roll_on_v1_0_0`, `release_tags_in_registry` |
+| `scale-x86.json` | `bursts`: one entry for each burst size, with `runs`: `[{requests, ok, wall_seconds, per_second, median_seconds, max_seconds, request_seconds}]`. `single_resume_seconds`, `waves`, `rows`, `idle_worker_memory_mb` |
 | `rotation-x86.json` | `dataplanes.agentgateway` and `dataplanes.envoy`. Each has `changes`: `[{change, seconds, requests_with_old_value}]`, `seconds`, `probe_requests`, `values_seen`, and `seconds_between_first_seen` |
 | `cpu-limit-x86.json` | `points`: `[{x, threads, wall_seconds, host_cpu_seconds, host_cores_used, cpu_seconds_reported_inside, throttled_periods, runs}]`, where `x` is the limit in millicores. `seen_inside_the_actor`, `cgroup_cpu_max_of_actor`, `worker_pod_limits`, and `superseded_first_test` |
 | `network-x86.json` | `keepalive_after_rule_removal`, `suspend_cutoff`, `egress_log_level`, `model_gateway`, `router_ports`, each with one entry for each dataplane, and `dataplane_switch`. Latencies of `model_gateway` are in milliseconds |

@@ -95,8 +95,6 @@ Error: while building the envoy-dataplane image: exit status 125
 
 The step failed after 163 s, so the error arrives late. The documented list of tools is Go, kubectl, and Docker, and it does not name buildx.
 
-One more install failure has no log in our records. After a restart of Docker Desktop, `kubectl` on the Apple silicon laptop pointed at another cluster, and `kubectl ate` printed `services "api" not found`. Pass `--context` to every command, or use a kubeconfig that holds one cluster.
-
 ## The actor cannot reach a host
 
 | Symptom | Dataplane | Cause that we proved | Fix | Section |

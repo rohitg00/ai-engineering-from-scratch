@@ -1,0 +1,4 @@
+wave	population_before	create_s	create_fail	burst	suspend_s	suspend_fail	disk_free_mb	mem_avail_mb	snap_mb	pg_db_mb	actors_rows
+1	0	2.001	0		1.813	0	9770	37397	379	9	150
+2	150	1.872	0		1.844	0	9743	37363	379	9	300
+3	300	1.972	0		1.872	0	9743	37363	379	10	450

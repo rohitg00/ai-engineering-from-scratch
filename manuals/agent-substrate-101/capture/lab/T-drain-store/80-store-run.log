@@ -1,0 +1,41 @@
+2026-11-12T16:29:59.687Z phase base: in-cluster rustfs, timers patched
+2026-11-12T16:30:22.448Z cluster ready: workers active 4; endpoints: http://rustfs.ate-system.svc:9000 http://rustfs.ate-system.svc:9000 
+2026-11-12T16:30:24.025Z incluster-0-0 warmup 200	0.317470	count=1 mb=0 sum=0 process_age_s=0.1 | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T16:31:36.085Z incluster-0-0 done; guest disk free 17G; local snapshots MiB 104+1
+2026-11-12T16:31:38.666Z incluster-0-200 warmup 200	1.149172	count=1 mb=200 sum=25517 process_age_s=1.2 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T16:33:02.166Z incluster-0-200 done; guest disk free 17G; local snapshots MiB 104+1
+2026-11-12T16:33:08.487Z incluster-0-1000 warmup 200	4.895140	count=1 mb=1000 sum=127453 process_age_s=6.3 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T16:35:15.594Z incluster-0-1000 done; guest disk free 16G; local snapshots MiB 104+1
+2026-11-12T16:35:15.826Z BASE-DONE
+2026-11-12T16:35:15.829Z phase ext: store as a container on the guest, host network, outside the kind network
+2026-11-12T16:35:59.930Z cluster ready: workers active 4; endpoints: http://172.18.0.1:9100 http://172.18.0.1:9100 
+2026-11-12T16:36:23.636Z netem 0 ms set
+2026-11-12T16:36:25.429Z external-0-0 warmup 200	0.346143	count=1 mb=0 sum=0 process_age_s=0.1 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T16:37:37.723Z external-0-0 done; guest disk free 14G; local snapshots MiB 104+1
+2026-11-12T16:37:39.949Z external-0-200 warmup 200	0.795433	count=1 mb=200 sum=25634 process_age_s=0.9 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T16:39:04.442Z external-0-200 done; guest disk free 14G; local snapshots MiB 104+1
+2026-11-12T16:39:10.360Z external-0-1000 warmup 200	4.471327	count=1 mb=1000 sum=126729 process_age_s=5.5 | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T16:41:20.658Z external-0-1000 done; guest disk free 13G; local snapshots MiB 104+1
+Total Objects: 24    Total Size: 1259123275 
+2026-11-12T16:41:22.886Z netem 20 ms set
+2026-11-12T16:41:24.742Z external-20-0 warmup 200	0.439448	count=1 mb=0 sum=0 process_age_s=0.1 | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T16:42:36.525Z external-20-0 done; guest disk free 13G; local snapshots MiB 104+1
+2026-11-12T16:42:40.922Z external-20-200 warmup 200	2.943336	count=1 mb=200 sum=25634 process_age_s=1.2 | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T16:44:15.694Z external-20-200 done; guest disk free 13G; local snapshots MiB 104+1
+2026-11-12T16:44:26.807Z external-20-1000 warmup 200	9.679387	count=1 mb=1000 sum=126729 process_age_s=5.2 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T16:47:21.264Z resumed after a stop for low host memory: no more 1,000 MiB or 200 MiB cycles
+2026-11-12T16:47:22.579Z leftover external-20-1000: ACTOR_STATE_SUSPENDED	- | delete: actor "external-20-1000" deleted
+2026-11-12T16:47:24.386Z netem 100 ms set
+2026-11-12T16:47:26.204Z external-100-0 warmup 200	0.329936	count=1 mb=0 sum=0 process_age_s=0.1 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T16:48:44.343Z external-100-0 done; guest disk free 12G; local snapshots MiB 104+1
+2026-11-12T16:48:45.086Z phase down: store unreachable
+2026-11-12T16:59:19.580Z DOWN-DONE
+2026-11-12T16:59:21.486Z supplement: recovery after a store outage
+2026-11-12T17:02:33.799Z SUPP-DONE
+2026-11-12T17:02:34.022Z phase restore
+Total Objects: 0    Total Size: 0 
+2026-11-12T17:03:01.700Z cluster ready: workers active 4; endpoints: http://rustfs.ate-system.svc:9000 http://rustfs.ate-system.svc:9000 
+2026-11-12T17:03:21.218Z cluster ready: workers active 4; endpoints: http://rustfs.ate-system.svc:9000 http://rustfs.ate-system.svc:9000 
+2026-11-12T17:03:28.118Z check after restore: 200	0.539606	count=1 mb=50 sum=6512 process_age_s=2.1 | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T17:03:29.912Z sync suspend after restore: ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T17:03:30.718Z RESTORE-DONE endpoints: http://rustfs.ate-system.svc:9000 http://rustfs.ate-system.svc:9000 

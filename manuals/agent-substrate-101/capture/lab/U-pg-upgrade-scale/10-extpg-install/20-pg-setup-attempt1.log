@@ -1,0 +1,55 @@
+kind gateway 172.18.0.1
+Unable to find image 'postgres:18-alpine' locally
+18-alpine: Pulling from library/postgres
+84314b29d421: Pulling fs layer
+63677b2e422d: Pulling fs layer
+21a876ea75ef: Pulling fs layer
+ef1860e97cef: Pulling fs layer
+08007d924193: Pulling fs layer
+269f116f693d: Pulling fs layer
+8f865016089d: Pulling fs layer
+f9a5f8f89c06: Pulling fs layer
+ef1860e97cef: Download complete
+21a876ea75ef: Download complete
+63677b2e422d: Download complete
+84314b29d421: Download complete
+08007d924193: Download complete
+8f865016089d: Download complete
+f9a5f8f89c06: Download complete
+f9a5f8f89c06: Pull complete
+ef1860e97cef: Pull complete
+63677b2e422d: Pull complete
+7d5727783cd4: Download complete
+f10676ecb088: Download complete
+269f116f693d: Download complete
+21a876ea75ef: Pull complete
+84314b29d421: Pull complete
+08007d924193: Pull complete
+8f865016089d: Pull complete
+21a876ea75ef: Pull complete
+84314b29d421: Pull complete
+08007d924193: Pull complete
+8f865016089d: Pull complete
+269f116f693d: Pull complete
+Digest: sha256:9ba53c7d41ea093baf5c1ba635ba5434c4f979880527d49bb7d9237d3193085b
+Status: Downloaded newer image for postgres:18-alpine
+c3b39c4d40f25ae8d9ca1e149ce5751860e4306d1925e584ae6aa62b63535032
+ERROR:  zero-length delimited identifier at or near """"
+LINE 1: CREATE ROLE "" NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE N...
+                    ^
+QUERY:  CREATE ROLE "" NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION
+CONTEXT:  PL/pgSQL function inline_code_block line 28 at EXECUTE
+setup.sql rc=3
+                             List of roles
+ Role name |                         Attributes                         
+-----------+------------------------------------------------------------
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS
+
+                                       List of schemas
+  Name  |       Owner       |           Access privileges            |      Description       
+--------+-------------------+----------------------------------------+------------------------
+ public | pg_database_owner | pg_database_owner=UC/pg_database_owner+| standard public schema
+        |                   | =U/pg_database_owner                   | 
+(1 row)
+
+u-pg postgres:18-alpine 172.18.0.1:5433->5432/tcp bridge

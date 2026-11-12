@@ -1,0 +1,34 @@
+Unable to find image 'rustfs/rustfs:1.0.3' locally
+1.0.3: Pulling from rustfs/rustfs
+918fdaedc474: Pulling fs layer
+26be4b44ec74: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+c60548f86c71: Pulling fs layer
+cddf3492d4a5: Pulling fs layer
+32b091294f09: Pulling fs layer
+55afa1ecc21d: Pulling fs layer
+918fdaedc474: Download complete
+4f4fb700ef54: Download complete
+55afa1ecc21d: Download complete
+cddf3492d4a5: Download complete
+32b091294f09: Download complete
+c60548f86c71: Download complete
+44136fa355b3: Download complete
+55afa1ecc21d: Pull complete
+ad69d13789c4: Download complete
+c10ecf01b63c: Download complete
+26be4b44ec74: Download complete
+918fdaedc474: Pull complete
+32b091294f09: Pull complete
+4f4fb700ef54: Pull complete
+cddf3492d4a5: Pull complete
+c60548f86c71: Pull complete
+26be4b44ec74: Pull complete
+Digest: sha256:9ca9559533b537d10482fe923288b676ad08f92a7069d9a17327fbae3cab688b
+Status: Downloaded newer image for rustfs/rustfs:1.0.3
+a824b3e6016d761de9b6b29b728fe4a47e98f11dc701f0168ba2ffc5ef65841e
+2026-11-12 16:35:25 ate-snapshots
+t-store Up 2 seconds rustfs/rustfs:1.0.3
+
+Total Objects: 24
+   Total Size: 1259123275

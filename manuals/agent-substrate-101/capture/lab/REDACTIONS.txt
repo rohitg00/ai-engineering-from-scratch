@@ -612,3 +612,57 @@ dropped	S-ax-model/70-agent-image/10-claude-help.txt	help text of a third-party 
 dropped	S-ax-model/FINDINGS.md	internal findings note, restated in sections 7.1 and 7.5
 note	S-ax-model	no provider key was used. The Secret s-model-key and the token of the agent task hold made-up strings, and the model server was a container on the test guest
 note	S-ax-model	pod, Service, and container addresses in these files are addresses inside the kind clusters and the container network of the test guest
+dropped	T-drain-store/50-f1-survivor-full-then-free-a-worker.tsv	requests went to port 0 after a script error; the rerun is 52-f1b
+dropped	T-drain-store/51-f1-actor.yaml	actor of the invalid first attempt 50-f1
+dropped	T-drain-store/60-f2-survivor-full-then-scale-pool.tsv	requests went to port 0 after a script error; the rerun is 62-f2b
+dropped	T-drain-store/61-f2-actor.yaml	actor of the invalid first attempt 60-f2
+dropped	T-drain-store/FINDINGS.md	internal findings note, restated in the manual
+redacted	T-drain-store/_scripts/t4-store.sh	default access key of the lab object store replaced with <store-key>
+redacted	T-drain-store/_scripts/t4f-store.sh	default access key of the lab object store replaced with <store-key>
+dropped	T-drain-store/proxy-a2.log	transient helper output
+dropped	T-drain-store/proxy-b1.log	transient helper output
+dropped	T-drain-store/proxy-c1.log	transient helper output
+dropped	T-drain-store/proxy-chk.log	transient helper output
+dropped	T-drain-store/proxy-d2.log	transient helper output
+dropped	T-drain-store/proxy-e3.log	transient helper output
+dropped	T-drain-store/proxy-external-0-0.log	transient helper output
+dropped	T-drain-store/proxy-external-0-1000.log	transient helper output
+dropped	T-drain-store/proxy-external-0-200.log	transient helper output
+dropped	T-drain-store/proxy-external-100-0.log	transient helper output
+dropped	T-drain-store/proxy-external-20-0.log	transient helper output
+dropped	T-drain-store/proxy-external-20-1000.log	transient helper output
+dropped	T-drain-store/proxy-external-20-200.log	transient helper output
+dropped	T-drain-store/proxy-f3.log	transient helper output
+dropped	T-drain-store/proxy-f3r.log	transient helper output
+dropped	T-drain-store/proxy-g5.log	transient helper output
+dropped	T-drain-store/proxy-g5r.log	transient helper output
+dropped	T-drain-store/proxy-h1.log	transient helper output
+dropped	T-drain-store/proxy-incluster-0-0.log	transient helper output
+dropped	T-drain-store/proxy-incluster-0-1000.log	transient helper output
+dropped	T-drain-store/proxy-incluster-0-200.log	transient helper output
+dropped	T-drain-store/proxy-j4.log	transient helper output
+dropped	T-drain-store/proxy-j4r.log	transient helper output
+dropped	T-drain-store/proxy-k1.log	transient helper output
+dropped	T-drain-store/proxy-k1r.log	transient helper output
+dropped	T-drain-store/proxy-s1.log	transient helper output
+dropped	T-drain-store/proxy-u-async.log	transient helper output
+dropped	T-drain-store/proxy-u-new-blackhole.log	transient helper output
+dropped	T-drain-store/proxy-u-new-refused.log	transient helper output
+dropped	T-drain-store/proxy-u-remote.log	transient helper output
+dropped	T-drain-store/proxy-u-run.log	transient helper output
+dropped	T-drain-store/proxy-w-rem-blackhole.log	transient helper output
+dropped	T-drain-store/proxy-w-rem-refused.log	transient helper output
+dropped	T-drain-store/proxy-w-run-blackhole.log	transient helper output
+dropped	T-drain-store/proxy-w-run-refused.log	transient helper output
+dropped	U-pg-upgrade-scale/20-extpg-tests/99-done	transient helper output
+dropped	U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/10-before/99-done	transient helper output
+dropped	U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/30-after/99-done	transient helper output
+dropped	U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/40-worker-roll-on-v1.0.0/99-done	transient helper output
+dropped	U-pg-upgrade-scale/FINDINGS.md	internal findings note, restated in the manual
+excerpt	U-pg-upgrade-scale/20-extpg-tests/34-api-server-log.txt	original over 200 KB; kept the first 40 of 400 lines verbatim as 34-api-server-log.excerpt.txt
+note	T-drain-store/95-store-unreachable.tsv	the request rows after 16:50:45 UTC with code 000 come from a client error and are not used; the row blackhole-request-new-actor has code 200 and is used
+note	T-drain-store/97-store-unreachable-recovery.tsv	the rows from refused-prepared to the end are not valid and are not used; the refused results come from 95-store-unreachable.tsv
+note	T-drain-store	addresses in these files are inside the kind cluster and the container network of the test guest; the object store outside the cluster was a container on the same guest
+note	U-pg-upgrade-scale	the external Postgres was a container on the test guest; its passwords and CA key were never copied, and connection strings appear with <user> and <password> only
+redacted	U-pg-upgrade-scale/40-scale/10-run/12-crictl-stats-system.txt	terminal escape codes removed
+redacted	U-pg-upgrade-scale/40-scale/10-run/40-crictl-stats-all-at-stop.txt	terminal escape codes removed

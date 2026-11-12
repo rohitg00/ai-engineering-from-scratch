@@ -1,0 +1,39 @@
+2026-11-12T16:08:57.953Z setup-start
+2026-11-12T16:09:41.869Z SETUP-DONE templates=5
+2026-11-12T16:10:23.026Z rebalanced: 7s65c:Running:multi-worker2 9qhp8:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:10:23.364Z drain-cases-start
+2026-11-12T16:13:50.809Z rebalanced: 76p2g:Running:multi-worker2 rpwq7:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:13:51.539Z case-a-done
+2026-11-12T16:15:52.100Z rebalanced: 2f6cn:Running:multi-worker2 dwjnh:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:15:52.862Z case-b-done
+2026-11-12T16:18:32.966Z rebalanced: chxcq:Running:multi-worker2 m26gf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:18:33.681Z case-b2-done
+2026-11-12T16:20:41.371Z rebalanced: v4cb5:Running:multi-worker2 xc69k:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:20:42.054Z case-c-done
+2026-11-12T16:23:24.581Z rebalanced: 68nsf:Running:multi-worker2 jn8rf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:23:25.300Z case-d-done
+2026-11-12T16:23:26.938Z DRAIN-DONE
+2026-11-12T16:23:36.784Z rebalanced: 68nsf:Running:multi-worker2 jn8rf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | 68nsf:ACTIVE:0/1000:0/1984Mi jn8rf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:23:37.133Z full-cases-start
+2026-11-12T16:26:22.567Z rebalanced: 68nsf:Running:multi-worker2 jn8rf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | 68nsf:ACTIVE:0/1000:0/1984Mi jn8rf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:26:22.893Z case-f1-done
+2026-11-12T16:29:25.671Z rebalanced: clh8q:Running:multi-worker2 lsvlf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:29:25.984Z case-f2-done
+2026-11-12T16:29:57.814Z rebalanced: clh8q:Running:multi-worker2 lsvlf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:29:58.163Z case-f3-done
+2026-11-12T16:29:59.482Z FULL-DONE
+2026-11-12T16:30:04.533Z rebalanced: clh8q:Running:multi-worker2 lsvlf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:46:40Z STOPPED-BY-COORDINATOR host memory low
+2026-11-12T16:47:21.260Z STORE-none-DONE
+2026-11-12T16:50:45.929Z STORE-none-DONE
+2026-11-12T16:59:19.583Z STORE-down-DONE
+2026-11-12T17:03:25.821Z rebalanced: clh8q:Running:multi-worker2 lsvlf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T17:03:30.721Z STORE-restore-DONE
+2026-11-12T17:03:35.712Z rebalanced: clh8q:Running:multi-worker2 lsvlf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T17:03:36.052Z fullb-cases-start
+2026-11-12T17:06:03.571Z rebalanced: clh8q:Running:multi-worker2 lsvlf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T17:06:03.930Z case-f1-done
+2026-11-12T17:08:09.591Z rebalanced: fj7wt:Running:multi-worker2 rcwgm:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | fj7wt:ACTIVE:0/1000:0/1984Mi rcwgm:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:0/1000:0/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T17:08:09.918Z case-f2-done
+2026-11-12T17:08:10.985Z FULLB-DONE
+2026-11-12T17:08:10Z FINISH-DONE

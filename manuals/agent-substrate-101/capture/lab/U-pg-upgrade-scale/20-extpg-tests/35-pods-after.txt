@@ -1,0 +1,13 @@
+NAME                                       READY   STATUS      RESTARTS        AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-api-server-6dfb5f89db-v78wt            2/2     Running     2 (6m23s ago)   8m40s   10.244.0.7    uext-control-plane   <none>           <none>
+ate-api-server-6dfb5f89db-wfpcs            2/2     Running     2 (6m24s ago)   8m40s   10.244.0.6    uext-control-plane   <none>           <none>
+ate-controller-7984566f8d-926px            1/1     Running     0               8m37s   10.244.0.9    uext-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-k9kqp             1/1     Running     0               8m39s   10.244.0.8    uext-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-n2nsx             1/1     Running     0               8m39s   10.244.0.11   uext-control-plane   <none>           <none>
+atelet-w6mw9                               2/2     Running     0               8m36s   10.244.0.10   uext-control-plane   <none>           <none>
+atenet-egress-557758f6b7-z5j7k             3/3     Running     0               5m25s   10.244.0.21   uext-control-plane   <none>           <none>
+atenet-router-d844d4995-5zfms              2/2     Running     0               8m35s   10.244.0.12   uext-control-plane   <none>           <none>
+k8s-credential-provider-5bb6b77b65-6hnrn   1/1     Running     0               8m28s   10.244.0.19   uext-control-plane   <none>           <none>
+rustfs-54c86945fb-l97sj                    1/1     Running     0               8m32s   10.244.0.18   uext-control-plane   <none>           <none>
+rustfs-bucket-init-rpzwf                   0/1     Completed   0               8m32s   10.244.0.14   uext-control-plane   <none>           <none>
+u-prober                                   1/1     Running     0               4m28s   10.244.0.77   uext-control-plane   <none>           <none>

@@ -1,0 +1,10 @@
+NAMESPACE            NAME                                         READY   STATUS    RESTARTS   AGE   IP           NODE                 NOMINATED NODE   READINESS GATES
+kube-system          coredns-559f6c778d-4wmw4                     1/1     Running   0          34s   10.244.0.3   uupg-control-plane   <none>           <none>
+kube-system          coredns-559f6c778d-bps5l                     1/1     Running   0          34s   10.244.0.4   uupg-control-plane   <none>           <none>
+kube-system          etcd-uupg-control-plane                      1/1     Running   0          43s   172.18.0.5   uupg-control-plane   <none>           <none>
+kube-system          kindnet-q8bvt                                1/1     Running   0          34s   172.18.0.5   uupg-control-plane   <none>           <none>
+kube-system          kube-apiserver-uupg-control-plane            1/1     Running   0          43s   172.18.0.5   uupg-control-plane   <none>           <none>
+kube-system          kube-controller-manager-uupg-control-plane   1/1     Running   0          41s   172.18.0.5   uupg-control-plane   <none>           <none>
+kube-system          kube-proxy-5ckr9                             1/1     Running   0          34s   172.18.0.5   uupg-control-plane   <none>           <none>
+kube-system          kube-scheduler-uupg-control-plane            1/1     Running   0          41s   172.18.0.5   uupg-control-plane   <none>           <none>
+local-path-storage   local-path-provisioner-75f7fc7dc5-j66b4      1/1     Running   0          34s   10.244.0.2   uupg-control-plane   <none>           <none>

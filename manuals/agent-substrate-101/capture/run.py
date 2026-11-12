@@ -19,6 +19,7 @@ GUEST_S = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, ka
 MAC = "Apple silicon laptop, Docker Desktop with 10 CPU and 8 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images"
 GUEST_P = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, one control plane node and two worker nodes, default atelet timers, pool of 4 worker pods"
 GUEST_Q = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, one kind node, agentgateway v1.7.0 and Envoy switched in place"
+GUEST_U = "x86 server guest, 24 vCPU, 47 GB, nested KVM, one kind node, Agent Substrate from the release images, Envoy dataplane, gVisor"
 VALIDATION_MACHINE = GUEST_A + ", pool of 2 workers with 8 CPU and 8 GiB each"
 TIMED_REQUESTS = ("first-call-golden", "warm-call", "resume-local", "resume-after-sync")
 
@@ -1494,7 +1495,556 @@ def agent_executor_followups_x86():
     }
 
 
+DRAIN_CASES = [
+    ("a", "RUNNING, one request about each second", "10-a-running.tsv", "return-a.tsv"),
+    ("b", "SUSPENDED with --mode sync, no request during the drain", "20-b-suspended-sync-quiet.tsv", "return-b.tsv"),
+    ("b2", "SUSPENDED with --mode sync, one request about each second from 2 s after the drain", "25-b2-suspended-sync-requests-during-drain.tsv", "return-b2.tsv"),
+    ("c", "SUSPENDED in the default mode, newest snapshot still PENDING on the node", "30-c-suspended-async-pending.tsv", "return-c.tsv"),
+    ("d", "RUNNING, one request of 120 s in flight", "40-d-mid-request.tsv", "return-d.tsv"),
+]
+ANSWER_EVENTS = ("probe", "request-1-no-revert", "request-2")
+
+
+def stamped_rows(rel):
+    out = []
+    for row in rows(rel)[1:]:
+        if len(row) >= 3:
+            out.append({"at": stamp(row[0]), "event": row[2], "fields": row[3:], "text": "\t".join(row[3:])})
+    return out
+
+
+def group_by_event(items):
+    out = {}
+    for item in items:
+        out.setdefault(item["event"], []).append(item)
+    return out
+
+
+def answer(item):
+    match = re.search(r"(?:^|[ \t])(\d{3})\t([\d.]+)\t([^\t]*)", item["text"])
+    if not match:
+        return None
+    count = re.search(r"count=(\d+)", match.group(3))
+    return {"code": match.group(1), "seconds": round(float(match.group(2)), 3), "count": int(count.group(1)) if count else None, "body": match.group(3).strip()[:120], "state": actor_state(item["text"])}
+
+
+def took(item):
+    match = re.search(r"([\d.]+) s", item["text"])
+    return float(match.group(1)) if match else None
+
+
+def short_answer(item):
+    reply = answer(item)
+    return {key: reply[key] for key in ("code", "seconds", "count")}
+
+
+def blocked_summary(blocked):
+    return {"requests": len(blocked), "codes": tally(entry["code"] for entry in blocked), "seconds": stat([entry["seconds"] for entry in blocked]), "body": blocked[0]["body"], "states": tally(entry["state"] for entry in blocked)}
+
+
+def resume_error(item):
+    return re.search(r"code = (\w+) desc = ([^\t]+)", item["text"]).group(0).strip()
+
+
+def drain_return(rel):
+    items = node_rows(f"T-drain-store/{rel}")
+    watches = [item for item in items if item["event"] == "watch"]
+    pods = [int(re.search(r"pool-pods-running-on-node=(\d+)", item["text"]).group(1)) for item in watches]
+    placed = [re.search(r"placement=(\S+)", item["text"]).group(1) for item in watches]
+    after = next(item for item in items if item["event"] == "request-after-uncordon")
+    return {
+        "source": f"capture/lab/T-drain-store/{rel}",
+        "cordoned_seconds": float(re.search(r"after ([\d.]+) s cordoned", items[0]["text"]).group(1)),
+        "watched_seconds": watches[-1]["t"],
+        "pool_pods_on_node_max": max(pods),
+        "new_actors_placed": len(placed),
+        "new_actors_on_the_node": sum(1 for node in placed if node.endswith("worker2")),
+        "request_after_uncordon": re.search(r"(\d{3})", after["text"]).group(1),
+    }
+
+
+def drain_case(key, title, rel, back):
+    items = stamped_rows(f"T-drain-store/{rel}")
+    start = next(item["at"] for item in items if item["event"] == "drain-start")
+    rel_t = lambda item: round(item["at"] - start, 1)
+    first = lambda name: next((item for item in items if item["event"] == name), None)
+    before = [answer(item) for item in items if item["at"] < start and item["event"] in ("call", "probe")]
+    probes = []
+    for item in items:
+        if item["at"] > start and item["event"] in ANSWER_EVENTS:
+            probes.append({"t": rel_t(item), **answer(item)})
+    failed = [probe for probe in probes if probe["code"] != "200"]
+    revert = first("revert-1")
+    after_revert = [probe for probe in probes if revert and probe["t"] > rel_t(revert) and probe["code"] == "200"]
+    served = [probe for probe in probes if probe["code"] == "200"]
+    crashed = next((rel_t(item) for item in items if item["at"] > start and actor_state(item["text"]) == "ACTOR_STATE_CRASHED"), None)
+    settled = first("pods-settled")
+    slow = first("slow-request-returned")
+    sent = first("slow-request-sent")
+    final = first("final") or items[-1]
+    last_before = max(entry["count"] for entry in before if entry and entry["count"])
+    out = {
+        "case": key,
+        "situation": title,
+        "source": f"capture/lab/T-drain-store/{rel}",
+        "drain_returned_seconds": rel_t(first("drain-returned")),
+        "pods_settled_event_t": rel_t(settled),
+        "requests_after_drain": len(probes),
+        "ok_after_drain": len(served),
+        "failed_after_drain": len(failed),
+        "first_failure_t": failed[0]["t"] if failed else None,
+        "last_failure_t": failed[-1]["t"] if failed else None,
+        "failure_bodies": tally(re.sub(r"lab-n/\w+", "lab-n/<actor>", probe["body"])[:70] for probe in failed),
+        "actor_crashed_seen_t": crashed,
+        "revert": {"t": rel_t(revert), "seconds": took(revert), "first_ok_t": after_revert[0]["t"], "first_ok_seconds": after_revert[0]["seconds"], "seconds_to_first_ok": round(after_revert[0]["t"] - rel_t(revert), 1)} if revert else None,
+        "first_ok_t": served[0]["t"] if served else None,
+        "first_ok_seconds": served[0]["seconds"] if served else None,
+        "count_before_drain": last_before,
+        "first_count_after": served[0]["count"] if served else None,
+        "calls_lost": last_before - (served[0]["count"] - 1) if served else None,
+        "node_at_end": re.search(r"ACTOR_STATE_RUNNING\t(\S+)", final["text"]).group(1) if "ACTOR_STATE_RUNNING\t" in final["text"] else None,
+        "probes": [{"t": probe["t"], "code": probe["code"], "seconds": probe["seconds"]} for probe in probes],
+        "return": drain_return(back),
+    }
+    if slow:
+        reply = answer(slow)
+        out["request_in_flight"] = {"sent_t": rel_t(sent), "returned_t": rel_t(slow), "code": reply["code"], "seconds": reply["seconds"], "body": reply["body"]}
+    return out
+
+
+def node_drain_x86():
+    cases = [drain_case(*entry) for entry in DRAIN_CASES]
+    return {
+        "machine": GUEST_P,
+        "note": "one run for each case. t is seconds from the kubectl drain command for the node multi-worker2. Requests go through kubectl ate proxy. The actor holds a counter and 50 MB in memory. In cases a and d the revert was sent by the script after a fixed wait.",
+        "command": "kubectl drain multi-worker2 --ignore-daemonsets --delete-emptydir-data --force --timeout=600s",
+        "sources": [case["source"] for case in cases] + [case["return"]["source"] for case in cases] + ["capture/lab/T-drain-store/04-pdb-and-grace.txt"],
+        "drain_returned_seconds": spread(case["drain_returned_seconds"] for case in cases),
+        "running_actors_crashed": sum(1 for case in cases if case["actor_crashed_seen_t"] is not None),
+        "suspended_actors_served_with_no_command": sum(1 for case in cases if case["revert"] is None and case["failed_after_drain"] == 0),
+        "after_uncordon": {"returns": len(cases), "new_actors_placed": sum(case["return"]["new_actors_placed"] for case in cases), "new_actors_on_the_node": sum(case["return"]["new_actors_on_the_node"] for case in cases), "pool_pods_on_node_max": max(case["return"]["pool_pods_on_node_max"] for case in cases), "watched_seconds": spread(case["return"]["watched_seconds"] for case in cases)},
+        "cases": cases,
+    }
+
+
+def full_node_run(key, rel, unblock, after_names):
+    by_event = group_by_event(node_rows(f"T-drain-store/{rel}"))
+    blocked = [answer(item) for name in ("request-1", "request-2", "request-new-actor-1", "request-new-actor-2") for item in by_event.get(name, [])]
+    revert = by_event["revert-after-unavailable"][0]
+    done = by_event[unblock][0]
+    served = []
+    for name in after_names:
+        item = by_event[name][0]
+        served.append({"event": name, "seconds_after_unblock_command": took(item), **short_answer(item)})
+    return {
+        "run": key,
+        "source": f"capture/lab/T-drain-store/{rel}",
+        "workers_unavailable_t": by_event["workers-of-stopped-node-not-active"][0]["t"],
+        "revert": {"t": revert["t"], "seconds": took(revert), "ok": "Error" not in revert["text"], "state_after": actor_state(by_event["state"][0]["text"])},
+        "blocked_requests": blocked_summary(blocked),
+        "resume_command_error": resume_error(by_event["resume-command"][0]),
+        "create_from_tag_ok": "Error" not in by_event["create-from-tag"][0]["text"],
+        "unblock": {"action": unblock, "t": done["t"], "seconds": took(done)},
+        "served_after_unblock": served,
+        "count_at_tag": 3,
+    }
+
+
+def full_node_x86():
+    stop_runs = [
+        full_node_run("free-a-worker", "52-f1b-survivor-full-then-free-a-worker.tsv", "free-a-worker-done", ("request-after-free", "request-new-actor-after-free")),
+        full_node_run("scale-the-pool", "62-f2b-survivor-full-then-scale-pool.tsv", "scale-up", ("request-after-scale", "request-new-actor-after-scale")),
+    ]
+    by_event = group_by_event(stamped_rows("T-drain-store/70-f3-survivor-full-no-revert-request-only.tsv"))
+    blocked = [answer(by_event[name][0]) for name in ("request-pool-full-1", "request-pool-full-2")]
+    freed = by_event["request-after-free-on-other-node"][0]
+    log = lines("T-drain-store/78-control-plane-events.log")
+    return {
+        "machine": GUEST_P,
+        "note": "each run once. One actor with a 1,900 Mi limit fills each worker of 1,984 Mi. In the node-stop runs t is seconds from the docker stop command of the node multi-worker2. The test actor has a tag from before the stop, made at count 3.",
+        "sources": [run["source"] for run in stop_runs] + ["capture/lab/T-drain-store/70-f3-survivor-full-no-revert-request-only.tsv", "capture/lab/T-drain-store/78-control-plane-events.log"],
+        "node_stopped_other_node_full": stop_runs,
+        "both_nodes_up_all_workers_full": {
+            "blocked_requests": blocked_summary(blocked),
+            "resume_command_error": resume_error(by_event["resume-command"][0]),
+            "freed_worker_on_node_without_the_local_snapshot": True,
+            "served_after_free": {"seconds_after_free_command": took(freed), **short_answer(freed)},
+            "node_after": re.search(r"ACTOR_STATE_RUNNING\t(\S+)", freed["text"]).group(1),
+            "log_lines_with_detach_from_full_node": sum(1 for line in log if "DetachFromFullNode" in line),
+        },
+    }
+
+
+STORE_VALID_UNTIL = "2026-11-12T16:50:45"
+
+
+def store_cycles():
+    groups = {}
+    for row in rows("T-drain-store/90-store-cycles.tsv")[1:]:
+        key = (row[1], int(row[2]), int(row[3]))
+        entry = groups.setdefault(key, {"suspend": [], "resume": [], "codes": []})
+        entry["suspend"].append(float(row[5]))
+        entry["resume"].append(float(row[10]))
+        entry["codes"].append(row[9])
+    out = []
+    for (store, rtt, mib), entry in groups.items():
+        out.append({"store": store, "added_round_trip_ms": rtt, "mib": mib, "suspend_sync_seconds": {**stat(entry["suspend"]), "runs": rounded(entry["suspend"])}, "resume_from_store_seconds": {**stat(entry["resume"]), "runs": rounded(entry["resume"])}, "codes": tally(entry["codes"])})
+    return out
+
+
+def netem_round_trips():
+    out = {}
+    label = None
+    for line in lines("T-drain-store/83-netem-rtt.txt"):
+        head = re.match(r"### netem (\d+) ms", line)
+        if head:
+            label = head.group(1)
+            continue
+        connect = re.match(r"connect=([\d.]+)", line)
+        if connect and label is not None:
+            out.setdefault(label, []).append(float(connect.group(1)) * 1000)
+    return {key: {"connect_ms": {**stat(values), "runs": rounded(values)}} for key, values in out.items()}
+
+
+def store_outage():
+    recorded = stamped_rows("T-drain-store/95-store-unreachable.tsv")
+    dropped_create = next(item for item in recorded if item["event"] == "blackhole-request-new-actor")
+    by_event = group_by_event(item for item in recorded if item["at"] < stamp(STORE_VALID_UNTIL))
+    second = node_rows("T-drain-store/97-store-unreachable-recovery.tsv")
+    cut = next(i for i, item in enumerate(second) if item["event"] == "refused-prepared")
+    later = group_by_event(second[:cut])
+    one = lambda table, name, index=0: answer(table[name][index])
+    back = [answer(item) for item in by_event["refused-remote-only-after-store-back"]]
+    failed_step = re.search(r"step (\w+)", by_event["refused-suspend-sync"][0]["text"])
+    sync_timeout = later["blackhole-suspend-sync-running"][0]["text"]
+    brief = lambda entry: {k: entry[k] for k in ("code", "seconds", "count", "state")}
+    return {
+        "refused": {
+            "request_to_actor_only_in_store": {**brief(one(by_event, "refused-request-remote-only")), "body": one(by_event, "refused-request-remote-only")["body"]},
+            "requests_after_store_back_with_no_command": {"requests": len(back), "codes": tally(entry["code"] for entry in back), "states": tally(entry["state"] for entry in back)},
+            "revert_then_request": {"revert_seconds": took(later["leftover-revert-u-remote"][0]), **brief(one(later, "leftover-request-after-revert", 0))},
+            "running_actor_request": brief(one(by_event, "refused-running-request")),
+            "suspend_sync": {"seconds": took(by_event["refused-suspend-sync"][0]), "failed_at_step": failed_step.group(1) if failed_step else None, "state_after": actor_state(by_event["refused-state-after-suspend-sync"][0]["text"])},
+            "request_after_failed_sync": brief(one(by_event, "refused-request-after-failed-sync")),
+            "revert_after_failed_sync": {"revert_seconds": took(later["leftover-revert-u-run"][0]), **brief(one(later, "leftover-request-after-revert", 1))},
+            "suspend_default": {"seconds": took(by_event["refused-suspend-async"][0]), "state_20s_after": actor_state(by_event["refused-state-20s-after-async"][0]["text"]), "newest_snapshot_pending": "PENDING" in by_event["refused-state-20s-after-async"][0]["text"], "next_request": brief(one(by_event, "refused-request-after-async"))},
+            "create_actor": {"seconds": took(by_event["refused-create-actor"][0]), "first_request": brief(one(by_event, "refused-request-new-actor"))},
+            "store_away_seconds": float(re.search(r"after ([\d.]+) s", by_event["store-back"][0]["text"]).group(1)),
+        },
+        "packets_dropped": {
+            "request_to_actor_only_in_store": brief(one(later, "blackhole-resume-remote-only")),
+            "same_actor_after_store_back_with_no_command": brief(one(later, "blackhole-remote-only-request-no-revert")),
+            "calls_before": [int(value) for value in re.findall(r"count=(\d+)", later["blackhole-run-calls"][0]["text"])],
+            "suspend_sync": {"seconds": took(later["blackhole-suspend-sync-running"][0]), "error": re.search(r"code = (\w+)", sync_timeout).group(1), "error_names_a_deadline": "code = DeadlineExce" in sync_timeout, "state_after": actor_state(later["blackhole-state-after-failed-suspend"][0]["text"])},
+            "request_after_failed_sync": brief(one(later, "blackhole-run-request-no-revert")),
+            "revert_after_failed_sync": {"revert_seconds": took(later["blackhole-run-revert"][0]), **brief(one(later, "blackhole-run-request-after-revert"))},
+            "create_actor_first_request": brief(answer(dropped_create)),
+            "store_away_seconds": float(re.search(r"after ([\d.]+) s", later["store-back"][0]["text"]).group(1)),
+        },
+    }
+
+
+def object_store_x86():
+    return {
+        "machine": GUEST_P,
+        "note": "the object store outside the cluster was a rustfs container on the same guest, outside the kind network. The delay was added with tc netem on the guest in one direction, so it is the added round trip. Bandwidth was not limited. atelet ran with --snapshot-upload-delay=3s and --snapshot-detach-delay=10s for these runs only. One cycle is a suspend with --mode sync, a wait for the detach, and one request. The outage cases used actors with no data in memory, each case once.",
+        "sources": ["capture/lab/T-drain-store/90-store-cycles.tsv", "capture/lab/T-drain-store/83-netem-rtt.txt", "capture/lab/T-drain-store/82-atelet-args-patched.txt", "capture/lab/T-drain-store/95-store-unreachable.tsv", "capture/lab/T-drain-store/97-store-unreachable-recovery.tsv"],
+        "not_recorded": ["200 MiB at 100 ms", "1,000 MiB at 100 ms", "a fifth cycle of 1,000 MiB at 20 ms", "an outage with an actor that holds data"],
+        "delay_check": netem_round_trips(),
+        "cycles": store_cycles(),
+        "store_unreachable": store_outage(),
+    }
+
+
+U = "U-pg-upgrade-scale"
+
+
+def marks(rel):
+    out = {}
+    for row in rows(rel):
+        if len(row) >= 3:
+            out.setdefault(row[2], float(row[0]))
+    return out
+
+
+def stream(rel):
+    out = []
+    for row in rows(rel):
+        if len(row) >= 5 and row[0].isdigit():
+            out.append({"at": int(row[0]), "stream": row[1], "code": row[3], "seconds": round(float(row[4]), 3), "body": row[5][:90] if len(row) > 5 else ""})
+    return out
+
+
+def attempts(rel):
+    out = [[]]
+    for line in lines(rel):
+        if line.startswith("--- attempt"):
+            out.append([])
+        elif "\t" in line:
+            name, code, seconds = line.split("\t")
+            out[-1].append({"step": name, "exit": int(code), "seconds": int(seconds)})
+    return out
+
+
+def external_postgres_x86():
+    base = f"{U}/10-extpg-install"
+    tests = f"{U}/20-extpg-tests"
+    tries = attempts(f"{base}/steps.tsv")
+    objects = read(f"{base}/41-ate-system-objects.txt")
+    connections = [line for line in lines(f"{base}/43-pg-connections-and-tables.txt") if "TLSv" in line]
+    life = read(f"{tests}/10-lifecycle.txt")
+    grab = lambda pattern: float(re.search(pattern, life).group(1))
+    resumes = re.findall(r"resume request: 200\t([\d.]+)", life)
+    cycles = [row for row in rows(f"{tests}/11-cycles.tsv") if len(row) >= 4]
+    suspends = [float(row[1]) for row in cycles]
+    resume_runs = [float(row[3]) for row in cycles]
+    at = marks(f"{tests}/30-timeline.tsv")
+    stopped, ready, end = at["pg-stop-begin"], at["pg-ready"], at["end"]
+    ready_t = ready - stopped
+    all_probes = stream(f"{tests}/33-probe.tsv")
+    streams = {}
+    for probe in all_probes:
+        if probe["at"] >= stopped - 10:
+            streams.setdefault(probe["stream"], []).append({"t": round(probe["at"] - stopped, 1), "code": probe["code"], "seconds": probe["seconds"]})
+    summary = {}
+    for name, items in streams.items():
+        failed = [item for item in items if item["code"] != "200"]
+        ok_after = [item for item in items if item["code"] == "200" and item["t"] > ready_t]
+        whole = [probe for probe in all_probes if probe["stream"] == name]
+        summary[name] = {
+            "requests_in_run": len(whole),
+            "failed_in_run": sum(1 for probe in whole if probe["code"] != "200"),
+            "codes_in_run": tally(probe["code"] for probe in whole),
+            "first_failure_t": failed[0]["t"] if failed else None,
+            "last_failure_t": failed[-1]["t"] if failed else None,
+            "last_failure_seconds_after_ready": round(max(item["t"] + item["seconds"] for item in failed) - ready_t, 1) if failed else None,
+            "last_failed_request_sent_seconds_after_ready": round(failed[-1]["t"] - ready_t, 1) if failed else None,
+            "first_ok_seconds_after_ready": round(ok_after[0]["t"] - ready_t, 1),
+            "failure_bodies": tally(re.sub(r"u-lab/[\w-]+", "u-lab/<actor>", probe["body"])[:60] for probe in whole if probe["code"] != "200"),
+        }
+    log = lines(f"{tests}/34-api-server-log.excerpt.txt")
+    synced = next(json.loads(line)["time"] for line in log if "worker cache synced" in line)
+    return {
+        "machine": GUEST_U,
+        "note": "one install and one outage. Postgres 18 ran as a container on the guest, outside the kind network, with TLS and password logins. Another install ran on the guest during the ten cycles. In the outage, t is seconds from the docker stop command for the Postgres container.",
+        "sources": [f"capture/lab/{base}/steps.tsv", f"capture/lab/{base}/20-pg-setup-attempt2-no-transaction.log", f"capture/lab/{base}/20-pg-setup.log", f"capture/lab/{base}/29-deploy-diff.txt", f"capture/lab/{base}/41-ate-system-objects.txt", f"capture/lab/{base}/43-pg-connections-and-tables.txt", f"capture/lab/{tests}/10-lifecycle.txt", f"capture/lab/{tests}/11-cycles.tsv", f"capture/lab/{tests}/30-timeline.tsv", f"capture/lab/{tests}/33-probe.tsv", f"capture/lab/{tests}/34-api-server-log.excerpt.txt"],
+        "install": {
+            "deploy_attempts": [attempt[-1] for attempt in tries],
+            "setup_sql_without_transaction_error": next(line for line in lines(f"{base}/20-pg-setup-attempt2-no-transaction.log") if line.startswith("ERROR")),
+            "setup_sql_with_single_transaction_exit": int(re.search(r"setup.sql rc=(\d+)", read(f"{base}/20-pg-setup.log")).group(1)),
+            "tls_connections": len(connections),
+            "tls_versions": tally(re.search(r"TLSv[\d.]+", line).group(0) for line in connections),
+            "postgres_statefulset_deployed": "statefulset.apps/postgres" in objects,
+            "postgres_networkpolicy_deployed": "networkpolicy.networking.k8s.io/postgres" in objects,
+            "install_record_holds_connection_string": "postgresql://" in read(f"{base}/45-install-record.yaml"),
+        },
+        "lifecycle": {
+            "create_seconds": grab(r"create ([\d.]+) s"),
+            "first_request_seconds": round(grab(r"first request: 200\t([\d.]+)"), 3),
+            "suspend_sync_seconds": grab(r"suspend sync ([\d.]+) s"),
+            "resume_after_sync_seconds": round(float(resumes[0]), 3),
+            "suspend_default_seconds": grab(r"suspend default ([\d.]+) s"),
+            "resume_after_default_seconds": round(float(resumes[1]), 3),
+            "counts": [int(value) for value in re.findall(r"count=(\d+)", life)],
+        },
+        "cycles": {
+            "suspend_sync_seconds": {**stat(suspends), "runs": rounded(suspends)},
+            "resume_seconds": {**stat(resume_runs), "runs": rounded(resume_runs)},
+            "codes": tally(row[2] for row in cycles),
+        },
+        "outage": {
+            "postgres_away_seconds": round(ready - at["pg-stopped"], 1),
+            "stop_command_to_ready_seconds": round(ready - stopped, 1),
+            "watched_after_ready_seconds": round(end - ready, 1),
+            "summary": summary,
+            "worker_cache_synced_seconds_after_ready": round(stamp(synced) - ready, 1),
+            "log_lines_with_worker_cache_not_ready": sum(1 for line in log if "worker cache not ready" in line),
+            "per_second": streams,
+        },
+    }
+
+
+def upgrade_x86():
+    old = f"{U}/30-upgrade-v0.6.0/00-install-v0.6.0"
+    base = f"{U}/30-upgrade-v1.0.0-rc.3"
+    up = f"{base}/20-upgrade"
+    roll = f"{base}/40-worker-roll-on-v1.0.0"
+    timeline = [row for row in rows(f"{up}/00-timeline-steps.tsv") if len(row) >= 3]
+    zero = float(timeline[0][0])
+    steps = []
+    begun = {}
+    for at, _, text in timeline:
+        name = text.split(" ")[0]
+        if text.endswith(" begin"):
+            begun[name] = float(at)
+        ended = re.search(r"end rc=(\d+) seconds=([\d.]+)", text)
+        if ended and name in begun:
+            steps.append({"step": name, "begin_t": round(begun[name] - zero, 1), "end_t": round(float(at) - zero, 1), "seconds": float(ended.group(2)), "exit": int(ended.group(1))})
+    patch = next(float(at) for at, _, text in timeline if text.startswith("23-step3-patch begin"))
+    new_image = next(float(at) for at, _, text in timeline if "has-new-image" in text)
+    steps.append({"step": "23-step3-workerpool-image-patch", "begin_t": round(patch - zero, 1), "end_t": round(new_image - zero, 1), "seconds": round(new_image - patch, 1), "exit": 0})
+    steps.sort(key=lambda step: step["begin_t"])
+    cycles = []
+    for row in rows(f"{up}/02-cycle-stream.tsv"):
+        code = re.search(r"resume: (\d{3})", row[3]).group(1)
+        suspend_error = next((name for name in ("Checkpoint", "atelet conn") if name in row[2]), None)
+        cycles.append({"t": round(int(row[0]) - zero, 1), "ok": code == "200" and "Error" not in row[2], "suspend_error": suspend_error})
+    bad = [cycle for cycle in cycles if not cycle["ok"]]
+    next_ok = next(cycle["t"] for cycle in cycles if cycle["ok"] and cycle["t"] > bad[-1]["t"])
+    api = [row for row in rows(f"{up}/03-api-stream.tsv") if len(row) >= 3]
+    running = stream(f"{up}/05-running-stream.tsv")
+    watch = [row for row in rows(f"{up}/23d-roll-watch.tsv") if row[0].isdigit()]
+    crashed = next(int(row[0]) for row in watch if row[1] == "ACTOR_STATE_CRASHED")
+    after = {}
+    for line in lines(f"{base}/30-after/10-actors-after.txt"):
+        found = re.match(r"(a-[\w-]+)\s+\((.+?)\): (\d{3})\t([\d.]+)\t(.*)", line)
+        if found and found.group(1) not in after:
+            count = re.search(r"count=(\d+)", found.group(5))
+            after[found.group(1)] = {"before": found.group(2), "code": found.group(3), "seconds": round(float(found.group(4)), 3), "count": int(count.group(1)) if count else None}
+    revert = read(f"{roll}/01-revert-a-run.txt")
+    sig = [row for row in rows(f"{roll}/10-watch.tsv")[1:] if row[0].isdigit()]
+    plain_crashed = next(int(row[0]) for row in sig if row[1] == "ACTOR_STATE_CRASHED")
+    trap = [(int(row[0]), row[5], row[6]) for row in sig]
+    marks_roll = [row for row in rows(f"{roll}/00-timeline.tsv") if len(row) >= 3]
+    trap_after = read(f"{roll}/14-after.txt")
+    deploy_old = read(f"{old}/20-deploy-ate-system.log")
+    return {
+        "machine": GUEST_U,
+        "note": "one upgrade, from v1.0.0-rc.3 to v1.0.0, by the steps of the upgrade guide. t is seconds from the start of step 1. A stream suspended and resumed one actor about each 3.5 s, a second stream listed actors each 2 s, and a third sent one request each second to a RUNNING actor. The worker pool had 8 pods on one node.",
+        "sources": [f"capture/lab/{up}/00-timeline-steps.tsv", f"capture/lab/{up}/02-cycle-stream.tsv", f"capture/lab/{up}/03-api-stream.tsv", f"capture/lab/{up}/05-running-stream.tsv", f"capture/lab/{up}/23d-roll-watch.tsv", f"capture/lab/{base}/30-after/10-actors-after.txt", f"capture/lab/{roll}/01-revert-a-run.txt", f"capture/lab/{roll}/10-watch.tsv", f"capture/lab/{roll}/14-after.txt", f"capture/lab/{old}/51-ghcr-release-tags.txt", f"capture/lab/{old}/20-deploy-ate-system.log"],
+        "release_tags_in_registry": json.loads(lines(f"{old}/51-ghcr-release-tags.txt")[0].split(": ", 1)[1]),
+        "install_of_v0_6_0_from_release_images": {"exit": attempts(f"{old}/steps.tsv")[0][-1]["exit"], "error_is_404": "v0.6.0: unexpected status code 404" in deploy_old},
+        "steps": steps,
+        "first_step_begin_to_last_step_end_seconds": round(max(step["end_t"] for step in steps), 1),
+        "suspend_resume_stream": {
+            "cycles": len(cycles),
+            "ok": len(cycles) - len(bad),
+            "failed": len(bad),
+            "first_failure_t": bad[0]["t"],
+            "last_failure_t": bad[-1]["t"],
+            "next_ok_t": next_ok,
+            "failed_window_seconds": round(next_ok - bad[0]["t"], 1),
+            "suspend_errors": tally(cycle["suspend_error"] or "none" for cycle in bad),
+            "per_cycle": [{"t": cycle["t"], "ok": cycle["ok"]} for cycle in cycles],
+        },
+        "list_actors_stream": {"calls": len(api), "answered": sum(1 for row in api if "actors listed" in row[2])},
+        "running_actor": {
+            "crashed_seen_seconds_after_pool_patch": round(crashed - patch, 1),
+            "requests": len(running),
+            "codes": tally(item["code"] for item in running),
+            "first_failure_t": round(next(item["at"] for item in running if item["code"] != "200") - zero, 1),
+            "revert_seconds": float(re.search(r"revert ([\d.]+) s", revert).group(1)),
+            "count_after_revert": int(re.search(r"count=(\d+)", revert).group(1)),
+            "per_second": [{"t": round(item["at"] - zero, 1), "code": item["code"]} for item in running],
+        },
+        "actors_after_upgrade": after,
+        "schema_migrations_unchanged": lines(f"{base}/10-before/15-schema-migrations-before.txt")[:2] == lines(f"{up}/33-schema-migrations-after.txt")[:2],
+        "substrate_images_after": tally(re.search(r":(v[\w.-]+)@", line).group(1) for line in lines(f"{up}/30-images-after.txt") if "agent-substrate/substrate/" in line and re.search(r":(v[\w.-]+)@", line)),
+        "worker_roll_on_v1_0_0": {
+            "actor_without_sigterm_handler_crashed_seen_t": plain_crashed,
+            "actor_with_sigterm_handler": {
+                "samples": len(trap),
+                "running_samples": sum(1 for _, state, _ in trap if state == "ACTOR_STATE_RUNNING"),
+                "ok_requests": sum(1 for _, _, code in trap if code == "200"),
+                "watched_seconds": trap[-1][0],
+                "suspend_sync_seconds": float(re.search(r"after ([\d.]+) s", marks_roll[2][2]).group(1)),
+                "request_after_roll": {"code": re.search(r"t-trap after the roll: (\d{3})", trap_after).group(1), "count": int(re.search(r"t-trap after the roll: .*count=(\d+)", trap_after).group(1))},
+            },
+        },
+    }
+
+
+def burst_line(text):
+    grab = lambda key: re.search(rf"{key}=([\d.]+)", text).group(1)
+    return {"requests": int(grab("n")), "ok": int(grab("ok")), "wall_seconds": float(grab("wall")), "per_second": float(grab("rate")), "median_seconds": float(grab("p50")), "p95_seconds": float(grab("p95")), "max_seconds": float(grab("max")), "connections": int(grab("connects"))}
+
+
+def burst_times(rel):
+    return sorted(round(float(row[2]), 3) for row in rows(rel) if len(row) >= 3)
+
+
+def scale_x86():
+    run = f"{U}/40-scale/10-run"
+    setup = f"{U}/40-scale/00-setup"
+    levels = {}
+    for row in rows(f"{run}/20-concurrency.tsv")[1:]:
+        entry = burst_line("\t".join(row[3:]))
+        entry["rep"] = int(row[1])
+        entry["request_seconds"] = burst_times(f"{run}/bursts/{row[2]}.tsv")
+        levels.setdefault(int(row[0]), []).append(entry)
+    bursts = []
+    for level, reps in sorted(levels.items()):
+        bursts.append({
+            "at_one_time": level,
+            "bursts": len(reps),
+            "requests": sum(rep["requests"] for rep in reps),
+            "ok": sum(rep["ok"] for rep in reps),
+            "median_seconds_each_burst": [rep["median_seconds"] for rep in reps],
+            "max_seconds_each_burst": [rep["max_seconds"] for rep in reps],
+            "per_second_each_burst": [rep["per_second"] for rep in reps],
+            "runs": reps,
+        })
+    single = [burst_line("\t".join(row[1:]))["median_seconds"] for row in rows(f"{run}/21-sequential.tsv")]
+    waves = []
+    previous = None
+    for row in rows(f"{run}/10-waves.tsv")[1:]:
+        text = "\t".join(row)
+        entry = burst_line(text)
+        tail = row[-7:]
+        snap = int(tail[4])
+        waves.append({
+            "wave": int(row[0]),
+            "actors": 150,
+            "create_seconds": float(row[2]),
+            "first_activation": {key: entry[key] for key in ("requests", "ok", "wall_seconds", "per_second", "median_seconds", "max_seconds")},
+            "suspend_seconds": float(tail[0]),
+            "suspends_per_second": round(150 / float(tail[0]), 1),
+            "guest_disk_free_mb": int(tail[2]),
+            "local_snapshots_mb": snap,
+            "snapshot_mb_per_actor": round((snap - previous) / 150, 1) if previous is not None else None,
+        })
+        previous = snap
+    sizes = {}
+    for row in rows(f"{run}/31-resume-with-rows.tsv"):
+        if row[1] == "seq":
+            sizes.setdefault(int(row[0].split()[1]), []).append(burst_line("\t".join(row[3:]))["median_seconds"])
+    table = []
+    for row in rows(f"{run}/30-rows.tsv")[1:]:
+        table.append({
+            "created": int(row[1]),
+            "create_seconds": float(row[2]),
+            "creates_per_second": round(int(row[1]) / float(row[2]), 1),
+            "failed": int(row[3]),
+            "actor_rows": int(row[5]),
+            "postgres_database_mb": int(row[4]),
+            "list_actors_seconds": float(row[6]),
+            "single_resume_seconds": {**stat(sizes[int(row[0])]), "runs": rounded(sizes[int(row[0])])},
+        })
+    workers = [float(re.search(r"([\d.]+)MB", line).group(1)) for line in lines(f"{run}/40-crictl-stats-all-at-stop.txt") if re.search(r"\sworker\s", line)]
+    stop = [line for line in lines(f"{run}/00-run.log") if "STOP" in line]
+    allocatable = read_json(f"{setup}/32-node-allocatable.json")
+    return {
+        "machine": GUEST_U,
+        "note": "one kind node with the pod limit raised to 250 and a pool of 200 gVisor workers. The actor is a Python counter with a 128 MiB limit and memory fidelity. A burst is one curl process with --parallel in a pod, HTTP/2 over 1 or 2 connections, one request to each of N suspended actors that have their own snapshot on the node. An older cluster was idle on the same guest.",
+        "sources": [f"capture/lab/{run}/20-concurrency.tsv", f"capture/lab/{run}/21-sequential.tsv", f"capture/lab/{run}/10-waves.tsv", f"capture/lab/{run}/30-rows.tsv", f"capture/lab/{run}/31-resume-with-rows.tsv", f"capture/lab/{run}/40-crictl-stats-all-at-stop.txt", f"capture/lab/{run}/00-run.log", f"capture/lab/{setup}/30-setup.log"],
+        "pool": {"workers": 200, "ready_seconds": int(re.search(r"pool of 200 workers ready after (\d+) s", read(f"{setup}/30-setup.log")).group(1)), "node_pod_limit": int(allocatable["pods"]), "node_cpus": int(allocatable["cpu"])},
+        "single_resume_seconds": {**stat(single), "runs": rounded(single)},
+        "bursts": bursts,
+        "burst_requests_ok": {"requests": sum(level["requests"] for level in bursts), "ok": sum(level["ok"] for level in bursts)},
+        "waves": waves,
+        "rows": table,
+        "idle_worker_memory_mb": stat(workers),
+        "ramp_stopped_by": stop[0].split(" ", 1)[1],
+    }
+
+
 BUILDERS = {
+    "node-drain-x86.json": node_drain_x86,
+    "full-node-x86.json": full_node_x86,
+    "object-store-x86.json": object_store_x86,
+    "external-postgres-x86.json": external_postgres_x86,
+    "upgrade-x86.json": upgrade_x86,
+    "scale-x86.json": scale_x86,
     "kagent-model-x86.json": kagent_model_x86,
     "agent-executor-followups-x86.json": agent_executor_followups_x86,
     "agent-executor-x86.json": agent_executor_x86,

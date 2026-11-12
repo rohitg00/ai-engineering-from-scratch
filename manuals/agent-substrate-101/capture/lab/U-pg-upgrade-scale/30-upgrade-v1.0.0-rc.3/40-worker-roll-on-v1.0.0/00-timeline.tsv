@@ -1,0 +1,5 @@
+1794500924.527	16:28:44	patch workerpool image to the tag form to start a roll (workers are v1.0.0 before and after)
+1794501104.790	16:31:44	owner suspends t-trap with --mode sync, state before ACTOR_STATE_RUNNING
+1794501105.676	16:31:45	t-trap suspend returned after 0.644 s state ACTOR_STATE_SUSPENDED
+1794501105.842	16:31:45	rollout status rc=0 after 0.151 s
+1794501105.984	16:31:45	no Terminating worker left

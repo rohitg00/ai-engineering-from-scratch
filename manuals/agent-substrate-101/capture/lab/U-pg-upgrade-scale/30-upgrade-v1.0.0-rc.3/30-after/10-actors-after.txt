@@ -1,0 +1,37 @@
+Error: unknown subcommand "version"
+
+Usage:
+ATESPACE   NAME      TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc     up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-kgt6l   10.244.0.36   415       9m20s
+up-lab     a-def     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          6         9m23s
+up-lab     a-fresh   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          1         9m16s
+up-lab     a-run     up-lab/up-drill   ACTOR_STATE_CRASHED     <none>                                          4         9m26s
+up-lab     a-sync    up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         9m24s
+up-lab     a-tag     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         9m22s
+a-run   (RUNNING at start, suspended by its owner in step 3, expected count continues from the stream): 503	0.026168	actor up-lab/a-run unavailable: AssignWorker prerequisite not met for Actor: up-lab/a-run (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPEN
+a-sync  (suspended sync at count 3 before): 200	0.336302	count=4 process_age_s=578.6 
+a-def   (suspended default at count 3 before): 200	0.353903	count=4 process_age_s=579.1 
+a-tag   (suspended sync at count 5, tag pre-up at 5): 200	0.371161	count=6 process_age_s=579.7 
+a-fresh (created before, never run): 200	0.337234	count=1 process_age_s=580.2 
+a-cyc   (cycled during the upgrade): 200	0.037239	count=107 process_age_s=580.5 
+up-lab     a-new   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-new   (created after, from the golden snapshot made on v1.0.0-rc.3): 200	0.317411	count=1 process_age_s=581.2 
+up-lab     a-fromtag   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-fromtag (created after, from tag pre-up): 200	0.437722	count=6 process_age_s=582.1 
+ATESPACE   NAME    TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-new   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    5         2s
+a-new after suspend on v1.0.0: 200	0.365019	count=2 process_age_s=583.3 
+ATESPACE   NAME        TEMPLATE          STATE                 WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc       up-lab/up-drill   ACTOR_STATE_RUNNING   up-lab/up-pool-678bcc9bfd-kgt6l   10.244.0.36   415       9m26s
+up-lab     a-def       up-lab/up-drill   ACTOR_STATE_RUNNING   up-lab/up-pool-678bcc9bfd-gscgx   10.244.0.40   8         9m29s
+up-lab     a-fresh     up-lab/up-drill   ACTOR_STATE_RUNNING   up-lab/up-pool-678bcc9bfd-j6shz   10.244.0.34   3         9m22s
+up-lab     a-fromtag   up-lab/up-drill   ACTOR_STATE_RUNNING   up-lab/up-pool-678bcc9bfd-kgt6l   10.244.0.36   3         2s
+up-lab     a-new       up-lab/up-drill   ACTOR_STATE_RUNNING   up-lab/up-pool-678bcc9bfd-zkbgf   10.244.0.39   7         2s
+up-lab     a-run       up-lab/up-drill   ACTOR_STATE_CRASHED   <none>                                          4         9m31s
+up-lab     a-sync      up-lab/up-drill   ACTOR_STATE_RUNNING   up-lab/up-pool-678bcc9bfd-ftrrt   10.244.0.35   7         9m30s
+up-lab     a-tag       up-lab/up-drill   ACTOR_STATE_RUNNING   up-lab/up-pool-678bcc9bfd-dw5pm   10.244.0.38   7         9m27s
+ATESPACE   NAME       GOLDEN TAG                             ERROR   AGE
+up-lab     up-drill   6a6a00ee-3579-4831-9df7-297cf34eb6c3           10m
+ATESPACE   NAME                                   SCOPE                 STATE   SNAPSHOT                                                                        FIDELITY                   AGE
+up-lab     6a6a00ee-3579-4831-9df7-297cf34eb6c3   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/up-lab/tags/a5e94f07-6898-412e-8b31-6a9904fe724e   SNAPSHOT_FIDELITY_MEMORY   9m43s
+up-lab     pre-up                                 TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/up-lab/tags/dfba3ad9-6770-4bcb-a9fc-453bfe90c6b8   SNAPSHOT_FIDELITY_MEMORY   8m19s

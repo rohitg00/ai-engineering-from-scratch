@@ -70,15 +70,51 @@ The disk that one node needs for snapshots is therefore the number of suspends i
 
 On a pool that spans nodes, size each node by itself. A suspended actor resumes only on the node of its last suspend, for 30 minutes with the default timers. In our runs on two worker nodes, no actor moved off a node that stopped. When the node returned, Kubernetes left the new worker pods on the other node. [Placement](#s-placement) has those runs.
 
+## Many resumes at one time
+
+A pool with free workers still has a limit on how fast it starts actors. We sent bursts of resumes to one node and timed each request. [Figure 4.5b](#fig-4-5b) shows every request.
+
+```figure
+id: fig-4-5b
+kind: chart
+title: resumes at one time on one node
+claim: One node finished 36 to 39 resumes each second, so the wait grew with the size of the burst.
+caption: In the left panel each line is one burst, with its requests in order from the first answer to the last. The right panel has the rate of each burst. The sizes on the horizontal axis are not to scale. The dashed line is the 0.5 s that the project site states. From capture/lab/summary/scale-x86.json.
+```
+
+**We measured** this on the x86 server guest (24 vCPU, 47 GB, nested KVM), on one kind node with a pool of 200 gVisor workers. The actor was a Python counter with a 128 MiB limit, and each actor had its own snapshot on the node. One client process in a pod sent each burst to the router, over one or two HTTP/2 connections. Each burst size ran three times, and all 933 requests returned 200.
+
+| Resumes at one time | Median of each burst | Slowest request | Resumes each second |
+|---|---|---|---|
+| 1, 30 times in a row | 0.36 s (0.33 to 0.40) | 0.40 s | not a burst |
+| 10 | 0.38 to 0.40 s | 0.43 s | 23 to 24 |
+| 50 | 1.16 to 1.34 s | 1.38 s | 36 to 38 |
+| 100 | 2.21 to 2.26 s | 2.73 s | 36 to 39 |
+| 150 | 3.16 to 3.42 s | 4.14 s | 36 to 38 |
+
+The rate stops rising at about 37 resumes each second. From there a larger burst only waits longer, and twice the burst took twice the time. We did not measure what sets that rate, and we did not record CPU use during a burst. A first start from the golden snapshot ran at the same rate: 34 to 38 each second for 150 new actors, in three waves.
+
+The count of stored actors did not change these numbers. We then raised the count to 10,750 actor rows in Postgres. A single resume took a median of 0.36 to 0.38 s at each of four sizes, with 10 resumes each. The database was 20 MB at 10,750 rows, and `kubectl ate get actors` took 0.86 s. The creates ran at 76 to 86 each second, and none of 10,000 failed.
+
+**Our position:** plan the pool for the burst, and not only for the peak count. If 100 sessions wake in the same second on one node like ours, the last one waits about 2.7 s. Spread a wake-up of many actors over time in your client. More nodes are the other answer, and we did not test them, so measure that rate yourself.
+
+Two limits stopped the ramp. Each suspended actor of this kind kept 12.9 MB on the node disk, and 450 of them left 3.9 GB free on the guest. We also stopped at 10,750 rows, below the 20,000 that we planned. An idle worker used a median of 16.7 MB of memory, in 200 workers.
+
 ## No autoscaler
 
 Substrate v1.0.0 has no code that changes `spec.replicas` {{code}}. The WorkerPool has a `scale` subresource, so a HorizontalPodAutoscaler or your own controller can change the count. The controller publishes `ate.workerpool.desired_workers` and `ate.workerpool.ready_workers` for that purpose {{docs}}. We did not test an autoscaler.
 
-Plan as if you have none. [Request parking](#s-request-parking) holds a request for 5 seconds. We did not measure how long a new worker pod takes to start and register. Do not plan for it to fit in that time. Size the pool for the peak of running actors, with room to spare.
+Plan as if you have none. [Request parking](#s-request-parking) holds a request for 5 seconds. Do not plan for a new worker pod to start and register in that time.
+
+**We measured** two such starts, each once. On the x86 server guest (24 vCPU, 47 GB, nested KVM), a new pool of 200 workers was ready after 75 s. On the second x86 server guest (16 vCPU, 23 GB), we scaled a pool from 4 workers to 6 while a request waited for room. That request returned 200 in 1.55 s, 1.7 s after the scale command. Both clusters had the worker image on the node already, so a first pull is not in these numbers.
+
+ Size the pool for the peak of running actors, with room to spare.
 
 ## What others reported at scale
 
-Our largest cluster had two worker nodes. Our largest actor count was 131 actors on one node, of which 75 ran at the end. The project site states `10×` the density of container runtimes. The documentation gives a benchmark method and no result, and we did not test density. These reports come from the issue tracker of Substrate. Their authors ran them, and we did not.
+Our largest cluster had two worker nodes. Our largest count was 10,750 actor rows on one node, of which 150 had a snapshot of their own. The project site states `10×` the density of container runtimes. The documentation gives a benchmark method and no result. We measured two parts of that claim and made no comparison with a container runtime. A suspended actor used no worker and 12.9 MB of node disk, and an idle worker used 16.7 MB of memory.
+
+These reports come from the issue tracker of Substrate. Their authors ran them, and we did not.
 
 | Report | Conditions | Result |
 |---|---|---|
@@ -103,7 +139,8 @@ Read the table as four separate limits: missing limits, node memory, Postgres ro
 - Keep actor CPU limits at 250 millicores or more to protect resume time.
 - Size node disk as suspends in 30 minutes times the snapshot size.
 - Size the pool for the peak, because Substrate has no autoscaler.
+- Plan for about 37 resumes each second on one node, and spread a larger wake-up over time.
 - Watch node memory, node disk, and Postgres before you add CPU.
 ```
 
-Sources: capture/lab/summary/microvm-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/demos-x86.json, capture/lab/summary/cpu-limit-x86.json, capture/lab/Q-network/n-cpu-limit/40-work.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/summary/parking-x86.json, capture/lab/K-kagent/parallel/workers-during.txt, capture/lab/K-kagent/parallel/states-during.txt, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/E-dependency-loss/00-setup.log, capture/lab/E-dependency-loss/22-actors-5min-later.txt; cmd/ateapi/internal/scheduling/scheduling.go, cmd/ateworker-gvisor/memory.go, cmd/ateworker-gvisor/main.go, api/infra/k8s/ate/v1/workerpool_types.go, cmd/atelet/main.go at v1.0.0; docs/reference/api-guide.md, docs/guides/observability.md, docs/guides/node-storage.md, docs/guides/benchmarking.md, site/layouts/_shortcodes/home.html at v1.0.0; issues https://github.com/agent-substrate/substrate/issues/3479, https://github.com/agent-substrate/substrate/issues/3408, https://github.com/agent-substrate/substrate/issues/3702, https://github.com/agent-substrate/substrate/issues/3101, https://github.com/agent-substrate/substrate/issues/3441, https://github.com/agent-substrate/substrate/issues/3431.
+Sources: capture/lab/summary/scale-x86.json, capture/lab/summary/full-node-x86.json, capture/lab/U-pg-upgrade-scale/40-scale/10-run/20-concurrency.tsv, capture/lab/U-pg-upgrade-scale/40-scale/10-run/30-rows.tsv, capture/lab/U-pg-upgrade-scale/40-scale/00-setup/30-setup.log, capture/lab/summary/microvm-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/demos-x86.json, capture/lab/summary/cpu-limit-x86.json, capture/lab/Q-network/n-cpu-limit/40-work.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/summary/parking-x86.json, capture/lab/K-kagent/parallel/workers-during.txt, capture/lab/K-kagent/parallel/states-during.txt, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/E-dependency-loss/00-setup.log, capture/lab/E-dependency-loss/22-actors-5min-later.txt; cmd/ateapi/internal/scheduling/scheduling.go, cmd/ateworker-gvisor/memory.go, cmd/ateworker-gvisor/main.go, api/infra/k8s/ate/v1/workerpool_types.go, cmd/atelet/main.go at v1.0.0; docs/reference/api-guide.md, docs/guides/observability.md, docs/guides/node-storage.md, docs/guides/benchmarking.md, site/layouts/_shortcodes/home.html at v1.0.0; issues https://github.com/agent-substrate/substrate/issues/3479, https://github.com/agent-substrate/substrate/issues/3408, https://github.com/agent-substrate/substrate/issues/3702, https://github.com/agent-substrate/substrate/issues/3101, https://github.com/agent-substrate/substrate/issues/3441, https://github.com/agent-substrate/substrate/issues/3431.

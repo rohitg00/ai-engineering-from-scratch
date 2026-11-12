@@ -51,6 +51,10 @@ The 27 s matter. A dashboard that watches a running actor reports recovery half 
 
 That delay is the result of one run on one machine. A later drill ran on another machine, a second x86 server guest (16 vCPU, 31 GB), with Postgres away for about 30 s. There a suspended actor answered 0.4 s after Postgres was ready. The two runs differ in the machine and in the length of the outage, so we draw no difference between them. Plan for the longer delay. [A failure drill](#s-a-failure-drill) shows the short case.
 
+**We measured** the cause of the long delay in a third run, on the x86 server guest (24 vCPU, 47 GB, nested KVM), one outage. That cluster used a Postgres outside the cluster, and the database was away for 60.6 s. The running actor answered again 0.7 s after Postgres was ready. Resumes of suspended actors kept failing, and the last failed one was sent 28.7 s after ready. One failed resume in the `ate-api-server` log carries the text `worker cache not ready`. The log line `worker cache synced` came 29.5 s after ready.
+
+So the API server serves a running actor at once, and it cannot place an actor until its list of workers is full again. The delay was about the same with the bundled database and with the outside one, 27 s and 29 s. [Section 8.1](#s-postgres-and-the-object-store) has the install of that database.
+
 Two more signs point at the database. Both `ate-api-server` pods stayed in `Running` and dropped to 1 of 2 ready containers. The CLI then printed `Error: failed to connect to ate-api-server: no ready api pods in ate-system`. That text names the API server, and the cause was Postgres. Check the database first when you see it.
 
 ## ate-api-server down: 503 in 3 to 5 seconds
@@ -254,11 +258,81 @@ caption: Read each row left to right: the actor when the node stopped, what to d
 
 So Substrate does not rebalance a pool. After a long outage the returned node stays empty until someone moves pods. An actor that a command left in `ACTOR_STATE_REVERTING` needs one more `revert` after the return, and [section 3.5](#s-crashed-and-revertactor) has that result and its caveat.
 
+## A node that you drain
+
+A drain is the planned form of a node stop, and it ends differently. `kubectl drain` evicts the worker pods and leaves the DaemonSet pods, so `atelet` stays on the node. The control plane can still reach the snapshot files there. [Figure 8.2f](#fig-8-2f) shows the five cases that we ran.
+
+```figure
+id: fig-8-2f
+kind: timeline
+title: five drains of one worker node, request by request
+claim: A drain crashed each running actor and did not disturb any suspended one.
+caption: Read each row left to right. Zero is the drain command. A green mark is a request that returned 200, and a rose mark is a request that failed. The dashed line is the revert that we sent. From capture/lab/summary/node-drain-x86.json.
+```
+
+**We measured** each case once, on the second x86 server guest (16 vCPU, 23 GB), with Envoy and gVisor. The cluster had two worker nodes. The command was `kubectl drain` with `--ignore-daemonsets --delete-emptydir-data --force`. It returned in 1.2 to 2.2 s, in five of five cases.
+
+The pool had no PodDisruptionBudget. In the two cases with no request during the drain, the new pods ran on the other node 2.5 s after the command.
+
+| The actor when the drain started | What the client saw | Did it move by itself | What worked | What was lost |
+|---|---|---|---|---|
+| `RUNNING`, one request about each second | 503 from 0.4 s. 46 of 62 requests failed, most with `AssignWorker prerequisite not met` | No. It was `ACTOR_STATE_CRASHED` | One `revert`, 0.2 s. The next request returned 200 0.8 s later, on the other node | The 6 calls after the last durable snapshot |
+| Suspended with `--mode sync`, no request during the drain | Nothing | Yes, at its first request | Send the request. It returned 200 in 0.58 s | Nothing |
+| Suspended with `--mode sync`, one request about each second from 2 s after the drain | 30 of 30 requests returned 200. The first took 0.49 s | Yes | No command | Nothing |
+| Suspended in the default mode, newest snapshot still `PENDING` on the node | Nothing | Yes, at its first request | Send the request. It returned 200 in 1.19 s | Nothing. The count was 6 after 5 |
+| `RUNNING`, with one request of 120 s open | The open request got 503 `connection termination` 0.4 s after the drain command. Then 16 of 16 requests got 503 | No. It was `ACTOR_STATE_CRASHED` | One `revert`, 0.2 s. The next request returned 200 0.7 s later | The open request, and the 2 calls after the last durable snapshot |
+
+The script sent the revert 64.8 s after the drain in the first case and 24.8 s after it in the last. We did not test an earlier revert.
+
+Two results stand out. A drain does not suspend a running actor. It ends the worker pod, and the actor was `ACTOR_STATE_CRASHED` within 7 s, in two of two cases. The worker pods had a termination grace period of 3,600 s, and the drain still returned in about 2 s.
+
+A drain does not hurt a suspended actor, in three of three cases. This is the opposite of a node stop. After a stop, the first request binds the actor to a worker of the dead node. After a drain, the node has no worker, and its `atelet` still answers. So the resume moves the snapshot off the node and places the actor on the other node. In the quiet case the drained node held 52 MiB of snapshots before the request and 1 MiB after it.
+
+**Our position:** before a drain, suspend each running actor with `--mode sync`, and then drain. A suspended actor moves with its state at the next request. A running actor crashes, and a `revert` returns it to the last durable snapshot. [Section 8.4](#s-upgrade-and-stale-advice) gives the same order for a worker upgrade.
+
+After `kubectl uncordon` the node stayed empty, in five of five returns. Its pool pods ran on the other node, and Kubernetes did not move them back. We created 15 new actors after each return, in 86 s. None of the 75 went to the returned node. We moved pods by hand again.
+
+## A stopped node, and no free worker on the other node
+
+The runbook for a stopped node rests on a free worker on the other node. We filled the other node and ran it again. Each worker of that pool holds 1,984 Mi, and one actor with a 1,900 Mi limit fills it.
+
+**We measured** two node-stop runs with the other node full, on the same guest (16 vCPU, 23 GB), each once. The `revert` after `UNAVAILABLE` was accepted in 2.8 and 3.1 s, and the actor was `ACTOR_STATE_SUSPENDED`. Each request then waited 5.05 to 5.07 s and got 503 with `no worker has room for the actor`, in 8 of 8 requests. `kubectl ate resume actor` failed with `ResourceExhausted`. `create actor --tag` was accepted, and a request to the new actor got the same 503.
+
+Capacity ended the wait in both runs. In the first run we suspended one actor on the full node, which took 0.6 s. The request then returned 200 in 0.80 s, 1.6 s after that command. In the second run we scaled the pool from 4 workers to 6. The request returned 200 in 1.55 s, 1.7 s after the scale command.
+
+The new actors from the tag answered in 0.64 and 0.63 s. Nothing was lost in either run.
+
+So a full node does not break the runbook. The revert and the rescue from a tag still succeed, and both then wait for a worker. Read `no worker has room for the actor` after a node loss as a capacity problem, and free a worker or add one. [Section 4.3](#s-placement) has the same case with both nodes up.
+
+## The object store away
+
+A resume from the node copy does not need the bucket. A synchronous suspend needs it, and so does a resume of an actor whose only copy is in the bucket. We took the bucket away in two ways. In the first, each connection was refused. In the second, packets were dropped, so each call waited.
+
+**We measured** each case once, on the same guest (16 vCPU, 23 GB), with actors that hold no data in memory. The bucket for these runs was outside the cluster, as [section 8.1](#s-postgres-and-the-object-store) describes.
+
+| Operation while the bucket was away | Connection refused | Packets dropped |
+|---|---|---|
+| A request to a running actor | 200 in 0.06 s | not recorded |
+| A request to a suspended actor whose only copy is in the bucket | 500 `error resuming actor` after 4.11 s. The actor is `ACTOR_STATE_CRASHED` | 504 after 10.05 s. The actor stays `ACTOR_STATE_RESUMING` |
+| The same actor after the bucket was back | 503 on 22 of 22 requests. After one `revert`, 0.2 s, the request returned 200 in 0.33 s with its state | 200 in 0.63 s with no command, with its state. The bucket had been away for 137 s |
+| `suspend --mode sync` of a running actor | The call fails after 4.28 s at the step `CallAteletSuspend`. The actor is `ACTOR_STATE_CRASHED` | The call fails after 126.3 s. The actor is `ACTOR_STATE_CRASHED` |
+| That actor afterwards | 503 until a `revert`. Then 200 from the last durable snapshot, and the 2 calls after it were lost | The same, and the 2 calls after the last durable snapshot were lost |
+| `suspend` in the default mode | 0.31 s. The snapshot stays `PENDING` on the node, and the next request returned 200 in 0.22 s | not recorded |
+| `create actor` from a template, then a request | 200 in 0.27 s | 200 in 0.24 s |
+
+The row to remember is the synchronous suspend. With the bucket away, the call that you send to protect an actor crashes it. The actor was healthy and `RUNNING` before the call, and it needed a `revert` after it. The default suspend was safe in the same minute, because it does not wait for the upload.
+
+The first two rows show a second difference. A refused connection crashed the suspended actor, and it stayed crashed after the bucket was back. A dropped connection left it in `ACTOR_STATE_RESUMING`, and it answered by itself when the bucket returned.
+
+**Our position:** check that the bucket answers before a batch of synchronous suspends, such as the batch before a drain or a worker upgrade. If it does not answer, leave the actors running, or suspend in the default mode and accept the node copy.
+
 ## What we did not test
 
-Each outage and each node-stop case ran once. The dependency outages ran on one kind node, on each dataplane. We did not test egress from an actor during an outage, or a connection that stays open across one.
+Each outage, each node-stop case, each drain case, and each bucket case ran once. The dependency outages ran on one kind node, on each dataplane. We did not test egress from an actor during an outage, or a connection that stays open across one.
 
-The node-stop cases have five gaps. We did not get a case where the other node had no free capacity: two tries left room, and the revert worked both times. A stop here was `docker stop`, which ends the kubelet and `atelet` cleanly, so a power loss or a network loss can differ. We did not change the node timers of Kubernetes, use more than two worker nodes, or repeat the cases on agentgateway.
+The node-stop cases have four gaps. A stop here was `docker stop`, which ends the kubelet and `atelet` cleanly, so a power loss or a network loss can differ. We did not change the node timers of Kubernetes, use more than two worker nodes, or repeat the cases on agentgateway. We filled the other node by memory, and not by CPU or by a count of actors.
+
+The drain cases have three gaps. The pool had no PodDisruptionBudget. We did not drain the node that runs `ate-system`. We sent no `revert` in the first 20 s after a drain. The bucket cases used actors with no data in memory, and the bucket was a container on the same guest.
 
 ```takeaways
 - Read a client timeout followed by `error resuming actor` as a database outage.
@@ -273,6 +347,9 @@ The node-stop cases have five gaps. We did not get a case where the other node h
 - When a node stops, wait for `WORKER_STATE_UNAVAILABLE` before you revert a quiet actor.
 - Send no `revert` or `delete` to an actor that got a request during the outage.
 - After a long node outage, move pool pods back to the returned node by hand.
+- Suspend running actors with `--mode sync` before a drain, because a drain crashes a running actor.
+- After a node loss, read `no worker has room for the actor` as missing capacity, and free or add a worker.
+- Check that the bucket answers before a synchronous suspend, because a failed one crashes the actor.
 ```
 
-Sources: capture/lab/N-demos/failure-drill/drill-run.log, capture/lab/summary/demos-x86.json, capture/lab/E-dependency-loss/10-timeline.tsv, capture/lab/E-dependency-loss/12-probe-incluster.tsv, capture/lab/E-dependency-loss/12-probe-proxy.tsv, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/E-dependency-loss/14-T1-pods-during.txt, capture/lab/E-dependency-loss/14-T1-cli-during.txt, capture/lab/E-dependency-loss/16-T3-kubectl-during.txt, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/E-dependency-loss/22-actors-5min-later.txt, capture/lab/summary/dependency-loss-x86.json, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/summary/failures-x86.json, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/L-gaps/restart/11-workers-each-poll.txt, capture/lab/L-gaps/restart/23-ateapi.log, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/96-controller-events.log, capture/lab/Q-network/g-dependency-loss-agw/12-probe-incluster.tsv, capture/lab/Q-network/g-dependency-loss-agw/12-probe-proxy.tsv, capture/lab/Q-network/g-dependency-loss-agw/20-analysis.txt, capture/lab/summary/dependency-loss-agw-x86.json, capture/lab/summary/node-loss-x86.json, capture/lab/P-node-loss/10-a-quiet-revert.tsv, capture/lab/P-node-loss/74-second-revert.tsv, capture/lab/P-node-loss/80-tag-rescue.tsv, capture/lab/P-node-loss/20-b60-requests-revert-loop.tsv, capture/lab/P-node-loss/30-bevict-requests-revert-after-eviction.tsv, capture/lab/P-node-loss/40-balt-suspend-resume-delete.tsv, capture/lab/P-node-loss/50-c-pending-snapshot.tsv, capture/lab/P-node-loss/55-c-pending-snapshot-with-requests.tsv, capture/lab/P-node-loss/88-pending-snapshot-node-returns.tsv, capture/lab/P-node-loss/60-d-running.tsv, capture/lab/P-node-loss/85-tag-rescue-running-and-pending.tsv, capture/lab/P-node-loss/return-tag.tsv, capture/lab/P-node-loss/return-tag2.tsv, capture/lab/P-node-loss/return-b60.tsv, capture/lab/P-node-loss/return-balt.tsv; cmd/atenet/internal/router/ingress/parking.go (the 5 s parking budget) and cmd/ateapi/internal/controlapi/workflow_resume.go at v1.0.0.
+Sources: capture/lab/summary/node-drain-x86.json, capture/lab/summary/full-node-x86.json, capture/lab/summary/object-store-x86.json, capture/lab/summary/external-postgres-x86.json, capture/lab/T-drain-store/20-b-suspended-sync-quiet.tsv, capture/lab/T-drain-store/04-pdb-and-grace.txt, capture/lab/T-drain-store/95-store-unreachable.tsv, capture/lab/T-drain-store/97-store-unreachable-recovery.tsv, capture/lab/U-pg-upgrade-scale/20-extpg-tests/34-api-server-log.excerpt.txt, capture/lab/N-demos/failure-drill/drill-run.log, capture/lab/summary/demos-x86.json, capture/lab/E-dependency-loss/10-timeline.tsv, capture/lab/E-dependency-loss/12-probe-incluster.tsv, capture/lab/E-dependency-loss/12-probe-proxy.tsv, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/E-dependency-loss/14-T1-pods-during.txt, capture/lab/E-dependency-loss/14-T1-cli-during.txt, capture/lab/E-dependency-loss/16-T3-kubectl-during.txt, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/E-dependency-loss/22-actors-5min-later.txt, capture/lab/summary/dependency-loss-x86.json, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/summary/failures-x86.json, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/L-gaps/restart/11-workers-each-poll.txt, capture/lab/L-gaps/restart/23-ateapi.log, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/96-controller-events.log, capture/lab/Q-network/g-dependency-loss-agw/12-probe-incluster.tsv, capture/lab/Q-network/g-dependency-loss-agw/12-probe-proxy.tsv, capture/lab/Q-network/g-dependency-loss-agw/20-analysis.txt, capture/lab/summary/dependency-loss-agw-x86.json, capture/lab/summary/node-loss-x86.json, capture/lab/P-node-loss/10-a-quiet-revert.tsv, capture/lab/P-node-loss/74-second-revert.tsv, capture/lab/P-node-loss/80-tag-rescue.tsv, capture/lab/P-node-loss/20-b60-requests-revert-loop.tsv, capture/lab/P-node-loss/30-bevict-requests-revert-after-eviction.tsv, capture/lab/P-node-loss/40-balt-suspend-resume-delete.tsv, capture/lab/P-node-loss/50-c-pending-snapshot.tsv, capture/lab/P-node-loss/55-c-pending-snapshot-with-requests.tsv, capture/lab/P-node-loss/88-pending-snapshot-node-returns.tsv, capture/lab/P-node-loss/60-d-running.tsv, capture/lab/P-node-loss/85-tag-rescue-running-and-pending.tsv, capture/lab/P-node-loss/return-tag.tsv, capture/lab/P-node-loss/return-tag2.tsv, capture/lab/P-node-loss/return-b60.tsv, capture/lab/P-node-loss/return-balt.tsv; cmd/atenet/internal/router/ingress/parking.go (the 5 s parking budget) and cmd/ateapi/internal/controlapi/workflow_resume.go at v1.0.0.

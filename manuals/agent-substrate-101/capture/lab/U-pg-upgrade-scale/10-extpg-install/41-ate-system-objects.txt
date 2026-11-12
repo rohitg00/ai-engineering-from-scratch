@@ -1,0 +1,32 @@
+NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/ate-api-server            2/2     2            2           3m23s
+deployment.apps/ate-controller            1/1     1            1           3m20s
+deployment.apps/ate-idp-server            2/2     2            2           3m22s
+deployment.apps/atenet-egress             1/1     1            1           3m10s
+deployment.apps/atenet-router             1/1     1            1           3m18s
+deployment.apps/k8s-credential-provider   1/1     1            1           3m11s
+deployment.apps/rustfs                    1/1     1            1           3m15s
+
+NAME                    DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/atelet   1         1         1       1            1           <none>          3m19s
+
+NAME                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+service/api                       ClusterIP   None            <none>        443/TCP,8445/TCP    3m22s
+service/ate-controller            ClusterIP   10.96.128.21    <none>        8080/TCP            3m20s
+service/atenet-egress             ClusterIP   10.96.248.224   <none>        443/TCP             3m10s
+service/atenet-router             ClusterIP   10.96.97.236    <none>        443/TCP,8444/TCP    3m17s
+service/idp                       ClusterIP   10.96.48.191    <none>        443/TCP             3m21s
+service/k8s-credential-provider   ClusterIP   10.96.125.225   <none>        50051/TCP           3m11s
+service/rustfs                    ClusterIP   10.96.139.79    <none>        9000/TCP,9001/TCP   3m15s
+
+NAME                                                       POD-SELECTOR                          AGE
+networkpolicy.networking.k8s.io/ate-api-server             app=ate-api-server                    3m17s
+networkpolicy.networking.k8s.io/ate-idp-server             app=ate-idp-server                    3m16s
+networkpolicy.networking.k8s.io/ate-system-observability   app notin (k8s-credential-provider)   3m16s
+networkpolicy.networking.k8s.io/atelet                     app=atelet                            3m17s
+networkpolicy.networking.k8s.io/atenet-egress              app=atenet-egress                     3m16s
+networkpolicy.networking.k8s.io/atenet-router              app=atenet-router                     3m16s
+networkpolicy.networking.k8s.io/default-deny-ingress       <none>                                3m17s
+networkpolicy.networking.k8s.io/k8s-credential-provider    app=k8s-credential-provider           3m11s
+networkpolicy.networking.k8s.io/postgres                   app=postgres                          3m17s
+networkpolicy.networking.k8s.io/rustfs                     app=rustfs                            3m15s

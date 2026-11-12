@@ -1,0 +1,14 @@
+NAME                                       READY   STATUS      RESTARTS   AGE     IP             NODE                   NOMINATED NODE   READINESS GATES
+ate-api-server-7bc56575c9-jm89v            2/2     Running     0          5m55s   10.244.0.9     uscale-control-plane   <none>           <none>
+ate-api-server-7bc56575c9-mwq5d            2/2     Running     0          5m55s   10.244.0.8     uscale-control-plane   <none>           <none>
+ate-controller-7984566f8d-nwg2n            1/1     Running     0          5m53s   10.244.0.11    uscale-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-ph6hc             1/1     Running     0          5m55s   10.244.0.13    uscale-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-zpl45             1/1     Running     0          5m55s   10.244.0.10    uscale-control-plane   <none>           <none>
+atelet-sw6h4                               2/2     Running     0          5m51s   10.244.0.12    uscale-control-plane   <none>           <none>
+atenet-egress-7758c8fb4-kpddl              3/3     Running     0          5m43s   10.244.0.22    uscale-control-plane   <none>           <none>
+atenet-router-d844d4995-95mvz              2/2     Running     0          5m50s   10.244.0.14    uscale-control-plane   <none>           <none>
+k8s-credential-provider-5bb6b77b65-krznk   1/1     Running     0          5m44s   10.244.0.21    uscale-control-plane   <none>           <none>
+postgres-0                                 2/2     Running     0          6m23s   10.244.0.7     uscale-control-plane   <none>           <none>
+rustfs-54c86945fb-4xzhr                    1/1     Running     0          5m48s   10.244.0.20    uscale-control-plane   <none>           <none>
+rustfs-bucket-init-dglvq                   0/1     Completed   0          5m48s   10.244.0.16    uscale-control-plane   <none>           <none>
+u-prober                                   1/1     Running     0          3m37s   10.244.0.223   uscale-control-plane   <none>           <none>

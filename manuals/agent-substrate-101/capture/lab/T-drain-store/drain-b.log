@@ -1,0 +1,7 @@
+node/multi-worker2 cordoned
+Warning: ignoring DaemonSet-managed Pods: ate-system/atelet-gsmxg, kube-system/kindnet-qpscg, kube-system/kube-proxy-x5hc4
+evicting pod lab-n/ballast-5d6cf97747-rpwq7
+evicting pod lab-n/ballast-5d6cf97747-76p2g
+pod/ballast-5d6cf97747-rpwq7 evicted
+pod/ballast-5d6cf97747-76p2g evicted
+node/multi-worker2 drained

@@ -76,24 +76,79 @@ Components move in a fixed order. A component is allowed to be one release newer
 id: fig-8-4
 kind: flow
 title: the four steps of a supported upgrade
-claim: Only the worker step interrupts running actors, and each actor then has 30 minutes to be suspended by its caller.
+claim: Only the worker step ends running actors, and an actor has 30 minutes there only if its process survives SIGTERM.
 caption: Read top to bottom. Each row is one step. The left box holds the components that move, and the right box says what a running actor sees. From the upgrade page and the version skew policy at v1.0.0.
 ```
 
 1. `podcertificate-controller`, which signs the certificates that components show each other. Running actors see nothing.
-2. `atelet`, one node at a time. Running actors see nothing.
+2. `atelet`, one node at a time. Running actors keep running. In our run, suspends and resumes on the node failed for 24 s.
 3. The workers. You change `spec.workerImage` of each WorkerPool, and the pool replaces 10 percent of its workers in each batch.
 4. `ate-api-server` and `ate-idp-server`, then the CRDs and `ate-controller`, then the router and the egress gateway, then the SandboxConfig, then the rest of the system bundle.
 
-Step 3 is the one that costs you work. Each actor on an old worker receives `SIGTERM` and has 30 minutes. Substrate does not suspend it in that time. If nothing calls `SuspendActor`, the actor becomes `ACTOR_STATE_CRASHED` and loses its work since the last snapshot. This is the idle suspend rule again: your harness must act on the signal. A spot instance gives between 15 seconds and two minutes, never 30 minutes.
+Step 3 is the one that costs you work. Each actor on an old worker receives `SIGTERM`. The upgrade page gives it 30 minutes after that {{docs}}, and our run shows that the time exists only if its process survives the signal. Substrate does not suspend it in that time.
+
+If nothing calls `SuspendActor`, the actor becomes `ACTOR_STATE_CRASHED` and loses its work since the last snapshot. This is the idle suspend rule again: your harness must act on the signal. A spot instance gives between 15 seconds and two minutes, never 30 minutes.
 
 Step 4 has one action that cannot be undone. The first new `ate-api-server` pod migrates the database schema, and a rollback leaves the new schema in place. Take a database backup before step 4. You can roll back to the release you came from and no further.
 
 **Our position:** before any worker upgrade, stop new requests and wait for the open ones. Then suspend every actor with `--mode sync` yourself. Keep requests stopped until the workers are replaced, because a request resumes an actor. A synchronous suspend puts the snapshot in the bucket before it returns. Then step 3 finds no running actors, and the 30 minutes do not matter.
 
+## One upgrade that we ran: v1.0.0-rc.3 to v1.0.0
+
+No supported older release exists yet, because the policy starts at 1.0.0. The registry holds images for three release candidates and for v1.0.0, and for nothing older. An install of v0.6.0 from the release images failed with a 404 for its first image. So we installed v1.0.0-rc.3 and moved it to v1.0.0 by the steps above. The policy does not cover this path, and the two releases have the same schema version. [Figure 8.4b](#fig-8-4b) sets the steps against two request streams.
+
+```figure
+id: fig-8-4b
+kind: timeline
+title: one upgrade from v1.0.0-rc.3 to v1.0.0, against two request streams
+claim: Suspends and resumes failed for 24 s in the atelet step, and the running actor crashed when the worker image changed.
+caption: Read left to right. The top row shows when each step ran. The two rows below show each request of two streams, green for 200 and rose for a failure. From capture/lab/summary/upgrade-x86.json.
+```
+
+**We measured** one upgrade, on the x86 server guest (24 vCPU, 47 GB, nested KVM), on one kind node with a pool of 8 workers. Three streams ran during it. One suspended and resumed one actor about every 3.5 s. One listed the actors every 2 s. One sent a request each second to a `RUNNING` actor.
+
+| Step | Seconds | What a client saw |
+|---|---|---|
+| 1, `podcertificate-controller` | 33.9 | nothing |
+| 2, `atelet` | 30.9 | 7 suspend and resume cycles in a row failed, over 24 s. The suspend failed with `Unavailable` from `atelet`, and the request got 503 |
+| 3, the worker image of the pool | 0.4 for the patch | the `RUNNING` actor answered 503 from 1.2 s after the patch. It was `ACTOR_STATE_CRASHED` at our first look, 5 s after the patch |
+| 4a, `ate-api-server` and `ate-idp-server` | 28.4 | nothing |
+| 4b, the CRDs and `ate-controller` | 12.3 | nothing |
+| 4c, the router and the egress gateway | 21.8 | nothing |
+| 4d, the SandboxConfig | 18.7 | nothing |
+| 4e, the system bundle | 29.5 | nothing |
+
+The time from the start of step 1 to the end of step 4e was 343 s. We watched the pool for 160 s of that time, in step 3. The cycle stream had 103 good cycles of 110, and all 7 failures were in step 2. The list stream got an answer 211 of 211 times. The schema version did not change, and every Substrate pod ran v1.0.0 at the end.
+
+We made one actor of each kind before the upgrade and called each one after it.
+
+| The actor before the upgrade | After the upgrade |
+|---|---|
+| Suspended with `--mode sync` at count 3 | 200, count 4 |
+| Suspended in the default mode at count 3 | 200, count 4 |
+| Suspended at count 5, with a tag | 200, count 6 |
+| Created and never run | 200, count 1 |
+| A new actor from the golden snapshot that the release candidate made | 200, count 1 |
+| A new actor from the tag | 200, count 6 |
+| `RUNNING` during step 3 | `ACTOR_STATE_CRASHED`. 368 of 469 requests got 503. A `revert` took 0.22 s, and the count went back to 1 |
+
+So snapshots, tags, and the golden snapshot from the release candidate all worked on v1.0.0. The one loss was the running actor.
+
+### The 30 minutes depend on the actor
+
+The upgrade page gives each running actor `SIGTERM` and then 30 minutes {{docs}}. Our running actor did not get 30 minutes. Its process exits on `SIGTERM`, so the actor crashed in seconds.
+
+**We measured** this in a second roll of the same pool, now on v1.0.0, once. Two actors ran. The process of the first exits on `SIGTERM`, and that actor was `ACTOR_STATE_CRASHED` at the first sample, 5 s after the patch. The process of the second handles `SIGTERM` and keeps running. That actor stayed `RUNNING` and answered 36 of 36 requests in 175 s, while its worker pod was `Terminating`.
+
+We then suspended it with `--mode sync` in 0.64 s. It resumed on a new worker, and its count continued.
+
+So the window exists only for an actor whose main process survives `SIGTERM`. A program exits on that signal unless it has a handler.
+
+Our run also moves the suspend earlier than the upgrade page puts it. Suspends and resumes failed for 24 s while `atelet` restarted on our one node. So stop requests and suspend every actor before step 2, and resume traffic after step 3.
+
 ## What we did not test
 
-We did not run an upgrade. Agent Substrate v1.0.0 is the first release that the policy covers, so no supported older release exists to start from. The order and the timings above come from the documentation at the tag.
+We ran one upgrade, once, on one node, and it started from a release candidate. We did not test an upgrade from v0.6.0. The upgrade page says to install again for any release before 1.0, and the registry has no images for it. We did not test a rollback, an upgrade between two supported releases, more than one node, or the microVM class. We did not test an upgrade with a Postgres outside the cluster.
 
 A new kagent release, v1.0.1, appeared on the day of our kagent run. All our kagent results are from v1.0.0.
 
@@ -101,9 +156,10 @@ A new kagent release, v1.0.1, appeared on the day of our kagent run. All our kag
 - Check the date of a Substrate tutorial, and distrust anything written before 2026-11-05.
 - Install again to move from any 0.x release, with a new database.
 - Store actor state names, never the numbers.
-- Suspend every actor with `--mode sync` before you change a worker image.
+- Stop requests and suspend every actor with `--mode sync` before the `atelet` step of an upgrade.
+- Handle `SIGTERM` in the actor process, or a worker upgrade crashes the actor in seconds.
 - Take a database backup before the API server step of an upgrade.
 - Upgrade one minor release at a time, in the documented component order.
 ```
 
-Sources: capture/lab/Q-network/m-router-ports/agentgateway/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/envoy/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/agentgateway/11-port-probes-supplement.txt, README.md, the ActorState enum and the CLI at v0.1.0 and at v1.0.0 (the old and new commands); cmd/kubectl-ate/internal/cmd/actor.go, api/ateapi/v1/ateapi.proto, manifests/ate-install/generated/ate.dev_workerpools.yaml, cmd/ate-setup/commands.md and go.mod at v1.0.0; docs/guides/upgrade.md, docs/reference/version-skew-policy.md, docs/dev/postgresql-schema-evolution.md and docs/get-started/quickstart.md at v1.0.0; capture/lab/B-lifecycle/10-trace.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/G-dataplane/envoy/ingress-auth/, capture/lab/G-dataplane/agentgateway/ingress-auth/, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/timers-x86.json, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/envoy/06-services.txt; manifests/ate-install/atenet-router.yaml and manifests/ate-install/components/agentgateway/kustomization.yaml at v1.0.0.
+Sources: capture/lab/summary/upgrade-x86.json, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/20-upgrade/00-timeline-steps.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/20-upgrade/02-cycle-stream.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/30-after/10-actors-after.txt, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/40-worker-roll-on-v1.0.0/10-watch.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v0.6.0/00-install-v0.6.0/51-ghcr-release-tags.txt, capture/lab/U-pg-upgrade-scale/30-upgrade-v0.6.0/00-install-v0.6.0/20-deploy-ate-system.log, capture/lab/Q-network/m-router-ports/agentgateway/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/envoy/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/agentgateway/11-port-probes-supplement.txt, README.md, the ActorState enum and the CLI at v0.1.0 and at v1.0.0 (the old and new commands); cmd/kubectl-ate/internal/cmd/actor.go, api/ateapi/v1/ateapi.proto, manifests/ate-install/generated/ate.dev_workerpools.yaml, cmd/ate-setup/commands.md and go.mod at v1.0.0; docs/guides/upgrade.md, docs/reference/version-skew-policy.md, docs/dev/postgresql-schema-evolution.md and docs/get-started/quickstart.md at v1.0.0; capture/lab/B-lifecycle/10-trace.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/G-dataplane/envoy/ingress-auth/, capture/lab/G-dataplane/agentgateway/ingress-auth/, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/timers-x86.json, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/envoy/06-services.txt; manifests/ate-install/atenet-router.yaml and manifests/ate-install/components/agentgateway/kustomization.yaml at v1.0.0.

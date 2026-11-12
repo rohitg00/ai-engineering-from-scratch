@@ -1,0 +1,535 @@
+{
+  "cycles": [
+    {
+      "added_round_trip_ms": 0,
+      "codes": {
+        "200": 5
+      },
+      "mib": 0,
+      "resume_from_store_seconds": {
+        "max": 0.275,
+        "median": 0.246,
+        "min": 0.22,
+        "n": 5,
+        "runs": [
+          0.246,
+          0.22,
+          0.275,
+          0.262,
+          0.241
+        ]
+      },
+      "store": "incluster",
+      "suspend_sync_seconds": {
+        "max": 0.546,
+        "median": 0.522,
+        "min": 0.435,
+        "n": 5,
+        "runs": [
+          0.435,
+          0.546,
+          0.47,
+          0.522,
+          0.534
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "codes": {
+        "200": 5
+      },
+      "mib": 200,
+      "resume_from_store_seconds": {
+        "max": 1.089,
+        "median": 1.042,
+        "min": 0.914,
+        "n": 5,
+        "runs": [
+          1.089,
+          0.914,
+          1.042,
+          0.954,
+          1.046
+        ]
+      },
+      "store": "incluster",
+      "suspend_sync_seconds": {
+        "max": 2.21,
+        "median": 2.07,
+        "min": 1.83,
+        "n": 5,
+        "runs": [
+          1.83,
+          2.07,
+          2.179,
+          2.21,
+          2.034
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "codes": {
+        "200": 5
+      },
+      "mib": 1000,
+      "resume_from_store_seconds": {
+        "max": 4.839,
+        "median": 4.5,
+        "min": 4.493,
+        "n": 5,
+        "runs": [
+          4.817,
+          4.493,
+          4.5,
+          4.839,
+          4.499
+        ]
+      },
+      "store": "incluster",
+      "suspend_sync_seconds": {
+        "max": 7.113,
+        "median": 6.443,
+        "min": 5.323,
+        "n": 5,
+        "runs": [
+          5.323,
+          6.443,
+          7.113,
+          6.944,
+          6.287
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "codes": {
+        "200": 5
+      },
+      "mib": 0,
+      "resume_from_store_seconds": {
+        "max": 0.335,
+        "median": 0.249,
+        "min": 0.223,
+        "n": 5,
+        "runs": [
+          0.249,
+          0.247,
+          0.335,
+          0.223,
+          0.255
+        ]
+      },
+      "store": "external",
+      "suspend_sync_seconds": {
+        "max": 0.554,
+        "median": 0.466,
+        "min": 0.445,
+        "n": 5,
+        "runs": [
+          0.445,
+          0.493,
+          0.462,
+          0.554,
+          0.466
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "codes": {
+        "200": 5
+      },
+      "mib": 200,
+      "resume_from_store_seconds": {
+        "max": 1.103,
+        "median": 1.081,
+        "min": 1.034,
+        "n": 5,
+        "runs": [
+          1.092,
+          1.081,
+          1.034,
+          1.103,
+          1.05
+        ]
+      },
+      "store": "external",
+      "suspend_sync_seconds": {
+        "max": 2.306,
+        "median": 2.143,
+        "min": 1.843,
+        "n": 5,
+        "runs": [
+          1.843,
+          2.264,
+          2.143,
+          2.306,
+          2.137
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "codes": {
+        "200": 5
+      },
+      "mib": 1000,
+      "resume_from_store_seconds": {
+        "max": 4.952,
+        "median": 4.794,
+        "min": 4.541,
+        "n": 5,
+        "runs": [
+          4.794,
+          4.909,
+          4.619,
+          4.952,
+          4.541
+        ]
+      },
+      "store": "external",
+      "suspend_sync_seconds": {
+        "max": 7.233,
+        "median": 7.094,
+        "min": 5.8,
+        "n": 5,
+        "runs": [
+          5.8,
+          7.094,
+          7.233,
+          7.114,
+          7.03
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 20,
+      "codes": {
+        "200": 5
+      },
+      "mib": 0,
+      "resume_from_store_seconds": {
+        "max": 0.446,
+        "median": 0.374,
+        "min": 0.35,
+        "n": 5,
+        "runs": [
+          0.374,
+          0.446,
+          0.35,
+          0.369,
+          0.38
+        ]
+      },
+      "store": "external",
+      "suspend_sync_seconds": {
+        "max": 0.757,
+        "median": 0.658,
+        "min": 0.61,
+        "n": 5,
+        "runs": [
+          0.617,
+          0.61,
+          0.663,
+          0.658,
+          0.757
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 20,
+      "codes": {
+        "200": 5
+      },
+      "mib": 200,
+      "resume_from_store_seconds": {
+        "max": 2.713,
+        "median": 2.502,
+        "min": 2.49,
+        "n": 5,
+        "runs": [
+          2.502,
+          2.525,
+          2.713,
+          2.49,
+          2.495
+        ]
+      },
+      "store": "external",
+      "suspend_sync_seconds": {
+        "max": 2.806,
+        "median": 2.704,
+        "min": 2.438,
+        "n": 5,
+        "runs": [
+          2.704,
+          2.75,
+          2.806,
+          2.657,
+          2.438
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 20,
+      "codes": {
+        "200": 4
+      },
+      "mib": 1000,
+      "resume_from_store_seconds": {
+        "max": 10.867,
+        "median": 10.239,
+        "min": 9.621,
+        "n": 4,
+        "runs": [
+          10.392,
+          10.867,
+          9.621,
+          10.086
+        ]
+      },
+      "store": "external",
+      "suspend_sync_seconds": {
+        "max": 8.897,
+        "median": 8.393,
+        "min": 7.169,
+        "n": 4,
+        "runs": [
+          7.169,
+          8.523,
+          8.897,
+          8.262
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 100,
+      "codes": {
+        "200": 5
+      },
+      "mib": 0,
+      "resume_from_store_seconds": {
+        "max": 1.056,
+        "median": 0.945,
+        "min": 0.863,
+        "n": 5,
+        "runs": [
+          0.973,
+          1.056,
+          0.863,
+          0.945,
+          0.892
+        ]
+      },
+      "store": "external",
+      "suspend_sync_seconds": {
+        "max": 1.586,
+        "median": 1.531,
+        "min": 1.414,
+        "n": 5,
+        "runs": [
+          1.414,
+          1.586,
+          1.527,
+          1.531,
+          1.549
+        ]
+      }
+    }
+  ],
+  "delay_check": {
+    "0": {
+      "connect_ms": {
+        "max": 0.544,
+        "median": 0.304,
+        "min": 0.197,
+        "n": 20,
+        "runs": [
+          0.293,
+          0.307,
+          0.279,
+          0.392,
+          0.197,
+          0.291,
+          0.308,
+          0.544,
+          0.301,
+          0.284,
+          0.279,
+          0.259,
+          0.292,
+          0.31,
+          0.327,
+          0.253,
+          0.315,
+          0.309,
+          0.317,
+          0.347
+        ]
+      }
+    },
+    "100": {
+      "connect_ms": {
+        "max": 100.466,
+        "median": 100.412,
+        "min": 100.279,
+        "n": 5,
+        "runs": [
+          100.424,
+          100.391,
+          100.279,
+          100.412,
+          100.466
+        ]
+      }
+    },
+    "20": {
+      "connect_ms": {
+        "max": 20.364,
+        "median": 20.336,
+        "min": 20.262,
+        "n": 5,
+        "runs": [
+          20.36,
+          20.262,
+          20.314,
+          20.336,
+          20.364
+        ]
+      }
+    }
+  },
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, one control plane node and two worker nodes, default atelet timers, pool of 4 worker pods",
+  "not_recorded": [
+    "200 MiB at 100 ms",
+    "1,000 MiB at 100 ms",
+    "a fifth cycle of 1,000 MiB at 20 ms",
+    "an outage with an actor that holds data"
+  ],
+  "note": "the object store outside the cluster was a rustfs container on the same guest, outside the kind network. The delay was added with tc netem on the guest in one direction, so it is the added round trip. Bandwidth was not limited. atelet ran with --snapshot-upload-delay=3s and --snapshot-detach-delay=10s for these runs only. One cycle is a suspend with --mode sync, a wait for the detach, and one request. The outage cases used actors with no data in memory, each case once.",
+  "sources": [
+    "capture/lab/T-drain-store/90-store-cycles.tsv",
+    "capture/lab/T-drain-store/83-netem-rtt.txt",
+    "capture/lab/T-drain-store/82-atelet-args-patched.txt",
+    "capture/lab/T-drain-store/95-store-unreachable.tsv",
+    "capture/lab/T-drain-store/97-store-unreachable-recovery.tsv"
+  ],
+  "store_unreachable": {
+    "packets_dropped": {
+      "calls_before": [
+        4,
+        5
+      ],
+      "create_actor_first_request": {
+        "code": "200",
+        "count": 1,
+        "seconds": 0.235,
+        "state": "ACTOR_STATE_RUNNING"
+      },
+      "request_after_failed_sync": {
+        "code": "503",
+        "count": null,
+        "seconds": 0.072,
+        "state": "ACTOR_STATE_CRASHED"
+      },
+      "request_to_actor_only_in_store": {
+        "code": "504",
+        "count": null,
+        "seconds": 10.046,
+        "state": "ACTOR_STATE_RESUMING"
+      },
+      "revert_after_failed_sync": {
+        "code": "200",
+        "count": 4,
+        "revert_seconds": 0.2,
+        "seconds": 0.24,
+        "state": "ACTOR_STATE_RUNNING"
+      },
+      "same_actor_after_store_back_with_no_command": {
+        "code": "200",
+        "count": 4,
+        "seconds": 0.635,
+        "state": "ACTOR_STATE_RUNNING"
+      },
+      "store_away_seconds": 136.9,
+      "suspend_sync": {
+        "error": "Internal",
+        "error_names_a_deadline": true,
+        "seconds": 126.336,
+        "state_after": "ACTOR_STATE_CRASHED"
+      }
+    },
+    "refused": {
+      "create_actor": {
+        "first_request": {
+          "code": "200",
+          "count": 1,
+          "seconds": 0.268,
+          "state": "ACTOR_STATE_RUNNING"
+        },
+        "seconds": 0.205
+      },
+      "request_after_failed_sync": {
+        "code": "503",
+        "count": null,
+        "seconds": 0.06,
+        "state": "ACTOR_STATE_CRASHED"
+      },
+      "request_to_actor_only_in_store": {
+        "body": "error resuming actor lab-n/u-remote",
+        "code": "500",
+        "count": null,
+        "seconds": 4.112,
+        "state": "ACTOR_STATE_CRASHED"
+      },
+      "requests_after_store_back_with_no_command": {
+        "codes": {
+          "503": 22
+        },
+        "requests": 22,
+        "states": {
+          "ACTOR_STATE_CRASHED": 22
+        }
+      },
+      "revert_after_failed_sync": {
+        "code": "200",
+        "count": 1,
+        "revert_seconds": 0.2,
+        "seconds": 0.218,
+        "state": "ACTOR_STATE_RUNNING"
+      },
+      "revert_then_request": {
+        "code": "200",
+        "count": 2,
+        "revert_seconds": 0.2,
+        "seconds": 0.332,
+        "state": "ACTOR_STATE_RUNNING"
+      },
+      "running_actor_request": {
+        "code": "200",
+        "count": 2,
+        "seconds": 0.06,
+        "state": "ACTOR_STATE_RUNNING"
+      },
+      "store_away_seconds": 32.7,
+      "suspend_default": {
+        "newest_snapshot_pending": true,
+        "next_request": {
+          "code": "200",
+          "count": 2,
+          "seconds": 0.216,
+          "state": "ACTOR_STATE_RUNNING"
+        },
+        "seconds": 0.312,
+        "state_20s_after": "ACTOR_STATE_SUSPENDED"
+      },
+      "suspend_sync": {
+        "failed_at_step": "CallAteletSuspend",
+        "seconds": 4.28,
+        "state_after": "ACTOR_STATE_CRASHED"
+      }
+    }
+  }
+}

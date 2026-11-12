@@ -1,0 +1,4 @@
+ERROR:  column reference "relname" is ambiguous
+LINE 1: select relname, pg_total_relation_size(c.oid)/1024 as kb, n_...
+               ^
+command terminated with exit code 1

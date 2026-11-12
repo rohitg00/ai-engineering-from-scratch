@@ -20,7 +20,7 @@ Our runs rank above the code on purpose. The code says what the system is built 
 
 ## Rank 1: our recorded runs
 
-Eighteen experiments, each with its scripts and raw output in [the capture folder](manuals/agent-substrate-101/capture/lab). [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
+Twenty experiments, each with its scripts and raw output in [the capture folder](manuals/agent-substrate-101/capture/lab). [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
 
 | Experiment | What it recorded | Used in |
 |---|---|---|
@@ -41,6 +41,8 @@ Eighteen experiments, each with its scripts and raw output in [the capture folde
 | Q, network checks | eight checks on the second guest (16 vCPU, 23 GB): dependency loss on agentgateway, a reused connection after a rule removal, a model gateway behind egress over TLS, the egress log level, a suspend as a cut-off, a changed Secret, the router ports, and the CPU limit | [4.1](#s-workerpool), Part 6, [7.2](#s-agentgateway), [8.2](#s-when-a-dependency-is-down) |
 | R, Agent Executor | the install of its head commit on Agent Substrate v1.0.0, what each of its objects becomes, lifecycle times, and where its documents and the run disagree | [7.5](#s-agent-executor) |
 | S, a real model | a small open model on CPU, kagent turns with it, and five Agent Executor follow-ups: a model call, the example agent image, a clone that succeeds, worker loss under a task, and release v0.3.1 | [7.1](#s-kagent-on-substrate), [7.5](#s-agent-executor) |
+| T, a drain and a bucket outside the cluster | five drains of one worker node, a node stop with the other node full, and a bucket outside the cluster with added delay and with an outage, on the second guest (16 vCPU, 23 GB) | [4.3](#s-placement), [8.1](#s-postgres-and-the-object-store), [8.2](#s-when-a-dependency-is-down) |
+| U, Postgres, upgrade, and scale | an install with a Postgres outside the cluster and its outage, one upgrade from v1.0.0-rc.3 to v1.0.0, and bursts of resumes on one node with up to 10,750 actor rows, on the first guest | [1.1](#s-what-substrate-does-and-what-it-leaves-to-you), [4.5](#s-sizing-a-pool), [8.1](#s-postgres-and-the-object-store), [8.4](#s-upgrade-and-stale-advice) |
 | V, validation | twelve checks on the first guest: memory that holds no data, a Python runtime, resumes at the same instant, fidelity, templates, access policies, actor JWTs, a preview feature, a process exit, and a suspend during a request | Part 3, [4.4](#s-request-parking), [4.5](#s-sizing-a-pool), Part 5, [8.5](#s-limits-at-v1-0-0) |
 
 ## Rank 2: the code

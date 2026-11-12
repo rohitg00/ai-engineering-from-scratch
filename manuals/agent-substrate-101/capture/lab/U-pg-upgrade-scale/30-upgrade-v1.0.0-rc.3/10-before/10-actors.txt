@@ -1,0 +1,69 @@
+up-lab     a-run   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-run: 200	0.476578	count=1 process_age_s=12.3 
+a-run: 200	0.031585	count=2 process_age_s=12.6 
+a-run: 200	0.056343	count=3 process_age_s=12.8 
+up-lab     a-sync   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-sync: 200	0.379307	count=1 process_age_s=13.7 
+a-sync: 200	0.032608	count=2 process_age_s=13.9 
+a-sync: 200	0.028570	count=3 process_age_s=14.2 
+up-lab     a-def   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-def: 200	0.407510	count=1 process_age_s=15.0 
+a-def: 200	0.032312	count=2 process_age_s=15.3 
+a-def: 200	0.034376	count=3 process_age_s=15.5 
+up-lab     a-tag   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-tag: 200	0.404810	count=1 process_age_s=16.4 
+a-tag: 200	0.035780	count=2 process_age_s=16.6 
+a-tag: 200	0.031852	count=3 process_age_s=16.9 
+up-lab     a-cyc   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-cyc: 200	0.363313	count=1 process_age_s=17.7 
+a-cyc: 200	0.033038	count=2 process_age_s=18.0 
+a-cyc: 200	0.032902	count=3 process_age_s=18.2 
+ATESPACE   NAME     TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-sync   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    5         5s
+ATESPACE   NAME    TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-def   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    5         5s
+Error: unknown subcommand "tag"
+
+Usage:
+  kubectl-ate [command]
+
+Available Commands:
+  admin       Administration and debugging commands
+  completion  Generate the autocompletion script for the specified shell
+  create      Create a resource
+  delete      Delete a resource
+  get         Display one or many resources
+  help        Help about any command
+  logs        Print the logs for a resource
+  proxy       Serve a local proxy to a resource
+  resume      Resume a resource
+  revert      Revert a resource
+  suspend     Suspend a resource
+  top         Display resource (CPU/Memory) usage
+  update      Update a resource
+
+Flags:
+      --context string      kubeconfig context to use
+      --endpoint string     manual override for the gRPC target (e.g., localhost:8080); if omitted, automatically port-forwards
+  -h, --help                help for kubectl-ate
+      --kubeconfig string   path to the kubeconfig file
+  -o, --output string       output format: table, json, or yaml (default "table")
+      --preview             allow the use of preview features enabled on the server
+      --token-file string   path to a bearer token for ate-api authentication, or - for stdin (defaults to a Kubernetes ServiceAccount token)
+      --trace               enable tracing for the request
+  -v, --verbose count       output verbosity; may be repeated (e.g. -v, -vv, -vvvvv)
+      --version             version for kubectl-ate
+
+Use "kubectl-ate [command] --help" for more information about a command.
+a-tag: 200	0.047938	count=4 process_age_s=19.9 
+a-tag: 200	0.032144	count=5 process_age_s=20.1 
+ATESPACE   NAME    TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-tag   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    5         4s
+up-lab     a-fresh   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+ATESPACE   NAME      TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc     up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-cmszw   10.244.0.25   3         9s
+up-lab     a-def     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         11s
+up-lab     a-fresh   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          1         5s
+up-lab     a-run     up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-p666v   10.244.0.29   3         14s
+up-lab     a-sync    up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         13s
+up-lab     a-tag     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         10s

@@ -1,0 +1,13 @@
+### after-uncordon-b2 2026-11-12T16:18:19.494Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ballast-5d6cf97747-7p7vj   Running   multi-worker   <none>
+ballast-5d6cf97747-dk57x   Running   multi-worker   <none>
+ballast-5d6cf97747-zxzvv   Running   multi-worker   <none>
+ballast-5d6cf97747-zzzdn   Running   multi-worker   <none>
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY         POD                              AGE
+f74b0c1f-5078-41d3-98f3-94b4c87ec2f1   ballast   WORKER_STATE_ACTIVE   1/1000   250/2000          250Mi/1984Mi   lab-n/ballast-5d6cf97747-7p7vj   2m16s
+081453f5-c8ee-46ed-895e-4f73e1f1f2a6   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi       lab-n/ballast-5d6cf97747-dk57x   2m16s
+e46a2421-df57-4c7c-aba7-7118e9098828   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi       lab-n/ballast-5d6cf97747-zxzvv   150m
+7acbf84d-e26f-45fd-88aa-08a1b9d816ec   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi       lab-n/ballast-5d6cf97747-zzzdn   3h16m

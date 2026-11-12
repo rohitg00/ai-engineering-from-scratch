@@ -58,8 +58,8 @@ Each value is one machine and one day. `capture/lab/summary/` holds the full sta
 ## What we did not test
 
 - Substrate on GKE. That section is written from the documentation and the code.
-- kagent with a real model, and its codex, claude, and bring-your-own harnesses.
-- A remote object store. Ours was in the same cluster, so real upload and download times will be longer.
+- kagent with a hosted model or a model on a GPU, and its codex, claude, and bring-your-own harnesses.
+- A bucket on another machine or in a cloud. Ours was in the cluster, and in one experiment outside it on the same guest with an emulated delay.
+- An upgrade from v0.6.0, a rollback, more than one node at scale, and a second run of any outage or upgrade step.
 - Actors with more than 1000 MiB of memory, and images with an init system or a large root filesystem.
 - Why workers reported no room for about one minute after a node restart.
-- The first run on the Mac went to the wrong cluster, because Docker Desktop had changed the kubectl context. We kept no file from that run.

@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 364" role="img" aria-labelledby="fig-8-2f-title fig-8-2f-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-2f-title">Five drains of one worker node, request by request</title>
+  <desc id="fig-8-2f-desc">Five rows, one for each actor state at the moment of a kubectl drain. The two actors that were RUNNING failed every request after the drain until a revert that we sent, 46 of 62 and 16 of 30 requests. The three suspended actors returned 200 on their first request after the drain with no command, on the other node.</desc>
+  <rect x="20" y="14" width="4" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="30" y="23" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">one request, 200</text>
+  <rect x="150" y="14" width="4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="160" y="23" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">one request, failed</text>
+  <line x1="298" y1="12" x2="298" y2="26" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="306" y="23" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">the revert that we sent</text>
+  <rect x="470" y="14" width="12" height="10" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="488" y="23" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">kubectl drain runs</text>
+  <text x="20" y="64" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">RUNNING,</text>
+  <text x="20" y="79" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one request each second</text>
+  <line x1="188" y1="82" x2="460" y2="82" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <rect x="206.13" y="54" width="7.98" height="28" fill="var(--m-grey-fill, #ecebe3)"/>
+  <rect x="206.08" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="228.93" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="234.01" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="238.72" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="243.44" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="248.15" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="252.87" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="257.58" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="262.66" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="267.01" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="271.73" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="276.44" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="281.16" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="285.87" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="290.59" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="295.3" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="300.01" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="304.37" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="309.08" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="313.8" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="318.51" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="323.23" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="327.94" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="332.65" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="337.37" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="342.08" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="346.8" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="351.15" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="355.87" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="360.58" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="365.29" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="370.01" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="374.72" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="379.8" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="384.52" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="389.23" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="393.95" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="398.66" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="403.37" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="408.09" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="412.8" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="417.52" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="421.87" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="426.59" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="431.3" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="436.01" y="58" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="442.54" y="58" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="447.26" y="58" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="452.33" y="58" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="457.05" y="58" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="441.14" y1="50" x2="441.14" y2="86" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="472" y="64" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">46 of 62 failed</text>
+  <text x="472" y="79" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">revert, 200 after 0.8 s</text>
+  <text x="20" y="114" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">suspended with --mode sync,</text>
+  <text x="20" y="129" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no request during the drain</text>
+  <line x1="188" y1="132" x2="460" y2="132" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <rect x="206.13" y="104" width="4.35" height="28" fill="var(--m-grey-fill, #ecebe3)"/>
+  <rect x="229.29" y="108" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="230.38" y="108" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <text x="472" y="114" font-size="11" font-weight="700" fill="var(--m-green-ink, #336b40)">2 of 2 returned 200</text>
+  <text x="472" y="129" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first answer in 0.58 s</text>
+  <text x="20" y="164" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">suspended with --mode sync,</text>
+  <text x="20" y="179" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">requests from 2 s after the drain</text>
+  <line x1="188" y1="182" x2="460" y2="182" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <rect x="206.13" y="154" width="7.98" height="28" fill="var(--m-grey-fill, #ecebe3)"/>
+  <rect x="214.43" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="219.14" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="223.85" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="228.57" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="233.28" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="238.36" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="243.08" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="247.79" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="252.51" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="257.22" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="261.93" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="266.65" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="271.36" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="276.08" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="280.79" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="285.51" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="290.22" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="294.94" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="300.01" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="304.73" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="309.44" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="314.16" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="318.87" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="323.59" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="328.3" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="333.02" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="337.73" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="342.45" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="347.52" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="351.88" y="158" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <text x="472" y="164" font-size="11" font-weight="700" fill="var(--m-green-ink, #336b40)">30 of 30 returned 200</text>
+  <text x="472" y="179" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first answer in 0.49 s</text>
+  <text x="20" y="214" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">suspended, default mode,</text>
+  <text x="20" y="229" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">newest snapshot still PENDING</text>
+  <line x1="188" y1="232" x2="460" y2="232" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <rect x="206.13" y="204" width="4.35" height="28" fill="var(--m-grey-fill, #ecebe3)"/>
+  <rect x="231.47" y="208" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="232.56" y="208" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <text x="472" y="214" font-size="11" font-weight="700" fill="var(--m-green-ink, #336b40)">2 of 2 returned 200</text>
+  <text x="472" y="229" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first answer in 1.19 s</text>
+  <text x="20" y="264" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">RUNNING,</text>
+  <text x="20" y="279" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one request of 120 s open</text>
+  <line x1="188" y1="282" x2="460" y2="282" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <rect x="206.13" y="254" width="7.98" height="28" fill="var(--m-grey-fill, #ecebe3)"/>
+  <rect x="195.25" y="272" width="12.33" height="6" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="220.23" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="224.94" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="229.66" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="234.01" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="238.72" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="243.8" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="248.52" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="252.87" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="257.58" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="262.66" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="267.37" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="272.09" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="276.8" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="281.52" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="286.23" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="290.95" y="258" width="3" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="297.11" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="301.47" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="306.54" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="311.26" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="315.97" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="320.32" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="325.04" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="329.75" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="334.47" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="339.18" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="344.26" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="348.97" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="353.69" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="358.04" y="258" width="3" height="14" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="296.07" y1="250" x2="296.07" y2="286" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="472" y="264" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">16 of 30 failed</text>
+  <text x="472" y="279" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">revert, 200 after 0.7 s</text>
+  <line x1="188" y1="308" x2="460" y2="308" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="206.13" y1="304" x2="206.13" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="206.13" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
+  <line x1="242.4" y1="304" x2="242.4" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="242.4" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10 s</text>
+  <line x1="278.67" y1="304" x2="278.67" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="278.67" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">20 s</text>
+  <line x1="314.93" y1="304" x2="314.93" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="314.93" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30 s</text>
+  <line x1="351.2" y1="304" x2="351.2" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="351.2" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">40 s</text>
+  <line x1="387.47" y1="304" x2="387.47" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="387.47" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50 s</text>
+  <line x1="423.73" y1="304" x2="423.73" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="423.73" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">60 s</text>
+  <line x1="460" y1="304" x2="460" y2="312" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="460" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">70 s</text>
+  <text x="324" y="346" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds since the drain command</text>
+</svg>

@@ -1,0 +1,34 @@
+<home>/u/bin-rc3/kubectl-ate
+Error: unknown subcommand "version"
+
+Usage:
+  kubectl-ate [command]
+
+Available Commands:
+  admin       Administration and debugging commands
+  completion  Generate the autocompletion script for the specified shell
+  create      Create a resource
+  delete      Delete a resource
+  get         Display one or many resources
+  help        Help about any command
+  logs        Print the logs for a resource
+  proxy       Serve a local proxy to a resource
+  resume      Resume a resource
+  revert      Revert a resource
+  suspend     Suspend a resource
+  top         Display resource (CPU/Memory) usage
+  update      Update a resource
+
+Flags:
+      --context string      kubeconfig context to use
+      --endpoint string     manual override for the gRPC target (e.g., localhost:8080); if omitted, automatically port-forwards
+  -h, --help                help for kubectl-ate
+      --kubeconfig string   path to the kubeconfig file
+  -o, --output string       output format: table, json, or yaml (default "table")
+      --preview             allow the use of preview features enabled on the server
+      --token-file string   path to a bearer token for ate-api authentication, or - for stdin (defaults to a Kubernetes ServiceAccount token)
+      --trace               enable tracing for the request
+  -v, --verbose count       output verbosity; may be repeated (e.g. -v, -vv, -vvvvv)
+      --version             version for kubectl-ate
+
+Use "kubectl-ate [command] --help" for more information about a command.
