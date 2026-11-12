@@ -1,6 +1,6 @@
 # Regulatory Frameworks — EU, US, UK, Korea
 
-> Four primary regulatory regimes define the 2026 AI governance landscape. EU AI Act (in force 1 August 2024) — prohibited practices and AI literacy from 2 February 2025; GPAI obligations from 2 August 2025; full applicability and Article 50 transparency 2 August 2026; legacy GPAI and embedded high-risk systems 2 August 2027; penalties up to 15M EUR or 3% of global turnover. GPAI Code of Practice (10 July 2025): three chapters — Transparency, Copyright, Safety and Security — 12 commitments; enforcement begins August 2026. UK AISI -> AI Security Institute (February 2025): rename signals narrower scope. US AISI -> CAISI (June 2025): Center for AI Standards and Innovation under NIST; shift toward pro-growth posture. Korean AI Framework Act (passed December 2024, effective January 2026): Article 12 establishes AISI under MSIT; mandates local representatives for foreign AI companies, risk assessment, safety measures for high-impact and generative AI.
+> Four primary regulatory regimes define the 2026 AI governance landscape. EU AI Act (in force 1 August 2024) — prohibited practices and AI literacy from 2 February 2025; GPAI obligations from 2 August 2025; general application and Article 50 transparency 2 August 2026; legacy GPAI models 2 August 2027; high-risk obligations 2 December 2027 (Annex III) and 2 August 2028 (Annex I products), as amended by Regulation (EU) 2026/1744; penalties up to 15M EUR or 3% of global turnover. GPAI Code of Practice (10 July 2025): three chapters — Transparency, Copyright, Safety and Security — 12 commitments; enforcement begins August 2026. UK AISI -> AI Security Institute (February 2025): rename signals narrower scope. US AISI -> CAISI (June 2025): Center for AI Standards and Innovation under NIST; shift toward pro-growth posture. Korean AI Framework Act (passed December 2024, effective January 2026): Article 12 establishes AISI under MSIT; mandates local representatives for foreign AI companies, risk assessment, safety measures for high-impact and generative AI.
 
 **Type:** Learn
 **Languages:** Python, TypeScript
@@ -9,7 +9,7 @@
 
 ## Learning Objectives
 
-- Describe the EU AI Act risk tiers (prohibited, high-risk, general-purpose, limited-risk) and the August 2025 / August 2026 / August 2027 timeline.
+- Describe the EU AI Act risk tiers (prohibited, high-risk, general-purpose, limited-risk) and the August 2025 / August 2026 / December 2027 / August 2028 timeline.
 - Describe the three chapters of the GPAI Code of Practice and which providers each binds.
 - Describe the 2025 rebrands: UK AISI -> AI Security Institute; US AISI -> CAISI; what each rebrand implies about policy direction.
 - State the core provision of Korea's AI Framework Act.
@@ -25,17 +25,19 @@ Lab frameworks (Lesson 18) are voluntary. Regulatory frameworks are compulsory. 
 **In force 1 August 2024.** Risk-tier structure:
 
 - **Prohibited practices** (Article 5). Social scoring, real-time remote biometric identification in public (with law-enforcement exceptions), exploitative manipulation of vulnerable groups. Applied 2 February 2025.
-- **High-risk systems** (Annex III). Employment, education, credit, law enforcement, justice, migration. Require conformity assessment, risk management, logging, transparency.
+- **High-risk systems** (Annex III). Employment, education, credit, law enforcement, justice, migration. Require conformity assessment, risk management, logging, transparency. Apply from 2 December 2027; Annex I systems from 2 August 2028.
 - **General-Purpose AI (GPAI) models**. Applied 2 August 2025. All GPAI providers have obligations; systemic-risk GPAI (>1e25 FLOP training compute) have additional obligations.
 - **Limited-risk systems**. Transparency obligations under Article 50 (AI-generated content labelling). Applied 2 August 2026.
 
 Timeline:
 - 2 Feb 2025: prohibited practices + AI literacy.
 - 2 Aug 2025: GPAI + governance.
-- 2 Aug 2026: full applicability + Article 50 transparency + penalties up to 15M EUR / 3% global turnover.
-- 2 Aug 2027: legacy GPAI + embedded high-risk.
+- 2 Aug 2026: general application + Article 50 transparency + penalties up to 15M EUR / 3% global turnover.
+- 2 Aug 2027: legacy GPAI (models placed on the market before 2 Aug 2025).
+- 2 Dec 2027: high-risk obligations for Annex III systems.
+- 2 Aug 2028: high-risk obligations for Annex I systems (products, or safety components of products, covered by Annex I harmonisation law).
 
-Commission proposed adjusting the high-risk timeline to 16 months in late 2025.
+The Commission proposed delaying the high-risk dates in late 2025. Regulation (EU) 2026/1744 adopted that delay: it entered into force on 27 July 2026 and amended Article 113 so that Chapter III, Sections 1 to 3, applies from 2 December 2027 for Annex III systems and from 2 August 2028 for Annex I systems.
 
 ### GPAI Code of Practice
 
@@ -122,6 +124,7 @@ This lesson produces `outputs/skill-regulatory-map.md`. Given a deployment descr
 ## Further Reading
 
 - [EU AI Act text (Regulation 2024/1689)](https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai) — the regulation and timeline
+- [Regulation (EU) 2026/1744](https://eur-lex.europa.eu/eli/reg/2026/1744/oj) — amends Article 113 of the AI Act: high-risk obligations from 2 December 2027 (Annex III) and 2 August 2028 (Annex I)
 - [GPAI Code of Practice (10 July 2025)](https://digital-strategy.ec.europa.eu/en/library/final-version-general-purpose-ai-code-practice) — three-chapter code
 - [UK AI Security Institute (renamed Feb 2025)](https://www.gov.uk/government/organisations/ai-security-institute) — official page
 - [CSET — South Korea AI Framework Act Analysis (2025)](https://cset.georgetown.edu/publication/south-korea-ai-law-2025/) — Korean framework analysis
