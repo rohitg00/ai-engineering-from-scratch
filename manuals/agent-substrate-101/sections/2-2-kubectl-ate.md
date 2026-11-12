@@ -17,6 +17,7 @@ BASE=https://github.com/agent-substrate/substrate/releases/download/v1.0.0
 curl -LO $BASE/kubectl-ate-linux-amd64
 curl -LO $BASE/kubectl-ate-linux-amd64.sha256
 shasum -a 256 -c kubectl-ate-linux-amd64.sha256
+mkdir -p ~/.local/bin
 install -m 0755 kubectl-ate-linux-amd64 ~/.local/bin/kubectl-ate
 ```
 
@@ -25,6 +26,8 @@ On a Mac with Apple silicon, the file is `kubectl-ate-darwin-arm64`. If you have
 ```bash
 go install ./cmd/kubectl-ate
 ```
+
+`kubectl` finds the plugin only on your `PATH`. Check that `~/.local/bin` is on it, or the directory `$(go env GOPATH)/bin` when you use `go install`.
 
 **We measured** the build once on an x86 server guest with 16 vCPU and 23 GB. `go install` took 5 s after the install of the control plane, because the Go modules were already on disk. In our runs we always built the plugin from the tag. We checked that both release files exist, and we did not time the download.
 

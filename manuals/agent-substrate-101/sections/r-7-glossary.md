@@ -83,7 +83,7 @@ The meanings come from the Agent Substrate source and documentation at v1.0.0 an
 | Tag | A named copy of the snapshot of a suspended actor, from which new actors can start | [3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives), [the API reference](#s-ref-api-methods) |
 | TLS interception | The egress gateway ends the TLS connection of the actor and opens its own to the host, so that it can read the request | [6.4](#s-tls-interception) |
 | TLS pass-through | The egress gateway forwards the TLS connection unread, after it checks the server name | [6.4](#s-tls-interception) |
-| Trust bundle | The file that holds the interception CA certificate, so that the actor can verify intercepted connections. A sandbox has it only when its template mounts a `systemInfo` volume with a `trustBundle` source, and the code in the actor must be set to trust it. | [6.4](#s-tls-interception) |
+| Trust bundle | The file that holds the interception CA certificate, so that the actor can verify intercepted connections. A sandbox has it only when its template mounts a `systemInfo` volume with a `trustBundle` source. The code in the actor must also be set to trust it. | [6.4](#s-tls-interception) |
 | Turn | In kagent, one user message and the reply to it. kagent resumes the actor before the turn and suspends it after. | [7.1](#s-kagent-on-substrate) |
 | Wakeup probe | An HTTP check in a template that a resume waits for before the actor counts as running | [3.1](#s-actortemplate-and-the-golden-snapshot) |
 | Warm call | A request to an actor that is already running | [3.3](#s-suspendactor-and-resumeactor) |

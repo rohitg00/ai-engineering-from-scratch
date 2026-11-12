@@ -2,6 +2,7 @@ import http.server
 import json
 import os
 import sqlite3
+import threading
 import time
 import urllib.request
 
@@ -11,6 +12,7 @@ SCRATCH = "/tmp/scratch.txt"
 
 started = time.time()
 note = None
+chat = threading.Lock()
 
 
 def database():
@@ -81,17 +83,18 @@ class Handler(http.server.BaseHTTPRequestHandler):
         if self.path != "/chat":
             self.reply(404, {"error": "use /chat, /note, /history"})
             return
-        memory.append({"role": "user", "content": text})
-        try:
-            answer = ask_model(memory)
-        except OSError as error:
-            memory.pop()
-            self.reply(502, {"error": f"model call failed: {error}"})
-            return
-        memory.append({"role": "assistant", "content": answer})
-        with database() as connection:
-            connection.executemany("insert into turns (role, content) values (?, ?)", [("user", text), ("assistant", answer)])
-        self.reply(200, {"reply": answer, **status()})
+        with chat:
+            memory.append({"role": "user", "content": text})
+            try:
+                answer = ask_model(memory)
+            except OSError as error:
+                memory.pop()
+                self.reply(502, {"error": f"model call failed: {error}"})
+                return
+            memory.append({"role": "assistant", "content": answer})
+            with database() as connection:
+                connection.executemany("insert into turns (role, content) values (?, ?)", [("user", text), ("assistant", answer)])
+            self.reply(200, {"reply": answer, **status()})
 
 
 http.server.ThreadingHTTPServer(("", 80), Handler).serve_forever()

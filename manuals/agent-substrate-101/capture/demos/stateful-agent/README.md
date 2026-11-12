@@ -31,7 +31,7 @@ OUT=./out ./run.sh record
 - `process_age_s`: it keeps growing under memory fidelity and starts again under volumes fidelity.
 - `rehydrated_from_db`: the turns the agent loaded from SQLite when its process started.
 
-Our recorded run is in `capture/lab/N-demos/stateful-agent/`.
+Our recorded run is in `capture/lab/N-demos/stateful-agent/`. The agent now handles one chat turn at a time. The recording sent one turn at a time, so it is the same.
 
 ## Needs
 

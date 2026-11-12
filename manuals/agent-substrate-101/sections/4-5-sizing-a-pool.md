@@ -34,7 +34,7 @@ The second result looks like free capacity, and it is the opposite. That worker 
 
 The CPU value of a template is a booking for placement, and the worker also writes it into the sandbox as a CPU quota {{code}}. That quota is a hard cap.
 
-**We measured** a fixed amount of work under four limits on a second x86 server guest (16 vCPU, 23 GB). Each of eight rows had three runs. The actor used 0.25, 0.50, 1.01, and 1.96 to 2.01 host cores at 250, 500, 1000, and 2000 millicores. Four threads got no more CPU than one thread. The work took 27.1 to 27.6 seconds at 250 millicores and 4.9 to 5.4 seconds at 1000.
+**We measured** a fixed amount of work under four limits on a second x86 server guest (16 vCPU, 23 GB). Each of eight rows had three runs. The actor used 0.25, 0.50, and 1.01 host cores at 250, 500, and 1000 millicores, with one thread or with four. At 2000 millicores, one thread used 1.12 cores and four threads used 1.96 to 2.01. The work took 27.1 to 27.6 seconds at 250 millicores and 4.9 to 5.4 seconds at 1000.
 
 [WorkerPool](#s-workerpool) has the table and the chart.
 
@@ -93,7 +93,7 @@ Read the table as four separate limits: missing limits, node memory, Postgres ro
 
 1. Measure the peak memory of one actor, and set the template limit a little above it.
 2. Set the CPU limit of the actor to 250 millicores or more.
-3. Choose the actors for each worker. Set the worker limits to that count times the actor limits, plus 64 MiB.
+3. Choose the actors for each worker. Set the worker limits to that count times the booking of one actor, plus 64 MiB. On `microvm` the memory booking is the limit plus an overhead, 7.6 MiB in our run.
 4. Set `replicas` to the peak of running actors divided by that count, plus spare workers.
 5. Size the node disk for 30 minutes of snapshots, and watch it.
 

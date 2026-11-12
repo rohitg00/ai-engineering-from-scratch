@@ -19,7 +19,7 @@ The same query from one actor, before and after its policy named the host:
 ```listing
 title: one name, without and with a rule for it
 source: capture/lab/F-egress/envoy/20-results.txt
-lang: text
+lang: console
 note: Two runs of the same dig command. The first actor has no policy. The second has an http rule for the name. Warning lines are cut.
 ---
 $ dig +time=2 +tries=1 +noall +comments +answer whoami.egress-target.svc.cluster.local | grep -E 'status|IN'
@@ -40,7 +40,7 @@ A tool that distrusts the local resolver sometimes queries a public one. From an
 ```listing
 title: a query to a public resolver from an actor
 source: capture/lab/F-egress/envoy/20-results.txt
-lang: text
+lang: console
 note: The command and its output. The actor had no policy.
 ---
 $ dig @8.8.8.8 +time=2 +tries=1 example.com | grep -E 'status|timed out|refused|unreachable' ; echo rc=$?

@@ -41,7 +41,7 @@ The upstream in our test prints each request that it receives. The actor sent th
 ```listing
 title: the request that the upstream received
 source: capture/lab/F-egress/envoy/20-results.txt
-lang: text
+lang: console
 note: The command in the actor and the matching lines of the response. The upstream is a server that returns the request it received.
 ---
 $ curl -sS -m 8 -i -H 'Authorization: placeholder-from-actor' http://whoami.egress-target.svc.cluster.local/ | grep -i -E 'HTTP/|authorization|x-forwarded|RemoteAddr|egress'
@@ -150,7 +150,7 @@ The last row needs care. The effect runs only when the header is present. Withou
 ```listing
 title: the same request without the header
 source: capture/lab/F-egress/envoy/20-results.txt
-lang: text
+lang: console
 note: The command and the matching lines. No Authorization line came back, because none was sent upstream.
 ---
 $ curl -sS -m 8 -i http://whoami.egress-target.svc.cluster.local/ | grep -i -E 'HTTP/|authorization'

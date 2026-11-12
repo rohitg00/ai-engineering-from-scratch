@@ -154,7 +154,7 @@ The actor had one `https` rule for the gateway host. The rule replaced the heade
 ```listing
 title: one request from the actor through egress to the model gateway
 source: capture/lab/Q-network/i-model-gateway/20-results-agentgateway-private-ca-trusted.txt
-lang: text
+lang: console
 note: One request on the agentgateway dataplane, and the answer for a model name that the gateway does not know. The requests between them are cut. All values are test values that we made up.
 ---
 $ curl -sS -m 15 --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '\ncode=%{http_code} t=%{time_total} verify=%{ssl_verify_result}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions

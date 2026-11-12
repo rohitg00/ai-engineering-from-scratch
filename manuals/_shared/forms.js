@@ -152,9 +152,10 @@ function cylinder(f, raw, [x, y, z = 0], hue, o = {}) {
   const [cx, cy] = view.P(x, y, z + h);
   const rx = r * Math.SQRT2 * m.ax * view.s;
   const ry = r * Math.SQRT2 * m.ay * view.s;
-  f.polygon([...ellipse(cx, cy + h, rx, ry, Math.PI, 0, 12), ...ellipse(cx, cy, rx, ry, 0, -Math.PI, 12)], { fill: color('panel') });
+  const tall = h * view.s;
+  f.polygon([...ellipse(cx, cy + tall, rx, ry, Math.PI, 0, 12), ...ellipse(cx, cy, rx, ry, 0, -Math.PI, 12)], { fill: color('panel') });
   f.isoDrum(view, { x, y, z, r, h, hue });
-  const band = k => ellipse(cx, cy + h - k, rx, ry, Math.PI, 0, 12);
+  const band = k => ellipse(cx, cy + tall - k * view.s, rx, ry, Math.PI, 0, 12);
   if (row && bands.length > 1) f.polygon([...band(bands[0]), ...band(bands[1]).reverse()], { fill: inkOf(hue), fillOpacity: 0.3 });
   for (const k of bands) stroke(f, band(k), hue, 0.9);
   const mark = pick(o.mark, { size: Math.min(r * 1.4, 40), drop: 2.5 });
@@ -162,12 +163,12 @@ function cylinder(f, raw, [x, y, z = 0], hue, o = {}) {
   return {
     top: [cx, r1(cy - ry)],
     center: [cx, cy],
-    foot: [cx, r1(cy + h + ry)],
-    left: [r1(cx - rx), r1(cy + h / 2)],
-    right: [r1(cx + rx), r1(cy + h / 2)],
+    foot: [cx, r1(cy + tall + ry)],
+    left: [r1(cx - rx), r1(cy + tall / 2)],
+    right: [r1(cx + rx), r1(cy + tall / 2)],
     rx,
     ry,
-    rim: (k, a = 0.7) => [r1(cx + rx * a), r1(cy + h - k + ry * a)],
+    rim: (k, a = 0.7) => [r1(cx + rx * a), r1(cy + tall - k * view.s + ry * a)],
   };
 }
 
@@ -182,7 +183,7 @@ function slab(f, raw, [x, y, z = 0], hue, o) {
   const view = snap(raw);
   const { w, d, thick = 10 } = o;
   block(f, view, { x, y, w, d, z: z - thick, h: thick, hue, shadow: o.shadow !== false });
-  const mark = pick(o.mark, { size: 46 });
+  const mark = pick(o.mark, { size: 46, at: [x + w / 2, y + d / 2] });
   if (mark) marks.stamp(f, mark.mark.onFloor(view, [mark.at[0], mark.at[1], z], mark.size), mark.hue || hue);
   return anchors(view, x, y, z, w, d, 0);
 }

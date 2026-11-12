@@ -8,7 +8,7 @@ When you finish this section, you can build an agent actor that keeps its conver
 
 ## The agent
 
-The demo agent is one Python file of 97 lines with no dependencies. It serves three paths.
+The demo agent is one Python file of 100 lines with no dependencies. It serves three paths, and it handles one chat turn at a time.
 
 - `POST /chat` adds your message to the conversation, calls the model, and stores both messages.
 - `POST /note` keeps a text in a Python variable and in a file under `/tmp`. Nothing durable holds it.

@@ -41,6 +41,6 @@
   <text x="475" y="298.95" font-size="11.5" text-anchor="middle" font-weight="700">PostgreSQL</text>
   <text x="475" y="316.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one StatefulSet on a 500 GiB disk</text>
   <rect x="330" y="336" width="290" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="475" y="352.95" font-size="11.5" text-anchor="middle" font-weight="700">WorkerPool, SandboxConfig</text>
-  <text x="475" y="370.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the two CRDs, and the CAs for mTLS</text>
+  <text x="475" y="352.95" font-size="11.5" text-anchor="middle" font-weight="700">three CRDs, and the CAs for mTLS</text>
+  <text x="475" y="370.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">WorkerPool, SandboxConfig, CSIDriverConfig</text>
 </svg>

@@ -8,6 +8,7 @@ Agent Substrate v1.0.0 does not suspend an actor that has no traffic. This progr
 - It listens on one local port and forwards `/<actor>/<path>` to that actor.
 - It records the time of the last finished request for each actor.
 - Once a second it suspends each running actor that has no open request and no request for `--idle` seconds.
+- A request that arrives during a suspend waits until the suspend ends.
 - The next request for a suspended actor goes to the router, and the router resumes the actor.
 
 ## Run
@@ -24,6 +25,8 @@ It prints one tab-separated line for each event: `watch`, `request` (with `resum
 ## Our recorded run
 
 `run.sh setup` makes a pool with room for two actors and creates three. `run.sh record` sends ten minutes of traffic with the suspender, then two minutes without it. The files are in `capture/lab/N-demos/idle-suspender/`.
+
+Two changes came after the recording. A request now waits for a suspend in progress, and no request met a suspend in the recording. The run without the suspender now ends after two minutes. In the recording its dry-run log continues for about 400 seconds.
 
 ## Limits
 

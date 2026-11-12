@@ -18,7 +18,7 @@ Our runs created three tags, started three actors from them, and deleted tags, i
 | `UpdateActor` | Changes the template or the worker selector of an actor. Needs the `uid` and the `version`. | `update actor` |
 | `SuspendActor` | Checkpoints a running actor to a new snapshot. A suspended actor is returned unchanged. `options.mode` is asynchronous by default. | `suspend actor` |
 | `ResumeActor` | Resumes a suspended actor from its latest snapshot. A running actor is returned unchanged, with `resumed=false`. The router calls it for every request and relies on that reply. | `resume actor` |
-| `RevertActor` | Returns an actor to `ACTOR_STATE_SUSPENDED` at its durable snapshot. Accepts a crashed actor, a running actor, and a suspended actor with a node-local snapshot. Also accepts an actor already in `ACTOR_STATE_REVERTING`, for a retry. In our run that retry worked only after the node of the actor was back. Every revert needs `atelet` on the node of the actor. | `revert actor` |
+| `RevertActor` | Returns an actor to `ACTOR_STATE_SUSPENDED` at its durable snapshot. Accepts a crashed actor, a running actor, and a suspended actor with a node-local snapshot. Also accepts an actor already in `ACTOR_STATE_REVERTING`, for a retry. In our run that retry worked only after the node of the actor was back. A revert calls `atelet` on the node that the actor is assigned to. It continues without `atelet` only for a suspended actor whose latest snapshot is already durable {{code}}. | `revert actor` |
 | `DeleteActor` | Stops the workload, releases the worker, and removes the record. Accepts any state. | `delete actor` |
 | `MintActorJwt` | Issues a token that states the identity of an actor. Only the egress gateway is allowed to call it. | - |
 
@@ -90,8 +90,8 @@ The global policy has no delete method.
 | `AcquireWorkerEpoch` | Gives a worker process a new epoch number when it starts. |
 | `RegisterWorker` | Records that the worker process runs under that epoch. Actors from an older epoch become crashed. |
 | `SetWorkerSandboxRuntimes` | Reports which sandbox classes and versions the worker can run and restore. |
-| `MintWorkerActorCertificate` | Issues the certificate that an actor shows to the dataplane. |
-| `MintWorkerActorJwt` | Issues an actor token for the worker. |
+| `MintWorkerActorCertificate` | Issues a certificate for a worker that acts for one actor. Its SPIFFE path starts with `worker-for-actor`, so it is not an identity of the actor itself. |
+| `MintWorkerActorJwt` | Issues a token for a worker that acts for one actor. Its subject is `worker-for-actor/<atespace>/<name>`, and it speaks for the worker. |
 | `RequestActorSuspend` | Asks the control plane to suspend an actor on behalf of the worker. `atelet` forwards the call from a worker-side library, and no binary at v1.0.0 imports that library. So nothing triggers it. |
 | `ReportActorSnapshotState` | Reports that a pending snapshot reached the bucket, or that the actor left the node. |
 | `ReportActorCrashed` | Reports that a sandbox died. The actor moves from running to crashed. |

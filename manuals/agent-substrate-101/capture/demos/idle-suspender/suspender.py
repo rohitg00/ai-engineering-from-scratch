@@ -16,7 +16,7 @@ parser.add_argument("--dry-run", action="store_true")
 parser.add_argument("actors", nargs="+")
 args = parser.parse_args()
 
-lock = threading.Lock()
+lock = threading.Condition()
 actors = {}
 
 
@@ -47,7 +47,7 @@ def start_proxies():
             stderr=subprocess.DEVNULL,
         )
         running = actor_state(name) == "ACTOR_STATE_RUNNING"
-        actors[name] = {"port": port, "last": time.time(), "open": 0, "running": running}
+        actors[name] = {"port": port, "last": time.time(), "open": 0, "running": running, "suspending": False}
         log("watch", name, f"port={port}", f"running={running}")
     time.sleep(3)
 
@@ -67,6 +67,8 @@ class Front(http.server.BaseHTTPRequestHandler):
         length = int(self.headers.get("Content-Length") or 0)
         body = self.rfile.read(length) if length else None
         with lock:
+            while actor["suspending"]:
+                lock.wait()
             actor["open"] += 1
             woke = not actor["running"]
         started = time.time()
@@ -98,6 +100,8 @@ def sweep():
         now = time.time()
         with lock:
             due = [name for name, actor in actors.items() if actor["running"] and actor["open"] == 0 and now - actor["last"] >= args.idle]
+            for name in due:
+                actors[name]["suspending"] = not args.dry_run
         for name in due:
             idle = now - actors[name]["last"]
             if args.dry_run:
@@ -105,8 +109,10 @@ def sweep():
                 continue
             done, seconds = cli("suspend", "actor", name)
             with lock:
-                if actors[name]["open"] == 0 and done.returncode == 0:
+                if done.returncode == 0:
                     actors[name]["running"] = False
+                actors[name]["suspending"] = False
+                lock.notify_all()
             log("suspend", name, f"idle={idle:.0f}s", f"{seconds:.3f}", "ok" if done.returncode == 0 else done.stderr.strip()[-120:])
 
 

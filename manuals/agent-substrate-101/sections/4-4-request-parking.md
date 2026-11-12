@@ -48,7 +48,7 @@ Parking is for conditions that can end without help. The router returns every ot
 
 The third row matters during a rollout of `ate-api-server`. A short restart of the control plane becomes a delay for the client and not an error. [When a dependency is down](#s-when-a-dependency-is-down) shows the limit of that protection.
 
-The fifth row is why a 503 after 5 seconds and a 503 after 60 ms are different problems. A slow 503 means the pool is too small. A fast 503 with the text `AssignWorker prerequisite not met` means the actor is crashed, and [CRASHED and RevertActor](#s-crashed-and-revertactor) has the fix.
+The fifth row is why a 503 after 5 seconds and a 503 after 60 ms are different problems. A slow 503 with the text `no worker has room` means the pool is too small. A slow 503 with only the word `unavailable` means the router got no answer from `ate-api-server`. A fast 503 with the text `AssignWorker prerequisite not met` means the actor is crashed, and [CRASHED and RevertActor](#s-crashed-and-revertactor) has the fix.
 
 ## One request, three outcomes
 
@@ -158,7 +158,7 @@ We did not test more than 1,024 parked requests. Our bursts stopped at 32 reques
 The project site states `500+/s` suspend and resume activations. We did not test at that rate. Our largest burst that was served in full was 16 resumes at one time.
 
 ```takeaways
-- Read a 503 after 5 seconds as a pool that is too small.
+- Read a 503 after 5 seconds with the text no worker has room as a pool that is too small.
 - Read a 503 in under 0.1 seconds as a crashed actor, and revert it.
 - Set the client timeout to 10 seconds or more for actors that can be suspended.
 - Alert on atenet.router.parking.active, and add workers when it stays above zero.

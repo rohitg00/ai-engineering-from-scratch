@@ -78,7 +78,7 @@ The annotation `sandboxconfig.ate.dev/is-class-default` marks the default config
 
 | Field | Meaning |
 |---|---|
-| `metadata.atespace` | the atespace. Empty for a worker and for an atespace. |
+| `metadata.atespace` | the atespace. Empty for a worker, for an atespace, and for an access policy. The request for an access policy names its atespace in a separate field. |
 | `metadata.name` | the name, unique in its atespace |
 | `metadata.uid` | assigned by the server. A new object with an old name gets a new uid. |
 | `metadata.version` | grows with each write. An update must name the current value. |
@@ -125,7 +125,7 @@ After an asynchronous suspend an actor has two entries: the older completed one 
 | `volumes[]` | a `name` and one source: `durableDir`, `image.reference`, `systemInfo`, or `external` (preview) |
 | `volumes[].systemInfo` | one source: `actorMetadata.items[]` or `trustBundle`. An item has a `path` and a `field`: `ACTOR_METADATA_FIELD_NAME`, `ACTOR_METADATA_FIELD_ATESPACE`, or `ACTOR_METADATA_FIELD_UID`. |
 | `resources.limits.cpuMillicores`, `resources.limits.memoryBytes` | required. The worker reserves both while the actor runs. |
-| `snapshotConfig.preferredFidelity` | the fidelity of each suspend |
+| `snapshotConfig.preferredFidelity` | the highest fidelity of a suspend. A snapshot can have less, so read the fidelity of the snapshot itself. |
 | `snapshotConfig.goldenSnapshotConfig.mode` | `GOLDEN_SNAPSHOT_MODE_ENABLED` or `GOLDEN_SNAPSHOT_MODE_DISABLED` |
 | `snapshotConfig.storageLocation` | preview: a snapshot location for this template |
 | `goldenEgressPolicy.rules` | preview: egress rules for the golden actor only |
@@ -179,7 +179,7 @@ One policy belongs to one actor. It has `metadata` and `rules[]`. Each rule has 
 |---|---|---|
 | Tag | `sourceActor`, `scope`, `status.snapshot` | a named copy of a snapshot. `scope` is `TAG_SCOPE_ATESPACE` or `TAG_SCOPE_PUBLISHED`. |
 | Atespace | `metadata.name` | a name that groups actors, templates, tags, and one access policy |
-| Worker | `workerNamespace`, `workerPool`, `workerPod`, `nodeName`, `labels` | one registered worker pod. Its name is the pod uid. `labels` is a copy of the `metadata.labels` of its WorkerPool. |
+| Worker | `workerNamespace`, `workerPool`, `workerPod`, `workerPodUid`, `nodeName`, `labels` | one registered worker pod. Its name is opaque, so read the pod from `workerPod` and `workerPodUid`. `labels` is a copy of the `metadata.labels` of its WorkerPool. |
 | Worker | `status.ips` | the IP addresses of the worker pod, at most one for each IP family |
 | Worker | `status.issuedEpoch`, `status.registeredEpoch`, `status.observedEpoch` | the epoch counters of the worker process. A rise of `registeredEpoch` means an earlier process exited, and the server then crashes its actors. |
 | Worker | `status.state` | `WORKER_STATE_ACTIVE`, `WORKER_STATE_DRAINING`, or `WORKER_STATE_UNAVAILABLE` |

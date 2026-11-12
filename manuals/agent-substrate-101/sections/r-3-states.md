@@ -11,7 +11,7 @@ The "what a request returned" column comes from our runs, through `kubectl ate p
 | Number | State | Meaning | What a request returned in our runs |
 |---|---|---|---|
 | 1 | `ACTOR_STATE_RESUMING` | A worker is bound, and the sandbox is being restored. | 504 at the client timeout, then 503 `actor lab-n/u1 unavailable`, for an actor on a stopped node. One other actor stayed in this state after a database outage. |
-| 2 | `ACTOR_STATE_RUNNING` | The actor holds a worker and serves requests. | 200 in 0.06 to 0.09 s |
+| 2 | `ACTOR_STATE_RUNNING` | The actor holds a worker, and the API counts it as running. The state does not prove that its process answers. | 200 in 0.06 to 0.09 s. An actor whose process had exited stayed in this state and returned 503. |
 | 3 | `ACTOR_STATE_SUSPENDING` | The worker writes a checkpoint. | A request that was open when the suspend started got a 503. A new request in this state was not tested. |
 | 4 | `ACTOR_STATE_SUSPENDED` | The actor holds no worker. It has a snapshot, or it never ran. | 200 in 0.36 s, after a resume |
 | 5 | `ACTOR_STATE_CRASHED` | The sandbox or its worker was lost, or a resume failed. | 503 in 0.06 s, `AssignWorker prerequisite not met` |
@@ -90,6 +90,6 @@ The `locality` field of a snapshot names the node that still has a local copy. I
 | Value | CLI | When the call returns |
 |---|---|---|
 | `DURABILITY_MODE_ASYNCHRONOUS` | `--mode async`, the default | when the snapshot is on the node |
-| `DURABILITY_MODE_SYNCHRONOUS` | `--mode sync` | when the snapshot is in the bucket |
+| `DURABILITY_MODE_SYNCHRONOUS` | `--mode sync` | when the new snapshot is in the bucket. An actor that is already suspended is returned as it is, and its snapshot can still be pending on the node. |
 
 Sources: capture/lab/P-node-loss/74-second-revert.tsv, capture/lab/P-node-loss/88-pending-snapshot-node-returns.tsv, capture/lab/P-node-loss/return-b60.tsv, capture/lab/summary/node-loss-x86.json, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, api/ateapi/v1/ateapi.proto (enums ActorState, SnapshotStorageState, SnapshotOwner, SnapshotFidelity, WorkerState, DurabilityMode, and the comments on RevertActor and SuspendActor), cmd/ateapi/internal/controlapi/workflow_resume.go, workflow_suspend.go and workflow_revert.go, and docs/reference/api-guide.md at v1.0.0; capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/93-after-node-return.tsv, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/D-durability/10-watch-part2.tsv, capture/lab/D-durability/30-local-loss.tsv, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/J-container-death/10-trace.tsv, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/summary/failures-x86.json.

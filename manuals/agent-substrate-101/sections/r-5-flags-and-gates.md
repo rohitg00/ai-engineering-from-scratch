@@ -71,7 +71,7 @@ note: The end of the one line in the file. The first four flags are the same as 
 … --log-level=debug --preview= --snapshot-upload-delay=3s --snapshot-detach-delay=10s
 ```
 
-Short timers move snapshots to the bucket sooner, and every later resume then reads from the bucket, which is slower. Do not copy the 3 s value into a cluster that serves users.
+Short timers move snapshots to the bucket sooner. A resume after the detach delay then reads from the bucket, which is slower. A resume before it still uses the copy on the node. Do not copy the 3 s value into a cluster that serves users.
 
 ## The router: parking and ports
 

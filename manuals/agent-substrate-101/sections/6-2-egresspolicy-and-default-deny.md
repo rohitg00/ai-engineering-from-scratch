@@ -169,7 +169,7 @@ A policy that names hosts invites one attack: connect to an IP of your choice an
 ```listing
 title: a request to another IP with the allowed Host header
 source: capture/lab/F-egress/envoy/20-results.txt
-lang: text
+lang: console
 note: The command and the lines that show which server answered. The headers between them are cut.
 ---
 $ curl -sS -m 8 -i -H 'Host: whoami.egress-target.svc.cluster.local' 'http://10.96.185.134/drip?n=1' | head -14

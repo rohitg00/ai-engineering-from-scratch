@@ -30,7 +30,7 @@ caption: Read left to right for a request, and top to bottom for the suspend. Th
 
 ## The program
 
-The demo is one Python file of 120 lines with no dependencies. It starts one `kubectl ate proxy actor` for each actor that you name. It listens on one port and forwards `/<actor>/<path>` to the proxy of that actor.
+The demo is one Python file of 125 lines with no dependencies. It starts one `kubectl ate proxy actor` for each actor that you name. It listens on one port and forwards `/<actor>/<path>` to the proxy of that actor.
 
 ```bash
 python3 suspender.py --atespace demo-idle --idle 30 --listen 8080 busy bursty rare
@@ -46,7 +46,7 @@ for name in due:
     done, seconds = cli("suspend", "actor", name)
 ```
 
-The suspender never resumes an actor. The next request goes to the router as before, and the router resumes the actor. The full file is in [the idle suspender folder](manuals/agent-substrate-101/capture/demos/idle-suspender).
+A request that arrives during a suspend waits until the suspend ends. The suspender never resumes an actor. The next request goes to the router as before, and the router resumes the actor. The full file is in [the idle suspender folder](manuals/agent-substrate-101/capture/demos/idle-suspender).
 
 ## Ten minutes with three actors and room for two
 

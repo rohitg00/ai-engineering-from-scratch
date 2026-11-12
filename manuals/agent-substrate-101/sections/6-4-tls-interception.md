@@ -68,7 +68,7 @@ Without the bundle, a client in the actor rejects the minted certificate. With t
 ```listing
 title: one https host with the default store and with the bundle, Envoy dataplane
 source: capture/lab/F-egress/envoy/40-supplement.txt
-lang: text
+lang: console
 note: Two curl commands in the actor and their results. The help text that curl prints after the error is cut.
 ---
 $ curl -sS -m 15 -o /dev/null -w 'code=%{http_code} verify=%{ssl_verify_result}\n' https://example.com/

@@ -43,7 +43,7 @@ traffic() {
       sleep 145
     done ) &
   pids+=($!)
-  ( sleep 60; request "$port" rare "$file"; sleep 340; [ "$seconds" -gt 420 ] && request "$port" rare "$file" ) &
+  ( sleep 60; request "$port" rare "$file"; if [ "$seconds" -gt 420 ]; then sleep 340; request "$port" rare "$file"; fi ) &
   pids+=($!)
   printf 'ts\tworker_actors\tworker_millicores\tbursty\tbusy\trare\n' > "$OUT/capacity-$file"
   while [ $(( $(date +%s) - start )) -lt "$seconds" ]; do

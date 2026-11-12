@@ -138,11 +138,11 @@ The quota is a hard cap. We tested it with a program that runs a fixed number of
 id: fig-4-1b
 kind: chart
 title: host cores an actor used at four CPU limits
-claim: An actor used 0.25, 0.50, 1.0, and 2.0 host cores at limits of 250, 500, 1000, and 2000 millicores, and more threads gave no more CPU.
+claim: An actor used 0.25, 0.50, and 1.0 host cores at limits of 250, 500, and 1000 millicores, and it needed four threads to use 2.0 cores at 2000.
 caption: Read the cores on the vertical axis against the limit of the template. The solid line is 1 thread and the dashed line is 4 threads, with one dot for each run. The thin dashed line is the limit itself. From capture/lab/summary/cpu-limit-x86.json.
 ```
 
-The actor used as many host cores as its limit, and no more. Four threads did not get more CPU than one thread. The same work took 5.4 times longer at 250 millicores than at 1000. In one row the limit was not the bound: one thread at 2000 millicores used 1.12 cores, because one thread fills one core.
+The actor never used more host cores than its limit. Up to 1000 millicores, four threads did not get more CPU than one thread. The same work took 5.4 times longer at 250 millicores than at 1000. In one row the limit was not the bound: one thread at 2000 millicores used 1.12 cores, because one thread fills one core. Four threads used the whole limit there.
 
 The cap is a cgroup for each actor, inside the cgroup of the worker pod. The worker pod had `cpu.max=600000 100000`, which is its Kubernetes limit of 6 CPU. Inside it we found one cgroup for each actor, named with the uid of the actor and the suffix `_sandbox`. Its `cpu.max` was the template limit, and the gVisor processes of the actor ran in it.
 
@@ -188,7 +188,7 @@ The worker claims all 16 CPUs and all the memory of the node. The Substrate docu
 
 The result is a capacity that nothing backs. The pod has no limit, so Kubernetes reserves nothing for it. A second pool on the same node would claim the same 16 CPUs again. The control plane, the dataplane and Postgres run on that node too. [kagent 1.0 on Substrate](#s-kagent-on-substrate) shows what that worker did under load.
 
-Our position: always set `limits` on a pool, and set the memory request equal to the memory limit. Then the capacity that the worker reports is capacity that Kubernetes has reserved. [Sizing a pool](#s-sizing-a-pool) turns that rule into numbers.
+Our position: always set `limits` on a pool, and set the memory request equal to the memory limit. Then the memory that the worker reports is memory that Kubernetes has reserved. Kubernetes reserves CPU only up to the CPU request. The example above requests 500 millicores and reports 2 CPUs. Set the CPU request equal to the limit when actors must get the CPU that they book. [Sizing a pool](#s-sizing-a-pool) turns that rule into numbers.
 
 One more fact matters before you give a pool to a team. A worker pod runs as root with `SYS_ADMIN` and `NET_ADMIN`, and its seccomp profile is unconfined {{run}}. The sandbox inside the pod isolates the actor. The pod does not isolate the worker from the node, so run pools on nodes that you trust.
 

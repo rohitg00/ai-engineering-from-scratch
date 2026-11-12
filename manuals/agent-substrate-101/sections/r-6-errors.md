@@ -94,8 +94,6 @@ These bodies are in the router code of the Envoy dataplane at v1.0.0. `X` is the
 | `unknown flag: --platform` | Docker has no buildx plugin. This line comes before the build error above. | [2.1](#s-install-with-ate-setup) |
 | `Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.` | No `--token-file` was given, so the CLI uses the shared identity. | [5.1](#s-client-authentication) |
 
-One more text has no log in our records. On the Apple silicon laptop, `kubectl ate` printed `services "api" not found` when the kubeconfig context pointed at a cluster with no Substrate.
-
 ## From the API, as status codes
 
 | Code | When | Section |

@@ -13,7 +13,9 @@ When you finish this section, you can create an atespace and name an actor and a
 | Object | Where it lives | How you list it |
 |---|---|---|
 | Atespace | Substrate API, global | `kubectl ate get atespaces` |
-| ActorTemplate, Actor, Tag | Substrate API, in one atespace | `kubectl ate get actors -a <atespace>` |
+| Actor | Substrate API, in one atespace | `kubectl ate get actors -a <atespace>` |
+| ActorTemplate | Substrate API, in one atespace | `kubectl ate get actor-templates -a <atespace>` |
+| Tag | Substrate API, in one atespace | `kubectl ate get tags -a <atespace>` |
 | Access policy | Substrate API, one for each atespace | [section 5.2](#s-access-policies) |
 | WorkerPool, worker pods | Kubernetes, in one namespace | `kubectl get workerpools -n <namespace>` |
 | Worker record | Substrate API, global | `kubectl ate get workers` |

@@ -14,7 +14,7 @@ const cluster = [
   { hue: 'indigo', title: 'atenet-router, atenet-egress', sub: 'the dataplane' },
   { hue: 'violet', title: 'atelet', sub: 'a privileged DaemonSet on every node' },
   { hue: 'teal', title: 'PostgreSQL', sub: 'one StatefulSet on a 500 GiB disk' },
-  { hue: 'violet', title: 'WorkerPool, SandboxConfig', sub: 'the two CRDs, and the CAs for mTLS' },
+  { hue: 'violet', title: 'three CRDs, and the CAs for mTLS', sub: 'WorkerPool, SandboxConfig, CSIDriverConfig' },
 ];
 
 module.exports = figure('fig-7-3', {

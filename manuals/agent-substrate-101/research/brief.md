@@ -15,9 +15,9 @@ Facts were verified on 2026-11-12.
 
 ## Test beds
 
-- Three KVM guests on one x86 server, each with its own kind cluster of one node: 24 vCPU and 47 GB for upstream Substrate built from source, 16 vCPU and 23 GB for the install from the release images, 16 vCPU and 31 GB for kagent.
+- Three KVM guests on one x86 server, each with its own kind clusters. The first has 24 vCPU and 47 GB, for upstream Substrate built from source. The second has 16 vCPU and 23 GB, for the install from the release images. The third has 16 vCPU and 31 GB, for kagent.
 - One Apple silicon laptop under Docker Desktop, with 10 CPU and 8 GB for Docker.
-- The sandbox class was gVisor in every run. The object store was rustfs inside the cluster. The model behind kagent was a mock server.
+- The sandbox class was gVisor in every run except the microVM runs of experiment L. The object store was rustfs inside the cluster. The model behind kagent was a mock server.
 
 ## Positions and the runs that prove them
 
@@ -60,7 +60,6 @@ Each value is one machine and one day. `capture/lab/summary/` holds the full sta
 - Substrate on GKE. That section is written from the documentation and the code.
 - kagent with a real model, and its codex, claude, and bring-your-own harnesses.
 - A remote object store. Ours was in the same cluster, so real upload and download times will be longer.
-- The dependency-loss run on the agentgateway dataplane.
 - Actors with more than 1000 MiB of memory, and images with an init system or a large root filesystem.
 - Why workers reported no room for about one minute after a node restart.
 - The first run on the Mac went to the wrong cluster, because Docker Desktop had changed the kubectl context. We kept no file from that run.
