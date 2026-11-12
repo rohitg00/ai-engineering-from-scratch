@@ -10,13 +10,16 @@ const RELEASE_URL = new RegExp(`^https://github\\.com/${REPOSITORY}/releases/tag
 const MAX_RELEASES = 6;
 const PAGE_SIZE = 30;
 const MAX_SUMMARY = 180;
-const NON_PROSE_START = /^(?:#|\||[-*] )/;
-const MARKDOWN_LINK = /\[[^\]]*\]\([^)]*\)/g;
+const NON_PROSE_START = /^(?:#|\||>|[-*+] |\d+\. )/;
+const MARKDOWN_LINK = /\[([^\]]*)\](?:\([^)]*\)|\[[^\]]*\])/g;
+const MARKDOWN_IMAGE = /!\[[^\]]*\](?:\([^)]*\)|\[[^\]]*\])/g;
+const FENCED_BLOCK = /^(```|~~~)[\s\S]*?^\1.*$/gm;
+const HEADING_LINE = /^#{1,6} .*$/gm;
 
 function plainText(markdown) {
   return String(markdown || '')
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(MARKDOWN_IMAGE, '')
+    .replace(MARKDOWN_LINK, '$1')
     .replace(/[`*_]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
@@ -24,11 +27,11 @@ function plainText(markdown) {
 
 function isProse(paragraph) {
   if (!paragraph || NON_PROSE_START.test(paragraph)) return false;
-  return /[A-Za-z0-9]/.test(paragraph.replace(MARKDOWN_LINK, ''));
+  return /[\p{L}\p{N}]/u.test(paragraph.replace(MARKDOWN_LINK, ''));
 }
 
 function summaryOf(body) {
-  const paragraphs = String(body || '').replace(/\r\n/g, '\n').replace(/^#{1,6} .*$/gm, '').split(/\n\s*\n/);
+  const paragraphs = String(body || '').replace(/\r\n/g, '\n').replace(FENCED_BLOCK, '').replace(HEADING_LINE, '').split(/\n\s*\n/);
   const firstProse = paragraphs.map(paragraph => paragraph.trim()).find(isProse);
   const text = plainText(firstProse);
   if (text.length <= MAX_SUMMARY) return text;

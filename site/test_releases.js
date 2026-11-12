@@ -47,6 +47,12 @@ test('release summaries clip long text at a word boundary and skip headings, tab
   assert.equal(summaryOf('[New lessons](lesson.md) are now available.\n\nMore.'), 'New lessons are now available.');
   assert.equal(summaryOf('[Start](https://a.example) · [Catalog](https://b.example)\n\nThe prose.'), 'The prose.');
   assert.equal(summaryOf('## Heading\nProse right under it.'), 'Prose right under it.');
+  assert.equal(summaryOf('修复错误。\n\nMore.'), '修复错误。');
+  assert.equal(summaryOf('[Start][docs] · [Catalog][index]\n\nNew lessons are available.'), 'New lessons are available.');
+  assert.equal(summaryOf('[New lessons][docs] are available.'), 'New lessons are available.');
+  assert.equal(summaryOf('## Changes\n> Preview only.\n\nNew lessons are available.'), 'New lessons are available.');
+  assert.equal(summaryOf('## Run\n```bash\nnpm test\n\nnpm run build\n```\n\nRun the suite first.'), 'Run the suite first.');
+  assert.equal(summaryOf('1. First step\n\nThe prose.'), 'The prose.');
   assert.equal(summaryOf(''), '');
 });
 
