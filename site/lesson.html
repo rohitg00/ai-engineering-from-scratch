@@ -728,6 +728,44 @@
       color: var(--ink-soft);
     }
 
+    .lesson-action-panel.is-collapsed {
+      margin: 16px 0 28px;
+      background: transparent;
+      border-color: var(--rule-soft);
+    }
+
+    .lesson-action-panel.is-collapsed .lesson-action-head {
+      align-items: center;
+      padding: 10px 14px;
+      border-bottom: 0;
+    }
+
+    .lesson-action-panel.is-collapsed .lesson-action-head > div:first-child { display: none; }
+
+    .lesson-action-panel.is-collapsed .lesson-action-status { flex: 1; }
+
+    .lesson-action-details[hidden] { display: none; }
+
+    .lesson-action-toggle {
+      flex-shrink: 0;
+      min-height: 36px;
+      padding: 6px 12px;
+      border: 1px solid var(--blueprint);
+      background: transparent;
+      color: var(--blueprint);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .lesson-action-toggle:hover,
+    .lesson-action-toggle:focus-visible {
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
     .lesson-action-loop {
       min-width: 0;
       display: grid;
@@ -4096,7 +4134,9 @@
         panel.innerHTML =
           '<div class="lesson-action-head"><div><h2 class="lesson-action-title" id="lessonActionTitle">Act on this lesson</h2>' +
           '<p class="lesson-action-intro">Use this loop to turn reading into evidence. Each checkpoint is yours to mark and stays separate from quiz correctness.</p></div>' +
-          '<div class="lesson-action-status" role="status" aria-live="polite">0 of 5 checkpoints</div></div>' +
+          '<div class="lesson-action-status" role="status" aria-live="polite">0 of 5 checkpoints</div>' +
+          '<button class="lesson-action-toggle" type="button" aria-expanded="false" aria-controls="lessonActionDetails">Show checklist</button></div>' +
+          '<div class="lesson-action-details" id="lessonActionDetails" hidden>' +
           '<div class="lesson-action-loop" aria-label="Lesson workflow checkpoints">' +
           '<button class="lesson-action-step" type="button" data-checkpoint="read"><span class="lesson-action-step-num">01</span><span class="lesson-action-step-title">Read</span><span class="lesson-action-step-copy">Understand the claim and constraints.</span></button>' +
           '<button class="lesson-action-step" type="button" data-checkpoint="built"><span class="lesson-action-step-num">02</span><span class="lesson-action-step-title">Build</span><span class="lesson-action-step-copy">Create or modify the lesson artifact.</span></button>' +
@@ -4107,7 +4147,24 @@
           '<div class="lesson-action-run"><div class="lesson-action-label">Run from the repository</div>' +
           '<div class="lesson-action-command-row"><code class="lesson-action-command">Checking for a standalone runnable file</code><button class="lesson-action-copy" type="button" hidden>Copy command</button></div>' +
           '<p class="lesson-action-note">The page is checking the lesson code directory for a standalone entry point.</p></div>' +
-          lessonActionPathHtml() + '</div>';
+          lessonActionPathHtml() + '</div></div>';
+
+        var actionToggle = panel.querySelector('.lesson-action-toggle');
+        var actionDetails = panel.querySelector('.lesson-action-details');
+        function setLessonActionOpen(open) {
+          actionDetails.hidden = !open;
+          panel.classList.toggle('is-collapsed', !open);
+          actionToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          actionToggle.textContent = open ? 'Hide checklist' : 'Show checklist';
+        }
+        var actionOpen = false;
+        try { actionOpen = window.localStorage.getItem('aifs:lesson-checklist-open') === '1'; } catch (_) {}
+        setLessonActionOpen(actionOpen);
+        actionToggle.addEventListener('click', function () {
+          var next = actionDetails.hidden;
+          setLessonActionOpen(next);
+          try { window.localStorage.setItem('aifs:lesson-checklist-open', next ? '1' : '0'); } catch (_) {}
+        });
 
         var metaTags = article.querySelectorAll('.lesson-meta-tag');
         var anchor = metaTags.length ? metaTags[metaTags.length - 1] : article.querySelector('.learning-objectives, .motto, h1');

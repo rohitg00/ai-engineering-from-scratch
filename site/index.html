@@ -488,6 +488,24 @@
 
     .masthead-btn--primary {
       border-color: var(--blueprint);
+      background: var(--blueprint);
+      color: var(--bg);
+    }
+
+    .masthead-btn--quiet,
+    .certification-actions .masthead-btn--quiet {
+      justify-content: flex-start;
+      min-height: 32px;
+      padding: 4px 0;
+      border-color: transparent;
+      background: transparent;
+      color: var(--ink-soft);
+      box-shadow: none;
+    }
+
+    .masthead-btn--quiet:hover,
+    .masthead-btn--quiet:focus-visible {
+      background: transparent;
       color: var(--blueprint);
     }
 
@@ -804,6 +822,17 @@
     [data-theme="dark"] .agent-machine-light { display: none !important; }
     .agent-machine-link:hover img, .agent-machine-link:focus-visible img { transform: translateY(-2px); }
     @media (max-width: 760px) { .agent-machine-link { grid-template-columns: 1fr; gap: 18px; } }
+    .machine-row { padding: 44px 0 52px; border-bottom: 1px solid var(--rule-soft); }
+    .machine-row-title { margin-bottom: 20px; font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blueprint); }
+    .machine-row-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .machine-row .agent-machine-feature { padding: 0; border: 1px solid var(--rule-soft); background: var(--bg-surface); }
+    .machine-row .agent-machine-feature:hover { border-color: var(--blueprint); }
+    .machine-row .agent-machine-link { display: flex; flex-direction: column; height: 100%; }
+    .machine-row .agent-machine-link img { order: -1; border-bottom: 1px solid var(--rule-soft); }
+    .machine-row .agent-machine-copy { padding: 16px; }
+    .machine-row .agent-machine-copy h2 { font-size: 1.5rem; line-height: 1.05; margin-bottom: 8px; }
+    .machine-row .agent-machine-copy p { max-width: none; margin-bottom: 12px; font-size: 0.92rem; line-height: 1.4; color: var(--ink-soft); }
+    @media (max-width: 900px) { .machine-row-grid { grid-template-columns: 1fr; } }
     @media (prefers-reduced-motion: reduce) { .agent-machine-link img { transition: none; } }
 
     .course-paths {
@@ -1532,6 +1561,97 @@
       background: var(--blueprint-tint);
     }
 
+    .toc-list.phase-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 14px;
+      border-top: 0;
+    }
+
+    .phase-card {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 190px;
+      padding: 16px 16px 14px;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg-surface);
+      cursor: pointer;
+      transition: border-color var(--motion-feedback) var(--ease-out), transform 120ms var(--ease-out);
+    }
+
+    .phase-card:hover,
+    .phase-card:focus-visible {
+      border-color: var(--blueprint);
+    }
+
+    .phase-card:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: 3px;
+    }
+
+    .phase-card:active { transform: scale(0.99); }
+
+    .phase-card.is-next {
+      border-color: var(--blueprint);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .phase-card-top,
+    .phase-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .phase-card-top .toc-status { margin: 0; }
+
+    .phase-card-name {
+      margin: 12px 0 6px;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .phase-card-desc {
+      flex: 1;
+      margin: 0 0 14px;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      line-height: 1.4;
+      color: var(--ink-soft);
+    }
+
+    .phase-card-bar {
+      height: 3px;
+      margin-bottom: 10px;
+      background: var(--rule-soft);
+    }
+
+    .phase-card-bar span {
+      display: block;
+      height: 100%;
+      background: var(--blueprint);
+    }
+
+    .phase-card-action { color: var(--ink-mute); }
+
+    .phase-card.is-next .phase-card-action,
+    .phase-card.is-started .phase-card-action,
+    .phase-card.is-done .phase-card-action { color: var(--blueprint); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .phase-card { transition: none; }
+    }
+
     .toc-empty {
       padding: 24px 0;
       color: var(--ink-mute);
@@ -2149,18 +2269,18 @@
       <p class="manual-tagline reveal" dir="auto"><span id="mastheadLessonCount">Every published lesson</span>. <span id="mastheadPhaseCount">Every phase</span>. Every algorithm built from raw math before a single framework gets imported.</p>
       <p class="manual-attribution reveal" style="--stagger-delay: 40ms;">Maintained by Rohit Ghumare and contributors. Run on your own machine.</p>
       <div class="masthead-cta reveal" style="--stagger-delay: 80ms;">
-        <a class="masthead-btn masthead-btn--primary" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment">
-          <span>Start the Course</span>
+        <a class="masthead-btn masthead-btn--primary" id="mastheadStart" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment">
+          <span id="mastheadStartLabel">Start the Course</span>
         </a>
         <a class="masthead-btn" href="learning-paths.html">
           <span>Explore Learning Paths</span>
         </a>
-        <a class="masthead-btn" href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" aria-label="Star ai-engineering-from-scratch on GitHub">
+        <a class="masthead-btn masthead-btn--quiet" href="https://github.com/rohitg00/ai-engineering-from-scratch" target="_blank" rel="noopener" aria-label="Star ai-engineering-from-scratch on GitHub">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279L12 19.896l-7.416 3.517 1.48-8.279L0 9.306l8.332-1.151z"/></svg>
           <span>Star on GitHub</span>
           <span class="masthead-btn-count" data-gh-stars="rohitg00/ai-engineering-from-scratch" data-loading="true">…</span>
         </a>
-        <a class="masthead-btn" href="https://github.com/rohitg00" target="_blank" rel="noopener" aria-label="Follow Rohit Ghumare on GitHub">
+        <a class="masthead-btn masthead-btn--quiet" href="https://github.com/rohitg00" target="_blank" rel="noopener" aria-label="Follow Rohit Ghumare on GitHub">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
           <span>Follow @rohitg00</span>
         </a>
@@ -2385,53 +2505,6 @@
       <p class="learners-quote">&ldquo;Obsessed with the AI Engineering from Scratch repo.&rdquo; <span class="learners-quote-attr">- AI engineer at Google</span></p>
     </section>
 
-    <section class="preface container">
-      <div class="preface-grid">
-        <div class="preface-eyebrow reveal reveal--left">How this works</div>
-        <div class="preface-body reveal" style="--stagger-delay: 120ms;">
-          <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.</p>
-          <p>This curriculum is the spine. <span id="prefacePhaseCount">Every phase</span>, <span id="prefaceLessonCount">every published lesson</span>, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.</p>
-          <p>Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.</p>
-        </div>
-      </div>
-    </section>
-    <section class="agent-machine-feature container" aria-labelledby="agentMachineTitle">
-      <a class="agent-machine-link" href="inside-an-ai-agent.html">
-        <div class="agent-machine-copy">
-          <div class="preface-eyebrow">FIG_AGT · Interactive simulation</div>
-          <h2 id="agentMachineTitle">Inside an AI Agent</h2>
-          <p>An AI agent is more than an LLM call. Run one request through a working machine, switch off retrieval, tools or the verifier, and watch what fails.</p>
-          <span class="agent-machine-cta">Break the machine →</span>
-        </div>
-        <img class="agent-machine-light" src="anatomy/inside-an-ai-agent-machine.png" width="2400" height="1260" loading="lazy" decoding="async" alt="An isometric card-processing machine with a nameplate on each station: request, memory, retrieval, model, tools, verifier, output, trace and the runtime loop.">
-        <img class="agent-machine-dark" src="anatomy/inside-an-ai-agent-machine-dark.png" width="2400" height="1260" loading="lazy" decoding="async" alt="">
-      </a>
-    </section>
-    <section class="agent-machine-feature container" aria-labelledby="decompilerMachineTitle">
-      <a class="agent-machine-link" href="inside-a-decompiler.html">
-        <div class="agent-machine-copy">
-          <div class="preface-eyebrow">FIG_DEC · Interactive simulation</div>
-          <h2 id="decompilerMachineTitle">Inside a Decompiler</h2>
-          <p>A decompiler turns bytes into code you can read. Run one small function through nine stations, strip the symbols or switch the decoder, and watch the ledger split what was observed from what was inferred.</p>
-          <span class="agent-machine-cta">Break the machine →</span>
-        </div>
-        <img class="agent-machine-light" src="anatomy/inside-a-decompiler-machine.png" width="2400" height="1260" loading="lazy" decoding="async" alt="An isometric bench with a carriage on one rail and nine stations, each with a nameplate: header, sections, disassembly, CFG, lift, types, structure, pseudocode and ledger.">
-        <img class="agent-machine-dark" src="anatomy/inside-a-decompiler-machine-dark.png" width="2400" height="1260" loading="lazy" decoding="async" alt="">
-      </a>
-    </section>
-    <section class="agent-machine-feature container" aria-labelledby="gpuMachineTitle">
-      <a class="agent-machine-link" href="inside-an-llm-serving-gpu.html">
-        <div class="agent-machine-copy">
-          <div class="preface-eyebrow">FIG_GPU · Interactive simulation</div>
-          <h2 id="gpuMachineTitle">Inside an LLM Serving GPU</h2>
-          <p>Decode reads every weight for every token. Follow one request through an NVIDIA L4 or GB10, fill the KV pool, switch to FP8, and watch memory bandwidth set the speed with numbers from the SGLang 101 runs.</p>
-          <span class="agent-machine-cta">Break the machine →</span>
-        </div>
-        <img class="agent-machine-light" src="anatomy/inside-an-llm-serving-gpu-machine.png" width="2400" height="1260" loading="lazy" decoding="async" alt="An isometric NVIDIA L4 card on a host board: a host CPU, a PCIe riser, the GPU die with its SMs and L2 band, six GDDR6 packages with colored memory cells, and a see-through heatsink.">
-        <img class="agent-machine-dark" src="anatomy/inside-an-llm-serving-gpu-machine-dark.png" width="2400" height="1260" loading="lazy" decoding="async" alt="">
-      </a>
-    </section>
-
     <section class="course-paths container" id="choose-path" aria-labelledby="coursePathsTitle">
       <header class="course-paths-header">
         <h2 id="coursePathsTitle">Choose the work you want to do</h2>
@@ -2532,6 +2605,18 @@
         </article>
       </div>
     </section>
+
+    <section class="preface container">
+      <div class="preface-grid">
+        <div class="preface-eyebrow reveal reveal--left">How this works</div>
+        <div class="preface-body reveal" style="--stagger-delay: 120ms;">
+          <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.</p>
+          <p>This curriculum is the spine. <span id="prefacePhaseCount">Every phase</span>, <span id="prefaceLessonCount">every published lesson</span>, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.</p>
+          <p>Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.</p>
+        </div>
+      </div>
+    </section>
+
     <section class="stat-block container">
       <div class="stat-block-title reveal reveal--left">Current Progress</div>
       <div class="stat-rows reveal" style="--stagger-delay: 100ms;" id="statRows">
@@ -2568,6 +2653,48 @@
         <span class="legend-item"><span class="toc-status planned"></span> Planned</span>
       </div>
     </section>
+
+    <div class="machine-row container" id="machines">
+      <div class="machine-row-title">Interactive machines · run one, then break it</div>
+      <div class="machine-row-grid">
+    <section class="agent-machine-feature" aria-labelledby="agentMachineTitle">
+      <a class="agent-machine-link" href="inside-an-ai-agent.html">
+        <div class="agent-machine-copy">
+          <div class="preface-eyebrow">FIG_AGT · Interactive simulation</div>
+          <h2 id="agentMachineTitle">Inside an AI Agent</h2>
+          <p>An AI agent is more than an LLM call. Run one request through a working machine, switch off retrieval, tools or the verifier, and watch what fails.</p>
+          <span class="agent-machine-cta">Break the machine →</span>
+        </div>
+        <img class="agent-machine-light" src="anatomy/inside-an-ai-agent-machine.png" width="2400" height="1260" loading="lazy" decoding="async" alt="An isometric card-processing machine with a nameplate on each station: request, memory, retrieval, model, tools, verifier, output, trace and the runtime loop.">
+        <img class="agent-machine-dark" src="anatomy/inside-an-ai-agent-machine-dark.png" width="2400" height="1260" loading="lazy" decoding="async" alt="">
+      </a>
+    </section>
+    <section class="agent-machine-feature" aria-labelledby="decompilerMachineTitle">
+      <a class="agent-machine-link" href="inside-a-decompiler.html">
+        <div class="agent-machine-copy">
+          <div class="preface-eyebrow">FIG_DEC · Interactive simulation</div>
+          <h2 id="decompilerMachineTitle">Inside a Decompiler</h2>
+          <p>A decompiler turns bytes into code you can read. Run one small function through nine stations, strip the symbols or switch the decoder, and watch the ledger split what was observed from what was inferred.</p>
+          <span class="agent-machine-cta">Break the machine →</span>
+        </div>
+        <img class="agent-machine-light" src="anatomy/inside-a-decompiler-machine.png" width="2400" height="1260" loading="lazy" decoding="async" alt="An isometric bench with a carriage on one rail and nine stations, each with a nameplate: header, sections, disassembly, CFG, lift, types, structure, pseudocode and ledger.">
+        <img class="agent-machine-dark" src="anatomy/inside-a-decompiler-machine-dark.png" width="2400" height="1260" loading="lazy" decoding="async" alt="">
+      </a>
+    </section>
+    <section class="agent-machine-feature" aria-labelledby="gpuMachineTitle">
+      <a class="agent-machine-link" href="inside-an-llm-serving-gpu.html">
+        <div class="agent-machine-copy">
+          <div class="preface-eyebrow">FIG_GPU · Interactive simulation</div>
+          <h2 id="gpuMachineTitle">Inside an LLM Serving GPU</h2>
+          <p>Decode reads every weight for every token. Follow one request through an NVIDIA L4 or GB10, fill the KV pool, switch to FP8, and watch memory bandwidth set the speed with numbers from the SGLang 101 runs.</p>
+          <span class="agent-machine-cta">Break the machine →</span>
+        </div>
+        <img class="agent-machine-light" src="anatomy/inside-an-llm-serving-gpu-machine.png" width="2400" height="1260" loading="lazy" decoding="async" alt="An isometric NVIDIA L4 card on a host board: a host CPU, a PCIe riser, the GPU die with its SMs and L2 band, six GDDR6 packages with colored memory cells, and a see-through heatsink.">
+        <img class="agent-machine-dark" src="anatomy/inside-an-llm-serving-gpu-machine-dark.png" width="2400" height="1260" loading="lazy" decoding="async" alt="">
+      </a>
+    </section>
+      </div>
+    </div>
 
     <div class="modal-overlay" id="modalOverlay">
       <div class="modal" id="modal">
@@ -2778,6 +2905,54 @@
   <script src="lang-picker.js?v=20261010a" defer></script>
   <script src="data.js?v=20260821c"></script>
   <script src="progress.js?v=20260822a"></script>
+  <script>
+    (function () {
+      var link = document.getElementById('mastheadStart');
+      var label = document.getElementById('mastheadStartLabel');
+      if (!link || !label) return;
+      var startHref = link.getAttribute('href');
+      var startLabel = label.textContent;
+
+      function publishedLessons() {
+        var published = {};
+        if (typeof PHASES === 'undefined' || !Array.isArray(PHASES) || !window.AIFSProgress) return null;
+        for (var i = 0; i < PHASES.length; i++) {
+          var lessons = PHASES[i].lessons || [];
+          for (var j = 0; j < lessons.length; j++) {
+            var path = lessons[j].url ? window.AIFSProgress.extractPath(lessons[j].url) : '';
+            if (path) published[path] = true;
+          }
+        }
+        return published;
+      }
+
+      function lastVisitedLesson() {
+        var state = null;
+        try { state = JSON.parse(localStorage.getItem('aifs:progress:v2') || 'null'); } catch (_) {}
+        var lessons = state && state.lessons || {};
+        var published = publishedLessons();
+        var last = '';
+        var at = 0;
+        for (var path in lessons) {
+          var visited = lessons[path] && lessons[path].visitedAt || 0;
+          if (visited <= at || !/^phases\/[a-z0-9-]+\/[a-z0-9-]+$/.test(path)) continue;
+          if (published && !published[path]) continue;
+          at = visited;
+          last = path;
+        }
+        return last;
+      }
+
+      function syncStartLink() {
+        var last = lastVisitedLesson();
+        link.setAttribute('href', last ? 'lesson?path=' + last : startHref);
+        label.textContent = last ? 'Continue where you left off' : startLabel;
+      }
+
+      syncStartLink();
+      if (window.AIFSProgress) window.AIFSProgress.onChange(syncStartLink);
+    })();
+  </script>
   <script src="header.js?v=20261103a" defer></script>
   <script src="cmdpalette.js?v=20261103a" defer></script>
   <script src="app.js?v=20261015a"></script>
