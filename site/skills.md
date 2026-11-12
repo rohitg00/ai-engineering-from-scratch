@@ -181,7 +181,7 @@ An interactive isometric machine that shows a process step by step. A tested sta
 - Install: `npx skills add rohitg00/ai-engineering-from-scratch --skill isometric-explainer`
 - Source: https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/skills/isometric-explainer/SKILL.md
 
-### write-manual (v1.0.0)
+### write-manual (v1.1.0)
 
 A long manual about one tool at one pinned version, with sources, a table of contents, offline captures of every listing, figures, and an audit.
 

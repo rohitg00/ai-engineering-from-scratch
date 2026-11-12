@@ -344,7 +344,6 @@
     - phases/13-tools-and-protocols/05-tool-schema-design
     - phases/19-capstone-projects/21-tool-registry-schema-validation
     - phases/19-capstone-projects/23-function-call-dispatcher
-    - projects/tool-contract-migration-checker
 
 - id: transformers-attention
   title: Transformers and Attention
@@ -1242,6 +1241,7 @@
     - phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints
     - projects/durable-agent-jobs
     - projects/cloud-agent-with-aws-strands
+    - manuals/agent-substrate-101
 
 - id: eval-driven-agents
   title: Eval-Driven Agent Development
