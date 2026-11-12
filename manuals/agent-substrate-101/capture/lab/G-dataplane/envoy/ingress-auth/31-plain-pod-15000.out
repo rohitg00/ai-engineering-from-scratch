@@ -1,0 +1,4 @@
+code=000
+curl: (28) Connection timed out after 6002 milliseconds
+command terminated with exit code 28
+exit=28

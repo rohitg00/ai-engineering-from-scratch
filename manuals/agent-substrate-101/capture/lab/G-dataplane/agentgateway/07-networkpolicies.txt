@@ -1,0 +1,11 @@
+NAME                       POD-SELECTOR                          AGE
+ate-api-server             app=ate-api-server                    59m
+ate-idp-server             app=ate-idp-server                    59m
+ate-system-observability   app notin (k8s-credential-provider)   59m
+atelet                     app=atelet                            59m
+atenet-egress              app=atenet-egress                     59m
+atenet-router              app=atenet-router                     59m
+default-deny-ingress       <none>                                59m
+k8s-credential-provider    app=k8s-credential-provider           59m
+postgres                   app=postgres                          59m
+rustfs                     app=rustfs                            59m

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-3-3b-title fig-3-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3b-title">What a synchronous suspend costs the caller</title>
+  <desc id="fig-3-3b-desc">Seconds for kubectl ate suspend actor to return against the MiB of random memory the actor holds, on the x86 server guest. The default asynchronous suspend takes a median of 0.34 s at 0 MiB, 0.50 s at 50 MiB, 0.79 s at 200 MiB, 1.17 s at 500 MiB and 1.95 s at 1000 MiB. With --mode sync it takes 0.40 s, 1.03 s, 2.02 s, 3.59 s and 6.41 s.</desc>
+  <line x1="60" y1="296" x2="608" y2="296" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="300" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="60" y1="241.5" x2="608" y2="241.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="245.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="60" y1="187" x2="608" y2="187" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="191" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="60" y1="132.5" x2="608" y2="132.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="136.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="60" y1="78" x2="608" y2="78" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="82" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="60" y1="296" x2="608" y2="296" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="78" x2="60" y2="296" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="296" x2="60" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="313" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="87.4" y1="296" x2="87.4" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="87.4" y="313" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="169.6" y1="296" x2="169.6" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="169.6" y="313" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="334" y1="296" x2="334" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="334" y="313" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="608" y1="296" x2="608" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="608" y="313" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <text x="334" y="330" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory the actor holds, MiB</text>
+  <text x="60" y="66" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds until the suspend command returns</text>
+  <path d="M60.0 286.0 L87.4 280.4 L169.6 272.7 L334.0 262.5 L608.0 234.6 L608.0 245.2 L334.0 266.3 L169.6 277.1 L87.4 282.8 L60.0 287.3 Z" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.14" stroke="none"/>
+  <path d="M60.0 286.9 L87.4 282.4 L169.6 274.5 L334.0 264.1 L608.0 242.9" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="286.87" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="87.4" cy="282.38" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="169.6" cy="274.47" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="334" cy="264.12" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="608" cy="242.86" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="600" y="260.86" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">1.95 s</text>
+  <path d="M60.0 284.4 L87.4 266.5 L169.6 239.2 L334.0 167.1 L608.0 87.8 L608.0 126.8 L334.0 206.8 L169.6 244.7 L87.4 270.7 L60.0 285.3 Z" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.14" stroke="none"/>
+  <path d="M60.0 285.1 L87.4 268.0 L169.6 241.0 L334.0 198.1 L608.0 121.4" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="285.07" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="87.4" cy="267.96" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="169.6" cy="240.98" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="334" cy="198.15" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="608" cy="121.38" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="600" y="109.38" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-teal-ink, #18696a)">6.41 s</text>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">async: returns with the snapshot on the node, 10 per point</text>
+  <path d="M60 36 H78" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="40" font-size="11" fill="var(--m-teal-ink, #18696a)">--mode sync: returns after the upload, 5 per point</text>
+</svg>

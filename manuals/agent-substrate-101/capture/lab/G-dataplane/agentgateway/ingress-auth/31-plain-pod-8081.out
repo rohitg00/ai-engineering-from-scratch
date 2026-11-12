@@ -1,0 +1,4 @@
+code=000
+curl: (7) Failed to connect to 10.244.0.42 port 8081 after 0 ms: Could not connect to server
+command terminated with exit code 7
+exit=7

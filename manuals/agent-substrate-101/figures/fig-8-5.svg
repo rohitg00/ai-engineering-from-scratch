@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 408" role="img" aria-labelledby="fig-8-5-title fig-8-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-5-title">Who does each job at v1.0.0</title>
+  <desc id="fig-8-5-desc">Six jobs in rows. On the left is what Substrate does at v1.0.0: it suspends on request, keeps a fixed number of workers, marks an actor crashed when its sandbox dies, runs one router and one database, offers key commands, and keeps one ingress allowlist. On the right is what the operator or the harness must add for each.</desc>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SUBSTRATE DOES</text>
+  <text x="340" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">YOU ADD</text>
+  <rect x="20" y="30" width="290" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">SuspendActor when asked</text>
+  <text x="165" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no idle timer: RUNNING in 60 of 60 samples</text>
+  <rect x="340" y="30" width="280" height="52" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="480" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">the decision to suspend</text>
+  <text x="480" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kagent suspends after each turn</text>
+  <line x1="310" y1="56" x2="340" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <rect x="20" y="92" width="290" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="113.25" font-size="12.5" text-anchor="middle" font-weight="700">a fixed number of workers</text>
+  <text x="165" y="130.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a full pool returns 503 after 5 s</text>
+  <rect x="340" y="92" width="280" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="113.25" font-size="12.5" text-anchor="middle" font-weight="700">an autoscaler</text>
+  <text x="480" y="130.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on free worker slots, not on CPU use</text>
+  <line x1="310" y1="118" x2="340" y2="118" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <rect x="20" y="154" width="290" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="175.25" font-size="12.5" text-anchor="middle" font-weight="700">CRASHED when a sandbox dies</text>
+  <text x="165" y="192.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a process exit leaves the actor RUNNING</text>
+  <rect x="340" y="154" width="280" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="175.25" font-size="12.5" text-anchor="middle" font-weight="700">a probe for dead processes</text>
+  <text x="480" y="192.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">watch for the upstream connect error</text>
+  <line x1="310" y1="180" x2="340" y2="180" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <rect x="20" y="216" width="290" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="237.25" font-size="12.5" text-anchor="middle" font-weight="700">one router and one Postgres</text>
+  <text x="165" y="254.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one egress gateway, two ate-api-server</text>
+  <rect x="340" y="216" width="280" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="237.25" font-size="12.5" text-anchor="middle" font-weight="700">failover</text>
+  <text x="480" y="254.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a database standby, more routers</text>
+  <line x1="310" y1="242" x2="340" y2="242" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <rect x="20" y="278" width="290" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="299.25" font-size="12.5" text-anchor="middle" font-weight="700">a key pool and three commands</text>
+  <text x="165" y="316.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">add, activate, and remove a JWT key</text>
+  <rect x="340" y="278" width="280" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="299.25" font-size="12.5" text-anchor="middle" font-weight="700">the rotation schedule</text>
+  <text x="480" y="316.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no component rotates the key</text>
+  <line x1="310" y1="304" x2="340" y2="304" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <rect x="20" y="340" width="290" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="165" y="361.25" font-size="12.5" text-anchor="middle" font-weight="700">one ingress allowlist</text>
+  <text x="165" y="378.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a listed client reaches every actor</text>
+  <rect x="340" y="340" width="280" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="480" y="361.25" font-size="12.5" text-anchor="middle" font-weight="700">isolation between tenants</text>
+  <text x="480" y="378.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">outside Substrate at v1.0.0</text>
+  <line x1="310" y1="366" x2="340" y2="366" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+</svg>

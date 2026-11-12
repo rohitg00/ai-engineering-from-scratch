@@ -1,0 +1,67 @@
+* Host atenet-router.ate-system.svc:443 was resolved.
+* IPv6: (none)
+* IPv4: 10.96.5.247
+*   Trying 10.96.5.247:443...
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /run/ca/trust-bundle.pem
+*  CApath: none
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [122 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [19 bytes data]
+* TLSv1.3 (IN), TLS handshake, Request CERT (13):
+{ [86 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [437 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [80 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Certificate (11):
+} [8 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / x25519 / id-ecPublicKey
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: 
+*  start date: Nov 12 11:09:18 2026 GMT
+*  expire date: Nov 13 11:09:18 2026 GMT
+*  subjectAltName: host "atenet-router.ate-system.svc" matched cert's "atenet-router.ate-system.svc"
+*  issuer: CN=WRFSPQP6AU3ZE3NDQAWZ2LEPBL
+*  SSL certificate verify ok.
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ED25519
+*   Certificate level 1: Public key type ED25519 (256/128 Bits/secBits), signed using ED25519
+* Connected to atenet-router.ate-system.svc (10.96.5.247) port 443
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://atenet-router.ate-system.svc:443/
+* [HTTP/2] [1] [:method: POST]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: atenet-router.ate-system.svc]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.11.1]
+* [HTTP/2] [1] [accept: */*]
+* [HTTP/2] [1] [ate-target-actor: ate-demo-counter/my-counter-1]
+} [5 bytes data]
+> POST / HTTP/2
+> Host: atenet-router.ate-system.svc
+> User-Agent: curl/8.11.1
+> Accept: */*
+> ate-target-actor: ate-demo-counter/my-counter-1
+> 
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS alert, unknown (628):
+{ [2 bytes data]
+* OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+* Failed receiving HTTP2 data: 56(Failure when receiving data from the peer)
+* Connection #0 to host atenet-router.ate-system.svc left intact
+curl: (56) OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+code=000
+command terminated with exit code 56
+exit=56

@@ -1,0 +1,108 @@
+[
+  {
+    "configMap": {
+      "defaultMode": 420,
+      "name": "atenet-egress-agentgateway-substrate-config"
+    },
+    "name": "config"
+  },
+  {
+    "emptyDir": {},
+    "name": "drain-signal"
+  },
+  {
+    "name": "servicedns",
+    "projected": {
+      "defaultMode": 420,
+      "sources": [
+        {
+          "podCertificate": {
+            "credentialBundlePath": "credential-bundle.pem",
+            "keyType": "ECDSAP256",
+            "signerName": "servicedns.podcert.ate.dev/identity"
+          }
+        },
+        {
+          "clusterTrustBundle": {
+            "labelSelector": {
+              "matchLabels": {
+                "podcert.ate.dev/canarying": "live"
+              }
+            },
+            "path": "trust-bundle.pem",
+            "signerName": "servicedns.podcert.ate.dev/identity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "podidentity",
+    "projected": {
+      "defaultMode": 420,
+      "sources": [
+        {
+          "podCertificate": {
+            "credentialBundlePath": "credential-bundle.pem",
+            "keyType": "ECDSAP256",
+            "signerName": "podidentity.podcert.ate.dev/identity"
+          }
+        },
+        {
+          "clusterTrustBundle": {
+            "labelSelector": {
+              "matchLabels": {
+                "podcert.ate.dev/canarying": "live"
+              }
+            },
+            "path": "trust-bundle.pem",
+            "signerName": "podidentity.podcert.ate.dev/identity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "actor-id-ca-certs",
+    "secret": {
+      "defaultMode": 420,
+      "secretName": "actor-id-ca-certs"
+    }
+  },
+  {
+    "name": "servicedns-ca",
+    "projected": {
+      "defaultMode": 420,
+      "sources": [
+        {
+          "clusterTrustBundle": {
+            "labelSelector": {
+              "matchLabels": {
+                "podcert.ate.dev/canarying": "live"
+              }
+            },
+            "path": "trust-bundle.pem",
+            "signerName": "servicedns.podcert.ate.dev/identity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "egress-mitm",
+    "secret": {
+      "defaultMode": 420,
+      "items": [
+        {
+          "key": "tls.crt",
+          "path": "tls.crt"
+        },
+        {
+          "key": "tls.key",
+          "path": "tls.key"
+        }
+      ],
+      "secretName": "egress-mitm-ca-pool"
+    }
+  }
+]

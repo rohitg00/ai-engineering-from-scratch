@@ -1,0 +1,990 @@
+{
+  "death_inside_sandbox": [
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.410878",
+        "count=1 mb=50 fill=random sum=5886 process_age_s=0.3"
+      ],
+      "t": "2026-11-12T11:30:43.622Z"
+    },
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.058464",
+        "count=2 mb=50 fill=random sum=5886 process_age_s=0.4"
+      ],
+      "t": "2026-11-12T11:30:43.700Z"
+    },
+    {
+      "case": "j1",
+      "event": "after-sync-suspend",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:44.877Z"
+    },
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.247937",
+        "count=3 mb=50 fill=random sum=5886 process_age_s=0.6"
+      ],
+      "t": "2026-11-12T11:30:45.144Z"
+    },
+    {
+      "case": "j1",
+      "event": "exit-request",
+      "fields": [
+        "200",
+        "0.065314",
+        "exiting with code 3"
+      ],
+      "t": "2026-11-12T11:30:45.229Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:47.441Z"
+    },
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.058459",
+        "upstream connect error or disconnect/reset before headers. reset reason: connection termination"
+      ],
+      "t": "2026-11-12T11:30:47.518Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:49.710Z"
+    },
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.057582",
+        "upstream connect error or disconnect/reset before headers. reset reason: connection termination"
+      ],
+      "t": "2026-11-12T11:30:49.787Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:52.002Z"
+    },
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.069035",
+        "upstream connect error or disconnect/reset before headers. reset reason: connection termination"
+      ],
+      "t": "2026-11-12T11:30:52.090Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:54.302Z"
+    },
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.056090",
+        "upstream connect error or disconnect/reset before headers. reset reason: connection termination"
+      ],
+      "t": "2026-11-12T11:30:54.377Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:56.583Z"
+    },
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.058293",
+        "upstream connect error or disconnect/reset before headers. reset reason: connection termination"
+      ],
+      "t": "2026-11-12T11:30:56.662Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:58.878Z"
+    },
+    {
+      "case": "j1",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.058297",
+        "upstream connect error or disconnect/reset before headers. reset reason: connection termination"
+      ],
+      "t": "2026-11-12T11:30:58.958Z"
+    },
+    {
+      "case": "j1",
+      "event": "suspend-attempt",
+      "fields": [
+        "Error: failed to suspend actor: rpc error: code = Internal desc = internal server error: workflow failed at step CallAteletSuspend: actor lab-c/j1 crashed: rpc error: code = Internal desc = while call"
+      ],
+      "t": "2026-11-12T11:31:00.122Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:-"
+      ],
+      "t": "2026-11-12T11:31:00.333Z"
+    },
+    {
+      "case": "j1",
+      "event": "call-after-suspend-attempt",
+      "fields": [
+        "503",
+        "0.065574",
+        "actor lab-c/j1 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)"
+      ],
+      "t": "2026-11-12T11:31:00.418Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:-"
+      ],
+      "t": "2026-11-12T11:31:00.631Z"
+    },
+    {
+      "case": "j1",
+      "event": "revert",
+      "fields": [
+        "ATESPACE   NAME   TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-c      j1     lab-c/fail-50   ACTOR_STATE_SUSPENDED   <none>                    11        18s "
+      ],
+      "t": "2026-11-12T11:31:00.862Z"
+    },
+    {
+      "case": "j1",
+      "event": "call-after-revert",
+      "fields": [
+        "200",
+        "0.391692",
+        "count=3 mb=50 fill=random sum=5886 process_age_s=0.7"
+      ],
+      "t": "2026-11-12T11:31:01.273Z"
+    },
+    {
+      "case": "j1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-"
+      ],
+      "t": "2026-11-12T11:31:01.475Z"
+    },
+    {
+      "case": "j2",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.272209",
+        "count=1 mb=50 fill=random sum=5886 process_age_s=0.3"
+      ],
+      "t": "2026-11-12T11:31:02.891Z"
+    },
+    {
+      "case": "j2",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.062073",
+        "count=2 mb=50 fill=random sum=5886 process_age_s=0.4"
+      ],
+      "t": "2026-11-12T11:31:02.971Z"
+    },
+    {
+      "case": "j2",
+      "event": "oom-request",
+      "fields": [
+        "200",
+        "0.067820",
+        "allocating until killed"
+      ],
+      "t": "2026-11-12T11:31:03.058Z"
+    },
+    {
+      "case": "j2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-"
+      ],
+      "t": "2026-11-12T11:31:05.277Z"
+    },
+    {
+      "case": "j2",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.057289",
+        "upstream connect error or disconnect/reset before headers. reset reason: connection termination"
+      ],
+      "t": "2026-11-12T11:31:05.353Z"
+    },
+    {
+      "case": "j2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-"
+      ],
+      "t": "2026-11-12T11:31:07.557Z"
+    },
+    {
+      "case": "j2",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.064760",
+        "actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)"
+      ],
+      "t": "2026-11-12T11:31:07.641Z"
+    },
+    {
+      "case": "j2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-"
+      ],
+      "t": "2026-11-12T11:31:09.851Z"
+    },
+    {
+      "case": "j2",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.058019",
+        "actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)"
+      ],
+      "t": "2026-11-12T11:31:09.928Z"
+    },
+    {
+      "case": "j2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-"
+      ],
+      "t": "2026-11-12T11:31:12.133Z"
+    },
+    {
+      "case": "j2",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.063996",
+        "actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)"
+      ],
+      "t": "2026-11-12T11:31:12.217Z"
+    },
+    {
+      "case": "j2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-"
+      ],
+      "t": "2026-11-12T11:31:14.424Z"
+    },
+    {
+      "case": "j2",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.068600",
+        "actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)"
+      ],
+      "t": "2026-11-12T11:31:14.514Z"
+    },
+    {
+      "case": "j2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-"
+      ],
+      "t": "2026-11-12T11:31:16.724Z"
+    },
+    {
+      "case": "j2",
+      "event": "call",
+      "fields": [
+        "503",
+        "0.061831",
+        "actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)"
+      ],
+      "t": "2026-11-12T11:31:16.807Z"
+    }
+  ],
+  "idle_watch": {
+    "all_samples": 63,
+    "samples_after_last_request": 61,
+    "seconds": 900,
+    "states": {
+      "ACTOR_STATE_RUNNING": 61
+    }
+  },
+  "lifecycle_ops": [
+    {
+      "event": "call-running",
+      "fields": [
+        "200",
+        "0.070760",
+        "preserved memory count: 7 | preserved file counter: 7 | preserved rootfs counter: 7"
+      ],
+      "t": "2026-11-12T10:30:05.377Z"
+    },
+    {
+      "event": "suspend-async",
+      "fields": [
+        "0.404s",
+        "ATESPACE           NAME           TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_SU"
+      ],
+      "t": "2026-11-12T10:30:05.790Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "5",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2"
+      ],
+      "t": "2026-11-12T10:30:08.028Z"
+    },
+    {
+      "event": "call-resume-after-async",
+      "fields": [
+        "200",
+        "0.356629",
+        "preserved memory count: 8 | preserved file counter: 8 | preserved rootfs counter: 8"
+      ],
+      "t": "2026-11-12T10:30:08.614Z"
+    },
+    {
+      "event": "suspend-sync",
+      "fields": [
+        "0.541s",
+        "ATESPACE           NAME           TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_SU"
+      ],
+      "t": "2026-11-12T10:30:09.164Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "9",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3"
+      ],
+      "t": "2026-11-12T10:30:09.378Z"
+    },
+    {
+      "event": "resume-cli",
+      "fields": [
+        "0.504s",
+        "ATESPACE           NAME           TEMPLATE                   STATE                 WORKER POD                                  WORKER IPS    VERSION   AGE ate-demo-counter   my-counter-1   ate-demo-co"
+      ],
+      "t": "2026-11-12T10:30:10.103Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "11",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3"
+      ],
+      "t": "2026-11-12T10:30:10.310Z"
+    },
+    {
+      "event": "call-a",
+      "fields": [
+        "200",
+        "0.072155",
+        "preserved memory count: 9 | preserved file counter: 9 | preserved rootfs counter: 9"
+      ],
+      "t": "2026-11-12T10:30:10.403Z"
+    },
+    {
+      "event": "call-b",
+      "fields": [
+        "200",
+        "0.058492",
+        "preserved memory count: 10 | preserved file counter: 10 | preserved rootfs counter: 10"
+      ],
+      "t": "2026-11-12T10:30:10.484Z"
+    },
+    {
+      "event": "call-c",
+      "fields": [
+        "200",
+        "0.065622",
+        "preserved memory count: 11 | preserved file counter: 11 | preserved rootfs counter: 11"
+      ],
+      "t": "2026-11-12T10:30:10.570Z"
+    },
+    {
+      "event": "crash-inject",
+      "fields": [
+        "kubectl delete pod counter-7cc7dcd596-5tj9h --grace-period=0 --force"
+      ],
+      "t": "2026-11-12T10:30:10.993Z"
+    },
+    {
+      "event": "state-after-crash",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "12",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3"
+      ],
+      "t": "2026-11-12T10:30:11.590Z"
+    },
+    {
+      "event": "call-while-crashed",
+      "fields": [
+        "503",
+        "0.063715",
+        "actor ate-demo-counter/my-counter-1 unavailable: AssignWorker prerequisite not met for Actor: ate-demo-counter/my-counter-1 (got: ACTOR_STAT"
+      ],
+      "t": "2026-11-12T10:30:11.672Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "12",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3"
+      ],
+      "t": "2026-11-12T10:30:16.870Z"
+    },
+    {
+      "event": "resume-while-crashed",
+      "fields": [
+        "0.207s",
+        "Error: failed to resume actor: rpc error: code = FailedPrecondition desc = AssignWorker prerequisite not met for Actor: ate-demo-counter/my-counter-1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPEN"
+      ],
+      "t": "2026-11-12T10:30:17.301Z"
+    },
+    {
+      "event": "revert",
+      "fields": [
+        "0.220s",
+        "ATESPACE           NAME           TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_SU"
+      ],
+      "t": "2026-11-12T10:30:17.530Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "-",
+        "14",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3"
+      ],
+      "t": "2026-11-12T10:30:17.724Z"
+    },
+    {
+      "event": "call-after-revert",
+      "fields": [
+        "200",
+        "0.382483",
+        "preserved memory count: 9 | preserved file counter: 9 | preserved rootfs counter: 9"
+      ],
+      "t": "2026-11-12T10:30:18.126Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "16",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3"
+      ],
+      "t": "2026-11-12T10:30:18.333Z"
+    }
+  ],
+  "local_snapshot_loss": [
+    {
+      "case": "x1",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.257300",
+        "count=1 mb=50 fill=random sum=6296 process_age_s=0.4"
+      ],
+      "t": "2026-11-12T11:30:15.873Z"
+    },
+    {
+      "case": "x1",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.070034",
+        "count=2 mb=50 fill=random sum=6296 process_age_s=0.4"
+      ],
+      "t": "2026-11-12T11:30:15.963Z"
+    },
+    {
+      "case": "x1",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.065226",
+        "count=3 mb=50 fill=random sum=6296 process_age_s=0.5"
+      ],
+      "t": "2026-11-12T11:30:16.050Z"
+    },
+    {
+      "case": "x1",
+      "event": "after-sync-suspend",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:17.241Z"
+    },
+    {
+      "case": "x1",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.248358",
+        "count=4 mb=50 fill=random sum=6296 process_age_s=0.8"
+      ],
+      "t": "2026-11-12T11:30:17.508Z"
+    },
+    {
+      "case": "x1",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.062252",
+        "count=5 mb=50 fill=random sum=6296 process_age_s=0.9"
+      ],
+      "t": "2026-11-12T11:30:17.588Z"
+    },
+    {
+      "case": "x1",
+      "event": "after-async-suspend",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:18.282Z"
+    },
+    {
+      "case": "x1",
+      "event": "removed-node-local-snapshot",
+      "fields": [
+        "uid 085b45fb-edb9-4523-ad30-3da55b3f34f0"
+      ],
+      "t": "2026-11-12T11:30:18.606Z"
+    },
+    {
+      "case": "x1",
+      "event": "call-after-loss",
+      "fields": [
+        "500",
+        "0.082402",
+        "error resuming actor lab-c/x1"
+      ],
+      "t": "2026-11-12T11:30:18.708Z"
+    },
+    {
+      "case": "x1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:18.911Z"
+    },
+    {
+      "case": "x1",
+      "event": "call-again",
+      "fields": [
+        "503",
+        "0.063957",
+        "actor lab-c/x1 unavailable: AssignWorker prerequisite not met for Actor: lab-c/x1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)"
+      ],
+      "t": "2026-11-12T11:30:23.997Z"
+    },
+    {
+      "case": "x1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:24.203Z"
+    },
+    {
+      "case": "x1",
+      "event": "revert",
+      "fields": [
+        "ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-c      x1     lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    13        10"
+      ],
+      "t": "2026-11-12T11:30:24.806Z"
+    },
+    {
+      "case": "x1",
+      "event": "call-after-revert",
+      "fields": [
+        "200",
+        "0.416152",
+        "count=4 mb=50 fill=random sum=6296 process_age_s=0.8"
+      ],
+      "t": "2026-11-12T11:30:25.241Z"
+    },
+    {
+      "case": "x1",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-"
+      ],
+      "t": "2026-11-12T11:30:25.434Z"
+    },
+    {
+      "case": "x2",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.253995",
+        "count=1 mb=50 fill=random sum=6296 process_age_s=0.3"
+      ],
+      "t": "2026-11-12T11:30:26.828Z"
+    },
+    {
+      "case": "x2",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.056651",
+        "count=2 mb=50 fill=random sum=6296 process_age_s=0.4"
+      ],
+      "t": "2026-11-12T11:30:26.904Z"
+    },
+    {
+      "case": "x2",
+      "event": "call",
+      "fields": [
+        "200",
+        "0.065669",
+        "count=3 mb=50 fill=random sum=6296 process_age_s=0.5"
+      ],
+      "t": "2026-11-12T11:30:26.990Z"
+    },
+    {
+      "case": "x2",
+      "event": "after-async-suspend",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:27.663Z"
+    },
+    {
+      "case": "x2",
+      "event": "atelet-restarted",
+      "fields": [
+        "atelet-x7q68 2/2 Running 0 10s 10.244.0.29 kind-control-plane <none> <none>"
+      ],
+      "t": "2026-11-12T11:30:38.100Z"
+    },
+    {
+      "case": "x2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:38.314Z"
+    },
+    {
+      "case": "x2",
+      "event": "call-after-atelet-restart",
+      "fields": [
+        "200",
+        "0.249727",
+        "count=4 mb=50 fill=random sum=6296 process_age_s=0.8"
+      ],
+      "t": "2026-11-12T11:30:38.586Z"
+    },
+    {
+      "case": "x2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:38.788Z"
+    },
+    {
+      "case": "x2",
+      "event": "call-again",
+      "fields": [
+        "200",
+        "0.062885",
+        "count=5 mb=50 fill=random sum=6296 process_age_s=4.0"
+      ],
+      "t": "2026-11-12T11:30:41.873Z"
+    },
+    {
+      "case": "x2",
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_RUNNING",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:30:42.071Z"
+    }
+  ],
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor",
+  "node_restart": [
+    {
+      "event": "call",
+      "fields": [
+        "200",
+        "0.284265",
+        "count=1 mb=50 fill=random sum=6296 process_age_s=0.4"
+      ],
+      "t": "2026-11-12T11:41:17.171Z"
+    },
+    {
+      "event": "call",
+      "fields": [
+        "200",
+        "0.071632",
+        "count=2 mb=50 fill=random sum=6296 process_age_s=0.4"
+      ],
+      "t": "2026-11-12T11:41:17.261Z"
+    },
+    {
+      "event": "call",
+      "fields": [
+        "200",
+        "0.066245",
+        "count=3 mb=50 fill=random sum=6296 process_age_s=0.5"
+      ],
+      "t": "2026-11-12T11:41:17.348Z"
+    },
+    {
+      "event": "after-sync-suspend",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:41:18.609Z"
+    },
+    {
+      "event": "call",
+      "fields": [
+        "200",
+        "0.224142",
+        "count=4 mb=50 fill=random sum=6296 process_age_s=0.8"
+      ],
+      "t": "2026-11-12T11:41:18.855Z"
+    },
+    {
+      "event": "call",
+      "fields": [
+        "200",
+        "0.055636",
+        "count=5 mb=50 fill=random sum=6296 process_age_s=0.9"
+      ],
+      "t": "2026-11-12T11:41:18.930Z"
+    },
+    {
+      "event": "after-async-suspend",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:41:19.624Z"
+    },
+    {
+      "event": "node-restart",
+      "fields": [
+        "docker restart kind-control-plane"
+      ],
+      "t": "2026-11-12T11:41:19.674Z"
+    },
+    {
+      "event": "kube-api-back",
+      "fields": [
+        "8 s"
+      ],
+      "t": "2026-11-12T11:41:39.118Z"
+    },
+    {
+      "event": "pods-ready",
+      "fields": [
+        "147 s, not-running=0"
+      ],
+      "t": "2026-11-12T11:43:58.809Z"
+    },
+    {
+      "event": "state-after-reboot",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:43:59.164Z"
+    },
+    {
+      "event": "call-after-reboot",
+      "fields": [
+        "500",
+        "0.408692",
+        "error resuming actor lab-c/r1"
+      ],
+      "t": "2026-11-12T11:44:00.610Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:44:00.821Z"
+    },
+    {
+      "event": "call-again",
+      "fields": [
+        "503",
+        "0.070858",
+        "actor lab-c/r1 unavailable: AssignWorker prerequisite not met for Actor: lab-c/r1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)"
+      ],
+      "t": "2026-11-12T11:44:05.915Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_CRASHED",
+        "kind-control-plane",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane"
+      ],
+      "t": "2026-11-12T11:44:06.075Z"
+    },
+    {
+      "event": "revert",
+      "fields": [
+        "ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-c      r1     lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    13        2m"
+      ],
+      "t": "2026-11-12T11:44:06.528Z"
+    },
+    {
+      "event": "call-after-revert",
+      "fields": [
+        "503",
+        "5.060362",
+        "actor lab-c/r1 unavailable: no worker has room for the actor"
+      ],
+      "t": "2026-11-12T11:44:11.607Z"
+    },
+    {
+      "event": "state",
+      "fields": [
+        "ACTOR_STATE_SUSPENDED",
+        "-",
+        "SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-"
+      ],
+      "t": "2026-11-12T11:44:11.814Z"
+    }
+  ],
+  "sources": [
+    "capture/lab/B-lifecycle/10-trace.tsv",
+    "capture/lab/B-lifecycle/20-trace-ops.tsv",
+    "capture/lab/D-durability/30-local-loss.tsv",
+    "capture/lab/D-durability/40-node-reboot.tsv",
+    "capture/lab/J-container-death/10-trace.tsv"
+  ]
+}

@@ -1,0 +1,46 @@
+mb	phase	i	http	seconds	detail
+0	create-actor	1	-	0.207	cli
+0	first-call-golden	1	200	0.237924	count=1 mb=0 fill=random sum=0 process_age_s=0.1
+0	warm-call	1	200	0.063424	count=2 mb=0 fill=random sum=0 process_age_s=0.2
+0	create-actor	2	-	0.210	cli
+0	first-call-golden	2	200	0.232597	count=1 mb=0 fill=random sum=0 process_age_s=0.1
+0	warm-call	2	200	0.064488	count=2 mb=0 fill=random sum=0 process_age_s=0.2
+0	create-actor	3	-	0.214	cli
+0	first-call-golden	3	200	0.218808	count=1 mb=0 fill=random sum=0 process_age_s=0.1
+0	warm-call	3	200	0.056868	count=2 mb=0 fill=random sum=0 process_age_s=0.2
+0	create-actor	4	-	0.214	cli
+0	first-call-golden	4	200	0.236813	count=1 mb=0 fill=random sum=0 process_age_s=0.1
+0	warm-call	4	200	0.063556	count=2 mb=0 fill=random sum=0 process_age_s=0.2
+0	create-actor	5	-	0.200	cli
+0	first-call-golden	5	503	5.060278	actor lab-c/b0-5 unavailable: no worker has room for the actor
+0	warm-call	5	503	5.055890	actor lab-c/b0-5 unavailable: no worker has room for the actor
+0	suspend-async	1	-	0.370	cli
+0	resume-local	1	200	0.221487	count=3 mb=0 fill=random sum=0 process_age_s=16.1
+0	suspend-async	2	-	0.344	cli
+0	resume-local	2	200	0.217315	count=4 mb=0 fill=random sum=0 process_age_s=16.4
+0	suspend-async	3	-	0.339	cli
+0	resume-local	3	200	0.242534	count=5 mb=0 fill=random sum=0 process_age_s=16.7
+0	suspend-async	4	-	0.324	cli
+0	resume-local	4	200	0.237705	count=6 mb=0 fill=random sum=0 process_age_s=16.9
+0	suspend-async	5	-	0.336	cli
+0	resume-local	5	200	0.215314	count=7 mb=0 fill=random sum=0 process_age_s=17.2
+0	suspend-async	6	-	0.342	cli
+0	resume-local	6	200	0.217394	count=8 mb=0 fill=random sum=0 process_age_s=17.5
+0	suspend-async	7	-	0.343	cli
+0	resume-local	7	200	0.219765	count=9 mb=0 fill=random sum=0 process_age_s=17.8
+0	suspend-async	8	-	0.334	cli
+0	resume-local	8	200	0.219033	count=10 mb=0 fill=random sum=0 process_age_s=18.0
+0	suspend-async	9	-	0.327	cli
+0	resume-local	9	200	0.198207	count=11 mb=0 fill=random sum=0 process_age_s=18.3
+0	suspend-async	10	-	0.320	cli
+0	resume-local	10	200	0.227173	count=12 mb=0 fill=random sum=0 process_age_s=18.6
+50	create-actor	1	-	0.199	cli
+50	first-call-golden	1	503	5.059037	actor lab-c/b50-1 unavailable: no worker has room for the actor
+50	warm-call	1	503	5.059319	actor lab-c/b50-1 unavailable: no worker has room for the actor
+50	create-actor	2	-	0.217	cli
+50	first-call-golden	2	503	5.057298	actor lab-c/b50-2 unavailable: no worker has room for the actor
+50	warm-call	2	503	5.059824	actor lab-c/b50-2 unavailable: no worker has room for the actor
+50	create-actor	3	-	0.221	cli
+50	first-call-golden	3	503	5.062623	actor lab-c/b50-3 unavailable: no worker has room for the actor
+50	warm-call	3	503	5.052830	actor lab-c/b50-3 unavailable: no worker has room for the actor
+50	create-actor	4	-	0.217	cli

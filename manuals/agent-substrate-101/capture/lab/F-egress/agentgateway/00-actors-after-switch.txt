@@ -1,0 +1,3 @@
+ATESPACE   NAME     TEMPLATE      STATE                 WORKER POD                               WORKER IPS    VERSION   AGE
+lab-f      f-deny   lab-f/shell   ACTOR_STATE_RUNNING   ate-demo-egress/egress-67f89fdb4-lg2r2   10.244.0.29   3         28m
+lab-f      f-main   lab-f/shell   ACTOR_STATE_RUNNING   ate-demo-egress/egress-67f89fdb4-9ttd8   10.244.0.28   3         28m

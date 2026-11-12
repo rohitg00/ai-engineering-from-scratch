@@ -1,0 +1,28 @@
+[
+  {
+    "name": "envoy",
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "runAsNonRoot": true,
+      "runAsUser": 65532
+    },
+    "resources": {}
+  },
+  {
+    "name": "ext-proc",
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      }
+    },
+    "resources": {}
+  }
+]

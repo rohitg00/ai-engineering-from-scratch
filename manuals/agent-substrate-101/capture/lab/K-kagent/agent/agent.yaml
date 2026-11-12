@@ -1,0 +1,54 @@
+apiVersion: api.kagent.dev/v1alpha3
+kind: Agent
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"api.kagent.dev/v1alpha3","kind":"Agent","metadata":{"annotations":{},"name":"lab-agent","namespace":"kagent"},"spec":{"harnessRef":{"name":"lab-harness"},"template":{"ref":{"name":"lab-template"}}}}
+  creationTimestamp: "2026-11-12T10:16:30Z"
+  generation: 1
+  name: lab-agent
+  namespace: kagent
+  resourceVersion: "1913"
+  uid: c7478cdf-8f74-46f1-85b2-ab90647a1f7d
+spec:
+  harnessRef:
+    name: lab-harness
+  template:
+    ref:
+      name: lab-template
+status:
+  conditions:
+  - lastTransitionTime: "2026-11-12T10:16:30Z"
+    message: Agent explicitly selects its template and harness
+    observedGeneration: 1
+    reason: Accepted
+    status: "True"
+    type: Accepted
+  - lastTransitionTime: "2026-11-12T10:16:30Z"
+    message: All requested egress grants are admitted
+    observedGeneration: 1
+    reason: Applied
+    status: "True"
+    type: EgressPoliciesApplied
+  - lastTransitionTime: "2026-11-12T10:16:30Z"
+    message: All runtime references resolved
+    observedGeneration: 1
+    reason: Resolved
+    status: "True"
+    type: ResolvedRefs
+  - lastTransitionTime: "2026-11-12T10:16:30Z"
+    message: Resolved configuration is compatible with the Harness
+    observedGeneration: 1
+    reason: Compatible
+    status: "True"
+    type: Compatible
+  - lastTransitionTime: "2026-11-12T10:16:54Z"
+    message: ActorTemplate golden snapshot is ready
+    observedGeneration: 1
+    reason: Ready
+    status: "True"
+    type: Ready
+  desiredRevision: 7f643ac37f02c89412284db3a7e70b235b1417cacecf90f9f9c0462500b6b348
+  latestSuccessfulRevision: 7f643ac37f02c89412284db3a7e70b235b1417cacecf90f9f9c0462500b6b348
+  observedGeneration: 1
+  workloadImage: ghcr.io/kagent-dev/kagent/golang-adk@sha256:f62e9f2820d3325ca147a5d39802dc3e9c914bee97b3e021bd38f6f5df10e3bf

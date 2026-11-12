@@ -1,0 +1,5 @@
+ATESPACE           NAME   TEMPLATE                   STATE                   WORKER POD                                  WORKER IPS    VERSION   AGE
+ate-demo-parking   p1     ate-demo-parking/parking   ACTOR_STATE_SUSPENDED   <none>                                                    5         13s
+ate-demo-parking   p2     ate-demo-parking/parking   ACTOR_STATE_RUNNING     ate-demo-parking/parking-664fd7c67b-l6mxf   10.244.0.30   3         13s
+ate-demo-parking   p3     ate-demo-parking/parking   ACTOR_STATE_RUNNING     ate-demo-parking/parking-664fd7c67b-475hq   10.244.0.31   3         13s
+ate-demo-parking   p4     ate-demo-parking/parking   ACTOR_STATE_SUSPENDED   <none>                                                    1         13s

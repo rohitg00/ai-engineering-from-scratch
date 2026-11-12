@@ -1,0 +1,156 @@
+cert wrong-id: subject=CN = ADEK3WXN4FHKGBXBXA7NWCBE2J X509v3 Subject Alternative Name:      URI:spiffe://cluster.local/ns/probe/sa/default 
+cert right-id: subject=CN = HBCORTIJRCAXAVJEJY3YTOYS3X X509v3 Subject Alternative Name:      URI:spiffe://cluster.local/ns/ate-system/sa/atenet-client 
+### 20-nocert-https-443: curl -sS -v -m 15 -o /dev/null -w 'code=%{http_code}\n' --cacert /run/ca/trust-bundle.pem -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' https://atenet-router.ate-system.svc:443/
+* [HTTP/2] [1] OPENED stream for https://atenet-router.ate-system.svc:443/
+* [HTTP/2] [1] [:method: POST]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: atenet-router.ate-system.svc]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.11.1]
+* [HTTP/2] [1] [accept: */*]
+* [HTTP/2] [1] [ate-target-actor: ate-demo-counter/my-counter-1]
+> POST / HTTP/2
+> ate-target-actor: ate-demo-counter/my-counter-1
+* TLSv1.3 (IN), TLS alert, unknown (628):
+* OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+curl: (56) OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+exit=56
+### 21-nocert-insecure-443: curl -sS -v -m 15 -o /dev/null -w 'code=%{http_code}\n' -k -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' https://atenet-router.ate-system.svc:443/
+* [HTTP/2] [1] OPENED stream for https://atenet-router.ate-system.svc:443/
+* [HTTP/2] [1] [:method: POST]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: atenet-router.ate-system.svc]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.11.1]
+* [HTTP/2] [1] [accept: */*]
+* [HTTP/2] [1] [ate-target-actor: ate-demo-counter/my-counter-1]
+> POST / HTTP/2
+> ate-target-actor: ate-demo-counter/my-counter-1
+* TLSv1.3 (IN), TLS alert, unknown (628):
+* OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+curl: (56) OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+exit=56
+### 22-wrongid-https-443: curl -sS -v -m 15 -o /dev/null -w 'code=%{http_code}\n' --cacert /run/ca/trust-bundle.pem --cert /run/id/credential-bundle.pem --key /run/id/credential-bundle.pem -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' https://atenet-router.ate-system.svc:443/
+*  SSL certificate verify ok.
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://atenet-router.ate-system.svc:443/
+* [HTTP/2] [1] [:method: POST]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: atenet-router.ate-system.svc]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.11.1]
+* [HTTP/2] [1] [accept: */*]
+* [HTTP/2] [1] [ate-target-actor: ate-demo-counter/my-counter-1]
+> POST / HTTP/2
+> ate-target-actor: ate-demo-counter/my-counter-1
+* OpenSSL SSL_read: Connection reset by peer, errno 104
+exit=56
+### 23-rightid-https-443: curl -sS -v -m 15 --cacert /run/ca/trust-bundle.pem --cert /run/id/credential-bundle.pem --key /run/id/credential-bundle.pem -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' https://atenet-router.ate-system.svc:443/
+* [HTTP/2] [1] [:authority: atenet-router.ate-system.svc]
+* [HTTP/2] [1] [:path: /]
+* [HTTP/2] [1] [user-agent: curl/8.11.1]
+* [HTTP/2] [1] [accept: */*]
+* [HTTP/2] [1] [ate-target-actor: ate-demo-counter/my-counter-1]
+> POST / HTTP/2
+> ate-target-actor: ate-demo-counter/my-counter-1
+preserved memory count: 4 | preserved file counter: 4 | preserved rootfs counter: 4
+< HTTP/2 200 
+< date: Thu, 12 Nov 2026 11:12:16 GMT
+< content-length: 84
+< content-type: text/plain; charset=utf-8
+< 
+exit=0
+### 24-nocert-connect-8444: curl -sS -v -m 15 -o /dev/null -w 'code=%{http_code}\n' --proxytunnel --proxy https://atenet-router.ate-system.svc:8444 --proxy-cacert /run/ca/trust-bundle.pem --proxy-header 'ate-target-actor: ate-demo-counter/my-counter-1' -X POST http://actor:80/
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / x25519 / id-ecPublicKey
+* Proxy certificate:
+*  SSL certificate verify ok.
+* CONNECT tunnel: HTTP/1.1 negotiated
+> CONNECT actor:80 HTTP/1.1
+> ate-target-actor: ate-demo-counter/my-counter-1
+* TLSv1.3 (IN), TLS alert, unknown (628):
+* OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+curl: (56) OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+exit=56
+### 25-wrongid-connect-8444: curl -sS -v -m 15 -o /dev/null -w 'code=%{http_code}\n' --proxytunnel --proxy https://atenet-router.ate-system.svc:8444 --proxy-cacert /run/ca/trust-bundle.pem --proxy-cert /run/id/credential-bundle.pem --proxy-key /run/id/credential-bundle.pem --proxy-header 'ate-target-actor: ate-demo-counter/my-counter-1' -X POST http://actor:80/
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / x25519 / id-ecPublicKey
+* Proxy certificate:
+*  SSL certificate verify ok.
+* CONNECT tunnel: HTTP/1.1 negotiated
+> CONNECT actor:80 HTTP/1.1
+> ate-target-actor: ate-demo-counter/my-counter-1
+< HTTP/1.1 200 OK
+< date: Thu, 12 Nov 2026 11:12:16 GMT
+< 
+* using HTTP/1.x
+> POST / HTTP/1.1
+* OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0
+curl: (56) OpenSSL SSL_read: SSL_ERROR_SYSCALcode=000
+exit=56
+### 26-rightid-connect-8444: curl -sS -v -m 15 --proxytunnel --proxy https://atenet-router.ate-system.svc:8444 --proxy-cacert /run/ca/trust-bundle.pem --proxy-cert /run/id/credential-bundle.pem --proxy-key /run/id/credential-bundle.pem --proxy-header 'ate-target-actor: ate-demo-counter/my-counter-1' -X POST http://actor:80/
+> CONNECT actor:80 HTTP/1.1
+> ate-target-actor: ate-demo-counter/my-counter-1
+< HTTP/1.1 200 OK
+< date: Thu, 12 Nov 2026 11:12:16 GMT
+< 
+* using HTTP/1.x
+> POST / HTTP/1.1
+< HTTP/1.1 200 OK
+< Date: Thu, 12 Nov 2026 11:12:16 GMT
+< Content-Length: 84
+< Content-Type: text/plain; charset=utf-8
+< 
+preserved memory count: 5 | preserved file counter: 5 | preserved rootfs counter: 5
+exit=0
+### 30-plain-svc-80: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:80/
+exit=7
+### 31-plain-pod-80: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:80/
+exit=28
+### 30-plain-svc-8081: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:8081/
+exit=7
+### 31-plain-pod-8081: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:8081/
+exit=7
+### 30-plain-svc-8080: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:8080/
+exit=28
+### 31-plain-pod-8080: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:8080/
+exit=7
+### 30-plain-svc-8443: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:8443/
+exit=28
+### 31-plain-pod-8443: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:8443/
+curl: (1) Received HTTP/0.9 when not allowed
+exit=1
+### 30-plain-svc-8444: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:8444/
+curl: (1) Received HTTP/0.9 when not allowed
+exit=1
+### 31-plain-pod-8444: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:8444/
+curl: (1) Received HTTP/0.9 when not allowed
+exit=1
+### 30-plain-svc-9901: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:9901/
+exit=28
+### 31-plain-pod-9901: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:9901/
+exit=28
+### 30-plain-svc-9902: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:9902/
+exit=28
+### 31-plain-pod-9902: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:9902/
+exit=28
+### 30-plain-svc-9090: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:9090/
+exit=28
+### 31-plain-pod-9090: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:9090/
+exit=28
+### 30-plain-svc-9091: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:9091/
+exit=28
+### 31-plain-pod-9091: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:9091/
+exit=28
+### 30-plain-svc-15000: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://atenet-router.ate-system.svc:15000/
+exit=28
+### 31-plain-pod-15000: curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:15000/
+exit=28
+### 32-plain-pod-80-body: curl -sS -m 10 -X POST -H 'ate-target-actor: ate-demo-counter/my-counter-1' http://10.244.0.42:80/
+exit=28
+### 33-plain-connect-8081: curl -sS -v -m 10 --proxytunnel --proxy http://atenet-router.ate-system.svc:8081 --proxy-header 'ate-target-actor: ate-demo-counter/my-counter-1' -X POST http://actor:80/
+* connect to 10.96.5.247 port 8081 from 10.244.0.26 port 55798 failed: Connection refused
+exit=7
+### kubectl ate proxy
+preserved memory count: 6 | preserved file counter: 6 | preserved rootfs counter: 6
+ code=200 t=0.077082
+ATESPACE           NAME           TEMPLATE                   STATE                 WORKER POD                                  WORKER IPS    VERSION   AGE
+ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_RUNNING   ate-demo-counter/counter-7cc7dcd596-kpw8g   10.244.0.25   3         38m

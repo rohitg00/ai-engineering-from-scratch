@@ -1,0 +1,95 @@
+[
+  {
+    "configMap": {
+      "defaultMode": 420,
+      "name": "atenet-egress"
+    },
+    "name": "config"
+  },
+  {
+    "emptyDir": {},
+    "name": "drain-signal"
+  },
+  {
+    "emptyDir": {},
+    "name": "sdsmint-sock"
+  },
+  {
+    "name": "servicedns",
+    "projected": {
+      "defaultMode": 420,
+      "sources": [
+        {
+          "podCertificate": {
+            "credentialBundlePath": "credential-bundle.pem",
+            "keyType": "ECDSAP256",
+            "signerName": "servicedns.podcert.ate.dev/identity"
+          }
+        },
+        {
+          "clusterTrustBundle": {
+            "labelSelector": {
+              "matchLabels": {
+                "podcert.ate.dev/canarying": "live"
+              }
+            },
+            "path": "trust-bundle.pem",
+            "signerName": "servicedns.podcert.ate.dev/identity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "podidentity",
+    "projected": {
+      "defaultMode": 420,
+      "sources": [
+        {
+          "podCertificate": {
+            "credentialBundlePath": "credential-bundle.pem",
+            "keyType": "ECDSAP256",
+            "signerName": "podidentity.podcert.ate.dev/identity"
+          }
+        },
+        {
+          "clusterTrustBundle": {
+            "labelSelector": {
+              "matchLabels": {
+                "podcert.ate.dev/canarying": "live"
+              }
+            },
+            "path": "trust-bundle.pem",
+            "signerName": "podidentity.podcert.ate.dev/identity"
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "actor-id-ca-certs",
+    "secret": {
+      "defaultMode": 420,
+      "secretName": "actor-id-ca-certs"
+    }
+  },
+  {
+    "name": "ca-state",
+    "projected": {
+      "defaultMode": 420,
+      "sources": [
+        {
+          "secret": {
+            "items": [
+              {
+                "key": "pool",
+                "path": "mitm-pool.json"
+              }
+            ],
+            "name": "egress-mitm-ca-pool"
+          }
+        }
+      ]
+    }
+  }
+]

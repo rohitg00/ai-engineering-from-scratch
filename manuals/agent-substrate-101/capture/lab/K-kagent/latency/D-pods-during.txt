@@ -1,0 +1,7 @@
+NAME                                 READY   STATUS    RESTARTS   AGE     IP            NODE                   NOMINATED NODE   READINESS GATES
+kagent-controller-6fff5c8696-7trwv   1/1     Running   0          10m     10.244.0.22   kagent-control-plane   <none>           <none>
+kagent-default-679c58c6cb-pljdk      1/1     Running   0          10m     10.244.0.23   kagent-control-plane   <none>           <none>
+kagent-postgresql-566dbb9bc5-8jt4z   2/2     Running   0          12m     10.244.0.7    kagent-control-plane   <none>           <none>
+kagent-tools-5b7c6fbcc5-dm9sr        1/1     Running   0          10m     10.244.0.20   kagent-control-plane   <none>           <none>
+kagent-ui-7945b67c54-s9ftd           1/1     Running   0          10m     10.244.0.21   kagent-control-plane   <none>           <none>
+mock-llm-597bf4cb6-wzs7p             1/1     Running   0          7m12s   10.244.0.24   kagent-control-plane   <none>           <none>

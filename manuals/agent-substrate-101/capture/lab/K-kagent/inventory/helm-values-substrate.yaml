@@ -1,0 +1,150 @@
+ateApi:
+  actorJWTIssuer: ""
+  authorization:
+    bootstrapOwners:
+    - spiffe://cluster.local/ns/kagent/sa/kagent-controller
+    - system:serviceaccount:ate-system:ate-client
+  extraArgs: []
+  logLevel: info
+  resources:
+    limits:
+      cpu: "2"
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  snapshotLocation: ""
+ateApiServerEnvVarsConfigMap: ate-api-server-envvars
+ateController:
+  resources:
+    limits:
+      cpu: "1"
+      memory: 512Mi
+    requests:
+      cpu: 50m
+      memory: 128Mi
+ateIdpServer:
+  resources: {}
+atelet:
+  enabled: false
+  extraArgs: []
+  extraEnv: []
+  imageCredentialProviderBinDir: ""
+  imageCredentialProviderConfig: ""
+  imageCredentialProviderConfigYAML: ""
+  resources:
+    limits:
+      cpu: "2"
+      memory: 1Gi
+    requests:
+      cpu: 50m
+      memory: 256Mi
+  storageBackend: s3
+atenetEgress:
+  agentgateway:
+    resources:
+      limits:
+        cpu: "2"
+        memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+atenetRouter:
+  agentgateway:
+    resources:
+      limits:
+        cpu: "2"
+        memory: 1Gi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+  ingressAllowedSPIFFEIDs:
+  - spiffe://cluster.local/ns/kagent/sa/kagent-controller
+  requestParking:
+    budget: 60s
+  requestTimeout: 60s
+createNamespace: false
+credentialProvider:
+  namespacePolicies:
+  - allowedNamespaces:
+    - kagent
+    atespace: kagent
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+global:
+  imagePullPolicy: ""
+  imagePullSecrets: []
+  imageRegistry: ""
+image:
+  registry: ghcr.io
+  repository: kagent-dev/substrate
+  tag: ""
+imagePullSecrets: []
+images:
+  agentgateway: cr.agentgateway.dev/agentgateway:v1.7.0@sha256:60216aafb03d37f94e952ff3d51d2f630a65b10ecaebdc0a864882f92610c45b
+  awsCli: amazon/aws-cli:2.38.5@sha256:c8156a0e74e13929a42d7e60f0d4e14e7d28d980cd21822505d4bff80e5460c1
+  busybox: busybox:1.36
+  rustfs: rustfs/rustfs:1.0.3@sha256:9ca9559533b537d10482fe923288b676ad08f92a7069d9a17327fbae3cab688b
+objectStorePlugin:
+  control:
+    resources: {}
+  extraEnv: []
+  node:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+  transferServiceAccount: ""
+otel:
+  endpoint: ""
+  logs:
+    enabled: true
+    endpoint: ""
+  metrics:
+    enabled: true
+    endpoint: ""
+  traces:
+    enabled: true
+    endpoint: ""
+    samplingRatio: 0.01
+postgres:
+  clientCertificates:
+    enabled: true
+  ownerConnectionStringSecretRef:
+    key: ownerConnectionString
+    name: substrate-postgres-owner
+  ownerRole: substrate_owner
+  readWriteConnectionStringSecretRef:
+    key: readWriteConnectionString
+    name: substrate-postgres-readwrite
+  readWriteRole: substrate_readwrite
+  schema: substrate
+preview:
+- PerTemplateSnapshotLocation
+- GoldenEgressPolicy
+rustfs:
+  accessKey: rustfsadmin
+  bucket: ate-snapshots
+  bucketInit:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 10m
+        memory: 128Mi
+  enabled: true
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 50m
+      memory: 256Mi
+  secretKey: rustfsadmin
+  storageSize: 1Gi

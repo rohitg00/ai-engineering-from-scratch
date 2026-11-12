@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" role="img" aria-labelledby="plate-substrate-request-title plate-substrate-request-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="plate-substrate-request-title">One request wakes one actor</title>
+  <desc id="plate-substrate-request-desc">A client sends one request through kubectl ate proxy to atenet-router. The router calls ResumeActor on ate-api-server, which reads the actor row in Postgres. Below them is one worker pod on the node kind-control-plane. On it, atelet restores the golden snapshot from the object store, and the actor my-counter-1 goes from SUSPENDED to RUNNING. The router then opens a tunnel to the actor. On our x86 server guest the first request took 0.358 s, the next four took 0.062 s to 0.091 s, and a request after 900 s with no traffic took 0.080 s because the actor was still running.</desc>
+  <defs><marker id="plate-substrate-request-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="plate-substrate-request-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="plate-substrate-request-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="plate-substrate-request-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE REQUEST PATH · AGENT SUBSTRATE V1.0.0</text>
+  <text x="620" y="18" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">my-counter-1</text>
+  <rect x="20" y="30" width="130" height="52" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="85" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">client</text>
+  <text x="85" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">curl, the proxy</text>
+  <rect x="165" y="30" width="144" height="52" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="237" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">atenet-router</text>
+  <text x="237" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">asks every time</text>
+  <rect x="321" y="30" width="144" height="52" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="393" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="393" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ResumeActor</text>
+  <rect x="482" y="30" width="130" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="547" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">Postgres</text>
+  <text x="547" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the actor row</text>
+  <polygon points="160,175 626,175 626,169 626,119 160,119 160,169" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="160,175 626,175 626,169 160,169" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="160,169 626,169 626,119 160,119" fill="var(--m-paper, #fafaf5)"/>
+  <polygon points="160,169 626,169 626,119 160,119" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polyline points="160,169 626,169" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="160,175 626,175 626,169 626,119 160,119 160,169" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-linejoin="round"/>
+  <polygon points="48.63,150 85,129 103.24,134.07 139.61,155.07 103.24,176.07 85,171" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="85,103 121.37,124 121.37,150 85,171 48.63,150 48.63,124" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="85,103 121.37,124 85,145 48.63,124" fill="var(--m-olive-fill, #eef0dc)"/>
+  <polygon points="85,103 121.37,124 85,145 48.63,124" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="48.63,150 85,171 85,145 48.63,124" fill="var(--m-olive-fill, #eef0dc)"/>
+  <polygon points="121.37,150 85,171 85,145 121.37,124" fill="var(--m-olive-fill, #eef0dc)"/>
+  <polygon points="121.37,150 85,171 85,145 121.37,124" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="85,145 121.37,124" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="85,145 48.63,124" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="85,145 85,171" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="85,103 121.37,124 121.37,150 85,171 48.63,150 48.63,124" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="200.63,150 237,129 255.24,134.07 291.61,155.07 255.24,176.07 237,171" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="237,103 273.37,124 273.37,150 237,171 200.63,150 200.63,124" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="237,103 273.37,124 237,145 200.63,124" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="237,103 273.37,124 237,145 200.63,124" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="200.63,150 237,171 237,145 200.63,124" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="273.37,150 237,171 237,145 273.37,124" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="273.37,150 237,171 237,145 273.37,124" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="237,145 273.37,124" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="237,145 200.63,124" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="237,145 237,171" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="237,103 273.37,124 273.37,150 237,171 200.63,150 200.63,124" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="356.63,150 393,129 411.24,134.07 447.61,155.07 411.24,176.07 393,171" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="393,103 429.37,124 429.37,150 393,171 356.63,150 356.63,124" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="393,103 429.37,124 393,145 356.63,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="393,103 429.37,124 393,145 356.63,124" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="356.63,150 393,171 393,145 356.63,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="429.37,150 393,171 393,145 429.37,124" fill="var(--m-blue-fill, #e6edf6)"/>
+  <polygon points="429.37,150 393,171 393,145 429.37,124" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="393,145 429.37,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="393,145 356.63,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="393,145 393,171" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="393,103 429.37,124 429.37,150 393,171 356.63,150 356.63,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="522.51,124 522.51,150 522.98,152.76 524.37,155.41 526.63,157.86 529.68,160 533.39,161.76 537.63,163.07 542.22,163.87 547,164.14 551.78,163.87 556.37,163.07 560.61,161.76 564.32,160 567.37,157.86 569.63,155.41 571.02,152.76 571.49,150 571.49,124" fill="var(--m-teal-fill, #e1efee)"/>
+  <polygon points="522.51,124 522.51,150 522.98,152.76 524.37,155.41 526.63,157.86 529.68,160 533.39,161.76 537.63,163.07 542.22,163.87 547,164.14 551.78,163.87 556.37,163.07 560.61,161.76 564.32,160 567.37,157.86 569.63,155.41 571.02,152.76 571.49,150 571.49,124" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.08"/>
+  <polygon points="522.51,124 522.51,150 522.98,152.76 524.37,155.41 526.63,157.86 529.68,160 533.39,161.76 537.63,163.07 542.22,163.87 547,164.14 551.78,163.87 556.37,163.07 560.61,161.76 564.32,160 567.37,157.86 569.63,155.41 571.02,152.76 571.49,150 571.49,124" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4" stroke-linejoin="round"/>
+  <ellipse cx="547" cy="124" rx="24.49" ry="14.14" fill="var(--m-teal-fill, #e1efee)"/>
+  <ellipse cx="547" cy="124" rx="24.49" ry="14.14" fill="var(--m-shine, #ffffff)" fill-opacity="0.45" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <polyline points="85,84 85,124" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="85" cy="124" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <polyline points="237,84 237,124" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="237" cy="124" r="2" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <polyline points="393,84 393,124" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="393" cy="124" r="2" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <polyline points="547,84 547,109.86" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="547" cy="109.86" r="2" fill="var(--m-teal-ink, #18696a)"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <path d="M123.37306680000002 137 L198.6269332 137" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-substrate-request-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M123.37306680000002 137 L198.6269332 137" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="138.2" y="118.42" width="45.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="161" y="129" font-size="11" text-anchor="middle">POST /</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <path d="M275.3730668 137 L354.6269332 137" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-substrate-request-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M275.3730668 137 L354.6269332 137" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="275.7" y="118.42" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="315" y="129" font-size="11" text-anchor="middle">ResumeActor</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <path d="M431.3730668 137 L515 137" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-substrate-request-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M431.3730668 137 L515 137" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="437.19" y="118.42" width="72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="473.19" y="129" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">read, bind</text>
+  </g>
+  <text x="20" y="206" font-size="11" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">namespace ate-system</text>
+  <line x1="20" y1="216" x2="620" y2="216" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="236" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NODE KIND-CONTROL-PLANE</text>
+  <text x="620" y="236" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">one worker pod, gVisor</text>
+  <polygon points="14,505 626,505 630.8,506.2 18.8,506.2" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="14,505 626,505 626,497 626,352 14,352 14,497" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="14,505 626,505 626,497 14,497" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="14,497 626,497 626,352 14,352" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="14,497 626,497 626,352 14,352" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polyline points="14,497 626,497" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="14,505 626,505 626,497 626,352 14,352 14,497" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.4" stroke-linejoin="round"/>
+  <polygon points="188.5,424.5 237,396.5 258.04,402.35 306.54,430.35 258.04,458.35 237,452.5" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="237,366.5 285.5,394.5 285.5,424.5 237,452.5 188.5,424.5 188.5,394.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="237,366.5 285.5,394.5 237,422.5 188.5,394.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="237,366.5 285.5,394.5 237,422.5 188.5,394.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="188.5,424.5 237,452.5 237,422.5 188.5,394.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="285.5,424.5 237,452.5 237,422.5 285.5,394.5" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="285.5,424.5 237,452.5 237,422.5 285.5,394.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="237,422.5 285.5,394.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="237,422.5 188.5,394.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="237,422.5 237,452.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="237,366.5 285.5,394.5 285.5,424.5 237,452.5 188.5,424.5 188.5,394.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="356.63,424.5 393,403.5 408.43,407.79 444.81,428.79 408.43,449.79 393,445.5" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="393,381.5 429.37,402.5 429.37,424.5 393,445.5 356.63,424.5 356.63,402.5" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="393,381.5 429.37,402.5 393,423.5 356.63,402.5" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="393,381.5 429.37,402.5 393,423.5 356.63,402.5" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="356.63,424.5 393,445.5 393,423.5 356.63,402.5" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="429.37,424.5 393,445.5 393,423.5 429.37,402.5" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="429.37,424.5 393,445.5 393,423.5 429.37,402.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <polyline points="393,423.5 429.37,402.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="393,423.5 356.63,402.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polyline points="393,423.5 393,445.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-opacity="0.6"/>
+  <polygon points="393,381.5 429.37,402.5 429.37,424.5 393,445.5 356.63,424.5 356.63,402.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.5" stroke-linejoin="round"/>
+  <polygon points="520.06,394.5 520.06,424.5 520.57,427.53 522.11,430.45 524.6,433.14 527.95,435.5 532.03,437.43 536.69,438.87 541.74,439.76 547,440.06 552.26,439.76 557.31,438.87 561.97,437.43 566.05,435.5 569.4,433.14 571.89,430.45 573.43,427.53 573.94,424.5 573.94,394.5" fill="var(--m-teal-fill, #e1efee)"/>
+  <polygon points="520.06,394.5 520.06,424.5 520.57,427.53 522.11,430.45 524.6,433.14 527.95,435.5 532.03,437.43 536.69,438.87 541.74,439.76 547,440.06 552.26,439.76 557.31,438.87 561.97,437.43 566.05,435.5 569.4,433.14 571.89,430.45 573.43,427.53 573.94,424.5 573.94,394.5" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.08"/>
+  <polygon points="520.06,394.5 520.06,424.5 520.57,427.53 522.11,430.45 524.6,433.14 527.95,435.5 532.03,437.43 536.69,438.87 541.74,439.76 547,440.06 552.26,439.76 557.31,438.87 561.97,437.43 566.05,435.5 569.4,433.14 571.89,430.45 573.43,427.53 573.94,424.5 573.94,394.5" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4" stroke-linejoin="round"/>
+  <ellipse cx="547" cy="394.5" rx="26.94" ry="15.56" fill="var(--m-teal-fill, #e1efee)"/>
+  <ellipse cx="547" cy="394.5" rx="26.94" ry="15.56" fill="var(--m-shine, #ffffff)" fill-opacity="0.45" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="20" y="262" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">actor my-counter-1</text>
+  <text x="20" y="278" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory, files, rootfs</text>
+  <polyline points="60,284 188.5,409.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="188.5" cy="409.5" r="2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="262" font-size="12" text-anchor="end" font-weight="700" fill="var(--m-teal-ink, #18696a)">object store</text>
+  <text x="620" y="278" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the golden snapshot</text>
+  <polyline points="570,284 547,378.94" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="547" cy="378.94" r="2" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="393" y="540" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">atelet</text>
+  <polyline points="393,526 393,423.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="393" cy="423.5" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <path d="M374.8134666 162.5 L374.8134666 398.5" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-substrate-request-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M374.8134666 162.5 L374.8134666 398.5" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="379.81" y="289.03" width="54.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="382.81" y="300" font-size="11.5">Restore</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <path d="M513 413.5 L432.3730668 413.5" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-substrate-request-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M513 413.5 L432.3730668 413.5" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <path d="M354.6269332 413.5 L288.4974224 409.5" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#plate-substrate-request-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M354.6269332 413.5 L288.4974224 409.5" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <text x="200" y="540" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">SUSPENDED to RUNNING</text>
+  <polyline points="200,526 237,422.5" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="237" cy="422.5" r="2" fill="var(--m-amber-ink, #85590c)"/>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <path d="M218.8134666 162.5 L218.8134666 390.5" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#plate-substrate-request-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M218.8134666 162.5 L218.8134666 390.5" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="223.81" y="289.03" width="123.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="226.81" y="300" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">tunnel, port 8443</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="580" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CLIENT TIME THROUGH KUBECTL ATE PROXY, X86 SERVER GUEST</text>
+  <text x="20" y="602" font-size="12" font-weight="700" fill="var(--m-amber-ink, #85590c)">first request 0.358 s</text>
+  <text x="330" y="602" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">next four 0.062 s to 0.091 s</text>
+  </g>
+  <text x="20" y="626" font-size="11" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">after 900 s with no request: 60 of 60 samples RUNNING, then 0.080 s</text>
+</svg>

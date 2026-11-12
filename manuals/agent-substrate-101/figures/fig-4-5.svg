@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-5-title fig-4-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-5-title">Running actors per worker follow the CPU that the worker reports</title>
+  <desc id="fig-4-5-desc">Two columns. On the left, each of two workers with a limit of 2 CPUs reports 2000 millicores and holds two actors that declare 1 CPU each. A fifth actor has no room and its request returns 503 after 5.06 seconds. On the right, one kagent worker with no limits on a node with 16 vCPUs reports 16000 millicores. With 24 turns at the same time, 16 actors run and 8 wait.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LIMITS SET: CPU 2, MEMORY 3GI</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NO LIMITS, NODE WITH 16 VCPUS</text>
+  <line x1="320" y1="8" x2="320" y2="322" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="34" width="130" height="92" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="85" y="52" font-size="11.5" text-anchor="middle" font-weight="700">worker bzgjd</text>
+  <rect x="49" y="62" width="30" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="85" y="62" width="30" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="85" y="114" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">CPU 2000/2000</text>
+  <rect x="162" y="34" width="130" height="92" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="227" y="52" font-size="11.5" text-anchor="middle" font-weight="700">worker f65dl</text>
+  <rect x="191" y="62" width="30" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="227" y="62" width="30" height="30" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="227" y="114" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">CPU 2000/2000</text>
+  <rect x="49" y="150" width="30" height="30" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="90" y="162" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">fifth actor b0-5</text>
+  <text x="90" y="178" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 after 5.06 s</text>
+  <text x="20" y="218" font-size="11.5">capacity: 2 workers x 2 CPUs = 4 actors</text>
+  <text x="20" y="236" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">each actor declares 1000 millicores</text>
+  <text x="20" y="252" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory was not the limit: 512Mi of 3008Mi</text>
+  <rect x="336" y="34" width="284" height="196" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="52" font-size="11.5" text-anchor="middle" font-weight="700">worker kagent-default</text>
+  <rect x="345" y="62" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="379" y="62" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="413" y="62" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="447" y="62" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="481" y="62" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="515" y="62" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="549" y="62" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="583" y="62" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="345" y="96" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="379" y="96" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="413" y="96" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="447" y="96" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="481" y="96" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="515" y="96" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="549" y="96" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <rect x="583" y="96" width="28" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="146" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">CPU 16000/16000, 16 turns run</text>
+  <rect x="345" y="162" width="28" height="28" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <rect x="379" y="162" width="28" height="28" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <rect x="413" y="162" width="28" height="28" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <rect x="447" y="162" width="28" height="28" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <rect x="481" y="162" width="28" height="28" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <rect x="515" y="162" width="28" height="28" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <rect x="549" y="162" width="28" height="28" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <rect x="583" y="162" width="28" height="28" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="478" y="210" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">8 more turns wait for a free CPU</text>
+  <text x="336" y="252" font-size="11.5">24 turns at once, all completed</text>
+  <text x="336" y="270" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in 4.3 to 7.8 s on the kagent guest</text>
+  <rect x="20" y="298" width="14" height="12" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="40" y="308" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">running actor, 1 CPU</text>
+  <rect x="180" y="298" width="14" height="12" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="200" y="308" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">waits</text>
+  <rect x="244" y="298" width="14" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="264" y="308" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+</svg>

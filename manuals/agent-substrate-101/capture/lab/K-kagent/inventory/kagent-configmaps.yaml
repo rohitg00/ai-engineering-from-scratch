@@ -1,0 +1,477 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    a2a-communication: |
+      ## Agent-to-Agent Communication
+
+      You can communicate with other agents to accomplish complex tasks that span multiple
+      domains of expertise. When working with other agents:
+
+      1. **Clear delegation**: When delegating a task to another agent, provide clear and
+         complete context. Include all relevant information the other agent needs to
+         accomplish the task.
+      2. **Result validation**: When receiving results from another agent, validate them
+         before incorporating them into your response or using them for further actions.
+      3. **Error handling**: If an agent you are communicating with fails or returns an
+         unexpected result, handle the error gracefully. Consider retrying, using an
+         alternative approach, or informing the user.
+      4. **Avoid circular delegation**: Do not create circular delegation chains where
+         agents repeatedly delegate tasks back to each other without making progress.
+    kubernetes-context: |
+      ## Kubernetes Operational Context
+
+      You are operating within a Kubernetes cluster. Follow this methodology:
+
+      ### Investigation Protocol
+      1. **Start non-intrusively**: Begin with read-only operations (get, describe, logs,
+         events) before any modifications. Gather information before acting.
+      2. **Progressive escalation**: Start with broad resource checks, then narrow down to
+         specific resources, pods, containers, or logs as you identify the problem area.
+      3. **Verify before acting**: Consider the potential impact of any change. Check
+         dependencies, related resources, and downstream effects before modifying anything.
+
+      ### Problem-Solving Framework
+      1. **Initial assessment**: Check cluster health, node status, and recent events. Identify
+         the scope of the issue (single pod, deployment, namespace, or cluster-wide).
+      2. **Classify the problem**: Determine if it's an application issue (crashes, errors),
+         infrastructure problem (node failures, resource exhaustion), networking issue
+         (connectivity, DNS, policies), or configuration error (invalid specs, missing secrets).
+      3. **Analyze resources**: Examine pod status, container logs, resource metrics, events,
+         and network connectivity relevant to the issue.
+      4. **Implement solutions**: Propose targeted fixes. Present multiple options when
+         appropriate, explain trade-offs, and include verification steps.
+
+      ### Key Principles
+      - Always be explicit about which namespace you are operating in.
+      - Remember that your actions impact real workloads — prioritize stability.
+      - Use labels and selectors to target resources precisely.
+      - Check resource quotas and limits before creating or scaling resources.
+    safety-guardrails: |
+      ## Safety Guidelines
+
+      You must follow these safety principles in all interactions:
+
+      1. **No destructive operations without confirmation**: Never delete resources, modify
+         production systems, or take irreversible actions without explicit user confirmation.
+         Always explain what will happen and ask for approval first.
+      2. **Least privilege**: Apply changes to the minimum scope necessary. Prefer targeted
+         operations over broad ones. Avoid cluster-wide changes when namespace-scoped changes
+         will suffice.
+      3. **Rollback planning**: Before making changes, ensure you have a plan to revert them.
+         Capture the current state, explain the rollback procedure, and verify the rollback
+         path exists before proceeding.
+      4. **Protect sensitive data**: Never expose secrets, credentials, API keys, tokens, or
+         certificates in your responses. Redact sensitive information before presenting output
+         to the user.
+      5. **Stay within scope**: Only perform actions within your defined capabilities and the
+         user's stated intent. Do not take autonomous actions beyond what was requested.
+      6. **Report uncertainties**: If you are unsure about an action or its consequences,
+         communicate your uncertainty to the user and ask for guidance before proceeding.
+    skills-usage: |
+      ## Skills
+
+      You have access to skills — pre-built capabilities loaded from external sources and
+      available as files in your skills directory (/skills). Each skill contains instructions,
+      prompts, or data that extend your abilities beyond your base training.
+
+      When a user asks you to perform a task, check if any of the available skills match
+      the request. If a skill is relevant, read and follow its instructions carefully.
+      Skills may contain domain-specific knowledge, step-by-step procedures, or templates
+      that you should use to produce higher-quality responses.
+
+      Always prefer using a skill over generating a response from scratch when a relevant
+      skill is available.
+    tool-usage-best-practices: |
+      ## Tool Usage Best Practices
+
+      Follow these principles when using tools:
+
+      1. **Read before write**: Always use informational tools (get, describe, list, status)
+         before modification tools. Understand the current state before making changes.
+      2. **Explain before acting**: Before calling any modification tool, explain to the user
+         what you intend to do and why. Wait for confirmation on destructive operations.
+      3. **Dry-run when possible**: Use dry-run flags or preview modes when available to
+         validate changes before applying them.
+      4. **Use the right tool**: Select the most specific tool for the task. Check tool
+         descriptions carefully and ensure you understand the expected parameters.
+      5. **Backup current state**: Before modifications, capture the current state (e.g.,
+         export YAML, save configuration) so changes can be reverted if needed.
+      6. **Verify after changes**: After any modification, use informational tools to confirm
+         the change took effect and didn't cause unintended side effects.
+      7. **Handle errors gracefully**: If a tool call fails, analyze the error, adjust your
+         approach, and retry. Do not repeat the exact same failing call.
+      8. **Minimize calls**: Plan your approach to minimize tool calls. Batch operations when
+         possible and avoid redundant calls.
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: kagent
+      meta.helm.sh/release-namespace: kagent
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    labels:
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kagent
+      app.kubernetes.io/part-of: kagent
+      app.kubernetes.io/version: 1.0.0
+      helm.sh/chart: kagent-1.0.0
+      kagent.dev/prompt-library: "true"
+    name: kagent-builtin-prompts
+    namespace: kagent
+    resourceVersion: "1331"
+    uid: 149ea397-08dc-4eec-bae2-1113cd1ec40c
+- apiVersion: v1
+  data:
+    controller.yaml: |
+      database:
+        owner:
+          role: kagent_owner
+          urlFile: /etc/kagent/secrets/database-owner-url
+        readWrite:
+          role: kagent_readwrite
+          urlFile: /etc/kagent/secrets/database-readwrite-url
+        schema: kagent
+        skipMigrations: false
+        vectorEnabled: false
+        vectorSchema: extensions
+      gateway:
+        publicUrl: http://kagent-controller.kagent.svc.cluster.local:8083
+      harnessImages:
+        claude: ghcr.io/kagent-dev/kagent/claude-harness@sha256:54629b4e47ad08ab931ae815492d2533f4a3dd6ce007eda06863675afb4f99d2
+        codex: ghcr.io/kagent-dev/kagent/codex-harness@sha256:7da600c1bc342b31bccb281dd9a48c6bdbf33d80a20f89e69128f052858fe9f3
+        kagent: ghcr.io/kagent-dev/kagent/golang-adk@sha256:f62e9f2820d3325ca147a5d39802dc3e9c914bee97b3e021bd38f6f5df10e3bf
+        release: 1.0.0
+      kubernetes:
+        namespace: kagent
+        watchNamespaces: []
+      logging:
+        level: info
+      metrics:
+        bindAddress: "0"
+        secure: true
+      push:
+        allowHttp: false
+        allowPrivateNetworks: false
+        issuer: http://kagent-controller.kagent.svc.cluster.local:8083
+        maxConcurrency: 10
+        recoveryInterval: 60s
+        sendTimeout: 5s
+      runtimeDefaults:
+        builtinTools:
+          bashVenvPath: ""
+          disableAskUser: false
+          disableBash: false
+          disableFileSearch: false
+        controlPlaneUrl: http://kagent-controller.kagent.svc.cluster.local:8083
+        cpu: "1"
+        gatewayUrl: http://kagent-controller.kagent.svc.cluster.local:8083
+        logging:
+          level: info
+        memory: 1Gi
+        telemetry: {}
+      sandboxes:
+        cpu: "1"
+        defaultTtl: 3600s
+        guestImage: ""
+        maxTtl: 86400s
+        memory: 1Gi
+      server:
+        auth:
+          mode: insecure
+        bindAddress: :8083
+        grpcReflection: true
+      sessions:
+        idleTtl: 604800s
+        shareMaxTtl: 0s
+      substrate:
+        actorJwtIssuer: https://idp.ate-system.svc
+        apiEndpoint: dns:///api.ate-system.svc:443
+        caFile: /run/substrate-servicedns/trust-bundle.pem
+        clientCertFile: /run/substrate-podidentity/credential-bundle.pem
+        routerUrl: https://atenet-router.ate-system.svc:443
+      telemetry: {}
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: kagent
+      meta.helm.sh/release-namespace: kagent
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kagent
+      app.kubernetes.io/part-of: kagent
+      app.kubernetes.io/version: 1.0.0
+      helm.sh/chart: kagent-1.0.0
+    name: kagent-controller
+    namespace: kagent
+    resourceVersion: "1329"
+    uid: b3e4ccbb-e416-4aad-8ba4-60dd41c140c4
+- apiVersion: v1
+  data:
+    pg_hba.conf: |
+      local all all trust
+      hostssl all postgres all reject
+      hostssl kagent kagent_owner_user,kagent_readwrite_user,substrate_owner_user,substrate_readwrite_user all cert
+    postgresql.conf: |
+      listen_addresses = '*'
+      ssl = on
+      ssl_cert_file = '/run/servicedns.podcert.ate.dev/credential-bundle.pem'
+      ssl_key_file = '/run/servicedns.podcert.ate.dev/credential-bundle.pem'
+      ssl_ca_file = '/run/postgres.podcert.ate.dev/trust-bundle.pem'
+      hba_file = '/etc/postgresql/pg_hba.conf'
+    reload-tls.sh: |
+      set -eu
+      trap 'exit 0' TERM INT
+
+      CERT=/run/servicedns.podcert.ate.dev/credential-bundle.pem
+      CA=/run/postgres.podcert.ate.dev/trust-bundle.pem
+      reloaded=""
+      while true; do
+        current="$(sha256sum "$CERT" "$CA" /etc/postgresql/pg_hba.conf)"
+        if [ "$current" != "$reloaded" ] \
+          && psql -U "$POSTGRES_USER" -d postgres -Atc 'SELECT pg_reload_conf()' >/dev/null 2>&1; then
+          reloaded="$current"
+        fi
+        sleep 60 &
+        wait $!
+      done
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: "2026-11-12T10:11:22Z"
+    name: kagent-postgresql
+    namespace: kagent
+    resourceVersion: "596"
+    uid: f451061b-f318-4960-9fcb-4d4a7a0e4099
+- apiVersion: v1
+  data:
+    KAGENT_UI_API_BASE_URL: /api
+    KAGENT_UI_SSO_REDIRECT_PATH: /oauth2/start
+    KAGENT_UI_STREAM_TIMEOUT_MS: "1800000"
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: kagent
+      meta.helm.sh/release-namespace: kagent
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    labels:
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kagent
+      app.kubernetes.io/part-of: kagent
+      app.kubernetes.io/version: 1.0.0
+      helm.sh/chart: kagent-1.0.0
+    name: kagent-ui
+    namespace: kagent
+    resourceVersion: "1330"
+    uid: 2e265e12-487b-48bc-b946-683be344a264
+- apiVersion: v1
+  data:
+    nginx.conf: |
+      pid /tmp/nginx.pid;
+
+      error_log /dev/stderr;
+
+      events {
+          worker_connections 1024;
+      }
+
+      http {
+          client_body_temp_path /tmp/nginx/client_temp;
+          proxy_temp_path /tmp/nginx/proxy_temp;
+          fastcgi_temp_path /tmp/nginx/fastcgi_temp;
+          uwsgi_temp_path /tmp/nginx/uwsgi_temp;
+          scgi_temp_path /tmp/nginx/scgi_temp;
+
+          include /etc/nginx/mime.types;
+          default_type application/octet-stream;
+
+          access_log /dev/stdout;
+
+          client_max_body_size 20m;
+
+          log_format main        '[$time_local] $remote_addr - $remote_user - $request $status $body_bytes_sent $http_referer $http_user_agent $http_x_forwarded_for';
+          log_format upstreamlog '[$time_local] $remote_addr - $remote_user - $server_name $host to: $upstream_addr: $request $status upstream_response_time $upstream_response_time msec $msec request_time $request_time';
+
+          upstream kagent_backend {
+              server kagent-controller.kagent.svc.cluster.local:8083;
+          }
+
+          map $http_upgrade $connection_upgrade {
+              default upgrade;
+              ''      close;
+          }
+
+          server {
+              listen 8080;
+              server_name localhost;
+
+              root /usr/share/nginx/html;
+              index index.html;
+
+              # Drop ui.basePath when the proxy in front forwards it unstripped.
+
+              location /health {
+                  return 200 'OK';
+              }
+              location = /env-config.js {
+                  alias /tmp/kagent/env-config.js;
+                  default_type application/javascript;
+                  add_header Cache-Control "no-store" always;
+              }
+
+              location = /.well-known/jwks.json {
+                  proxy_pass http://kagent_backend/.well-known/jwks.json;
+                  proxy_set_header Host $host;
+              }
+
+              location /a2a/ {
+                  proxy_pass http://kagent_backend/a2a/;
+                  proxy_http_version 1.1;
+                  proxy_set_header Connection '';
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Forwarded-Host $host;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header Origin $scheme://$host;
+                  proxy_set_header x-auth-request-user "";
+                  proxy_set_header x-auth-request-email "";
+                  proxy_set_header x-auth-request-groups "";
+                  proxy_set_header x-auth-request-preferred-username "";
+                  proxy_set_header x-auth-request-access-token "";
+                  proxy_set_header x-auth-request-redirect "";
+                  proxy_set_header x-forwarded-user "";
+                  proxy_set_header x-forwarded-email "";
+                  proxy_set_header x-forwarded-groups "";
+                  proxy_set_header x-forwarded-preferred-username "";
+                  proxy_read_timeout 1800s;
+                  proxy_send_timeout 1800s;
+                  # Chat is server-sent events; buffering would hold tokens back.
+                  proxy_buffering off;
+              }
+
+              location = /mcp {
+                  proxy_pass http://kagent_backend/mcp;
+                  proxy_http_version 1.1;
+                  proxy_set_header Connection '';
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_set_header x-auth-request-user "";
+                  proxy_set_header x-auth-request-email "";
+                  proxy_set_header x-auth-request-groups "";
+                  proxy_set_header x-auth-request-preferred-username "";
+                  proxy_set_header x-auth-request-access-token "";
+                  proxy_set_header x-auth-request-redirect "";
+                  proxy_set_header x-forwarded-user "";
+                  proxy_set_header x-forwarded-email "";
+                  proxy_set_header x-forwarded-groups "";
+                  proxy_set_header x-forwarded-preferred-username "";
+                  proxy_read_timeout 1800s;
+                  proxy_send_timeout 1800s;
+                  proxy_buffering off;
+              }
+
+              location /api/ {
+                  proxy_pass http://kagent_backend/api/;
+                  proxy_http_version 1.1;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection $connection_upgrade;
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_set_header X-Forwarded-Host $server_name;
+                  proxy_set_header x-auth-request-user "";
+                  proxy_set_header x-auth-request-email "";
+                  proxy_set_header x-auth-request-groups "";
+                  proxy_set_header x-auth-request-preferred-username "";
+                  proxy_set_header x-auth-request-access-token "";
+                  proxy_set_header x-auth-request-redirect "";
+                  proxy_set_header x-forwarded-user "";
+                  proxy_set_header x-forwarded-email "";
+                  proxy_set_header x-forwarded-groups "";
+                  proxy_set_header x-forwarded-preferred-username "";
+                  proxy_cache_bypass $http_upgrade;
+                  proxy_read_timeout 1800s;
+                  proxy_send_timeout 1800s;
+                  proxy_buffering off;
+              }
+              location = /mockServiceWorker.js {
+                  return 404;
+              }
+
+              # Vite fingerprints these filenames, so a given URL's bytes never change.
+              location /assets/ {
+                  add_header Cache-Control "public, max-age=31536000, immutable" always;
+              }
+
+              # The bundle entrypoint must never be cached, or a client keeps loading
+              # the previous release's asset URLs after an upgrade.
+              location = /index.html {
+                  alias /tmp/kagent/index.html;
+                  add_header Cache-Control "no-store" always;
+              }
+
+              # SPA fallback: routing is client-side, so a deep link such as /agents
+              # is not a file on disk and must still return the app shell.
+              location / {
+                  try_files $uri $uri/ /index.html;
+              }
+          }
+      }
+  kind: ConfigMap
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: kagent
+      meta.helm.sh/release-namespace: kagent
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    labels:
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kagent
+      app.kubernetes.io/part-of: kagent
+      app.kubernetes.io/version: 1.0.0
+      helm.sh/chart: kagent-1.0.0
+    name: kagent-ui-config
+    namespace: kagent
+    resourceVersion: "1328"
+    uid: 373c0ead-a40b-48a8-b6ba-ba46a8320823
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIDBTCCAe2gAwIBAgIIG53qHsKxlNkwDQYJKoZIhvcNAQELBQAwFTETMBEGA1UE
+      AxMKa3ViZXJuZXRlczAeFw0yNjExMTIxMDA1NDNaFw0zNjExMDkxMDEwNDNaMBUx
+      EzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+      AoIBAQDIRboKTyxAyD9d21tQtF5jLX3OGE2oVmvsqCKoOrW9STnv/0YW5xQd3nL+
+      Qd2tyXy2duye2q/yWzqu7tomiCpck3zqCrBmTHCn9YPMmMcEL9MzdnfWfa6MAbSF
+      MBCjFjK09Jr/eyI/b7jTRTsHM3TPY5SrlrUZWeZUTiR8jTfb+ce9/ZxSVQsuH2P3
+      YfCaqovNe0iobnIBo19hVGymLNuOgbhPM97XJhI488QI7aqkyDVTVuEpUXW6V+b9
+      aq4gseityuFetGfI75b6wxwgLOADH6k2g8Kp3wZ3XLwKrU/kZbGieTq7TIGfoWGm
+      Q+uC1f+Cnk+N7ktGGPg/gPytrWm1AgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAP
+      BgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBRqPAXm4upRgF93nyk1JCXnMeX6DjAV
+      BgNVHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQDGAVwbflFe
+      3vh+ZOsnG0sTN1wl86arhDsxUWLUP9ivDjcEhgU2DDm7ciSgM/1guxjdYvE9AAov
+      O6VkowgtTmfFbu71JQaJyL7HpfJoGgPORKK7eK9OHH0eC/s6M1BjegMpKFRULRlB
+      1QwiMBatRJhOXqZ5cm8mQbVSHDG73I4JKOxGcH5PFUViYtn8Zjhudy5XQAGgiWVu
+      wDvh7lrvopWi8ORJ31XVzpYaKkB5N31QLV6gSRWTovwdxcKPmT+tmXW8Xw8uaXkV
+      dBwHJVrKE5mC+MJmiJwqdZAd81r4bjLZEDwfCof4xXWvRTOJmdXP9TMX1BSIpDyX
+      xc6ziuq/bRhR
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-11-12T10:11:05Z"
+    name: kube-root-ca.crt
+    namespace: kagent
+    resourceVersion: "436"
+    uid: c5b16ac5-f829-4427-80e4-94e6f64a8a81
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,1 @@
+{"stdout":"issuer=CN=U7ICLCR3N66DBMBSAQNS5JHTHI\nsubject=\nnotBefore=Nov 12 10:48:04 2026 GMT\nnotAfter=Nov 12 11:08:04 2026 GMT\nX509v3 Subject Alternative Name: critical\n    DNS:example.com\n","stderr":"","exitCode":0}

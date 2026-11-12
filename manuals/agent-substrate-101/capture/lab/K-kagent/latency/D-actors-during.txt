@@ -1,0 +1,22 @@
+ATESPACE   NAME                                           TEMPLATE                        STATE                   WORKER POD                               WORKER IPS    VERSION   AGE
+kagent     session-01a1cf43-d760-747a-b907-5e0640126e4e   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 21        5m22s
+kagent     session-01a1cf46-0786-748f-ad16-cc3bb0e1f2e1   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 81        2m59s
+kagent     session-01a1cf47-a49c-7e3c-9913-2ca586700201   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 81        73s
+kagent     session-01a1cf48-140b-7c6a-af23-173d97b5160a   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         45s
+kagent     session-01a1cf48-21bf-731d-b747-9dd5edab82d3   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         41s
+kagent     session-01a1cf48-2f28-7b13-85b7-41d79e765946   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         38s
+kagent     session-01a1cf48-3cef-7cef-99d8-aebf38e96fe1   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         34s
+kagent     session-01a1cf48-4ae2-78f7-bbed-5975beb0d816   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         31s
+kagent     session-01a1cf48-5834-7ee1-9738-36f458f41a8a   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         27s
+kagent     session-01a1cf48-656d-7726-bda6-0267e3818d95   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         24s
+kagent     session-01a1cf48-72c8-7a8b-9814-ead97bc5f401   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         20s
+kagent     session-01a1cf48-8097-7a8f-bb9c-31bb596a2916   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         17s
+kagent     session-01a1cf48-8e60-731a-bd18-059d726e0e5e   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 5         13s
+kagent     session-01a1cf48-abad-7b0e-9426-b48e7a9ce311   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_RUNNING     kagent/kagent-default-679c58c6cb-pljdk   10.244.0.23   3         6s
+kagent     session-01a1cf48-ad3a-7ad0-ac31-910a36afe5a9   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 1         5s
+kagent     session-01a1cf48-aebc-77dd-a706-72e86273bdfa   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_RUNNING     kagent/kagent-default-679c58c6cb-pljdk   10.244.0.23   3         5s
+kagent     session-01a1cf48-b076-7c3a-b6a5-fbaf58d7f71c   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_RUNNING     kagent/kagent-default-679c58c6cb-pljdk   10.244.0.23   3         5s
+kagent     session-01a1cf48-b21c-791f-9a53-00300133c12c   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 1         4s
+kagent     session-01a1cf48-b3a7-7f18-9694-78a3d7def648   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 1         4s
+kagent     session-01a1cf48-b531-7a93-ae59-06dd16c0e3fa   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 1         3s
+kagent     session-01a1cf48-b6bc-7086-a299-b7a1fbbe118d   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                                                 1         3s

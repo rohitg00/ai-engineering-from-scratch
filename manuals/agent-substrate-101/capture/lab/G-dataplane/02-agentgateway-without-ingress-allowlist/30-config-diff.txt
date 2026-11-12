@@ -1,0 +1,4 @@
+14c14
+<             source.spiffeId in []
+---
+>             source.spiffeId in ["spiffe://cluster.local/ns/ate-system/sa/atenet-client"]

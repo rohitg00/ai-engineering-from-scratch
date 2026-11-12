@@ -1,0 +1,12 @@
+1794481264	11:01:04	start-baseline
+1794481294	11:01:34	T1-postgres-scale-0
+1794481355	11:02:35	T1-postgres-scale-1
+1794481357	11:02:37	T1-postgres-ready
+1794481448	11:04:08	T2-ateapi-scale-0
+1794481508	11:05:08	T2-ateapi-scale-2
+1794481518	11:05:18	T2-ateapi-ready
+1794481609	11:06:49	T3-kube-apiserver-manifest-moved-out livez=200
+1794481695	11:08:15	T3-kube-apiserver-manifest-moved-back
+1794481700	11:08:20	T3-kube-apiserver-livez-200
+1794481790	11:09:50	end
+E-DONE

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 250" role="img" aria-labelledby="fig-1-2b-title fig-1-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-2b-title">Six requests to my-counter-1 through kubectl ate proxy</title>
+  <desc id="fig-1-2b-desc">Six horizontal bars with the client time of each request on the x86 server guest: request 1 0.358 s, request 2 0.091 s, request 3 0.067 s, request 4 0.062 s, request 5 0.068 s, after 900 s idle 0.080 s. The first bar is amber because it includes the resume from the golden snapshot. The other bars are green because the actor was already running. The actor was in ACTOR_STATE_RUNNING in all 60 samples of the idle period.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CLIENT TIME OF EACH REQUEST, SECONDS</text>
+  <text x="160" y="47" font-size="11.5" text-anchor="end">request 1</text>
+  <rect x="170" y="34" width="322.54" height="18" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="500.54" y="47" font-size="11.5" fill="var(--m-amber-ink, #85590c)">0.358 s</text>
+  <text x="160" y="77" font-size="11.5" text-anchor="end">request 2</text>
+  <rect x="170" y="64" width="81.69" height="18" fill="var(--m-green-ink, #336b40)"/>
+  <text x="259.69" y="77" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.091 s</text>
+  <text x="160" y="107" font-size="11.5" text-anchor="end">request 3</text>
+  <rect x="170" y="94" width="60.21" height="18" fill="var(--m-green-ink, #336b40)"/>
+  <text x="238.21" y="107" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.067 s</text>
+  <text x="160" y="137" font-size="11.5" text-anchor="end">request 4</text>
+  <rect x="170" y="124" width="55.66" height="18" fill="var(--m-green-ink, #336b40)"/>
+  <text x="233.66" y="137" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.062 s</text>
+  <text x="160" y="167" font-size="11.5" text-anchor="end">request 5</text>
+  <rect x="170" y="154" width="61.25" height="18" fill="var(--m-green-ink, #336b40)"/>
+  <text x="239.25" y="167" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.068 s</text>
+  <text x="160" y="197" font-size="11.5" text-anchor="end">after 900 s idle</text>
+  <rect x="170" y="184" width="72.34" height="18" fill="var(--m-green-ink, #336b40)"/>
+  <text x="250.34" y="197" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.080 s</text>
+  <line x1="170" y1="28" x2="170" y2="214" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="500.54" y="63" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">includes the resume</text>
+  <text x="20" y="238" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Between request 5 and the last one: 60 state samples in 900 s, all ACTOR_STATE_RUNNING</text>
+</svg>

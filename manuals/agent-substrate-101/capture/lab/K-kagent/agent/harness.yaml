@@ -1,0 +1,19 @@
+apiVersion: api.kagent.dev/v1alpha3
+kind: Harness
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"api.kagent.dev/v1alpha3","kind":"Harness","metadata":{"annotations":{},"name":"lab-harness","namespace":"kagent"},"spec":{"kagent":{},"substrate":{"snapshotPolicy":{"location":"s3://ate-snapshots/kagent/"},"workerPoolRef":{"name":"kagent-default"}}}}
+  creationTimestamp: "2026-11-12T10:16:30Z"
+  generation: 1
+  name: lab-harness
+  namespace: kagent
+  resourceVersion: "1860"
+  uid: 012ce895-2f8a-46a0-9c47-73a021f87965
+spec:
+  kagent: {}
+  substrate:
+    snapshotPolicy:
+      location: s3://ate-snapshots/kagent/
+    workerPoolRef:
+      name: kagent-default

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 344" role="img" aria-labelledby="fig-6-6b-title fig-6-6b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-6b-title">New work and open connections after a rule is removed</title>
+  <desc id="fig-6-6b-desc">Two groups of four tracks over a time axis from 0 to 40 seconds, where zero is the removal of the rule. On the Envoy dataplane, new DNS lookups fail from 1 second, new HTTP requests are served until 6 seconds and refused with 403 after that, an HTTP response that was open ran until the server ended it at 39 seconds, and an open pass-through connection served a second request at 20 seconds. On the agentgateway dataplane, new DNS lookups fail within 3 seconds, new HTTP requests are refused at the first sample, an open HTTP response ran until the server ended it at 18 seconds, and an open pass-through connection served a second request at 20 seconds.</desc>
+  <text x="181" y="46" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">rule removed</text>
+  <text x="16" y="40" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ENVOY DATAPLANE</text>
+  <line x1="176" y1="50" x2="176" y2="156" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="16" y="73" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new DNS lookup</text>
+  <rect x="187" y="64" width="429" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="191" y="60" font-size="11" fill="var(--m-rose-ink, #b0344d)">NXDOMAIN at 1 s</text>
+  <text x="16" y="99" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new HTTP request</text>
+  <rect x="176" y="90" width="66" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="242" y="90" width="374" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="246" y="86" font-size="11" fill="var(--m-rose-ink, #b0344d)">403 from 6 s</text>
+  <text x="16" y="125" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open HTTP response</text>
+  <rect x="176" y="116" width="429" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="603" y="112" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">the server ended it at 39 s</text>
+  <text x="16" y="151" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open pass-through</text>
+  <rect x="176" y="142" width="220" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="396" y="142" width="220" height="10" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="394" y="138" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">second request served at 20 s</text>
+  <text x="16" y="174" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENTGATEWAY DATAPLANE</text>
+  <line x1="176" y1="184" x2="176" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="16" y="207" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new DNS lookup</text>
+  <rect x="209" y="198" width="407" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="213" y="194" font-size="11" fill="var(--m-rose-ink, #b0344d)">NXDOMAIN within 3 s</text>
+  <text x="16" y="233" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">new HTTP request</text>
+  <rect x="176" y="224" width="440" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="180" y="220" font-size="11" fill="var(--m-rose-ink, #b0344d)">403 at the first sample</text>
+  <text x="16" y="259" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open HTTP response</text>
+  <rect x="176" y="250" width="198" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="372" y="246" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">the server ended it at 18 s</text>
+  <text x="16" y="285" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">open pass-through</text>
+  <rect x="176" y="276" width="220" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="396" y="276" width="220" height="10" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="394" y="272" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">second request served at 20 s</text>
+  <line x1="176" y1="300" x2="616" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="176" y1="296" x2="176" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="176" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="231" y1="296" x2="231" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="286" y1="296" x2="286" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="286" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="341" y1="296" x2="341" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="396" y1="296" x2="396" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="396" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="451" y1="296" x2="451" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="506" y1="296" x2="506" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="506" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="561" y1="296" x2="561" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="616" y1="296" x2="616" y2="304" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="616" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <text x="16" y="318" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SECONDS</text>
+  <rect x="176" y="328" width="14" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="196" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+  <rect x="266" y="328" width="14" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="286" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">served</text>
+  <rect x="356" y="328" width="14" height="10" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-dasharray="5 4"/>
+  <text x="376" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">still open, not tested longer</text>
+</svg>

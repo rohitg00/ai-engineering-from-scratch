@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: probe
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wrong-id
+  namespace: probe
+spec:
+  containers:
+  - name: c
+    image: curlimages/curl:8.11.1
+    command: ["sleep", "86400"]
+    volumeMounts:
+    - {name: podidentity, mountPath: /run/id}
+    - {name: servicedns-ca, mountPath: /run/ca}
+  volumes:
+  - name: podidentity
+    projected:
+      sources:
+      - podCertificate: {credentialBundlePath: credential-bundle.pem, keyType: ECDSAP256, signerName: podidentity.podcert.ate.dev/identity}
+  - name: servicedns-ca
+    projected:
+      sources:
+      - clusterTrustBundle: {labelSelector: {matchLabels: {podcert.ate.dev/canarying: live}}, path: trust-bundle.pem, signerName: servicedns.podcert.ate.dev/identity}
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: right-id
+  namespace: ate-system
+  labels: {app: probe-right-id}
+spec:
+  serviceAccountName: atenet-client
+  containers:
+  - name: c
+    image: curlimages/curl:8.11.1
+    command: ["sleep", "86400"]
+    volumeMounts:
+    - {name: podidentity, mountPath: /run/id}
+    - {name: servicedns-ca, mountPath: /run/ca}
+  volumes:
+  - name: podidentity
+    projected:
+      sources:
+      - podCertificate: {credentialBundlePath: credential-bundle.pem, keyType: ECDSAP256, signerName: podidentity.podcert.ate.dev/identity}
+  - name: servicedns-ca
+    projected:
+      sources:
+      - clusterTrustBundle: {labelSelector: {matchLabels: {podcert.ate.dev/canarying: live}}, path: trust-bundle.pem, signerName: servicedns.podcert.ate.dev/identity}

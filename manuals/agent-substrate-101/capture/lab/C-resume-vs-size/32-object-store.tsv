@@ -1,0 +1,82 @@
+mb	phase	i	http	seconds	detail
+0	first-call-golden	1	200	0.246518	count=1 mb=0 fill=random sum=0 process_age_s=0.1
+0	wait-detach	1	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+0	resume-object-store	1	200	0.241929	count=2 mb=0 fill=random sum=0 process_age_s=0.4
+0	warm-call	1	200	0.067505	count=3 mb=0 fill=random sum=0 process_age_s=0.5
+0	wait-detach	2	-	10.2	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+0	resume-object-store	2	200	0.247604	count=4 mb=0 fill=random sum=0 process_age_s=0.7
+0	warm-call	2	200	0.062544	count=5 mb=0 fill=random sum=0 process_age_s=0.8
+0	wait-detach	3	-	10.2	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+0	resume-object-store	3	200	0.242721	count=6 mb=0 fill=random sum=0 process_age_s=1.1
+0	warm-call	3	200	0.059069	count=7 mb=0 fill=random sum=0 process_age_s=1.2
+0	wait-detach	4	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+0	resume-object-store	4	200	0.235909	count=8 mb=0 fill=random sum=0 process_age_s=1.4
+0	warm-call	4	200	0.062985	count=9 mb=0 fill=random sum=0 process_age_s=1.5
+0	wait-detach	5	-	10.2	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+0	resume-object-store	5	200	0.243474	count=10 mb=0 fill=random sum=0 process_age_s=1.8
+0	warm-call	5	200	0.060777	count=11 mb=0 fill=random sum=0 process_age_s=1.8
+50	first-call-golden	1	200	0.262465	count=1 mb=50 fill=random sum=6296 process_age_s=0.3
+50	wait-detach	1	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+50	resume-object-store	1	200	0.372381	count=2 mb=50 fill=random sum=6296 process_age_s=0.6
+50	warm-call	1	200	0.063886	count=3 mb=50 fill=random sum=6296 process_age_s=0.7
+50	wait-detach	2	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+50	resume-object-store	2	200	0.412925	count=4 mb=50 fill=random sum=6296 process_age_s=1.0
+50	warm-call	2	200	0.061695	count=5 mb=50 fill=random sum=6296 process_age_s=1.1
+50	wait-detach	3	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+50	resume-object-store	3	200	0.384409	count=6 mb=50 fill=random sum=6296 process_age_s=1.4
+50	warm-call	3	200	0.058333	count=7 mb=50 fill=random sum=6296 process_age_s=1.5
+50	wait-detach	4	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+50	resume-object-store	4	200	0.444562	count=8 mb=50 fill=random sum=6296 process_age_s=1.7
+50	warm-call	4	200	0.124729	count=9 mb=50 fill=random sum=6296 process_age_s=1.9
+50	wait-detach	5	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+50	resume-object-store	5	200	0.472257	count=10 mb=50 fill=random sum=6296 process_age_s=2.1
+50	warm-call	5	200	0.062272	count=11 mb=50 fill=random sum=6296 process_age_s=2.2
+200	first-call-golden	1	200	0.607938	count=1 mb=200 fill=random sum=24631 process_age_s=1.3
+200	wait-detach	1	-	10.2	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+200	resume-object-store	1	200	0.902269	count=2 mb=200 fill=random sum=24631 process_age_s=1.7
+200	warm-call	1	200	0.062430	count=3 mb=200 fill=random sum=24631 process_age_s=1.8
+200	wait-detach	2	-	10.3	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+200	resume-object-store	2	200	0.948166	count=4 mb=200 fill=random sum=24631 process_age_s=2.3
+200	warm-call	2	200	0.073847	count=5 mb=200 fill=random sum=24631 process_age_s=2.4
+200	wait-detach	3	-	9.5	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+200	resume-object-store	3	200	1.010704	count=6 mb=200 fill=random sum=24631 process_age_s=2.9
+200	warm-call	3	200	0.067740	count=7 mb=200 fill=random sum=24631 process_age_s=3.0
+200	wait-detach	4	-	9.5	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+200	resume-object-store	4	200	0.954884	count=8 mb=200 fill=random sum=24631 process_age_s=3.5
+200	warm-call	4	200	0.067631	count=9 mb=200 fill=random sum=24631 process_age_s=3.5
+200	wait-detach	5	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+200	resume-object-store	5	200	0.981079	count=10 mb=200 fill=random sum=24631 process_age_s=4.1
+200	warm-call	5	200	0.061086	count=11 mb=200 fill=random sum=24631 process_age_s=4.1
+500	first-call-golden	1	200	1.681633	count=1 mb=500 fill=random sum=63332 process_age_s=3.5
+500	wait-detach	1	-	10.2	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+500	resume-object-store	1	200	2.190872	count=2 mb=500 fill=random sum=63332 process_age_s=4.6
+500	warm-call	1	200	0.067785	count=3 mb=500 fill=random sum=63332 process_age_s=4.7
+500	wait-detach	2	-	10.1	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+500	resume-object-store	2	200	2.392106	count=4 mb=500 fill=random sum=63332 process_age_s=5.9
+500	warm-call	2	200	0.077472	count=5 mb=500 fill=random sum=63332 process_age_s=6.0
+500	wait-detach	3	-	9.5	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+500	resume-object-store	3	200	2.411932	count=6 mb=500 fill=random sum=63332 process_age_s=7.2
+500	warm-call	3	200	0.076545	count=7 mb=500 fill=random sum=63332 process_age_s=7.3
+500	wait-detach	4	-	9.5	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+500	resume-object-store	4	200	2.254536	count=8 mb=500 fill=random sum=63332 process_age_s=8.4
+500	warm-call	4	200	0.063018	count=9 mb=500 fill=random sum=63332 process_age_s=8.5
+500	wait-detach	5	-	10.2	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+500	resume-object-store	5	200	1.926436	count=10 mb=500 fill=random sum=63332 process_age_s=9.4
+500	warm-call	5	200	0.067938	count=11 mb=500 fill=random sum=63332 process_age_s=9.5
+1000	first-call-golden	1	200	3.461328	count=1 mb=1000 fill=random sum=129450 process_age_s=7.1
+1000	wait-detach	1	-	10.2	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+1000	resume-object-store	1	200	4.967191	count=2 mb=1000 fill=random sum=129450 process_age_s=9.4
+1000	warm-call	1	200	0.073037	count=3 mb=1000 fill=random sum=129450 process_age_s=9.5
+1000	wait-detach	2	-	10.9	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+1000	resume-object-store	2	200	4.677600	count=4 mb=1000 fill=random sum=129450 process_age_s=11.9
+1000	warm-call	2	200	0.060190	count=5 mb=1000 fill=random sum=129450 process_age_s=12.0
+1000	wait-detach	3	-	8.9	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+1000	resume-object-store	3	200	4.452713	count=6 mb=1000 fill=random sum=129450 process_age_s=14.1
+1000	warm-call	3	200	0.070410	count=7 mb=1000 fill=random sum=129450 process_age_s=14.2
+1000	wait-detach	4	-	8.8	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+1000	resume-object-store	4	200	4.701543	count=8 mb=1000 fill=random sum=129450 process_age_s=16.1
+1000	warm-call	4	200	0.062019	count=9 mb=1000 fill=random sum=129450 process_age_s=16.2
+1000	wait-detach	5	-	9.5	- SNAPSHOT_STORAGE_STATE_COMPLETED,SNAPSHOT_STORAGE_STATE_COMPLETED
+1000	resume-object-store	5	200	4.232673	count=10 mb=1000 fill=random sum=129450 process_age_s=18.1
+1000	warm-call	5	200	0.064567	count=11 mb=1000 fill=random sum=129450 process_age_s=18.2
+DONE

@@ -1,0 +1,14 @@
+  spec:
+    replicas: 2
+    sandboxClasses:
+    - name: gvisor
+    template:
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 1Gi
+    workerImage: localhost:5001/ateworker-gvisor@sha256:ad6957f41bccaa8bb5f3eb5b34b7812babb862f1a3187a11578c21a7d799491c
+  status:

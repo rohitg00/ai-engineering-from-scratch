@@ -1,0 +1,6 @@
+### [11:24:12.526] +5s policy changed to P1 (drip and example.org removed)
+[11:24:15.196] +8s new requests: ["code=000\nstatus: NXDOMAIN\n0\n","curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n"]
+[11:24:20.500] +13s new requests: ["code=000\nstatus: NXDOMAIN\n0\n","curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n"]
+[11:24:27.241] +20s new requests: ["code=000\nstatus: NXDOMAIN\n0\n","curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n"]
+[11:24:37.051] +30s new requests: ["code=000\nstatus: NXDOMAIN\n0\n","curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n"]
+[11:24:38.155] +31s background jobs done

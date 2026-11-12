@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 366" role="img" aria-labelledby="fig-6-5-title fig-6-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-5-title">One request with a placeholder header</title>
+  <desc id="fig-6-5-desc">Five lifelines: the actor f-main, atenet-egress, the credential provider k8s.io, the Kubernetes Secret cred-ns/api-token, and the upstream host whoami. Six numbered exchanges: the actor sends a request with the header Authorization set to a placeholder, atenet-egress calls FetchSecret with the reference and the actor identity, the provider reads the key token of the Secret, and it returns the secret. atenet-egress sends the request upstream with Authorization set to Bearer and the secret. The upstream answers 200 with a body that repeats the request headers, so the actor reads the secret.</desc>
+  <defs><marker id="fig-6-5-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-5-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <rect x="17" y="8" width="118" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="76" y="22.8" font-size="11" text-anchor="middle" font-weight="700">actor f-main</text>
+  <text x="76" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">holds no secret</text>
+  <line x1="76" y1="48" x2="76" y2="356" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="141" y="8" width="118" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="200" y="22.8" font-size="11" text-anchor="middle" font-weight="700">atenet-egress</text>
+  <text x="200" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one http rule</text>
+  <line x1="200" y1="48" x2="200" y2="356" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="265" y="8" width="118" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="324" y="22.8" font-size="11" text-anchor="middle" font-weight="700">credential</text>
+  <text x="324" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">provider k8s.io</text>
+  <line x1="324" y1="48" x2="324" y2="356" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="389" y="8" width="118" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="448" y="22.8" font-size="11" text-anchor="middle" font-weight="700">Secret</text>
+  <text x="448" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cred-ns/api-token</text>
+  <line x1="448" y1="48" x2="448" y2="356" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="513" y="8" width="118" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="572" y="22.8" font-size="11" text-anchor="middle" font-weight="700">whoami</text>
+  <text x="572" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">upstream host</text>
+  <line x1="572" y1="48" x2="572" y2="356" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="12" cy="84" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="12" y="88" font-size="11" text-anchor="middle">1</text>
+  <line x1="76" y1="84" x2="199" y2="84" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M76 84 L199 84" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="44.8" y="67.03" width="185.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="137.5" y="78" font-size="11.5" text-anchor="middle">Authorization: placeholder</text>
+  <rect class="m-knock" x="63.22" y="88.42" width="148.56" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="137.5" y="99" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">GET / through the tunnel</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="12" cy="130" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="12" y="134" font-size="11" text-anchor="middle">2</text>
+  <line x1="200" y1="130" x2="323" y2="130" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M200 130 L323 130" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="220.55" y="113.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="261.5" y="124" font-size="11.5" text-anchor="middle">FetchSecret</text>
+  <rect class="m-knock" x="184.25" y="134.42" width="154.5" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="261.5" y="145" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reference, actor identity</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="12" cy="176" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="12" y="180" font-size="11" text-anchor="middle">3</text>
+  <line x1="324" y1="176" x2="447" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M324 176 L447 176" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="334.2" y="159.03" width="102.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="385.5" y="170" font-size="11.5" text-anchor="middle">read key token</text>
+  <rect class="m-knock" x="320.13" y="180.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="385.5" y="191" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">lab-f can use cred-ns</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="12" cy="222" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="12" y="226" font-size="11" text-anchor="middle">4</text>
+  <line x1="324" y1="222" x2="201" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-5-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M324 222 L201 222" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="225" y="205.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="262.5" y="216" font-size="11.5" text-anchor="middle">the secret</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="12" cy="268" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="12" y="272" font-size="11" text-anchor="middle">5</text>
+  <line x1="200" y1="268" x2="571" y2="268" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M200 268 L571 268" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="279" y="251.03" width="213" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="385.5" y="262" font-size="11.5" text-anchor="middle">Authorization: Bearer &lt;secret&gt;</text>
+  <rect class="m-knock" x="290.43" y="272.42" width="190.14" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="385.5" y="283" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the gateway overwrote the value</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="12" cy="314" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="12" y="318" font-size="11" text-anchor="middle">6</text>
+  <line x1="572" y1="314" x2="77" y2="314" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-5-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M572 314 L77 314" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="193.85" y="297.03" width="261.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="324.5" y="308" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">200, body repeats the request headers</text>
+  <rect class="m-knock" x="244.28" y="318.42" width="160.44" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="324.5" y="329" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the actor reads the secret</text>
+  </g>
+</svg>

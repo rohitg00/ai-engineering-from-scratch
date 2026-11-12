@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 388" role="img" aria-labelledby="fig-1-1-title fig-1-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-1-title">What Substrate does and what it leaves to you</title>
+  <desc id="fig-1-1-desc">Three worker pods of the WorkerPool counter sit in a row. The middle pod, counter-7cc7dcd596-ffxwt, runs the actor my-counter-1, and the other two run no actor. Below them the object store holds one snapshot for each suspended actor, and ate-api-server with Postgres holds the state of every actor. A request resumes an actor from its snapshot onto a worker, and SuspendActor writes a snapshot and frees the worker. Two lists at the bottom divide the work: Substrate resumes on request, takes the snapshot, and routes each request, and you call SuspendActor, change the number of workers, and keep GPU work elsewhere.</desc>
+  <defs><marker id="fig-1-1-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-1-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-1-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WORKERPOOL COUNTER · 3 WORKER PODS, EACH CAN RUN 1 ACTOR OF THIS SIZE</text>
+  <rect x="20" y="28" width="190" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-dasharray="5 4"/>
+  <text x="115" y="45.8" font-size="11" text-anchor="middle" font-weight="700">counter-7cc7dcd596-5tj9h</text>
+  <text x="115" y="62.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no actor</text>
+  <rect x="225" y="28" width="190" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="45.8" font-size="11" text-anchor="middle" font-weight="700">counter-7cc7dcd596-ffxwt</text>
+  <text x="320" y="62.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CPU 1000 of 1000 millicores</text>
+  <rect x="430" y="28" width="190" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-dasharray="5 4"/>
+  <text x="525" y="45.8" font-size="11" text-anchor="middle" font-weight="700">counter-7cc7dcd596-p6g2q</text>
+  <text x="525" y="62.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no actor</text>
+  <rect x="245" y="96" width="150" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="320" y="111.1" font-size="12" text-anchor="middle" font-weight="700">my-counter-1</text>
+  <text x="320" y="128.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACTOR_STATE_RUNNING</text>
+  <line x1="320" y1="74" x2="320" y2="96" stroke="var(--m-green-ink, #336b40)" stroke-width="1"/>
+  <rect x="20" y="176" width="270" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="155" y="194.25" font-size="12.5" text-anchor="middle" font-weight="700">object store</text>
+  <text x="155" y="211.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one snapshot for each suspended actor</text>
+  <rect x="350" y="176" width="270" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="485" y="194.25" font-size="12.5" text-anchor="middle" font-weight="700">ate-api-server and Postgres</text>
+  <text x="485" y="211.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the state of every actor and worker</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <path d="M80 176 V116 H244" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-1-1-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M80 176 V116 H244" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="27" y="139.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="30" y="150" font-size="11.5" fill="var(--m-amber-ink, #85590c)">a request resumes it</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <path d="M290 136 V160 H220 V175" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-1-1-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M290 136 V160 H220 V175" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="157" y="153.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="160" y="164" font-size="11.5" fill="var(--m-teal-ink, #18696a)">SuspendActor</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <path d="M485 176 V116 H396" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-1-1-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M485 176 V116 H396" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="490" y="139.03" width="130.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="493" y="150" font-size="11.5">chooses the worker</text>
+  </g>
+  <text x="20" y="250" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SUBSTRATE DOES</text>
+  <text x="336" y="250" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">YOU DO</text>
+  <rect x="20" y="258" width="284" height="118" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="295.2" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumes an actor when a request arrives</text>
+  <text x="32" y="310.7" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">writes the snapshot when you suspend</text>
+  <text x="32" y="326.2" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">routes each request to the right worker</text>
+  <text x="32" y="341.7" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">limits what an actor can reach</text>
+  <rect x="336" y="258" width="284" height="118" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="348" y="295.2" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">call SuspendActor: no idle timer exists</text>
+  <text x="348" y="310.7" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">change spec.replicas: no autoscaler</text>
+  <text x="348" y="326.2" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">run GPU work elsewhere: no device support</text>
+  <text x="348" y="341.7" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">call RevertActor after a crash</text>
+</svg>

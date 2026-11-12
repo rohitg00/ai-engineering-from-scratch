@@ -1,0 +1,2 @@
+ATESPACE           NAME           TEMPLATE                   STATE                 WORKER POD                                  WORKER IPS    VERSION   AGE
+ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_RUNNING   ate-demo-counter/counter-7cc7dcd596-fps97   10.244.0.28   16        90m

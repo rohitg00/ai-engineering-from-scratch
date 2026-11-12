@@ -1,0 +1,20 @@
+ts	event	detail
+2026-11-12T11:41:17.171Z	call	200	0.284265	count=1 mb=50 fill=random sum=6296 process_age_s=0.4
+2026-11-12T11:41:17.261Z	call	200	0.071632	count=2 mb=50 fill=random sum=6296 process_age_s=0.4
+2026-11-12T11:41:17.348Z	call	200	0.066245	count=3 mb=50 fill=random sum=6296 process_age_s=0.5
+2026-11-12T11:41:18.609Z	after-sync-suspend	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:41:18.855Z	call	200	0.224142	count=4 mb=50 fill=random sum=6296 process_age_s=0.8
+2026-11-12T11:41:18.930Z	call	200	0.055636	count=5 mb=50 fill=random sum=6296 process_age_s=0.9
+2026-11-12T11:41:19.624Z	after-async-suspend	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane
+2026-11-12T11:41:19.674Z	node-restart	docker restart kind-control-plane
+2026-11-12T11:41:39.118Z	kube-api-back	8 s
+2026-11-12T11:43:58.809Z	pods-ready	147 s, not-running=0
+2026-11-12T11:43:59.164Z	state-after-reboot	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane
+2026-11-12T11:44:00.610Z	call-after-reboot	500	0.408692	error resuming actor lab-c/r1
+2026-11-12T11:44:00.821Z	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane
+2026-11-12T11:44:05.915Z	call-again	503	0.070858	actor lab-c/r1 unavailable: AssignWorker prerequisite not met for Actor: lab-c/r1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)
+2026-11-12T11:44:06.075Z	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane
+2026-11-12T11:44:06.528Z	revert	ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-c      r1     lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    13        2m
+2026-11-12T11:44:11.607Z	call-after-revert	503	5.060362	actor lab-c/r1 unavailable: no worker has room for the actor
+2026-11-12T11:44:11.814Z	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+DONE

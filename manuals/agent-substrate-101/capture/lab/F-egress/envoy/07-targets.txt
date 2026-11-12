@@ -1,0 +1,7 @@
+NAME             TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE   SELECTOR
+service/drip     ClusterIP   10.96.185.134   <none>        80/TCP    8s    app=drip
+service/whoami   ClusterIP   10.96.79.253    <none>        80/TCP    8s    app=whoami
+
+NAME                          READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   REA
+pod/drip-546bbb8ffc-qw5wf     1/1     Running   0          8s    10.244.0.34   kind-control-plane   <none>           <no
+pod/whoami-5bdb4584f6-4gqz6   1/1     Running   0          8s    10.244.0.33   kind-control-plane   <none>           <no

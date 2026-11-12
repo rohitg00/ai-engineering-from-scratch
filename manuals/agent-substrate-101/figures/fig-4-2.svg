@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-4-2-title fig-4-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-2-title">What sits between an actor and the node in each sandbox class</title>
+  <desc id="fig-4-2-desc">Two columns of stacked layers, read from the node at the bottom to the actor at the top. In the gvisor class, a worker pod runs ateworker-gvisor, which starts one runsc Sentry for each actor, and every container of the actor shares that Sentry. In the microvm class, the node must have the device /dev/kvm, a worker pod runs ateworker-microvm, which starts Cloud Hypervisor and virtiofsd, and the containers of the actor run on a guest kernel with one cgroup each.</desc>
+  <defs><marker id="fig-4-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CLASS GVISOR</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CLASS MICROVM</text>
+  <line x1="320" y1="8" x2="320" y2="348" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="30" width="284" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">actor containers</text>
+  <text x="162" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">limits apply to the actor as a whole</text>
+  <line x1="162" y1="97" x2="162" y2="79" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <rect x="20" y="98" width="284" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="162" y="117.25" font-size="12.5" text-anchor="middle" font-weight="700">runsc Sentry</text>
+  <text x="162" y="134.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a kernel in user space, one for each actor</text>
+  <line x1="162" y1="165" x2="162" y2="147" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <rect x="20" y="166" width="284" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="162" y="185.25" font-size="12.5" text-anchor="middle" font-weight="700">worker pod, ateworker-gvisor</text>
+  <text x="162" y="202.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">root, SYS_ADMIN, NET_ADMIN</text>
+  <line x1="162" y1="233" x2="162" y2="215" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <rect x="20" y="234" width="284" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="162" y="253.25" font-size="12.5" text-anchor="middle" font-weight="700">node</text>
+  <text x="162" y="270.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">any Linux node</text>
+  <rect x="336" y="30" width="284" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">actor containers</text>
+  <text x="478" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one guest cgroup for each container</text>
+  <line x1="478" y1="97" x2="478" y2="79" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <rect x="336" y="98" width="284" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="117.25" font-size="12.5" text-anchor="middle" font-weight="700">guest kernel</text>
+  <text x="478" y="134.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Kata guest on Cloud Hypervisor, virtiofsd</text>
+  <line x1="478" y1="165" x2="478" y2="147" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <rect x="336" y="166" width="284" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="478" y="185.25" font-size="12.5" text-anchor="middle" font-weight="700">worker pod, ateworker-microvm</text>
+  <text x="478" y="202.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">root, SYS_ADMIN, NET_ADMIN</text>
+  <line x1="478" y1="233" x2="478" y2="215" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-4-2-head-ink)"/>
+  <rect x="336" y="234" width="284" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="478" y="253.25" font-size="12.5" text-anchor="middle" font-weight="700">node with /dev/kvm</text>
+  <text x="478" y="270.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">atelet offers it as ate.dev/kvm</text>
+  <text x="20" y="318" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">snapshot of files: runsc checkpoint bundles</text>
+  <text x="336" y="318" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">snapshot of files: tar archives</text>
+  <text x="20" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">minimum memory limit: none</text>
+  <text x="336" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">minimum memory limit: 128 MiB</text>
+</svg>

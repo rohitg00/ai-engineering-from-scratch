@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-3-3-title fig-3-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3-title">Resume time against the memory an actor holds</title>
+  <desc id="fig-3-3-desc">Seconds for the first request to a suspended actor against the MiB of random memory it holds, on the x86 server guest with gVisor. From the node-local snapshot the median is 0.22 s at 0 MiB, 0.24 s at 50 MiB, 0.47 s at 200 MiB, 1.07 s at 500 MiB and 2.16 s at 1000 MiB. From the object store in the same cluster the median is 0.24 s, 0.41 s, 0.96 s, 2.26 s and 4.68 s. A dashed line marks 0.5 s.</desc>
+  <line x1="60" y1="280" x2="608" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="284" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="60" y1="243.33" x2="608" y2="243.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="247.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="60" y1="206.67" x2="608" y2="206.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="210.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="60" y1="170" x2="608" y2="170" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="174" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="60" y1="133.33" x2="608" y2="133.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="137.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="60" y1="96.67" x2="608" y2="96.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="100.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="60" y1="60" x2="608" y2="60" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="64" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="60" y1="280" x2="608" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="60" x2="60" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="280" x2="60" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="87.4" y1="280" x2="87.4" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="87.4" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="169.6" y1="280" x2="169.6" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="169.6" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="334" y1="280" x2="334" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="334" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="608" y1="280" x2="608" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="608" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <text x="334" y="314" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory the actor holds, MiB</text>
+  <text x="60" y="48" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds from request to reply, client side</text>
+  <path d="M60.0 261.7 L608.0 261.7" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="604" y="256.67" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.5 s</text>
+  <path d="M60.0 271.5 L87.4 270.6 L169.6 260.3 L334.0 231.0 L608.0 93.5 L608.0 209.1 L334.0 243.3 L169.6 267.3 L87.4 271.6 L60.0 272.1 Z" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.14" stroke="none"/>
+  <path d="M60.0 271.9 L87.4 271.3 L169.6 262.7 L334.0 240.8 L608.0 200.8" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="271.86" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="87.4" cy="271.27" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="169.6" cy="262.69" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="334" cy="240.84" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="608" cy="200.8" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M60.0 270.9 L87.4 262.7 L169.6 242.9 L334.0 191.6 L608.0 97.9 L608.0 124.8 L334.0 209.4 L169.6 246.9 L87.4 266.4 L60.0 271.3 Z" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.14" stroke="none"/>
+  <path d="M60.0 271.1 L87.4 264.9 L169.6 245.0 L334.0 197.3 L608.0 108.5" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="271.09" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="87.4" cy="264.86" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="169.6" cy="244.98" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="334" cy="197.32" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="608" cy="108.47" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="326" y="189.32" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-teal-ink, #18696a)">2.25 s</text>
+  <rect class="m-knock" x="529.36" y="85.89" width="41.64" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="568" y="96.47" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-teal-ink, #18696a)">4.68 s</text>
+  <text x="342" y="258.84" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">1.07 s</text>
+  <text x="600" y="220.8" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">2.16 s</text>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">from the node, 10 resumes per point</text>
+  <path d="M333 18 H351" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="357" y="22" font-size="11" fill="var(--m-teal-ink, #18696a)">from the object store, 5 per point</text>
+</svg>

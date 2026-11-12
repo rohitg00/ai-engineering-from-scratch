@@ -1,0 +1,13 @@
+ProductName:		macOS
+ProductVersion:		26.2
+BuildVersion:		25C56
+arm64
+Apple M1 Max
+docker server 29.8.2 linux/arm64
+docker vm cpus 10 mem 8319504384
+kind v0.33.0 go1.27.3 darwin/arm64
+Client Version: v1.35.1
+v1.0.0
+/dev/disk3s5   926Gi   874Gi   8.1Gi   100%     15M   85M   15%   /System/Volumes/Data
+/dev/disk3s5   926Gi   875Gi   6.6Gi   100%     15M   69M   18%   /System/Volumes/Data
+/dev/disk3s5   926Gi   879Gi   2.6Gi   100%     15M   28M   36%   /System/Volumes/Data

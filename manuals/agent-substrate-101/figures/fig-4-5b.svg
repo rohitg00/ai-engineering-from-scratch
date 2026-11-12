@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-4-5b-title fig-4-5b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-5b-title">Disk that 25 suspended actors hold, and what is left after their deletion</title>
+  <desc id="fig-4-5b-desc">Four bars in MiB. With 25 suspended actors, the node holds 8801 MiB of snapshots and the object store holds 10824 MiB. After the actors are deleted, the node holds 1 MiB of snapshots and the object store still holds 2064 MiB of golden snapshots.</desc>
+  <line x1="70" y1="240" x2="610" y2="240" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="244" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="173.33" x2="610" y2="173.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="177.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4k</text>
+  <line x1="70" y1="106.67" x2="610" y2="106.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="110.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">8k</text>
+  <line x1="70" y1="40" x2="610" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">12k</text>
+  <line x1="70" y1="240" x2="610" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="40" x2="70" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MiB on disk, x86 server guest</text>
+  <rect x="100.38" y="93.32" width="74.25" height="146.68" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="137.5" y="87.32" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">8.6 GiB</text>
+  <text x="137.5" y="257" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">node snapshots</text>
+  <rect x="235.38" y="59.6" width="74.25" height="180.4" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="272.5" y="53.6" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">10.6 GiB</text>
+  <text x="272.5" y="257" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">object store</text>
+  <rect x="370.38" y="239.98" width="74.25" height="0.02" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="407.5" y="233.98" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">1 MiB</text>
+  <text x="407.5" y="257" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">node snapshots</text>
+  <rect x="505.38" y="205.6" width="74.25" height="34.4" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="542.5" y="199.6" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">2.0 GiB</text>
+  <text x="542.5" y="257" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">object store</text>
+  <line x1="340" y1="30" x2="340" y2="262" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="205" y="284" font-size="11.5" text-anchor="middle" font-weight="700">25 actors suspended</text>
+  <text x="475" y="284" font-size="11.5" text-anchor="middle" font-weight="700">after the actors are deleted</text>
+</svg>

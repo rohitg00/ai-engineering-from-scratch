@@ -1,0 +1,201 @@
+kagent is a CLI for kagent
+
+Usage:
+  kagent [flags]
+  kagent [command]
+
+Available Commands:
+  agent       Discover agents and work with their conversations
+  apply       Create or update an Agent or AgentTemplate
+  bug-report  Generate a bug report
+  completion  Generate the autocompletion script for the specified shell
+  config      Inspect and validate configuration
+  dashboard   Open the kagent dashboard
+  db          Database operations (migrations, inspection)
+  help        Help about any command
+  install     Install kagent
+  sandbox     Run commands and transfer files in standalone sandboxes
+  uninstall   Uninstall kagent
+  version     Print the kagent version
+
+Flags:
+      --api-url string         KAgent control-plane API URL (default "http://localhost:8083")
+      --ca-file string         CA certificate file for KAgent endpoints
+      --config string          Configuration file (default: user config directory/kagent/config.yaml)
+      --gateway-url string     KAgent A2A and MCP gateway URL (default "http://localhost:8083")
+  -h, --help                   help for kagent
+      --log-level string       Log level: debug, info, warn, error (default "info")
+  -n, --namespace string       Namespace (default "kagent")
+  -o, --output-format string   Output format (default "table")
+      --server-name string     TLS server name for KAgent endpoints
+      --timeout duration       Timeout (default 5m0s)
+      --user-id string         Caller identity used to select the server-side data partition (default "admin@kagent.dev")
+  -v, --verbose                Verbose output
+
+Use "kagent [command] --help" for more information about a command.
+Discover agents and work with their conversations
+
+Usage:
+  kagent agent [command]
+
+Available Commands:
+  get         Get an Agent
+  invoke      Invoke a Session
+  list        List Agents
+  session     Manage agent conversations
+  template    Discover reusable agent templates
+
+Flags:
+  -h, --help   help for agent
+
+Global Flags:
+      --api-url string         KAgent control-plane API URL (default "http://localhost:8083")
+      --ca-file string         CA certificate file for KAgent endpoints
+      --config string          Configuration file (default: user config directory/kagent/config.yaml)
+      --gateway-url string     KAgent A2A and MCP gateway URL (default "http://localhost:8083")
+      --log-level string       Log level: debug, info, warn, error (default "info")
+  -n, --namespace string       Namespace (default "kagent")
+  -o, --output-format string   Output format (default "table")
+      --server-name string     TLS server name for KAgent endpoints
+      --timeout duration       Timeout (default 5m0s)
+      --user-id string         Caller identity used to select the server-side data partition (default "admin@kagent.dev")
+  -v, --verbose                Verbose output
+
+Use "kagent agent [command] --help" for more information about a command.
+Manage agent conversations
+
+Usage:
+  kagent agent session [command]
+
+Available Commands:
+  create      Create a Session
+  delete      Delete a Session
+  get         Get a Session
+  list        List your Sessions
+  push        Manage A2A task push callbacks
+
+Flags:
+  -h, --help   help for session
+
+Global Flags:
+      --api-url string         KAgent control-plane API URL (default "http://localhost:8083")
+      --ca-file string         CA certificate file for KAgent endpoints
+      --config string          Configuration file (default: user config directory/kagent/config.yaml)
+      --gateway-url string     KAgent A2A and MCP gateway URL (default "http://localhost:8083")
+      --log-level string       Log level: debug, info, warn, error (default "info")
+  -n, --namespace string       Namespace (default "kagent")
+  -o, --output-format string   Output format (default "table")
+      --server-name string     TLS server name for KAgent endpoints
+      --timeout duration       Timeout (default 5m0s)
+      --user-id string         Caller identity used to select the server-side data partition (default "admin@kagent.dev")
+  -v, --verbose                Verbose output
+
+Use "kagent agent session [command] --help" for more information about a command.
+Create a Session
+
+Usage:
+  kagent agent session create [flags]
+
+Flags:
+      --agent string        Agent name
+  -h, --help                help for create
+      --request-id string   Idempotency key (generated when omitted)
+
+Global Flags:
+      --api-url string         KAgent control-plane API URL (default "http://localhost:8083")
+      --ca-file string         CA certificate file for KAgent endpoints
+      --config string          Configuration file (default: user config directory/kagent/config.yaml)
+      --gateway-url string     KAgent A2A and MCP gateway URL (default "http://localhost:8083")
+      --log-level string       Log level: debug, info, warn, error (default "info")
+  -n, --namespace string       Namespace (default "kagent")
+  -o, --output-format string   Output format (default "table")
+      --server-name string     TLS server name for KAgent endpoints
+      --timeout duration       Timeout (default 5m0s)
+      --user-id string         Caller identity used to select the server-side data partition (default "admin@kagent.dev")
+  -v, --verbose                Verbose output
+Manage agent conversations
+
+Usage:
+  kagent agent session [command]
+
+Available Commands:
+  create      Create a Session
+  delete      Delete a Session
+  get         Get a Session
+  list        List your Sessions
+  push        Manage A2A task push callbacks
+
+Flags:
+  -h, --help   help for session
+
+Global Flags:
+      --api-url string         KAgent control-plane API URL (default "http://localhost:8083")
+      --ca-file string         CA certificate file for KAgent endpoints
+      --config string          Configuration file (default: user config directory/kagent/config.yaml)
+      --gateway-url string     KAgent A2A and MCP gateway URL (default "http://localhost:8083")
+      --log-level string       Log level: debug, info, warn, error (default "info")
+  -n, --namespace string       Namespace (default "kagent")
+  -o, --output-format string   Output format (default "table")
+      --server-name string     TLS server name for KAgent endpoints
+      --timeout duration       Timeout (default 5m0s)
+      --user-id string         Caller identity used to select the server-side data partition (default "admin@kagent.dev")
+  -v, --verbose                Verbose output
+
+Use "kagent agent session [command] --help" for more information about a command.
+Get a Session
+
+Usage:
+  kagent agent session get ID [flags]
+
+Flags:
+  -h, --help   help for get
+
+Global Flags:
+      --api-url string         KAgent control-plane API URL (default "http://localhost:8083")
+      --ca-file string         CA certificate file for KAgent endpoints
+      --config string          Configuration file (default: user config directory/kagent/config.yaml)
+      --gateway-url string     KAgent A2A and MCP gateway URL (default "http://localhost:8083")
+      --log-level string       Log level: debug, info, warn, error (default "info")
+  -n, --namespace string       Namespace (default "kagent")
+  -o, --output-format string   Output format (default "table")
+      --server-name string     TLS server name for KAgent endpoints
+      --timeout duration       Timeout (default 5m0s)
+      --user-id string         Caller identity used to select the server-side data partition (default "admin@kagent.dev")
+  -v, --verbose                Verbose output
+Run commands and transfer files in standalone sandboxes
+
+Usage:
+  kagent sandbox [command]
+
+Available Commands:
+  create      Create a sandbox from a prepared template
+  delete      delete a sandbox
+  download    Download a file, replacing the local destination only after success
+  exec        Start a command once and wait for its result
+  get         get a sandbox
+  kill        Terminate a process and its children
+  list        List your sandboxes
+  process     Inspect process status without waiting
+  resume      resume a sandbox
+  suspend     suspend a sandbox
+  templates   List SandboxTemplates in the selected namespace
+  upload      Stream a local file into a sandbox (replaces the remote file)
+  wait        Collect output and wait for an existing process without restarting it
+
+Flags:
+  -h, --help   help for sandbox
+
+Global Flags:
+      --api-url string         KAgent control-plane API URL (default "http://localhost:8083")
+      --ca-file string         CA certificate file for KAgent endpoints
+      --config string          Configuration file (default: user config directory/kagent/config.yaml)
+      --gateway-url string     KAgent A2A and MCP gateway URL (default "http://localhost:8083")
+      --log-level string       Log level: debug, info, warn, error (default "info")
+  -n, --namespace string       Namespace (default "kagent")
+  -o, --output-format string   Output format (default "table")
+      --server-name string     TLS server name for KAgent endpoints
+      --timeout duration       Timeout (default 5m0s)
+      --user-id string         Caller identity used to select the server-side data partition (default "admin@kagent.dev")
+  -v, --verbose                Verbose output
+
+Use "kagent sandbox [command] --help" for more information about a command.

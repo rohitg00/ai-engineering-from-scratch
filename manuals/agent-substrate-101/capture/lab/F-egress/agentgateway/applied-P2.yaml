@@ -1,0 +1,7 @@
+metadata:
+  uid: 06d478d7-7a70-4ca0-91f8-4524c40ea9bc
+  version: "32"
+rules:
+- http: {hostnames: ["whoami.egress-target.svc.cluster.local"]}
+- https: {hostnames: ["example.com"]}
+- tlsPassthrough: {hostnames: ["example.org"], ports: {numbers: [443]}}

@@ -1,0 +1,1 @@
+{"backend_version":"1.0.0","build_date":"2026-11-09","git_commit":"a08cde7","kagent_version":"1.0.0"}

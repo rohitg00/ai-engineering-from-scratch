@@ -1,0 +1,4 @@
+curl: (52) Empty reply from server
+code=000
+command terminated with exit code 52
+exit=52

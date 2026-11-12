@@ -1,0 +1,9 @@
+52972	/var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4
+0 /var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4/local-checkpoint/2e79ae1d-f0dc-45d0-80b2-aec18215d423/rootfs/pages.img
+62 /var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4/local-checkpoint/2e79ae1d-f0dc-45d0-80b2-aec18215d423/rootfs/pages_meta.img
+70 /var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4/local-checkpoint/2e79ae1d-f0dc-45d0-80b2-aec18215d423/rootfs/fscheckpoint.pb
+570 /var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4/local-checkpoint/2e79ae1d-f0dc-45d0-80b2-aec18215d423/manifest.json
+2377 /var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4/local-checkpoint/2e79ae1d-f0dc-45d0-80b2-aec18215d423/pages_meta.img
+7680 /var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4/local-checkpoint/2e79ae1d-f0dc-45d0-80b2-aec18215d423/rootfs/multitar.img
+59856 /var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4/local-checkpoint/2e79ae1d-f0dc-45d0-80b2-aec18215d423/checkpoint.img
+54132736 /var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4/local-checkpoint/2e79ae1d-f0dc-45d0-80b2-aec18215d423/pages.img

@@ -1,0 +1,78 @@
+A http-outside:
+wget: bad address 'example.com'
+B https-outside:
+wget: bad address 'example.com'
+C dns-outside:
+
+** server can't find example.com: NXDOMAIN
+
+** server can't find example.com: NXDOMAIN
+
+D dns-allowed:
+Name:	mock-llm.kagent.svc.cluster.local
+Address: 10.96.178.17
+
+
+E allowed-host:
+{"object": "list", "data": [{"id": "mock-1", "object": "model", "owned_by": "lab"}]}
+F raw-ip:
+Connecting to 1.1.1.1 (1.1.1.1:80)
+wget: server returned error: HTTP/1.1 403 Forbidden
+G kube-api:
+wget: bad address 'kubernetes.default.svc.cluster.local'
+H short-name:
+wget: server returned error: HTTP/1.1 403 Forbidden
+
+I resolv:
+nameserver 169.254.17.1
+search kagent.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65522 state UP 
+    inet 127.0.0.1/8 scope host dynamic lo
+2: eth0: <UP,LOWER_UP> mtu 1500 state UP 
+    inet 169.254.17.2/30 scope global dynamic eth0
+::1 dev lo scope link 
+fe80::/64 dev eth0 scope link 
+169.254.17.0/30 dev eth0 scope link 
+127.0.0.0/8 dev lo scope link 
+default via 169.254.17.1 dev eth0 scope link
+TOOL_OUTPUT_BEGIN
+A http-outside:
+wget: bad address 'example.com'
+B https-outside:
+wget: bad address 'example.com'
+C dns-outside:
+
+** server can't find example.com: NXDOMAIN
+
+** server can't find example.com: NXDOMAIN
+
+D dns-allowed:
+Name:	mock-llm.kagent.svc.cluster.local
+Address: 10.96.178.17
+
+
+E allowed-host:
+{"object": "list", "data": [{"id": "mock-1", "object": "model", "owned_by": "lab"}]}
+F raw-ip:
+Connecting to 1.1.1.1 (1.1.1.1:80)
+wget: server returned error: HTTP/1.1 403 Forbidden
+G kube-api:
+wget: bad address 'kubernetes.default.svc.cluster.local'
+H short-name:
+wget: server returned error: HTTP/1.1 403 Forbidden
+
+I resolv:
+nameserver 169.254.17.1
+search kagent.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65522 state UP 
+    inet 127.0.0.1/8 scope host dynamic lo
+2: eth0: <UP,LOWER_UP> mtu 1500 state UP 
+    inet 169.254.17.2/30 scope global dynamic eth0
+::1 dev lo scope link 
+fe80::/64 dev eth0 scope link 
+169.254.17.0/30 dev eth0 scope link 
+127.0.0.0/8 dev lo scope link 
+default via 169.254.17.1 dev eth0 scope link
+TOOL_OUTPUT_END

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 232" role="img" aria-labelledby="fig-6-1b-title fig-6-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-1b-title">Three callers at atenet-router on each dataplane</title>
+  <desc id="fig-6-1b-desc">Three rows, one for each caller, with the outcome on the Envoy dataplane and on the agentgateway dataplane. A caller with no client certificate gets a cut connection on Envoy and the TLS alert certificate required on agentgateway. A caller whose identity is not on the list gets the TLS alert certificate unknown on Envoy and a connection reset on agentgateway. A caller with the allowed identity atenet-client gets 200 from my-counter-1 on port 443 and through port 8444 on both.</desc>
+  <defs><marker id="fig-6-1b-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-6-1b-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="16" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CALLER</text>
+  <text x="232" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ENVOY DATAPLANE</text>
+  <text x="438" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENTGATEWAY DATAPLANE</text>
+  <rect x="16" y="28" width="196" height="50" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="114" y="47.95" font-size="11.5" text-anchor="middle" font-weight="700">no client certificate</text>
+  <text x="114" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a pod with no certificate</text>
+  <rect x="232" y="28" width="186" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="325" y="47.95" font-size="11.5" text-anchor="middle" font-weight="700">connection cut</text>
+  <text x="325" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">curl: Broken pipe</text>
+  <rect x="438" y="28" width="186" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="531" y="47.95" font-size="11.5" text-anchor="middle" font-weight="700">TLS alert</text>
+  <text x="531" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">certificate required</text>
+  <line x1="212" y1="53" x2="231" y2="53" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1b-head-rose)"/>
+  <line x1="418" y1="53" x2="437" y2="53" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1b-head-rose)"/>
+  <rect x="16" y="96" width="196" height="50" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="114" y="115.95" font-size="11.5" text-anchor="middle" font-weight="700">identity not on the list</text>
+  <text x="114" y="133.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ns/probe/sa/default</text>
+  <rect x="232" y="96" width="186" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="325" y="115.95" font-size="11.5" text-anchor="middle" font-weight="700">TLS alert</text>
+  <text x="325" y="133.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">certificate unknown</text>
+  <rect x="438" y="96" width="186" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="531" y="115.95" font-size="11.5" text-anchor="middle" font-weight="700">connection reset</text>
+  <text x="531" y="133.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reset by peer, no alert</text>
+  <line x1="212" y1="121" x2="231" y2="121" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1b-head-rose)"/>
+  <line x1="418" y1="121" x2="437" y2="121" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-1b-head-rose)"/>
+  <rect x="16" y="164" width="196" height="50" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="114" y="183.95" font-size="11.5" text-anchor="middle" font-weight="700">allowed identity</text>
+  <text x="114" y="201.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ns/ate-system/sa/atenet-client</text>
+  <rect x="232" y="164" width="186" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="325" y="183.95" font-size="11.5" text-anchor="middle" font-weight="700">200 from my-counter-1</text>
+  <text x="325" y="201.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on 443 and through 8444</text>
+  <rect x="438" y="164" width="186" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="531" y="183.95" font-size="11.5" text-anchor="middle" font-weight="700">200 from my-counter-1</text>
+  <text x="531" y="201.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on 443 and through 8444</text>
+  <line x1="212" y1="189" x2="231" y2="189" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1b-head-ink)"/>
+  <line x1="418" y1="189" x2="437" y2="189" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-1b-head-ink)"/>
+</svg>

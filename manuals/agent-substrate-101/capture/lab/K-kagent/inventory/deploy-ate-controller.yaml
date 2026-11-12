@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    meta.helm.sh/release-name: substrate
+    meta.helm.sh/release-namespace: ate-system
+  creationTimestamp: "2026-11-12T10:12:13Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/managed-by: Helm
+  name: ate-controller
+  namespace: ate-system
+  resourceVersion: "1122"
+  uid: 160f2daf-97ce-4df3-af36-c25d5cc891e8
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: ate-controller
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: ate-controller
+    spec:
+      containers:
+      - args:
+        - --preview=PerTemplateSnapshotLocation,GoldenEgressPolicy
+        - --ateapi-conn-spec=dns:///api.ate-system.svc:443
+        - --atelet-service-account=atelet
+        - --router-service-account=atenet-router
+        - --ateapi-ca-file=/run/servicedns-ca/trust-bundle.pem
+        - --ateapi-client-cert=/run/podidentity.podcert.ate.dev/credential-bundle.pem
+        - --dns-egress-policy=enforce-in-atunnel
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: ATE_WORKER_OTEL_LOGS_EXPORTER
+          value: none
+        - name: ATE_WORKER_OTEL_TRACES_EXPORTER
+          value: none
+        - name: ATE_WORKER_OTEL_METRICS_EXPORTER
+          value: none
+        image: ghcr.io/kagent-dev/substrate/atecontroller:v1.0.0
+        imagePullPolicy: IfNotPresent
+        name: ate-controller
+        ports:
+        - containerPort: 8080
+          name: metrics
+          protocol: TCP
+        - containerPort: 8081
+          name: healthz
+          protocol: TCP
+        resources:
+          limits:
+            cpu: "1"
+            memory: 512Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/servicedns-ca
+          name: servicedns-ca
+          readOnly: true
+        - mountPath: /run/podidentity.podcert.ate.dev
+          name: podidentity
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: ate-controller
+      serviceAccountName: ate-controller
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: servicedns-ca
+        projected:
+          defaultMode: 420
+          sources:
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: servicedns.podcert.ate.dev/identity
+      - name: podidentity
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: podidentity.podcert.ate.dev/identity
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-11-12T10:12:28Z"
+    lastUpdateTime: "2026-11-12T10:12:28Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-11-12T10:12:13Z"
+    lastUpdateTime: "2026-11-12T10:12:28Z"
+    message: ReplicaSet "ate-controller-84d4d99bbb" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

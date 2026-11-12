@@ -1,0 +1,433 @@
+action	file	reason
+dropped	B-lifecycle/stop-poll	transient helper output
+dropped	C-resume-vs-size/proxy-b0-1.log	transient helper output
+dropped	C-resume-vs-size/proxy-b0-2.log	transient helper output
+dropped	C-resume-vs-size/proxy-b0-3.log	transient helper output
+dropped	C-resume-vs-size/proxy-b0-4.log	transient helper output
+dropped	C-resume-vs-size/proxy-b0-5.log	transient helper output
+dropped	C-resume-vs-size/proxy-b1000-1.log	transient helper output
+dropped	C-resume-vs-size/proxy-b1000-2.log	transient helper output
+dropped	C-resume-vs-size/proxy-b1000-3.log	transient helper output
+dropped	C-resume-vs-size/proxy-b1000-4.log	transient helper output
+dropped	C-resume-vs-size/proxy-b1000-5.log	transient helper output
+dropped	C-resume-vs-size/proxy-b200-1.log	transient helper output
+dropped	C-resume-vs-size/proxy-b200-2.log	transient helper output
+dropped	C-resume-vs-size/proxy-b200-3.log	transient helper output
+dropped	C-resume-vs-size/proxy-b200-4.log	transient helper output
+dropped	C-resume-vs-size/proxy-b200-5.log	transient helper output
+dropped	C-resume-vs-size/proxy-b50-1.log	transient helper output
+dropped	C-resume-vs-size/proxy-b50-2.log	transient helper output
+dropped	C-resume-vs-size/proxy-b50-3.log	transient helper output
+dropped	C-resume-vs-size/proxy-b50-4.log	transient helper output
+dropped	C-resume-vs-size/proxy-b50-5.log	transient helper output
+dropped	C-resume-vs-size/proxy-b500-1.log	transient helper output
+dropped	C-resume-vs-size/proxy-b500-2.log	transient helper output
+dropped	C-resume-vs-size/proxy-b500-3.log	transient helper output
+dropped	C-resume-vs-size/proxy-b500-4.log	transient helper output
+dropped	C-resume-vs-size/proxy-b500-5.log	transient helper output
+dropped	C-resume-vs-size/proxy-o0.log	transient helper output
+dropped	C-resume-vs-size/proxy-o1000.log	transient helper output
+dropped	C-resume-vs-size/proxy-o200.log	transient helper output
+dropped	C-resume-vs-size/proxy-o50.log	transient helper output
+dropped	C-resume-vs-size/proxy-o500.log	transient helper output
+dropped	D-durability/proxy-d0.log	transient helper output
+dropped	D-durability/proxy-d1000.log	transient helper output
+dropped	D-durability/proxy-d200.log	transient helper output
+dropped	D-durability/proxy-d50.log	transient helper output
+dropped	D-durability/proxy-d500.log	transient helper output
+dropped	D-durability/proxy-r1.log	transient helper output
+dropped	D-durability/proxy-x1.log	transient helper output
+dropped	D-durability/proxy-x2.log	transient helper output
+dropped	E-dependency-loss/proxy-e-run.log	transient helper output
+dropped	F-egress/agentgateway/first-run-targets-missing/20-results.txt	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/21-t4-timeline.txt	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/22-drip-server.log	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/31-log-atenet-egress-agentgateway.log	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/31-log-k8s-credential-provider-k8s-credential-provider.log	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/32-marker-in-logs.txt	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/40-supplement.txt	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/f2.log	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/f3.log	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-a-dns-poll-add.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-a-https-chain.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-a-https-default-store.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-a-https-ssl-cert-dir.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-a-https-trust-bundle.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-a-passthrough.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-b-passthrough-one-conn.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-b-poll-new-conn.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-c-keepalive-one-conn.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/s-c-poll-http-removed.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t1-dns-incluster.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t1-dns-other-server.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t1-dns-public.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t1-http-direct-ip.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t1-https-direct-ip.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t1-resolv.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t1-tcp-other.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t2-dns-allowed.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t2-dns-not-allowed.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t2-host-header-spoof.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t2-http-allowed.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t2-http-ip-not-in-policy.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t2-other-ip-direct.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t3-https-cert-seen.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t3-https-default-store.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t3-https-trust-bundle.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t3-passthrough-cert-seen.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t3-passthrough-default-store.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t3-sni-unlisted.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t3-trust-bundle-subjects.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t3-websocket.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t4-bg-http-stream.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t4-bg-passthrough-one-conn.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t4-pre-drip.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t5-actor-env.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t5-missing-secret.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t5-not-granted-namespace.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t5-with-placeholder.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/first-run-targets-missing/t-t5-without-header.json	failed first run; the 19-* result files kept
+dropped	F-egress/agentgateway/proxy-f-deny.log	transient helper output
+dropped	F-egress/agentgateway/proxy-f-main-2.log	transient helper output
+dropped	F-egress/agentgateway/proxy-f-main-3.log	transient helper output
+dropped	F-egress/agentgateway/proxy-f-main.log	transient helper output
+dropped	F-egress/envoy/proxy-f-deny.log	transient helper output
+dropped	F-egress/envoy/proxy-f-main-2.log	transient helper output
+dropped	F-egress/envoy/proxy-f-main.log	transient helper output
+dropped	I-capacity/proxy-p1.log	transient helper output
+dropped	I-capacity/proxy-p2.log	transient helper output
+dropped	I-capacity/proxy-p3.log	transient helper output
+dropped	J-container-death/proxy-j1.log	transient helper output
+dropped	J-container-death/proxy-j2.log	transient helper output
+dropped	K-kagent/FINDINGS.md	internal findings note, restated in research/brief.md
+dropped	K-kagent/docs/operations_upgrade-from-0x.md	copy of third-party documentation
+dropped	K-kagent/docs/setup_installation.md	copy of third-party documentation
+dropped	K-kagent/latency/A-spaced-02.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-02.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-02.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-03.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-03.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-03.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-04.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-04.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-04.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-05.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-05.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-05.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-06.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-06.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-06.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-07.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-07.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-07.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-08.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-08.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-08.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-09.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-09.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-09.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-10.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-10.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-10.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-11.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-11.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-11.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-12.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-12.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-12.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-13.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-13.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-13.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-14.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-14.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-14.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-15.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-15.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-15.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-16.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-16.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-16.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-17.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-17.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-17.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-18.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-18.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-18.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-19.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-19.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-19.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-20.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-20.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/A-spaced-20.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-02.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-02.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-02.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-03.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-03.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-03.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-04.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-04.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-04.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-05.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-05.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-05.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-06.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-06.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-06.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-07.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-07.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-07.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-08.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-08.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-08.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-09.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-09.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-09.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-10.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-10.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-10.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-11.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-11.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-11.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-12.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-12.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-12.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-13.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-13.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-13.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-14.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-14.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-14.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-15.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-15.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-15.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-16.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-16.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-16.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-17.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-17.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-17.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-18.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-18.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-18.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-19.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-19.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-19.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-20.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-20.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/B-b2b-20.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-02.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-02.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-02.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-03.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-03.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-03.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-04.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-04.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-04.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-05.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-05.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-05.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-06.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-06.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-06.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-07.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-07.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-07.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-08.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-08.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-08.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-09.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-09.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-09.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-10.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-10.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/C-first-10.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-2.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-2.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-2.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-3.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-3.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-3.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-4.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-4.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-4.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-5.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-5.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-5.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-6.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-6.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-6.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-7.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-7.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-7.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-8.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-8.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/D-par-8.out	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/d1.sid	transient helper output
+dropped	K-kagent/latency/d2.sid	transient helper output
+dropped	K-kagent/latency/d3.sid	transient helper output
+dropped	K-kagent/latency/d4.sid	transient helper output
+dropped	K-kagent/latency/d5.sid	transient helper output
+dropped	K-kagent/latency/d6.sid	transient helper output
+dropped	K-kagent/latency/d7.sid	transient helper output
+dropped	K-kagent/latency/d8.sid	transient helper output
+dropped	K-kagent/latency/session-A.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-A.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-B.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-B.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C01.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C01.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C02.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C02.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C03.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C03.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C04.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C04.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C05.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C05.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C06.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C06.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C07.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C07.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C08.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C08.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C09.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C09.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C10.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-C10.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D2.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D2.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D3.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D3.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D4.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D4.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D5.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D5.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D6.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D6.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D7.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D7.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D8.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/session-D8.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/latency/stop	transient helper output
+dropped	K-kagent/logs/ate-api-server-776cd6fb4c-hztmx.log	bulk component log; state changes kept in actor-state-changes.tsv
+dropped	K-kagent/logs/ate-api-server-776cd6fb4c-tnc4m.log	bulk component log; state changes kept in actor-state-changes.tsv
+dropped	K-kagent/logs/ate-controller-84d4d99bbb-zwnz5.log	bulk component log; state changes kept in actor-state-changes.tsv
+dropped	K-kagent/logs/atelet-5g655.log	bulk component log; state changes kept in actor-state-changes.tsv
+dropped	K-kagent/logs/atenet-router-556c5ff957-489rl.log	bulk component log; state changes kept in actor-state-changes.tsv
+dropped	K-kagent/logs/kagent-controller.log	bulk component log; state changes kept in actor-state-changes.tsv
+dropped	K-kagent/logs/mock-llm.log	bulk component log; state changes kept in actor-state-changes.tsv
+dropped	K-kagent/logs/worker.log	bulk component log; state changes kept in actor-state-changes.tsv
+dropped	K-kagent/parallel/p24-1.sid	transient helper output
+dropped	K-kagent/parallel/p24-10.sid	transient helper output
+dropped	K-kagent/parallel/p24-11.sid	transient helper output
+dropped	K-kagent/parallel/p24-12.sid	transient helper output
+dropped	K-kagent/parallel/p24-13.sid	transient helper output
+dropped	K-kagent/parallel/p24-14.sid	transient helper output
+dropped	K-kagent/parallel/p24-15.sid	transient helper output
+dropped	K-kagent/parallel/p24-16.sid	transient helper output
+dropped	K-kagent/parallel/p24-17.sid	transient helper output
+dropped	K-kagent/parallel/p24-18.sid	transient helper output
+dropped	K-kagent/parallel/p24-19.sid	transient helper output
+dropped	K-kagent/parallel/p24-2.sid	transient helper output
+dropped	K-kagent/parallel/p24-20.sid	transient helper output
+dropped	K-kagent/parallel/p24-21.sid	transient helper output
+dropped	K-kagent/parallel/p24-22.sid	transient helper output
+dropped	K-kagent/parallel/p24-23.sid	transient helper output
+dropped	K-kagent/parallel/p24-24.sid	transient helper output
+dropped	K-kagent/parallel/p24-3.sid	transient helper output
+dropped	K-kagent/parallel/p24-4.sid	transient helper output
+dropped	K-kagent/parallel/p24-5.sid	transient helper output
+dropped	K-kagent/parallel/p24-6.sid	transient helper output
+dropped	K-kagent/parallel/p24-7.sid	transient helper output
+dropped	K-kagent/parallel/p24-8.sid	transient helper output
+dropped	K-kagent/parallel/p24-9.sid	transient helper output
+dropped	K-kagent/parallel/p8-1.sid	transient helper output
+dropped	K-kagent/parallel/p8-2.sid	transient helper output
+dropped	K-kagent/parallel/p8-3.sid	transient helper output
+dropped	K-kagent/parallel/p8-4.sid	transient helper output
+dropped	K-kagent/parallel/p8-5.sid	transient helper output
+dropped	K-kagent/parallel/p8-6.sid	transient helper output
+dropped	K-kagent/parallel/p8-7.sid	transient helper output
+dropped	K-kagent/parallel/p8-8.sid	transient helper output
+dropped	K-kagent/parallel/session-P24-1.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-1.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-10.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-10.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-11.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-11.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-12.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-12.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-13.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-13.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-14.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-14.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-15.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-15.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-16.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-16.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-17.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-17.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-18.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-18.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-19.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-19.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-2.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-2.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-20.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-20.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-21.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-21.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-22.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-22.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-23.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-23.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-24.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-24.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-3.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-3.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-4.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-4.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-5.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-5.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-6.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-6.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-7.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-7.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-8.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-8.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-9.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P24-9.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-2.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-2.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-3.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-3.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-4.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-4.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-5.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-5.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-6.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-6.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-7.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-7.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-8.err	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/session-P8-8.json	per-turn bulk output; one sample of each series kept, timings kept in timings.tsv
+dropped	K-kagent/parallel/stop	transient helper output
+dropped	K-kagent/probes/stop	transient helper output
+dropped	K-kagent/session1/stop	transient helper output
+excerpt	E-dependency-loss/18-router-full.log	original over 200 KB; kept 513 of 5070 lines verbatim as 18-router-full.excerpt.log
+excerpt	F-egress/agentgateway/31-log-atenet-egress-agentgateway.log	original over 200 KB; kept 589 of 6477 lines verbatim as 31-log-atenet-egress-agentgateway.excerpt.log
+excerpt	K-kagent/latency/actor-trace.log	original over 200 KB; kept 124 of 215 lines verbatim as actor-trace.excerpt.log
+excerpt	K-kagent/latency/ate-api.log	original over 200 KB; kept 160 of 1285 lines verbatim as ate-api.excerpt.log
+excerpt	K-kagent/latency/atelet.log	original over 200 KB; kept 160 of 363 lines verbatim as atelet.excerpt.log
+excerpt	K-kagent/latency/kagent-controller.log	original over 200 KB; kept 186 of 936 lines verbatim as kagent-controller.excerpt.log
+excerpt	K-kagent/parallel/actor-trace.log	original over 200 KB; kept 0 of 45 lines verbatim as actor-trace.excerpt.log
+excerpt	K-kagent/session1/atenet-egress.log	original over 200 KB; kept 428 of 4199 lines verbatim as atenet-egress.excerpt.log
+excerpt	M-mac-arm64/85-atelet-tail.log	original over 200 KB; kept 192 of 364 lines verbatim as 85-atelet-tail.excerpt.log
+redacted	K-kagent/latency/ate-api.log	26 line(s) removed that matched a secret or identity pattern
+redacted	M-mac-arm64/20-deploy-ate-system.log	personal home path replaced with <home>
+split	D-durability/10-watch.tsv	over 200 KB; split verbatim into -part1 and -part2 (part2 repeats the header line)
+note	F-egress, K-kagent	the strings sk-mock-not-a-real-key, lab-granted-marker-<digits>, placeholder-custom-header and kagent-credential-injected are test values that we made up; they are kept on purpose
+note	M-mac-arm64/failed-wrong-context	the folder was empty in the evidence: the files of the first run against the wrong kubectl context were overwritten by the second run, so no proof file exists
+note	K-kagent/inventory/kagent-configmaps.yaml	holds one public CA certificate of the test cluster, no key

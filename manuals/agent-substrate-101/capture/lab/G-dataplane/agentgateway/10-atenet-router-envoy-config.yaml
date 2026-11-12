@@ -1,0 +1,124 @@
+apiVersion: v1
+data:
+  envoy.yaml: |
+    admin:
+      address:
+        socket_address:
+          # Loopback only. The admin API is unauthenticated and includes
+          # /quitquitquit, /drain_listeners, /runtime_modify and /config_dump,
+          # so it must not be reachable on the pod IP. In-pod callers (the
+          # router's drain sequence and dataplane health check) dial localhost,
+          # and `kubectl port-forward` dials loopback inside the pod's network
+          # namespace, so both keep working. Prometheus scrapes the
+          # envoy_metrics listener below instead.
+          address: 127.0.0.1
+          port_value: 9901
+
+    node:
+      id: substrate-envoy-node
+      cluster: substrate-router-cluster
+
+    # Required for main_internal (see xds.go's buildMainInternalListener):
+    # Envoy rejects any Listener.internal_listener without this registered,
+    # with "InternalListener bootstrap extension is mandatory".
+    bootstrap_extensions:
+    - name: envoy.bootstrap.internal_listener
+      typed_config:
+        "@type": type.googleapis.com/envoy.extensions.bootstrap.internal_listener.v3.InternalListener
+
+    dynamic_resources:
+      lds_config:
+        resource_api_version: V3
+        ads: {}
+      cds_config:
+        resource_api_version: V3
+        ads: {}
+      ads_config:
+        api_type: DELTA_GRPC
+        transport_api_version: V3
+        grpc_services:
+        - envoy_grpc:
+            cluster_name: xds_cluster
+
+    static_resources:
+      # envoy_metrics is the only pod-IP-reachable view of the admin API: it
+      # proxies GET /stats/prometheus (the PodMonitoring in
+      # atenet-router-monitoring.yaml) and GET /ready (the envoy container's
+      # readiness probe) to the loopback-only admin listener and 404s
+      # everything else. The stat prefixes contain "admin" so
+      # envoyDrainer.activeConnections excludes probes and scrapes from the
+      # downstream connection count it waits on to reach zero.
+      listeners:
+      - name: envoy_metrics
+        stat_prefix: admin_metrics
+        address:
+          socket_address:
+            address: "::"
+            ipv4_compat: true
+            port_value: 9902
+        filter_chains:
+        - filters:
+          - name: envoy.filters.network.http_connection_manager
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+              stat_prefix: admin_metrics
+              route_config:
+                name: envoy_metrics
+                virtual_hosts:
+                - name: envoy_metrics
+                  domains: ["*"]
+                  routes:
+                  - match:
+                      path: /stats/prometheus
+                      headers:
+                      - name: ":method"
+                        string_match: { exact: GET }
+                    route: { cluster: envoy_admin }
+                  - match:
+                      path: /ready
+                      headers:
+                      - name: ":method"
+                        string_match: { exact: GET }
+                    route: { cluster: envoy_admin }
+              http_filters:
+              - name: envoy.filters.http.router
+                typed_config:
+                  "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+      clusters:
+      - name: envoy_admin
+        connect_timeout: 0.25s
+        type: STATIC
+        load_assignment:
+          cluster_name: envoy_admin
+          endpoints:
+          - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: 127.0.0.1
+                    port_value: 9901
+      - name: xds_cluster
+        connect_timeout: 0.25s
+        type: STRICT_DNS
+        lb_policy: ROUND_ROBIN
+        typed_extension_protocol_options:
+          envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+            "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+            explicit_http_config:
+              http2_protocol_options: {}
+        load_assignment:
+          cluster_name: xds_cluster
+          endpoints:
+          - lb_endpoints:
+            - endpoint:
+                address:
+                  socket_address:
+                    address: 127.0.0.1
+                    port_value: 18000
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2026-11-12T10:32:06Z"
+  name: atenet-router-envoy-config
+  namespace: ate-system
+  resourceVersion: "906"
+  uid: 2c8df9bc-e32a-4c69-b37f-451ffa25871d

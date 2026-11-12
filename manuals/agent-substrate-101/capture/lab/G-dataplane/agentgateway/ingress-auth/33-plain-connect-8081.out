@@ -1,0 +1,10 @@
+* Host atenet-router.ate-system.svc:8081 was resolved.
+* IPv6: (none)
+* IPv4: 10.96.5.247
+*   Trying 10.96.5.247:8081...
+* connect to 10.96.5.247 port 8081 from 10.244.0.26 port 55798 failed: Connection refused
+* Failed to connect to atenet-router.ate-system.svc port 8081 after 3 ms: Could not connect to server
+* closing connection #0
+curl: (7) Failed to connect to atenet-router.ate-system.svc port 8081 after 3 ms: Could not connect to server
+command terminated with exit code 7
+exit=7

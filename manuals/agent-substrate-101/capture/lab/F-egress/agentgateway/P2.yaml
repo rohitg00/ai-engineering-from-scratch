@@ -1,0 +1,4 @@
+rules:
+- http: {hostnames: ["whoami.egress-target.svc.cluster.local"]}
+- https: {hostnames: ["example.com"]}
+- tlsPassthrough: {hostnames: ["example.org"], ports: {numbers: [443]}}

@@ -1,0 +1,62 @@
+{
+  "hostNetwork": null,
+  "hostPID": null,
+  "serviceAccountName": "kagent-default",
+  "containers": [
+    {
+      "name": "worker",
+      "image": "ghcr.io/kagent-dev/substrate/ateworker-gvisor:v1.0.0",
+      "securityContext": {
+        "allowPrivilegeEscalation": false,
+        "appArmorProfile": {
+          "type": "Unconfined"
+        },
+        "capabilities": {
+          "add": [
+            "NET_ADMIN",
+            "SYS_ADMIN",
+            "SETUID",
+            "SETGID",
+            "DAC_OVERRIDE",
+            "FOWNER",
+            "CHOWN",
+            "NET_RAW",
+            "SETFCAP"
+          ],
+          "drop": [
+            "ALL"
+          ]
+        },
+        "privileged": false,
+        "runAsGroup": 0,
+        "runAsUser": 0,
+        "seccompProfile": {
+          "type": "Unconfined"
+        }
+      },
+      "resources": {}
+    }
+  ],
+  "volumes": [
+    {
+      "name": "worker-capacity",
+      "hostPath": null
+    },
+    {
+      "name": "ate-base",
+      "hostPath": "/var/lib/ate"
+    },
+    {
+      "name": "atunnel-identity",
+      "hostPath": null
+    },
+    {
+      "name": "atunnel-egress-trust",
+      "hostPath": null
+    },
+    {
+      "name": "kube-api-access-7jz5r",
+      "hostPath": null
+    }
+  ]
+}

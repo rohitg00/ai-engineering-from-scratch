@@ -1,0 +1,1 @@
+{"stdout":" 0 s:CN=example.com\n   i:CN=U7ICLCR3N66DBMBSAQNS5JHTHI\n 1 s:CN=U7ICLCR3N66DBMBSAQNS5JHTHI\n   i:CN=U7ICLCR3N66DBMBSAQNS5JHTHI\nVerification error: self-signed certificate in certificate chain\nVerify return code: 19 (self-signed certificate in certificate chain)\n","stderr":"","exitCode":0}

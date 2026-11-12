@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-6-6-title fig-6-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-6-title">The containers of each dataplane and their idle memory</title>
+  <desc id="fig-6-6-desc">Two columns. The Envoy dataplane has 5 containers that hold 91 MB in total: atenet-router and envoy in the pod atenet-router, and envoy, ext-proc, and sdsmint in the pod atenet-egress. Only sdsmint holds the CA key. The agentgateway dataplane has 2 containers that hold 38 MB in total: one agentgateway container in each pod. The agentgateway container in atenet-egress holds the CA key.</desc>
+  <line x1="320" y1="8" x2="320" y2="292" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="16" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ENVOY DATAPLANE</text>
+  <rect x="16" y="28" width="292" height="106" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-dasharray="5 4"/>
+  <text x="26" y="46" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">pod atenet-router</text>
+  <rect x="26" y="56" width="132" height="66" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="92" y="83.8" font-size="11" text-anchor="middle" font-weight="700">atenet-router</text>
+  <text x="92" y="100.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">25.6 MB</text>
+  <rect x="166" y="56" width="132" height="66" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="232" y="83.8" font-size="11" text-anchor="middle" font-weight="700">envoy</text>
+  <text x="232" y="100.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">21.6 MB</text>
+  <rect x="16" y="150" width="292" height="106" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-dasharray="5 4"/>
+  <text x="26" y="168" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">pod atenet-egress</text>
+  <rect x="26" y="178" width="85.33" height="66" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="68.67" y="205.8" font-size="11" text-anchor="middle" font-weight="700">envoy</text>
+  <text x="68.67" y="222.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">22.8 MB</text>
+  <rect x="119.33" y="178" width="85.33" height="66" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="162" y="205.8" font-size="11" text-anchor="middle" font-weight="700">ext-proc</text>
+  <text x="162" y="222.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">12.0 MB</text>
+  <rect x="212.67" y="178" width="85.33" height="66" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="215.67" y="181" width="79.33" height="60" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="255.33" y="198.3" font-size="11" text-anchor="middle" font-weight="700">sdsmint</text>
+  <text x="255.33" y="215.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">8.9 MB</text>
+  <text x="255.33" y="230.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CA key</text>
+  <text x="16" y="282" font-size="12" font-weight="700">91 MB in 5 containers</text>
+  <text x="332" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENTGATEWAY DATAPLANE</text>
+  <rect x="332" y="28" width="292" height="106" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-dasharray="5 4"/>
+  <text x="342" y="46" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">pod atenet-router</text>
+  <rect x="342" y="56" width="272" height="66" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="478" y="83.8" font-size="11" text-anchor="middle" font-weight="700">agentgateway</text>
+  <text x="478" y="100.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">19.9 MB</text>
+  <rect x="332" y="150" width="292" height="106" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-dasharray="5 4"/>
+  <text x="342" y="168" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">pod atenet-egress</text>
+  <rect x="342" y="178" width="272" height="66" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="345" y="181" width="266" height="60" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="478" y="198.3" font-size="11" text-anchor="middle" font-weight="700">agentgateway</text>
+  <text x="478" y="215.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">17.8 MB</text>
+  <text x="478" y="230.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">CA key</text>
+  <text x="332" y="282" font-size="12" font-weight="700">38 MB in 2 containers</text>
+</svg>

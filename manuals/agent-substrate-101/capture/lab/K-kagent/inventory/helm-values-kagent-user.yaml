@@ -1,0 +1,20 @@
+config:
+  server:
+    grpcReflection: true
+  substrate:
+    apiEndpoint: dns:///api.ate-system.svc:443
+    routerUrl: https://atenet-router.ate-system.svc:443
+controller:
+  substrateClientCertificate:
+    enabled: true
+database:
+  postgres:
+    clientCertificate:
+      enabled: true
+providers:
+  default: openAI
+  openAI:
+    apiKey: sk-mock-not-a-real-key
+substrateWorkerPool:
+  create: true
+  workerImage: ghcr.io/kagent-dev/substrate/ateworker-gvisor:v1.0.0

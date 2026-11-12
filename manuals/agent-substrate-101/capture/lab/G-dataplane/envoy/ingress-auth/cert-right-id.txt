@@ -1,0 +1,1 @@
+subject=CN = HBCORTIJRCAXAVJEJY3YTOYS3X X509v3 Subject Alternative Name:      URI:spiffe://cluster.local/ns/ate-system/sa/atenet-client 

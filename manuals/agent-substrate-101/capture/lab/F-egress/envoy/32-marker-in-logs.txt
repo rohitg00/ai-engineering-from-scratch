@@ -1,0 +1,4 @@
+## marker (the real credential value) occurrences in logs
+31-log-atenet-egress-envoy.log granted=0 ungranted=0 placeholder=0 lines=88
+31-log-atenet-egress-ext-proc.log granted=0 ungranted=0 placeholder=0 lines=1281
+31-log-k8s-credential-provider-k8s-credential-provider.log granted=0 ungranted=0 placeholder=0 lines=24

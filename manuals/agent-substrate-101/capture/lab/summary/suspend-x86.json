@@ -1,0 +1,120 @@
+{
+  "async": {
+    "note": "default mode, returns when the snapshot is on the node",
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.368,
+          "median": 0.335,
+          "min": 0.319,
+          "n": 10
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.572,
+          "median": 0.5,
+          "min": 0.486,
+          "n": 10
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.854,
+          "median": 0.79,
+          "min": 0.694,
+          "n": 10
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 1.228,
+          "median": 1.17,
+          "min": 1.091,
+          "n": 10
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 2.253,
+          "median": 1.95,
+          "min": 1.863,
+          "n": 10
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor",
+  "sources": [
+    "capture/lab/C-resume-vs-size/10-local.tsv"
+  ],
+  "sync": {
+    "note": "--mode sync, returns when the snapshot is in the object store",
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.424,
+          "median": 0.401,
+          "min": 0.393,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 1.081,
+          "median": 1.029,
+          "min": 0.929,
+          "n": 5
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 2.083,
+          "median": 2.019,
+          "min": 1.881,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 4.732,
+          "median": 3.591,
+          "min": 3.274,
+          "n": 5
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 7.64,
+          "median": 6.408,
+          "min": 6.209,
+          "n": 5
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "unit": {
+    "seconds": "kubectl ate suspend actor, CLI time",
+    "x": "MiB of memory the actor holds"
+  }
+}

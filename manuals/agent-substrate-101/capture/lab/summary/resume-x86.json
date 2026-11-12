@@ -1,0 +1,388 @@
+{
+  "actor": "ballast: a Go server in a scratch image that holds x MiB of random bytes, fidelity SNAPSHOT_FIDELITY_MEMORY",
+  "create_actor": {
+    "note": "kubectl ate create actor, CLI time",
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.232,
+          "median": 0.212,
+          "min": 0.202,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.254,
+          "median": 0.216,
+          "min": 0.213,
+          "n": 5
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.222,
+          "median": 0.209,
+          "min": 0.206,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.263,
+          "median": 0.208,
+          "min": 0.201,
+          "n": 5
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.226,
+          "median": 0.219,
+          "min": 0.202,
+          "n": 5
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "detach_wait": {
+    "note": "seconds from async suspend until the actor had no assigned node, shortened timers",
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 10.2,
+          "median": 10.2,
+          "min": 10.1,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 10.1,
+          "median": 10.1,
+          "min": 10.1,
+          "n": 5
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 10.3,
+          "median": 10.1,
+          "min": 9.5,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 10.2,
+          "median": 10.1,
+          "min": 9.5,
+          "n": 5
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 10.9,
+          "median": 9.5,
+          "min": 8.8,
+          "n": 5
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor",
+  "new_actor_first_call": {
+    "note": "create an actor, first request restores the golden snapshot",
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.24,
+          "median": 0.226,
+          "min": 0.216,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.4,
+          "median": 0.253,
+          "min": 0.242,
+          "n": 5
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.863,
+          "median": 0.615,
+          "min": 0.561,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 6.76,
+          "median": 5.762,
+          "min": 1.862,
+          "n": 5
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 12.745,
+          "median": 6.598,
+          "min": 3.464,
+          "n": 5
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "node_local": {
+    "note": "async suspend, 1 s wait, one request",
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.233,
+          "median": 0.222,
+          "min": 0.215,
+          "n": 10
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.255,
+          "median": 0.238,
+          "min": 0.228,
+          "n": 10
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.537,
+          "median": 0.472,
+          "min": 0.347,
+          "n": 10
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 1.336,
+          "median": 1.068,
+          "min": 1.001,
+          "n": 10
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 5.086,
+          "median": 2.16,
+          "min": 1.935,
+          "n": 10
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "object_store": {
+    "note": "atelet with --snapshot-upload-delay=3s --snapshot-detach-delay=10s, request after the actor has no assigned node",
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.248,
+          "median": 0.243,
+          "min": 0.236,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.472,
+          "median": 0.413,
+          "min": 0.372,
+          "n": 5
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 1.011,
+          "median": 0.955,
+          "min": 0.902,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 2.412,
+          "median": 2.255,
+          "min": 1.926,
+          "n": 5
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 4.967,
+          "median": 4.678,
+          "min": 4.233,
+          "n": 5
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "object_store_default_timers": {
+    "note": "default atelet timers, request 42 minutes after the suspend, one sample per size",
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.249,
+          "median": 0.249,
+          "min": 0.249,
+          "n": 1
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.519,
+          "median": 0.519,
+          "min": 0.519,
+          "n": 1
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 1.186,
+          "median": 1.186,
+          "min": 1.186,
+          "n": 1
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 2.443,
+          "median": 2.443,
+          "min": 2.443,
+          "n": 1
+        },
+        "x": 500
+      }
+    ]
+  },
+  "sources": [
+    "capture/lab/C-resume-vs-size/10-local.tsv",
+    "capture/lab/C-resume-vs-size/32-object-store.tsv",
+    "capture/lab/D-durability/10-watch-part1.tsv",
+    "capture/lab/D-durability/10-watch-part2.tsv"
+  ],
+  "unit": {
+    "seconds": "client time through kubectl ate proxy",
+    "x": "MiB of memory the actor holds"
+  },
+  "warm_call": {
+    "points": [
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.068,
+          "median": 0.064,
+          "min": 0.058,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.066,
+          "median": 0.065,
+          "min": 0.059,
+          "n": 5
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.068,
+          "median": 0.064,
+          "min": 0.06,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.068,
+          "median": 0.064,
+          "min": 0.061,
+          "n": 5
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "seconds": {
+          "max": 0.066,
+          "median": 0.063,
+          "min": 0.062,
+          "n": 5
+        },
+        "x": 1000
+      }
+    ]
+  }
+}

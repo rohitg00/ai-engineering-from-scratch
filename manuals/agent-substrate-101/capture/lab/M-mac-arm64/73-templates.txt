@@ -1,0 +1,31 @@
+ATESPACE   NAME          GOLDEN TAG                             ERROR   AGE
+lab-c      ballast-0     b64f9567-34aa-4508-be3a-3bd654db1ab9           63s
+lab-c      ballast-200   a485a7f1-5a4d-4372-8eef-7f48032b4c6b           63s
+lab-c      ballast-50    351062e0-d0a2-4f83-9e44-fd37cd5c42a3           63s
+NAME                       READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+ballast-78ff84c85c-dnfv5   1/1     Running   0          64s   10.244.0.20   kind-control-plane   <none>           <none>
+    HostPathType:  DirectoryOrCreate
+  atunnel-identity:
+    Type:  Projected (a volume that contains injected data from multiple sources)
+  atunnel-egress-trust:
+    Type:  Projected (a volume that contains injected data from multiple sources)
+  kube-api-access-kqpwc:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 ate.dev/sandboxClass=gvisor:NoSchedule
+                             node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age   From               Message
+  ----     ------     ----  ----               -------
+  Normal   Scheduled  64s   default-scheduler  Successfully assigned lab-c/ballast-78ff84c85c-dnfv5 to kind-control-plane
+  Normal   Pulling    63s   kubelet            spec.containers{worker}: Pulling image "ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0"
+  Normal   Pulled     31s   kubelet            spec.containers{worker}: Successfully pulled image "ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0" in 32.298s (32.298s including waiting). Image size: 20285878 bytes.
+  Normal   Created    31s   kubelet            spec.containers{worker}: Container created
+  Normal   Started    31s   kubelet            spec.containers{worker}: Container started
+  Warning  Unhealthy  31s   kubelet            spec.containers{worker}: Readiness probe failed: Get "http://10.244.0.20:8080/readyz": dial tcp 10.244.0.20:8080: connect: connection refused

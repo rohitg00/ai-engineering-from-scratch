@@ -1,0 +1,11 @@
+cert right-id: subject=CN = HBCORTIJRCAXAVJEJY3YTOYS3X X509v3 Subject Alternative Name:      URI:spiffe://cluster.local/ns/ate-system/sa/atenet-client 
+### 23-rightid-https-443
+preserved memory count: 2 | preserved file counter: 2 | preserved rootfs counter: 2
+ code=200 t=0.037024
+### 26-rightid-connect-8444
+preserved memory count: 3 | preserved file counter: 3 | preserved rootfs counter: 3
+ code=200 t=0.031985
+### 27-rightid-unknown-actor
+actor ate-demo-counter/does-not-exist not found code=404 t=0.023980
+### 28-rightid-no-header
+invalid actor reference code=404 t=0.018376

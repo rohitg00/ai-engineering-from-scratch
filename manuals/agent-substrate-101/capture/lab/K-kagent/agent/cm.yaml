@@ -1,0 +1,119 @@
+apiVersion: v1
+data:
+  mock_llm.py: |
+    import json, sys, time, uuid, hashlib
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+
+    def flat(content):
+        if isinstance(content, str):
+            return content
+        if isinstance(content, list):
+            out = []
+            for p in content:
+                if isinstance(p, dict):
+                    out.append(str(p.get("text") or p.get("content") or ""))
+                else:
+                    out.append(str(p))
+            return "\n".join(out)
+        return "" if content is None else str(content)
+
+
+    def decide(messages):
+        last = messages[-1] if messages else {}
+        role = last.get("role")
+        text = flat(last.get("content"))
+        if role == "tool":
+            return {"content": "TOOL_OUTPUT_BEGIN\n" + text + "\nTOOL_OUTPUT_END"}
+        if "RUN:" in text:
+            cmd = text.split("RUN:", 1)[1].strip()
+            return {"tool": {"name": "bash", "arguments": json.dumps({"command": cmd})}}
+        return {"content": "MOCK_REPLY: " + text[:200]}
+
+
+    class H(BaseHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
+
+        def log_message(self, *a):
+            pass
+
+        def _json(self, code, obj):
+            b = json.dumps(obj).encode()
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(b)))
+            self.end_headers()
+            self.wfile.write(b)
+
+        def do_GET(self):
+            print(json.dumps({"t": time.time(), "m": "GET", "path": self.path, "headers": sorted(self.headers.keys())}), flush=True)
+            if self.path.endswith("/models"):
+                return self._json(200, {"object": "list", "data": [{"id": "mock-1", "object": "model", "owned_by": "lab"}]})
+            return self._json(200, {"ok": True})
+
+        def do_POST(self):
+            n = int(self.headers.get("Content-Length") or 0)
+            raw = self.rfile.read(n)
+            try:
+                req = json.loads(raw or b"{}")
+            except Exception:
+                req = {}
+            msgs = req.get("messages") or []
+            auth = self.headers.get("Authorization") or ""
+            d = decide(msgs)
+            last = msgs[-1] if msgs else {}
+            print(json.dumps({
+                "t": time.time(), "m": "POST", "path": self.path,
+                "auth": auth, "auth_sha": hashlib.sha256(auth.encode()).hexdigest()[:12],
+                "headers": {k: v for k, v in self.headers.items() if k.lower() not in ("authorization",)},
+                "model": req.get("model"), "stream": bool(req.get("stream")),
+                "tools": [t.get("function", {}).get("name") for t in (req.get("tools") or [])],
+                "n_messages": len(msgs), "roles": [m.get("role") for m in msgs],
+                "last_role": last.get("role"), "last_text": flat(last.get("content"))[:400],
+                "decision": "tool" if "tool" in d else "text",
+            }), flush=True)
+            cid = "chatcmpl-" + uuid.uuid4().hex[:12]
+            model = req.get("model") or "mock-1"
+            usage = {"prompt_tokens": 10, "completion_tokens": 5, "total_tokens": 15}
+            if "tool" in d:
+                tc = {"id": "call_" + uuid.uuid4().hex[:10], "type": "function", "function": d["tool"]}
+                msg = {"role": "assistant", "content": None, "tool_calls": [tc]}
+                finish = "tool_calls"
+            else:
+                msg = {"role": "assistant", "content": d["content"]}
+                finish = "stop"
+            if not req.get("stream"):
+                return self._json(200, {"id": cid, "object": "chat.completion", "created": int(time.time()), "model": model,
+                                        "choices": [{"index": 0, "message": msg, "finish_reason": finish}], "usage": usage})
+            self.send_response(200)
+            self.send_header("Content-Type", "text/event-stream")
+            self.send_header("Cache-Control", "no-cache")
+            self.send_header("Connection", "close")
+            self.end_headers()
+
+            def ev(obj):
+                self.wfile.write(b"data: " + json.dumps(obj).encode() + b"\n\n")
+                self.wfile.flush()
+
+            base = {"id": cid, "object": "chat.completion.chunk", "created": int(time.time()), "model": model}
+            if "tool" in d:
+                delta = {"role": "assistant", "content": None,
+                         "tool_calls": [{"index": 0, "id": tc["id"], "type": "function", "function": d["tool"]}]}
+            else:
+                delta = {"role": "assistant", "content": d["content"]}
+            ev(dict(base, choices=[{"index": 0, "delta": delta, "finish_reason": None}]))
+            ev(dict(base, choices=[{"index": 0, "delta": {}, "finish_reason": finish}]))
+            ev(dict(base, choices=[], usage=usage))
+            self.wfile.write(b"data: [DONE]\n\n")
+            self.wfile.flush()
+            self.close_connection = True
+
+
+    if __name__ == "__main__":
+        port = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
+        print(json.dumps({"t": time.time(), "m": "START", "port": port}), flush=True)
+        ThreadingHTTPServer(("0.0.0.0", port), H).serve_forever()
+kind: ConfigMap
+metadata:
+  name: mock-llm
+  namespace: kagent

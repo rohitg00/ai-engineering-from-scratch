@@ -1,0 +1,14 @@
+NAME                                       READY   STATUS      RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-api-server-59dcf8d6bf-crsxt            2/2     Running     0          26m   10.244.0.40   kind-control-plane   <none>           <none>
+ate-api-server-59dcf8d6bf-rfg7v            2/2     Running     0          26m   10.244.0.41   kind-control-plane   <none>           <none>
+ate-controller-7984566f8d-wqg7s            1/1     Running     0          59m   10.244.0.9    kind-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-9fdns             1/1     Running     0          59m   10.244.0.13   kind-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-qdhl8             1/1     Running     0          59m   10.244.0.12   kind-control-plane   <none>           <none>
+atelet-rc4mn                               2/2     Running     0          59m   10.244.0.11   kind-control-plane   <none>           <none>
+atenet-egress-9fbd685d5-5q98b              1/1     Running     0          42s   10.244.0.49   kind-control-plane   <none>           <none>
+atenet-router-7c5c864d47-9gztj             1/1     Running     0          20m   10.244.0.42   kind-control-plane   <none>           <none>
+k8s-credential-provider-85dc8799f8-hjrbm   1/1     Running     0          47m   10.244.0.32   kind-control-plane   <none>           <none>
+postgres-0                                 2/2     Running     0          29m   10.244.0.39   kind-control-plane   <none>           <none>
+right-id                                   1/1     Running     0          53m   10.244.0.27   kind-control-plane   <none>           <none>
+rustfs-54c86945fb-lst2f                    1/1     Running     0          59m   10.244.0.20   kind-control-plane   <none>           <none>
+rustfs-bucket-init-kjhfs                   0/1     Completed   0          59m   10.244.0.15   kind-control-plane   <none>           <none>

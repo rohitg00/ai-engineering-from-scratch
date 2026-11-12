@@ -1,0 +1,101 @@
+{
+  "client_seconds": {
+    "A-spaced": {
+      "max": 1.435,
+      "median": 1.224,
+      "min": 1.056,
+      "n": 20
+    },
+    "B-b2b": {
+      "max": 1.367,
+      "median": 1.175,
+      "min": 1.028,
+      "n": 20
+    },
+    "C-first": {
+      "max": 1.13,
+      "median": 1.054,
+      "min": 0.956,
+      "n": 10
+    },
+    "D-par": {
+      "max": 1.682,
+      "median": 0.333,
+      "min": 0.291,
+      "n": 8
+    },
+    "parallel-P24": {
+      "max": 7.848,
+      "median": 5.334,
+      "min": 4.25,
+      "n": 24
+    },
+    "parallel-P8": {
+      "max": 3.566,
+      "median": 2.923,
+      "min": 2.473,
+      "n": 8
+    },
+    "parallel-session-create": {
+      "max": 0.473,
+      "median": 0.174,
+      "min": 0.156,
+      "n": 32
+    },
+    "session-create": {
+      "max": 0.423,
+      "median": 0.391,
+      "min": 0.379,
+      "n": 20
+    }
+  },
+  "machine": "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, kagent v1.0.0 with its Substrate distribution, mock model server",
+  "note": "the model is a mock server in the cluster, so model time is near zero. Every turn resumes the session actor and suspends it again.",
+  "resume_seconds": {
+    "all": {
+      "max": 9.839,
+      "median": 0.381,
+      "min": 0.216,
+      "n": 99
+    },
+    "note": "resuming to running in the ate-api log. The values of 5 s or more are golden snapshot builds, left out of turns_only.",
+    "turns_only": {
+      "max": 0.542,
+      "median": 0.38,
+      "min": 0.216,
+      "n": 98
+    }
+  },
+  "server_turn_seconds": {
+    "A-spaced": {
+      "max": 0.818,
+      "median": 0.726,
+      "min": 0.622,
+      "n": 20
+    },
+    "B-b2b": {
+      "max": 0.797,
+      "median": 0.738,
+      "min": 0.624,
+      "n": 20
+    },
+    "C-first": {
+      "max": 0.669,
+      "median": 0.605,
+      "min": 0.511,
+      "n": 10
+    }
+  },
+  "sources": [
+    "capture/lab/K-kagent/latency/timings.tsv",
+    "capture/lab/K-kagent/latency/server-times.tsv",
+    "capture/lab/K-kagent/parallel/timings.tsv",
+    "capture/lab/K-kagent/logs/actor-state-changes.tsv"
+  ],
+  "suspend_seconds": {
+    "max": 0.398,
+    "median": 0.142,
+    "min": 0.12,
+    "n": 99
+  }
+}

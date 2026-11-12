@@ -1,0 +1,7 @@
+[
+  {
+    "name": "agentgateway",
+    "securityContext": null,
+    "resources": {}
+  }
+]

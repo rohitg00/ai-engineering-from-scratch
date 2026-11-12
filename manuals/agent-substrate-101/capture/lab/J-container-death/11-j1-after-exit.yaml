@@ -1,0 +1,59 @@
+actorTemplate:
+  atespace: lab-c
+  name: fail-50
+metadata:
+  atespace: lab-c
+  createTime: "2026-11-12T11:30:42.258011455Z"
+  name: j1
+  uid: d2f9f63b-c795-4811-b000-c94cee5f5fa0
+  updateTime: "2026-11-12T11:30:45.121632647Z"
+  version: "7"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 2
+  snapshots:
+  - actorTemplateUid: d1828760-d8ad-47b8-bc5c-d7a8998331db
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-c/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/snapshots/6f39f936-ddaf-43d1-848f-bb99e4fb26f8
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 2
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 6f39f936-ddaf-43d1-848f-bb99e4fb26f8
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: kind-control-plane
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: ee4ba8b4-dbfa-4555-a621-7cf7662c1091
+    workerEpoch: "1"
+    workerNamespace: lab-c
+    workerPod: ballast-65cf95d875-f65dl
+    workerPodIps:
+    - 10.244.0.27
+    workerPodUid: ee4ba8b4-dbfa-4555-a621-7cf7662c1091
+    workerPool: ballast
+    workerSpiffeId: spiffe://cluster.local/ns/lab-c/sa/ateworker

@@ -1,0 +1,8 @@
+## custom header injection (X-Api-Key), dataplane agentgateway
+HTTP/1.1 200 OK
+GET / HTTP/1.1
+X-Api-Key: <GRANTED-MARKER>
+
+log agentgateway: lines=440 real_credential=0 actor_placeholder=2 header_name=2
+2026-11-12T11:29:54.697269Z	debug	proxy::httpproxy	request before normalization: Request { method: GET, uri: /, version: HTTP/1.1, headers: {"host": "whoami.egress-target.svc.cluster.local", "user-agent": "curl/8.14.1", "accept": "*/*", "x-api-key": "placeholder-custom-header"}, body: Body(BodyInner { needs_inspection: false, representation: Streaming { body: Body(UnsyncBoxBody), inspected_prefix: None }, extensions:
+2026-11-12T11:29:54.697285Z	debug	proxy::httpproxy	request after normalization: Request { method: GET, uri: https://whoami.egress-target.svc.cluster.local/, version: HTTP/1.1, headers: {"x-api-key": "placeholder-custom-header", "user-agent": "curl/8.14.1", "accept": "*/*"}, body: Body(BodyInner { needs_inspection: false, representation: Streaming { body: Body(UnsyncBoxBody), inspected_prefix: None }, extensions: {}, 

@@ -1,0 +1,209 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    meta.helm.sh/release-name: kagent
+    meta.helm.sh/release-namespace: kagent
+  creationTimestamp: "2026-11-12T10:13:34Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: kagent
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: kagent
+    app.kubernetes.io/part-of: kagent
+    app.kubernetes.io/version: 1.0.0
+    helm.sh/chart: kagent-1.0.0
+  name: kagent-controller
+  namespace: kagent
+  resourceVersion: "1599"
+  uid: 6ae3a0a7-10f2-4982-9276-c1571e6e0738
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/name: kagent
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: 82972287b86149fc8a2326ffc9ee40d4c2ea4b9543f47019a1400db262409d8c
+      labels:
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/instance: kagent
+        app.kubernetes.io/name: kagent
+    spec:
+      containers:
+      - args:
+        - --config=/etc/kagent/controller.yaml
+        env:
+        - name: K8S_POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: K8S_POD_UID
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.uid
+        - name: K8S_NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        image: ghcr.io/kagent-dev/kagent/controller:1.0.0
+        imagePullPolicy: IfNotPresent
+        name: controller
+        ports:
+        - containerPort: 8083
+          name: http
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: http
+            scheme: HTTP
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "2"
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        startupProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/kagent
+          name: controller-config
+          readOnly: true
+        - mountPath: /etc/kagent/secrets
+          name: controller-secrets
+          readOnly: true
+        - mountPath: /run/postgres.podcert.ate.dev
+          name: postgres-client-certificate
+          readOnly: true
+        - mountPath: /run/substrate-servicedns
+          name: substrate-servicedns
+          readOnly: true
+        - mountPath: /run/substrate-podidentity
+          name: substrate-podidentity
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      serviceAccount: kagent-controller
+      serviceAccountName: kagent-controller
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: kagent-controller
+        name: controller-config
+      - name: controller-secrets
+        projected:
+          defaultMode: 420
+          sources:
+          - secret:
+              items:
+              - key: readWriteConnectionString
+                path: database-readwrite-url
+              name: kagent-postgres-readwrite
+          - secret:
+              items:
+              - key: ownerConnectionString
+                path: database-owner-url
+              name: kagent-postgres-owner
+      - name: postgres-client-certificate
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: kagent_owner_user.pem
+              keyType: ECDSAP256
+              signerName: postgres.podcert.ate.dev/identity
+              userAnnotations:
+                postgres.podcert.ate.dev/username: kagent_owner_user
+          - podCertificate:
+              credentialBundlePath: kagent_readwrite_user.pem
+              keyType: ECDSAP256
+              signerName: postgres.podcert.ate.dev/identity
+              userAnnotations:
+                postgres.podcert.ate.dev/username: kagent_readwrite_user
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: servicedns.podcert.ate.dev/identity
+      - name: substrate-servicedns
+        projected:
+          defaultMode: 420
+          sources:
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: servicedns.podcert.ate.dev/identity
+      - name: substrate-podidentity
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: podidentity.podcert.ate.dev/identity
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-11-12T10:14:34Z"
+    lastUpdateTime: "2026-11-12T10:14:34Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-11-12T10:13:34Z"
+    lastUpdateTime: "2026-11-12T10:14:34Z"
+    message: ReplicaSet "kagent-controller-6fff5c8696" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

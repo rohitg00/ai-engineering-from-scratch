@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" role="img" aria-labelledby="fig-7-1b-title fig-7-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-1b-title">A kagent turn costs the same with a pause and with no pause</title>
+  <desc id="fig-7-1b-desc">Five bars of median seconds from our kagent run with a mock model. Resume 0.380 s, suspend 0.142 s, a turn 4 seconds after the last one 0.726 s, a turn with no pause 0.738 s, and the first turn of a new Session 0.605 s.</desc>
+  <line x1="66" y1="256" x2="606" y2="256" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="66" y1="156" x2="606" y2="156" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="160" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="66" y1="56" x2="606" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="60" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="66" y1="256" x2="606" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="66" y1="56" x2="66" y2="256" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="66" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median seconds, with a mock model</text>
+  <rect x="92" y="180" width="56" height="76" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="120" y="174" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">0.380 s</text>
+  <text x="120" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">resume</text>
+  <rect x="200" y="227.6" width="56" height="28.4" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="228" y="221.6" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">0.142 s</text>
+  <text x="228" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">suspend</text>
+  <rect x="308" y="110.8" width="56" height="145.2" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="336" y="104.8" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">0.726 s</text>
+  <text x="336" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">turn, 4 s apart</text>
+  <rect x="416" y="108.4" width="56" height="147.6" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="444" y="102.4" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">0.738 s</text>
+  <text x="444" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">turn, no pause</text>
+  <rect x="524" y="135" width="56" height="121" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="552" y="129" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">0.605 s</text>
+  <text x="552" y="273" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">first turn</text>
+  <text x="66" y="300" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">amber: the two state changes of each turn. plum: the whole turn, as kagent reports it.</text>
+</svg>

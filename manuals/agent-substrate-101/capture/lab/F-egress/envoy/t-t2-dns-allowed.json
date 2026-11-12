@@ -1,0 +1,1 @@
+{"stdout":";; WARNING: .local is reserved for Multicast DNS\n;; -\u003e\u003eHEADER\u003c\u003c- opcode: QUERY, status: NOERROR, id: 26542\n;; WARNING: recursion requested but not available\nwhoami.egress-target.svc.cluster.local.\t30 IN A\t10.96.79.253\n","stderr":"","exitCode":0}

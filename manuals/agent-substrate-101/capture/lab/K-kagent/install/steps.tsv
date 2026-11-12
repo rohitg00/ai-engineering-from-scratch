@@ -1,0 +1,8 @@
+10-get-kind	0	1.1
+20-kind-create	0	26.1
+21-api-resources	0	0.3
+30-get-kagent-cli	0	5.5
+40-kagent-install	0	216.1
+50-rollout	0	0.1
+60-state	0	0.6
+DONE install_rc=0

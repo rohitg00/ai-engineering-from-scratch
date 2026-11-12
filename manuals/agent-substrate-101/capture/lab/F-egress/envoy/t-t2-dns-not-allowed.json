@@ -1,0 +1,1 @@
+{"stdout":";; WARNING: .local is reserved for Multicast DNS\n;; -\u003e\u003eHEADER\u003c\u003c- opcode: QUERY, status: NXDOMAIN, id: 12550\ncode=000\n","stderr":"curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n","exitCode":6,"error":"exit status 6"}

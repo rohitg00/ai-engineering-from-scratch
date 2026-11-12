@@ -1,0 +1,37 @@
+apiVersion: api.kagent.dev/v1alpha3
+kind: ModelConfig
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"api.kagent.dev/v1alpha3","kind":"ModelConfig","metadata":{"annotations":{},"name":"mock-model","namespace":"kagent"},"spec":{"apiKeySecret":"kagent-openai","apiKeySecretKey":"OPENAI_API_KEY","model":"mock-1","openAI":{"baseUrl":"http://mock-llm.kagent.svc.cluster.local:8080/v1"},"provider":"OpenAI","stream":true}}
+  creationTimestamp: "2026-11-12T10:16:30Z"
+  generation: 1
+  name: mock-model
+  namespace: kagent
+  resourceVersion: "1859"
+  uid: c81738bf-66f4-4cf2-92fe-fb9239e59020
+spec:
+  apiKeySecret: kagent-openai
+  apiKeySecretKey: OPENAI_API_KEY
+  model: mock-1
+  openAI:
+    apiFormat: chatCompletions
+    baseUrl: http://mock-llm.kagent.svc.cluster.local:8080/v1
+  provider: OpenAI
+  stream: true
+status:
+  conditions:
+  - lastTransitionTime: "2026-11-12T10:16:30Z"
+    message: ModelConfig configuration accepted
+    observedGeneration: 1
+    reason: Accepted
+    status: "True"
+    type: Accepted
+  - lastTransitionTime: "2026-11-12T10:16:30Z"
+    message: All referenced secrets and config maps resolved
+    observedGeneration: 1
+    reason: Resolved
+    status: "True"
+    type: ResolvedRefs
+  observedGeneration: 1
+  secretHash: c03a5d1bc2ab9ec29616da255dff117e71968081014e054d454ab9cfaffcf576

@@ -1,0 +1,1 @@
+RUN: echo "uptime=$(cut -d' ' -f1 /proc/uptime)"; echo "bg=$(pgrep -x sleep | tr '\n' ' ')"; (nohup sleep 100000 >/dev/null 2>&1 &); sleep 0.2; echo "bg-now=$(pgrep -x sleep | tr '\n' ' ')"

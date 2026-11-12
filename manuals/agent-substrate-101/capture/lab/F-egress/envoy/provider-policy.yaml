@@ -1,0 +1,4 @@
+policies:
+- atespace: lab-f
+  allowedNamespaces:
+  - cred-ns

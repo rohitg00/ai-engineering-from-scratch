@@ -1,0 +1,4 @@
+curl: (1) Received HTTP/0.9 when not allowed
+code=000
+command terminated with exit code 1
+exit=1

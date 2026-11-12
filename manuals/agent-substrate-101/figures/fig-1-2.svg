@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" role="img" aria-labelledby="fig-1-2-title fig-1-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-2-title">The first request to my-counter-1</title>
+  <desc id="fig-1-2-desc">Six lifelines: curl, kubectl ate proxy actor, atenet-router, ate-api-server, Postgres, and the worker pod. Nine numbered exchanges: curl sends POST to 127.0.0.1:8000, the proxy opens an mTLS CONNECT to router port 8444 through a kube-apiserver port-forward, the router calls ResumeActor, ate-api-server reads the actor row and finds it suspended, takes the lease and binds a worker, has atelet restore the golden snapshot so the actor goes from SUSPENDED to RUNNING, and returns worker 10.244.0.23 to the router. The router opens a CONNECT to worker port 8443, and curl gets 200 with count 1 after 0.358 seconds.</desc>
+  <defs><marker id="fig-1-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-1-2-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker><marker id="fig-1-2-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-1-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <rect x="10" y="8" width="100" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="60" y="22.8" font-size="11" text-anchor="middle" font-weight="700">curl</text>
+  <text x="60" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">client</text>
+  <line x1="60" y1="48" x2="60" y2="490" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="114" y="8" width="100" height="40" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="164" y="22.8" font-size="11" text-anchor="middle" font-weight="700">kubectl ate</text>
+  <text x="164" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">proxy actor</text>
+  <line x1="164" y1="48" x2="164" y2="490" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="218" y="8" width="100" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="268" y="22.8" font-size="11" text-anchor="middle" font-weight="700">atenet-router</text>
+  <text x="268" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dataplane</text>
+  <line x1="268" y1="48" x2="268" y2="490" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="322" y="8" width="100" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="372" y="22.8" font-size="11" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="372" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">control plane</text>
+  <line x1="372" y1="48" x2="372" y2="490" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="426" y="8" width="100" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="476" y="22.8" font-size="11" text-anchor="middle" font-weight="700">Postgres</text>
+  <text x="476" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">actor rows</text>
+  <line x1="476" y1="48" x2="476" y2="490" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="530" y="8" width="100" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="580" y="22.8" font-size="11" text-anchor="middle" font-weight="700">worker pod</text>
+  <text x="580" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">my-counter-1</text>
+  <line x1="580" y1="48" x2="580" y2="490" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="82" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="86" font-size="11" text-anchor="middle">1</text>
+  <line x1="60" y1="82" x2="163" y2="82" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M60 82 L163 82" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="25.7" y="65.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="111.5" y="76" font-size="11.5" text-anchor="middle">POST / on 127.0.0.1:8000</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="128" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="132" font-size="11" text-anchor="middle">2</text>
+  <line x1="164" y1="128" x2="267" y2="128" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-1-2-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M164 128 L267 128" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="126.25" y="111.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="122" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">mTLS CONNECT to port 8444</text>
+  <rect class="m-knock" x="102.61" y="132.42" width="225.78" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="215.5" y="143" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">through a kube-apiserver port-forward</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="174" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="178" font-size="11" text-anchor="middle">3</text>
+  <line x1="268" y1="174" x2="371" y2="174" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M268 174 L371 174" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="278.55" y="157.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="168" font-size="11.5" text-anchor="middle">ResumeActor</text>
+  <rect class="m-knock" x="251.16" y="178.42" width="136.68" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="189" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sent for every request</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="220" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="224" font-size="11" text-anchor="middle">4</text>
+  <line x1="372" y1="220" x2="475" y2="220" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-1-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M372 220 L475 220" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="358.4" y="203.03" width="130.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="423.5" y="214" font-size="11.5" text-anchor="middle">read the actor row</text>
+  <rect class="m-knock" x="358.13" y="224.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="423.5" y="235" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ACTOR_STATE_SUSPENDED</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="266" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="270" font-size="11" text-anchor="middle">5</text>
+  <line x1="372" y1="266" x2="475" y2="266" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-1-2-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M372 266 L475 266" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="320.45" y="249.03" width="206.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="423.5" y="260" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">take the lease, bind a worker</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="312" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="316" font-size="11" text-anchor="middle">6</text>
+  <line x1="372" y1="312" x2="579" y2="312" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M372 312 L579 312" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="351.75" y="295.03" width="247.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="475.5" y="306" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">atelet restores the golden snapshot</text>
+  <rect class="m-knock" x="413.1" y="316.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="475.5" y="327" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SUSPENDED to RUNNING</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="358" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="362" font-size="11" text-anchor="middle">7</text>
+  <line x1="372" y1="358" x2="269" y2="358" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M372 358 L269 358" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="255.4" y="341.03" width="130.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="320.5" y="352" font-size="11.5" text-anchor="middle">worker 10.244.0.23</text>
+  <rect class="m-knock" x="264.04" y="362.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="320.5" y="373" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">with its SPIFFE ID</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="404" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="408" font-size="11" text-anchor="middle">8</text>
+  <line x1="268" y1="404" x2="579" y2="404" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-1-2-head-indigo)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)" opacity="0"><animateMotion path="M268 404 L579 404" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="351.5" y="387.03" width="144" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="423.5" y="398" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">CONNECT to port 8443</text>
+  <rect class="m-knock" x="367.04" y="408.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="423.5" y="419" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">then actor port 80</text>
+  </g>
+  <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="450" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="454" font-size="11" text-anchor="middle">9</text>
+  <line x1="164" y1="450" x2="61" y2="450" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M164 450 L61 450" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="64.65" y="433.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="112.5" y="444" font-size="11.5" text-anchor="middle">200, count: 1</text>
+  <rect class="m-knock" x="47.13" y="454.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="112.5" y="465" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.358 s at the client</text>
+  </g>
+</svg>

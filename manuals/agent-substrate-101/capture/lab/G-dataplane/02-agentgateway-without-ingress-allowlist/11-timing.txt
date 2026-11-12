@@ -1,0 +1,2 @@
+deploy-without-allowlist rc=0 seconds=26
+deploy-with-allowlist rc=0 seconds=25

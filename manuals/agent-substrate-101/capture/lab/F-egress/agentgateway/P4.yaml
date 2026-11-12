@@ -1,0 +1,12 @@
+rules:
+- http:
+    hostnames: ["whoami.egress-target.svc.cluster.local"]
+    effects:
+      replaceHeaders:
+      - header: Authorization
+        prefix: "Bearer "
+        credentialUri: ate-secret://k8s.io/default/cred-ns/api-token/token
+      - header: X-Other-Token
+        credentialUri: ate-secret://k8s.io/default/cred-ns-not-granted/api-token/token
+      - header: X-Missing-Token
+        credentialUri: ate-secret://k8s.io/default/cred-ns/does-not-exist/token

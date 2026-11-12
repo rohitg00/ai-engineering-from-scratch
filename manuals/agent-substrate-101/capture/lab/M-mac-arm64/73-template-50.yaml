@@ -1,0 +1,35 @@
+containers:
+- command:
+  - /ballast
+  - --mb=50
+  image: localhost:5001/ballast@sha256:1e90136616e5206c3238ce84d7d94ec8b3ee66a3bfe4cc42239ca44d093dcdc6
+  name: ballast
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+    timeoutSeconds: 30
+metadata:
+  atespace: lab-c
+  createTime: "2026-11-12T11:32:28.952699388Z"
+  name: ballast-50
+  uid: 351062e0-d0a2-4f83-9e44-fd37cd5c42a3
+  updateTime: "2026-11-12T11:33:31.068921166Z"
+  version: "3"
+resources:
+  limits:
+    cpuMillicores: "1000"
+    memoryBytes: "320864256"
+snapshotConfig:
+  goldenSnapshotConfig:
+    mode: GOLDEN_SNAPSHOT_MODE_ENABLED
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY
+status:
+  goldenSnapshotStatus:
+    goldenTag:
+      atespace: lab-c
+      name: 351062e0-d0a2-4f83-9e44-fd37cd5c42a3
+    snapshotTime: "2026-11-12T11:33:29.880255597Z"
+workerSelector:
+  matchLabels:
+    workload: ballast

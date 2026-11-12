@@ -1,0 +1,51 @@
+{
+  "after_delete": {
+    "node_snapshot_cache_mib": 1765,
+    "node_snapshots_mib": 1,
+    "object_store_mib": 2064
+  },
+  "local_snapshot_per_actor": [
+    {
+      "kib": 1380,
+      "mib": 1.3,
+      "x": 0
+    },
+    {
+      "kib": 52972,
+      "mib": 51.7,
+      "x": 50
+    },
+    {
+      "kib": 206728,
+      "mib": 201.9,
+      "x": 200
+    },
+    {
+      "kib": 514300,
+      "mib": 502.2,
+      "x": 500
+    },
+    {
+      "kib": 1026784,
+      "mib": 1002.7,
+      "x": 1000
+    }
+  ],
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor",
+  "sources": [
+    "capture/lab/C-resume-vs-size/20-storage-footprint.txt",
+    "capture/lab/C-resume-vs-size/23-storage-after-delete.txt",
+    "capture/lab/C-resume-vs-size/snapdir-b0-1.txt",
+    "capture/lab/C-resume-vs-size/snapdir-b50-1.txt",
+    "capture/lab/C-resume-vs-size/snapdir-b200-1.txt",
+    "capture/lab/C-resume-vs-size/snapdir-b500-1.txt",
+    "capture/lab/C-resume-vs-size/snapdir-b1000-1.txt"
+  ],
+  "unit": "MiB as du reports it",
+  "with_25_suspended_actors": {
+    "actors": 25,
+    "node_snapshot_cache_mib": 1765,
+    "node_snapshots_mib": 8801,
+    "object_store_mib": 10824
+  }
+}

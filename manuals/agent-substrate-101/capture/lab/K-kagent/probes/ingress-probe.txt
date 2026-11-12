@@ -1,0 +1,13 @@
+ns=defaultns=defaultns=defaultns=defaultns=defaultns=defaultcommand terminated with exit code 7
+ns=defaultns=defaultns=defaultns=defaultns=defaultns=defaultcommand terminated with exit code 7
+ns=defaultns=defaultns=defaultns=defaultns=defaultns=defaultcommand terminated with exit code 56
+ns=defaultns=defaultns=defaultns=defaultns=defaultns=defaultcommand terminated with exit code 56
+ns=defaultns=defaultns=defaultns=defaultns=defaultns=defaultcommand terminated with exit code 28
+ns=defaultns=defaultns=defaultns=defaultns=defaultns=defaultcommand terminated with exit code 28
+ns=defaultns=defaultns=defaultns=defaultns=defaultns=defaultcommand terminated with exit code 28
+ns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentcommand terminated with exit code 7
+ns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentcommand terminated with exit code 7
+ns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentcommand terminated with exit code 56
+ns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentcommand terminated with exit code 56
+ns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentcommand terminated with exit code 28
+ns=kagentns=kagentns=kagentns=kagentns=kagentns=kagentcommand terminated with exit code 28

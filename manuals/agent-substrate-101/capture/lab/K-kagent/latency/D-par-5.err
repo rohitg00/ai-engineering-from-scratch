@@ -1,0 +1,3 @@
+Error: connect to kagent gateway: kubectl port-forward exited before the server became ready (kubectl: Unable to listen on port 8083: Listeners failed to create with the following errors: [unable to create listener: Error listen tcp4 127.0.0.1:8083: bind: address already in use unable to create listener: Error listen tcp6 [::1]:8083: bind: address already in use]
+error: unable to listen on any of the requested ports: [{8083 8083}]): exit status 1
+error connecting to server: rpc error: code = Unavailable desc = connection error: desc = "transport: Error while dialing: dial tcp 127.0.0.1:8083: connect: connection refused"

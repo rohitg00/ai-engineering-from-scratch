@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 372" role="img" aria-labelledby="fig-8-1-title fig-8-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-1-title">The three places that hold an actor</title>
+  <desc id="fig-8-1-desc">ate-api-server reads and writes actor records in a single-replica Postgres. atelet writes each checkpoint to the node disk and uploads it to the object store five minutes later. With 25 suspended actors the node held 8,801 MiB of snapshots and the bucket held 10,824 MiB.</desc>
+  <defs><marker id="fig-8-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <rect x="35" y="24" width="160" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="115" y="41.25" font-size="12.5" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="115" y="58.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2 replicas</text>
+  <rect x="400" y="24" width="160" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="480" y="41.25" font-size="12.5" text-anchor="middle" font-weight="700">atelet</text>
+  <text x="480" y="58.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one on each node</text>
+  <rect x="20" y="118" width="190" height="234" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="32" y="138" font-size="12.5" font-weight="700">Postgres</text>
+  <text x="32" y="154" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">postgres-0, 1 replica</text>
+  <text x="32" y="178" font-size="11" letter-spacing="1.2" fill="var(--m-teal-ink, #18696a)">TABLES</text>
+  <text x="32" y="196" font-size="11">atespaces</text>
+  <text x="32" y="212" font-size="11">actors</text>
+  <text x="32" y="228" font-size="11">actor_templates</text>
+  <text x="32" y="244" font-size="11">tags</text>
+  <text x="32" y="260" font-size="11">actor_egress_policies</text>
+  <text x="32" y="276" font-size="11">workers</text>
+  <text x="32" y="292" font-size="11">worker_assignments</text>
+  <text x="32" y="308" font-size="11">leases</text>
+  <text x="32" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no actor is in etcd</text>
+  <rect x="225" y="118" width="190" height="234" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="237" y="138" font-size="12.5" font-weight="700">object store</text>
+  <text x="237" y="154" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rustfs on kind, 1 pod</text>
+  <text x="237" y="178" font-size="11" letter-spacing="1.2" fill="var(--m-teal-ink, #18696a)">SNAPSHOT ADDRESS</text>
+  <text x="237" y="196" font-size="11">gs://ate-snapshots/</text>
+  <text x="245" y="212" font-size="11">atespaces/&lt;atespace&gt;/</text>
+  <text x="253" y="228" font-size="11">actors/&lt;actor uid&gt;/</text>
+  <text x="261" y="244" font-size="11">snapshots/&lt;uuid&gt;</text>
+  <text x="237" y="282" font-size="11" letter-spacing="1.2" fill="var(--m-teal-ink, #18696a)">MEASURED</text>
+  <text x="237" y="300" font-size="11">10,824 MiB, 25 actors</text>
+  <text x="237" y="316" font-size="11">2,064 MiB after delete</text>
+  <text x="237" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">golden snapshots stay</text>
+  <rect x="430" y="118" width="190" height="234" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="442" y="138" font-size="12.5" font-weight="700">node disk</text>
+  <text x="442" y="154" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/var/lib/ate</text>
+  <text x="442" y="178" font-size="11" letter-spacing="1.2" fill="var(--m-violet-ink, #5b4fa3)">DIRECTORIES</text>
+  <text x="442" y="196" font-size="11">snapshots/&lt;actor uid&gt;</text>
+  <text x="442" y="212" font-size="11">snapshot-cache/</text>
+  <text x="442" y="282" font-size="11" letter-spacing="1.2" fill="var(--m-violet-ink, #5b4fa3)">MEASURED</text>
+  <text x="442" y="300" font-size="11">8,801 MiB snapshots</text>
+  <text x="442" y="316" font-size="11">1,765 MiB cache</text>
+  <text x="442" y="338" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">copy stays 30 minutes</text>
+  <line x1="115" y1="68" x2="115" y2="117" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-8-1-head-teal)"/>
+  <rect class="m-knock" x="120" y="81.53" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="123" y="92.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">each call</text>
+  <line x1="525" y1="68" x2="525" y2="117" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-8-1-head-teal)"/>
+  <rect class="m-knock" x="530" y="81.53" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="533" y="92.5" font-size="11.5" fill="var(--m-teal-ink, #18696a)">checkpoint</text>
+  <path d="M435 68 V94 H320 V117" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-8-1-head-teal)"/>
+  <text x="428" y="88" font-size="11.5" text-anchor="end" fill="var(--m-teal-ink, #18696a)">upload, 5 min later</text>
+</svg>

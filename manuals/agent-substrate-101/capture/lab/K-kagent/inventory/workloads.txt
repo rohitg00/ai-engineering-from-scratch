@@ -1,0 +1,50 @@
+NAMESPACE                          NAME                                        READY   UP-TO-DATE   AVAILABLE   AGE
+ate-system                         deployment.apps/ate-api-server              2/2     2            2           3m24s
+ate-system                         deployment.apps/ate-controller              1/1     1            1           3m24s
+ate-system                         deployment.apps/ate-idp-server              2/2     2            2           3m24s
+ate-system                         deployment.apps/atenet-egress               1/1     1            1           3m24s
+ate-system                         deployment.apps/atenet-router               1/1     1            1           3m24s
+ate-system                         deployment.apps/k8s-credential-provider     1/1     1            1           3m24s
+ate-system                         deployment.apps/rustfs                      1/1     1            1           3m24s
+kagent                             deployment.apps/kagent-controller           1/1     1            1           2m3s
+kagent                             deployment.apps/kagent-default              1/1     1            1           2m3s
+kagent                             deployment.apps/kagent-postgresql           1/1     1            1           4m15s
+kagent                             deployment.apps/kagent-tools                1/1     1            1           2m3s
+kagent                             deployment.apps/kagent-ui                   1/1     1            1           2m3s
+kube-system                        deployment.apps/coredns                     2/2     2            2           4m46s
+local-path-storage                 deployment.apps/local-path-provisioner      1/1     1            1           4m43s
+podcertificate-controller-system   deployment.apps/podcertificate-controller   1/1     1            1           4m23s
+
+NAMESPACE     NAME                        DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+ate-system    daemonset.apps/atelet       1         1         1       1            1           <none>                   3m49s
+kube-system   daemonset.apps/kindnet      1         1         1       1            1           kubernetes.io/os=linux   4m44s
+kube-system   daemonset.apps/kube-proxy   1         1         1       1            1           kubernetes.io/os=linux   4m46s
+
+NAMESPACE     NAME                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                                      AGE
+ate-system    service/api                       ClusterIP   None            <none>        443/TCP,8445/TCP                             3m24s
+ate-system    service/ate-controller            ClusterIP   10.96.108.102   <none>        8080/TCP                                     3m24s
+ate-system    service/atenet-egress             ClusterIP   10.96.156.157   <none>        443/TCP                                      3m24s
+ate-system    service/atenet-router             ClusterIP   10.96.166.28    <none>        80/TCP,443/TCP,8081/TCP,8444/TCP,15020/TCP   3m24s
+ate-system    service/idp                       ClusterIP   10.96.132.104   <none>        443/TCP                                      3m24s
+ate-system    service/k8s-credential-provider   ClusterIP   10.96.141.16    <none>        50051/TCP                                    3m24s
+ate-system    service/rustfs                    ClusterIP   10.96.84.184    <none>        9000/TCP,9001/TCP                            3m24s
+default       service/kubernetes                ClusterIP   10.96.0.1       <none>        443/TCP                                      4m47s
+kagent        service/kagent-controller         ClusterIP   10.96.56.169    <none>        8083/TCP                                     2m3s
+kagent        service/kagent-postgresql         ClusterIP   10.96.244.72    <none>        5432/TCP                                     4m15s
+kagent        service/kagent-tools              ClusterIP   10.96.20.199    <none>        8084/TCP                                     2m3s
+kagent        service/kagent-tools-metrics      ClusterIP   10.96.43.230    <none>        8085/TCP                                     2m3s
+kagent        service/kagent-ui                 ClusterIP   10.96.79.189    <none>        8080/TCP                                     2m3s
+kube-system   service/kube-dns                  ClusterIP   10.96.0.10      <none>        53/UDP,53/TCP,9153/TCP                       4m46s
+
+NAMESPACE    NAME                                                       POD-SELECTOR                          AGE
+ate-system   networkpolicy.networking.k8s.io/ate-api-server             app=ate-api-server                    3m24s
+ate-system   networkpolicy.networking.k8s.io/ate-idp-server             app=ate-idp-server                    3m24s
+ate-system   networkpolicy.networking.k8s.io/ate-system-observability   app notin (k8s-credential-provider)   3m24s
+ate-system   networkpolicy.networking.k8s.io/atelet                     app=atelet                            3m24s
+ate-system   networkpolicy.networking.k8s.io/atenet-egress              app=atenet-egress                     3m24s
+ate-system   networkpolicy.networking.k8s.io/atenet-router              app=atenet-router                     3m24s
+ate-system   networkpolicy.networking.k8s.io/default-deny-ingress       <none>                                3m24s
+ate-system   networkpolicy.networking.k8s.io/k8s-credential-provider    app=k8s-credential-provider           3m24s
+ate-system   networkpolicy.networking.k8s.io/postgres                   app=postgres                          3m24s
+ate-system   networkpolicy.networking.k8s.io/rustfs                     app=rustfs                            3m24s
+kagent       networkpolicy.networking.k8s.io/substrate-kagent-default   ate.dev/worker-pool=kagent-default    2m3s

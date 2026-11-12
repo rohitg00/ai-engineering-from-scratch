@@ -1,0 +1,49 @@
+apiVersion: api.kagent.dev/v1alpha3
+kind: ModelConfig
+metadata:
+  name: mock-model
+  namespace: kagent
+spec:
+  provider: OpenAI
+  model: mock-1
+  apiKeySecret: kagent-openai
+  apiKeySecretKey: OPENAI_API_KEY
+  stream: true
+  openAI:
+    baseUrl: http://mock-llm.kagent.svc.cluster.local:8080/v1
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: Harness
+metadata:
+  name: lab-harness
+  namespace: kagent
+spec:
+  kagent: {}
+  substrate:
+    workerPoolRef:
+      name: kagent-default
+    snapshotPolicy:
+      location: s3://ate-snapshots/kagent/
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: AgentTemplate
+metadata:
+  name: lab-template
+  namespace: kagent
+spec:
+  description: Lab agent that runs shell commands for the Substrate manual experiments
+  modelConfig:
+    name: mock-model
+  systemPrompt: You are a lab agent. Use the bash tool when the user asks you to run a command.
+---
+apiVersion: api.kagent.dev/v1alpha3
+kind: Agent
+metadata:
+  name: lab-agent
+  namespace: kagent
+spec:
+  template:
+    ref:
+      name: lab-template
+  harnessRef:
+    name: lab-harness

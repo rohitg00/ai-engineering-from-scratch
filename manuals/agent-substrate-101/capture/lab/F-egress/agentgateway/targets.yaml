@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Namespace
+metadata: {name: egress-target}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: whoami, namespace: egress-target}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: whoami}}
+  template:
+    metadata: {labels: {app: whoami}}
+    spec:
+      containers:
+      - {name: whoami, image: traefik/whoami:v1.10.3, ports: [{containerPort: 80}]}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: whoami, namespace: egress-target}
+spec: {selector: {app: whoami}, ports: [{port: 80, targetPort: 80}]}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: drip, namespace: egress-target}
+data:
+  drip.py: |
+    import time, http.server, urllib.parse
+    class H(http.server.BaseHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
+        def do_GET(self):
+            q = urllib.parse.parse_qs(urllib.parse.urlparse(self.path).query)
+            n = int(q.get("n", ["10"])[0])
+            self.send_response(200)
+            self.send_header("Content-Type", "text/plain")
+            self.send_header("Transfer-Encoding", "chunked")
+            self.end_headers()
+            try:
+                for i in range(1, n + 1):
+                    line = ("chunk %d %s\n" % (i, time.strftime("%H:%M:%S"))).encode()
+                    self.wfile.write(b"%x\r\n%s\r\n" % (len(line), line)); self.wfile.flush()
+                    time.sleep(1)
+                self.wfile.write(b"0\r\n\r\n")
+            except Exception as e:
+                print("client gone at chunk", i, e, flush=True)
+    http.server.ThreadingHTTPServer(("", 80), H).serve_forever()
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: drip, namespace: egress-target}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: drip}}
+  template:
+    metadata: {labels: {app: drip}}
+    spec:
+      containers:
+      - name: drip
+        image: python:3.12-alpine
+        command: ["python", "-u", "/app/drip.py"]
+        volumeMounts: [{name: app, mountPath: /app}]
+      volumes: [{name: app, configMap: {name: drip}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: drip, namespace: egress-target}
+spec: {selector: {app: drip}, ports: [{port: 80, targetPort: 80}]}
+---
+apiVersion: v1
+kind: Namespace
+metadata: {name: cred-ns}
+---
+apiVersion: v1
+kind: Namespace
+metadata: {name: cred-ns-not-granted}

@@ -1,0 +1,277 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  annotations:
+    deprecated.daemonset.template.generation: "1"
+    meta.helm.sh/release-name: substrate-atelet
+    meta.helm.sh/release-namespace: ate-system
+  creationTimestamp: "2026-11-12T10:11:48Z"
+  generation: 1
+  labels:
+    app: atelet
+    app.kubernetes.io/managed-by: Helm
+  name: atelet
+  namespace: ate-system
+  resourceVersion: "775"
+  uid: 8bcea8f0-50d3-405c-bf4d-6e3c53499df0
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: atelet
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9090"
+        prometheus.io/scrape: "true"
+      labels:
+        app: atelet
+    spec:
+      containers:
+      - args:
+        - --preview=PerTemplateSnapshotLocation,GoldenEgressPolicy
+        - --objectstore-plugin-socket=/run/objectstore-plugin/node.sock
+        - --grpc-server-cred-bundle=/run/podidentity.podcert.ate.dev/credential-bundle.pem
+        - --client-ca-certs=/run/podidentity.podcert.ate.dev/trust-bundle.pem
+        - --herder-allowed-spiffe-id=spiffe://cluster.local/ns/ate-system/sa/ate-api-server
+        - --ateapi-ca-file=/run/servicedns.podcert.ate.dev/trust-bundle.pem
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_UID
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.uid
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: k8s.namespace.name=$(POD_NAMESPACE),k8s.pod.name=$(POD_NAME),k8s.pod.uid=$(POD_UID),k8s.node.name=$(NODE_NAME),service.instance.id=$(POD_UID)
+        image: ghcr.io/kagent-dev/substrate/atelet:v1.0.0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: health
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: atelet
+        ports:
+        - containerPort: 21998
+          name: grpc
+          protocol: TCP
+        - containerPort: 9090
+          name: prometheus
+          protocol: TCP
+        - containerPort: 9091
+          name: health
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /readyz
+            port: health
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1Gi
+          requests:
+            cpu: 50m
+            memory: 256Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            add:
+            - CHOWN
+            - DAC_OVERRIDE
+            - FOWNER
+            - FSETID
+            drop:
+            - ALL
+          runAsGroup: 0
+          runAsUser: 0
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/objectstore-plugin
+          name: objectstore-plugin
+        - mountPath: /var/lib/ate
+          mountPropagation: HostToContainer
+          name: ate-base
+        - mountPath: /run/podidentity.podcert.ate.dev
+          name: podidentity
+          readOnly: true
+        - mountPath: /run/servicedns.podcert.ate.dev
+          name: servicedns-ca
+          readOnly: true
+        - mountPath: /var/lib/kubelet/plugins
+          name: kubelet-plugins
+        - mountPath: /var/lib/kubelet/device-plugins
+          name: device-plugins
+        - mountPath: /host/dev
+          name: host-dev
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - node
+        - --socket=/run/objectstore-plugin/node.sock
+        - --root=/var/lib/ate
+        - --asset-staging-dir=/var/lib/objectstore-plugin/asset-staging
+        - --asset-staging-capacity=8Gi
+        - --exchange-address=api.ate-system.svc:8445
+        - --exchange-server-name=api.ate-system.svc
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: ATE_STORAGE_BACKEND
+          value: s3
+        - name: AWS_REGION
+          value: us-east-1
+        - name: AWS_ENDPOINT_URL
+          value: http://rustfs.ate-system.svc:9000
+        - name: AWS_S3_USE_PATH_STYLE
+          value: "true"
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              key: AWS_ACCESS_KEY_ID
+              name: kagent-rustfs-credentials
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              key: AWS_SECRET_ACCESS_KEY
+              name: kagent-rustfs-credentials
+        image: ghcr.io/kagent-dev/substrate/objectstore-plugin:v1.0.0
+        imagePullPolicy: IfNotPresent
+        name: objectstore-plugin
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        restartPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsGroup: 0
+          runAsUser: 0
+        startupProbe:
+          exec:
+            command:
+            - /ko-app/objectstore-plugin
+            - healthcheck
+            - --socket=/run/objectstore-plugin/node.sock
+          failureThreshold: 30
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/ate
+          mountPropagation: HostToContainer
+          name: ate-base
+        - mountPath: /run/objectstore-plugin
+          name: objectstore-plugin
+        - mountPath: /var/lib/objectstore-plugin/asset-staging
+          name: asset-staging
+        - mountPath: /run/servicedns.podcert.ate.dev
+          name: servicedns-ca
+          readOnly: true
+      priorityClassName: system-cluster-critical
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: atelet
+      serviceAccountName: atelet
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: ate.dev/sandboxClass
+        operator: Exists
+      - effect: NoSchedule
+        key: cloud.google.com/compute-class
+        operator: Exists
+      volumes:
+      - emptyDir: {}
+        name: objectstore-plugin
+      - emptyDir: {}
+        name: asset-staging
+      - hostPath:
+          path: /var/lib/ate
+          type: DirectoryOrCreate
+        name: ate-base
+      - hostPath:
+          path: /var/lib/kubelet/plugins
+          type: DirectoryOrCreate
+        name: kubelet-plugins
+      - hostPath:
+          path: /var/lib/kubelet/device-plugins
+          type: DirectoryOrCreate
+        name: device-plugins
+      - hostPath:
+          path: /dev
+          type: Directory
+        name: host-dev
+      - name: podidentity
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: podidentity.podcert.ate.dev/identity
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: podidentity.podcert.ate.dev/identity
+      - name: servicedns-ca
+        projected:
+          defaultMode: 420
+          sources:
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: servicedns.podcert.ate.dev/identity
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+status:
+  currentNumberScheduled: 1
+  desiredNumberScheduled: 1
+  numberAvailable: 1
+  numberMisscheduled: 0
+  numberReady: 1
+  observedGeneration: 1
+  updatedNumberScheduled: 1

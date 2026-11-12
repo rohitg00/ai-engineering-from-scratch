@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 262" role="img" aria-labelledby="fig-6-4-title fig-6-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-4-title">Who holds the TLS session for each rule kind</title>
+  <desc id="fig-6-4-desc">Two columns. On the left, an https rule for example.com: the actor f-main holds TLS session 1 with atenet-egress, which presents a leaf certificate from CN=U7ICLCR3N66DBMBSAQNS5JHTHI, and atenet-egress holds TLS session 2 with example.com. On the right, a tlsPassthrough rule for example.org: the actor holds one TLS session with example.org, atenet-egress reads only the server name and forwards the bytes, and the actor sees a certificate from Cloudflare TLS Issuing ECC CA 3.</desc>
+  <defs><marker id="fig-6-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-4-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HTTPS RULE: EXAMPLE.COM</text>
+  <text x="336" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TLSPASSTHROUGH RULE: EXAMPLE.ORG</text>
+  <line x1="320" y1="8" x2="320" y2="254" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="30" width="284" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="162" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">actor f-main</text>
+  <text x="162" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">trusts the projected bundle</text>
+  <line x1="120" y1="78" x2="120" y2="113" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="125" y="84.53" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="128" y="95.5" font-size="11.5">TLS session 1</text>
+  <rect x="20" y="114" width="284" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="162" y="133.25" font-size="12.5" text-anchor="middle" font-weight="700">atenet-egress</text>
+  <text x="162" y="150.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">leaf from CN=U7ICLCR3N66DBMBSAQNS5JHTHI</text>
+  <line x1="120" y1="162" x2="120" y2="197" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4-head-ink)"/>
+  <rect class="m-knock" x="125" y="168.53" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="128" y="179.5" font-size="11.5">TLS session 2</text>
+  <rect x="20" y="198" width="284" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="162" y="217.25" font-size="12.5" text-anchor="middle" font-weight="700">example.com</text>
+  <text x="162" y="234.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">public certificate, checked by the gateway</text>
+  <rect x="336" y="30" width="284" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="478" y="49.25" font-size="12.5" text-anchor="middle" font-weight="700">actor f-main</text>
+  <text x="478" y="66.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">uses its normal root store</text>
+  <line x1="436" y1="78" x2="436" y2="113" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-6-4-head-indigo)"/>
+  <rect class="m-knock" x="441" y="84.53" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="444" y="95.5" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">one TLS session</text>
+  <rect x="336" y="114" width="284" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-dasharray="5 4"/>
+  <text x="478" y="133.25" font-size="12.5" text-anchor="middle" font-weight="700">atenet-egress</text>
+  <text x="478" y="150.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reads the server name, forwards bytes</text>
+  <line x1="436" y1="162" x2="436" y2="197" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-6-4-head-indigo)"/>
+  <rect class="m-knock" x="441" y="168.53" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="444" y="179.5" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">the same session</text>
+  <rect x="336" y="198" width="284" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="478" y="217.25" font-size="12.5" text-anchor="middle" font-weight="700">example.org</text>
+  <text x="478" y="234.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">issuer Cloudflare TLS Issuing ECC CA 3</text>
+</svg>

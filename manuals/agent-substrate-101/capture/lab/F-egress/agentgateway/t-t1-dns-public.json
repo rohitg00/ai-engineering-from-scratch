@@ -1,0 +1,1 @@
+{"stdout":";; -\u003e\u003eHEADER\u003c\u003c- opcode: QUERY, status: NXDOMAIN, id: 39099\ncode=000\n","stderr":"curl: (6) Could not resolve host: example.com\n","exitCode":6,"error":"exit status 6"}

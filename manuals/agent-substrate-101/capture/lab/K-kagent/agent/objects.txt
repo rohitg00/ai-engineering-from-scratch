@@ -1,0 +1,12 @@
+NAME                                 AGE
+harness.api.kagent.dev/lab-harness   26s
+
+NAME                                        AGE
+agenttemplate.api.kagent.dev/lab-template   26s
+
+NAME                             READY   AGE
+agent.api.kagent.dev/lab-agent   True    26s
+
+NAME                                              PROVIDER   MODEL
+modelconfig.api.kagent.dev/default-model-config   OpenAI     gpt-4.1-mini
+modelconfig.api.kagent.dev/mock-model             OpenAI     mock-1

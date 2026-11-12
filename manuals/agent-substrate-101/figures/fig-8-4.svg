@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-8-4-title fig-8-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-4-title">The four steps of a supported upgrade</title>
+  <desc id="fig-8-4-desc">Four upgrade steps from top to bottom: the podcertificate-controller, atelet on each node, the workers, and then the API server with the controller and the dataplane. Running actors see nothing in the first two steps. In the worker step each actor gets SIGTERM and 30 minutes, and an actor that nothing suspends becomes crashed. The last step migrates the database schema, which a rollback does not undo.</desc>
+  <defs><marker id="fig-8-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-8-4-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-8-4-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-8-4-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT MOVES</text>
+  <text x="330" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT A RUNNING ACTOR SEES</text>
+  <rect x="20" y="30" width="250" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="145" y="50.25" font-size="12.5" text-anchor="middle" font-weight="700">1  podcertificate-controller</text>
+  <text x="145" y="67.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">signs component certificates</text>
+  <rect x="20" y="104" width="250" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="145" y="124.25" font-size="12.5" text-anchor="middle" font-weight="700">2  atelet</text>
+  <text x="145" y="141.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one node at a time</text>
+  <rect x="20" y="178" width="250" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="145" y="198.25" font-size="12.5" text-anchor="middle" font-weight="700">3  workers</text>
+  <text x="145" y="215.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10 percent of a pool in each batch</text>
+  <rect x="20" y="284" width="250" height="56" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="145" y="299.75" font-size="12.5" text-anchor="middle" font-weight="700">4  ate-api-server and the rest</text>
+  <text x="145" y="317.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ate-idp-server, CRDs, ate-controller,</text>
+  <text x="145" y="332.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">router, egress, SandboxConfig</text>
+  <line x1="145" y1="80" x2="145" y2="103" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-4-head-ink)"/>
+  <line x1="145" y1="154" x2="145" y2="177" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-4-head-ink)"/>
+  <line x1="145" y1="228" x2="145" y2="283" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-4-head-ink)"/>
+  <rect x="330" y="30" width="290" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="475" y="50.25" font-size="12.5" text-anchor="middle" font-weight="700">nothing</text>
+  <text x="475" y="67.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the actor keeps running</text>
+  <rect x="330" y="104" width="290" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="475" y="124.25" font-size="12.5" text-anchor="middle" font-weight="700">nothing</text>
+  <text x="475" y="141.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the actor keeps running</text>
+  <rect x="330" y="178" width="290" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="475" y="198.25" font-size="12.5" text-anchor="middle" font-weight="700">SIGTERM, then 30 minutes</text>
+  <text x="475" y="215.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">your harness must call SuspendActor</text>
+  <rect x="330" y="238" width="290" height="36" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="475" y="250.95" font-size="11.5" text-anchor="middle" font-weight="700">ACTOR_STATE_CRASHED</text>
+  <text x="475" y="268.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">if nothing suspended it in time</text>
+  <rect x="330" y="284" width="290" height="56" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="475" y="299.75" font-size="12.5" text-anchor="middle" font-weight="700">the schema migrates</text>
+  <text x="475" y="317.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">API calls can be cut once</text>
+  <text x="475" y="332.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a rollback does not undo the migration</text>
+  <line x1="270" y1="55" x2="329" y2="55" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-4-head-ink)"/>
+  <line x1="270" y1="129" x2="329" y2="129" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-4-head-ink)"/>
+  <line x1="270" y1="203" x2="329" y2="203" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-4-head-amber)"/>
+  <line x1="270" y1="312" x2="329" y2="312" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-8-4-head-teal)"/>
+  <line x1="475" y1="228" x2="475" y2="237" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-8-4-head-rose)"/>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 372" role="img" aria-labelledby="fig-3-5-title fig-3-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-5-title">From the error text to the fix</title>
+  <desc id="fig-3-5-desc">A decision figure with four rows. A 500 with the text error resuming actor and a 503 with the text AssignWorker prerequisite not met both mean ACTOR_STATE_CRASHED, and the fix is kubectl ate revert actor, which loses the calls since the last completed snapshot. A 503 with the text upstream connect error means the process exited while the state is still ACTOR_STATE_RUNNING, and a synchronous suspend moves it to CRASHED before the revert. A 503 after 5 seconds with the text no worker has room for the actor means the actor is healthy and the pool is full.</desc>
+  <defs><marker id="fig-3-5-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-3-5-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-5-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE CALLER SEES</text>
+  <text x="296" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ACTOR STATE</text>
+  <text x="456" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT TO DO</text>
+  <rect x="20" y="28" width="250" height="60" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="32" y="53.25" font-size="12.5" font-weight="700">500 in 0.08 s</text>
+  <text x="32" y="70.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">error resuming actor lab-c/x1</text>
+  <rect x="20" y="104" width="250" height="60" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="32" y="121.75" font-size="12.5" font-weight="700">503 in 0.06 s</text>
+  <text x="32" y="139.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">AssignWorker prerequisite not met</text>
+  <text x="32" y="154.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">got: ACTOR_STATE_CRASHED</text>
+  <rect x="20" y="196" width="250" height="60" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="32" y="213.75" font-size="12.5" font-weight="700">503 in 0.06 s</text>
+  <text x="32" y="231.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">upstream connect error or disconnect</text>
+  <text x="32" y="246.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reset reason: connection termination</text>
+  <rect x="20" y="288" width="250" height="60" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="32" y="313.25" font-size="12.5" font-weight="700">503 after 5.06 s</text>
+  <text x="32" y="330.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no worker has room for the actor</text>
+  <rect x="296" y="50" width="134" height="92" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="363" y="83.75" font-size="12.5" text-anchor="middle" font-weight="700">CRASHED</text>
+  <text x="363" y="101.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resume actor</text>
+  <text x="363" y="116.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">is refused</text>
+  <rect x="296" y="196" width="134" height="60" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="363" y="221.25" font-size="12.5" text-anchor="middle" font-weight="700">RUNNING</text>
+  <text x="363" y="238.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the process exited</text>
+  <rect x="296" y="288" width="134" height="60" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="363" y="313.25" font-size="12.5" text-anchor="middle" font-weight="700">SUSPENDED</text>
+  <text x="363" y="330.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the pool is full</text>
+  <rect x="456" y="50" width="164" height="92" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="538" y="76.25" font-size="12.5" text-anchor="middle" font-weight="700">revert actor</text>
+  <text x="538" y="93.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">back to the last</text>
+  <text x="538" y="108.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">COMPLETED snapshot,</text>
+  <text x="538" y="123.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">later calls are lost</text>
+  <rect x="456" y="196" width="164" height="60" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="538" y="213.45" font-size="11.5" text-anchor="middle" font-weight="700">suspend --mode sync</text>
+  <text x="538" y="230.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">it fails and marks</text>
+  <text x="538" y="245.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the actor CRASHED</text>
+  <rect x="456" y="288" width="164" height="60" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="538" y="305.75" font-size="12.5" text-anchor="middle" font-weight="700">add workers</text>
+  <text x="538" y="323.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">or try again later,</text>
+  <text x="538" y="338.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">see section 4.4</text>
+  <line x1="270" y1="58" x2="295" y2="58" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-5-head-rose)"/>
+  <line x1="270" y1="134" x2="295" y2="122" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-5-head-rose)"/>
+  <line x1="270" y1="226" x2="295" y2="226" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-5-head-rose)"/>
+  <line x1="270" y1="318" x2="295" y2="318" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-5-head-ink)"/>
+  <line x1="430" y1="96" x2="455" y2="96" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-5-head-ink)"/>
+  <line x1="430" y1="226" x2="455" y2="226" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-5-head-ink)"/>
+  <line x1="430" y1="318" x2="455" y2="318" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-5-head-ink)"/>
+  <line x1="538" y1="195" x2="538" y2="143" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-5-head-amber)"/>
+  <text x="20" y="366" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Seconds and names are from our runs on the x86 server guest, Envoy dataplane.</text>
+</svg>

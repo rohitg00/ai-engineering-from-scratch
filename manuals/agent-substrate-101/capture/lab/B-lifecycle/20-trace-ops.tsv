@@ -1,0 +1,22 @@
+ts	event	detail
+2026-11-12T10:30:05.377Z	call-running	200	0.070760	preserved memory count: 7 | preserved file counter: 7 | preserved rootfs counter: 7
+2026-11-12T10:30:05.790Z	suspend-async	0.404s	ATESPACE           NAME           TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_SU
+2026-11-12T10:30:08.028Z	state	ACTOR_STATE_SUSPENDED	kind-control-plane	5	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+2026-11-12T10:30:08.614Z	call-resume-after-async	200	0.356629	preserved memory count: 8 | preserved file counter: 8 | preserved rootfs counter: 8
+2026-11-12T10:30:09.164Z	suspend-sync	0.541s	ATESPACE           NAME           TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_SU
+2026-11-12T10:30:09.378Z	state	ACTOR_STATE_SUSPENDED	kind-control-plane	9	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3
+2026-11-12T10:30:10.103Z	resume-cli	0.504s	ATESPACE           NAME           TEMPLATE                   STATE                 WORKER POD                                  WORKER IPS    VERSION   AGE ate-demo-counter   my-counter-1   ate-demo-co
+2026-11-12T10:30:10.310Z	state	ACTOR_STATE_RUNNING	kind-control-plane	11	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3
+2026-11-12T10:30:10.403Z	call-a	200	0.072155	preserved memory count: 9 | preserved file counter: 9 | preserved rootfs counter: 9
+2026-11-12T10:30:10.484Z	call-b	200	0.058492	preserved memory count: 10 | preserved file counter: 10 | preserved rootfs counter: 10
+2026-11-12T10:30:10.570Z	call-c	200	0.065622	preserved memory count: 11 | preserved file counter: 11 | preserved rootfs counter: 11
+2026-11-12T10:30:10.993Z	crash-inject	kubectl delete pod counter-7cc7dcd596-5tj9h --grace-period=0 --force
+2026-11-12T10:30:11.590Z	state-after-crash	ACTOR_STATE_CRASHED	kind-control-plane	12	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3
+2026-11-12T10:30:11.672Z	call-while-crashed	503	0.063715	actor ate-demo-counter/my-counter-1 unavailable: AssignWorker prerequisite not met for Actor: ate-demo-counter/my-counter-1 (got: ACTOR_STAT
+2026-11-12T10:30:16.870Z	state	ACTOR_STATE_CRASHED	kind-control-plane	12	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3
+2026-11-12T10:30:17.301Z	resume-while-crashed	0.207s	Error: failed to resume actor: rpc error: code = FailedPrecondition desc = AssignWorker prerequisite not met for Actor: ate-demo-counter/my-counter-1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPEN
+2026-11-12T10:30:17.530Z	revert	0.220s	ATESPACE           NAME           TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_SU
+2026-11-12T10:30:17.724Z	state	ACTOR_STATE_SUSPENDED	-	14	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3
+2026-11-12T10:30:18.126Z	call-after-revert	200	0.382483	preserved memory count: 9 | preserved file counter: 9 | preserved rootfs counter: 9
+2026-11-12T10:30:18.333Z	state	ACTOR_STATE_RUNNING	kind-control-plane	16	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3
+DONE

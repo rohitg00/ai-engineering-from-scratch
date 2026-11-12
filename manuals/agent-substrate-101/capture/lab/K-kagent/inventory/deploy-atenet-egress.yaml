@@ -1,0 +1,177 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    meta.helm.sh/release-name: substrate
+    meta.helm.sh/release-namespace: ate-system
+  creationTimestamp: "2026-11-12T10:12:13Z"
+  generation: 1
+  labels:
+    app: atenet-egress
+    app.kubernetes.io/managed-by: Helm
+  name: atenet-egress
+  namespace: ate-system
+  resourceVersion: "1258"
+  uid: 47df7a0b-6f17-49f4-b605-8d24ed636c72
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: atenet-egress
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: atenet-egress
+    spec:
+      containers:
+      - args:
+        - -f
+        - /etc/agentgateway/config.yaml
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        - name: RUST_LOG
+          value: debug
+        image: cr.agentgateway.dev/agentgateway:v1.7.0@sha256:60216aafb03d37f94e952ff3d51d2f630a65b10ecaebdc0a864882f92610c45b
+        imagePullPolicy: IfNotPresent
+        name: agentgateway
+        ports:
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        - containerPort: 15021
+          name: readiness
+          protocol: TCP
+        - containerPort: 15020
+          name: stats
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz/ready
+            port: readiness
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1Gi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        startupProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /healthz/ready
+            port: readiness
+            scheme: HTTP
+          periodSeconds: 1
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/egress-mitm
+          name: egress-mitm
+          readOnly: true
+        - mountPath: /etc/agentgateway
+          name: config
+          readOnly: true
+        - mountPath: /run/servicedns.podcert.ate.dev
+          name: servicedns
+          readOnly: true
+        - mountPath: /run/podidentity.podcert.ate.dev
+          name: podidentity
+          readOnly: true
+        - mountPath: /run/actor-id-ca-certs
+          name: actor-id-ca-certs
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        sysctls:
+        - name: net.ipv4.ip_unprivileged_port_start
+          value: "0"
+      serviceAccount: atenet-egress
+      serviceAccountName: atenet-egress
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - name: egress-mitm
+        secret:
+          defaultMode: 420
+          items:
+          - key: tls.crt
+            path: tls.crt
+          - key: tls.key
+            path: tls.key
+          secretName: egress-mitm-ca-pool
+      - configMap:
+          defaultMode: 420
+          name: atenet-egress-agentgateway-config
+        name: config
+      - name: servicedns
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: servicedns.podcert.ate.dev/identity
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: servicedns.podcert.ate.dev/identity
+      - name: podidentity
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: podidentity.podcert.ate.dev/identity
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: podidentity.podcert.ate.dev/identity
+      - name: actor-id-ca-certs
+        secret:
+          defaultMode: 420
+          secretName: actor-id-ca-certs
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-11-12T10:13:15Z"
+    lastUpdateTime: "2026-11-12T10:13:15Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-11-12T10:12:13Z"
+    lastUpdateTime: "2026-11-12T10:13:15Z"
+    message: ReplicaSet "atenet-egress-787d98dc77" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

@@ -1,0 +1,40 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+metadata:
+  atespace: kagent
+  createTime: "2026-11-12T10:18:12.247217202Z"
+  name: default
+  uid: 69b9990b-22c5-4590-bf2e-a7be74628139
+  updateTime: "2026-11-12T10:18:12.247217202Z"
+  version: "1"
+rules:
+- http:
+    effects:
+      replaceHeaders:
+      - actorJwt:
+          audiences:
+          - kagent-runtime
+          expirationSeconds: "300"
+        header: authorization
+        prefix: 'Bearer '
+    hostnames:
+    - kagent-controller.kagent.svc.cluster.local
+    ports:
+      numbers:
+      - 8083
+- http:
+    effects:
+      replaceHeaders:
+      - credentialUri: ate-secret://k8s.io/default/kagent/kagent-openai/OPENAI_API_KEY
+        header: authorization
+        prefix: 'Bearer '
+    hostnames:
+    - mock-llm.kagent.svc.cluster.local
+    ports:
+      numbers:
+      - 8080
+- https:
+    hostnames:
+    - api.openai.com
+    ports:
+      numbers:
+      - 443

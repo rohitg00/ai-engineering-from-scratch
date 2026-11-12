@@ -1,0 +1,64 @@
+## env atenet-router-d844d4995-8smpb / atenet-router
+OTEL_LOGS_EXPORTER=otlp,console
+ATE_WORKER_OTEL_LOGS_EXPORTER=otlp,console
+RUSTFS_PORT_9000_TCP=tcp://10.96.215.244:9000
+RUSTFS_SERVICE_PORT_CONSOLE=9001
+RUSTFS_PORT=tcp://10.96.215.244:9000
+RUSTFS_PORT_9000_TCP_PORT=9000
+RUSTFS_PORT_9001_TCP_ADDR=10.96.215.244
+RUSTFS_PORT_9001_TCP_PORT=9001
+RUSTFS_SERVICE_PORT=9000
+RUSTFS_PORT_9000_TCP_PROTO=tcp
+RUSTFS_PORT_9000_TCP_ADDR=10.96.215.244
+RUSTFS_PORT_9001_TCP=tcp://10.96.215.244:9001
+RUSTFS_SERVICE_HOST=10.96.215.244
+RUSTFS_SERVICE_PORT_API=9000
+RUSTFS_PORT_9001_TCP_PROTO=tcp
+/ko-app/atenet router --mode=ingress --namespace=ate-system --port-xds=18000 --port-extproc=50051 --extproc-address=127.0.0.1 --status-port=4040 --port-https=8443 --envoy-cert-path=/run/servicedns.podcert.ate.dev/credential-bundle.pem --port-connect-tls=8444 --ingress-client-ca-file=/run/podidentity.podcert.ate.dev/trust-bundle.pem --ateapi-address=k8s:///api.ate-system.svc:443 --ateapi-ca-file=/run/servicedns-ca/trust-bundle.pem --ateapi-client-cert=/run/podidentity.podcert.ate.dev/credential-bundle.pem --drain-delay=13s --ingress-allowed-spiffe-ids=spiffe://cluster.local/ns/ate-system/sa/atenet-client --preview= 
+## env atenet-router-d844d4995-8smpb / envoy
+RUSTFS_PORT_9001_TCP_ADDR=10.96.215.244
+RUSTFS_SERVICE_PORT_CONSOLE=9001
+RUSTFS_PORT_9001_TCP=tcp://10.96.215.244:9001
+RUSTFS_PORT=tcp://10.96.215.244:9000
+RUSTFS_PORT_9000_TCP=tcp://10.96.215.244:9000
+RUSTFS_PORT_9000_TCP_PROTO=tcp
+RUSTFS_PORT_9000_TCP_ADDR=10.96.215.244
+RUSTFS_SERVICE_HOST=10.96.215.244
+RUSTFS_SERVICE_PORT_API=9000
+RUSTFS_PORT_9001_TCP_PROTO=tcp
+RUSTFS_PORT_9001_TCP_PORT=9001
+RUSTFS_SERVICE_PORT=9000
+RUSTFS_PORT_9000_TCP_PORT=9000
+/usr/local/bin/envoy -c /etc/envoy/envoy.yaml 
+## env atenet-egress-7758c8fb4-wxgxm / envoy
+RUSTFS_PORT_9000_TCP_ADDR=10.96.215.244
+RUSTFS_PORT_9001_TCP_ADDR=10.96.215.244
+RUSTFS_PORT_9000_TCP_PORT=9000
+RUSTFS_PORT_9001_TCP_PORT=9001
+RUSTFS_PORT_9000_TCP_PROTO=tcp
+RUSTFS_PORT_9001_TCP_PROTO=tcp
+RUSTFS_SERVICE_HOST=10.96.215.244
+RUSTFS_PORT_9000_TCP=tcp://10.96.215.244:9000
+RUSTFS_PORT_9001_TCP=tcp://10.96.215.244:9001
+RUSTFS_PORT=tcp://10.96.215.244:9000
+RUSTFS_SERVICE_PORT=9000
+RUSTFS_SERVICE_PORT_API=9000
+RUSTFS_SERVICE_PORT_CONSOLE=9001
+envoy -c /etc/envoy/envoy.yaml --service-node atenet-egress --service-cluster atenet-egress 
+## env atenet-egress-7758c8fb4-wxgxm / ext-proc
+ATE_WORKER_OTEL_LOGS_EXPORTER=otlp,console
+OTEL_LOGS_EXPORTER=otlp,console
+RUSTFS_PORT_9000_TCP_ADDR=10.96.215.244
+RUSTFS_SERVICE_HOST=10.96.215.244
+RUSTFS_PORT_9001_TCP_PROTO=tcp
+RUSTFS_PORT_9001_TCP_ADDR=10.96.215.244
+RUSTFS_PORT_9001_TCP=tcp://10.96.215.244:9001
+RUSTFS_PORT=tcp://10.96.215.244:9000
+RUSTFS_PORT_9000_TCP_PORT=9000
+RUSTFS_PORT_9000_TCP=tcp://10.96.215.244:9000
+RUSTFS_PORT_9001_TCP_PORT=9001
+RUSTFS_SERVICE_PORT_CONSOLE=9001
+RUSTFS_SERVICE_PORT=9000
+RUSTFS_PORT_9000_TCP_PROTO=tcp
+RUSTFS_SERVICE_PORT_API=9000
+/ko-app/atenet router --mode=egress --namespace=ate-system --port-extproc=50051 --extproc-address=127.0.0.1 --ateapi-address=dns:///api.ate-system.svc:443 --ateapi-ca-file=/run/servicedns.podcert.ate.dev/trust-bundle.pem --ateapi-client-cert=/run/podidentity.podcert.ate.dev/credential-bundle.pem --actor-identity-ca-file=/run/actor-id-ca-certs/ca.crt --otlp-collector-address= --envoy-admin-address=127.0.0.1:15000 --credential-provider-name=k8s.io --credential-provider-address=k8s-credential-provider.ate-system.svc:50051 --credential-provider-server-name=k8s-credential-provider.ate-system.svc --credential-provider-ca-file=/run/servicedns.podcert.ate.dev/trust-bundle.pem --credential-provider-client-cert=/run/podidentity.podcert.ate.dev/credential-bundle.pem --preview= 

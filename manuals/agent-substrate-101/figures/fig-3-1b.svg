@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-3-1b-title fig-3-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-1b-title">The first call of a new actor against the memory in its template</title>
+  <desc id="fig-3-1b-desc">Seconds for the first request to a new actor, which restores the golden snapshot, against the MiB of memory the template holds, on the x86 server guest. The median is 0.23 s at 0 MiB, 0.25 s at 50 MiB, 0.62 s at 200 MiB, 5.76 s at 500 MiB and 6.60 s at 1000 MiB, with a band from the fastest to the slowest of five actors. A second line shows a later resume of the same actor from its own node-local snapshot, which reaches 2.16 s at 1000 MiB.</desc>
+  <line x1="60" y1="270" x2="608" y2="270" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="274" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="60" y1="240" x2="608" y2="240" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="244" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="60" y1="210" x2="608" y2="210" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="214" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="60" y1="180" x2="608" y2="180" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="184" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="60" y1="150" x2="608" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="154" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="60" y1="120" x2="608" y2="120" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="124" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="60" y1="90" x2="608" y2="90" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="94" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">12</text>
+  <line x1="60" y1="60" x2="608" y2="60" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="54" y="64" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">14</text>
+  <line x1="60" y1="270" x2="608" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="60" x2="60" y2="270" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="60" y1="270" x2="60" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="60" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="87.4" y1="270" x2="87.4" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="87.4" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="169.6" y1="270" x2="169.6" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="169.6" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="334" y1="270" x2="334" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="334" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="608" y1="270" x2="608" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="608" y="287" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <text x="334" y="304" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory the actor holds, MiB</text>
+  <text x="60" y="48" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds, client side</text>
+  <path d="M60.0 266.4 L87.4 264.0 L169.6 257.1 L334.0 168.6 L608.0 78.8 L608.0 218.0 L334.0 242.1 L169.6 261.6 L87.4 266.4 L60.0 266.8 Z" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.14" stroke="none"/>
+  <path d="M60.0 266.6 L87.4 266.2 L169.6 260.8 L334.0 183.6 L608.0 171.0" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="266.61" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="87.4" cy="266.21" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="169.6" cy="260.77" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="334" cy="183.57" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="608" cy="171.03" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <path d="M60.0 266.7 L87.4 266.4 L169.6 262.9 L334.0 254.0 L608.0 237.6" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="60" cy="266.67" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="87.4" cy="266.43" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="169.6" cy="262.92" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="334" cy="253.98" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="608" cy="237.6" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect class="m-knock" x="525.72" y="176.45" width="77.28" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="600" y="187.03" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-teal-ink, #18696a)">6.6 s median</text>
+  <text x="600" y="74.83" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-teal-ink, #18696a)">12.7 s slowest</text>
+  <text x="600" y="253.6" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">2.16 s</text>
+  <path d="M60 18 H78" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="84" y="22" font-size="11" fill="var(--m-teal-ink, #18696a)">first call of a new actor, median and range of 5</text>
+  <path d="M418.8 18 H436.8" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="442.8" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">later resume, median of 10</text>
+</svg>

@@ -1,0 +1,2 @@
+rules:
+- http: {hostnames: ["whoami.egress-target.svc.cluster.local"]}

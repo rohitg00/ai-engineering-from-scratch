@@ -1,0 +1,241 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2026-11-12T10:32:06Z"
+  generation: 1
+  labels:
+    app: atenet-router
+  name: atenet-router
+  namespace: ate-system
+  resourceVersion: "1382"
+  uid: ac6e5c47-8c13-48b6-aa09-205e637723c5
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: atenet-router
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9090"
+        prometheus.io/scrape: "true"
+      labels:
+        app: atenet-router
+    spec:
+      containers:
+      - args:
+        - router
+        - --mode=ingress
+        - --namespace=ate-system
+        - --port-xds=18000
+        - --port-extproc=50051
+        - --extproc-address=127.0.0.1
+        - --status-port=4040
+        - --port-https=8443
+        - --envoy-cert-path=/run/servicedns.podcert.ate.dev/credential-bundle.pem
+        - --port-connect-tls=8444
+        - --ingress-client-ca-file=/run/podidentity.podcert.ate.dev/trust-bundle.pem
+        - --ateapi-address=k8s:///api.ate-system.svc:443
+        - --ateapi-ca-file=/run/servicedns-ca/trust-bundle.pem
+        - --ateapi-client-cert=/run/podidentity.podcert.ate.dev/credential-bundle.pem
+        - --drain-delay=13s
+        - --ingress-allowed-spiffe-ids=spiffe://cluster.local/ns/ate-system/sa/atenet-client
+        - --preview=
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_UID
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.uid
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: k8s.namespace.name=$(POD_NAMESPACE),k8s.pod.name=$(POD_NAME),k8s.pod.uid=$(POD_UID),service.instance.id=$(POD_UID)
+        envFrom:
+        - configMapRef:
+            name: ate-otel-config
+        image: ghcr.io/agent-substrate/substrate/atenet:v1.0.0@sha256:04f7d93dc3fb3deda688137077226c12ce2da41cd4753adff708e3737dc59e20
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: health
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: atenet-router
+        ports:
+        - containerPort: 50051
+          name: extproc
+          protocol: TCP
+        - containerPort: 9090
+          name: metrics
+          protocol: TCP
+        - containerPort: 9091
+          name: health
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /readyz
+            port: health
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/podidentity.podcert.ate.dev
+          name: podidentity
+        - mountPath: /run/servicedns-ca
+          name: servicedns-ca
+        - mountPath: /var/run/atenet
+          name: drain-signal
+      - command:
+        - /usr/local/bin/envoy
+        - -c
+        - /etc/envoy/envoy.yaml
+        image: ghcr.io/agent-substrate/substrate/envoy-dataplane:v1.0.0@sha256:fc8e4c3ee9060a01153e4d4af571f3db294e60d536422e8a8c2996fa4a72bf8b
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sh
+              - -c
+              - while [ ! -f /var/run/atenet/drain-complete ]; do sleep 0.5; done
+        name: envoy
+        ports:
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        - containerPort: 8444
+          name: connect-tls
+          protocol: TCP
+        - containerPort: 9902
+          name: envoy-metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ready
+            port: envoy-metrics
+            scheme: HTTP
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: 65532
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/envoy
+          name: envoy-config
+        - mountPath: /run/servicedns.podcert.ate.dev
+          name: servicedns
+        - mountPath: /run/podidentity.podcert.ate.dev
+          name: podidentity
+        - mountPath: /var/run/atenet
+          name: drain-signal
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: atenet-router
+      serviceAccountName: atenet-router
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: atenet-router-envoy-config
+        name: envoy-config
+      - emptyDir: {}
+        name: drain-signal
+      - name: servicedns
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: servicedns.podcert.ate.dev/identity
+      - name: podidentity
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: podidentity.podcert.ate.dev/identity
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: podidentity.podcert.ate.dev/identity
+      - name: servicedns-ca
+        projected:
+          defaultMode: 420
+          sources:
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: servicedns.podcert.ate.dev/identity
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-11-12T10:32:59Z"
+    lastUpdateTime: "2026-11-12T10:32:59Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-11-12T10:32:07Z"
+    lastUpdateTime: "2026-11-12T10:32:59Z"
+    message: ReplicaSet "atenet-router-d844d4995" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

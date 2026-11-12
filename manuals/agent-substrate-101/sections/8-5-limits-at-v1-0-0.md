@@ -1,0 +1,120 @@
+# Limits at v1.0.0
+
+> At v1.0.0 Substrate runs, suspends, and resumes actors on request, and it leaves the suspend decision, pool size, failover, and key rotation to you.
+
+You plan a rollout and write down what the platform will do for you. It will stop idle sessions. It will add capacity under load. It will survive the loss of one pod. For Agent Substrate v1.0.0, each of those three lines is wrong, and the release does not say so in one place.
+
+When you finish this section, you can list what Substrate does not do at v1.0.0. You can also say which of our claims rest on a run, and which parts we did not test.
+
+## What Substrate leaves to you
+
+[Figure 8.5](#fig-8-5) sets each job that a platform team expects against the party that does it at v1.0.0.
+
+```figure
+id: fig-8-5
+kind: comparison
+title: who does each job at v1.0.0
+claim: Substrate performs the lifecycle operations that you request, and your harness or your platform team must decide when to request them.
+caption: Read each row left to right. The left column is what Substrate does, and the right column is what you or your harness must add. From the code at v1.0.0 and the runs in capture/lab/B-lifecycle/10-trace.tsv and capture/lab/J-container-death/10-trace.tsv.
+```
+
+### No idle suspend
+
+Nothing in Substrate suspends an actor because it has no requests. **The code** has no idle timer in `ate-api-server`, in `atelet`, or in either worker. The worker API has a method for a worker to ask for a suspend, `RequestActorSuspend`, and nothing in the repository calls it.
+
+**We measured** this on an x86 server guest (24 vCPU, 47 GB, nested KVM). One actor received no request for 900 s, and it read RUNNING in 60 of 60 samples. A running actor reserves its full CPU and memory limit on a worker for all that time.
+
+The harness must call `SuspendActor`. kagent does it after every turn, in 98 of 98 turns in our run, as [section 7.1](#s-kagent-on-substrate) shows. If you write your own harness, the suspend call is the first thing to build.
+
+### No autoscaler, and no overcommit
+
+A WorkerPool has a fixed `replicas` number. Nothing in the install changes it. The WorkerPool kind has a scale subresource, so an outside autoscaler can change the number, and we did not test one. CPU and memory use are poor signals for it. An actor reserves its limit while it runs, whether or not it works.
+
+Substrate also books each running actor at its full declared limit. A proposal to book less than the limit exists in the public issues, and the maintainers moved it to after the release.
+
+**We measured** the effect on the kagent guest (16 vCPU, 31 GB), in one run of 24 turns at the same time. The single worker reported 16,000 millicores, and each actor reserved 1,000. The worker stopped at 16 running actors, and the other eight turns waited.
+
+When a pool is full, a request waits up to 5 s and then gets a 503. [Section 4.5](#s-sizing-a-pool) gives the arithmetic for a pool.
+
+### No GPU
+
+An ActorTemplate at v1.0.0 can declare two resources: `cpuMillicores` and `memoryBytes`. The API has no field for a GPU or for any other device, so we ran no GPU test.
+
+### Single-replica components
+
+**The code** sets these replica counts in the install manifests.
+
+| Component | Replicas | What stops when the one pod is away |
+|---|---|---|
+| `ate-api-server` | 2 | nothing, while one replica remains |
+| `ate-idp-server` | 2 | nothing, while one replica remains |
+| `atenet-router` | 1 | every request to every actor |
+| `atenet-egress` | 1 | every new outbound connection from an actor |
+| `ate-controller` | 1 | changes to worker pools |
+| `podcertificate-controller` | 1 | new and renewed certificates |
+| bundled Postgres | 1 | every request, as [section 8.2](#s-when-a-dependency-is-down) measures |
+
+The right column is our reading of the request path, except for the Postgres row, which we ran. The router also keeps its parked requests in memory, so a router restart drops them. We did not measure a router or an egress restart.
+
+### Crash detection has a gap
+
+Substrate marks an actor crashed when its sandbox dies or when the kernel kills it for memory. It does not notice a process that exits inside a sandbox that still runs. [Section 8.3](#s-symptom-cause-fix) shows that actor: RUNNING for at least 14 s, with a 503 on every request. A design for this detection is open in the public issues.
+
+### Access is coarse at the router
+
+The ingress allowlist holds client identities, and each listed client can reach every actor in every atespace. Access policies for each atespace govern the API calls, as [section 5.2](#s-access-policies) explains. They do not govern requests through the router at v1.0.0.
+
+### Manual key rotation
+
+The key that signs actor JWTs lives in a pool that an operator edits. The CLI has `kubectl ate admin add-jwt-key`, `activate-jwt-key`, and `remove-jwt-key`, and the documentation gives the waits between them. No component rotates the key on a schedule. [Section 5.3](#s-actor-jwts) covers the tokens. We did not run a rotation.
+
+### Preview features are off
+
+Three features exist behind a server flag and a client flag. All three are off by default.
+
+| Preview name | What it adds |
+|---|---|
+| `ExternalVolumes` | CSI volumes that an actor mounts and that no snapshot includes |
+| `GoldenEgressPolicy` | an egress policy for the actor that builds the golden snapshot |
+| `PerTemplateSnapshotLocation` | a snapshot location in each template, in place of one for the cluster |
+
+To use one, start every component with `--preview` and its name, and pass `--preview` to `kubectl ate`. A request without the client flag behaves as if the feature were off. We ran every experiment with `--preview=` empty, so this manual describes none of the three in use.
+
+### Smaller limits that will reach you
+
+- An open connection outlives its egress rule. Removing a rule stops new requests and leaves open connections alone, as [section 6.2](#s-egresspolicy-and-default-deny) shows.
+- Names are identities. The documentation tells you never to reuse the name of a deleted atespace. A request that was allowed for the old one can apply to the new one.
+- Postgres is the only store. The maintainers declined a storage plugin before the release.
+- A durable directory has no size limit in the API, so one actor can fill the node disk. This comes from an open issue. We did not test it.
+- The gVisor class accepts a limit for each container and enforces only the limit of the actor.
+
+**Our position:** none of these limits makes v1.0.0 unusable. Together they mean that Substrate is one layer of a platform. Budget engineering time for four things. They are a harness that suspends, an autoscaler that reads free worker slots, a database with failover, and a probe for dead processes. [Section 7.4](#s-when-to-choose-substrate) weighs that cost against the alternatives.
+
+## What we did not test
+
+Every measured number in this manual came from clusters with one kind node, an object store in the same cluster, and one of two dataplanes. This is the full list of what we did not run.
+
+| Area | Not tested |
+|---|---|
+| Clouds | GKE, and every other managed Kubernetes service |
+| Storage | Google Cloud Storage, Amazon S3, any bucket across a network, an external Postgres, a restore of either store |
+| Scale | more than 131 actors in one cluster, more than 24 parallel turns, more than one worker node beyond what [section 4.3](#s-placement) reports |
+| Sandbox | the microVM class beyond what [section 4.2](#s-sandbox-classes) reports, images with an init system, non-root images, large root filesystems |
+| Agents | a real model behind kagent, the codex and claude harnesses, MCP servers through the egress gateway |
+| Lifecycle | an upgrade, a key rotation, a worker drain, tags that you create from a suspended actor |
+| Failure | the three outages on agentgateway, egress during an outage, a router restart, an egress restart, a `RevertActor` on an actor in RESUMING |
+| Apple silicon | actors above 200 MiB, a resume from the object store |
+| Preview | all three preview features |
+
+Where a section states a fact from these areas, it comes from the code or the documentation at the tag, and the text says so.
+
+```takeaways
+- Build the suspend call into your harness first, because Substrate never suspends an idle actor.
+- Scale a WorkerPool on free worker slots, never on CPU use.
+- Run more than one router replica before you depend on the cluster, and test it.
+- Watch for the `upstream connect error` 503 to find a dead process.
+- Leave preview features off unless you accept that this manual did not test them.
+- Read each claim about GKE, remote buckets, and upgrades as documentation, not as a measurement.
+```
+
+Sources: api/ateapi/v1/ateapi.proto (Resources, RequestActorSuspend, AccessPolicy), internal/preview/preview.go, api/infra/k8s/ate/v1/workerpool_types.go (replicas and the scale subresource), manifests/ate-install/ate-api-server.yaml, ate-idp-server.yaml, atenet-router.yaml, atenet-egress.yaml, ate-controller.yaml, pod-certificate-controller.yaml and postgres/postgres.yaml (replica counts), cmd/kubectl-ate/internal/cmd/admin.go, cmd/ate-setup/commands.md (the ingress allowlist) at v1.0.0; docs/guides/actor-jwt-key-rotation.md, docs/dev/preview-gates.md, docs/reference/api-guide.md and docs/reference/sandbox-classes.md at v1.0.0; issues #3775 and #2972 (dead process detection), #3441 (overcommit), #3589 (ingress authorization), #3203 (storage plugins), #3602 (durable directory size), #3347 (name reuse), #3285 (open connections); capture/lab/B-lifecycle/10-trace.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/parallel/, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/kagent-turns-x86.json.
