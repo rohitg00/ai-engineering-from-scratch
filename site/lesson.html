@@ -2896,13 +2896,23 @@
         if (typeof lessonPath !== 'undefined' && lessonPath) fetchLesson(lessonPath);
       };
 
+      function linkFragment(link) {
+        var href = link.getAttribute('href') || '';
+        var hashIndex = href.indexOf('#');
+        return hashIndex < 0 ? '' : href.slice(hashIndex);
+      }
+
+      function isPlainClick(e) {
+        return e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey;
+      }
+
       if (document.querySelector('base')) {
-        document.addEventListener('click', function (e) {
+        var anchorFragmentLink = function (e) {
           var hashLink = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
-          if (!hashLink || e.defaultPrevented) return;
-          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-          e.preventDefault();
-          window.location.hash = hashLink.getAttribute('href');
+          if (hashLink) hashLink.setAttribute('href', window.location.pathname + window.location.search + hashLink.getAttribute('href'));
+        };
+        ['pointerdown', 'mousedown', 'touchstart', 'contextmenu', 'focusin', 'auxclick', 'click'].forEach(function (type) {
+          document.addEventListener(type, anchorFragmentLink, true);
         });
       }
 
@@ -3997,7 +4007,8 @@
         document.querySelectorAll('a[href^="#"]').forEach(function (link) {
           link.addEventListener('click', function (e) {
             if (link.classList && link.classList.contains('toc-link')) return;
-            var target = document.querySelector(link.getAttribute('href'));
+            if (!isPlainClick(e)) return;
+            var target = document.getElementById(linkFragment(link).slice(1));
             if (target) {
               e.preventDefault();
               target.scrollIntoView({ behavior: preferredScrollBehavior() });
@@ -4256,8 +4267,8 @@
 
         sidebar.querySelectorAll('.toc-link').forEach(function (a) {
           a.addEventListener('click', function (e) {
-            var href = a.getAttribute('href');
-            if (!href || href.charAt(0) !== '#') return;
+            var href = linkFragment(a);
+            if (!href || !isPlainClick(e)) return;
             var id = href.slice(1);
             var target = document.getElementById(id);
             if (!target) return;
@@ -4306,8 +4317,7 @@
           sidebar._tocActiveId = id;
 
           links.forEach(function (link) {
-            var href = link.getAttribute('href');
-            var match = href && href.charAt(0) === '#' ? href.slice(1) : '';
+            var match = linkFragment(link).slice(1);
             if (match === id) link.classList.add('active');
             else link.classList.remove('active');
           });

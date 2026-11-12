@@ -46,7 +46,9 @@ async function smoke(name, root) {
     for (const kind of ['course', 'certification']) {
       const entry = lessons.find(lesson => lesson.context.kind === kind);
       assert.ok(entry, `missing ${kind} lesson`);
-      const url = `/lesson?path=${encodeURIComponent(entry.path)}`;
+      const canonical = new URL(entry.canonicalUrl);
+      const url = canonical.pathname + canonical.search;
+      assert.match(url, kind === 'course' ? /^\/learn\/[a-z0-9-]+\/[a-z0-9-]+$/ : /^\/lesson\?path=certifications/);
       const response = await invoke(handler, url);
       assert.equal(response.statusCode, 200, response.body.toString());
       assert.match(response.body.toString(), /data-server-rendered="true"/);
