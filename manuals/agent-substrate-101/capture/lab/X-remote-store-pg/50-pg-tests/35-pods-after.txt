@@ -1,0 +1,13 @@
+NAME                                       READY   STATUS      RESTARTS   AGE     IP            NODE                NOMINATED NODE   READINESS GATES
+ate-api-server-55b88dc744-7nkwp            2/2     Running     0          9m18s   10.244.0.7    xpg-control-plane   <none>           <none>
+ate-api-server-55b88dc744-b25t5            2/2     Running     0          9m18s   10.244.0.6    xpg-control-plane   <none>           <none>
+ate-controller-7984566f8d-zkslh            1/1     Running     0          9m15s   10.244.0.10   xpg-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-tnfvx             1/1     Running     0          9m17s   10.244.0.8    xpg-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-zrptk             1/1     Running     0          9m17s   10.244.0.9    xpg-control-plane   <none>           <none>
+atelet-d9j7b                               2/2     Running     0          9m14s   10.244.0.11   xpg-control-plane   <none>           <none>
+atenet-egress-7758c8fb4-jkmpz              3/3     Running     0          9m5s    10.244.0.20   xpg-control-plane   <none>           <none>
+atenet-router-d844d4995-qgmhz              2/2     Running     0          9m13s   10.244.0.12   xpg-control-plane   <none>           <none>
+k8s-credential-provider-5bb6b77b65-fzmvq   1/1     Running     0          9m6s    10.244.0.19   xpg-control-plane   <none>           <none>
+rustfs-54c86945fb-sbpx6                    1/1     Running     0          9m10s   10.244.0.18   xpg-control-plane   <none>           <none>
+rustfs-bucket-init-hrdn5                   0/1     Completed   0          9m10s   10.244.0.14   xpg-control-plane   <none>           <none>
+x-prober                                   1/1     Running     0          7m16s   10.244.0.71   xpg-control-plane   <none>           <none>

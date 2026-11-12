@@ -1,0 +1,8 @@
+### path to Postgres on the other guest, 2026-11-12T18:41:51Z
+10.0.2.2:15432 - accepting connections
+10.0.2.2:15432 - accepting connections
+10.0.2.2:15432 - accepting connections
+10.0.2.2:15432 - accepting connections
+10.0.2.2:15432 - accepting connections
+PostgreSQL 18.6 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+t|TLSv1.3|TLS_AES_256_GCM_SHA384

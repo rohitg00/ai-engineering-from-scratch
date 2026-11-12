@@ -1,0 +1,38 @@
+### 2026-11-12T18:08:59.325Z waited 5 s, pods not ready: 0
+ate-api-server-59dcf8d6bf-7n9b7 2/2 Running 6
+ate-api-server-59dcf8d6bf-8w5tw 2/2 Running 2
+ate-controller-7984566f8d-jm7ps 1/1 Running 1
+ate-idp-server-dcd5f565f-pnfr8 1/1 Running 1
+ate-idp-server-dcd5f565f-r7jhz 1/1 Running 1
+atelet-4jx2j 2/2 Running 6
+atelet-64crz 2/2 Running 2
+atenet-egress-7758c8fb4-52d2z 3/3 Running 3
+atenet-router-d844d4995-hzq92 2/2 Running 2
+k8s-credential-provider-5bb6b77b65-2gbnq 1/1 Running 1
+postgres-0 2/2 Running 2
+rustfs-54c86945fb-dplgq 1/1 Running 1
+rustfs-bucket-init-pz9fw 0/1 Completed 0
+NAME                                   POOL      STATE                      ACTORS   CPU(MILLICORES)   MEMORY     POD                              AGE
+947c7790-e1f0-47e3-924d-e1eb257a989e   ballast   WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-fj7wt   60m
+355fd5c3-b7ee-46b5-b2c9-068e011413e3   ballast   WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-rcwgm   60m
+e46a2421-df57-4c7c-aba7-7118e9098828   ballast   WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zxzvv   4h21m
+7acbf84d-e26f-45fd-88aa-08a1b9d816ec   ballast   WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/1984Mi   lab-n/ballast-5d6cf97747-zzzdn   5h7m
+ATESPACE   NAME   TEMPLATE   STATE   WORKER POD   WORKER IPS   VERSION   AGE
+ATESPACE   NAME         GOLDEN TAG                             ERROR   AGE
+lab-n      ballast-0    d8328610-2fdb-4974-a6ab-7c8671586d37           6h9m
+lab-n      ballast-50   09fee120-cd19-4121-8bae-5623fcbe70eb           6h9m
+lab-n      nb-0         a4d47db7-39ce-4bbd-8969-2d738787c09e           3h19m
+lab-n      nb-50        20146d73-350e-4da3-8f82-8153e837b07b           3h19m
+lab-n      tb-0         b15f9995-908a-4aa3-bf00-3f888c307fd5           119m
+lab-n      tb-1000      ee988cc1-0e22-4c30-bd89-e3e9fa0ea4ba           119m
+lab-n      tb-200       9d19e8bf-0e00-4545-96cb-cfdd1545f933           119m
+lab-n      tb-50        e0166532-008a-4281-bb95-9b7c51662d90           119m
+lab-n      tb-big       e95e9f47-4cbf-4e2a-b3ed-e76ad3a4bac0           119m
+check: 200	4.162334	count=1 mb=50 sum=6512 process_age_s=2.0 | ACTOR_STATE_RUNNING	multi-worker
+sync suspend 1.3 s: ACTOR_STATE_SUSPENDED	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker
+resume: 200	0.276929	count=2 mb=50 sum=6512 process_age_s=2.5
+tcp to 10.0.2.2:19000 from guest: open
+tcp to 10.0.2.2:2223 (a forward to the other guest) from guest: open
+from a kind node: open
+amazon/aws-cli:<none> 650MB
+rustfs/rustfs:1.0.3 417MB

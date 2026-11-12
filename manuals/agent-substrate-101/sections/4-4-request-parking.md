@@ -141,6 +141,16 @@ A burst that does not fit is split by the pool, with no request in between. We s
 
 The pool had 14 free places and not 16 for a reason that [section 3.5](#s-crashed-and-revertactor) explains. Two actors whose process had exited were still `ACTOR_STATE_RUNNING`, and each one held a CPU.
 
+## A resume that takes more than 10 seconds
+
+The parking budget is not the only clock. Envoy waits a fixed time for the router to decide where a request goes. **The code** sets that time to the parking budget plus 5 seconds {{code}}. With the default budget that is 10 seconds. A resume that takes longer gets a 504 from Envoy, and the resume is not cancelled.
+
+**We measured** this on a second x86 server guest (16 vCPU, 23 GB), in the bucket runs of [section 8.1](#s-postgres-and-the-object-store). In 32 of 61 cycles the resume had to read a large snapshot from a far or slow bucket. In each of the 32, the first request returned 504 after 10.05 s with an empty body. The client sent the request again each second and sent no other command. Each of the 32 then returned 200 with the right count. In the slowest cycle the first 200 came after 213 s and 19 requests.
+
+The limit is on the decision of the router, and not on the whole request. In an earlier run, three requests returned 200 after 10.09 to 10.87 s.
+
+A 504 after 10 s has a second cause, and the state of the actor separates the two. During a slow resume the actor reads `ACTOR_STATE_RESUMING`. After a database outage, one actor that read `ACTOR_STATE_RUNNING` returned the same 504 on every request. [Section 8.2](#s-when-a-dependency-is-down) has that case.
+
 ## Our position
 
 Parking hides a short shortage. It does not add capacity. A pool that parks requests all day is too small, and your users pay for that with seconds on every request.
@@ -148,6 +158,7 @@ Parking hides a short shortage. It does not add capacity. A pool that parks requ
 Three things follow for your client and your alerts:
 
 - **Client timeout.** Allow at least 10 seconds for a request to an actor that can be suspended. The budget is 5 seconds, a resume that started late still completes, and the Envoy dataplane ends the wait 5 seconds after the budget {{docs}}.
+- **Retry a 504 too.** A 504 after 10 seconds on a request to a suspended actor means that the resume is still at work. Send the request again after a pause, and send no `revert`. A revert of an actor in `ACTOR_STATE_RESUMING` is refused, as [section 8.2](#s-when-a-dependency-is-down) shows.
 - **Retry.** Retry a 503 with the text `no worker has room` after a pause. Do not retry it in a tight loop, because each retry takes a place among the parked requests.
 - **Alert.** The router counts parked requests in the metric `atenet.router.parking.active` and requests over the limit in `atenet.router.parking.rejected` {{docs}}. Alert when the first one stays above zero.
 
@@ -163,6 +174,7 @@ The project site states `500+/s` suspend and resume activations. We did not test
 - Set the client timeout to 10 seconds or more for actors that can be suspended.
 - Alert on atenet.router.parking.active, and add workers when it stays above zero.
 - Retry a capacity 503 with a pause, never in a tight loop.
+- Send a request again after a 504 at 10 seconds on a resume, because the resume is still at work.
 ```
 
-Sources: capture/lab/I-capacity/13-parking-trace.tsv, capture/lab/I-capacity/16-load-30s.log, capture/lab/I-capacity/17-router-args.txt, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/12-pool-spec.yaml, capture/lab/I-capacity/14-workers-full.txt, capture/lab/I-capacity/15-actors-after.txt, capture/lab/summary/parking-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/V-validation/03-parallel-resume/20-parallel.tsv, capture/lab/V-validation/03-parallel-resume/24-summary.tsv, capture/lab/V-validation/03-parallel-resume/10-parallel-first-run-n16-n32.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/03-parallel-resume/12-ateapi-error-lines-during-bursts.txt, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/summary/kagent-turns-x86.json; cmd/atenet/internal/router/ingress/parking.go, cmd/atenet/internal/router/ingress/resumer.go, cmd/atenet/internal/router/cmd.go at v1.0.0; docs/concepts/request-parking.md and site/layouts/_shortcodes/home.html at v1.0.0.
+Sources: capture/lab/I-capacity/13-parking-trace.tsv, capture/lab/I-capacity/16-load-30s.log, capture/lab/I-capacity/17-router-args.txt, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/12-pool-spec.yaml, capture/lab/I-capacity/14-workers-full.txt, capture/lab/I-capacity/15-actors-after.txt, capture/lab/summary/parking-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/V-validation/03-parallel-resume/20-parallel.tsv, capture/lab/V-validation/03-parallel-resume/24-summary.tsv, capture/lab/V-validation/03-parallel-resume/10-parallel-first-run-n16-n32.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/03-parallel-resume/12-ateapi-error-lines-during-bursts.txt, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/summary/kagent-turns-x86.json; cmd/atenet/internal/router/ingress/parking.go, cmd/atenet/internal/router/ingress/resumer.go, cmd/atenet/internal/router/cmd.go at v1.0.0; docs/concepts/request-parking.md and site/layouts/_shortcodes/home.html at v1.0.0., capture/lab/summary/remote-store-x86.json, capture/lab/X-remote-store-pg/22-store-cycles.tsv, capture/lab/summary/object-store-x86.json

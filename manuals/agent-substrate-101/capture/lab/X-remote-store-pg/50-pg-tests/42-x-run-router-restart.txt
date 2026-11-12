@@ -1,0 +1,15 @@
+### 2026-11-12T18:57:05Z router check, 357 s after Postgres was ready
+request x-run (actor is SUSPENDED): 504	10.013112	
+request to another suspended actor x-s-046: 200	0.029192	count=2 process_age_s=674.3 
+--- router log for x-run, last 40 s
+18:56:43.801	ERROR	Error during ext_proc RequestHeaders processing	request for actor x-lab/x-run canceled by client	-
+18:57:05.597	INFO	ResumeActor	-	-
+18:57:15.597	ERROR	Error during ext_proc RequestHeaders processing	request for actor x-lab/x-run canceled by client	-
+--- api-server RPCs that name x-run, last 40 s
+18:56:43.974	/substrate.ateapi.v1.Control/GetActor	-	4.972146ms
+--- rollout restart of atenet-router
+deployment "atenet-router" successfully rolled out
+restart took 7.060 s
+request x-run after the router restart: 200	0.327000	count=49 process_age_s=685.4 
+request x-run: 200	0.056370	count=50 process_age_s=685.6 
+state: ACTOR_STATE_RUNNING

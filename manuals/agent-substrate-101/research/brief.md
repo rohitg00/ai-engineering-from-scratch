@@ -59,7 +59,7 @@ Each value is one machine and one day. `capture/lab/summary/` holds the full sta
 
 - Substrate on GKE. That section is written from the documentation and the code.
 - kagent with a hosted model or a model on a GPU, and its codex, claude, and bring-your-own harnesses.
-- A bucket on another machine or in a cloud. Ours was in the cluster, and in one experiment outside it on the same guest with an emulated delay.
+- A bucket in a cloud, or a real link with 100 ms of delay. Ours was in the cluster, outside it on the same guest, and on a second guest of the same server.
 - An upgrade from v0.6.0, a rollback, more than one node at scale, and a second run of any outage or upgrade step.
 - Actors with more than 1000 MiB of memory, and images with an init system or a large root filesystem.
 - Why workers reported no room for about one minute after a node restart.

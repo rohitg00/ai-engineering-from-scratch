@@ -1,0 +1,25 @@
+NAMESPACE                          NAME                                        READY   STATUS      RESTARTS   AGE     IP            NODE                NOMINATED NODE   READINESS GATES
+ate-system                         ate-api-server-55b88dc744-7nkwp             2/2     Running     0          60s     10.244.0.7    xpg-control-plane   <none>           <none>
+ate-system                         ate-api-server-55b88dc744-b25t5             2/2     Running     0          60s     10.244.0.6    xpg-control-plane   <none>           <none>
+ate-system                         ate-controller-7984566f8d-zkslh             1/1     Running     0          57s     10.244.0.10   xpg-control-plane   <none>           <none>
+ate-system                         ate-idp-server-dcd5f565f-tnfvx              1/1     Running     0          59s     10.244.0.8    xpg-control-plane   <none>           <none>
+ate-system                         ate-idp-server-dcd5f565f-zrptk              1/1     Running     0          59s     10.244.0.9    xpg-control-plane   <none>           <none>
+ate-system                         atelet-d9j7b                                2/2     Running     0          56s     10.244.0.11   xpg-control-plane   <none>           <none>
+ate-system                         atenet-egress-7758c8fb4-jkmpz               3/3     Running     0          47s     10.244.0.20   xpg-control-plane   <none>           <none>
+ate-system                         atenet-router-d844d4995-qgmhz               2/2     Running     0          55s     10.244.0.12   xpg-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-5bb6b77b65-fzmvq    1/1     Running     0          48s     10.244.0.19   xpg-control-plane   <none>           <none>
+ate-system                         rustfs-54c86945fb-sbpx6                     1/1     Running     0          52s     10.244.0.18   xpg-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-hrdn5                    0/1     Completed   0          52s     10.244.0.14   xpg-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-kjf6s                    1/1     Running     0          2m51s   10.244.0.3    xpg-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-mp6mc                    1/1     Running     0          2m51s   10.244.0.4    xpg-control-plane   <none>           <none>
+kube-system                        etcd-xpg-control-plane                      1/1     Running     0          2m57s   172.18.0.7    xpg-control-plane   <none>           <none>
+kube-system                        kindnet-rpc6c                               1/1     Running     0          2m51s   172.18.0.7    xpg-control-plane   <none>           <none>
+kube-system                        kube-apiserver-xpg-control-plane            1/1     Running     0          2m57s   172.18.0.7    xpg-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-xpg-control-plane   1/1     Running     0          2m58s   172.18.0.7    xpg-control-plane   <none>           <none>
+kube-system                        kube-proxy-zxd9g                            1/1     Running     0          2m51s   172.18.0.7    xpg-control-plane   <none>           <none>
+kube-system                        kube-scheduler-xpg-control-plane            1/1     Running     0          2m57s   172.18.0.7    xpg-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-t4n64     1/1     Running     0          2m51s   10.244.0.2    xpg-control-plane   <none>           <none>
+otel-system                        jaeger-fb9948ddf-rwt97                      1/1     Running     0          51s     10.244.0.16   xpg-control-plane   <none>           <none>
+otel-system                        opentelemetry-collector-6f5b87f5dd-l4s2w    1/1     Running     0          51s     10.244.0.15   xpg-control-plane   <none>           <none>
+otel-system                        prometheus-5b5fb67d57-hfdwk                 1/1     Running     0          50s     10.244.0.17   xpg-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-57c94fb5b-qf4th   1/1     Running     0          82s     10.244.0.5    xpg-control-plane   <none>           <none>

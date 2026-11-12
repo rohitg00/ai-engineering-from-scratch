@@ -1,0 +1,12 @@
+metadata: {atespace: x-lab, name: x-drill}
+workerSelector:
+  matchLabels: {workload: x-pool}
+containers:
+- name: drill
+  image: localhost:5001/x-drill@sha256:adb95d1834e09abc2a32ab8454c29aeac3176f5a29c7f7622b818c8525e8bf16
+  wakeupProbe:
+    httpGet: {path: /readyz, port: 80}
+resources:
+  limits: {cpuMillicores: 500, memoryBytes: 134217728}
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

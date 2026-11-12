@@ -1,0 +1,57 @@
+### no shaping, plain HTTP 2026-11-12T18:12:55.934Z endpoint http://10.0.2.2:19000
+wan: qdisc fq_codel 0: root refcnt 2 limit 10240p flows 1024 quantum 1514 target 5ms interval 100ms memory_limit 32Mb ecn drop_batch 64 ;
+bridge: qdisc noqueue 0: root refcnt 2 ;
+from-node connect=0.001817 total=0.003161 code=403
+from-node connect=0.000977 total=0.002458 code=403
+from-node connect=0.000853 total=0.002050 code=403
+from-node connect=0.000727 total=0.001757 code=403
+from-node connect=0.000764 total=0.001727 code=403
+aws s3 cp 300 MiB from the guest: upload 3.912 s, download 4.452 s (includes about 1 s of container start)
+aws s3 ls (container start plus one list call): 1.053 s
+### 100 ms added, plain HTTP 2026-11-12T18:25:08.704Z endpoint http://10.0.2.2:19000
+wan: qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;qdisc netem 30: parent 1:3 limit 1000 delay 100ms;
+bridge: qdisc noqueue 0: root refcnt 2 ;
+from-node connect=0.102437 total=0.205594 code=403
+from-node connect=0.101602 total=0.204657 code=403
+from-node connect=0.101242 total=0.202427 code=403
+from-node connect=0.101255 total=0.202527 code=403
+from-node connect=0.100982 total=0.202123 code=403
+aws s3 cp 300 MiB from the guest: upload 54.860 s, download 55.989 s (includes about 1 s of container start)
+aws s3 ls (container start plus one list call): 1.440 s
+### rate 100 Mbit/s both directions, plain HTTP 2026-11-12T18:58:50.007Z endpoint http://10.0.2.2:19000
+wan: qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;qdisc netem 30: parent 1:3 limit 1000 rate 100Mbit;
+bridge: qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;qdisc netem 30: parent 1:3 limit 1000 rate 100Mbit;
+from-node connect=0.000799 total=0.001833 code=403
+from-node connect=0.000826 total=0.002054 code=403
+from-node connect=0.000842 total=0.002222 code=403
+from-node connect=0.000766 total=0.002086 code=403
+from-node connect=0.000784 total=0.001935 code=403
+aws s3 cp 300 MiB from the guest: upload 27.386 s, download 4.496 s (includes about 1 s of container start)
+aws s3 ls (container start plus one list call): 1.128 s
+### rate 20 Mbit/s both directions, plain HTTP 2026-11-12T19:03:54.604Z endpoint http://10.0.2.2:19000
+wan: qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;qdisc netem 30: parent 1:3 limit 1000 rate 20Mbit;
+bridge: qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;qdisc netem 30: parent 1:3 limit 1000 rate 20Mbit;
+from-node connect=0.000000 total=0.000496 code=000
+from-node connect=0.000000 total=0.000405 code=000
+from-node connect=0.000000 total=0.000449 code=000
+from-node connect=0.000000 total=0.000344 code=000
+from-node connect=0.000000 total=0.000596 code=000
+aws s3 cp 300 MiB from the guest: upload 132.690 s, download 4.530 s (includes about 1 s of container start)
+aws s3 ls (container start plus one list call): 1.149 s
+### no shaping, TLS 2026-11-12T19:30:41.793Z endpoint https://10.0.2.2:19001
+wan: qdisc fq_codel 0: root refcnt 2 limit 10240p flows 1024 quantum 1514 target 5ms interval 100ms memory_limit 32Mb ecn drop_batch 64 ;
+bridge: qdisc noqueue 0: root refcnt 2 ;
+from-node connect=0.000985 total=0.015196 code=403
+from-node connect=0.000880 total=0.011532 code=403
+from-node connect=0.000877 total=0.010934 code=403
+from-node connect=0.000807 total=0.011602 code=403
+from-node connect=0.000888 total=0.011382 code=403
+aws s3 cp 300 MiB from the guest: upload 3.915 s, download 4.449 s (includes about 1 s of container start)
+aws s3 ls (container start plus one list call): 1.139 s
+### local store, 100 ms added on the bridge 2026-11-12T19:39:45.595Z
+qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;qdisc netem 30: parent 1:3 limit 1000 delay 100ms;
+from-node connect=0.100376 total=0.201043 code=403
+from-node connect=0.100378 total=0.200974 code=403
+from-node connect=0.100316 total=0.200853 code=403
+from-node connect=0.100289 total=0.200977 code=403
+from-node connect=0.100302 total=0.200943 code=403

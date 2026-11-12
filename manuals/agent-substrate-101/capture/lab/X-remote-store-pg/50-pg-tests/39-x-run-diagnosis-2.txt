@@ -1,0 +1,82 @@
+### 2026-11-12T18:55:33Z second diagnosis of x-run
+request: 504	10.012155	
+--- leases table
+(0 rows)
+
+--- postgres sessions of substrate users
+ pid | state | wait_event_type | wait_event |       age       |      since      |                                  left                                  
+-----+-------+-----------------+------------+-----------------+-----------------+------------------------------------------------------------------------
+  44 | idle  | Client          | ClientRead | 00:04:36.147929 | 00:00:17.356829 | SELECT object_type, object_id, relation, _user, condition_name, condit
+  45 | idle  | Client          | ClientRead | 00:04:36.14768  | 00:00:00.149076 | SELECT object_type, object_id, relation, _user, condition_name, condit
+  46 | idle  | Client          | ClientRead | 00:04:36.147347 | 00:00:42.967789 | SELECT store, object_type, object_id, relation, _user, condition_name,
+  47 | idle  | Client          | ClientRead | 00:04:36.147146 | 00:00:18.147277 | SELECT object_type, object_id, relation, _user, condition_name, condit
+  50 | idle  | Client          | ClientRead | 00:04:35.233011 | 00:00:01.234962 | -- ping
+  51 | idle  | Client          | ClientRead | 00:04:35.232702 | 00:00:01.2343   | -- ping
+  56 | idle  | Client          | ClientRead | 00:04:35.110666 | 00:00:42.968116 | SELECT object_type, object_id, relation, _user, condition_name, condit
+  55 | idle  | Client          | ClientRead | 00:04:35.109955 | 00:00:00.149296 | SELECT object_type, object_id, relation, _user, condition_name, condit
+  59 | idle  | Client          | ClientRead | 00:04:35.109871 | 00:00:42.968094 | SELECT store, object_type, object_id, relation, _user, condition_name,
+  57 | idle  | Client          | ClientRead | 00:04:35.109866 | 00:00:00.148527 |                                                                       +
+     |       |                 |            |                 |                 |                 SELECT atespace, name, proto FROM actors              +
+     |       |                 |            |                 |                 |                 WHERE $1::text IS NULL O
+  58 | idle  | Client          | ClientRead | 00:04:35.109845 | 00:00:00.14873  | SELECT object_type, object_id, relation, _user, condition_name, condit
+  73 | idle  | Client          | ClientRead | 00:04:30.963016 | 00:00:17.356839 | SELECT object_type, object_id, relation, _user, condition_name, condit
+  72 | idle  | Client          | ClientRead | 00:04:30.960892 | 00:00:42.967652 | SELECT store, object_type, object_id, relation, _user, condition_name,
+  96 | idle  | Client          | ClientRead | 00:04:17.004277 | 00:00:00.001089 |                                                                       +
+     |       |                 |            |                 |                 |         SELECT EXISTS(                                                +
+     |       |                 |            |                 |                 |                 SELECT 1 FROM worker_outbox_trim                      +
+     |       |                 |            |                 |                 |                 WHERE xid > $1::
+  97 | idle  | Client          | ClientRead | 00:04:16.992904 | 00:00:00.011819 |                                                                       +
+     |       |                 |            |                 |                 |         SELECT EXISTS(                                                +
+     |       |                 |            |                 |                 |                 SELECT 1 FROM worker_outbox_trim                      +
+     |       |                 |            |                 |                 |                 WHERE xid > $1::
+  99 | idle  | Client          | ClientRead | 00:04:16.854417 | 00:00:16.84858  | commit
+ 102 | idle  | Client          | ClientRead | 00:04:15.969098 | 00:00:15.961072 | commit
+ 176 | idle  | Client          | ClientRead | 00:03:36.137507 | 00:00:00.359263 | SELECT object_type, object_id, relation, _user, condition_name, condit
+ 208 | idle  | Client          | ClientRead | 00:03:16.847794 | 00:00:17.050806 |                                                                       +
+     |       |                 |            |                 |                 |         SELECT EXISTS(                                                +
+     |       |                 |            |                 |                 |                 SELECT 1 FROM worker_outbox_trim                      +
+     |       |                 |            |                 |                 |                 WHERE xid > $1::
+ 241 | idle  | Client          | ClientRead | 00:03:01.01432  | 00:00:17.148254 |                                                                       +
+     |       |                 |            |                 |                 |                 SELECT atespace, name, proto FROM actors              +
+     |       |                 |            |                 |                 |                 WHERE $1::text IS NULL O
+ 257 | idle  | Client          | ClientRead | 00:02:54.953827 | 00:00:01.148502 | SELECT object_type, object_id, relation, _user, condition_name, condit
+ 264 | idle  | Client          | ClientRead | 00:02:50.981418 | 00:00:00.358751 |                                                                       +
+     |       |                 |            |                 |                 |                 SELECT atespace, name, proto FROM actors              +
+     |       |                 |            |                 |                 |                 WHERE $1::text IS NULL O
+ 284 | idle  | Client          | ClientRead | 00:02:40.94887  | 00:00:17.148238 | SELECT object_type, object_id, relation, _user, condition_name, condit
+--- locks not granted
+ locktype | mode | granted | pid 
+----------+------+---------+-----
+(0 rows)
+
+--- TCP connections to Postgres as seen in each api-server pod
+pod/ate-api-server-55b88dc744-7nkwp sandbox pid 2128
+      1 ESTAB 10.244.0.7:34064 10.0.2.2:15432 timer:(keepalive,2.017sec,0) cubic
+      1 ESTAB 10.244.0.7:34076 10.0.2.2:15432 timer:(keepalive,12sec,0) cubic
+      1 ESTAB 10.244.0.7:34078 10.0.2.2:15432 timer:(keepalive,2.027sec,0) cubic
+      1 ESTAB 10.244.0.7:39242 10.0.2.2:15432 timer:(keepalive,12sec,0) cubic
+      1 ESTAB 10.244.0.7:50380 10.0.2.2:15432 timer:(keepalive,13sec,0) cubic
+      1 ESTAB 10.244.0.7:50394 10.0.2.2:15432 timer:(keepalive,12sec,0) cubic
+      1 ESTAB 10.244.0.7:53366 10.0.2.2:15432 timer:(keepalive,12sec,0) cubic
+      1 ESTAB 10.244.0.7:53468 10.0.2.2:15432 timer:(keepalive,2.021sec,0) cubic
+      1 ESTAB 10.244.0.7:53490 10.0.2.2:15432 timer:(keepalive,12sec,0) cubic
+      1 ESTAB 10.244.0.7:53492 10.0.2.2:15432 timer:(keepalive,153ms,0) cubic
+      1 ESTAB 10.244.0.7:53498 10.0.2.2:15432 timer:(keepalive,2.023sec,0) cubic
+      1 ESTAB 10.244.0.7:53510 10.0.2.2:15432 timer:(keepalive,11sec,0) cubic
+      1 ESTAB 10.244.0.7:53526 10.0.2.2:15432 timer:(keepalive,5.069sec,0) cubic
+      1 ESTAB 10.244.0.7:53536 10.0.2.2:15432 timer:(keepalive,947ms,0) cubic
+      1 ESTAB 10.244.0.7:53550 10.0.2.2:15432 timer:(keepalive,2.028sec,0) cubic
+      1 ESTAB 10.244.0.7:53566 10.0.2.2:15432 timer:(keepalive,945ms,0) cubic
+      1 ESTAB 10.244.0.7:53576 10.0.2.2:15432 timer:(keepalive,953ms,0) cubic
+      1 ESTAB 10.244.0.7:53584 10.0.2.2:15432 timer:(keepalive,2.026sec,0) cubic
+pod/ate-api-server-55b88dc744-b25t5 sandbox pid 2045
+      1 ESTAB 10.244.0.6:33516 10.0.2.2:15432 timer:(keepalive,11sec,0) cubic
+      1 ESTAB 10.244.0.6:33518 10.0.2.2:15432 timer:(keepalive,12sec,0) cubic
+      1 ESTAB 10.244.0.6:33880 10.0.2.2:15432 timer:(keepalive,11sec,0) cubic
+      1 ESTAB 10.244.0.6:34324 10.0.2.2:15432 timer:(keepalive,11sec,0) cubic
+      1 ESTAB 10.244.0.6:34326 10.0.2.2:15432 timer:(keepalive,12sec,0) cubic
+      1 ESTAB 10.244.0.6:53008 10.0.2.2:15432 timer:(keepalive,4.741sec,0) cubic
+      1 ESTAB 10.244.0.6:56732 10.0.2.2:15432 timer:(keepalive,2.714sec,0) cubic
+      1 ESTAB 10.244.0.6:56748 10.0.2.2:15432 timer:(keepalive,13sec,0) cubic
+      1 ESTAB 10.244.0.6:58208 10.0.2.2:15432 timer:(keepalive,12sec,0) cubic
+      1 ESTAB 10.244.0.6:58674 10.0.2.2:15432 timer:(keepalive,11sec,0) cubic

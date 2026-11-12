@@ -1,0 +1,57 @@
+### 2026-11-12T18:01:23.792Z after boot
+ 18:01:23 up 1 min,  1 user,  load average: 1.78, 0.71, 0.26
+Mem:              23           2          18           0           2          20
+/dev/vda1        38G   26G   13G  67% /
+multi-control-plane Up About a minute
+multi-worker2 Up About a minute
+multi-worker Up About a minute
+kind-control-plane Up About a minute
+kind-registry Up About a minute
+t-store Exited (0) 58 minutes ago rustfs/rustfs:1.0.3
+0afd3b25f35cbae4748aa2a0e2904bd0a1f2e33a0985a6f413ec5e5eb2da7857
+1c7b753fd07a9f1193061f99f6f1f58dbda6ea8d342a7bffe51bcfc54f50c306
+06e7de8dbfb0dda75d28aeff563dc41179889cf74a5d6836cccc69c23a8192fb
+d8ef9d141728f479367a2511cbdddcb7964f9547736fc77bdda32587a5aacec1
+e302810bfdc7c5695e817bf445a8e56fabdfb0433f01a479b986f30575eb1595
+t-store-data
+multi-control-plane   Ready   control-plane   6h4m   v1.37.0
+multi-worker          Ready   <none>          6h4m   v1.37.0
+multi-worker2         Ready   <none>          6h4m   v1.37.0
+ate-api-server-59dcf8d6bf-7n9b7 0/2 Unknown 4
+ate-api-server-59dcf8d6bf-8w5tw 0/2 Unknown 0
+ate-controller-7984566f8d-jm7ps 0/1 Unknown 0
+ate-idp-server-dcd5f565f-pnfr8 0/1 Unknown 0
+ate-idp-server-dcd5f565f-r7jhz 0/1 Unknown 0
+atelet-4jx2j 0/2 Unknown 4
+atelet-64crz 0/2 Unknown 0
+atenet-egress-7758c8fb4-52d2z 0/3 Unknown 0
+atenet-router-d844d4995-hzq92 0/2 Unknown 0
+k8s-credential-provider-5bb6b77b65-2gbnq 0/1 Unknown 0
+postgres-0 0/2 Unknown 0
+rustfs-54c86945fb-dplgq 1/1 Running 1
+rustfs-bucket-init-pz9fw 0/1 Completed 0
+ballast-5d6cf97747-fj7wt   Running   multi-worker2   <none>
+ballast-5d6cf97747-rcwgm   Running   multi-worker2   <none>
+ballast-5d6cf97747-zxzvv   Running   multi-worker    <none>
+ballast-5d6cf97747-zzzdn   Running   multi-worker    <none>
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+Error: failed to connect to ate-api-server: no ready api pods in ate-system
+endpoints:
+ghcr.io/agent-substrate/substrate/objectstore-plugin:v1.0.0@sha256:485cf92b31fed761c53f478d17ed69bf552a2cd8e8cf3b24b98a3e06789ee274 AWS_REGION=us-east-1 AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 AWS_S3_USE_PATH_STYLE=true AWS_ACCESS_KEY_ID=<store-key> AWS_SECRET_ACCESS_KEY=<store-key>
+ghcr.io/agent-substrate/substrate/objectstore-plugin:v1.0.0@sha256:485cf92b31fed761c53f478d17ed69bf552a2cd8e8cf3b24b98a3e06789ee274 AWS_REGION=us-east-1 AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 AWS_S3_USE_PATH_STYLE=true AWS_ACCESS_KEY_ID=<store-key> AWS_SECRET_ACCESS_KEY=<store-key>
+--localhost-registry-replacement=kind-registry:5000 --grpc-server-cred-bundle=/run/podidentity.podcert.ate.dev/credential-bundle.pem --client-ca-certs=/run/podidentity.podcert.ate.dev/trust-bundle.pem --log-level=debug --preview=
+Dockerfile
+ballast
+go.mod
+main.go
+8.3M	<home>/ballast-t
+lo 127.0.0.1/8
+ens3 10.0.2.15/24
+br-80a8c4f642e3 172.18.0.1/16
+docker0 172.17.0.1/16
+default via 10.0.2.2 dev ens3 proto dhcp src 10.0.2.15 metric 100 
+10.0.2.0/24 dev ens3 proto kernel scope link src 10.0.2.15 metric 100 
+10.0.2.2 dev ens3 proto dhcp scope link src 10.0.2.15 metric 100 
+10.0.2.3 dev ens3 proto dhcp scope link src 10.0.2.15 metric 100 
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1 

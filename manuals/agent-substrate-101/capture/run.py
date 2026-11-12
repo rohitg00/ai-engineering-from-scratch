@@ -2052,6 +2052,238 @@ def object_store_x86():
     }
 
 
+X = "X-remote-store-pg"
+X_TESTS = f"{X}/50-pg-tests"
+GUEST_X = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor. The bucket and the Postgres ran in containers on a second guest of the same server, reached through loopback forwards of the host"
+
+
+def remote_path():
+    out = []
+    entry = None
+    for line in lines(f"{X}/13-path.txt"):
+        head = re.match(r"### (.+?) (\d{4}-\d\d-\d\dT[\d:.]+Z)", line)
+        if head:
+            entry = {"phase": head.group(1), "connect_ms": [], "probe_codes": []}
+            out.append(entry)
+            continue
+        probe = re.match(r"from-node connect=([\d.]+) total=[\d.]+ code=(\d+)", line)
+        if probe:
+            entry["probe_codes"].append(probe.group(2))
+            if probe.group(2) != "000":
+                entry["connect_ms"].append(float(probe.group(1)) * 1000)
+            continue
+        copy = re.match(r"aws s3 cp 300 MiB from the guest: upload ([\d.]+) s, download ([\d.]+) s", line)
+        if copy:
+            entry["copy_300_mib_seconds"] = {"upload": float(copy.group(1)), "download": float(copy.group(2))}
+    for entry in out:
+        codes = entry.pop("probe_codes")
+        entry["connect_ms"] = {**stat(entry["connect_ms"]), "runs": rounded(entry["connect_ms"])} if entry["connect_ms"] else None
+        entry["probes_with_no_answer"] = codes.count("000")
+    return out
+
+
+def remote_cycles():
+    groups = {}
+    for row in rows(f"{X}/22-store-cycles.tsv")[1:]:
+        key = (row[1], int(row[2]), int(row[3]), int(row[4]))
+        groups.setdefault(key, []).append(row)
+    out = []
+    for (store, rtt, rate, mib), items in groups.items():
+        suspends = [float(row[6]) for row in items]
+        first = [float(row[11]) for row in items]
+        total = [float(row[13]) for row in items]
+        out.append({
+            "store": store,
+            "added_round_trip_ms": rtt,
+            "rate_mbit": rate,
+            "mib": mib,
+            "suspend_sync_seconds": {**stat(suspends), "runs": rounded(suspends)},
+            "first_answer_codes": tally(row[10] for row in items),
+            "first_answer_seconds": {**stat(first), "runs": rounded(first)},
+            "requests_until_200": tally(row[12] for row in items),
+            "seconds_to_first_200": {**stat(total), "runs": rounded(total)},
+            "ended_with_200": sum(1 for row in items if row[15].endswith("last=200")),
+        })
+    return out
+
+
+def remote_outage(rel):
+    by_event = group_by_event(node_rows(f"{X}/{rel}"))
+    one = lambda name, index=0: short_answer(by_event[name][index])
+    before = [int(value) for value in re.findall(r"count=(\d+)", by_event["run-two-more-calls"][0]["text"])]
+    sync = by_event["run-suspend-sync"][0]["text"]
+    after_revert = one("run-request-after-revert")
+    pending = lambda name: "STATE_PENDING" in by_event[name][0]["text"]
+    return {
+        "bucket_away_seconds": float(re.search(r"after ([\d.]+) s", by_event["store-back"][0]["text"]).group(1)),
+        "actor_with_snapshot_only_in_bucket": {
+            "requests_during": [{**short_answer(item), "body": answer(item)["body"][:60]} for item in by_event["rem-request-1"] + by_event["rem-request-2"]],
+            "request_after_bucket_back_with_no_command": one("rem-request-no-revert"),
+            "revert_seconds": took(by_event["rem-revert"][0]),
+            "request_after_revert": one("rem-request-after-revert"),
+        },
+        "running_actor_suspend_sync": {
+            "counts_before": before,
+            "seconds": took(by_event["run-suspend-sync"][0]),
+            "failed_at_step": re.search(r"step (\w+)", sync).group(1),
+            "error_names_a_deadline": "DeadlineExceed" in sync,
+            "state_after": actor_state(by_event["run-state-after-suspend-sync"][0]["text"]),
+            "request_after": one("run-request-after-suspend-sync"),
+            "request_after_bucket_back_with_no_command": one("run-request-no-revert"),
+            "revert_seconds": took(by_event["run-revert"][0]),
+            "request_after_revert": after_revert,
+            "calls_lost": before[-1] - (after_revert["count"] - 1),
+        },
+        "default_suspend": {
+            "seconds": took(by_event["async-suspend-default"][0]),
+            "newest_snapshot_pending_20s_later": pending("async-state-after-20s"),
+            "resume_from_node": one("async-request-local-resume"),
+            "second_suspend_seconds": took(by_event["async-suspend-default-again"][0]),
+            "newest_snapshot_pending_after_bucket_back": pending("async-state"),
+            "node_copy_present_after_bucket_back": by_event["async-state"][0]["fields"][1] != "-",
+            "request_after_bucket_back": one("async-request"),
+        },
+        "requests_to_a_running_actor": [one("live-request-1"), one("live-request-2")],
+        "new_actor": {"create_seconds": took(by_event["new-create"][0]), "first_request": one("new-request")},
+        "suspend_sync_after_bucket_back_seconds": took(by_event["live-suspend-sync"][0]),
+    }
+
+
+def remote_store_x86():
+    cycles = remote_cycles()
+    return {
+        "machine": GUEST_X,
+        "note": "the bucket was a rustfs container on a second guest. The path between the guests is the user-mode network of the hypervisor, so read the rows with added delay as rows of this path only. atelet ran with --snapshot-upload-delay=3s and --snapshot-detach-delay=10s for these runs only. One cycle is a suspend with --mode sync, a wait for the detach, and one request. A 504 was followed by one more request each second until the first 200, with no revert, so seconds_to_first_200 is an upper bound. The rows with store local repeat the method of experiment T, with the bucket in a container on the same guest. Each outage case ran once, with actors that hold 200 MiB.",
+        "sources": [f"capture/lab/{X}/22-store-cycles.tsv", f"capture/lab/{X}/13-path.txt", f"capture/lab/{X}/10-store-run.log", f"capture/lab/{X}/19-tls-store-check.txt", f"capture/lab/{X}/30-outage-stopped.tsv", f"capture/lab/{X}/30-outage-dropped.tsv"],
+        "not_used": [f"capture/lab/{X}/20-store-cycles.tsv, a first attempt in which a 504 led to a revert", "the download times of 13-path.txt under the two rate limits, because the client on the guest was not shaped on the way down"],
+        "path": remote_path(),
+        "cycles": cycles,
+        "cycles_total": sum(item["suspend_sync_seconds"]["n"] for item in cycles),
+        "cycles_ended_with_200": sum(item["ended_with_200"] for item in cycles),
+        "cycles_with_504_first": sum(item["first_answer_codes"].get("504", 0) for item in cycles),
+        "tls_check": lines(f"{X}/19-tls-store-check.txt")[1:],
+        "bucket_unreachable": {"stopped": remote_outage("30-outage-stopped.tsv"), "packets_dropped": remote_outage("30-outage-dropped.tsv")},
+    }
+
+
+def pg_lifecycle(delay):
+    life = read(f"{X_TESTS}/10-lifecycle-delay{delay}.txt")
+    grab = lambda pattern: float(re.search(pattern, life).group(1))
+    cycles = [row for row in rows(f"{X_TESTS}/11-cycles-delay{delay}.tsv") if len(row) >= 4]
+    running = [row for row in rows(f"{X_TESTS}/12-running-requests-delay{delay}.tsv") if len(row) >= 3]
+    suspends = [float(row[1]) for row in cycles]
+    resumes = [float(row[3]) for row in cycles]
+    warm = [float(row[2]) for row in running]
+    return {
+        "create_seconds": grab(r"create ([\d.]+) s"),
+        "first_request_seconds": round(grab(r"first request: 200\t([\d.]+)"), 3),
+        "suspend_default_seconds": grab(r"suspend default ([\d.]+) s"),
+        "suspend_sync_seconds": {**stat(suspends), "runs": rounded(suspends)},
+        "resume_seconds": {**stat(resumes), "runs": rounded(resumes)},
+        "cycle_codes": tally(row[2] for row in cycles),
+        "running_actor_request_seconds": {**stat(warm), "runs": rounded(warm)},
+    }
+
+
+def pg_round_trips():
+    out = {}
+    label = None
+    for line in lines(f"{X_TESTS}/05-pg-round-trip.txt"):
+        head = re.match(r"### added delay (\d+) ms", line)
+        if head:
+            label = head.group(1)
+            continue
+        values = [float(value) for value in re.findall(r"Time: ([\d.]+) ms", line)]
+        if values and label is not None:
+            out[label] = {"query_ms": {**stat(values), "runs": rounded(values)}}
+    return out
+
+
+def pg_outage(suffix):
+    at = marks(f"{X_TESTS}/30-timeline{suffix}.tsv")
+    stopped, ready, end = at["pg-stop-begin"], at["pg-ready-on-its-guest"], at["end"]
+    probes = [probe for probe in stream(f"{X_TESTS}/33-probe{suffix}.tsv") if probe["code"] != "404"]
+    summary = {}
+    for name in ("running", "suspended"):
+        whole = [probe for probe in probes if probe["stream"] == name]
+        failed = [probe for probe in whole if probe["code"] != "200"]
+        ok_after = [probe for probe in whole if probe["code"] == "200" and probe["at"] > ready]
+        summary[name] = {
+            "requests_in_run": len(whole),
+            "failed_in_run": len(failed),
+            "codes_in_run": tally(probe["code"] for probe in whole),
+            "first_failure_t": round(failed[0]["at"] - stopped, 1),
+            "last_failed_request_sent_seconds_after_ready": round(failed[-1]["at"] - ready, 1),
+            "first_ok_seconds_after_ready": round(ok_after[0]["at"] - ready, 1) if ok_after else None,
+        }
+    return {
+        "postgres_away_seconds": round(ready - at["pg-stopped"], 1),
+        "stop_command_to_ready_seconds": round(ready - stopped, 1),
+        "watched_after_ready_seconds": round(end - ready, 1),
+        "summary": summary,
+    }
+
+
+def pg_stuck_actor():
+    first = read(f"{X_TESTS}/37-follow-up.txt")
+    recovery = read(f"{X_TESTS}/41-x-run-recovery.txt")
+    restart = read(f"{X_TESTS}/42-x-run-router-restart.txt")
+    coded = lambda pattern, text: [{"code": code, "seconds": round(float(seconds), 3)} for code, seconds in re.findall(pattern, text)]
+    x_run = r"request x-run[^:]*: (\d{3})\t([\d.]+)"
+    after = re.search(r"request x-run after the router restart: (\d{3})\t([\d.]+)\tcount=(\d+)", restart)
+    stuck = coded(x_run, first) + coded(r"request[^:\n]*: (504)\t([\d.]+)", recovery) + coded(x_run, restart)[:1]
+    return {
+        "requests_while_stuck": {"requests": len(stuck), "codes": tally(item["code"] for item in stuck), "seconds": stat([item["seconds"] for item in stuck])},
+        "state_in_the_api": re.search(r"x-run state: .*?(ACTOR_STATE_\w+)", first).group(1),
+        "other_running_actors": coded(r"request to a running [\w-]+: (\d{3})\t([\d.]+)", first),
+        "router_access_log_duration_ms": [int(value) for value in re.findall(r'"POST / HTTP/2" 504 - 0 0 (\d+) ', first)],
+        "resume_command_seconds": float(re.search(r"resume command: ([\d.]+) s", recovery).group(1)),
+        "suspend_sync_command_seconds": float(re.search(r"suspend command: ([\d.]+) s", recovery).group(1)),
+        "seconds_after_ready_at_router_check": int(re.search(r"router check, (\d+) s after", restart).group(1)),
+        "router_restart_seconds": float(re.search(r"restart took ([\d.]+) s", restart).group(1)),
+        "request_after_router_restart": {"code": after.group(1), "seconds": round(float(after.group(2)), 3), "count": int(after.group(3))},
+        "run_2_requests_after_outage": coded(r"request y-run: (\d{3})\t([\d.]+)", read(f"{X_TESTS}/43-run2-follow-up.txt")),
+    }
+
+
+def pg_worker_cache():
+    log = lines(f"{X_TESTS}/47-worker-cache-lines.txt")
+    times = lambda needle: [stamp(re.search(r'"time":"([^"]+)"', line).group(1)) for line in log if needle in line]
+    closed = times("watch channel closed")[0]
+    tries = times('"msg":"worker cache resync failed"')
+    synced = times('"msg":"worker cache synced"')[0]
+    ready = marks(f"{X_TESTS}/30-timeline-run2.tsv")["pg-ready-on-its-guest"]
+    return {
+        "failed_tries_seconds_after_the_watch_closed": [round(value - closed, 1) for value in tries],
+        "seconds_between_failed_tries": [round(later - earlier, 1) for earlier, later in zip(tries, tries[1:])],
+        "synced_seconds_after_last_failed_try": round(synced - tries[-1], 1),
+        "synced_seconds_after_ready": round(synced - ready, 1),
+    }
+
+
+def remote_postgres_x86():
+    base = f"{X}/40-pg-install"
+    objects = read(f"{base}/51-ate-system-objects.txt")
+    steps = {row[0]: int(row[2]) for row in rows(f"{base}/steps.tsv") if len(row) == 3}
+    return {
+        "machine": GUEST_X,
+        "note": "one install on a new kind cluster with one node, with Postgres 18 in a container on the second guest over TLS and password logins. Bucket cycles of the other part ran on the same guest during the install. The delay was added with tc netem toward Postgres only. Each outage is one run. In an outage, t is seconds from the docker stop command for the Postgres container, and the ready mark was taken on the guest of the database.",
+        "sources": [f"capture/lab/{base}/steps.tsv", f"capture/lab/{base}/30-pg-setup.log", f"capture/lab/{base}/39-deploy-diff.txt", f"capture/lab/{base}/51-ate-system-objects.txt", f"capture/lab/{base}/10-pg-reach.txt", f"capture/lab/{X_TESTS}/05-pg-round-trip.txt", f"capture/lab/{X_TESTS}/10-lifecycle-delay0.txt", f"capture/lab/{X_TESTS}/11-cycles-delay0.tsv", f"capture/lab/{X_TESTS}/11-cycles-delay20.tsv", f"capture/lab/{X_TESTS}/30-timeline.tsv", f"capture/lab/{X_TESTS}/33-probe.tsv", f"capture/lab/{X_TESTS}/33-probe-run2.tsv", f"capture/lab/{X_TESTS}/37-follow-up.txt", f"capture/lab/{X_TESTS}/41-x-run-recovery.txt", f"capture/lab/{X_TESTS}/42-x-run-router-restart.txt", f"capture/lab/{X_TESTS}/47-worker-cache-lines.txt"],
+        "install": {
+            "deploy_seconds": steps["40-deploy-ate-system"],
+            "setup_sql_with_single_transaction_exit": int(re.search(r"rc=(\d+)", read(f"{base}/30-pg-setup.log")).group(1)),
+            "tls_versions": tally(re.findall(r"TLSv[\d.]+", read(f"{base}/10-pg-reach.txt"))),
+            "postgres_statefulset_deployed": "statefulset.apps/postgres" in objects,
+            "postgres_networkpolicy_deployed": "networkpolicy.networking.k8s.io/postgres" in objects,
+        },
+        "round_trip": pg_round_trips(),
+        "lifecycle": {"0": pg_lifecycle(0), "20": pg_lifecycle(20)},
+        "outages": {"run_1": pg_outage(""), "run_2": pg_outage("-run2")},
+        "stuck_actor_run_1": pg_stuck_actor(),
+        "worker_cache_run_2": pg_worker_cache(),
+    }
+
+
 U = "U-pg-upgrade-scale"
 
 
@@ -2339,6 +2571,8 @@ BUILDERS = {
     "full-node-x86.json": full_node_x86,
     "object-store-x86.json": object_store_x86,
     "external-postgres-x86.json": external_postgres_x86,
+    "remote-store-x86.json": remote_store_x86,
+    "remote-postgres-x86.json": remote_postgres_x86,
     "upgrade-x86.json": upgrade_x86,
     "scale-x86.json": scale_x86,
     "kagent-model-x86.json": kagent_model_x86,

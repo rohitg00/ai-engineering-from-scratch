@@ -823,3 +823,45 @@ redacted	W-ax-kagent-2/40-ax-example/26b-egress-hosts.log	public addresses of th
 note	W-ax-kagent-2	no provider key was used. The token of each agent task is a made-up string, and the model server was a container on the test guest
 note	W-ax-kagent-2	pod, Service, and container addresses in these files are addresses inside the kind clusters and the container network of the test guest
 redacted	W-ax-kagent-2/31-ax-mcp-call/w-mcp2/16-actor.log, w-mcp3/16-actor.log	three lines of final text that the 3b model wrote in the form of a commit trailer are replaced with a marker; the model made no commit
+redacted	X-remote-store-pg/00-health.txt	the home folder of the guest user is replaced with <home>
+redacted	X-remote-store-pg/01-health-after-wait.txt	an internal guest name is replaced
+dropped	X-remote-store-pg/12-atelet-args-patched.txt	empty file
+dropped	X-remote-store-pg/17-tls-plugin-log.txt	empty file
+redacted	X-remote-store-pg/40-pg-install/40-deploy-ate-system.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	X-remote-store-pg/40-pg-install/55-install-record.yaml	the home folder of the guest user is replaced with <home>
+redacted	X-remote-store-pg/50-pg-tests/49-removal.txt	the home folder of the guest user is replaced with <home>
+redacted	X-remote-store-pg/99-state-left.txt	the home folder of the guest user is replaced with <home>
+dropped	X-remote-store-pg/FINDINGS.md	internal findings note, restated in the manual
+redacted	X-remote-store-pg/_scripts/x0b-wait.sh	an internal guest name is replaced
+dropped	X-remote-store-pg/_scripts/x16-store-outage-driver.sh	driver script that ran on the workstation and names the access helper of the lab
+dropped	X-remote-store-pg/_scripts/x8-pg-outage-driver.sh	driver script that ran on the workstation and names the access helper of the lab
+dropped	X-remote-store-pg/_scripts/x8b-pg-outage-driver-run2.sh	driver script that ran on the workstation and names the access helper of the lab
+dropped	X-remote-store-pg/proxy-chk.log	transient helper output
+dropped	X-remote-store-pg/proxy-local-100-0-1000.log	transient helper output
+dropped	X-remote-store-pg/proxy-local-100-0-200.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-async-dropped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-async-stopped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-live-dropped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-live-stopped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-new-dropped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-new-stopped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-rem-dropped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-rem-stopped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-run-dropped.log	transient helper output
+dropped	X-remote-store-pg/proxy-o-run-stopped.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-0-0-0.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-0-0-1000.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-0-0-200.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-0-100-200.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-0-20-200.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-100-0-0.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-100-0-1000.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-100-0-200.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-tls-0-0-0.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-tls-0-0-1000.log	transient helper output
+dropped	X-remote-store-pg/proxy-remote-tls-0-0-200.log	transient helper output
+dropped	X-remote-store-pg/proxy-xchk.log	transient helper output
+dropped	X-remote-store-pg/t0-dropped	marker file that holds one start time
+dropped	X-remote-store-pg/t0-stopped	marker file that holds one start time
+note	X-remote-store-pg	the access key of the lab bucket shows as <store-key>, and the connection strings show <user> and <password>. The CA key, the server keys, and the database passwords of the lab were never copied
+note	X-remote-store-pg	the address 10.0.2.2 is the gateway of the user-mode network of the guest, and the other addresses are inside the kind clusters and the container network of the test guests

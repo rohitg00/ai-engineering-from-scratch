@@ -1,0 +1,3 @@
+wan: qdisc fq_codel 0: root refcnt 2 limit 10240p flows 1024 quantum 1514 target 5ms interval 100ms memory_limit 32Mb ecn drop_batch 64 ;
+bridge: qdisc noqueue 0: root refcnt 2 ;
+0

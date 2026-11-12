@@ -1,0 +1,12 @@
+{"time":"2026-11-12T19:03:22.670196505Z","level":"WARN","msg":"worker cache: watch channel closed, resyncing"}
+{"time":"2026-11-12T19:03:22.670732606Z","level":"WARN","msg":"worker cache resync failed","err":"WatchWorkers: reading worker outbox cursor: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:
+{"time":"2026-11-12T19:03:23.671508297Z","level":"WARN","msg":"worker cache resync failed","err":"WatchWorkers: reading worker outbox cursor: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:
+{"time":"2026-11-12T19:03:25.671073586Z","level":"WARN","msg":"worker cache resync failed","err":"WatchWorkers: reading worker outbox cursor: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:
+{"time":"2026-11-12T19:03:29.671749734Z","level":"WARN","msg":"worker cache resync failed","err":"WatchWorkers: reading worker outbox cursor: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:
+{"time":"2026-11-12T19:03:37.671973142Z","level":"WARN","msg":"worker cache resync failed","err":"WatchWorkers: reading worker outbox cursor: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:
+{"time":"2026-11-12T19:03:53.672155197Z","level":"WARN","msg":"worker cache resync failed","err":"WatchWorkers: reading worker outbox cursor: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:
+{"time":"2026-11-12T19:04:00.347067529Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/ResumeActor","req":{"actor":{"atespace":"x-lab","name":"y-s-021"}},"resp":null,"err":"workflow failed at s
+{"time":"2026-11-12T19:04:10.354508376Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/ResumeActor","req":{"actor":{"atespace":"x-lab","name":"y-s-023"}},"resp":null,"err":"workflow failed at s
+{"time":"2026-11-12T19:04:20.385840881Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/ResumeActor","req":{"actor":{"atespace":"x-lab","name":"y-s-025"}},"resp":null,"err":"workflow failed at s
+{"time":"2026-11-12T19:04:23.706777152Z","level":"INFO","msg":"worker cache synced","count":50,"changed":0}
+{"time":"2026-11-12T19:04:27.221092893Z","level":"INFO","msg":"worker cache synced","count":50,"changed":0}

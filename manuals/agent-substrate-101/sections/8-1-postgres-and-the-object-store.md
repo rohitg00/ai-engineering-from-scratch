@@ -94,6 +94,19 @@ Four things differed from the bundled install:
 
 **We measured** one outage of that database, 60.6 s long. A running actor failed 62 of 211 requests: 54 client timeouts at 9 s and 8 answers of 500. It answered again 0.7 s after the database was ready. New resumes failed in 19 of 43 requests, and the last failed one was sent 28.7 s after ready. The bundled database gave the same pattern, 66 of 158 requests and 27 s, as [section 8.2](#s-when-a-dependency-is-down) shows. So an outside Postgres removes the single pod, and it does not shorten an outage by itself.
 
+### The same install with Postgres on another machine
+
+**We measured** a second install with the database on another machine, once. The cluster was a new kind cluster on the second x86 server guest (16 vCPU, 23 GB). Postgres 18 ran in a container on another guest of the same server, over TLS 1.3 with `sslmode=verify-full`. `setup.sql` ran over that network with `psql --single-transaction` and returned 0. The deploy took 173 s, while bucket cycles ran on the same guest. The same three settings were enough, and the install again deployed no `postgres` StatefulSet.
+
+The two guests reach each other through the user-mode network of the hypervisor. One query took a median of 0.56 ms on that path. We then added 20 ms toward the database with `tc netem`, and one query took 26.5 ms.
+
+| Delay added toward Postgres | One query, median, n=20 | Synchronous suspend, median (range), n=10 | Resume, median (range), n=10 | Request to a running actor, median, n=10 |
+|---|---|---|---|---|
+| none | 0.56 ms | 0.64 s (0.61 to 0.70) | 0.32 s (0.30 to 0.36) | 0.03 s |
+| 20 ms | 26.5 ms | 1.13 s (1.01 to 1.81) | 0.82 s (0.71 to 1.20) | 0.08 s |
+
+So 20 ms of round trip to the database added about 0.5 s to a suspend and to a resume. A request to a running actor paid 0.05 s. A suspend and a resume each make several database calls in a row, and each call pays the round trip. [Section 8.2](#s-when-a-dependency-is-down) has two outages of this database.
+
 The rest of this part comes from the code and the documentation at the tag.
 
 - `ate-api-server` takes two connection strings: `--postgres-owner-connection-string` and `--postgres-read-write-connection-string`. The owner role runs migrations, and the read-write role serves requests. The default role names are `substrate_owner` and `substrate_readwrite`.
@@ -191,13 +204,81 @@ caption: Read each panel left to right, from the bucket in the cluster to the bu
 
 Three results come out of the table. Moving the bucket out of the cluster, with no delay, changed little. A round trip of 20 ms more than doubled the resume at 200 and at 1,000 MiB, and the suspend grew less. At 100 ms even an actor with no data paid: its resume went from 0.25 s to 0.94 s.
 
-Read the limits before you use these numbers. The bucket ran on the same guest, so the delay was emulated, and the bucket shared one disk and one CPU with the node. Bandwidth was not limited. Three cells are missing: 200 and 1,000 MiB at 100 ms, and the fifth cycle of 1,000 MiB at 20 ms. We did not test a bucket on another machine, or a cloud bucket.
+Read the limits before you use these numbers. The bucket ran on the same guest, so the delay was emulated, and the bucket shared one disk and one CPU with the node. Bandwidth was not limited. Two cells at 100 ms were missing in that run, and the next part has them. The fifth cycle of 1,000 MiB at 20 ms is still missing. The next part also moves the bucket to another machine.
 
 **Our position:** measure the round trip from your nodes to your bucket before you promise a resume time. Keep the bucket in the region of the cluster. An actor that must wake fast needs its node copy. Set the detach delay to the longest idle time of that actor, as [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) describes.
 
+## A bucket on another machine
+
+We then put the bucket on another machine. [Figure 8.1c](#fig-8-1c) shows every cycle.
+
+```figure
+id: fig-8-1c
+kind: chart
+title: a bucket on another guest, with TLS, a rate limit, and added delay
+claim: With the bucket on another guest, a request to an actor of 1,000 MiB got a 504 after 10 s and its first 200 after 12 s.
+caption: Read each panel left to right, from the plain path to the paths with a limit. Each dot is one cycle, a short line is the median of a group, and the number above a group is the MiB of data. The vertical scale grows by ten at each step. From capture/lab/summary/remote-store-x86.json.
+```
+
+**We measured** this on the second x86 server guest (16 vCPU, 23 GB), with five cycles for each cell unless the table says less. The bucket was rustfs in a container on another guest of the same server.
+
+The method was the one above, with one change. When a request returned 504, the client sent it again each second until the first 200, and it sent no `revert`. So the last column is an upper value, about 1 s coarse. All 51 cycles ended with 200 and the right count.
+
+The path decides every number here. The two guests reach each other through the user-mode network of the hypervisor. A connection from a node took 0.7 to 1.8 ms in five tries. A copy of 300 MiB took 3.9 s up and 4.5 s down, which includes about 1 s to start the client. That is about 100 MiB each second.
+
+| Path to the bucket | Data in memory | Synchronous suspend, median (range) | First answer | Request to the first 200, median (range) |
+|---|---|---|---|---|
+| Plain HTTP | 0 MiB | 0.49 s (0.47 to 0.56) | 200 | 0.28 s (0.26 to 0.30) |
+| Plain HTTP | 200 MiB | 3.07 s (3.00 to 3.15) | 200 | 2.64 s (2.63 to 2.68) |
+| Plain HTTP | 1,000 MiB | 13.10 s (11.73 to 14.06) | 504 after 10.05 s, 5 of 5 | 12.15 s (11.44 to 12.45) |
+| TLS | 0 MiB | 0.48 s (0.46 to 0.52) | 200 | 0.26 s (0.25 to 0.32) |
+| TLS | 200 MiB | 4.96 s (4.64 to 5.01) | 200 | 2.54 s (2.48 to 2.61) |
+| TLS | 1,000 MiB | 20.78 s (20.12 to 22.35) | 504, 5 of 5 | 12.45 s (12.24 to 12.72) |
+| Plain HTTP, limited to 100 Mbit/s | 200 MiB | 18.63 s (18.42 to 18.90) | 504, 5 of 5 | 18.06 s (17.90 to 18.20) |
+| Plain HTTP, limited to 20 Mbit/s | 200 MiB | 88.50 s (88.32 to 88.55) | 504, 5 of 5 | 87.80 s (87.79 to 87.86) |
+| Plain HTTP, 100 ms added | 0 MiB | 1.54 s (1.35 to 1.79) | 200 | 1.98 s (1.46 to 2.15) |
+| Plain HTTP, 100 ms added | 200 MiB | 107.4 s (106.8 to 107.6) | 504, 5 of 5 | 55.1 s (54.7 to 55.2) |
+| Plain HTTP, 100 ms added | 1,000 MiB, 1 cycle | 424.2 s | 504 | 213.4 s |
+
+Four results come out of the table.
+
+- **Another machine costs more than another container.** With no shaping, 200 MiB resumed in 2.64 s, against 1.08 s with the bucket on the same guest. 1,000 MiB took 12.15 s against 4.79 s.
+- **A resume that passes 10 s returns 504 first.** In 26 of these 51 cycles the first answer was a 504 after 10.05 s. The resume went on, and a later request returned 200 with the state. [Section 4.4](#s-request-parking) explains the limit.
+- **Bandwidth sets the time once the snapshot is large.** At 20 Mbit/s, 200 MiB took 88 s in each direction. That is close to the size divided by the rate.
+- **A synchronous suspend has no fixed limit while data moves.** One suspend ran 424 s and succeeded.
+
+Do not read the rows with 100 ms as the rows of a real link. On this path, the same copy of 300 MiB took 55 s in each direction with the delay, which is about 5.5 MiB each second. The user-mode network passes each connection through a process on the host, and delay cut its rate by a factor of about 18. We did not measure a real link with 100 ms, so we cannot give its numbers.
+
+**We measured** the two cells that the earlier run missed, with the method of that run and five cycles each. The bucket was in a container on the same guest, with 100 ms added. At 200 MiB the synchronous suspend took a median of 7.17 s (5.26 to 8.43). The request took 8.74 s (6.98 to 12.83) to its first 200. At 1,000 MiB the suspend took 14.17 s (12.89 to 14.66), and the request took 16.16 s (16.05 to 16.47). Six of these ten requests got a 504 first.
+
+So the same 200 MiB with the same delay took 8.74 s on one path and 55.1 s on the other.
+
+### TLS to the bucket
+
+Substrate v1.0.0 has no install setting for the CA of a bucket. **The code** builds the client of the object store plugin from the default configuration of the AWS SDK {{code}}. That SDK reads the variable `AWS_CA_BUNDLE`. So we gave the plugin a CA with a patch.
+
+```listing
+title: the patch that gives the object store plugin a CA
+source: capture/lab/X-remote-store-pg/_scripts/x1-store.sh
+lang: bash
+note: Four lines of the script of the run. One line is left out, and the patch line is cut in its middle. The patch adds a volume, a mount, and one variable to the plugin container.
+---
+  kc -n ate-system create configmap x-store-ca --from-file=ca.crt=$HOME/x/tls/ca.crt --dry-run=client -o yaml | kc apply -f - >> 11-patches.log 2>&1
+  for w in ds/atelet deploy/ate-api-server; do
+    i=$(idx $w objectstore-plugin initContainers)
+…
+    kc -n ate-system patch $w --type=json -p "[{\"op\":\"add\",\"path\":\"/spec/template/spec/volumes/-\",\"value\":{\"name\":\"x-store-ca\",\"configMap\":{\"name\":\"x-store-ca\"}}},…{\"op\":\"add\",\"path\":\"/spec/template/spec/initContainers/$i/env/-\",\"value\":{\"name\":\"AWS_CA_BUNDLE\",\"value\":\"/x-store-ca/ca.crt\"}}]" >> 11-patches.log 2>&1
+```
+
+In the script, `kc` is `kubectl` with the kubeconfig of the cluster. The plugin runs in `atelet` and in `ate-api-server`, so the patch goes to both.
+
+**We measured** the result on the same guest. A client with the CA completed a handshake with TLS 1.3, and `curl` without the CA stopped with exit code 60. In the table, TLS cost time in the suspend only. A suspend of 200 MiB took 4.96 s against 3.07 s, and one of 1,000 MiB took 20.78 s against 13.10 s. The resume times stayed inside the range of the plain path.
+
+**Our position:** treat this patch as your own change, and check it after each `ate-setup deploy` and each upgrade. The installer does not know the variable, so a new deploy can write the container without it.
+
 ## What we did not test
 
-Our object store was rustfs, in the cluster or in a container on the same guest. We did not test Google Cloud Storage, Amazon S3, or a bucket on another machine. Our outside Postgres ran on the same guest too. We did not test a Postgres restore or a bucket restore.
+Our object store was rustfs in every run. It ran in the cluster, in a container on the same guest, and on another guest of the same server. We did not test Google Cloud Storage or Amazon S3. We did not test a real link with 100 ms of delay. Our outside Postgres ran on the same guest and on another guest. We did not test a managed database, a Postgres restore, or a bucket restore.
 
 So we give no tested backup procedure. Two backups at the same clock time are not one consistent backup. A suspend or a delete between them leaves rows and objects out of step.
 
@@ -209,6 +290,8 @@ So we give no tested backup procedure. Two backups at the same clock time are no
 - Size node disk for the memory of all actors that suspend there in 30 minutes.
 - Run `setup.sql` in one transaction when you prepare an outside Postgres.
 - Measure the round trip from your nodes to the bucket before you promise a resume time.
+- Send a request again after a 504 on a resume from a far bucket, and send no revert.
+- Give the object store plugin a CA with `AWS_CA_BUNDLE`, because the install has no setting for it.
 ```
 
-Sources: capture/lab/summary/external-postgres-x86.json, capture/lab/summary/object-store-x86.json, capture/lab/U-pg-upgrade-scale/10-extpg-install/steps.tsv, capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup-attempt2-no-transaction.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/29-deploy-diff.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/31-api-server-log-db-not-provisioned.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/30-deploy-attempt2-db-not-provisioned.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/41-ate-system-objects.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/43-pg-connections-and-tables.txt, capture/lab/T-drain-store/90-store-cycles.tsv, capture/lab/T-drain-store/83-netem-rtt.txt, capture/lab/T-drain-store/82-atelet-args-patched.txt, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/A-quickstart/60-state.log, capture/lab/B-lifecycle/23-actor-after-sync-suspend.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/K-kagent/inventory/workloads.txt (the PostgreSQL Deployment); go/core/pkg/install/bundled_postgres.yaml at kagent v1.0.0 (the trust setting); cmd/ateapi/main.go (the Postgres flags), docs/dev/cloud-sql-scaling-guide.md and issue #3702 (the load report); cmd/ateapi/internal/store/atepg/migrations/000001_initial.sql (the tables), cmd/ateapi/internal/store/atepg/lease.go (the lease), manifests/ate-install/postgres/postgres.yaml (replicas, image, volume claim), manifests/ate-install/ate-api-server.yaml (replicas) and manifests/ate-install/kind/ at v1.0.0; docs/guides/postgres.md, docs/guides/node-storage.md and docs/reference/api-guide.md (snapshot layout, delete order) at v1.0.0; issue #3101 (disk pressure from node-local snapshots).
+Sources: capture/lab/summary/external-postgres-x86.json, capture/lab/summary/object-store-x86.json, capture/lab/U-pg-upgrade-scale/10-extpg-install/steps.tsv, capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup-attempt2-no-transaction.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/29-deploy-diff.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/31-api-server-log-db-not-provisioned.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/30-deploy-attempt2-db-not-provisioned.log, capture/lab/U-pg-upgrade-scale/10-extpg-install/41-ate-system-objects.txt, capture/lab/U-pg-upgrade-scale/10-extpg-install/43-pg-connections-and-tables.txt, capture/lab/T-drain-store/90-store-cycles.tsv, capture/lab/T-drain-store/83-netem-rtt.txt, capture/lab/T-drain-store/82-atelet-args-patched.txt, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/A-quickstart/60-state.log, capture/lab/B-lifecycle/23-actor-after-sync-suspend.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/K-kagent/inventory/workloads.txt (the PostgreSQL Deployment); go/core/pkg/install/bundled_postgres.yaml at kagent v1.0.0 (the trust setting); cmd/ateapi/main.go (the Postgres flags), docs/dev/cloud-sql-scaling-guide.md and issue #3702 (the load report); cmd/ateapi/internal/store/atepg/migrations/000001_initial.sql (the tables), cmd/ateapi/internal/store/atepg/lease.go (the lease), manifests/ate-install/postgres/postgres.yaml (replicas, image, volume claim), manifests/ate-install/ate-api-server.yaml (replicas) and manifests/ate-install/kind/ at v1.0.0; docs/guides/postgres.md, docs/guides/node-storage.md and docs/reference/api-guide.md (snapshot layout, delete order) at v1.0.0; issue #3101 (disk pressure from node-local snapshots)., capture/lab/summary/remote-store-x86.json, capture/lab/summary/remote-postgres-x86.json, capture/lab/X-remote-store-pg/22-store-cycles.tsv, capture/lab/X-remote-store-pg/13-path.txt, capture/lab/X-remote-store-pg/19-tls-store-check.txt, capture/lab/X-remote-store-pg/_scripts/x1-store.sh, capture/lab/X-remote-store-pg/40-pg-install/steps.tsv, capture/lab/X-remote-store-pg/40-pg-install/30-pg-setup.log, capture/lab/X-remote-store-pg/40-pg-install/10-pg-reach.txt, capture/lab/X-remote-store-pg/40-pg-install/51-ate-system-objects.txt, capture/lab/X-remote-store-pg/50-pg-tests/05-pg-round-trip.txt, capture/lab/X-remote-store-pg/50-pg-tests/11-cycles-delay0.tsv, capture/lab/X-remote-store-pg/50-pg-tests/11-cycles-delay20.tsv, capture/lab/X-remote-store-pg/50-pg-tests/12-running-requests-delay0.tsv, capture/lab/X-remote-store-pg/50-pg-tests/12-running-requests-delay20.tsv

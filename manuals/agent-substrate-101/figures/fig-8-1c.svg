@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 390" role="img" aria-labelledby="fig-8-1c-title fig-8-1c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-1c-title">A bucket on another guest: every cycle, on a scale of powers of ten</title>
+  <desc id="fig-8-1c-desc">Two panels plot every one of 51 cycles with the bucket on a second guest. With no shaping, a request to an actor of 1,000 MiB took a median of 12.2 s to its first 200. At 20 Mbit/s, an actor of 200 MiB took 87.8 s, and its synchronous suspend took 88.5 s. In 26 cycles the first answer was a 504 after 10 s, and a later request returned 200.</desc>
+  <circle cx="26" cy="18" r="1.9" fill="var(--m-ink-soft, #4a4a4a)"/>
+  <text x="36" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">one cycle</text>
+  <line x1="110" y1="18" x2="128" y2="18" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.8"/>
+  <text x="136" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">median of five cycles</text>
+  <line x1="300" y1="18" x2="318" y2="18" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="326" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">the router answers 504 after 10 s</text>
+  <line x1="56" y1="310" x2="286" y2="310" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="314" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.1</text>
+  <line x1="56" y1="250" x2="286" y2="250" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="254" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="56" y1="190" x2="286" y2="190" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="194" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="56" y1="130" x2="286" y2="130" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="134" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="56" y1="70" x2="286" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1,000</text>
+  <line x1="56" y1="310" x2="286" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="56" y1="70" x2="56" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="79" y1="310" x2="79" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="79" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <line x1="125" y1="310" x2="125" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="125" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <line x1="171" y1="310" x2="171" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="171" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <line x1="217" y1="310" x2="217" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="217" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <line x1="263" y1="310" x2="263" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="263" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <text x="56" y="58" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">request to the first 200, seconds</text>
+  <text x="79" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">plain</text>
+  <text x="125" y="341" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">TLS</text>
+  <text x="171" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100 Mbit/s</text>
+  <text x="217" y="341" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">20 Mbit/s</text>
+  <text x="263" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+100 ms</text>
+  <line x1="56" y1="190" x2="286" y2="190" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <circle cx="72.2" cy="282.8" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="75.6" cy="281.03" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="79" cy="284.41" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="82.4" cy="283.64" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="85.8" cy="285" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="67" y1="283.64" x2="91" y2="283.64" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="79" y="273.03" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">0</text>
+  <circle cx="118.2" cy="279.94" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="121.6" cy="285" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="125" cy="285.71" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="128.4" cy="284.8" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="131.8" cy="283.73" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="113" y1="284.8" x2="137" y2="284.8" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="125" y="271.94" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">0</text>
+  <circle cx="256.2" cy="230.03" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="259.6" cy="232.27" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="263" cy="240.19" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="266.4" cy="231.26" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="269.8" cy="236.82" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="251" y1="232.27" x2="275" y2="232.27" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="263" y="222.03" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">0</text>
+  <circle cx="72.2" cy="224.55" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="75.6" cy="224.68" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="79" cy="224.27" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="82.4" cy="224.83" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="85.8" cy="224.7" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="67" y1="224.68" x2="91" y2="224.68" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="79" y="216.27" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">200</text>
+  <circle cx="118.2" cy="225.93" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="121.6" cy="224.99" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="125" cy="224.96" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="128.4" cy="225.71" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="131.8" cy="226.35" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="113" y1="225.71" x2="137" y2="225.71" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="125" y="216.96" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">200</text>
+  <circle cx="164.2" cy="174.83" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="167.6" cy="174.42" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="171" cy="174.4" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="174.4" cy="174.6" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="177.8" cy="174.75" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="159" y1="174.6" x2="183" y2="174.6" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="171" y="166.4" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">200</text>
+  <circle cx="210.2" cy="133.39" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="213.6" cy="133.39" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="217" cy="133.38" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="220.4" cy="133.37" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="223.8" cy="133.39" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="205" y1="133.39" x2="229" y2="133.39" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="217" y="125.37" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">200</text>
+  <circle cx="256.2" cy="145.54" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="259.6" cy="145.5" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="263" cy="145.5" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="266.4" cy="145.71" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="269.8" cy="145.65" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="251" y1="145.54" x2="275" y2="145.54" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="263" y="137.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">200</text>
+  <circle cx="72.2" cy="186.49" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="75.6" cy="186.06" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="79" cy="184.29" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="82.4" cy="184.41" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="85.8" cy="184.92" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="67" y1="184.92" x2="91" y2="184.92" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="79" y="176.29" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">1,000</text>
+  <circle cx="118.2" cy="184.73" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="121.6" cy="184.28" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="125" cy="184.1" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="128.4" cy="184.68" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="131.8" cy="183.72" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="113" y1="184.28" x2="137" y2="184.28" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <text x="125" y="175.72" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">1,000</text>
+  <circle cx="263" cy="110.25" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="263" y="102.25" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">1,000</text>
+  <line x1="362" y1="310" x2="592" y2="310" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="356" y="314" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.1</text>
+  <line x1="362" y1="250" x2="592" y2="250" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="356" y="254" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="362" y1="190" x2="592" y2="190" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="356" y="194" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="362" y1="130" x2="592" y2="130" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="356" y="134" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="362" y1="70" x2="592" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="356" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1,000</text>
+  <line x1="362" y1="310" x2="592" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="362" y1="70" x2="362" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="385" y1="310" x2="385" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="385" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <line x1="431" y1="310" x2="431" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="431" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <line x1="477" y1="310" x2="477" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="477" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <line x1="523" y1="310" x2="523" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="523" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <line x1="569" y1="310" x2="569" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="569" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)"></text>
+  <text x="362" y="58" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">synchronous suspend, seconds</text>
+  <text x="385" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">plain</text>
+  <text x="431" y="341" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">TLS</text>
+  <text x="477" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100 Mbit/s</text>
+  <text x="523" y="341" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">20 Mbit/s</text>
+  <text x="569" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+100 ms</text>
+  <circle cx="378.2" cy="268.38" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="381.6" cy="269.45" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="385" cy="265.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="388.4" cy="268.38" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="391.8" cy="268.01" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="373" y1="268.38" x2="397" y2="268.38" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="385" y="257.2" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0</text>
+  <circle cx="424.2" cy="269.23" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="427.6" cy="269.07" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="431" cy="266.84" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="434.4" cy="270.41" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="437.8" cy="268.17" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="419" y1="269.07" x2="443" y2="269.07" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="431" y="258.84" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0</text>
+  <circle cx="562.2" cy="242.24" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="565.6" cy="234.83" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="569" cy="237.19" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="572.4" cy="238.97" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="575.8" cy="238.66" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="557" y1="238.66" x2="581" y2="238.66" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="569" y="226.83" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0</text>
+  <circle cx="378.2" cy="221.38" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="381.6" cy="221.34" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="385" cy="220.08" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="388.4" cy="220.36" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="391.8" cy="220.75" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="373" y1="220.75" x2="397" y2="220.75" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="385" y="212.08" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">200</text>
+  <circle cx="424.2" cy="210" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="427.6" cy="208.27" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="431" cy="208.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="434.4" cy="208.16" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="437.8" cy="207.98" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="419" y1="208.27" x2="443" y2="208.27" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="431" y="199.98" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">200</text>
+  <circle cx="470.2" cy="174.09" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="473.6" cy="173.79" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="477" cy="173.41" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="480.4" cy="173.82" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="483.8" cy="173.61" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="465" y1="173.79" x2="489" y2="173.79" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="477" y="165.41" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">200</text>
+  <circle cx="516.2" cy="133.24" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="519.6" cy="133.18" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="523" cy="133.17" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="526.4" cy="133.19" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="529.8" cy="133.17" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="511" y1="133.18" x2="535" y2="133.18" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="523" y="125.17" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">200</text>
+  <circle cx="562.2" cy="128.29" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="565.6" cy="128.14" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="569" cy="128.1" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="572.4" cy="128.12" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="575.8" cy="128.13" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="557" y1="128.13" x2="581" y2="128.13" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="569" y="120.1" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">200</text>
+  <circle cx="378.2" cy="185.84" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="381.6" cy="183.58" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="385" cy="181.12" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="388.4" cy="181.67" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="391.8" cy="182.97" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="373" y1="182.97" x2="397" y2="182.97" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="385" y="173.12" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">1,000</text>
+  <circle cx="424.2" cy="171.33" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="427.6" cy="169.04" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="431" cy="170.94" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="434.4" cy="169.35" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="437.8" cy="171.78" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <line x1="419" y1="170.94" x2="443" y2="170.94" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4"/>
+  <text x="431" y="161.04" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">1,000</text>
+  <circle cx="569" cy="92.35" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="569" y="84.35" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">1,000</text>
+  <text x="320" y="362" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the path from the node to the bucket on the other guest</text>
+  <text x="320" y="378" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the number above a group is the MiB of data in the actor</text>
+</svg>

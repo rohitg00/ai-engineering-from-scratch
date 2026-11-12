@@ -25,11 +25,11 @@ The guests and the Mac are different machines. Do not compare a number from one 
 | Folder | Machine |
 |---|---|
 | `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart`, `U-pg-upgrade-scale` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
-| `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode`, `P-node-loss`, `Q-network`, `T-drain-store` | a second x86 server guest (16 vCPU, 23 GB) |
+| `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode`, `P-node-loss`, `Q-network`, `T-drain-store`, `X-remote-store-pg` | a second x86 server guest (16 vCPU, 23 GB) |
 | `K-kagent`, `N-demos`, `R-agent-executor`, `S-ax-model`, `W-ax-kagent-2` | a second x86 server guest (16 vCPU, 31 GB) |
 | `M-mac-arm64` | the Mac |
 
-Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node, except the cluster of `L-gaps/multinode`, `P-node-loss`, and `T-drain-store`. The object store was rustfs in the same cluster. In part of `T-drain-store` it was rustfs in a container on the same guest, outside the cluster.
+Each guest kept its disk in memory and reached the network through user-mode NAT. All clusters had one kind node, except the cluster of `L-gaps/multinode`, `P-node-loss`, and `T-drain-store`. The object store was rustfs in the same cluster. In part of `T-drain-store` it was rustfs in a container on the same guest, outside the cluster. In `X-remote-store-pg` the bucket and Postgres were containers on the guest with 31 GB, reached through the user-mode network.
 
 ## What each folder proves
 
@@ -257,6 +257,28 @@ Three parts of these files are not valid, and `summary/object-store-x86.json` do
 
 The bucket outside the cluster ran on the same guest. The delay of `tc netem` was set in one direction, so the value is the added round trip.
 
+### X-remote-store-pg: a bucket and a Postgres on another machine
+
+All runs used a second x86 server guest (16 vCPU, 23 GB), with the Envoy dataplane and gVisor. The bucket cycles and the bucket outages ran on the cluster with two worker nodes. The database runs used a new kind cluster with one node. The bucket and Postgres ran in containers on the guest with 31 GB. The two guests reach each other through the user-mode network of the hypervisor, and `13-path.txt` holds the connect times and the copy times of that path.
+
+| File | What it shows |
+|---|---|
+| `00-health.txt`, `01-health-after-wait.txt`, `00-run.log` | the cluster after a restart of the guest, and the order of the runs |
+| `10-store-run.log`, `11-patches.log`, `12-atelet-args-*.txt`, `_scripts/x1-store.sh` | the endpoint and timer changes, and the patch that gives the object store plugin a CA |
+| `13-path.txt` | five connects from a node and one copy of 300 MiB, for each path and limit |
+| `19-tls-store-check.txt` | the bucket over TLS, with and without the CA |
+| `22-store-cycles.tsv` | every cycle: the synchronous suspend, the first answer, the number of requests, and the seconds to the first 200 |
+| `30-outage-stopped.tsv`, `30-outage-dropped.tsv`, `31-outage-*-logs.log` | the bucket away with actors that hold 200 MiB, stopped and with dropped packets |
+| `40-pg-install/` | the install against Postgres on the other guest |
+| `50-pg-tests/05-pg-round-trip.txt`, `10-lifecycle-delay*.txt`, `11-cycles-delay*.tsv`, `12-running-requests-delay*.tsv` | the query round trip and the lifecycle, with no delay and with 20 ms |
+| `50-pg-tests/30-timeline*.tsv`, `33-probe*.tsv`, `34-api-server-log*.excerpt.txt`, `47-worker-cache-lines.txt` | two outages of the database, one request each second, and the retries of the worker cache |
+| `50-pg-tests/37-follow-up.txt`, `38-x-run-diagnosis.txt`, `39-x-run-diagnosis-2.txt`, `41-x-run-recovery.txt`, `42-x-run-router-restart.txt` | the running actor that stayed at 504 after the first outage, and the router restart that ended it |
+| `99-state-left.txt` | the clusters after the runs |
+
+These parts are not valid, and the summaries do not use them. `20-store-cycles.tsv` is a first attempt in which a 504 led to a revert; `22-store-cycles.tsv` replaces it. In `13-path.txt`, the download times under the two rate limits are not shaped, and one block of probes under 20 Mbit/s shows code `000`. In `30-outage-*.tsv`, the row `async-state-after-wait` is one sample and not a wait. In `50-pg-tests/33-probe.tsv`, the one row with code 404 came from a list of actors that ran out. In `50-pg-tests/05-pg-round-trip.txt`, the line that starts with `qdisc` under the first heading shows the rule for another address.
+
+The rows with 100 ms of added delay on the path between the guests are valid for that path only. The access key of the bucket shows as `<store-key>`, and the connection strings show `<user>` and `<password>`.
+
 ### U-pg-upgrade-scale: a Postgres outside the cluster, one upgrade, and bursts on one node
 
 All runs used the x86 server guest (24 vCPU, 47 GB, nested KVM), on new kind clusters with one node, from the release images, with the Envoy dataplane and gVisor. The cluster of the earlier experiments was idle on the same guest. Each install, outage, and upgrade step ran once.
@@ -382,6 +404,8 @@ The shell scripts that made the recordings. Each one ran inside a guest, or on t
 | `full-node-x86.json` | `node_stopped_other_node_full`: two runs with `revert`, `blocked_requests`, `resume_command_error`, `unblock`, `served_after_unblock`. `both_nodes_up_all_workers_full` |
 | `object-store-x86.json` | `cycles`: `[{store, added_round_trip_ms, mib, suspend_sync_seconds, resume_from_store_seconds}]`, each with `{median, min, max, n, runs}`. `delay_check`. `store_unreachable.refused` and `store_unreachable.packets_dropped`. `not_recorded` |
 | `external-postgres-x86.json` | `install`, `lifecycle`, `cycles`, and `outage` with `summary.<stream>` and `per_second.<stream>`: `[{t, code, seconds}]` |
+| `remote-store-x86.json` | `path`: one entry for each path and limit, with `connect_ms` and `copy_300_mib_seconds`. `cycles`: `[{store, added_round_trip_ms, rate_mbit, mib, suspend_sync_seconds, first_answer_codes, first_answer_seconds, requests_until_200, seconds_to_first_200}]`. `bucket_unreachable.stopped` and `bucket_unreachable.packets_dropped` |
+| `remote-postgres-x86.json` | `install`, `round_trip`, `lifecycle.<delay>`, `outages.run_1` and `outages.run_2` with `summary.<stream>`, `stuck_actor_run_1`, `worker_cache_run_2` |
 | `upgrade-x86.json` | `steps`: `[{step, begin_t, end_t, seconds, exit}]`. `suspend_resume_stream`, `list_actors_stream`, `running_actor`, `actors_after_upgrade`, `worker_roll_on_v1_0_0`, `release_tags_in_registry` |
 | `scale-x86.json` | `bursts`: one entry for each burst size, with `runs`: `[{requests, ok, wall_seconds, per_second, median_seconds, max_seconds, request_seconds}]`. `single_resume_seconds`, `waves`, `rows`, `idle_worker_memory_mb` |
 | `rotation-x86.json` | `dataplanes.agentgateway` and `dataplanes.envoy`. Each has `changes`: `[{change, seconds, requests_with_old_value}]`, `seconds`, `probe_requests`, `values_seen`, and `seconds_between_first_seen` |

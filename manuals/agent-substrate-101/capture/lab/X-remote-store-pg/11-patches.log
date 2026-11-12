@@ -1,0 +1,18 @@
+daemonset.apps/atelet patched
+daemonset.apps/atelet patched
+deployment.apps/ate-api-server patched
+configmap/x-store-ca created
+daemonset.apps/atelet patched
+deployment.apps/ate-api-server patched
+daemonset.apps/atelet patched
+deployment.apps/ate-api-server patched
+daemonset.apps/atelet patched
+deployment.apps/ate-api-server patched
+daemonset.apps/atelet patched
+deployment.apps/ate-api-server patched
+daemonset.apps/atelet patched
+deployment.apps/ate-api-server patched
+daemonset.apps/atelet patched
+deployment.apps/ate-api-server patched
+configmap "x-store-ca" deleted from ate-system namespace
+daemonset.apps/atelet patched

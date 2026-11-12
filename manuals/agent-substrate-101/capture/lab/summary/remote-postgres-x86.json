@@ -1,0 +1,351 @@
+{
+  "install": {
+    "deploy_seconds": 173,
+    "postgres_networkpolicy_deployed": true,
+    "postgres_statefulset_deployed": false,
+    "setup_sql_with_single_transaction_exit": 0,
+    "tls_versions": {
+      "TLSv1.3": 1
+    }
+  },
+  "lifecycle": {
+    "0": {
+      "create_seconds": 0.221,
+      "cycle_codes": {
+        "200": 10
+      },
+      "first_request_seconds": 0.422,
+      "resume_seconds": {
+        "max": 0.358,
+        "median": 0.315,
+        "min": 0.297,
+        "n": 10,
+        "runs": [
+          0.338,
+          0.335,
+          0.358,
+          0.3,
+          0.305,
+          0.343,
+          0.325,
+          0.306,
+          0.303,
+          0.297
+        ]
+      },
+      "running_actor_request_seconds": {
+        "max": 0.029,
+        "median": 0.028,
+        "min": 0.026,
+        "n": 10,
+        "runs": [
+          0.028,
+          0.027,
+          0.027,
+          0.026,
+          0.028,
+          0.028,
+          0.028,
+          0.029,
+          0.027,
+          0.028
+        ]
+      },
+      "suspend_default_seconds": 0.377,
+      "suspend_sync_seconds": {
+        "max": 0.698,
+        "median": 0.637,
+        "min": 0.615,
+        "n": 10,
+        "runs": [
+          0.679,
+          0.657,
+          0.677,
+          0.639,
+          0.631,
+          0.698,
+          0.634,
+          0.632,
+          0.633,
+          0.615
+        ]
+      }
+    },
+    "20": {
+      "create_seconds": 0.416,
+      "cycle_codes": {
+        "200": 10
+      },
+      "first_request_seconds": 1.088,
+      "resume_seconds": {
+        "max": 1.196,
+        "median": 0.824,
+        "min": 0.713,
+        "n": 10,
+        "runs": [
+          0.948,
+          0.96,
+          0.889,
+          0.713,
+          0.717,
+          0.819,
+          1.196,
+          0.817,
+          0.761,
+          0.829
+        ]
+      },
+      "running_actor_request_seconds": {
+        "max": 0.235,
+        "median": 0.079,
+        "min": 0.067,
+        "n": 10,
+        "runs": [
+          0.235,
+          0.092,
+          0.092,
+          0.093,
+          0.067,
+          0.069,
+          0.088,
+          0.067,
+          0.071,
+          0.067
+        ]
+      },
+      "suspend_default_seconds": 0.887,
+      "suspend_sync_seconds": {
+        "max": 1.811,
+        "median": 1.126,
+        "min": 1.006,
+        "n": 10,
+        "runs": [
+          1.243,
+          1.811,
+          1.035,
+          1.083,
+          1.169,
+          1.055,
+          1.006,
+          1.19,
+          1.083,
+          1.233
+        ]
+      }
+    }
+  },
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor. The bucket and the Postgres ran in containers on a second guest of the same server, reached through loopback forwards of the host",
+  "note": "one install on a new kind cluster with one node, with Postgres 18 in a container on the second guest over TLS and password logins. Bucket cycles of the other part ran on the same guest during the install. The delay was added with tc netem toward Postgres only. Each outage is one run. In an outage, t is seconds from the docker stop command for the Postgres container, and the ready mark was taken on the guest of the database.",
+  "outages": {
+    "run_1": {
+      "postgres_away_seconds": 62.6,
+      "stop_command_to_ready_seconds": 65.0,
+      "summary": {
+        "running": {
+          "codes_in_run": {
+            "000": 185,
+            "200": 47
+          },
+          "failed_in_run": 185,
+          "first_failure_t": 0.9,
+          "first_ok_seconds_after_ready": null,
+          "last_failed_request_sent_seconds_after_ready": 121.0,
+          "requests_in_run": 232
+        },
+        "suspended": {
+          "codes_in_run": {
+            "200": 28,
+            "500": 6,
+            "503": 11,
+            "504": 1
+          },
+          "failed_in_run": 18,
+          "first_failure_t": 3.9,
+          "first_ok_seconds_after_ready": 29.0,
+          "last_failed_request_sent_seconds_after_ready": 24.0,
+          "requests_in_run": 46
+        }
+      },
+      "watched_after_ready_seconds": 121.0
+    },
+    "run_2": {
+      "postgres_away_seconds": 63.3,
+      "stop_command_to_ready_seconds": 65.1,
+      "summary": {
+        "running": {
+          "codes_in_run": {
+            "000": 57,
+            "200": 150,
+            "500": 12
+          },
+          "failed_in_run": 69,
+          "first_failure_t": 1.2,
+          "first_ok_seconds_after_ready": 5.2,
+          "last_failed_request_sent_seconds_after_ready": 4.2,
+          "requests_in_run": 219
+        },
+        "suspended": {
+          "codes_in_run": {
+            "200": 26,
+            "500": 6,
+            "503": 11,
+            "504": 1
+          },
+          "failed_in_run": 18,
+          "first_failure_t": 3.2,
+          "first_ok_seconds_after_ready": 28.2,
+          "last_failed_request_sent_seconds_after_ready": 23.2,
+          "requests_in_run": 44
+        }
+      },
+      "watched_after_ready_seconds": 122.0
+    }
+  },
+  "round_trip": {
+    "0": {
+      "query_ms": {
+        "max": 0.938,
+        "median": 0.564,
+        "min": 0.533,
+        "n": 20,
+        "runs": [
+          0.938,
+          0.6,
+          0.573,
+          0.561,
+          0.571,
+          0.563,
+          0.533,
+          0.555,
+          0.577,
+          0.561,
+          0.555,
+          0.548,
+          0.579,
+          0.565,
+          0.574,
+          0.553,
+          0.55,
+          0.599,
+          0.56,
+          0.569
+        ]
+      }
+    },
+    "20": {
+      "query_ms": {
+        "max": 27.51,
+        "median": 26.476,
+        "min": 21.89,
+        "n": 20,
+        "runs": [
+          27.456,
+          26.411,
+          25.227,
+          24.825,
+          27.51,
+          27.388,
+          25.73,
+          27.327,
+          27.227,
+          25.716,
+          24.151,
+          26.643,
+          26.144,
+          21.89,
+          26.086,
+          26.541,
+          25.879,
+          27.348,
+          27.003,
+          26.775
+        ]
+      }
+    }
+  },
+  "sources": [
+    "capture/lab/X-remote-store-pg/40-pg-install/steps.tsv",
+    "capture/lab/X-remote-store-pg/40-pg-install/30-pg-setup.log",
+    "capture/lab/X-remote-store-pg/40-pg-install/39-deploy-diff.txt",
+    "capture/lab/X-remote-store-pg/40-pg-install/51-ate-system-objects.txt",
+    "capture/lab/X-remote-store-pg/40-pg-install/10-pg-reach.txt",
+    "capture/lab/X-remote-store-pg/50-pg-tests/05-pg-round-trip.txt",
+    "capture/lab/X-remote-store-pg/50-pg-tests/10-lifecycle-delay0.txt",
+    "capture/lab/X-remote-store-pg/50-pg-tests/11-cycles-delay0.tsv",
+    "capture/lab/X-remote-store-pg/50-pg-tests/11-cycles-delay20.tsv",
+    "capture/lab/X-remote-store-pg/50-pg-tests/30-timeline.tsv",
+    "capture/lab/X-remote-store-pg/50-pg-tests/33-probe.tsv",
+    "capture/lab/X-remote-store-pg/50-pg-tests/33-probe-run2.tsv",
+    "capture/lab/X-remote-store-pg/50-pg-tests/37-follow-up.txt",
+    "capture/lab/X-remote-store-pg/50-pg-tests/41-x-run-recovery.txt",
+    "capture/lab/X-remote-store-pg/50-pg-tests/42-x-run-router-restart.txt",
+    "capture/lab/X-remote-store-pg/50-pg-tests/47-worker-cache-lines.txt"
+  ],
+  "stuck_actor_run_1": {
+    "other_running_actors": [
+      {
+        "code": "200",
+        "seconds": 0.038
+      },
+      {
+        "code": "200",
+        "seconds": 0.036
+      }
+    ],
+    "request_after_router_restart": {
+      "code": "200",
+      "count": 49,
+      "seconds": 0.327
+    },
+    "requests_while_stuck": {
+      "codes": {
+        "504": 8
+      },
+      "requests": 8,
+      "seconds": {
+        "max": 10.017,
+        "median": 10.014,
+        "min": 10.012,
+        "n": 8
+      }
+    },
+    "resume_command_seconds": 0.171,
+    "router_access_log_duration_ms": [
+      10000,
+      9999
+    ],
+    "router_restart_seconds": 7.06,
+    "run_2_requests_after_outage": [
+      {
+        "code": "200",
+        "seconds": 0.03
+      },
+      {
+        "code": "200",
+        "seconds": 0.032
+      }
+    ],
+    "seconds_after_ready_at_router_check": 357,
+    "state_in_the_api": "ACTOR_STATE_RUNNING",
+    "suspend_sync_command_seconds": 0.666
+  },
+  "worker_cache_run_2": {
+    "failed_tries_seconds_after_the_watch_closed": [
+      0.0,
+      1.0,
+      3.0,
+      7.0,
+      15.0,
+      31.0
+    ],
+    "seconds_between_failed_tries": [
+      1.0,
+      2.0,
+      4.0,
+      8.0,
+      16.0
+    ],
+    "synced_seconds_after_last_failed_try": 30.0,
+    "synced_seconds_after_ready": 26.9
+  }
+}
