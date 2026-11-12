@@ -139,6 +139,8 @@
     }
     var hasProgress = !!window.AIFSProgress;
     var html = '';
+    var nextMarked = false;
+    grid.classList.add('phase-cards');
     for (var i = 0; i < PHASES.length; i++) {
       var p = PHASES[i];
       var total = p.lessons.length;
@@ -151,13 +153,25 @@
       }
       var count = done > 0 ? done + ' / ' + total : total + (total === 1 ? ' lesson' : ' lessons');
       var statusClass = escapeHtml(String(p.status || 'planned').replace(/ /g, '-'));
-      var roman = toRoman(p.id);
       var num = String(p.id).padStart(2, '0');
-      html += '<div class="toc-row" data-phase="' + i + '" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open Phase ' + num + ': ' + escapeHtml(p.name) + '">';
-      html += '<span class="toc-num" dir="ltr">' + roman + '.</span>';
-      html += '<div><span class="toc-status ' + statusClass + '"></span><span class="toc-name">' + escapeHtml(p.name) + '</span></div>';
-      html += '<span class="toc-meta">' + count + '</span>';
-      html += '<span class="toc-meta">' + num + '</span>';
+      var finished = total > 0 && done >= total;
+      var isNext = !finished && !nextMarked && total > 0;
+      if (isNext) nextMarked = true;
+      var action = 'Not started';
+      if (finished) action = 'Done';
+      else if (done > 0) action = 'Continue';
+      else if (isNext) action = 'Start here';
+      var percent = total > 0 ? Math.round(done / total * 100) : 0;
+      var cardClass = 'phase-card';
+      if (isNext) cardClass += ' is-next';
+      if (done > 0 && !finished) cardClass += ' is-started';
+      if (finished) cardClass += ' is-done';
+      html += '<div class="' + cardClass + '" data-phase="' + i + '" role="button" tabindex="0" aria-haspopup="dialog" aria-label="Open Phase ' + num + ': ' + escapeHtml(p.name) + '">';
+      html += '<div class="phase-card-top"><span class="phase-card-num" dir="ltr">Phase ' + num + '</span><span class="toc-status ' + statusClass + '"></span></div>';
+      html += '<h3 class="phase-card-name">' + escapeHtml(p.name) + '</h3>';
+      html += '<p class="phase-card-desc">' + escapeHtml(p.desc || '') + '</p>';
+      html += '<div class="phase-card-bar" aria-hidden="true"><span style="width:' + percent + '%"></span></div>';
+      html += '<div class="phase-card-foot"><span class="phase-card-count">' + count + '</span><span class="phase-card-action">' + action + '</span></div>';
       html += '</div>';
     }
     grid.innerHTML = html;
