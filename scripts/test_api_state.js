@@ -10,6 +10,7 @@ const resource = require('../api/v1/resource');
 const mcp = require('../api/mcp');
 
 const PERCEPTRON = 'phases/03-deep-learning-core/01-the-perceptron';
+const PERCEPTRON_CLEAN = '/learn/deep-learning-core/the-perceptron';
 const HINDI = '# पर्सेप्ट्रोन\n\n> पर्सेप्ट्रॉन तंत्रिका नेटवर्क का परमाणु है।\n\n## अवधारणा\n\nएक न्यूरॉन एक निर्णय लेता है।\n';
 const RETRY_CACHE = 'public, max-age=0, s-maxage=300, must-revalidate';
 
@@ -113,7 +114,7 @@ test('paths without a translation source resolve as not found without fetching',
 });
 
 test('resource API caches stale translations briefly and fresh translations normally', async () => {
-  const entry = { path: 'phases/01-a/01-x', kind: 'lesson', title: 'X', description: 'X', url: 'https://aiengineeringfromscratch.com/lesson?path=phases%2F01-a%2F01-x', sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/phases/01-a/01-x/docs/en.md', translations: ['hi'], markdown: '# X\n' };
+  const entry = { path: 'phases/01-a/01-x', kind: 'lesson', title: 'X', description: 'X', url: 'https://aiengineeringfromscratch.com/learn/a/x', sourceUrl: 'https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/phases/01-a/01-x/docs/en.md', translations: ['hi'], markdown: '# X\n' };
   const read = path => (path === entry.path ? entry : null);
   for (const [stale, cache] of [[true, RETRY_CACHE], [false, 'public, max-age=300, s-maxage=86400']]) {
     const readTranslation = () => Promise.resolve({ markdown: HINDI, stale });
@@ -129,7 +130,7 @@ test('resource API caches stale translations briefly and fresh translations norm
 });
 
 test('lesson pages cache stale translations briefly', async () => {
-  const url = `/lesson?path=${encodeURIComponent(PERCEPTRON)}&lang=hi`;
+  const url = `${PERCEPTRON_CLEAN}?lang=hi`;
   for (const [result, cache] of [[{ markdown: HINDI, stale: true }, RETRY_CACHE], [{ markdown: HINDI, stale: false }, 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800']]) {
     const handler = lessonApi.createHandler({ loadAssets: () => lessonAssets(), readTranslation: () => Promise.resolve(result) });
     const response = await invoke(handler, { url });
@@ -141,7 +142,7 @@ test('lesson pages cache stale translations briefly', async () => {
 
 test('lesson Markdown requests that reject HTML get 406 when no Markdown exists', async () => {
   const handler = lessonApi.createHandler({ loadAssets: () => lessonAssets({ readMarkdown() { throw new Error('ENOENT'); } }) });
-  const url = `/lesson?path=${encodeURIComponent(PERCEPTRON)}`;
+  const url = PERCEPTRON_CLEAN;
   for (const method of ['GET', 'HEAD']) {
     const rejected = await invoke(handler, { method, url, headers: { accept: 'text/markdown' } });
     assert.equal(rejected.statusCode, 406);
@@ -157,9 +158,12 @@ test('lesson Markdown requests that reject HTML get 406 when no Markdown exists'
 
 test('lesson lang=en redirects to the URL without lang', async () => {
   const handler = lessonApi.createHandler({ loadAssets: () => lessonAssets() });
-  const response = await invoke(handler, { url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&learningPath=x&lang=en` });
+  const response = await invoke(handler, { url: `${PERCEPTRON_CLEAN}?learningPath=x&lang=en` });
   assert.equal(response.statusCode, 308);
   assert.doesNotMatch(response.headers.location, /lang=/);
+  const legacy = await invoke(handler, { url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}&learningPath=x&lang=en` });
+  assert.equal(legacy.statusCode, 308);
+  assert.equal(legacy.headers.location, response.headers.location);
   const page = await invoke(handler, { url: response.headers.location });
   assert.equal(page.statusCode, 200);
   assert.doesNotMatch(page.body, /lang=en(?:&|")/);
@@ -167,7 +171,7 @@ test('lesson lang=en redirects to the URL without lang', async () => {
 
 test('lesson Content-Language is set only after the page renders', async () => {
   const handler = lessonApi.createHandler({ loadAssets: () => lessonAssets({ template: '<html lang="en"><body></body></html>' }) });
-  const response = await invoke(handler, { url: `/lesson?path=${encodeURIComponent(PERCEPTRON)}` });
+  const response = await invoke(handler, { url: PERCEPTRON_CLEAN });
   assert.equal(response.statusCode, 500);
   assert.equal(response.headers['content-language'], undefined);
   assert.equal(response.headers.vary, undefined);

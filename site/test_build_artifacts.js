@@ -600,7 +600,9 @@ test('build-time SEO manifests cover every readable lesson and expose canonical 
     assert.ok(entry.seoTitle.length <= 60);
     assert.ok(entry.description.length <= 160);
     assert.ok(entry.excerpt.split(/\s+/).length <= 220);
-    assert.match(entry.canonicalUrl, /^https:\/\/aiengineeringfromscratch\.com\/lesson\?path=/);
+    assert.match(entry.canonicalUrl, entry.context.kind === 'course'
+      ? /^https:\/\/aiengineeringfromscratch\.com\/learn\/[a-z0-9-]+\/[a-z0-9-]+$/
+      : /^https:\/\/aiengineeringfromscratch\.com\/lesson\?path=/);
     assert.doesNotMatch(entry.canonicalUrl, /lesson\.html|[&?](?:track|learningPath)=/);
     assert.match(entry.sourceUrl, /^https:\/\/github\.com\/rohitg00\/ai-engineering-from-scratch\//);
     assert.ok(['course', 'certification'].includes(entry.context.kind));

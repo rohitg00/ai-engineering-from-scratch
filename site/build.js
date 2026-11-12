@@ -15,7 +15,7 @@ const { buildData: buildProjectData } = require('./build-projects.js');
 const { normalizeWhitespace, wordCount, truncateWords, seoTitleFor, descriptionFromParts, lessonDocumentSeo } = require('../lib/lesson-document');
 const { TRANSLATION_LANGUAGES, TRANSLATION_SOURCE, NATIVE_NAMES, isIndexedLanguage } = require('../lib/lesson-translations');
 const { socialCards } = require('../lib/og-cards');
-const { phaseHubPath, phaseLabel, glossaryLookupKey } = require('../lib/hub-routes');
+const { phaseHubPath, phaseLabel, glossaryLookupKey, lessonCleanPath } = require('../lib/hub-routes');
 const { writeHubs } = require('./build-hubs.js');
 const { writeCheatsheets, loadTopics, coverage } = require('./build-cheatsheets.js');
 const { writePractice } = require('./build-practice.js');
@@ -788,8 +788,12 @@ function annotateLessonMeta(phases) {
   return { summarized, withKeywords, lessonMinutes };
 }
 
+function lessonLocation(lessonPathValue) {
+  return lessonCleanPath(lessonPathValue) || `/lesson?path=${encodeURIComponent(lessonPathValue)}`;
+}
+
 function canonicalLessonUrl(lessonPathValue) {
-  return `${SITE_ORIGIN}/lesson?path=${encodeURIComponent(lessonPathValue)}`;
+  return `${SITE_ORIGIN}${lessonLocation(lessonPathValue)}`;
 }
 
 function lessonHref(lessonPathValue) {
@@ -2390,7 +2394,7 @@ function writeSitemap(lessonManifest, glossaryCount, certifications, projects, h
   }
   for (const lesson of Object.values(lessonManifest.lessons || {})) {
     if (lesson.context && lesson.context.kind === 'course') {
-      urls.push({ loc: '/lesson?path=' + encodeURIComponent(lesson.path), priority: '0.6', freq: 'monthly' });
+      urls.push({ loc: lessonLocation(lesson.path), priority: '0.6', freq: 'monthly' });
     }
   }
   const manualIds = readyManualIds();
@@ -2427,7 +2431,7 @@ function translatedLessons(lessonManifest) {
 function writeLanguageSitemaps(lessonManifest, siteDir = __dirname, hubSitemaps = []) {
   const files = [];
   for (const [lang, entries] of translatedLessons(lessonManifest)) {
-    const urls = entries.map(entry => ({ loc: `/lesson?path=${encodeURIComponent(entry.path)}&lang=${lang}`, priority: '0.5', freq: 'monthly' }));
+    const urls = entries.map(entry => ({ loc: `${lessonLocation(entry.path)}${lessonCleanPath(entry.path) ? '?' : '&'}lang=${lang}`, priority: '0.5', freq: 'monthly' }));
     const name = `sitemap-lessons-${lang}.xml`;
     fs.writeFileSync(path.join(siteDir, name), urlsetXml(urls), 'utf8');
     files.push(name);
@@ -2449,7 +2453,7 @@ function translationLlms(lessonManifest) {
   if (!translated.length) return '';
   let out = `## Lesson translations\n`;
   out += `Course lessons are also published in ${translated.length} languages: ${translated.map(([lang, entries]) => `${lang} (${NATIVE_NAMES[lang]}, ${entries.length} lessons)`).join(', ')}. Certification lessons, projects, and site pages are English only.\n\n`;
-  out += `- Reader page: ${SITE_ORIGIN}/lesson?path=<lesson path>&lang=<code>, with its own canonical URL and hreflang alternates\n`;
+  out += `- Reader page: ${SITE_ORIGIN}/learn/<phase>/<lesson>?lang=<code>, with its own canonical URL and hreflang alternates\n`;
   out += `- Markdown: request the reader page with Accept: text/markdown, or GET ${SITE_ORIGIN}/api/v1/resource?path=<lesson path>&lang=<code>\n`;
   out += `- Raw source: ${TRANSLATION_SOURCE}/<code>/<lesson path>/docs/<code>.md\n`;
   out += `- [Translated lesson sitemaps](${SITE_ORIGIN}/sitemap-index.xml)\n\n`;
@@ -2470,7 +2474,7 @@ function hubLlms(hubs) {
       const list = hubs.practice.problems.filter(problem => problem.meta.kind === kind);
       if (!list.length) continue;
       out += `### ${labels[kind]}\n\n`;
-      for (const problem of list) out += `- [${problem.meta.title}](${SITE_ORIGIN}${problem.href}) (${problem.meta.difficulty}): ${problem.meta.summary} From [${problem.lessonTitle}](${SITE_ORIGIN}/lesson?path=${encodeURIComponent(problem.meta.lesson)})\n`;
+      for (const problem of list) out += `- [${problem.meta.title}](${SITE_ORIGIN}${problem.href}) (${problem.meta.difficulty}): ${problem.meta.summary} From [${problem.lessonTitle}](${canonicalLessonUrl(problem.meta.lesson)})\n`;
       out += `\n`;
     }
   }
@@ -2514,7 +2518,7 @@ function writeLlms(phases, glossaryCount, artifactCount, certifications, lessonM
       const p = lessonPath(l.url);
       if (!p) continue;
       const note = l.summary ? ` — ${l.summary}` : '';
-      out += `- [${l.name}](${SITE_ORIGIN}/lesson?path=${encodeURIComponent(p)}) · [raw](${rawOrigin}/${p}/docs/en.md)${note}\n`;
+      out += `- [${l.name}](${canonicalLessonUrl(p)}) · [raw](${rawOrigin}/${p}/docs/en.md)${note}\n`;
     }
     out += `\n`;
   }

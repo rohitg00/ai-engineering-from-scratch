@@ -5,7 +5,7 @@ const { representation, quality, problem } = require('../lib/agent-http');
 const { lessonDocumentSeo, seoTitleFor } = require('../lib/lesson-document');
 const { cardTags, cardUrl, lessonCard } = require('../lib/og-cards');
 const { readTranslationResult: readTranslationFromSource, TRANSLATION_LANGUAGES, isIndexedLanguage, translationsOf, lessonUrl, NATIVE_NAMES, RTL_LANGUAGES, OG_LOCALES } = require('../lib/lesson-translations');
-const { phaseHubPath, phaseLabel } = require('../lib/hub-routes');
+const { phaseHubPath, phaseLabel, lessonCleanPath } = require('../lib/hub-routes');
 
 const REPO_ROOT = path.join(__dirname, '..');
 const ORIGIN = 'https://aiengineeringfromscratch.com';
@@ -16,6 +16,9 @@ const FALLBACK_END = '<!-- AIFS:LESSON-FALLBACK:END -->';
 const HUBS_START = '<!-- AIFS:LESSON-HUBS:START -->';
 const HUBS_END = '<!-- AIFS:LESSON-HUBS:END -->';
 const LESSON_QUERY_NAMES = new Set(['path', 'track', 'fromTrack', 'learningPath', 'lang', 'ttsTest', 'legacy']);
+const CLEAN_QUERY_NAMES = ['cleanPhase', 'cleanLesson'];
+const CLEAN_SEGMENT = /^[a-z0-9][a-z0-9-]*$/;
+const cleanLessonIndexes = new WeakMap();
 const LEARNING_PATH_ALIASES = Object.freeze({
   'mcp-engineering': 'model-context-protocol',
 });
@@ -120,6 +123,43 @@ function isLocalRequest(req) {
 
 function hasQuery(req, name) {
   return queryNames(req).has(name);
+}
+
+function requestPathname(req) {
+  try {
+    return new URL(req.url || '/', 'http://localhost').pathname;
+  } catch (_) {
+    return '';
+  }
+}
+
+function cleanRequestPath(req) {
+  const pathname = requestPathname(req);
+  if (pathname === '/lesson' || pathname === '/lesson.html') return '';
+  const direct = /^\/learn\/([a-z0-9][a-z0-9-]*)\/([a-z0-9][a-z0-9-]*)$/.exec(pathname);
+  if (direct) return pathname;
+  const phase = queryValue(req, 'cleanPhase');
+  const lesson = queryValue(req, 'cleanLesson');
+  return CLEAN_SEGMENT.test(phase) && CLEAN_SEGMENT.test(lesson) ? `/learn/${phase}/${lesson}` : '';
+}
+
+function lessonPathForCleanPath(manifest, cleanPath) {
+  let index = cleanLessonIndexes.get(manifest);
+  if (!index) {
+    index = new Map();
+    for (const lessonPath of Object.keys(manifest.lessons)) {
+      const clean = lessonCleanPath(lessonPath);
+      if (clean && !index.has(clean)) index.set(clean, lessonPath);
+    }
+    cleanLessonIndexes.set(manifest, index);
+  }
+  return index.get(cleanPath) || '';
+}
+
+function withoutCleanNames(query) {
+  const params = new URLSearchParams(query);
+  for (const name of CLEAN_QUERY_NAMES) params.delete(name);
+  return params.toString();
 }
 
 function validLessonPath(value) {
@@ -284,11 +324,13 @@ function lessonHead(entry, page) {
 
 function lessonHref(ref, contextParams) {
   const params = new URLSearchParams();
-  params.set('path', ref.path);
+  const cleanPath = lessonCleanPath(ref.path);
+  if (!cleanPath) params.set('path', ref.path);
   for (const name of ['track', 'fromTrack', 'learningPath', 'lang']) {
     if (contextParams && contextParams[name]) params.set(name, contextParams[name]);
   }
-  return `/lesson?${params.toString().replace(/&/g, '&amp;')}`;
+  const query = params.toString().replace(/&/g, '&amp;');
+  return `${cleanPath || '/lesson'}${query ? `?${query}` : ''}`;
 }
 
 function readEnglishMarkdown(assets, lessonPath) {
@@ -414,15 +456,17 @@ function send(res, method, status, body, cacheControl, type = 'text/html') {
   res.end(method === 'HEAD' ? '' : payload);
 }
 
-function normalizedLessonLocation(req, lessonPath, entry, assets) {
+function normalizedLessonLocation(req, lessonPath, entry, assets, cleanRequest) {
   const params = new URLSearchParams();
+  const cleanPath = lessonCleanPath(lessonPath);
   const certificationLesson = /^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(lessonPath);
   const navigationByTrack = entry.navigationByTrack && typeof entry.navigationByTrack === 'object'
     ? entry.navigationByTrack
     : {};
   let needsRedirect = hasQuery(req, 'legacy') || Array.from(queryNames(req)).some(function (name) {
-    return !LESSON_QUERY_NAMES.has(name);
+    return !LESSON_QUERY_NAMES.has(name) && !(cleanRequest && CLEAN_QUERY_NAMES.includes(name));
   });
+  if (cleanPath && !cleanRequest) needsRedirect = true;
   params.set('path', lessonPath);
 
   if (certificationLesson && hasQuery(req, 'track')) {
@@ -480,13 +524,18 @@ function normalizedLessonLocation(req, lessonPath, entry, assets) {
     }
   }
 
+  const context = new URLSearchParams(params);
+  context.delete('path');
+  const contextQuery = context.toString();
   const requestQuery = rawUrlQuery(req);
-  if (requestQuery !== null && requestQuery !== params.toString()) {
+  if (cleanRequest) {
+    if (requestQuery !== null && withoutCleanNames(requestQuery) !== contextQuery) needsRedirect = true;
+  } else if (requestQuery !== null && requestQuery !== params.toString()) {
     needsRedirect = true;
   }
 
   return {
-    location: `/lesson?${params.toString()}`,
+    location: cleanPath ? `${cleanPath}${contextQuery ? `?${contextQuery}` : ''}` : `/lesson?${params.toString()}`,
     needsRedirect,
     params,
   };
@@ -522,8 +571,9 @@ function createHandler(options) {
       return;
     }
 
-    const lessonPath = queryValue(req, 'path');
-    if (!validLessonPath(lessonPath)) {
+    const cleanRequest = cleanRequestPath(req);
+    const queryPath = queryValue(req, 'path');
+    if (!cleanRequest && !validLessonPath(queryPath)) {
       send(res, method, 404, errorPage('Lesson not found', 'This lesson path does not exist. Use the catalog, sitemap, or agent curriculum index to continue.'), 'no-store');
       return;
     }
@@ -533,6 +583,7 @@ function createHandler(options) {
       const manifest = assets && assets.manifest;
       if (typeof template !== 'string') throw new Error('template-shape');
       if (!manifest || !manifest.lessons || typeof manifest.lessons !== 'object') throw new Error('manifest-shape');
+      const lessonPath = cleanRequest ? lessonPathForCleanPath(manifest, cleanRequest) : queryPath;
       const entry = Object.prototype.hasOwnProperty.call(manifest.lessons, lessonPath)
         ? manifest.lessons[lessonPath]
         : null;
@@ -540,7 +591,7 @@ function createHandler(options) {
         send(res, method, 404, errorPage('Lesson not found', 'This lesson path is not part of the current curriculum. Use the catalog, sitemap, or agent curriculum index to continue.'), 'no-store');
         return;
       }
-      const normalized = normalizedLessonLocation(req, lessonPath, entry, assets);
+      const normalized = normalizedLessonLocation(req, lessonPath, entry, assets, Boolean(cleanRequest));
       if (normalized.needsRedirect) {
         res.setHeader('Location', normalized.location);
         send(res, method, 308, '', PAGE_CACHE);
@@ -571,6 +622,7 @@ function createHandler(options) {
         let html = replaceMarkedRegion(localizedTemplate(template, servedLang), SEO_START, SEO_END, lessonHead(entry, page));
         html = replaceMarkedRegion(html, FALLBACK_START, FALLBACK_END, lessonFallback(entry, lessonPath, contextParams, page, body));
         html = replaceMarkedRegion(html, HUBS_START, HUBS_END, lessonHubLinks(entry, page, assets.lessonTerms, assets.cheatsheets, assets.practice));
+        if (cleanRequest) html = html.replace('<head>', `<head>\n  <base href="/">\n  <meta name="aifs-lesson-path" content="${escapeHtml(lessonPath)}">`);
         res.setHeader('Vary', 'Accept, Accept-Encoding');
         res.setHeader('Content-Language', servedLang);
         send(res, method, 200, html, cacheControl);

@@ -51,7 +51,7 @@
     var safe = clean(path).replace(/\/+$/, '');
     if (!safe || /\\/.test(safe)) return Promise.reject(new Error('Invalid local directory path'));
 
-    var expectedUrl = new URL(repoUrl(safe + '/'), window.location.href);
+    var expectedUrl = new URL(repoUrl(safe + '/'), document.baseURI);
     return fetch(expectedUrl.href, { headers: { 'Accept': 'text/html' } }).then(function (res) {
       if (!res.ok) throw new Error(String(res.status));
 

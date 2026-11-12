@@ -1597,7 +1597,7 @@
     var selection = state.tab === 'page' ? [state.ctx.path] : null;
     var date = new Date().toISOString().slice(0, 10);
     var name = 'highlights-' + (state.tab === 'page' ? slug(state.ctx.path.split('/').pop()) : 'all') + '-' + date;
-    var origin = /^https?:/.test(window.location.origin || '') ? window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '') : 'https://aiengineeringfromscratch.com';
+    var origin = /^https?:/.test(window.location.origin || '') ? window.location.origin + (window.location.pathname.indexOf('/learn/') === 0 ? '' : window.location.pathname.replace(/\/[^/]*$/, '')) : 'https://aiengineeringfromscratch.com';
     if (kind === 'md') download(name + '.md', 'text/markdown;charset=utf-8', Store.exportMarkdown(selection, { origin: origin }));
     else download(name + '.json', 'application/json;charset=utf-8', Store.exportJson(selection));
     announce(kind === 'md' ? 'Markdown export ready.' : 'JSON export ready.');

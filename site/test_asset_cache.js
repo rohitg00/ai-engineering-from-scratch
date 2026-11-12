@@ -139,7 +139,7 @@ test('server-rendered pages revalidate in browsers while keeping CDN reuse and e
     template: '<!-- AIFS:CERTIFICATION-SEO:START --><!-- AIFS:CERTIFICATION-SEO:END --><!-- AIFS:CERTIFICATION-FALLBACK:START --><!-- AIFS:CERTIFICATION-FALLBACK:END -->',
     manifest: { tracks: { example: { id: 'example', title: 'Example' } } },
   }) });
-  for (const result of [invoke(lesson, { path: lessonPath }), invoke(certification, { id: 'example' }),
+  for (const result of [invoke(lesson, { cleanPhase: 'math', cleanLesson: 'vectors' }), invoke(certification, { id: 'example' }),
     invoke(require('../api/markdown'), { path: '/' })]) {
     assert.equal(result.status, 200);
     assert.match(result.headers['cache-control'], /(?:^|, )max-age=0(?:,|$)/);

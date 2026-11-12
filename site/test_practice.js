@@ -4,6 +4,7 @@ const os = require('node:os');
 const path = require('node:path');
 const test = require('node:test');
 const practice = require('./build-practice');
+const { lessonCleanPath } = require('../lib/hub-routes');
 
 const root = path.resolve(__dirname, '..');
 const built = practice.buildPractice();
@@ -45,7 +46,7 @@ test('a problem page holds the statement, the starter, the source lesson and its
     assert.match(html, new RegExp(`<link rel="canonical" href="https://aiengineeringfromscratch.com/practice/${problem.id}">`));
     assert.match(html, /<h2 id="task"/);
     assert.match(html, /data-editor-input/);
-    assert.ok(html.includes(`/lesson?path=${encodeURIComponent(problem.meta.lesson)}`), `${problem.id} does not link its lesson`);
+    assert.ok(html.includes(`href="${lessonCleanPath(problem.meta.lesson)}"`), `${problem.id} does not link its lesson`);
     if (problem.meta.cheatsheet) assert.ok(html.includes(`/cheatsheets/${problem.meta.cheatsheet}`));
     assert.match(html, /"@type":"LearningResource"/);
     assert.match(html, /data-pyodide="https:\/\/cdn\.jsdelivr\.net\/pyodide\/v314\.0\.7\/full\/"/);

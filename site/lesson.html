@@ -2729,7 +2729,7 @@
       var hasTrackContext = false;
       try {
         var lessonParams = new URLSearchParams(window.location.search);
-        path = lessonParams.get('path') || '';
+        path = lessonParams.get('path') || (document.querySelector('meta[name="aifs-lesson-path"]') || {}).content || '';
         hasTrackContext = !!(lessonParams.get('track') || lessonParams.get('fromTrack'));
       } catch (_) {}
       if (!/^certifications\/[a-z0-9][a-z0-9-]*\/lessons\//.test(path) && !hasTrackContext) return;
@@ -2896,8 +2896,17 @@
         if (typeof lessonPath !== 'undefined' && lessonPath) fetchLesson(lessonPath);
       };
 
+      if (document.querySelector('base')) {
+        document.addEventListener('click', function (e) {
+          var hashLink = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+          if (!hashLink || e.defaultPrevented) return;
+          e.preventDefault();
+          window.location.hash = hashLink.getAttribute('href');
+        });
+      }
+
       var params = new URLSearchParams(window.location.search);
-      var lessonPath = params.get('path');
+      var lessonPath = params.get('path') || (document.querySelector('meta[name="aifs-lesson-path"]') || {}).content || null;
       var requestedTrackId = params.get('track') || '';
       var originatingTrackId = params.get('fromTrack') || '';
       var LEARNING_PATH_ID_ALIASES = { 'mcp-engineering': 'model-context-protocol' };
@@ -3844,7 +3853,7 @@
 
       function updateLessonSeo(title, md) {
         var ORIGIN = 'https://aiengineeringfromscratch.com';
-        var path = new URLSearchParams(location.search).get('path') || '';
+        var path = new URLSearchParams(location.search).get('path') || (document.querySelector('meta[name="aifs-lesson-path"]') || {}).content || '';
         var alternate = document.querySelector('link[rel="alternate"][hreflang="' + (document.documentElement.lang || 'en') + '"]');
         var url = alternate ? alternate.href : ORIGIN + '/lesson?path=' + encodeURIComponent(path);
         var contextTrack = certificationContextTrack();
@@ -4253,7 +4262,7 @@
             if (!target) return;
             e.preventDefault();
             target.scrollIntoView({ behavior: preferredScrollBehavior(), block: 'start' });
-            history.replaceState(null, '', '#' + id);
+            history.replaceState(null, '', location.pathname + location.search + '#' + id);
             if (!target.hasAttribute('tabindex')) {
               target.setAttribute('tabindex', '-1');
               target.addEventListener('blur', function blurHandler() {
