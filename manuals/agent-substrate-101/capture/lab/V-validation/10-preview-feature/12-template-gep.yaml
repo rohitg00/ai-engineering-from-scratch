@@ -1,0 +1,44 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+containers:
+- command:
+  - /ballast
+  - --mb=0
+  image: localhost:5001/ballast@sha256:3c297fb8f6ce7067ac8180af0fc52cd422b5ee46135aa937368a731925e173b7
+  name: ballast
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+    timeoutSeconds: 30
+goldenEgressPolicy:
+  rules:
+  - http:
+      hostnames:
+      - echo.lab-v.svc.cluster.local
+      ports:
+        numbers:
+        - 80
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T13:06:37.040510685Z"
+  name: gep-0
+  uid: e232fbe8-fdde-41c7-9cde-eefde6dbc814
+  updateTime: "2026-11-12T13:06:44.268630206Z"
+  version: "3"
+resources:
+  limits:
+    cpuMillicores: "1000"
+    memoryBytes: "268435456"
+snapshotConfig:
+  goldenSnapshotConfig:
+    mode: GOLDEN_SNAPSHOT_MODE_ENABLED
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY
+status:
+  goldenSnapshotStatus:
+    goldenTag:
+      atespace: lab-v
+      name: e232fbe8-fdde-41c7-9cde-eefde6dbc814
+    snapshotTime: "2026-11-12T13:06:43.830807601Z"
+workerSelector:
+  matchLabels:
+    workload: vpool

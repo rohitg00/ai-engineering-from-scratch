@@ -1,0 +1,428 @@
+2026-11-12T10:17:23.666151Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.ate-system.svc.cluster.local. A	
+2026-11-12T10:17:23.666186Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T10:17:23.666194Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.ate-system.svc.cluster.local. IN A
+2026-11-12T10:17:23.666211Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=969.355ms ip=10.96.0.10
+2026-11-12T10:17:23.666227Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T10:17:23.666275Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 25916:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.ate-system.svc.cluster.local. IN A
+
+2026-11-12T10:17:23.666336Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T10:17:23.667341Z	debug	hickory_net::udp::udp_client_stream	received message id: 25916	
+2026-11-12T10:17:23.667396Z	debug	hickory_net::error	response: ; header 25916:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; api.ate-system.svc.ate-system.svc.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794478590 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T10:17:23.667483Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.ate-system.svc.cluster.local. AAAA	
+2026-11-12T10:17:23.667497Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T10:17:23.667502Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+2026-11-12T10:17:23.667515Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=1.316629s ip=10.96.0.10
+2026-11-12T10:17:23.667525Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T10:17:23.667587Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 17907:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+
+2026-11-12T10:17:23.667631Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T10:17:23.668421Z	debug	hickory_net::udp::udp_client_stream	received message id: 17907	
+2026-11-12T10:17:23.668498Z	debug	hickory_net::error	response: ; header 17907:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; api.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794478590 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T10:17:23.668549Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.svc.cluster.local. A	
+2026-11-12T10:17:23.668580Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T10:17:23.668585Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.svc.cluster.local. IN A
+2026-11-12T10:17:23.668594Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=1.495632s ip=10.96.0.10
+2026-11-12T10:17:23.668602Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T10:17:23.668633Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 34448:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.svc.cluster.local. IN A
+
+2026-11-12T10:17:23.668678Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T10:17:23.669336Z	debug	hickory_net::udp::udp_client_stream	received message id: 34448	
+2026-11-12T10:17:23.669363Z	debug	hickory_net::error	response: ; header 34448:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; api.ate-system.svc.svc.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794478590 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T10:17:23.669386Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.svc.cluster.local. AAAA	
+2026-11-12T10:17:23.669391Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T10:17:23.669395Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.svc.cluster.local. IN AAAA
+2026-11-12T10:17:23.669401Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=1.674635s ip=10.96.0.10
+2026-11-12T10:17:23.669406Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T10:17:23.669474Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 60926:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.svc.cluster.local. IN AAAA
+
+2026-11-12T10:17:23.669512Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T10:17:23.670139Z	debug	hickory_net::udp::udp_client_stream	received message id: 60926	
+2026-11-12T10:17:23.670167Z	debug	hickory_net::error	response: ; header 60926:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; api.ate-system.svc.svc.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794478590 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T10:17:23.670232Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.cluster.local. A	
+2026-11-12T10:17:23.670245Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T10:17:23.670248Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.cluster.local. IN A
+2026-11-12T10:17:23.670255Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=1.853638s ip=10.96.0.10
+2026-11-12T10:17:23.670261Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T10:17:23.670286Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 44490:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.cluster.local. IN A
+
+2026-11-12T10:17:23.670306Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T10:17:23.670940Z	debug	hickory_net::udp::udp_client_stream	received message id: 44490	
+2026-11-12T10:17:23.670966Z	debug	hickory_net::error	response: ; header 44490:RESPONSE:RD,AA:NoError:QUERY
+; query
+;; api.ate-system.svc.cluster.local. IN A
+; answers 2
+api.ate-system.svc.cluster.local. 30 IN A 10.244.0.19
+api.ate-system.svc.cluster.local. 30 IN A 10.244.0.18
+; authorities 0
+; additionals 0
+	
+2026-11-12T10:17:23.670982Z	debug	hickory_net::error	response: ; header 44490:RESPONSE:RD,AA:NoError:QUERY
+; query
+;; api.ate-system.svc.cluster.local. IN A
+; answers 2
+api.ate-system.svc.cluster.local. 30 IN A 10.244.0.19
+api.ate-system.svc.cluster.local. 30 IN A 10.244.0.18
+; authorities 0
+; additionals 0
+	
+2026-11-12T10:18:18.319893Z	debug	proxy::gateway	connection started	connection.id=2 bind="bind/8443"
+2026-11-12T10:18:18.320662Z	debug	rustls::server::hs	decided upon suite TLS13_AES_128_GCM_SHA256	connection.id=2
+2026-11-12T10:18:18.320694Z	debug	rustls::server::tls13::client_hello	Client unwilling to resume, PSK_DHE_KE not offered	connection.id=2
+2026-11-12T10:18:18.320918Z	debug	rustls::server::hs	Chosen ALPN protocol ProtocolName(6832)	connection.id=2
+2026-11-12T10:18:18.323416Z	debug	h2::codec::framed_write	send	connection.id=2 frame=Settings { flags: (0x0), max_concurrent_streams: 200, initial_window_size: 65535, max_frame_size: 16384, max_header_list_size: 16384 }
+2026-11-12T10:18:18.323567Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=2 frame=Settings { flags: (0x0), enable_push: 0, initial_window_size: 4194304, max_frame_size: 1048576, max_header_list_size: 10485760 }
+2026-11-12T10:18:18.323584Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=2 frame=Settings { flags: (0x1: ACK) }
+2026-11-12T10:18:18.323589Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=2 frame=WindowUpdate { stream_id: StreamId(0), size_increment: 1073741824 }
+2026-11-12T10:18:18.323612Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=2 frame=Headers { stream_id: StreamId(1), flags: (0x4: END_HEADERS) }
+2026-11-12T10:18:18.323837Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.ate-system.svc.cluster.local. A	
+2026-11-12T10:18:18.323860Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T10:18:18.323866Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.ate-system.svc.cluster.local. IN A
+2026-11-12T10:18:18.323879Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=986.023ms ip=10.96.0.10
+2026-11-12T10:18:18.323889Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T10:18:18.323933Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 24992:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.324705Z	debug	hickory_net::error	response: ; header 24992:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.324793Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 15742:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.325479Z	debug	hickory_net::error	response: ; header 15742:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.325572Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 56979:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.326325Z	debug	hickory_net::error	response: ; header 56979:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.326480Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 38544:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.327124Z	debug	hickory_net::error	response: ; header 38544:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.327247Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 28836:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.327906Z	debug	hickory_net::error	response: ; header 28836:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:18.327931Z	debug	hickory_net::error	response: ; header 28836:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:18.344126Z	debug	upstream request	request.id=2 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="6ms"
+2026-11-12T10:18:18.349186Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 48452:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.350029Z	debug	hickory_net::udp::udp_client_stream	received message id: 48452	
+2026-11-12T10:18:18.350087Z	debug	hickory_net::error	response: ; header 48452:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.350244Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 23979:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.350995Z	debug	hickory_net::error	response: ; header 23979:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.351114Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 60585:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.351820Z	debug	hickory_net::error	response: ; header 60585:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.351902Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 38399:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.352667Z	debug	hickory_net::error	response: ; header 38399:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.352745Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 64727:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.353395Z	debug	hickory_net::error	response: ; header 64727:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.353518Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 3507:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.354168Z	debug	hickory_net::error	response: ; header 3507:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.354243Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 9707:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.355003Z	debug	hickory_net::error	response: ; header 9707:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:18.355021Z	debug	hickory_net::error	response: ; header 9707:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:18.395002Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Data { stream_id: StreamId(5) }
+2026-11-12T10:18:18.395073Z	debug	upstream request	request.id=3 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="6ms"
+2026-11-12T10:18:18.430342Z	debug	upstream request	request.id=4 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:18:18.430500Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. IN A
+2026-11-12T10:18:18.430551Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 17158:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.431552Z	debug	hickory_net::error	response: ; header 17158:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.431690Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 41440:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.432585Z	debug	hickory_net::error	response: ; header 41440:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.432690Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 53624:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.433653Z	debug	hickory_net::error	response: ; header 53624:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.433733Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 63565:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.434707Z	debug	hickory_net::error	response: ; header 63565:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.434864Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 425:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.435836Z	debug	hickory_net::error	response: ; header 425:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:18.435870Z	debug	hickory_net::error	response: ; header 425:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:18.436524Z	debug	rustls::client::hs	Not resuming any session	
+2026-11-12T10:18:18.438599Z	debug	rustls::client::tls13	Not resuming	
+2026-11-12T10:18:18.439376Z	debug	upstream tcp	connected	endpoint=10.96.141.16:50051 transport=tls connect_ms=3
+2026-11-12T10:18:18.445030Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=2 frame=Ping { ack: true, payload: [59, 124, 219, 122, 11, 135, 22, 180] }
+2026-11-12T10:18:18.451561Z	debug	upstream request	request.id=4 target=k8s-credential-provider.ate-system.svc:50051 endpoint=10.96.141.16:50051 transport=tls http.method=POST http.host=k8s-credential-provider.ate-system.svc:50051 http.path=/substrate.credprovider.v1.CredentialProvider/FetchSecret http.version=HTTP/2.0 http.status=200 duration="21ms"
+2026-11-12T10:18:18.451630Z	debug	upstream request	request.id=5 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:18:18.451903Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 24642:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.452961Z	debug	hickory_net::error	response: ; header 24642:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.453162Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 22828:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.454146Z	debug	hickory_net::error	response: ; header 22828:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.454314Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 18994:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.455128Z	debug	hickory_net::error	response: ; header 18994:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.455226Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 54674:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.456213Z	debug	hickory_net::error	response: ; header 54674:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.456294Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 3250:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.457024Z	debug	hickory_net::error	response: ; header 3250:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.457115Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 52801:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.458183Z	debug	hickory_net::error	response: ; header 52801:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:18.458267Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 24878:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:18.459001Z	debug	hickory_net::error	response: ; header 24878:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:18.459028Z	debug	hickory_net::error	response: ; header 24878:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:18.462847Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=2 frame=Reset { stream_id: StreamId(3), error_code: NO_ERROR }
+2026-11-12T10:18:18.463159Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=2 frame=Reset { stream_id: StreamId(3), error_code: NO_ERROR }
+2026-11-12T10:18:18.535071Z	debug	upstream request	request.id=6 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="62ms"
+2026-11-12T10:18:18.970651Z	debug	upstream request	request.id=7 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:18:18.973961Z	debug	rustls::client::hs	Resuming session	
+2026-11-12T10:18:18.975242Z	debug	rustls::client::tls13	Not resuming	
+2026-11-12T10:18:18.985991Z	debug	upstream request	request.id=8 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:18:18.989364Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=2 frame=Reset { stream_id: StreamId(5), error_code: NO_ERROR }
+2026-11-12T10:18:18.989687Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=2 frame=Reset { stream_id: StreamId(5), error_code: NO_ERROR }
+2026-11-12T10:18:18.996944Z	debug	upstream request	request.id=9 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:18:19.014079Z	debug	upstream request	request.id=10 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:18:19.029606Z	debug	upstream request	request.id=11 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:18:19.047711Z	debug	upstream request	request.id=13 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:18:19.048152Z	debug	upstream request	request.id=12 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:18:19.142207Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=2 frame=Reset { stream_id: StreamId(1), error_code: CANCEL }
+2026-11-12T10:18:19.142239Z	debug	rustls::common_state:Connection{peer=Server}	Sending warning alert CloseNotify	connection.id=2
+2026-11-12T10:18:19.142346Z	warn	proxy::gateway	connect tunnel error: connection error	connection.id=2 src.addr=10.244.0.23:41992
+2026-11-12T10:18:48.328812Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 61223:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.329817Z	debug	hickory_net::error	response: ; header 61223:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.329944Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 54079:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.330801Z	debug	hickory_net::error	response: ; header 54079:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.330961Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 56055:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.331777Z	debug	hickory_net::error	response: ; header 56055:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.331839Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 41536:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.332745Z	debug	hickory_net::error	response: ; header 41536:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.332875Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 48487:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.333710Z	debug	hickory_net::error	response: ; header 48487:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:48.333746Z	debug	hickory_net::error	response: ; header 48487:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:48.356038Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 28298:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.357019Z	debug	hickory_net::error	response: ; header 28298:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.357147Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 33338:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.358096Z	debug	hickory_net::error	response: ; header 33338:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.358242Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 56204:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.358980Z	debug	hickory_net::error	response: ; header 56204:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.359054Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 12557:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.359704Z	debug	hickory_net::error	response: ; header 12557:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.359780Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 47571:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.360473Z	debug	hickory_net::error	response: ; header 47571:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.360503Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("kagent-controller.kagent.svc.cluster.local.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T10:18:48.360551Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 28009:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.361164Z	debug	hickory_net::error	response: ; header 28009:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.361233Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 52313:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.361851Z	debug	hickory_net::error	response: ; header 52313:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:48.361866Z	debug	hickory_net::error	response: ; header 52313:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:48.460477Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 46446:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.461344Z	debug	hickory_net::error	response: ; header 46446:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.461435Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 12257:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.462103Z	debug	hickory_net::error	response: ; header 12257:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.462198Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 41198:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.462954Z	debug	hickory_net::error	response: ; header 41198:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.463047Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 49809:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.463771Z	debug	hickory_net::error	response: ; header 49809:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.463937Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 39117:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.464565Z	debug	hickory_net::error	response: ; header 39117:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.464645Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 31841:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.465557Z	debug	hickory_net::error	response: ; header 31841:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:18:48.465639Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 11173:QUERY:RD:NoError:QUERY
+2026-11-12T10:18:48.466256Z	debug	hickory_net::error	response: ; header 11173:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:18:48.466300Z	debug	hickory_net::error	response: ; header 11173:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:19:34.435495Z	debug	rustls::server::tls13::client_hello	Client unwilling to resume, PSK_DHE_KE not offered	connection.id=3
+2026-11-12T10:19:34.438184Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 4833:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.438870Z	debug	hickory_net::error	response: ; header 4833:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.438993Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 55083:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.439790Z	debug	hickory_net::error	response: ; header 55083:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.439864Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 31649:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.440537Z	debug	hickory_net::error	response: ; header 31649:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.440599Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 13600:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.441296Z	debug	hickory_net::error	response: ; header 13600:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.441380Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 61598:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.442179Z	debug	hickory_net::error	response: ; header 61598:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:19:34.442210Z	debug	hickory_net::error	response: ; header 61598:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:19:34.474596Z	debug	upstream request	request.id=14 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:34.475000Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.195114s ip=10.96.0.10
+2026-11-12T10:19:34.475070Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 55664:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.476036Z	debug	hickory_net::error	response: ; header 55664:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.476126Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 2646:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.476939Z	debug	hickory_net::error	response: ; header 2646:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.477043Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 22335:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.477822Z	debug	hickory_net::error	response: ; header 22335:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.477952Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 13054:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.479006Z	debug	hickory_net::error	response: ; header 13054:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.479112Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 63395:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.480266Z	debug	hickory_net::error	response: ; header 63395:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.480350Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 15188:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.481137Z	debug	hickory_net::error	response: ; header 15188:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.481239Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 56397:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.482135Z	debug	hickory_net::error	response: ; header 56397:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:19:34.482169Z	debug	hickory_net::error	response: ; header 56397:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:19:34.521412Z	debug	upstream request	request.id=15 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:34.550376Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(19), flags: (0x4: END_HEADERS) }
+2026-11-12T10:19:34.550440Z	debug	upstream request	request.id=16 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:34.553286Z	debug	upstream request	request.id=17 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:34.553745Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 50631:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.554811Z	debug	hickory_net::error	response: ; header 50631:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.554919Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 10949:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.555866Z	debug	hickory_net::error	response: ; header 10949:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.556031Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 31017:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.556927Z	debug	hickory_net::error	response: ; header 31017:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.557052Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 60737:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.557754Z	debug	hickory_net::error	response: ; header 60737:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.557832Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 4209:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.558688Z	debug	hickory_net::error	response: ; header 4209:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.558770Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 29954:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.559489Z	debug	hickory_net::error	response: ; header 29954:RESPONSE:RD,AA:NXDomain:QUERY
+2026-11-12T10:19:34.559561Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 39143:QUERY:RD:NoError:QUERY
+2026-11-12T10:19:34.560370Z	debug	hickory_net::error	response: ; header 39143:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:19:34.560392Z	debug	hickory_net::error	response: ; header 39143:RESPONSE:RD,AA:NoError:QUERY
+2026-11-12T10:19:34.563523Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=3 frame=Reset { stream_id: StreamId(3), error_code: NO_ERROR }
+2026-11-12T10:19:34.563892Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=3 frame=Reset { stream_id: StreamId(3), error_code: NO_ERROR }
+2026-11-12T10:19:34.581756Z	debug	upstream request	request.id=18 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:34.637503Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Headers { stream_id: StreamId(7), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T10:19:34.655503Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 7 }
+2026-11-12T10:19:34.982618Z	debug	upstream request	request.id=19 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:34.990500Z	debug	proxy::httpproxy	route for bind	request.id=20 bind=bind/wildcard
+2026-11-12T10:19:34.994156Z	debug	upstream request	request.id=20 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:34.997990Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=3 frame=Reset { stream_id: StreamId(5), error_code: NO_ERROR }
+2026-11-12T10:19:34.998231Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=3 frame=Reset { stream_id: StreamId(5), error_code: NO_ERROR }
+2026-11-12T10:19:35.006307Z	debug	upstream request	request.id=21 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:35.007500Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 8168 }
+2026-11-12T10:19:35.027756Z	debug	upstream request	request.id=22 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:35.046993Z	debug	upstream request	request.id=23 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:35.067633Z	debug	upstream request	request.id=25 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:35.080768Z	debug	upstream request	request.id=24 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="17ms"
+2026-11-12T10:19:35.153698Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=3 frame=Reset { stream_id: StreamId(1), error_code: CANCEL }
+2026-11-12T10:19:35.153771Z	debug	rustls::common_state:Connection{peer=Server}	Sending warning alert CloseNotify	connection.id=3
+2026-11-12T10:19:35.153824Z	warn	proxy::gateway	proxy error: connection error	src.addr=10.244.0.23:34792
+2026-11-12T10:19:41.025234Z	debug	rustls::server::tls13::client_hello	Client unwilling to resume, PSK_DHE_KE not offered	connection.id=4
+2026-11-12T10:19:41.043756Z	debug	upstream request	request.id=26 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:41.079500Z	debug	proxy::httpproxy	selected route	request.id=27 bind=bind/wildcard listener=default/default/bind/wildcard/listener1 route=default/default/bind/wildcard/listener1/default/route0
+2026-11-12T10:19:41.085024Z	debug	upstream request	request.id=27 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:41.121685Z	debug	upstream request	request.id=28 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:41.145515Z	debug	upstream request	request.id=29 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:41.149013Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=4 frame=Reset { stream_id: StreamId(3), error_code: NO_ERROR }
+2026-11-12T10:19:41.162975Z	debug	upstream request	request.id=30 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:41.575586Z	debug	upstream request	request.id=31 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:41.625483Z	debug	upstream request	request.id=32 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:41.629300Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=4 frame=Reset { stream_id: StreamId(5), error_code: NO_ERROR }
+2026-11-12T10:19:41.658039Z	debug	upstream request	request.id=33 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="25ms"
+2026-11-12T10:19:41.676871Z	debug	upstream request	request.id=34 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:41.695144Z	debug	upstream request	request.id=35 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:41.695503Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Headers { stream_id: StreamId(57), flags: (0x4: END_HEADERS) }
+2026-11-12T10:19:41.715095Z	debug	upstream request	request.id=37 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:41.715610Z	debug	upstream request	request.id=36 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:41.725005Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=4 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:41.725036Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 5 }
+2026-11-12T10:19:41.755411Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=4 frame=Reset { stream_id: StreamId(1), error_code: CANCEL }
+2026-11-12T10:19:41.755525Z	warn	proxy::gateway	proxy error: connection error	src.addr=10.244.0.23:34802
+2026-11-12T10:19:41.755577Z	debug	rustls::common_state:Connection{peer=Server}	Sending warning alert CloseNotify	connection.id=4
+2026-11-12T10:19:42.671016Z	debug	rustls::server::tls13::client_hello	Client unwilling to resume, PSK_DHE_KE not offered	connection.id=5
+2026-11-12T10:19:42.709820Z	debug	upstream request	request.id=38 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:42.745036Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Data { stream_id: StreamId(43) }
+2026-11-12T10:19:42.749831Z	debug	upstream request	request.id=39 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:42.750096Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Headers { stream_id: StreamId(65), flags: (0x4: END_HEADERS) }
+2026-11-12T10:19:42.819337Z	debug	upstream request	request.id=40 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:42.830885Z	debug	upstream request	request.id=41 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="5ms"
+2026-11-12T10:19:42.835192Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=5 frame=Reset { stream_id: StreamId(3), error_code: NO_ERROR }
+2026-11-12T10:19:42.835435Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=5 frame=Reset { stream_id: StreamId(3), error_code: NO_ERROR }
+2026-11-12T10:19:42.845000Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 70 }
+2026-11-12T10:19:42.845035Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Ping { ack: true, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T10:19:42.849000Z	debug	upstream request	request.id=42 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:43.015747Z	debug	upstream request	request.id=43 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:43.030030Z	debug	upstream request	request.id=44 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:43.033500Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=5 frame=Data { stream_id: StreamId(5) }
+2026-11-12T10:19:43.033536Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=5 frame=Reset { stream_id: StreamId(5), error_code: NO_ERROR }
+2026-11-12T10:19:43.040559Z	debug	upstream request	request.id=45 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:43.061056Z	debug	upstream request	request.id=46 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:43.078666Z	debug	upstream request	request.id=47 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:43.097382Z	debug	upstream request	request.id=49 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:43.097799Z	debug	upstream request	request.id=48 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:43.105000Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Data { stream_id: StreamId(17) }
+2026-11-12T10:19:43.154154Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=5 frame=Reset { stream_id: StreamId(1), error_code: CANCEL }
+2026-11-12T10:19:43.154259Z	warn	proxy::gateway	proxy error: connection error	src.addr=10.244.0.23:59176
+2026-11-12T10:19:43.154290Z	debug	rustls::common_state:Connection{peer=Server}	Sending warning alert CloseNotify	connection.id=5
+2026-11-12T10:19:43.154503Z	debug	downstream connection	closed	connection.id=5 sent=5297 recv=40455
+2026-11-12T10:19:49.983592Z	debug	rustls::server::tls13::client_hello	Client unwilling to resume, PSK_DHE_KE not offered	connection.id=6
+2026-11-12T10:19:49.995232Z	debug	upstream request	request.id=50 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.025662Z	debug	upstream request	request.id=51 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.043280Z	debug	upstream request	request.id=52 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:50.095254Z	debug	upstream request	request.id=53 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.098745Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Reset { stream_id: StreamId(3), error_code: NO_ERROR }
+2026-11-12T10:19:50.107500Z	debug	proxy::httpproxy	request before normalization: Request { method: POST, uri: http://kagent-controller.kagent.svc.cluster.local:8083/kagent.runtime.v1.TaskStoreService/UpdateTask, version: HTTP/2.0, headers: {"content-type": "application/grpc", "user-agent": "grpc-go/1.85.0", "te": "trailers", "grpc-accept-encoding": "gzip", "grpc-timeout": "29999797u", "authorization": Sensitive}, body: Body(BodyInner { needs_inspection: false, representation: Streaming { body: Body(UnsyncBoxBody), inspected_prefix: None }, extensions: {}, deadline: None, recorded: None, observers: BodyObservers(0) }) }	request.id=54
+2026-11-12T10:19:50.111344Z	debug	upstream request	request.id=54 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.398294Z	debug	upstream request	request.id=55 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:50.400723Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Reset { stream_id: StreamId(5), error_code: NO_ERROR }
+2026-11-12T10:19:50.400975Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=6 frame=Reset { stream_id: StreamId(5), error_code: NO_ERROR }
+2026-11-12T10:19:50.431569Z	debug	upstream request	request.id=56 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.431807Z	error	request request.id=56 gateway=default/default listener=listener1 route=default/route0 src.addr=10.244.0.23:59184 http.method=GET http.host=1.1.1.1 http.path=/ http.version=HTTP/1.1 http.status=403 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent error="actor egress policy denied destination" reason=Authorization duration=4ms substrate.connect.authority="1.1.1.1:80"
+2026-11-12T10:19:50.431931Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Reset { stream_id: StreamId(7), error_code: NO_ERROR }
+2026-11-12T10:19:50.432187Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=6 frame=Reset { stream_id: StreamId(7), error_code: NO_ERROR }
+2026-11-12T10:19:50.519711Z	debug	upstream request	request.id=57 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:50.519968Z	error	request request.id=57 gateway=default/default listener=listener1 route=default/route0 src.addr=10.244.0.23:59184 http.method=GET http.host=mock-llm.kagent http.path=/v1/models http.version=HTTP/1.1 http.status=403 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent error="actor egress policy denied destination" reason=Authorization duration=5ms substrate.connect.authority="10.96.178.17:8080"
+2026-11-12T10:19:50.520127Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Reset { stream_id: StreamId(9), error_code: NO_ERROR }
+2026-11-12T10:19:50.696692Z	debug	upstream request	request.id=58 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:50.705500Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Headers { stream_id: StreamId(11), flags: (0x4: END_HEADERS) }
+2026-11-12T10:19:50.709866Z	debug	upstream request	request.id=59 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.712365Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Reset { stream_id: StreamId(11), error_code: NO_ERROR }
+2026-11-12T10:19:50.712651Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=6 frame=Reset { stream_id: StreamId(11), error_code: NO_ERROR }
+2026-11-12T10:19:50.715001Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 70 }
+2026-11-12T10:19:50.718043Z	debug	upstream request	request.id=60 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.734894Z	debug	upstream request	request.id=61 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.735662Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 6500 }
+2026-11-12T10:19:50.751942Z	debug	upstream request	request.id=62 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:50.763500Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Headers { stream_id: StreamId(15), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T10:19:50.769841Z	debug	upstream request	request.id=63 target=api.ate-system.svc:443 endpoint=10.244.0.18:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="3ms"
+2026-11-12T10:19:50.770263Z	debug	upstream request	request.id=64 target=api.ate-system.svc:443 endpoint=10.244.0.19:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="4ms"
+2026-11-12T10:19:50.777209Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(99), flags: (0x4: END_HEADERS) }
+2026-11-12T10:19:50.777221Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Data { stream_id: StreamId(101) }
+2026-11-12T10:19:50.777274Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Data { stream_id: StreamId(99) }
+2026-11-12T10:19:50.777276Z	debug	upstream request	request.id=63 target=kagent-controller.kagent.svc.cluster.local:8083 endpoint=10.96.56.169:8083 transport=plaintext http.method=POST http.host=kagent-controller.kagent.svc.cluster.local http.path=/kagent.runtime.v1.TaskStoreService/GetTask http.version=HTTP/2.0 http.status=200 duration="7ms"
+2026-11-12T10:19:50.777288Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Data { stream_id: StreamId(99) }
+2026-11-12T10:19:50.777315Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Data { stream_id: StreamId(17) }
+2026-11-12T10:19:50.777321Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Headers { stream_id: StreamId(19), flags: (0x4: END_HEADERS) }
+2026-11-12T10:19:50.777351Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.777368Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Data { stream_id: StreamId(19) }
+2026-11-12T10:19:50.777385Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Data { stream_id: StreamId(19) }
+2026-11-12T10:19:50.777409Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.777410Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(101), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T10:19:50.777494Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.777521Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.777540Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.777575Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Headers { stream_id: StreamId(17), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T10:19:50.777573Z	info	request request.id=64 gateway=default/default listener=listener1 route=default/route0 endpoint=kagent-controller.kagent.svc.cluster.local:8083 src.addr=10.244.0.23:59184 http.method=POST http.host=kagent-controller.kagent.svc.cluster.local http.path=/kagent.runtime.v1.TaskStoreService/SettleTask http.version=HTTP/2.0 http.status=200 grpc.status=0 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent duration=11ms substrate.connect.authority="10.96.56.169:8083"
+2026-11-12T10:19:50.777597Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.777655Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(99), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T10:19:50.777687Z	debug	agent_pool::pool	pooling idle connection for PoolKey(Hostname("kagent-controller.kagent.svc.cluster.local", 8083), 10.96.56.169:8083, ConnectionConfig { transport: Plain(Plaintext), tcp: None, max_connection_duration: None }, HTTP/2.0)	
+2026-11-12T10:19:50.777713Z	info	request request.id=63 gateway=default/default listener=listener1 route=default/route0 endpoint=kagent-controller.kagent.svc.cluster.local:8083 src.addr=10.244.0.23:59184 http.method=POST http.host=kagent-controller.kagent.svc.cluster.local http.path=/kagent.runtime.v1.TaskStoreService/GetTask http.version=HTTP/2.0 http.status=200 grpc.status=0 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent duration=12ms substrate.connect.authority="10.96.56.169:8083"
+2026-11-12T10:19:50.777719Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=6 frame=WindowUpdate { stream_id: StreamId(0), size_increment: 5622 }
+2026-11-12T10:19:50.777727Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=6 frame=WindowUpdate { stream_id: StreamId(1), size_increment: 6211 }
+2026-11-12T10:19:50.777735Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Headers { stream_id: StreamId(19), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T10:19:50.777761Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.778843Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.778885Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 5 }
+2026-11-12T10:19:50.778892Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	frame=Ping { ack: false, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T10:19:50.778897Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	frame=Ping { ack: true, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T10:19:50.778926Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=6 frame=Data { stream_id: StreamId(1) }
+2026-11-12T10:19:50.844070Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=6 frame=Data { stream_id: StreamId(1), flags: (0x1: END_STREAM) }
+2026-11-12T10:19:50.844113Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=6 frame=Reset { stream_id: StreamId(1), error_code: CANCEL }
+2026-11-12T10:19:50.844252Z	warn	proxy::gateway	proxy error: connection error	src.addr=10.244.0.23:59184
+2026-11-12T10:19:50.844339Z	debug	rustls::common_state:Connection{peer=Server}	Sending warning alert CloseNotify	connection.id=6
+2026-11-12T10:19:50.844568Z	debug	downstream connection	closed	connection.id=6 sent=11474 recv=66917
+2026-11-12T10:19:50.844608Z	debug	proxy::gateway	connection completed	connection.id=6 bind="bind/8443" dur=861.55305ms
+2026-11-12T10:19:53.737560Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=GoAway { error_code: NO_ERROR, last_stream_id: StreamId(0) }
+2026-11-12T10:19:53.737595Z	debug	h2::proto::connection:Connection{peer=Client}	Connection::poll; connection error	error=GoAway(b"", NO_ERROR, Library)
+2026-11-12T10:19:53.737697Z	debug	rustls::common_state:Connection{peer=Client}	Sending warning alert CloseNotify	
+2026-11-12T10:19:53.737834Z	debug	upstream connection	closed	sent=402 recv=148

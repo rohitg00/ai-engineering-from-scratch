@@ -58,7 +58,9 @@ The right column is our reading of the request path, except for the Postgres row
 
 ### Crash detection has a gap
 
-Substrate marks an actor crashed when its sandbox dies or when the kernel kills it for memory. It does not notice a process that exits inside a sandbox that still runs. [Section 8.3](#s-symptom-cause-fix) shows that actor: RUNNING for at least 14 s, with a 503 on every request. A design for this detection is open in the public issues.
+Substrate marks an actor crashed when its sandbox dies or when the kernel kills it for memory. It does not notice a process that exits inside a sandbox that still runs. [Section 8.3](#s-symptom-cause-fix) shows that actor. A design for this detection is open in the public issues.
+
+**We measured** two such actors on the x86 server guest (24 vCPU, 47 GB, nested KVM). Both read RUNNING for 20 minutes 36 s after the exit, in 81 and 80 samples. All 20 requests to one of them returned 503. Each kept 1,000 millicores of its worker for all that time. The first suspend call failed and marked the actor crashed. We did not watch longer than 20 minutes, and we did not restart the worker.
 
 It also does not mark a running actor whose node stops. On a cluster with two worker nodes, that actor read RUNNING for the 10 minutes of our probe. Each of 150 requests got a 503.
 
@@ -76,7 +78,11 @@ The ingress allowlist holds client identities, and each listed client can reach 
 
 ### Manual key rotation
 
-The key that signs actor JWTs lives in a pool that an operator edits. The CLI has `kubectl ate admin add-jwt-key`, `activate-jwt-key`, and `remove-jwt-key`, and the documentation gives the waits between them. No component rotates the key on a schedule. [Section 5.3](#s-actor-jwts) covers the tokens. We did not run a rotation.
+The key that signs actor JWTs lives in a pool that an operator edits. The CLI has `kubectl ate admin add-jwt-key`, `activate-jwt-key`, and `remove-jwt-key`, and the documentation gives the waits between them. No component rotates the key on a schedule. [Section 5.3](#s-actor-jwts) covers the tokens. Our install had one key, and our decoded token named it. We did not run a rotation.
+
+### A suspend does not wait for requests
+
+`SuspendActor` stops the sandbox at once. A request that is open at that moment gets a 503, and the suspend call still reports success. We saw this in both suspend modes, as [section 3.3](#s-suspendactor-and-resumeactor) shows. The caller of the suspend must know that the actor is idle.
 
 ### Preview features are off
 
@@ -88,7 +94,27 @@ Three features exist behind a server flag and a client flag. All three are off b
 | `GoldenEgressPolicy` | an egress policy for the actor that builds the golden snapshot |
 | `PerTemplateSnapshotLocation` | a snapshot location in each template, in place of one for the cluster |
 
-To use one, start every component with `--preview` and its name, and pass `--preview` to `kubectl ate`. A request without the client flag behaves as if the feature were off. We ran every experiment with `--preview=` empty, so this manual describes none of the three in use.
+To use one, start every component with `--preview` and its name, and pass `--preview` to `kubectl ate`. A request without the client flag behaves as if the feature were off. We tried all four combinations with a template that has a `goldenEgressPolicy` field.
+
+| Server `--preview` | `kubectl ate --preview` | Result of `create actor-template` |
+|---|---|---|
+| empty | no | `InvalidArgument desc = actor_template.golden_egress_policy: Forbidden` |
+| empty | yes | the same error |
+| `GoldenEgressPolicy` | no | the same error |
+| `GoldenEgressPolicy` | yes | accepted, and the golden tag was ready within 30 s |
+
+```listing
+title: the error when one of the two switches is missing
+source: capture/lab/V-validation/10-preview-feature/10-preview.tsv
+lang: text
+note: One line of the trace, with the server flag on and the client flag missing.
+---
+2026-11-12T13:06:36.842Z	on	no-flag	Error: failed to create actor template: rpc error: code = InvalidArgument desc = actor_template.golden_egress_policy: Forbidden 
+```
+
+We ran each combination once on the x86 server guest. The error does not name the preview feature or the flag, so you must know that the field is a preview field. Once the template existed, `kubectl ate get` read it without the client flag.
+
+Our test had two limits. We set the flag on `ate-api-server` only, with an edit of its Deployment, and the documented way sets it on every component through `ate-setup`. We also did not test that the egress rule of the golden actor works. Every other experiment ran with `--preview=` empty, so this manual describes none of the three features in use.
 
 ### Smaller limits that will reach you
 
@@ -108,13 +134,15 @@ Most measured numbers in this manual came from clusters with one kind node. One 
 |---|---|
 | Clouds | GKE, and every other managed Kubernetes service |
 | Storage | Google Cloud Storage, Amazon S3, any bucket across a network, an external Postgres, a restore of either store |
-| Scale | more than 131 actors in one cluster, more than 24 parallel turns, more than two worker nodes, more than 20 actors across nodes |
+| Scale | more than 131 actors in one cluster, more than 24 parallel turns, more than 16 resumes at the same instant inside the capacity of a pool, a burst through the ingress of the router, more than two worker nodes, more than 20 actors across nodes |
 | Sandbox | the microVM class on arm64, with agentgateway, with a resume from the object store, above 500 MiB, and across CPU models. Also images with an init system, non-root images, large root filesystems |
 | Agents | a real model behind kagent, the codex and claude harnesses, MCP servers through the egress gateway |
-| Lifecycle | an upgrade, a key rotation, a worker drain, tags that you create from a suspended actor |
-| Failure | the three outages on agentgateway, egress during an outage, a router restart, an egress restart, a `RevertActor` sent after the workers of a stopped node are marked unavailable, a node that is alive and unreachable, a node loss on the microVM class, a pool with spare workers on a third node |
+| Lifecycle | an upgrade, a worker drain, tags that you create from a suspended actor, a resume at the two lower fidelities for an application with a long start on this guest |
+| Identity | the signature check of an actor JWT with the published key, a key rotation, federation with a second issuer or a cloud provider, a second token issuer for clients |
+| Snapshots | why the object store copy of the Python actor was half of its node copy, and equal for random bytes |
+| Failure | a dead process that stays `RUNNING` for more than 20 minutes or across a worker restart, the three outages on agentgateway, egress during an outage, a router restart, an egress restart, a `RevertActor` sent after the workers of a stopped node are marked unavailable, a node that is alive and unreachable, a node loss on the microVM class, a pool with spare workers on a third node |
 | Apple silicon | actors above 200 MiB, a resume from the object store |
-| Preview | all three preview features |
+| Preview | `ExternalVolumes` and `PerTemplateSnapshotLocation` on upstream Substrate, the flag on every component, and the behaviour of a golden egress policy |
 
 Where a section states a fact from these areas, it comes from the code or the documentation at the tag, and the text says so.
 
@@ -124,8 +152,9 @@ Where a section states a fact from these areas, it comes from the code or the do
 - Run more than one router replica before you depend on the cluster, and test it.
 - Watch for the `upstream connect error` 503 to find a dead process or a dead node.
 - Plan for a stopped node as an outage, because no actor left a dead node by itself.
-- Leave preview features off unless you accept that this manual did not test them.
+- Leave preview features off unless you accept that this manual tested only how to turn one on.
+- Suspend only idle actors, because a suspend cuts an open request.
 - Read each claim about GKE, remote buckets, and upgrades as documentation, not as a measurement.
 ```
 
-Sources: api/ateapi/v1/ateapi.proto (Resources, RequestActorSuspend, AccessPolicy), internal/preview/preview.go, api/infra/k8s/ate/v1/workerpool_types.go (replicas and the scale subresource), manifests/ate-install/ate-api-server.yaml, ate-idp-server.yaml, atenet-router.yaml, atenet-egress.yaml, ate-controller.yaml, pod-certificate-controller.yaml and postgres/postgres.yaml (replica counts), cmd/kubectl-ate/internal/cmd/admin.go, cmd/ate-setup/commands.md (the ingress allowlist) at v1.0.0; docs/guides/actor-jwt-key-rotation.md, docs/dev/preview-gates.md, docs/reference/api-guide.md and docs/reference/sandbox-classes.md at v1.0.0; issues #3775 and #2972 (dead process detection), #3441 (overcommit), #3589 (ingress authorization), #3203 (storage plugins), #3602 (durable directory size), #3347 (name reuse), #3285 (open connections); capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/96-controller-events.log, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/summary/microvm-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/parallel/, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/kagent-turns-x86.json.
+Sources: api/ateapi/v1/ateapi.proto (Resources, RequestActorSuspend, AccessPolicy), internal/preview/preview.go, api/infra/k8s/ate/v1/workerpool_types.go (replicas and the scale subresource), manifests/ate-install/ate-api-server.yaml, ate-idp-server.yaml, atenet-router.yaml, atenet-egress.yaml, ate-controller.yaml, pod-certificate-controller.yaml and postgres/postgres.yaml (replica counts), cmd/kubectl-ate/internal/cmd/admin.go, cmd/ate-setup/commands.md (the ingress allowlist) at v1.0.0; docs/guides/actor-jwt-key-rotation.md, docs/dev/preview-gates.md, docs/reference/api-guide.md and docs/reference/sandbox-classes.md at v1.0.0; issues #3775 and #2972 (dead process detection), #3441 (overcommit), #3589 (ingress authorization), #3203 (storage plugins), #3602 (durable directory size), #3347 (name reuse), #3285 (open connections); capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/96-controller-events.log, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/summary/microvm-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/parallel/, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/V-validation/10-preview-feature/10-preview.tsv, capture/lab/V-validation/10-preview-feature/tmpl-gep.yaml, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv, capture/lab/V-validation/09-actor-jwt/16-jwks-key-ids.json, capture/lab/V-validation/03-parallel-resume/24-summary.tsv.

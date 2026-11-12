@@ -1,0 +1,59 @@
+actorTemplate:
+  atespace: lab-v
+  name: mv-b
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:50:58.384040363Z"
+  name: mv1
+  uid: 8aede96f-43ce-439a-a027-95a1841135a1
+  updateTime: "2026-11-12T12:51:03.371722699Z"
+  version: "12"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 3
+  snapshots:
+  - actorTemplateUid: d2dbff77-ca10-4f44-8edd-aad92d6c47b0
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-v/actors/8aede96f-43ce-439a-a027-95a1841135a1/snapshots/15c3848f-3568-494c-98af-42793ceeeebf
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 3
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 15c3848f-3568-494c-98af-42793ceeeebf
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: kind-control-plane
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: 5c29a997-aa08-4804-a995-da57683135ca
+    workerEpoch: "1"
+    workerNamespace: lab-v
+    workerPod: vpool-69595c64bf-p4slt
+    workerPodIps:
+    - 10.244.0.31
+    workerPodUid: 5c29a997-aa08-4804-a995-da57683135ca
+    workerPool: vpool
+    workerSpiffeId: spiffe://cluster.local/ns/lab-v/sa/ateworker

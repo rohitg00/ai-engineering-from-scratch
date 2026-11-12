@@ -1,0 +1,6 @@
+metadata:
+  name: default
+bindings:
+- role: viewer
+  members:
+  - user:system:serviceaccount:ate-users:alice

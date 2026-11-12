@@ -1,0 +1,311 @@
+Forwarding from 127.0.0.1:8083 -> 8083
+Forwarding from [::1]:8083 -> 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:16.396772   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34116: write tcp4 127.0.0.1:8083->127.0.0.1:34116: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:17.150582   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34152: write tcp4 127.0.0.1:8083->127.0.0.1:34152: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:17.200255   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34158: write tcp4 127.0.0.1:8083->127.0.0.1:34158: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:17.339621   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34172: write tcp4 127.0.0.1:8083->127.0.0.1:34172: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:17.385316   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34192: write tcp4 127.0.0.1:8083->127.0.0.1:34192: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:17.525641   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34198: write tcp4 127.0.0.1:8083->127.0.0.1:34198: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:17.574761   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34202: write tcp4 127.0.0.1:8083->127.0.0.1:34202: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:17.721829   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34212: write tcp4 127.0.0.1:8083->127.0.0.1:34212: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:17.763934   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34234: write tcp4 127.0.0.1:8083->127.0.0.1:34234: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:17.906996   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34258: write tcp4 127.0.0.1:8083->127.0.0.1:34258: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:17.949573   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34270: write tcp4 127.0.0.1:8083->127.0.0.1:34270: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:18.103730   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34276: write tcp4 127.0.0.1:8083->127.0.0.1:34276: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:18.148927   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34282: write tcp4 127.0.0.1:8083->127.0.0.1:34282: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:18.290335   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34302: write tcp4 127.0.0.1:8083->127.0.0.1:34302: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:18.338504   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34334: write tcp4 127.0.0.1:8083->127.0.0.1:34334: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:18.470378   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34342: write tcp4 127.0.0.1:8083->127.0.0.1:34342: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:18.516038   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34364: write tcp4 127.0.0.1:8083->127.0.0.1:34364: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:20.679406   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34390: write tcp4 127.0.0.1:8083->127.0.0.1:34390: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+E1112 10:26:20.685419   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34434: write tcp4 127.0.0.1:8083->127.0.0.1:34434: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+E1112 10:26:20.689294   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34468: write tcp4 127.0.0.1:8083->127.0.0.1:34468: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:20.694138   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34494: write tcp4 127.0.0.1:8083->127.0.0.1:34494: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:26:20.708576   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34628: write tcp4 127.0.0.1:8083->127.0.0.1:34628: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:22.742301   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34512: write tcp4 127.0.0.1:8083->127.0.0.1:34512: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:23.147423   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34672: write tcp4 127.0.0.1:8083->127.0.0.1:34672: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:23.244544   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34456: write tcp4 127.0.0.1:8083->127.0.0.1:34456: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:23.442253   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34546: write tcp4 127.0.0.1:8083->127.0.0.1:34546: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:23.643581   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34570: write tcp4 127.0.0.1:8083->127.0.0.1:34570: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:26:23.843919   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:34554: write tcp4 127.0.0.1:8083->127.0.0.1:34554: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:39.327609   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49834: write tcp4 127.0.0.1:8083->127.0.0.1:49834: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:40.084984   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49864: write tcp4 127.0.0.1:8083->127.0.0.1:49864: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:40.153786   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49886: write tcp4 127.0.0.1:8083->127.0.0.1:49886: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:40.292922   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49894: write tcp4 127.0.0.1:8083->127.0.0.1:49894: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:40.339786   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49906: write tcp4 127.0.0.1:8083->127.0.0.1:49906: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:40.481128   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49926: write tcp4 127.0.0.1:8083->127.0.0.1:49926: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:40.530100   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49952: write tcp4 127.0.0.1:8083->127.0.0.1:49952: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+E1112 10:29:40.667384   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49966: write tcp4 127.0.0.1:8083->127.0.0.1:49966: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+E1112 10:29:40.711240   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:49988: write tcp4 127.0.0.1:8083->127.0.0.1:49988: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:40.858016   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:50020: write tcp4 127.0.0.1:8083->127.0.0.1:50020: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:40.900427   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:50026: write tcp4 127.0.0.1:8083->127.0.0.1:50026: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:41.052000   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:50042: write tcp4 127.0.0.1:8083->127.0.0.1:50042: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:41.105042   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:50062: write tcp4 127.0.0.1:8083->127.0.0.1:50062: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:41.246231   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:50076: write tcp4 127.0.0.1:8083->127.0.0.1:50076: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:41.361320   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:50094: write tcp4 127.0.0.1:8083->127.0.0.1:50094: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:41.498488   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:50122: write tcp4 127.0.0.1:8083->127.0.0.1:50122: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:41.542827   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:50140: write tcp4 127.0.0.1:8083->127.0.0.1:50140: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:42.162286   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43300: write tcp4 127.0.0.1:8083->127.0.0.1:43300: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:42.325912   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43316: write tcp4 127.0.0.1:8083->127.0.0.1:43316: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:43.704763   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43348: write tcp4 127.0.0.1:8083->127.0.0.1:43348: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:43.722783   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43430: write tcp4 127.0.0.1:8083->127.0.0.1:43430: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:43.732191   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43528: write tcp4 127.0.0.1:8083->127.0.0.1:43528: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:43.732491   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43514: write tcp4 127.0.0.1:8083->127.0.0.1:43514: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+E1112 10:29:46.245588   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43566: write tcp4 127.0.0.1:8083->127.0.0.1:43566: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:46.344833   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43480: write tcp4 127.0.0.1:8083->127.0.0.1:43480: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:46.352334   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43464: write tcp4 127.0.0.1:8083->127.0.0.1:43464: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:46.645638   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43386: write tcp4 127.0.0.1:8083->127.0.0.1:43386: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:46.944579   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43602: write tcp4 127.0.0.1:8083->127.0.0.1:43602: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:47.141661   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43492: write tcp4 127.0.0.1:8083->127.0.0.1:43492: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:53.307931   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58830: write tcp4 127.0.0.1:8083->127.0.0.1:58830: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:53.651193   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58846: write tcp4 127.0.0.1:8083->127.0.0.1:58846: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:53.799181   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58864: write tcp4 127.0.0.1:8083->127.0.0.1:58864: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:53.853363   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58886: write tcp4 127.0.0.1:8083->127.0.0.1:58886: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:54.002298   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58896: write tcp4 127.0.0.1:8083->127.0.0.1:58896: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:54.055798   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58914: write tcp4 127.0.0.1:8083->127.0.0.1:58914: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:54.201691   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58922: write tcp4 127.0.0.1:8083->127.0.0.1:58922: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:54.246000   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58936: write tcp4 127.0.0.1:8083->127.0.0.1:58936: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:54.394655   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58948: write tcp4 127.0.0.1:8083->127.0.0.1:58948: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:54.442906   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58972: write tcp4 127.0.0.1:8083->127.0.0.1:58972: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:54.599390   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:58992: write tcp4 127.0.0.1:8083->127.0.0.1:58992: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:54.654809   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59020: write tcp4 127.0.0.1:8083->127.0.0.1:59020: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:54.797005   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59038: write tcp4 127.0.0.1:8083->127.0.0.1:59038: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:54.839232   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59048: write tcp4 127.0.0.1:8083->127.0.0.1:59048: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:54.979659   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59060: write tcp4 127.0.0.1:8083->127.0.0.1:59060: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:55.024355   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59082: write tcp4 127.0.0.1:8083->127.0.0.1:59082: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:55.163031   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59106: write tcp4 127.0.0.1:8083->127.0.0.1:59106: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:55.220860   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59118: write tcp4 127.0.0.1:8083->127.0.0.1:59118: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:55.366113   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59134: write tcp4 127.0.0.1:8083->127.0.0.1:59134: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:55.404888   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59140: write tcp4 127.0.0.1:8083->127.0.0.1:59140: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:55.546104   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59170: write tcp4 127.0.0.1:8083->127.0.0.1:59170: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:55.588697   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59184: write tcp4 127.0.0.1:8083->127.0.0.1:59184: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:55.730575   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59200: write tcp4 127.0.0.1:8083->127.0.0.1:59200: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:55.775072   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59214: write tcp4 127.0.0.1:8083->127.0.0.1:59214: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:55.924892   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59228: write tcp4 127.0.0.1:8083->127.0.0.1:59228: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:55.967572   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59256: write tcp4 127.0.0.1:8083->127.0.0.1:59256: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:56.118981   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59268: write tcp4 127.0.0.1:8083->127.0.0.1:59268: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:56.162881   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59292: write tcp4 127.0.0.1:8083->127.0.0.1:59292: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:56.306657   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59318: write tcp4 127.0.0.1:8083->127.0.0.1:59318: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:56.370756   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59326: write tcp4 127.0.0.1:8083->127.0.0.1:59326: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:56.511680   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59340: write tcp4 127.0.0.1:8083->127.0.0.1:59340: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:56.552272   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59364: write tcp4 127.0.0.1:8083->127.0.0.1:59364: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:56.697802   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59390: write tcp4 127.0.0.1:8083->127.0.0.1:59390: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:56.872710   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59416: write tcp4 127.0.0.1:8083->127.0.0.1:59416: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:56.913261   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59426: write tcp4 127.0.0.1:8083->127.0.0.1:59426: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:57.059839   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59438: write tcp4 127.0.0.1:8083->127.0.0.1:59438: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:57.100487   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59456: write tcp4 127.0.0.1:8083->127.0.0.1:59456: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:57.242215   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59470: write tcp4 127.0.0.1:8083->127.0.0.1:59470: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:57.281935   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59486: write tcp4 127.0.0.1:8083->127.0.0.1:59486: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:57.423808   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59500: write tcp4 127.0.0.1:8083->127.0.0.1:59500: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:57.466890   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59504: write tcp4 127.0.0.1:8083->127.0.0.1:59504: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:57.611245   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59532: write tcp4 127.0.0.1:8083->127.0.0.1:59532: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:57.653760   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59560: write tcp4 127.0.0.1:8083->127.0.0.1:59560: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:57.808263   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59588: write tcp4 127.0.0.1:8083->127.0.0.1:59588: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:29:57.855117   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59612: write tcp4 127.0.0.1:8083->127.0.0.1:59612: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:29:58.013166   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59636: write tcp4 127.0.0.1:8083->127.0.0.1:59636: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:30:00.241784   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59664: write tcp4 127.0.0.1:8083->127.0.0.1:59664: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:30:00.306996   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59870: write tcp4 127.0.0.1:8083->127.0.0.1:59870: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:30:00.310992   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59912: write tcp4 127.0.0.1:8083->127.0.0.1:59912: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:00.311009   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59934: write tcp4 127.0.0.1:8083->127.0.0.1:59934: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:30:00.315240   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60022: write tcp4 127.0.0.1:8083->127.0.0.1:60022: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:30:00.321617   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60054: write tcp4 127.0.0.1:8083->127.0.0.1:60054: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:30:00.358479   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60288: write tcp4 127.0.0.1:8083->127.0.0.1:60288: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:30:04.353556   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59766: write tcp4 127.0.0.1:8083->127.0.0.1:59766: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:04.649850   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59688: write tcp4 127.0.0.1:8083->127.0.0.1:59688: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:04.844575   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59950: write tcp4 127.0.0.1:8083->127.0.0.1:59950: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:04.945751   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60184: write tcp4 127.0.0.1:8083->127.0.0.1:60184: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:05.040340   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60086: write tcp4 127.0.0.1:8083->127.0.0.1:60086: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:05.147761   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60072: write tcp4 127.0.0.1:8083->127.0.0.1:60072: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:05.248734   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60416: write tcp4 127.0.0.1:8083->127.0.0.1:60416: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:05.248869   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59920: write tcp4 127.0.0.1:8083->127.0.0.1:59920: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:05.346498   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:59812: write tcp4 127.0.0.1:8083->127.0.0.1:59812: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:05.543536   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60120: write tcp4 127.0.0.1:8083->127.0.0.1:60120: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:05.551236   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60444: write tcp4 127.0.0.1:8083->127.0.0.1:60444: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:06.542016   70656 portforward.go:525] "Error copying from local connection to remote stream" err="writeto tcp4 127.0.0.1:8083->127.0.0.1:60110: read tcp4 127.0.0.1:8083->127.0.0.1:60110: read: connection reset by peer" localPort=8083 remotePort=8083
+E1112 10:30:07.041870   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60192: write tcp4 127.0.0.1:8083->127.0.0.1:60192: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:07.246080   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60208: write tcp4 127.0.0.1:8083->127.0.0.1:60208: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:07.446650   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60490: write tcp4 127.0.0.1:8083->127.0.0.1:60490: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:07.741160   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60220: write tcp4 127.0.0.1:8083->127.0.0.1:60220: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:07.851135   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60458: write tcp4 127.0.0.1:8083->127.0.0.1:60458: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:30:07.943404   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:60148: write tcp4 127.0.0.1:8083->127.0.0.1:60148: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:32:51.411225   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43168: write tcp4 127.0.0.1:8083->127.0.0.1:43168: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:32:51.476576   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:43176: write tcp4 127.0.0.1:8083->127.0.0.1:43176: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:32:51.615787   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:38344: write tcp4 127.0.0.1:8083->127.0.0.1:38344: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:32:52.554147   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:38364: write tcp4 127.0.0.1:8083->127.0.0.1:38364: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:32:54.931879   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:38382: write tcp4 127.0.0.1:8083->127.0.0.1:38382: write: broken pipe" localPort=8083 remotePort=8083
+E1112 10:32:55.054145   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:38396: write tcp4 127.0.0.1:8083->127.0.0.1:38396: write: broken pipe" localPort=8083 remotePort=8083
+Handling connection for 8083
+Handling connection for 8083
+E1112 10:33:02.464712   70656 portforward.go:512] "Error copying from remote stream to local connection" err="readfrom tcp4 127.0.0.1:8083->127.0.0.1:41434: write tcp4 127.0.0.1:8083->127.0.0.1:41434: write: broken pipe" localPort=8083 remotePort=8083

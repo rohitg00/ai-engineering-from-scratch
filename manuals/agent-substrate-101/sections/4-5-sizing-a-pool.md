@@ -40,6 +40,16 @@ caption: Each dot is one turn, in the order in which the turns completed. The do
 
 The second result looks like free capacity, and it is the opposite. That worker promised every CPU of the node to actors, and the control plane runs on the same node. Set limits, as [WorkerPool](#s-workerpool) explains.
 
+The CPU value of a template is a booking for placement. We saw no throttling from it.
+
+**We measured** one command on a second x86 server guest (16 vCPU, 31 GB), with n=1. It used 2.0 seconds of CPU time and finished in 2.38 seconds under a value of 500 millicores. [A tool sandbox](#s-a-tool-sandbox) shows that run. So a low value packs more actors on a worker, and it does not protect one actor from the next.
+
+A burst of resumes inside the capacity of the pool is cheap.
+
+**We measured** 16 resumes at the same instant on the x86 server guest (24 vCPU, 47 GB, nested KVM), 80 requests in five rounds. The median was 0.37 seconds, against 0.23 seconds for one resume alone, and all 80 returned 200. [Request parking](#s-request-parking) has the chart.
+
+A dead actor counts as a running one. An actor whose process has exited stays `ACTOR_STATE_RUNNING`, and it keeps its booking. Two such actors each held 1,000 millicores of a worker for the 20 minutes of our watch. A burst of 32 resumes then found 14 free places in a pool of 16. [CRASHED and RevertActor](#s-crashed-and-revertactor) shows how to find and free them.
+
 Two reports by other people help you choose the CPU limit of an actor. We did not repeat either.
 
 A contributor measured real CPU use on workers that were fully booked, in issue 3441 {{issue #3441}}. Seven actors with 1 CPU each used between 0.55 and 0.8 cores together, at the median. A generous limit therefore costs you most of a worker, because Substrate at v1.0.0 has no overcommit.
@@ -62,7 +72,7 @@ caption: Violet is disk on the node, in the snapshot directory and in a cache. T
 
 Three rules come out of those numbers:
 
-- **A memory snapshot is as large as the memory.** An actor with 200 MiB of random bytes made a snapshot of 201.9 MiB. Random bytes are the worst case. Memory that compresses makes a smaller copy in the object store. On the microVM class the snapshot also holds the guest, and it was 59 to 70 MiB larger, as [sandbox classes](#s-sandbox-classes) shows.
+- **A memory snapshot is as large as the memory that holds data.** An actor with 200 MiB of random bytes made a snapshot of 201.9 MiB. Random bytes are the worst case. The same actor with 200 MiB of zero bytes made a snapshot of 4.0 MiB, and with half of each, 103.8 MiB. On the microVM class the snapshot also holds the guest, and it was 59 to 70 MiB larger, as [sandbox classes](#s-sandbox-classes) shows.
 - **You pay two times for 30 minutes.** With the default timers, the node keeps its copy for 30 minutes after the suspend. The object store has a second copy after 5 minutes. [Snapshot fidelity, and where a snapshot lives](#s-snapshot-fidelity-and-where-a-snapshot-lives) has the timeline.
 - **Golden snapshots stay.** The 2,064 MiB that remained belong to the five templates. Deleting actors does not free that space.
 
@@ -99,10 +109,11 @@ Read the table as four separate limits: missing limits, node memory, Postgres ro
 
 ```takeaways
 - Compute running actors per worker from declared limits, never from real use.
+- Count an actor with a dead process as running, until a suspend marks it crashed.
 - Keep actor CPU limits at 250 millicores or more to protect resume time.
 - Size node disk as suspends in 30 minutes times the snapshot size.
 - Size the pool for the peak, because Substrate has no autoscaler.
 - Watch node memory, node disk, and Postgres before you add CPU.
 ```
 
-Sources: capture/lab/summary/microvm-x86.json, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/summary/parking-x86.json, capture/lab/K-kagent/parallel/workers-during.txt, capture/lab/K-kagent/parallel/states-during.txt, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/D-durability/10-watch-part1.tsv; cmd/ateapi/internal/scheduling/scheduling.go, cmd/ateworker-gvisor/memory.go, cmd/ateworker-gvisor/main.go, api/infra/k8s/ate/v1/workerpool_types.go, cmd/atelet/main.go at v1.0.0; docs/reference/api-guide.md, docs/guides/observability.md, docs/guides/node-storage.md at v1.0.0; issues https://github.com/agent-substrate/substrate/issues/3479, https://github.com/agent-substrate/substrate/issues/3408, https://github.com/agent-substrate/substrate/issues/3702, https://github.com/agent-substrate/substrate/issues/3101, https://github.com/agent-substrate/substrate/issues/3441, https://github.com/agent-substrate/substrate/issues/3431.
+Sources: capture/lab/summary/microvm-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/demos-x86.json, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/summary/parking-x86.json, capture/lab/K-kagent/parallel/workers-during.txt, capture/lab/K-kagent/parallel/states-during.txt, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/D-durability/10-watch-part1.tsv; cmd/ateapi/internal/scheduling/scheduling.go, cmd/ateworker-gvisor/memory.go, cmd/ateworker-gvisor/main.go, api/infra/k8s/ate/v1/workerpool_types.go, cmd/atelet/main.go at v1.0.0; docs/reference/api-guide.md, docs/guides/observability.md, docs/guides/node-storage.md at v1.0.0; issues https://github.com/agent-substrate/substrate/issues/3479, https://github.com/agent-substrate/substrate/issues/3408, https://github.com/agent-substrate/substrate/issues/3702, https://github.com/agent-substrate/substrate/issues/3101, https://github.com/agent-substrate/substrate/issues/3441, https://github.com/agent-substrate/substrate/issues/3431.

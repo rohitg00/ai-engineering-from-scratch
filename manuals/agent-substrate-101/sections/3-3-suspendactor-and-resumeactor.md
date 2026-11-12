@@ -1,6 +1,6 @@
 # SuspendActor and ResumeActor
 
-> Substrate suspends an actor only when a caller asks, and on our test server a resume cost about 2 ms for each MiB held.
+> Substrate suspends an actor only when a caller asks, and on our test server a resume cost about 2 ms for each MiB that holds data.
 
 You created an actor in the afternoon, sent it five requests, and went home. The quickstart told you that Substrate checkpoints an idle actor. The next morning the actor is still `ACTOR_STATE_RUNNING`, and it still holds a full CPU of its worker. Nothing is broken. Substrate v1.0.0 has no idle timer.
 
@@ -70,6 +70,26 @@ claim: At 1,000 MiB a synchronous suspend took 6.4 seconds, and the default asyn
 caption: Each dot is one suspend, and each line joins the medians of one mode. Violet returns with the snapshot on the node, and teal returns after the upload. Measured on the x86 server guest. From capture/lab/summary/suspend-x86.json.
 ```
 
+## A suspend does not wait for open requests
+
+A suspend stops the sandbox at once, also when the actor is in the middle of a request. We gave an actor a handler that sleeps 10 seconds, sent it one request, and suspended the actor 2 seconds later.
+
+```listing
+title: a suspend 2 seconds into a 10 second request
+source: capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv
+lang: text
+note: Three lines of the asynchronous run. The end of the suspend line is cut, and the lines between them are cut.
+---
+2026-11-12T12:52:10.848Z	async	slow-request-ended	503	2.218030	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T12:52:10.992Z	async	suspend-2s-into-request	0.376s	ATESPACE   NAME       TEMPLATE       STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-v      sl-async   lab-v/tiny-0   ACTOR_STATE_SUSPENDED…
+…
+2026-11-12T12:52:11.431Z	async	next-call	200	0.228121	tag=v3 count=2 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.4 child[none]
+```
+
+**We measured** this once in each mode on the x86 server guest (24 vCPU, 47 GB, nested KVM). The client of the open request got a 503 after 2.2 seconds in both modes. The suspend call returned success in 0.38 seconds in the asynchronous mode and 0.48 seconds in the synchronous mode, with no warning. The next request resumed the actor in 0.23 seconds, and the count continued at 2.
+
+Substrate does not replay the request that was cut. The snapshot holds the actor in the middle of its handler, and the client is gone when the handler ends. So the caller of `SuspendActor` must know that the actor is idle. A harness that suspends after each turn knows it. A timer that suspends by clock does not.
+
 ## ResumeActor: who calls it and where it runs
 
 **ResumeActor:** the call that places a suspended actor on a worker and restores its newest snapshot. The router makes this call for every request, so a plain request is enough to start an actor. `kubectl ate resume actor` makes the same call with no request.
@@ -113,12 +133,63 @@ The download took 1.17 seconds of the 1.50 seconds that atelet counted. The work
 
 Our rule of thumb for this machine has two numbers. A resume costs a fixed 0.2 seconds, plus about 2 ms for each MiB from the node. From the object store, it costs about twice as much for each MiB. The rule has four conditions, and you must check each one against your case.
 
-- The memory was random, so no layer could compress it. Real heaps compress, and we did not measure how much that helps.
+- The memory was random, so every MiB held data. The rule counts the memory that holds data, as the next subsection shows.
 - The object store ran in the same cluster and on the same disk. We did not test a remote bucket, which adds its own transfer time.
 - The sandbox was gVisor. On the microVM class the same test cost a fixed 0.3 seconds plus about 1 ms for each MiB, up to 500 MiB. [Section 4.2](#s-sandbox-classes) has the comparison.
 - The machine was a nested guest on a server CPU from 2019.
 
 The project states that a resume takes less than 500 ms, and it gives no actor size and no machine. On our guest, that holds up to about 200 MiB from the node and up to about 50 MiB from the object store.
+
+## The rule counts memory that holds data
+
+Random bytes are the worst case for a snapshot. We repeated the node path with three kinds of memory at 200 and 500 MiB.
+
+| Memory held | All zero bytes | Half zero, half random | All random bytes |
+|---|---|---|---|
+| 200 MiB | 0.24 s | 0.28 s | 0.42 s |
+| 500 MiB | 0.23 s | 0.57 s | 1.07 s |
+
+**We measured** 10 resumes from the node for each cell, on the x86 server guest (24 vCPU, 47 GB, nested KVM). Each cell is the median, and the sandbox was gVisor. All 60 resumes returned 200, and every count continued. The random column repeats the earlier table within 12 percent.
+
+An actor with 500 MiB of zero pages resumed as fast as an empty actor. Half the data cost about half the extra time. So put the MiB that hold data into the rule, and not the limit of the template. [Section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) shows that the snapshot size follows the same bytes.
+
+## An ordinary runtime: Python with 245 MiB
+
+Ballast is not an application. We checked the rule with a Python server that builds a dict of one million random 100-byte values at start. It keeps a counter in memory and a SQLite file on a `durableDir` volume.
+
+```listing
+title: the Python actor, from its start to its first table
+source: capture/lab/V-validation/02-python-runtime/img/app.py
+lang: python
+note: The first eleven lines of the file. The HTTP handler below them is cut.
+---
+import os, resource, sqlite3, time
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+started = time.time()
+state = {"count": 0, "ready": False}
+data = {i: os.urandom(100) for i in range(1_000_000)}
+os.makedirs("/data", exist_ok=True)
+db = sqlite3.connect("/data/app.db", check_same_thread=False)
+db.execute("create table if not exists hits (n integer)")
+db.commit()
+state["ready"] = True
+…
+```
+
+| Step | Result |
+|---|---|
+| Resume from the node | median 0.41 s, 0.37 to 0.54 s, n=10 |
+| First call of a new actor | median 0.63 s, 0.62 to 0.99 s, n=5 |
+| Asynchronous suspend | median 0.81 s, n=10 |
+| Synchronous suspend | median 1.93 s, n=3 |
+| Snapshot on the node | 215.2 MiB |
+
+**We measured** one actor of the image `python:3.13-slim` on the x86 server guest (24 vCPU, 47 GB, nested KVM). The sandbox was gVisor, the limit was 768 MiB, and the fidelity was memory. The process reported a peak resident size of 245 MiB. All 29 requests returned 200. The memory counter, the SQLite row count, and the dict continued across 13 suspends, and the process ID stayed 1.
+
+The rule holds. It gives 0.2 seconds plus 215 MiB at 2 ms, which is 0.63 seconds, and the measured median was 0.41 seconds. An interpreter heap is not all random data, so the rule is an upper estimate for it.
+
+One detail matters for code that reads a clock. The process reported an age of 32.9 seconds at its first request and 65.1 seconds at its last, 13 suspends later. Under gVisor the clock of the actor does not count the time that it was suspended. [Section 4.2](#s-sandbox-classes) compares the two classes on this point.
 
 ## The same test on Apple silicon
 
@@ -128,15 +199,16 @@ The laptop and the server guest are different machines. Read each table by itsel
 
 ## Our position
 
-Call `SuspendActor` yourself, from the component that knows when a turn ends. Use the asynchronous mode for the normal case, because the caller waits a third as long at 1,000 MiB. Use the synchronous mode before you drain a node, and for any state that you cannot lose. Budget the resume from the memory that your actor holds, not from a headline number.
+Call `SuspendActor` yourself, from the component that knows when a turn ends. Use the asynchronous mode for the normal case, because the caller waits a third as long at 1,000 MiB. Use the synchronous mode before you drain a node, and for any state that you cannot lose. Suspend only an actor that has no open request. Budget the resume from the memory that holds data in your actor, and not from a headline number.
 
 ```takeaways
 - Call SuspendActor from your harness, because Substrate does not suspend an idle actor.
 - Use the default asynchronous mode when the caller must not wait for an upload.
 - Use --mode sync before node maintenance and for state that you cannot lose.
-- Budget 0.2 s plus 2 ms for each MiB for a resume from the node.
+- Suspend an actor only when it has no open request, because the request gets a 503.
+- Budget 0.2 s plus 2 ms for each MiB that holds data, for a resume from the node.
 - Double the cost for each MiB when the snapshot comes from the object store.
-- Measure your own actor, because real memory compresses and ours did not.
+- Measure your own actor, and treat the rule as an upper estimate for a real heap.
 ```
 
-Sources: capture/lab/summary/resume-x86.json, capture/lab/summary/suspend-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/13-workers.txt, capture/lab/C-resume-vs-size/10-local.tsv, capture/lab/C-resume-vs-size/32-object-store.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/C-resume-vs-size/33-atelet-upload-detach.log, capture/lab/C-resume-vs-size/main.go, capture/lab/M-mac-arm64/80-local.tsv, capture/lab/summary/kagent-turns-x86.json. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (SuspendActorRequest, DurabilityMode, ResumeActorRequest), cmd/ateapi/internal/controlapi/workflow_suspend.go, workflow_resume.go, internal/ateworker/suspend (not imported by any binary), docs/reference/api-guide.md (Eviction, ResumeActor, SuspendActor), docs/get-started/quickstart.md, README.md (the resume claim).
+Sources: capture/lab/summary/resume-x86.json, capture/lab/summary/suspend-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/13-workers.txt, capture/lab/C-resume-vs-size/10-local.tsv, capture/lab/C-resume-vs-size/32-object-store.tsv, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/C-resume-vs-size/33-atelet-upload-detach.log, capture/lab/C-resume-vs-size/main.go, capture/lab/M-mac-arm64/80-local.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/V-validation/01-compressible/10-compressible.tsv, capture/lab/V-validation/02-python-runtime/10-python.tsv, capture/lab/V-validation/02-python-runtime/img/app.py, capture/lab/V-validation/02-python-runtime/tmpl-pyagent.yaml, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (SuspendActorRequest, DurabilityMode, ResumeActorRequest), cmd/ateapi/internal/controlapi/workflow_suspend.go, workflow_resume.go, internal/ateworker/suspend (not imported by any binary), docs/reference/api-guide.md (Eviction, ResumeActor, SuspendActor), docs/get-started/quickstart.md, README.md (the resume claim).

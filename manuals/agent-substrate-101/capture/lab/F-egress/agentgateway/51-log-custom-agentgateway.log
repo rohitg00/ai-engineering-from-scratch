@@ -1,0 +1,440 @@
+2026-11-12T11:29:28.928809Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=GoAway { error_code: NO_ERROR, last_stream_id: StreamId(0) }
+2026-11-12T11:29:28.928856Z	debug	h2::proto::connection:Connection{peer=Client}	Connection::poll; connection error	error=GoAway(b"", NO_ERROR, Library)
+2026-11-12T11:29:28.928925Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=GoAway { error_code: NO_ERROR, last_stream_id: StreamId(0) }
+2026-11-12T11:29:28.928958Z	debug	h2::proto::connection:Connection{peer=Client}	Connection::poll; connection error	error=GoAway(b"", NO_ERROR, Library)
+2026-11-12T11:29:28.928971Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=GoAway { error_code: NO_ERROR, last_stream_id: StreamId(0) }
+2026-11-12T11:29:28.929011Z	debug	h2::proto::connection:Connection{peer=Client}	Connection::poll; connection error	error=GoAway(b"", NO_ERROR, Library)
+2026-11-12T11:29:28.929046Z	debug	rustls::common_state:Connection{peer=Client}	Sending warning alert CloseNotify	
+2026-11-12T11:29:28.929067Z	debug	rustls::common_state:Connection{peer=Client}	Sending warning alert CloseNotify	
+2026-11-12T11:29:28.929079Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=GoAway { error_code: NO_ERROR, last_stream_id: StreamId(0) }
+2026-11-12T11:29:28.929110Z	debug	h2::proto::connection:Connection{peer=Client}	Connection::poll; connection error	error=GoAway(b"", NO_ERROR, Library)
+2026-11-12T11:29:28.929138Z	debug	rustls::common_state:Connection{peer=Client}	Sending warning alert CloseNotify	
+2026-11-12T11:29:28.929149Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=GoAway { error_code: NO_ERROR, last_stream_id: StreamId(0) }
+2026-11-12T11:29:28.929176Z	debug	upstream connection	closed	sent=249 recv=325
+2026-11-12T11:29:28.929180Z	debug	h2::proto::connection:Connection{peer=Client}	Connection::poll; connection error	error=GoAway(b"", NO_ERROR, Library)
+2026-11-12T11:29:28.929187Z	debug	upstream connection	closed	sent=133 recv=815
+2026-11-12T11:29:28.929208Z	debug	rustls::common_state:Connection{peer=Client}	Sending warning alert CloseNotify	
+2026-11-12T11:29:28.929239Z	debug	upstream connection	closed	sent=133 recv=815
+2026-11-12T11:29:28.929250Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=GoAway { error_code: NO_ERROR, last_stream_id: StreamId(0) }
+2026-11-12T11:29:28.929268Z	debug	h2::proto::connection:Connection{peer=Client}	Connection::poll; connection error	error=GoAway(b"", NO_ERROR, Library)
+2026-11-12T11:29:28.929290Z	debug	rustls::common_state:Connection{peer=Client}	Sending warning alert CloseNotify	
+2026-11-12T11:29:28.929322Z	debug	upstream connection	closed	sent=4056 recv=9859
+2026-11-12T11:29:28.929356Z	debug	rustls::common_state:Connection{peer=Client}	Sending warning alert CloseNotify	
+2026-11-12T11:29:28.929380Z	debug	upstream connection	closed	sent=249 recv=325
+2026-11-12T11:29:28.929452Z	debug	upstream connection	closed	sent=366 recv=607
+2026-11-12T11:29:54.686129Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=3 frame=Headers { stream_id: StreamId(243), flags: (0x4: END_HEADERS) }
+2026-11-12T11:29:54.686659Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.ate-system.svc.cluster.local. A	
+2026-11-12T11:29:54.686700Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.686707Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.ate-system.svc.cluster.local. IN A
+2026-11-12T11:29:54.686723Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=1.442953s ip=10.96.0.10
+2026-11-12T11:29:54.686743Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.686799Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 14929:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.ate-system.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.686862Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.687850Z	debug	hickory_net::udp::udp_client_stream	received message id: 14929	
+2026-11-12T11:29:54.687924Z	debug	hickory_net::error	response: ; header 14929:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; api.ate-system.svc.ate-system.svc.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.688003Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.ate-system.svc.cluster.local. AAAA	
+2026-11-12T11:29:54.688050Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.688064Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+2026-11-12T11:29:54.688077Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.098659s ip=10.96.0.10
+2026-11-12T11:29:54.688089Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.ate-system.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.688139Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 42941:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+
+2026-11-12T11:29:54.688192Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.688966Z	debug	hickory_net::udp::udp_client_stream	received message id: 42941	
+2026-11-12T11:29:54.689015Z	debug	hickory_net::error	response: ; header 42941:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; api.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.689071Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.svc.cluster.local. A	
+2026-11-12T11:29:54.689087Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.689092Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.svc.cluster.local. IN A
+2026-11-12T11:29:54.689100Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.277662s ip=10.96.0.10
+2026-11-12T11:29:54.689109Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.689138Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 61982:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.689182Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.689927Z	debug	hickory_net::udp::udp_client_stream	received message id: 61982	
+2026-11-12T11:29:54.689956Z	debug	hickory_net::error	response: ; header 61982:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; api.ate-system.svc.svc.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.689980Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.svc.cluster.local. AAAA	
+2026-11-12T11:29:54.689985Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.689989Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.svc.cluster.local. IN AAAA
+2026-11-12T11:29:54.689995Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.456665s ip=10.96.0.10
+2026-11-12T11:29:54.690000Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.690024Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 38807:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.svc.cluster.local. IN AAAA
+
+2026-11-12T11:29:54.690064Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.690886Z	debug	hickory_net::udp::udp_client_stream	received message id: 38807	
+2026-11-12T11:29:54.690958Z	debug	hickory_net::error	response: ; header 38807:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; api.ate-system.svc.svc.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.691032Z	debug	hickory_net::xfer::dns_handle	querying: api.ate-system.svc.cluster.local. A	
+2026-11-12T11:29:54.691049Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("api.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.691055Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=api.ate-system.svc.cluster.local. IN A
+2026-11-12T11:29:54.691068Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.635667s ip=10.96.0.10
+2026-11-12T11:29:54.691080Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("api.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.691126Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 32133:QUERY:RD:NoError:QUERY
+; query
+;; api.ate-system.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.691187Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.692055Z	debug	hickory_net::udp::udp_client_stream	received message id: 32133	
+2026-11-12T11:29:54.692093Z	debug	hickory_net::error	response: ; header 32133:RESPONSE:RD,AA:NoError:QUERY
+; query
+;; api.ate-system.svc.cluster.local. IN A
+; answers 2
+api.ate-system.svc.cluster.local. 30 IN A 10.244.0.41
+api.ate-system.svc.cluster.local. 30 IN A 10.244.0.40
+; authorities 0
+; additionals 0
+	
+2026-11-12T11:29:54.692119Z	debug	hickory_net::error	response: ; header 32133:RESPONSE:RD,AA:NoError:QUERY
+; query
+;; api.ate-system.svc.cluster.local. IN A
+; answers 2
+api.ate-system.svc.cluster.local. 30 IN A 10.244.0.41
+api.ate-system.svc.cluster.local. 30 IN A 10.244.0.40
+; authorities 0
+; additionals 0
+	
+2026-11-12T11:29:54.692279Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Headers { stream_id: StreamId(123), flags: (0x4: END_HEADERS) }
+2026-11-12T11:29:54.692393Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Data { stream_id: StreamId(123) }
+2026-11-12T11:29:54.692411Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Data { stream_id: StreamId(123), flags: (0x1: END_STREAM) }
+2026-11-12T11:29:54.692691Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 22 }
+2026-11-12T11:29:54.692720Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Ping { ack: false, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T11:29:54.692727Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Ping { ack: true, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T11:29:54.696073Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(123), flags: (0x4: END_HEADERS) }
+2026-11-12T11:29:54.696108Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Data { stream_id: StreamId(123) }
+2026-11-12T11:29:54.696143Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(123), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T11:29:54.696208Z	debug	upstream request	target=api.ate-system.svc:443 endpoint=10.244.0.41:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActor http.version=HTTP/2.0 http.status=200 duration="9ms"
+2026-11-12T11:29:54.696297Z	debug	agent_pool::pool	pooling idle connection for PoolKey(Hostname("api.ate-system.svc", 443), 10.244.0.41:443, ConnectionConfig { transport: Plain(Tls(VersionedBackendTLS { hostname_override: None, config: ClientConfig { alpn_protocols: [[104, 50], [104, 116, 116, 112, 47, 49, 46, 49]], check_selected_alpn: true, resumption: Resumption { store: ClientSessionMemoryCache, tls12_resumption: SessionIdOrTickets }, max_fragment_size: None, client_auth_cert_resolver: SingleCertAndKey(CertifiedKey { cert: [CertificateDer(0x3082031b308202cda00302010202146b37bdd92d50dfd2dcaca45ad5b21a87ccb75508300506032b65703025312330210603550403131a4151454e3335354956553642484c5147505a414b50594b434c55301e170d3236313131323131303932375a170d3236313131333131303932375a3025312330210603550403131a4c5445443537354d5a37374a4152565434563432554c47365a493059301306072a8648ce3d020106082a8648ce3d03010703420004766d1a1b949530767e543f24ae8e6dddc72dd8043d5a4aa2baf273063fc4ed1e30ff83baa6cb0dee6ecd4dac640f8d9e778fe9bf28ffbf7b3c9a83befeddfe8ba38201de308201da300e0603551d0f0101ff040403020780301d0603551d250416301406082b0601050507030206082b06010505070301300c0603551d130101ff04023000301f0603551d23041830168014bc063aa630b7fc2f7a0d8157d4a8b200485a6c3830400603551d110439303786357370696666653a2f2f636c75737465722e6c6f63616c2f6e732f6174652d73797374656d2f73612f6174656e65742d65677265737330820136060a2b06010401d679020c01048201267b224e616d657370616365223a226174652d73797374656d222c22536572766963654163636f756e744e616d65223a226174656e65742d656772657373222c22536572766963654163636f756e74554944223a2231626439646462362d373230382d343237632d383632622d633033646636316437633364222c22506f644e616d65223a226174656e65742d6567726573732d373534363738643734372d6878726d38222c22506f64554944223a2236616661353161342d396463622d343639642d613161352d646666313134646130363962222c224e6f64654e616d65223a226b696e642d636f6e74726f6c2d706c616e65222c224e6f6465554944223a2234393434353761622d386631312d343631652d383337312d653039353330363732653035227d300506032b6570034100e5e943e4cb2b34b01f6cf084f1cc0259f06e1500520b8f3132b06e2155511c691170111a21d77ce8afac0195b39cbec3156f897cdacb97ca608595df85210800)], key: EcdsaSigningKey { algorithm: ECDSA }, ocsp: None }), enable_sni: true, key_log: NoKeyLog, enable_secret_extraction: false, enable_early_data: false, require_ems: false, time_provider: DefaultTimeProvider, provider: CryptoProvider { cipher_suites: [TLS13_AES_256_GCM_SHA384, TLS13_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256], kx_groups: [X25519, secp256r1, secp384r1, Hybrid { classical: X25519, post_quantum: MlKem { alg: MlKem768, group: MLKEM768 }, name: X25519MLKEM768, layout: Layout { classical_share_len: 32, post_quantum_client_share_len: 1184, post_quantum_server_share_len: 1088, post_quantum_first: true } }], signature_verification_algorithms: WebPkiSupportedAlgorithms { all: [ .. ], mapping: [ECDSA_NISTP384_SHA384, ECDSA_NISTP256_SHA256, ECDSA_NISTP521_SHA512, ED25519, RSA_PSS_SHA512, RSA_PSS_SHA384, RSA_PSS_SHA256, RSA_PKCS1_SHA512, RSA_PKCS1_SHA384, RSA_PKCS1_SHA256, ML_DSA_44, ML_DSA_65, ML_DSA_87] }, secure_random: AwsLcRs, key_provider: AwsLcRs }, versions: [TLSv1_2, TLSv1_3], verifier: WebPkiServerVerifier { roots: RootCertStore { roots: "(1 roots)" }, crls: [], revocation_check_depth: Chain, unknown_revocation_policy: Allow, revocation_expiration_policy: Ignore, supported: WebPkiSupportedAlgorithms { all: [ .. ], mapping: [ECDSA_NISTP384_SHA384, ECDSA_NISTP256_SHA256, ECDSA_NISTP521_SHA512, ED25519, RSA_PSS_SHA512, RSA_PSS_SHA384, RSA_PSS_SHA256, RSA_PKCS1_SHA512, RSA_PKCS1_SHA384, RSA_PKCS1_SHA256, ML_DSA_44, ML_DSA_65, ML_DSA_87] } }, cert_decompressors: [], cert_compressors: [], cert_compression_cache: Enabled(CompressionCacheInner { size: 4, entries: Mutex { data: [], poisoned: false, .. } }), ech_mode: None, send_ticket_request: None }, expected_identities: None, peer_identity_mode: Istio })), tcp: None, max_connection_duration: None }, HTTP/2.0)	
+2026-11-12T11:29:54.696390Z	debug	proxy::gateway	CONNECT tunnel terminated	bind=bind/wildcard target=10.96.213.47:80 actor_name=f-main actor_uid="bc4c2b6d-26d1-40da-b6f6-01f1ded64f2e" atespace=lab-f
+2026-11-12T11:29:54.696521Z	debug	downstream connection	opened	src.addr=10.244.0.28:52980 protocol=auto
+2026-11-12T11:29:54.696523Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=3 frame=Headers { stream_id: StreamId(243), flags: (0x4: END_HEADERS) }
+2026-11-12T11:29:54.696977Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=3 frame=Data { stream_id: StreamId(243) }
+2026-11-12T11:29:54.697104Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=3 frame=Ping { ack: false, payload: [59, 124, 219, 122, 11, 135, 22, 180] }
+2026-11-12T11:29:54.697243Z	debug	proxy::httpproxy	route for bind	request.id=51 bind=bind/wildcard
+2026-11-12T11:29:54.697269Z	debug	proxy::httpproxy	request before normalization: Request { method: GET, uri: /, version: HTTP/1.1, headers: {"host": "whoami.egress-target.svc.cluster.local", "user-agent": "curl/8.14.1", "accept": "*/*", "x-api-key": "placeholder-custom-header"}, body: Body(BodyInner { needs_inspection: false, representation: Streaming { body: Body(UnsyncBoxBody), inspected_prefix: None }, extensions: {}, deadline: None, recorded: None, observers: BodyObservers(0) }) }	request.id=51
+2026-11-12T11:29:54.697285Z	debug	proxy::httpproxy	request after normalization: Request { method: GET, uri: https://whoami.egress-target.svc.cluster.local/, version: HTTP/1.1, headers: {"x-api-key": "placeholder-custom-header", "user-agent": "curl/8.14.1", "accept": "*/*"}, body: Body(BodyInner { needs_inspection: false, representation: Streaming { body: Body(UnsyncBoxBody), inspected_prefix: None }, extensions: {}, deadline: None, recorded: None, observers: BodyObservers(0) }) }	request.id=51
+2026-11-12T11:29:54.697308Z	debug	proxy::httpproxy	selected listener	request.id=51 bind=bind/wildcard listener=default/default/bind/wildcard/listener1
+2026-11-12T11:29:54.697336Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=3 frame=Ping { ack: true, payload: [59, 124, 219, 122, 11, 135, 22, 180] }
+2026-11-12T11:29:54.697357Z	debug	proxy::httpproxy	selected route	request.id=51 bind=bind/wildcard listener=default/default/bind/wildcard/listener1 route=default/default/bind/wildcard/listener1/default/route1
+2026-11-12T11:29:54.697579Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Headers { stream_id: StreamId(61), flags: (0x4: END_HEADERS) }
+2026-11-12T11:29:54.697684Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Data { stream_id: StreamId(61) }
+2026-11-12T11:29:54.697700Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Data { stream_id: StreamId(61), flags: (0x1: END_STREAM) }
+2026-11-12T11:29:54.698068Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 31 }
+2026-11-12T11:29:54.698089Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Ping { ack: false, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T11:29:54.698093Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Ping { ack: true, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T11:29:54.704800Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(61), flags: (0x4: END_HEADERS) }
+2026-11-12T11:29:54.704826Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Data { stream_id: StreamId(61) }
+2026-11-12T11:29:54.704836Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(61), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T11:29:54.704894Z	debug	upstream request	request.id=51 target=api.ate-system.svc:443 endpoint=10.244.0.40:443 transport=tls http.method=POST http.host=api.ate-system.svc http.path=/substrate.ateapi.v1.Control/GetActorEgressPolicy http.version=HTTP/2.0 http.status=200 duration="7ms"
+2026-11-12T11:29:54.704953Z	debug	agent_pool::pool	pooling idle connection for PoolKey(Hostname("api.ate-system.svc", 443), 10.244.0.40:443, ConnectionConfig { transport: Plain(Tls(VersionedBackendTLS { hostname_override: None, config: ClientConfig { alpn_protocols: [[104, 50], [104, 116, 116, 112, 47, 49, 46, 49]], check_selected_alpn: true, resumption: Resumption { store: ClientSessionMemoryCache, tls12_resumption: SessionIdOrTickets }, max_fragment_size: None, client_auth_cert_resolver: SingleCertAndKey(CertifiedKey { cert: [CertificateDer(0x3082031b308202cda00302010202146b37bdd92d50dfd2dcaca45ad5b21a87ccb75508300506032b65703025312330210603550403131a4151454e3335354956553642484c5147505a414b50594b434c55301e170d3236313131323131303932375a170d3236313131333131303932375a3025312330210603550403131a4c5445443537354d5a37374a4152565434563432554c47365a493059301306072a8648ce3d020106082a8648ce3d03010703420004766d1a1b949530767e543f24ae8e6dddc72dd8043d5a4aa2baf273063fc4ed1e30ff83baa6cb0dee6ecd4dac640f8d9e778fe9bf28ffbf7b3c9a83befeddfe8ba38201de308201da300e0603551d0f0101ff040403020780301d0603551d250416301406082b0601050507030206082b06010505070301300c0603551d130101ff04023000301f0603551d23041830168014bc063aa630b7fc2f7a0d8157d4a8b200485a6c3830400603551d110439303786357370696666653a2f2f636c75737465722e6c6f63616c2f6e732f6174652d73797374656d2f73612f6174656e65742d65677265737330820136060a2b06010401d679020c01048201267b224e616d657370616365223a226174652d73797374656d222c22536572766963654163636f756e744e616d65223a226174656e65742d656772657373222c22536572766963654163636f756e74554944223a2231626439646462362d373230382d343237632d383632622d633033646636316437633364222c22506f644e616d65223a226174656e65742d6567726573732d373534363738643734372d6878726d38222c22506f64554944223a2236616661353161342d396463622d343639642d613161352d646666313134646130363962222c224e6f64654e616d65223a226b696e642d636f6e74726f6c2d706c616e65222c224e6f6465554944223a2234393434353761622d386631312d343631652d383337312d653039353330363732653035227d300506032b6570034100e5e943e4cb2b34b01f6cf084f1cc0259f06e1500520b8f3132b06e2155511c691170111a21d77ce8afac0195b39cbec3156f897cdacb97ca608595df85210800)], key: EcdsaSigningKey { algorithm: ECDSA }, ocsp: None }), enable_sni: true, key_log: NoKeyLog, enable_secret_extraction: false, enable_early_data: false, require_ems: false, time_provider: DefaultTimeProvider, provider: CryptoProvider { cipher_suites: [TLS13_AES_256_GCM_SHA384, TLS13_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256], kx_groups: [X25519, secp256r1, secp384r1, Hybrid { classical: X25519, post_quantum: MlKem { alg: MlKem768, group: MLKEM768 }, name: X25519MLKEM768, layout: Layout { classical_share_len: 32, post_quantum_client_share_len: 1184, post_quantum_server_share_len: 1088, post_quantum_first: true } }], signature_verification_algorithms: WebPkiSupportedAlgorithms { all: [ .. ], mapping: [ECDSA_NISTP384_SHA384, ECDSA_NISTP256_SHA256, ECDSA_NISTP521_SHA512, ED25519, RSA_PSS_SHA512, RSA_PSS_SHA384, RSA_PSS_SHA256, RSA_PKCS1_SHA512, RSA_PKCS1_SHA384, RSA_PKCS1_SHA256, ML_DSA_44, ML_DSA_65, ML_DSA_87] }, secure_random: AwsLcRs, key_provider: AwsLcRs }, versions: [TLSv1_2, TLSv1_3], verifier: WebPkiServerVerifier { roots: RootCertStore { roots: "(1 roots)" }, crls: [], revocation_check_depth: Chain, unknown_revocation_policy: Allow, revocation_expiration_policy: Ignore, supported: WebPkiSupportedAlgorithms { all: [ .. ], mapping: [ECDSA_NISTP384_SHA384, ECDSA_NISTP256_SHA256, ECDSA_NISTP521_SHA512, ED25519, RSA_PSS_SHA512, RSA_PSS_SHA384, RSA_PSS_SHA256, RSA_PKCS1_SHA512, RSA_PKCS1_SHA384, RSA_PKCS1_SHA256, ML_DSA_44, ML_DSA_65, ML_DSA_87] } }, cert_decompressors: [], cert_compressors: [], cert_compression_cache: Enabled(CompressionCacheInner { size: 4, entries: Mutex { data: [], poisoned: false, .. } }), ech_mode: None, send_ticket_request: None }, expected_identities: None, peer_identity_mode: Istio })), tcp: None, max_connection_duration: None }, HTTP/2.0)	request.id=51
+2026-11-12T11:29:54.705146Z	debug	hickory_net::xfer::dns_handle	querying: k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. A	
+2026-11-12T11:29:54.705163Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.705169Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. IN A
+2026-11-12T11:29:54.705181Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=1.888881s ip=10.96.0.10
+2026-11-12T11:29:54.705188Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.705228Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 50148:QUERY:RD:NoError:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.705273Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.706111Z	debug	hickory_net::udp::udp_client_stream	received message id: 50148	
+2026-11-12T11:29:54.706151Z	debug	hickory_net::error	response: ; header 50148:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.706194Z	debug	hickory_net::xfer::dns_handle	querying: k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. AAAA	
+2026-11-12T11:29:54.706210Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.706215Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+2026-11-12T11:29:54.706225Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.067884s ip=10.96.0.10
+2026-11-12T11:29:54.706233Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.706285Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 33413:QUERY:RD:NoError:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+
+2026-11-12T11:29:54.706328Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.707094Z	debug	hickory_net::udp::udp_client_stream	received message id: 33413	
+2026-11-12T11:29:54.707122Z	debug	hickory_net::error	response: ; header 33413:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.ate-system.svc.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.707152Z	debug	hickory_net::xfer::dns_handle	querying: k8s-credential-provider.ate-system.svc.svc.cluster.local. A	
+2026-11-12T11:29:54.707157Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("k8s-credential-provider.ate-system.svc.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.707161Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=k8s-credential-provider.ate-system.svc.svc.cluster.local. IN A
+2026-11-12T11:29:54.707168Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.246886s ip=10.96.0.10
+2026-11-12T11:29:54.707174Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("k8s-credential-provider.ate-system.svc.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.707196Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 57371:QUERY:RD:NoError:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.707230Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.708164Z	debug	hickory_net::udp::udp_client_stream	received message id: 57371	
+2026-11-12T11:29:54.708215Z	debug	hickory_net::error	response: ; header 57371:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.svc.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.708251Z	debug	hickory_net::xfer::dns_handle	querying: k8s-credential-provider.ate-system.svc.svc.cluster.local. AAAA	
+2026-11-12T11:29:54.708267Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("k8s-credential-provider.ate-system.svc.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.708271Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=k8s-credential-provider.ate-system.svc.svc.cluster.local. IN AAAA
+2026-11-12T11:29:54.708278Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.425889s ip=10.96.0.10
+2026-11-12T11:29:54.708284Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("k8s-credential-provider.ate-system.svc.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.708316Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 30064:QUERY:RD:NoError:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.svc.cluster.local. IN AAAA
+
+2026-11-12T11:29:54.708351Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.709164Z	debug	hickory_net::udp::udp_client_stream	received message id: 30064	
+2026-11-12T11:29:54.709191Z	debug	hickory_net::error	response: ; header 30064:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.svc.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.709218Z	debug	hickory_net::xfer::dns_handle	querying: k8s-credential-provider.ate-system.svc.cluster.local. A	
+2026-11-12T11:29:54.709222Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("k8s-credential-provider.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.709226Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=k8s-credential-provider.ate-system.svc.cluster.local. IN A
+2026-11-12T11:29:54.709240Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.604892s ip=10.96.0.10
+2026-11-12T11:29:54.709245Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("k8s-credential-provider.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.709267Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 4065:QUERY:RD:NoError:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.709300Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.710072Z	debug	hickory_net::udp::udp_client_stream	received message id: 4065	
+2026-11-12T11:29:54.710099Z	debug	hickory_net::error	response: ; header 4065:RESPONSE:RD,AA:NoError:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.cluster.local. IN A
+; answers 1
+k8s-credential-provider.ate-system.svc.cluster.local. 30 IN A 10.96.42.229
+; authorities 0
+; additionals 0
+	
+2026-11-12T11:29:54.710114Z	debug	hickory_net::error	response: ; header 4065:RESPONSE:RD,AA:NoError:QUERY
+; query
+;; k8s-credential-provider.ate-system.svc.cluster.local. IN A
+; answers 1
+k8s-credential-provider.ate-system.svc.cluster.local. 30 IN A 10.96.42.229
+; authorities 0
+; additionals 0
+	
+2026-11-12T11:29:54.710822Z	debug	client::tls	connecting tls	hostname=DnsName("k8s-credential-provider.ate-system.svc") alpn=["h2", "http/1.1"]
+2026-11-12T11:29:54.710853Z	debug	rustls::client::hs	Resuming session	
+2026-11-12T11:29:54.713573Z	debug	rustls::client::hs	Using ciphersuite TLS13_AES_128_GCM_SHA256	
+2026-11-12T11:29:54.713608Z	debug	rustls::client::tls13	Resuming using PSK	
+2026-11-12T11:29:54.713783Z	debug	rustls::client::tls13	TLS1.3 encrypted extensions: ServerExtensions { selected_protocol: SingleProtocolName(ProtocolName(6832)), unknown_extensions: {}, .. }	
+2026-11-12T11:29:54.713800Z	debug	rustls::client::hs	ALPN protocol is Some(b"h2")	
+2026-11-12T11:29:54.713951Z	debug	upstream tcp	connected	endpoint=10.96.42.229:50051 transport=tls connect_ms=3
+2026-11-12T11:29:54.713974Z	debug	h2::client	binding client connection	
+2026-11-12T11:29:54.713999Z	debug	h2::client	client connection bound	
+2026-11-12T11:29:54.714007Z	debug	h2::codec::framed_write	send	frame=Settings { flags: (0x0), enable_push: 0, initial_window_size: 2097152, max_frame_size: 16384, max_header_list_size: 16384 }
+2026-11-12T11:29:54.714091Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 5177345 }
+2026-11-12T11:29:54.714117Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Headers { stream_id: StreamId(1), flags: (0x4: END_HEADERS) }
+2026-11-12T11:29:54.714234Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Data { stream_id: StreamId(1) }
+2026-11-12T11:29:54.714248Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Data { stream_id: StreamId(1), flags: (0x1: END_STREAM) }
+2026-11-12T11:29:54.714503Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Settings { flags: (0x0), max_frame_size: 16384 }
+2026-11-12T11:29:54.714524Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Settings { flags: (0x1: ACK) }
+2026-11-12T11:29:54.714893Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Settings { flags: (0x1: ACK) }
+2026-11-12T11:29:54.714909Z	debug	h2::proto::settings:Connection{peer=Client}	received settings ACK; applying Settings { flags: (0x0), enable_push: 0, initial_window_size: 2097152, max_frame_size: 16384, max_header_list_size: 16384 }	
+2026-11-12T11:29:54.714916Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=WindowUpdate { stream_id: StreamId(0), size_increment: 109 }
+2026-11-12T11:29:54.714922Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Ping { ack: false, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T11:29:54.714927Z	debug	h2::codec::framed_write:Connection{peer=Client}	send	frame=Ping { ack: true, payload: [2, 4, 16, 16, 9, 14, 7, 7] }
+2026-11-12T11:29:54.727256Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(1), flags: (0x4: END_HEADERS) }
+2026-11-12T11:29:54.727284Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Data { stream_id: StreamId(1) }
+2026-11-12T11:29:54.727295Z	debug	h2::codec::framed_read:Connection{peer=Client}	received	frame=Headers { stream_id: StreamId(1), flags: (0x5: END_HEADERS | END_STREAM) }
+2026-11-12T11:29:54.727344Z	debug	upstream request	request.id=51 target=k8s-credential-provider.ate-system.svc:50051 endpoint=10.96.42.229:50051 transport=tls http.method=POST http.host=k8s-credential-provider.ate-system.svc:50051 http.path=/substrate.credprovider.v1.CredentialProvider/FetchSecret http.version=HTTP/2.0 http.status=200 duration="22ms"
+2026-11-12T11:29:54.727439Z	debug	agent_pool::pool	pooling idle connection for PoolKey(Hostname("k8s-credential-provider.ate-system.svc", 50051), 10.96.42.229:50051, ConnectionConfig { transport: Plain(Tls(VersionedBackendTLS { hostname_override: Some(DnsName("k8s-credential-provider.ate-system.svc")), config: ClientConfig { alpn_protocols: [[104, 50], [104, 116, 116, 112, 47, 49, 46, 49]], check_selected_alpn: true, resumption: Resumption { store: ClientSessionMemoryCache, tls12_resumption: SessionIdOrTickets }, max_fragment_size: None, client_auth_cert_resolver: SingleCertAndKey(CertifiedKey { cert: [CertificateDer(0x3082031b308202cda00302010202146b37bdd92d50dfd2dcaca45ad5b21a87ccb75508300506032b65703025312330210603550403131a4151454e3335354956553642484c5147505a414b50594b434c55301e170d3236313131323131303932375a170d3236313131333131303932375a3025312330210603550403131a4c5445443537354d5a37374a4152565434563432554c47365a493059301306072a8648ce3d020106082a8648ce3d03010703420004766d1a1b949530767e543f24ae8e6dddc72dd8043d5a4aa2baf273063fc4ed1e30ff83baa6cb0dee6ecd4dac640f8d9e778fe9bf28ffbf7b3c9a83befeddfe8ba38201de308201da300e0603551d0f0101ff040403020780301d0603551d250416301406082b0601050507030206082b06010505070301300c0603551d130101ff04023000301f0603551d23041830168014bc063aa630b7fc2f7a0d8157d4a8b200485a6c3830400603551d110439303786357370696666653a2f2f636c75737465722e6c6f63616c2f6e732f6174652d73797374656d2f73612f6174656e65742d65677265737330820136060a2b06010401d679020c01048201267b224e616d657370616365223a226174652d73797374656d222c22536572766963654163636f756e744e616d65223a226174656e65742d656772657373222c22536572766963654163636f756e74554944223a2231626439646462362d373230382d343237632d383632622d633033646636316437633364222c22506f644e616d65223a226174656e65742d6567726573732d373534363738643734372d6878726d38222c22506f64554944223a2236616661353161342d396463622d343639642d613161352d646666313134646130363962222c224e6f64654e616d65223a226b696e642d636f6e74726f6c2d706c616e65222c224e6f6465554944223a2234393434353761622d386631312d343631652d383337312d653039353330363732653035227d300506032b6570034100e5e943e4cb2b34b01f6cf084f1cc0259f06e1500520b8f3132b06e2155511c691170111a21d77ce8afac0195b39cbec3156f897cdacb97ca608595df85210800)], key: EcdsaSigningKey { algorithm: ECDSA }, ocsp: None }), enable_sni: true, key_log: NoKeyLog, enable_secret_extraction: false, enable_early_data: false, require_ems: false, time_provider: DefaultTimeProvider, provider: CryptoProvider { cipher_suites: [TLS13_AES_256_GCM_SHA384, TLS13_AES_128_GCM_SHA256, TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256, TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384, TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256], kx_groups: [X25519, secp256r1, secp384r1, Hybrid { classical: X25519, post_quantum: MlKem { alg: MlKem768, group: MLKEM768 }, name: X25519MLKEM768, layout: Layout { classical_share_len: 32, post_quantum_client_share_len: 1184, post_quantum_server_share_len: 1088, post_quantum_first: true } }], signature_verification_algorithms: WebPkiSupportedAlgorithms { all: [ .. ], mapping: [ECDSA_NISTP384_SHA384, ECDSA_NISTP256_SHA256, ECDSA_NISTP521_SHA512, ED25519, RSA_PSS_SHA512, RSA_PSS_SHA384, RSA_PSS_SHA256, RSA_PKCS1_SHA512, RSA_PKCS1_SHA384, RSA_PKCS1_SHA256, ML_DSA_44, ML_DSA_65, ML_DSA_87] }, secure_random: AwsLcRs, key_provider: AwsLcRs }, versions: [TLSv1_2, TLSv1_3], verifier: WebPkiServerVerifier { roots: RootCertStore { roots: "(1 roots)" }, crls: [], revocation_check_depth: Chain, unknown_revocation_policy: Allow, revocation_expiration_policy: Ignore, supported: WebPkiSupportedAlgorithms { all: [ .. ], mapping: [ECDSA_NISTP384_SHA384, ECDSA_NISTP256_SHA256, ECDSA_NISTP521_SHA512, ED25519, RSA_PSS_SHA512, RSA_PSS_SHA384, RSA_PSS_SHA256, RSA_PKCS1_SHA512, RSA_PKCS1_SHA384, RSA_PKCS1_SHA256, ML_DSA_44, ML_DSA_65, ML_DSA_87] } }, cert_decompressors: [], cert_compressors: [], cert_compression_cache: Enabled(CompressionCacheInner { size: 4, entries: Mutex { data: [], poisoned: false, .. } }), ech_mode: None, send_ticket_request: None }, expected_identities: None, peer_identity_mode: Istio })), tcp: None, max_connection_duration: None }, HTTP/2.0)	request.id=51
+2026-11-12T11:29:54.727711Z	debug	hickory_net::xfer::dns_handle	querying: whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local. A	
+2026-11-12T11:29:54.727729Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.727736Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local. IN A
+2026-11-12T11:29:54.727747Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=1.866775s ip=10.96.0.10
+2026-11-12T11:29:54.727756Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.727791Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 24901:QUERY:RD:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.727833Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.728526Z	debug	hickory_net::udp::udp_client_stream	received message id: 24901	
+2026-11-12T11:29:54.728565Z	debug	hickory_net::error	response: ; header 24901:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.728605Z	debug	hickory_net::xfer::dns_handle	querying: whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local. AAAA	
+2026-11-12T11:29:54.728619Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.728624Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local. IN AAAA
+2026-11-12T11:29:54.728646Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.045778s ip=10.96.0.10
+2026-11-12T11:29:54.728661Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.728691Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 6337:QUERY:RD:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local. IN AAAA
+
+2026-11-12T11:29:54.728730Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.729385Z	debug	hickory_net::udp::udp_client_stream	received message id: 6337	
+2026-11-12T11:29:54.729416Z	debug	hickory_net::error	response: ; header 6337:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.ate-system.svc.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.729481Z	debug	hickory_net::xfer::dns_handle	querying: whoami.egress-target.svc.cluster.local.svc.cluster.local. A	
+2026-11-12T11:29:54.729494Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("whoami.egress-target.svc.cluster.local.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.729498Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=whoami.egress-target.svc.cluster.local.svc.cluster.local. IN A
+2026-11-12T11:29:54.729506Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.224781s ip=10.96.0.10
+2026-11-12T11:29:54.729512Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("whoami.egress-target.svc.cluster.local.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.729538Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 18677:QUERY:RD:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.729581Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.730190Z	debug	hickory_net::udp::udp_client_stream	received message id: 18677	
+2026-11-12T11:29:54.730216Z	debug	hickory_net::error	response: ; header 18677:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.svc.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.730242Z	debug	hickory_net::xfer::dns_handle	querying: whoami.egress-target.svc.cluster.local.svc.cluster.local. AAAA	
+2026-11-12T11:29:54.730247Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("whoami.egress-target.svc.cluster.local.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.730252Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=whoami.egress-target.svc.cluster.local.svc.cluster.local. IN AAAA
+2026-11-12T11:29:54.730258Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.403784s ip=10.96.0.10
+2026-11-12T11:29:54.730263Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("whoami.egress-target.svc.cluster.local.svc.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.730293Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 46193:QUERY:RD:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.svc.cluster.local. IN AAAA
+
+2026-11-12T11:29:54.730333Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.730942Z	debug	hickory_net::udp::udp_client_stream	received message id: 46193	
+2026-11-12T11:29:54.730970Z	debug	hickory_net::error	response: ; header 46193:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.svc.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.731008Z	debug	hickory_net::xfer::dns_handle	querying: whoami.egress-target.svc.cluster.local.cluster.local. A	
+2026-11-12T11:29:54.731013Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("whoami.egress-target.svc.cluster.local.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.731018Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=whoami.egress-target.svc.cluster.local.cluster.local. IN A
+2026-11-12T11:29:54.731034Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.582786s ip=10.96.0.10
+2026-11-12T11:29:54.731039Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("whoami.egress-target.svc.cluster.local.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.731068Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 31168:QUERY:RD:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.cluster.local. IN A
+
+2026-11-12T11:29:54.731096Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.731773Z	debug	hickory_net::udp::udp_client_stream	received message id: 31168	
+2026-11-12T11:29:54.731824Z	debug	hickory_net::error	response: ; header 31168:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.cluster.local. IN A
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.731880Z	debug	hickory_net::xfer::dns_handle	querying: whoami.egress-target.svc.cluster.local.cluster.local. AAAA	
+2026-11-12T11:29:54.731897Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("whoami.egress-target.svc.cluster.local.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.731903Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=whoami.egress-target.svc.cluster.local.cluster.local. IN AAAA
+2026-11-12T11:29:54.731914Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.761789s ip=10.96.0.10
+2026-11-12T11:29:54.731924Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("whoami.egress-target.svc.cluster.local.cluster.local."), query_type: AAAA, query_class: IN }]	
+2026-11-12T11:29:54.731960Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 52745:QUERY:RD:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.cluster.local. IN AAAA
+
+2026-11-12T11:29:54.732011Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.732704Z	debug	hickory_net::udp::udp_client_stream	received message id: 52745	
+2026-11-12T11:29:54.732732Z	debug	hickory_net::error	response: ; header 52745:RESPONSE:RD,AA:NXDomain:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local.cluster.local. IN AAAA
+; answers 0
+; authorities 1
+cluster.local. 30 IN SOA ns.dns.cluster.local. hostmaster.cluster.local. 1794482587 7200 1800 86400 30
+; additionals 0
+	
+2026-11-12T11:29:54.732787Z	debug	hickory_net::xfer::dns_handle	querying: whoami.egress-target.svc.cluster.local. A	
+2026-11-12T11:29:54.732803Z	debug	hickory_resolver::name_server_pool	sending request: [Query { name: Name("whoami.egress-target.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.732806Z	debug	hickory_resolver::name_server_pool	creating new shared lookup	query=whoami.egress-target.svc.cluster.local. IN A
+2026-11-12T11:29:54.732814Z	debug	hickory_resolver::name_server_pool	setting retry_interval	retry_interval=2.940792s ip=10.96.0.10
+2026-11-12T11:29:54.732820Z	debug	hickory_net::xfer	enqueueing message:QUERY:[Query { name: Name("whoami.egress-target.svc.cluster.local."), query_type: A, query_class: IN }]	
+2026-11-12T11:29:54.732847Z	debug	hickory_net::udp::udp_client_stream	final message	final_message=; header 36383:QUERY:RD:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local. IN A
+
+2026-11-12T11:29:54.732885Z	debug	hickory_net::udp::udp_stream	created socket successfully	
+2026-11-12T11:29:54.733506Z	debug	hickory_net::udp::udp_client_stream	received message id: 36383	
+2026-11-12T11:29:54.733532Z	debug	hickory_net::error	response: ; header 36383:RESPONSE:RD,AA:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local. IN A
+; answers 1
+whoami.egress-target.svc.cluster.local. 30 IN A 10.96.213.47
+; authorities 0
+; additionals 0
+	
+2026-11-12T11:29:54.733549Z	debug	hickory_net::error	response: ; header 36383:RESPONSE:RD,AA:NoError:QUERY
+; query
+;; whoami.egress-target.svc.cluster.local. IN A
+; answers 1
+whoami.egress-target.svc.cluster.local. 30 IN A 10.96.213.47
+; authorities 0
+; additionals 0
+	
+2026-11-12T11:29:54.734117Z	debug	upstream tcp	connected	endpoint=10.96.213.47:80 transport=plaintext connect_ms=0
+2026-11-12T11:29:54.734984Z	debug	agent_pool::pool	pooling idle connection for PoolKey(Hostname("whoami.egress-target.svc.cluster.local", 80), 10.96.213.47:80, ConnectionConfig { transport: Plain(Plaintext), tcp: None, max_connection_duration: None }, HTTP/1.1)	request.id=51
+2026-11-12T11:29:54.735013Z	debug	upstream request	request.id=51 target=whoami.egress-target.svc.cluster.local:80 endpoint=10.96.213.47:80 transport=plaintext http.method=GET http.host=whoami.egress-target.svc.cluster.local http.path=/ http.version=HTTP/1.1 http.status=200 duration="7ms"
+2026-11-12T11:29:54.735302Z	info	request request.id=51 gateway=default/default listener=listener1 route=default/route1 endpoint=whoami.egress-target.svc.cluster.local:80 src.addr=10.244.0.28:52980 http.method=GET http.host=whoami.egress-target.svc.cluster.local http.path=/ http.version=HTTP/1.1 http.status=200 protocol=http ate.actor.name=f-main ate.actor.uid=bc4c2b6d-26d1-40da-b6f6-01f1ded64f2e ate.atespace=lab-f duration=37ms substrate.connect.authority="10.96.213.47:80"
+2026-11-12T11:29:54.735381Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=3 frame=Data { stream_id: StreamId(243) }
+2026-11-12T11:29:54.742163Z	debug	h2::codec::framed_read:Connection{peer=Server}	received	connection.id=3 frame=Data { stream_id: StreamId(243), flags: (0x1: END_STREAM) }
+2026-11-12T11:29:54.742301Z	debug	h2::codec::framed_write:Connection{peer=Server}	send	connection.id=3 frame=Data { stream_id: StreamId(243), flags: (0x1: END_STREAM) }

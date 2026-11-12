@@ -1,0 +1,394 @@
+{
+  "actor": "ballast v3 with 50 MiB of random bytes, a counter in memory, a counter file on the root filesystem, a counter file on a durableDir volume, and a child process",
+  "levels": [
+    {
+      "after_last_resume": {
+        "memory_count": 1,
+        "process_age_s": 0.2,
+        "rootfs_count": 1,
+        "volume_count": 25
+      },
+      "fidelity": "SNAPSHOT_FIDELITY_VOLUMES",
+      "new_actor_first_call": {
+        "failed": 0,
+        "runs": [
+          0.524
+        ],
+        "seconds": {
+          "max": 0.524,
+          "median": 0.524,
+          "min": 0.524,
+          "n": 1
+        }
+      },
+      "node_snapshot": {
+        "kib": 44,
+        "mib": 0.0
+      },
+      "object_store_copy": {
+        "kib": 48,
+        "mib": 0.0
+      },
+      "process_age_after_resume_s": {
+        "max": 0.4,
+        "min": 0.2
+      },
+      "requests": 25,
+      "resume_after_sync": {
+        "failed": 0,
+        "runs": [
+          0.492,
+          0.493,
+          0.413
+        ],
+        "seconds": {
+          "max": 0.493,
+          "median": 0.492,
+          "min": 0.413,
+          "n": 3
+        }
+      },
+      "resume_node": {
+        "failed": 0,
+        "runs": [
+          0.535,
+          0.48,
+          0.528,
+          0.533,
+          0.537,
+          0.501,
+          0.52,
+          0.474,
+          0.515,
+          0.56
+        ],
+        "seconds": {
+          "max": 0.56,
+          "median": 0.524,
+          "min": 0.474,
+          "n": 10
+        }
+      },
+      "suspend_async": {
+        "failed": 0,
+        "runs": [
+          0.336,
+          0.344,
+          0.322,
+          0.305,
+          0.303,
+          0.325,
+          0.295,
+          0.319,
+          0.336,
+          0.32
+        ],
+        "seconds": {
+          "max": 0.344,
+          "median": 0.321,
+          "min": 0.295,
+          "n": 10
+        }
+      },
+      "suspend_sync": {
+        "failed": 0,
+        "runs": [
+          0.353,
+          0.421,
+          0.421
+        ],
+        "seconds": {
+          "max": 0.421,
+          "median": 0.421,
+          "min": 0.353,
+          "n": 3
+        }
+      },
+      "template": "fid-volumes",
+      "warm_call": {
+        "failed": 0,
+        "runs": [
+          0.065,
+          0.065,
+          0.064,
+          0.063,
+          0.063,
+          0.066,
+          0.075,
+          0.065,
+          0.059,
+          0.062,
+          0.062
+        ],
+        "seconds": {
+          "max": 0.075,
+          "median": 0.064,
+          "min": 0.059,
+          "n": 11
+        }
+      }
+    },
+    {
+      "after_last_resume": {
+        "memory_count": 1,
+        "process_age_s": 0.3,
+        "rootfs_count": 25,
+        "volume_count": 25
+      },
+      "fidelity": "SNAPSHOT_FIDELITY_ROOTFS",
+      "new_actor_first_call": {
+        "failed": 0,
+        "runs": [
+          0.539
+        ],
+        "seconds": {
+          "max": 0.539,
+          "median": 0.539,
+          "min": 0.539,
+          "n": 1
+        }
+      },
+      "node_snapshot": {
+        "kib": 72,
+        "mib": 0.1
+      },
+      "object_store_copy": {
+        "kib": 84,
+        "mib": 0.1
+      },
+      "process_age_after_resume_s": {
+        "max": 0.3,
+        "min": 0.2
+      },
+      "requests": 25,
+      "resume_after_sync": {
+        "failed": 0,
+        "runs": [
+          0.464,
+          0.536,
+          0.481
+        ],
+        "seconds": {
+          "max": 0.536,
+          "median": 0.481,
+          "min": 0.464,
+          "n": 3
+        }
+      },
+      "resume_node": {
+        "failed": 0,
+        "runs": [
+          0.476,
+          0.499,
+          0.535,
+          0.526,
+          0.502,
+          0.527,
+          0.519,
+          0.465,
+          0.438,
+          0.495
+        ],
+        "seconds": {
+          "max": 0.535,
+          "median": 0.501,
+          "min": 0.438,
+          "n": 10
+        }
+      },
+      "suspend_async": {
+        "failed": 0,
+        "runs": [
+          0.329,
+          0.332,
+          0.314,
+          0.307,
+          0.36,
+          0.334,
+          0.317,
+          0.332,
+          0.259,
+          0.316
+        ],
+        "seconds": {
+          "max": 0.36,
+          "median": 0.323,
+          "min": 0.259,
+          "n": 10
+        }
+      },
+      "suspend_sync": {
+        "failed": 0,
+        "runs": [
+          0.365,
+          0.494,
+          0.462
+        ],
+        "seconds": {
+          "max": 0.494,
+          "median": 0.462,
+          "min": 0.365,
+          "n": 3
+        }
+      },
+      "template": "fid-rootfs",
+      "warm_call": {
+        "failed": 0,
+        "runs": [
+          0.066,
+          0.057,
+          0.061,
+          0.069,
+          0.068,
+          0.061,
+          0.064,
+          0.064,
+          0.059,
+          0.061,
+          0.065
+        ],
+        "seconds": {
+          "max": 0.069,
+          "median": 0.064,
+          "min": 0.057,
+          "n": 11
+        }
+      }
+    },
+    {
+      "after_last_resume": {
+        "memory_count": 25,
+        "process_age_s": 5.0,
+        "rootfs_count": 25,
+        "volume_count": 25
+      },
+      "fidelity": "SNAPSHOT_FIDELITY_MEMORY",
+      "new_actor_first_call": {
+        "failed": 0,
+        "runs": [
+          0.453
+        ],
+        "seconds": {
+          "max": 0.453,
+          "median": 0.453,
+          "min": 0.453,
+          "n": 1
+        }
+      },
+      "node_snapshot": {
+        "kib": 58244,
+        "mib": 56.9
+      },
+      "object_store_copy": {
+        "kib": 53380,
+        "mib": 52.1
+      },
+      "process_age_after_resume_s": {
+        "max": 5.0,
+        "min": 0.7
+      },
+      "requests": 25,
+      "resume_after_sync": {
+        "failed": 0,
+        "runs": [
+          0.236,
+          0.24,
+          0.246
+        ],
+        "seconds": {
+          "max": 0.246,
+          "median": 0.24,
+          "min": 0.236,
+          "n": 3
+        }
+      },
+      "resume_node": {
+        "failed": 0,
+        "runs": [
+          0.256,
+          0.246,
+          0.235,
+          0.244,
+          0.248,
+          0.236,
+          0.246,
+          0.245,
+          0.272,
+          0.238
+        ],
+        "seconds": {
+          "max": 0.272,
+          "median": 0.245,
+          "min": 0.235,
+          "n": 10
+        }
+      },
+      "suspend_async": {
+        "failed": 0,
+        "runs": [
+          0.512,
+          0.521,
+          0.56,
+          0.548,
+          0.545,
+          0.506,
+          0.543,
+          0.542,
+          0.563,
+          0.504
+        ],
+        "seconds": {
+          "max": 0.563,
+          "median": 0.542,
+          "min": 0.504,
+          "n": 10
+        }
+      },
+      "suspend_sync": {
+        "failed": 0,
+        "runs": [
+          1.028,
+          1.19,
+          1.208
+        ],
+        "seconds": {
+          "max": 1.208,
+          "median": 1.19,
+          "min": 1.028,
+          "n": 3
+        }
+      },
+      "template": "fid-memory",
+      "warm_call": {
+        "failed": 0,
+        "runs": [
+          0.068,
+          0.071,
+          0.067,
+          0.068,
+          0.068,
+          0.071,
+          0.07,
+          0.073,
+          0.068,
+          0.065,
+          0.069
+        ],
+        "seconds": {
+          "max": 0.073,
+          "median": 0.068,
+          "min": 0.065,
+          "n": 11
+        }
+      }
+    }
+  ],
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor, pool of 2 workers with 8 CPU and 8 GiB each",
+  "sources": [
+    "capture/lab/V-validation/04-fidelity/10-fidelity.tsv"
+  ],
+  "unit": {
+    "kib": "du on the node snapshot folder and on the object store data folder",
+    "seconds": "client time through kubectl ate proxy, CLI time for suspend"
+  }
+}

@@ -1,0 +1,19 @@
+metadata:
+  atespace: demo-idle
+  name: counter
+workerSelector:
+  matchLabels:
+    workload: idle
+containers:
+- name: counter
+  image: IMAGE
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+resources:
+  limits:
+    cpuMillicores: 1000
+    memoryBytes: 268435456
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

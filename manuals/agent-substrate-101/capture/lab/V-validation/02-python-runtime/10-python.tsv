@@ -1,0 +1,48 @@
+template	phase	i	http	value	detail
+pyagent	template-to-golden-ready	1	-	39.298	includes image pull, boot, dict load, snapshot
+pyagent	create-actor	1	-	0.222	cli
+pyagent	first-call-golden	1	200	0.994044	python count=1 sqlite_rows=1 dict=1000000 maxrss_mib=245 pid=1 process_age_s=32.9
+pyagent	warm-call	0	200	0.072992	python count=2 sqlite_rows=2 dict=1000000 maxrss_mib=245 pid=1 process_age_s=33.0
+pyagent	suspend-async	1	-	0.787	cli
+pyagent	local-snapshot-kib	1	-	220356	du
+pyagent	resume-local	1	200	0.397631	python count=3 sqlite_rows=3 dict=1000000 maxrss_mib=245 pid=1 process_age_s=35.5
+pyagent	warm-call	1	200	0.064514	python count=4 sqlite_rows=4 dict=1000000 maxrss_mib=245 pid=1 process_age_s=35.6
+pyagent	suspend-async	2	-	0.962	cli
+pyagent	resume-local	2	200	0.527547	python count=5 sqlite_rows=5 dict=1000000 maxrss_mib=245 pid=1 process_age_s=38.1
+pyagent	warm-call	2	200	0.062916	python count=6 sqlite_rows=6 dict=1000000 maxrss_mib=245 pid=1 process_age_s=38.2
+pyagent	suspend-async	3	-	0.923	cli
+pyagent	resume-local	3	200	0.534744	python count=7 sqlite_rows=7 dict=1000000 maxrss_mib=245 pid=1 process_age_s=40.7
+pyagent	warm-call	3	200	0.061962	python count=8 sqlite_rows=8 dict=1000000 maxrss_mib=245 pid=1 process_age_s=40.8
+pyagent	suspend-async	4	-	0.723	cli
+pyagent	resume-local	4	200	0.380268	python count=9 sqlite_rows=9 dict=1000000 maxrss_mib=245 pid=1 process_age_s=42.9
+pyagent	warm-call	4	200	0.066477	python count=10 sqlite_rows=10 dict=1000000 maxrss_mib=245 pid=1 process_age_s=43.0
+pyagent	suspend-async	5	-	0.798	cli
+pyagent	resume-local	5	200	0.407068	python count=11 sqlite_rows=11 dict=1000000 maxrss_mib=245 pid=1 process_age_s=45.2
+pyagent	warm-call	5	200	0.063561	python count=12 sqlite_rows=12 dict=1000000 maxrss_mib=245 pid=1 process_age_s=45.3
+pyagent	suspend-async	6	-	0.821	cli
+pyagent	resume-local	6	200	0.367169	python count=13 sqlite_rows=13 dict=1000000 maxrss_mib=245 pid=1 process_age_s=47.5
+pyagent	warm-call	6	200	0.058551	python count=14 sqlite_rows=14 dict=1000000 maxrss_mib=245 pid=1 process_age_s=47.6
+pyagent	suspend-async	7	-	0.804	cli
+pyagent	resume-local	7	200	0.513308	python count=15 sqlite_rows=15 dict=1000000 maxrss_mib=245 pid=1 process_age_s=49.9
+pyagent	warm-call	7	200	0.061460	python count=16 sqlite_rows=16 dict=1000000 maxrss_mib=245 pid=1 process_age_s=50.0
+pyagent	suspend-async	8	-	0.849	cli
+pyagent	resume-local	8	200	0.409903	python count=17 sqlite_rows=17 dict=1000000 maxrss_mib=245 pid=1 process_age_s=52.3
+pyagent	warm-call	8	200	0.060704	python count=18 sqlite_rows=18 dict=1000000 maxrss_mib=245 pid=1 process_age_s=52.4
+pyagent	suspend-async	9	-	0.787	cli
+pyagent	resume-local	9	200	0.509940	python count=19 sqlite_rows=19 dict=1000000 maxrss_mib=245 pid=1 process_age_s=54.7
+pyagent	warm-call	9	200	0.065033	python count=20 sqlite_rows=20 dict=1000000 maxrss_mib=245 pid=1 process_age_s=54.8
+pyagent	suspend-async	10	-	0.864	cli
+pyagent	resume-local	10	200	0.415794	python count=21 sqlite_rows=21 dict=1000000 maxrss_mib=245 pid=1 process_age_s=57.1
+pyagent	warm-call	10	200	0.064214	python count=22 sqlite_rows=22 dict=1000000 maxrss_mib=245 pid=1 process_age_s=57.2
+pyagent	suspend-sync	1	-	1.710	cli
+pyagent	store-snapshot-kib	1	-	112760	du-in-rustfs
+pyagent	resume-after-sync	1	200	0.512040	python count=23 sqlite_rows=23 dict=1000000 maxrss_mib=245 pid=1 process_age_s=60.1
+pyagent	suspend-sync	2	-	1.955	cli
+pyagent	resume-after-sync	2	200	0.521366	python count=24 sqlite_rows=24 dict=1000000 maxrss_mib=245 pid=1 process_age_s=62.6
+pyagent	suspend-sync	3	-	1.927	cli
+pyagent	resume-after-sync	3	200	0.550922	python count=25 sqlite_rows=25 dict=1000000 maxrss_mib=245 pid=1 process_age_s=65.1
+pyagent	first-call-golden	2	200	0.623803	python count=1 sqlite_rows=1 dict=1000000 maxrss_mib=245 pid=1 process_age_s=69.5
+pyagent	first-call-golden	3	200	0.628119	python count=1 sqlite_rows=1 dict=1000000 maxrss_mib=245 pid=1 process_age_s=73.4
+pyagent	first-call-golden	4	200	0.633143	python count=1 sqlite_rows=1 dict=1000000 maxrss_mib=245 pid=1 process_age_s=77.4
+pyagent	first-call-golden	5	200	0.637307	python count=1 sqlite_rows=1 dict=1000000 maxrss_mib=245 pid=1 process_age_s=81.3
+DONE

@@ -1,0 +1,8 @@
+{"time":"2026-11-12T11:56:45.981581297Z","message":"Actor restoring","span_id":"3f337b8efd2d17f8","trace_flags":"00","trace_id":"675f4a7de96f5cb6d001add651e6c1d6"}
+{"time":"2026-11-12T11:56:46.270250024Z","message":"Actor restored","span_id":"3f337b8efd2d17f8","trace_flags":"00","trace_id":"675f4a7de96f5cb6d001add651e6c1d6"}
+{"time":"2026-11-12T11:56:46.197804017Z","level":"INFO","msg":"Handled request","response":"preserved memory count: 6 | preserved file counter: 6 | preserved rootfs counter: 6\n"}
+{"time":"2026-11-12T11:56:46.549414721Z","message":"Actor checkpointing","span_id":"cf5a74a8e4bd1d31","trace_flags":"01","trace_id":"705dc8f4ff4dfc87e973ec9914a94b92"}
+{"time":"2026-11-12T11:56:46.698589042Z","message":"Actor checkpointed","span_id":"cf5a74a8e4bd1d31","trace_flags":"01","trace_id":"705dc8f4ff4dfc87e973ec9914a94b92"}
+{"time":"2026-11-12T11:56:47.877135073Z","message":"Actor restoring","span_id":"cbbcae238c4c622c","trace_flags":"00","trace_id":"7a26dd525ffbba60f2befbf4e2b139af"}
+{"time":"2026-11-12T11:56:48.121371344Z","message":"Actor restored","span_id":"cbbcae238c4c622c","trace_flags":"00","trace_id":"7a26dd525ffbba60f2befbf4e2b139af"}
+{"time":"2026-11-12T11:56:48.046607627Z","level":"INFO","msg":"Handled request","response":"preserved memory count: 7 | preserved file counter: 7 | preserved rootfs counter: 7\n"}

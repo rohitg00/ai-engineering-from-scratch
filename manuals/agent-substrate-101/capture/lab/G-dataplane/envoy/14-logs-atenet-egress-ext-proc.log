@@ -1,0 +1,105 @@
+2026/11/12 10:32:59 INFO initializing preview gates state="[ExternalVolumes=off, GoldenEgressPolicy=off, PerTemplateSnapshotLocation=off]"
+{"time":"2026-11-12T10:32:59.304945641Z","level":"INFO","msg":"atenet router starting","version":"v1.0.0"}
+{"time":"2026-11-12T10:32:59.305259181Z","level":"INFO","msg":"Tracing initialized","sampler":"ParentBased{root:TraceIDRatioBased{0.01},remoteParentSampled:AlwaysOnSampler,remoteParentNotSampled:AlwaysOffSampler,localParentSampled:AlwaysOnSampler,localParentNotSampled:AlwaysOffSampler}","export":true}
+{"time":"2026-11-12T10:32:59.305301152Z","level":"INFO","msg":"Metrics exporters resolved","exporters":"otlp,prometheus"}
+{"time":"2026-11-12T10:32:59.305564009Z","level":"INFO","msg":"Metrics initialized","otlp_export":true}
+{"time":"2026-11-12T10:32:59.305634712Z","level":"INFO","msg":"Starting metrics HTTP server","addr":":9090"}
+{"time":"2026-11-12T10:32:59.305906629Z","level":"INFO","msg":"Connecting to ateapi","address":"dns:///api.ate-system.svc:443"}
+{"time":"2026-11-12T10:32:59.30593179Z","level":"INFO","msg":"Starting substrate router subsystem","mode":"egress","atenet_router":"envoy"}
+{"time":"2026-11-12T10:32:59.306088055Z","level":"INFO","msg":"Starting health HTTP server","addr":":9091"}
+{"time":"2026-11-12T10:32:59.306220339Z","level":"INFO","msg":"egress credential injection enabled","provider":"k8s-credential-provider.ate-system.svc:50051","provider_name":"k8s.io"}
+{"time":"2026-11-12T10:32:59.306734603Z","level":"INFO","msg":"Starting ExtProc Server","address":"127.0.0.1:50051"}
+{"time":"2026-11-12T10:32:59.306959361Z","level":"INFO","msg":"Starting periodic health checker","interval":1000000000}
+{"time":"2026-11-12T10:32:59.306993251Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:00.307493311Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:01.307315895Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:02.307673498Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:03.307916292Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:04.307915672Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:05.307095513Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:06.30738888Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:07.307938288Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:08.307225183Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:09.307063308Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:10.30808083Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:11.307551402Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:12.307345806Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:13.307247555Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:14.30714047Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:15.353907558Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:16.307797142Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:17.30751894Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:18.307685785Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:19.307009027Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:20.307716674Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:21.307516307Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:22.307776277Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:23.307041779Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:24.307782909Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:25.307718417Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:26.30773498Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:27.3078708Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:28.307888708Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:29.307110986Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:30.307259974Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:31.308032724Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:32.308048952Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:33.307148096Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:34.307115719Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:35.307796855Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:36.307522055Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:37.307760072Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:38.307435886Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:39.307100871Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:40.307993423Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:41.309086285Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:42.307625004Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:43.307560236Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:44.307556251Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:45.307599181Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:46.307619672Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:47.307134859Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:48.307519364Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:49.308359486Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:50.307683523Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:51.307579549Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:52.307342854Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:53.307093419Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:54.307996621Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:55.307566436Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:56.308035138Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:57.307571975Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:58.307917778Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:59.307066311Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:00.307546127Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:01.307668737Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:02.309544802Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:03.307647506Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:04.307595156Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:05.307598479Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:06.307135136Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:07.307597921Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:08.30763737Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:09.307052918Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:10.307189338Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:11.307045213Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:12.307543307Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:13.307698904Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:14.307591061Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:15.30770406Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:16.307650733Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:17.307711773Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:18.307114995Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:19.307119482Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:20.307896188Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:21.307223909Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:22.307904729Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:23.307640872Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:24.308126402Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:25.30750825Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:26.307345799Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:27.307171487Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:28.307667366Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:29.307128554Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:30.30757875Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:31.307539014Z","level":"INFO","msg":"Checking health"}

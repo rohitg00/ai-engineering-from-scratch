@@ -1,0 +1,5 @@
+apply 2026-11-12T10:16:30.391Z
+modelconfig.api.kagent.dev/mock-model created
+harness.api.kagent.dev/lab-harness created
+agenttemplate.api.kagent.dev/lab-template created
+agent.api.kagent.dev/lab-agent created

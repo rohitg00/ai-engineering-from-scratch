@@ -19,7 +19,8 @@
     "Predict how long an actor takes to resume from the memory it holds, and choose between an asynchronous and a synchronous suspend.",
     "Size a WorkerPool, and say what a client sees when the pool is full.",
     "Write an egress policy, inject a credential, and choose between the Envoy and the agentgateway dataplane.",
-    "Find the cause of a 500 or a 503 from its text, and bring a crashed actor back with RevertActor."
+    "Find the cause of a 500 or a 503 from its text, and bring a crashed actor back with RevertActor.",
+    "Build the parts Substrate leaves to you: an idle suspender, a stateful agent actor, a tool sandbox, and a failure drill."
   ],
   "palette": [
     {
@@ -331,6 +332,31 @@
         {
           "id": "8.5",
           "file": "sections/8-5-limits-at-v1-0-0.md"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Build",
+      "thesis": "Four small programs that you can run show what you must build around Substrate: an idle suspender, a stateful agent, a tool sandbox, and a failure drill.",
+      "summary": "An idle suspender, an agent actor that keeps its conversation, a sandbox for commands you do not trust, and a drill for six failures.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "9.1",
+          "file": "sections/9-1-an-idle-suspender.md"
+        },
+        {
+          "id": "9.2",
+          "file": "sections/9-2-a-stateful-agent-actor.md"
+        },
+        {
+          "id": "9.3",
+          "file": "sections/9-3-a-tool-sandbox.md"
+        },
+        {
+          "id": "9.4",
+          "file": "sections/9-4-a-failure-drill.md"
         }
       ]
     }

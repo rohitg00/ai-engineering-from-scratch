@@ -6,7 +6,7 @@ A colleague gets access to your test cluster and runs `kubectl ate get actors`. 
 
 When you finish this section, you can name the credential that each kind of client needs. You can also say what the default install lets every user do.
 
-This section mixes two kinds of evidence. A sentence marked as seen in our runs comes from a recorded probe. The other statements come from the code and the documentation at v1.0.0, and we did not run them.
+This section mixes two kinds of evidence. A sentence marked as seen in our runs comes from a recorded probe, and so does every listing. The other statements come from the code and the documentation at v1.0.0.
 
 ## Two places check a client
 
@@ -52,16 +52,35 @@ Warning: system:serviceaccount:ate-system:ate-client is a bootstrap owner, so an
 
 So the true access rule of a default install is a Kubernetes rule. Whoever can create a token for `ate-client`, or create a pod in `ate-system`, owns every actor.
 
-To act as yourself, create a ServiceAccount for each person and pass its token {{docs}}. We did not run these commands.
+To act as yourself, create a ServiceAccount for each person and pass its token {{docs}}. We ran these commands for a ServiceAccount named `alice`, against the atespace `lab-v`.
 
 ```bash
 kubectl create namespace ate-users
 kubectl -n ate-users create serviceaccount alice
-kubectl create token -n ate-users alice --audience api.ate-system.svc > alice.token
-kubectl ate --token-file alice.token get actors -a team-a
+kubectl create token alice -n ate-users --audience api.ate-system.svc --duration 1h > alice.token
+kubectl ate --token-file alice.token get actors -a lab-v
 ```
 
-The principal is then `system:serviceaccount:ate-users:alice`. It can do nothing until an access policy grants it a role.
+The principal is then `system:serviceaccount:ate-users:alice`. It can do nothing until an access policy grants it a role. The server accepted the token and refused the call.
+
+```listing
+title: a valid token with no role
+source: capture/lab/V-validation/08-access-control/10-access.tsv
+lang: text
+note: One line of the trace. The time and the step name at the start of the line are cut.
+---
+…Error: failed to list actors: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_list_actors" on "atespace:lab-v" 
+```
+
+`PermissionDenied` means that the server knows who you are. A credential that it cannot verify gets a different error, and the error does not say why.
+
+| What `--token-file` held | Result of `get actors` |
+|---|---|
+| a token for `alice` with the audience `api.ate-system.svc`, and no role | `PermissionDenied`, with the principal and the missing permission |
+| a token for `alice` with the default audience of Kubernetes | `Unauthenticated desc = invalid bearer token` |
+| a text that is not a token | `Unauthenticated desc = invalid bearer token` |
+
+We ran each row once on the x86 server guest. The second row is the mistake to expect: `kubectl create token` without `--audience` gives a token that Substrate rejects. [Access policies](#s-access-policies) continues with the same ServiceAccount.
 
 Three facts from the documentation limit how far you can trust this setup:
 
@@ -124,14 +143,15 @@ Three results from these probes matter to you {{run}}:
 
 The last result decides your design. The router answers one question: is this client on the list. It does not ask which actor the client is allowed to call. Put your own service between your users and the router, give only that service an allowed identity, and check each user there.
 
-We did not test `--token-file`, a second token issuer, or a list with more than one identity.
+We did not test a second token issuer, a token of a deleted ServiceAccount, or a list with more than one identity.
 
 ```takeaways
 - Treat a default install as open to everyone who can create a token for ate-client.
 - Give each person a ServiceAccount and pass its token with --token-file.
+- Create the token with --audience api.ate-system.svc, or the server rejects it.
 - Remove a person from access policies to stop them, because tokens stay valid.
 - Give a router identity only to your own service, and check users there.
 - Label a namespace with ate.dev/api-access=true before its pods call the API.
 ```
 
-Sources: capture/lab/A-quickstart/50-create-actor.log, capture/lab/A-quickstart/22-deploy-ate-system-retry.log, capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/00-serviceaccounts.txt, capture/lab/G-dataplane/envoy/ingress-auth/50-create-sa.log, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/14-probe-no-allowlist.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/K-kagent/parallel/ingress-probe.txt; docs/guides/authentication.md, docs/guides/authorization.md at v1.0.0; internal/ateclient/builder.go, cmd/kubectl-ate/internal/cmd/root.go, manifests/ate-install/ate-system-networkpolicies.yaml, manifests/ate-install/atenet-router.yaml at v1.0.0; issue https://github.com/agent-substrate/substrate/issues/3589.
+Sources: capture/lab/A-quickstart/50-create-actor.log, capture/lab/A-quickstart/22-deploy-ate-system-retry.log, capture/lab/G-dataplane/envoy/ingress-auth/10-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/10-results.txt, capture/lab/G-dataplane/envoy/ingress-auth/00-serviceaccounts.txt, capture/lab/G-dataplane/envoy/ingress-auth/50-create-sa.log, capture/lab/G-dataplane/envoy/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/agentgateway/ingress-auth/51-rightid-results.txt, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/14-probe-no-allowlist.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/K-kagent/parallel/ingress-probe.txt, capture/lab/V-validation/08-access-control/10-access.tsv, capture/lab/V-validation/_scripts/v4-items-5-12.sh; docs/guides/authentication.md, docs/guides/authorization.md at v1.0.0; internal/ateclient/builder.go, cmd/kubectl-ate/internal/cmd/root.go, manifests/ate-install/ate-system-networkpolicies.yaml, manifests/ate-install/atenet-router.yaml at v1.0.0; issue https://github.com/agent-substrate/substrate/issues/3589.

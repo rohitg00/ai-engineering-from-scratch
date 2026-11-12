@@ -1,0 +1,56 @@
+NAME                               STATUS   AGE
+ate-system                         Active   3m28s
+default                            Active   3m48s
+kagent                             Active   3m32s
+kube-node-lease                    Active   3m48s
+kube-public                        Active   3m48s
+kube-system                        Active   3m48s
+local-path-storage                 Active   3m43s
+podcertificate-controller-system   Active   3m26s
+NAMESPACE                          NAME                                           READY   STATUS      RESTARTS   AGE     IP            NODE                   NOMINATED NODE   READINESS GATES
+ate-system                         ate-api-server-776cd6fb4c-hztmx                2/2     Running     0          2m23s   10.244.0.19   kagent-control-plane   <none>           <none>
+ate-system                         ate-api-server-776cd6fb4c-tnc4m                2/2     Running     0          2m24s   10.244.0.18   kagent-control-plane   <none>           <none>
+ate-system                         ate-controller-84d4d99bbb-zwnz5                1/1     Running     0          2m24s   10.244.0.10   kagent-control-plane   <none>           <none>
+ate-system                         ate-idp-server-85cfb75cfb-6sxpc                1/1     Running     0          2m24s   10.244.0.9    kagent-control-plane   <none>           <none>
+ate-system                         ate-idp-server-85cfb75cfb-ck8mh                1/1     Running     0          2m24s   10.244.0.16   kagent-control-plane   <none>           <none>
+ate-system                         atelet-5g655                                   2/2     Running     0          2m49s   10.244.0.8    kagent-control-plane   <none>           <none>
+ate-system                         atenet-egress-787d98dc77-gvl59                 1/1     Running     0          2m24s   10.244.0.17   kagent-control-plane   <none>           <none>
+ate-system                         atenet-router-556c5ff957-489rl                 1/1     Running     0          2m24s   10.244.0.14   kagent-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-6946fd687c-bjv4q       1/1     Running     0          2m24s   10.244.0.13   kagent-control-plane   <none>           <none>
+ate-system                         rustfs-545745bdf6-9z76v                        1/1     Running     0          2m24s   10.244.0.15   kagent-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-mlmkk                       0/1     Completed   0          2m24s   10.244.0.11   kagent-control-plane   <none>           <none>
+kagent                             kagent-controller-6fff5c8696-7trwv             1/1     Running     0          63s     10.244.0.22   kagent-control-plane   <none>           <none>
+kagent                             kagent-default-679c58c6cb-pljdk                1/1     Running     0          63s     10.244.0.23   kagent-control-plane   <none>           <none>
+kagent                             kagent-postgresql-566dbb9bc5-8jt4z             2/2     Running     0          3m15s   10.244.0.7    kagent-control-plane   <none>           <none>
+kagent                             kagent-tools-5b7c6fbcc5-dm9sr                  1/1     Running     0          63s     10.244.0.20   kagent-control-plane   <none>           <none>
+kagent                             kagent-ui-7945b67c54-s9ftd                     1/1     Running     0          63s     10.244.0.21   kagent-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-58h5n                       1/1     Running     0          3m39s   10.244.0.2    kagent-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-hccbv                       1/1     Running     0          3m39s   10.244.0.4    kagent-control-plane   <none>           <none>
+kube-system                        etcd-kagent-control-plane                      1/1     Running     0          3m45s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kindnet-jlrzw                                  1/1     Running     0          3m39s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kube-apiserver-kagent-control-plane            1/1     Running     0          3m47s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-kagent-control-plane   1/1     Running     0          3m45s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kube-proxy-t9jdl                               1/1     Running     0          3m39s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kube-scheduler-kagent-control-plane            1/1     Running     0          3m45s   172.18.0.2    kagent-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-4vbch        1/1     Running     0          3m39s   10.244.0.3    kagent-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-64fd9584b5-2cl2g     1/1     Running     0          3m23s   10.244.0.5    kagent-control-plane   <none>           <none>
+NAME             	NAMESPACE                       	REVISION	UPDATED                                	STATUS  	CHART                  	APP VERSION
+kagent           	kagent                          	1       	2026-11-12 10:13:33.384012737 +0000 UTC	deployed	kagent-1.0.0           	           
+kagent-crds      	kagent                          	1       	2026-11-12 10:11:05.528994763 +0000 UTC	deployed	kagent-crds-1.0.0      	           
+substrate        	ate-system                      	1       	2026-11-12 10:12:12.704840959 +0000 UTC	deployed	substrate-1.0.0        	v1.0.0     
+substrate-atelet 	ate-system                      	1       	2026-11-12 10:11:48.159174573 +0000 UTC	deployed	substrate-atelet-1.0.0 	v1.0.0     
+substrate-crds   	ate-system                      	1       	2026-11-12 10:11:09.672366284 +0000 UTC	deployed	substrate-crds-1.0.0   	v1.0.0     
+substrate-podcert	podcertificate-controller-system	1       	2026-11-12 10:11:13.597739767 +0000 UTC	deployed	substrate-podcert-1.0.0	v1.0.0     
+NAMESPACE   NAME             DESIRED   REPLICAS   READY   SANDBOXCONFIG    RESOLVED   AGE
+kagent      kagent-default   1         1          1       gvisor-default   True       63s
+agents.api.kagent.dev                 Namespaced   v1alpha3(storage)   2026-11-12T10:11:05Z
+agenttemplates.api.kagent.dev         Namespaced   v1alpha3(storage)   2026-11-12T10:11:05Z
+csidriverconfigs.ate.dev              Cluster      v1(storage)         2026-11-12T10:11:09Z
+egresspolicies.api.kagent.dev         Namespaced   v1alpha3(storage)   2026-11-12T10:11:05Z
+harnesses.api.kagent.dev              Namespaced   v1alpha3(storage)   2026-11-12T10:11:05Z
+modelconfigs.api.kagent.dev           Namespaced   v1alpha3(storage)   2026-11-12T10:11:05Z
+modelproviderconfigs.api.kagent.dev   Namespaced   v1alpha3(storage)   2026-11-12T10:11:05Z
+remotemcpservers.api.kagent.dev       Namespaced   v1alpha3(storage)   2026-11-12T10:11:05Z
+sandboxconfigs.ate.dev                Cluster      v1(storage)         2026-11-12T10:11:09Z
+sandboxtemplates.api.kagent.dev       Namespaced   v1alpha3(storage)   2026-11-12T10:11:05Z
+workerpools.ate.dev                   Namespaced   v1(storage)         2026-11-12T10:11:09Z

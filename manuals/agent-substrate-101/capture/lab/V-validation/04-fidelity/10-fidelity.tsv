@@ -1,0 +1,134 @@
+template	phase	i	http	value	detail
+fid-memory	golden-ready-wait	1	-	19.685	poll-1s
+fid-memory	create-actor	1	-	0.247	cli
+fid-memory	first-call-golden	1	200	0.452884	tag=v3 count=1 mb=50 fill=random sum=6927 rootfs=1 data=1 pid=1 process_age_s=0.4 child[child_pid=7 child_age_s=0.4]
+fid-memory	warm-call	0	200	0.068049	tag=v3 count=2 mb=50 fill=random sum=6927 rootfs=2 data=2 pid=1 process_age_s=0.5 child[child_pid=7 child_age_s=0.4]
+fid-memory	suspend-async	1	-	0.512	cli
+fid-memory	local-snapshot-kib	1	-	58244	du
+fid-memory	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+fid-memory	resume-local	1	200	0.256322	tag=v3 count=3 mb=50 fill=random sum=6927 rootfs=3 data=3 pid=1 process_age_s=0.7 child[child_pid=7 child_age_s=0.7]
+fid-memory	warm-call	1	200	0.070937	tag=v3 count=4 mb=50 fill=random sum=6927 rootfs=4 data=4 pid=1 process_age_s=0.8 child[child_pid=7 child_age_s=0.8]
+fid-memory	suspend-async	2	-	0.521	cli
+fid-memory	resume-local	2	200	0.245593	tag=v3 count=5 mb=50 fill=random sum=6927 rootfs=5 data=5 pid=1 process_age_s=1.1 child[child_pid=7 child_age_s=1.1]
+fid-memory	warm-call	2	200	0.067170	tag=v3 count=6 mb=50 fill=random sum=6927 rootfs=6 data=6 pid=1 process_age_s=1.2 child[child_pid=7 child_age_s=1.2]
+fid-memory	suspend-async	3	-	0.560	cli
+fid-memory	resume-local	3	200	0.234741	tag=v3 count=7 mb=50 fill=random sum=6927 rootfs=7 data=7 pid=1 process_age_s=1.5 child[child_pid=7 child_age_s=1.5]
+fid-memory	warm-call	3	200	0.067529	tag=v3 count=8 mb=50 fill=random sum=6927 rootfs=8 data=8 pid=1 process_age_s=1.6 child[child_pid=7 child_age_s=1.6]
+fid-memory	suspend-async	4	-	0.548	cli
+fid-memory	resume-local	4	200	0.244179	tag=v3 count=9 mb=50 fill=random sum=6927 rootfs=9 data=9 pid=1 process_age_s=1.8 child[child_pid=7 child_age_s=1.8]
+fid-memory	warm-call	4	200	0.068131	tag=v3 count=10 mb=50 fill=random sum=6927 rootfs=10 data=10 pid=1 process_age_s=1.9 child[child_pid=7 child_age_s=1.9]
+fid-memory	suspend-async	5	-	0.545	cli
+fid-memory	resume-local	5	200	0.248263	tag=v3 count=11 mb=50 fill=random sum=6927 rootfs=11 data=11 pid=1 process_age_s=2.2 child[child_pid=7 child_age_s=2.2]
+fid-memory	warm-call	5	200	0.071404	tag=v3 count=12 mb=50 fill=random sum=6927 rootfs=12 data=12 pid=1 process_age_s=2.3 child[child_pid=7 child_age_s=2.3]
+fid-memory	suspend-async	6	-	0.506	cli
+fid-memory	resume-local	6	200	0.236096	tag=v3 count=13 mb=50 fill=random sum=6927 rootfs=13 data=13 pid=1 process_age_s=2.6 child[child_pid=7 child_age_s=2.6]
+fid-memory	warm-call	6	200	0.069665	tag=v3 count=14 mb=50 fill=random sum=6927 rootfs=14 data=14 pid=1 process_age_s=2.7 child[child_pid=7 child_age_s=2.6]
+fid-memory	suspend-async	7	-	0.543	cli
+fid-memory	resume-local	7	200	0.245772	tag=v3 count=15 mb=50 fill=random sum=6927 rootfs=15 data=15 pid=1 process_age_s=3.0 child[child_pid=7 child_age_s=2.9]
+fid-memory	warm-call	7	200	0.072994	tag=v3 count=16 mb=50 fill=random sum=6927 rootfs=16 data=16 pid=1 process_age_s=3.1 child[child_pid=7 child_age_s=3.0]
+fid-memory	suspend-async	8	-	0.542	cli
+fid-memory	resume-local	8	200	0.244951	tag=v3 count=17 mb=50 fill=random sum=6927 rootfs=17 data=17 pid=1 process_age_s=3.3 child[child_pid=7 child_age_s=3.3]
+fid-memory	warm-call	8	200	0.067714	tag=v3 count=18 mb=50 fill=random sum=6927 rootfs=18 data=18 pid=1 process_age_s=3.4 child[child_pid=7 child_age_s=3.4]
+fid-memory	suspend-async	9	-	0.563	cli
+fid-memory	resume-local	9	200	0.271563	tag=v3 count=19 mb=50 fill=random sum=6927 rootfs=19 data=19 pid=1 process_age_s=3.7 child[child_pid=7 child_age_s=3.7]
+fid-memory	warm-call	9	200	0.064695	tag=v3 count=20 mb=50 fill=random sum=6927 rootfs=20 data=20 pid=1 process_age_s=3.8 child[child_pid=7 child_age_s=3.8]
+fid-memory	suspend-async	10	-	0.504	cli
+fid-memory	resume-local	10	200	0.237617	tag=v3 count=21 mb=50 fill=random sum=6927 rootfs=21 data=21 pid=1 process_age_s=4.1 child[child_pid=7 child_age_s=4.1]
+fid-memory	warm-call	10	200	0.069479	tag=v3 count=22 mb=50 fill=random sum=6927 rootfs=22 data=22 pid=1 process_age_s=4.2 child[child_pid=7 child_age_s=4.2]
+fid-memory	suspend-sync	1	-	1.028	cli
+fid-memory	store-snapshot-kib	1	-	53380	du-in-rustfs
+fid-memory	local-after-sync-kib	1	-	58484	du
+fid-memory	resume-after-sync	1	200	0.236296	tag=v3 count=23 mb=50 fill=random sum=6927 rootfs=23 data=23 pid=1 process_age_s=4.5 child[child_pid=7 child_age_s=4.5]
+fid-memory	suspend-sync	2	-	1.190	cli
+fid-memory	resume-after-sync	2	200	0.239528	tag=v3 count=24 mb=50 fill=random sum=6927 rootfs=24 data=24 pid=1 process_age_s=4.8 child[child_pid=7 child_age_s=4.7]
+fid-memory	suspend-sync	3	-	1.208	cli
+fid-memory	resume-after-sync	3	200	0.246490	tag=v3 count=25 mb=50 fill=random sum=6927 rootfs=25 data=25 pid=1 process_age_s=5.0 child[child_pid=7 child_age_s=5.0]
+fid-rootfs	golden-ready-wait	1	-	0.218	poll-1s
+fid-rootfs	create-actor	1	-	0.208	cli
+fid-rootfs	first-call-golden	1	200	0.538645	tag=v3 count=1 mb=50 fill=random sum=6928 rootfs=1 data=1 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	warm-call	0	200	0.065863	tag=v3 count=2 mb=50 fill=random sum=6928 rootfs=2 data=2 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-rootfs	suspend-async	1	-	0.329	cli
+fid-rootfs	local-snapshot-kib	1	-	72	du
+fid-rootfs	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_ROOTFS:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_ROOTFS:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+fid-rootfs	resume-local	1	200	0.476090	tag=v3 count=1 mb=50 fill=random sum=6794 rootfs=3 data=3 pid=1 process_age_s=0.3 child[child_pid=7 child_age_s=0.3]
+fid-rootfs	warm-call	1	200	0.057417	tag=v3 count=2 mb=50 fill=random sum=6794 rootfs=4 data=4 pid=1 process_age_s=0.3 child[child_pid=7 child_age_s=0.3]
+fid-rootfs	suspend-async	2	-	0.332	cli
+fid-rootfs	resume-local	2	200	0.499339	tag=v3 count=1 mb=50 fill=random sum=5908 rootfs=5 data=5 pid=1 process_age_s=0.3 child[child_pid=7 child_age_s=0.3]
+fid-rootfs	warm-call	2	200	0.061317	tag=v3 count=2 mb=50 fill=random sum=5908 rootfs=6 data=6 pid=1 process_age_s=0.4 child[child_pid=7 child_age_s=0.3]
+fid-rootfs	suspend-async	3	-	0.314	cli
+fid-rootfs	resume-local	3	200	0.534928	tag=v3 count=1 mb=50 fill=random sum=6746 rootfs=7 data=7 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	warm-call	3	200	0.068668	tag=v3 count=2 mb=50 fill=random sum=6746 rootfs=8 data=8 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-rootfs	suspend-async	4	-	0.307	cli
+fid-rootfs	resume-local	4	200	0.525944	tag=v3 count=1 mb=50 fill=random sum=5986 rootfs=9 data=9 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	warm-call	4	200	0.068458	tag=v3 count=2 mb=50 fill=random sum=5986 rootfs=10 data=10 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-rootfs	suspend-async	5	-	0.360	cli
+fid-rootfs	resume-local	5	200	0.502427	tag=v3 count=1 mb=50 fill=random sum=6554 rootfs=11 data=11 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	warm-call	5	200	0.060509	tag=v3 count=2 mb=50 fill=random sum=6554 rootfs=12 data=12 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-rootfs	suspend-async	6	-	0.334	cli
+fid-rootfs	resume-local	6	200	0.526825	tag=v3 count=1 mb=50 fill=random sum=6276 rootfs=13 data=13 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	warm-call	6	200	0.064230	tag=v3 count=2 mb=50 fill=random sum=6276 rootfs=14 data=14 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-rootfs	suspend-async	7	-	0.317	cli
+fid-rootfs	resume-local	7	200	0.518541	tag=v3 count=1 mb=50 fill=random sum=6427 rootfs=15 data=15 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	warm-call	7	200	0.063745	tag=v3 count=2 mb=50 fill=random sum=6427 rootfs=16 data=16 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-rootfs	suspend-async	8	-	0.332	cli
+fid-rootfs	resume-local	8	200	0.465125	tag=v3 count=1 mb=50 fill=random sum=6174 rootfs=17 data=17 pid=1 process_age_s=0.3 child[child_pid=7 child_age_s=0.3]
+fid-rootfs	warm-call	8	200	0.059323	tag=v3 count=2 mb=50 fill=random sum=6174 rootfs=18 data=18 pid=1 process_age_s=0.3 child[child_pid=7 child_age_s=0.3]
+fid-rootfs	suspend-async	9	-	0.259	cli
+fid-rootfs	resume-local	9	200	0.438070	tag=v3 count=1 mb=50 fill=random sum=6788 rootfs=19 data=19 pid=1 process_age_s=0.2 child[child_pid=6 child_age_s=0.2]
+fid-rootfs	warm-call	9	200	0.060521	tag=v3 count=2 mb=50 fill=random sum=6788 rootfs=20 data=20 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	suspend-async	10	-	0.316	cli
+fid-rootfs	resume-local	10	200	0.495036	tag=v3 count=1 mb=50 fill=random sum=5208 rootfs=21 data=21 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	warm-call	10	200	0.065112	tag=v3 count=2 mb=50 fill=random sum=5208 rootfs=22 data=22 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-rootfs	suspend-sync	1	-	0.365	cli
+fid-rootfs	store-snapshot-kib	1	-	84	du-in-rustfs
+fid-rootfs	local-after-sync-kib	1	-	72	du
+fid-rootfs	resume-after-sync	1	200	0.463594	tag=v3 count=1 mb=50 fill=random sum=6946 rootfs=23 data=23 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	suspend-sync	2	-	0.494	cli
+fid-rootfs	resume-after-sync	2	200	0.535937	tag=v3 count=1 mb=50 fill=random sum=6255 rootfs=24 data=24 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-rootfs	suspend-sync	3	-	0.462	cli
+fid-rootfs	resume-after-sync	3	200	0.481279	tag=v3 count=1 mb=50 fill=random sum=5826 rootfs=25 data=25 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.2]
+fid-volumes	golden-ready-wait	1	-	0.210	poll-1s
+fid-volumes	create-actor	1	-	0.200	cli
+fid-volumes	first-call-golden	1	200	0.524057	tag=v3 count=1 mb=50 fill=random sum=5712 rootfs=1 data=1 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	warm-call	0	200	0.065065	tag=v3 count=2 mb=50 fill=random sum=5712 rootfs=2 data=2 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.3]
+fid-volumes	suspend-async	1	-	0.336	cli
+fid-volumes	local-snapshot-kib	1	-	44	du
+fid-volumes	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_VOLUMES:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_VOLUMES:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+fid-volumes	resume-local	1	200	0.534804	tag=v3 count=1 mb=50 fill=random sum=6887 rootfs=1 data=3 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	warm-call	1	200	0.064629	tag=v3 count=2 mb=50 fill=random sum=6887 rootfs=2 data=4 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-volumes	suspend-async	2	-	0.344	cli
+fid-volumes	resume-local	2	200	0.479998	tag=v3 count=1 mb=50 fill=random sum=5663 rootfs=1 data=5 pid=1 process_age_s=0.3 child[child_pid=7 child_age_s=0.2]
+fid-volumes	warm-call	2	200	0.064173	tag=v3 count=2 mb=50 fill=random sum=5663 rootfs=2 data=6 pid=1 process_age_s=0.3 child[child_pid=7 child_age_s=0.3]
+fid-volumes	suspend-async	3	-	0.322	cli
+fid-volumes	resume-local	3	200	0.528425	tag=v3 count=1 mb=50 fill=random sum=6820 rootfs=1 data=7 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	warm-call	3	200	0.062834	tag=v3 count=2 mb=50 fill=random sum=6820 rootfs=2 data=8 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-volumes	suspend-async	4	-	0.305	cli
+fid-volumes	resume-local	4	200	0.532841	tag=v3 count=1 mb=50 fill=random sum=6074 rootfs=1 data=9 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	warm-call	4	200	0.063323	tag=v3 count=2 mb=50 fill=random sum=6074 rootfs=2 data=10 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-volumes	suspend-async	5	-	0.303	cli
+fid-volumes	resume-local	5	200	0.537425	tag=v3 count=1 mb=50 fill=random sum=5087 rootfs=1 data=11 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	warm-call	5	200	0.065801	tag=v3 count=2 mb=50 fill=random sum=5087 rootfs=2 data=12 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-volumes	suspend-async	6	-	0.325	cli
+fid-volumes	resume-local	6	200	0.500919	tag=v3 count=1 mb=50 fill=random sum=7365 rootfs=1 data=13 pid=1 process_age_s=0.3 child[child_pid=7 child_age_s=0.3]
+fid-volumes	warm-call	6	200	0.074785	tag=v3 count=2 mb=50 fill=random sum=7365 rootfs=2 data=14 pid=1 process_age_s=0.4 child[child_pid=7 child_age_s=0.4]
+fid-volumes	suspend-async	7	-	0.295	cli
+fid-volumes	resume-local	7	200	0.519605	tag=v3 count=1 mb=50 fill=random sum=5202 rootfs=1 data=15 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	warm-call	7	200	0.064765	tag=v3 count=2 mb=50 fill=random sum=5202 rootfs=2 data=16 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-volumes	suspend-async	8	-	0.319	cli
+fid-volumes	resume-local	8	200	0.473899	tag=v3 count=1 mb=50 fill=random sum=6530 rootfs=1 data=17 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.2]
+fid-volumes	warm-call	8	200	0.059389	tag=v3 count=2 mb=50 fill=random sum=6530 rootfs=2 data=18 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	suspend-async	9	-	0.336	cli
+fid-volumes	resume-local	9	200	0.515069	tag=v3 count=1 mb=50 fill=random sum=6781 rootfs=1 data=19 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	warm-call	9	200	0.062446	tag=v3 count=2 mb=50 fill=random sum=6781 rootfs=2 data=20 pid=1 process_age_s=0.4 child[child_pid=6 child_age_s=0.4]
+fid-volumes	suspend-async	10	-	0.320	cli
+fid-volumes	resume-local	10	200	0.560156	tag=v3 count=1 mb=50 fill=random sum=7167 rootfs=1 data=21 pid=1 process_age_s=0.4 child[child_pid=7 child_age_s=0.3]
+fid-volumes	warm-call	10	200	0.061743	tag=v3 count=2 mb=50 fill=random sum=7167 rootfs=2 data=22 pid=1 process_age_s=0.4 child[child_pid=7 child_age_s=0.4]
+fid-volumes	suspend-sync	1	-	0.353	cli
+fid-volumes	store-snapshot-kib	1	-	48	du-in-rustfs
+fid-volumes	local-after-sync-kib	1	-	44	du
+fid-volumes	resume-after-sync	1	200	0.491680	tag=v3 count=1 mb=50 fill=random sum=4875 rootfs=1 data=23 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	suspend-sync	2	-	0.421	cli
+fid-volumes	resume-after-sync	2	200	0.493175	tag=v3 count=1 mb=50 fill=random sum=6179 rootfs=1 data=24 pid=1 process_age_s=0.3 child[child_pid=6 child_age_s=0.3]
+fid-volumes	suspend-sync	3	-	0.421	cli
+fid-volumes	resume-after-sync	3	200	0.412544	tag=v3 count=1 mb=50 fill=random sum=6817 rootfs=1 data=25 pid=1 process_age_s=0.2 child[child_pid=6 child_age_s=0.2]
+DONE

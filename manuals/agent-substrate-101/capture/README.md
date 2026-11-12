@@ -157,6 +157,32 @@ The credential values in this folder are test values that we made up: `sk-mock-n
 | `80-local.tsv` | create, first call, async suspend, resume, for 0, 50, and 200 MiB |
 | `82-actor-m*.yaml`, `83-lifecycle-m*.log` | the actor objects and their lifecycle logs |
 
+### V-validation: twelve checks of statements that the first draft could not prove
+
+All twelve ran on the x86 server guest, on the cluster of experiments A to D, with a pool `vpool` of two workers that hold 16 one-CPU actors.
+
+| Folder | What it shows |
+|---|---|
+| `00-setup/` | the ballast v3 actor (`ballast3-main.go`) and the pool |
+| `01-compressible/10-compressible.tsv` | snapshot size, resume, and both suspend modes for 200 and 500 MiB of zero bytes, half zero and half random bytes, and random bytes |
+| `02-python-runtime/10-python.tsv`, `img/app.py`, `tmpl-pyagent.yaml` | a Python server with a dict of one million values: the golden snapshot build, first calls, resumes, suspends, and snapshot sizes |
+| `03-parallel-resume/20-parallel.tsv`, `24-summary.tsv` | 1, 2, 4, 8, and 16 resumes at the same instant, five rounds each |
+| `03-parallel-resume/10-parallel-first-run-n16-n32.tsv`, `11-workers-before-32.txt` | an earlier run with 14 free places: 16 at once, 32 at once, and 32 at once with 16 actors suspended during the wait |
+| `04-fidelity/10-fidelity.tsv`, `tmpl-fid-*.yaml` | one actor for each fidelity, with a count in memory, on the root filesystem, and on a volume, and a child process |
+| `05-golden-race/10-race.tsv` | an actor created before the golden snapshot of its template exists |
+| `06-template-move/10-move.tsv` | `update actor --template` on a running and on a suspended actor |
+| `07-cross-namespace-pool/` | a template in an atespace with no namespace on a pool of another namespace, and a selector that matches no pool |
+| `08-access-control/10-access.tsv`, `policy-viewer.yaml`, `15-policy-lab-v-editor.yaml` | one ServiceAccount with no role, as viewer, and as editor, a text that is no token, and a token with the wrong audience |
+| `09-actor-jwt/24-jwt-decoded.txt`, `20-jwt-second-try.tsv`, `12-policy-live.yaml` | the header and the claims of one actor JWT, without its signature, and the use of one token for several requests |
+| `09-actor-jwt/10-jwt.tsv`, `14-jwt-decoded.txt` | the first try, where the host name did not resolve |
+| `10-preview-feature/10-preview.tsv`, `tmpl-gep.yaml` | the four combinations of the server flag and the client flag for `GoldenEgressPolicy` |
+| `10-preview-feature/13-ateapi-lines.log` | the `ate-api-server` log of that test, with the reconcile errors of the template whose selector matches no pool |
+| `11-process-exit-long-watch/10-watch.tsv`, `11-workers-end.txt` | two actors whose process exited, state every 15 s for 20 minutes, then a suspend and a revert |
+| `12-suspend-during-request/10-inflight.tsv` | a suspend 2 s into a request of 10 s, in both modes |
+| `_scripts/` | the scripts that made these recordings |
+
+The JWT files hold decoded claims only. No file in this folder holds a signed token.
+
 ### _scripts
 
 The shell scripts that made the recordings. Each one ran inside a guest, or on the Mac for `m2-install.sh` and `m3-actors.sh`.
@@ -172,12 +198,15 @@ The shell scripts that made the recordings. Each one ran inside a guest, or on t
 | `suspend-x86.json` | `async`, `sync`, same `points` shape |
 | `footprint-x86.json` | `local_snapshot_per_actor`: `[{x, kib, mib}]`. `with_25_suspended_actors` and `after_delete`: `node_snapshots_mib`, `node_snapshot_cache_mib`, `object_store_mib` |
 | `timers-x86.json` | `actors`: `[{actor, mib, suspended_at, uploaded_at, detached_at, seconds_to_upload, seconds_to_detach}]`. `node_local_snapshots`: `[{t, mib}]` |
-| `failures-x86.json` | `idle_watch`: `{seconds, samples_after_last_request, states}`. `lifecycle_ops`, `local_snapshot_loss`, `node_restart`, `death_inside_sandbox`: `[{t, case, event, fields}]` |
+| `failures-x86.json` | `idle_watch`: `{seconds, samples_after_last_request, states}`, which counts only the samples between the start and the end of the watch. `lifecycle_ops`, `local_snapshot_loss`, `node_restart`, `death_inside_sandbox`: `[{t, case, event, fields}]` |
 | `parking-x86.json` | `load_run`: `{requests, ok, shed_503, ok_average_seconds, ok_slowest_seconds, actors, workers, seconds}`. `parking_trace`. `full_pool_503`: `{seconds, body}` |
 | `dependency-loss-x86.json` | `outages.postgres`, `outages.ate-api-server`, `outages.kube-apiserver`. Each has `outage_seconds`, `dependency_ready_t`, `summary.<stream>`, and `per_second.<stream>`: `[{t, code, seconds, ok}]`. The streams are `running`, `suspended`, and `proxy` |
 | `kagent-turns-x86.json` | `client_seconds.<series>`, `server_turn_seconds.<series>`, `resume_seconds.turns_only`, `resume_seconds.all`, `suspend_seconds` |
 | `install-steps.json` | `source_build`, `release_images`, `release_images_mac`, `kagent`. Each has `machine` and `steps`: `[{step, exit, seconds}]` |
 | `microvm-x86.json` | `node_local`, `new_actor_first_call`, `suspend_async`, `suspend_sync`, `warm_call`, `create_actor`, with the `points` shape of `resume-x86.json`. `local_snapshot_per_actor`: `[{x, kib, mib}]`. `resident_memory`: `microvm` and `gvisor_same_node`, each a list of `{process, kib, mib}` |
+| `validation-memory-x86.json` | `actors`: one entry for each of six templates, with `fill` (`zero`, `mixed`, `rand`), `x` in MiB, `node_snapshot` and `object_store_copy` as `{kib, mib}`, and `resume_node`, `resume_after_sync`, `suspend_async`, `suspend_sync`, `new_actor_first_call`, `warm_call`, each `{seconds, runs, failed}`. `python`: the same fields for the Python actor, with `template_to_golden_ready`, `peak_rss_mib`, `image_bytes`, and the process age at its first and last request |
+| `validation-parallel-x86.json` | `points`: `[{x, requests, ok, refused_503, seconds, p90, runs}]`, where `x` is the number of resumes at the same instant. `first_run.levels`: the same for the earlier run, with `refused_seconds`, `refused_runs`, and `refused_body`. `workers_before` and `first_run.workers_before`: booked and total millicores of the pool |
+| `validation-fidelity-x86.json` | `levels`: one entry for each fidelity, with `after_last_resume` (`memory_count`, `rootfs_count`, `volume_count`, `process_age_s`), `process_age_after_resume_s`, `node_snapshot`, `object_store_copy`, and the timed fields of `validation-memory-x86.json` |
 
 ## What was removed
 

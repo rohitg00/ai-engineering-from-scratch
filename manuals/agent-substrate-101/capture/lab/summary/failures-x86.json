@@ -389,10 +389,10 @@
   ],
   "idle_watch": {
     "all_samples": 63,
-    "samples_after_last_request": 61,
+    "samples_after_last_request": 60,
     "seconds": 900,
     "states": {
-      "ACTOR_STATE_RUNNING": 61
+      "ACTOR_STATE_RUNNING": 60
     }
   },
   "lifecycle_ops": [

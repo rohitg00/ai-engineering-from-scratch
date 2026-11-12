@@ -1,0 +1,14 @@
+metadata:
+  atespace: demo-tools
+  createTime: "2026-11-12T12:49:30.159866336Z"
+  name: default
+  uid: 48d1e41d-f7b3-4a90-856e-9f4d1d87c1dc
+  updateTime: "2026-11-12T12:49:30.159866336Z"
+  version: "1"
+rules:
+- http:
+    hostnames:
+    - pkg-mirror.demo-tools.svc.cluster.local
+    ports:
+      numbers:
+      - 80

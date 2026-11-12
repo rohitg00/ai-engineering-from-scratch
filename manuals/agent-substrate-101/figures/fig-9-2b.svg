@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 318" role="img" aria-labelledby="fig-9-2b-title fig-9-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-2b-title">The time of one agent turn, by fidelity and by the state of the actor</title>
+  <desc id="fig-9-2b-desc">Seconds for one turn of the agent at the client, on the second x86 server guest with a mock model. On a running actor a turn took 0.09 to 0.11 s under memory fidelity and 0.09 to 0.10 s under volumes fidelity, with 4 turns each. After a suspend a turn took 0.30 to 0.32 s under memory fidelity and 4.50 to 5.06 s under volumes fidelity, with 3 turns each.</desc>
+  <line x1="70" y1="256" x2="600" y2="256" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="1"/>
+  <text x="60" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="219.33" x2="600" y2="219.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <text x="60" y="223.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="70" y1="182.67" x2="600" y2="182.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <text x="60" y="186.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="70" y1="146" x2="600" y2="146" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <text x="60" y="150" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="70" y1="109.33" x2="600" y2="109.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <text x="60" y="113.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="70" y1="72.67" x2="600" y2="72.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <text x="60" y="76.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="70" y1="36" x2="600" y2="36" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.2"/>
+  <text x="60" y="40" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <text x="70" y="22" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds for one turn, at the client</text>
+  <circle cx="126.5" cy="251.86" r="3.4" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="135.5" cy="252.3" r="3.4" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="144.5" cy="252.44" r="3.4" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="153.5" cy="252.63" r="3.4" fill="var(--m-green-ink, #336b40)"/>
+  <rect class="m-knock" x="85.25" y="216.89" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="140" y="227.86" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">memory fidelity</text>
+  <rect class="m-knock" x="95.42" y="231.28" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="140" y="241.86" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.09 to 0.11 s</text>
+  <circle cx="256.5" cy="252.44" r="3.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="265.5" cy="252.59" r="3.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="274.5" cy="252.41" r="3.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="283.5" cy="252.77" r="3.4" fill="var(--m-teal-ink, #18696a)"/>
+  <rect class="m-knock" x="211.8" y="217.44" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="270" y="228.41" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">volumes fidelity</text>
+  <rect class="m-knock" x="225.42" y="231.83" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="270" y="242.41" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.09 to 0.10 s</text>
+  <circle cx="411" cy="245.11" r="3.4" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="420" cy="244.16" r="3.4" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="429" cy="244.89" r="3.4" fill="var(--m-green-ink, #336b40)"/>
+  <rect class="m-knock" x="365.25" y="209.19" width="109.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="420" y="220.16" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">memory fidelity</text>
+  <rect class="m-knock" x="375.42" y="223.58" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="420" y="234.16" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.30 to 0.32 s</text>
+  <circle cx="531" cy="70.5" r="3.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="540" cy="77.18" r="3.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="549" cy="91.18" r="3.4" fill="var(--m-teal-ink, #18696a)"/>
+  <rect class="m-knock" x="481.8" y="35.53" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="540" y="46.5" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">volumes fidelity</text>
+  <rect class="m-knock" x="495.42" y="49.92" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="540" y="60.5" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">4.50 to 5.06 s</text>
+  <text x="205" y="276" font-size="12" text-anchor="middle" font-weight="700">a turn on a running actor</text>
+  <text x="480" y="276" font-size="12" text-anchor="middle" font-weight="700">a turn that resumes the actor</text>
+  <text x="205" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">4 turns for each fidelity</text>
+  <text x="480" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">3 turns for each fidelity</text>
+</svg>

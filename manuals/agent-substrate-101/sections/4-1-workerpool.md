@@ -117,6 +117,10 @@ The worker kept 64 MiB of its 3 GiB limit, so it reported 3008Mi. The demo pools
 
 The booked side is the sum of the limits that each running actor declares in its ActorTemplate. Each actor here declared 1000 millicores and 256 MiB. Two actors booked the whole CPU capacity and a sixth of the memory. The worker is full, and CPU is the reason.
 
+Read `cpuMillicores` as the number that the worker books for placement. We did not see it slow an actor.
+
+**We measured** one command on a second x86 server guest (16 vCPU, 31 GB), with n=1. It used 2.0 seconds of CPU time and finished in 2.38 seconds under a value of 500 millicores. [A tool sandbox](#s-a-tool-sandbox) shows that run.
+
 A suspended actor books nothing. The command counts running actors only.
 
 Two habits from `kubectl` do not carry over. The command has no `-A` flag, and it lists the workers of every namespace by default. Use `-n` to limit it to one namespace and `-l` to filter by pool labels.
@@ -150,4 +154,4 @@ One more fact matters before you give a pool to a team. A worker pod runs as roo
 - Expect a pool rollout to wait up to 30 minutes for running actors.
 ```
 
-Sources: capture/lab/A-quickstart/60-state.log, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/I-capacity/14-workers-full.txt, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/inventory/worker-pod-spec.json; api/infra/k8s/ate/v1/workerpool_types.go, cmd/atecontroller/internal/controllers/workerpool_apply.go, cmd/atecontroller/internal/workersync/syncer.go, cmd/ateworker-gvisor/main.go, cmd/ateworker-gvisor/memory.go, api/ateapi/v1/ateapi.proto (Worker, WorkerStatus, WorkerState), cmd/kubectl-ate/internal/cmd/worker.go at v1.0.0; docs/reference/api-guide.md at v1.0.0; issue https://github.com/agent-substrate/substrate/issues/3479.
+Sources: capture/lab/summary/demos-x86.json, capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/A-quickstart/60-state.log, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/I-capacity/14-workers-full.txt, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/K-kagent/inventory/workerpools.yaml, capture/lab/K-kagent/inventory/worker-pod-spec.json; api/infra/k8s/ate/v1/workerpool_types.go, cmd/atecontroller/internal/controllers/workerpool_apply.go, cmd/atecontroller/internal/workersync/syncer.go, cmd/ateworker-gvisor/main.go, cmd/ateworker-gvisor/memory.go, api/ateapi/v1/ateapi.proto (Worker, WorkerStatus, WorkerState), cmd/kubectl-ate/internal/cmd/worker.go at v1.0.0; docs/reference/api-guide.md at v1.0.0; issue https://github.com/agent-substrate/substrate/issues/3479.

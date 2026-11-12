@@ -1,0 +1,7 @@
+### 10-get-kind: curl -fsSL -o /tmp/kind https://kind.sigs.k8s.io/dl/v0.33.0/kind-linux-amd64 && sudo install -m 755 /tmp/kind /usr/local/bin/kind && kind version
+### 20-kind-create: kind create cluster --name kagent --image kindest/node:v1.37.0
+### 21-api-resources: kubectl api-resources --api-group=certificates.k8s.io; kubectl version; kubectl get nodes -o wide
+### 30-get-kagent-cli: curl -fsSL https://raw.githubusercontent.com/kagent-dev/kagent/refs/heads/main/scripts/get-kagent | bash -s -- --version v1.0.0; kagent version
+### 40-kagent-install: kagent --config kagent-config.yaml install --namespace kagent
+### 50-rollout: kubectl rollout status deployment/kagent-controller -n kagent --timeout=300s
+### 60-state: kubectl get ns; kubectl get pods -A -o wide; helm list -A; kubectl get workerpools -A; kubectl get crd | grep -E 'ate.dev|kagent'

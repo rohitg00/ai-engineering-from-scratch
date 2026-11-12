@@ -1,0 +1,4 @@
+ATESPACE    NAME     TEMPLATE            STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+demo-idle   bursty   demo-idle/counter   ACTOR_STATE_SUSPENDED   <none>                    19        14m
+demo-idle   busy     demo-idle/counter   ACTOR_STATE_SUSPENDED   <none>                    5         14m
+demo-idle   rare     demo-idle/counter   ACTOR_STATE_SUSPENDED   <none>                    11        14m

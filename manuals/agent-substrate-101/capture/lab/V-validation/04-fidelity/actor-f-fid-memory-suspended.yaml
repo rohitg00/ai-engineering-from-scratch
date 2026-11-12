@@ -1,0 +1,36 @@
+actorTemplate:
+  atespace: lab-v
+  name: fid-memory
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:43:38.562729107Z"
+  name: f-fid-memory
+  uid: 443628cd-9aed-4631-9ea9-dcc6632ce1ae
+  updateTime: "2026-11-12T12:44:00.416784590Z"
+  version: "45"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 12
+  snapshots:
+  - actorTemplateUid: dec0c196-e199-4c19-aa00-6037835949f4
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-v/actors/443628cd-9aed-4631-9ea9-dcc6632ce1ae/snapshots/92a768ff-7ea1-4baf-9c22-13ef64159aaa
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 12
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 92a768ff-7ea1-4baf-9c22-13ef64159aaa
+  state: ACTOR_STATE_SUSPENDED

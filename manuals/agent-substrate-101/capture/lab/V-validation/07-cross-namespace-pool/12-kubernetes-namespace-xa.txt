@@ -1,0 +1,1 @@
+Error from server (NotFound): namespaces "xa" not found

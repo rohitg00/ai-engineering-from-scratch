@@ -1,0 +1,22 @@
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:51:58.645958800Z"
+  name: default
+  uid: 5dfed9e6-3d1b-4e3d-87ae-dd8849545be8
+  updateTime: "2026-11-12T12:51:58.645958800Z"
+  version: "1"
+rules:
+- http:
+    effects:
+      replaceHeaders:
+      - actorJwt:
+          audiences:
+          - lab-echo
+          expirationSeconds: "600"
+        header: authorization
+        prefix: 'Bearer '
+    hostnames:
+    - echo.lab-v.svc.cluster.local
+    ports:
+      numbers:
+      - 80

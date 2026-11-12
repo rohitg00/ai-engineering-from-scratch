@@ -1,0 +1,7 @@
+ts	event	detail
+ATESPACE   NAME      GOLDEN TAG   ERROR   AGE
+xa         cross-0                        0s
+2026-11-12T12:51:17.025Z	golden-ready	yes
+2026-11-12T12:51:18.007Z	call	200	0.263974	tag=v3 count=1 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=0.1 child[none]
+2026-11-12T12:51:40.304Z	call-unmatched-selector	503	5.060180	actor xa/x2 unavailable: no worker has room for the actor
+DONE

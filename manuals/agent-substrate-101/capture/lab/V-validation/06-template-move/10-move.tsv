@@ -1,0 +1,12 @@
+ts	event	detail
+2026-11-12T12:50:59.167Z	call-on-A	200	0.356742	tag=A count=1 mb=20 fill=random sum=2219 rootfs=1 data=1 pid=1 process_age_s=0.2 child[none]
+2026-11-12T12:50:59.542Z	call-on-A	200	0.067067	tag=A count=2 mb=20 fill=random sum=2219 rootfs=2 data=2 pid=1 process_age_s=0.3 child[none]
+2026-11-12T12:50:59.628Z	call-on-A	200	0.069773	tag=A count=3 mb=20 fill=random sum=2219 rootfs=3 data=3 pid=1 process_age_s=0.4 child[none]
+2026-11-12T12:50:59.839Z	update-while-running	Error: failed to update actor: rpc error: code = FailedPrecondition desc = actor must be ACTOR_STATE_SUSPENDED to change its actor template (got: ACTOR_STATE_RUNNING) 
+2026-11-12T12:51:00.869Z	suspended	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2
+2026-11-12T12:51:01.103Z	update-while-suspended	ATESPACE   NAME   TEMPLATE     STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-v      mv1    lab-v/mv-b   ACTOR_STATE_SUSPENDED   <none>                    6         2s 
+2026-11-12T12:51:01.535Z	call-after-move	200	0.347521	tag=B count=1 mb=20 fill=random sum=2891 rootfs=1 data=4 pid=1 process_age_s=0.1 child[none]
+2026-11-12T12:51:01.904Z	call-after-move	200	0.064756	tag=B count=2 mb=20 fill=random sum=2891 rootfs=2 data=5 pid=1 process_age_s=0.2 child[none]
+2026-11-12T12:51:01.989Z	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2
+2026-11-12T12:51:03.137Z	call-after-second-suspend	200	0.236241	tag=B count=3 mb=20 fill=random sum=2891 rootfs=3 data=6 pid=1 process_age_s=0.7 child[none]
+DONE

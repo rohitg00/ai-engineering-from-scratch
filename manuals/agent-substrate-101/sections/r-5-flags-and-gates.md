@@ -114,7 +114,18 @@ A preview feature is off unless two switches agree.
 | `GoldenEgressPolicy` | `goldenEgressPolicy` in a template | off |
 | `PerTemplateSnapshotLocation` | `snapshotConfig.storageLocation` in a template | off |
 
-An object that was created while a feature was on stays usable after the feature is turned off. The server does not check an unchanged value again. Every argument list that we recorded has `--preview=` with no value, so all three were off in all our runs.
+An object that was created while a feature was on stays usable after the feature is turned off. The server does not check an unchanged value again.
+
+We tried the four combinations of the two switches once, on the x86 server guest. The request was `kubectl ate create actor-template` with a file that has a `goldenEgressPolicy` field.
+
+| `--preview` on `ate-api-server` | `--preview` on `kubectl ate` | Result |
+|---|---|---|
+| empty | not passed | `Error: failed to create actor template: rpc error: code = InvalidArgument desc = actor_template.golden_egress_policy: Forbidden` |
+| empty | passed | the same error |
+| `GoldenEgressPolicy` | not passed | the same error |
+| `GoldenEgressPolicy` | passed | accepted, with a golden tag within 30 s |
+
+The error names the field and not the feature. A read of the new template with `kubectl ate get` needed no client flag. In this test only `ate-api-server` had the server switch, and we restored its arguments afterwards. Every other argument list that we recorded has `--preview=` with no value, so all three features were off in all other runs.
 
 ## Kubernetes features that the cluster must have
 
@@ -129,4 +140,4 @@ Substrate issues its certificates with Kubernetes pod certificates. The cluster 
 
 A cluster without them cannot start the Substrate components. We ran Kubernetes 1.37.0 in every test.
 
-Sources: cmd/ate-setup/commands.md and docs/guides/operator-install.md (installer settings), cmd/atelet/main.go, cmd/atelet/snapshotcache.go and cmd/atelet/internal/snapshottracker/background.go (atelet flags and timer defaults), cmd/atenet/internal/router/cmd.go, cmd/atenet/internal/router/ingress/parking.go, cmd/atenet/internal/router/xds.go and cmd/atenet/internal/router/egress/policycache.go (router flags and defaults), cmd/ateapi/main.go, cmd/atecontroller/, internal/preview/preview.go, docs/dev/preview-gates.md and hack/create-kind-cluster.sh at v1.0.0; capture/lab/D-durability/00-atelet-args.txt, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/F-egress/agentgateway/20-results.txt.
+Sources: cmd/ate-setup/commands.md and docs/guides/operator-install.md (installer settings), cmd/atelet/main.go, cmd/atelet/snapshotcache.go and cmd/atelet/internal/snapshottracker/background.go (atelet flags and timer defaults), cmd/atenet/internal/router/cmd.go, cmd/atenet/internal/router/ingress/parking.go, cmd/atenet/internal/router/xds.go and cmd/atenet/internal/router/egress/policycache.go (router flags and defaults), cmd/ateapi/main.go, cmd/atecontroller/, internal/preview/preview.go, docs/dev/preview-gates.md and hack/create-kind-cluster.sh at v1.0.0; capture/lab/D-durability/00-atelet-args.txt, capture/lab/C-resume-vs-size/31-atelet-args-patched.txt, capture/lab/I-capacity/17-router-args.txt, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/V-validation/10-preview-feature/10-preview.tsv, capture/lab/V-validation/10-preview-feature/tmpl-gep.yaml, capture/lab/V-validation/10-preview-feature/11-patch-on.log.

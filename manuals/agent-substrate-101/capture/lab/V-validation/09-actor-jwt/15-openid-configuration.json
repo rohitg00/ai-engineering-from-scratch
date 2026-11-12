@@ -1,0 +1,1 @@
+{"issuer":"https://idp.ate-system.svc","jwks_uri":"https://idp.ate-system.svc/openid/v1/jwks","response_types_supported":["id_token"],"subject_types_supported":["public"],"id_token_signing_alg_values_supported":["ES256"],"claims_supported":["iss","sub","aud","exp","nbf","iat","jti","actor.ate.dev","worker-for-actor.ate.dev"]}

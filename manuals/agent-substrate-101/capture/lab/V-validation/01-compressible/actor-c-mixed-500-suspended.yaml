@@ -1,0 +1,36 @@
+actorTemplate:
+  atespace: lab-v
+  name: mixed-500
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:40:56.762731847Z"
+  name: c-mixed-500
+  uid: 558aaba9-9bcf-4091-91ce-fb94b5d122e5
+  updateTime: "2026-11-12T12:41:26.415336258Z"
+  version: "45"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 12
+  snapshots:
+  - actorTemplateUid: ab87cbae-753c-4704-9f1a-cc7cdb1040c2
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-v/actors/558aaba9-9bcf-4091-91ce-fb94b5d122e5/snapshots/c9f885a7-4ced-489b-b541-cdb205662580
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 12
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: c9f885a7-4ced-489b-b541-cdb205662580
+  state: ACTOR_STATE_SUSPENDED

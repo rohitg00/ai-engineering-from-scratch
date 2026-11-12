@@ -13,21 +13,39 @@ SUMMARY = LAB / "summary"
 GUEST_A = "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor"
 GUEST_B = "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images"
 GUEST_K = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, kagent v1.0.0 with its Substrate distribution, mock model server"
+GUEST_D = "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor"
 MAC = "Apple silicon laptop, Docker Desktop with 10 CPU and 8 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images"
+VALIDATION_MACHINE = GUEST_A + ", pool of 2 workers with 8 CPU and 8 GiB each"
+TIMED_REQUESTS = ("first-call-golden", "warm-call", "resume-local", "resume-after-sync")
+
+
+def lines(rel):
+    return (LAB / rel).read_text(encoding="utf-8").splitlines()
 
 
 def rows(rel):
-    path = LAB / rel
-    out = []
-    for line in path.read_text(encoding="utf-8").splitlines():
-        if line.strip():
-            out.append(line.split("\t"))
-    return out
+    return [line.split("\t") for line in lines(rel) if line.strip()]
+
+
+def rounded(values):
+    return [round(value, 3) for value in values]
 
 
 def stat(values):
     values = sorted(values)
     return {"median": round(statistics.median(values), 3), "min": round(values[0], 3), "max": round(values[-1], 3), "n": len(values)}
+
+
+def timed(entry):
+    return {"seconds": stat(entry["ok"]), "runs": rounded(entry["ok"]), "failed": entry["failed"]}
+
+
+def kib_mib(kib):
+    return {"kib": kib, "mib": round(kib / 1024, 1)}
+
+
+def first_kib(rel):
+    return int(lines(rel)[0].split()[0])
 
 
 def stamp(text):
@@ -51,16 +69,11 @@ def by_size(rel):
 
 
 def points(group):
-    return [{"x": mb, "seconds": stat(entry["ok"]), "runs": [round(v, 3) for v in entry["ok"]], "failed": entry["failed"]} for mb, entry in sorted(group.items()) if entry["ok"]]
+    return [{"x": mb, **timed(entry)} for mb, entry in sorted(group.items()) if entry["ok"]]
 
 
 def snapshot_sizes():
-    out = []
-    for mb in (0, 50, 200, 500, 1000):
-        first = (LAB / f"C-resume-vs-size/snapdir-b{mb}-1.txt").read_text(encoding="utf-8").splitlines()[0]
-        kib = int(first.split()[0])
-        out.append({"x": mb, "kib": kib, "mib": round(kib / 1024, 1)})
-    return out
+    return [{"x": mb, **kib_mib(first_kib(f"C-resume-vs-size/snapdir-b{mb}-1.txt"))} for mb in (0, 50, 200, 500, 1000)]
 
 
 def resume_x86():
@@ -110,10 +123,10 @@ def resume_mac():
     }
 
 
-def section(lines, title):
+def section(text_lines, title):
     out = []
     inside = False
-    for line in lines:
+    for line in text_lines:
         if line.startswith("== "):
             inside = line.startswith(title)
             continue
@@ -122,8 +135,8 @@ def section(lines, title):
     return out
 
 
-def du_value(lines, suffix):
-    for line in lines:
+def du_value(text_lines, suffix):
+    for line in text_lines:
         parts = line.split()
         if len(parts) == 2 and parts[0].isdigit() and parts[1] == suffix:
             return int(parts[0])
@@ -131,8 +144,8 @@ def du_value(lines, suffix):
 
 
 def footprint_x86():
-    before = (LAB / "C-resume-vs-size/20-storage-footprint.txt").read_text(encoding="utf-8").splitlines()
-    after = (LAB / "C-resume-vs-size/23-storage-after-delete.txt").read_text(encoding="utf-8").splitlines()
+    before = lines("C-resume-vs-size/20-storage-footprint.txt")
+    after = lines("C-resume-vs-size/23-storage-after-delete.txt")
     node = section(before, "== node: /var/lib/ate")
     store = section(before, "== rustfs pod data")
     return {
@@ -164,10 +177,9 @@ def watch_rows():
 
 
 def timers_x86():
-    watch = watch_rows()
     actors = {}
     node = []
-    for row in watch:
+    for row in watch_rows():
         if row[1] == "node" and row[2] == "local-snapshots-MiB":
             node.append({"t": row[0], "mib": int(row[3])})
             continue
@@ -225,7 +237,8 @@ def failures_x86():
     lifecycle = rows("B-lifecycle/10-trace.tsv")
     idle = [row for row in lifecycle if len(row) > 2 and row[1] == "state"]
     start = next(i for i, row in enumerate(lifecycle) if len(row) > 1 and row[1] == "idle-watch-start")
-    watch = [row for row in lifecycle[start:] if len(row) > 2 and row[1] == "state"]
+    end = next(i for i, row in enumerate(lifecycle) if len(row) > 1 and row[1] == "idle-watch-end")
+    watch = [row for row in lifecycle[start:end] if len(row) > 2 and row[1] == "state"]
     counts = {}
     for row in watch:
         counts[row[2]] = counts.get(row[2], 0) + 1
@@ -350,11 +363,10 @@ def kagent_x86():
                 suspend.append(when - last.pop("suspend"))
     turns = [value for value in resume if value < 5]
     workers = []
-    for line in (LAB / "K-kagent/parallel/workers-during.txt").read_text(encoding="utf-8").splitlines():
+    for line in lines("K-kagent/parallel/workers-during.txt"):
         match = re.match(r"(\S+) N=(\d+) actors=(\d+)/\d+ cpu=(\d+)/(\d+)", line)
         if match:
             workers.append({"t": match.group(1), "turns_started": int(match.group(2)), "actors": int(match.group(3)), "cpu_millicores": int(match.group(4)), "cpu_capacity_millicores": int(match.group(5))})
-    listed = lambda values: [round(value, 3) for value in values]
     return {
         "machine": GUEST_K,
         "note": "the model is a mock server in the cluster, so model time is near zero. Every turn resumes the session actor and suspends it again.",
@@ -364,10 +376,10 @@ def kagent_x86():
         "resume_seconds": {"all": stat(resume), "turns_only": stat(turns), "note": "resuming to running in the ate-api log. The values of 5 s or more are golden snapshot builds, left out of turns_only."},
         "suspend_seconds": stat(suspend),
         "runs": {
-            "client_seconds": {key: listed(values) for key, values in sorted(client.items())},
-            "server_turn_seconds": {key: listed(values) for key, values in sorted(server.items())},
-            "resume_seconds_turns_only": listed(turns),
-            "suspend_seconds": listed(suspend),
+            "client_seconds": {key: rounded(values) for key, values in sorted(client.items())},
+            "server_turn_seconds": {key: rounded(values) for key, values in sorted(server.items())},
+            "resume_seconds_turns_only": rounded(turns),
+            "suspend_seconds": rounded(suspend),
         },
         "parallel_workers": workers,
     }
@@ -384,26 +396,23 @@ def steps(rel):
 def microvm_x86():
     base = "L-gaps/microvm"
     local = by_size(f"{base}/40-microvm-local.tsv")
-    sizes = (0, 200, 500)
-    snapshots = []
+    snapdir_sizes = (0, 200, 500)
+    process_sizes = (0, 200)
+    snapshots = [{"x": mb, **kib_mib(first_kib(f"{base}/44-snapdir-v{mb}-1.txt"))} for mb in snapdir_sizes]
     resident = []
-    for mb in sizes:
-        first = (LAB / f"{base}/44-snapdir-v{mb}-1.txt").read_text(encoding="utf-8").splitlines()[0]
-        kib = int(first.split()[0])
-        snapshots.append({"x": mb, "kib": kib, "mib": round(kib / 1024, 1)})
-    for mb in (0, 200):
-        for line in (LAB / f"{base}/41-node-processes-v{mb}-1.txt").read_text(encoding="utf-8").splitlines():
+    for mb in process_sizes:
+        for line in lines(f"{base}/41-node-processes-v{mb}-1.txt"):
             parts = line.split()
             if len(parts) > 3 and parts[3].endswith("/cloud-hypervisor"):
-                resident.append({"x": mb, "process": "cloud-hypervisor", "kib": int(parts[1]), "mib": round(int(parts[1]) / 1024, 1)})
+                resident.append({"x": mb, "process": "cloud-hypervisor", **kib_mib(int(parts[1]))})
     gvisor = []
-    for line in (LAB / f"{base}/50-gvisor-rss.txt").read_text(encoding="utf-8").splitlines():
+    for line in lines(f"{base}/50-gvisor-rss.txt"):
         parts = line.split()
         if len(parts) > 3 and parts[3] in ("runsc-sandbox", "runsc-gofer"):
-            gvisor.append({"process": parts[3], "kib": int(parts[1]), "mib": round(int(parts[1]) / 1024, 1)})
+            gvisor.append({"process": parts[3], **kib_mib(int(parts[1]))})
     files = [f"capture/lab/{base}/40-microvm-local.tsv", f"capture/lab/{base}/50-gvisor-rss.txt"]
-    files += [f"capture/lab/{base}/44-snapdir-v{mb}-1.txt" for mb in sizes]
-    files += [f"capture/lab/{base}/41-node-processes-v{mb}-1.txt" for mb in (0, 200)]
+    files += [f"capture/lab/{base}/44-snapdir-v{mb}-1.txt" for mb in snapdir_sizes]
+    files += [f"capture/lab/{base}/41-node-processes-v{mb}-1.txt" for mb in process_sizes]
     return {
         "machine": GUEST_A.replace(", gVisor", ", microVM class"),
         "actor": "ballast: a Go server in a scratch image that holds x MiB of random bytes, fidelity SNAPSHOT_FIDELITY_MEMORY, sandbox class microvm",
@@ -431,6 +440,325 @@ def install_steps():
     }
 
 
+def drill_cases():
+    cases = []
+    for line in lines("N-demos/failure-drill/drill-run.log"):
+        head = re.match(r"== (\d) (.+)", line)
+        if head:
+            cases.append({"n": int(head.group(1)), "title": head.group(2), "symptoms": [], "recoveries": []})
+            continue
+        field = re.match(r"\s+(\w+)\s+(.*)", line)
+        if not field or not cases:
+            continue
+        case, key, text = cases[-1], field.group(1), field.group(2)
+        timed = re.search(r"(\d{3}) in ([\d.]+) s", text)
+        after = re.search(r"after ([\d.]+) s", text)
+        took = re.search(r"\(([\d.]+) s\)", text)
+        if key == "symptom" and timed:
+            case["symptoms"].append({"http": int(timed.group(1)), "seconds": round(float(timed.group(2)), 3)})
+        elif key == "detect" and after:
+            case["detect_seconds"] = float(after.group(1))
+        elif key == "fix":
+            case["fix"] = re.sub(r"\s*\(.*\)$", "", text)
+            case["fix_seconds"] = float(took.group(1)) if took else float(after.group(1))
+        elif key == "recover" and timed:
+            case["recoveries"].append({"http": int(timed.group(1)), "seconds": round(float(timed.group(2)), 3)})
+        elif key == "recover" and after:
+            case["recoveries"].append({"http": 200, "seconds": float(after.group(1))})
+        elif key == "state" and "state" not in case:
+            case["state"] = text
+    return cases
+
+
+def agent_session(kind):
+    turns = []
+    for row in rows(f"N-demos/stateful-agent/session-{kind}.tsv")[1:]:
+        reply = json.loads(row[3])
+        step = row[0]
+        if step.startswith("note"):
+            phase = "note"
+        elif "new actor" in step:
+            phase = "new"
+        elif "after suspend" in step:
+            phase = "resumed"
+        else:
+            phase = "warm"
+        turns.append({
+            "step": step,
+            "phase": phase,
+            "http": int(row[1]),
+            "seconds": round(float(row[2]), 3),
+            "memory_turns": reply["memory_turns"],
+            "db_turns": reply["db_turns"],
+            "rehydrated_from_db": reply["rehydrated_from_db"],
+            "note": reply["note"],
+            "scratch_file": reply["scratch_file"],
+            "process_age_s": reply["process_age_s"],
+        })
+    marks = []
+    for line in lines(f"N-demos/stateful-agent/lifecycle-{kind}.log"):
+        if line.startswith("{"):
+            event = json.loads(line)
+            marks.append((event["message"], stamp(event["time"][:26])))
+    restores = [round(end - start, 3) for (a, start), (b, end) in zip(marks, marks[1:]) if a == "Actor restoring" and b == "Actor restored"]
+    return {
+        "turns": turns,
+        "resumed_seconds": stat([t["seconds"] for t in turns if t["phase"] == "resumed"]),
+        "warm_seconds": stat([t["seconds"] for t in turns if t["phase"] == "warm"]),
+        "restore_seconds": stat(restores),
+    }
+
+
+def sandbox_tasks():
+    tasks = {}
+    for row in rows("N-demos/tool-sandbox/tasks.tsv")[1:]:
+        task = tasks.setdefault(row[0], {"label": row[0]})
+        if row[1] == "task":
+            task.update({"state": row[2], "http": int(row[3]), "seconds": float(row[4]), "result": row[5][:200]})
+        elif row[1] == "revert":
+            task["revert_seconds"] = float(row[4])
+        else:
+            task.update({"clean_check_seconds": float(row[4]), "files_after_revert": int(json.loads(row[5])["stdout"])})
+    return list(tasks.values())
+
+
+def idle_run():
+    base = "N-demos/idle-suspender"
+    events = rows(f"{base}/suspender.tsv")
+    zero = min(stamp(row[0]) for row in events if row[1] == "request")
+    requests = [{"t": round(stamp(row[0]) - zero, 1), "actor": row[2], "http": int(row[3]), "seconds": float(row[4]), "kind": row[5]} for row in events if row[1] == "request"]
+    suspends = [{"t": round(stamp(row[0]) - zero, 1), "actor": row[2], "idle_seconds": int(row[3][5:-1]), "seconds": float(row[4]), "result": row[5]} for row in events if row[1] == "suspend"]
+    capacity = []
+    for row in rows(f"{base}/capacity-requests-with-suspender.tsv")[1:]:
+        if len(row) < 6:
+            continue
+        capacity.append({"t": round(stamp(row[0]) - zero, 1), "actors": int(row[1].split("/")[0]), "millicores": int(row[2].split("/")[0]), "bursty": row[3], "busy": row[4], "rare": row[5]})
+    control_file = f"{base}/requests-without-suspender.tsv"
+    control = [{"actor": row[1], "http": int(row[2]), "seconds": round(float(row[3]), 3)} for row in rows(control_file)[1:]] if (LAB / control_file).exists() else []
+    client = [(row[1], int(row[2]), float(row[3])) for row in rows(f"{base}/requests-with-suspender.tsv")[1:]]
+    return {
+        "idle_seconds": 30,
+        "slots": 2,
+        "requests": requests,
+        "suspends": suspends,
+        "capacity": capacity,
+        "with_suspender": {
+            "requests": len(client),
+            "ok": sum(1 for _, code, _ in client if code == 200),
+            "resumed_seconds": stat([r["seconds"] for r in requests if r["kind"] == "resumed"]),
+            "warm_seconds": stat([r["seconds"] for r in requests if r["kind"] == "warm"]),
+            "suspend_cli_seconds": stat([s["seconds"] for s in suspends]),
+            "mean_millicores": round(statistics.mean(c["millicores"] for c in capacity)),
+        },
+        "without_suspender": {
+            "requests": len(control),
+            "ok": sum(1 for r in control if r["http"] == 200),
+            "failed": [r for r in control if r["http"] != 200],
+        },
+    }
+
+
+def demos_x86():
+    return {
+        "machine": GUEST_D,
+        "note": "four demos from capture/demos, recorded once each. The model in the agent demo is a mock server in the cluster.",
+        "sources": [
+            "capture/lab/N-demos/failure-drill/drill-run.log",
+            "capture/lab/N-demos/stateful-agent/session-memory.tsv",
+            "capture/lab/N-demos/stateful-agent/session-volumes.tsv",
+            "capture/lab/N-demos/stateful-agent/lifecycle-memory.log",
+            "capture/lab/N-demos/stateful-agent/lifecycle-volumes.log",
+            "capture/lab/N-demos/tool-sandbox/tasks.tsv",
+            "capture/lab/N-demos/idle-suspender/suspender.tsv",
+            "capture/lab/N-demos/idle-suspender/requests-with-suspender.tsv",
+            "capture/lab/N-demos/idle-suspender/requests-without-suspender.tsv",
+            "capture/lab/N-demos/idle-suspender/capacity-requests-with-suspender.tsv",
+        ],
+        "install": steps("N-demos/install/steps.tsv"),
+        "failure_drill": drill_cases(),
+        "stateful_agent": {"memory": agent_session("memory"), "volumes": agent_session("volumes")},
+        "tool_sandbox": sandbox_tasks(),
+        "idle_suspender": idle_run(),
+    }
+
+
+def validation_rows(rel):
+    groups = {}
+    for row in rows(rel):
+        if len(row) < 5 or row[0] == "template":
+            continue
+        entry = groups.setdefault(row[0], {}).setdefault(row[1], {"ok": [], "failed": 0, "details": []})
+        if row[3] in ("200", "-"):
+            entry["ok"].append(float(row[4]))
+            entry["details"].append(row[5] if len(row) > 5 else "")
+        else:
+            entry["failed"] += 1
+    return groups
+
+
+def sized(entry):
+    return kib_mib(int(entry["ok"][0]))
+
+
+def detail_field(detail, key):
+    match = re.search(rf"{key}=(-?[\d.]+)", detail)
+    return float(match.group(1)) if match else None
+
+
+def request_count(group):
+    return sum(len(group[key]["ok"]) + group[key]["failed"] for key in TIMED_REQUESTS)
+
+
+def validation_timings(group):
+    return {
+        "node_snapshot": sized(group["local-snapshot-kib"]),
+        "object_store_copy": sized(group["store-snapshot-kib"]),
+        "resume_node": timed(group["resume-local"]),
+        "resume_after_sync": timed(group["resume-after-sync"]),
+        "suspend_async": timed(group["suspend-async"]),
+        "suspend_sync": timed(group["suspend-sync"]),
+        "new_actor_first_call": timed(group["first-call-golden"]),
+        "warm_call": timed(group["warm-call"]),
+    }
+
+
+def validation_memory_x86():
+    rel = "V-validation/01-compressible/10-compressible.tsv"
+    groups = validation_rows(rel)
+    fills = {"zero": "all zero bytes", "mixed": "half zero bytes, half random bytes", "rand": "all random bytes"}
+    actors = []
+    for name, group in groups.items():
+        fill, mib = name.split("-")
+        actors.append({
+            "template": name,
+            "fill": fill,
+            "fill_note": fills[fill],
+            "x": int(mib),
+            **validation_timings(group),
+        })
+    py_rel = "V-validation/02-python-runtime/10-python.tsv"
+    py = validation_rows(py_rel)["pyagent"]
+    ages = [detail_field(d, "process_age_s") for d in py["first-call-golden"]["details"][:1] + py["resume-local"]["details"] + py["resume-after-sync"]["details"]]
+    rss = {int(detail_field(d, "maxrss_mib")) for d in py["resume-local"]["details"]}
+    image_bytes = int((LAB / "V-validation/02-python-runtime/02-image.txt").read_text(encoding="utf-8").split()[1])
+    return {
+        "machine": VALIDATION_MACHINE,
+        "actor": "ballast v3: a Go server in a scratch image that holds x MiB of zero bytes, random bytes, or half of each, fidelity SNAPSHOT_FIDELITY_MEMORY",
+        "unit": {"x": "MiB of memory the actor holds", "seconds": "client time through kubectl ate proxy, CLI time for suspend", "kib": "du on the node snapshot folder and on the object store data folder"},
+        "sources": [f"capture/lab/{rel}", f"capture/lab/{py_rel}", "capture/lab/V-validation/02-python-runtime/02-image.txt"],
+        "actors": sorted(actors, key=lambda a: (a["x"], ["zero", "mixed", "rand"].index(a["fill"]))),
+        "python": {
+            "actor": "python:3.13-slim with an HTTP server that builds a dict of 1,000,000 random 100-byte values, limit 768 MiB, fidelity SNAPSHOT_FIDELITY_MEMORY",
+            "image_bytes": image_bytes,
+            "peak_rss_mib": sorted(rss),
+            "requests": request_count(py),
+            "process_age_first_request_s": ages[0],
+            "process_age_last_resume_s": ages[-1],
+            "template_to_golden_ready": timed(py["template-to-golden-ready"]),
+            **validation_timings(py),
+        },
+    }
+
+
+def percentile(values, q):
+    values = sorted(values)
+    return round(values[int(q * (len(values) - 1))], 3)
+
+
+def parallel_levels(rel):
+    levels = {}
+    for row in rows(rel):
+        if len(row) < 5 or row[0] in ("n", "DONE"):
+            continue
+        level = levels.setdefault(row[0], {"ok": [], "refused": [], "bodies": set()})
+        if row[3] == "200":
+            level["ok"].append(float(row[4]))
+        else:
+            level["refused"].append(float(row[4]))
+            level["bodies"].add(row[5][:160] if len(row) > 5 else "")
+    out = []
+    for name, level in levels.items():
+        item = {
+            "level": name,
+            "requests": len(level["ok"]) + len(level["refused"]),
+            "ok": len(level["ok"]),
+            "refused_503": len(level["refused"]),
+            "runs": rounded(level["ok"]),
+        }
+        if level["ok"]:
+            item["seconds"] = stat(level["ok"])
+            item["p90"] = percentile(level["ok"], 0.9)
+        if level["refused"]:
+            item["refused_seconds"] = stat(level["refused"])
+            item["refused_runs"] = rounded(level["refused"])
+            item["refused_body"] = sorted(level["bodies"])[0]
+        out.append(item)
+    return out
+
+
+def worker_slots(rel):
+    used = 0
+    capacity = 0
+    for line in lines(rel):
+        match = re.search(r"\s(\d+)/(\d+)\s+\S+Mi", line)
+        if match:
+            used += int(match.group(1))
+            capacity += int(match.group(2))
+    return {"cpu_millicores_used": used, "cpu_millicores_capacity": capacity}
+
+
+def validation_parallel_x86():
+    base = "V-validation/03-parallel-resume"
+    levels = parallel_levels(f"{base}/20-parallel.tsv")
+    for item in levels:
+        item["x"] = int(item.pop("level"))
+    return {
+        "machine": VALIDATION_MACHINE,
+        "actor": "ballast v3 with 50 MiB of random bytes, one CPU each, suspended before each round",
+        "note": "x suspended actors each get one request at the same instant, 5 rounds for each x, one kubectl ate proxy for each actor. The pool has room for 16 one-CPU actors.",
+        "unit": {"x": "requests at the same instant, one for each suspended actor", "seconds": "client time through kubectl ate proxy"},
+        "sources": [f"capture/lab/{base}/20-parallel.tsv", f"capture/lab/{base}/10-parallel-first-run-n16-n32.tsv", f"capture/lab/{base}/11-workers-before-32.txt", f"capture/lab/{base}/21-workers-before.txt", f"capture/lab/{base}/12-ateapi-error-lines-during-bursts.txt"],
+        "points": sorted(levels, key=lambda item: item["x"]),
+        "first_run": {
+            "note": "an earlier run with two dead RUNNING actors on the pool, so 14 of 16 slots were free. Level 32-with-release suspends 16 of the actors 1.5 s into the wait.",
+            "workers_before": worker_slots(f"{base}/11-workers-before-32.txt"),
+            "levels": parallel_levels(f"{base}/10-parallel-first-run-n16-n32.tsv"),
+        },
+        "workers_before": worker_slots(f"{base}/21-workers-before.txt"),
+        "ate_api_error_lines_during_bursts": int((LAB / f"{base}/12-ateapi-error-lines-during-bursts.txt").read_text(encoding="utf-8").strip()),
+    }
+
+
+def validation_fidelity_x86():
+    rel = "V-validation/04-fidelity/10-fidelity.tsv"
+    groups = validation_rows(rel)
+    levels = []
+    for name in ("fid-volumes", "fid-rootfs", "fid-memory"):
+        group = groups[name]
+        resumed = group["resume-local"]["details"] + group["resume-after-sync"]["details"]
+        last = resumed[-1]
+        levels.append({
+            "template": name,
+            "fidelity": "SNAPSHOT_FIDELITY_" + name.split("-")[1].upper(),
+            "requests": request_count(group),
+            "after_last_resume": {
+                "memory_count": int(detail_field(last, "count")),
+                "rootfs_count": int(detail_field(last, "rootfs")),
+                "volume_count": int(detail_field(last, "data")),
+                "process_age_s": detail_field(last, "process_age_s"),
+            },
+            "process_age_after_resume_s": {"min": min(detail_field(d, "process_age_s") for d in resumed), "max": max(detail_field(d, "process_age_s") for d in resumed)},
+            **validation_timings(group),
+        })
+    return {
+        "machine": VALIDATION_MACHINE,
+        "actor": "ballast v3 with 50 MiB of random bytes, a counter in memory, a counter file on the root filesystem, a counter file on a durableDir volume, and a child process",
+        "unit": {"seconds": "client time through kubectl ate proxy, CLI time for suspend", "kib": "du on the node snapshot folder and on the object store data folder"},
+        "sources": [f"capture/lab/{rel}"],
+        "levels": levels,
+    }
+
+
 BUILDERS = {
     "resume-x86.json": resume_x86,
     "suspend-x86.json": suspend_x86,
@@ -443,6 +771,10 @@ BUILDERS = {
     "kagent-turns-x86.json": kagent_x86,
     "install-steps.json": install_steps,
     "microvm-x86.json": microvm_x86,
+    "demos-x86.json": demos_x86,
+    "validation-memory-x86.json": validation_memory_x86,
+    "validation-parallel-x86.json": validation_parallel_x86,
+    "validation-fidelity-x86.json": validation_fidelity_x86,
 }
 
 

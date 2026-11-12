@@ -1,0 +1,17 @@
+Warning: resource namespaces/egress-target is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+Warning: Detected changes to resource egress-target which is currently being deleted.
+namespace/egress-target configured
+Warning: resource deployments/whoami is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+deployment.apps/whoami configured
+Warning: resource services/whoami is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+service/whoami configured
+namespace/cred-ns created
+namespace/cred-ns-not-granted created
+Error from server (Forbidden): error when creating "targets.yaml": configmaps "drip" is forbidden: unable to create new content in namespace egress-target because it is being terminated
+Error from server (Forbidden): error when creating "targets.yaml": deployments.apps "drip" is forbidden: unable to create new content in namespace egress-target because it is being terminated
+Error from server (Forbidden): error when creating "targets.yaml": services "drip" is forbidden: unable to create new content in namespace egress-target because it is being terminated
+secret/api-token created
+secret/api-token created
+Waiting for deployment spec update to be observed...
+error: object has been deleted
+Error from server (NotFound): deployments.apps "drip" not found

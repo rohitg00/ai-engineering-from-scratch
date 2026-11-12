@@ -111,6 +111,36 @@ note: The lines before the results are cut.
 
 Read those numbers together. Parking turned a pool that was two times too small into a service that answered 98% of requests. It did that with latency. The average request took more than two times longer than a request to a free worker. The slowest took twelve times longer. Two requests still failed, in a demo that was built to show parking at its best.
 
+## A burst of resumes
+
+The demo sends its requests one after another. A real burst arrives in one instant, so we tested that. The pool had two workers with room for 16 one-CPU actors. We suspended n actors of 50 MiB each and sent one request to each of them at the same instant, five rounds for each n.
+
+```figure
+id: fig-4-4b
+kind: chart
+title: resume time against the number of resumes at the same instant
+claim: Sixteen resumes at the same instant took 0.37 seconds each at the median, against 0.23 seconds for one resume alone.
+caption: Each dot is one request to a suspended actor, and the line joins the medians of each level. The horizontal axis doubles at each step. The grey numbers are the requests that returned 200. The dashed line marks 0.5 seconds. Measured on the x86 server guest. From capture/lab/summary/validation-parallel-x86.json.
+```
+
+| Resumes at the same instant | Requests | Returned 200 | Median | Slowest |
+|---|---|---|---|---|
+| 1 | 5 | 5 | 0.23 s | 0.24 s |
+| 2 | 10 | 10 | 0.23 s | 0.24 s |
+| 4 | 20 | 20 | 0.26 s | 0.31 s |
+| 8 | 40 | 40 | 0.29 s | 0.33 s |
+| 16 | 80 | 80 | 0.37 s | 0.45 s |
+
+**We measured** these 155 requests on the x86 server guest (24 vCPU, 47 GB, nested KVM), with gVisor and the Envoy dataplane. Each request went through its own `kubectl ate proxy`, and the time is at the client. All 155 returned 200. Sixteen resumes at once cost 64 percent more for each request than one resume alone. `ate-api-server` logged no error line during the bursts.
+
+So the control plane did not queue at 16 resumes at once. A burst that fits in the pool costs tenths of a second, and no request waits for the budget.
+
+A burst that does not fit is split by the pool, with no request in between. We sent 32 requests at the same instant to 32 suspended actors, when the pool had 14 free places.
+
+**We measured** that burst once, on the same guest. Fourteen requests returned 200, at a median of 0.37 seconds. The other 18 returned 503 after 5.11 to 5.15 seconds, with the text `no worker has room for the actor`. In a second burst of 32 we suspended 16 actors 1.5 seconds into the wait. Then 21 of 32 requests returned 200, the slowest after 2.69 seconds, and 11 returned 503.
+
+The pool had 14 free places and not 16 for a reason that [section 3.5](#s-crashed-and-revertactor) explains. Two actors whose process had exited were still `ACTOR_STATE_RUNNING`, and each one held a CPU.
+
 ## Our position
 
 Parking hides a short shortage. It does not add capacity. A pool that parks requests all day is too small, and your users pay for that with seconds on every request.
@@ -121,7 +151,7 @@ Three things follow for your client and your alerts:
 - **Retry.** Retry a 503 with the text `no worker has room` after a pause. Do not retry it in a tight loop, because each retry takes a place among the parked requests.
 - **Alert.** The router counts parked requests in the metric `atenet.router.parking.active` and requests over the limit in `atenet.router.parking.rejected` {{docs}}. Alert when the first one stays above zero.
 
-All of this section is the Envoy dataplane, where the router process of Substrate handles each request. We did not test a full pool on the agentgateway dataplane, and we did not test more than 1,024 parked requests.
+All of this section is the Envoy dataplane, where the router process of Substrate handles each request. We did not test a full pool on the agentgateway dataplane, and we did not test more than 1,024 parked requests. Our bursts stopped at 32 requests, and each request had its own `kubectl ate proxy`. We did not send a burst through the ingress of the router.
 
 ```takeaways
 - Read a 503 after 5 seconds as a pool that is too small.
@@ -131,4 +161,4 @@ All of this section is the Envoy dataplane, where the router process of Substrat
 - Retry a capacity 503 with a pause, never in a tight loop.
 ```
 
-Sources: capture/lab/I-capacity/13-parking-trace.tsv, capture/lab/I-capacity/16-load-30s.log, capture/lab/I-capacity/17-router-args.txt, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/12-pool-spec.yaml, capture/lab/I-capacity/14-workers-full.txt, capture/lab/I-capacity/15-actors-after.txt, capture/lab/summary/parking-x86.json, capture/lab/B-lifecycle/20-trace-ops.tsv; cmd/atenet/internal/router/ingress/parking.go, cmd/atenet/internal/router/ingress/resumer.go, cmd/atenet/internal/router/cmd.go at v1.0.0; docs/concepts/request-parking.md at v1.0.0.
+Sources: capture/lab/I-capacity/13-parking-trace.tsv, capture/lab/I-capacity/16-load-30s.log, capture/lab/I-capacity/17-router-args.txt, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/12-pool-spec.yaml, capture/lab/I-capacity/14-workers-full.txt, capture/lab/I-capacity/15-actors-after.txt, capture/lab/summary/parking-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/V-validation/03-parallel-resume/20-parallel.tsv, capture/lab/V-validation/03-parallel-resume/24-summary.tsv, capture/lab/V-validation/03-parallel-resume/10-parallel-first-run-n16-n32.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/03-parallel-resume/12-ateapi-error-lines-during-bursts.txt, capture/lab/B-lifecycle/20-trace-ops.tsv; cmd/atenet/internal/router/ingress/parking.go, cmd/atenet/internal/router/ingress/resumer.go, cmd/atenet/internal/router/cmd.go at v1.0.0; docs/concepts/request-parking.md at v1.0.0.

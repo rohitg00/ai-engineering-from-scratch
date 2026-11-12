@@ -1,0 +1,3 @@
+NAME                                   POOL    STATE                 ACTORS   CPU(MILLICORES)   MEMORY          POD                            AGE
+5c29a997-aa08-4804-a995-da57683135ca   vpool   WORKER_STATE_ACTIVE   8/1000   8000/8000         2448Mi/8128Mi   lab-v/vpool-69595c64bf-p4slt   10m
+6942ebfe-695a-4767-999e-29e5c08938f7   vpool   WORKER_STATE_ACTIVE   8/1000   8000/8000         2348Mi/8128Mi   lab-v/vpool-69595c64bf-xvzlq   10m

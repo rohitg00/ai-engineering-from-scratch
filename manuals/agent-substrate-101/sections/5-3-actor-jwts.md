@@ -6,7 +6,7 @@ Your actor calls a service that you run, and the service must know which actor i
 
 When you finish this section, you can write the egress rule that attaches an actor JWT and list the claims in the token. You can also say what a service must check before it trusts one.
 
-Our runs show one such rule at work, the one that kagent writes for each session. We did not decode a token in our runs. The claim names and the limits below come from the code and the documentation at v1.0.0.
+Our runs show two such rules at work. One is the rule that kagent writes for each session. The other is our own rule, which sent a token to a service that returns its request headers, so we could decode the token. The limits at the end come from the documentation at v1.0.0, and we say which of them we saw.
 
 ## The gateway asks, the actor does not
 
@@ -75,24 +75,65 @@ This rule is on the `http` kind, so the token crossed the cluster network withou
 
 ## What the token says
 
-The header of the token has `typ` set to `JWT`, an `alg` of `ES256` or `RS256`, and a `kid` that names the signing key. The claims are these {{code}}.
+We wrote a rule like the one of kagent for an actor named `jw2` in the atespace `lab-v`. The audience was `lab-echo`, the lifetime was 600 seconds, and the host was a service in the cluster that returns its request headers. The actor called that service, and we decoded the token that came back. The listing shows the header and the claims, and it leaves out the signature.
 
-| Claim | Value |
-|---|---|
-| `iss` | the issuer URL of the install, by default `https://idp.ate-system.svc` |
-| `sub` | `actor/<atespace>/<name>` |
-| `aud` | the audiences from the rule, always an array |
-| `exp` | the issue time plus `expirationSeconds`, which must be 300 to 3600 |
-| `nbf` | five minutes before `iat` |
-| `iat` | the issue time |
-| `jti` | a random id |
-| `actor.ate.dev` | an object with `atespace`, `actorName` and `actorUID` |
+```listing
+title: the header and the claims of one actor JWT
+source: capture/lab/V-validation/09-actor-jwt/24-jwt-decoded.txt
+lang: text
+note: The request headers at the start of the file and the two lines after the claims are cut.
+---
+…
+header: {
+ "typ": "JWT",
+ "alg": "ES256",
+ "kid": "E38XLIprTZzZkY7RinXF7sPyw-HxHT-ysnVHFvvTCAU"
+}
+claims: {
+ "iss": "https://idp.ate-system.svc",
+ "sub": "actor/lab-v/jw2",
+ "aud": [
+  "lab-echo"
+ ],
+ "exp": 1794488570,
+ "nbf": 1794487670,
+ "iat": 1794487970,
+ "jti": "VLZDMDBJ2UA3ME2Z5M62BADKQK",
+ "actor.ate.dev": {
+  "atespace": "lab-v",
+  "actorName": "jw2",
+  "actorUID": "93e670a4-3215-41e5-be33-4dffaca75d42"
+ }
+}
+…
+```
 
-Three details change how you use the token:
+| Claim | Value | In our token |
+|---|---|---|
+| `iss` | the issuer URL of the install | `https://idp.ate-system.svc` |
+| `sub` | `actor/<atespace>/<name>` | `actor/lab-v/jw2` |
+| `aud` | the audiences from the rule, always an array | `["lab-echo"]` |
+| `exp` | the issue time plus `expirationSeconds`, which must be 300 to 3600 {{code}} | `iat` plus 600 seconds |
+| `nbf` | five minutes before `iat` | `iat` less 300 seconds |
+| `iat` | the issue time | present |
+| `jti` | a random id | present |
+| `actor.ate.dev` | an object with `atespace`, `actorName` and `actorUID` | all three fields |
+
+The header named the algorithm `ES256`. Its `kid` was equal to the one key in the key set that the issuer published. The code also allows `RS256` {{code}}.
+
+We saw four more things in that run, once each, on the x86 server guest:
+
+- **The gateway uses a token again.** Two requests in a row carried the same token, with the same `jti`. A request after a suspend and a resume of the actor carried it too. So `jti` is not a request id, and a suspend does not end a token.
+- **The actor must send the header.** The effect replaces a header and does not add one. A request that the actor sent without an `authorization` header reached the service with none. Our other requests sent `Bearer placeholder`, and the gateway replaced it.
+- **The actor can get the token.** The service returned its request headers, so the actor read its own token in the response. Send a token only to a service that does not return it.
+- **One claim was absent.** The discovery document lists a claim named `worker-for-actor.ate.dev`. Our token did not have it.
+
+Two details change how you use the token:
 
 - **`sub` is a name.** An actor that you delete and create again with the same name gets the same `sub`. Bind to `actorUID` if the difference matters.
-- **`jti` is not a request id.** The gateway uses one token for many requests while enough of its lifetime remains.
 - **Substrate adds no audience.** The rule decides `aud`, and the person who writes the rule also decides which host receives the token.
+
+Create the policy before the actor asks for the name. In our first try, the actor asked for the host before any policy existed. We created the policy, and 4.5 seconds later the name still did not resolve. In the second try the policy came first, and the name resolved at once. [The DNS relay](#s-the-dns-relay) describes one more slow update like this one.
 
 ## What the service must check
 
@@ -112,13 +153,15 @@ The default issuer is a Service name, so only a verifier inside the cluster can 
 
 ## Limits
 
-The documentation lists these limits, and we tested none of them {{docs}}:
+The documentation lists these limits {{docs}}. We saw the second one in our run, and we tested none of the others:
 
 - **No revocation.** A token is valid until `exp`, also after you delete the actor. Keep the lifetime at 300 seconds unless a service needs more.
-- **It is a bearer token.** A service that returns its request headers in the response gives the token to the actor. We saw that effect with an injected credential in our egress tests.
+- **It is a bearer token.** A service that returns its request headers in the response gives the token to the actor. Our header service did that, and we saw the same effect with an injected credential in our egress tests.
 - **A new actor with an old name.** After you create an actor again, the gateway can send a token with the `actorUID` of the old one. The window is up to two thirds of the token lifetime (issue 2208) {{issue #2208}}.
 - **No exchange for cloud credentials.** Cloud token services want the JWT in the request body, and the gateway replaces only headers (issue 1661) {{issue #1661}}.
 - **Key rotation is manual.** Keys do not expire. You add, activate and remove keys with `kubectl ate admin`.
+
+Three things stay unverified after our run. We did not check the signature with the published key, as a service must. We did not rotate a key. And we did not set up federation with a second issuer or a cloud provider.
 
 ## Our position
 
@@ -132,4 +175,4 @@ Use the actor JWT for calls from an actor to services that you control. It remov
 - Use one audience for each service, and refuse tokens for other audiences.
 ```
 
-Sources: capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/atenet-egress.excerpt.log, capture/lab/K-kagent/inventory/kagent-configmaps.yaml, capture/lab/F-egress/envoy/20-results.txt; cmd/ateapi/internal/controlapi/actor.go (MintActorJwt), internal/actoridjwt/actoridjwt.go, api/ateapi/v1/ateapi.proto (ActorJwtSource, MintActorJwtRequest), cmd/atenet/internal/router/egress/actorjwt/actorjwt.go, cmd/ate-idp-server/internal/server/server.go at v1.0.0; docs/guides/actor-jwts.md, docs/guides/actor-jwt-federation.md, docs/guides/actor-jwt-key-rotation.md, docs/guides/authorization.md at v1.0.0; issues https://github.com/agent-substrate/substrate/issues/2208 and https://github.com/agent-substrate/substrate/issues/1661.
+Sources: capture/lab/K-kagent/session1/egress-policy-actor.yaml, capture/lab/K-kagent/session1/atenet-egress.excerpt.log, capture/lab/K-kagent/inventory/kagent-configmaps.yaml, capture/lab/F-egress/envoy/20-results.txt, capture/lab/V-validation/09-actor-jwt/24-jwt-decoded.txt, capture/lab/V-validation/09-actor-jwt/20-jwt-second-try.tsv, capture/lab/V-validation/09-actor-jwt/10-jwt.tsv, capture/lab/V-validation/09-actor-jwt/12-policy-live.yaml, capture/lab/V-validation/09-actor-jwt/15-openid-configuration.json, capture/lab/V-validation/09-actor-jwt/16-jwks-key-ids.json; cmd/ateapi/internal/controlapi/actor.go (MintActorJwt), internal/actoridjwt/actoridjwt.go, api/ateapi/v1/ateapi.proto (ActorJwtSource, MintActorJwtRequest), cmd/atenet/internal/router/egress/actorjwt/actorjwt.go, cmd/ate-idp-server/internal/server/server.go at v1.0.0; docs/guides/actor-jwts.md, docs/guides/actor-jwt-federation.md, docs/guides/actor-jwt-key-rotation.md, docs/guides/authorization.md at v1.0.0; issues https://github.com/agent-substrate/substrate/issues/2208 and https://github.com/agent-substrate/substrate/issues/1661.

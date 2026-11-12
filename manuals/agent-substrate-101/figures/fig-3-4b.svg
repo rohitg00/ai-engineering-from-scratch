@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 306" role="img" aria-labelledby="fig-3-4b-title fig-3-4b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 370" role="img" aria-labelledby="fig-3-4b-title fig-3-4b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-3-4b-title">What each snapshot fidelity keeps</title>
-  <desc id="fig-3-4b-desc">Three columns for the three snapshot fidelity levels. SNAPSHOT_FIDELITY_VOLUMES keeps only durable volumes and resumes with new processes. SNAPSHOT_FIDELITY_ROOTFS keeps durable volumes and root filesystem writes and also resumes with new processes. SNAPSHOT_FIDELITY_MEMORY keeps volumes, root filesystem writes and process memory, so the same processes continue. A row under the columns says what we saw for each level in our runs.</desc>
+  <desc id="fig-3-4b-desc">Three columns for the three snapshot fidelity levels. SNAPSHOT_FIDELITY_VOLUMES keeps only durable volumes and resumes with new processes. SNAPSHOT_FIDELITY_ROOTFS keeps durable volumes and root filesystem writes and also resumes with new processes. SNAPSHOT_FIDELITY_MEMORY keeps volumes, root filesystem writes and process memory, so the same processes continue. Rows under the columns give what one actor for each level showed on the x86 server guest after 25 calls with suspends between them: its three counts, its median resume from the node, and its snapshot size. VOLUMES: counts memory 1, rootfs 1, volume 25, 0.52 s median of 10, snapshot 44 KiB. ROOTFS: counts memory 1, rootfs 25, volume 25, 0.50 s median of 10, snapshot 72 KiB. MEMORY: counts memory 25, rootfs 25, volume 25, 0.25 s median of 10, snapshot 56.9 MiB.</desc>
   <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LAYER</text>
   <text x="225" y="18" font-size="12" text-anchor="middle" font-weight="700">VOLUMES</text>
   <text x="385" y="18" font-size="12" text-anchor="middle" font-weight="700">ROOTFS</text>
@@ -30,15 +30,25 @@
   <rect x="470" y="146" width="150" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
   <text x="545" y="173.75" font-size="12.5" text-anchor="middle" font-weight="700">kept</text>
   <text x="20" y="222" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ON RESUME</text>
-  <text x="20" y="262" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WE SAW</text>
-  <text x="225" y="222" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink, #1a1a1a)">new processes</text>
-  <text x="225" y="262" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kagent: /data kept,</text>
-  <text x="225" y="278" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/tmp and sleep gone</text>
-  <text x="385" y="222" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink, #1a1a1a)">new processes</text>
-  <text x="385" y="262" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">not run by us</text>
-  <text x="545" y="222" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink, #1a1a1a)">same processes</text>
-  <text x="545" y="262" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">counter: memory count</text>
-  <text x="545" y="278" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">went on from 8 to 9</text>
-  <line x1="20" y1="238" x2="620" y2="238" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
-  <text x="20" y="298" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The enum names carry the prefix SNAPSHOT_FIDELITY_. Each level includes the levels to its left.</text>
+  <text x="20" y="280" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">COUNTS</text>
+  <text x="20" y="296" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">after 25 calls</text>
+  <text x="225" y="222" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-ink, #1a1a1a)">new processes</text>
+  <text x="225" y="238" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">0.52 s median of 10</text>
+  <text x="225" y="254" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-teal-ink, #18696a)">snapshot 44 KiB</text>
+  <text x="225" y="280" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory 1, rootfs 1,</text>
+  <text x="225" y="296" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">volume 25</text>
+  <text x="385" y="222" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-ink, #1a1a1a)">new processes</text>
+  <text x="385" y="238" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">0.50 s median of 10</text>
+  <text x="385" y="254" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-teal-ink, #18696a)">snapshot 72 KiB</text>
+  <text x="385" y="280" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory 1, rootfs 25,</text>
+  <text x="385" y="296" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">volume 25</text>
+  <text x="545" y="222" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-ink, #1a1a1a)">same processes</text>
+  <text x="545" y="238" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">0.25 s median of 10</text>
+  <text x="545" y="254" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-teal-ink, #18696a)">snapshot 56.9 MiB</text>
+  <text x="545" y="280" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory 25, rootfs 25,</text>
+  <text x="545" y="296" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">volume 25</text>
+  <line x1="20" y1="264" x2="620" y2="264" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="20" y="326" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The enum names carry the prefix SNAPSHOT_FIDELITY_.</text>
+  <text x="20" y="342" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each level includes the levels to its left.</text>
+  <text x="20" y="358" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A count of 1 means that the count started again at the last resume.</text>
 </svg>

@@ -1,0 +1,155 @@
+2026-11-12T10:13:05.551773Z	info	agentgateway_app::commands::run	version: {
+  "version": "1.7.0",
+  "git_revision": "26f5aebe99a36a037fe54f8080a608aca5547e15",
+  "rust_version": "1.99.0",
+  "build_profile": "release",
+  "build_target": "x86_64-unknown-linux-gnu",
+  "crypto_backend": "aws-lc-rs",
+  "crypto_fips": false
+}	
+2026-11-12T10:13:05.552153Z	info	agentgateway_app::commands::run	running with config: ipv6Enabled: true
+network: ''
+selfIdentity: null
+terminationMaxDeadline: 5s
+terminationMinDeadline: 0s
+numWorkerThreads: 2
+adminAddr:
+  Localhost:
+  - true
+  - 15000
+statsAddr:
+  SocketAddr: 0.0.0.0:15020
+histograms: classic
+readinessAddr:
+  SocketAddr: '[::]:15021'
+selfAddr:
+  gateway: default
+  namespace: default
+hbone:
+  windowSize: 4194304
+  connectionWindowSize: 16777216
+  frameSize: 1048576
+  poolMaxStreamsPerConn: 100
+  poolUnusedReleaseTimeout:
+    secs: 300
+    nanos: 0
+xds:
+  address: null
+  auth: none
+  caCert: Default
+  headers: []
+  namespace: default
+  gateway: default
+  localConfig: /etc/agentgateway/config.yaml
+ca: null
+spiffe: null
+tracing: null
+metrics:
+  metric_fields:
+    add: {}
+  excluded_metrics: []
+logging:
+  filter: null
+  fields:
+    remove: []
+    add: {}
+  level: ''
+  format: text
+  database: null
+database: null
+storage:
+  mode: file
+sensitiveHeaders: []
+dns:
+  resolverCfg:
+    domain: null
+    search:
+    - ate-system.svc.cluster.local
+    - svc.cluster.local
+    - cluster.local
+    name_servers:
+    - ip: 10.96.0.10
+      trust_negative_responses: true
+      connections:
+      - port: 53
+        protocol:
+          type: udp
+        bind_addr: null
+      - port: 53
+        protocol:
+          type: tcp
+        bind_addr: null
+  resolverOpts:
+    ndots: 5
+    timeout: 5
+    attempts: 2
+    edns0: false
+    ip_strategy: Ipv4thenIpv6
+    cache_size: 8192
+    use_hosts_file: Auto
+    positive_min_ttl: null
+    negative_min_ttl: null
+    positive_max_ttl: null
+    negative_max_ttl: null
+    num_concurrent_reqs: 2
+    max_active_requests: 32
+    preserve_intermediates: true
+    try_tcp_on_error: false
+    server_ordering_strategy: QueryStatistics
+    recursion_desired: true
+    avoid_local_udp_ports: []
+    os_port_selection: false
+    case_randomization: false
+    trust_anchor: null
+    allow_answers: []
+    deny_answers: []
+    edns_payload_len: 1232
+proxyMetadata:
+  instanceIp: null
+  podName: ''
+  podNamespace: ''
+  nodeName: ''
+  role: '~'
+  nodeId: agentgateway~1.1.1.1~.~.svc.cluster.local
+threadingMode: multithreaded
+sessionEncoder: base64
+oidcCookieEncoder: null
+backend:
+  keepalives:
+    enabled: true
+    time: 3m0s
+    interval: 3m0s
+    retries: 9
+  connectTimeout: 11s
+  poolIdleTimeout: 1m30s
+  poolMaxSize: 0
+  h2KeepaliveInterval: 0s
+  h2KeepaliveTimeout: 5s
+  allowDynamicLoopback: true
+callouts: {}
+mcp:
+  sessionTtl: 30m0s
+dynamicCaCertCache:
+  ttl: 5m0s
+  capacity: 256
+modelCatalog:
+  sources: []
+	
+2026-11-12T10:13:05.622196Z	warn	config	failed to write generated session key	err=failed to write to file `/etc/agentgateway/config.yaml`: Read-only file system (os error 30) path=/etc/agentgateway/config.yaml
+2026-11-12T10:13:05.622219Z	warn	config	no session key configured; MCP session IDs are not encrypted. Set SESSION_KEY or config.session.key	
+2026-11-12T10:13:05.623638Z	info	management::hyper_helpers	listener established	address=[::]:15021 component="readiness"
+2026-11-12T10:13:05.633992Z	info	state_manager	loaded config from File("/etc/agentgateway/config.yaml")	
+2026-11-12T10:13:05.634695Z	info	state_manager	Watching config file: /etc/agentgateway/config.yaml	
+2026-11-12T10:13:05.635310Z	info	agent_core::readiness	Task 'state manager' complete (84.020733ms), still awaiting 1 tasks	
+2026-11-12T10:13:05.635554Z	info	app	serving UI at http://localhost:15000/ui	
+2026-11-12T10:13:05.635573Z	info	agent_core::readiness	Task 'agentgateway' complete (84.28418ms), marking server ready	
+2026-11-12T10:13:05.635579Z	info	management::hyper_helpers	listener established	address=127.0.0.1:15000 component="admin"
+2026-11-12T10:13:05.635585Z	info	management::hyper_helpers	listener established	address=[::1]:15000 component="admin"
+2026-11-12T10:13:05.635599Z	info	management::hyper_helpers	listener established	address=0.0.0.0:15020 component="stats"
+2026-11-12T10:13:05.635816Z	info	proxy::gateway	started bind	bind="bind/8443"
+2026-11-12T10:13:05.635805Z	info	proxy::gateway	started bind	bind="bind/8444"
+2026-11-12T10:18:19.061223Z	info	request gateway=default/default listener=https route=default/substrate-actors-grpc endpoint=atenet-router.ate-system.svc:80 src.addr=10.244.0.22:47334 src.identity=spiffe://cluster.local/ns/kagent/sa/kagent-controller http.method=POST http.host=atenet-router.ate-system.svc http.path=/lf.a2a.v1.A2AService/SendMessage http.version=HTTP/2.0 http.status=200 grpc.status=0 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent ate.router.resume=triggered ate.router.route.duration=0.456179539 duration=1232ms
+2026-11-12T10:19:35.144989Z	info	request gateway=default/default listener=https route=default/substrate-actors-grpc endpoint=atenet-router.ate-system.svc:80 src.addr=10.244.0.22:54384 src.identity=spiffe://cluster.local/ns/kagent/sa/kagent-controller http.method=POST http.host=atenet-router.ate-system.svc http.path=/lf.a2a.v1.A2AService/SendMessage http.version=HTTP/2.0 http.status=200 grpc.status=0 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent ate.router.resume=triggered ate.router.route.duration=0.564364688 duration=1305ms
+2026-11-12T10:19:41.724191Z	info	request gateway=default/default listener=https route=default/substrate-actors-grpc endpoint=atenet-router.ate-system.svc:80 src.addr=10.244.0.22:54398 src.identity=spiffe://cluster.local/ns/kagent/sa/kagent-controller http.method=POST http.host=atenet-router.ate-system.svc http.path=/lf.a2a.v1.A2AService/SendMessage http.version=HTTP/2.0 http.status=200 grpc.status=0 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent ate.router.resume=triggered ate.router.route.duration=0.40040154 duration=1178ms
+2026-11-12T10:19:43.109149Z	info	request gateway=default/default listener=https route=default/substrate-actors-grpc endpoint=atenet-router.ate-system.svc:80 src.addr=10.244.0.22:35646 src.identity=spiffe://cluster.local/ns/kagent/sa/kagent-controller http.method=POST http.host=atenet-router.ate-system.svc http.path=/lf.a2a.v1.A2AService/SendMessage http.version=HTTP/2.0 http.status=200 grpc.status=0 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent ate.router.resume=triggered ate.router.route.duration=0.393190351 retry.attempt=1 duration=966ms
+2026-11-12T10:19:50.780483Z	info	request gateway=default/default listener=https route=default/substrate-actors-grpc endpoint=atenet-router.ate-system.svc:80 src.addr=10.244.0.22:35654 src.identity=spiffe://cluster.local/ns/kagent/sa/kagent-controller http.method=POST http.host=atenet-router.ate-system.svc http.path=/lf.a2a.v1.A2AService/SendMessage http.version=HTTP/2.0 http.status=200 grpc.status=0 protocol=http ate.actor.name=session-01a1cf43-d760-747a-b907-5e0640126e4e ate.actor.uid=d64e21f4-05eb-49a3-a81e-69ca2d893b06 ate.atespace=kagent ate.router.resume=triggered ate.router.route.duration=0.372553584 duration=1233ms

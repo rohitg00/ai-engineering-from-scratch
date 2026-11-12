@@ -99,9 +99,30 @@ note: Five lines for the actor j1. Five more pairs of the second and third line 
 2026-11-12T11:31:00.333Z	j1	state	ACTOR_STATE_CRASHED	kind-control-plane	…
 ```
 
-**We measured** one actor for each kind of death on the x86 server guest. After the exit, the state was `ACTOR_STATE_RUNNING` in 6 of 6 samples over 14 seconds, and all 6 requests got the 503 from Envoy. We stopped the watch there, so we do not know if Substrate ever finds this case. A memory kill is different: Substrate recorded the crash 2.3 seconds after the request that started the allocation. One request in that gap got the Envoy text.
+**We measured** one actor for each kind of death on the x86 server guest. After the exit, the state was `ACTOR_STATE_RUNNING` in 6 of 6 samples over 14 seconds, and all 6 requests got the 503 from Envoy. A memory kill is different: Substrate recorded the crash 2.3 seconds after the request that started the allocation. One request in that gap got the Envoy text.
 
-Our `suspend actor --mode sync` found the exit. The checkpoint failed, and the failed suspend marked the actor crashed.
+Fourteen seconds do not prove much, so we repeated the exit and watched for 20 minutes. One actor got no request. A second actor got one request each 60 seconds.
+
+```listing
+title: 20 minutes after the exit, and then one suspend
+source: capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv
+lang: text
+note: Six lines for the actor e1, which got no request. The 80 later state lines of e1 are cut, and all of them say ACTOR_STATE_RUNNING. The snapshot column and the end of the error are cut.
+---
+2026-11-12T12:45:20.264Z	e1	exit-request	200	0.068987	exiting with code 3
+2026-11-12T12:45:36.467Z	e1	state	ACTOR_STATE_RUNNING	kind-control-plane	…
+…
+2026-11-12T13:05:57.588Z	e1	call-after-watch	503	0.070948	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T13:05:57.886Z	e1	suspend-attempt	Error: failed to suspend actor: rpc error: code = Internal desc = internal server error: workflow failed at step CallAteletSuspend: actor lab-v/e1 crashed…
+2026-11-12T13:05:58.168Z	e1	state	ACTOR_STATE_CRASHED	kind-control-plane	…
+2026-11-12T13:05:58.604Z	e1	after-revert	ACTOR_STATE_SUSPENDED	-	…
+```
+
+**We measured** two actors on the x86 server guest (24 vCPU, 47 GB, nested KVM), for 20 minutes 36 seconds after the exit. Both were `ACTOR_STATE_RUNNING` in every sample, 81 and 80 samples at 15 second intervals. All 20 requests to the second actor returned the 503 from Envoy. The first suspend after the watch failed and marked the actor crashed. A revert returned it to `ACTOR_STATE_SUSPENDED`, and the next call returned 200 with the count of the last durable snapshot.
+
+So Substrate did not find a process exit by itself in 20 minutes, with requests or without. Each dead actor also kept one CPU of its worker for all that time, which [section 4.5](#s-sizing-a-pool) counts. We did not watch longer, and we did not restart the worker.
+
+In both runs a suspend found the exit. The checkpoint failed, and the failed suspend marked the actor crashed.
 
 Your harness must cover the exit case. If requests return `upstream connect error` and the state is `ACTOR_STATE_RUNNING`, call `SuspendActor` and expect it to fail. A harness that suspends after every turn does this without extra code.
 
@@ -177,4 +198,4 @@ Our position: decide in your harness what a crash means, because Substrate will 
 - Treat an actor that stays in RESUMING as an actor on a dead node, and check its worker.
 ```
 
-Sources: capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/D-durability/32-x1-after-loss.yaml, capture/lab/D-durability/34-x2-atelet-restart.log, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/J-container-death/14-j2-after-oom.yaml, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/98-worker-state-rpcs.log. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorStatus.crash, RevertActorRequest, ReportActorCrashed), cmd/ateapi/internal/controlapi/workflow_revert.go, docs/reference/api-guide.md (ResumeActor, RevertActor, Eviction).
+Sources: capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/D-durability/32-x1-after-loss.yaml, capture/lab/D-durability/34-x2-atelet-restart.log, capture/lab/D-durability/40-node-reboot.tsv, capture/lab/D-durability/44-r1-after-reboot.yaml, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/J-container-death/14-j2-after-oom.yaml, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/75-stop-after-upload-revert.tsv, capture/lab/L-gaps/multinode/80-stop-before-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/98-worker-state-rpcs.log. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorStatus.crash, RevertActorRequest, ReportActorCrashed), cmd/ateapi/internal/controlapi/workflow_revert.go, docs/reference/api-guide.md (ResumeActor, RevertActor, Eviction).

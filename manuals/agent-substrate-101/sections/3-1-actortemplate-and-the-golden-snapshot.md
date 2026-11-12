@@ -50,7 +50,20 @@ Five fields decide how the actor behaves.
 - `wakeupProbe` is a readiness check that runs on every resume. The actor becomes `ACTOR_STATE_RUNNING` only after the probe passes {{docs}}.
 - `preferredFidelity` says how much state a snapshot keeps. [Section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) compares the three levels.
 
-A template is immutable, and the API has no call that updates one {{code}}. For new code you create a new template, and then you move each suspended actor with `kubectl ate update actor --template` {{docs}}. We did not test that move.
+A template is immutable, and the API has no call that updates one {{code}}. For new code you create a new template, and then you move each suspended actor with `kubectl ate update actor --template` {{docs}}.
+
+We ran that move with two templates that differ in the image. On a running actor the update is refused.
+
+```listing
+title: a template change on a running actor
+source: capture/lab/V-validation/06-template-move/10-move.tsv
+lang: text
+note: One line of the trace. The time and the event name at the start of the line are cut.
+---
+…Error: failed to update actor: rpc error: code = FailedPrecondition desc = actor must be ACTOR_STATE_SUSPENDED to change its actor template (got: ACTOR_STATE_RUNNING) 
+```
+
+On the suspended actor the update was accepted, and the next call ran the new image. The count in memory started again at 1, and so did the count on the root filesystem. The count on the `durableDir` volume continued at 4. So a move keeps the volumes and drops the old memory snapshot. Suspend first, and expect a cold start of the new image on the next call.
 
 ## The golden snapshot is built once
 
@@ -82,6 +95,10 @@ note: The first seven lines of the file. The columns are the time, the uid of th
 
 The timestamps show a resume of 9.84 seconds, because the golden actor is the one actor that boots the image from zero. The suspend took 0.15 seconds. That template had a files-only fidelity, so the snapshot held no memory.
 
+The build pays the full start of your application, once.
+
+**We measured** one template for a Python server on the x86 server guest (24 vCPU, 47 GB, nested KVM), with n=1. The server builds a dict of one million values at start. The golden tag was ready 39.3 seconds after `create actor-template`. The process was 32.9 seconds old at its first request, so most of that time was the application start under gVisor. A new actor of that template then answered its first call in a median of 0.63 seconds, with five new actors. [Section 3.3](#s-suspendactor-and-resumeactor) shows the server.
+
 The golden tag does not exist at the moment the template does. In our resume tests we listed the five templates 21 seconds after we created them.
 
 ```listing
@@ -98,7 +115,26 @@ lab-c      ballast-50     0382e2fc-99db-461a-8845-a90d93484443           21s
 lab-c      ballast-500    2fa7aaf9-1fe8-4076-9350-af27ba338a6b           20s
 ```
 
-All five had a tag when we looked again at 118 seconds. Wait for the `GOLDEN TAG` column before you create actors. An actor that you create earlier records no snapshot. It boots from the image on its first call, and it keeps that cold start until its own first suspend {{docs}}. We did not test that race.
+All five had a tag when we looked again at 118 seconds. Wait for the `GOLDEN TAG` column before you create actors. An actor that you create earlier records no snapshot. It boots from the image on its first call, and it keeps that cold start until its own first suspend {{docs}}.
+
+We ran that race. We created an actor directly after its template, and `create actor` succeeded.
+
+```listing
+title: an actor created before the golden snapshot exists
+source: capture/lab/V-validation/05-golden-race/10-race.tsv
+lang: text
+note: Four lines of the trace. The actor rc1 is early, and the actor rc2 was created after the golden tag. The lines between them are cut.
+---
+2026-11-12T12:49:47.365Z	rc1-state	ACTOR_STATE_SUSPENDED	-	
+2026-11-12T12:49:48.542Z	rc1-first-call	200	0.983729	tag=v3 count=1 mb=200 fill=random sum=26936 rootfs=-1 data=-1 pid=1 process_age_s=0.8 child[none]
+…
+2026-11-12T12:50:00.900Z	golden-ready	waited 11.137 s more
+2026-11-12T12:50:01.888Z	rc2-state-new	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1
+```
+
+**We measured** this once on the x86 server guest (24 vCPU, 47 GB, nested KVM), with a 200 MiB actor. The early actor was `ACTOR_STATE_SUSPENDED` with an empty snapshot list. Its first call was a cold start and took 0.98 seconds. The golden tag was ready 11 seconds later, and the first call of an actor created after that took 0.93 seconds. Five more early actors of another template still had no snapshot 25 seconds later.
+
+So an early actor never adopts the golden snapshot. It gets its own snapshot at its first suspend. Our actor starts in under a second, so the two first calls cost the same. With an application that needs 30 seconds to start, the early actor pays 30 seconds on its first call.
 
 You can turn the golden snapshot off with `goldenSnapshotConfig.mode: GOLDEN_SNAPSHOT_MODE_DISABLED` {{code}}. Every new actor then boots from the image.
 
@@ -185,8 +221,8 @@ Our position: the golden snapshot is a good place for slow start code and a bad 
 - Pin the image of a template by digest, and set both resource limits.
 - Give every container a wakeupProbe, so the golden snapshot needs no extra 20 seconds.
 - Wait for the GOLDEN TAG column before you create the first actor.
-- Create a new template for new code, because a template cannot change.
+- Create a new template for new code, suspend each actor, and then move it.
 - Send one request to a large new actor before a user does.
 ```
 
-Sources: capture/lab/summary/resume-x86.json, capture/lab/C-resume-vs-size/tmpl-200.yaml, capture/lab/C-resume-vs-size/02-templates.txt, capture/lab/C-resume-vs-size/09-templates-at-start.txt, capture/lab/C-resume-vs-size/10-local.tsv, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/00-image.txt, capture/lab/B-lifecycle/00-actor-before.json, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/footprint-x86.json. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorTemplate, GoldenSnapshotMode, Snapshot, SnapshotOwner), cmd/ateapi/internal/controlapi/template_reconciler.go (goldenSnapshotWarmup), docs/reference/api-guide.md (The Golden Snapshot, Container Wakeup Probe, UpdateActor).
+Sources: capture/lab/summary/resume-x86.json, capture/lab/C-resume-vs-size/tmpl-200.yaml, capture/lab/C-resume-vs-size/02-templates.txt, capture/lab/C-resume-vs-size/09-templates-at-start.txt, capture/lab/C-resume-vs-size/10-local.tsv, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/00-image.txt, capture/lab/B-lifecycle/00-actor-before.json, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/footprint-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/V-validation/02-python-runtime/10-python.tsv, capture/lab/V-validation/05-golden-race/10-race.tsv, capture/lab/V-validation/06-template-move/10-move.tsv. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorTemplate, GoldenSnapshotMode, Snapshot, SnapshotOwner), cmd/ateapi/internal/controlapi/template_reconciler.go (goldenSnapshotWarmup), docs/reference/api-guide.md (The Golden Snapshot, Container Wakeup Probe, UpdateActor).

@@ -63,7 +63,36 @@ Three rules follow from the code and the documentation.
 - An actor can add its own selector. The scheduler applies both selectors together {{code}}.
 - A template with no selector can run on every pool {{docs}}.
 
-So the namespace of a pool is not a fence. A template in any atespace can name the labels of any pool, and Kubernetes RBAC on that namespace does not stop it {{docs}}. We did not run a template against a pool in a different namespace. All our pools shared a name with their atespace.
+So the namespace of a pool is not a fence. A template in any atespace can name the labels of any pool, and Kubernetes RBAC on that namespace does not stop it {{docs}}.
+
+We ran it. We created an atespace `xa` and no Kubernetes namespace of that name. A template in `xa` selected `workload: vpool`, the label of a pool in the namespace `lab-v`.
+
+```listing
+title: an actor of atespace xa on a worker pod of namespace lab-v
+source: capture/lab/V-validation/07-cross-namespace-pool/13-actors.txt
+lang: text
+note: Both lines of the file. The last three columns are cut.
+---
+ATESPACE   NAME   TEMPLATE     STATE                 WORKER POD                     …
+xa         x1     xa/cross-0   ACTOR_STATE_RUNNING   lab-v/vpool-69595c64bf-p4slt   …
+```
+
+The template built its golden snapshot on that pool, and the actor ran on a worker pod of `lab-v`.
+
+A selector that matches no pool is the opposite mistake, and Substrate does not refuse it. We created a second template in `xa` with the label `workload: no-such-pool`. The create call succeeded. The template never got a golden tag, and its `ERROR` column stayed empty. A request to an actor of that template failed.
+
+```listing
+title: a request to an actor whose template matches no pool
+source: capture/lab/V-validation/07-cross-namespace-pool/10-cross.tsv
+lang: text
+note: One line of the trace.
+---
+2026-11-12T12:51:40.304Z	call-unmatched-selector	503	5.060180	actor xa/x2 unavailable: no worker has room for the actor
+```
+
+**We measured** both templates once on the x86 server guest (24 vCPU, 47 GB, nested KVM). The first request to the actor on the pool of `lab-v` returned 200 in 0.26 seconds. The request with the wrong selector waited 5.06 seconds for its 503.
+
+That is the text of a full pool, word for word. `ate-api-server` logged the same reason for the template 8 times in 40 seconds of its log, and the template showed no error. When you see `no worker has room for the actor`, compare the selector with the pool labels before you add workers. [Section 8.3](#s-symptom-cause-fix) has the row.
 
 kagent shows the convention that fills this gap. It writes the name and the namespace of the pool into two labels, and its templates select both.
 
@@ -149,8 +178,9 @@ Our position: use one name for the atespace and the namespace when one team owns
 - List actors with kubectl ate, because kubectl get shows pools and pods only.
 - Label each WorkerPool on purpose, because any template can select it by label.
 - Give every template a workerSelector, so that it cannot run on every pool.
+- Check the selector against the pool labels when a new template gets no golden tag.
 - Read the atespace, the owner, and the uid of a snapshot from its URI.
 - Do not use the name of a deleted atespace again.
 ```
 
-Sources: capture/lab/_scripts/c1-ballast-setup.sh, capture/lab/C-resume-vs-size/tmpl-200.yaml, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/02-templates.txt, capture/lab/C-resume-vs-size/actor-b200-1-suspended.json, capture/lab/C-resume-vs-size/snapdir-b200-1.txt, capture/lab/A-quickstart/60-state.log, capture/lab/A-quickstart/50-create-actor.log, capture/lab/B-lifecycle/22-actor-after-async-suspend.yaml, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/K-kagent/session1/actor-template.yaml, capture/lab/K-kagent/session1/actors-after-turn1.json, capture/lab/D-durability/46-after-reboot-followup.txt. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ResourceMetadata, Selector, Actor.worker_selector, Worker), docs/reference/glossary.md (Atespace), docs/reference/resource-model.md, docs/reference/api-guide.md (Snapshot Storage Layout, Best Practices), docs/guides/authorization.md (roles and limits).
+Sources: capture/lab/_scripts/c1-ballast-setup.sh, capture/lab/C-resume-vs-size/tmpl-200.yaml, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/02-templates.txt, capture/lab/C-resume-vs-size/actor-b200-1-suspended.json, capture/lab/C-resume-vs-size/snapdir-b200-1.txt, capture/lab/A-quickstart/60-state.log, capture/lab/A-quickstart/50-create-actor.log, capture/lab/B-lifecycle/22-actor-after-async-suspend.yaml, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/K-kagent/session1/actor-template.yaml, capture/lab/K-kagent/session1/actors-after-turn1.json, capture/lab/D-durability/46-after-reboot-followup.txt, capture/lab/V-validation/07-cross-namespace-pool/10-cross.tsv, capture/lab/V-validation/07-cross-namespace-pool/12-kubernetes-namespace-xa.txt, capture/lab/V-validation/07-cross-namespace-pool/13-actors.txt, capture/lab/V-validation/07-cross-namespace-pool/15-templates-with-unmatched-selector.txt, capture/lab/V-validation/07-cross-namespace-pool/tmpl-cross-none.yaml, capture/lab/V-validation/10-preview-feature/13-ateapi-lines.log. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ResourceMetadata, Selector, Actor.worker_selector, Worker), docs/reference/glossary.md (Atespace), docs/reference/resource-model.md, docs/reference/api-guide.md (Snapshot Storage Layout, Best Practices), docs/guides/authorization.md (roles and limits).

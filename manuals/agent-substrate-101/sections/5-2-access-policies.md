@@ -6,7 +6,7 @@ Two teams share a cluster. Team A must not suspend, read, or copy the actors of 
 
 When you finish this section, you can write an access policy, say what each role allows, and name the things that a policy cannot separate.
 
-We ran no access policy commands in our test runs, because every run used the default owner. The rules below come from the code and the documentation at v1.0.0. Three observations from our runs are marked.
+Most of our runs used the default owner. For this section we used one ServiceAccount, `alice`, and the atespace `lab-v`. We gave it no role, then the viewer role, then the editor role, and we recorded what the API allowed. The denial texts and the policy listings below come from that run. The rules that we did not run are marked as code or documentation.
 
 ## How a call is checked
 
@@ -63,27 +63,49 @@ For a shared cluster, set the list to the principals of your operators and keep 
 
 ## Write a policy
 
-A policy is a short manifest. This one gives a ServiceAccount named `alice` the editor role and a second one the viewer role.
+A policy is a short manifest. This is the file that gave the ServiceAccount `alice` the viewer role on `lab-v`.
 
-```yaml
+```listing
+title: the policy file that we created
+source: capture/lab/V-validation/08-access-control/policy-viewer.yaml
+lang: yaml
+note: The complete file.
+---
 metadata:
   name: default
 bindings:
-- role: editor
-  members:
-  - user:system:serviceaccount:ate-users:alice
 - role: viewer
   members:
-  - user:system:serviceaccount:ate-users:bob
+  - user:system:serviceaccount:ate-users:alice
 ```
 
 A member is the principal with the prefix `user:`. The four commands follow the pattern of the other `kubectl ate` objects:
 
 ```bash
-kubectl ate create access-policy -a team-a -f policy.yaml
-kubectl ate get access-policy -a team-a -o yaml > current.yaml
-kubectl ate update access-policy -a team-a -f current.yaml
-kubectl ate delete access-policy -a team-a
+kubectl ate create access-policy -a lab-v -f policy-viewer.yaml
+kubectl ate get access-policy -a lab-v -o yaml > current.yaml
+kubectl ate update access-policy -a lab-v -f current.yaml
+kubectl ate delete access-policy -a lab-v
+```
+
+For the editor role we changed one word in the output of `get -o yaml` and sent that file with `update`. This is the stored policy after the update.
+
+```listing
+title: the stored policy after the update to editor
+source: capture/lab/V-validation/08-access-control/15-policy-lab-v-editor.yaml
+lang: yaml
+note: The complete file. The server added the uid, the times, and the version.
+---
+bindings:
+- members:
+  - user:system:serviceaccount:ate-users:alice
+  role: editor
+metadata:
+  createTime: "2026-11-12T12:51:47.968679335Z"
+  name: default
+  uid: a06fc82d-e269-4ce3-8471-00c1b537adff
+  updateTime: "2026-11-12T12:51:51.605795572Z"
+  version: "2"
 ```
 
 Use `--global` in place of `-a` for the global policy. Four rules save you a failed command {{code}}:
@@ -95,7 +117,37 @@ Use `--global` in place of `-a` for the global policy. Four rules save you a fai
 
 Egress policies follow the same `update` rule. Our first `update egress-policy` failed until the manifest carried both fields {{run}}.
 
-When a call is denied, the error names the principal with each colon written as `%3A` {{docs}}. Decode it before you paste it into a policy.
+## What each role was refused
+
+We ran the same ServiceAccount through four stages. Each denial has the gRPC code `PermissionDenied` and the same sentence, with the missing permission and the scope in it.
+
+```listing
+title: a viewer tries to create an actor
+source: capture/lab/V-validation/08-access-control/10-access.tsv
+lang: text
+note: One line of the trace. The time and the step name at the start of the line are cut.
+---
+…Error: failed to create actor: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_create_actor" on "atespace:lab-v" 
+```
+
+| Role of `alice` on `lab-v` | Call | Result |
+|---|---|---|
+| none | list actors in `lab-v` | denied: lacks `"can_list_actors"` on `"atespace:lab-v"` |
+| none | list atespaces | denied: lacks `"can_list_atespaces"` on `"global:root"` |
+| viewer | list actors and templates in `lab-v` | allowed |
+| viewer | create an actor in `lab-v` | denied: lacks `"can_create_actor"` on `"atespace:lab-v"` |
+| viewer | list actors in the atespace `lab-c` | denied: lacks `"can_list_actors"` on `"atespace:lab-c"` |
+| viewer | list workers | denied: lacks `"can_list_workers"` on `"global:root"` |
+| editor | create, suspend, and delete an actor in `lab-v` | allowed |
+| editor | create an actor in `lab-c` | denied: lacks `"can_create_actor"` on `"atespace:lab-c"` |
+| editor | create an access policy on `lab-c` | denied: lacks `"can_create_access_policy"` on `"atespace:lab-c"` |
+| none, after the owner deleted the policy | list actors in `lab-v` | denied: lacks `"can_list_actors"` on `"atespace:lab-v"` |
+
+**We measured** the delay of a role change on the x86 server guest (24 vCPU, 47 GB, nested KVM), once for each change. The first call 2 seconds after the create was allowed, and so was the first call 2 seconds after the update. The call 0.2 seconds after the delete was denied. So a change took effect within 2 seconds, and the delete within 0.2 seconds.
+
+Two details of the denial help you. The error names the principal with each colon written as `%3A`, so decode it before you paste it into a policy. And the scope `global:root` in a denial means that no atespace role can allow the call.
+
+After the install, the global scope had no policy at all: `kubectl ate get access-policy --global` answered `global has no access policy`. The shared `ate-client` identity still owned everything, because it is a bootstrap owner.
 
 ## What a policy cannot separate
 
@@ -134,4 +186,4 @@ Use one atespace for each group of people that must not read the others' actors,
 - Never create an atespace with a name that you used before.
 ```
 
-Sources: capture/lab/K-kagent/inventory/deploy-ate-api-server.yaml, capture/lab/K-kagent/session1/actors-after-create.json, capture/lab/A-quickstart/22-deploy-ate-system-retry.log, capture/lab/F-egress/envoy/19-first-run-update-refused.txt; docs/guides/authorization.md, docs/guides/authentication.md at v1.0.0; cmd/kubectl-ate/internal/cmd/access_policy.go, cmd/ateapi/internal/authz/registry.go, cmd/ateapi/internal/authz/model.fga, api/ateapi/v1/ateapi.proto (AccessPolicy) at v1.0.0.
+Sources: capture/lab/V-validation/08-access-control/10-access.tsv, capture/lab/V-validation/08-access-control/policy-viewer.yaml, capture/lab/V-validation/08-access-control/14-policy-lab-v-viewer.yaml, capture/lab/V-validation/08-access-control/15-policy-lab-v-editor.yaml, capture/lab/V-validation/_scripts/v4-items-5-12.sh, capture/lab/K-kagent/inventory/deploy-ate-api-server.yaml, capture/lab/K-kagent/session1/actors-after-create.json, capture/lab/A-quickstart/22-deploy-ate-system-retry.log, capture/lab/F-egress/envoy/19-first-run-update-refused.txt; docs/guides/authorization.md, docs/guides/authentication.md at v1.0.0; cmd/kubectl-ate/internal/cmd/access_policy.go, cmd/ateapi/internal/authz/registry.go, cmd/ateapi/internal/authz/model.fga, api/ateapi/v1/ateapi.proto (AccessPolicy) at v1.0.0.

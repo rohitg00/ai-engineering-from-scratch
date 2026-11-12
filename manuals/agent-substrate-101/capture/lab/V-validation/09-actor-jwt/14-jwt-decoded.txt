@@ -1,0 +1,3 @@
+headers the upstream saw, without Authorization:
+fetch error: Get "http://echo.lab-v.svc.cluster.local/hdr": dial tcp: lookup echo.lab-v.svc.cluster.local on 169.254.17.1:53: no such host
+NO JWT FOUND; authorization line shape: []

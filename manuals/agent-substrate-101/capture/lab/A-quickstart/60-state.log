@@ -1,0 +1,72 @@
+NAME                 STATUS   ROLES           AGE     VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION              CONTAINER-RUNTIME
+kind-control-plane   Ready    control-plane   9m46s   v1.37.0   172.18.0.2    <none>        Debian GNU/Linux 13 (trixie)   6.8.0-147-generic (amd64)   containerd://2.3.4
+NAMESPACE                          NAME                                         READY   STATUS      RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-demo-counter                   counter-7cc7dcd596-5tj9h                     1/1     Running     0          33s     10.244.0.25   kind-control-plane   <none>           <none>
+ate-demo-counter                   counter-7cc7dcd596-ffxwt                     1/1     Running     0          33s     10.244.0.23   kind-control-plane   <none>           <none>
+ate-demo-counter                   counter-7cc7dcd596-p6g2q                     1/1     Running     0          33s     10.244.0.24   kind-control-plane   <none>           <none>
+ate-system                         ate-api-server-696d95dd66-9q7f8              2/2     Running     0          117s    10.244.0.8    kind-control-plane   <none>           <none>
+ate-system                         ate-api-server-696d95dd66-t85dd              2/2     Running     0          117s    10.244.0.10   kind-control-plane   <none>           <none>
+ate-system                         ate-controller-7479ff54f-jrrtc               1/1     Running     0          114s    10.244.0.9    kind-control-plane   <none>           <none>
+ate-system                         ate-idp-server-7c46c85d94-66sf2              1/1     Running     0          116s    10.244.0.13   kind-control-plane   <none>           <none>
+ate-system                         ate-idp-server-7c46c85d94-cfbt4              1/1     Running     0          116s    10.244.0.12   kind-control-plane   <none>           <none>
+ate-system                         atelet-sqzvr                                 2/2     Running     0          113s    10.244.0.11   kind-control-plane   <none>           <none>
+ate-system                         atenet-egress-78f759fcb8-74d4m               3/3     Running     0          76s     10.244.0.22   kind-control-plane   <none>           <none>
+ate-system                         atenet-router-86454b57f5-7vtp5               2/2     Running     0          112s    10.244.0.16   kind-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-8df9859f8-jcfll      1/1     Running     0          89s     10.244.0.21   kind-control-plane   <none>           <none>
+ate-system                         postgres-0                                   2/2     Running     0          7m13s   10.244.0.7    kind-control-plane   <none>           <none>
+ate-system                         rustfs-54c86945fb-w9pnn                      1/1     Running     0          109s    10.244.0.20   kind-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-bvq6z                     0/1     Completed   0          109s    10.244.0.15   kind-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-b2sfm                     1/1     Running     0          9m36s   10.244.0.2    kind-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-gwdp2                     1/1     Running     0          9m36s   10.244.0.4    kind-control-plane   <none>           <none>
+kube-system                        etcd-kind-control-plane                      1/1     Running     0          9m43s   172.18.0.2    kind-control-plane   <none>           <none>
+kube-system                        kindnet-hbthm                                1/1     Running     0          9m36s   172.18.0.2    kind-control-plane   <none>           <none>
+kube-system                        kube-apiserver-kind-control-plane            1/1     Running     0          9m43s   172.18.0.2    kind-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-kind-control-plane   1/1     Running     0          9m45s   172.18.0.2    kind-control-plane   <none>           <none>
+kube-system                        kube-proxy-4h66r                             1/1     Running     0          9m36s   172.18.0.2    kind-control-plane   <none>           <none>
+kube-system                        kube-scheduler-kind-control-plane            1/1     Running     0          9m43s   172.18.0.2    kind-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-mfq79      1/1     Running     0          9m36s   10.244.0.3    kind-control-plane   <none>           <none>
+otel-system                        jaeger-fb9948ddf-fjsz4                       1/1     Running     0          107s    10.244.0.18   kind-control-plane   <none>           <none>
+otel-system                        opentelemetry-collector-6f5b87f5dd-46fvg     1/1     Running     0          108s    10.244.0.17   kind-control-plane   <none>           <none>
+otel-system                        prometheus-5b5fb67d57-5bwtv                  1/1     Running     0          106s    10.244.0.19   kind-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-5c454c4ddd-gj59l   1/1     Running     0          7m25s   10.244.0.5    kind-control-plane   <none>           <none>
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+ATESPACE           NAME           TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+Error: unknown flag "-A"
+
+Usage:
+  kubectl-ate get worker [worker-name ...] [flags]
+
+Aliases:
+  worker, workers
+
+Flags:
+  -a, --atespace string        filter worker pods hosting actors in a specific atespace
+  -h, --help                   help for worker
+  -n, --namespace string       scope output to a specific Kubernetes namespace
+      --sandbox-class string   filter by sandbox class (e.g. gvisor, microvm)
+  -l, --selector string        filter by worker pool labels
+
+Global Flags:
+      --context string      kubeconfig context to use
+      --endpoint string     manual override for the gRPC target (e.g., localhost:8080); if omitted, automatically port-forwards
+      --kubeconfig string   path to the kubeconfig file
+  -o, --output string       output format: table, json, or yaml (default "table")
+      --preview             allow the use of preview features enabled on the server
+      --token-file string   path to a bearer token for ate-api authentication, or - for stdin (defaults to a Kubernetes ServiceAccount token)
+      --trace               enable tracing for the request
+  -v, --verbose count       output verbosity; may be repeated (e.g. -v, -vv, -vvvvv)
+NAME                       SCOPE        VERSIONS      CREATED AT
+csidriverconfigs.ate.dev   Cluster      v1(storage)   2026-11-12T10:05:33Z
+sandboxconfigs.ate.dev     Cluster      v1(storage)   2026-11-12T10:05:33Z
+workerpools.ate.dev        Namespaced   v1(storage)   2026-11-12T10:05:33Z
+kind-control-plane kindest/node:v1.37.0
+kind-registry registry:3
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          5         2         5.338GB   4.395GB (82%)
+Containers      2         2         3.953MB   0B (0%)
+Local Volumes   2         2         5.159GB   0B (0%)
+Build Cache     22        0         3.808GB   3.523GB
+1.1G	/home/lab/go
+3.1G	/home/lab/.cache
+/dev/vda1        48G   18G   30G  38% /

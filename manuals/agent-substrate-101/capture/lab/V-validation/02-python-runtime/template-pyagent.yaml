@@ -1,0 +1,41 @@
+containers:
+- command:
+  - python
+  - /app/app.py
+  image: localhost:5001/pyagent@sha256:418ee00a7c48e97eb8499d09b2b7e1f73f0787eb1ab7e3d3fccd2c01217256f6
+  name: app
+  volumeMounts:
+  - mountPath: /data
+    name: data
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+    timeoutSeconds: 30
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:45:09.879006594Z"
+  name: pyagent
+  uid: f8ce5566-1ff0-4dba-97e5-c36decd5c3a0
+  updateTime: "2026-11-12T12:45:48.068359550Z"
+  version: "3"
+resources:
+  limits:
+    cpuMillicores: "1000"
+    memoryBytes: "805306368"
+snapshotConfig:
+  goldenSnapshotConfig:
+    mode: GOLDEN_SNAPSHOT_MODE_ENABLED
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY
+status:
+  goldenSnapshotStatus:
+    goldenTag:
+      atespace: lab-v
+      name: f8ce5566-1ff0-4dba-97e5-c36decd5c3a0
+    snapshotTime: "2026-11-12T12:45:45.453576359Z"
+volumes:
+- durableDir: {}
+  name: data
+workerSelector:
+  matchLabels:
+    workload: vpool

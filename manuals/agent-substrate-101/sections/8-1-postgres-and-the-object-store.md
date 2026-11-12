@@ -111,7 +111,7 @@ caption: Read left to right. Each panel is one store, with the names it uses and
 
 ## What 25 suspended actors cost in disk
 
-A snapshot with memory fidelity is as large as the memory that the actor holds. Our ballast actor holds random bytes, which do not compress, so it shows the worst case.
+A snapshot with memory fidelity is as large as the memory that holds data in the actor. Our ballast actor holds random bytes, so every MiB holds data and it shows the worst case. The same actor with 500 MiB of zero bytes had a snapshot of 4.6 MiB on the node, as [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) shows.
 
 **We measured** the disk use on an x86 server guest (24 vCPU, 47 GB, nested KVM), with one run and 25 suspended actors. Five actors each held 0, 50, 200, 500, and 1,000 MiB, which is 8,750 MiB in total.
 
@@ -125,7 +125,7 @@ A snapshot with memory fidelity is as large as the memory that the actor holds. 
 id: fig-8-1b
 kind: chart
 title: disk use with 25 suspended actors, and after their deletion
-claim: The node copy was as large as the memory that the actors held, and the bucket kept 2,064 MiB of golden snapshots after the delete.
+claim: With random bytes the node copy was as large as the memory held, and the bucket kept 2,064 MiB of golden snapshots after the delete.
 caption: Each place has two bars. The solid bar is the disk use with 25 suspended actors, and the light bar is the use after their deletion. The dashed line is the memory that the actors held. From capture/lab/summary/footprint-x86.json.
 ```
 
@@ -133,7 +133,7 @@ The node held one copy of each snapshot, 8,801 MiB for 8,750 MiB of actor memory
 
 The node copy is the part that people forget. After an asynchronous suspend, `atelet` keeps the files on the node for 30 minutes, as [section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) shows. Those files sit in a host directory that Kubernetes charges to no pod. A public issue reports a node that crossed its disk pressure threshold this way, after which the kubelet evicted the worker pods.
 
-**Our position:** size the node disk for the memory of every actor that can suspend on that node inside 30 minutes, plus the snapshot cache. Size the bucket for the memory of every suspended actor, plus one golden snapshot for each template. Both numbers are upper limits for memory fidelity. A files-only snapshot is smaller, and we did not measure its size in the bucket.
+**Our position:** size the node disk for the memory of every actor that can suspend on that node inside 30 minutes, plus the snapshot cache. Size the bucket for the memory of every suspended actor, plus one golden snapshot for each template. Both numbers are upper limits for memory fidelity, because only the memory that holds data counts. A files-only snapshot is far smaller. For an actor with one small file in its volume, it was 44 KiB on the node and 48 KiB in the bucket.
 
 ## What we did not test
 
@@ -147,4 +147,4 @@ Our object store was rustfs in the same cluster and on the same disk as the node
 - Size node disk for the memory of all actors that suspend there in 30 minutes.
 ```
 
-Sources: capture/lab/A-quickstart/60-state.log, capture/lab/B-lifecycle/23-actor-after-sync-suspend.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/K-kagent/inventory/workloads.txt (the PostgreSQL Deployment); go/core/pkg/install/bundled_postgres.yaml at kagent v1.0.0 (the trust setting); cmd/ateapi/main.go (the Postgres flags), docs/dev/cloud-sql-scaling-guide.md and issue #3702 (the load report); cmd/ateapi/internal/store/atepg/migrations/000001_initial.sql (the tables), cmd/ateapi/internal/store/atepg/lease.go (the lease), manifests/ate-install/postgres/postgres.yaml (replicas, image, volume claim), manifests/ate-install/ate-api-server.yaml (replicas) and manifests/ate-install/kind/ at v1.0.0; docs/guides/postgres.md, docs/guides/node-storage.md and docs/reference/api-guide.md (snapshot layout, delete order) at v1.0.0; issue #3101 (disk pressure from node-local snapshots).
+Sources: capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/A-quickstart/60-state.log, capture/lab/B-lifecycle/23-actor-after-sync-suspend.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/K-kagent/inventory/workloads.txt (the PostgreSQL Deployment); go/core/pkg/install/bundled_postgres.yaml at kagent v1.0.0 (the trust setting); cmd/ateapi/main.go (the Postgres flags), docs/dev/cloud-sql-scaling-guide.md and issue #3702 (the load report); cmd/ateapi/internal/store/atepg/migrations/000001_initial.sql (the tables), cmd/ateapi/internal/store/atepg/lease.go (the lease), manifests/ate-install/postgres/postgres.yaml (replicas, image, volume claim), manifests/ate-install/ate-api-server.yaml (replicas) and manifests/ate-install/kind/ at v1.0.0; docs/guides/postgres.md, docs/guides/node-storage.md and docs/reference/api-guide.md (snapshot layout, delete order) at v1.0.0; issue #3101 (disk pressure from node-local snapshots).

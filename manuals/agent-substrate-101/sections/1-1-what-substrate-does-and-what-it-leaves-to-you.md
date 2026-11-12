@@ -28,7 +28,7 @@ claim: Substrate resumes an actor onto a worker when a request arrives, and the 
 caption: The top row is the WorkerPool of the counter demo, and the dashed pods run no actor. The amber arrow is the resume, which Substrate does. The thick teal arrow is the suspend, which you call. The two lists at the bottom divide the work, with the seconds from our run. From capture/lab/A-quickstart/60-state.log, capture/lab/B-lifecycle/13-workers.txt, capture/lab/B-lifecycle/10-trace.tsv, and capture/lab/B-lifecycle/20-trace-ops.tsv.
 ```
 
-So a pool of three workers can hold hundreds of sessions, as long as few of them run at one time. That is the whole offer. The cost is the time to resume, and [section 3.3](#s-suspendactor-and-resumeactor) measures it against the memory an actor holds.
+So a pool of three workers can hold hundreds of sessions, as long as few of them run at one time. That is the whole offer. The cost is the time to resume, and [section 3.3](#s-suspendactor-and-resumeactor) measures it against the memory that holds data in an actor.
 
 ## What Substrate standardizes
 
@@ -68,6 +68,8 @@ Substrate v1.0.0 does not give an actor a GPU. The API guide marks devices as no
 
 Substrate marks an actor as crashed, and then it waits for you. A crashed actor returns 503 on every request until a caller sends `RevertActor`. In one case it is not marked at all: a process that exits leaves the actor in `ACTOR_STATE_RUNNING`. [Section 3.5](#s-crashed-and-revertactor) shows both cases.
 
+**We measured** the exit case on the x86 server guest (24 vCPU, 47 GB, nested KVM), with two actors. Both read `ACTOR_STATE_RUNNING` for 20 minutes after the exit, until we called a suspend. One of them got 20 requests in that time, and all 20 returned 503. Each dead actor kept its CPU on the worker for all that time.
+
 Substrate also does not move an actor off a node that stops.
 
 **We measured** this on a second x86 server guest (16 vCPU, 23 GB), on a cluster with two worker nodes, one run for each case. A suspended actor with its snapshot in the object store stayed in `ACTOR_STATE_RESUMING` on the stopped node for 5 min 33 s. Then it was crashed. A running actor read `ACTOR_STATE_RUNNING` for the 10 minutes of our probe. The other node had free workers the whole time. [Section 4.3](#s-placement) has the four cases.
@@ -85,13 +87,37 @@ Each position comes from a run on our own clusters. The table is the map of this
 | Substrate does not suspend an idle actor | 60 of 60 samples `RUNNING` in 900 s | [3.3](#s-suspendactor-and-resumeactor), [7.1](#s-kagent-on-substrate) |
 | A suspend is asynchronous, and its snapshot is not durable at once | `PENDING` on one node for 5 minutes | [3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives), [3.5](#s-crashed-and-revertactor) |
 | Postgres and `ate-api-server` are on every request path, and the Kubernetes API server is on none | 223 of 223 requests served with kube-apiserver down for 86 s | [1.2](#s-one-request-from-client-to-actor), [8.2](#s-when-a-dependency-is-down) |
-| Resume time grows with the memory an actor holds | 0.22 s at 0 MiB, 2.16 s at 1000 MiB | [3.3](#s-suspendactor-and-resumeactor) |
+| Resume time grows with the memory that holds data in an actor | 0.22 s at 0 MiB, 2.16 s at 1000 MiB of random bytes, 0.23 s at 500 MiB of zero bytes | [3.3](#s-suspendactor-and-resumeactor) |
 | agentgateway is a dataplane option of Substrate, and it does authenticate ingress clients | 38 MB against 91 MB at idle | [6.6](#s-the-dataplane-choice), [7.2](#s-agentgateway) |
 | An egress policy allows hosts and ports, and a removed rule does not close an open connection | a second request passed 20 s after the rule was removed | [6.2](#s-egresspolicy-and-default-deny) |
-| A crashed actor is not always marked crashed | 6 of 6 samples `RUNNING` after the process exited | [3.5](#s-crashed-and-revertactor) |
+| A crashed actor is not always marked crashed | `RUNNING` for 20 minutes after the process exited, in 81 of 81 samples | [3.5](#s-crashed-and-revertactor) |
 | Install from the release images | 162 s against 266 s | [2.1](#s-install-with-ate-setup) |
 
 Read the positions as a list of things to check on your own cluster. Your seconds will differ. The states, the error texts, and the order of events must not.
+
+## What the project site says, and what we measured
+
+The project site, ate.dev, reached version 1.0 with the release. We read it on 2026-11-12. Its documentation pages are built from the same files as the release tag, and we found no difference in content {{docs}}. Its first page makes short statements, some with numbers and none with conditions. The table sets each statement beside our result.
+
+**We measured** every result in this table on x86 server guests, one run each unless the section says more. The section in the last column names the machine and the count.
+
+| The site says | Our result | Section |
+|---|---|---|
+| Idle agents suspend | Not seen. An idle actor stayed `RUNNING` for 900 s. The architecture page says that the caller requests the suspend. | [3.3](#s-suspendactor-and-resumeactor), [9.1](#s-an-idle-suspender) |
+| An actor resumes in under `500ms` | True up to about 200 MiB of data, on gVisor, from the node. 2.16 s at 1,000 MiB. 0.96 s at 200 MiB from the object store. | [3.3](#s-suspendactor-and-resumeactor), [4.2](#s-sandbox-classes) |
+| An actor resumes on any ready worker | Not seen. 5 of 5 resumes stayed on the node that held the snapshot. The actor did not leave a stopped node. | [4.3](#s-placement) |
+| The Kubernetes API is off the request path | Confirmed. 223 of 223 requests were served with kube-apiserver down for 86 s. | [8.2](#s-when-a-dependency-is-down) |
+| Kubernetes handles recovery | True for nodes and pods. An actor on a stopped node needed an operator. | [4.3](#s-placement), [3.5](#s-crashed-and-revertactor) |
+| Memory and files survive a suspend | Confirmed with the memory fidelity. With the other two fidelities, the process starts again. | [3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) |
+| No inbound access without authentication | Confirmed on both dataplanes. | [6.1](#s-the-router-and-ingress) |
+| No outbound access without a policy | Confirmed. A name gets `NXDOMAIN`, and an IP gets a reset or a 403. | [6.2](#s-egresspolicy-and-default-deny) |
+| The actor does not hold the secret | Confirmed for the placeholder swap. An upstream that returns its request headers gives the secret to the actor. | [6.5](#s-credential-injection) |
+| `500+/s` suspend and resume activations | Not tested at that rate. With 16 resumes at one time, 80 of 80 were served. | [4.4](#s-request-parking) |
+| `10×` the density of container runtimes | Not tested. The documentation gives a benchmark method and no result. | [4.5](#s-sizing-a-pool) |
+| Worker state is scrubbed between runs | Not tested. The security page lists this guarantee as in progress. | no section |
+| JWTs federate with every cloud provider | We decoded one token. We did not test federation. | [5.3](#s-actor-jwts) |
+
+Three statements match our runs as written. Four hold under a condition that the site does not state. Two did not match what we saw, and four we did not test. The two that did not match are the ones to plan for. You must send the suspend, and you must move actors off a dead node.
 
 ## When this is the wrong tool
 
@@ -105,4 +131,4 @@ Substrate fits sessions that keep state and are idle most of the time. It does n
 - Check each of the eight positions on your own cluster before you depend on it.
 ```
 
-Sources: capture/lab/summary/failures-x86.json, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/13-workers.txt, capture/lab/A-quickstart/60-state.log, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/summary/parking-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/resume-x86.json, capture/lab/summary/install-steps.json, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/J-container-death/10-trace.tsv, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/summary/microvm-x86.json; api/ateapi/v1/ateapi.proto, docs/reference/api-guide.md, docs/get-started/quickstart.md, docs/reference/sandbox-classes.md, and README.md at v1.0.0.
+Sources: capture/lab/summary/failures-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/B-lifecycle/13-workers.txt, capture/lab/A-quickstart/60-state.log, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/summary/parking-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/summary/resume-x86.json, capture/lab/summary/install-steps.json, capture/lab/E-dependency-loss/20-analysis.txt, capture/lab/J-container-death/10-trace.tsv, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/summary/microvm-x86.json; api/ateapi/v1/ateapi.proto, docs/reference/api-guide.md, docs/get-started/quickstart.md, docs/reference/sandbox-classes.md, docs/concepts/architecture.md, docs/get-started/overview.md, docs/security/security.md, docs/guides/benchmarking.md, site/layouts/_shortcodes/home.html, and README.md at v1.0.0; the project site ate.dev, read 2026-11-12.

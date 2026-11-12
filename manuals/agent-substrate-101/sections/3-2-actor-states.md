@@ -63,12 +63,14 @@ The enum `ActorState` has seven values at v1.0.0 {{code}}. The architecture page
 | `ACTOR_STATE_SUSPENDED` | No sandbox, and zero or more snapshots | The router resumes the actor, then the actor answers |
 | `ACTOR_STATE_RESUMING` | A worker, and a restore that is not complete | It waits for the same resume {{code}} |
 | `ACTOR_STATE_RUNNING` | A sandbox on a worker | The actor answers |
-| `ACTOR_STATE_SUSPENDING` | A worker, and a checkpoint that is not complete | We did not test this case |
+| `ACTOR_STATE_SUSPENDING` | A worker, and a checkpoint that is not complete | A request that is open when the suspend starts gets a 503. We did not test a request that arrives in this state |
 | `ACTOR_STATE_CRASHED` | No sandbox, and a `crash` record | 503 at once, with the state in the text |
 | `ACTOR_STATE_REVERTING` | A revert that is not complete | 503 at once, with the state in the text |
 | `ACTOR_STATE_DELETING` | A delete that is not complete | 503 at once, with the state in the text |
 
 Three of these states are stable. `ACTOR_STATE_SUSPENDED` and `ACTOR_STATE_CRASHED` last until a call arrives. `ACTOR_STATE_RUNNING` lasts until a caller suspends the actor, and [section 3.3](#s-suspendactor-and-resumeactor) proves that Substrate does not do it. The other four states are steps of one operation.
+
+`ACTOR_STATE_RUNNING` does not prove that the process is alive. Two actors whose process had exited read `ACTOR_STATE_RUNNING` for the 20 minutes of our watch. [Section 3.5](#s-crashed-and-revertactor) shows that run.
 
 Old tutorials name a state `ACTOR_STATE_PAUSED` and a command `kubectl ate pause actor`. Both are gone at v1.0.0 {{code}}.
 
@@ -134,4 +136,4 @@ Our position: read the state before you debug the network. `kubectl ate get acto
 - Expect only your own calls to move an actor out of RUNNING or CRASHED.
 ```
 
-Sources: capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/93-after-node-return.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/00-actor-before.json, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/summary/failures-x86.json. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorState, ActorStatus, Actor), cmd/ateapi/internal/controlapi/workflow_resume.go, workflow_suspend.go, workflow_revert.go, docs/reference/api-guide.md (ResumeActor, SuspendActor, RevertActor, DeleteActor), docs/concepts/architecture.md (the state diagram).
+Sources: capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv, capture/lab/L-gaps/multinode/90-stop-while-running.tsv, capture/lab/L-gaps/multinode/93-after-node-return.tsv, capture/lab/summary/kagent-turns-x86.json, capture/lab/B-lifecycle/26-actor-after-revert.yaml, capture/lab/B-lifecycle/20-trace-ops.tsv, capture/lab/B-lifecycle/00-actor-before.json, capture/lab/B-lifecycle/25-actor-crashed.yaml, capture/lab/D-durability/30-local-loss.tsv, capture/lab/J-container-death/10-trace.tsv, capture/lab/K-kagent/logs/actor-state-changes.tsv, capture/lab/E-dependency-loss/21-nonsteady-actors-after.txt, capture/lab/summary/failures-x86.json. Agent Substrate v1.0.0: api/ateapi/v1/ateapi.proto (ActorState, ActorStatus, Actor), cmd/ateapi/internal/controlapi/workflow_resume.go, workflow_suspend.go, workflow_revert.go, docs/reference/api-guide.md (ResumeActor, SuspendActor, RevertActor, DeleteActor), docs/concepts/architecture.md (the state diagram).

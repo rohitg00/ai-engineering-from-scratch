@@ -1,0 +1,14 @@
+{"time":"2026-11-12T11:58:31.248806753Z","level":"WARN","msg":"Syncer: failed to list a page of registered workers for orphan cleanup, retrying","err":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T11:58:31.797264606Z","level":"WARN","msg":"Syncer: failed to list a page of registered workers for orphan cleanup, retrying","err":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T11:58:32.805934999Z","level":"WARN","msg":"Syncer: failed to list a page of registered workers for orphan cleanup, retrying","err":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T11:58:34.961774735Z","level":"WARN","msg":"Syncer: failed to list a page of registered workers for orphan cleanup, retrying","err":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T11:58:38.97348282Z","level":"WARN","msg":"Syncer: failed to list a page of registered workers for orphan cleanup, retrying","err":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T11:58:47.49057247Z","level":"WARN","msg":"Syncer: failed to list a page of registered workers for orphan cleanup, retrying","err":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T12:03:19.231654833Z","level":"INFO","msg":"Syncer: marking worker unavailable (pod not Ready)","worker":"090b9723-a53d-4e0c-a139-741942971a78","pod":"lab-n/ballast-5d6cf97747-67bkm"}
+{"time":"2026-11-12T12:03:19.244105955Z","level":"INFO","msg":"Syncer: marking worker unavailable (pod not Ready)","worker":"f37017f1-681a-4831-9d46-17d4d06d2f29","pod":"lab-n/ballast-5d6cf97747-xlw7d"}
+{"time":"2026-11-12T12:20:05.08006829Z","level":"INFO","msg":"Syncer: marking worker unavailable (pod not Ready)","worker":"ff677aaf-e6bb-403f-a8d8-3895b1caddb8","pod":"lab-n/ballast-5d6cf97747-mcbjt"}
+{"time":"2026-11-12T12:20:05.090893083Z","level":"INFO","msg":"Syncer: marking worker unavailable (pod not Ready)","worker":"2d340d11-413b-4900-a85f-ddae57a695a8","pod":"lab-n/ballast-5d6cf97747-l7jm8"}
+{"time":"2026-11-12T12:23:45.285165207Z","level":"INFO","msg":"Syncer: marking worker unavailable (pod not Ready)","worker":"ff677aaf-e6bb-403f-a8d8-3895b1caddb8","pod":"lab-n/ballast-5d6cf97747-mcbjt"}
+{"time":"2026-11-12T12:23:45.295267324Z","level":"INFO","msg":"Syncer: marking worker unavailable (pod not Ready)","worker":"2d340d11-413b-4900-a85f-ddae57a695a8","pod":"lab-n/ballast-5d6cf97747-l7jm8"}
+{"time":"2026-11-12T12:36:01.071425816Z","level":"INFO","msg":"Syncer: marking worker unavailable (pod not Ready)","worker":"13fcc8f0-4bd8-4641-ae43-84227cc3f9d3","pod":"lab-n/ballast-5d6cf97747-4dhz2"}
+{"time":"2026-11-12T12:36:01.081618301Z","level":"INFO","msg":"Syncer: marking worker unavailable (pod not Ready)","worker":"0d147b5d-acd5-4827-ad96-13dbe2ddf275","pod":"lab-n/ballast-5d6cf97747-zjz8n"}

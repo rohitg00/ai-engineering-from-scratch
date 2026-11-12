@@ -1,0 +1,36 @@
+actorTemplate:
+  atespace: lab-v
+  name: pyagent
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:45:49.396844147Z"
+  name: py1
+  uid: e090055b-dee9-4ff6-8ae4-44c687a57b68
+  updateTime: "2026-11-12T12:46:17.154133282Z"
+  version: "45"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 12
+  snapshots:
+  - actorTemplateUid: f8ce5566-1ff0-4dba-97e5-c36decd5c3a0
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-v/actors/e090055b-dee9-4ff6-8ae4-44c687a57b68/snapshots/b11af47c-d208-4fa8-8706-37834b2d89eb
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 12
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: b11af47c-d208-4fa8-8706-37834b2d89eb
+  state: ACTOR_STATE_SUSPENDED

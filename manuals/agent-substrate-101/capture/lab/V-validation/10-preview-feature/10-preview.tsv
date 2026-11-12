@@ -1,0 +1,11 @@
+ts	server	client	output
+2026-11-12T13:06:11.082Z	off	-	server arg: --preview=
+2026-11-12T13:06:11.416Z	off	no-flag	Error: failed to create actor template: rpc error: code = InvalidArgument desc = actor_template.golden_egress_policy: Forbidden 
+2026-11-12T13:06:11.619Z	off	--preview	Error: failed to create actor template: rpc error: code = InvalidArgument desc = actor_template.golden_egress_policy: Forbidden 
+2026-11-12T13:06:36.486Z	on	-	server arg: --preview=GoldenEgressPolicy
+2026-11-12T13:06:36.842Z	on	no-flag	Error: failed to create actor template: rpc error: code = InvalidArgument desc = actor_template.golden_egress_policy: Forbidden 
+2026-11-12T13:06:37.052Z	on	--preview	ATESPACE   NAME    GOLDEN TAG   ERROR   AGE lab-v      gep-0                        0s 
+2026-11-12T13:07:07.281Z	on	--preview	ATESPACE   NAME          GOLDEN TAG                             ERROR   AGE lab-v      fid-memory    dec0c196-e199-4c19-aa00-6037835949f4           23m lab-v      fid-rootfs    2edaf4a5-9dd2-41da-a82c-4e668ac38640           23m lab-v      fid-volumes   abb8f11c-9d47-42e6-b2b9-36eb204a8421           23m lab-v      gep-0         e232fbe8-fdde-41c7-9cde-eefde6dbc814           30s lab-v      mixed-200     69c9e857-9419-4d14-a819-d2f99bcde6ff           27m lab-
+2026-11-12T13:07:07.729Z	on	no-flag	ATESPACE   NAME    GOLDEN TAG                             ERROR   AGE lab-v      gep-0   e232fbe8-fdde-41c7-9cde-eefde6dbc814           30s 
+2026-11-12T13:07:27.039Z	off-again	-	server arg: --preview=
+DONE

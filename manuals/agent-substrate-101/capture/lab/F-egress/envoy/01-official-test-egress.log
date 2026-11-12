@@ -1,0 +1,28 @@
+
+[1;36m== preflight: egress gateway is running[0m
+deployment "atenet-egress" successfully rolled out
+   dataplane = envoy
+
+[1;36m== deploy an in-cluster HTTP target (whoami)[0m
+Waiting for deployment "whoami" rollout to finish: 0 of 1 updated replicas are available...
+deployment "whoami" successfully rolled out
+   target = 10.96.3.30:80
+
+[1;36m== create + resume Actor ate-demo-egress/egress-demo, allow all its egress[0m
+ate-demo-egress   egress-demo   ate-demo-egress/egress   ACTOR_STATE_RUNNING   ate-demo-egress/egress-67f89fdb4-lg2r2   10.244.0.29   3         0s
+
+[1;36m== POSITIVE — real Actor egress is tunneled through the gateway (expect 200)[0m
+   actor round-trip HTTP 200
+[1;32mPASS[0m actor fetched the target (HTTP 200)
+[1;32mPASS[0m target saw the egress gateway (10.244.0.22) as its client — traffic went through the gateway
+[1;32mPASS[0m gateway logged the CONNECT: [egress] authority=10.96.3.30:80 peer_san=spiffe://substrate-actor.local/worker-for-actor/ate-demo-egress/egress-demo peer_serial=6a3965e09e58461b3eef8341fe1c15446dcf5d4e protocol=HTTP/2 code=200 flags=- up_bytes=0 down_bytes=0
+
+[1;36m== NEGATIVE — a pod identity is not an actor identity (expect a refused handshake)[0m
+   pod-identity CONNECT attempt: http_connect=000 exit=28
+[1;32mPASS[0m a pod identity cannot open an egress tunnel (no CONNECT succeeded)
+   gateway egress log since the probe: [egress] authority=10.96.3.30:80 peer_san=spiffe://substrate-actor.local/worker-for-actor/ate-demo-egress/egress-demo peer_serial=6a3965e09e58461b3eef8341fe1c15446dcf5d4e protocol=HTTP/2 code=200 flags=- up_bytes=164 down_bytes=540
+
+[1;32mALL CHECKS PASSED[0m — pluggable egress + identity authentication working.
+
+[1;36m== cleanup[0m
+   done

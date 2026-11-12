@@ -40,7 +40,7 @@ Do not build from source for a first install. The command without `--image-repo`
 ## What you can do after this manual
 
 - Install Agent Substrate on a kind cluster from the release images, create an actor, and send it a request.
-- Predict how long an actor takes to resume from the memory it holds, and choose between an asynchronous and a synchronous suspend.
+- Predict how long an actor takes to resume from the memory that holds data in it, and choose between an asynchronous and a synchronous suspend.
 - Size a WorkerPool, and say what a client sees when the pool is full.
 - Write an egress policy, inject a credential, and choose between the Envoy and the agentgateway dataplane.
 - Find the cause of a 500 or a 503 from its text, and bring a crashed actor back with `RevertActor`.

@@ -1,0 +1,20 @@
+warning: source repository is shallow, ignoring --local
+warning: --local is ignored
+warning: refs/tags/v1.0.0 fd67f6204a7c287f658d080f6196ba1638744a10 is not a commit!
+Note: switching to 'b34fbee742906494b5eb4f1f36987176bf8770a4'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+

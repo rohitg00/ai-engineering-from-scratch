@@ -1,0 +1,60 @@
+{"time":"2026-11-12T10:37:29.072552474Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:30.072518438Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:31.072220311Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:32.071775717Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:33.071942065Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:34.072393377Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:35.071674573Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:35.19018023Z","level":"INFO","msg":"Request","host":"127.0.0.1:8000","trace_id":"64c0ea245cd771e7ce79c5595f461ada","span_id":"eeb0745bc51d2452","trace_flags":"00"}
+{"time":"2026-11-12T10:37:35.190261811Z","level":"INFO","msg":"ResumeActor","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"trace_id":"64c0ea245cd771e7ce79c5595f461ada","span_id":"11d2cfbb0f1bd2bf","trace_flags":"00"}
+{"time":"2026-11-12T10:37:35.582184136Z","level":"INFO","msg":"ResumeActor result","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"state":"ACTOR_STATE_RUNNING","workerIP":"10.244.0.25","workerSPIFFEID":"spiffe://cluster.local/ns/ate-demo-counter/sa/ateworker","trace_id":"64c0ea245cd771e7ce79c5595f461ada","span_id":"11d2cfbb0f1bd2bf","trace_flags":"00"}
+{"time":"2026-11-12T10:37:35.582251258Z","level":"INFO","msg":"Route ok","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"targetAddr":"10.244.0.25:443","trace_id":"64c0ea245cd771e7ce79c5595f461ada","span_id":"11d2cfbb0f1bd2bf","trace_flags":"00"}
+{"time":"2026-11-12T10:37:36.072252051Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:37.07231058Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:38.071509503Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:39.072338064Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:40.071868114Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:41.072524671Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:42.072235608Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:43.071828306Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:44.071562182Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:45.07227126Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:46.072213491Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:47.072392064Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:48.071877614Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:49.071607354Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:50.072370907Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:51.071544Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:52.071867338Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:53.07184819Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:54.071792396Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:55.072244908Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:56.072391396Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:57.071645804Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:58.072532028Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:37:59.071556248Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:00.071553795Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:01.072381408Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:02.072155785Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:03.07249683Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:04.071886072Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:05.071990717Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:06.071602491Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:07.071851395Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:08.072262704Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:09.071554077Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:10.07156666Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:10.447204817Z","level":"INFO","msg":"Request","host":"atenet-router.ate-system.svc","trace_id":"f59d37d75fe505e11f1da7e29743cc07","span_id":"7c4e9079b14eab60","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.44731349Z","level":"INFO","msg":"ResumeActor","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"trace_id":"f59d37d75fe505e11f1da7e29743cc07","span_id":"3c83004eb00da3a0","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.456491456Z","level":"INFO","msg":"ResumeActor result","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"state":"ACTOR_STATE_RUNNING","workerIP":"10.244.0.25","workerSPIFFEID":"spiffe://cluster.local/ns/ate-demo-counter/sa/ateworker","trace_id":"f59d37d75fe505e11f1da7e29743cc07","span_id":"3c83004eb00da3a0","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.456530527Z","level":"INFO","msg":"Route ok","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"targetAddr":"10.244.0.25:443","trace_id":"f59d37d75fe505e11f1da7e29743cc07","span_id":"3c83004eb00da3a0","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.667596458Z","level":"INFO","msg":"Request","host":"actor","trace_id":"5d396c79bcbc3cacc11003b781730274","span_id":"82aafbe45276d02c","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.667782413Z","level":"INFO","msg":"ResumeActor","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"trace_id":"5d396c79bcbc3cacc11003b781730274","span_id":"b5946892eb5a2208","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.673608489Z","level":"INFO","msg":"ResumeActor result","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"state":"ACTOR_STATE_RUNNING","workerIP":"10.244.0.25","workerSPIFFEID":"spiffe://cluster.local/ns/ate-demo-counter/sa/ateworker","trace_id":"5d396c79bcbc3cacc11003b781730274","span_id":"b5946892eb5a2208","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.673675951Z","level":"INFO","msg":"Route ok","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"my-counter-1"},"targetAddr":"10.244.0.25:443","trace_id":"5d396c79bcbc3cacc11003b781730274","span_id":"b5946892eb5a2208","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.89771526Z","level":"INFO","msg":"Request","host":"atenet-router.ate-system.svc","trace_id":"70e2e75f9c2b9d2a5fb7b7edff81fdd4","span_id":"13a537c318dde4f2","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.897837253Z","level":"INFO","msg":"ResumeActor","actor":{"type":"*ateapi.Actor","atespace":"ate-demo-counter","name":"does-not-exist"},"trace_id":"70e2e75f9c2b9d2a5fb7b7edff81fdd4","span_id":"13f56df80d6fd4fa","trace_flags":"00"}
+{"time":"2026-11-12T10:38:10.90371438Z","level":"ERROR","msg":"Error during ext_proc RequestHeaders processing","direction":"ingress","err":"actor ate-demo-counter/does-not-exist not found","trace_id":"70e2e75f9c2b9d2a5fb7b7edff81fdd4","span_id":"13a537c318dde4f2","trace_flags":"00"}
+{"time":"2026-11-12T10:38:11.071546465Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:38:11.118614506Z","level":"INFO","msg":"Request","host":"atenet-router.ate-system.svc","trace_id":"4edc8d7497ee75700775b3f456c0e69b","span_id":"726ecec47156f737","trace_flags":"00"}
+{"time":"2026-11-12T10:38:11.118757179Z","level":"ERROR","msg":"Error during ext_proc RequestHeaders processing","direction":"ingress","err":"invalid actor reference","trace_id":"4edc8d7497ee75700775b3f456c0e69b","span_id":"726ecec47156f737","trace_flags":"00"}

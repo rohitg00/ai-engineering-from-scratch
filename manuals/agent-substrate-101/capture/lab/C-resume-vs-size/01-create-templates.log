@@ -1,0 +1,15 @@
+ATESPACE   NAME        GOLDEN TAG   ERROR   AGE
+lab-c      ballast-0                        0s
+create-template ballast-0 .228711643s
+ATESPACE   NAME         GOLDEN TAG   ERROR   AGE
+lab-c      ballast-50                        0s
+create-template ballast-50 .222557469s
+ATESPACE   NAME          GOLDEN TAG   ERROR   AGE
+lab-c      ballast-200                        0s
+create-template ballast-200 .224847073s
+ATESPACE   NAME          GOLDEN TAG   ERROR   AGE
+lab-c      ballast-500                        0s
+create-template ballast-500 .212300466s
+ATESPACE   NAME           GOLDEN TAG   ERROR   AGE
+lab-c      ballast-1000                        0s
+create-template ballast-1000 .211478249s

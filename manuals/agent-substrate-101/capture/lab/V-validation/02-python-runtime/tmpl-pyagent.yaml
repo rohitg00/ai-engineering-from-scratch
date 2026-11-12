@@ -1,0 +1,28 @@
+metadata:
+  atespace: lab-v
+  name: pyagent
+workerSelector:
+  matchLabels:
+    workload: vpool
+containers:
+- name: app
+  image: localhost:5001/pyagent@sha256:418ee00a7c48e97eb8499d09b2b7e1f73f0787eb1ab7e3d3fccd2c01217256f6
+  command:
+  - python
+  - /app/app.py
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+  volumeMounts:
+  - name: data
+    mountPath: /data
+resources:
+  limits:
+    cpuMillicores: 1000
+    memoryBytes: 805306368
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY
+volumes:
+- name: data
+  durableDir: {}
