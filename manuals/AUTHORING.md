@@ -243,6 +243,35 @@ module.exports = figure('fig-1-2', {
 
 Save it as `figures/src/fig-1-2.js` and run `node manuals/_shared/figkit.js build manuals/<id>`. The audit fails when a committed SVG differs from its source. A figure without a source file is checked as a hand-written SVG.
 
+### Object forms and project marks
+
+Two shared modules draw objects that say what they are. [_shared/forms.js](_shared/forms.js) holds the forms, and [_shared/marks.js](_shared/marks.js) holds the project marks. Use them on the cover plate and in architecture figures. Never use them in a chart, a timeline, or a decision figure.
+
+- A form must say what the object is, such as a terminal, a gateway with ports, a server tower, or a database cylinder.
+- A surface shows containment. A floor tile is a group such as a namespace, and a platform slab is a host. An open frame is a pod, and a shell with walls is a sandbox.
+- A layered stack is a workload with its state layers. Its dashed variant is a workload that is stopped or suspended.
+- Each form takes the figure, the isometric view, a position, a hue, and an optional mark. It returns anchor points for arrows and labels.
+- Each form has a flat variant under `forms.flat`, a front view of about 28 to 44 units. Use it in sequence, flow, structure, and layers figures, where depth would fight the data.
+
+A mark is the logo of a real project. The `mark` method of the figure kit draws it as one path in one palette colour.
+
+- A mark comes only from the official artwork of the project. Never draw a mark from memory.
+- `marks.js` records the source and the license or trademark note of each mark. Add both when you add a mark.
+- Each mark returns its path on an isometric face, on a floor, or flat.
+- Leave a mark out when it does not read at the size you have. A label alone is correct.
+- The sources page of the manual says that the marks belong to their owners.
+
+```javascript
+const forms = require('../../../_shared/forms.js');
+
+const view = forms.isoView(f, { ox: 250, oy: 160, angle: 'true' });
+const router = forms.gateway(f, view, [-28, -28, 0], 'indigo', { mark: 'envoy' });
+f.leader([120, 40], router.top);
+forms.flat.tower(f, 420, 16, 'blue', { mark: 'substrate' });
+```
+
+Keep the two modules out of `figures/src`, because the build treats every file there as a figure.
+
 ## Listings and the capture kit
 
 - A JSON, HTTP, SSE, or JSONL block must be a `listing` with a `source`. The audit fails a `json` fence that is not a listing.

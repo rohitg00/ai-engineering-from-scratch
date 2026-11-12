@@ -208,6 +208,11 @@ class Figure {
 
   path(d, options = {}) { return this.stroke('path', { d }, options); }
 
+  mark(d, options = {}) {
+    this.emit(`<path${attrs({ d, fill: inkOf(options.hue || 'ink'), 'fill-opacity': options.opacity })}/>`);
+    return this;
+  }
+
   arrow(from, to, options = {}) {
     this.line(from[0], from[1], to[0], to[1], options);
     const style = resolveStyle(options);
@@ -476,7 +481,7 @@ function build(dir, check = false) {
   return drift;
 }
 
-module.exports = { HUES, MIN_FONT, TOKENS, WIDTH, build, color, escapeHtml, figure, measure, textBox };
+module.exports = { HUES, ISO, MIN_FONT, TOKENS, WIDTH, build, color, escapeHtml, figure, measure, textBox };
 
 if (require.main === module) {
   const [command, dir] = process.argv.slice(2);
