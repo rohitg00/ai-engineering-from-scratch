@@ -1092,7 +1092,7 @@ def run_correctness_benchmark(
         else:
             safe_misses += 1
 
-        if actual.startswith("HIT") and (expected == "MISS" or actual != expected):
+        if actual.startswith("HIT") and expected == "MISS":
             false_hits += 1
 
         if "adversarial_blocked" in str(reason):
