@@ -216,9 +216,9 @@ The new system had no actor and no atespace. Nothing that we made on v0.6.0 surv
 
 **Our position:** do not move a 0.x cluster to 1.0. Install 1.0 on a new cluster, create your templates again, and move traffic. If you must reuse the cluster, plan for the finalizer and the image cache, and for an empty system at the end.
 
-## What we did not test
+## Coming next
 
-We ran two upgrades and one rollback, each once, on one node, and both upgrades started from a release candidate. We did not test an upgrade between two supported releases, a rollback that crosses a schema change, more than one node, or the microVM class. We did not test an upgrade with a Postgres outside the cluster. From v0.6.0 we found no path that keeps an actor.
+We ran two upgrades and one rollback, each once, on one node, and both upgrades started from a release candidate. From v0.6.0 we found no path that keeps an actor. The next edition adds an upgrade between two supported releases and a rollback that crosses a schema change. It also adds upgrades on more than one node, with the microVM class, and with a Postgres outside the cluster.
 
 A new kagent release, v1.0.1, appeared on the day of our kagent run. All our kagent results are from v1.0.0.
 

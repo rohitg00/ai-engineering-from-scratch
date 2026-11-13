@@ -112,7 +112,7 @@ The three lags on agentgateway are not random. The upstream first saw a new valu
 
 During a change the upstream saw the old value or the new one. It never saw an empty header, and it never saw the placeholder of the actor. That is why no request failed. It also means that a secret which you revoke stays in use on agentgateway for up to 5 minutes. Revoke the old value at the upstream when you must stop its use at once. When you rotate without an incident, keep the old value valid at the upstream for 5 minutes after the change.
 
-We tested one Secret and one actor. We did not test whether a restart of `atenet-egress` forces a new fetch.
+We tested one Secret and one actor. Whether a restart of `atenet-egress` forces a new fetch is a test for the next edition.
 
 On Envoy, the cost is one call to the provider and one read of the Kubernetes API for each request that carries the header. On agentgateway, most requests make no call to the provider.
 
@@ -198,7 +198,7 @@ note: The second of three rules in the policy of one session actor.
 
 kagent also sets `OPENAI_API_KEY=kagent-credential-injected` in the environment of the actor. The model client reads that variable and sends it as the `authorization` header, which is the placeholder. Our mock model server received `Bearer sk-mock-not-a-real-key`, a test value that we made up, on 10 of 10 calls.
 
-We ran kagent against a mock model over HTTP in the cluster. We did not test a real model host over HTTPS. [Section 7.1](#s-kagent-on-substrate) has the rest of that policy.
+We ran kagent against a mock model over HTTP in the cluster. A real model host over HTTPS is planned for the next edition. [Section 7.1](#s-kagent-on-substrate) has the rest of that policy.
 
 ```takeaways
 - Put the credential effect on an `https` rule for any host outside the cluster.

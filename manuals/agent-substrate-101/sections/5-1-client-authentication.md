@@ -145,7 +145,7 @@ Three results from these probes matter to you {{run}}:
 
 The last result decides your design. The router answers one question: is this client on the list. It does not ask which actor the client is allowed to call. Put your own service between your users and the router, give only that service an allowed identity, and check each user there.
 
-We did not test a second token issuer, a token of a deleted ServiceAccount, or a list with more than one identity.
+A second token issuer is planned for the next edition. This edition also does not cover a token of a deleted ServiceAccount or a list with more than one identity.
 
 ```takeaways
 - Treat a default install as open to everyone who can create a token for ate-client.

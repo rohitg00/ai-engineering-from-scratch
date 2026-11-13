@@ -1,6 +1,6 @@
 # How this manual was made
 
-> This page records the version, the machines, the lab method, and the capture kit behind every fact in the manual, and what we did not test.
+> This page records the version, the machines, the lab method, and the capture kit behind every fact in the manual, and the runs that come next.
 
 ## The version
 
@@ -16,7 +16,7 @@ Each fact carries one of four labels, and [the sources page](#s-ref-sources) ran
 
 **The code:** the default or the mechanism comes from the source at the release tag. We read it and did not run it, unless the same paragraph says that we did.
 
-**The documentation:** the statement comes from the project documentation at the tag. We use it for paths that we did not run, such as an install on GKE, and the text says so.
+**The documentation:** the statement comes from the project documentation at the tag. We use it for paths that this edition does not run yet, such as an install on GKE, and the text says so.
 
 **An issue:** a user or a maintainer reported the behaviour in the public tracker. We name the issue and do not present it as our result.
 
@@ -213,6 +213,6 @@ Your seconds will differ from ours. The states, the error texts, and the order o
 | Dependencies | the loss of Postgres, of `ate-api-server`, and of the Kubernetes API server, on Envoy and on agentgateway, and a second run of each on Envoy. Also a Postgres outside the cluster and its loss, and a bucket outside the cluster with 20 and 100 ms of added round trip and its loss, all on the same guest. Also a bucket and a Postgres on a second guest of the same server, with TLS, a rate limit, added delay, and the loss of each | a cloud bucket, a managed Postgres, a real link with 100 ms of delay |
 | Upgrade | two upgrades from v1.0.0-rc.3 to v1.0.0 on one node, a second roll of the worker pool, one rollback, and an install of v0.6.0 with a direct upgrade and a reinstall | an upgrade from an older release that keeps actors, a rollback across a schema change, the supported paths |
 
-[Section 8.5](#s-limits-at-v1-0-0) holds the full list of what we did not test.
+[Coming in the next edition](#s-next-edition), in section 8.5, holds the full list of planned runs.
 
 Sources: capture/lab/summary/bursts-one-node-x86.json, capture/lab/summary/restore-limit-x86.json, capture/lab/summary/dependency-reruns-x86.json, capture/lab/summary/upgrade-rerun-x86.json, capture/lab/summary/v060-x86.json, capture/lab/summary/node-drain-x86.json, capture/lab/summary/full-node-x86.json, capture/lab/summary/object-store-x86.json, capture/lab/summary/external-postgres-x86.json, capture/lab/summary/upgrade-x86.json, capture/lab/summary/scale-x86.json, manual.json (pin, sources); capture/lab/summary/node-loss-x86.json, capture/lab/summary/network-x86.json, capture/lab/summary/rotation-x86.json, capture/lab/summary/cpu-limit-x86.json, capture/lab/summary/dependency-loss-agw-x86.json, capture/lab/Q-network/n-cpu-limit/10-burn.tsv, capture/lab/P-node-loss/96-golden-tag-deleted.txt, capture/lab/summary/microvm-x86.json, capture/lab/L-gaps/microvm/49-summary.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/restart/10-poll.tsv, capture/lab/summary/kagent-model-x86.json, capture/lab/summary/agent-executor-followups-x86.json, capture/README.md, capture/run.py, capture/lab/REDACTIONS.txt, capture/lab/summary/install-steps.json, capture/lab/summary/resume-x86.json, capture/lab/summary/resume-mac.json, capture/lab/summary/failures-x86.json, capture/lab/summary/dependency-loss-x86.json, capture/lab/summary/kagent-turns-x86.json, capture/lab/A-quickstart/02-steps.tsv, capture/lab/B-lifecycle/10-trace.tsv, capture/lab/G-dataplane/00-install/steps.tsv, capture/lab/M-mac-arm64/02-steps.tsv, capture/lab/K-kagent/install/steps.tsv, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/summary/validation-fidelity-x86.json, capture/lab/V-validation/00-setup/pool.yaml, capture/lab/V-validation/03-parallel-resume/24-summary.tsv, capture/lab/V-validation/05-golden-race/10-race.tsv, capture/lab/V-validation/06-template-move/10-move.tsv, capture/lab/V-validation/07-cross-namespace-pool/10-cross.tsv, capture/lab/V-validation/08-access-control/10-access.tsv, capture/lab/V-validation/09-actor-jwt/24-jwt-decoded.txt, capture/lab/V-validation/10-preview-feature/10-preview.tsv, capture/lab/V-validation/11-process-exit-long-watch/10-watch.tsv, capture/lab/V-validation/12-suspend-during-request/10-inflight.tsv; docs/get-started/quickstart.md at v1.0.0., capture/lab/summary/remote-store-x86.json, capture/lab/summary/remote-postgres-x86.json

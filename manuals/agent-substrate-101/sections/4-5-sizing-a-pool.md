@@ -38,7 +38,7 @@ The CPU value of a template is a booking for placement, and the worker also writ
 
 [WorkerPool](#s-workerpool) has the table and the chart.
 
-So a low value packs more actors on a worker, and each of them is that much slower when it is busy. Size the value from the CPU that one turn needs, not from the average. The actor still sees 2 CPUs at every limit, so set thread counts in the template yourself. We did not test several busy actors on one worker at the same time.
+So a low value packs more actors on a worker, and each of them is that much slower when it is busy. Size the value from the CPU that one turn needs, not from the average. The actor still sees 2 CPUs at every limit, so set thread counts in the template yourself. Several busy actors on one worker at the same time are a run for the next edition.
 
 A burst of resumes inside the capacity of the pool is cheap.
 
@@ -126,7 +126,7 @@ We ruled out the parts that we could change or watch, in 13 bursts with no hung 
 - The client: one or four curl processes gave the same rate. So did one connection for each request, against one or two in the first run.
 - The node: 9.5 to 11.4 of its 24 cores were busy on average in a burst, with peaks of 14 to 16. I/O wait was 0.02 to 0.12 cores on average, in the bursts that recorded it.
 
-The busiest processes were the gVisor sandboxes, at 2.1 to 2.9 cores on average, and the worker processes, at 1.5 to 2.2. So the limit is on the node, inside the gVisor restores that run together. Plain CPU, disk wait, and the control plane of Substrate are ruled out. We did not measure its cause. Lock contention in the guest kernel or in gVisor, and a cost of nested virtualisation, are possible. We are sure of what the limit is not, and less sure of where it is.
+The busiest processes were the gVisor sandboxes, at 2.1 to 2.9 cores on average, and the worker processes, at 1.5 to 2.2. So the limit is on the node, inside the gVisor restores that run together. Plain CPU, disk wait, and the control plane of Substrate are ruled out. This edition does not measure its cause, and the next one does. Lock contention in the guest kernel or in gVisor, and a cost of nested virtualisation, are possible. We are sure of what the limit is not, and less sure of where it is.
 
 ## More replicas of ate-api-server
 
@@ -134,19 +134,19 @@ The busiest processes were the gVisor sandboxes, at 2.1 to 2.9 cores on average,
 
 Eight actors ended `ACTOR_STATE_CRASHED`, and one `revert` brought each one back, in 0.33 to 0.38 s. Two more actors stayed in `ACTOR_STATE_RESUMING` for at least 4 minutes, and [section 8.2](#s-when-a-dependency-is-down) has them.
 
-**Our position:** keep the two replicas of `ate-api-server` that the install sets, when you use the bundled Postgres. More replicas did not raise the rate on one node, and four of them failed resumes and crashed actors. If you need more replicas for availability, raise the connection limit of Postgres first. We did not test that change.
+**Our position:** keep the two replicas of `ate-api-server` that the install sets, when you use the bundled Postgres. More replicas did not raise the rate on one node, and four of them failed resumes and crashed actors. If you need more replicas for availability, raise the connection limit of Postgres first. A run with that change is planned for the next edition.
 
 ## The count of stored actors
 
 The count of stored actors did not change these numbers. In the first run we raised the count to 10,750 actor rows in Postgres. A single resume took a median of 0.36 to 0.38 s at each of four sizes, with 10 resumes each. The database was 20 MB at 10,750 rows, and `kubectl ate get actors` took 0.86 s. The creates ran at 76 to 86 each second, and none of 10,000 failed.
 
-**Our position:** plan the pool for the burst, and not only for the peak count. If 100 sessions wake in the same second on one node like ours, the last one waits about 2.7 s. With 300 it waits about 9 s. Spread a wake-up of many actors over time in your client. More nodes are the other answer, and we did not test them, so measure that rate yourself.
+**Our position:** plan the pool for the burst, and not only for the peak count. If 100 sessions wake in the same second on one node like ours, the last one waits about 2.7 s. With 300 it waits about 9 s. Spread a wake-up of many actors over time in your client. More nodes are the other answer. Until the next edition measures them, measure that rate yourself.
 
 Two limits stopped the runs. Each suspended actor of this kind kept 12.9 MB on the node disk, and 450 of them left 3.9 GB free on the guest. We also stopped at 10,750 rows, below the 20,000 that we planned. In the second run the delayed upload of 300 snapshots took the guest disk from 4.9 to 4.0 GB in one minute. So 200 and 300 at one time ran twice each, and not three times. An idle worker used a median of 16.7 MB of memory, in 200 workers.
 
 ## No autoscaler
 
-Substrate v1.0.0 has no code that changes `spec.replicas` {{code}}. The WorkerPool has a `scale` subresource, so a HorizontalPodAutoscaler or your own controller can change the count. The controller publishes `ate.workerpool.desired_workers` and `ate.workerpool.ready_workers` for that purpose {{docs}}. We did not test an autoscaler.
+Substrate v1.0.0 has no code that changes `spec.replicas` {{code}}. The WorkerPool has a `scale` subresource, so a HorizontalPodAutoscaler or your own controller can change the count. The controller publishes `ate.workerpool.desired_workers` and `ate.workerpool.ready_workers` for that purpose {{docs}}. A run with an autoscaler is planned for the next edition.
 
 Plan as if you have none. [Request parking](#s-request-parking) holds a request for 5 seconds. Do not plan for a new worker pod to start and register in that time.
 

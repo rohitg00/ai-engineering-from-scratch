@@ -212,7 +212,7 @@ The second set of cases gave the same split, with more returns. After an outage 
 
 **We measured** the case where the other node has no room, in two runs on the same guest. The `revert` was accepted, and each request got 503 after 5 s with `no worker has room for the actor`, in 8 of 8 requests. The actor stayed `ACTOR_STATE_SUSPENDED`. It answered 1.6 s after we freed a worker in one run, and 1.7 s after we scaled the pool in the other. [When a dependency is down](#s-when-a-dependency-is-down) has both runs.
 
-We did not test a pool with spare workers on a third node, or a node loss with the microVM class. We also did not test a node that is alive and unreachable.
+The next edition adds a pool with spare workers on a third node and a node loss with the microVM class. It also adds a node that is alive and unreachable.
 
 ## After a node restart
 

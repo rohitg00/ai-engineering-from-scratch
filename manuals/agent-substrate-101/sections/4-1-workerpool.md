@@ -165,7 +165,7 @@ Two facts about the inside of the sandbox follow, and both can mislead you.
 
 The second fact explains an earlier reading of ours. A demo command reported 2.0 seconds of CPU time in 2.38 seconds under 500 millicores, which looked like no cap. That CPU time came from inside the sandbox, so it does not count. [A tool sandbox](#s-a-tool-sandbox) has that run and the correction.
 
-We tested one actor at a time. We did not test memory limits, or CPU limits with several busy actors on one worker. One row is not explained. Four threads at 2000 millicores used 2.8 seconds of host CPU, and 1 thread used 4.6 to 5.1 seconds for the same work.
+We tested one actor at a time. Memory limits, and CPU limits with several busy actors on one worker, come in the next edition. One row is not explained. Four threads at 2000 millicores used 2.8 seconds of host CPU, and 1 thread used 4.6 to 5.1 seconds for the same work.
 
 A suspended actor books nothing. The command counts running actors only.
 

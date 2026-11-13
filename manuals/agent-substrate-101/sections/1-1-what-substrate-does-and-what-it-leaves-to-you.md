@@ -62,7 +62,7 @@ Substrate has no autoscaler {{code}}. A WorkerPool has a `spec.replicas` field a
 
 ### GPU work
 
-Substrate v1.0.0 does not give an actor a GPU. The API guide marks devices as not supported for now {{docs}}. We did not test GPUs. Keep model inference on a serving system, and let the actor call it through an egress policy.
+Substrate v1.0.0 does not give an actor a GPU. The API guide marks devices as not supported for now {{docs}}, so this edition has no GPU run. Keep model inference on a serving system, and let the actor call it through an egress policy.
 
 ### Recovery
 
@@ -114,13 +114,13 @@ The project site, ate.dev, reached version 1.0 with the release. We read it on 2
 | No inbound access without authentication | Confirmed for the two actor ports on both dataplanes. The stats port of the agentgateway router answered `/metrics` with no credentials. | [6.1](#s-the-router-and-ingress) |
 | No outbound access without a policy | Confirmed. A name gets `NXDOMAIN`, and an IP gets a reset or a 403. | [6.2](#s-egresspolicy-and-default-deny) |
 | The actor does not hold the secret | Confirmed for the placeholder swap. An upstream that returns its request headers gives the secret to the actor. | [6.5](#s-credential-injection) |
-| `500+/s` suspend and resume activations | Not reproduced on one node. One node with 24 vCPU finished 32 to 39 resumes each second, with 50 to 300 at one time, in two runs. The control plane was not the limit, and our reading puts it in the gVisor restores on the node. We did not test more nodes, so this is no result for a larger cluster. | [4.5](#s-sizing-a-pool) |
-| `10×` the density of container runtimes | Not tested as stated. A suspended actor used no worker and 12.9 MB of node disk, and an idle worker used 16.7 MB of memory. We compared with no container runtime. | [4.5](#s-sizing-a-pool) |
-| Millions of agents | Not testable on our machines. With 10,750 actor rows on one node, the database was 20 MB and a single resume took the same 0.36 s. | [4.5](#s-sizing-a-pool) |
-| Worker state is scrubbed between runs | Not tested. The security page lists this guarantee as in progress. | no section |
-| JWTs federate with every cloud provider | We decoded one token. We did not test federation. | [5.3](#s-actor-jwts) |
+| `500+/s` suspend and resume activations | Not reproduced on one node. One node with 24 vCPU finished 32 to 39 resumes each second, with 50 to 300 at one time, in two runs. The control plane was not the limit, and our reading puts it in the gVisor restores on the node. A run on more nodes is planned for the next edition, so this is no result for a larger cluster yet. | [4.5](#s-sizing-a-pool) |
+| `10×` the density of container runtimes | Planned for the next edition. So far: a suspended actor used no worker and 12.9 MB of node disk, and an idle worker used 16.7 MB of memory. We compared with no container runtime. | [4.5](#s-sizing-a-pool) |
+| Millions of agents | Planned for the next edition, on more than one node. So far: with 10,750 actor rows on one node, the database was 20 MB and a single resume took the same 0.36 s. | [4.5](#s-sizing-a-pool) |
+| Worker state is scrubbed between runs | Planned for the next edition. The security page lists this guarantee as in progress. | no section |
+| JWTs federate with every cloud provider | We decoded one token. Federation is planned for the next edition. | [5.3](#s-actor-jwts) |
 
-Three statements match our runs as written. Four hold under a condition that the site does not state. Two did not match what we saw. One we did not reproduce on one node, and four we did not test or could not test at our size. The two that did not match are the ones to plan for. You must send the suspend, and you must act when a node stops.
+Three statements match our runs as written. Four hold under a condition that the site does not state. Two did not match what we saw. One we did not reproduce on one node, and four are planned for the next edition. The two that did not match are the ones to plan for. You must send the suspend, and you must act when a node stops.
 
 ## When this is the wrong tool
 

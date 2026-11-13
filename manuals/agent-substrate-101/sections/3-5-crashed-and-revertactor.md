@@ -120,7 +120,7 @@ note: Six lines for the actor e1, which got no request. The 80 later state lines
 
 **We measured** two actors on the x86 server guest (24 vCPU, 47 GB, nested KVM), for 20 minutes 36 seconds after the exit. Both were `ACTOR_STATE_RUNNING` in every sample, 81 and 80 samples at 15 second intervals. All 20 requests to the second actor returned the 503 from Envoy. The first suspend after the watch failed and marked the actor crashed. A revert returned it to `ACTOR_STATE_SUSPENDED`, and the next call returned 200 with the count of the last durable snapshot.
 
-So Substrate did not find a process exit by itself in 20 minutes, with requests or without. Each dead actor also kept one CPU of its worker for all that time, which [section 4.5](#s-sizing-a-pool) counts. We did not watch longer, and we did not restart the worker.
+So Substrate did not find a process exit by itself in 20 minutes, with requests or without. Each dead actor also kept one CPU of its worker for all that time, which [section 4.5](#s-sizing-a-pool) counts. A longer watch and a worker restart are runs for the next edition.
 
 In both runs a suspend found the exit. The checkpoint failed, and the failed suspend marked the actor crashed.
 
@@ -202,7 +202,7 @@ The calls in the third column are gone. The actor answers as if they never happe
 
 **We measured** one revert of the counter actor on the x86 server guest: `kubectl ate revert actor` returned in 0.22 seconds. The first request after a revert took 0.38 to 0.42 seconds in three runs. After the node restart, that first request waited 5 seconds and got `no worker has room for the actor`, although all pods ran. A request 78 seconds later returned 200. [Placement](#s-placement) explains that 503: for some seconds after the control plane returns, no worker of the pool is active.
 
-A revert rewinds the actor only. A tool call that the actor made after the snapshot stays made, and an external volume keeps its contents {{docs}}. We did not test external volumes.
+A revert rewinds the actor only. A tool call that the actor made after the snapshot stays made, and an external volume keeps its contents {{docs}}. External volumes are planned for the next edition.
 
 ```figure
 id: fig-3-5

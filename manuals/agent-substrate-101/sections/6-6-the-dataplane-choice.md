@@ -122,7 +122,7 @@ So the rule is: a removal stops requests, and it does not stop a response that i
 
 **We measured** that cut-off once on each dataplane, on the same guest (16 vCPU, 23 GB). The actor held one open HTTP response from a host that writes one chunk each second. An asynchronous `suspend actor` returned in 0.64 s on agentgateway and in 0.54 s on Envoy. The upstream saw the connection gone 2.2 s and 1.3 s after the suspend call began. It writes once each second, so the real close can be up to 1 s earlier.
 
-The connection does not come back. After a resume, no new chunk reached the actor. The curl processes were still in the process list of the actor, restored from memory with sockets that no longer work. An application that you suspend must be able to reconnect. We used an `http` rule in this test, and we did not repeat it with a `tlsPassthrough` connection.
+The connection does not come back. After a resume, no new chunk reached the actor. The curl processes were still in the process list of the actor, restored from memory with sockets that no longer work. An application that you suspend must be able to reconnect. We used an `http` rule in this test. A repeat with a `tlsPassthrough` connection is planned for the next edition.
 
 ## Our verdict
 
@@ -138,7 +138,7 @@ If you choose agentgateway, do three things. Limit who can read Secrets in `ate-
 kubectl -n ate-system set env deploy/atenet-egress RUST_LOG=info
 ```
 
-The command restarts the egress pod. The installer writes `debug` again at its next run, so the setting is yours to keep. We did not change the level of `atenet-router`, and we did not check that `info` logs enough to debug a denied request.
+The command restarts the egress pod. The installer writes `debug` again at its next run, so the setting is yours to keep. The level of `atenet-router`, and whether `info` logs enough to debug a denied request, are checks for the next edition.
 
 Do not choose on speed. One allowed request took 0.037 s on Envoy and 0.035 s on agentgateway in our probes, and one request each proves nothing about load.
 

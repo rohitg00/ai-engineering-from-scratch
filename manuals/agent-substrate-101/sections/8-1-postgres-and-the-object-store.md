@@ -111,7 +111,7 @@ The rest of this part comes from the code and the documentation at the tag.
 
 - `ate-api-server` takes two connection strings: `--postgres-owner-connection-string` and `--postgres-read-write-connection-string`. The owner role runs migrations, and the read-write role serves requests. The default role names are `substrate_owner` and `substrate_readwrite`.
 - The repository includes an overlay for Cloud SQL through its proxy. Any other PostgreSQL service is yours to connect.
-- The Cloud SQL scaling guide of the project says that a connection pooler in transaction mode does not work. Its reason is a session that listens for worker changes {{docs}}. The code at the tag does not match that reason. The worker watch reads the `worker_outbox` table every 50 ms, and the advisory locks last for one transaction {{code}}. We did not test a pooler, so use session mode until you have tested transaction mode yourself.
+- The Cloud SQL scaling guide of the project says that a connection pooler in transaction mode does not work. Its reason is a session that listens for worker changes {{docs}}. The code at the tag does not match that reason. The worker watch reads the `worker_outbox` table every 50 ms, and the advisory locks last for one transaction {{code}}. A run with a pooler is planned for the next edition. Until then, use session mode, or test transaction mode yourself.
 - The first replica of a new release migrates the schema, and no migration is rolled back. Take a backup before an upgrade, as [section 8.4](#s-upgrade-and-stale-advice) describes.
 - The largest public load report names Postgres as the limit. With 9,000 sandboxes in use, the database ran at 53 to 60 of 64 cores while the API servers were idle. That number is from an issue against a release candidate, and it is not our result.
 
@@ -276,11 +276,11 @@ In the script, `kc` is `kubectl` with the kubeconfig of the cluster. The plugin 
 
 **Our position:** treat this patch as your own change, and check it after each `ate-setup deploy` and each upgrade. The installer does not know the variable, so a new deploy can write the container without it.
 
-## What we did not test
+## Coming next
 
-Our object store was rustfs in every run. It ran in the cluster, in a container on the same guest, and on another guest of the same server. We did not test Google Cloud Storage or Amazon S3. We did not test a real link with 100 ms of delay. Our outside Postgres ran on the same guest and on another guest. We did not test a managed database, a Postgres restore, or a bucket restore.
+Our object store was rustfs in every run. It ran in the cluster, in a container on the same guest, and on another guest of the same server. Our outside Postgres ran on the same guest and on another guest. The next edition adds Google Cloud Storage, Amazon S3, and a real link with 100 ms of delay. It also adds a managed database, a Postgres restore, and a bucket restore. [Coming in the next edition](#s-next-edition) has the full list.
 
-So we give no tested backup procedure. Two backups at the same clock time are not one consistent backup. A suspend or a delete between them leaves rows and objects out of step.
+Until those runs, we give no tested backup procedure. Two backups at the same clock time are not one consistent backup. A suspend or a delete between them leaves rows and objects out of step.
 
 ```takeaways
 - List actors with `kubectl ate get actor`, because Kubernetes holds no actor object.

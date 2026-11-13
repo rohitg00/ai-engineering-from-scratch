@@ -193,7 +193,7 @@ One detail matters for code that reads a clock. The process reported an age of 3
 
 ## The same test on Apple silicon
 
-**We measured** the node path on an Apple silicon laptop under Docker Desktop, with 10 CPU and 8 GB for Docker. Each size had 10 resumes. The median resume was 0.09 seconds at 0 MiB, 0.09 seconds at 50 MiB, and 0.16 seconds at 200 MiB. The median asynchronous suspend was 0.10, 0.15, and 0.24 seconds. All 66 requests returned 200, and every count continued. We did not test more than 200 MiB or the object store path on the laptop.
+**We measured** the node path on an Apple silicon laptop under Docker Desktop, with 10 CPU and 8 GB for Docker. Each size had 10 resumes. The median resume was 0.09 seconds at 0 MiB, 0.09 seconds at 50 MiB, and 0.16 seconds at 200 MiB. The median asynchronous suspend was 0.10, 0.15, and 0.24 seconds. All 66 requests returned 200, and every count continued. More than 200 MiB and the object store path on the laptop are runs for the next edition.
 
 The laptop and the server guest are different machines. Read each table by itself, and do not take a ratio across them.
 
