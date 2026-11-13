@@ -1,35 +1,35 @@
 [
   {
     "question": "Why have benchmarks like MMLU become less useful for comparing frontier models?",
-    "options": ["They test the wrong subjects", "MMLU was designed for smaller models", "Frontier models have saturated MMLU (scoring 86-89%), compressing the leaderboard to a range where differences are statistical noise", "The questions are too easy"],
+    "options": ["They test the wrong subjects, since MMLU's 57 subjects come from school curricula that frontier labs deliberately leave out of their training", "MMLU was designed for smaller models, and it marks longer, more detailed answers as wrong, which penalizes larger ones", "Frontier models have saturated MMLU (scoring 86-89%), compressing the leaderboard to a range where differences are statistical noise", "The questions are too easy because each one offers just two answer choices, so a random guess gets half of them right"],
     "correct": 2,
     "explanation": "When GPT-4, Claude 3, and Llama 3 all score 86-89% on MMLU, a 1-point difference is not meaningful. The benchmark no longer discriminates between models, yet it still dominates leaderboard culture.",
     "stage": "pre"
   },
   {
     "question": "What is Goodhart's Law in the context of LLM evaluation?",
-    "options": ["When a measure becomes a target, it ceases to be a good measure -- models and teams optimize for benchmarks instead of real capabilities", "A law about model scaling", "A theorem about attention mechanisms", "A rule about learning rate schedules"],
+    "options": ["When a measure becomes a target, it ceases to be a good measure -- models and teams optimize for benchmarks instead of real capabilities", "A law about model scaling: benchmark scores rise with the log of training compute until the model runs out of new data to train on", "A theorem about attention mechanisms: a model attends most strongly to the tokens that appear in its evaluation prompts", "A rule about learning rate schedules: the rate should be cut in half each time the validation loss stops improving"],
     "correct": 0,
     "explanation": "Labs optimize for benchmark scores (data contamination, benchmark-specific prompting). The score goes up, but real-world capability doesn't necessarily improve. Your own task-specific eval is the only reliable measure.",
     "stage": "pre"
   },
   {
     "question": "What is the LLM-as-judge evaluation approach?",
-    "options": ["Having a human judge evaluate every response", "Using a strong LLM (e.g., GPT-4) to score responses against rubrics, replacing expensive human evaluation at scale", "Training a separate classifier for evaluation", "Using the model to evaluate itself"],
+    "options": ["Having a human judge evaluate each response, with an LLM drafting the scoring rubric that the human judge then follows", "Using a strong LLM (e.g., GPT-4) to score responses against rubrics, replacing expensive human evaluation at scale", "Training a separate classifier for evaluation on labelled examples of good and bad responses", "Using the model to evaluate itself: it rereads its own answer and scores it before replying to the user"],
     "correct": 1,
     "explanation": "LLM-as-judge uses a capable model to score responses against defined criteria. It's cheaper and faster than human evaluation, though it has biases (e.g., preferring verbose responses) that must be calibrated.",
     "stage": "post"
   },
   {
     "question": "Why is building a custom evaluation suite important rather than relying on public benchmarks?",
-    "options": ["Public benchmarks are always wrong", "Custom evals are easier to build", "Public benchmarks are too expensive", "Public benchmarks test general capabilities; your application has specific requirements that only a custom eval can measure"],
+    "options": ["Public benchmarks are too expensive, because each run requires licensing fees paid to the groups that publish and maintain them", "Custom evals are easier to build, since five or six examples give scores as stable as a large public benchmark", "Public benchmarks are wrong for most models, because their answer keys were written before current models existed", "Public benchmarks test general capabilities; your application has specific requirements that only a custom eval can measure"],
     "correct": 3,
     "explanation": "A model scoring 90% on MMLU might fail on your specific task (e.g., extracting dates from legal documents in your format). Only a custom eval with your data, your edge cases, and your success criteria measures what matters.",
     "stage": "post"
   },
   {
     "question": "What is data contamination in the context of LLM benchmarks?",
-    "options": ["When training data is corrupted", "When benchmark questions appear in the model's pre-training data, inflating scores without reflecting true capability", "When evaluation data is mislabeled", "When the model generates incorrect data"],
+    "options": ["When training data is corrupted, for example by encoding errors that garble the raw text before it reaches tokenization", "When benchmark questions appear in the model's pre-training data, inflating scores without reflecting true capability", "When evaluation data is mislabeled, so the benchmark's answer key marks some answers as wrong even when the model got them right", "When the model generates incorrect data, such as made-up facts and sources, while it is answering the benchmark's questions"],
     "correct": 1,
     "explanation": "If MMLU questions appeared in the training corpus, the model memorized the answers rather than reasoning about them. This inflates scores and makes benchmark comparisons unreliable. It's a growing problem as training corpora expand.",
     "stage": "post"
