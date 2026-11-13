@@ -1,0 +1,18 @@
+ts	t	event	detail
+2026-11-12T14:12:48.463Z	t=0.3	node-start	multi-worker2 after outage of 50.8 s
+2026-11-12T14:12:50.724Z	t=2.6	node-ready	multi-worker2
+2026-11-12T14:12:53.194Z	t=5.0	watch	pool-pods-running-on-node=2 workers-active-on-node=0 placement=multi-worker | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:12:59.740Z	t=11.6	watch	pool-pods-running-on-node=2 workers-active-on-node=0 placement=multi-worker | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:06.216Z	t=18.1	watch	pool-pods-running-on-node=2 workers-active-on-node=0 placement=multi-worker | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:12.745Z	t=24.6	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:19.336Z	t=31.2	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:25.886Z	t=37.7	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2 | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:25.896Z	t=37.7	first-actor-on-returned-node	no pods moved by hand
+2026-11-12T14:13:32.457Z	t=44.3	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2 | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:38.972Z	t=50.8	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2 | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:45.447Z	t=57.3	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:51.949Z	t=63.8	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:13:58.475Z	t=70.3	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:14:04.955Z	t=76.8	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2 | h2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T14:14:05.188Z	t=77.0	final-state	h2: ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T14:14:10.883Z	t=82.7	ready-for-next-case	workers active on multi-worker2: 2

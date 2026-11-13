@@ -1,0 +1,22 @@
+metadata:
+  atespace: lab-n
+  name: nb-0
+workerSelector:
+  matchLabels:
+    workload: ballast
+containers:
+- name: ballast
+  image: localhost:5001/ballast@sha256:1de05703c8f0688f24f11a57bd7e63af3103e3537644360bb64101a142d8ce2f
+  command:
+  - /ballast
+  - --mb=0
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+resources:
+  limits:
+    cpuMillicores: 250
+    memoryBytes: 209715200
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

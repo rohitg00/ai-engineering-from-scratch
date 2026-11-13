@@ -1,0 +1,26 @@
+apiVersion: ax.io/v1alpha1
+kind: Workspace
+metadata:
+  name: ax-ws
+  atespace: default
+spec:
+  git:
+    - name: origin
+      repo: "https://github.com/chalk/chalk.git"
+      branch: "main"
+  files:
+    - path: "AGENTS.md"
+      content: |
+        # Project Guidelines
+        - Keep dependencies minimal.
+---
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: ax-ws-task
+  atespace: default
+spec:
+  debug: true
+  command: ["sleep", "infinity"]
+  workspace:
+    name: ax-ws

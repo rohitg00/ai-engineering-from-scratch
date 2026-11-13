@@ -1,0 +1,26 @@
+NAMESPACE                          NAME                                         READY   STATUS      RESTARTS      AGE
+ate-system                         ate-api-server-7bc56575c9-78k87              2/2     Running     0             118s
+ate-system                         ate-api-server-7bc56575c9-xfkxh              2/2     Running     0             118s
+ate-system                         ate-controller-7984566f8d-f8gsx              1/1     Running     0             115s
+ate-system                         ate-idp-server-dcd5f565f-787nv               1/1     Running     0             117s
+ate-system                         ate-idp-server-dcd5f565f-n48gx               1/1     Running     0             117s
+ate-system                         atelet-vtvsl                                 1/2     Error       4 (43s ago)   114s
+ate-system                         atenet-egress-7758c8fb4-kdqs9                3/3     Running     0             105s
+ate-system                         atenet-router-d844d4995-jhgrm                2/2     Running     0             113s
+ate-system                         k8s-credential-provider-5bb6b77b65-ghcdq     1/1     Running     0             106s
+ate-system                         postgres-0                                   2/2     Running     0             2m13s
+ate-system                         rustfs-54c86945fb-jsnt8                      1/1     Running     0             110s
+ate-system                         rustfs-bucket-init-x55jq                     0/1     Completed   0             110s
+kube-system                        coredns-559f6c778d-55grx                     1/1     Running     0             27m
+kube-system                        coredns-559f6c778d-jbdbc                     1/1     Running     0             27m
+kube-system                        etcd-y060-control-plane                      1/1     Running     0             27m
+kube-system                        kindnet-tx8rk                                1/1     Running     0             27m
+kube-system                        kube-apiserver-y060-control-plane            1/1     Running     0             27m
+kube-system                        kube-controller-manager-y060-control-plane   1/1     Running     0             27m
+kube-system                        kube-proxy-nwvwl                             1/1     Running     0             27m
+kube-system                        kube-scheduler-y060-control-plane            1/1     Running     0             27m
+local-path-storage                 local-path-provisioner-75f7fc7dc5-2sv54      1/1     Running     0             27m
+otel-system                        jaeger-fb9948ddf-cp2hq                       1/1     Running     0             109s
+otel-system                        opentelemetry-collector-6f5b87f5dd-wzbs7     1/1     Running     0             109s
+otel-system                        prometheus-5b5fb67d57-lbndh                  1/1     Running     0             107s
+podcertificate-controller-system   podcertificate-controller-57c94fb5b-hwk25    1/1     Running     0             2m31s

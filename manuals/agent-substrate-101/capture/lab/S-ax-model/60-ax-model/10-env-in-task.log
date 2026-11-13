@@ -1,0 +1,5 @@
+        - name: MODEL_URL
+    name: s-model-task
+MODEL_URL=http://ollama.ax-system.svc.cluster.local:11434/v1/chat/completions
+---
+           value: http://ollama.ax-system.svc.cluster.local:11434/v1/chat/completions         - infinity         - name: MODEL_URL         - sleep     atespace: default     command:     createTime: 2026-11-12T16:37:24.267876589Z     debug: true     env:     image: localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31     name: s-model-task AX_METADATA_URL AX_TASK_YAML GPG_KEY HOME LANG MODEL_URL PATH PWD PYTHON_SHA256 PYTHON_VERSION kind: Task metadata: spec: 

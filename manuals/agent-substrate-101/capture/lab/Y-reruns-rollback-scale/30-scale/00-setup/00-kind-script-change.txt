@@ -1,0 +1,31 @@
+ hack/create-kind-cluster.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+diff --git a/hack/create-kind-cluster.sh b/hack/create-kind-cluster.sh
+index b3b25db2..4370b46a 100755
+--- a/hack/create-kind-cluster.sh
++++ b/hack/create-kind-cluster.sh
+@@ -124,6 +124,7 @@ kubeadmConfigPatches:
+   kind: KubeletConfiguration
+   serializeImagePulls: false
+   maxParallelImagePulls: 4
++  maxPods: 700
+ EOF
+ # Hundreds of sandboxes per node can starve the kubelet's node heartbeat; after
+ # the 300 s toleration the taint manager evicts every pod on the node. Opt in to
+@@ -137,6 +138,16 @@ cat <<EOF >> "${ROOT}/bin/kind-config.yaml"
+ EOF
+ fi
+ 
++cat <<EOF >> "${ROOT}/bin/kind-config.yaml"
++kubeadmConfigPatchesJSON6902:
++- group: kubeadm.k8s.io
++  version: v1beta4
++  kind: ClusterConfiguration
++  patch: |
++    - op: add
++      path: /controllerManager/extraArgs/-
++      value: {name: node-cidr-mask-size, value: "22"}
++EOF
+ echo "Deleting existing kind cluster '${KIND_CLUSTER_NAME}' if it exists..."
+ "${ROOT}"/hack/kind.sh delete cluster --name "${KIND_CLUSTER_NAME}" || true
+ 

@@ -1,0 +1,22 @@
+### 2026-11-12T18:53:57Z follow-up after the outage
+x-run state: {"state":"ACTOR_STATE_RUNNING","assignedNode":"xpg-control-plane"}
+request x-run: 504	10.015117	
+request x-run: 504	10.012216	
+request x-run: 504	10.015097	
+request to a running x-s-030: 200	0.037799	count=2 process_age_s=506.9 
+request to a running x-s-040: 200	0.035505	count=2 process_age_s=507.1 
+     30 ACTOR_STATE_RUNNING      18 ACTOR_STATE_SUSPENDED get actors 0.178 s
+ate-api-server-55b88dc744-7nkwp 2/2 Running 0;ate-api-server-55b88dc744-b25t5 2/2 Running 0;ate-controller-7984566f8d-zkslh 1/1 Running 0;ate-idp-server-dcd5f565f-tnfvx 1/1 Running 0;ate-idp-server-dcd5f565f-zrptk 1/1 Running 0;atelet-d9j7b 2/2 Running 0;atenet-egress-7758c8fb4-jkmpz 3/3 Running 0;atenet-router-d844d4995-qgmhz 2/2 Running 0;k8s-credential-provider-5bb6b77b65-fzmvq 1/1 Running 0;rustfs-54c86945fb-sbpx6 1/1 Running 0;rustfs-bucket-init-hrdn5 0/1 Completed 0;x-prober 1/1 Running 0;
+idle|28|00:00:10.463837
+[2026-11-12T18:53:08.079Z] "POST / HTTP/2" 0 DR 0 0 8988 - "-" "curl/8.11.1" "101a896c-dbaf-4242-8463-b5c8cca0260e" "atenet-router.ate-system.svc" "-"
+[2026-11-12T18:53:09.083Z] "POST / HTTP/2" 0 DR 0 0 8988 - "-" "curl/8.11.1" "f7369f8e-ee73-423e-b9e1-3fdf3c1dd08c" "atenet-router.ate-system.svc" "-"
+[2026-11-12T18:53:57.845Z] "POST / HTTP/2" 504 - 0 0 10000 - "-" "curl/8.11.1" "c581b193-5b20-40d5-8c0f-d41eb0adeec9" "atenet-router.ate-system.svc" "-"
+[2026-11-12T18:54:08.043Z] "POST / HTTP/2" 504 - 0 0 9999 - "-" "curl/8.11.1" "7cee2860-5364-4377-b620-19d1ebb64149" "atenet-router.ate-system.svc" "-"
+{"time":"2026-11-12T18:50:33.562203904Z","level":"WARN","msg":"worker outbox poll failed","err":"failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:15432 (10.0.2.2): tls error: EOF"}
+{"time":"2026-11-12T18:50:47.288009662Z","level":"ERROR","msg":"Failed to list actor templates","err":"listing actor templates: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:15432 (10.0.2.2): tls error: read tcp 10.244.0.7:47978->10.0.2.2:15432: read: connection reset by peer"}
+{"time":"2026-11-12T18:50:47.87369522Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/ListActors","req":{"options":{"page_size":1}},"resp":null,"err":"while listing actors in db: listing actors: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:15432 (10.0.2.2): tls error: EOF","elapsed-time":"3.241498ms
+{"time":"2026-11-12T18:50:51.873402871Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/ListActors","req":{"options":{"page_size":1}},"resp":null,"err":"while listing actors in db: listing actors: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:15432 (10.0.2.2): tls error: read tcp 10.244.0.7:59414->10.
+{"time":"2026-11-12T18:51:01.873787599Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/ListActors","req":{"options":{"page_size":1}},"resp":null,"err":"while listing actors in db: listing actors: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:15432 (10.0.2.2): tls error: read tcp 10.244.0.7:55184->10.
+{"time":"2026-11-12T18:51:03.872154152Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/ListActors","req":{"options":{"page_size":1}},"resp":null,"err":"while listing actors in db: listing actors: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:15432 (10.0.2.2): tls error: read tcp 10.244.0.7:41948->10.
+{"time":"2026-11-12T18:51:05.873000675Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/ListActors","req":{"options":{"page_size":1}},"resp":null,"err":"while listing actors in db: listing actors: failed to connect to `user=substrate_readwrite_user database=atepg`: 10.0.2.2:15432 (10.0.2.2): tls error: read tcp 10.244.0.7:51046->10.
+{"time":"2026-11-12T18:53:57.677341419Z","level":"INFO","msg":"Handle RPC","method":"/substrate.ateapi.v1.Control/GetActor","req":{"actor":{"atespace":"x-lab","name":"x-run"}},"resp":{"metadata":{"atespace":"x-lab","name":"x-run","uid":"5f9e5835-d1be-4a93-a30d-c630c520eae8","version":3,"create_time":{"seconds":1794509346,"nanos":973110004},"update_time":{"se

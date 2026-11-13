@@ -1,0 +1,11 @@
+Error: applying document 1: rpc error: code = Internal desc = provisioning task on substrate: ensuring atespace: creating atespace "default": rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aax-system%3Aax-server" lacks "can_create_atespace" on "global:root"
+Name:         ax-install-check
+Atespace:     default
+Phase:        Failed
+Actor:        
+Worker IP:    
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE   STATUS  REASON                  MESSAGE
+  Ready  False   AtespaceCreationFailed  creating atespace "default": rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aax-system%3Aax-server" lacks "can_create_atespace" on "global:root"

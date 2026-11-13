@@ -1,0 +1,2 @@
+router pod address family recorded as POD (value not stored)
+atenet-router-d844d4995-stpql 2/2 Running

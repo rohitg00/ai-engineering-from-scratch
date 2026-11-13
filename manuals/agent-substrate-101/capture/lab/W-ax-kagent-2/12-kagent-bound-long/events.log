@@ -1,0 +1,28 @@
+2026-11-12T18:20:16.683Z phase T: maxTokens 128, count prompt
+2026-11-12T18:20:16.882Z T-tok-count-1 start agent=w-tok sid=01a1d0fd-3230-79d1-b9eb-77b3b6b5e1be timeout=5m
+2026-11-12T18:20:37.139Z T-tok-count-1 end rc=0 dur=18.990890603 task=TASK_STATE_COMPLETED chars=128 outputTokens=128 actor=ACTOR_STATE_SUSPENDED cpu=55.73% err=
+2026-11-12T18:20:41.365Z T-tok-count-2 start agent=w-tok sid=01a1d0fd-91b9-7b73-a45b-bad630da4d71 timeout=5m
+2026-11-12T18:20:58.224Z T-tok-count-2 end rc=0 dur=15.629913501 task=TASK_STATE_COMPLETED chars=128 outputTokens=128 actor=ACTOR_STATE_SUSPENDED cpu=107.46% err=
+2026-11-12T18:21:02.424Z T-tok-count-3 start agent=w-tok sid=01a1d0fd-e41b-7d28-9d3f-fa753164478d timeout=5m
+2026-11-12T18:21:23.039Z T-tok-count-3 end rc=0 dur=19.391846855 task=TASK_STATE_COMPLETED chars=128 outputTokens=128 actor=ACTOR_STATE_SUSPENDED cpu=120.97% err=
+2026-11-12T18:21:48.882Z phase U: timeout 20, count prompt
+2026-11-12T18:21:49.162Z U-time-count-1 start agent=w-time sid=01a1d0fe-9a53-7419-a57b-bfb169e8a6ba timeout=5m
+2026-11-12T18:22:11.302Z U-time-count-1 end rc=1 dur=20.851592538 task=TASK_STATE_FAILED chars=158 outputTokens= actor=ACTOR_STATE_SUSPENDING cpu=673.89% err=Error: session task 01a1d0fe-9d2d-77db-9ec6-cd9ddd742afb ended in TASK_STATE_FAILED 
+2026-11-12T18:22:45.373Z U-time-count-2 start agent=w-time sid=01a1d0ff-75df-7279-89b9-b386130b6ffc timeout=5m
+2026-11-12T18:23:07.749Z U-time-count-2 end rc=1 dur=21.172540947 task=TASK_STATE_FAILED chars=78 outputTokens= actor=ACTOR_STATE_SUSPENDING cpu=257.30% err=Error: session task 01a1d0ff-79eb-7f11-9000-f23ef3c201ff ended in TASK_STATE_FAILED 
+2026-11-12T18:23:41.766Z U-time-count-3 start agent=w-time sid=01a1d100-5259-7d0d-94d7-a53ec692cc9c timeout=5m
+2026-11-12T18:24:03.807Z U-time-count-3 end rc=1 dur=20.808748101 task=TASK_STATE_FAILED chars=166 outputTokens= actor=ACTOR_STATE_SUSPENDED cpu=236.48% err=Error: session task 01a1d100-550a-74d1-bf72-2e139bf3f7f1 ended in TASK_STATE_FAILED 
+2026-11-12T18:24:37.709Z phase U2: next turn in the same session after a timeout
+2026-11-12T18:24:54.960Z U2-next-same-session rc=0 dur=17.089277413 task=TASK_STATE_COMPLETED actor=ACTOR_STATE_SUSPENDING
+2026-11-12T18:24:54.963Z phase F: no bound, count prompt, client timeout 60 s
+2026-11-12T18:24:55.121Z F-free-count-1 start agent=real-1p5b sid=01a1d101-7118-7399-94c7-a8d82b1334e5 timeout=60s
+2026-11-12T18:25:56.484Z F-free-count-1 end rc=1 dur=60.120142374 task= chars= outputTokens= actor=ACTOR_STATE_RUNNING cpu=1203.39% err=Error: invoke Session: context deadline exceeded 
+2026-11-12T18:30:06.326Z F next turn on a new session
+2026-11-12T18:30:06.494Z F-next-turn start agent=real-1p5b sid=01a1d106-3173-7ab4-b7c9-3ed8615c87bd timeout=5m
+2026-11-12T18:35:07.880Z F-next-turn end rc=1 dur=300.128238774 task= chars= outputTokens= actor=ACTOR_STATE_RUNNING cpu=1204.22% err=Error: invoke Session: context deadline exceeded 
+2026-11-12T18:35:07.886Z F same session, next turn
+2026-11-12T18:35:08.211Z F-next-same-session rc=1 dur=.130784702 task= actor=ACTOR_STATE_RUNNING err=Error: invoke Session: resource conflict 
+2026-11-12T18:35:09.883Z F cpu before cleanup=1193.78%
+2026-11-12T18:35:09.886Z model still busy: restarting the model server
+2026-11-12T18:35:19.489Z restarted cpu=1207.79%
+2026-11-12T18:35:20.731Z DONE

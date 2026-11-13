@@ -1,0 +1,46 @@
+apiVersion: v1
+items:
+- apiVersion: ate.dev/v1
+  kind: WorkerPool
+  metadata:
+    creationTimestamp: "2026-11-12T11:56:05Z"
+    generation: 1
+    labels:
+      workload: counter-microvm
+    name: counter-microvm
+    namespace: ate-demo-counter-microvm
+    resourceVersion: "12541"
+    uid: d1fd5591-fd31-4cc5-ae3a-540c3fd1d777
+  spec:
+    replicas: 2
+    sandboxClasses:
+    - configRef:
+        name: microvm
+      name: microvm
+    template:
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 1Gi
+    workerImage: localhost:5001/ateworker-microvm@sha256:d4b76fde69ca4c4747d5d33423952aa4890b5a8e537207916b7214a914049d56
+  status:
+    readyReplicas: 2
+    replicas: 2
+    sandboxClasses:
+    - conditions:
+      - lastTransitionTime: "2026-11-12T11:56:05Z"
+        message: resolved to SandboxConfig "microvm"
+        observedGeneration: 1
+        reason: Resolved
+        status: "True"
+        type: Resolved
+      configRef:
+        name: microvm
+      name: microvm
+    selector: ate.dev/worker-pool=counter-microvm
+kind: List
+metadata:
+  resourceVersion: ""

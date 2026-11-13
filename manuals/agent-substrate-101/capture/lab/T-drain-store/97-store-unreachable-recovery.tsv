@@ -1,0 +1,41 @@
+ts	t	event	detail
+2026-11-12T16:59:23.399Z	t=-	leftover-state	u-remote: ACTOR_STATE_CRASHED	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T16:59:23.682Z	t=-	leftover-request-store-is-back	u-remote: 503	0.060374	actor lab-n/u-remote unavailable: AssignWorker prerequisite not met for Actor: lab-n/u-remote (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)	|	ACTOR_STATE_CRASHED	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T16:59:23.929Z	t=-	leftover-revert-u-remote	0.2 s | ATESPACE   NAME       TEMPLATE     STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      u-remote   lab-n/sb-0   ACTOR_STATE_SUSPENDED   <none>                    10        10m 
+2026-11-12T16:59:24.139Z	t=-	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T16:59:24.698Z	t=-	leftover-request-after-revert	u-remote: 200	0.332121	count=2 mb=0 sum=0 process_age_s=0.5	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T16:59:24.906Z	t=-	leftover-state	u-run: ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:-
+2026-11-12T16:59:25.199Z	t=-	leftover-request-store-is-back	u-run: 503	0.065781	actor lab-n/u-run unavailable: AssignWorker prerequisite not met for Actor: lab-n/u-run (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)	|	ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:-
+2026-11-12T16:59:25.445Z	t=-	leftover-revert-u-run	0.2 s | ATESPACE   NAME    TEMPLATE     STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      u-run   lab-n/sb-0   ACTOR_STATE_SUSPENDED   <none>                    7         10m 
+2026-11-12T16:59:25.656Z	t=-	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T16:59:26.089Z	t=-	leftover-request-after-revert	u-run: 200	0.218067	count=1 mb=0 sum=0 process_age_s=0.1	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T16:59:41.730Z	t=-	blackhole-prepared	w-rem-blackhole: ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:- | w-run-blackhole (durable snapshot at count=3): ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T16:59:42.115Z	t=-	blackhole-run-calls	200	0.287078	count=4 mb=0 sum=0 process_age_s=12.1 | 200	0.061563	count=5 mb=0 sum=0 process_age_s=12.2
+2026-11-12T16:59:42.137Z	t=0.0	store-down	blackhole
+2026-11-12T16:59:52.414Z	t=10.3	blackhole-resume-remote-only	504	10.046497		|	ACTOR_STATE_RESUMING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:01:58.769Z	t=136.6	blackhole-suspend-sync-running	126.336 s | Error: failed to suspend actor: rpc error: code = Internal desc = internal server error: workflow failed at step CallAteletSuspend: actor lab-n/w-run-blackhole crashed: rpc error: code = Internal desc = while uploading external snapshot: while uploading snapshot files: rpc error: code = DeadlineExce
+2026-11-12T17:01:59.007Z	t=136.9	blackhole-state-after-failed-suspend	ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:-
+2026-11-12T17:01:59.049Z	t=136.9	store-back	blackhole after 136.9 s
+2026-11-12T17:02:03.908Z	t=141.8	blackhole-remote-only-request-no-revert	200	0.634710	count=4 mb=0 sum=0 process_age_s=1.0	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:02:04.223Z	t=142.1	blackhole-remote-only-revert	0.3 s | ATESPACE   NAME              TEMPLATE     STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      w-rem-blackhole   lab-n/sb-0   ACTOR_STATE_SUSPENDED   <none>                    10        2m37s 
+2026-11-12T17:02:04.427Z	t=142.3	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:02:04.930Z	t=142.8	blackhole-remote-only-request-after-revert	200	0.276299	count=4 mb=0 sum=0 process_age_s=1.0	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:02:05.216Z	t=143.1	blackhole-run-request-no-revert	503	0.072320	actor lab-n/w-run-blackhole unavailable: AssignWorker prerequisite not met for Actor: lab-n/w-run-blackhole (got: ACTOR_STATE_CRASHED, want ACTOR_STAT	|	ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:-
+2026-11-12T17:02:05.466Z	t=143.3	blackhole-run-revert	0.2 s | ATESPACE   NAME              TEMPLATE     STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      w-run-blackhole   lab-n/sb-0   ACTOR_STATE_SUSPENDED   <none>                    11        2m38s 
+2026-11-12T17:02:05.680Z	t=143.5	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:02:06.153Z	t=144.0	blackhole-run-request-after-revert	200	0.239780	count=4 mb=0 sum=0 process_age_s=12.0	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:02:26.545Z	t=-	refused-prepared	w-rem-refused: ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:- | w-run-refused (durable snapshot at count=3): ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:02:26.707Z	t=-	refused-run-calls	200	0.058813	count=8 mb=0 sum=0 process_age_s=32.7 | 200	0.063806	count=9 mb=0 sum=0 process_age_s=32.8
+2026-11-12T17:02:26.859Z	t=0.0	store-down	refused
+2026-11-12T17:02:27.150Z	t=0.3	refused-resume-remote-only	200	0.060537	count=8 mb=0 sum=0 process_age_s=23.2	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:02:27.385Z	t=0.5	refused-suspend-sync-running	0.217 s | ATESPACE   NAME            TEMPLATE     STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      w-run-refused   lab-n/sb-0   ACTOR_STATE_SUSPENDED   <none>                    1         20s 
+2026-11-12T17:02:27.579Z	t=0.7	refused-state-after-failed-suspend	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:02:27.774Z	t=0.9	store-back	refused after 0.9 s
+2026-11-12T17:02:32.061Z	t=5.2	refused-remote-only-request-no-revert	200	0.060514	count=9 mb=0 sum=0 process_age_s=28.1	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:02:32.293Z	t=5.4	refused-remote-only-revert	0.2 s | Error: failed to revert actor: rpc error: code = FailedPrecondition desc = Actor lab-n/w-rem-refused is not in a revertable state (got: ACTOR_STATE_SUSPENDED, want one of [ACTOR_STATE_RUNNING ACTOR_STATE_CRASHED], or ACTOR_STATE_S
+2026-11-12T17:02:32.495Z	t=5.6	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:02:32.778Z	t=5.9	refused-remote-only-request-after-revert	200	0.061589	count=10 mb=0 sum=0 process_age_s=28.9	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:02:33.058Z	t=6.2	refused-run-request-no-revert	200	0.052994	count=10 mb=0 sum=0 process_age_s=38.9	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:02:33.280Z	t=6.4	refused-run-revert	0.2 s | Error: failed to revert actor: rpc error: code = FailedPrecondition desc = Actor lab-n/w-run-refused is not in a revertable state (got: ACTOR_STATE_SUSPENDED, want one of [ACTOR_STATE_RUNNING ACTOR_STATE_CRASHED], or ACTOR_STATE_S
+2026-11-12T17:02:33.494Z	t=6.6	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:02:33.787Z	t=6.9	refused-run-request-after-revert	200	0.061923	count=11 mb=0 sum=0 process_age_s=39.7	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-

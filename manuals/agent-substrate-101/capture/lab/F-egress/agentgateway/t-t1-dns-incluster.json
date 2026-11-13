@@ -1,0 +1,1 @@
+{"stdout":";; WARNING: .local is reserved for Multicast DNS\n;; -\u003e\u003eHEADER\u003c\u003c- opcode: QUERY, status: NXDOMAIN, id: 45178\n","stderr":"","exitCode":0}

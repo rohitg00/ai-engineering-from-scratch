@@ -1,0 +1,19 @@
+metadata:
+  atespace: demo-agent
+  createTime: "2026-11-12T12:48:40.519235434Z"
+  name: default
+  uid: d4588dc2-9ab6-4fae-8eb9-ae86406cf2d1
+  updateTime: "2026-11-12T12:48:40.519235434Z"
+  version: "1"
+rules:
+- http:
+    effects:
+      replaceHeaders:
+      - credentialUri: ate-secret://k8s.io/default/demo-agent-secrets/model-key/token
+        header: Authorization
+        prefix: 'Bearer '
+    hostnames:
+    - mock-llm.demo-agent.svc.cluster.local
+    ports:
+      numbers:
+      - 80

@@ -1,0 +1,185 @@
+{
+  "agent_executor_commit": "a72b8ca4",
+  "agent_image": {
+    "agent_version": "2.1.322 (Claude Code)",
+    "build_seconds": 50.005,
+    "command_seconds": 31.7,
+    "first_resume_seconds": 5.942,
+    "image_bytes": 253340600,
+    "model_requests": [
+      {
+        "code": 200,
+        "end": "2026-11-12T16:41:43.431270014Z",
+        "seconds": 28.78
+      },
+      {
+        "code": 200,
+        "end": "2026-11-12T16:41:44.840156184Z",
+        "seconds": 1.32
+      }
+    ],
+    "note": "the Claude Code example image of the repository, pointed at the local model server through its Anthropic messages route. One run with one short prompt.",
+    "phase_after_command_ended": "Running"
+  },
+  "clone": {
+    "note": "one workspace with one public Git repository. The https rule lets the gateway intercept TLS, and the template that Agent Executor generates holds no trust bundle, so git refuses the certificate and the runner tries 5 times at each resume.",
+    "resume_after_clone": {
+      "runs": [
+        0.292,
+        0.279,
+        0.265,
+        0.244,
+        0.207
+      ],
+      "seconds": {
+        "max": 0.292,
+        "median": 0.265,
+        "min": 0.207,
+        "n": 5
+      }
+    },
+    "resume_with_https_rule": {
+      "runs": [
+        13.488,
+        11.418,
+        11.148,
+        15.944,
+        12.047,
+        11.324,
+        11.083,
+        11.774,
+        10.69,
+        11.745,
+        10.88,
+        12.387,
+        17.214,
+        11.494
+      ],
+      "seconds": {
+        "max": 17.214,
+        "median": 11.619,
+        "min": 10.69,
+        "n": 14
+      }
+    },
+    "resume_with_passthrough_rule_seconds": 9.574,
+    "update_to_passthrough_without_ports_exit": 1
+  },
+  "machine": "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, Agent Executor built from source at one commit, Ollama 0.40.16 in a container on the guest with 12 CPUs and no GPU",
+  "model": "qwen2.5:3b, a small open model on CPU. Model time on a GPU or with a hosted model will differ.",
+  "model_call": {
+    "calls": 10,
+    "codes": {
+      "200": 10
+    },
+    "curl_seconds": {
+      "max": 6.561,
+      "median": 3.569,
+      "min": 2.657,
+      "n": 10
+    },
+    "injected_key_in_task_environment": false,
+    "note": "one curl from inside a running task to the model server, through an http egress rule set on the actor with kubectl ate",
+    "turns": {
+      "call_seconds": {
+        "max": 4.459,
+        "median": 2.937,
+        "min": 2.573,
+        "n": 10
+      },
+      "codes": {
+        "200": 10
+      },
+      "note": "ax resume task, one model call through ax ssh, ax suspend task",
+      "resume_seconds": {
+        "max": 0.328,
+        "median": 0.25,
+        "min": 0.226,
+        "n": 10
+      },
+      "runs": [
+        4.026,
+        4.93,
+        4.449,
+        4.229,
+        5.9,
+        4.112,
+        4.126,
+        5.285,
+        4.234,
+        5.462
+      ],
+      "suspend_seconds": {
+        "max": 0.199,
+        "median": 0.151,
+        "min": 0.124,
+        "n": 10
+      },
+      "total_seconds": {
+        "max": 5.9,
+        "median": 4.341,
+        "min": 4.026,
+        "n": 10
+      }
+    }
+  },
+  "release_v0_3_1": {
+    "commits_behind_head": 61,
+    "first_error_is_timeout": true,
+    "phase": "Failed",
+    "second_error_is_unknown_service": true
+  },
+  "sources": [
+    "capture/lab/S-ax-model/30-ax-clone/steps.tsv",
+    "capture/lab/S-ax-model/30-ax-clone/32-cycles-https-rule-no-trust.tsv",
+    "capture/lab/S-ax-model/30-ax-clone/49-cycles-https-rule-no-trust-2.tsv",
+    "capture/lab/S-ax-model/30-ax-clone/69-cycles-after-clone.tsv",
+    "capture/lab/S-ax-model/40-ax-worker-loss/steps.tsv",
+    "capture/lab/S-ax-model/40-ax-worker-loss/19-poll-changes.tsv",
+    "capture/lab/S-ax-model/40-ax-worker-loss/21-events.tsv",
+    "capture/lab/S-ax-model/40-ax-worker-loss/40-ax-server.log",
+    "capture/lab/S-ax-model/41-ax-worker-loss-durable/steps.tsv",
+    "capture/lab/S-ax-model/41-ax-worker-loss-durable/12c-durable-changes.tsv",
+    "capture/lab/S-ax-model/41-ax-worker-loss-durable/19-poll-changes.tsv",
+    "capture/lab/S-ax-model/41-ax-worker-loss-durable/21-events.tsv",
+    "capture/lab/S-ax-model/50-ax-v031/01-tag.txt",
+    "capture/lab/S-ax-model/50-ax-v031/85-controller-final.log",
+    "capture/lab/S-ax-model/50-ax-v031/92-controller-after-label.log",
+    "capture/lab/S-ax-model/60-ax-model/12-model-calls-running.tsv",
+    "capture/lab/S-ax-model/60-ax-model/13-turns-resume-call-suspend.tsv",
+    "capture/lab/S-ax-model/70-agent-image/steps.tsv",
+    "capture/lab/S-ax-model/70-agent-image/19-actor.log",
+    "capture/lab/S-ax-model/70-agent-image/22-ollama.log"
+  ],
+  "unit": {
+    "seconds": "wall time of the ax command at the client, on the guest that runs the cluster, unless a field says otherwise"
+  },
+  "worker_loss": {
+    "note": "the worker pod that held the running task was deleted. Each run is one task.",
+    "snapshot_durable": {
+      "ax_resume_exit": 0,
+      "ax_resume_seconds": 0.328,
+      "crashed_seen_after_seconds": 0.9,
+      "durable_snapshot_at_loss": "SNAPSHOT_STORAGE_STATE_COMPLETED",
+      "durable_snapshot_completed_after_seconds": 301.0,
+      "file_from_after_last_suspend_kept": false,
+      "file_from_before_last_suspend_kept": true,
+      "message_after_loss": "worker pod went away while hosting the actor",
+      "phase_after_loss": "Failed",
+      "suspend_to_loss_seconds": 306.5,
+      "watched_with_no_command_seconds": 300.4
+    },
+    "snapshot_pending": {
+      "ax_resume_exit": 0,
+      "ax_resume_seconds": 0.296,
+      "crashed_seen_after_seconds": 1.2,
+      "durable_snapshot_at_loss": "SNAPSHOT_STORAGE_STATE_PENDING",
+      "file_from_after_last_suspend_kept": false,
+      "file_from_before_last_suspend_kept": false,
+      "message_after_loss": "worker pod went away while hosting the actor",
+      "phase_after_loss": "Failed",
+      "suspend_to_loss_seconds": 8.7,
+      "watched_with_no_command_seconds": 40.8
+    }
+  }
+}

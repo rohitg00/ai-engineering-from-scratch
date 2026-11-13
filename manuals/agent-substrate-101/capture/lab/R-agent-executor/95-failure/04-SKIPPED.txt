@@ -1,0 +1,1 @@
+skipped: the worker pod of ax-install-check is demo-tools/tools-5b5f9c9fb7-nhsjh. That pool belongs to another experiment, so no pod was deleted and the worker-loss test did not run.

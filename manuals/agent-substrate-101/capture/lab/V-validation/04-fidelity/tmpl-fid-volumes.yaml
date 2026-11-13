@@ -1,0 +1,31 @@
+metadata:
+  atespace: lab-v
+  name: fid-volumes
+workerSelector:
+  matchLabels:
+    workload: vpool
+containers:
+- name: ballast
+  image: localhost:5001/ballast@sha256:3c297fb8f6ce7067ac8180af0fc52cd422b5ee46135aa937368a731925e173b7
+  command:
+  - /ballast
+  - --mb=50
+  - --rootfs-file=/rootfs.txt
+  - --data-file=/data/a.txt
+  - --spawn-child
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+  volumeMounts:
+  - name: data
+    mountPath: /data
+resources:
+  limits:
+    cpuMillicores: 1000
+    memoryBytes: 320864256
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_VOLUMES
+volumes:
+- name: data
+  durableDir: {}

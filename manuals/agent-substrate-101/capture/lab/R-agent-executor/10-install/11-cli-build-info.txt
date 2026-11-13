@@ -1,0 +1,12 @@
+bin/ax: go1.27.3
+	path	github.com/google/ax/cmd/ax
+	mod	github.com/google/ax	v0.3.2-0.20261112060745-a72b8ca46cb5	
+	dep	github.com/agent-substrate/env	v0.0.11-0.20260912052224-4468a200b170	h1:8AxhEx3BL7J8c+zqnYq5S3aH0J/4z85/JYWoo1dr6xY=
+	dep	go.ate.dev/substrate	v1.0.0	h1:7zFdRCb4e4OHoJUUWugBCQ7m1GLHHb1SxJo05HqEDjw=
+	dep	golang.org/x/net	v0.60.0	h1:79p50tfZlm0J9YfoDsSi639qSXNGVwEzOPLCxM2FsYU=
+	dep	golang.org/x/sys	v0.48.0	h1:bbX/i/6MgT9BVLM9RT1thmxL04yeTAhbEz4SyadbXoo=
+	dep	golang.org/x/text	v0.42.0	h1:JbOZXgfeCPU9gacVtYliJqOhD+zhrEqK4LfdpmlUZqI=
+	dep	google.golang.org/genproto/googleapis/rpc	v0.0.0-20260803160001-6ac0973c030d	h1:IL4hdHzcUv2l/gcg98/Rj3FbtE6axwqslOW8SW0C+S0=
+	dep	google.golang.org/grpc	v1.83.2	h1:EManeRomTObA0BU7I8vXgg/78uE5MJ9M8B39EX2WscU=
+	dep	google.golang.org/protobuf	v1.36.12	h1:pJOKDDOyeXErUroCihFAd5LQuwXBSpVnKGrj5o/fwxc=
+	dep	gopkg.in/yaml.v3	v3.0.1	h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=

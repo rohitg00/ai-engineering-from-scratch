@@ -1,0 +1,16 @@
+			tr := &http.Transport{
+				TLSClientConfig: &tls.Config{
+					RootCAs: caCertPool,
+				},
+			}
+			k8sClient := &http.Client{
+				Transport: tr,
+				Timeout:   10 * time.Second,
+			}
+
+			url := fmt.Sprintf("https://%s:%s/api/v1/namespaces/%s/secrets/%s", k8sHost, k8sPort, namespace, secretName)
+			req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+			if err == nil {
+				req.Header.Set("Authorization", "Bearer "+token)
+				req.Header.Set("Accept", "application/json")
+				resp, err := k8sClient.Do(req)

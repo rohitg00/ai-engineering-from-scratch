@@ -1,0 +1,22 @@
+metadata:
+  atespace: lab-e
+  name: e-counter
+workerSelector:
+  matchLabels: {workload: e-pool}
+containers:
+- name: counter
+  image: localhost:5001/counter@sha256:c7f650b4a35236c9cbf8d487c8f70c985e4b0c4523be421740966690ee201589
+  command: ["/ko-app/counter"]
+  wakeupProbe:
+    httpGet: {path: /readyz, port: 80}
+  volumeMounts:
+  - {name: data, mountPath: /home/counter}
+resources:
+  limits:
+    cpuMillicores: 100
+    memoryBytes: 100663296
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY
+volumes:
+- name: data
+  durableDir: {}

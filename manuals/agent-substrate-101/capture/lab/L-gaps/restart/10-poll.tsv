@@ -1,0 +1,64 @@
+ts	t_s	node	pods_not_running	workers_active	ballast_workers	resume_result
+2026-11-12T12:01:57.911Z	10	-	0/36	0		Error: failed to connect to ate-api-server: port forwarding: error upgrading connection: unable to upgrade streaming request: websocket: bad handshake (500 Internal Server Error): pod not found ("ate-api-server-696d95dd66-9q7f8_at
+2026-11-12T12:02:00.630Z	18	Ready	21/36	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:03.281Z	21	Ready	21/36	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:05.981Z	24	Ready	21/36	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:08.666Z	26	Ready	21/36	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:11.355Z	29	Ready	21/36	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:14.069Z	32	Ready	21/36	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:16.753Z	35	Ready	21/36	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:19.448Z	37	Ready	21/36	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:22.141Z	40	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:24.842Z	43	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:27.527Z	45	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:30.265Z	48	Ready	27/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:32.993Z	51	Ready	27/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:35.715Z	53	Ready	27/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:38.441Z	56	Ready	27/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:41.153Z	59	Ready	27/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:43.888Z	62	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:46.579Z	64	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:49.267Z	67	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:51.977Z	70	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:54.686Z	72	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:02:57.395Z	75	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:00.205Z	78	Ready	25/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:02.912Z	81	Ready	19/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:05.627Z	83	Ready	13/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:08.336Z	86	Ready	13/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:11.039Z	89	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:13.743Z	92	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:16.468Z	94	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:19.174Z	97	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:21.888Z	100	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:24.633Z	102	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:27.377Z	105	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:30.129Z	108	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:32.851Z	111	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:35.573Z	113	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:38.282Z	116	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:40.987Z	119	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:43.747Z	121	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:46.490Z	124	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:49.232Z	127	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:51.962Z	130	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:54.689Z	132	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:03:57.416Z	135	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:00.162Z	138	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:02.881Z	141	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:05.598Z	143	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:08.321Z	146	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:11.021Z	149	Ready	9/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:13.729Z	152	Ready	7/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:16.489Z	154	Ready	5/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:19.206Z	157	Ready	4/40	0		Error: failed to connect to ate-api-server: no ready api pods in ate-system 
+2026-11-12T12:04:22.143Z	160	Ready	4/40	11	WORKER_STATE_ACTIVE:0/1000:0/2000 WORKER_STATE_ACTIVE:1/1000:1000/2000 	Error: failed to resume actor: rpc error: code = Unavailable desc = while calling atelet Restore: rpc error: code = Unavailable desc = while calling worker RestoreWorkload: rpc error: code = Unavailable desc = worker has not regis
+2026-11-12T12:04:25.072Z	163	Ready	3/39	8	WORKER_STATE_UNAVAILABLE:1/1000:1000/2000 WORKER_STATE_UNAVAILABLE:1/1000:1000/2000 	Error: failed to resume actor: rpc error: code = Unavailable desc = worker b17a6492-9643-42f1-bfdb-8bb88ee46772 assigned to actor lab-c/w1 is unavailable 
+2026-11-12T12:04:27.932Z	166	Ready	3/39	3	WORKER_STATE_UNAVAILABLE:1/1000:1000/2000 WORKER_STATE_UNAVAILABLE:1/1000:1000/2000 	Error: failed to resume actor: rpc error: code = Unavailable desc = worker b17a6492-9643-42f1-bfdb-8bb88ee46772 assigned to actor lab-c/w1 is unavailable 
+2026-11-12T12:04:30.787Z	168	Ready	3/39	3	WORKER_STATE_UNAVAILABLE:1/1000:1000/2000 WORKER_STATE_UNAVAILABLE:1/1000:1000/2000 	Error: failed to resume actor: rpc error: code = Unavailable desc = worker b17a6492-9643-42f1-bfdb-8bb88ee46772 assigned to actor lab-c/w1 is unavailable 
+2026-11-12T12:04:33.670Z	171	Ready	3/39	3	WORKER_STATE_UNAVAILABLE:1/1000:1000/2000 WORKER_STATE_UNAVAILABLE:1/1000:1000/2000 	Error: failed to resume actor: rpc error: code = Unavailable desc = worker b17a6492-9643-42f1-bfdb-8bb88ee46772 assigned to actor lab-c/w1 is unavailable 
+2026-11-12T12:04:37.927Z	174	Ready	3/39	8	WORKER_STATE_ACTIVE:1/1000:1000/2000 WORKER_STATE_UNAVAILABLE:0/1000:0/2000 	RUNNING
+2026-11-12T12:04:42.201Z	178	Ready	0/36	6	WORKER_STATE_ACTIVE:0/1000:0/2000 WORKER_STATE_UNAVAILABLE:0/1000:0/2000 	RUNNING
+2026-11-12T12:04:46.407Z	183	Ready	0/36	8	WORKER_STATE_ACTIVE:0/1000:0/2000 WORKER_STATE_ACTIVE:0/1000:0/2000 	RUNNING
+2026-11-12T12:04:50.616Z	187	Ready	0/36	10	WORKER_STATE_ACTIVE:0/1000:0/2000 WORKER_STATE_ACTIVE:0/1000:0/2000 	RUNNING
+2026-11-12T12:04:54.763Z	191	Ready	0/36	11	WORKER_STATE_ACTIVE:0/1000:0/2000 WORKER_STATE_ACTIVE:0/1000:0/2000 	RUNNING

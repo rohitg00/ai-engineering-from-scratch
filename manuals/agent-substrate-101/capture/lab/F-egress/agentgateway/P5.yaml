@@ -1,0 +1,7 @@
+rules:
+- http:
+    hostnames: ["whoami.egress-target.svc.cluster.local"]
+    effects:
+      replaceHeaders:
+      - header: X-Api-Key
+        credentialUri: ate-secret://k8s.io/default/cred-ns/api-token/token

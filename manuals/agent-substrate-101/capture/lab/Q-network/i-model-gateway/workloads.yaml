@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: mock-a, namespace: model-gw}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: mock-a}}
+  template:
+    metadata: {labels: {app: mock-a}}
+    spec:
+      containers:
+      - name: mock
+        image: python:3.12-alpine
+        command: ["python", "-u", "/app/mock.py"]
+        env: [{name: NAME, value: backend-a}]
+        volumeMounts: [{name: app, mountPath: /app}]
+      volumes: [{name: app, configMap: {name: mock}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: mock-a, namespace: model-gw}
+spec: {selector: {app: mock-a}, ports: [{port: 80, targetPort: 80}]}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: mock-b, namespace: model-gw}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: mock-b}}
+  template:
+    metadata: {labels: {app: mock-b}}
+    spec:
+      containers:
+      - name: mock
+        image: python:3.12-alpine
+        command: ["python", "-u", "/app/mock.py"]
+        env: [{name: NAME, value: backend-b}]
+        volumeMounts: [{name: app, mountPath: /app}]
+      volumes: [{name: app, configMap: {name: mock}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: mock-b, namespace: model-gw}
+spec: {selector: {app: mock-b}, ports: [{port: 80, targetPort: 80}]}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: modelgw, namespace: model-gw}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: modelgw}}
+  template:
+    metadata: {labels: {app: modelgw}}
+    spec:
+      containers:
+      - name: agentgateway
+        image: cr.agentgateway.dev/agentgateway:v1.7.0@sha256:60216aafb03d37f94e952ff3d51d2f630a65b10ecaebdc0a864882f92610c45b
+        args: ["-f", "/config/tls.yaml"]
+        env: [{name: KEY_A, value: provider-key-for-backend-a}, {name: KEY_B, value: provider-key-for-backend-b}]
+        volumeMounts: [{name: config, mountPath: /config}, {name: tls, mountPath: /tls}]
+      volumes: [{name: config, configMap: {name: gw-config}}, {name: tls, secret: {secretName: modelgw-tls}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: modelgw, namespace: model-gw}
+spec: {selector: {app: modelgw}, ports: [{port: 443, targetPort: 8443}]}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: modelgw-plain, namespace: model-gw}
+spec:
+  replicas: 1
+  selector: {matchLabels: {app: modelgw-plain}}
+  template:
+    metadata: {labels: {app: modelgw-plain}}
+    spec:
+      containers:
+      - name: agentgateway
+        image: cr.agentgateway.dev/agentgateway:v1.7.0@sha256:60216aafb03d37f94e952ff3d51d2f630a65b10ecaebdc0a864882f92610c45b
+        args: ["-f", "/config/plain.yaml"]
+        env: [{name: KEY_A, value: provider-key-for-backend-a}, {name: KEY_B, value: provider-key-for-backend-b}]
+        volumeMounts: [{name: config, mountPath: /config}]
+      volumes: [{name: config, configMap: {name: gw-config}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: modelgw-plain, namespace: model-gw}
+spec: {selector: {app: modelgw-plain}, ports: [{port: 80, targetPort: 8080}]}
+---
+apiVersion: v1
+kind: Pod
+metadata: {name: client, namespace: model-gw}
+spec:
+  containers:
+  - name: c
+    image: curlimages/curl:8.11.1
+    command: ["sleep", "86400"]
+    volumeMounts: [{name: ca, mountPath: /ca}]
+  volumes: [{name: ca, configMap: {name: private-ca}}]

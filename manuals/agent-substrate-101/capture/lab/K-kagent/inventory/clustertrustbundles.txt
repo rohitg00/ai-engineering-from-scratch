@@ -1,0 +1,6 @@
+NAME                                                            SIGNERNAME
+egress-mitm.ate.dev:mitm:primary-bundle                         egress-mitm.ate.dev/mitm
+kubernetes.io:kube-apiserver-serving:94791b56fced13df73f612e0   kubernetes.io/kube-apiserver-serving
+podidentity.podcert.ate.dev:identity:primary-bundle             podidentity.podcert.ate.dev/identity
+postgres.podcert.ate.dev:identity:primary-bundle                postgres.podcert.ate.dev/identity
+servicedns.podcert.ate.dev:identity:primary-bundle              servicedns.podcert.ate.dev/identity

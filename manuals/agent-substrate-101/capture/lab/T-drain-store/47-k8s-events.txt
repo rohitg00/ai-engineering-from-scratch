@@ -1,0 +1,24 @@
+lab-n       12m         Normal    Killing              pod/ballast-5d6cf97747-7s65c    Stopping container worker
+lab-n       12m         Normal    Killing              pod/ballast-5d6cf97747-9qhp8    Stopping container worker
+lab-n       9m42s       Normal    Killing              pod/ballast-5d6cf97747-hkkdv    Stopping container worker
+lab-n       9m42s       Normal    Killing              pod/ballast-5d6cf97747-wdv9f    Stopping container worker
+lab-n       9m26s       Normal    Killing              pod/ballast-5d6cf97747-rpwq7    Stopping container worker
+lab-n       9m26s       Normal    Killing              pod/ballast-5d6cf97747-76p2g    Stopping container worker
+lab-n       7m41s       Normal    Killing              pod/ballast-5d6cf97747-lzvtp    Stopping container worker
+lab-n       7m41s       Normal    Killing              pod/ballast-5d6cf97747-thdfl    Stopping container worker
+lab-n       7m23s       Normal    Killing              pod/ballast-5d6cf97747-dwjnh    Stopping container worker
+lab-n       7m23s       Normal    Killing              pod/ballast-5d6cf97747-2f6cn    Stopping container worker
+lab-n       5m          Normal    Killing              pod/ballast-5d6cf97747-7p7vj    Stopping container worker
+lab-n       5m          Normal    Killing              pod/ballast-5d6cf97747-dk57x    Stopping container worker
+lab-n       4m43s       Normal    Killing              pod/ballast-5d6cf97747-chxcq    Stopping container worker
+lab-n       4m43s       Normal    Killing              pod/ballast-5d6cf97747-m26gf    Stopping container worker
+lab-n       2m57s       Normal    Killing              pod/ballast-5d6cf97747-khzxd    Stopping container worker
+lab-n       2m57s       Normal    Killing              pod/ballast-5d6cf97747-fmxlc    Stopping container worker
+default     2m39s       Normal    NodeSchedulable      node/multi-worker               Node multi-worker status is now: NodeSchedulable
+lab-n       2m33s       Normal    Killing              pod/ballast-5d6cf97747-v4cb5    Stopping container worker
+lab-n       2m33s       Normal    Killing              pod/ballast-5d6cf97747-xc69k    Stopping container worker
+default     2m25s       Normal    NodeNotSchedulable   node/multi-worker2              Node multi-worker2 status is now: NodeNotSchedulable
+default     104s        Normal    NodeSchedulable      node/multi-worker2              Node multi-worker2 status is now: NodeSchedulable
+lab-n       9s          Normal    Killing              pod/ballast-5d6cf97747-2wrjg    Stopping container worker
+lab-n       8s          Normal    Killing              pod/ballast-5d6cf97747-chdjz    Stopping container worker
+default     6s          Normal    NodeNotSchedulable   node/multi-worker               Node multi-worker status is now: NodeNotSchedulable

@@ -1,0 +1,632 @@
+1794488113	running	e-run	200	0.040096	preserved memory count: 2 | preserved file counter: 2 | preserved rootfs counter: 2 
+1794488113	suspended	e-s-001	200	0.424968	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488114	running	e-run	200	0.020375	preserved memory count: 4 | preserved file counter: 4 | preserved rootfs counter: 4 
+1794488115	running	e-run	200	0.019967	preserved memory count: 6 | preserved file counter: 6 | preserved rootfs counter: 6 
+1794488116	running	e-run	200	0.018825	preserved memory count: 8 | preserved file counter: 8 | preserved rootfs counter: 8 
+1794488117	running	e-run	200	0.020577	preserved memory count: 10 | preserved file counter: 10 | preserved rootfs counter: 10 
+1794488118	running	e-run	200	0.032145	preserved memory count: 12 | preserved file counter: 12 | preserved rootfs counter: 12 
+1794488118	suspended	e-s-002	200	0.513572	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488119	running	e-run	200	0.021232	preserved memory count: 14 | preserved file counter: 14 | preserved rootfs counter: 14 
+1794488120	running	e-run	200	0.020783	preserved memory count: 16 | preserved file counter: 16 | preserved rootfs counter: 16 
+1794488121	running	e-run	200	0.020019	preserved memory count: 18 | preserved file counter: 18 | preserved rootfs counter: 18 
+1794488122	running	e-run	200	0.019947	preserved memory count: 20 | preserved file counter: 20 | preserved rootfs counter: 20 
+1794488123	running	e-run	200	0.025090	preserved memory count: 22 | preserved file counter: 22 | preserved rootfs counter: 22 
+1794488123	suspended	e-s-003	200	0.491791	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488124	running	e-run	200	0.019541	preserved memory count: 24 | preserved file counter: 24 | preserved rootfs counter: 24 
+1794488125	running	e-run	200	0.020737	preserved memory count: 26 | preserved file counter: 26 | preserved rootfs counter: 26 
+1794488126	running	e-run	200	0.019797	preserved memory count: 28 | preserved file counter: 28 | preserved rootfs counter: 28 
+1794488127	running	e-run	200	0.020853	preserved memory count: 30 | preserved file counter: 30 | preserved rootfs counter: 30 
+1794488128	running	e-run	200	0.029715	preserved memory count: 32 | preserved file counter: 32 | preserved rootfs counter: 32 
+1794488128	suspended	e-s-004	200	0.474303	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488129	running	e-run	200	0.019144	preserved memory count: 33 | preserved file counter: 33 | preserved rootfs counter: 33 
+1794488130	running	e-run	200	0.022816	preserved memory count: 35 | preserved file counter: 35 | preserved rootfs counter: 35 
+1794488131	running	e-run	200	0.019140	preserved memory count: 37 | preserved file counter: 37 | preserved rootfs counter: 37 
+1794488132	running	e-run	200	0.020525	preserved memory count: 39 | preserved file counter: 39 | preserved rootfs counter: 39 
+1794488133	running	e-run	200	0.027357	preserved memory count: 41 | preserved file counter: 41 | preserved rootfs counter: 41 
+1794488133	suspended	e-s-005	200	0.465456	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488134	running	e-run	200	0.019219	preserved memory count: 43 | preserved file counter: 43 | preserved rootfs counter: 43 
+1794488135	running	e-run	200	0.020731	preserved memory count: 45 | preserved file counter: 45 | preserved rootfs counter: 45 
+1794488137	running	e-run	200	0.020607	preserved memory count: 47 | preserved file counter: 47 | preserved rootfs counter: 47 
+1794488138	running	e-run	200	0.020522	preserved memory count: 49 | preserved file counter: 49 | preserved rootfs counter: 49 
+1794488139	running	e-run	200	0.029943	preserved memory count: 51 | preserved file counter: 51 | preserved rootfs counter: 51 
+1794488139	suspended	e-s-006	200	0.394599	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488140	running	e-run	200	0.020187	preserved memory count: 53 | preserved file counter: 53 | preserved rootfs counter: 53 
+1794488141	running	e-run	200	0.021717	preserved memory count: 55 | preserved file counter: 55 | preserved rootfs counter: 55 
+1794488142	running	e-run	200	0.020504	preserved memory count: 57 | preserved file counter: 57 | preserved rootfs counter: 57 
+1794488143	running	e-run	200	0.019405	preserved memory count: 59 | preserved file counter: 59 | preserved rootfs counter: 59 
+1794488144	running	e-run	200	0.026704	preserved memory count: 61 | preserved file counter: 61 | preserved rootfs counter: 61 
+1794488144	suspended	e-s-007	500	0.398211	ingress failed
+1794488145	running	e-run	200	0.021051	preserved memory count: 63 | preserved file counter: 63 | preserved rootfs counter: 63 
+1794488146	running	e-run	200	0.020662	preserved memory count: 64 | preserved file counter: 64 | preserved rootfs counter: 64 
+1794488147	running	e-run	200	0.017830	preserved memory count: 65 | preserved file counter: 65 | preserved rootfs counter: 65 
+1794488148	running	e-run	200	0.019701	preserved memory count: 66 | preserved file counter: 66 | preserved rootfs counter: 66 
+1794488149	running	e-run	500	0.043341	ingress failed
+1794488149	suspended	e-s-008	500	0.044297	ingress failed
+1794488150	running	e-run	500	0.029906	ingress failed
+1794488151	running	e-run	500	0.030101	ingress failed
+1794488152	running	e-run	500	0.027201	ingress failed
+1794488153	running	e-run	500	0.032042	ingress failed
+1794488154	running	e-run	500	0.046360	ingress failed
+1794488154	suspended	e-s-009	504	5.017190	ingress failed
+1794488159	suspended	e-s-010	500	0.020462	ingress failed
+1794488157	running	e-run	504	3.010174	ingress failed
+1794488158	running	e-run	504	2.008164	ingress failed
+1794488156	running	e-run	504	4.011705	ingress failed
+1794488155	running	e-run	504	5.013478	ingress failed
+1794488159	running	e-run	504	1.006680	ingress failed
+1794488164	suspended	e-s-011	500	0.018362	ingress failed
+1794488162	running	e-run	504	3.006400	ingress failed
+1794488161	running	e-run	504	4.008699	ingress failed
+1794488160	running	e-run	504	5.010279	ingress failed
+1794488164	running	e-run	504	1.000598	ingress failed
+1794488163	running	e-run	504	2.003577	ingress failed
+1794488169	suspended	e-s-012	500	0.021769	ingress failed
+1794488169	running	e-run	504	1.005302	ingress failed
+1794488166	running	e-run	504	4.015752	ingress failed
+1794488165	running	e-run	504	5.015165	ingress failed
+1794488167	running	e-run	504	3.008949	ingress failed
+1794488168	running	e-run	504	2.007684	ingress failed
+1794488172	running	e-run	504	3.006542	ingress failed
+1794488173	running	e-run	504	1.999839	ingress failed
+1794488170	running	e-run	504	5.012159	ingress failed
+1794488174	running	e-run	504	0.996167	ingress failed
+1794488171	running	e-run	504	4.009562	ingress failed
+1794488174	suspended	e-s-013	503	5.018422	ingress failed
+1794488178	running	e-run	503	2.009588	ingress failed
+1794488176	running	e-run	503	4.013905	ingress failed
+1794488177	running	e-run	503	3.007792	ingress failed
+1794488175	running	e-run	503	5.017239	ingress failed
+1794488179	running	e-run	503	1.004090	ingress failed
+1794488179	suspended	e-s-014	503	5.017576	ingress failed
+1794488184	running	e-run	503	1.001829	ingress failed
+1794488182	running	e-run	503	3.007851	ingress failed
+1794488180	running	e-run	503	5.017752	ingress failed
+1794488183	running	e-run	503	2.005461	ingress failed
+1794488181	running	e-run	503	4.014914	ingress failed
+1794488184	suspended	e-s-015	503	5.019419	ingress failed
+1794488185	running	e-run	503	5.017883	ingress failed
+1794488187	running	e-run	503	3.011458	ingress failed
+1794488186	running	e-run	503	4.015551	ingress failed
+1794488189	running	e-run	503	1.005768	ingress failed
+1794488188	running	e-run	503	2.009799	ingress failed
+1794488189	suspended	e-s-016	503	5.016666	ingress failed
+1794488192	running	e-run	503	3.010005	ingress failed
+1794488193	running	e-run	503	2.006797	ingress failed
+1794488191	running	e-run	503	4.014342	ingress failed
+1794488190	running	e-run	503	5.017893	ingress failed
+1794488194	running	e-run	503	1.004010	ingress failed
+1794488194	suspended	e-s-017	503	5.012518	ingress failed
+1794488197	running	e-run	503	3.010781	ingress failed
+1794488195	running	e-run	503	5.017012	ingress failed
+1794488199	running	e-run	503	1.002114	ingress failed
+1794488196	running	e-run	503	4.014688	ingress failed
+1794488198	running	e-run	503	2.006450	ingress failed
+1794488199	suspended	e-s-018	503	5.017946	ingress failed
+1794488202	running	e-run	503	3.011396	ingress failed
+1794488200	running	e-run	503	5.020108	ingress failed
+1794488204	running	e-run	503	1.003311	ingress failed
+1794488203	running	e-run	503	2.008859	ingress failed
+1794488201	running	e-run	503	4.016659	ingress failed
+1794488204	suspended	e-s-019	503	5.017142	ingress failed
+1794488205	running	e-run	503	5.018275	ingress failed
+1794488208	running	e-run	503	2.008404	ingress failed
+1794488209	running	e-run	503	1.004506	ingress failed
+1794488206	running	e-run	503	4.015535	ingress failed
+1794488207	running	e-run	503	3.009611	ingress failed
+1794488209	suspended	e-s-020	503	5.012447	ingress failed
+1794488214	running	e-run	503	1.001604	ingress failed
+1794488210	running	e-run	503	5.017952	ingress failed
+1794488212	running	e-run	503	3.009491	ingress failed
+1794488213	running	e-run	503	2.005177	ingress failed
+1794488211	running	e-run	503	4.014641	ingress failed
+1794488214	suspended	e-s-021	503	5.017285	ingress failed
+1794488218	running	e-run	503	2.003389	ingress failed
+1794488216	running	e-run	503	4.012452	ingress failed
+1794488217	running	e-run	503	3.007362	ingress failed
+1794488219	running	e-run	503	0.998093	ingress failed
+1794488215	running	e-run	503	5.017168	ingress failed
+1794488219	suspended	e-s-022	503	5.017945	ingress failed
+1794488222	running	e-run	503	3.011081	ingress failed
+1794488221	running	e-run	503	4.014519	ingress failed
+1794488223	running	e-run	503	2.007760	ingress failed
+1794488220	running	e-run	503	5.017969	ingress failed
+1794488224	running	e-run	503	1.003205	ingress failed
+1794488224	suspended	e-s-023	503	5.017620	ingress failed
+1794488229	running	e-run	503	1.005816	ingress failed
+1794488227	running	e-run	503	3.011965	ingress failed
+1794488225	running	e-run	503	5.019085	ingress failed
+1794488226	running	e-run	503	4.017031	ingress failed
+1794488228	running	e-run	503	2.010590	ingress failed
+1794488229	suspended	e-s-024	503	5.016383	ingress failed
+1794488234	suspended	e-s-025	500	0.406191	ingress failed
+1794488230	running	e-run	200	4.613773	preserved memory count: 70 | preserved file counter: 70 | preserved rootfs counter: 70 
+1794488232	running	e-run	200	2.641954	preserved memory count: 71 | preserved file counter: 71 | preserved rootfs counter: 71 
+1794488233	running	e-run	200	1.736500	preserved memory count: 72 | preserved file counter: 74 | preserved rootfs counter: 72 
+1794488234	running	e-run	200	0.832678	preserved memory count: 73 | preserved file counter: 72 | preserved rootfs counter: 73 
+1794488231	running	e-run	200	3.844722	preserved memory count: 74 | preserved file counter: 73 | preserved rootfs counter: 74 
+1794488235	running	e-run	200	0.021565	preserved memory count: 75 | preserved file counter: 75 | preserved rootfs counter: 75 
+1794488236	running	e-run	200	0.021394	preserved memory count: 77 | preserved file counter: 77 | preserved rootfs counter: 77 
+1794488237	running	e-run	200	0.021901	preserved memory count: 79 | preserved file counter: 79 | preserved rootfs counter: 79 
+1794488238	running	e-run	200	0.020001	preserved memory count: 81 | preserved file counter: 81 | preserved rootfs counter: 81 
+1794488239	running	e-run	200	0.019942	preserved memory count: 83 | preserved file counter: 83 | preserved rootfs counter: 83 
+1794488239	suspended	e-s-026	200	0.499787	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488240	running	e-run	200	0.027282	preserved memory count: 85 | preserved file counter: 85 | preserved rootfs counter: 85 
+1794488241	running	e-run	200	0.020767	preserved memory count: 87 | preserved file counter: 87 | preserved rootfs counter: 87 
+1794488242	running	e-run	200	0.020924	preserved memory count: 89 | preserved file counter: 89 | preserved rootfs counter: 89 
+1794488243	running	e-run	200	0.100514	preserved memory count: 91 | preserved file counter: 91 | preserved rootfs counter: 91 
+1794488244	running	e-run	200	0.020756	preserved memory count: 93 | preserved file counter: 93 | preserved rootfs counter: 93 
+1794488244	suspended	e-s-027	200	0.506526	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488245	running	e-run	200	0.029634	preserved memory count: 95 | preserved file counter: 95 | preserved rootfs counter: 95 
+1794488246	running	e-run	200	0.020622	preserved memory count: 97 | preserved file counter: 97 | preserved rootfs counter: 97 
+1794488247	running	e-run	200	0.021158	preserved memory count: 99 | preserved file counter: 99 | preserved rootfs counter: 99 
+1794488248	running	e-run	200	0.021833	preserved memory count: 101 | preserved file counter: 101 | preserved rootfs counter: 101 
+1794488249	running	e-run	200	0.019475	preserved memory count: 103 | preserved file counter: 103 | preserved rootfs counter: 103 
+1794488249	suspended	e-s-028	200	0.499656	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488250	running	e-run	200	0.068109	preserved memory count: 105 | preserved file counter: 105 | preserved rootfs counter: 105 
+1794488251	running	e-run	200	0.021271	preserved memory count: 106 | preserved file counter: 106 | preserved rootfs counter: 106 
+1794488252	running	e-run	200	0.020393	preserved memory count: 108 | preserved file counter: 108 | preserved rootfs counter: 108 
+1794488253	running	e-run	200	0.054768	preserved memory count: 110 | preserved file counter: 110 | preserved rootfs counter: 110 
+1794488254	running	e-run	200	0.020666	preserved memory count: 112 | preserved file counter: 112 | preserved rootfs counter: 112 
+1794488254	suspended	e-s-029	200	0.425575	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488255	running	e-run	200	0.025624	preserved memory count: 114 | preserved file counter: 114 | preserved rootfs counter: 114 
+1794488256	running	e-run	200	0.018969	preserved memory count: 116 | preserved file counter: 116 | preserved rootfs counter: 116 
+1794488257	running	e-run	200	0.020903	preserved memory count: 118 | preserved file counter: 118 | preserved rootfs counter: 118 
+1794488258	running	e-run	200	0.018995	preserved memory count: 120 | preserved file counter: 120 | preserved rootfs counter: 120 
+1794488259	running	e-run	200	0.020143	preserved memory count: 122 | preserved file counter: 122 | preserved rootfs counter: 122 
+1794488259	suspended	e-s-030	200	0.480542	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488260	running	e-run	200	0.025147	preserved memory count: 124 | preserved file counter: 124 | preserved rootfs counter: 124 
+1794488261	running	e-run	200	0.020442	preserved memory count: 126 | preserved file counter: 126 | preserved rootfs counter: 126 
+1794488262	running	e-run	200	0.020311	preserved memory count: 128 | preserved file counter: 128 | preserved rootfs counter: 128 
+1794488263	running	e-run	200	0.019970	preserved memory count: 130 | preserved file counter: 130 | preserved rootfs counter: 130 
+1794488264	running	e-run	200	0.022040	preserved memory count: 132 | preserved file counter: 132 | preserved rootfs counter: 132 
+1794488264	suspended	e-s-031	200	0.507927	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488265	running	e-run	200	0.026137	preserved memory count: 134 | preserved file counter: 134 | preserved rootfs counter: 134 
+1794488266	running	e-run	200	0.019104	preserved memory count: 136 | preserved file counter: 136 | preserved rootfs counter: 136 
+1794488267	running	e-run	200	0.019886	preserved memory count: 137 | preserved file counter: 137 | preserved rootfs counter: 137 
+1794488268	running	e-run	200	0.019985	preserved memory count: 139 | preserved file counter: 139 | preserved rootfs counter: 139 
+1794488269	running	e-run	200	0.022032	preserved memory count: 141 | preserved file counter: 141 | preserved rootfs counter: 141 
+1794488269	suspended	e-s-032	200	0.468495	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488270	running	e-run	200	0.027654	preserved memory count: 143 | preserved file counter: 143 | preserved rootfs counter: 143 
+1794488271	running	e-run	200	0.022122	preserved memory count: 145 | preserved file counter: 145 | preserved rootfs counter: 145 
+1794488272	running	e-run	200	0.020259	preserved memory count: 147 | preserved file counter: 147 | preserved rootfs counter: 147 
+1794488273	running	e-run	200	0.075076	preserved memory count: 149 | preserved file counter: 149 | preserved rootfs counter: 149 
+1794488274	running	e-run	200	0.020484	preserved memory count: 151 | preserved file counter: 151 | preserved rootfs counter: 151 
+1794488274	suspended	e-s-033	200	0.552962	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488275	running	e-run	200	0.024411	preserved memory count: 153 | preserved file counter: 153 | preserved rootfs counter: 153 
+1794488276	running	e-run	200	0.018792	preserved memory count: 155 | preserved file counter: 155 | preserved rootfs counter: 155 
+1794488277	running	e-run	200	0.019361	preserved memory count: 157 | preserved file counter: 157 | preserved rootfs counter: 157 
+1794488278	running	e-run	200	0.018713	preserved memory count: 159 | preserved file counter: 159 | preserved rootfs counter: 159 
+1794488279	running	e-run	200	0.019135	preserved memory count: 161 | preserved file counter: 161 | preserved rootfs counter: 161 
+1794488279	suspended	e-s-034	200	0.438901	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488280	running	e-run	200	0.027087	preserved memory count: 163 | preserved file counter: 163 | preserved rootfs counter: 163 
+1794488281	running	e-run	200	0.019922	preserved memory count: 165 | preserved file counter: 165 | preserved rootfs counter: 165 
+1794488282	running	e-run	200	0.020326	preserved memory count: 166 | preserved file counter: 166 | preserved rootfs counter: 166 
+1794488283	running	e-run	200	0.018686	preserved memory count: 168 | preserved file counter: 168 | preserved rootfs counter: 168 
+1794488284	running	e-run	200	0.019994	preserved memory count: 170 | preserved file counter: 170 | preserved rootfs counter: 170 
+1794488284	suspended	e-s-035	200	0.402096	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488285	running	e-run	200	0.024001	preserved memory count: 172 | preserved file counter: 172 | preserved rootfs counter: 172 
+1794488286	running	e-run	200	0.019788	preserved memory count: 174 | preserved file counter: 174 | preserved rootfs counter: 174 
+1794488287	running	e-run	200	0.019592	preserved memory count: 176 | preserved file counter: 176 | preserved rootfs counter: 176 
+1794488288	running	e-run	200	0.019953	preserved memory count: 178 | preserved file counter: 178 | preserved rootfs counter: 178 
+1794488289	running	e-run	200	0.019371	preserved memory count: 180 | preserved file counter: 180 | preserved rootfs counter: 180 
+1794488289	suspended	e-s-036	200	0.421723	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488290	running	e-run	200	0.025608	preserved memory count: 182 | preserved file counter: 182 | preserved rootfs counter: 182 
+1794488291	running	e-run	200	0.020476	preserved memory count: 184 | preserved file counter: 184 | preserved rootfs counter: 184 
+1794488292	running	e-run	200	0.021738	preserved memory count: 186 | preserved file counter: 186 | preserved rootfs counter: 186 
+1794488293	running	e-run	200	0.019198	preserved memory count: 188 | preserved file counter: 188 | preserved rootfs counter: 188 
+1794488294	running	e-run	200	0.020350	preserved memory count: 190 | preserved file counter: 190 | preserved rootfs counter: 190 
+1794488294	suspended	e-s-037	200	0.417699	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488295	running	e-run	200	0.024490	preserved memory count: 192 | preserved file counter: 192 | preserved rootfs counter: 192 
+1794488296	running	e-run	200	0.019932	preserved memory count: 194 | preserved file counter: 194 | preserved rootfs counter: 194 
+1794488297	running	e-run	200	0.021897	preserved memory count: 195 | preserved file counter: 195 | preserved rootfs counter: 195 
+1794488298	running	e-run	200	0.020503	preserved memory count: 197 | preserved file counter: 197 | preserved rootfs counter: 197 
+1794488299	running	e-run	200	0.019315	preserved memory count: 199 | preserved file counter: 199 | preserved rootfs counter: 199 
+1794488299	suspended	e-s-038	200	0.490979	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488300	running	e-run	200	0.026813	preserved memory count: 201 | preserved file counter: 201 | preserved rootfs counter: 201 
+1794488301	running	e-run	200	0.019832	preserved memory count: 203 | preserved file counter: 203 | preserved rootfs counter: 203 
+1794488302	running	e-run	200	0.019869	preserved memory count: 205 | preserved file counter: 205 | preserved rootfs counter: 205 
+1794488303	running	e-run	200	0.021807	preserved memory count: 207 | preserved file counter: 207 | preserved rootfs counter: 207 
+1794488304	running	e-run	200	0.020376	preserved memory count: 209 | preserved file counter: 209 | preserved rootfs counter: 209 
+1794488304	suspended	e-s-039	200	0.412654	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488305	running	e-run	200	0.025769	preserved memory count: 211 | preserved file counter: 211 | preserved rootfs counter: 211 
+1794488306	running	e-run	200	0.019669	preserved memory count: 213 | preserved file counter: 213 | preserved rootfs counter: 213 
+1794488307	running	e-run	200	0.019702	preserved memory count: 215 | preserved file counter: 215 | preserved rootfs counter: 215 
+1794488308	running	e-run	200	0.019462	preserved memory count: 217 | preserved file counter: 217 | preserved rootfs counter: 217 
+1794488309	running	e-run	200	0.020255	preserved memory count: 219 | preserved file counter: 219 | preserved rootfs counter: 219 
+1794488310	running	e-run	200	0.024015	preserved memory count: 221 | preserved file counter: 221 | preserved rootfs counter: 221 
+1794488311	running	e-run	200	0.022470	preserved memory count: 223 | preserved file counter: 223 | preserved rootfs counter: 223 
+1794488312	running	e-run	200	0.021161	preserved memory count: 224 | preserved file counter: 224 | preserved rootfs counter: 224 
+1794488309	suspended	e-s-040	500	3.091037	ingress failed
+1794488313	running	e-run	200	0.020436	preserved memory count: 226 | preserved file counter: 226 | preserved rootfs counter: 226 
+1794488314	running	e-run	200	0.019735	preserved memory count: 228 | preserved file counter: 228 | preserved rootfs counter: 228 
+1794488314	suspended	e-s-041	504	5.017604	ingress failed
+1794488315	running	e-run	504	5.017256	ingress failed
+1794488317	running	e-run	504	3.009912	ingress failed
+1794488318	running	e-run	504	2.006531	ingress failed
+1794488316	running	e-run	504	4.014034	ingress failed
+1794488319	running	e-run	504	1.001842	ingress failed
+1794488319	suspended	e-s-042	504	5.017168	ingress failed
+1794488323	running	e-run	503	2.011013	ingress failed
+1794488320	running	e-run	503	5.019635	ingress failed
+1794488321	running	e-run	503	4.018678	ingress failed
+1794488322	running	e-run	503	3.015410	ingress failed
+1794488324	running	e-run	503	1.006303	ingress failed
+1794488324	suspended	e-s-043	504	5.018835	ingress failed
+1794488325	running	e-run	503	5.020842	ingress failed
+1794488328	running	e-run	503	2.007896	ingress failed
+1794488326	running	e-run	503	4.016554	ingress failed
+1794488327	running	e-run	503	3.013609	ingress failed
+1794488329	running	e-run	503	1.004619	ingress failed
+1794488329	suspended	e-s-044	503	5.016846	ingress failed
+1794488331	running	e-run	503	4.018046	ingress failed
+1794488333	running	e-run	503	2.011142	ingress failed
+1794488332	running	e-run	503	3.014260	ingress failed
+1794488334	running	e-run	503	1.005867	ingress failed
+1794488330	running	e-run	503	5.019591	ingress failed
+1794488334	suspended	e-s-045	503	5.017221	ingress failed
+1794488338	running	e-run	503	2.006246	ingress failed
+1794488336	running	e-run	503	4.013322	ingress failed
+1794488335	running	e-run	503	5.017579	ingress failed
+1794488339	running	e-run	503	1.002829	ingress failed
+1794488337	running	e-run	503	3.009795	ingress failed
+1794488339	suspended	e-s-046	503	5.018896	ingress failed
+1794488341	running	e-run	503	4.015672	ingress failed
+1794488340	running	e-run	503	5.018600	ingress failed
+1794488343	running	e-run	503	2.007288	ingress failed
+1794488342	running	e-run	503	3.011542	ingress failed
+1794488344	running	e-run	503	1.003593	ingress failed
+1794488344	suspended	e-s-047	503	5.016912	ingress failed
+1794488348	running	e-run	503	2.007533	ingress failed
+1794488347	running	e-run	503	3.010544	ingress failed
+1794488346	running	e-run	503	4.015432	ingress failed
+1794488345	running	e-run	503	5.018003	ingress failed
+1794488349	running	e-run	503	1.003313	ingress failed
+1794488349	suspended	e-s-048	503	5.016935	ingress failed
+1794488352	running	e-run	503	3.011615	ingress failed
+1794488351	running	e-run	503	4.016085	ingress failed
+1794488354	running	e-run	503	1.000583	ingress failed
+1794488350	running	e-run	503	5.018457	ingress failed
+1794488353	running	e-run	503	2.007466	ingress failed
+1794488354	suspended	e-s-049	503	5.017957	ingress failed
+1794488356	running	e-run	503	4.014543	ingress failed
+1794488355	running	e-run	503	5.017924	ingress failed
+1794488358	running	e-run	503	2.007056	ingress failed
+1794488357	running	e-run	503	3.011329	ingress failed
+1794488359	running	e-run	503	1.001527	ingress failed
+1794488359	suspended	e-s-050	503	5.017543	ingress failed
+1794488362	running	e-run	503	3.009962	ingress failed
+1794488364	running	e-run	503	1.002630	ingress failed
+1794488360	running	e-run	503	5.018061	ingress failed
+1794488361	running	e-run	503	4.014823	ingress failed
+1794488363	running	e-run	503	2.006273	ingress failed
+1794488364	suspended	e-s-051	503	5.018230	ingress failed
+1794488368	running	e-run	503	2.007471	ingress failed
+1794488367	running	e-run	503	3.011522	ingress failed
+1794488365	running	e-run	503	5.018881	ingress failed
+1794488366	running	e-run	503	4.014761	ingress failed
+1794488369	running	e-run	503	1.002744	ingress failed
+1794488369	suspended	e-s-052	503	5.017068	ingress failed
+1794488370	running	e-run	503	5.016939	ingress failed
+1794488373	running	e-run	503	2.006260	ingress failed
+1794488371	running	e-run	503	4.014193	ingress failed
+1794488374	running	e-run	503	1.001583	ingress failed
+1794488372	running	e-run	503	3.010860	ingress failed
+1794488374	suspended	e-s-053	503	5.018939	ingress failed
+1794488379	running	e-run	503	1.004227	ingress failed
+1794488378	running	e-run	503	2.007864	ingress failed
+1794488376	running	e-run	503	4.016056	ingress failed
+1794488377	running	e-run	503	3.011656	ingress failed
+1794488375	running	e-run	503	5.018027	ingress failed
+1794488379	suspended	e-s-054	503	5.018717	ingress failed
+1794488380	running	e-run	503	5.017763	ingress failed
+1794488384	running	e-run	503	1.005042	ingress failed
+1794488381	running	e-run	503	4.015594	ingress failed
+1794488382	running	e-run	503	3.011047	ingress failed
+1794488383	running	e-run	503	2.008745	ingress failed
+1794488385	running	e-run	200	1.226377	preserved memory count: 232 | preserved file counter: 232 | preserved rootfs counter: 232 
+1794488386	running	e-run	200	0.224542	preserved memory count: 233 | preserved file counter: 233 | preserved rootfs counter: 233 
+1794488384	suspended	e-s-055	200	2.601301	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488387	running	e-run	200	0.021217	preserved memory count: 234 | preserved file counter: 234 | preserved rootfs counter: 234 
+1794488388	running	e-run	200	0.021226	preserved memory count: 236 | preserved file counter: 236 | preserved rootfs counter: 236 
+1794488389	running	e-run	200	0.014057	preserved memory count: 238 | preserved file counter: 238 | preserved rootfs counter: 238 
+1794488389	suspended	e-s-056	200	0.318478	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488390	running	e-run	200	0.019565	preserved memory count: 240 | preserved file counter: 240 | preserved rootfs counter: 240 
+1794488392	running	e-run	200	0.023372	preserved memory count: 242 | preserved file counter: 242 | preserved rootfs counter: 242 
+1794488393	running	e-run	200	0.027311	preserved memory count: 244 | preserved file counter: 244 | preserved rootfs counter: 244 
+1794488394	running	e-run	200	0.018980	preserved memory count: 246 | preserved file counter: 246 | preserved rootfs counter: 246 
+1794488395	running	e-run	200	0.020846	preserved memory count: 248 | preserved file counter: 248 | preserved rootfs counter: 248 
+1794488395	suspended	e-s-057	200	0.348298	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488396	running	e-run	200	0.019502	preserved memory count: 250 | preserved file counter: 250 | preserved rootfs counter: 250 
+1794488397	running	e-run	200	0.019725	preserved memory count: 252 | preserved file counter: 252 | preserved rootfs counter: 252 
+1794488398	running	e-run	200	0.026966	preserved memory count: 254 | preserved file counter: 254 | preserved rootfs counter: 254 
+1794488399	running	e-run	200	0.020608	preserved memory count: 256 | preserved file counter: 256 | preserved rootfs counter: 256 
+1794488400	running	e-run	200	0.019328	preserved memory count: 258 | preserved file counter: 258 | preserved rootfs counter: 258 
+1794488400	suspended	e-s-058	200	0.418841	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488401	running	e-run	200	0.019516	preserved memory count: 260 | preserved file counter: 260 | preserved rootfs counter: 260 
+1794488402	running	e-run	200	0.018822	preserved memory count: 262 | preserved file counter: 262 | preserved rootfs counter: 262 
+1794488403	running	e-run	200	0.028596	preserved memory count: 263 | preserved file counter: 263 | preserved rootfs counter: 263 
+1794488404	running	e-run	200	0.020618	preserved memory count: 265 | preserved file counter: 265 | preserved rootfs counter: 265 
+1794488405	running	e-run	200	0.021959	preserved memory count: 267 | preserved file counter: 267 | preserved rootfs counter: 267 
+1794488405	suspended	e-s-059	200	0.454721	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488406	running	e-run	200	0.019692	preserved memory count: 269 | preserved file counter: 269 | preserved rootfs counter: 269 
+1794488407	running	e-run	200	0.019100	preserved memory count: 271 | preserved file counter: 271 | preserved rootfs counter: 271 
+1794488408	running	e-run	200	0.025241	preserved memory count: 273 | preserved file counter: 273 | preserved rootfs counter: 273 
+1794488409	running	e-run	200	0.018410	preserved memory count: 275 | preserved file counter: 275 | preserved rootfs counter: 275 
+1794488410	running	e-run	200	0.020489	preserved memory count: 277 | preserved file counter: 277 | preserved rootfs counter: 277 
+1794488410	suspended	e-s-060	200	0.458560	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488411	running	e-run	200	0.020918	preserved memory count: 279 | preserved file counter: 279 | preserved rootfs counter: 279 
+1794488412	running	e-run	200	0.019455	preserved memory count: 281 | preserved file counter: 281 | preserved rootfs counter: 281 
+1794488413	running	e-run	200	0.026164	preserved memory count: 283 | preserved file counter: 283 | preserved rootfs counter: 283 
+1794488414	running	e-run	200	0.020205	preserved memory count: 285 | preserved file counter: 285 | preserved rootfs counter: 285 
+1794488415	running	e-run	200	0.020214	preserved memory count: 287 | preserved file counter: 287 | preserved rootfs counter: 287 
+1794488415	suspended	e-s-061	200	0.456497	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488416	running	e-run	200	0.020793	preserved memory count: 289 | preserved file counter: 289 | preserved rootfs counter: 289 
+1794488417	running	e-run	200	0.020430	preserved memory count: 290 | preserved file counter: 290 | preserved rootfs counter: 290 
+1794488418	running	e-run	200	0.026410	preserved memory count: 292 | preserved file counter: 292 | preserved rootfs counter: 292 
+1794488419	running	e-run	200	0.020866	preserved memory count: 294 | preserved file counter: 294 | preserved rootfs counter: 294 
+1794488420	running	e-run	200	0.019831	preserved memory count: 296 | preserved file counter: 296 | preserved rootfs counter: 296 
+1794488420	suspended	e-s-062	200	0.481979	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488421	running	e-run	200	0.020830	preserved memory count: 298 | preserved file counter: 298 | preserved rootfs counter: 298 
+1794488422	running	e-run	200	0.019795	preserved memory count: 300 | preserved file counter: 300 | preserved rootfs counter: 300 
+1794488423	running	e-run	200	0.025120	preserved memory count: 302 | preserved file counter: 302 | preserved rootfs counter: 302 
+1794488424	running	e-run	200	0.018958	preserved memory count: 304 | preserved file counter: 304 | preserved rootfs counter: 304 
+1794488425	running	e-run	200	0.020653	preserved memory count: 306 | preserved file counter: 306 | preserved rootfs counter: 306 
+1794488425	suspended	e-s-063	200	0.321419	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488426	running	e-run	200	0.019331	preserved memory count: 308 | preserved file counter: 308 | preserved rootfs counter: 308 
+1794488427	running	e-run	200	0.020337	preserved memory count: 310 | preserved file counter: 310 | preserved rootfs counter: 310 
+1794488428	running	e-run	200	0.024074	preserved memory count: 312 | preserved file counter: 312 | preserved rootfs counter: 312 
+1794488429	running	e-run	200	0.019223	preserved memory count: 314 | preserved file counter: 314 | preserved rootfs counter: 314 
+1794488430	running	e-run	200	0.057969	preserved memory count: 316 | preserved file counter: 316 | preserved rootfs counter: 316 
+1794488430	suspended	e-s-064	200	0.449130	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488431	running	e-run	200	0.019375	preserved memory count: 317 | preserved file counter: 317 | preserved rootfs counter: 317 
+1794488432	running	e-run	200	0.018727	preserved memory count: 319 | preserved file counter: 319 | preserved rootfs counter: 319 
+1794488433	running	e-run	200	0.024311	preserved memory count: 321 | preserved file counter: 321 | preserved rootfs counter: 321 
+1794488434	running	e-run	200	0.019119	preserved memory count: 323 | preserved file counter: 323 | preserved rootfs counter: 323 
+1794488435	running	e-run	200	0.019867	preserved memory count: 325 | preserved file counter: 325 | preserved rootfs counter: 325 
+1794488435	suspended	e-s-065	200	0.463662	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488436	running	e-run	200	0.018286	preserved memory count: 327 | preserved file counter: 327 | preserved rootfs counter: 327 
+1794488437	running	e-run	200	0.017958	preserved memory count: 329 | preserved file counter: 329 | preserved rootfs counter: 329 
+1794488438	running	e-run	200	0.023661	preserved memory count: 331 | preserved file counter: 331 | preserved rootfs counter: 331 
+1794488439	running	e-run	200	0.018675	preserved memory count: 333 | preserved file counter: 333 | preserved rootfs counter: 333 
+1794488440	running	e-run	200	0.021518	preserved memory count: 335 | preserved file counter: 335 | preserved rootfs counter: 335 
+1794488440	suspended	e-s-066	200	0.342685	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488441	running	e-run	200	0.017935	preserved memory count: 337 | preserved file counter: 337 | preserved rootfs counter: 337 
+1794488442	running	e-run	200	0.017722	preserved memory count: 339 | preserved file counter: 339 | preserved rootfs counter: 339 
+1794488443	running	e-run	200	0.023691	preserved memory count: 341 | preserved file counter: 341 | preserved rootfs counter: 341 
+1794488444	running	e-run	200	0.017814	preserved memory count: 343 | preserved file counter: 343 | preserved rootfs counter: 343 
+1794488445	running	e-run	200	0.021796	preserved memory count: 344 | preserved file counter: 344 | preserved rootfs counter: 344 
+1794488445	suspended	e-s-067	200	0.338059	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488446	running	e-run	200	0.020225	preserved memory count: 346 | preserved file counter: 346 | preserved rootfs counter: 346 
+1794488447	running	e-run	200	0.019670	preserved memory count: 348 | preserved file counter: 348 | preserved rootfs counter: 348 
+1794488448	running	e-run	200	0.025547	preserved memory count: 350 | preserved file counter: 350 | preserved rootfs counter: 350 
+1794488449	running	e-run	200	0.019466	preserved memory count: 352 | preserved file counter: 352 | preserved rootfs counter: 352 
+1794488450	running	e-run	200	0.020606	preserved memory count: 354 | preserved file counter: 354 | preserved rootfs counter: 354 
+1794488450	suspended	e-s-068	200	0.313508	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488451	running	e-run	200	0.018855	preserved memory count: 356 | preserved file counter: 356 | preserved rootfs counter: 356 
+1794488452	running	e-run	200	0.020422	preserved memory count: 358 | preserved file counter: 358 | preserved rootfs counter: 358 
+1794488453	running	e-run	200	0.024079	preserved memory count: 360 | preserved file counter: 360 | preserved rootfs counter: 360 
+1794488454	running	e-run	200	0.020250	preserved memory count: 362 | preserved file counter: 362 | preserved rootfs counter: 362 
+1794488455	running	e-run	200	0.020489	preserved memory count: 364 | preserved file counter: 364 | preserved rootfs counter: 364 
+1794488455	suspended	e-s-069	200	0.438154	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488456	running	e-run	200	0.019582	preserved memory count: 366 | preserved file counter: 366 | preserved rootfs counter: 366 
+1794488457	running	e-run	200	0.019766	preserved memory count: 368 | preserved file counter: 368 | preserved rootfs counter: 368 
+1794488458	running	e-run	200	0.023127	preserved memory count: 370 | preserved file counter: 370 | preserved rootfs counter: 370 
+1794488459	running	e-run	200	0.018595	preserved memory count: 372 | preserved file counter: 372 | preserved rootfs counter: 372 
+1794488460	running	e-run	200	0.019953	preserved memory count: 373 | preserved file counter: 373 | preserved rootfs counter: 373 
+1794488460	suspended	e-s-070	200	0.417583	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488461	running	e-run	200	0.018930	preserved memory count: 374 | preserved file counter: 374 | preserved rootfs counter: 374 
+1794488462	running	e-run	200	0.017975	preserved memory count: 375 | preserved file counter: 375 | preserved rootfs counter: 375 
+1794488463	running	e-run	200	0.025357	preserved memory count: 376 | preserved file counter: 376 | preserved rootfs counter: 376 
+1794488464	running	e-run	200	0.023587	preserved memory count: 377 | preserved file counter: 377 | preserved rootfs counter: 377 
+1794488465	running	e-run	200	0.021110	preserved memory count: 378 | preserved file counter: 378 | preserved rootfs counter: 378 
+1794488465	suspended	e-s-071	200	0.368117	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488466	running	e-run	200	0.022775	preserved memory count: 379 | preserved file counter: 379 | preserved rootfs counter: 379 
+1794488467	running	e-run	200	0.019117	preserved memory count: 380 | preserved file counter: 380 | preserved rootfs counter: 380 
+1794488468	running	e-run	200	0.025758	preserved memory count: 381 | preserved file counter: 381 | preserved rootfs counter: 381 
+1794488469	running	e-run	200	0.022111	preserved memory count: 382 | preserved file counter: 382 | preserved rootfs counter: 382 
+1794488470	running	e-run	200	0.021114	preserved memory count: 383 | preserved file counter: 383 | preserved rootfs counter: 383 
+1794488470	suspended	e-s-072	200	0.484740	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488471	running	e-run	200	0.024660	preserved memory count: 384 | preserved file counter: 384 | preserved rootfs counter: 384 
+1794488472	running	e-run	200	0.019914	preserved memory count: 385 | preserved file counter: 385 | preserved rootfs counter: 385 
+1794488473	running	e-run	200	0.029974	preserved memory count: 386 | preserved file counter: 386 | preserved rootfs counter: 386 
+1794488474	running	e-run	200	0.021887	preserved memory count: 387 | preserved file counter: 387 | preserved rootfs counter: 387 
+1794488475	running	e-run	200	0.024596	preserved memory count: 388 | preserved file counter: 388 | preserved rootfs counter: 388 
+1794488475	suspended	e-s-073	200	0.482707	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488476	running	e-run	200	0.021255	preserved memory count: 389 | preserved file counter: 389 | preserved rootfs counter: 389 
+1794488477	running	e-run	200	0.020045	preserved memory count: 390 | preserved file counter: 390 | preserved rootfs counter: 390 
+1794488478	running	e-run	200	0.025765	preserved memory count: 391 | preserved file counter: 391 | preserved rootfs counter: 391 
+1794488479	running	e-run	200	0.019761	preserved memory count: 392 | preserved file counter: 392 | preserved rootfs counter: 392 
+1794488480	running	e-run	200	0.021207	preserved memory count: 393 | preserved file counter: 393 | preserved rootfs counter: 393 
+1794488480	suspended	e-s-074	200	0.333148	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488481	running	e-run	200	0.020878	preserved memory count: 394 | preserved file counter: 394 | preserved rootfs counter: 394 
+1794488482	running	e-run	200	0.019765	preserved memory count: 395 | preserved file counter: 395 | preserved rootfs counter: 395 
+1794488483	running	e-run	200	0.026448	preserved memory count: 396 | preserved file counter: 396 | preserved rootfs counter: 396 
+1794488484	running	e-run	200	0.020221	preserved memory count: 397 | preserved file counter: 397 | preserved rootfs counter: 397 
+1794488485	running	e-run	200	0.024429	preserved memory count: 398 | preserved file counter: 398 | preserved rootfs counter: 398 
+1794488485	suspended	e-s-075	200	0.432605	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488486	running	e-run	200	0.020851	preserved memory count: 399 | preserved file counter: 399 | preserved rootfs counter: 399 
+1794488487	running	e-run	200	0.022719	preserved memory count: 400 | preserved file counter: 400 | preserved rootfs counter: 400 
+1794488488	running	e-run	200	0.025772	preserved memory count: 401 | preserved file counter: 401 | preserved rootfs counter: 401 
+1794488489	running	e-run	200	0.017875	preserved memory count: 402 | preserved file counter: 402 | preserved rootfs counter: 402 
+1794488490	running	e-run	200	0.023167	preserved memory count: 403 | preserved file counter: 403 | preserved rootfs counter: 403 
+1794488490	suspended	e-s-076	200	0.592831	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488491	running	e-run	200	0.021800	preserved memory count: 404 | preserved file counter: 404 | preserved rootfs counter: 404 
+1794488492	running	e-run	200	0.017699	preserved memory count: 405 | preserved file counter: 405 | preserved rootfs counter: 405 
+1794488493	running	e-run	200	0.025506	preserved memory count: 406 | preserved file counter: 406 | preserved rootfs counter: 406 
+1794488494	running	e-run	200	0.020154	preserved memory count: 407 | preserved file counter: 407 | preserved rootfs counter: 407 
+1794488495	running	e-run	200	0.019871	preserved memory count: 408 | preserved file counter: 408 | preserved rootfs counter: 408 
+1794488495	suspended	e-s-077	200	0.327582	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488496	running	e-run	200	0.019333	preserved memory count: 409 | preserved file counter: 409 | preserved rootfs counter: 409 
+1794488497	running	e-run	200	0.021943	preserved memory count: 410 | preserved file counter: 410 | preserved rootfs counter: 410 
+1794488498	running	e-run	200	0.023245	preserved memory count: 411 | preserved file counter: 411 | preserved rootfs counter: 411 
+1794488499	running	e-run	200	0.022099	preserved memory count: 412 | preserved file counter: 412 | preserved rootfs counter: 412 
+1794488500	running	e-run	200	0.019814	preserved memory count: 413 | preserved file counter: 413 | preserved rootfs counter: 413 
+1794488500	suspended	e-s-078	200	0.339979	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488501	running	e-run	200	0.020015	preserved memory count: 414 | preserved file counter: 414 | preserved rootfs counter: 414 
+1794488502	running	e-run	200	0.019683	preserved memory count: 415 | preserved file counter: 415 | preserved rootfs counter: 415 
+1794488503	running	e-run	200	0.087334	preserved memory count: 416 | preserved file counter: 416 | preserved rootfs counter: 416 
+1794488504	running	e-run	200	0.019196	preserved memory count: 417 | preserved file counter: 417 | preserved rootfs counter: 417 
+1794488505	running	e-run	200	0.019048	preserved memory count: 418 | preserved file counter: 418 | preserved rootfs counter: 418 
+1794488505	suspended	e-s-079	200	0.467512	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488506	running	e-run	200	0.020971	preserved memory count: 419 | preserved file counter: 419 | preserved rootfs counter: 419 
+1794488507	running	e-run	200	0.019825	preserved memory count: 420 | preserved file counter: 420 | preserved rootfs counter: 420 
+1794488508	running	e-run	200	0.022622	preserved memory count: 421 | preserved file counter: 421 | preserved rootfs counter: 421 
+1794488509	running	e-run	200	0.019025	preserved memory count: 422 | preserved file counter: 422 | preserved rootfs counter: 422 
+1794488510	running	e-run	200	0.020008	preserved memory count: 423 | preserved file counter: 423 | preserved rootfs counter: 423 
+1794488510	suspended	e-s-080	200	0.482283	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488511	running	e-run	200	0.019373	preserved memory count: 424 | preserved file counter: 424 | preserved rootfs counter: 424 
+1794488512	running	e-run	200	0.021733	preserved memory count: 425 | preserved file counter: 425 | preserved rootfs counter: 425 
+1794488513	running	e-run	200	0.050182	preserved memory count: 426 | preserved file counter: 426 | preserved rootfs counter: 426 
+1794488514	running	e-run	200	0.018889	preserved memory count: 427 | preserved file counter: 427 | preserved rootfs counter: 427 
+1794488515	running	e-run	200	0.019033	preserved memory count: 428 | preserved file counter: 428 | preserved rootfs counter: 428 
+1794488515	suspended	e-s-081	200	0.362751	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488516	running	e-run	200	0.019893	preserved memory count: 429 | preserved file counter: 429 | preserved rootfs counter: 429 
+1794488517	running	e-run	200	0.018173	preserved memory count: 430 | preserved file counter: 430 | preserved rootfs counter: 430 
+1794488518	running	e-run	200	0.024269	preserved memory count: 431 | preserved file counter: 431 | preserved rootfs counter: 431 
+1794488519	running	e-run	200	0.019812	preserved memory count: 432 | preserved file counter: 432 | preserved rootfs counter: 432 
+1794488520	running	e-run	200	0.019207	preserved memory count: 433 | preserved file counter: 433 | preserved rootfs counter: 433 
+1794488520	suspended	e-s-082	200	0.471748	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488521	running	e-run	200	0.020010	preserved memory count: 434 | preserved file counter: 434 | preserved rootfs counter: 434 
+1794488522	running	e-run	200	0.019803	preserved memory count: 435 | preserved file counter: 435 | preserved rootfs counter: 435 
+1794488523	running	e-run	200	0.024637	preserved memory count: 436 | preserved file counter: 436 | preserved rootfs counter: 436 
+1794488524	running	e-run	200	0.019473	preserved memory count: 437 | preserved file counter: 437 | preserved rootfs counter: 437 
+1794488525	running	e-run	200	0.020390	preserved memory count: 438 | preserved file counter: 438 | preserved rootfs counter: 438 
+1794488525	suspended	e-s-083	200	0.455761	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488526	running	e-run	200	0.021171	preserved memory count: 439 | preserved file counter: 439 | preserved rootfs counter: 439 
+1794488527	running	e-run	200	0.018325	preserved memory count: 440 | preserved file counter: 440 | preserved rootfs counter: 440 
+1794488528	running	e-run	200	0.027237	preserved memory count: 441 | preserved file counter: 441 | preserved rootfs counter: 441 
+1794488529	running	e-run	200	0.019857	preserved memory count: 442 | preserved file counter: 442 | preserved rootfs counter: 442 
+1794488530	running	e-run	200	0.019751	preserved memory count: 443 | preserved file counter: 443 | preserved rootfs counter: 443 
+1794488530	suspended	e-s-084	200	0.369474	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488531	running	e-run	200	0.021703	preserved memory count: 444 | preserved file counter: 444 | preserved rootfs counter: 444 
+1794488532	running	e-run	200	0.020085	preserved memory count: 445 | preserved file counter: 445 | preserved rootfs counter: 445 
+1794488533	running	e-run	200	0.025571	preserved memory count: 446 | preserved file counter: 446 | preserved rootfs counter: 446 
+1794488534	running	e-run	200	0.019732	preserved memory count: 447 | preserved file counter: 447 | preserved rootfs counter: 447 
+1794488535	running	e-run	200	0.022527	preserved memory count: 448 | preserved file counter: 448 | preserved rootfs counter: 448 
+1794488535	suspended	e-s-085	200	0.487727	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488536	running	e-run	200	0.019643	preserved memory count: 449 | preserved file counter: 449 | preserved rootfs counter: 449 
+1794488537	running	e-run	200	0.021046	preserved memory count: 450 | preserved file counter: 450 | preserved rootfs counter: 450 
+1794488538	running	e-run	200	0.027391	preserved memory count: 451 | preserved file counter: 451 | preserved rootfs counter: 451 
+1794488539	running	e-run	200	0.019852	preserved memory count: 452 | preserved file counter: 452 | preserved rootfs counter: 452 
+1794488540	running	e-run	200	0.019705	preserved memory count: 453 | preserved file counter: 453 | preserved rootfs counter: 453 
+1794488540	suspended	e-s-086	200	0.482572	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488541	running	e-run	200	0.020150	preserved memory count: 454 | preserved file counter: 454 | preserved rootfs counter: 454 
+1794488542	running	e-run	200	0.020349	preserved memory count: 455 | preserved file counter: 455 | preserved rootfs counter: 455 
+1794488543	running	e-run	200	0.031802	preserved memory count: 456 | preserved file counter: 456 | preserved rootfs counter: 456 
+1794488544	running	e-run	200	0.020352	preserved memory count: 457 | preserved file counter: 457 | preserved rootfs counter: 457 
+1794488545	running	e-run	200	0.019735	preserved memory count: 458 | preserved file counter: 458 | preserved rootfs counter: 458 
+1794488545	suspended	e-s-087	200	0.490956	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488546	running	e-run	200	0.020005	preserved memory count: 459 | preserved file counter: 459 | preserved rootfs counter: 459 
+1794488547	running	e-run	200	0.020832	preserved memory count: 460 | preserved file counter: 460 | preserved rootfs counter: 460 
+1794488548	running	e-run	200	0.112041	preserved memory count: 461 | preserved file counter: 461 | preserved rootfs counter: 461 
+1794488549	running	e-run	200	0.019736	preserved memory count: 462 | preserved file counter: 462 | preserved rootfs counter: 462 
+1794488550	running	e-run	200	0.019092	preserved memory count: 463 | preserved file counter: 463 | preserved rootfs counter: 463 
+1794488550	suspended	e-s-088	200	0.440535	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488551	running	e-run	200	0.020127	preserved memory count: 464 | preserved file counter: 464 | preserved rootfs counter: 464 
+1794488552	running	e-run	200	0.020525	preserved memory count: 465 | preserved file counter: 465 | preserved rootfs counter: 465 
+1794488553	running	e-run	200	0.024825	preserved memory count: 466 | preserved file counter: 466 | preserved rootfs counter: 466 
+1794488554	running	e-run	200	0.019940	preserved memory count: 467 | preserved file counter: 467 | preserved rootfs counter: 467 
+1794488555	running	e-run	200	0.026417	preserved memory count: 468 | preserved file counter: 468 | preserved rootfs counter: 468 
+1794488555	suspended	e-s-089	200	0.453969	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488556	running	e-run	200	0.019294	preserved memory count: 469 | preserved file counter: 469 | preserved rootfs counter: 469 
+1794488557	running	e-run	200	0.021052	preserved memory count: 470 | preserved file counter: 470 | preserved rootfs counter: 470 
+1794488558	running	e-run	200	0.026353	preserved memory count: 471 | preserved file counter: 471 | preserved rootfs counter: 471 
+1794488559	running	e-run	200	0.020231	preserved memory count: 472 | preserved file counter: 472 | preserved rootfs counter: 472 
+1794488560	running	e-run	200	0.020687	preserved memory count: 473 | preserved file counter: 473 | preserved rootfs counter: 473 
+1794488560	suspended	e-s-090	200	0.416033	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488561	running	e-run	200	0.019605	preserved memory count: 474 | preserved file counter: 474 | preserved rootfs counter: 474 
+1794488562	running	e-run	200	0.019104	preserved memory count: 475 | preserved file counter: 475 | preserved rootfs counter: 475 
+1794488563	running	e-run	200	0.024696	preserved memory count: 476 | preserved file counter: 476 | preserved rootfs counter: 476 
+1794488564	running	e-run	200	0.019342	preserved memory count: 477 | preserved file counter: 477 | preserved rootfs counter: 477 
+1794488565	running	e-run	200	0.019468	preserved memory count: 478 | preserved file counter: 478 | preserved rootfs counter: 478 
+1794488565	suspended	e-s-091	200	0.469087	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488566	running	e-run	200	0.020185	preserved memory count: 479 | preserved file counter: 479 | preserved rootfs counter: 479 
+1794488567	running	e-run	200	0.021254	preserved memory count: 480 | preserved file counter: 480 | preserved rootfs counter: 480 
+1794488568	running	e-run	200	0.026287	preserved memory count: 481 | preserved file counter: 481 | preserved rootfs counter: 481 
+1794488569	running	e-run	200	0.019565	preserved memory count: 482 | preserved file counter: 482 | preserved rootfs counter: 482 
+1794488570	running	e-run	200	0.021115	preserved memory count: 483 | preserved file counter: 483 | preserved rootfs counter: 483 
+1794488570	suspended	e-s-092	200	0.351903	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488571	running	e-run	200	0.019599	preserved memory count: 484 | preserved file counter: 484 | preserved rootfs counter: 484 
+1794488572	running	e-run	200	0.020424	preserved memory count: 485 | preserved file counter: 485 | preserved rootfs counter: 485 
+1794488573	running	e-run	200	0.024993	preserved memory count: 486 | preserved file counter: 486 | preserved rootfs counter: 486 
+1794488574	running	e-run	200	0.023653	preserved memory count: 487 | preserved file counter: 487 | preserved rootfs counter: 487 
+1794488575	running	e-run	200	0.022756	preserved memory count: 488 | preserved file counter: 488 | preserved rootfs counter: 488 
+1794488575	suspended	e-s-093	200	0.460782	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488576	running	e-run	200	0.021256	preserved memory count: 489 | preserved file counter: 489 | preserved rootfs counter: 489 
+1794488577	running	e-run	200	0.021585	preserved memory count: 490 | preserved file counter: 490 | preserved rootfs counter: 490 
+1794488578	running	e-run	200	0.024508	preserved memory count: 491 | preserved file counter: 491 | preserved rootfs counter: 491 
+1794488579	running	e-run	200	0.020844	preserved memory count: 492 | preserved file counter: 492 | preserved rootfs counter: 492 
+1794488580	running	e-run	200	0.020633	preserved memory count: 494 | preserved file counter: 494 | preserved rootfs counter: 494 
+1794488580	suspended	e-s-094	200	0.469204	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488581	running	e-run	200	0.018965	preserved memory count: 498 | preserved file counter: 498 | preserved rootfs counter: 498 
+1794488582	running	e-run	200	0.021039	preserved memory count: 503 | preserved file counter: 503 | preserved rootfs counter: 503 
+1794488583	running	e-run	200	0.024363	preserved memory count: 507 | preserved file counter: 507 | preserved rootfs counter: 507 
+1794488584	running	e-run	200	0.020448	preserved memory count: 509 | preserved file counter: 509 | preserved rootfs counter: 509 
+1794488585	running	e-run	200	0.020344	preserved memory count: 511 | preserved file counter: 511 | preserved rootfs counter: 511 
+1794488585	suspended	e-s-095	200	0.430419	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488586	running	e-run	200	0.019935	preserved memory count: 513 | preserved file counter: 513 | preserved rootfs counter: 513 
+1794488587	running	e-run	200	0.020847	preserved memory count: 515 | preserved file counter: 515 | preserved rootfs counter: 515 
+1794488588	running	e-run	200	0.026975	preserved memory count: 517 | preserved file counter: 517 | preserved rootfs counter: 517 
+1794488589	running	e-run	200	0.019279	preserved memory count: 519 | preserved file counter: 519 | preserved rootfs counter: 519 
+1794488590	running	e-run	200	0.035746	preserved memory count: 521 | preserved file counter: 521 | preserved rootfs counter: 521 
+1794488590	suspended	e-s-096	200	0.615073	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488591	running	e-run	200	0.020670	preserved memory count: 523 | preserved file counter: 523 | preserved rootfs counter: 523 
+1794488592	running	e-run	200	0.042263	preserved memory count: 525 | preserved file counter: 525 | preserved rootfs counter: 525 
+1794488593	running	e-run	200	0.026110	preserved memory count: 526 | preserved file counter: 526 | preserved rootfs counter: 526 
+1794488594	running	e-run	200	0.019437	preserved memory count: 528 | preserved file counter: 528 | preserved rootfs counter: 528 
+1794488595	running	e-run	200	0.031083	preserved memory count: 530 | preserved file counter: 530 | preserved rootfs counter: 530 
+1794488595	suspended	e-s-097	200	0.425784	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488596	running	e-run	200	0.018945	preserved memory count: 532 | preserved file counter: 532 | preserved rootfs counter: 532 
+1794488597	running	e-run	200	0.022231	preserved memory count: 534 | preserved file counter: 534 | preserved rootfs counter: 534 
+1794488598	running	e-run	200	0.033099	preserved memory count: 536 | preserved file counter: 536 | preserved rootfs counter: 536 
+1794488599	running	e-run	200	0.020097	preserved memory count: 538 | preserved file counter: 538 | preserved rootfs counter: 538 
+1794488600	running	e-run	200	0.018833	preserved memory count: 540 | preserved file counter: 540 | preserved rootfs counter: 540 
+1794488600	suspended	e-s-098	200	0.482040	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488601	running	e-run	200	0.020190	preserved memory count: 542 | preserved file counter: 542 | preserved rootfs counter: 542 
+1794488602	running	e-run	200	0.021513	preserved memory count: 544 | preserved file counter: 544 | preserved rootfs counter: 544 
+1794488603	running	e-run	200	0.024637	preserved memory count: 546 | preserved file counter: 546 | preserved rootfs counter: 546 
+1794488604	running	e-run	200	0.019550	preserved memory count: 548 | preserved file counter: 548 | preserved rootfs counter: 548 
+1794488605	running	e-run	200	0.020013	preserved memory count: 550 | preserved file counter: 550 | preserved rootfs counter: 550 
+1794488605	suspended	e-s-099	200	0.397210	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488606	running	e-run	200	0.020805	preserved memory count: 551 | preserved file counter: 551 | preserved rootfs counter: 551 
+1794488607	running	e-run	200	0.019982	preserved memory count: 553 | preserved file counter: 553 | preserved rootfs counter: 553 
+1794488608	running	e-run	200	0.029403	preserved memory count: 555 | preserved file counter: 555 | preserved rootfs counter: 555 
+1794488609	running	e-run	200	0.021317	preserved memory count: 557 | preserved file counter: 557 | preserved rootfs counter: 557 
+1794488610	running	e-run	200	0.021974	preserved memory count: 559 | preserved file counter: 559 | preserved rootfs counter: 559 
+1794488610	suspended	e-s-100	200	0.525189	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488611	running	e-run	200	0.016473	preserved memory count: 561 | preserved file counter: 561 | preserved rootfs counter: 561 
+1794488612	running	e-run	200	0.019745	preserved memory count: 563 | preserved file counter: 563 | preserved rootfs counter: 563 
+1794488613	running	e-run	200	0.023379	preserved memory count: 565 | preserved file counter: 565 | preserved rootfs counter: 565 
+1794488614	running	e-run	200	0.021485	preserved memory count: 567 | preserved file counter: 567 | preserved rootfs counter: 567 
+1794488615	running	e-run	200	0.020763	preserved memory count: 569 | preserved file counter: 569 | preserved rootfs counter: 569 
+1794488615	suspended	e-s-101	200	0.494071	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488616	running	e-run	200	0.020699	preserved memory count: 571 | preserved file counter: 571 | preserved rootfs counter: 571 
+1794488617	running	e-run	200	0.021119	preserved memory count: 573 | preserved file counter: 573 | preserved rootfs counter: 573 
+1794488618	running	e-run	200	0.023925	preserved memory count: 575 | preserved file counter: 575 | preserved rootfs counter: 575 
+1794488619	running	e-run	200	0.020109	preserved memory count: 576 | preserved file counter: 576 | preserved rootfs counter: 576 
+1794488620	running	e-run	200	0.023406	preserved memory count: 578 | preserved file counter: 578 | preserved rootfs counter: 578 
+1794488620	suspended	e-s-102	200	0.487148	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488621	running	e-run	200	0.020816	preserved memory count: 580 | preserved file counter: 580 | preserved rootfs counter: 580 
+1794488622	running	e-run	200	0.020242	preserved memory count: 582 | preserved file counter: 582 | preserved rootfs counter: 582 
+1794488623	running	e-run	200	0.027219	preserved memory count: 584 | preserved file counter: 584 | preserved rootfs counter: 584 
+1794488624	running	e-run	200	0.019783	preserved memory count: 586 | preserved file counter: 586 | preserved rootfs counter: 586 
+1794488625	running	e-run	200	0.022968	preserved memory count: 588 | preserved file counter: 588 | preserved rootfs counter: 588 
+1794488625	suspended	e-s-103	200	0.491428	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488626	running	e-run	200	0.021496	preserved memory count: 590 | preserved file counter: 590 | preserved rootfs counter: 590 
+1794488627	running	e-run	200	0.018938	preserved memory count: 592 | preserved file counter: 592 | preserved rootfs counter: 592 
+1794488628	running	e-run	200	0.026389	preserved memory count: 594 | preserved file counter: 594 | preserved rootfs counter: 594 
+1794488629	running	e-run	200	0.019915	preserved memory count: 596 | preserved file counter: 596 | preserved rootfs counter: 596 
+1794488630	running	e-run	200	0.020390	preserved memory count: 598 | preserved file counter: 598 | preserved rootfs counter: 598 
+1794488630	suspended	e-s-104	200	0.488407	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488631	running	e-run	200	0.021695	preserved memory count: 599 | preserved file counter: 599 | preserved rootfs counter: 599 
+1794488632	running	e-run	200	0.020818	preserved memory count: 601 | preserved file counter: 601 | preserved rootfs counter: 601 
+1794488633	running	e-run	200	0.023310	preserved memory count: 603 | preserved file counter: 603 | preserved rootfs counter: 603 
+1794488634	running	e-run	200	0.022164	preserved memory count: 605 | preserved file counter: 605 | preserved rootfs counter: 605 
+1794488635	running	e-run	200	0.019323	preserved memory count: 607 | preserved file counter: 607 | preserved rootfs counter: 607 
+1794488635	suspended	e-s-105	200	0.498567	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 
+1794488636	running	e-run	200	0.021939	preserved memory count: 609 | preserved file counter: 609 | preserved rootfs counter: 609 
+1794488637	running	e-run	200	0.020598	preserved memory count: 611 | preserved file counter: 611 | preserved rootfs counter: 611 
+1794488638	running	e-run	200	0.026047	preserved memory count: 613 | preserved file counter: 613 | preserved rootfs counter: 613 
+1794488639	running	e-run	200	0.018921	preserved memory count: 615 | preserved file counter: 615 | preserved rootfs counter: 615 
+1794488640	running	e-run	200	0.018986	preserved memory count: 617 | preserved file counter: 617 | preserved rootfs counter: 617 
+1794488640	suspended	e-s-106	200	0.490727	preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1 

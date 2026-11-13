@@ -1,0 +1,64 @@
+ateApi:
+  authorization:
+    bootstrapOwners:
+    - spiffe://cluster.local/ns/kagent/sa/kagent-controller
+    - system:serviceaccount:ate-system:ate-client
+atelet:
+  extraArgs: []
+  extraEnv: []
+  imageCredentialProviderBinDir: ""
+  imageCredentialProviderConfig: ""
+  imageCredentialProviderConfigYAML: ""
+  resources:
+    limits:
+      cpu: "2"
+      memory: 1Gi
+    requests:
+      cpu: 50m
+      memory: 256Mi
+atenetRouter:
+  ingressAllowedSPIFFEIDs:
+  - spiffe://cluster.local/ns/kagent/sa/kagent-controller
+credentialProvider:
+  namespacePolicies:
+  - allowedNamespaces:
+    - kagent
+    atespace: kagent
+global:
+  imagePullPolicy: ""
+  imagePullSecrets: []
+  imageRegistry: ""
+image:
+  registry: ghcr.io
+  repository: kagent-dev/substrate
+  tag: ""
+imagePullSecrets: []
+objectStore:
+  backend: s3
+  credentialsSecret: kagent-rustfs-credentials
+  endpoint: http://rustfs.ate-system.svc:9000
+  pathStyle: true
+  region: us-east-1
+objectStorePlugin:
+  extraEnv: []
+  node:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+otel:
+  endpoint: ""
+  logs:
+    enabled: true
+    endpoint: ""
+  metrics:
+    enabled: true
+    endpoint: ""
+  traces:
+    enabled: true
+    endpoint: ""
+    samplingRatio: 0.01
+preview:
+- PerTemplateSnapshotLocation
+- GoldenEgressPolicy
+substrateReleaseName: substrate

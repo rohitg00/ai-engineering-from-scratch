@@ -1,0 +1,7 @@
+case	n_ok	n	median_total_ms	median_tls_ms	median_first_byte_ms	new_connections
+c1-tls-gw-new-connection-each	10	10	618.0	606.4	617.3	10
+c2-tls-gw-one-connection	30	30	10.0	0.0	9.5	1
+c3-plain-gw-new-connection-each	10	10	56.3	0.0	55.7	10
+c4-plain-gw-one-connection	30	30	8.6	0.0	8.1	1
+c5-direct-mock-one-connection	30	30	9.2	0.0	8.5	1
+c6-public-https-new-connection-each	0	5	codes=000

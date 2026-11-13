@@ -1,0 +1,1 @@
+{"stdout":"HTTP/1.1 403 Forbidden\r\ncontent-type: text/plain\r\ncontent-length: 13\r\ndate: Thu, 12 Nov 2026 10:52:45 GMT\r\nserver: envoy\r\n\r\negress denied","stderr":"","exitCode":0}

@@ -1,0 +1,1 @@
+deploy settings for Postgres on the other guest: env ATE_API_POSTGRES_READ_WRITE_CONNECTION_STRING, ATE_API_POSTGRES_OWNER_CONNECTION_STRING (postgresql://<user>:<password>@10.0.2.2:15432/atepg?sslmode=verify-full&sslrootcert=/run/postgres-server-ca/server-ca.pem) and --ateapi-postgres-server-ca-file

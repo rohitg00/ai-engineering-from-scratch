@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "atespace": "default",
+    "createTime": "2026-11-12T16:14:17.671780687Z",
+    "name": "default",
+    "uid": "bf89ff15-3469-48f4-867c-24d32c9c8f1c",
+    "updateTime": "2026-11-12T16:14:17.671780687Z",
+    "version": "1"
+  },
+  "rules": [
+    {
+      "tlsPassthrough": {
+        "hostnames": [
+          "github.com"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,1458 @@
+{
+  "dataplane_switch": {
+    "to_agentgateway": {
+      "exit": 0,
+      "seconds": 31
+    },
+    "to_envoy": {
+      "exit": 0,
+      "seconds": 31
+    }
+  },
+  "egress_log_level": {
+    "levels": [
+      {
+        "bytes": 1590006,
+        "lines": 4380,
+        "lines_with_authorization_value": 0,
+        "lines_with_header_value": 200,
+        "requests": 100,
+        "requests_ok": 100,
+        "rust_log": "debug"
+      },
+      {
+        "bytes": 46300,
+        "lines": 100,
+        "lines_with_authorization_value": 0,
+        "lines_with_header_value": 0,
+        "requests": 100,
+        "requests_ok": 100,
+        "rust_log": "info"
+      },
+      {
+        "bytes": 0,
+        "lines": 0,
+        "lines_with_authorization_value": 0,
+        "lines_with_header_value": 0,
+        "requests": 100,
+        "requests_ok": 100,
+        "rust_log": "warn"
+      }
+    ],
+    "note": "100 requests at each level on agentgateway",
+    "rust_log_after_installer_rerun": [
+      "debug"
+    ]
+  },
+  "keepalive_after_rule_removal": {
+    "agentgateway": {
+      "h1": {
+        "first_refused_request": 8,
+        "first_refused_seconds_after_removal": 0.8,
+        "http": "1.1",
+        "last_ok_seconds_after_removal": -1.2,
+        "new_connections": 1,
+        "ok": 7,
+        "refused_403": 13,
+        "requests": 20,
+        "rule_removed_seconds_after_start": 13.2,
+        "runs": {
+          "codes": [
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403"
+          ],
+          "seconds": [
+            0.091,
+            0.014,
+            0.009,
+            0.009,
+            0.009,
+            0.012,
+            0.009,
+            0.008,
+            0.01,
+            0.009,
+            0.008,
+            0.008,
+            0.01,
+            0.015,
+            0.008,
+            0.008,
+            0.008,
+            0.01,
+            0.008,
+            0.01
+          ]
+        },
+        "test": "h1-http11-keepalive"
+      },
+      "h2": {
+        "first_refused_request": 8,
+        "first_refused_seconds_after_removal": 0.7,
+        "http": "2",
+        "last_ok_seconds_after_removal": -1.3,
+        "new_connections": 1,
+        "ok": 7,
+        "refused_403": 13,
+        "requests": 20,
+        "rule_removed_seconds_after_start": 13.3,
+        "runs": {
+          "codes": [
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403"
+          ],
+          "seconds": [
+            1.61,
+            0.847,
+            1.143,
+            1.249,
+            0.886,
+            1.122,
+            1.076,
+            0.01,
+            0.01,
+            0.009,
+            0.009,
+            0.015,
+            0.016,
+            0.017,
+            0.014,
+            0.008,
+            0.008,
+            0.009,
+            0.011,
+            0.01
+          ]
+        },
+        "test": "h2-https-rule-http2"
+      }
+    },
+    "envoy": {
+      "h1": {
+        "first_refused_request": 12,
+        "first_refused_seconds_after_removal": 8.5,
+        "http": "1.1",
+        "last_ok_seconds_after_removal": 6.5,
+        "new_connections": 1,
+        "ok": 11,
+        "refused_403": 9,
+        "requests": 20,
+        "rule_removed_seconds_after_start": 13.5,
+        "runs": {
+          "codes": [
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403"
+          ],
+          "seconds": [
+            0.077,
+            0.005,
+            0.005,
+            0.005,
+            0.004,
+            0.005,
+            0.008,
+            0.005,
+            0.006,
+            0.005,
+            0.005,
+            0.012,
+            0.005,
+            0.004,
+            0.005,
+            0.005,
+            0.005,
+            0.011,
+            0.005,
+            0.005
+          ]
+        },
+        "test": "h1-http11-keepalive"
+      },
+      "h2": {
+        "first_refused_request": 11,
+        "first_refused_seconds_after_removal": 6.6,
+        "http": "2",
+        "last_ok_seconds_after_removal": 4.6,
+        "new_connections": 1,
+        "ok": 10,
+        "refused_403": 10,
+        "requests": 20,
+        "rule_removed_seconds_after_start": 13.4,
+        "runs": {
+          "codes": [
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "200",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403",
+            "403"
+          ],
+          "seconds": [
+            0.665,
+            0.018,
+            0.014,
+            0.244,
+            0.021,
+            0.018,
+            0.014,
+            1.048,
+            1.069,
+            1.074,
+            0.01,
+            0.004,
+            0.005,
+            0.004,
+            0.007,
+            0.01,
+            0.005,
+            0.005,
+            0.006,
+            0.004
+          ]
+        },
+        "test": "h2-https-rule-http2"
+      }
+    },
+    "note": "one curl process, 20 requests 2 s apart on one connection. The start time has a resolution of 1 s, so each time after the removal can be up to 1 s later."
+  },
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, one kind node, agentgateway v1.7.0 and Envoy switched in place",
+  "model_gateway": {
+    "agentgateway": {
+      "connection_cost_ms": [
+        {
+          "case": "c1-tls-gw-new-connection-each",
+          "median_first_byte_ms": 617.3,
+          "median_tls_ms": 606.4,
+          "median_total_ms": 618.0,
+          "n": 10,
+          "n_ok": 10,
+          "new_connections": 10
+        },
+        {
+          "case": "c2-tls-gw-one-connection",
+          "median_first_byte_ms": 9.5,
+          "median_tls_ms": 0.0,
+          "median_total_ms": 10.0,
+          "n": 30,
+          "n_ok": 30,
+          "new_connections": 1
+        },
+        {
+          "case": "c3-plain-gw-new-connection-each",
+          "median_first_byte_ms": 55.7,
+          "median_tls_ms": 0.0,
+          "median_total_ms": 56.3,
+          "n": 10,
+          "n_ok": 10,
+          "new_connections": 10
+        },
+        {
+          "case": "c4-plain-gw-one-connection",
+          "median_first_byte_ms": 8.1,
+          "median_tls_ms": 0.0,
+          "median_total_ms": 8.6,
+          "n": 30,
+          "n_ok": 30,
+          "new_connections": 1
+        },
+        {
+          "case": "c5-direct-mock-one-connection",
+          "median_first_byte_ms": 8.5,
+          "median_tls_ms": 0.0,
+          "median_total_ms": 9.2,
+          "n": 30,
+          "n_ok": 30,
+          "new_connections": 1
+        },
+        {
+          "case": "c6-public-https-new-connection-each",
+          "median_total_ms": "codes=000",
+          "n": 5,
+          "n_ok": 0
+        }
+      ],
+      "default_install_tls_gateway": {
+        "max_ms": "-",
+        "median_ms": "codes=503",
+        "min_ms": "-",
+        "n": 30,
+        "n_ok": 0,
+        "path": "actor-l3-via-tls-gw"
+      },
+      "injected_credential_seen_by": {
+        "mock-a": 3,
+        "mock-b": 0
+      },
+      "new_connection_each_request_ms": [
+        {
+          "max_ms": 96.6,
+          "median_ms": 27.5,
+          "min_ms": 20.0,
+          "n": 30,
+          "n_ok": 30,
+          "path": "actor-l1-direct-mock"
+        },
+        {
+          "max_ms": 98.5,
+          "median_ms": 53.7,
+          "min_ms": 24.4,
+          "n": 30,
+          "n_ok": 30,
+          "path": "actor-l2-via-plain-gw"
+        },
+        {
+          "max_ms": 790.1,
+          "median_ms": 689.8,
+          "min_ms": 617.3,
+          "n": 30,
+          "n_ok": 30,
+          "path": "actor-l3-via-tls-gw"
+        },
+        {
+          "max_ms": 5.0,
+          "median_ms": 4.2,
+          "min_ms": 3.6,
+          "n": 30,
+          "n_ok": 30,
+          "path": "pod-direct-mock"
+        },
+        {
+          "max_ms": 5.7,
+          "median_ms": 4.3,
+          "min_ms": 3.6,
+          "n": 30,
+          "n_ok": 30,
+          "path": "pod-via-plain-gw"
+        },
+        {
+          "max_ms": 18.2,
+          "median_ms": 14.7,
+          "min_ms": 13.7,
+          "n": 30,
+          "n_ok": 30,
+          "path": "pod-via-tls-gw"
+        }
+      ],
+      "placeholder_seen_by_backends": 0
+    },
+    "envoy": {
+      "connection_cost_ms": [
+        {
+          "case": "c1-tls-gw-new-connection-each",
+          "median_first_byte_ms": 613.2,
+          "median_tls_ms": 599.7,
+          "median_total_ms": 613.6,
+          "n": 10,
+          "n_ok": 10,
+          "new_connections": 10
+        },
+        {
+          "case": "c2-tls-gw-one-connection",
+          "median_first_byte_ms": 11.5,
+          "median_tls_ms": 0.0,
+          "median_total_ms": 11.9,
+          "n": 30,
+          "n_ok": 30,
+          "new_connections": 1
+        },
+        {
+          "case": "c3-plain-gw-new-connection-each",
+          "median_first_byte_ms": 26.9,
+          "median_tls_ms": 0.0,
+          "median_total_ms": 27.4,
+          "n": 10,
+          "n_ok": 10,
+          "new_connections": 10
+        },
+        {
+          "case": "c4-plain-gw-one-connection",
+          "median_first_byte_ms": 10.1,
+          "median_tls_ms": 0.0,
+          "median_total_ms": 10.5,
+          "n": 30,
+          "n_ok": 30,
+          "new_connections": 1
+        },
+        {
+          "case": "c5-direct-mock-one-connection",
+          "median_first_byte_ms": 4.0,
+          "median_tls_ms": 0.0,
+          "median_total_ms": 4.4,
+          "n": 30,
+          "n_ok": 30,
+          "new_connections": 1
+        },
+        {
+          "case": "c6-public-https-new-connection-each",
+          "median_total_ms": "codes=000",
+          "n": 5,
+          "n_ok": 0
+        }
+      ],
+      "default_install_tls_gateway": {
+        "max_ms": "-",
+        "median_ms": "codes=503",
+        "min_ms": "-",
+        "n": 30,
+        "n_ok": 0,
+        "path": "actor-l3-via-tls-gw"
+      },
+      "injected_credential_seen_by": {
+        "mock-a": 3,
+        "mock-b": 2
+      },
+      "new_connection_each_request_ms": [
+        {
+          "max_ms": 96.7,
+          "median_ms": 22.8,
+          "min_ms": 19.7,
+          "n": 30,
+          "n_ok": 30,
+          "path": "actor-l1-direct-mock"
+        },
+        {
+          "max_ms": 96.2,
+          "median_ms": 29.2,
+          "min_ms": 26.3,
+          "n": 30,
+          "n_ok": 30,
+          "path": "actor-l2-via-plain-gw"
+        },
+        {
+          "max_ms": 701.5,
+          "median_ms": 614.1,
+          "min_ms": 528.1,
+          "n": 30,
+          "n_ok": 30,
+          "path": "actor-l3-via-tls-gw"
+        },
+        {
+          "max_ms": 6.5,
+          "median_ms": 4.4,
+          "min_ms": 3.8,
+          "n": 30,
+          "n_ok": 30,
+          "path": "pod-direct-mock"
+        },
+        {
+          "max_ms": 6.5,
+          "median_ms": 4.2,
+          "min_ms": 3.8,
+          "n": 30,
+          "n_ok": 30,
+          "path": "pod-via-plain-gw"
+        },
+        {
+          "max_ms": 17.7,
+          "median_ms": 14.9,
+          "min_ms": 13.8,
+          "n": 30,
+          "n_ok": 30,
+          "path": "pod-via-tls-gw"
+        }
+      ],
+      "placeholder_seen_by_backends": 0
+    }
+  },
+  "note": "a three-node cluster on the same guest ran the node-stop tests at the same time, so read differences of a few milliseconds as noise. Each test ran once on each dataplane.",
+  "router_ports": {
+    "agentgateway": {
+      "container_ports": {
+        "agentgateway": [
+          8080,
+          8443,
+          8081,
+          8444,
+          15021,
+          15020
+        ]
+      },
+      "more_probes": {
+        "pod-ip 15000 plain": {
+          "code": "000"
+        },
+        "pod-ip 15000 tls": {
+          "code": "000"
+        },
+        "pod-ip 15021 plain": {
+          "body": "",
+          "code": "404"
+        },
+        "pod-ip 15021 tls": {
+          "code": "000"
+        },
+        "pod-ip 8443 plain": {
+          "code": "000"
+        },
+        "pod-ip 8443 tls": {
+          "code": "000"
+        },
+        "service 443 with allowed client cert, POST with routing header": {
+          "body": "preserved memory count: 9 ",
+          "code": "200"
+        },
+        "service 443 with allowed client cert, no routing header": {
+          "body": "ingress failed",
+          "code": "404"
+        },
+        "service 8444 with allowed client cert, POST with routing header": {
+          "body": "method not allowed",
+          "code": "405"
+        },
+        "stats 15020 /metrics from another namespace": {
+          "bytes": 13394,
+          "code": "200",
+          "metric_families": 58
+        },
+        "stats 15020 /stats/prometheus": {
+          "bytes": 13394,
+          "code": "200"
+        }
+      },
+      "probes": [
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 80 after 4 ms: Could not connect to server"
+          },
+          "port": 80,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 80 after 3 ms: Could not connect to server"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8080,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 8081 after 4 ms: Could not connect to server"
+          },
+          "port": 8081,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 8081 after 4 ms: Could not connect to server"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 1,
+            "error": "Received HTTP/0.9 when not allowed"
+          },
+          "port": 443,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 56,
+            "error": "OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 1,
+            "error": "Received HTTP/0.9 when not allowed"
+          },
+          "port": 8444,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 56,
+            "error": "OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "404",
+            "curl_exit": 0,
+            "error": ""
+          },
+          "port": 15020,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 35,
+            "error": "TLS connect error: error:0A0000C6:SSL routines::packet length too long"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 80,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to <router-pod-ip> port 8080 after 0 ms: Could not connect to server"
+          },
+          "port": 8080,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to <router-pod-ip> port 8080 after 0 ms: Could not connect to server"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to <router-pod-ip> port 8081 after 0 ms: Could not connect to server"
+          },
+          "port": 8081,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to <router-pod-ip> port 8081 after 0 ms: Could not connect to server"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 443,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 1,
+            "error": "Received HTTP/0.9 when not allowed"
+          },
+          "port": 8444,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 56,
+            "error": "OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "404",
+            "curl_exit": 0,
+            "error": ""
+          },
+          "port": 15020,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 35,
+            "error": "TLS connect error: error:0A0000C6:SSL routines::packet length too long"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 80 after 5 ms: Could not connect to server"
+          },
+          "port": 80,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 80 after 5 ms: Could not connect to server"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 80 after 5 ms: Could not connect to server"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8080,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 6002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 8081 after 6 ms: Could not connect to server"
+          },
+          "port": 8081,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 8081 after 5 ms: Could not connect to server"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to atenet-router.ate-system.svc.cluster.local port 8081 after 5 ms: Could not connect to server"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 1,
+            "error": "Received HTTP/0.9 when not allowed"
+          },
+          "port": 443,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 56,
+            "error": "OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 60,
+            "error": "SSL: no alternative certificate subject name matches target hostname 'atenet-router.ate-system.svc.cluster.local'"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 1,
+            "error": "Received HTTP/0.9 when not allowed"
+          },
+          "port": 8444,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 56,
+            "error": "OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 60,
+            "error": "SSL: no alternative certificate subject name matches target hostname 'atenet-router.ate-system.svc.cluster.local'"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "404",
+            "curl_exit": 0,
+            "error": ""
+          },
+          "port": 15020,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 35,
+            "error": "TLS connect error: error:0A0000C6:SSL routines::packet length too long"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 35,
+            "error": "TLS connect error: error:0A0000C6:SSL routines::packet length too long"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          },
+          "port": 80,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to <router-pod-ip> port 8080 after 0 ms: Could not connect to server"
+          },
+          "port": 8080,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to <router-pod-ip> port 8080 after 0 ms: Could not connect to server"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to <router-pod-ip> port 8081 after 0 ms: Could not connect to server"
+          },
+          "port": 8081,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 7,
+            "error": "Failed to connect to <router-pod-ip> port 8081 after 0 ms: Could not connect to server"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 443,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 1,
+            "error": "Received HTTP/0.9 when not allowed"
+          },
+          "port": 8444,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 56,
+            "error": "OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "404",
+            "curl_exit": 0,
+            "error": ""
+          },
+          "port": 15020,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 35,
+            "error": "TLS connect error: error:0A0000C6:SSL routines::packet length too long"
+          }
+        }
+      ],
+      "service_ports": [
+        443,
+        8444,
+        15020,
+        80,
+        8081
+      ]
+    },
+    "envoy": {
+      "container_ports": {
+        "atenet-router": [
+          50051,
+          9090,
+          9091
+        ],
+        "envoy": [
+          8443,
+          8444,
+          9902
+        ]
+      },
+      "more_probes": {
+        "pod-ip 15000 plain": {
+          "code": "000"
+        },
+        "pod-ip 15000 tls": {
+          "code": "000"
+        },
+        "pod-ip 15021 plain": {
+          "code": "000"
+        },
+        "pod-ip 15021 tls": {
+          "code": "000"
+        },
+        "pod-ip 8443 plain": {
+          "code": "000"
+        },
+        "pod-ip 8443 tls": {
+          "code": "000"
+        },
+        "service 443 with allowed client cert, POST with routing header": {
+          "body": "preserved memory count: 10 ",
+          "code": "200"
+        },
+        "service 443 with allowed client cert, no routing header": {
+          "body": "invalid actor reference",
+          "code": "404"
+        },
+        "service 8444 with allowed client cert, POST with routing header": {
+          "body": "",
+          "code": "404"
+        },
+        "stats 15020 /metrics from another namespace": {
+          "code": "000"
+        },
+        "stats 15020 /stats/prometheus": {
+          "code": "000"
+        }
+      },
+      "probes": [
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 80,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8080,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          },
+          "port": 8081,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 52,
+            "error": "Empty reply from server"
+          },
+          "port": 443,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 55,
+            "error": "Send failure: Broken pipe"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 52,
+            "error": "Empty reply from server"
+          },
+          "port": 8444,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 55,
+            "error": "Send failure: Broken pipe"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 15020,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 80,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8080,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8081,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 443,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 52,
+            "error": "Empty reply from server"
+          },
+          "port": 8444,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 55,
+            "error": "Send failure: Broken pipe"
+          }
+        },
+        {
+          "from": "pod-in-other-namespace to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 15020,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 80,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 6002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8080,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 6002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8081,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 6002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 52,
+            "error": "Empty reply from server"
+          },
+          "port": 443,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 55,
+            "error": "Send failure: Broken pipe"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 60,
+            "error": "SSL: no alternative certificate subject name matches target hostname 'atenet-router.ate-system.svc.cluster.local'"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 52,
+            "error": "Empty reply from server"
+          },
+          "port": 8444,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 55,
+            "error": "Send failure: Broken pipe"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 60,
+            "error": "SSL: no alternative certificate subject name matches target hostname 'atenet-router.ate-system.svc.cluster.local'"
+          }
+        },
+        {
+          "from": "pod-in-ate-system with atenet-client identity to Service",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          },
+          "port": 15020,
+          "target": "service",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "tls_with_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 6002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4001 milliseconds"
+          },
+          "port": 80,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8080,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 8081,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 443,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 52,
+            "error": "Empty reply from server"
+          },
+          "port": 8444,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 55,
+            "error": "Send failure: Broken pipe"
+          }
+        },
+        {
+          "from": "pod-in-ate-system to pod IP",
+          "plain_http": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          },
+          "port": 15020,
+          "target": "pod-ip",
+          "tls_no_client_cert": {
+            "code": "000",
+            "curl_exit": 28,
+            "error": "Connection timed out after 4002 milliseconds"
+          }
+        }
+      ],
+      "service_ports": [
+        443,
+        8444
+      ]
+    }
+  },
+  "sources": [
+    "capture/lab/Q-network/h-keepalive/agentgateway/results.txt",
+    "capture/lab/Q-network/h-keepalive/envoy/results.txt",
+    "capture/lab/Q-network/k-suspend-cutoff/agentgateway/10-events.tsv",
+    "capture/lab/Q-network/k-suspend-cutoff/envoy/10-events.tsv",
+    "capture/lab/Q-network/j-log-level/10-volume.tsv",
+    "capture/lab/Q-network/i-model-gateway/31-latency-agentgateway-private-ca-trusted.tsv",
+    "capture/lab/Q-network/i-model-gateway/31-latency-envoy-private-ca-trusted.tsv",
+    "capture/lab/Q-network/i-model-gateway/51-connection-cost-agentgateway.tsv",
+    "capture/lab/Q-network/i-model-gateway/51-connection-cost-envoy-private-ca-trusted.tsv",
+    "capture/lab/Q-network/m-router-ports/agentgateway/10-port-probes.tsv",
+    "capture/lab/Q-network/m-router-ports/envoy/10-port-probes.tsv",
+    "capture/lab/Q-network/00-dataplane-switch-to-agentgateway/17-after-rerun-rust-log-and-roots.json"
+  ],
+  "suspend_cutoff": {
+    "agentgateway": {
+      "state_after_request": "ACTOR_STATE_RUNNING",
+      "state_before_resume": "ACTOR_STATE_SUSPENDED",
+      "suspend_call_seconds": 0.64,
+      "upstream_saw_connection_gone_seconds": 2.2
+    },
+    "envoy": {
+      "state_after_request": "ACTOR_STATE_RUNNING",
+      "state_before_resume": "ACTOR_STATE_SUSPENDED",
+      "suspend_call_seconds": 0.54,
+      "upstream_saw_connection_gone_seconds": 1.3
+    },
+    "note": "the upstream writes one chunk each second, so the close can be up to 1 s earlier"
+  }
+}

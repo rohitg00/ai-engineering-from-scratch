@@ -1,0 +1,4 @@
+ATESPACE   NAME    TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-run   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    6         10m
+revert 0.224 s state ACTOR_STATE_SUSPENDED
+a-run after revert: 200	0.348150	count=1 process_age_s=642.5 

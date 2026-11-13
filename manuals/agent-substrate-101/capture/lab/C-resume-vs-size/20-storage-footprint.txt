@@ -1,0 +1,76 @@
+== node: /var/lib/ate
+0	/var/lib/ate/atelet-otlp.sock
+0	/var/lib/ate/worker-support.sock
+1	/var/lib/ate/cache-boot-id
+1	/var/lib/ate/sandbox-asset-scratch
+1	/var/lib/ate/sandbox-runtime-index.json
+1	/var/lib/ate/snapshot-scratch
+1	/var/lib/ate/workers
+24	/var/lib/ate/image-cache
+159	/var/lib/ate/sandbox-asset-cache
+164	/var/lib/ate/actors
+1765	/var/lib/ate/snapshot-cache
+8801	/var/lib/ate/snapshots
+== node: snapshots per actor uid (MiB)
+1	/var/lib/ate/snapshots/6f80f612-7547-4f5b-b3ab-831595621806
+2	/var/lib/ate/snapshots/04ec08ec-d101-4e22-8aee-824705174bab
+2	/var/lib/ate/snapshots/ac020c4c-0d51-4ad7-8b4d-8f8c0987a44a
+2	/var/lib/ate/snapshots/aca7bdb7-e9fd-405a-97c1-4acde31bca20
+2	/var/lib/ate/snapshots/ba1030b1-7cc8-42cb-96b9-32ca06092a1e
+2	/var/lib/ate/snapshots/cb0af3e3-c7d3-48c5-8895-13b44d3be53d
+52	/var/lib/ate/snapshots/5e7d097b-03d2-4774-83a8-e2ce4865a82d
+52	/var/lib/ate/snapshots/84c70d57-0285-4a25-b9f0-2abae08df43b
+52	/var/lib/ate/snapshots/aa535fc4-72ae-441f-929a-242255870fb4
+52	/var/lib/ate/snapshots/eeacdad1-9d25-4431-97a7-8b925a48e68e
+52	/var/lib/ate/snapshots/fe35aaee-b017-4bcd-8117-c2ef7b5d17ef
+202	/var/lib/ate/snapshots/13bf1743-2ab4-45c9-a58c-f4dc41c461fa
+202	/var/lib/ate/snapshots/3d6dcfc6-0995-41f1-a556-8d07404adc3f
+202	/var/lib/ate/snapshots/9d9419fd-ea95-48d2-b673-11a1d4fba006
+202	/var/lib/ate/snapshots/a77c2723-c524-46d0-9a7e-caa97f36ab9c
+202	/var/lib/ate/snapshots/f7f72b51-bdc8-4357-a557-40072bfaa1ff
+503	/var/lib/ate/snapshots/1e2f9ae2-27db-4893-9320-19bcd8992929
+503	/var/lib/ate/snapshots/9ac65945-156c-48fc-9843-57e54fd36a9f
+503	/var/lib/ate/snapshots/9b5df341-5145-4785-90ff-6eb4008754b0
+503	/var/lib/ate/snapshots/ab1c5a33-8355-4b68-86f1-1d416ce913f5
+503	/var/lib/ate/snapshots/c67a2819-de75-420f-81f5-22a542954c1a
+1003	/var/lib/ate/snapshots/4c444767-4963-4405-b6dd-69ada1d8a9ca
+1003	/var/lib/ate/snapshots/61a6dcae-3426-40c4-85fe-4bc0f84dbaca
+1003	/var/lib/ate/snapshots/683afa6f-f057-463f-b55b-11904c137085
+1003	/var/lib/ate/snapshots/9843817b-abf2-485f-9e23-ca50d5caf6c9
+1003	/var/lib/ate/snapshots/f15c04c3-9217-415b-9660-d0c3319be060
+== rustfs pod data
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda1        48G   39G  9.0G  82% /data
+10824	/data
+10821	/data/ate-snapshots
+== kind node disk
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda1        48G   39G  9.0G  82% /var
+/dev/vda1        48G   39G  9.0G  82% /var
+== actors
+ATESPACE   NAME      TEMPLATE             STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+lab-c      b0-1      lab-c/ballast-0      ACTOR_STATE_SUSPENDED   <none>                    45        8m5s
+lab-c      b0-2      lab-c/ballast-0      ACTOR_STATE_SUSPENDED   <none>                    5         7m47s
+lab-c      b0-3      lab-c/ballast-0      ACTOR_STATE_SUSPENDED   <none>                    5         7m45s
+lab-c      b0-4      lab-c/ballast-0      ACTOR_STATE_SUSPENDED   <none>                    5         7m43s
+lab-c      b0-5      lab-c/ballast-0      ACTOR_STATE_SUSPENDED   <none>                    5         7m41s
+lab-c      b1000-1   lab-c/ballast-1000   ACTOR_STATE_SUSPENDED   <none>                    45        5m3s
+lab-c      b1000-2   lab-c/ballast-1000   ACTOR_STATE_SUSPENDED   <none>                    5         3m48s
+lab-c      b1000-3   lab-c/ballast-1000   ACTOR_STATE_SUSPENDED   <none>                    5         3m37s
+lab-c      b1000-4   lab-c/ballast-1000   ACTOR_STATE_SUSPENDED   <none>                    5         3m23s
+lab-c      b1000-5   lab-c/ballast-1000   ACTOR_STATE_SUSPENDED   <none>                    5         3m10s
+lab-c      b200-1    lab-c/ballast-200    ACTOR_STATE_SUSPENDED   <none>                    45        7m8s
+lab-c      b200-2    lab-c/ballast-200    ACTOR_STATE_SUSPENDED   <none>                    5         6m41s
+lab-c      b200-3    lab-c/ballast-200    ACTOR_STATE_SUSPENDED   <none>                    5         6m37s
+lab-c      b200-4    lab-c/ballast-200    ACTOR_STATE_SUSPENDED   <none>                    5         6m33s
+lab-c      b200-5    lab-c/ballast-200    ACTOR_STATE_SUSPENDED   <none>                    5         6m29s
+lab-c      b50-1     lab-c/ballast-50     ACTOR_STATE_SUSPENDED   <none>                    45        7m39s
+lab-c      b50-2     lab-c/ballast-50     ACTOR_STATE_SUSPENDED   <none>                    5         7m18s
+lab-c      b50-3     lab-c/ballast-50     ACTOR_STATE_SUSPENDED   <none>                    5         7m16s
+lab-c      b50-4     lab-c/ballast-50     ACTOR_STATE_SUSPENDED   <none>                    5         7m13s
+lab-c      b50-5     lab-c/ballast-50     ACTOR_STATE_SUSPENDED   <none>                    5         7m11s
+lab-c      b500-1    lab-c/ballast-500    ACTOR_STATE_SUSPENDED   <none>                    45        6m25s
+lab-c      b500-2    lab-c/ballast-500    ACTOR_STATE_SUSPENDED   <none>                    5         5m44s
+lab-c      b500-3    lab-c/ballast-500    ACTOR_STATE_SUSPENDED   <none>                    5         5m37s
+lab-c      b500-4    lab-c/ballast-500    ACTOR_STATE_SUSPENDED   <none>                    5         5m25s
+lab-c      b500-5    lab-c/ballast-500    ACTOR_STATE_SUSPENDED   <none>                    5         5m14s

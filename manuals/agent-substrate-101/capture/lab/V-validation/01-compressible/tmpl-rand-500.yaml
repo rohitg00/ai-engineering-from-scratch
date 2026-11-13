@@ -1,0 +1,23 @@
+metadata:
+  atespace: lab-v
+  name: rand-500
+workerSelector:
+  matchLabels:
+    workload: vpool
+containers:
+- name: ballast
+  image: localhost:5001/ballast@sha256:3c297fb8f6ce7067ac8180af0fc52cd422b5ee46135aa937368a731925e173b7
+  command:
+  - /ballast
+  - --mb=500
+  - --fill=random
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+resources:
+  limits:
+    cpuMillicores: 1000
+    memoryBytes: 792723456
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

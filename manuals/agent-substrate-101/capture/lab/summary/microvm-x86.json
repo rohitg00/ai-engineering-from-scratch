@@ -1,0 +1,465 @@
+{
+  "actor": "ballast: a Go server in a scratch image that holds x MiB of random bytes, fidelity SNAPSHOT_FIDELITY_MEMORY, sandbox class microvm",
+  "create_actor": {
+    "points": [
+      {
+        "failed": 0,
+        "runs": [
+          0.222,
+          0.226,
+          0.215,
+          0.219,
+          0.212
+        ],
+        "seconds": {
+          "max": 0.226,
+          "median": 0.219,
+          "min": 0.212,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.219,
+          0.216,
+          0.233,
+          0.209,
+          0.202
+        ],
+        "seconds": {
+          "max": 0.233,
+          "median": 0.216,
+          "min": 0.202,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.191,
+          0.21,
+          0.211,
+          0.204,
+          0.206
+        ],
+        "seconds": {
+          "max": 0.211,
+          "median": 0.206,
+          "min": 0.191,
+          "n": 5
+        },
+        "x": 500
+      }
+    ]
+  },
+  "local_snapshot_per_actor": [
+    {
+      "kib": 60032,
+      "mib": 58.6,
+      "x": 0
+    },
+    {
+      "kib": 270376,
+      "mib": 264.0,
+      "x": 200
+    },
+    {
+      "kib": 583384,
+      "mib": 569.7,
+      "x": 500
+    }
+  ],
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, microVM class",
+  "new_actor_first_call": {
+    "note": "create an actor, first request restores the golden snapshot",
+    "points": [
+      {
+        "failed": 0,
+        "runs": [
+          0.73,
+          0.448,
+          0.443,
+          0.436,
+          0.462
+        ],
+        "seconds": {
+          "max": 0.73,
+          "median": 0.448,
+          "min": 0.436,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "runs": [
+          1.487,
+          0.764,
+          0.787,
+          0.769,
+          0.859
+        ],
+        "seconds": {
+          "max": 1.487,
+          "median": 0.787,
+          "min": 0.764,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "runs": [
+          2.762,
+          1.256,
+          1.333,
+          1.394,
+          2.956
+        ],
+        "seconds": {
+          "max": 2.956,
+          "median": 1.394,
+          "min": 1.256,
+          "n": 5
+        },
+        "x": 500
+      }
+    ]
+  },
+  "node_local": {
+    "note": "async suspend, 1 s wait, one request",
+    "points": [
+      {
+        "failed": 0,
+        "runs": [
+          0.325,
+          0.326,
+          0.345,
+          0.321,
+          0.306,
+          0.335,
+          0.303,
+          0.331,
+          0.323,
+          0.331
+        ],
+        "seconds": {
+          "max": 0.345,
+          "median": 0.326,
+          "min": 0.303,
+          "n": 10
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.476,
+          0.62,
+          0.515,
+          0.51,
+          0.489,
+          0.51,
+          0.485,
+          0.494,
+          0.481,
+          0.48
+        ],
+        "seconds": {
+          "max": 0.62,
+          "median": 0.491,
+          "min": 0.476,
+          "n": 10
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.794,
+          0.807,
+          1.026,
+          0.935,
+          0.826,
+          1.101,
+          0.752,
+          0.799,
+          0.796,
+          0.772
+        ],
+        "seconds": {
+          "max": 1.101,
+          "median": 0.803,
+          "min": 0.752,
+          "n": 10
+        },
+        "x": 500
+      }
+    ]
+  },
+  "resident_memory": {
+    "gvisor_same_node": [
+      {
+        "kib": 11552,
+        "mib": 11.3,
+        "process": "runsc-gofer"
+      },
+      {
+        "kib": 11540,
+        "mib": 11.3,
+        "process": "runsc-gofer"
+      },
+      {
+        "kib": 242516,
+        "mib": 236.8,
+        "process": "runsc-sandbox"
+      },
+      {
+        "kib": 88472,
+        "mib": 86.4,
+        "process": "runsc-sandbox"
+      }
+    ],
+    "microvm": [
+      {
+        "kib": 75804,
+        "mib": 74.0,
+        "process": "cloud-hypervisor",
+        "x": 0
+      },
+      {
+        "kib": 286224,
+        "mib": 279.5,
+        "process": "cloud-hypervisor",
+        "x": 200
+      }
+    ],
+    "note": "resident set size from ps on the node, one sample per process"
+  },
+  "sources": [
+    "capture/lab/L-gaps/microvm/40-microvm-local.tsv",
+    "capture/lab/L-gaps/microvm/50-gvisor-rss.txt",
+    "capture/lab/L-gaps/microvm/44-snapdir-v0-1.txt",
+    "capture/lab/L-gaps/microvm/44-snapdir-v200-1.txt",
+    "capture/lab/L-gaps/microvm/44-snapdir-v500-1.txt",
+    "capture/lab/L-gaps/microvm/41-node-processes-v0-1.txt",
+    "capture/lab/L-gaps/microvm/41-node-processes-v200-1.txt"
+  ],
+  "suspend_async": {
+    "points": [
+      {
+        "failed": 0,
+        "runs": [
+          0.385,
+          0.398,
+          0.394,
+          0.397,
+          0.377,
+          0.378,
+          0.407,
+          0.385,
+          0.378,
+          0.41
+        ],
+        "seconds": {
+          "max": 0.41,
+          "median": 0.39,
+          "min": 0.377,
+          "n": 10
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.821,
+          0.764,
+          0.793,
+          0.8,
+          0.822,
+          0.778,
+          0.777,
+          0.786,
+          0.937,
+          0.878
+        ],
+        "seconds": {
+          "max": 0.937,
+          "median": 0.796,
+          "min": 0.764,
+          "n": 10
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "runs": [
+          1.199,
+          1.172,
+          1.102,
+          1.205,
+          1.209,
+          1.156,
+          1.171,
+          1.078,
+          1.121,
+          1.237
+        ],
+        "seconds": {
+          "max": 1.237,
+          "median": 1.171,
+          "min": 1.078,
+          "n": 10
+        },
+        "x": 500
+      }
+    ]
+  },
+  "suspend_sync": {
+    "points": [
+      {
+        "failed": 0,
+        "runs": [
+          0.726,
+          0.7,
+          0.719,
+          0.719,
+          0.689
+        ],
+        "seconds": {
+          "max": 0.726,
+          "median": 0.719,
+          "min": 0.689,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "runs": [
+          2.022,
+          1.892,
+          1.879,
+          1.892,
+          2.044
+        ],
+        "seconds": {
+          "max": 2.044,
+          "median": 1.892,
+          "min": 1.879,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "runs": [
+          3.522,
+          3.201,
+          3.349,
+          3.348,
+          3.341
+        ],
+        "seconds": {
+          "max": 3.522,
+          "median": 3.348,
+          "min": 3.201,
+          "n": 5
+        },
+        "x": 500
+      }
+    ]
+  },
+  "unit": {
+    "seconds": "client time through kubectl ate proxy, CLI time for create and suspend",
+    "x": "MiB of memory the actor holds"
+  },
+  "warm_call": {
+    "points": [
+      {
+        "failed": 0,
+        "runs": [
+          0.073,
+          0.066,
+          0.065,
+          0.064,
+          0.066,
+          0.058,
+          0.065,
+          0.063,
+          0.065,
+          0.067,
+          0.062,
+          0.068,
+          0.068,
+          0.064,
+          0.066
+        ],
+        "seconds": {
+          "max": 0.073,
+          "median": 0.065,
+          "min": 0.058,
+          "n": 15
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.068,
+          0.062,
+          0.069,
+          0.065,
+          0.058,
+          0.064,
+          0.067,
+          0.063,
+          0.066,
+          0.068,
+          0.064,
+          0.063,
+          0.072,
+          0.067,
+          0.065
+        ],
+        "seconds": {
+          "max": 0.072,
+          "median": 0.065,
+          "min": 0.058,
+          "n": 15
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.069,
+          0.055,
+          0.061,
+          0.063,
+          0.065,
+          0.065,
+          0.06,
+          0.065,
+          0.065,
+          0.066,
+          0.061,
+          0.067,
+          0.072,
+          0.061,
+          0.061
+        ],
+        "seconds": {
+          "max": 0.072,
+          "median": 0.065,
+          "min": 0.055,
+          "n": 15
+        },
+        "x": 500
+      }
+    ]
+  }
+}

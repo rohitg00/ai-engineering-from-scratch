@@ -1,0 +1,9 @@
+step	rc	seconds
+03-apply	0	0.091
+04-actor-after-apply	0	0.191
+05-create-egress	0	0.169
+06-resume-first-with-clone	0	5.468
+07-clone-state	0	0.865
+08-actor-logs	0	0.211
+09-describe	0	0.041
+11-suspend-end	0	0.194

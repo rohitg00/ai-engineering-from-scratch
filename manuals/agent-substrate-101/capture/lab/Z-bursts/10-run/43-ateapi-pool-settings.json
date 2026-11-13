@@ -1,0 +1,28 @@
+[
+  {
+    "name": "ate-api-server",
+    "args": [
+      "--grpc-server-cred-bundle=/run/servicedns.podcert.ate.dev/credential-bundle.pem",
+      "--config-file=/run/apiconfig.ate.dev/apiconfig.textproto",
+      "--authentication-config=/etc/ateapi/authentication/authentication.yaml",
+      "--postgres-read-write-connection-string=@env",
+      "--postgres-owner-connection-string=@env",
+      "--postgres-read-write-role=@env",
+      "--postgres-owner-role=@env",
+      "--postgres-schema=@env",
+      "--actor-id-jwt-pool=/run/actor-id-jwt-pool/pool.json",
+      "--actor-jwt-issuer=@env",
+      "--actor-id-ca-pool=/run/actor-id-ca-pool/pool.json",
+      "--atelet-client-cred-bundle=/run/podidentity.podcert.ate.dev/credential-bundle.pem",
+      "--pod-identity-ca-certs=/run/podidentity.podcert.ate.dev/trust-bundle.pem",
+      "--default-egress-gateway-address=atenet-egress.ate-system.svc:443",
+      "--drain-delay=13s",
+      "--drain-timeout=15s",
+      "--objectstore-plugin-socket=/run/objectstore-plugin/control.sock",
+      "--snapshot-location=@env",
+      "--preview=",
+      "--authz-bootstrap-owners=system:serviceaccount:ate-system:ate-client"
+    ],
+    "env": []
+  }
+]

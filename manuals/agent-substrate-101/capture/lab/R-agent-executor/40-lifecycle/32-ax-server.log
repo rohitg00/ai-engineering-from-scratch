@@ -1,0 +1,125 @@
+{"time":"2026-11-12T15:20:08.991871447Z","level":"INFO","msg":"tracing initialized","export":false}
+{"time":"2026-11-12T15:20:08.992366596Z","level":"INFO","msg":"metrics initialized","export":false}
+{"time":"2026-11-12T15:20:08.992387646Z","level":"INFO","msg":"OTLP logs export disabled","exporter":"none"}
+{"time":"2026-11-12T15:20:08.99258241Z","level":"INFO","msg":"starting ax-server","listenAddr":":8080","metricsAddr":":9090","store":"ax@ax-postgres.ax-system.svc.cluster.local:5432/ax","substrateEndpoint":"api.ate-system.svc.cluster.local:443","template":"default-template","defaultTaskImage":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:20:14.503604316Z","level":"INFO","msg":"deleting Substrate actor for task","atespace":"default","task":"ax-install-check"}
+{"time":"2026-11-12T15:20:14.565086476Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:20:14.569321387Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:20:14.58372476Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:20:14.594831365Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:20:14.605715328Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:20:14.810337316Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:20:14.813852744Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:20:14.819067841Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:20:14.831596592Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:20:19.231353414Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.25","workspaceReady":true}
+{"time":"2026-11-12T15:21:14.707863374Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:14.712093677Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:14.717048702Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:14.730125757Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:14.889636129Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:15.178686538Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:15.182055096Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:15.186373351Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:15.198402897Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:15.446644536Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.25","workspaceReady":true}
+{"time":"2026-11-12T15:21:16.378837909Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:16.382564823Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:16.386762085Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:16.400676983Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:16.554159663Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:17.605513594Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:17.610368607Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:17.614767094Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:17.626072458Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:17.786311035Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.31","workspaceReady":true}
+{"time":"2026-11-12T15:21:18.632532712Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:18.635315071Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:18.639608194Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:18.649523476Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:18.762774775Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:19.813587061Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:19.816910458Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:19.820648443Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:19.833104807Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:20.01437652Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.40","workspaceReady":true}
+{"time":"2026-11-12T15:21:20.846385705Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:20.850062038Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:20.853858333Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:20.863821935Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:20.978575881Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:22.028407177Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:22.031820116Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:22.03604233Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:22.04888525Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:22.226865919Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.40","workspaceReady":true}
+{"time":"2026-11-12T15:21:23.06488257Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:23.070495618Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:23.075667286Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:23.09099916Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:23.201945944Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:24.25203984Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:24.255704813Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:24.259130222Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:24.270280165Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:24.533590959Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.25","workspaceReady":true}
+{"time":"2026-11-12T15:21:25.375148734Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:25.378261607Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:25.381823909Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:25.392565594Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:25.541364963Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:26.594270203Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:26.597419108Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:26.601190234Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:26.611482691Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:26.785493527Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.31","workspaceReady":true}
+{"time":"2026-11-12T15:21:27.605704306Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:27.608434903Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:27.611638318Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:27.621361576Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:27.733208989Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:28.781575165Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:28.784876952Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:28.788509965Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:28.798359356Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:29.034763282Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.24","workspaceReady":true}
+{"time":"2026-11-12T15:21:29.861262342Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:29.865673038Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:29.869291741Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:29.879336785Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:30.02713255Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:31.074307264Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:31.078117439Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:31.081854533Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:31.092856945Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:31.25960095Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.41","workspaceReady":true}
+{"time":"2026-11-12T15:21:32.087241271Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:32.089680973Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:32.093050911Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:32.101093721Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:32.207514363Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:33.259482084Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:33.262484516Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:33.265904105Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:33.278524665Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:33.446971451Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.28","workspaceReady":true}
+{"time":"2026-11-12T15:21:34.287671971Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:34.290423378Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:34.294479538Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:34.305208794Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:34.412745667Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:35.469609179Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:35.472353707Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:35.477267892Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:35.487966817Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:35.748641564Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.24","workspaceReady":true}
+{"time":"2026-11-12T15:21:36.587027927Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:36.590708972Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:36.595184538Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:36.606627816Z","level":"INFO","msg":"suspending actor on Substrate","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:36.745588356Z","level":"INFO","msg":"task successfully suspended","name":"ax-install-check","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:37.802978453Z","level":"INFO","msg":"reconciling task","name":"ax-install-check","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:37.806199849Z","level":"INFO","msg":"ensuring custom ActorTemplate for task","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T15:21:37.810223008Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"ax-install-check-tmpl-b08f2422"}
+{"time":"2026-11-12T15:21:37.819671163Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"ax-install-check"}
+{"time":"2026-11-12T15:21:38.034274765Z","level":"INFO","msg":"task successfully resumed","name":"ax-install-check","actor":"ax-install-check","workerIP":"10.244.0.31","workspaceReady":true}

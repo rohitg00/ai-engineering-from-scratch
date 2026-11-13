@@ -1,0 +1,28 @@
+ts	t	event	detail
+2026-11-12T17:03:46.719Z	t=-	actor	j4 on multi-worker2 pod lab-n/ballast-5d6cf97747-lsvlf
+2026-11-12T17:03:46.829Z	t=-	call	200	0.085778	count=1 mb=50 sum=6512 process_age_s=3.7
+2026-11-12T17:03:46.922Z	t=-	call	200	0.070123	count=2 mb=50 sum=6512 process_age_s=3.8
+2026-11-12T17:03:47.015Z	t=-	call	200	0.068347	count=3 mb=50 sum=6512 process_age_s=3.9
+2026-11-12T17:03:48.686Z	t=-	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T17:03:49.284Z	t=-	create-tag	ATESPACE   NAME      SCOPE                STATE   SNAPSHOT                                                                       FIDELITY                   AGE lab-n      keep-j4   TAG_SCOPE_ATESPACE 
+2026-11-12T17:03:55.722Z	t=-	survivor-filled	fillers on multi-worker: fill1-3 fill2-2 | workers: clh8q:ACTIVE:0/1000:0/1984Mi lsvlf:ACTIVE:0/1000:0/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:1/1000:1900Mi/1984Mi 
+2026-11-12T17:03:56.200Z	t=-	node-stop	docker stop multi-worker2
+2026-11-12T17:04:06.575Z	t=10.4	node-stopped	multi-worker2
+2026-11-12T17:05:07.319Z	t=71.1	workers-of-stopped-node-not-active	clh8q:UNAVAILABLE:0/1000:0/1984Mi lsvlf:UNAVAILABLE:0/1000:0/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:1/1000:1900Mi/1984Mi 
+2026-11-12T17:05:10.952Z	t=74.8	revert-after-unavailable	3.1 s | ATESPACE   NAME   TEMPLATE      STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      j4     lab-n/tb-50   ACTOR_STATE_SUSPENDED   <none>                    8         86s 
+2026-11-12T17:05:11.195Z	t=75.0	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:05:16.524Z	t=80.3	request-1	503	5.060078	actor lab-n/j4 unavailable: no worker has room for the actor	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:05:21.828Z	t=85.6	request-2	503	5.059531	actor lab-n/j4 unavailable: no worker has room for the actor	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:05:22.044Z	t=85.8	resume-command	Error: failed to resume actor: rpc error: code = ResourceExhausted desc = no worker has room for the actor 
+2026-11-12T17:05:22.256Z	t=86.1	state	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:05:22.492Z	t=86.3	create-from-tag	ATESPACE   NAME   TEMPLATE      STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      j4r    lab-n/tb-50   ACTOR_STATE_SUSPENDED   <none>                    1         0s 
+2026-11-12T17:05:28.803Z	t=92.6	request-new-actor-1	503	5.056468	actor lab-n/j4r unavailable: no worker has room for the actor	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:05:34.119Z	t=97.9	request-new-actor-2	503	5.070184	actor lab-n/j4r unavailable: no worker has room for the actor	|	ACTOR_STATE_SUSPENDED	-	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T17:05:34.343Z	t=98.1	workers-before-unblock	clh8q:UNAVAILABLE:0/1000:0/1984Mi lsvlf:UNAVAILABLE:0/1000:0/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:1/1000:1900Mi/1984Mi 
+2026-11-12T17:05:34.933Z	t=98.7	free-a-worker	suspend --mode sync of filler fill1-3: lab-n      fill1-3   lab-n/tb-big   ACTOR_STATE_SUSPENDED   <none>                    5         102s
+2026-11-12T17:05:35.167Z	t=99.0	free-a-worker-done	0.6 s | workers: clh8q:UNAVAILABLE:0/1000:0/1984Mi lsvlf:UNAVAILABLE:0/1000:0/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T17:05:36.219Z	t=100.0	request-after-free	1.6 s	200	0.799471	count=4 mb=50 sum=6512 process_age_s=4.3	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:05:37.102Z	t=100.9	request-new-actor-after-free	2.5 s	200	0.636503	count=4 mb=50 sum=6512 process_age_s=4.2	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T17:05:37.938Z	t=101.7	final	j4: ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:- pod lab-n/ballast-5d6cf97747-zzzdn | j4r: ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:- | workers: clh8q:UNAVAILABLE:0/1000:0/1984Mi lsvlf:UNAVAILABLE:0/1000:0/1984Mi zxzvv:ACTIVE:1/1000:1900Mi/1984Mi zzzdn:ACTIVE:2/1000:500Mi/1984Mi 
+2026-11-12T17:05:38.162Z	t=102.0	node-start	docker start multi-worker2 after 102.0 s
+2026-11-12T17:05:55.179Z	t=119.0	node-ready	multi-control-plane:Ready multi-worker:Ready multi-worker2:Ready 

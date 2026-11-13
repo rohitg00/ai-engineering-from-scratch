@@ -1,0 +1,25 @@
+      http:
+        version: HTTP/2.0
+
+binds:
+- port: 8444
+  tunnelProtocol: connect
+  listeners:
+  - protocol: HTTPS
+    tls: *ingress-tls
+    routes: []
+- mode: internal
+  listeners:
+  - protocol: HTTP
+    routes:
+    - name: substrate-actors-tunneled
+      matches:
+      - path:
+          pathPrefix: /
+      policies: *substrate-ingress
+      backends:
+      - backend: /dynamic
+    - name: substrate-actors-tunneled-grpc
+      matches: *grpc-matches
+      policies: *substrate-ingress
+      backends: *grpc-backends

@@ -1,0 +1,5 @@
+step	rc	seconds
+02-apply	0	0.060
+03-resume	0	2.289
+04-describe	0	0.033
+05-ssh	1	0.034

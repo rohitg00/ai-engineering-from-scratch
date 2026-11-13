@@ -1,0 +1,18 @@
+NAME                                       READY   STATUS        RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-api-server-59dcf8d6bf-nz9kb            2/2     Running       0          108m    10.244.0.56   kind-control-plane   <none>           <none>
+ate-api-server-59dcf8d6bf-rw5vc            2/2     Running       0          108m    10.244.0.55   kind-control-plane   <none>           <none>
+ate-controller-7984566f8d-wqg7s            1/1     Running       0          4h15m   10.244.0.9    kind-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-9fdns             1/1     Running       0          4h15m   10.244.0.13   kind-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-qdhl8             1/1     Running       0          4h15m   10.244.0.12   kind-control-plane   <none>           <none>
+atelet-rc4mn                               2/2     Running       0          4h15m   10.244.0.11   kind-control-plane   <none>           <none>
+atenet-egress-846c4f5f4b-klxv2             0/1     Terminating   0          6s      10.244.0.78   kind-control-plane   <none>           <none>
+atenet-egress-85c76bff96-g98j4             3/3     Terminating   0          10m     10.244.0.76   kind-control-plane   <none>           <none>
+atenet-egress-cfb758d46-7nntk              1/1     Running       0          5s      10.244.0.79   kind-control-plane   <none>           <none>
+atenet-router-7c5c864d47-q8b97             1/1     Running       0          14s     10.244.0.77   kind-control-plane   <none>           <none>
+atenet-router-d844d4995-stpql              1/2     Terminating   0          10m     10.244.0.75   kind-control-plane   <none>           <none>
+e-prober                                   1/1     Running       0          112m    10.244.0.53   kind-control-plane   <none>           <none>
+k8s-credential-provider-85dc8799f8-hjrbm   1/1     Running       0          4h3m    10.244.0.32   kind-control-plane   <none>           <none>
+postgres-0                                 2/2     Running       0          111m    10.244.0.54   kind-control-plane   <none>           <none>
+right-id                                   1/1     Running       0          4h9m    10.244.0.27   kind-control-plane   <none>           <none>
+rustfs-54c86945fb-lst2f                    1/1     Running       0          4h15m   10.244.0.20   kind-control-plane   <none>           <none>
+rustfs-bucket-init-kjhfs                   0/1     Completed     0          4h15m   10.244.0.15   kind-control-plane   <none>           <none>

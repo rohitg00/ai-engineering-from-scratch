@@ -1,0 +1,42 @@
+- app_version: ""
+  chart: kagent-1.0.0
+  name: kagent
+  namespace: kagent
+  revision: "1"
+  status: deployed
+  updated: 2026-11-12 10:13:33.384012737 +0000 UTC
+- app_version: ""
+  chart: kagent-crds-1.0.0
+  name: kagent-crds
+  namespace: kagent
+  revision: "1"
+  status: deployed
+  updated: 2026-11-12 10:11:05.528994763 +0000 UTC
+- app_version: v1.0.0
+  chart: substrate-1.0.0
+  name: substrate
+  namespace: ate-system
+  revision: "1"
+  status: deployed
+  updated: 2026-11-12 10:12:12.704840959 +0000 UTC
+- app_version: v1.0.0
+  chart: substrate-atelet-1.0.0
+  name: substrate-atelet
+  namespace: ate-system
+  revision: "1"
+  status: deployed
+  updated: 2026-11-12 10:11:48.159174573 +0000 UTC
+- app_version: v1.0.0
+  chart: substrate-crds-1.0.0
+  name: substrate-crds
+  namespace: ate-system
+  revision: "1"
+  status: deployed
+  updated: 2026-11-12 10:11:09.672366284 +0000 UTC
+- app_version: v1.0.0
+  chart: substrate-podcert-1.0.0
+  name: substrate-podcert
+  namespace: podcertificate-controller-system
+  revision: "1"
+  status: deployed
+  updated: 2026-11-12 10:11:13.597739767 +0000 UTC

@@ -1,0 +1,36 @@
+actorTemplate:
+  atespace: lab-v
+  name: rand-200
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:41:38.008760453Z"
+  name: c-rand-200
+  uid: 15c49e0f-4519-42b3-94cd-f38b95804a49
+  updateTime: "2026-11-12T12:42:06.063350047Z"
+  version: "45"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 12
+  snapshots:
+  - actorTemplateUid: 6f5e74b3-b75a-4308-93c6-3aee23180cde
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-v/actors/15c49e0f-4519-42b3-94cd-f38b95804a49/snapshots/a822d302-2c7a-42f5-a0bd-fe7c353679a3
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 12
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: a822d302-2c7a-42f5-a0bd-fe7c353679a3
+  state: ACTOR_STATE_SUSPENDED

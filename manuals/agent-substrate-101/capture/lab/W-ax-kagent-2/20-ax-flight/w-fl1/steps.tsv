@@ -1,0 +1,14 @@
+step	rc	seconds
+09-apply	0	0.065
+10-resume-first	0	2.254
+11-write-note	0	0.746
+12-suspend	0	0.165
+13-resume	0	0.231
+15-describe-before	0	0.034
+22-delete-worker-pod	0	0.132
+23-describe-after-loss	0	0.251
+25b-ssh-while-crashed	1	0.038
+26-resume-after-loss	0	0.278
+27-describe-after-resume	0	0.196
+28-files-after-resume	0	0.838
+43-suspend-end	0	0.182

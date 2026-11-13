@@ -1,0 +1,7 @@
+configmap/mock configured
+deployment.apps/mock-a restarted
+deployment.apps/mock-b restarted
+Waiting for deployment "mock-a" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "mock-a" rollout to finish: 1 old replicas are pending termination...
+deployment "mock-a" successfully rolled out
+deployment "mock-b" successfully rolled out

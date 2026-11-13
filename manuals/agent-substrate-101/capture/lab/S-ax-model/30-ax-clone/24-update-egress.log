@@ -1,0 +1,1 @@
+Error: manifest for actor "s-clone" in atespace "default" lacks the metadata.uid and metadata.version preconditions that "get egress-policy -o yaml" prints

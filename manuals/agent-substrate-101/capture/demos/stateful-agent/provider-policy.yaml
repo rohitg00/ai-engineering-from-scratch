@@ -1,0 +1,4 @@
+policies:
+- atespace: demo-agent
+  allowedNamespaces:
+  - demo-agent-secrets

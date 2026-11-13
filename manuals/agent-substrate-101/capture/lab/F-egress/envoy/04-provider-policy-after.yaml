@@ -1,0 +1,17 @@
+apiVersion: v1
+data:
+  namespace-policy.yaml: |
+    policies:
+    - atespace: lab-f
+      allowedNamespaces:
+      - cred-ns
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"namespace-policy.yaml":"policies:\n- atespace: lab-f\n  allowedNamespaces:\n  - cred-ns\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"k8s-credential-provider-namespace-policy","namespace":"ate-system"}}
+  creationTimestamp: "2026-11-12T10:32:12Z"
+  name: k8s-credential-provider-namespace-policy
+  namespace: ate-system
+  resourceVersion: "2675"
+  uid: a5179b96-5325-4573-af03-40bede594eef

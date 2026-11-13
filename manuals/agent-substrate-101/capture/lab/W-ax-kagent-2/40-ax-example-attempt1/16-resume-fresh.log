@@ -1,0 +1,1 @@
+Error: resuming task: rpc error: code = Internal desc = resuming task on substrate: resuming actor: resuming actor default/claude-code: rpc error: code = ResourceExhausted desc = no worker has room for the actor

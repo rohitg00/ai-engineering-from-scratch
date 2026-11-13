@@ -1,0 +1,75 @@
+--- earlier delete watch
+cat: ../latency/delete.out: No such file or directory
+cli with standing port-forward: .149603943s rc=0
+2026-11-12T10:29:43.567Z P8-start
+2026-11-12T10:29:47.178Z P8-end
+2026-11-12T10:30:00.081Z P24-start
+2026-11-12T10:30:07.980Z P24-end
+2026-11-12T10:29:43.981Z N=8 actors=6/1000 cpu=6000/16000 mem=6Gi/32797744Ki
+2026-11-12T10:29:44.808Z N=8 actors=8/1000 cpu=8000/16000 mem=8Gi/32797744Ki
+2026-11-12T10:29:45.657Z N=8 actors=8/1000 cpu=8000/16000 mem=8Gi/32797744Ki
+2026-11-12T10:30:00.499Z N=24 actors=11/1000 cpu=11000/16000 mem=11Gi/32797744Ki
+2026-11-12T10:30:01.173Z N=24 actors=16/1000 cpu=16000/16000 mem=16Gi/32797744Ki
+2026-11-12T10:30:02.158Z N=24 actors=16/1000 cpu=16000/16000 mem=16Gi/32797744Ki
+2026-11-12T10:29:44.250Z N=8       7 ACTOR_STATE_RESUMING       1 ACTOR_STATE_RUNNING      29 ACTOR_STATE_SUSPENDED 
+2026-11-12T10:29:45.048Z N=8       8 ACTOR_STATE_RUNNING      29 ACTOR_STATE_SUSPENDED 
+2026-11-12T10:29:45.862Z N=8       7 ACTOR_STATE_RUNNING      29 ACTOR_STATE_SUSPENDED       1 ACTOR_STATE_SUSPENDING 
+2026-11-12T10:30:00.645Z N=24       8 ACTOR_STATE_RESUMING       8 ACTOR_STATE_RUNNING      45 ACTOR_STATE_SUSPENDED 
+2026-11-12T10:30:01.450Z N=24      16 ACTOR_STATE_RUNNING      45 ACTOR_STATE_SUSPENDED 
+2026-11-12T10:30:02.453Z N=24      16 ACTOR_STATE_RUNNING      45 ACTOR_STATE_SUSPENDED 
+P8 n=8 ok=8 : 2.473 2.669 2.768 2.778 3.067 3.168 3.368 3.566
+P24 n=24 ok=24 : 4.250 4.345 4.535 4.551 4.741 4.836 4.931 5.032 5.140 5.158 5.156 5.243 5.425 5.432 5.454 5.446 6.448 6.941 7.146 7.335 7.634 7.629 7.744 7.848
+--- clean ingress probe
+from namespace default:
+http://atenet-router.ate-system.svc:80/ code=000 curl_exit=7 Failed to connect to atenet-router.ate-system.svc port 80 after 3 ms: Could not connect to server
+http://atenet-router.ate-system.svc:8081/ code=000 curl_exit=7 Failed to connect to atenet-router.ate-system.svc port 8081 after 2 ms: Could not connect to server
+https://atenet-router.ate-system.svc:443/ code=000 curl_exit=56 OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+https://atenet-router.ate-system.svc:8444/ code=000 curl_exit=56 OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+http://atenet-router.ate-system.svc:15020/ code=404 curl_exit=0 
+https://api.ate-system.svc:443/ code=000 curl_exit=28 Connection timed out after 5001 milliseconds
+https://atenet-egress.ate-system.svc:443/ code=000 curl_exit=28 Connection timed out after 5002 milliseconds
+command terminated with exit code 28
+from namespace kagent:
+http://atenet-router.ate-system.svc:80/ code=000 curl_exit=7 Failed to connect to atenet-router.ate-system.svc port 80 after 2 ms: Could not connect to server
+http://atenet-router.ate-system.svc:8081/ code=000 curl_exit=7 Failed to connect to atenet-router.ate-system.svc port 8081 after 2 ms: Could not connect to server
+https://atenet-router.ate-system.svc:443/ code=000 curl_exit=56 OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+https://atenet-router.ate-system.svc:8444/ code=000 curl_exit=56 OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+http://atenet-router.ate-system.svc:15020/ code=404 curl_exit=0 
+https://api.ate-system.svc:443/ code=415 curl_exit=0 
+https://atenet-egress.ate-system.svc:443/ code=000 curl_exit=28 Connection timed out after 5002 milliseconds
+command terminated with exit code 28
+kagent     session-01a1cf4e-5679-77ad-9913-f700c3e5ab70   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                    
+--- logs
+   5079 /home/lab/evidence/K-kagent/logs/ate-api-server-776cd6fb4c-hztmx.log
+   3622 /home/lab/evidence/K-kagent/logs/ate-api-server-776cd6fb4c-tnc4m.log
+     89 /home/lab/evidence/K-kagent/logs/ate-controller-84d4d99bbb-zwnz5.log
+   1398 /home/lab/evidence/K-kagent/logs/atelet-5g655.log
+    256 /home/lab/evidence/K-kagent/logs/atenet-router-556c5ff957-489rl.log
+   1289 /home/lab/evidence/K-kagent/logs/kagent-controller.log
+    105 /home/lab/evidence/K-kagent/logs/mock-llm.log
+   3000 /home/lab/evidence/K-kagent/logs/worker.log
+  14838 total
+463 /home/lab/evidence/K-kagent/logs/actor-state-changes.tsv
+resume: n=99 min=0.216 p50=0.381 p90=0.435 p99=9.839 max=9.839
+suspend: n=99 min=0.120 p50=0.142 p90=0.297 p99=0.398 max=0.398
+--- restore / checkpoint breakdown sample
+{"ate.snapshot.fidelity":"volumes","ate.snapshot.kind":"latest","ate.actor.restore.duration.volume_mount":6.59E-7,"ate.actor.restore.duration.manifest_fetch":0.000735204,"ate.actor.restore.duration.sandbox_assets":0.000535156,"ate.actor.restore.duration.download":0.000399142,"ate.actor.restore.duration.oci_unpack":0.000890278,"ate.actor.restore.duration.worker_restore":0.234142385,"ate.actor.restore.duration.total":0.237016746}
+{"ate.snapshot.fidelity":"volumes","ate.snapshot.kind":"latest","ate.actor.checkpoint.duration.sandbox_assets":0.000025019,"ate.actor.checkpoint.duration.worker_checkpoint":0.085097094,"ate.actor.checkpoint.duration.persist":0.054380198,"ate.actor.checkpoint.duration.cleanup":0.0022645,"ate.actor.checkpoint.duration.total":0.141956428}
+     56 latest
+     42 local
+--- router parked / 503
+2
+Display resource (CPU/Memory) usage
+
+Usage:
+  kubectl-ate top [command]
+
+Available Commands:
+  worker      Display resource (CPU/Memory) usage of workers
+
+Flags:
+  -h, --help   help for top
+
+Global Flags:
+/dev/vda1        38G  8.2G   30G  22% /
+Mem:              31           2          22           0           7          28

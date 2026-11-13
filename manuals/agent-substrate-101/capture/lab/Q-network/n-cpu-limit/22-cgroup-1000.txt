@@ -1,0 +1,21 @@
+### before limit=1000
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/worker cpu.max=max 100000 procs=3 usage_usec 3806345 nr_periods 0 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/136d69f8-6254-4466-91ff-963af011cc21-burn cpu.max=100000 100000 procs=0 usage_usec 0 nr_periods 2 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope cpu.max=600000 100000 procs=0 usage_usec 88840832 nr_periods 2529 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/136d69f8-6254-4466-91ff-963af011cc21-_sandbox cpu.max=100000 100000 procs=6 usage_usec 173339 nr_periods 5 nr_throttled 0 throttled_usec 0 
+/cri-containerd-794c1378350bcecc81754ac46fb2450ff191885d8700d9433e351adce922bd75.scope cpu.max=max 100000 procs=1 usage_usec 63620 nr_periods 0 nr_throttled 0 throttled_usec 0 
+ cpu.max=600000 100000 procs=0 usage_usec 88904452 nr_periods 2534 nr_throttled 0 throttled_usec 0 
+### after threads=1 limit=1000
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/worker cpu.max=max 100000 procs=3 usage_usec 4058219 nr_periods 0 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/136d69f8-6254-4466-91ff-963af011cc21-burn cpu.max=100000 100000 procs=0 usage_usec 0 nr_periods 2 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope cpu.max=600000 100000 procs=0 usage_usec 118391300 nr_periods 2831 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/136d69f8-6254-4466-91ff-963af011cc21-_sandbox cpu.max=100000 100000 procs=6 usage_usec 29472705 nr_periods 307 nr_throttled 290 throttled_usec 9793738 
+/cri-containerd-794c1378350bcecc81754ac46fb2450ff191885d8700d9433e351adce922bd75.scope cpu.max=max 100000 procs=1 usage_usec 63620 nr_periods 0 nr_throttled 0 throttled_usec 0 
+ cpu.max=600000 100000 procs=0 usage_usec 118455252 nr_periods 2836 nr_throttled 0 throttled_usec 0 
+### after threads=4 limit=1000
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/worker cpu.max=max 100000 procs=3 usage_usec 4367691 nr_periods 0 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/136d69f8-6254-4466-91ff-963af011cc21-burn cpu.max=100000 100000 procs=0 usage_usec 0 nr_periods 2 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope cpu.max=600000 100000 procs=0 usage_usec 153902607 nr_periods 3202 nr_throttled 0 throttled_usec 0 
+/cri-containerd-f5d7d3680f813503fb6777fc86c11959ac26dcd0058af85254c376c8dafa62c9.scope/136d69f8-6254-4466-91ff-963af011cc21-_sandbox cpu.max=100000 100000 procs=6 usage_usec 64674540 nr_periods 668 nr_throttled 639 throttled_usec 93586246 
+/cri-containerd-794c1378350bcecc81754ac46fb2450ff191885d8700d9433e351adce922bd75.scope cpu.max=max 100000 procs=1 usage_usec 63620 nr_periods 0 nr_throttled 0 throttled_usec 0 
+ cpu.max=600000 100000 procs=0 usage_usec 153966659 nr_periods 3207 nr_throttled 0 throttled_usec 0 

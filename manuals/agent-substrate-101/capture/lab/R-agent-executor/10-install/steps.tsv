@@ -1,0 +1,15 @@
+10-make-install	0	17
+20-make-images	2	33
+20-make-images-try2	0	34
+BUILD-DONE
+40-namespace-and-secret	0	0.5
+41-postgres	0	23.9
+42-ax-server	0	7.0
+51-apply-before-grant	0	0.1
+DEPLOY-DONE
+60-substrate-grant	0	29.7
+63-ax-pool	0	3.3
+66-apply-after-grant	0	0.1
+68-resume	0	4.5
+69-ssh	0	1.3
+GRANT-DONE

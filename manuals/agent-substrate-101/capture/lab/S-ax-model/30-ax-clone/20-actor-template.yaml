@@ -1,0 +1,72 @@
+containers:
+- command:
+  - /usr/local/bin/ax-task-runner
+  env:
+  - name: AX_TASK_YAML
+    value: |
+      apiVersion: ax.io/v1alpha1
+      kind: Task
+      metadata:
+          name: s-clone
+          atespace: default
+          createTime: 2026-11-12T16:14:16.967312957Z
+      spec:
+          image: localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31
+          command:
+              - sleep
+              - infinity
+          workspace:
+              name: s-ws
+          debug: true
+  - name: AX_WORKSPACE_YAML
+    value: |
+      apiVersion: ax.io/v1alpha1
+      kind: Workspace
+      metadata:
+          name: s-ws
+          atespace: default
+          createTime: 2026-11-12T16:14:16.952625836Z
+      spec:
+          git:
+              - name: origin
+                repo: https://github.com/pallets/itsdangerous.git
+                branch: main
+          files:
+              - path: AGENTS.md
+                content: |
+                  # Project Guidelines
+                  - Keep dependencies minimal.
+  image: localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31
+  name: guest
+  volumeMounts:
+  - mountPath: /workspace
+    name: workspace
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+    timeoutSeconds: 30
+metadata:
+  atespace: default
+  createTime: "2026-11-12T16:14:17.015439582Z"
+  name: s-clone-tmpl-c443ad30
+  uid: a5baca74-2f37-4039-9239-4d27a47d03e2
+  updateTime: "2026-11-12T16:14:38.746147729Z"
+  version: "3"
+resources:
+  limits:
+    cpuMillicores: "1000"
+    memoryBytes: "536870912"
+snapshotConfig:
+  goldenSnapshotConfig:
+    mode: GOLDEN_SNAPSHOT_MODE_ENABLED
+  preferredFidelity: SNAPSHOT_FIDELITY_VOLUMES
+status:
+  goldenSnapshotStatus:
+    goldenTag:
+      atespace: default
+      name: a5baca74-2f37-4039-9239-4d27a47d03e2
+    snapshotTime: "2026-11-12T16:14:38.453766935Z"
+volumes:
+- durableDir: {}
+  name: workspace

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 336" role="img" aria-labelledby="fig-9-3-title fig-9-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-3-title">Six tasks in one sandbox actor, each followed by a revert</title>
+  <desc id="fig-9-3-desc">Six rows for six commands sent to one sandbox actor on the second x86 server guest, with one egress rule for a package mirror, 500 millicores and 256 MiB. download from the mirror: file saved, exit 0, revert in 0.47 s, 0 files after it. outside host, by name: NXDOMAIN, revert in 0.48 s, 0 files after it. outside host, by IP: 403 from the gateway, revert in 0.50 s, 0 files after it. Kubernetes API, by name: name not resolved, revert in 0.51 s, 0 files after it. 2 s of CPU work: 2.38 s of wall time, revert in 0.48 s, 0 files after it. 640 MiB of memory: 503, actor CRASHED, revert in 0.43 s, 0 files after it.</desc>
+  <defs><marker id="fig-9-3-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="16" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE COMMAND TRIES</text>
+  <text x="232" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT IT GETS</text>
+  <text x="420" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-amber-ink, #85590c)">REVERT</text>
+  <text x="506" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-green-ink, #336b40)">FILES IN /WORK</text>
+  <line x1="16" y1="38" x2="624" y2="38" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="60" font-size="12" font-weight="700">download from the mirror</text>
+  <rect x="232" y="46" width="168" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="316" y="63.45" font-size="11.5" text-anchor="middle" font-weight="700">file saved, exit 0</text>
+  <line x1="400" y1="60" x2="470" y2="60" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-9-3-head-amber)"/>
+  <text x="420" y="80" font-size="11" fill="var(--m-amber-ink, #85590c)">0.47 s</text>
+  <rect x="506" y="46" width="60" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="536" y="63.6" font-size="12" text-anchor="middle" font-weight="700">0</text>
+  <line x1="16" y1="84" x2="624" y2="84" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="106" font-size="12" font-weight="700">outside host, by name</text>
+  <rect x="232" y="92" width="168" height="28" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="316" y="109.45" font-size="11.5" text-anchor="middle" font-weight="700">NXDOMAIN</text>
+  <line x1="400" y1="106" x2="470" y2="106" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-9-3-head-amber)"/>
+  <text x="420" y="126" font-size="11" fill="var(--m-amber-ink, #85590c)">0.48 s</text>
+  <rect x="506" y="92" width="60" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="536" y="109.6" font-size="12" text-anchor="middle" font-weight="700">0</text>
+  <line x1="16" y1="130" x2="624" y2="130" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="152" font-size="12" font-weight="700">outside host, by IP</text>
+  <rect x="232" y="138" width="168" height="28" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="316" y="155.45" font-size="11.5" text-anchor="middle" font-weight="700">403 from the gateway</text>
+  <line x1="400" y1="152" x2="470" y2="152" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-9-3-head-amber)"/>
+  <text x="420" y="172" font-size="11" fill="var(--m-amber-ink, #85590c)">0.50 s</text>
+  <rect x="506" y="138" width="60" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="536" y="155.6" font-size="12" text-anchor="middle" font-weight="700">0</text>
+  <line x1="16" y1="176" x2="624" y2="176" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="198" font-size="12" font-weight="700">Kubernetes API, by name</text>
+  <rect x="232" y="184" width="168" height="28" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="316" y="201.45" font-size="11.5" text-anchor="middle" font-weight="700">name not resolved</text>
+  <line x1="400" y1="198" x2="470" y2="198" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-9-3-head-amber)"/>
+  <text x="420" y="218" font-size="11" fill="var(--m-amber-ink, #85590c)">0.51 s</text>
+  <rect x="506" y="184" width="60" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="536" y="201.6" font-size="12" text-anchor="middle" font-weight="700">0</text>
+  <line x1="16" y1="222" x2="624" y2="222" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="244" font-size="12" font-weight="700">2 s of CPU work</text>
+  <rect x="232" y="230" width="168" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="316" y="247.45" font-size="11.5" text-anchor="middle" font-weight="700">2.38 s of wall time</text>
+  <line x1="400" y1="244" x2="470" y2="244" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-9-3-head-amber)"/>
+  <text x="420" y="264" font-size="11" fill="var(--m-amber-ink, #85590c)">0.48 s</text>
+  <rect x="506" y="230" width="60" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="536" y="247.6" font-size="12" text-anchor="middle" font-weight="700">0</text>
+  <line x1="16" y1="268" x2="624" y2="268" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="290" font-size="12" font-weight="700">640 MiB of memory</text>
+  <rect x="232" y="276" width="168" height="28" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="316" y="293.45" font-size="11.5" text-anchor="middle" font-weight="700">503, actor CRASHED</text>
+  <line x1="400" y1="290" x2="470" y2="290" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-9-3-head-amber)"/>
+  <text x="420" y="310" font-size="11" fill="var(--m-amber-ink, #85590c)">0.43 s</text>
+  <rect x="506" y="276" width="60" height="28" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="536" y="293.6" font-size="12" text-anchor="middle" font-weight="700">0</text>
+</svg>

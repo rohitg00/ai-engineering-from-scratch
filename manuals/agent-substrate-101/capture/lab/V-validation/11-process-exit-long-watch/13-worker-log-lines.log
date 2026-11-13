@@ -1,0 +1,20 @@
+[pod/vpool-69595c64bf-xvzlq/worker] {"id":"ballast","exitStatus":137}
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.932001   11520 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.932027   11515 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.936454   11525 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] {"labels":{"ate.actor.name":"q23","ate.actor.uid":"34f80eba-4e25-40cd-8d48-3b62dccc7c9c","ate.atespace":"lab-v","ate.template.atespace":"lab-v","ate.template.name":"par-50"},"message":"Actor terminated","span_id":"0d307ee598cfb408","time":"2026-11-12T12:49:43.937582688Z","trace_flags":"01","trace_id":"d8242e63e5e084d89515d9e3c0e47213"}
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.940100   11535 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] {"labels":{"ate.actor.name":"q21","ate.actor.uid":"911cbfec-acb0-4c0f-8aff-e392d32e21c3","ate.atespace":"lab-v","ate.template.atespace":"lab-v","ate.template.name":"par-50"},"message":"Actor terminated","span_id":"1615ff342758aa97","time":"2026-11-12T12:49:43.941115565Z","trace_flags":"01","trace_id":"109f406bc3885999e6280861818e8158"}
+[pod/vpool-69595c64bf-xvzlq/worker] {"labels":{"ate.actor.name":"q01","ate.actor.uid":"96d3a342-f5ac-4955-b896-8a5e84f46087","ate.atespace":"lab-v","ate.template.atespace":"lab-v","ate.template.name":"par-50"},"message":"Actor terminated","span_id":"0f4a05c682012f87","time":"2026-11-12T12:49:43.941388682Z","trace_flags":"01","trace_id":"f19436f29cc0a7b6b66f757e2501b1de"}
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.943503   11530 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.946766   11540 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] {"id":"ballast","exitStatus":137}
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.953794   11545 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.962083   11555 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.963980   11550 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.968673   11560 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.974480   11565 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.975147   11570 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] {"labels":{"ate.actor.name":"q12","ate.actor.uid":"73fe5d06-baae-41fc-9c1b-e56311d72a0e","ate.atespace":"lab-v","ate.template.atespace":"lab-v","ate.template.name":"par-50"},"message":"Actor terminated","span_id":"46582cb61ab1a518","time":"2026-11-12T12:49:43.977370614Z","trace_flags":"01","trace_id":"a7dfd80e0e5bd45a808254e3da1557a5"}
+[pod/vpool-69595c64bf-xvzlq/worker] I1112 12:49:43.985206   11575 cli.go:323] Exiting with status: 0
+[pod/vpool-69595c64bf-xvzlq/worker] {"labels":{"ate.actor.name":"q22","ate.actor.uid":"b2071268-ff85-4fdd-a1f6-680a81c07c76","ate.atespace":"lab-v","ate.template.atespace":"lab-v","ate.template.name":"par-50"},"message":"Actor terminated","span_id":"80eddde09b026945","time":"2026-11-12T12:49:43.988838589Z","trace_flags":"01","trace_id":"c88c1546affa0010854b3b99c6b52787"}

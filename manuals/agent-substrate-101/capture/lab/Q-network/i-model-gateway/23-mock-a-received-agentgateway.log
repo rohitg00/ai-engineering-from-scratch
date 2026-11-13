@@ -1,0 +1,1 @@
+{"t": "13:05:31", "backend": "backend-a", "path": "/v1/chat/completions", "model": "small-1", "authorization": "Bearer provider-key-for-backend-a", "x_lab": "lab-gw-client-credential-1794488723", "host": "mock-a.model-gw.svc.cluster.local"}

@@ -1,0 +1,17 @@
+16:36:45 start disk=9762MB mem=37560MB snap=379MB
+16:36:45 population starts at 300: two waves of a first attempt left 300 actors that never ran (their burst failed on a client config error)
+16:37:01 wave 1 done states:     750 ACTOR_STATE_SUSPENDED 
+16:37:16 wave 2 done states:     900 ACTOR_STATE_SUSPENDED 
+16:37:30 wave 3 done states:    1050 ACTOR_STATE_SUSPENDED 
+16:37:30 STOP ramp: guest disk free 3879 MB below 5500 MB
+16:37:30 phase 1 end population=750
+16:37:56 operator stopped the run after wave 3: 450 actors with their own snapshot left 3886 MB free, and the delayed upload to the in-cluster object store would need about as much again. Deleting waves x2 and x3.
+16:38:11 disk free 7762 MB snap 2326 MB
+16:38:21 disk free 7757 MB snap 2326 MB
+16:38:31 disk free 7752 MB snap 2326 MB
+16:38:41 disk free 7768 MB snap 2326 MB
+16:38:51 disk free 7763 MB snap 2326 MB
+16:39:02 disk free 7769 MB snap 2326 MB
+16:39:16 phase 2 start: 150 actors with their own snapshot (x1), 750 actor rows, disk=7760MB
+16:41:31 phase 2 end
+16:46:26 STOPPED by operator: host memory below its floor; no new data after this line

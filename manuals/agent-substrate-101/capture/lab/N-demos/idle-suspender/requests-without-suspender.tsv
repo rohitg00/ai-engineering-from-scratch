@@ -1,0 +1,31 @@
+ts	actor	http	seconds	body
+2026-11-12T13:04:25.877Z	bursty	200	0.351621	count=21 process_age_s=863.1
+2026-11-12T13:04:25.877Z	busy	200	0.352089	count=119 process_age_s=863.1
+2026-11-12T13:04:26.958Z	bursty	200	0.061134	count=22 process_age_s=864.2
+2026-11-12T13:04:28.052Z	bursty	200	0.073161	count=23 process_age_s=865.3
+2026-11-12T13:04:29.135Z	bursty	200	0.062285	count=24 process_age_s=866.3
+2026-11-12T13:04:30.222Z	bursty	200	0.067294	count=25 process_age_s=867.4
+2026-11-12T13:04:30.964Z	busy	200	0.062027	count=120 process_age_s=868.2
+2026-11-12T13:04:36.062Z	busy	200	0.074120	count=121 process_age_s=873.3
+2026-11-12T13:04:41.143Z	busy	200	0.058406	count=122 process_age_s=878.3
+2026-11-12T13:04:46.225Z	busy	200	0.059814	count=123 process_age_s=883.4
+2026-11-12T13:04:51.314Z	busy	200	0.066115	count=124 process_age_s=888.5
+2026-11-12T13:04:56.394Z	busy	200	0.060387	count=125 process_age_s=893.6
+2026-11-12T13:05:01.481Z	busy	200	0.065256	count=126 process_age_s=898.7
+2026-11-12T13:05:06.564Z	busy	200	0.061216	count=127 process_age_s=903.8
+2026-11-12T13:05:11.646Z	busy	200	0.059695	count=128 process_age_s=908.8
+2026-11-12T13:05:16.725Z	busy	200	0.057516	count=129 process_age_s=913.9
+2026-11-12T13:05:21.808Z	busy	200	0.061116	count=130 process_age_s=919.0
+2026-11-12T13:05:26.894Z	busy	200	0.064004	count=131 process_age_s=924.1
+2026-11-12T13:05:30.579Z	rare	503	5.054876	actor demo-idle/rare unavailable: no worker has room for the actor
+2026-11-12T13:05:31.974Z	busy	200	0.059386	count=132 process_age_s=929.2
+2026-11-12T13:05:37.059Z	busy	200	0.062687	count=133 process_age_s=934.3
+2026-11-12T13:05:42.142Z	busy	200	0.060942	count=134 process_age_s=939.3
+2026-11-12T13:05:47.227Z	busy	200	0.062041	count=135 process_age_s=944.4
+2026-11-12T13:05:52.311Z	busy	200	0.060095	count=136 process_age_s=949.5
+2026-11-12T13:05:57.397Z	busy	200	0.066275	count=137 process_age_s=954.6
+2026-11-12T13:06:02.482Z	busy	200	0.061174	count=138 process_age_s=959.7
+2026-11-12T13:06:07.569Z	busy	200	0.063973	count=139 process_age_s=964.8
+2026-11-12T13:06:12.655Z	busy	200	0.062765	count=140 process_age_s=969.9
+2026-11-12T13:06:17.741Z	busy	200	0.063382	count=141 process_age_s=974.9
+2026-11-12T13:06:22.821Z	busy	200	0.058174	count=142 process_age_s=980.0

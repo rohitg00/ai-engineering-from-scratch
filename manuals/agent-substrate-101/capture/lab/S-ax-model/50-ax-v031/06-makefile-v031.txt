@@ -1,0 +1,16 @@
+24:all: build
+31:build: build-binaries
+33:build-binaries:
+41:install:
+46:build-task-runner:
+54:push-task-runner: build-task-runner
+61:push: push-task-runner
+68:deploy: deploy-redis deploy-controller deploy-server
+70:deploy-redis:
+74:deploy-controller:
+76:	KO_DOCKER_REPO=$(AX_IMAGE_REPO) ko apply -f deploy/ax-controller.yaml
+78:deploy-server:
+80:	KO_DOCKER_REPO=$(AX_IMAGE_REPO) ko apply -f deploy/ax-server.yaml
+83:apply-example:
+91:test:
+95:clean:

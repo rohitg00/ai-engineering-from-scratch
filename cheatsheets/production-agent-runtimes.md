@@ -4,8 +4,8 @@ title: Production Agent Runtimes and Queues
 code: PA
 subtitle: Pick a runtime shape, checkpoint and replay, lease and fence jobs, retry scoped reads. Python and Go.
 hue: 30
-sources: phases/14-agent-engineering/29-production-runtimes, phases/15-autonomous-systems/12-durable-execution, phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints, projects/durable-agent-jobs, projects/cloud-agent-with-aws-strands
-source_hash: e1799546605e724e
+sources: phases/14-agent-engineering/29-production-runtimes, phases/15-autonomous-systems/12-durable-execution, phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints, projects/durable-agent-jobs, projects/cloud-agent-with-aws-strands, manuals/agent-substrate-101
+source_hash: 5089cfb1618d666e
 ---
 
 ## Pick the runtime shape

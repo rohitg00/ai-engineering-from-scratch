@@ -1,0 +1,40 @@
+ate-system                         44s         Normal    Started                    pod/atenet-router-86454b57f5-7vtp5               Container started
+ate-system                         44s         Normal    Created                    pod/k8s-credential-provider-8df9859f8-jcfll      Container created
+ate-system                         44s         Normal    Created                    pod/atenet-router-86454b57f5-7vtp5               Container created
+ate-system                         44s         Normal    Pulled                     pod/ate-api-server-696d95dd66-t85dd              Container image "localhost:5001/objectstore-plugin@sha256:dc296aea0fb98d1b9d63e2bd86091
+ate-system                         44s         Warning   Unhealthy                  pod/atenet-router-86454b57f5-7vtp5               Readiness probe failed: Get "http://10.244.0.26:9902/ready": dial tcp 10.244.0.26:9902:
+ate-system                         43s         Normal    Created                    pod/ate-api-server-696d95dd66-t85dd              Container created
+ate-system                         43s         Normal    Started                    pod/ate-api-server-696d95dd66-t85dd              Container started
+ate-system                         43s         Normal    SandboxChanged             pod/atenet-egress-78f759fcb8-74d4m               Pod sandbox changed, it will be killed and re-created.
+ate-system                         43s         Normal    Pulled                     pod/atenet-egress-78f759fcb8-74d4m               Container image "localhost:5001/atenet@sha256:e4618026661f38786d7c5cfc5e4706ca4c17a5fc7
+ate-system                         43s         Normal    SandboxChanged             pod/ate-api-server-696d95dd66-9q7f8              Pod sandbox changed, it will be killed and re-created.
+ate-system                         43s         Normal    Started                    pod/k8s-credential-provider-8df9859f8-jcfll      Container started
+ate-system                         43s         Warning   Unhealthy                  pod/k8s-credential-provider-8df9859f8-jcfll      Readiness probe failed: Get "http://10.244.0.27:9091/readyz": dial tcp 10.244.0.27:9091
+ate-system                         42s         Normal    Started                    pod/ate-api-server-696d95dd66-9q7f8              Container started
+ate-system                         42s         Normal    Created                    pod/atenet-egress-78f759fcb8-74d4m               Container created
+ate-system                         42s         Normal    Pulled                     pod/atenet-egress-78f759fcb8-74d4m               Container image "localhost:5001/envoy-dataplane@sha256:fd6482b70478a40f83dcea33dcd7adab
+ate-system                         42s         Normal    Started                    pod/atenet-egress-78f759fcb8-74d4m               Container started
+ate-system                         42s         Normal    Pulled                     pod/ate-api-server-696d95dd66-9q7f8              Container image "localhost:5001/objectstore-plugin@sha256:dc296aea0fb98d1b9d63e2bd86091
+ate-system                         42s         Normal    Started                    pod/atenet-egress-78f759fcb8-74d4m               Container started
+ate-system                         42s         Normal    Created                    pod/atenet-egress-78f759fcb8-74d4m               Container created
+ate-system                         42s         Normal    Started                    pod/atenet-egress-78f759fcb8-74d4m               Container started
+ate-system                         42s         Normal    Created                    pod/atenet-egress-78f759fcb8-74d4m               Container created
+ate-system                         42s         Normal    Created                    pod/ate-api-server-696d95dd66-9q7f8              Container created
+ate-system                         42s         Normal    Pulled                     pod/atenet-egress-78f759fcb8-74d4m               Container image "localhost:5001/atenet@sha256:e4618026661f38786d7c5cfc5e4706ca4c17a5fc7
+ate-system                         41s         Normal    Created                    pod/ate-api-server-696d95dd66-t85dd              Container created
+ate-system                         41s         Normal    Pulled                     pod/ate-api-server-696d95dd66-t85dd              Container image "localhost:5001/ateapi@sha256:11c73d2c94bbf5ac76cadbda2113bb1c57605d10f
+ate-system                         41s         Normal    Started                    pod/ate-api-server-696d95dd66-t85dd              Container started
+ate-system                         40s         Normal    Pulled                     pod/ate-api-server-696d95dd66-9q7f8              Container image "localhost:5001/ateapi@sha256:11c73d2c94bbf5ac76cadbda2113bb1c57605d10f
+ate-system                         40s         Normal    Created                    pod/ate-api-server-696d95dd66-9q7f8              Container created
+ate-system                         40s         Normal    Started                    pod/ate-api-server-696d95dd66-9q7f8              Container started
+ate-demo-counter                   33s         Warning   Unhealthy                  pod/counter-7cc7dcd596-fps97                     Readiness probe failed: HTTP probe failed with statuscode: 503
+ate-demo-counter                   33s         Warning   Unhealthy                  pod/counter-7cc7dcd596-p6g2q                     Readiness probe failed: HTTP probe failed with statuscode: 503
+ate-demo-parking                   32s         Warning   Unhealthy                  pod/parking-664fd7c67b-l6mxf                     Readiness probe failed: HTTP probe failed with statuscode: 503
+lab-c                              31s         Warning   Unhealthy                  pod/ballast-65cf95d875-bzgjd                     Readiness probe failed: HTTP probe failed with statuscode: 503
+ate-demo-counter                   31s         Warning   Unhealthy                  pod/counter-7cc7dcd596-ffxwt                     Readiness probe failed: HTTP probe failed with statuscode: 503
+ate-demo-parking                   27s         Warning   Unhealthy                  pod/parking-664fd7c67b-475hq                     Readiness probe failed: HTTP probe failed with statuscode: 503
+lab-c                              25s         Warning   Unhealthy                  pod/ballast-65cf95d875-f65dl                     Readiness probe failed: HTTP probe failed with statuscode: 503
+ate-demo-counter-microvm           23s         Warning   Unhealthy                  pod/counter-microvm-59f65968fb-4n8ns             Readiness probe failed: HTTP probe failed with statuscode: 503
+lab-m                              20s         Warning   Unhealthy                  pod/ballast-mvm-65c7469b7b-phw8g                 Readiness probe failed: HTTP probe failed with statuscode: 503
+lab-m                              18s         Warning   Unhealthy                  pod/ballast-mvm-65c7469b7b-tdqqr                 Readiness probe failed: HTTP probe failed with statuscode: 503
+ate-demo-counter-microvm           17s         Warning   Unhealthy                  pod/counter-microvm-59f65968fb-wljrg             Readiness probe failed: HTTP probe failed with statuscode: 503

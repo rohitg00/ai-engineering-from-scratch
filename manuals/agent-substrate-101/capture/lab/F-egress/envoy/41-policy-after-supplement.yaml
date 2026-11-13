@@ -1,0 +1,23 @@
+metadata:
+  atespace: lab-f
+  createTime: "2026-11-12T10:45:59.339191794Z"
+  name: default
+  uid: 06d478d7-7a70-4ca0-91f8-4524c40ea9bc
+  updateTime: "2026-11-12T10:59:57.501911932Z"
+  version: "15"
+rules:
+- http:
+    effects:
+      replaceHeaders:
+      - credentialUri: ate-secret://k8s.io/default/cred-ns/api-token/token
+        header: Authorization
+        prefix: 'Bearer '
+      - credentialUri: ate-secret://k8s.io/default/cred-ns-not-granted/api-token/token
+        header: X-Other-Token
+      - credentialUri: ate-secret://k8s.io/default/cred-ns/does-not-exist/token
+        header: X-Missing-Token
+    hostnames:
+    - whoami.egress-target.svc.cluster.local
+    ports:
+      numbers:
+      - 80

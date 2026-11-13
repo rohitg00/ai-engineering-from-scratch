@@ -1,0 +1,5 @@
+ATESPACE   NAME     SCOPE                STATE   SNAPSHOT                                                                        FIDELITY                   AGE
+up-lab     pre-up   TAG_SCOPE_ATESPACE   Ready   gs://ate-snapshots/atespaces/up-lab/tags/dfba3ad9-6770-4bcb-a9fc-453bfe90c6b8   SNAPSHOT_FIDELITY_MEMORY   0s
+ATESPACE   NAME                                   SCOPE                 STATE   SNAPSHOT                                                                        FIDELITY                   AGE
+up-lab     6a6a00ee-3579-4831-9df7-297cf34eb6c3   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/up-lab/tags/a5e94f07-6898-412e-8b31-6a9904fe724e   SNAPSHOT_FIDELITY_MEMORY   84s
+up-lab     pre-up                                 TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/up-lab/tags/dfba3ad9-6770-4bcb-a9fc-453bfe90c6b8   SNAPSHOT_FIDELITY_MEMORY   0s

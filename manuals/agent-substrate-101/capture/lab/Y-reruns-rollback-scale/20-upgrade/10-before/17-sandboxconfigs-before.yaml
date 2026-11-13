@@ -1,0 +1,86 @@
+apiVersion: v1
+items:
+- apiVersion: ate.dev/v1
+  kind: SandboxConfig
+  metadata:
+    annotations:
+      sandboxconfig.ate.dev/is-class-default: "true"
+    creationTimestamp: "2026-11-12T20:21:48Z"
+    finalizers:
+    - sandboxconfig.ate.dev/workerpool-protection
+    generation: 1
+    name: gvisor-default
+    resourceVersion: "1343"
+    uid: a57b3ee3-0213-449c-ac04-d2e9745a9228
+  spec:
+    defaultVersion: v7
+    sandboxClass: gvisor
+    versions:
+    - assets:
+        amd64:
+          gvisor:
+            sha256: 708afc62f2ee82d19930c703e85f9dab4f27a78c0aec40c0f55eb1040107f1a7
+            url: gs://gvisor/releases/release/20261026.0/x86_64/gvisor.tar.zstd
+        arm64:
+          gvisor:
+            sha256: 6257e49955f13e6caceb2c4181c5dc5406c460e805940c944e67ad65553f5b02
+            url: gs://gvisor/releases/release/20261026.0/aarch64/gvisor.tar.zstd
+      name: v6
+      state: Enabled
+    - assets:
+        amd64:
+          gvisor:
+            sha256: a1439ffbba7d212e0fde32ea79fa9bb51cbc4c5f6c16af1f047260290b861d42
+            url: gs://gvisor/releases/release/20261102.0/x86_64/gvisor.tar.zstd
+        arm64:
+          gvisor:
+            sha256: f702ae92ad7a0c4134be34ca23f52966dbb696db0c0f5b8ec439210ab2cd7c6a
+            url: gs://gvisor/releases/release/20261102.0/aarch64/gvisor.tar.zstd
+      name: v7
+      state: Enabled
+- apiVersion: ate.dev/v1
+  kind: SandboxConfig
+  metadata:
+    annotations:
+      sandboxconfig.ate.dev/is-class-default: "true"
+    creationTimestamp: "2026-11-12T20:23:57Z"
+    generation: 1
+    name: microvm
+    resourceVersion: "1337"
+    uid: 7ec27ed6-cdda-4da2-8b90-4410c055cf9e
+  spec:
+    defaultVersion: v2
+    sandboxClass: microvm
+    versions:
+    - assets:
+        amd64:
+          cloud-hypervisor:
+            sha256: 448af3d4e59b22c2987f7df94c213ad40fb53a10d437e42b5ee6c4fce7c29ecc
+            url: s3://ate-snapshots/microvm-assets/amd64/448af3d4e59b22c2987f7df94c213ad40fb53a10d437e42b5ee6c4fce7c29ecc
+          kata-image:
+            sha256: 6770db2cca5710593f27c9ac5e1d9d7aab836422695a5e5c4807496a92a0f24d
+            url: s3://ate-snapshots/microvm-assets/amd64/6770db2cca5710593f27c9ac5e1d9d7aab836422695a5e5c4807496a92a0f24d
+          kata-kernel:
+            sha256: f87d8359035cb7557b16a319e6431ea09b183e62268aef436bf8dc6530d786b6
+            url: s3://ate-snapshots/microvm-assets/amd64/f87d8359035cb7557b16a319e6431ea09b183e62268aef436bf8dc6530d786b6
+          virtiofsd:
+            sha256: 15b2e72a78cc08a9bd8a6943e89fb69c88cb3cbeb63069efceade835342ac7d4
+            url: s3://ate-snapshots/microvm-assets/amd64/15b2e72a78cc08a9bd8a6943e89fb69c88cb3cbeb63069efceade835342ac7d4
+        arm64:
+          cloud-hypervisor:
+            sha256: f192b510eea1c710cbc439d716bb0573c223fc463dbe3e6523788a2b7ef62850
+            url: s3://ate-snapshots/microvm-assets/arm64/f192b510eea1c710cbc439d716bb0573c223fc463dbe3e6523788a2b7ef62850
+          kata-image:
+            sha256: 69f9a76e5a2563b7c74d1f271f3a904240f50ef405465f832021525894519f97
+            url: s3://ate-snapshots/microvm-assets/arm64/69f9a76e5a2563b7c74d1f271f3a904240f50ef405465f832021525894519f97
+          kata-kernel:
+            sha256: dece388830720fe8bddb41552fff5f486240aeece5acc0aebc1812761e3e3f66
+            url: s3://ate-snapshots/microvm-assets/arm64/dece388830720fe8bddb41552fff5f486240aeece5acc0aebc1812761e3e3f66
+          virtiofsd:
+            sha256: 4b43f4f6de6500203b01214a790314eea4182f5f110594ddb28ae2805622f06f
+            url: s3://ate-snapshots/microvm-assets/arm64/4b43f4f6de6500203b01214a790314eea4182f5f110594ddb28ae2805622f06f
+      name: v2
+      state: Enabled
+kind: List
+metadata:
+  resourceVersion: ""

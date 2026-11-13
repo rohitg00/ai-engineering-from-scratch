@@ -1,0 +1,18 @@
+### 2026-11-12T19:06:43Z before removal
+{"time":"2026-11-12T18:49:27.218963012Z","level":"INFO","msg":"worker cache synced","count":50,"changed":0}
+96
+9582 kB
+ate-api-server-55b88dc744-7nkwp 2/2 Running 0
+ate-api-server-55b88dc744-b25t5 2/2 Running 0
+ate-controller-7984566f8d-zkslh 1/1 Running 0
+ate-idp-server-dcd5f565f-tnfvx 1/1 Running 0
+ate-idp-server-dcd5f565f-zrptk 1/1 Running 0
+atelet-d9j7b 2/2 Running 0
+atenet-egress-7758c8fb4-jkmpz 3/3 Running 0
+atenet-router-7657dd48b4-szmx4 2/2 Running 0
+k8s-credential-provider-5bb6b77b65-fzmvq 1/1 Running 0
+rustfs-54c86945fb-sbpx6 1/1 Running 0
+rustfs-bucket-init-hrdn5 0/1 Completed 0
+x-prober 1/1 Running 0
+34-api-server-log.excerpt.txt worker-cache-not-ready lines: 0
+34-api-server-log-run2.excerpt.txt worker-cache-not-ready lines: 0

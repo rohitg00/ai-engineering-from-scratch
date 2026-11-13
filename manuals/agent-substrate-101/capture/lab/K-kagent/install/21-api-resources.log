@@ -1,0 +1,9 @@
+NAME                         SHORTNAMES   APIVERSION               NAMESPACED   KIND
+certificatesigningrequests   csr          certificates.k8s.io/v1   false        CertificateSigningRequest
+clustertrustbundles                       certificates.k8s.io/v1   false        ClusterTrustBundle
+podcertificaterequests                    certificates.k8s.io/v1   true         PodCertificateRequest
+Client Version: v1.37.2
+Kustomize Version: v5.8.1
+Server Version: v1.37.0
+NAME                   STATUS     ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION              CONTAINER-RUNTIME
+kagent-control-plane   NotReady   control-plane   6s    v1.37.0   172.18.0.2    <none>        Debian GNU/Linux 13 (trixie)   6.8.0-147-generic (amd64)   containerd://2.3.4

@@ -1,0 +1,2 @@
+ATESPACE   NAME   TEMPLATE     STATE                 WORKER POD                     WORKER IPS    VERSION   AGE
+xa         x1     xa/cross-0   ACTOR_STATE_RUNNING   lab-v/vpool-69595c64bf-p4slt   10.244.0.31   3         1s

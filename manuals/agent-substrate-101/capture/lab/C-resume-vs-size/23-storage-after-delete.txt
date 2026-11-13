@@ -1,0 +1,14 @@
+== after delete: node snapshots
+0	/var/lib/ate/atelet-otlp.sock
+0	/var/lib/ate/worker-support.sock
+1	/var/lib/ate/cache-boot-id
+1	/var/lib/ate/sandbox-asset-scratch
+1	/var/lib/ate/sandbox-runtime-index.json
+1	/var/lib/ate/snapshot-scratch
+1	/var/lib/ate/snapshots
+1	/var/lib/ate/workers
+24	/var/lib/ate/image-cache
+159	/var/lib/ate/sandbox-asset-cache
+163	/var/lib/ate/actors
+1765	/var/lib/ate/snapshot-cache
+2064	/data

@@ -1,0 +1,37 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+actorTemplate:
+  atespace: default
+  name: w-fl1-tmpl-4b80bdaf
+metadata:
+  atespace: default
+  createTime: "2026-11-12T18:07:38.885962027Z"
+  name: w-fl1
+  uid: c2b7aeb7-cb6a-4ba6-9827-4a4832db2924
+  updateTime: "2026-11-12T18:07:42.072882861Z"
+  version: "5"
+status:
+  assignedNode: demo-control-plane
+  lastAssignedGeneration: 1
+  snapshots:
+  - actorTemplateUid: 3bad118e-7cc0-4910-bac2-2f8ee3bfb0d1
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/default/actors/c2b7aeb7-cb6a-4ba6-9827-4a4832db2924/snapshots/f2429bca-78dc-4ec2-a5c1-6fcc43b92933
+      state: SNAPSHOT_STORAGE_STATE_PENDING
+    fidelity: SNAPSHOT_FIDELITY_VOLUMES
+    generation: 1
+    locality: demo-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: f2429bca-78dc-4ec2-a5c1-6fcc43b92933
+  state: ACTOR_STATE_SUSPENDED

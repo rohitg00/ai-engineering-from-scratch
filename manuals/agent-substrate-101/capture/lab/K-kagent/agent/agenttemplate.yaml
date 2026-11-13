@@ -1,0 +1,18 @@
+apiVersion: api.kagent.dev/v1alpha3
+kind: AgentTemplate
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"api.kagent.dev/v1alpha3","kind":"AgentTemplate","metadata":{"annotations":{},"name":"lab-template","namespace":"kagent"},"spec":{"description":"Lab agent that runs shell commands for the Substrate manual experiments","modelConfig":{"name":"mock-model"},"systemPrompt":"You are a lab agent. Use the bash tool when the user asks you to run a command."}}
+  creationTimestamp: "2026-11-12T10:16:30Z"
+  generation: 1
+  name: lab-template
+  namespace: kagent
+  resourceVersion: "1861"
+  uid: 22726ce1-7d64-4367-bd5e-d7956b7a8354
+spec:
+  description: Lab agent that runs shell commands for the Substrate manual experiments
+  modelConfig:
+    name: mock-model
+  systemPrompt: You are a lab agent. Use the bash tool when the user asks you to run
+    a command.

@@ -1,0 +1,3 @@
+Error from server (NotFound): pods "postgres-0" not found
+Error from server (NotFound): pods "postgres-0" not found
+Error from server (NotFound): pods "postgres-0" not found

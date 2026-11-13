@@ -1,0 +1,21 @@
+ts	t	event	detail
+2026-11-12T16:21:39.498Z	t=0.1	uncordon	node/multi-worker2 uncordoned  after 46.8 s cordoned
+2026-11-12T16:21:41.446Z	t=2.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:21:47.448Z	t=8.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:21:53.357Z	t=14.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:21:59.319Z	t=20.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:05.416Z	t=26.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:11.563Z	t=32.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:17.497Z	t=38.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:23.529Z	t=44.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:29.441Z	t=50.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:35.494Z	t=56.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:41.425Z	t=62.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:47.361Z	t=68.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:53.305Z	t=73.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:22:59.347Z	t=80.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:23:05.381Z	t=86.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | d2: ACTOR_STATE_RUNNING multi-worker
+2026-11-12T16:23:09.400Z	t=90.0	no-actor-on-returned-node	after 90.0 s, pool pods on node: 0
+2026-11-12T16:23:09.621Z	t=90.3	final-state	d2: ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T16:23:11.033Z	t=91.7	request-after-uncordon	d2: 200	0.059921	count=18 mb=50 sum=6512 process_age_s=117.0	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T16:23:25.289Z	t=105.9	ready-for-next-case	pods: 68nsf:Running:multi-worker2 jn8rf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | workers: 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 

@@ -1,0 +1,9 @@
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE
+api                       ClusterIP   None            <none>        443/TCP,8445/TCP    160m
+ate-controller            ClusterIP   10.96.97.250    <none>        8080/TCP            160m
+atenet-egress             ClusterIP   10.96.98.56     <none>        443/TCP             159m
+atenet-router             ClusterIP   10.96.153.110   <none>        443/TCP,8444/TCP    160m
+idp                       ClusterIP   10.96.138.114   <none>        443/TCP             160m
+k8s-credential-provider   ClusterIP   10.96.33.4      <none>        50051/TCP           159m
+postgres                  ClusterIP   None            <none>        5432/TCP            165m
+rustfs                    ClusterIP   10.96.210.202   <none>        9000/TCP,9001/TCP   160m

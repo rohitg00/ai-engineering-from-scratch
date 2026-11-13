@@ -1,0 +1,12 @@
+namespace/lab-c created
+workerpool.ate.dev/ballast created
+NAME    AGE
+lab-c   0s
+ATESPACE   NAME        GOLDEN TAG   ERROR   AGE
+lab-c      ballast-0                        0s
+ATESPACE   NAME         GOLDEN TAG   ERROR   AGE
+lab-c      ballast-50                        0s
+ATESPACE   NAME          GOLDEN TAG   ERROR   AGE
+lab-c      ballast-200                        0s
+Waiting for deployment "ballast" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ballast" successfully rolled out

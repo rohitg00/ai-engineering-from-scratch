@@ -1,0 +1,19 @@
+from namespace default:
+http://atenet-router.ate-system.svc:80/ code=000 curl_exit=7 Failed to connect to atenet-router.ate-system.svc port 80 after 3 ms: Could not connect to server
+http://atenet-router.ate-system.svc:8081/ code=000 curl_exit=7 Failed to connect to atenet-router.ate-system.svc port 8081 after 2 ms: Could not connect to server
+https://atenet-router.ate-system.svc:443/ code=000 curl_exit=56 OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+https://atenet-router.ate-system.svc:8444/ code=000 curl_exit=56 OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+http://atenet-router.ate-system.svc:15020/ code=404 curl_exit=0 
+https://api.ate-system.svc:443/ code=000 curl_exit=28 Connection timed out after 5001 milliseconds
+https://atenet-egress.ate-system.svc:443/ code=000 curl_exit=28 Connection timed out after 5002 milliseconds
+command terminated with exit code 28
+from namespace kagent:
+http://atenet-router.ate-system.svc:80/ code=000 curl_exit=7 Failed to connect to atenet-router.ate-system.svc port 80 after 2 ms: Could not connect to server
+http://atenet-router.ate-system.svc:8081/ code=000 curl_exit=7 Failed to connect to atenet-router.ate-system.svc port 8081 after 2 ms: Could not connect to server
+https://atenet-router.ate-system.svc:443/ code=000 curl_exit=56 OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+https://atenet-router.ate-system.svc:8444/ code=000 curl_exit=56 OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+http://atenet-router.ate-system.svc:15020/ code=404 curl_exit=0 
+https://api.ate-system.svc:443/ code=415 curl_exit=0 
+https://atenet-egress.ate-system.svc:443/ code=000 curl_exit=28 Connection timed out after 5002 milliseconds
+command terminated with exit code 28
+kagent     session-01a1cf4e-5679-77ad-9913-f700c3e5ab70   kagent/lab-agent-7f643ac37f02   ACTOR_STATE_SUSPENDED   <none>                    

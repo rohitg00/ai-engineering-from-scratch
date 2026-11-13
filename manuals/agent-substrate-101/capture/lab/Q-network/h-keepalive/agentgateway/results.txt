@@ -1,0 +1,86 @@
+### [13:10:47.600] policy update f-main <- Pall.yaml : ATESPACE   ACTOR    RULES   VERSION   AGE lab-f      f-main   2       42        144m 
+### [13:10:53.971] warm
+$ curl -s -o /dev/null -w '%{http_code}\n' http://whoami.egress-target.svc.cluster.local/; curl -s -o /dev/null --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '%{http_code} http=%{http_version}\n' https://example.com/
+exit=0
+200
+200 http=2
+
+
+### [13:11:07.224] policy update f-main <- Pnone.yaml : ATESPACE   ACTOR    RULES   VERSION   AGE lab-f      f-main   1       43        145m 
+### [13:11:32.229] h1-http11-keepalive
+$ date -u +start=%T.%N; curl -sS -m 70 --rate 30/m -o /dev/null -w '%{http_code} http=%{http_version} new_conns=%{num_connects} lport=%{local_port} t=%{time_total}\n' 'http://whoami.egress-target.svc.cluster.local/?i=[1-20]' 2>&1; date -u +end=%T.%N
+exit=0
+start=13:10:54.
+200 http=1.1 new_conns=1 lport=50509 t=0.090609
+200 http=1.1 new_conns=0 lport=50509 t=0.014036
+200 http=1.1 new_conns=0 lport=50509 t=0.009324
+200 http=1.1 new_conns=0 lport=50509 t=0.008994
+200 http=1.1 new_conns=0 lport=50509 t=0.008608
+200 http=1.1 new_conns=0 lport=50509 t=0.012208
+200 http=1.1 new_conns=0 lport=50509 t=0.008836
+403 http=1.1 new_conns=0 lport=50509 t=0.007677
+403 http=1.1 new_conns=0 lport=50509 t=0.009808
+403 http=1.1 new_conns=0 lport=50509 t=0.009118
+403 http=1.1 new_conns=0 lport=50509 t=0.008451
+403 http=1.1 new_conns=0 lport=50509 t=0.008374
+403 http=1.1 new_conns=0 lport=50509 t=0.009712
+403 http=1.1 new_conns=0 lport=50509 t=0.014888
+403 http=1.1 new_conns=0 lport=50509 t=0.007900
+403 http=1.1 new_conns=0 lport=50509 t=0.008054
+403 http=1.1 new_conns=0 lport=50509 t=0.007764
+403 http=1.1 new_conns=0 lport=50509 t=0.009837
+403 http=1.1 new_conns=0 lport=50509 t=0.008082
+403 http=1.1 new_conns=0 lport=50509 t=0.010107
+end=13:11:32.
+
+
+### [13:11:32.674] h1-new-connection-after
+$ curl -sS -m 8 -o /dev/null -w '%{http_code}\n' http://whoami.egress-target.svc.cluster.local/ 2>&1
+exit=6 error=exit status 6
+curl: (6) Could not resolve host: whoami.egress-target.svc.cluster.local
+000
+
+
+### [13:11:32.901] policy update f-main <- Pall.yaml : ATESPACE   ACTOR    RULES   VERSION   AGE lab-f      f-main   2       44        145m 
+### [13:11:40.075] warm2
+$ curl -s -o /dev/null --http2 --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '%{http_code} http=%{http_version}\n' https://example.com/
+exit=0
+200 http=2
+
+
+### [13:11:53.302] policy update f-main <- Pnone.yaml : ATESPACE   ACTOR    RULES   VERSION   AGE lab-f      f-main   1       45        145m 
+### [13:12:18.360] h2-https-rule-http2
+$ date -u +start=%T.%N; curl -sS -m 70 --http2 --cacert /run/ate/egress-trust-bundle/trust-bundle.pem --rate 30/m -o /dev/null -w '%{http_code} http=%{http_version} new_conns=%{num_connects} lport=%{local_port} t=%{time_total}\n' 'https://example.com/?i=[1-20]' 2>&1; date -u +end=%T.%N
+exit=0
+start=13:11:40.
+200 http=2 new_conns=1 lport=49902 t=1.609673
+200 http=2 new_conns=0 lport=49902 t=0.846819
+200 http=2 new_conns=0 lport=49902 t=1.142747
+200 http=2 new_conns=0 lport=49902 t=1.248631
+200 http=2 new_conns=0 lport=49902 t=0.886443
+200 http=2 new_conns=0 lport=49902 t=1.122190
+200 http=2 new_conns=0 lport=49902 t=1.076010
+403 http=2 new_conns=0 lport=49902 t=0.009658
+403 http=2 new_conns=0 lport=49902 t=0.010169
+403 http=2 new_conns=0 lport=49902 t=0.008784
+403 http=2 new_conns=0 lport=49902 t=0.009450
+403 http=2 new_conns=0 lport=49902 t=0.015495
+403 http=2 new_conns=0 lport=49902 t=0.015804
+403 http=2 new_conns=0 lport=49902 t=0.017106
+403 http=2 new_conns=0 lport=49902 t=0.013857
+403 http=2 new_conns=0 lport=49902 t=0.008177
+403 http=2 new_conns=0 lport=49902 t=0.007942
+403 http=2 new_conns=0 lport=49902 t=0.009088
+403 http=2 new_conns=0 lport=49902 t=0.010797
+403 http=2 new_conns=0 lport=49902 t=0.009721
+end=13:12:18.
+
+
+### [13:12:18.649] h2-new-connection-after
+$ curl -sS -m 8 -o /dev/null --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '%{http_code}\n' https://example.com/ 2>&1
+exit=6 error=exit status 6
+curl: (6) Could not resolve host: example.com
+000
+
+
+### [13:12:18.900] policy update f-main <- Pall.yaml : ATESPACE   ACTOR    RULES   VERSION   AGE lab-f      f-main   2       46        146m 

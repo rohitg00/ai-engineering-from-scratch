@@ -1,0 +1,13 @@
+NAME                 ATESPACE   PROVIDER    MODEL
+lab-model-nosecret   default    anthropic   claude-opus-5
+lab-model            default    anthropic   claude-opus-5
+Name:               lab-model
+Atespace:           default
+Provider:           anthropic
+Model:              claude-opus-5
+Secret Key:         ax-lab-dummy-model-key (key: ANTHROPIC_API_KEY)
+Name:               lab-model-nosecret
+Atespace:           default
+Provider:           anthropic
+Model:              claude-opus-5
+Secret Key:         no-such-secret (key: ANTHROPIC_API_KEY)

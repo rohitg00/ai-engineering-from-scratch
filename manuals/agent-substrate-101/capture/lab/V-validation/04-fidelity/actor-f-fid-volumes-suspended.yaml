@@ -1,0 +1,36 @@
+actorTemplate:
+  atespace: lab-v
+  name: fid-volumes
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:44:34.140252840Z"
+  name: f-fid-volumes
+  uid: 470818dc-da83-482f-9c96-011a0bd3d7c4
+  updateTime: "2026-11-12T12:44:55.887632813Z"
+  version: "45"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 12
+  snapshots:
+  - actorTemplateUid: abb8f11c-9d47-42e6-b2b9-36eb204a8421
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-v/actors/470818dc-da83-482f-9c96-011a0bd3d7c4/snapshots/b45b41e1-64aa-4f8b-abb5-aa1d8d0e9367
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_VOLUMES
+    generation: 12
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: b45b41e1-64aa-4f8b-abb5-aa1d8d0e9367
+  state: ACTOR_STATE_SUSPENDED

@@ -1,0 +1,177 @@
+### [10:56:08.666] policy update f-main <- P1.yaml : lab-f      f-main   1       10        10m
+## A. DNS propagation after a hostname is ADDED (P1 -> P2 adds example.com and example.org)
+### [10:56:39.119] policy update f-main <- P2.yaml : lab-f      f-main   3       11        10m
+### [10:57:44.759] a-dns-poll-add
+$ for i in $(seq 1 40); do echo "$(date -u +%T) com=$(dig +time=1 +tries=1 +noall +comments example.com | grep -o 'status: [A-Z]*') org=$(dig +time=1 +tries=1 +noall +comments example.org | grep -o 'status: [A-Z]*')"; sleep 1; done
+exit=0
+10:56:33 com=status: NXDOMAIN org=status: NXDOMAIN
+10:56:35 com=status: NXDOMAIN org=status: NXDOMAIN
+10:56:37 com=status: NXDOMAIN org=status: NXDOMAIN
+10:56:39 com=status: NOERROR org=status: NOERROR
+10:56:41 com=status: NOERROR org=status: NOERROR
+10:56:42 com=status: NOERROR org=status: NOERROR
+10:56:44 com=status: NOERROR org=status: NOERROR
+10:56:46 com=status: NOERROR org=status: NOERROR
+10:56:48 com=status: NOERROR org=status: NOERROR
+10:56:49 com=status: NOERROR org=status: NOERROR
+10:56:51 com=status: NOERROR org=status: NOERROR
+10:56:53 com=status: NOERROR org=status: NOERROR
+10:56:55 com=status: NOERROR org=status: NOERROR
+10:56:57 com=status: NOERROR org=status: NOERROR
+10:56:58 com=status: NOERROR org=status: NOERROR
+10:57:00 com=status: NOERROR org=status: NOERROR
+10:57:02 com=status: NOERROR org=status: NOERROR
+10:57:04 com=status: NOERROR org=status: NOERROR
+10:57:06 com=status: NOERROR org=status: NOERROR
+10:57:07 com=status: NOERROR org=status: NOERROR
+10:57:09 com=status: NOERROR org=status: NOERROR
+10:57:11 com=status: NOERROR org=status: NOERROR
+10:57:13 com=status: NOERROR org=status: NOERROR
+10:57:15 com=status: NOERROR org=status: NOERROR
+10:57:16 com=status: NOERROR org=status: NOERROR
+10:57:18 com=status: NOERROR org=status: NOERROR
+10:57:20 com=status: NOERROR org=status: NOERROR
+10:57:22 com=status: NOERROR org=status: NOERROR
+10:57:23 com=status: NOERROR org=status: NOERROR
+10:57:25 com=status: NOERROR org=status: NOERROR
+10:57:27 com=status: NOERROR org=status: NOERROR
+10:57:29 com=status: NOERROR org=status: NOERROR
+10:57:30 com=status: NOERROR org=status: NOERROR
+10:57:32 com=status: NOERROR org=status: NOERROR
+10:57:34 com=status: NOERROR org=status: NOERROR
+10:57:36 com=status: NOERROR org=status: NOERROR
+10:57:37 com=status: NOERROR org=status: NOERROR
+10:57:39 com=status: NOERROR org=status: NOERROR
+10:57:41 com=status: NOERROR org=status: NOERROR
+10:57:42 com=status: NOERROR org=status: NOERROR
+
+
+### [10:57:45.548] a-https-default-store
+$ curl -sS -m 15 -o /dev/null -w 'code=%{http_code} verify=%{ssl_verify_result}\n' https://example.com/
+exit=60
+code=000 verify=20
+
+stderr: curl: (60) SSL certificate problem: unable to get local issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the webpage mentioned above.
+
+
+### [10:57:46.456] a-https-trust-bundle
+$ curl -sS -m 15 -o /dev/null -w 'code=%{http_code} verify=%{ssl_verify_result} http=%{http_version}\n' --cacert /run/ate/egress-trust-bundle/trust-bundle.pem https://example.com/
+exit=0
+code=200 verify=0 http=2
+
+
+### [10:57:47.360] a-https-ssl-cert-dir
+$ SSL_CERT_FILE=/run/ate/egress-trust-bundle/trust-bundle.pem curl -sS -m 15 -o /dev/null -w 'code=%{http_code} verify=%{ssl_verify_result}\n' https://example.com/
+exit=0
+code=200 verify=0
+
+
+### [10:57:48.154] a-https-chain
+$ echo | openssl s_client -connect example.com:443 -servername example.com -showcerts 2>/dev/null | grep -E '^ *[0-9]+ s:|^ *i:|Verification|Verify return'
+exit=0
+ 0 s:
+   i:CN=U7ICLCR3N66DBMBSAQNS5JHTHI
+Verification error: unable to verify the first certificate
+Verify return code: 21 (unable to verify the first certificate)
+
+
+### [10:57:48.877] a-passthrough
+$ curl -sS -m 15 -o /dev/null -w 'code=%{http_code} verify=%{ssl_verify_result} http=%{http_version}\n' https://example.org/
+exit=0
+code=200 verify=0 http=2
+
+
+## B. tls_passthrough connection kept open across removal of its rule (P2 -> P1)
+### [10:57:53.330] policy update f-main <- P1.yaml : lab-f      f-main   1       12        11m
+### [10:58:17.248] b-passthrough-one-conn
+$ (printf 'GET / HTTP/1.1\r\nHost: example.org\r\n\r\n'; sleep 24; printf 'GET / HTTP/1.1\r\nHost: example.org\r\nConnection: close\r\n\r\n'; sleep 4) | openssl s_client -quiet -connect example.org:443 -servername example.org 2>/dev/null | grep -a -E '^HTTP/1.1 |^date:|^Date:' | head -6; echo end=$(date -u +%T)
+exit=0
+HTTP/1.1 200 OK
+Date: Thu, 12 Nov 2026 10:57:50 GMT
+HTTP/1.1 200 OK
+Date: Thu, 12 Nov 2026 10:58:13 GMT
+end=10:58:17
+
+
+### [10:58:42.481] b-poll-new-conn
+$ IP=$(dig +short example.org | head -1); for i in $(seq 1 26); do echo "$(date -u +%T) dns=$(dig +time=1 +tries=1 +noall +comments example.org | grep -o 'status: [A-Z]*') newconn_certs=$(echo | openssl s_client -connect $IP:443 -servername example.org 2>/dev/null | grep -c 'BEGIN CERT')"; sleep 1; done
+exit=0
+10:57:49 dns=status: NOERROR newconn_certs=1
+10:57:52 dns=status: NOERROR newconn_certs=1
+10:57:54 dns=status: NXDOMAIN newconn_certs=0
+10:57:56 dns=status: NXDOMAIN newconn_certs=0
+10:57:58 dns=status: NXDOMAIN newconn_certs=0
+10:58:00 dns=status: NXDOMAIN newconn_certs=0
+10:58:02 dns=status: NXDOMAIN newconn_certs=0
+10:58:04 dns=status: NXDOMAIN newconn_certs=0
+10:58:06 dns=status: NXDOMAIN newconn_certs=0
+10:58:08 dns=status: NXDOMAIN newconn_certs=0
+10:58:10 dns=status: NXDOMAIN newconn_certs=0
+10:58:12 dns=status: NXDOMAIN newconn_certs=0
+10:58:14 dns=status: NXDOMAIN newconn_certs=0
+10:58:16 dns=status: NXDOMAIN newconn_certs=0
+10:58:18 dns=status: NXDOMAIN newconn_certs=0
+10:58:20 dns=status: NXDOMAIN newconn_certs=0
+10:58:22 dns=status: NXDOMAIN newconn_certs=0
+10:58:24 dns=status: NXDOMAIN newconn_certs=0
+10:58:26 dns=status: NXDOMAIN newconn_certs=0
+10:58:28 dns=status: NXDOMAIN newconn_certs=0
+10:58:30 dns=status: NXDOMAIN newconn_certs=0
+10:58:32 dns=status: NXDOMAIN newconn_certs=0
+10:58:34 dns=status: NXDOMAIN newconn_certs=0
+10:58:36 dns=status: NXDOMAIN newconn_certs=0
+10:58:38 dns=status: NXDOMAIN newconn_certs=0
+10:58:40 dns=status: NXDOMAIN newconn_certs=0
+
+
+## C. HTTP: gateway decision for NEW requests after a hostname is REMOVED (P3 -> P1), DNS bypassed with --resolve
+### [10:58:42.904] policy update f-main <- P3.yaml : lab-f      f-main   2       13        12m
+### [10:59:12.328] policy update f-main <- P1.yaml : lab-f      f-main   1       14        13m
+### [10:59:30.459] c-keepalive-one-conn
+$ curl -s -m 60 -o /dev/null -w 'first=%{http_code} ' 'http://drip.egress-target.svc.cluster.local/drip?n=1' --next -s -o /dev/null -w 'second_same_conn_after_20s=%{http_code} conns=%{num_connects}\n' --resolve drip.egress-target.svc.cluster.local:80:10.96.185.134 'http://drip.egress-target.svc.cluster.local/drip?n=21' ; echo
+exit=0
+first=200 second_same_conn_after_20s=200 conns=0
+
+
+
+### [10:59:57.084] c-poll-http-removed
+$ for i in $(seq 1 30); do echo "$(date -u +%T) dns=$(dig +time=1 +tries=1 +noall +comments drip.egress-target.svc.cluster.local | grep -o 'status: [A-Z]*') http=$(curl -s -m 3 -o /dev/null -w '%{http_code}' --resolve drip.egress-target.svc.cluster.local:80:10.96.185.134 'http://drip.egress-target.svc.cluster.local/drip?n=1')"; sleep 1; done
+exit=0
+10:59:08 dns=status: NOERROR http=200
+10:59:10 dns=status: NOERROR http=200
+10:59:13 dns=status: NXDOMAIN http=200
+10:59:15 dns=status: NXDOMAIN http=200
+10:59:18 dns=status: NXDOMAIN http=403
+10:59:19 dns=status: NXDOMAIN http=403
+10:59:20 dns=status: NXDOMAIN http=403
+10:59:22 dns=status: NXDOMAIN http=403
+10:59:24 dns=status: NXDOMAIN http=403
+10:59:25 dns=status: NXDOMAIN http=403
+10:59:27 dns=status: NXDOMAIN http=403
+10:59:28 dns=status: NXDOMAIN http=403
+10:59:30 dns=status: NXDOMAIN http=403
+10:59:31 dns=status: NXDOMAIN http=403
+10:59:33 dns=status: NXDOMAIN http=403
+10:59:34 dns=status: NXDOMAIN http=403
+10:59:36 dns=status: NXDOMAIN http=403
+10:59:37 dns=status: NXDOMAIN http=403
+10:59:39 dns=status: NXDOMAIN http=403
+10:59:40 dns=status: NXDOMAIN http=403
+10:59:42 dns=status: NXDOMAIN http=403
+10:59:43 dns=status: NXDOMAIN http=403
+10:59:45 dns=status: NXDOMAIN http=403
+10:59:46 dns=status: NXDOMAIN http=403
+10:59:48 dns=status: NXDOMAIN http=403
+10:59:49 dns=status: NXDOMAIN http=403
+10:59:51 dns=status: NXDOMAIN http=403
+10:59:52 dns=status: NXDOMAIN http=403
+10:59:54 dns=status: NXDOMAIN http=403
+10:59:55 dns=status: NXDOMAIN http=403
+
+
+### [10:59:57.515] policy update f-main <- P4.yaml : lab-f      f-main   1       15        13m

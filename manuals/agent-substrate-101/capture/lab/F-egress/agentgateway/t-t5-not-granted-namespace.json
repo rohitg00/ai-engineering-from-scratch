@@ -1,0 +1,1 @@
+{"stdout":"HTTP/1.1 403 Forbidden\r\ncontent-type: text/plain\r\ncontent-length: 26\r\ndate: Thu, 12 Nov 2026 11:24:51 GMT\r\n\r\nactor egress policy denied","stderr":"","exitCode":0}

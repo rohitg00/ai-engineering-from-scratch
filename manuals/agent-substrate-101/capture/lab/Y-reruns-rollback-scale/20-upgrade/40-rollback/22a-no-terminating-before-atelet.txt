@@ -1,0 +1,11 @@
+NAMESPACE   NAME                       READY   STATUS    RESTARTS   AGE
+up-lab      up-pool-59f744cb5d-82png   1/1     Running   0          2m11s
+up-lab      up-pool-59f744cb5d-8pgm8   1/1     Running   0          2m14s
+up-lab      up-pool-59f744cb5d-glqnj   1/1     Running   0          2m17s
+up-lab      up-pool-59f744cb5d-jfc5m   1/1     Running   0          2m7s
+up-lab      up-pool-59f744cb5d-m8r9r   1/1     Running   0          2m8s
+up-lab      up-pool-59f744cb5d-ngplc   1/1     Running   0          2m15s
+up-lab      up-pool-59f744cb5d-sj6wf   1/1     Running   0          2m12s
+up-lab      up-pool-59f744cb5d-t8s9b   1/1     Running   0          2m10s
+up-lab      up-pool-59f744cb5d-vjb86   1/1     Running   0          2m9s
+up-lab      up-pool-59f744cb5d-zhhz8   1/1     Running   0          2m13s

@@ -1,0 +1,12 @@
+step	rc	seconds
+06-apply-4gi	0	0.084
+07-create-egress	0	0.204
+08-resume-4gi	1	0.071
+09-describe-4gi	0	0.256
+10-apply-1536mi	1	0.052
+11-describe-after-apply	0	0.260
+12-resume-1536mi	1	0.068
+13-delete-task	0	0.081
+14-apply-1536mi-fresh	0	0.089
+15-create-egress-fresh	0	0.220
+16-resume-fresh	1	0.070

@@ -1,0 +1,56 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+{
+  "actorTemplate": {
+    "atespace": "kagent",
+    "name": "real-1p5b-a0390fb3d7de"
+  },
+  "metadata": {
+    "atespace": "kagent",
+    "createTime": "2026-11-12T18:24:55.085898739Z",
+    "name": "session-01a1d101-7118-7399-94c7-a8d82b1334e5",
+    "uid": "9ef802a0-5e55-44e6-aa5e-93359852f955",
+    "updateTime": "2026-11-12T18:35:10.195909607Z",
+    "version": "5"
+  },
+  "status": {
+    "assignedNode": "kagent-control-plane",
+    "lastAssignedGeneration": 2,
+    "snapshots": [
+      {
+        "actorTemplateUid": "57105e7d-2c8a-42b1-a6d3-f53a930fc5bc",
+        "durableSnapshot": {
+          "object": {
+            "snapshotUri": "s3://ate-snapshots/kagent/atespaces/kagent/actors/9ef802a0-5e55-44e6-aa5e-93359852f955/snapshots/680ef701-7511-4041-85b2-64450cb624f6"
+          },
+          "state": "SNAPSHOT_STORAGE_STATE_COMPLETED"
+        },
+        "fidelity": "SNAPSHOT_FIDELITY_VOLUMES",
+        "generation": 2,
+        "locality": "kagent-control-plane",
+        "owner": "SNAPSHOT_OWNER_ACTOR",
+        "sandboxRuntime": {
+          "sandboxClass": "gvisor",
+          "version": {
+            "attributes": [
+              {
+                "key": "architecture",
+                "value": "amd64"
+              },
+              {
+                "key": "cpu_features",
+                "value": "8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203"
+              },
+              {
+                "key": "sandbox_bundle_hash",
+                "value": "sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa"
+              }
+            ],
+            "schemaVersion": "v1"
+          }
+        },
+        "uuid": "680ef701-7511-4041-85b2-64450cb624f6"
+      }
+    ],
+    "state": "ACTOR_STATE_SUSPENDED"
+  }
+}

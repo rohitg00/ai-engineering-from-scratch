@@ -1,0 +1,21 @@
+ts	step	exit	output
+2026-11-12T12:51:47.141Z	default-identity-get-global-policy	-	global has no access policy 
+2026-11-12T12:51:47.565Z	alice-no-role-get-actors	-	Error: failed to list actors: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_list_actors" on "atespace:lab-v" 
+2026-11-12T12:51:47.772Z	alice-no-role-get-atespaces	-	Error: failed to list atespaces: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_list_atespaces" on "global:root" 
+2026-11-12T12:51:47.988Z	owner-create-policy-viewer	-	SCOPE   ROLE     MEMBERS lab-v   viewer   user:system:serviceaccount:ate-users:alice 
+2026-11-12T12:51:50.394Z	alice-viewer-get-actors	-	ATESPACE   NAME   TEMPLATE       STATE                 WORKER POD                     WORKER IPS    VERSION   AGE lab-v      e1     lab-v/tiny-0   ACTOR_STATE_RUNNING   lab-v/vpool-69595c64bf-xvzlq   10.244.0.32   7         6m32s lab-v      e2     lab-v/tiny-0   ACTOR_STATE_RUNNING   lab-v/vpool-69595c64bf-xvzlq   10.244.0.32   7         6m32s 
+2026-11-12T12:51:50.601Z	alice-viewer-get-templates	-	ATESPACE   NAME          GOLDEN TAG                             ERROR   AGE lab-v      fid-memory    dec0c196-e199-4c19-aa00-6037835949f4           8m32s lab-v      fid-rootfs    2edaf4a5-9dd2-41da-a82c-4e668ac38640           8m32s lab-v      fid-volumes   abb8f11c-9d47-42e6-b2b9-36eb204a8421           8m31s lab-v      mixed-200     69c9e857-9419-4d14-a819-d2f99bcde6ff           12m lab-v      mixed-500     ab87cbae-
+2026-11-12T12:51:50.799Z	alice-viewer-create-actor	-	Error: failed to create actor: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_create_actor" on "atespace:lab-v" 
+2026-11-12T12:51:50.990Z	alice-viewer-other-atespace	-	Error: failed to list actors: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_list_actors" on "atespace:lab-c" 
+2026-11-12T12:51:51.192Z	alice-viewer-get-workers	-	Error: failed to list workers: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_list_workers" on "global:root" 
+2026-11-12T12:51:51.625Z	owner-update-policy-editor	-	SCOPE   ROLE     MEMBERS lab-v   editor   user:system:serviceaccount:ate-users:alice 
+2026-11-12T12:51:54.046Z	alice-editor-create-actor	-	ATESPACE   NAME   TEMPLATE       STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-v      al1    lab-v/tiny-0   ACTOR_STATE_SUSPENDED   <none>                    1         0s 
+2026-11-12T12:51:54.253Z	alice-editor-suspend	-	ATESPACE   NAME   TEMPLATE       STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-v      al1    lab-v/tiny-0   ACTOR_STATE_SUSPENDED   <none>                    1         0s 
+2026-11-12T12:51:54.457Z	alice-editor-create-template-other	-	Error: failed to create actor: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_create_actor" on "atespace:lab-c" 
+2026-11-12T12:51:54.647Z	alice-editor-create-access-policy	-	Error: failed to create atespace "lab-c" access policy: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_create_access_policy" on "atespace:lab-c" 
+2026-11-12T12:51:54.864Z	alice-editor-delete-actor	-	actor "al1" deleted 
+2026-11-12T12:51:55.056Z	bad-token	-	Error: failed to list actors: rpc error: code = Unauthenticated desc = invalid bearer token 
+2026-11-12T12:51:55.371Z	wrong-audience-token	-	Error: failed to list actors: rpc error: code = Unauthenticated desc = invalid bearer token 
+2026-11-12T12:51:55.584Z	owner-delete-policy	-	access policy for atespace "lab-v" deleted 
+2026-11-12T12:51:55.793Z	alice-after-delete	-	Error: failed to list actors: rpc error: code = PermissionDenied desc = permission denied: principal "user:system%3Aserviceaccount%3Aate-users%3Aalice" lacks "can_list_actors" on "atespace:lab-v" 
+DONE

@@ -1,0 +1,18 @@
+Name:         w-mcp
+Atespace:     default
+Phase:        Running
+Actor:        w-mcp
+Worker IP:    10.244.0.35
+Workspace:    w-ws  path=/workspace
+Image:        localhost:5002/ax-claude-code@sha256:73fbd85b498dacfde3660cb9c5cc4c27f279a2bb2b9638e783dbf81d15919d35
+Config:
+  dangerouslySkipPermissions: true
+  maxTurns: 6
+  model: qwen2.5:3b
+  prompt: Call the tool lab_fact from the docs MCP server. Then use the Bash tool to write exactly the text that the tool returned into the file /workspace/mcp-result.txt . Then answer with the single word done.
+  systemPrompt: You are a coding agent in a Linux sandbox. Use the tools to do what the user asks.
+
+Conditions:
+  TYPE            STATUS  REASON         MESSAGE
+  WorkspaceReady  True    SetupComplete  Workspace setup completed at 10.244.0.35
+  Ready           True    TaskRunning    Task is running and its workspace is ready

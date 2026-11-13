@@ -1,0 +1,13 @@
+## atenet-router-7c5c864d47-9gztj / agentgateway pid=51638
+LISTEN 0      128    127.0.0.1:15000 0.0.0.0:* users:(("agentgateway",pid=51638,fd=31))
+LISTEN 0      128      0.0.0.0:15020 0.0.0.0:* users:(("agentgateway",pid=51638,fd=33))
+LISTEN 0      128        [::1]:15000    [::]:* users:(("agentgateway",pid=51638,fd=32))
+LISTEN 0      128            *:8444        *:* users:(("agentgateway",pid=51638,fd=27))
+LISTEN 0      128            *:8443        *:* users:(("agentgateway",pid=51638,fd=26))
+LISTEN 0      128            *:15021       *:* users:(("agentgateway",pid=51638,fd=13))
+## atenet-egress-9fbd685d5-5q98b / agentgateway pid=68557
+LISTEN 0      128    10.244.0.49:8443  0.0.0.0:* users:(("agentgateway",pid=68557,fd=35))
+LISTEN 0      128      127.0.0.1:15000 0.0.0.0:* users:(("agentgateway",pid=68557,fd=39))
+LISTEN 0      128          [::1]:15000    [::]:* users:(("agentgateway",pid=68557,fd=40))
+LISTEN 0      128              *:15020       *:* users:(("agentgateway",pid=68557,fd=42))
+LISTEN 0      128              *:15021       *:* users:(("agentgateway",pid=68557,fd=13))

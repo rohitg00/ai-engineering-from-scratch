@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 318" role="img" aria-labelledby="fig-8-2e-title fig-8-2e-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-2e-title">The running actor in three outages, on each dataplane</title>
+  <desc id="fig-8-2e-desc">Three panels, one for each dependency that was taken away, with one row for the Envoy dataplane and one for agentgateway. Each row is one request each second to a running actor from a pod in the cluster. Without Postgres the first failure came at 1 seconds on Envoy and at 6 seconds on agentgateway, and the last failure came at 66 and 86 seconds, with Postgres ready at 63 and 65 seconds. Without ate-api-server the failures ran from 6 to 65 seconds on Envoy and from 17 to 86 seconds on agentgateway. Without the Kubernetes API server no request failed on either dataplane.</desc>
+  <rect x="20" y="14" width="12" height="8" fill="var(--m-green-ink, #336b40)"/>
+  <text x="38" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">request returned 200</text>
+  <rect x="190" y="14" width="12" height="8" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="208" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">request failed</text>
+  <rect x="320" y="12" width="12" height="12" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="338" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">dependency away</text>
+  <line x1="468" y1="12" x2="468" y2="24" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="476" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">ready again</text>
+  <text x="20" y="50" font-size="11" letter-spacing="1.2" fill="var(--m-ink-soft, #4a4a4a)">POSTGRES AWAY</text>
+  <rect x="140" y="59" width="134.2" height="16" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="71" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Envoy</text>
+  <rect x="118" y="62" width="24.2" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="142.2" y="62" width="145.2" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="287.4" y="62" width="81.4" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="278.6" y1="59" x2="278.6" y2="75" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="416" y="71" font-size="11" fill="var(--m-rose-ink, #b0344d)">failed from 1 s to 66 s</text>
+  <rect x="140" y="81" width="134.2" height="16" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="93" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agentgateway</text>
+  <rect x="118" y="84" width="35.2" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="153.2" y="84" width="178.2" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="331.4" y="84" width="41.8" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="283" y1="81" x2="283" y2="97" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="416" y="93" font-size="11" fill="var(--m-rose-ink, #b0344d)">failed from 6 s to 86 s</text>
+  <text x="20" y="126" font-size="11" letter-spacing="1.2" fill="var(--m-ink-soft, #4a4a4a)">ATE-API-SERVER AWAY</text>
+  <rect x="140" y="135" width="132" height="16" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="147" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Envoy</text>
+  <rect x="118" y="138" width="35.2" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="153.2" y="138" width="132" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="285.2" y="138" width="99" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="294" y1="135" x2="294" y2="151" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="416" y="147" font-size="11" fill="var(--m-rose-ink, #b0344d)">failed from 6 s to 65 s</text>
+  <rect x="140" y="157" width="134.2" height="16" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="169" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agentgateway</text>
+  <rect x="118" y="160" width="59.4" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="177.4" y="160" width="154" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="331.4" y="160" width="55" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="296.2" y1="157" x2="296.2" y2="173" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="416" y="169" font-size="11" fill="var(--m-rose-ink, #b0344d)">failed from 17 s to 86 s</text>
+  <text x="20" y="202" font-size="11" letter-spacing="1.2" fill="var(--m-ink-soft, #4a4a4a)">KUBE-APISERVER AWAY</text>
+  <rect x="140" y="211" width="189.2" height="16" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="223" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Envoy</text>
+  <rect x="118" y="214" width="286" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="340.2" y1="211" x2="340.2" y2="227" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="416" y="223" font-size="11" fill="var(--m-green-ink, #336b40)">86 of 86 served</text>
+  <rect x="140" y="233" width="191.4" height="16" fill="var(--m-grey-fill, #ecebe3)"/>
+  <text x="20" y="245" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agentgateway</text>
+  <rect x="118" y="236" width="286" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="342.4" y1="233" x2="342.4" y2="249" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="416" y="245" font-size="11" fill="var(--m-green-ink, #336b40)">88 of 88 served</text>
+  <line x1="118" y1="274" x2="404" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="140" y1="270" x2="140" y2="278" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="140" y="292" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
+  <line x1="206" y1="270" x2="206" y2="278" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="206" y="292" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30 s</text>
+  <line x1="272" y1="270" x2="272" y2="278" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="272" y="292" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">60 s</text>
+  <line x1="338" y1="270" x2="338" y2="278" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="338" y="292" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">90 s</text>
+  <line x1="404" y1="270" x2="404" y2="278" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="404" y="292" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">120 s</text>
+  <text x="118" y="310" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds since the dependency went away, one run for each dataplane</text>
+</svg>

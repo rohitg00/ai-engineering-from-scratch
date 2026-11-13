@@ -1,0 +1,180 @@
+### [13:07:24.791] policy update f-main <- Pgw.yaml : ATESPACE   ACTOR    RULES   VERSION   AGE lab-f      f-main   3       40        141m 
+### [13:07:31.535] a1-plain-gw-fast
+$ curl -sS -m 15 -w '\ncode=%{http_code} t=%{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+{"model":"small-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-a model=small-1 authorization=Bearer provider-key-for-backend-a x_lab=lab-gw-client-credential-1794488723","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794488851}
+code=200 t=0.145080
+
+
+### [13:07:31.750] a2-plain-gw-smart
+$ curl -sS -m 15 -w '\ncode=%{http_code} t=%{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"smart","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+{"model":"big-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-b model=big-1 authorization=Bearer provider-key-for-backend-b x_lab=lab-gw-client-credential-1794488723","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794488851}
+code=200 t=0.029242
+
+
+### [13:07:31.981] a3-plain-gw-unknown-model
+$ curl -sS -m 15 -w '\ncode=%{http_code}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"other","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+{"error":{"message":"Model not found","type":"invalid_request_error","code":"model_not_found"}}
+code=404
+
+
+### [13:07:32.978] b1-tls-gw-fast
+$ curl -sS -m 15 --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '\ncode=%{http_code} t=%{time_total} verify=%{ssl_verify_result}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+{"model":"small-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-a model=small-1 authorization=Bearer provider-key-for-backend-a x_lab=lab-gw-client-credential-1794488723","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794488852}
+code=200 t=0.744791 verify=0
+
+
+### [13:07:33.960] b2-tls-gw-smart
+$ curl -sS -m 15 --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '\ncode=%{http_code} t=%{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"smart","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+{"model":"big-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-b model=big-1 authorization=Bearer provider-key-for-backend-b x_lab=lab-gw-client-credential-1794488723","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794488853}
+code=200 t=0.706784
+
+
+### [13:07:35.256] b3-tls-gw-cert-seen-by-actor
+$ echo | openssl s_client -connect modelgw.model-gw.svc.cluster.local:443 -servername modelgw.model-gw.svc.cluster.local 2>/dev/null | openssl x509 -noout -subject -issuer -dates 2>&1
+exit=0
+subject=CN=modelgw.model-gw.svc.cluster.local
+issuer=CN=U7ICLCR3N66DBMBSAQNS5JHTHI
+notBefore=Jan  1 00:00:00 1975 GMT
+notAfter=Jan  1 00:00:00 4096 GMT
+
+
+### [13:07:36.274] b4-tls-gw-verbose
+$ curl -sS -m 15 -v --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -o /dev/null -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions 2>&1 | grep -E '^\* |^< HTTP|^< ' | tail -25
+exit=0
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+*   Certificate level 1: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+* Connected to modelgw.model-gw.svc.cluster.local (10.96.113.67) port 443
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://modelgw.model-gw.svc.cluster.local/v1/chat/completions
+* [HTTP/2] [1] [:method: POST]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: modelgw.model-gw.svc.cluster.local]
+* [HTTP/2] [1] [:path: /v1/chat/completions]
+* [HTTP/2] [1] [user-agent: curl/8.14.1]
+* [HTTP/2] [1] [accept: */*]
+* [HTTP/2] [1] [content-type: application/json]
+* [HTTP/2] [1] [authorization: Bearer placeholder-from-actor]
+* [HTTP/2] [1] [x-lab: placeholder-from-actor]
+* [HTTP/2] [1] [content-length: 60]
+* upload completely sent off: 60 bytes
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+< HTTP/2 200 
+< server: BaseHTTP/0.6 Python/3.12.16
+< date: Thu, 12 Nov 2026 13:07:36 GMT
+< content-type: application/json
+< content-length: 368
+< 
+* Connection #0 to host modelgw.model-gw.svc.cluster.local left intact
+
+
+### [13:07:44.482] l1-direct-mock
+$ for i in $(seq 1 30); do curl -s -m 10 -o /dev/null -w '%{http_code} %{time_total}\n' -H 'content-type: application/json' -d '{"model":"small-1","messages":[{"role":"user","content":"hi"}]}' http://mock-a.model-gw.svc.cluster.local/v1/chat/completions; done
+exit=0
+200 0.053144
+200 0.030902
+200 0.094661
+200 0.024103
+200 0.096573
+200 0.091378
+200 0.090518
+200 0.029158
+200 0.023980
+200 0.024125
+200 0.025923
+200 0.022149
+200 0.090846
+200 0.080851
+200 0.019968
+200 0.024700
+200 0.025404
+200 0.023473
+200 0.089561
+200 0.091775
+200 0.087792
+200 0.023469
+200 0.023088
+200 0.025530
+200 0.024985
+200 0.024334
+200 0.093597
+200 0.036997
+200 0.025497
+200 0.088507
+
+
+### [13:07:50.248] l2-via-plain-gw
+$ for i in $(seq 1 30); do curl -s -m 10 -o /dev/null -w '%{http_code} %{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions; done
+exit=0
+200 0.088583
+200 0.098490
+200 0.090035
+200 0.094373
+200 0.096442
+200 0.093917
+200 0.024432
+200 0.086662
+200 0.026175
+200 0.025819
+200 0.025795
+200 0.093652
+200 0.092724
+200 0.025772
+200 0.028302
+200 0.024545
+200 0.027507
+200 0.090819
+200 0.079142
+200 0.027434
+200 0.024496
+200 0.026334
+200 0.026859
+200 0.089008
+200 0.091345
+200 0.024776
+200 0.094229
+200 0.086893
+200 0.024414
+200 0.027695
+
+
+### [13:08:17.165] l3-via-tls-gw
+$ for i in $(seq 1 30); do curl -s -m 10 -o /dev/null --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '%{http_code} %{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions; done
+exit=0
+200 0.700206
+200 0.635001
+200 0.689871
+200 0.634490
+200 0.693996
+200 0.692605
+200 0.691008
+200 0.689727
+200 0.618145
+200 0.673924
+200 0.617257
+200 0.695421
+200 0.708508
+200 0.790090
+200 0.698234
+200 0.686490
+200 0.688650
+200 0.622055
+200 0.620311
+200 0.701379
+200 0.693762
+200 0.698223
+200 0.687807
+200 0.622085
+200 0.692684
+200 0.676654
+200 0.621907
+200 0.627684
+200 0.690320
+200 0.693706
+
+

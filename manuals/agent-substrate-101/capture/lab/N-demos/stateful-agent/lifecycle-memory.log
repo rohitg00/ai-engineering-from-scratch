@@ -1,0 +1,14 @@
+{"time":"2026-11-12T12:48:34.57531071Z","message":"Actor restoring","span_id":"8168cea2d5faa240","trace_flags":"00","trace_id":"2554efd1fee1c8c492794529c83af104"}
+{"time":"2026-11-12T12:48:34.732948413Z","message":"Actor restored","span_id":"8168cea2d5faa240","trace_flags":"00","trace_id":"2554efd1fee1c8c492794529c83af104"}
+{"time":"2026-11-12T12:48:35.400127732Z","message":"Actor checkpointing","span_id":"9e361e9edc6cc6d2","trace_flags":"01","trace_id":"275ca1c9c1434064eae8e1176fa28dd9"}
+{"time":"2026-11-12T12:48:35.559165304Z","message":"Actor checkpointed","span_id":"9e361e9edc6cc6d2","trace_flags":"01","trace_id":"275ca1c9c1434064eae8e1176fa28dd9"}
+{"time":"2026-11-12T12:48:35.864036455Z","message":"Actor restoring","span_id":"cf4399ae72655646","trace_flags":"00","trace_id":"c2888c914b5ca1ce76275541faa63802"}
+{"time":"2026-11-12T12:48:36.014738499Z","message":"Actor restored","span_id":"cf4399ae72655646","trace_flags":"00","trace_id":"c2888c914b5ca1ce76275541faa63802"}
+{"time":"2026-11-12T12:48:36.496303813Z","message":"Actor checkpointing","span_id":"c103cc64bcb0b2b0","trace_flags":"01","trace_id":"642ecd8c4b032c621051546ddc01d91e"}
+{"time":"2026-11-12T12:48:36.620886324Z","message":"Actor checkpointed","span_id":"c103cc64bcb0b2b0","trace_flags":"01","trace_id":"642ecd8c4b032c621051546ddc01d91e"}
+{"time":"2026-11-12T12:48:37.075404436Z","message":"Actor restoring","span_id":"bb28df3f404ba4a7","trace_flags":"00","trace_id":"c1f8e9e17e3f1559761e8d0437db2041"}
+{"time":"2026-11-12T12:48:37.242553553Z","message":"Actor restored","span_id":"bb28df3f404ba4a7","trace_flags":"00","trace_id":"c1f8e9e17e3f1559761e8d0437db2041"}
+{"time":"2026-11-12T12:48:37.725781692Z","message":"Actor checkpointing","span_id":"7984d6b0eed0c72b","trace_flags":"01","trace_id":"1f58156ab9396dfb4999095ac5378cb8"}
+{"time":"2026-11-12T12:48:37.846346218Z","message":"Actor checkpointed","span_id":"7984d6b0eed0c72b","trace_flags":"01","trace_id":"1f58156ab9396dfb4999095ac5378cb8"}
+{"time":"2026-11-12T12:48:38.333490433Z","message":"Actor restoring","span_id":"dcc2623b0c739c98","trace_flags":"00","trace_id":"9419882c3e36b4a8330b266003f3ae9f"}
+{"time":"2026-11-12T12:48:38.486496945Z","message":"Actor restored","span_id":"dcc2623b0c739c98","trace_flags":"00","trace_id":"9419882c3e36b4a8330b266003f3ae9f"}

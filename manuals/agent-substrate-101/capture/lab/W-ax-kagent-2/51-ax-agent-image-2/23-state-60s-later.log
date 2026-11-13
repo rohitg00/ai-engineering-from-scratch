@@ -1,0 +1,3 @@
+Phase:        Running
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+{"state":"ACTOR_STATE_RUNNING"}

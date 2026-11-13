@@ -1,0 +1,30 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:43.635Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:44.855Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:46.152Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:47.352Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:48.555Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:49.756Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:50.950Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:52.160Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:53.443Z
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+Error: failed to get actor "session-01a1cf47-a49c-7e3c-9913-2ca586700201": rpc error: code = NotFound desc = Actor kagent/session-01a1cf47-a49c-7e3c-9913-2ca586700201 not found
+--- 2026-11-12T10:29:54.672Z

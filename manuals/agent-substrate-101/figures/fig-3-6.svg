@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-3-6-title fig-3-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-6-title">An atespace and a Kubernetes namespace hold different objects</title>
+  <desc id="fig-3-6-desc">Two trees side by side. On the left, in the Substrate API and stored in Postgres, the atespace lab-c holds the ActorTemplate ballast-200, the actor b200-1 and the golden tag of the template. On the right, in Kubernetes, the namespace lab-c holds the WorkerPool ballast with the label workload: ballast and its two worker pods. A dotted line joins the workerSelector of the template to the label of the pool, because pool selection uses labels and does not check the namespace.</desc>
+  <defs><marker id="fig-3-6-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SUBSTRATE API, ROWS IN POSTGRES</text>
+  <text x="350" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KUBERNETES, OBJECTS IN ETCD</text>
+  <line x1="320" y1="8" x2="320" y2="268" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="28" width="280" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="160" y="45.25" font-size="12.5" text-anchor="middle" font-weight="700">Atespace lab-c</text>
+  <text x="160" y="62.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kubectl ate create atespace lab-c</text>
+  <rect x="50" y="96" width="250" height="58" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="62" y="112.75" font-size="12.5" font-weight="700">ActorTemplate ballast-200</text>
+  <text x="62" y="130.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">workerSelector:</text>
+  <text x="62" y="145.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">matchLabels workload: ballast</text>
+  <rect x="50" y="166" width="250" height="44" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="62" y="183.25" font-size="12.5" font-weight="700">Actor b200-1</text>
+  <text x="62" y="200.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">addressed as lab-c/b200-1</text>
+  <rect x="50" y="222" width="250" height="44" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="62" y="239.1" font-size="12" font-weight="700">Tag b9f97b82</text>
+  <text x="62" y="256.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">golden tag, named by the template uid</text>
+  <path d="M34 72 V125 H49" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M34 72 V188 H49" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M34 72 V244 H49" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="350" y="28" width="270" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="485" y="45.25" font-size="12.5" text-anchor="middle" font-weight="700">Namespace lab-c</text>
+  <text x="485" y="62.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kubectl create namespace lab-c</text>
+  <rect x="380" y="96" width="240" height="58" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="392" y="112.75" font-size="12.5" font-weight="700">WorkerPool ballast</text>
+  <text x="392" y="130.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">labels workload: ballast</text>
+  <text x="392" y="145.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">replicas 2, class gvisor</text>
+  <rect x="410" y="166" width="210" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="422" y="182.95" font-size="11.5" font-weight="700">ballast-65cf95d875-bzgjd</text>
+  <text x="422" y="200.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">worker pod, 2 CPU, 3 GiB</text>
+  <rect x="410" y="222" width="210" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="422" y="238.95" font-size="11.5" font-weight="700">ballast-65cf95d875-f65dl</text>
+  <text x="422" y="256.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">worker pod, 2 CPU, 3 GiB</text>
+  <path d="M364 72 V125 H379" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M394 154 V188 H409" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M394 154 V244 H409" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <line x1="300" y1="125" x2="379" y2="125" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-3-6-head-indigo)"/>
+  <text x="20" y="292" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The dotted line is the only link: the selector of the template matches the labels of the pool.</text>
+  <text x="20" y="310" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The two names lab-c are equal because we chose them so. Substrate does not compare them.</text>
+</svg>

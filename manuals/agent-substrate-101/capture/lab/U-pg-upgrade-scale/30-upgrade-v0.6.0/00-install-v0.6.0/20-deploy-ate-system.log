@@ -1,0 +1,87 @@
+configuration: 13 set, 40 default
+  actorJWT.algorithm                          ES256                                                  (from default)
+  actorJWT.issuer                             ""                                                     (from default)
+  ateapi.authz.bootstrapOwners                ""                                                     (from default)
+  ateapi.expectedJWTIssuer                    ""                                                     (from default)
+  ateapi.logLevel                             ""                                                     (from default)
+  ateapi.postgres.cloudsql.gsa                ""                                                     (from default)
+  ateapi.postgres.cloudsql.iamAuth            ""                                                     (from default)
+  ateapi.postgres.cloudsql.instance           ""                                                     (from default)
+  ateapi.postgres.cloudsql.ipType             ""                                                     (from default)
+  ateapi.postgres.owner.connectionString      ""                                                     (from default)
+  ateapi.postgres.owner.role                  substrate_owner                                        (from default)
+  ateapi.postgres.poolMaxConns                ""                                                     (from default)
+  ateapi.postgres.readWrite.connectionString  ""                                                     (from default)
+  ateapi.postgres.readWrite.role              substrate_readwrite                                    (from default)
+  ateapi.postgres.schema                      ""                                                     (from default)
+  ateapi.postgres.serverCAFile                ""                                                     (from default)
+  ateapi.postgres.storageClass                ""                                                     (from default)
+  atenet.dataplane                            envoy                                                  (from default)
+  atenet.egress.additionalExtprocService      ""                                                     (from default)
+  atenet.egress.credentialProvider            {"name":"k8s.io"}                                      (from --credential-provider)
+  benchmark.actorMemory                       ""                                                     (from default)
+  benchmark.sandboxClass                      gvisor                                                 (from default)
+  benchmark.workerCount                       1                                                      (from default)
+  clusterSize                                 size0                                                  (from default)
+  context                                     kind-uupg                                              (from the --kind profile)
+  cordonControlPlane                          false                                                  (from default)
+  csi.setup                                   none                                                   (from default)
+  demo.anthropicAPIKey                        ""                                                     (from default)
+  demo.counter.storageClass                   standard                                               (from default)
+  demo.counter.withExternalVolume             false                                                  (from default)
+  docker.buildFlags                           ""                                                     (from default)
+  e2e.envoyConcurrency                        0                                                      (from default)
+  fakeDataPlane.enabled                       false                                                  (from default)
+  gcp.clusterLocation                         ""                                                     (from default)
+  gcp.clusterName                             ""                                                     (from default)
+  gcp.projectID                               ""                                                     (from default)
+  images.repo                                 ghcr.io/agent-substrate/substrate                      (from --image-repo)
+  images.tag                                  v0.6.0                                                 (from --image-tag)
+  ingressAllowedSPIFFEIDs                     spiffe://cluster.local/ns/ate-system/sa/atenet-client  (from --ingress-allowed-spiffe-ids)
+  kindCluster.enabled                         true                                                   (from ATE_INSTALL_KIND)
+  kindCluster.name                            uupg                                                   (from KIND_CLUSTER_NAME)
+  ko.defaultPlatforms                         linux/amd64                                            (from the --kind profile)
+  ko.dockerRepo                               localhost:5001                                         (from the --kind profile)
+  kubeconfig                                  <home>/u/kc-uupg                                    (from KUBECONFIG)
+  namespace                                   ate-system                                             (from default)
+  otlpEndpoint                                ""                                                     (from default)
+  podcert.workersPerSigner                    0                                                      (from default)
+  preview                                     ""                                                     (from default)
+  record.dir                                  <home>/u/rec                                        (from ATE_RECORD_DIR)
+  rolloutTimeout                              1m0s                                                   (from default)
+  storage.bucketName                          ate-snapshots                                          (from the --kind profile)
+  storage.snapshotLocation                    gs://ate-snapshots/                                    (from the --kind profile)
+  storage.transferGSAName                     ""                                                     (from default)
+[step]: deploy_ate_system
+  (apply of 1 objects took 0.020s)
+[step]: deploy_crds
+[step]: images: pre-built from ghcr.io/agent-substrate/substrate, tag v0.6.0
+  (apply of 5 objects took 0.136s)
+[step]: ensure_apiserver_prerequisites
+[step]: create_jwt_authority_pool_secret
+  created pool secret ate-system/actor-id-jwt-pool
+[step]: create_actor_id_ca_pool_secret
+  created pool secret ate-system/actor-id-ca-pool
+[step]: create_actor_id_ca_certs_secret
+[step]: create_api_server_env_vars
+[step]: create_api_config
+ate-api-config apiconfig.textproto:
+  | logging: {
+  |   level: "info"
+  | }
+[step]: create_api_authentication_config
+ate-api-authentication authentication.yaml:
+  | jwtProviders:
+  | - name: kubernetes
+  |   issuer: https://kubernetes.default.svc.cluster.local
+  |   audiences: [api.ate-system.svc]
+  |   certificateAuthorityFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  |   discoveryTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+[step]: create_podcertificate_controller_cas
+  created pool secret podcertificate-controller-system/service-dns-ca-pool
+  created pool secret podcertificate-controller-system/pod-identity-ca-pool
+  created pool secret podcertificate-controller-system/postgres-ca-pool
+Error: resolving ghcr.io/agent-substrate/substrate/podcertcontroller:v0.6.0 to a digest: HEAD https://ghcr.io/v2/agent-substrate/substrate/podcertcontroller/manifests/v0.6.0: unexpected status code 404 Not Found (HEAD responses have no body, use GET for details)
+the settings this run used were written to <home>/u/rec/failed/kind-uupg-20261112T161231Z.yaml
+retry with: ate-setup deploy ate-system --config <home>/u/rec/failed/kind-uupg-20261112T161231Z.yaml
+exit status 1

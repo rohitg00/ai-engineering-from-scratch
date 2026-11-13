@@ -1,0 +1,11 @@
+pod-ip 8443 plain: 000 exit=1 err=Received HTTP/0.9 when not allowed|
+pod-ip 8443 tls:   000 exit=56 err=OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0|
+pod-ip 15021 plain: 404 exit=0 err=|
+pod-ip 15021 tls:   000 exit=35 err=TLS connect error: error:0A0000C6:SSL routines::packet length too long|
+pod-ip 15000 plain: 000 exit=28 err=Connection timed out after 4002 milliseconds|
+pod-ip 15000 tls:   000 exit=28 err=Connection timed out after 4002 milliseconds|
+stats 15020 /metrics from another namespace: 200|13394|58|# HELP agentgateway_substrate_request_parking_active Number of requests waiting for a Substrate actor to become routable.|
+stats 15020 /stats/prometheus: 200|13394|
+service 443 with allowed client cert, POST with routing header: 200 exit=0 err=|preserved memory count: 9 | preserved file counter: 9 | preserved rootfs counter: 9|
+service 8444 with allowed client cert, POST with routing header: 405 exit=0 err=|method not allowed
+service 443 with allowed client cert, no routing header: 404|ingress failed

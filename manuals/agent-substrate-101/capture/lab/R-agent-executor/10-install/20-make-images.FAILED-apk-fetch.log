@@ -1,0 +1,94 @@
+==> Cross-compiling ax-server and ax-task-runner for linux/amd64...
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o bin/linux_amd64/ax-server ./cmd/ax-server
+go: downloading github.com/jackc/pgx/v5 v5.11.0
+go: downloading github.com/cenkalti/backoff/v5 v5.0.3
+go: downloading github.com/prometheus/client_golang v1.24.1
+go: downloading go.opentelemetry.io/otel v1.45.0
+go: downloading go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc v0.21.0
+go: downloading go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v1.45.0
+go: downloading go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.45.0
+go: downloading go.opentelemetry.io/otel/exporters/prometheus v0.65.0
+go: downloading go.opentelemetry.io/otel/log v0.21.0
+go: downloading go.opentelemetry.io/otel/sdk/log v0.21.0
+go: downloading go.opentelemetry.io/otel/sdk/metric v1.45.0
+go: downloading go.opentelemetry.io/otel/sdk v1.45.0
+go: downloading go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.45.0
+go: downloading go.opentelemetry.io/otel/trace v1.45.0
+go: downloading github.com/prometheus/client_model v0.6.2
+go: downloading github.com/prometheus/common v0.70.1
+go: downloading github.com/beorn7/perks v1.0.1
+go: downloading github.com/cespare/xxhash/v2 v2.3.0
+go: downloading github.com/prometheus/procfs v0.21.1
+go: downloading github.com/jackc/pgpassfile v1.0.0
+go: downloading github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761
+go: downloading github.com/jackc/puddle/v2 v2.2.2
+go: downloading github.com/google/uuid v1.6.0
+go: downloading go.opentelemetry.io/otel/metric v1.45.0
+go: downloading github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822
+go: downloading golang.org/x/sync v0.23.0
+go: downloading github.com/go-logr/logr v1.4.4
+go: downloading github.com/go-logr/stdr v1.2.2
+go: downloading go.opentelemetry.io/auto/sdk v1.2.1
+go: downloading github.com/prometheus/otlptranslator v1.0.0
+go: downloading go.opentelemetry.io/proto/otlp v1.11.0
+go: downloading github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0
+go: downloading google.golang.org/genproto/googleapis/api v0.0.0-20260803160001-6ac0973c030d
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o bin/linux_amd64/ax-task-runner ./cmd/ax-task-runner
+==> Building localhost:5002/ax-server:ax-a72b8ca46cb5 using docker...
+docker build --platform linux/amd64 --build-arg TARGETARCH=amd64 -t localhost:5002/ax-server:ax-a72b8ca46cb5 -f Dockerfile.server .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.server
+#1 transferring dockerfile: 805B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/alpine:3.21
+#2 DONE 3.7s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 302B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM docker.io/library/alpine:3.21@sha256:bc21487101ae47172509130ee1092cc273a831968d64b617776d1f69c81e42ab
+#4 resolve docker.io/library/alpine:3.21@sha256:bc21487101ae47172509130ee1092cc273a831968d64b617776d1f69c81e42ab 0.0s done
+#4 ...
+
+#5 [internal] load build context
+#5 transferring context: 22.94MB 0.2s done
+#5 DONE 0.2s
+
+#4 [1/3] FROM docker.io/library/alpine:3.21@sha256:bc21487101ae47172509130ee1092cc273a831968d64b617776d1f69c81e42ab
+#4 sha256:871d48e9bf6b789a439a4a19c1e152009924d818e60f7c51e498573223cd7cda 0B / 3.63MB 0.2s
+#4 sha256:871d48e9bf6b789a439a4a19c1e152009924d818e60f7c51e498573223cd7cda 3.63MB / 3.63MB 0.4s done
+#4 extracting sha256:871d48e9bf6b789a439a4a19c1e152009924d818e60f7c51e498573223cd7cda 0.1s done
+#4 DONE 0.6s
+
+#6 [2/3] RUN apk add --no-cache ca-certificates
+#6 0.229 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+#6 5.234 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+#6 5.234 WARNING: fetching https://dl-cdn.alpinelinux.org/alpine/v3.21/main: temporary error (try again later)
+#6 10.24 WARNING: fetching https://dl-cdn.alpinelinux.org/alpine/v3.21/community: temporary error (try again later)
+#6 10.24 ERROR: unable to select packages:
+#6 10.24   ca-certificates (no such package):
+#6 10.24     required by: world[ca-certificates]
+#6 ERROR: process "/bin/sh -c apk add --no-cache ca-certificates" did not complete successfully: exit code: 1
+------
+ > [2/3] RUN apk add --no-cache ca-certificates:
+0.229 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64/APKINDEX.tar.gz
+5.234 fetch https://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz
+5.234 WARNING: fetching https://dl-cdn.alpinelinux.org/alpine/v3.21/main: temporary error (try again later)
+10.24 WARNING: fetching https://dl-cdn.alpinelinux.org/alpine/v3.21/community: temporary error (try again later)
+10.24 ERROR: unable to select packages:
+10.24   ca-certificates (no such package):
+10.24     required by: world[ca-certificates]
+------
+Dockerfile.server:17
+--------------------
+  15 |     FROM alpine:3.21
+  16 |     
+  17 | >>> RUN apk add --no-cache ca-certificates
+  18 |     
+  19 |     ARG TARGETARCH=amd64
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c apk add --no-cache ca-certificates" did not complete successfully: exit code: 1
+make: *** [Makefile:76: images] Error 1

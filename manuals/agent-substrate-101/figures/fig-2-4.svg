@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 414" role="img" aria-labelledby="fig-2-4-title fig-2-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-4-title">What the install created on kind-control-plane</title>
+  <desc id="fig-2-4-desc">The namespace ate-system holds 11 running pods and one finished Job: ate-api-server, ate-controller, ate-idp-server, atelet, atenet-router, atenet-egress, k8s-credential-provider, postgres-0, rustfs, and rustfs-bucket-init. The namespace podcertificate-controller-system holds podcertificate-controller. The namespace ate-demo-counter holds the 3 worker pods of the WorkerPool counter. The namespace otel-system holds jaeger, opentelemetry-collector, and prometheus. Two boxes at the bottom say where objects live: etcd holds the three custom resources WorkerPool, SandboxConfig, and CSIDriverConfig, and Postgres holds atespaces, templates, actors, workers, and policies.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ATE-SYSTEM · 11 RUNNING PODS, 1 FINISHED JOB</text>
+  <rect x="20" y="26" width="400" height="240" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="28" y="34" width="188" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="122" y="48.95" font-size="11.5" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="122" y="66.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2 pods, 2 containers each</text>
+  <rect x="224" y="34" width="188" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="318" y="48.95" font-size="11.5" text-anchor="middle" font-weight="700">ate-controller</text>
+  <text x="318" y="66.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 pod</text>
+  <rect x="28" y="80" width="188" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="122" y="94.95" font-size="11.5" text-anchor="middle" font-weight="700">ate-idp-server</text>
+  <text x="122" y="112.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2 pods</text>
+  <rect x="224" y="80" width="188" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="318" y="94.95" font-size="11.5" text-anchor="middle" font-weight="700">atelet</text>
+  <text x="318" y="112.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">DaemonSet, 2 containers</text>
+  <rect x="28" y="126" width="188" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="122" y="140.95" font-size="11.5" text-anchor="middle" font-weight="700">atenet-router</text>
+  <text x="122" y="158.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 pod, 2 containers</text>
+  <rect x="224" y="126" width="188" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="318" y="140.95" font-size="11.5" text-anchor="middle" font-weight="700">atenet-egress</text>
+  <text x="318" y="158.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 pod, 3 containers</text>
+  <rect x="28" y="172" width="188" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="122" y="186.95" font-size="11.5" text-anchor="middle" font-weight="700">k8s-credential-provider</text>
+  <text x="122" y="204.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 pod</text>
+  <rect x="224" y="172" width="188" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="318" y="186.95" font-size="11.5" text-anchor="middle" font-weight="700">postgres-0</text>
+  <text x="318" y="204.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">StatefulSet, 2 containers</text>
+  <rect x="28" y="218" width="188" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="122" y="232.95" font-size="11.5" text-anchor="middle" font-weight="700">rustfs</text>
+  <text x="122" y="250.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">object store, 1 pod</text>
+  <rect x="224" y="218" width="188" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="318" y="232.95" font-size="11.5" text-anchor="middle" font-weight="700">rustfs-bucket-init</text>
+  <text x="318" y="250.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Job, Completed</text>
+  <text x="20" y="290" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PODCERTIFICATE-CONTROLLER-SYSTEM</text>
+  <rect x="20" y="298" width="400" height="40" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="220" y="312.95" font-size="11.5" text-anchor="middle" font-weight="700">podcertificate-controller</text>
+  <text x="220" y="330.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">signs pod certificates, 1 pod</text>
+  <text x="436" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ATE-DEMO-COUNTER</text>
+  <rect x="436" y="26" width="184" height="58" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="528" y="42.45" font-size="11.5" text-anchor="middle" font-weight="700">counter</text>
+  <text x="528" y="59.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">WorkerPool, 3 worker pods</text>
+  <text x="528" y="74.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">image ateworker-gvisor</text>
+  <text x="436" y="110" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">OTEL-SYSTEM</text>
+  <rect x="436" y="118" width="184" height="30" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="528" y="136.45" font-size="11.5" text-anchor="middle" font-weight="400">jaeger</text>
+  <rect x="436" y="154" width="184" height="30" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="528" y="172.45" font-size="11.5" text-anchor="middle" font-weight="400">opentelemetry-collector</text>
+  <rect x="436" y="190" width="184" height="30" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="528" y="208.45" font-size="11.5" text-anchor="middle" font-weight="400">prometheus</text>
+  <text x="436" y="242" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">KUBE-SYSTEM</text>
+  <rect x="436" y="250" width="184" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="528" y="264.95" font-size="11.5" text-anchor="middle" font-weight="700">Kubernetes v1.37.0</text>
+  <text x="528" y="282.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">8 pods, not from Substrate</text>
+  <text x="20" y="360" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHERE THE OBJECTS LIVE</text>
+  <rect x="20" y="368" width="290" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="165" y="383.1" font-size="12" text-anchor="middle" font-weight="700">etcd: 3 custom resources</text>
+  <text x="165" y="400.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">WorkerPool, SandboxConfig, CSIDriverConfig</text>
+  <rect x="330" y="368" width="290" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="475" y="383.1" font-size="12" text-anchor="middle" font-weight="700">Postgres: all other objects</text>
+  <text x="475" y="400.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">atespaces, templates, actors, workers, policies</text>
+</svg>

@@ -1,0 +1,101 @@
+configuration: 8 set, 50 default
+  actorJWT.algorithm                          ES256                (from default)
+  actorJWT.issuer                             ""                   (from default)
+  ateapi.authz.bootstrapOwners                ""                   (from default)
+  ateapi.authz.egressGatewayExtraSPIFFEIDs    ""                   (from default)
+  ateapi.expectedJWTIssuer                    ""                   (from default)
+  ateapi.logLevel                             ""                   (from default)
+  ateapi.postgres.cloudsql.gsa                ""                   (from default)
+  ateapi.postgres.cloudsql.iamAuth            ""                   (from default)
+  ateapi.postgres.cloudsql.instance           ""                   (from default)
+  ateapi.postgres.cloudsql.ipType             ""                   (from default)
+  ateapi.postgres.owner.connectionString      ""                   (from default)
+  ateapi.postgres.owner.role                  substrate_owner      (from default)
+  ateapi.postgres.poolMaxConns                ""                   (from default)
+  ateapi.postgres.readWrite.connectionString  ""                   (from default)
+  ateapi.postgres.readWrite.role              substrate_readwrite  (from default)
+  ateapi.postgres.schema                      ""                   (from default)
+  ateapi.postgres.serverCAFile                ""                   (from default)
+  ateapi.postgres.storageClass                ""                   (from default)
+  atenet.dataplane                            envoy                (from default)
+  atenet.egress.additionalExtprocService      ""                   (from default)
+  atenet.egress.credentialProvider            ""                   (from default)
+  benchmark.actorMemory                       ""                   (from default)
+  benchmark.sandboxClass                      gvisor               (from default)
+  benchmark.workerCount                       1                    (from default)
+  clusterSize                                 size0                (from default)
+  context                                     kind-y060            (from the --kind profile)
+  cordonSystemInfraComponents                 false                (from default)
+  csi.setup                                   none                 (from default)
+  demo.anthropicAPIKey                        ""                   (from default)
+  demo.counter.storageClass                   standard             (from default)
+  demo.counter.withExternalVolume             false                (from default)
+  docker.buildFlags                           ""                   (from default)
+  e2e.envoyConcurrency                        0                    (from default)
+  e2e.tuning                                  false                (from default)
+  fakeDataPlane.enabled                       false                (from default)
+  gcp.clusterLocation                         ""                   (from default)
+  gcp.clusterName                             ""                   (from default)
+  gcp.projectID                               ""                   (from default)
+  images.repo                                 ""                   (from default)
+  images.tag                                  ""                   (from default)
+  ingressAllowedSPIFFEIDs                     ""                   (from default)
+  kindCluster.enabled                         true                 (from ATE_INSTALL_KIND)
+  kindCluster.name                            y060                 (from KIND_CLUSTER_NAME)
+  ko.defaultPlatforms                         linux/amd64          (from the --kind profile)
+  ko.dockerRepo                               localhost:5001       (from the --kind profile)
+  kubeconfig                                  <home>/u/kc-y060  (from KUBECONFIG)
+  namespace                                   ate-system           (from default)
+  otlpEndpoint                                ""                   (from default)
+  podcert.workersPerSigner                    0                    (from default)
+  preview                                     ""                   (from default)
+  publish.binariesDir                         bin/release          (from default)
+  publish.overwrite                           false                (from default)
+  record.dir                                  ""                   (from default)
+  rolloutTimeout                              1m0s                 (from default)
+  sandboxClasses                              gvisor,microvm       (from default)
+  storage.bucketName                          ate-snapshots        (from the --kind profile)
+  storage.snapshotLocation                    gs://ate-snapshots/  (from the --kind profile)
+  storage.transferGSAName                     ""                   (from default)
+[step]: delete_all
+[step]: demo-claude-code-multiplex_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+  (delete of 2 objects took 0.017s)
+[step]: demo-counter_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+  (delete of 2 objects took 0.013s)
+[step]: demo-counter-microvm_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+  (delete of 2 objects took 0.010s)
+[step]: demo-egress_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+  (delete of 2 objects took 0.011s)
+[step]: demo-egress-microvm_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+E1113 06:08:18.706532  119562 portforward.go:525] "Error copying from local connection to remote stream" err="writeto tcp4 127.0.0.1:36393->127.0.0.1:43732: websocket: close sent" logger="UnhandledError" localPort=36393 remotePort=443
+  (delete of 2 objects took 0.010s)
+[step]: demo-jupyter_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+  (delete of 2 objects took 0.012s)
+[step]: demo-multi-template_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+  (delete of 2 objects took 0.009s)
+[step]: demo-parking_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+  (delete of 2 objects took 0.010s)
+[step]: demo-sandbox_delete
+Warning: could not list actors; skipping actor cleanup: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+  (delete of 2 objects took 0.013s)
+[step]: delete_ate_system
+  (delete of 6 objects took 0.365s)
+I1113 06:08:27.996853  119562 warnings.go:107] "Warning: child pods are preserved by default when jobs are deleted; set propagationPolicy=Background to remove them or set propagationPolicy=Orphan to suppress this warning"
+  (delete of 57 objects took 11.111s)
+  (delete of 7 objects took 1.393s)
+  (delete of 2 objects took 0.396s)
+  (delete of 8 objects took 1.596s)
+  (delete of 3 objects took 0.602s)
+  (delete of 5 objects took 0.990s)
+Deleted ClusterTrustBundle egress-mitm.ate.dev:mitm:primary-bundle
+Deleted ClusterTrustBundle podidentity.podcert.ate.dev:identity:primary-bundle
+Deleted ClusterTrustBundle postgres.podcert.ate.dev:identity:primary-bundle
+Deleted ClusterTrustBundle servicedns.podcert.ate.dev:identity:primary-bundle

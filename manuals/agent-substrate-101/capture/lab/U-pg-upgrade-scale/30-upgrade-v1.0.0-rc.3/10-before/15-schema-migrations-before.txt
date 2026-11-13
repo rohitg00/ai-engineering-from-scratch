@@ -1,0 +1,29 @@
+1|0|t|2026-11-12 16:16:30.474198
+2|1|t|2026-11-12 16:16:30.503305
+                                List of tables
+  Schema   |            Name             |       Type        |      Owner      
+-----------+-----------------------------+-------------------+-----------------
+ substrate | actor_egress_policies       | table             | substrate_owner
+ substrate | actor_templates             | table             | substrate_owner
+ substrate | actors                      | table             | substrate_owner
+ substrate | assertion                   | table             | substrate_owner
+ substrate | atespace_access_policies    | table             | substrate_owner
+ substrate | atespaces                   | table             | substrate_owner
+ substrate | authorization_model         | table             | substrate_owner
+ substrate | changelog                   | table             | substrate_owner
+ substrate | global_access_policy        | table             | substrate_owner
+ substrate | leases                      | table             | substrate_owner
+ substrate | schema_migrations           | table             | substrate_owner
+ substrate | store                       | table             | substrate_owner
+ substrate | tags                        | table             | substrate_owner
+ substrate | tuple                       | table             | substrate_owner
+ substrate | worker_assignments          | table             | substrate_owner
+ substrate | worker_outbox               | partitioned table | substrate_owner
+ substrate | worker_outbox_default       | table             | substrate_owner
+ substrate | worker_outbox_p202611121615 | table             | substrate_owner
+ substrate | worker_outbox_p202611121630 | table             | substrate_owner
+ substrate | worker_outbox_p202611121645 | table             | substrate_owner
+ substrate | worker_outbox_trim          | table             | substrate_owner
+ substrate | workers                     | table             | substrate_owner
+(22 rows)
+

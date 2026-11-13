@@ -1,0 +1,12 @@
+metadata: {atespace: sc-lab, name: sc-tiny}
+workerSelector:
+  matchLabels: {workload: sc-pool}
+containers:
+- name: tiny
+  image: localhost:5001/y-tiny@sha256:4fd5ee40c9ee78756d9842ebb2af67d403a0ca5717104f605909e4080118fcf5
+  wakeupProbe:
+    httpGet: {path: /readyz, port: 80}
+resources:
+  limits: {cpuMillicores: 500, memoryBytes: 67108864}
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

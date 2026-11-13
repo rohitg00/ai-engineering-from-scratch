@@ -1,0 +1,20 @@
+namespace/model-gw created
+secret/modelgw-tls created
+configmap/private-ca created
+configmap/mock created
+configmap/gw-config created
+deployment.apps/mock-a created
+service/mock-a created
+deployment.apps/mock-b created
+service/mock-b created
+deployment.apps/modelgw created
+service/modelgw created
+deployment.apps/modelgw-plain created
+service/modelgw-plain created
+pod/client created
+Waiting for deployment "mock-a" rollout to finish: 0 of 1 updated replicas are available...
+deployment "mock-a" successfully rolled out
+deployment "mock-b" successfully rolled out
+deployment "modelgw" successfully rolled out
+deployment "modelgw-plain" successfully rolled out
+pod/client condition met

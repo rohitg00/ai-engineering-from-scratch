@@ -1,0 +1,6 @@
+Warning: resource configmaps/k8s-credential-provider-namespace-policy is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+configmap/k8s-credential-provider-namespace-policy configured
+deployment.apps/k8s-credential-provider restarted
+Waiting for deployment "k8s-credential-provider" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "k8s-credential-provider" rollout to finish: 1 old replicas are pending termination...
+deployment "k8s-credential-provider" successfully rolled out

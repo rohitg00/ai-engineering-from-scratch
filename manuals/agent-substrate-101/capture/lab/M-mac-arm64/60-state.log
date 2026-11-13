@@ -1,0 +1,35 @@
+NAME                 STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                       KERNEL-VERSION            CONTAINER-RUNTIME
+kind-control-plane   Ready    control-plane   11m   v1.37.0   172.20.0.5    <none>        Debian GNU/Linux 13 (trixie)   7.0.14-linuxkit (arm64)   containerd://2.3.4
+NAMESPACE                          NAME                                         READY   STATUS      RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-system                         ate-api-server-7bc56575c9-8wm4g              2/2     Running     0          5m17s   10.244.0.10   kind-control-plane   <none>           <none>
+ate-system                         ate-api-server-7bc56575c9-dpq79              2/2     Running     0          5m17s   10.244.0.8    kind-control-plane   <none>           <none>
+ate-system                         ate-controller-7984566f8d-tmmfl              1/1     Running     0          5m14s   10.244.0.9    kind-control-plane   <none>           <none>
+ate-system                         ate-idp-server-dcd5f565f-9288f               1/1     Running     0          5m16s   10.244.0.13   kind-control-plane   <none>           <none>
+ate-system                         ate-idp-server-dcd5f565f-cnrd5               1/1     Running     0          5m16s   10.244.0.12   kind-control-plane   <none>           <none>
+ate-system                         atelet-jhphl                                 2/2     Running     0          5m13s   10.244.0.11   kind-control-plane   <none>           <none>
+ate-system                         atenet-egress-7758c8fb4-mxqn7                3/3     Running     0          5m4s    10.244.0.22   kind-control-plane   <none>           <none>
+ate-system                         atenet-router-d844d4995-8682h                2/2     Running     0          5m12s   10.244.0.16   kind-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-5bb6b77b65-prtp5     1/1     Running     0          5m5s    10.244.0.21   kind-control-plane   <none>           <none>
+ate-system                         postgres-0                                   2/2     Running     0          6m11s   10.244.0.7    kind-control-plane   <none>           <none>
+ate-system                         rustfs-54c86945fb-t5s4x                      1/1     Running     0          5m9s    10.244.0.20   kind-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-4mnxj                     0/1     Completed   0          5m9s    10.244.0.15   kind-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-9wf9x                     1/1     Running     0          11m     10.244.0.2    kind-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-tckgx                     1/1     Running     0          11m     10.244.0.4    kind-control-plane   <none>           <none>
+kube-system                        etcd-kind-control-plane                      1/1     Running     0          11m     172.20.0.5    kind-control-plane   <none>           <none>
+kube-system                        kindnet-ndxsc                                1/1     Running     0          11m     172.20.0.5    kind-control-plane   <none>           <none>
+kube-system                        kube-apiserver-kind-control-plane            1/1     Running     0          11m     172.20.0.5    kind-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-kind-control-plane   1/1     Running     0          11m     172.20.0.5    kind-control-plane   <none>           <none>
+kube-system                        kube-proxy-lpgx6                             1/1     Running     0          11m     172.20.0.5    kind-control-plane   <none>           <none>
+kube-system                        kube-scheduler-kind-control-plane            1/1     Running     0          11m     172.20.0.5    kind-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-nbrfp      1/1     Running     0          11m     10.244.0.3    kind-control-plane   <none>           <none>
+otel-system                        jaeger-fb9948ddf-q8v64                       1/1     Running     0          5m8s    10.244.0.18   kind-control-plane   <none>           <none>
+otel-system                        opentelemetry-collector-6f5b87f5dd-4xv87     1/1     Running     0          5m8s    10.244.0.17   kind-control-plane   <none>           <none>
+otel-system                        prometheus-5b5fb67d57-tb5hf                  1/1     Running     0          5m6s    10.244.0.19   kind-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-57c94fb5b-l8vnz    1/1     Running     0          6m37s   10.244.0.5    kind-control-plane   <none>           <none>
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          16        8         5.46GB    2.288GB (41%)
+Containers      11        5         6.569MB   0B (0%)
+Local Volumes   62        5         20.09GB   14.19GB (70%)
+Build Cache     428       0         13.25GB   13.09GB
+kind-control-plane 2.701GiB / 7.748GiB 21.05%
+kind-registry 18.61MiB / 7.748GiB 0.00%

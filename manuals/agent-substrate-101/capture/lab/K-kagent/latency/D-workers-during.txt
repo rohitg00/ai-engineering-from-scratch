@@ -1,0 +1,2 @@
+NAME                                   POOL             STATE                 ACTORS   CPU(MILLICORES)   MEMORY           POD                                      AGE
+6dfb9d1d-cce7-4e42-af53-799a4132fa5d   kagent-default   WORKER_STATE_ACTIVE   3/1000   3000/16000        3Gi/32797744Ki   kagent/kagent-default-679c58c6cb-pljdk   9m41s

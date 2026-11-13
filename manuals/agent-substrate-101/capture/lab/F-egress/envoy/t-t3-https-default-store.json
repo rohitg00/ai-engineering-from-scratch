@@ -1,0 +1,1 @@
+{"stdout":"code=000 verify=0\n","stderr":"curl: (6) Could not resolve host: example.com\n","exitCode":6,"error":"exit status 6"}

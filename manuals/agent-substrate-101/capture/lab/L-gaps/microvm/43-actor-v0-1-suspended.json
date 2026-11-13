@@ -1,0 +1,96 @@
+{
+  "actorTemplate": {
+    "atespace": "lab-m",
+    "name": "mvm-0"
+  },
+  "metadata": {
+    "atespace": "lab-m",
+    "createTime": "2026-11-12T11:57:21.986777178Z",
+    "name": "v0-1",
+    "uid": "e50770c9-0749-42e7-8e0f-978b6dee5474",
+    "updateTime": "2026-11-12T11:57:24.421159045Z",
+    "version": "5"
+  },
+  "status": {
+    "assignedNode": "kind-control-plane",
+    "lastAssignedGeneration": 2,
+    "snapshots": [
+      {
+        "actorTemplateUid": "213bc6d9-7c6d-4db2-81c7-ba6441b2c474",
+        "durableSnapshot": {
+          "object": {
+            "snapshotUri": "gs://ate-snapshots/atespaces/lab-m/tags/09691ff5-6f5d-4a86-863c-538fae91dec4"
+          },
+          "state": "SNAPSHOT_STORAGE_STATE_COMPLETED"
+        },
+        "fidelity": "SNAPSHOT_FIDELITY_MEMORY",
+        "generation": 1,
+        "owner": "SNAPSHOT_OWNER_TAG",
+        "sandboxRuntime": {
+          "sandboxClass": "microvm",
+          "version": {
+            "attributes": [
+              {
+                "key": "architecture",
+                "value": "amd64"
+              },
+              {
+                "key": "cpu_model",
+                "value": "23:49"
+              },
+              {
+                "key": "cpu_vendor",
+                "value": "AuthenticAMD"
+              },
+              {
+                "key": "sandbox_bundle_hash",
+                "value": "sha256:1d40aaaf66896731f227d4cfe129ab724721b592ff89c73df603e8e2372a67b8"
+              }
+            ],
+            "schemaVersion": "v1"
+          }
+        },
+        "uuid": "09691ff5-6f5d-4a86-863c-538fae91dec4"
+      },
+      {
+        "actorTemplateUid": "213bc6d9-7c6d-4db2-81c7-ba6441b2c474",
+        "durableSnapshot": {
+          "object": {
+            "snapshotUri": "gs://ate-snapshots/atespaces/lab-m/actors/e50770c9-0749-42e7-8e0f-978b6dee5474/snapshots/0128dfc3-cfe8-42ff-b372-01d27eadcf68"
+          },
+          "state": "SNAPSHOT_STORAGE_STATE_PENDING"
+        },
+        "fidelity": "SNAPSHOT_FIDELITY_MEMORY",
+        "generation": 2,
+        "locality": "kind-control-plane",
+        "owner": "SNAPSHOT_OWNER_ACTOR",
+        "sandboxRuntime": {
+          "sandboxClass": "microvm",
+          "version": {
+            "attributes": [
+              {
+                "key": "architecture",
+                "value": "amd64"
+              },
+              {
+                "key": "cpu_model",
+                "value": "23:49"
+              },
+              {
+                "key": "cpu_vendor",
+                "value": "AuthenticAMD"
+              },
+              {
+                "key": "sandbox_bundle_hash",
+                "value": "sha256:1d40aaaf66896731f227d4cfe129ab724721b592ff89c73df603e8e2372a67b8"
+              }
+            ],
+            "schemaVersion": "v1"
+          }
+        },
+        "uuid": "0128dfc3-cfe8-42ff-b372-01d27eadcf68"
+      }
+    ],
+    "state": "ACTOR_STATE_SUSPENDED"
+  }
+}

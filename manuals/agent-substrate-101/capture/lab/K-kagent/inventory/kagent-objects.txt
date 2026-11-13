@@ -1,0 +1,6 @@
+NAMESPACE   NAME                                              PROVIDER   MODEL
+kagent      modelconfig.api.kagent.dev/default-model-config   OpenAI     gpt-4.1-mini
+
+NAMESPACE   NAME                                                PROTOCOL          URL                                                          ACCEPTED
+kagent      remotemcpserver.api.kagent.dev/kagent-api           STREAMABLE_HTTP   http://kagent-controller.kagent.svc.cluster.local:8083/mcp   True
+kagent      remotemcpserver.api.kagent.dev/kagent-tool-server   STREAMABLE_HTTP   http://kagent-tools.kagent.svc.cluster.local:8084/mcp        True

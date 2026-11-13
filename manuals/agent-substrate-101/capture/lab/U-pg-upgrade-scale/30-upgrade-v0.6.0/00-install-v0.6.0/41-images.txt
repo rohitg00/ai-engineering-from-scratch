@@ -1,0 +1,9 @@
+kube-system/coredns-559f6c778d-4wmw4	registry.k8s.io/coredns/coredns:v1.14.6
+kube-system/coredns-559f6c778d-bps5l	registry.k8s.io/coredns/coredns:v1.14.6
+kube-system/etcd-uupg-control-plane	registry.k8s.io/etcd:3.7.0-0
+kube-system/kindnet-q8bvt	docker.io/kindest/kindnetd:v20260820-69b56db7
+kube-system/kube-apiserver-uupg-control-plane	registry.k8s.io/kube-apiserver:v1.37.0
+kube-system/kube-controller-manager-uupg-control-plane	registry.k8s.io/kube-controller-manager:v1.37.0
+kube-system/kube-proxy-5ckr9	registry.k8s.io/kube-proxy:v1.37.0
+kube-system/kube-scheduler-uupg-control-plane	registry.k8s.io/kube-scheduler:v1.37.0
+local-path-storage/local-path-provisioner-75f7fc7dc5-j66b4	docker.io/kindest/local-path-provisioner:v20260820-69b56db7

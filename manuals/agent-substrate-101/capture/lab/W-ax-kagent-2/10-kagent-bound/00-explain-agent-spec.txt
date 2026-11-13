@@ -1,0 +1,28 @@
+GROUP:      api.kagent.dev
+KIND:       Agent
+VERSION:    v1alpha3
+
+FIELD: spec <Object>
+
+
+DESCRIPTION:
+    AgentSpec pairs portable behavior with a platform-managed runtime.
+    References
+    are local to the Agent's namespace, including references nested in inline
+    template specs.
+    
+FIELDS:
+  egressPolicyRefs	<[]Object>
+    EgressPolicyRefs grants additional access to the whole runtime, including
+    shared subagents. Policies resolve in this Agent's namespace. Integration
+    access inferred from models and tools is always included. Changes update
+    existing Sessions without a new invocation or runtime restart.
+
+  harnessRef	<Object> -required-
+    HarnessRef selects the platform-managed runtime configuration that executes
+    the behavior.
+
+  template	<Object> -required-
+    Template selects the portable behavior this Agent exposes.
+
+

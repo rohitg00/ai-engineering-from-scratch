@@ -1,0 +1,72 @@
+timeline:
+   12:55:13 start-baseline
+   12:55:43 T1-postgres-scale-0
+   12:56:44 T1-postgres-scale-1
+   12:56:48 T1-postgres-ready
+   12:58:18 T2-ateapi-scale-0
+   12:59:19 T2-ateapi-scale-2
+   12:59:29 T2-ateapi-ready
+   13:00:59 T3-kube-apiserver-manifest-moved-out livez=200
+   13:02:26 T3-kube-apiserver-manifest-moved-back
+   13:02:31 T3-kube-apiserver-livez-200
+   13:04:01 end
+
+baseline in-cluster running actor: n=29 p50=21 ms
+baseline in-cluster suspended (resume) : n=6 p50=470 ms
+
+== T1 Postgres: down at +0 s, restore action at +61 s, dependency ready at +65 s
+  proxy/running (VM, kubectl ate proxy)
+     codes from -10 s: 200x12 500x1 504x10 500x1 504x5 500x3 504x5 500x1 503x55 200x58
+     first failure at +2 s, last failure at +88 s (= +27 s from restore action, +23 s from dependency ready); failed 81 of 151
+     failure latency p50 2.91 s max 5.06 s
+     55x code=503 body='ingress failed'
+     20x code=504 body='ingress failed'
+     6x code=500 body='ingress failed'
+  incluster/running (pod, mTLS to router)
+     codes from -10 s: 200x15 500x6 504x20 503x55 200x64
+     first failure at +6 s, last failure at +86 s (= +25 s from restore action, +21 s from dependency ready); failed 81 of 160
+     failure latency p50 3.01 s max 5.02 s
+     55x code=503 body='ingress failed'
+     20x code=504 body='ingress failed'
+     6x code=500 body='ingress failed'
+  incluster/suspended (fresh actor each 5 s)
+     codes from -10 s: 200x2 500x2 504x1 500x3 503x12 500x1 200x11
+     first failure at +1 s, last failure at +91 s (= +30 s from restore action, +26 s from dependency ready); failed 19 of 32
+     failure latency p50 5.02 s max 5.02 s
+     12x code=503 body='ingress failed'
+     6x code=500 body='ingress failed'
+     1x code=504 body='ingress failed'
+
+== T2 ate-api-server: down at +0 s, restore action at +61 s, dependency ready at +71 s
+  proxy/running (VM, kubectl ate proxy)
+     codes from -10 s: 200x25 504x10 503x55 200x65
+     first failure at +17 s, last failure at +86 s (= +25 s from restore action, +15 s from dependency ready); failed 65 of 155
+     failure latency p50 2.90 s max 5.06 s
+     55x code=503 body='ingress failed'
+     10x code=504 body='ingress failed'
+  incluster/running (pod, mTLS to router)
+     codes from -10 s: 200x27 504x5 503x65 200x69
+     first failure at +17 s, last failure at +86 s (= +25 s from restore action, +15 s from dependency ready); failed 70 of 166
+     failure latency p50 3.01 s max 5.02 s
+     65x code=503 body='ingress failed'
+     5x code=504 body='ingress failed'
+  incluster/suspended (fresh actor each 5 s)
+     codes from -10 s: 200x4 500x1 504x3 503x11 200x14
+     first failure at +11 s, last failure at +81 s (= +20 s from restore action, +10 s from dependency ready); failed 15 of 33
+     failure latency p50 5.02 s max 5.02 s
+     11x code=503 body='ingress failed'
+     3x code=504 body='ingress failed'
+     1x code=500 body='ingress failed'
+
+== T3 kube-apiserver: down at +0 s, restore action at +87 s, dependency ready at +92 s
+  proxy/running (VM, kubectl ate proxy)
+     codes from -10 s: 200x10 000x103 200x60
+     first failure at +1 s, last failure at +111 s (= +24 s from restore action, +19 s from dependency ready); failed 103 of 173
+     failure latency p50 9.00 s max 9.00 s
+     103x code=000 body=''
+  incluster/running (pod, mTLS to router)
+     codes from -10 s: 200x188
+     no failures
+  incluster/suspended (fresh actor each 5 s)
+     codes from -10 s: 200x38
+     no failures

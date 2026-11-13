@@ -1,0 +1,30 @@
+2026-11-12T11:45:29Z
+== workers (all)
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY     POD                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-ffxwt   92m
+c572e96d-dd9b-4500-b0e3-880a98d9f61d   counter   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-fps97   75m
+3718ba4b-9e03-4160-9c10-48656071e44b   counter   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-counter/counter-7cc7dcd596-p6g2q   92m
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-475hq   13m
+7437427a-2039-44a3-afb8-c3419a071755   parking   WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi    ate-demo-parking/parking-664fd7c67b-l6mxf   13m
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-bzgjd              89m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/3008Mi   lab-c/ballast-65cf95d875-f65dl              89m
+== pool pods
+NAME                       READY   STATUS    RESTARTS        AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+ballast-65cf95d875-bzgjd   1/1     Running   1 (3m58s ago)   89m   10.244.0.12   kind-control-plane   <none>           <none>
+ballast-65cf95d875-f65dl   1/1     Running   1 (3m58s ago)   89m   10.244.0.13   kind-control-plane   <none>           <none>
+NAME                       READY   STATUS    RESTARTS        AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+counter-7cc7dcd596-ffxwt   1/1     Running   1 (3m58s ago)   92m   10.244.0.11   kind-control-plane   <none>           <none>
+counter-7cc7dcd596-fps97   1/1     Running   1 (3m58s ago)   75m   10.244.0.14   kind-control-plane   <none>           <none>
+counter-7cc7dcd596-p6g2q   1/1     Running   1 (3m58s ago)   92m   10.244.0.10   kind-control-plane   <none>           <none>
+== actors
+ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+lab-c      r1     lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    13        4m13s
+ATESPACE           NAME           TEMPLATE                   STATE                 WORKER POD   WORKER IPS   VERSION   AGE
+ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_CRASHED   <none>                    17        91m
+== call r1
+count=4 mb=50 fill=random sum=6296 process_age_s=0.8
+ -> 200 0.459392s
+== call my-counter-1 (was RUNNING before the node restart)
+actor ate-demo-counter/my-counter-1 unavailable: AssignWorker prerequisite not met for Actor: ate-demo-counter/my-counter-1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED) -> 503 0.076169s
+ATESPACE           NAME           TEMPLATE                   STATE                 WORKER POD   WORKER IPS   VERSION   AGE
+ate-demo-counter   my-counter-1   ate-demo-counter/counter   ACTOR_STATE_CRASHED   <none>                    17        91m

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-2-2-title fig-2-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-2-title">Where kubectl ate and kubectl read from</title>
+  <desc id="fig-2-2-desc">Two rows. In the top row kubectl ate get actors opens a port-forward through kube-apiserver to the Service api on port 443, where ate-api-server answers from Postgres. The token it sends belongs to the shared identity system:serviceaccount:ate-system:ate-client unless you pass --token-file. In the bottom row kubectl get workerpools asks kube-apiserver, which answers from etcd, because WorkerPool, SandboxConfig, and CSIDriverConfig are the only custom resources.</desc>
+  <defs><marker id="fig-2-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ATESPACES, TEMPLATES, ACTORS, WORKERS, POLICIES</text>
+  <rect x="20" y="28" width="150" height="46" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="95" y="46.25" font-size="12.5" text-anchor="middle" font-weight="700">kubectl ate</text>
+  <text x="95" y="63.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">get actors -A</text>
+  <rect x="200" y="28" width="130" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="265" y="46.1" font-size="12" text-anchor="middle" font-weight="700">kube-apiserver</text>
+  <text x="265" y="63.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">port-forward</text>
+  <rect x="360" y="28" width="130" height="46" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="425" y="46.1" font-size="12" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="425" y="63.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Service api:443</text>
+  <rect x="520" y="28" width="100" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="570" y="46.25" font-size="12.5" text-anchor="middle" font-weight="700">Postgres</text>
+  <text x="570" y="63.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rows</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <line x1="170" y1="51" x2="199" y2="51" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 51 L199 51" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <line x1="330" y1="51" x2="359" y2="51" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M330 51 L359 51" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="490" y1="51" x2="519" y2="51" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M490 51 L519 51" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="98" width="600" height="46" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-dasharray="5 4"/>
+  <text x="32" y="116.1" font-size="12" font-weight="700">acting as system:serviceaccount:ate-system:ate-client</text>
+  <text x="32" y="133.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the shared identity of every caller that passes no --token-file</text>
+  <line x1="95" y1="74" x2="95" y2="98" stroke="var(--m-olive-ink, #515f26)" stroke-width="1" stroke-dasharray="5 4"/>
+  </g>
+  <line x1="20" y1="168" x2="620" y2="168" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="192" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WORKERPOOL, SANDBOXCONFIG, CSIDRIVERCONFIG</text>
+  <rect x="20" y="202" width="150" height="46" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="95" y="220.25" font-size="12.5" text-anchor="middle" font-weight="700">kubectl</text>
+  <text x="95" y="237.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">get workerpools -A</text>
+  <rect x="200" y="202" width="130" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="265" y="220.1" font-size="12" text-anchor="middle" font-weight="700">kube-apiserver</text>
+  <text x="265" y="237.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ate.dev/v1</text>
+  <rect x="360" y="202" width="130" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="425" y="220.25" font-size="12.5" text-anchor="middle" font-weight="700">etcd</text>
+  <text x="425" y="237.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the 3 CRDs</text>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <line x1="170" y1="225" x2="199" y2="225" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M170 225 L199 225" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <line x1="330" y1="225" x2="359" y2="225" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M330 225 L359 225" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <text x="20" y="274" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kubectl get actor finds nothing: an actor is a row in Postgres, not a custom resource.</text>
+  <text x="20" y="290" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">With --endpoint, kubectl ate skips the port-forward and dials ate-api-server directly.</text>
+</svg>

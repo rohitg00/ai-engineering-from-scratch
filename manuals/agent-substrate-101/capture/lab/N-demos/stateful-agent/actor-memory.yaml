@@ -1,0 +1,59 @@
+actorTemplate:
+  atespace: demo-agent
+  name: agent-memory
+metadata:
+  atespace: demo-agent
+  createTime: "2026-11-12T12:48:33.259710407Z"
+  name: agent-memory-1
+  uid: 98195d43-7191-4a68-8787-c85092e08acd
+  updateTime: "2026-11-12T12:48:38.491003522Z"
+  version: "15"
+status:
+  assignedNode: demo-control-plane
+  lastAssignedGeneration: 4
+  snapshots:
+  - actorTemplateUid: bd220b4a-5728-4d30-9ef0-2acf12ae30b1
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/demo-agent/actors/98195d43-7191-4a68-8787-c85092e08acd/snapshots/3654f27a-7dac-4e66-b157-cc98bf0fc836
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 4
+    locality: demo-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 3654f27a-7dac-4e66-b157-cc98bf0fc836
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: demo-control-plane
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: 6e9d45e1-1617-41ab-972b-b4a6b5ed3380
+    workerEpoch: "1"
+    workerNamespace: demo-agent
+    workerPod: agent-845f48c9bf-k8lkw
+    workerPodIps:
+    - 10.244.0.28
+    workerPodUid: 6e9d45e1-1617-41ab-972b-b4a6b5ed3380
+    workerPool: agent
+    workerSpiffeId: spiffe://cluster.local/ns/demo-agent/sa/ateworker

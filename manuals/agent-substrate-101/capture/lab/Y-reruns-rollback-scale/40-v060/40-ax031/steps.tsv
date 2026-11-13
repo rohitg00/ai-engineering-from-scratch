@@ -1,0 +1,18 @@
+00-delete-y060	0	8
+01-kind	0	18
+02-deploy-v060	0	102
+10-clone	0	11
+13-go-build	0	16
+20-image-ax-server	0	4
+20-image-ax-controller	0	3
+21-task-runner-image	0	50
+40-apply	0	1
+42-rollout	0	6
+51-version	0	0
+52-apply	0	0
+53-describe	0	0
+54-resume	0	0
+55-describe-after-resume	0	0
+56-ssh	1	0
+57-suspend	0	5
+DONE

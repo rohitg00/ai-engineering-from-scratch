@@ -1,0 +1,31 @@
+apiVersion: install.ate.dev/v1alpha1
+atenet:
+  egress:
+    credentialProvider: '{"name":"k8s.io"}'
+cluster:
+  context: kind-uupg
+  outcome: succeeded
+  substrateVersion: v1.0.0
+  writtenAt: "2026-11-12T16:25:20Z"
+  writtenBy: ate-setup go.ate.dev/substrate.Version=(devel) commit=unknown built=unknown
+    linux/amd64
+context: kind-uupg
+csi:
+  setup: none
+images:
+  repo: ghcr.io/agent-substrate/substrate
+  tag: v1.0.0
+ingressAllowedSPIFFEIDs: spiffe://cluster.local/ns/ate-system/sa/atenet-client
+kind: SubstrateInstall
+kindCluster:
+  enabled: true
+  name: uupg
+ko:
+  defaultPlatforms: linux/amd64
+  dockerRepo: localhost:5001
+kubeconfig: <home>/u/kc-uupg
+record:
+  dir: <home>/u/rec
+storage:
+  bucketName: ate-snapshots
+  snapshotLocation: gs://ate-snapshots/

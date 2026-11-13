@@ -1,0 +1,4 @@
+/home/lab/ax/internal/server/server.go:628:func (s *Server) ListModels(ctx context.Context, req *v1alpha1.ListModelsRequest) (*v1alpha1.ListModelsResponse, error) {
+/home/lab/ax/internal/server/server.go:633:	models, err := s.store.ListModels(ctx, atespace)
+/home/lab/ax/internal/server/server.go:637:	return &v1alpha1.ListModelsResponse{Models: models}, nil
+/home/lab/ax/cmd/ax/main.go:578:		resp, err := client.ListModels(ctx, &v1alpha1.ListModelsRequest{Atespace: atespace})

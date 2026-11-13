@@ -1,0 +1,6 @@
+### 2026-11-12T19:30:18Z store recreated on the other guest with TLS on port 19001 (RUSTFS_TLS_PATH with rustfs_cert.pem and rustfs_key.pem), same data volume
+https with the lab CA: code=403 total=0.010375 verify=0
+https without the CA: curl exit 60
+plain http on the TLS port: curl exit 1
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Verify return code: 0 (ok)

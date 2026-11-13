@@ -1,0 +1,9 @@
+{
+  "ate.dev/kvm": "4096",
+  "cpu": "24",
+  "ephemeral-storage": "50884108288",
+  "hugepages-1Gi": "0",
+  "hugepages-2Mi": "0",
+  "memory": "49326368Ki",
+  "pods": "250"
+}

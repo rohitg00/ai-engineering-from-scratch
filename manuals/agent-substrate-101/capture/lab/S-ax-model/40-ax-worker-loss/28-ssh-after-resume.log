@@ -1,0 +1,7 @@
+total 0
+drwxrwxrwx 3 root root  60 Nov 12 16:20 .
+drwxr-xr-x 1 root root 100 Nov 12 16:20 ..
+drwxr-xr-x 2 root root  60 Nov 12 16:20 .ax
+cat: /workspace/note.txt: No such file or directory
+cat: /workspace/unsaved.txt: No such file or directory
+5.23 0.00

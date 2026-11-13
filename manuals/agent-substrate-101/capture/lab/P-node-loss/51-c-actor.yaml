@@ -1,0 +1,56 @@
+actorTemplate:
+  atespace: lab-n
+  name: ballast-50
+metadata:
+  atespace: lab-n
+  createTime: "2026-11-12T13:29:43.448819594Z"
+  name: e2
+  uid: 02680017-db02-4edd-ba6d-aaef32d3fbfe
+  updateTime: "2026-11-12T13:30:41.870501090Z"
+  version: "10"
+status:
+  assignedNode: multi-worker2
+  lastAssignedGeneration: 3
+  snapshots:
+  - actorTemplateUid: 09fee120-cd19-4121-8bae-5623fcbe70eb
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-n/actors/02680017-db02-4edd-ba6d-aaef32d3fbfe/snapshots/4dbaa3cd-4ac8-425d-834a-46d70879617f
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 2
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 4dbaa3cd-4ac8-425d-834a-46d70879617f
+  - actorTemplateUid: 09fee120-cd19-4121-8bae-5623fcbe70eb
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-n/actors/02680017-db02-4edd-ba6d-aaef32d3fbfe/snapshots/43049df8-2a37-44bb-baf2-5535363f1fd6
+      state: SNAPSHOT_STORAGE_STATE_PENDING
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 3
+    locality: multi-worker2
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 43049df8-2a37-44bb-baf2-5535363f1fd6
+  state: ACTOR_STATE_REVERTING

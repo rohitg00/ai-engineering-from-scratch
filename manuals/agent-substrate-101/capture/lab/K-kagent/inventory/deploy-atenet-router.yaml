@@ -1,0 +1,159 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    meta.helm.sh/release-name: substrate
+    meta.helm.sh/release-namespace: ate-system
+  creationTimestamp: "2026-11-12T10:12:13Z"
+  generation: 1
+  labels:
+    app: atenet-router
+    app.kubernetes.io/managed-by: Helm
+  name: atenet-router
+  namespace: ate-system
+  resourceVersion: "1223"
+  uid: 7743cc35-7bcd-4705-997c-9850e238e040
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: atenet-router
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "15020"
+        prometheus.io/scrape: "true"
+      labels:
+        app: atenet-router
+    spec:
+      containers:
+      - args:
+        - -f
+        - /etc/agentgateway/config.yaml
+        image: cr.agentgateway.dev/agentgateway:v1.7.0@sha256:60216aafb03d37f94e952ff3d51d2f630a65b10ecaebdc0a864882f92610c45b
+        imagePullPolicy: IfNotPresent
+        name: agentgateway
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        - containerPort: 8081
+          name: connect
+          protocol: TCP
+        - containerPort: 8444
+          name: connect-tls
+          protocol: TCP
+        - containerPort: 15021
+          name: readiness
+          protocol: TCP
+        - containerPort: 15020
+          name: gw-metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz/ready
+            port: readiness
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: "2"
+            memory: 1Gi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/agentgateway
+          name: agentgateway-config
+        - mountPath: /run/servicedns.podcert.ate.dev
+          name: servicedns
+        - mountPath: /run/podidentity.podcert.ate.dev
+          name: podidentity
+          readOnly: true
+        - mountPath: /run/servicedns-ca
+          name: servicedns-ca
+          readOnly: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: atenet-router
+      serviceAccountName: atenet-router
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: atenet-router-agentgateway-config
+        name: agentgateway-config
+      - name: servicedns
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              certificateChainPath: cert.pem
+              credentialBundlePath: credential-bundle.pem
+              keyPath: key.pem
+              keyType: ECDSAP256
+              signerName: servicedns.podcert.ate.dev/identity
+      - name: servicedns-ca
+        projected:
+          defaultMode: 420
+          sources:
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: servicedns.podcert.ate.dev/identity
+      - name: podidentity
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              certificateChainPath: cert.pem
+              credentialBundlePath: credential-bundle.pem
+              keyPath: key.pem
+              keyType: ECDSAP256
+              signerName: podidentity.podcert.ate.dev/identity
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: podidentity.podcert.ate.dev/identity
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-11-12T10:13:06Z"
+    lastUpdateTime: "2026-11-12T10:13:06Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-11-12T10:12:13Z"
+    lastUpdateTime: "2026-11-12T10:13:06Z"
+    message: ReplicaSet "atenet-router-556c5ff957" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

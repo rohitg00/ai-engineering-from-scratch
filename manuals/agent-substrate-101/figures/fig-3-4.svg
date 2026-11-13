@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 352" role="img" aria-labelledby="fig-3-4-title fig-3-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-4-title">Where a snapshot lives after an asynchronous suspend</title>
+  <desc id="fig-3-4-desc">A timeline of four actors, d0, d50, d200 and d500, over 43 minutes after an asynchronous suspend with default atelet timers on the x86 server guest. For the first 5 minutes each snapshot is only on the node and its state is PENDING. From about 5 minutes to about 30 minutes the snapshot is on the node and in the object store. After about 30 minutes the node copy is removed and only the object store copy remains. The first three uploads completed after 5 min 1 s to 5 min 2 s, and the 500 MiB one after 5 min 11 s. A request 42 minutes after the suspend resumed each actor from the object store in 0.25 s, 0.52 s, 1.19 s, 2.44 s. A row of dots under the bars shows the size of the snapshots on the node disk in each of 38 samples: 758 MiB until the node copies were removed and 1 MiB after that.</desc>
+  <rect x="20" y="14" width="14" height="10" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="40" y="23" font-size="11" fill="var(--m-rose-ink, #b0344d)">node only, PENDING</text>
+  <rect x="196" y="14" width="14" height="10" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="216" y="23" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">node and object store</text>
+  <rect x="390" y="14" width="14" height="10" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="410" y="23" font-size="11" fill="var(--m-teal-ink, #18696a)">object store only</text>
+  <text x="20" y="80" font-size="12" font-weight="700">d0</text>
+  <text x="56" y="80" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <rect x="96" y="66" width="60.42" height="20" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <rect x="156.42" y="66" width="300.26" height="20" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="456.68" y="66" width="143.32" height="20" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <circle cx="600" cy="76" r="3.5" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="592" y="80" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumed in 0.25 s</text>
+  <text x="20" y="118" font-size="12" font-weight="700">d50</text>
+  <text x="56" y="118" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <rect x="96" y="104" width="60.32" height="20" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <rect x="156.32" y="104" width="300.26" height="20" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="456.58" y="104" width="143.42" height="20" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <circle cx="600" cy="114" r="3.5" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="592" y="118" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumed in 0.52 s</text>
+  <text x="20" y="156" font-size="12" font-weight="700">d200</text>
+  <text x="56" y="156" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <rect x="96" y="142" width="60.18" height="20" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <rect x="156.18" y="142" width="300.24" height="20" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="456.42" y="142" width="143.58" height="20" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <circle cx="600" cy="152" r="3.5" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="592" y="156" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumed in 1.19 s</text>
+  <text x="20" y="194" font-size="12" font-weight="700">d500</text>
+  <text x="56" y="194" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <rect x="96" y="180" width="62.12" height="20" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <rect x="158.12" y="180" width="298.04" height="20" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="456.16" y="180" width="143.84" height="20" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <circle cx="600" cy="190" r="3.5" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="592" y="194" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumed in 2.44 s</text>
+  <text x="56" y="56" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">MiB</text>
+  <line x1="156.18" y1="30" x2="156.18" y2="266" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="162.18" y="40" font-size="11" fill="var(--m-teal-ink, #18696a)">upload done after 5 min 1 s</text>
+  <line x1="456.68" y1="46" x2="456.68" y2="266" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="450.68" y="56" font-size="11" text-anchor="end" fill="var(--m-violet-ink, #5b4fa3)">node copy removed after 30 min 3 s</text>
+  <text x="20" y="232" font-size="12" font-weight="700">node</text>
+  <text x="20" y="247" font-size="12" font-weight="700">disk</text>
+  <circle cx="108.06" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="121.32" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="134.55" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="147.79" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="161.03" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="174.26" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="187.52" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="200.75" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="213.99" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="227.25" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="240.47" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="253.73" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="267" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="280.28" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="293.54" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="306.8" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="320.02" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="333.28" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="346.53" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="359.76" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="373" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="386.24" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="399.46" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="412.73" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="425.98" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.22" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="452.46" cy="226" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="465.66" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="478.84" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="492.1" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="505.35" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="518.56" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="531.8" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="545.04" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="558.28" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="571.51" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="584.74" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="597.97" cy="252" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="168" y="244" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">758 MiB of snapshots, one dot for each sample</text>
+  <text x="463.2" y="242" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">1 MiB</text>
+  <line x1="96" y1="272" x2="612" y2="272" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="96" y1="268" x2="96" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="96" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="156" y1="268" x2="156" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="156" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="216" y1="268" x2="216" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="216" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="276" y1="268" x2="276" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="276" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">15</text>
+  <line x1="336" y1="268" x2="336" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="336" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="396" y1="268" x2="396" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="396" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">25</text>
+  <line x1="456" y1="268" x2="456" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="456" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="516" y1="268" x2="516" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="516" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">35</text>
+  <line x1="576" y1="268" x2="576" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="576" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <text x="20" y="290" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MINUTES</text>
+  <circle cx="26" cy="312" r="3.5" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="36" y="316" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one request 42 minutes after the suspend: every actor resumed from the object store</text>
+  <text x="20" y="336" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">In the rose part, losing the node copy leaves the actor CRASHED. Each time is at most 10 s late.</text>
+</svg>

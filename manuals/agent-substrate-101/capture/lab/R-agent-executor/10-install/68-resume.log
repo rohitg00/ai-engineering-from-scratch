@@ -1,0 +1,12 @@
+task.ax.io/ax-install-check resumed
+Name:         ax-install-check
+Atespace:     default
+Phase:        Running
+Actor:        ax-install-check
+Worker IP:    10.244.0.25
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE            STATUS  REASON         MESSAGE
+  WorkspaceReady  True    SetupComplete  Workspace setup completed at 10.244.0.25
+  Ready           True    TaskRunning    Task is running and its workspace is ready

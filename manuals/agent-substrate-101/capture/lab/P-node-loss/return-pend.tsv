@@ -1,0 +1,17 @@
+ts	t	event	detail
+2026-11-12T14:30:51.444Z	t=0.1	node-start	multi-worker2 after outage of 0.0 s
+2026-11-12T14:30:51.570Z	t=0.2	node-ready	multi-worker2
+2026-11-12T14:30:53.902Z	t=2.5	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2
+2026-11-12T14:30:53.913Z	t=2.5	first-actor-on-returned-node	no pods moved by hand
+2026-11-12T14:31:00.232Z	t=8.8	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker
+2026-11-12T14:31:06.702Z	t=15.3	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2
+2026-11-12T14:31:12.988Z	t=21.6	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2
+2026-11-12T14:31:19.366Z	t=28.0	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker
+2026-11-12T14:31:25.712Z	t=34.3	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker
+2026-11-12T14:31:31.936Z	t=40.5	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2
+2026-11-12T14:31:38.225Z	t=46.8	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker
+2026-11-12T14:31:44.503Z	t=53.1	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2
+2026-11-12T14:31:50.826Z	t=59.4	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2
+2026-11-12T14:31:57.086Z	t=65.7	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker
+2026-11-12T14:32:03.416Z	t=72.0	watch	pool-pods-running-on-node=2 workers-active-on-node=2 placement=multi-worker2
+2026-11-12T14:32:07.073Z	t=75.7	ready-for-next-case	workers active on multi-worker2: 2

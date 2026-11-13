@@ -1,0 +1,6 @@
+sh: 1: kind: not found
+x-pgc
+<home>/scripts/x18-pg-teardown.sh: line 17: kind: command not found /dev/vda1        38G   31G  7.4G  81% /
+Mem:              23           9           1           0          13          14
+
+kind was not on PATH in the first attempt; the cluster was deleted with hack/kind.sh at 2026-11-12T19:06:59Z

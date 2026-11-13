@@ -1,0 +1,70 @@
+timeline:
+   11:01:04 start-baseline
+   11:01:34 T1-postgres-scale-0
+   11:02:35 T1-postgres-scale-1
+   11:02:37 T1-postgres-ready
+   11:04:08 T2-ateapi-scale-0
+   11:05:08 T2-ateapi-scale-2
+   11:05:18 T2-ateapi-ready
+   11:06:49 T3-kube-apiserver-manifest-moved-out livez=200
+   11:08:15 T3-kube-apiserver-manifest-moved-back
+   11:08:20 T3-kube-apiserver-livez-200
+   11:09:50 end
+
+baseline in-cluster running actor: n=30 p50=27 ms
+baseline in-cluster suspended (resume) : n=6 p50=411 ms
+
+== T1 Postgres: down at +0 s, restore action at +61 s, dependency ready at +63 s
+  proxy/running (VM, kubectl ate proxy)
+     codes from -10 s: 200x10 000x56 500x8 200x77
+     first failure at +1 s, last failure at +66 s (= +5 s from restore action, +3 s from dependency ready); failed 64 of 151
+     failure latency p50 9.00 s max 9.00 s
+     56x code=000 body=''
+     8x code=500 body='error resuming actor lab-e/e-run'
+  incluster/running (pod, mTLS to router)
+     codes from -10 s: 200x11 000x57 500x9 200x81
+     first failure at +1 s, last failure at +66 s (= +5 s from restore action, +3 s from dependency ready); failed 66 of 158
+     failure latency p50 9.00 s max 9.00 s
+     57x code=000 body=''
+     9x code=500 body='error resuming actor lab-e/e-run'
+  incluster/suspended (fresh actor each 5 s)
+     codes from -10 s: 200x2 500x1 504x1 503x10 500x7 200x11
+     first failure at +0 s, last failure at +90 s (= +29 s from restore action, +27 s from dependency ready); failed 19 of 32
+     failure latency p50 5.01 s max 10.01 s
+     1x code=500 body='error resuming actor lab-e/e-s-007'
+     1x code=504 body=''
+     1x code=503 body='actor lab-e/e-s-009 unavailable'
+     1x code=503 body='actor lab-e/e-s-010 unavailable'
+
+== T2 ate-api-server: down at +0 s, restore action at +60 s, dependency ready at +70 s
+  proxy/running (VM, kubectl ate proxy)
+     codes from -10 s: 200x14 503x58 200x84
+     first failure at +5 s, last failure at +66 s (= +6 s from restore action, -4 s from dependency ready); failed 58 of 156
+     failure latency p50 2.70 s max 5.06 s
+     58x code=503 body='actor lab-e/e-run unavailable'
+  incluster/running (pod, mTLS to router)
+     codes from -10 s: 200x16 503x60 200x90
+     first failure at +6 s, last failure at +65 s (= +5 s from restore action, -5 s from dependency ready); failed 60 of 166
+     failure latency p50 3.01 s max 5.02 s
+     60x code=503 body='actor lab-e/e-run unavailable'
+  incluster/suspended (fresh actor each 5 s)
+     codes from -10 s: 200x3 503x12 200x18
+     first failure at +7 s, last failure at +62 s (= +2 s from restore action, -8 s from dependency ready); failed 12 of 33
+     failure latency p50 5.02 s max 5.02 s
+     1x code=503 body='actor lab-e/e-s-039 unavailable'
+     1x code=503 body='actor lab-e/e-s-040 unavailable'
+     1x code=503 body='actor lab-e/e-s-041 unavailable'
+     1x code=503 body='actor lab-e/e-s-042 unavailable'
+
+== T3 kube-apiserver: down at +0 s, restore action at +86 s, dependency ready at +91 s
+  proxy/running (VM, kubectl ate proxy)
+     codes from -10 s: 200x9 000x105 200x59
+     first failure at +0 s, last failure at +112 s (= +26 s from restore action, +21 s from dependency ready); failed 105 of 173
+     failure latency p50 9.00 s max 9.00 s
+     105x code=000 body=''
+  incluster/running (pod, mTLS to router)
+     codes from -10 s: 200x186
+     no failures
+  incluster/suspended (fresh actor each 5 s)
+     codes from -10 s: 200x37
+     no failures

@@ -1,0 +1,4 @@
+Waiting for deployment "ax-redis" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ax-redis" successfully rolled out
+deployment "ax-server" successfully rolled out
+Error from server (NotFound): deployments.apps "ax-controller" not found

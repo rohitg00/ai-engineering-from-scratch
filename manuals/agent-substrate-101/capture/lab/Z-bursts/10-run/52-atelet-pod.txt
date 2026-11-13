@@ -1,0 +1,3 @@
+NAME           READY   STATUS    RESTARTS   AGE   IP            NODE               NOMINATED NODE   READINESS GATES
+atelet-tzw7b   2/2     Running   0          34m   10.244.0.11   zb-control-plane   <none>           <none>
+atelet-tzw7b                               2/2     Running     0          34m   10.244.0.11   zb-control-plane   <none>           <none>

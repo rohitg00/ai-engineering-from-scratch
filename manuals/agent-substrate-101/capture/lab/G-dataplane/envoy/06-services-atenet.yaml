@@ -1,0 +1,63 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:07Z"
+    name: atenet-router
+    namespace: ate-system
+    resourceVersion: "929"
+    uid: 5efce0bb-e8fd-44de-892a-23fe0fcd5589
+  spec:
+    clusterIP: 10.96.5.247
+    clusterIPs:
+    - 10.96.5.247
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: PreferDualStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+    - name: connect-tls
+      port: 8444
+      protocol: TCP
+      targetPort: 8444
+    selector:
+      app: atenet-router
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: "2026-11-12T10:32:14Z"
+    name: atenet-egress
+    namespace: ate-system
+    resourceVersion: "1124"
+    uid: b059a233-a103-48e8-b0aa-afde55d605c0
+  spec:
+    clusterIP: 10.96.190.93
+    clusterIPs:
+    - 10.96.190.93
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: PreferDualStack
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: https
+    selector:
+      app: atenet-egress
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""

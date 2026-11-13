@@ -1,0 +1,34 @@
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchExpressions:
+        - key: app
+          operator: In
+          values:
+          - ate-controller
+          - atelet
+          - atenet-egress
+          - atenet-router
+    - namespaceSelector:
+        matchLabels:
+          ate.dev/api-access: "true"
+      podSelector:
+        matchExpressions:
+        - key: ate.dev/worker-pool
+          operator: DoesNotExist
+    ports:
+    - port: 443
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: atelet
+    ports:
+    - port: 8445
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: ate-api-server
+  policyTypes:
+  - Ingress

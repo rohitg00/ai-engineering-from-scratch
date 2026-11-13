@@ -1,0 +1,25 @@
+                  path: /ready
+                  headers:
+                  - name: ":method"
+                    string_match: { exact: GET }
+                route: { cluster: envoy_admin }
+          http_filters:
+          - name: envoy.filters.http.router
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+  clusters:
+  - name: envoy_admin
+    connect_timeout: 0.25s
+    type: STATIC
+    load_assignment:
+      cluster_name: envoy_admin
+      endpoints:
+      - lb_endpoints:
+        - endpoint:
+            address:
+              socket_address:
+                address: 127.0.0.1
+                port_value: 9901
+  - name: xds_cluster
+    connect_timeout: 0.25s
+    type: STRICT_DNS

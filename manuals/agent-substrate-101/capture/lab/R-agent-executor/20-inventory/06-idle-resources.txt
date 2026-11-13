@@ -1,0 +1,4 @@
+[2J[HCONTAINER           NAME                      CPU %               MEM                 DISK                INODES              SWAP
+21cf9cd19c190       postgres                  0.04                30.28MB             45.06kB             12                  0B
+5d6ce0c99155b       postgres                  2.67                95.94MB             45.06kB             12                  0B
+64175953998b6       ax-server                 0.00                6.308MB             45.06kB             12                  0B

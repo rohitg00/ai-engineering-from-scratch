@@ -1,0 +1,142 @@
+configuration: 10 set, 48 default
+  actorJWT.algorithm                          ES256                                                  (from default)
+  actorJWT.issuer                             ""                                                     (from default)
+  ateapi.authz.bootstrapOwners                ""                                                     (from default)
+  ateapi.authz.egressGatewayExtraSPIFFEIDs    ""                                                     (from default)
+  ateapi.expectedJWTIssuer                    ""                                                     (from default)
+  ateapi.logLevel                             ""                                                     (from default)
+  ateapi.postgres.cloudsql.gsa                ""                                                     (from default)
+  ateapi.postgres.cloudsql.iamAuth            ""                                                     (from default)
+  ateapi.postgres.cloudsql.instance           ""                                                     (from default)
+  ateapi.postgres.cloudsql.ipType             ""                                                     (from default)
+  ateapi.postgres.owner.connectionString      ""                                                     (from default)
+  ateapi.postgres.owner.role                  substrate_owner                                        (from default)
+  ateapi.postgres.poolMaxConns                ""                                                     (from default)
+  ateapi.postgres.readWrite.connectionString  ""                                                     (from default)
+  ateapi.postgres.readWrite.role              substrate_readwrite                                    (from default)
+  ateapi.postgres.schema                      ""                                                     (from default)
+  ateapi.postgres.serverCAFile                ""                                                     (from default)
+  ateapi.postgres.storageClass                ""                                                     (from default)
+  atenet.dataplane                            envoy                                                  (from default)
+  atenet.egress.additionalExtprocService      ""                                                     (from default)
+  atenet.egress.credentialProvider            {"name":"k8s.io"}                                      (from --credential-provider)
+  benchmark.actorMemory                       ""                                                     (from default)
+  benchmark.sandboxClass                      gvisor                                                 (from default)
+  benchmark.workerCount                       1                                                      (from default)
+  clusterSize                                 size0                                                  (from default)
+  context                                     kind-kind                                              (from the --kind profile)
+  cordonSystemInfraComponents                 false                                                  (from default)
+  csi.setup                                   none                                                   (from default)
+  demo.anthropicAPIKey                        ""                                                     (from default)
+  demo.counter.storageClass                   standard                                               (from default)
+  demo.counter.withExternalVolume             false                                                  (from default)
+  docker.buildFlags                           ""                                                     (from default)
+  e2e.envoyConcurrency                        0                                                      (from default)
+  e2e.tuning                                  false                                                  (from default)
+  fakeDataPlane.enabled                       false                                                  (from default)
+  gcp.clusterLocation                         ""                                                     (from default)
+  gcp.clusterName                             ""                                                     (from default)
+  gcp.projectID                               ""                                                     (from default)
+  images.repo                                 ghcr.io/agent-substrate/substrate                      (from --image-repo)
+  images.tag                                  v1.0.0                                                 (from --image-tag)
+  ingressAllowedSPIFFEIDs                     spiffe://cluster.local/ns/ate-system/sa/atenet-client  (from --ingress-allowed-spiffe-ids)
+  kindCluster.enabled                         true                                                   (from ATE_INSTALL_KIND)
+  kindCluster.name                            kind                                                   (from default)
+  ko.defaultPlatforms                         linux/arm64                                            (from the --kind profile)
+  ko.dockerRepo                               localhost:5001                                         (from the --kind profile)
+  kubeconfig                                  ""                                                     (from default)
+  namespace                                   ate-system                                             (from default)
+  otlpEndpoint                                ""                                                     (from default)
+  podcert.workersPerSigner                    0                                                      (from default)
+  preview                                     ""                                                     (from default)
+  publish.binariesDir                         bin/release                                            (from default)
+  publish.overwrite                           false                                                  (from default)
+  record.dir                                  ""                                                     (from default)
+  rolloutTimeout                              1m0s                                                   (from default)
+  sandboxClasses                              gvisor,microvm                                         (from default)
+  storage.bucketName                          ate-snapshots                                          (from the --kind profile)
+  storage.snapshotLocation                    gs://ate-snapshots/                                    (from the --kind profile)
+  storage.transferGSAName                     ""                                                     (from default)
+[1;36m[step]: deploy_ate_system[0m
+[1;36m[step]: prepare_microvm_deps[0m
+Assembling microVM assets into <home>/.cache/aiefs-manuals-wip/substrate-research/mac-run/substrate/bin/microvm-assets/arm64 (arch=arm64)...
+>> Downloading kata-static 4.3.1 (arm64)...
+>> Downloading cloud-hypervisor v53.0 (cloud-hypervisor-static-aarch64)...
+>> Assets assembled in <home>/.cache/aiefs-manuals-wip/substrate-research/mac-run/substrate/bin/microvm-assets/arm64.
+  (apply of 1 objects took 0.005s)
+[1;36m[step]: deploy_crds[0m
+[1;36m[step]: images: pre-built from ghcr.io/agent-substrate/substrate, tag v1.0.0[0m
+  (apply of 5 objects took 0.035s)
+  (apply of 2 objects took 0.155s)
+  (apply of 1 objects took 0.209s)
+[1;36m[step]: ensure_apiserver_prerequisites[0m
+[1;36m[step]: create_jwt_authority_pool_secret[0m
+  created pool secret ate-system/actor-id-jwt-pool
+[1;36m[step]: create_actor_id_ca_pool_secret[0m
+  created pool secret ate-system/actor-id-ca-pool
+[1;36m[step]: create_actor_id_ca_certs_secret[0m
+[1;36m[step]: create_api_server_env_vars[0m
+[1;36m[step]: create_api_config[0m
+ate-api-config apiconfig.textproto:
+  | logging:  {
+  |   level:  "info"
+  | }
+[1;36m[step]: create_api_authentication_config[0m
+ate-api-authentication authentication.yaml:
+  | jwtProviders:
+  | - audiences:
+  |   - api.ate-system.svc
+  |   certificateAuthorityFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  |   discoveryTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+  |   issuer: https://kubernetes.default.svc.cluster.local
+  |   name: kubernetes
+[1;36m[step]: create_podcertificate_controller_cas[0m
+  created pool secret podcertificate-controller-system/service-dns-ca-pool
+  created pool secret podcertificate-controller-system/pod-identity-ca-pool
+  created pool secret podcertificate-controller-system/postgres-ca-pool
+  (apply of 7 objects took 0.023s)
+  (rollout status deployment/podcertificate-controller took 18.005s)
+Waiting for podcertificate ClusterTrustBundles to be ready...
+  (wait for clustertrustbundles took 8.024s)
+[1;36m[step]: setup_csi[0m
+Skipping CSI driver setup.
+  (apply of 1 objects took 0.003s)
+  (apply of 3 objects took 0.019s)
+  (rollout status statefulset/postgres took 48.004s)
+[1;36m[step]: setup_bundled_postgres[0m
+  (delete of 8 objects took 0.010s)
+Warning: system:serviceaccount:ate-system:ate-client is a bootstrap owner, so anyone who can mint a token for it is a global owner of this install. It is the default so the demos, benchmarks and e2e tests work; for a shared or production install, set --ateapi-authz-bootstrap-owners (ATE_API_AUTHZ_BOOTSTRAP_OWNERS) to your operators' own principals. See docs/authorization.md.
+  (apply of 57 objects took 10.973s)
+[1;36m[step]: create_egress_mitm_ca_pool_secret[0m
+  created pool secret ate-system/egress-mitm-ca-pool
+[1;36m[step]: deploy_k8s_credential_provider[0m
+  (apply of 1 objects took 0.186s)
+  (apply of 6 objects took 0.367s)
+  (apply of 4 objects took 0.776s)
+[1;36m[step]: deploy_microvm_sandboxconfig[0m
+Staging assets to in-cluster rustfs bucket ate-snapshots (microvm-assets/)...
+>> Waiting for rustfs in namespace ate-system...
+  (rollout status deployment/rustfs took 178.007s)
+  (wait for job/rustfs-bucket-init took 14.004s)
+>> Uploading assets to s3://ate-snapshots/microvm-assets/ via http://10.96.26.60:9000 (netns of kind-control-plane)...
+   arm64/cloud-hypervisor -> microvm-assets/arm64/f192b510eea1c710cbc439d716bb0573c223fc463dbe3e6523788a2b7ef62850
+   arm64/virtiofsd -> microvm-assets/arm64/4b43f4f6de6500203b01214a790314eea4182f5f110594ddb28ae2805622f06f
+   arm64/vmlinux -> microvm-assets/arm64/dece388830720fe8bddb41552fff5f486240aeece5acc0aebc1812761e3e3f66
+   arm64/rootfs.img -> microvm-assets/arm64/69f9a76e5a2563b7c74d1f271f3a904240f50ef405465f832021525894519f97
+>> Done. Verify:
+2026-11-12 10:42:16    3217736 microvm-assets/arm64/4b43f4f6de6500203b01214a790314eea4182f5f110594ddb28ae2805622f06f
+2026-11-12 10:42:20  268435456 microvm-assets/arm64/69f9a76e5a2563b7c74d1f271f3a904240f50ef405465f832021525894519f97
+2026-11-12 10:42:17   18883072 microvm-assets/arm64/dece388830720fe8bddb41552fff5f486240aeece5acc0aebc1812761e3e3f66
+2026-11-12 10:42:16    5468264 microvm-assets/arm64/f192b510eea1c710cbc439d716bb0573c223fc463dbe3e6523788a2b7ef62850
+Applying microvm SandboxConfig from manifests/ate-install/sandboxconfig-microvm.yaml.tmpl...
+  (apply of 1 objects took 0.006s)
+Done. Installed cluster-wide microvm SandboxConfig.
+[1;36m[step]: Waiting for ATE system components to be ready...[0m
+  (rollout status deployment/ate-api-server took 28.004s)
+  (rollout status deployment/ate-idp-server took 0.004s)
+  (rollout status deployment/ate-controller took 0.002s)
+  (rollout status deployment/atenet-router took 20.003s)
+  (rollout status deployment/atenet-egress took 6.004s)
+  (rollout status daemonset/atelet took 0.002s)
+  (rollout status deployment/k8s-credential-provider took 0.002s)
+recorded this configuration in <home>/Library/Caches/ate-setup/installs/kind-kind.yaml

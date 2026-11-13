@@ -1,0 +1,5 @@
+rotation	wait_before_s	secret_changed_epoch	first_seen_epoch	lag_s	old_values_after_change
+1	5	1794494525.618	1794494526.611	1.0	0
+2	100	1794494627.067	1794494628.104	1.0	0
+3	200	1794494828.498	1794494830.095	1.6	1
+ROTATION-envoy-DONE

@@ -1,0 +1,31 @@
+metadata:
+  atespace: lab-v
+  name: mv-b
+workerSelector:
+  matchLabels:
+    workload: vpool
+containers:
+- name: ballast
+  image: localhost:5001/ballast@sha256:80f458e1ae4003bab14be97c9777bfb72cf64c79917eb924f7200f847c35df4a
+  command:
+  - /ballast
+  - --mb=20
+  - --tag=B
+  - --rootfs-file=/rootfs.txt
+  - --data-file=/data/a.txt
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+  volumeMounts:
+  - name: data
+    mountPath: /data
+resources:
+  limits:
+    cpuMillicores: 1000
+    memoryBytes: 289406976
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY
+volumes:
+- name: data
+  durableDir: {}

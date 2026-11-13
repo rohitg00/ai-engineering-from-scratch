@@ -1,0 +1,6 @@
+ts	event	detail
+2026-11-12T12:51:58.193Z	fetch-no-policy	200	0.238306	fetch error: Get "http://echo.lab-v.svc.cluster.local/hdr": dial tcp: lookup echo.lab-v.svc.cluster.local on 169.254.17.1:53: no such host
+2026-11-12T12:51:58.454Z	create-egress-policy	ATESPACE   ACTOR   RULES   VERSION   AGE lab-v      jw1     1       1         0s 
+2026-11-12T12:52:03.012Z	fetch-with-policy	200 0.073473
+2026-11-12T12:52:03.016Z	fetch-without-header	0
+DONE

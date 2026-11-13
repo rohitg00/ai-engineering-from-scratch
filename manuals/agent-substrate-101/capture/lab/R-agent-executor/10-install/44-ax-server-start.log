@@ -1,0 +1,4 @@
+{"time":"2026-11-12T15:19:18.82353038Z","level":"INFO","msg":"tracing initialized","export":false}
+{"time":"2026-11-12T15:19:18.823953537Z","level":"INFO","msg":"metrics initialized","export":false}
+{"time":"2026-11-12T15:19:18.823975097Z","level":"INFO","msg":"OTLP logs export disabled","exporter":"none"}
+{"time":"2026-11-12T15:19:18.824154399Z","level":"INFO","msg":"starting ax-server","listenAddr":":8080","metricsAddr":":9090","store":"ax@ax-postgres.ax-system.svc.cluster.local:5432/ax","substrateEndpoint":"api.ate-system.svc.cluster.local:443","template":"default-template","defaultTaskImage":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}

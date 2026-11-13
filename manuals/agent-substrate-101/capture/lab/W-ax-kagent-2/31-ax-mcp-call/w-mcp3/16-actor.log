@@ -1,0 +1,18 @@
+{"time":"2026-11-12T18:48:28.083429304Z","message":"Actor starting","span_id":"a2d1fac7bb69fdb4","trace_flags":"01","trace_id":"c84c5a99fee4e2f45b60af863e7a8bcf"}
+{"time":"2026-11-12T18:48:28.217601767Z","message":"time=2026-11-12T18:48:28.216Z level=WARN msg=\"skipping MCP server with neither an endpoint nor a command\" name=neither"}
+{"time":"2026-11-12T18:48:28.217676949Z","message":"time=2026-11-12T18:48:28.217Z level=WARN msg=\"skipping MCP server with a missing or duplicate name\" name=docs"}
+{"time":"2026-11-12T18:48:28.218768472Z","message":"time=2026-11-12T18:48:28.218Z level=INFO msg=\"initializing AX task runner\" port=80 workspace=w-ws wsPath=/workspace"}
+{"time":"2026-11-12T18:48:28.219849964Z","message":"time=2026-11-12T18:48:28.219Z level=INFO msg=\"guest services enabled (spec.debug is true)\""}
+{"time":"2026-11-12T18:48:28.221448477Z","message":"time=2026-11-12T18:48:28.221Z level=INFO msg=\"probe and guest server started\" addr=[::]:80"}
+{"time":"2026-11-12T18:48:28.2215291Z","message":"time=2026-11-12T18:48:28.221Z level=INFO msg=\"metadata server started\" addr=127.0.0.1:8099"}
+{"time":"2026-11-12T18:48:28.222280534Z","message":"time=2026-11-12T18:48:28.222Z level=INFO msg=\"executing workspace maiden run setup\" path=/workspace"}
+{"time":"2026-11-12T18:48:28.222957078Z","message":"time=2026-11-12T18:48:28.222Z level=INFO msg=\"wrote inlined workspace file\" path=/workspace/CLAUDE.md"}
+{"time":"2026-11-12T18:48:28.223057651Z","message":"time=2026-11-12T18:48:28.222Z level=INFO msg=\"initializing and fetching git repo\" repo=https://github.com/pallets/itsdangerous.git branch=main dir=/workspace/itsdangerous depth=0"}
+{"time":"2026-11-12T18:48:31.676307976Z","message":"time=2026-11-12T18:48:31.676Z level=INFO msg=\"maiden run workspace setup completed successfully\" path=/workspace"}
+{"time":"2026-11-12T18:48:31.676418867Z","message":"time=2026-11-12T18:48:31.676Z level=INFO msg=\"workspace maiden run setup marked ready\" path=/workspace"}
+{"time":"2026-11-12T18:48:31.676896978Z","message":"Actor started","span_id":"a2d1fac7bb69fdb4","trace_flags":"01","trace_id":"c84c5a99fee4e2f45b60af863e7a8bcf"}
+{"time":"2026-11-12T18:48:31.7065326Z","message":"time=2026-11-12T18:48:31.706Z level=INFO msg=\"started task command\" pid=25 command=\"[claude --print --dangerously-skip-permissions --max-turns=4 --model=qwen2.5:3b --system-prompt=You are an agent in a Linux sandbox. You must call a tool when the user names one. --tools=Bash --mcp-config={\\\"mcpServers\\\":{\\\"docs\\\":{\\\"type\\\":\\\"http\\\",\\\"url\\\":\\\"http://lab-mcp.ax-system.svc.cluster.local:8080/mcp\\\"},\\\"missing-command\\\":{\\\"args\\\":[\\\"--repo\\\",\\\"/workspace\\\"],\\\"command\\\":\\\"no-such-mcp-binary\\\",\\\"type\\\":\\\"stdio\\\"}}} -- Use the tool mcp__docs__lab_fact now. After it returns, reply with exactly the text that it returned and nothing else.]\""}
+{"time":"2026-11-12T18:48:32.441313581Z","message":"Claude Code doesn't recognize the model \"qwen2.5:3b\", so it assumes a context window of 200k tokens. Update Claude Code, or see https://code.claude.com/docs/en/model-config#correct-the-window-for-a-gateway-or-custom-model-id to set the window."}
+{"time":"2026-11-12T18:48:33.0163335Z","message":"[claude-code:unrecognized_model] {\"model\":\"qwen2.5:3b\",\"query_source\":\"sdk\"}"}
+{"time":"2026-11-12T18:48:41.697276456Z","message":"<line written by the model, removed>"}
+{"time":"2026-11-12T18:48:41.738403574Z","message":"time=2026-11-12T18:48:41.737Z level=INFO msg=\"task command completed successfully\" pid=25"}

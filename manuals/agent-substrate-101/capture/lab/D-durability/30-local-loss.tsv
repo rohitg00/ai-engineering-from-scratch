@@ -1,0 +1,26 @@
+ts	case	event	detail
+2026-11-12T11:30:15.873Z	x1	call	200	0.257300	count=1 mb=50 fill=random sum=6296 process_age_s=0.4
+2026-11-12T11:30:15.963Z	x1	call	200	0.070034	count=2 mb=50 fill=random sum=6296 process_age_s=0.4
+2026-11-12T11:30:16.050Z	x1	call	200	0.065226	count=3 mb=50 fill=random sum=6296 process_age_s=0.5
+2026-11-12T11:30:17.241Z	x1	after-sync-suspend	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:30:17.508Z	x1	call	200	0.248358	count=4 mb=50 fill=random sum=6296 process_age_s=0.8
+2026-11-12T11:30:17.588Z	x1	call	200	0.062252	count=5 mb=50 fill=random sum=6296 process_age_s=0.9
+2026-11-12T11:30:18.282Z	x1	after-async-suspend	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane
+2026-11-12T11:30:18.606Z	x1	removed-node-local-snapshot	uid 085b45fb-edb9-4523-ad30-3da55b3f34f0
+2026-11-12T11:30:18.708Z	x1	call-after-loss	500	0.082402	error resuming actor lab-c/x1
+2026-11-12T11:30:18.911Z	x1	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane
+2026-11-12T11:30:23.997Z	x1	call-again	503	0.063957	actor lab-c/x1 unavailable: AssignWorker prerequisite not met for Actor: lab-c/x1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)
+2026-11-12T11:30:24.203Z	x1	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:kind-control-plane
+2026-11-12T11:30:24.806Z	x1	revert	ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-c      x1     lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    13        10
+2026-11-12T11:30:25.241Z	x1	call-after-revert	200	0.416152	count=4 mb=50 fill=random sum=6296 process_age_s=0.8
+2026-11-12T11:30:25.434Z	x1	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T11:30:26.828Z	x2	call	200	0.253995	count=1 mb=50 fill=random sum=6296 process_age_s=0.3
+2026-11-12T11:30:26.904Z	x2	call	200	0.056651	count=2 mb=50 fill=random sum=6296 process_age_s=0.4
+2026-11-12T11:30:26.990Z	x2	call	200	0.065669	count=3 mb=50 fill=random sum=6296 process_age_s=0.5
+2026-11-12T11:30:27.663Z	x2	after-async-suspend	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:kind-control-plane
+2026-11-12T11:30:38.100Z	x2	atelet-restarted	atelet-x7q68 2/2 Running 0 10s 10.244.0.29 kind-control-plane <none> <none>
+2026-11-12T11:30:38.314Z	x2	state	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:kind-control-plane
+2026-11-12T11:30:38.586Z	x2	call-after-atelet-restart	200	0.249727	count=4 mb=50 fill=random sum=6296 process_age_s=0.8
+2026-11-12T11:30:38.788Z	x2	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:kind-control-plane
+2026-11-12T11:30:41.873Z	x2	call-again	200	0.062885	count=5 mb=50 fill=random sum=6296 process_age_s=4.0
+2026-11-12T11:30:42.071Z	x2	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen2:kind-control-plane

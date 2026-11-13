@@ -1,0 +1,16 @@
+namespace/sc-lab created
+workerpool.ate.dev/sc-pool created
+NAME     AGE
+sc-lab   0s
+ATESPACE   NAME       GOLDEN TAG   ERROR   AGE
+sc-lab     sc-drill                        0s
+serviceaccount/atenet-client created
+pod/u-prober created
+pod/u-prober condition met
+workerpool.ate.dev/sc-pool patched (no change)
+workerpool.ate.dev/sc-pool patched (no change)
+workerpool.ate.dev/sc-pool patched
+workerpool.ate.dev/sc-pool patched
+workerpool.ate.dev/sc-pool patched
+workerpool.ate.dev/sc-pool patched
+workerpool.ate.dev/sc-pool patched

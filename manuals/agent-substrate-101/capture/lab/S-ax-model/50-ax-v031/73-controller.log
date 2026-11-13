@@ -1,0 +1,2 @@
+time=2026-11-12T16:34:02.996Z level=INFO msg="starting ax-controller" redisAddr=ax-redis.ax031-system.svc.cluster.local:6379 group=ax-controllers substrateEndpoint=api.ate-system.svc.cluster.local:443 authority=api.ate-system.svc templateAtespace=ax031-system template=default-template
+time=2026-11-12T16:34:03.003Z level=INFO msg="starting AX task worker" group=ax-controllers consumer=ax031-controller-8678688d5c-7xzx6-552

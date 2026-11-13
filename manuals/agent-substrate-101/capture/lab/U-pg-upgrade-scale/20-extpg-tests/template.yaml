@@ -1,0 +1,12 @@
+metadata: {atespace: u-lab, name: u-drill}
+workerSelector:
+  matchLabels: {workload: u-pool}
+containers:
+- name: drill
+  image: localhost:5001/u-drill@sha256:374c724652995ef3083d8fe2592b551843d1dcaddb11b2a65eccce8022dfaae0
+  wakeupProbe:
+    httpGet: {path: /readyz, port: 80}
+resources:
+  limits: {cpuMillicores: 500, memoryBytes: 134217728}
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

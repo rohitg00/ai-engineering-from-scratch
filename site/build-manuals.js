@@ -270,6 +270,16 @@ function measuredEvidence(doc, manual) {
   const paths = new Set((sources.match(/capture\/[A-Za-z0-9_./-]*[A-Za-z0-9_-]/g) || []));
   const has = rel => paths.has(rel);
   const folder = prefix => [...paths].some(rel => rel.startsWith(prefix));
+  const labSummaries = text => String(text || '').match(/capture\/lab\/summary\/[A-Za-z0-9_.-]*[A-Za-z0-9_-]/g) || [];
+  const figureCaptions = new Map(doc.blocks.filter(block => block.type === 'figure').map(block => [block.id, block.caption]));
+  const underHeading = new Map();
+  let section = '';
+  for (const block of doc.blocks) {
+    if (block.type === 'heading') section = block.text;
+    if (block.type !== 'figure') continue;
+    if (!underHeading.has(section)) underHeading.set(section, new Set());
+    for (const rel of labSummaries(block.caption).filter(has)) underHeading.get(section).add(rel);
+  }
   let heading = '';
   for (const block of doc.blocks) {
     if (block.type === 'heading') heading = block.text;
@@ -288,6 +298,16 @@ function measuredEvidence(doc, manual) {
     } else if (mac && !l4 && !gb10) rel = folder('capture/out/') ? 'capture/out' : null;
     if (!rel && (l4 || gb10) && folder('capture/gpu/')) rel = 'capture/gpu';
     if (!rel && !l4 && !gb10 && !mac) rel = folder('capture/gpu/') ? 'capture/gpu' : folder('capture/out/') ? 'capture/out' : null;
+    if (!rel && folder('capture/lab/')) {
+      const summaries = [...paths].filter(p => p.startsWith('capture/lab/summary/'));
+      const cited = new Set((block.text.match(/\(#fig-[a-z0-9-]+\)/g) || []).flatMap(link => labSummaries(figureCaptions.get(link.slice(2, -1)))).filter(has));
+      const nearby = underHeading.get(heading) || new Set();
+      if (cited.size === 1) rel = [...cited][0];
+      else if (!cited.size && !mac && nearby.size === 1) rel = [...nearby][0];
+      else if (mac) rel = [...paths].find(p => p.startsWith('capture/lab/') && /mac/i.test(p)) || null;
+      else if (summaries.length === 1) rel = summaries[0];
+      if (!rel) rel = summaries.length ? 'capture/lab/summary' : 'capture/lab';
+    }
     block.evidence = rel ? evidenceUrl(path.join(manual.dir, rel), docLine(doc, block.line)) : null;
   }
 }

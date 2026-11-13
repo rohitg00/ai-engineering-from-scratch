@@ -1,0 +1,2 @@
+NAMESPACE   NAME      CLASS    IMAGE
+up-lab      up-pool   gvisor   ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0-rc.3

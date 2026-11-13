@@ -1,0 +1,14 @@
+rules:
+- http: {hostnames: ["whoami.egress-target.svc.cluster.local", "mock-a.model-gw.svc.cluster.local"]}
+- http:
+    hostnames: ["modelgw-plain.model-gw.svc.cluster.local"]
+    effects:
+      replaceHeaders:
+      - header: X-Lab
+        credentialUri: ate-secret://k8s.io/default/cred-ns/gw-client-key/token
+- https:
+    hostnames: ["modelgw.model-gw.svc.cluster.local"]
+    effects:
+      replaceHeaders:
+      - header: X-Lab
+        credentialUri: ate-secret://k8s.io/default/cred-ns/gw-client-key/token

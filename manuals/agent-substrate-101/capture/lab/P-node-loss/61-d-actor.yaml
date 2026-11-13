@@ -1,0 +1,60 @@
+actorTemplate:
+  atespace: lab-n
+  name: ballast-50
+metadata:
+  atespace: lab-n
+  createTime: "2026-11-12T13:55:40.399131974Z"
+  deleteTime: "2026-11-12T14:04:14.212839209Z"
+  name: g1
+  uid: 13a2f0f4-db33-4838-af68-73a837fb095f
+  updateTime: "2026-11-12T14:04:14.212839209Z"
+  version: "9"
+status:
+  assignedNode: multi-worker2
+  lastAssignedGeneration: 2
+  snapshots:
+  - actorTemplateUid: 09fee120-cd19-4121-8bae-5623fcbe70eb
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-n/actors/13a2f0f4-db33-4838-af68-73a837fb095f/snapshots/d410adf6-4434-47be-bfa9-bf7cdb9ac6ae
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 2
+    locality: multi-worker2
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: d410adf6-4434-47be-bfa9-bf7cdb9ac6ae
+  state: ACTOR_STATE_DELETING
+  workerAssignment:
+    nodeName: multi-worker2
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: d5a22709-e80b-47da-bd32-f7c8c0ca344b
+    workerEpoch: "1"
+    workerNamespace: lab-n
+    workerPod: ballast-5d6cf97747-klwdk
+    workerPodIps:
+    - 10.244.1.3
+    workerPodUid: d5a22709-e80b-47da-bd32-f7c8c0ca344b
+    workerPool: ballast
+    workerSpiffeId: spiffe://cluster.local/ns/lab-n/sa/ateworker

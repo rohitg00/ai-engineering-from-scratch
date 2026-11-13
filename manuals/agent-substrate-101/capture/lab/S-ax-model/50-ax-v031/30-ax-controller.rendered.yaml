@@ -1,0 +1,119 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ax031-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ax031-controller
+  namespace: ax031-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ax031-controller
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ax031-controller
+subjects:
+  - kind: ServiceAccount
+    name: ax031-controller
+    namespace: ax031-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ax031-controller
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ax031-controller
+  namespace: ax031-system
+  labels:
+    app.kubernetes.io/name: ax031-controller
+    app.kubernetes.io/part-of: ax
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ax031-controller
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ax031-controller
+    spec:
+      serviceAccountName: ax-controller
+      containers:
+        - name: controller
+          image: localhost:5002/ax031-ax-controller:v0.3.1
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--redis-addr=ax-redis.ax031-system.svc.cluster.local:6379"
+            - "--substrate-endpoint=api.ate-system.svc.cluster.local:443"
+            - "--substrate-authority=api.ate-system.svc"
+            - "--substrate-token-file=/var/run/secrets/ateapi/token"
+            - "--substrate-ca-file=/run/servicedns-ca/trust-bundle.pem"
+            - "--template=default-template"
+            - "--template-atespace=ax031-system"
+          env:
+            - name: ATENET_ROUTER_ADDR
+              value: "atenet-router.ate-system.svc.cluster.local:80"
+            - name: AX_SNAPSHOTS_BUCKET
+              value: "gs://dberkov-gke-dev3/ate-env/"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - mountPath: /var/run/secrets/ateapi
+              name: ate-token
+              readOnly: true
+            - mountPath: /run/servicedns-ca
+              name: servicedns-ca
+              readOnly: true
+      volumes:
+        - name: ate-token
+          projected:
+            defaultMode: 420
+            sources:
+              - serviceAccountToken:
+                  audience: api.ate-system.svc
+                  expirationSeconds: 7200
+                  path: token
+        - name: servicedns-ca
+          projected:
+            defaultMode: 420
+            sources:
+              - clusterTrustBundle:
+                  labelSelector:
+                    matchLabels:
+                      podcert.ate.dev/canarying: live
+                  path: trust-bundle.pem
+                  signerName: servicedns.podcert.ate.dev/identity

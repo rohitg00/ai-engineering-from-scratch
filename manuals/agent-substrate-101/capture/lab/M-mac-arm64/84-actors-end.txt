@@ -1,0 +1,4 @@
+ATESPACE   NAME   TEMPLATE            STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+lab-c      m0     lab-c/ballast-0     ACTOR_STATE_SUSPENDED   <none>                    45        45s
+lab-c      m200   lab-c/ballast-200   ACTOR_STATE_SUSPENDED   <none>                    45        16s
+lab-c      m50    lab-c/ballast-50    ACTOR_STATE_SUSPENDED   <none>                    45        31s

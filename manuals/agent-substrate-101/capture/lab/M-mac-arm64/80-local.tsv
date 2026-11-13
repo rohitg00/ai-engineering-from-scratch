@@ -1,0 +1,101 @@
+mb	phase	i	http	seconds	detail
+0	create-actor	1	-	0.060	cli
+0	first-call-golden	1	200	0.110373	count=1 mb=0 fill=random sum=0 process_age_s=0.0
+0	warm-call	1	200	0.023705	count=2 mb=0 fill=random sum=0 process_age_s=0.1
+0	suspend-async	1	-	0.108	cli
+0	resume-local	1	200	0.093246	count=3 mb=0 fill=random sum=0 process_age_s=0.2
+0	warm-call	1	200	0.027021	count=4 mb=0 fill=random sum=0 process_age_s=0.2
+0	suspend-async	2	-	0.107	cli
+0	resume-local	2	200	0.081909	count=5 mb=0 fill=random sum=0 process_age_s=0.3
+0	warm-call	2	200	0.024976	count=6 mb=0 fill=random sum=0 process_age_s=0.4
+0	suspend-async	3	-	0.106	cli
+0	resume-local	3	200	0.087010	count=7 mb=0 fill=random sum=0 process_age_s=0.4
+0	warm-call	3	200	0.024456	count=8 mb=0 fill=random sum=0 process_age_s=0.5
+0	suspend-async	4	-	0.103	cli
+0	resume-local	4	200	0.096423	count=9 mb=0 fill=random sum=0 process_age_s=0.6
+0	warm-call	4	200	0.026755	count=10 mb=0 fill=random sum=0 process_age_s=0.6
+0	suspend-async	5	-	0.103	cli
+0	resume-local	5	200	0.093157	count=11 mb=0 fill=random sum=0 process_age_s=0.7
+0	warm-call	5	200	0.028603	count=12 mb=0 fill=random sum=0 process_age_s=0.7
+0	suspend-async	6	-	0.105	cli
+0	resume-local	6	200	0.097921	count=13 mb=0 fill=random sum=0 process_age_s=0.8
+0	warm-call	6	200	0.024966	count=14 mb=0 fill=random sum=0 process_age_s=0.9
+0	suspend-async	7	-	0.111	cli
+0	resume-local	7	200	0.085787	count=15 mb=0 fill=random sum=0 process_age_s=1.0
+0	warm-call	7	200	0.024458	count=16 mb=0 fill=random sum=0 process_age_s=1.0
+0	suspend-async	8	-	0.100	cli
+0	resume-local	8	200	0.086889	count=17 mb=0 fill=random sum=0 process_age_s=1.1
+0	warm-call	8	200	0.028302	count=18 mb=0 fill=random sum=0 process_age_s=1.1
+0	suspend-async	9	-	0.101	cli
+0	resume-local	9	200	0.092826	count=19 mb=0 fill=random sum=0 process_age_s=1.2
+0	warm-call	9	200	0.025376	count=20 mb=0 fill=random sum=0 process_age_s=1.3
+0	suspend-async	10	-	0.104	cli
+0	resume-local	10	200	0.092137	count=21 mb=0 fill=random sum=0 process_age_s=1.4
+0	warm-call	10	200	0.026892	count=22 mb=0 fill=random sum=0 process_age_s=1.4
+50	create-actor	1	-	0.060	cli
+50	first-call-golden	1	200	0.195944	count=1 mb=50 fill=random sum=5802 process_age_s=0.2
+50	warm-call	1	200	0.028018	count=2 mb=50 fill=random sum=5802 process_age_s=0.3
+50	suspend-async	1	-	0.167	cli
+50	resume-local	1	200	0.087091	count=3 mb=50 fill=random sum=5802 process_age_s=0.4
+50	warm-call	1	200	0.027563	count=4 mb=50 fill=random sum=5802 process_age_s=0.4
+50	suspend-async	2	-	0.137	cli
+50	resume-local	2	200	0.096733	count=5 mb=50 fill=random sum=5802 process_age_s=0.5
+50	warm-call	2	200	0.025831	count=6 mb=50 fill=random sum=5802 process_age_s=0.5
+50	suspend-async	3	-	0.152	cli
+50	resume-local	3	200	0.082261	count=7 mb=50 fill=random sum=5802 process_age_s=0.6
+50	warm-call	3	200	0.024655	count=8 mb=50 fill=random sum=5802 process_age_s=0.7
+50	suspend-async	4	-	0.153	cli
+50	resume-local	4	200	0.096780	count=9 mb=50 fill=random sum=5802 process_age_s=0.8
+50	warm-call	4	200	0.025022	count=10 mb=50 fill=random sum=5802 process_age_s=0.8
+50	suspend-async	5	-	0.126	cli
+50	resume-local	5	200	0.102572	count=11 mb=50 fill=random sum=5802 process_age_s=0.9
+50	warm-call	5	200	0.026457	count=12 mb=50 fill=random sum=5802 process_age_s=0.9
+50	suspend-async	6	-	0.143	cli
+50	resume-local	6	200	0.092140	count=13 mb=50 fill=random sum=5802 process_age_s=1.0
+50	warm-call	6	200	0.026131	count=14 mb=50 fill=random sum=5802 process_age_s=1.1
+50	suspend-async	7	-	0.144	cli
+50	resume-local	7	200	0.083594	count=15 mb=50 fill=random sum=5802 process_age_s=1.1
+50	warm-call	7	200	0.024789	count=16 mb=50 fill=random sum=5802 process_age_s=1.2
+50	suspend-async	8	-	0.153	cli
+50	resume-local	8	200	0.095567	count=17 mb=50 fill=random sum=5802 process_age_s=1.3
+50	warm-call	8	200	0.026079	count=18 mb=50 fill=random sum=5802 process_age_s=1.3
+50	suspend-async	9	-	0.156	cli
+50	resume-local	9	200	0.094815	count=19 mb=50 fill=random sum=5802 process_age_s=1.4
+50	warm-call	9	200	0.025431	count=20 mb=50 fill=random sum=5802 process_age_s=1.5
+50	suspend-async	10	-	0.138	cli
+50	resume-local	10	200	0.093305	count=21 mb=50 fill=random sum=5802 process_age_s=1.5
+50	warm-call	10	200	0.027592	count=22 mb=50 fill=random sum=5802 process_age_s=1.6
+200	create-actor	1	-	0.060	cli
+200	first-call-golden	1	200	0.474284	count=1 mb=200 fill=random sum=24981 process_age_s=0.8
+200	warm-call	1	200	0.027662	count=2 mb=200 fill=random sum=24981 process_age_s=0.8
+200	suspend-async	1	-	0.303	cli
+200	resume-local	1	200	0.150495	count=3 mb=200 fill=random sum=24981 process_age_s=1.0
+200	warm-call	1	200	0.026942	count=4 mb=200 fill=random sum=24981 process_age_s=1.0
+200	suspend-async	2	-	0.218	cli
+200	resume-local	2	200	0.205613	count=5 mb=200 fill=random sum=24981 process_age_s=1.2
+200	warm-call	2	200	0.030634	count=6 mb=200 fill=random sum=24981 process_age_s=1.2
+200	suspend-async	3	-	0.242	cli
+200	resume-local	3	200	0.206475	count=7 mb=200 fill=random sum=24981 process_age_s=1.4
+200	warm-call	3	200	0.026666	count=8 mb=200 fill=random sum=24981 process_age_s=1.5
+200	suspend-async	4	-	0.227	cli
+200	resume-local	4	200	0.171949	count=9 mb=200 fill=random sum=24981 process_age_s=1.6
+200	warm-call	4	200	0.025786	count=10 mb=200 fill=random sum=24981 process_age_s=1.7
+200	suspend-async	5	-	0.215	cli
+200	resume-local	5	200	0.146803	count=11 mb=200 fill=random sum=24981 process_age_s=1.8
+200	warm-call	5	200	0.023652	count=12 mb=200 fill=random sum=24981 process_age_s=1.9
+200	suspend-async	6	-	0.234	cli
+200	resume-local	6	200	0.135296	count=13 mb=200 fill=random sum=24981 process_age_s=2.0
+200	warm-call	6	200	0.024533	count=14 mb=200 fill=random sum=24981 process_age_s=2.0
+200	suspend-async	7	-	0.251	cli
+200	resume-local	7	200	0.116043	count=15 mb=200 fill=random sum=24981 process_age_s=2.2
+200	warm-call	7	200	0.025962	count=16 mb=200 fill=random sum=24981 process_age_s=2.2
+200	suspend-async	8	-	0.255	cli
+200	resume-local	8	200	0.145073	count=17 mb=200 fill=random sum=24981 process_age_s=2.3
+200	warm-call	8	200	0.024385	count=18 mb=200 fill=random sum=24981 process_age_s=2.4
+200	suspend-async	9	-	0.237	cli
+200	resume-local	9	200	0.158696	count=19 mb=200 fill=random sum=24981 process_age_s=2.5
+200	warm-call	9	200	0.026729	count=20 mb=200 fill=random sum=24981 process_age_s=2.6
+200	suspend-async	10	-	0.234	cli
+200	resume-local	10	200	0.176517	count=21 mb=200 fill=random sum=24981 process_age_s=2.8
+200	warm-call	10	200	0.024700	count=22 mb=200 fill=random sum=24981 process_age_s=2.8
+DONE

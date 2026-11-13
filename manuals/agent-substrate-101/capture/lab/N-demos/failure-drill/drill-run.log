@@ -1,0 +1,37 @@
+== 1 worker pod deleted under a running actor
+  detect    CRASHED after 0.2 s
+  symptom   503 in 0.073744 s: actor demo-drill/d1 unavailable: AssignWorker prerequisite not met for Actor: demo-drill/d1 (got: ACTOR_STATE_CRASHED, w
+  state     ACTOR_STATE_CRASHED
+  fix       kubectl ate revert actor d1 -a demo-drill (0.2 s)
+  recover   200 in 0.327434 s: count=1 process_age_s=27.9
+== 2 node-local snapshot removed before the upload
+  symptom   500 in 0.078639 s: error resuming actor demo-drill/d2
+  state     ACTOR_STATE_CRASHED
+  fix       kubectl ate revert actor d2 -a demo-drill (0.2 s)
+  recover   200 in 0.413543 s: count=4 process_age_s=32.3 (durable snapshot held count=3)
+== 3 the actor process exits inside the sandbox
+  symptom   503 in 0.055202 s: upstream connect error or disconnect/reset before headers. reset reason: connection termination
+  state     ACTOR_STATE_RUNNING (5 s after the exit)
+  detect    suspend fails, state ACTOR_STATE_CRASHED
+  fix       kubectl ate suspend actor d3, then kubectl ate revert actor d3 (0.7 s)
+  recover   200 in 0.408503 s: count=2 process_age_s=41.6 (durable snapshot held count=1)
+== 4 the actor uses more memory than its limit
+  detect    CRASHED after 2.9 s
+  symptom   503 in 0.062056 s: actor demo-drill/d4 unavailable: AssignWorker prerequisite not met for Actor: demo-drill/d4 (got: ACTOR_STATE_CRASHED, w
+  state     ACTOR_STATE_CRASHED
+  fix       kubectl ate revert actor d4 -a demo-drill (0.2 s)
+  recover   200 in 0.364615 s: count=1 process_age_s=47.3 (new actor from the golden snapshot)
+== 5 more running actors than the pool has room for
+  symptom   503 in 5.050146 s: actor demo-drill/d5c unavailable: no worker has room for the actor
+  state     d5a ACTOR_STATE_RUNNING, d5b ACTOR_STATE_RUNNING, d5c ACTOR_STATE_SUSPENDED
+  fix       kubectl ate suspend actor d5a -a demo-drill (0.4 s)
+  recover   200 in 0.321061 s: count=1 process_age_s=58.1
+== 6 Postgres is away for 30 s
+  symptom   running actor: 503 in 5.055445 s: actor demo-drill/d6 unavailable
+  symptom   suspended actor: 503 in 5.053930 s: actor demo-drill/d6s unavailable
+  state     kubectl ate get actor fails: Error: failed to connect to ate-api-server: no ready api pods in ate-system
+  fix       kubectl -n ate-system scale statefulset postgres --replicas=1 (ready after 2.1 s)
+  recover   running actor answers after 0.9 s
+  recover   suspended actor answers after 0.4 s
+  state     d6 ACTOR_STATE_RUNNING, d6s ACTOR_STATE_RUNNING
+total 70 s

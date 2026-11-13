@@ -1,0 +1,200 @@
+{
+  "agent_executor_v0_3_1": {
+    "commit": "e70162a34037c221fe6fadefd98308c05a4ad8f3",
+    "steps": [
+      {
+        "exit": 0,
+        "seconds": 8,
+        "step": "00-delete-y060"
+      },
+      {
+        "exit": 0,
+        "seconds": 18,
+        "step": "01-kind"
+      },
+      {
+        "exit": 0,
+        "seconds": 102,
+        "step": "02-deploy-v060"
+      },
+      {
+        "exit": 0,
+        "seconds": 11,
+        "step": "10-clone"
+      },
+      {
+        "exit": 0,
+        "seconds": 16,
+        "step": "13-go-build"
+      },
+      {
+        "exit": 0,
+        "seconds": 4,
+        "step": "20-image-ax-server"
+      },
+      {
+        "exit": 0,
+        "seconds": 3,
+        "step": "20-image-ax-controller"
+      },
+      {
+        "exit": 0,
+        "seconds": 50,
+        "step": "21-task-runner-image"
+      },
+      {
+        "exit": 0,
+        "seconds": 1,
+        "step": "40-apply"
+      },
+      {
+        "exit": 0,
+        "seconds": 6,
+        "step": "42-rollout"
+      },
+      {
+        "exit": 0,
+        "seconds": 0,
+        "step": "51-version"
+      },
+      {
+        "exit": 0,
+        "seconds": 0,
+        "step": "52-apply"
+      },
+      {
+        "exit": 0,
+        "seconds": 0,
+        "step": "53-describe"
+      },
+      {
+        "exit": 0,
+        "seconds": 0,
+        "step": "54-resume"
+      },
+      {
+        "exit": 0,
+        "seconds": 0,
+        "step": "55-describe-after-resume"
+      },
+      {
+        "exit": 1,
+        "seconds": 0,
+        "step": "56-ssh"
+      },
+      {
+        "exit": 0,
+        "seconds": 5,
+        "step": "57-suspend"
+      }
+    ],
+    "substrate_requirement": "v0.0.0-20260911232748-672533541dbf",
+    "task_condition": "creating actor default/ax031-install-check: rpc error: code = InvalidArgument desc = [actor.actor_template.atespace: Required value, actor.actor_template.name: Required value]",
+    "task_phase": "Failed",
+    "template_error": "[actor_template.snapshot_config: Invalid value: unknown field with protobuf tag 1, actor_template.resources: Invalid value: unknown field with protobuf tag 1]"
+  },
+  "direct_upgrade": {
+    "error": "CustomResourceDefinition.apiextensions.k8s.io \"csidriverconfigs.ate.dev\" is invalid: status.storedVersions[0]: Invalid value: \"v1alpha1\": missing from spec.versions",
+    "new_cli_error": "Error: failed to list actors: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control",
+    "rc": 1,
+    "requests_after": {
+      "200": 3,
+      "503": 1
+    },
+    "schema_rows_after": 4,
+    "seconds": 3
+  },
+  "install": {
+    "actors_made": 4,
+    "readme_demo_command_prints_help": true,
+    "readme_deploy_error": "Error: at least one of ATE_INGRESS_ALLOWED_SPIFFE_IDS, config.ingressAllowedSPIFFEIDs or --ingress-allowed-spiffe-ids must be set, got none",
+    "readme_port_forward_error": "error: Service atenet-router does not have a service port 80",
+    "request_codes_before_upgrade": {
+      "000": 9
+    },
+    "schema_rows": 4,
+    "steps": [
+      {
+        "exit": 0,
+        "seconds": 18,
+        "step": "10-kind-cluster"
+      },
+      {
+        "exit": 1,
+        "seconds": 2,
+        "step": "20-deploy-ate-system"
+      },
+      {
+        "exit": 0,
+        "seconds": 1,
+        "step": "30-deploy-demo"
+      },
+      {
+        "exit": 0,
+        "seconds": 278,
+        "step": "21-deploy-ate-system-with-ingress-id"
+      },
+      {
+        "exit": 0,
+        "seconds": 1,
+        "step": "31-deploy-demo"
+      },
+      {
+        "exit": 0,
+        "seconds": 43,
+        "step": "32-deploy-demo-counter"
+      }
+    ]
+  },
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, one kind node, Agent Substrate from the release images, Envoy dataplane, gVisor, bundled Postgres, Agent Substrate v0.6.0 built from source with ko",
+  "note": "one install of v0.6.0 by its README, one direct upgrade to v1.0.0 from the release images, one reinstall on the same cluster, and the release v0.3.1 of Agent Executor on a fresh v0.6.0. Each ran once.",
+  "reinstall": {
+    "actor_rows_after": 0,
+    "atelet_error": "image cache at \"/var/lib/ate/image-cache\" has layout version \"2\" and this atelet supports \"3\", so delete it once no actor runs on this node",
+    "atespaces_after": 0,
+    "delete_all": {
+      "rc": 0,
+      "seconds": 346
+    },
+    "deploy_1": {
+      "rc": 1,
+      "seconds": 1
+    },
+    "deploy_1_error": "CustomResourceDefinition.apiextensions.k8s.io \"sandboxconfigs.ate.dev\" is invalid: status.storedVersions[0]: Invalid value: \"v1alpha1\": missing from spec.versions",
+    "deploy_2": {
+      "rc": 1,
+      "seconds": 157
+    },
+    "deploy_3": {
+      "rc": 0,
+      "seconds": 30
+    },
+    "schema_rows_after": 2,
+    "stuck_crd_finalizer": true
+  },
+  "sources": [
+    "capture/lab/Y-reruns-rollback-scale/40-v060/00-install/steps.tsv",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/00-install/20-deploy-ate-system.log",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/00-install/30-deploy-demo.log",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/10-before/pf.log",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/10-before/02-requests.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/10-before/04-actors.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/10-before/06-schema.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/00-timeline.tsv",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/20-direct-upgrade/10-deploy.log",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/20-direct-upgrade/22-schema.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/20-direct-upgrade/23-actors.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/20-direct-upgrade/27-requests.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/30-reinstall/20-deploy.log",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/30-reinstall/29-stuck-crd.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/30-reinstall/36-atelet-crash.log",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/30-reinstall/40-atespaces.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/30-reinstall/41-actor-rows.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/30-reinstall/33-schema.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/40-ax031/steps.tsv",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/40-ax031/11-ax-commit.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/40-ax031/12-gomod.txt",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/40-ax031/53-describe.log",
+    "capture/lab/Y-reruns-rollback-scale/40-v060/40-ax031/60-controller-after.log"
+  ]
+}

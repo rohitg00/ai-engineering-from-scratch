@@ -1,0 +1,19 @@
+metadata:
+  atespace: demo-tools
+  name: sandbox
+workerSelector:
+  matchLabels:
+    workload: tools
+containers:
+- name: sandbox
+  image: IMAGE
+  wakeupProbe:
+    httpGet:
+      path: /
+      port: 80
+resources:
+  limits:
+    cpuMillicores: 500
+    memoryBytes: 268435456
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

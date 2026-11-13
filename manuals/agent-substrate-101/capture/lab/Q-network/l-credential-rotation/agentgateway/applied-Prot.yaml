@@ -1,0 +1,10 @@
+metadata:
+  uid: 06d478d7-7a70-4ca0-91f8-4524c40ea9bc
+  version: "53"
+rules:
+- http:
+    hostnames: ["whoami.egress-target.svc.cluster.local"]
+    effects:
+      replaceHeaders:
+      - header: X-Lab
+        credentialUri: ate-secret://k8s.io/default/cred-ns/rot-key/token

@@ -1,0 +1,4 @@
+ATESPACE           NAME     TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+ate-demo-counter   c-susp   ate-demo-counter/counter   ACTOR_STATE_SUSPENDED   <none>                    1         5s
+ATESPACE           NAME     TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+ate-demo-counter   c-sync   ate-demo-counter/counter   ACTOR_STATE_SUSPENDED   <none>                    1         5s

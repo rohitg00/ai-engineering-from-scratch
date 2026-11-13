@@ -1,0 +1,8 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: ax-install-check
+  atespace: default
+spec:
+  debug: true
+  command: ["sleep", "infinity"]

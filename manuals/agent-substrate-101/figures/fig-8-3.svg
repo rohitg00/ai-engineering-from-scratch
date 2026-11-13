@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="fig-8-3-title fig-8-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-3-title">From a failed request to its cause</title>
+  <desc id="fig-8-3-desc">Six failed requests in rows. Each row gives the status code, the delay, and the body that the client saw, then the cause that our runs proved, then the fix. Two rows have a 500 and four have a 503, and the delay and the body tell them apart.</desc>
+  <defs><marker id="fig-8-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE CLIENT SAW</text>
+  <text x="262" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CAUSE</text>
+  <text x="450" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FIX</text>
+  <rect x="20" y="30" width="226" height="54" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="133" y="52.25" font-size="12.5" text-anchor="middle" font-weight="700">503 after 5.06 s</text>
+  <text x="133" y="69.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no worker has room for the actor</text>
+  <rect x="262" y="30" width="172" height="54" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="348" y="52.25" font-size="12.5" text-anchor="middle" font-weight="700">the pool is full</text>
+  <text x="348" y="69.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every worker is reserved</text>
+  <rect x="450" y="30" width="170" height="54" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="535" y="51.95" font-size="11.5" text-anchor="middle" font-weight="700">free a worker</text>
+  <text x="535" y="69.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">suspend, or add workers</text>
+  <line x1="246" y1="57" x2="261" y2="57" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <line x1="434" y1="57" x2="449" y2="57" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <rect x="20" y="94" width="226" height="54" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="133" y="116.25" font-size="12.5" text-anchor="middle" font-weight="700">503 in 0.07 s</text>
+  <text x="133" y="133.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">AssignWorker prerequisite not met</text>
+  <rect x="262" y="94" width="172" height="54" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="348" y="116.25" font-size="12.5" text-anchor="middle" font-weight="700">actor is CRASHED</text>
+  <text x="348" y="133.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">only SUSPENDED resumes</text>
+  <rect x="450" y="94" width="170" height="54" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="535" y="115.95" font-size="11.5" text-anchor="middle" font-weight="700">revert the actor</text>
+  <text x="535" y="133.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kubectl ate revert actor</text>
+  <line x1="246" y1="121" x2="261" y2="121" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <line x1="434" y1="121" x2="449" y2="121" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <rect x="20" y="158" width="226" height="54" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="133" y="180.25" font-size="12.5" text-anchor="middle" font-weight="700">500 in 0.08 s</text>
+  <text x="133" y="197.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">error resuming actor lab-c/x1</text>
+  <rect x="262" y="158" width="172" height="54" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="348" y="180.25" font-size="12.5" text-anchor="middle" font-weight="700">node copy is gone</text>
+  <text x="348" y="197.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">lost before the upload</text>
+  <rect x="450" y="158" width="170" height="54" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="535" y="179.95" font-size="11.5" text-anchor="middle" font-weight="700">revert the actor</text>
+  <text x="535" y="197.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">recent calls are lost</text>
+  <line x1="246" y1="185" x2="261" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <line x1="434" y1="185" x2="449" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <rect x="20" y="222" width="226" height="54" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="133" y="244.25" font-size="12.5" text-anchor="middle" font-weight="700">timeout, then 500</text>
+  <text x="133" y="261.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">error resuming actor lab-e/e-run</text>
+  <rect x="262" y="222" width="172" height="54" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="348" y="244.25" font-size="12.5" text-anchor="middle" font-weight="700">Postgres is away</text>
+  <text x="348" y="261.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the row is not readable</text>
+  <rect x="450" y="222" width="170" height="54" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="535" y="243.95" font-size="11.5" text-anchor="middle" font-weight="700">restore the database</text>
+  <text x="535" y="261.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumes lag 27 s</text>
+  <line x1="246" y1="249" x2="261" y2="249" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <line x1="434" y1="249" x2="449" y2="249" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <rect x="20" y="286" width="226" height="54" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="133" y="308.25" font-size="12.5" text-anchor="middle" font-weight="700">503 after 3 to 5 s</text>
+  <text x="133" y="325.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">actor lab-e/e-run unavailable</text>
+  <rect x="262" y="286" width="172" height="54" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="348" y="308.25" font-size="12.5" text-anchor="middle" font-weight="700">no ate-api-server</text>
+  <text x="348" y="325.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the router got no answer</text>
+  <rect x="450" y="286" width="170" height="54" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="535" y="307.95" font-size="11.5" text-anchor="middle" font-weight="700">check its pods</text>
+  <text x="535" y="325.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">then check Postgres</text>
+  <line x1="246" y1="313" x2="261" y2="313" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <line x1="434" y1="313" x2="449" y2="313" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <rect x="20" y="350" width="226" height="54" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="133" y="364.75" font-size="12.5" text-anchor="middle" font-weight="700">503 in 0.06 s</text>
+  <text x="133" y="382.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">upstream connect error</text>
+  <text x="133" y="397.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">reason: connection termination</text>
+  <rect x="262" y="350" width="172" height="54" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="348" y="372.25" font-size="12.5" text-anchor="middle" font-weight="700">the process exited</text>
+  <text x="348" y="389.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">state stays RUNNING</text>
+  <rect x="450" y="350" width="170" height="54" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="535" y="371.95" font-size="11.5" text-anchor="middle" font-weight="700">suspend, then revert</text>
+  <text x="535" y="389.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">use --mode sync</text>
+  <line x1="246" y1="377" x2="261" y2="377" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+  <line x1="434" y1="377" x2="449" y2="377" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-8-3-head-ink)"/>
+</svg>

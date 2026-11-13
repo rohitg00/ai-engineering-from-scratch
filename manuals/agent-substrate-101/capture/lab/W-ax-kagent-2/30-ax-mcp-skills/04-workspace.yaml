@@ -1,0 +1,34 @@
+apiVersion: ax.io/v1alpha1
+kind: Workspace
+metadata:
+  name: w-ws
+  atespace: default
+spec:
+  git:
+    - name: origin
+      repo: "https://github.com/pallets/itsdangerous.git"
+      branch: "main"
+  files:
+    - path: "CLAUDE.md"
+      content: |
+        # Working in this repo
+        - Pure-Python library.
+        - Do not push or open pull requests.
+  mcp:
+    registries:
+      - provider: google
+        query: "mcp.tags:build"
+    servers:
+      - name: docs
+        endpoint: "http://lab-mcp.ax-system.svc.cluster.local:8080/mcp"
+      - name: missing-command
+        command: "no-such-mcp-binary"
+        args: ["--repo", "/workspace"]
+      - name: neither
+      - name: docs
+        endpoint: "http://duplicate.invalid/mcp"
+  skills:
+    registries:
+      - provider: google
+        query: "skills.tags:nodejs"
+    path: "/.agents/skills"

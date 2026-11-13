@@ -1,0 +1,1295 @@
+{
+  "cycles": {
+    "codes": {
+      "200": 10
+    },
+    "resume_seconds": {
+      "max": 0.744,
+      "median": 0.307,
+      "min": 0.254,
+      "n": 10,
+      "runs": [
+        0.279,
+        0.744,
+        0.261,
+        0.254,
+        0.418,
+        0.299,
+        0.316,
+        0.379,
+        0.278,
+        0.375
+      ]
+    },
+    "suspend_sync_seconds": {
+      "max": 1.159,
+      "median": 0.858,
+      "min": 0.591,
+      "n": 10,
+      "runs": [
+        0.888,
+        0.891,
+        1.133,
+        0.591,
+        1.001,
+        0.779,
+        0.828,
+        0.711,
+        1.159,
+        0.646
+      ]
+    }
+  },
+  "install": {
+    "deploy_attempts": [
+      {
+        "exit": 1,
+        "seconds": 23,
+        "step": "30-deploy-ate-system"
+      },
+      {
+        "exit": 1,
+        "seconds": 198,
+        "step": "30-deploy-ate-system"
+      },
+      {
+        "exit": 0,
+        "seconds": 29,
+        "step": "30-deploy-ate-system"
+      }
+    ],
+    "install_record_holds_connection_string": false,
+    "postgres_networkpolicy_deployed": true,
+    "postgres_statefulset_deployed": false,
+    "setup_sql_with_single_transaction_exit": 0,
+    "setup_sql_without_transaction_error": "ERROR:  zero-length delimited identifier at or near \"\"\"\"",
+    "tls_connections": 14,
+    "tls_versions": {
+      "TLSv1.3": 14
+    }
+  },
+  "lifecycle": {
+    "counts": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "create_seconds": 0.238,
+    "first_request_seconds": 0.477,
+    "resume_after_default_seconds": 0.491,
+    "resume_after_sync_seconds": 0.334,
+    "suspend_default_seconds": 0.464,
+    "suspend_sync_seconds": 0.798
+  },
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, one kind node, Agent Substrate from the release images, Envoy dataplane, gVisor",
+  "note": "one install and one outage. Postgres 18 ran as a container on the guest, outside the kind network, with TLS and password logins. Another install ran on the guest during the ten cycles. In the outage, t is seconds from the docker stop command for the Postgres container.",
+  "outage": {
+    "log_lines_with_worker_cache_not_ready": 1,
+    "per_second": {
+      "running": [
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": -9.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.029,
+          "t": -8.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.028,
+          "t": -7.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": -6.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.028,
+          "t": -5.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.034,
+          "t": -4.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": -3.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.027,
+          "t": -2.8
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": -1.8
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": -0.8
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 0.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 1.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 2.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 3.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 4.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 5.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 6.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 7.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 8.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 9.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 10.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 11.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 12.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 13.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 14.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 15.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 16.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 17.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 18.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 19.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 21.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 22.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 23.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 24.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 25.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 26.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 27.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 28.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 29.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.005,
+          "t": 30.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 31.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 32.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 33.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 34.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 35.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 36.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 37.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 38.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 39.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 40.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 41.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 42.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 43.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 44.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 45.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 46.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 47.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 48.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 49.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 50.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.003,
+          "t": 51.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.002,
+          "t": 52.2
+        },
+        {
+          "code": "000",
+          "seconds": 9.02,
+          "t": 53.2
+        },
+        {
+          "code": "500",
+          "seconds": 8.045,
+          "t": 54.2
+        },
+        {
+          "code": "500",
+          "seconds": 7.036,
+          "t": 55.2
+        },
+        {
+          "code": "500",
+          "seconds": 6.034,
+          "t": 56.2
+        },
+        {
+          "code": "500",
+          "seconds": 5.029,
+          "t": 57.2
+        },
+        {
+          "code": "500",
+          "seconds": 3.982,
+          "t": 58.2
+        },
+        {
+          "code": "500",
+          "seconds": 2.904,
+          "t": 59.2
+        },
+        {
+          "code": "500",
+          "seconds": 1.974,
+          "t": 60.2
+        },
+        {
+          "code": "500",
+          "seconds": 0.969,
+          "t": 61.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.042,
+          "t": 62.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.056,
+          "t": 63.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.044,
+          "t": 64.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.037,
+          "t": 65.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.084,
+          "t": 66.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.276,
+          "t": 67.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.037,
+          "t": 68.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 69.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 70.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.036,
+          "t": 71.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 72.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.038,
+          "t": 73.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 74.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.039,
+          "t": 75.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.034,
+          "t": 76.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 77.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.052,
+          "t": 78.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 79.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 80.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 81.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 82.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 83.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.034,
+          "t": 84.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 85.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.035,
+          "t": 86.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 87.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.059,
+          "t": 88.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.037,
+          "t": 89.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 90.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.028,
+          "t": 91.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 92.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.035,
+          "t": 93.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 94.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 95.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 96.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.035,
+          "t": 97.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 98.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 99.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.028,
+          "t": 100.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 101.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 102.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 103.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 104.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 105.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.036,
+          "t": 106.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 107.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.028,
+          "t": 108.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.034,
+          "t": 109.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 110.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 111.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 112.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.029,
+          "t": 113.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 114.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 115.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.037,
+          "t": 116.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.029,
+          "t": 117.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.044,
+          "t": 118.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 119.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 120.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.028,
+          "t": 121.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.029,
+          "t": 122.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 123.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 124.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.023,
+          "t": 125.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 126.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 127.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 128.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 129.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 130.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.024,
+          "t": 131.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 132.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.023,
+          "t": 133.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 134.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 135.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 136.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 137.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 138.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.026,
+          "t": 139.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 140.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 141.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 142.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.028,
+          "t": 143.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.034,
+          "t": 144.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 145.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 146.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 147.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 148.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.028,
+          "t": 149.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 150.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.034,
+          "t": 151.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.035,
+          "t": 152.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.039,
+          "t": 153.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.035,
+          "t": 154.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.035,
+          "t": 155.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 156.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.054,
+          "t": 157.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 158.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.036,
+          "t": 159.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 160.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 161.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.034,
+          "t": 162.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 163.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 164.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 165.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 166.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.029,
+          "t": 167.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.032,
+          "t": 168.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 169.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 170.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.025,
+          "t": 171.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.035,
+          "t": 172.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 173.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.024,
+          "t": 174.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.034,
+          "t": 175.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.033,
+          "t": 176.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 177.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.03,
+          "t": 178.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.025,
+          "t": 179.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.031,
+          "t": 180.2
+        }
+      ],
+      "suspended": [
+        {
+          "code": "200",
+          "seconds": 0.345,
+          "t": -5.8
+        },
+        {
+          "code": "504",
+          "seconds": 10.019,
+          "t": -0.8
+        },
+        {
+          "code": "504",
+          "seconds": 10.015,
+          "t": 4.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.024,
+          "t": 9.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.024,
+          "t": 14.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.021,
+          "t": 19.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.024,
+          "t": 25.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.026,
+          "t": 30.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.022,
+          "t": 35.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.027,
+          "t": 40.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.026,
+          "t": 45.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.018,
+          "t": 50.2
+        },
+        {
+          "code": "503",
+          "seconds": 5.028,
+          "t": 55.2
+        },
+        {
+          "code": "500",
+          "seconds": 1.722,
+          "t": 60.2
+        },
+        {
+          "code": "500",
+          "seconds": 0.037,
+          "t": 65.2
+        },
+        {
+          "code": "500",
+          "seconds": 0.023,
+          "t": 70.2
+        },
+        {
+          "code": "500",
+          "seconds": 0.046,
+          "t": 75.2
+        },
+        {
+          "code": "500",
+          "seconds": 0.035,
+          "t": 80.2
+        },
+        {
+          "code": "500",
+          "seconds": 0.03,
+          "t": 85.2
+        },
+        {
+          "code": "500",
+          "seconds": 0.032,
+          "t": 90.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.388,
+          "t": 95.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.381,
+          "t": 100.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.345,
+          "t": 105.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.369,
+          "t": 110.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.418,
+          "t": 115.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.4,
+          "t": 120.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.368,
+          "t": 125.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.387,
+          "t": 130.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.377,
+          "t": 135.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.352,
+          "t": 140.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.365,
+          "t": 145.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.359,
+          "t": 150.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.381,
+          "t": 155.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.395,
+          "t": 160.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.35,
+          "t": 165.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.397,
+          "t": 170.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.371,
+          "t": 175.2
+        },
+        {
+          "code": "200",
+          "seconds": 0.418,
+          "t": 180.2
+        }
+      ]
+    },
+    "postgres_away_seconds": 60.6,
+    "stop_command_to_ready_seconds": 61.5,
+    "summary": {
+      "running": {
+        "codes_in_run": {
+          "000": 54,
+          "200": 149,
+          "500": 8
+        },
+        "failed_in_run": 62,
+        "failure_bodies": {
+          "": 54,
+          "error resuming actor u-lab/<actor>": 8
+        },
+        "first_failure_t": -0.8,
+        "first_ok_seconds_after_ready": 0.7,
+        "last_failed_request_sent_seconds_after_ready": -0.3,
+        "last_failure_seconds_after_ready": 0.7,
+        "last_failure_t": 61.2,
+        "requests_in_run": 211
+      },
+      "suspended": {
+        "codes_in_run": {
+          "200": 24,
+          "500": 7,
+          "503": 10,
+          "504": 2
+        },
+        "failed_in_run": 19,
+        "failure_bodies": {
+          "": 2,
+          "actor u-lab/<actor> unavailable": 10,
+          "error resuming actor u-lab/<actor>": 7
+        },
+        "first_failure_t": -0.8,
+        "first_ok_seconds_after_ready": 33.7,
+        "last_failed_request_sent_seconds_after_ready": 28.7,
+        "last_failure_seconds_after_ready": 28.7,
+        "last_failure_t": 90.2,
+        "requests_in_run": 43
+      }
+    },
+    "watched_after_ready_seconds": 120.0,
+    "worker_cache_synced_seconds_after_ready": 29.5
+  },
+  "sources": [
+    "capture/lab/U-pg-upgrade-scale/10-extpg-install/steps.tsv",
+    "capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup-attempt2-no-transaction.log",
+    "capture/lab/U-pg-upgrade-scale/10-extpg-install/20-pg-setup.log",
+    "capture/lab/U-pg-upgrade-scale/10-extpg-install/29-deploy-diff.txt",
+    "capture/lab/U-pg-upgrade-scale/10-extpg-install/41-ate-system-objects.txt",
+    "capture/lab/U-pg-upgrade-scale/10-extpg-install/43-pg-connections-and-tables.txt",
+    "capture/lab/U-pg-upgrade-scale/20-extpg-tests/10-lifecycle.txt",
+    "capture/lab/U-pg-upgrade-scale/20-extpg-tests/11-cycles.tsv",
+    "capture/lab/U-pg-upgrade-scale/20-extpg-tests/30-timeline.tsv",
+    "capture/lab/U-pg-upgrade-scale/20-extpg-tests/33-probe.tsv",
+    "capture/lab/U-pg-upgrade-scale/20-extpg-tests/34-api-server-log.excerpt.txt"
+  ]
+}

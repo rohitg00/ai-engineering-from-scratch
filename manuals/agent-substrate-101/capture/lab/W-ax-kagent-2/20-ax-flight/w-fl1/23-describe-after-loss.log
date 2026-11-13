@@ -1,0 +1,12 @@
+Name:         w-fl1
+Atespace:     default
+Phase:        Failed
+Actor:        w-fl1
+Worker IP:    
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE            STATUS  REASON         MESSAGE
+  WorkspaceReady  True    SetupComplete  Workspace setup completed at 10.244.0.17
+  Ready           False   Failed         worker pod went away while hosting the actor
+{"state":"ACTOR_STATE_CRASHED","node":"demo-control-plane"}

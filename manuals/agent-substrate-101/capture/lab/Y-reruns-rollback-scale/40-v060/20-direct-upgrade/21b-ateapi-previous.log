@@ -1,0 +1,3 @@
+Found 2 pods, using pod/ate-api-server-977bc449c-6nwv6
+Defaulted container "ate-api-server" out of: ate-api-server, objectstore-plugin (init)
+Error from server (BadRequest): previous terminated container "ate-api-server" in pod "ate-api-server-977bc449c-6nwv6" not found

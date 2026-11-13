@@ -1,0 +1,5 @@
+a-term after the roll: 200	0.028927	count=672 process_age_s=749.7 sigterm_seen=2 
+a-run state ACTOR_STATE_CRASHED: 503	0.024926	actor up-lab/a-run unavailable: AssignWorker prerequisite not met for Actor: up-lab/a-run (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPEN
+ATESPACE   NAME    TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-run   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    11        12m
+a-run after revert: 200	0.289002	count=1 process_age_s=751.2 

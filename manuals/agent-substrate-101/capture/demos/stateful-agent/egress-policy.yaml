@@ -1,0 +1,8 @@
+rules:
+- http:
+    hostnames: ["mock-llm.demo-agent.svc.cluster.local"]
+    effects:
+      replaceHeaders:
+      - header: Authorization
+        prefix: "Bearer "
+        credentialUri: ate-secret://k8s.io/default/demo-agent-secrets/model-key/token

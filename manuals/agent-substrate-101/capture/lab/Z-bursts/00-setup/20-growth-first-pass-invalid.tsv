@@ -1,0 +1,2 @@
+replicas	ready_s	active_s	active	api_readyz_ms_median5	get_pods_ms	guest_mem_avail_mb	node_mem	disk_mb	pods_total
+50	0	fail	0	105	214	42011	2.946GiB	9192	76

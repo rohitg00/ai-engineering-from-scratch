@@ -1,0 +1,16 @@
+72c72
+<   image: "gcr.io/ax-images/ax-images@sha256:REPLACE_WITH_PUSHED_DIGEST"
+---
+>   image: "localhost:5002/ax-claude-code@sha256:73fbd85b498dacfde3660cb9c5cc4c27f279a2bb2b9638e783dbf81d15919d35"
+83c83
+<     model: claude-opus-5-5
+---
+>     model: "qwen2.5:3b"
+94,95c94,97
+<     - name: ANTHROPIC_API_KEY
+<       value: "${ANTHROPIC_API_KEY}"
+---
+>     - name: ANTHROPIC_BASE_URL
+>       value: "http://ollama.ax-system.svc.cluster.local:11434"
+>     - name: ANTHROPIC_AUTH_TOKEN
+>       value: "ollama"

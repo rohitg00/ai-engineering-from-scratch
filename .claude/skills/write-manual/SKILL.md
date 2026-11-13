@@ -1,6 +1,6 @@
 ---
 name: write-manual
-version: 1.0.0
+version: 1.1.0
 description: >
   Writes a long technical manual that explains one subject at one pinned version, from its purpose to each request and response.
   Every listing comes from an offline capture, every claim traces to a ranked source, and an audit must report TOTAL 0.
@@ -55,8 +55,11 @@ The worked example has 7 parts, 28 sections, 7 reference sections, and 31 figure
 9. **Write the front matter.** Title it "How to read this manual" and follow the order in "Front matter" below.
 10. **Write one section at a time.** Use the section shape below. Cut every listing from a capture file.
 11. **Draw each figure from a capture.** Follow the figure must-haves below and the sibling `blueprint-figure` skill.
-12. **Build and audit.** Fix every finding until the audit prints `TOTAL 0`. See [references/audit.md](references/audit.md).
-13. **Size commits by judgment.** A section with its figures and the captures it adds is a good unit.
+12. **Run what you did not test.** Turn each "we did not test" sentence into a run, and write a build part with demos. See "Validate before the first review".
+13. **Look at every figure as a rendered image.** Fix what you see, then look again. See "Review figures as images".
+14. **Build and audit.** Fix every finding until the audit prints `TOTAL 0`. See [references/audit.md](references/audit.md).
+15. **Get two independent audits.** One checks numbers against the recordings. One checks code-based claims against the source at the pin.
+16. **Size commits by judgment.** A section with its figures and the captures it adds is a good unit.
 
 ## Plan the contents from the specification
 
@@ -130,6 +133,41 @@ Raw HTML, horizontal rules, nested lists, `####` headings, and other quote block
 - Say what you cut in the `note`.
 - Name the source file in `source`, so the reader can open the full record.
 
+## Recordings from a live system
+
+Some subjects cannot run offline in CI, such as a cluster runtime. Record them on your own machines and keep the proof in the repository.
+
+- Put the raw recordings in `capture/lab/<experiment>/`, one folder for each experiment, with the scripts that made them.
+- Compute every chart and every quoted number from the raw files with `capture/run.py`. It writes one summary file for each data set to `capture/lab/summary/`.
+- Keep each run in the summary, not only the median. A chart needs the runs.
+- Make `capture.check` rebuild the summaries and compare them. For the recording itself, print one `skipped` line with the reason.
+- Name the machine and the count in every measured paragraph. Start that paragraph with **We measured**.
+- Never set numbers from two machines side by side as one comparison. Say that the machines differ.
+- State the window of a count. "103 of 103 during the outage" is a different claim from a count over the full run.
+- Remove secrets before anything reads the copy: keys, tokens, kubeconfigs, host names, public addresses, and names of people. Record each removal without the secret.
+- Keep each recording file small, and cut a long log to an excerpt file whose lines are exact.
+
+## Validate before the first review
+
+A manual that passes the audit can still be short on proof. Do these before you ask for a review.
+
+- List every sentence that says you did not test something. Run each one that your lab can run, and replace the sentence with the result.
+- Give the manual a last part named "Build". Write small programs that a reader can run, record one run of each, and show the recording.
+- Build the piece that the subject leaves to the user. For a runtime with no idle timer, that is the program that suspends idle work.
+- Include a failure drill: one script that causes each documented failure and prints the symptom, the state, the fix, and the time.
+- Set the headline claims of the project site beside your results in one table. Say which ones your runs confirm.
+- When a second run disagrees with the first, keep both and say that the cause is not found. Do not pick one.
+- Correct your own early conclusion when a later run or the raw file contradicts it.
+
+## Two independent audits
+
+Ask two reviewers who wrote none of the text. Give them the files, not your conclusions.
+
+- **Numbers and consistency.** Every measured number matches its recording and is the same in every section, figure, takeaway, and table. Every listing line is in its source file. Each measured paragraph names the right machine.
+- **Code-based claims.** Every flag, default, timer, limit, method, field, state, command, and error string matches the source at the pin. Each finding names a source file and line.
+- Confirm each finding against the evidence before you apply it. An audit can be wrong too.
+- Record which findings you applied, skipped, or partly applied, with the reason.
+
 ## Sources, quotes, and conflicts
 
 - Rank `sources` by authority. When two sources disagree, the higher one wins and the text says so.
@@ -158,7 +196,9 @@ Use no semicolons, no contractions, and no em or en dashes. Never write the word
 
 Use the sibling `blueprint-figure` skill to draw the figures. Every figure in a manual must also meet these rules:
 
-- Use one of nine kinds: `sequence`, `structure`, `flow`, `comparison`, `timeline`, `tree`, `state`, `decision`, `layers`.
+- Use one of ten kinds: `sequence`, `structure`, `flow`, `comparison`, `timeline`, `tree`, `state`, `decision`, `layers`, `chart`.
+- Draw a measured result as a `chart` that reads a summary file. Plot each run as a dot, add a median line, and label the lines directly.
+- Keep one chart for each data set. A second section links to it.
 - Show the real system: real ids, field names, method names, and sequence numbers from a capture.
 - Make one claim of at most 28 words. The caption says how to read the figure, then names its capture file.
 - Never draw generic boxes such as "Component A", stat cards, or progress bars.
@@ -181,6 +221,32 @@ Use the sibling `blueprint-figure` skill to draw the figures. Every figure in a 
 | dotted indigo | a stream or an event |
 | dashed rose | a failure |
 
+## Object forms and project marks
+
+The cover plate and the architecture figures show things, not data. A row of identical cubes says nothing.
+
+- Give each object a form that says what it is: a terminal for a client, a unit with ports for a gateway, a tower for a server, a cylinder for a database, a bucket for an object store.
+- Show containment with surfaces: a slab for a host, a floor tile for a group, an open frame for a pod, walls for a sandbox.
+- Show the state that matters. Draw a stopped or suspended workload as a dashed ghost beside the solid running form.
+- Make the size and the position of an object reflect its role. Put the main event at the centre.
+- Put the real project mark on the object that runs that project. Take the mark from the official artwork, never from memory.
+- Draw a mark in one palette colour, projected onto the face it sits on. Leave it out when it does not read at 28 to 40 units.
+- Record the source and the license or trademark note of each mark beside its path data.
+- Say on the sources page that the marks belong to their owners and identify the projects.
+- Use forms and marks on the cover and on architecture figures. Keep charts, timelines, and decision figures flat.
+
+Inside the AI Engineering from Scratch repo, the forms are in `manuals/_shared/forms.js`, the marks are in `manuals/_shared/marks.js`, and the figure kit draws a mark with `mark`. `manuals/agent-substrate-101/` is the worked example.
+
+## Review figures as images
+
+A figure that passes the lint can still be hard to read. Judge the render, not the source.
+
+- Render each figure at the page width and at twice that, in the light theme and the dark theme, and look at it.
+- Ask if a reader gets the one claim in five seconds, and if each object is clear without its label.
+- Fix crowding, overlap, clipped labels, and labels far from what they name. Then render and look again.
+- Do at least three rounds for an ordinary figure and four for the cover.
+- Check a figure against its section. A caption must not claim more than the recording shows.
+
 ## Build and audit
 
 Inside the AI Engineering from Scratch repo, run these from the repository root:
@@ -193,6 +259,20 @@ node scripts/audit_manuals.js --manual <id>
 ```
 
 Outside the repo, build your own audit from [references/audit.md](references/audit.md). It lists each check, so you can write it as one script. Fix the text, never the limit. A manual does not merge until the audit prints `TOTAL 0`.
+
+Audit the tree that you commit, not the tree on your disk. An ignore rule can drop a file that a listing cites, and the local audit still passes.
+
+```bash
+git add manuals/<id>
+STAGED=$(mktemp -d)
+git checkout-index -a --prefix="$STAGED/" && (cd "$STAGED" && node scripts/audit_manuals.js --manual <id>)
+```
+
+Inside the repo, also do these before the first push:
+
+- Check that `.gitignore` keeps the recorded `.log` files of your capture folder. Add an exception when it does not.
+- Add the manual to one topic in `cheatsheets/topics.yaml`, then run `node scripts/cheatsheets/generate.js --stamp <topic id>`.
+- Preview with `node site/build-manuals.js --drafts`, and serve `site/` with a static server.
 
 ## Commit rules
 
@@ -212,7 +292,14 @@ Outside the repo, build your own audit from [references/audit.md](references/aud
 - [ ] Every quote of 24 or more characters is found word for word in its vendored file.
 - [ ] Every conflict has a register id, and each section that meets it links that id.
 - [ ] Every figure SVG is used by a document and matches its source script.
-- [ ] The audit prints `TOTAL 0`.
+- [ ] Every figure was viewed as a rendered image, and each chart plots its runs.
+- [ ] The cover and the architecture figures use forms that say what each object is, with marks from official artwork.
+- [ ] Each "we did not test" sentence that the lab can answer is replaced by a result.
+- [ ] The build part has demos with their sources and one recorded run of each.
+- [ ] Each measured paragraph names its machine and count, and no comparison mixes two machines.
+- [ ] Two independent audits ran, and each finding is applied, skipped, or partly applied with a reason.
+- [ ] The audit prints `TOTAL 0` on the staged tree.
+- [ ] The manual is in a cheat sheet topic, and the recordings hold no secret, host name, or address.
 - [ ] Commits are sized by judgment, with messages such as `feat(manual/<id>): <section slug>`.
 
 ## Files

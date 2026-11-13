@@ -1,0 +1,33 @@
+NAME                             READY   STATUS    RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+pod/ax-pool-588b78fd54-29xgr     1/1     Running   0          65s     10.244.0.40   demo-control-plane   <none>           <none>
+pod/ax-pool-588b78fd54-88rc7     1/1     Running   0          65s     10.244.0.41   demo-control-plane   <none>           <none>
+pod/ax-postgres-0                1/1     Running   0          2m16s   10.244.0.34   demo-control-plane   <none>           <none>
+pod/ax-server-786f5878b4-g7qr8   1/1     Running   0          61s     10.244.0.42   demo-control-plane   <none>           <none>
+
+NAME                  TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)             AGE     SELECTOR
+service/ax-postgres   ClusterIP   10.96.116.51    <none>        5432/TCP            2m16s   app.kubernetes.io/name=ax-postgres
+service/ax-server     ClusterIP   10.96.103.201   <none>        8080/TCP,9090/TCP   112s    app.kubernetes.io/name=ax-server
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE    CONTAINERS   IMAGES                                                                                             SELECTOR
+deployment.apps/ax-pool     2/2     2            2           65s    worker       ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0                                          ate.dev/worker-pool=ax-pool
+deployment.apps/ax-server   1/1     1            1           112s   ax-server    localhost:5002/ax-server@sha256:d3965c00e8af250e60d0e281e961753d6655c9e3c9a9b53bb8339824c9bc92c6   app.kubernetes.io/name=ax-server
+
+NAME                                   DESIRED   CURRENT   READY   AGE    CONTAINERS   IMAGES                                                                                             SELECTOR
+replicaset.apps/ax-pool-588b78fd54     2         2         2       65s    worker       ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0                                          ate.dev/worker-pool=ax-pool,pod-template-hash=588b78fd54
+replicaset.apps/ax-server-7784445448   0         0         0       112s   ax-server    localhost:5002/ax-server@sha256:d3965c00e8af250e60d0e281e961753d6655c9e3c9a9b53bb8339824c9bc92c6   app.kubernetes.io/name=ax-server,pod-template-hash=7784445448
+replicaset.apps/ax-server-786f5878b4   1         1         1       61s    ax-server    localhost:5002/ax-server@sha256:d3965c00e8af250e60d0e281e961753d6655c9e3c9a9b53bb8339824c9bc92c6   app.kubernetes.io/name=ax-server,pod-template-hash=786f5878b4
+
+NAME                           READY   AGE     CONTAINERS   IMAGES
+statefulset.apps/ax-postgres   1/1     2m16s   postgres     postgres:17-alpine
+
+NAME                                       STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE     VOLUMEMODE
+persistentvolumeclaim/data-ax-postgres-0   Bound    pvc-4ae2ae2a-6090-476a-8233-ac71df8e18fa   10Gi       RWO            standard       <unset>                 2m16s   Filesystem
+
+NAME                         DATA   AGE
+configmap/ax-otel-config     2      112s
+configmap/kube-root-ca.crt   1      2m17s
+
+NAME                       AGE
+serviceaccount/ateworker   65s
+serviceaccount/ax-server   112s
+serviceaccount/default     2m17s

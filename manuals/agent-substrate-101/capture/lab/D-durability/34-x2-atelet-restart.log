@@ -1,0 +1,3 @@
+pod "atelet-sqzvr" deleted from ate-system namespace
+Waiting for daemon set "atelet" rollout to finish: 0 of 1 updated pods are available...
+daemon set "atelet" successfully rolled out

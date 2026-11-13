@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 352" role="img" aria-labelledby="fig-3-3-title fig-3-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-3-title">Resume time against the memory an actor holds</title>
+  <desc id="fig-3-3-desc">Seconds for one request to a suspended actor against the MiB of random memory it holds, on the x86 server guest with gVisor. Every one of the 75 resumes is a small dot, and a line joins the medians. From the snapshot on the node the median is 0.22 s at 0 MiB, 0.24 s at 50 MiB, 0.47 s at 200 MiB, 1.07 s at 500 MiB, 2.16 s at 1000 MiB, with ten resumes for each size. One resume at 1000 MiB took 5.09 s and the other nine took at most 2.45 s. From the object store in the same cluster the median is 0.24 s at 0 MiB, 0.41 s at 50 MiB, 0.96 s at 200 MiB, 2.26 s at 500 MiB, 4.68 s at 1000 MiB, with five resumes for each size. A dashed line marks 0.5 s, which the node path passes above 200 MiB and the object store path above 50 MiB.</desc>
+  <line x1="46" y1="310" x2="486" y2="310" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="314" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="46" y1="265" x2="486" y2="265" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="269" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="46" y1="220" x2="486" y2="220" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="224" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="46" y1="175" x2="486" y2="175" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="179" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="46" y1="130" x2="486" y2="130" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="134" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="46" y1="85" x2="486" y2="85" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="89" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="46" y1="40" x2="486" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="46" y1="310" x2="486" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="46" y1="40" x2="46" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="46" y1="310" x2="46" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="46" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="68" y1="310" x2="68" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="68" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="134" y1="310" x2="134" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="134" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="266" y1="310" x2="266" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="266" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="486" y1="310" x2="486" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="486" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1000</text>
+  <text x="266" y="344" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory the actor holds, MiB</text>
+  <text x="46" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds from request to reply, at the client</text>
+  <line x1="46" y1="287.5" x2="486" y2="287.5" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <path d="M46.0 299.1 L68.0 291.4 L134.0 267.0 L266.0 208.5 L486.0 99.5" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M46.0 300.0 L68.0 299.3 L134.0 288.8 L266.0 261.9 L486.0 212.8" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <line x1="56" y1="298.84" x2="56" y2="299.38" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="56" cy="299.11" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="56" cy="298.84" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="56" cy="299.07" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="56" cy="299.38" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="56" cy="299.07" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="72" y1="288.76" x2="72" y2="293.26" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="72" cy="293.26" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="72" cy="291.42" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="72" cy="292.72" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="72" cy="289.98" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="72" cy="288.76" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="138" y1="264.51" x2="138" y2="269.41" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="138" cy="269.41" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="138" cy="267.34" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="138" cy="264.51" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="138" cy="267.02" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="138" cy="265.86" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="270" y1="201.46" x2="270" y2="223.33" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="270" cy="211.41" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="270" cy="202.36" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="270" cy="201.46" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="270" cy="208.53" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="270" cy="223.33" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="490" y1="86.49" x2="490" y2="119.52" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="490" cy="86.49" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="490" cy="99.49" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="490" cy="109.61" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="490" cy="98.41" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="490" cy="119.52" r="1.9" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="48" y1="299.52" x2="48" y2="300.33" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="48" cy="299.96" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="300.1" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="299.92" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="300.1" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="300.33" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="300.19" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="299.83" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="300.28" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="299.52" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="48" cy="299.88" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="64" y1="298.52" x2="64" y2="299.74" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="64" cy="299.07" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="298.52" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="299.38" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="299.2" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="299.74" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="299.7" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="298.89" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="298.89" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="299.7" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="64" cy="299.7" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="130" y1="285.83" x2="130" y2="294.39" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="130" cy="289.52" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="288.81" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="290.02" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="288.18" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="290.07" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="294.39" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="285.83" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="287.19" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="288.72" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="130" cy="288.31" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="262" y1="249.88" x2="262" y2="264.96" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="262" cy="249.88" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="264.96" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="260.86" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="261.99" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="264.91" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="257.13" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="262.17" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="261.45" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="261.9" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262" cy="264.96" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="482" y1="81.13" x2="482" y2="222.93" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="482" cy="81.13" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="215.73" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="222.93" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="216.31" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="213.3" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="212.31" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="216.72" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="212.13" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="208.48" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="482" cy="199.75" r="1.9" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="500" y="103.49" font-size="11.5" font-weight="700" fill="var(--m-teal-ink, #18696a)">object store</text>
+  <text x="500" y="118.49" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">4.68 s median of 5</text>
+  <text x="500" y="216.8" font-size="11.5" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">node</text>
+  <text x="500" y="231.8" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2.16 s median of 10</text>
+  <text x="472" y="75.13" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">5.09 s, the first of 10 from the node</text>
+  <text x="336.4" y="201.5" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">about 4 ms per MiB</text>
+  <text x="354" y="280.25" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">about 2 ms per MiB</text>
+  <text x="500" y="291.5" font-size="11.5" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">0.5 s</text>
+  <text x="500" y="306.5" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">what the project states</text>
+  <circle cx="57.8" cy="54" r="1.9" fill="var(--m-ink-soft, #4a4a4a)"/>
+  <text x="66.8" y="58" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one resume</text>
+  <line x1="138.8" y1="54" x2="156.8" y2="54" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.8"/>
+  <text x="162.8" y="58" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median of one size</text>
+  <polyline points="76.8,168 130,288.76" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="130" cy="288.76" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="54.8" y="147" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">under 0.5 s up to 200 MiB from the node</text>
+  <text x="54.8" y="161" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">and up to 50 MiB from the object store</text>
+</svg>

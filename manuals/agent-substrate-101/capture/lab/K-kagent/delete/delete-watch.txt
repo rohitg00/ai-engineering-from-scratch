@@ -1,0 +1,6 @@
+2026-11-12T10:32:55.067Z Error: failed to get actor "session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a": rpc error: code = NotFound desc = Actor kagent/session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a not
+2026-11-12T10:32:56.278Z Error: failed to get actor "session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a": rpc error: code = NotFound desc = Actor kagent/session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a not
+2026-11-12T10:32:57.475Z Error: failed to get actor "session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a": rpc error: code = NotFound desc = Actor kagent/session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a not
+2026-11-12T10:32:58.682Z Error: failed to get actor "session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a": rpc error: code = NotFound desc = Actor kagent/session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a not
+2026-11-12T10:32:59.884Z Error: failed to get actor "session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a": rpc error: code = NotFound desc = Actor kagent/session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a not
+2026-11-12T10:33:01.095Z Error: failed to get actor "session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a": rpc error: code = NotFound desc = Actor kagent/session-01a1cf51-41d7-7bed-8dbe-9d43c480a43a not

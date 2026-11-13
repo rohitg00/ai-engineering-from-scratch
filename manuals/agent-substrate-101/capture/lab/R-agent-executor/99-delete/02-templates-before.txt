@@ -1,0 +1,4 @@
+ATESPACE   NAME                             GOLDEN TAG                             ERROR   AGE
+default    ax-install-check-tmpl-b08f2422   921c52be-e85f-4bac-a5ab-1dd5700530a2           14m
+default    ax-nodebug-tmpl-4a67c8d7         b0405d12-3ba7-4ab8-8a5d-713e9dee5176           99s
+default    ax-ws-task-tmpl-5fd7c4b9         90179817-d734-4ae6-ac7d-51308c3c14ee           2m34s

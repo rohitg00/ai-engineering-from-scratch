@@ -1,0 +1,4 @@
+NAME                                READY   STATUS    RESTARTS   AGE    IP            NODE                 NOMINATED NODE   READINESS GATES
+ax-redis-86df786c87-8vhvb           1/1     Running   0          2m2s   10.244.0.51   demo-control-plane   <none>           <none>
+ax-server-6b987bbf67-8wxqj          1/1     Running   0          2m1s   10.244.0.52   demo-control-plane   <none>           <none>
+ax031-controller-8678688d5c-7xzx6   1/1     Running   0          13s    10.244.0.58   demo-control-plane   <none>           <none>

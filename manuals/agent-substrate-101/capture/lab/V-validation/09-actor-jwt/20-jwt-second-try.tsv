@@ -1,0 +1,12 @@
+ts	event	detail
+Waiting for deployment "echo" rollout to finish: 0 of 1 updated replicas are available...
+deployment "echo" successfully rolled out
+echo-7dc6f85458-d86w8 1/1 Running
+echo ClusterIP 80/TCP
+2026-11-12T12:52:50.380Z	create-egress-policy	ATESPACE   ACTOR   RULES   VERSION   AGE lab-v      jw2     1       1         0s 
+2026-11-12T12:52:50.603Z	first-call	200	0.231113	tag=v3 count=1 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=0.1 child[none]
+2026-11-12T12:52:50.997Z	fetch-try-1	resolved, status=200
+2026-11-12T12:52:51.132Z	fetch-without-header	authorization lines at upstream: 0
+-	second-token	same token as first request: True
+-	after-suspend-resume	same token: True; jti changed: False; sub same: True
+DONE

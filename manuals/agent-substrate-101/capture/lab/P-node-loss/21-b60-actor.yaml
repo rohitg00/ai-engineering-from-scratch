@@ -1,0 +1,39 @@
+actorTemplate:
+  atespace: lab-n
+  name: ballast-50
+metadata:
+  atespace: lab-n
+  createTime: "2026-11-12T12:56:01.300959708Z"
+  name: b2
+  uid: 0ac50ead-e011-475f-99d9-8a07da53d703
+  updateTime: "2026-11-12T13:01:57.819663467Z"
+  version: "8"
+status:
+  assignedNode: multi-worker2
+  crash:
+    crashTime: "2026-11-12T13:01:52.091402815Z"
+    message: 'resume failed: assigned worker is draining'
+  lastAssignedGeneration: 2
+  snapshots:
+  - actorTemplateUid: 09fee120-cd19-4121-8bae-5623fcbe70eb
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-n/actors/0ac50ead-e011-475f-99d9-8a07da53d703/snapshots/98a37394-6f3e-4c57-9791-b08473319c22
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 2
+    locality: multi-worker2
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 98a37394-6f3e-4c57-9791-b08473319c22
+  state: ACTOR_STATE_REVERTING

@@ -1,0 +1,2020 @@
+{
+  "failure_drill": [
+    {
+      "detect_seconds": 0.2,
+      "fix": "kubectl ate revert actor d1 -a demo-drill",
+      "fix_seconds": 0.2,
+      "n": 1,
+      "recoveries": [
+        {
+          "http": 200,
+          "seconds": 0.327
+        }
+      ],
+      "state": "ACTOR_STATE_CRASHED",
+      "symptoms": [
+        {
+          "http": 503,
+          "seconds": 0.074
+        }
+      ],
+      "title": "worker pod deleted under a running actor"
+    },
+    {
+      "fix": "kubectl ate revert actor d2 -a demo-drill",
+      "fix_seconds": 0.2,
+      "n": 2,
+      "recoveries": [
+        {
+          "http": 200,
+          "seconds": 0.414
+        }
+      ],
+      "state": "ACTOR_STATE_CRASHED",
+      "symptoms": [
+        {
+          "http": 500,
+          "seconds": 0.079
+        }
+      ],
+      "title": "node-local snapshot removed before the upload"
+    },
+    {
+      "fix": "kubectl ate suspend actor d3, then kubectl ate revert actor d3",
+      "fix_seconds": 0.7,
+      "n": 3,
+      "recoveries": [
+        {
+          "http": 200,
+          "seconds": 0.409
+        }
+      ],
+      "state": "ACTOR_STATE_RUNNING (5 s after the exit)",
+      "symptoms": [
+        {
+          "http": 503,
+          "seconds": 0.055
+        }
+      ],
+      "title": "the actor process exits inside the sandbox"
+    },
+    {
+      "detect_seconds": 2.9,
+      "fix": "kubectl ate revert actor d4 -a demo-drill",
+      "fix_seconds": 0.2,
+      "n": 4,
+      "recoveries": [
+        {
+          "http": 200,
+          "seconds": 0.365
+        }
+      ],
+      "state": "ACTOR_STATE_CRASHED",
+      "symptoms": [
+        {
+          "http": 503,
+          "seconds": 0.062
+        }
+      ],
+      "title": "the actor uses more memory than its limit"
+    },
+    {
+      "fix": "kubectl ate suspend actor d5a -a demo-drill",
+      "fix_seconds": 0.4,
+      "n": 5,
+      "recoveries": [
+        {
+          "http": 200,
+          "seconds": 0.321
+        }
+      ],
+      "state": "d5a ACTOR_STATE_RUNNING, d5b ACTOR_STATE_RUNNING, d5c ACTOR_STATE_SUSPENDED",
+      "symptoms": [
+        {
+          "http": 503,
+          "seconds": 5.05
+        }
+      ],
+      "title": "more running actors than the pool has room for"
+    },
+    {
+      "fix": "kubectl -n ate-system scale statefulset postgres --replicas=1",
+      "fix_seconds": 2.1,
+      "n": 6,
+      "recoveries": [
+        {
+          "http": 200,
+          "seconds": 0.9
+        },
+        {
+          "http": 200,
+          "seconds": 0.4
+        }
+      ],
+      "state": "kubectl ate get actor fails: Error: failed to connect to ate-api-server: no ready api pods in ate-system",
+      "symptoms": [
+        {
+          "http": 503,
+          "seconds": 5.055
+        },
+        {
+          "http": 503,
+          "seconds": 5.054
+        }
+      ],
+      "title": "Postgres is away for 30 s"
+    }
+  ],
+  "idle_suspender": {
+    "capacity": [
+      {
+        "actors": 2,
+        "bursty": "RESUMING",
+        "busy": "RESUMING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 0.4
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 10.9
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 21.3
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 31.7
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 42.1
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 52.5
+      },
+      {
+        "actors": 2,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "RUNNING",
+        "t": 62.9
+      },
+      {
+        "actors": 2,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "RUNNING",
+        "t": 73.3
+      },
+      {
+        "actors": 2,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "RUNNING",
+        "t": 83.7
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 94.1
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 104.5
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 114.9
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 125.3
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 135.7
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 146.1
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 156.5
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 166.9
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 177.3
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 187.7
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 198.1
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 208.5
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 218.9
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 229.3
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 239.8
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 250.2
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 260.6
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 271.0
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 281.4
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 291.8
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 302.2
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 312.6
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 323.0
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 333.4
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 343.8
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 354.2
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 364.6
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 375.0
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 385.4
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 395.8
+      },
+      {
+        "actors": 2,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "RUNNING",
+        "t": 406.2
+      },
+      {
+        "actors": 2,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "RUNNING",
+        "t": 416.6
+      },
+      {
+        "actors": 2,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "RUNNING",
+        "t": 427.0
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 437.4
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 447.8
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 458.2
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 468.6
+      },
+      {
+        "actors": 2,
+        "bursty": "RUNNING",
+        "busy": "RUNNING",
+        "millicores": 2000,
+        "rare": "SUSPENDED",
+        "t": 479.0
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 489.4
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 499.7
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 510.1
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 520.5
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 530.9
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 541.3
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 551.7
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 562.1
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 572.5
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 582.9
+      },
+      {
+        "actors": 1,
+        "bursty": "SUSPENDED",
+        "busy": "RUNNING",
+        "millicores": 1000,
+        "rare": "SUSPENDED",
+        "t": 593.3
+      }
+    ],
+    "idle_seconds": 30,
+    "requests": [
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "resumed",
+        "seconds": 0.443,
+        "t": 0.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "resumed",
+        "seconds": 0.487,
+        "t": 0.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 1.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.07,
+        "t": 3.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 4.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.073,
+        "t": 5.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 6.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 11.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.068,
+        "t": 16.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.065,
+        "t": 21.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.067,
+        "t": 26.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.069,
+        "t": 31.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 36.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.069,
+        "t": 41.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 46.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.065,
+        "t": 51.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.065,
+        "t": 56.0
+      },
+      {
+        "actor": "rare",
+        "http": 200,
+        "kind": "resumed",
+        "seconds": 0.242,
+        "t": 60.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 62.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.066,
+        "t": 67.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.066,
+        "t": 72.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 77.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.066,
+        "t": 82.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.058,
+        "t": 87.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.065,
+        "t": 92.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 97.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 102.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 107.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 112.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.058,
+        "t": 117.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.069,
+        "t": 123.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 128.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.066,
+        "t": 133.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.077,
+        "t": 138.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 143.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 148.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "resumed",
+        "seconds": 0.24,
+        "t": 151.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 152.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 153.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 153.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 154.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 155.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 158.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 163.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 168.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.083,
+        "t": 173.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 179.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 184.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 189.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 194.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.066,
+        "t": 199.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 204.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 209.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 214.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 219.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 224.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 229.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 235.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 240.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 245.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.067,
+        "t": 250.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 255.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 260.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 265.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.092,
+        "t": 270.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.066,
+        "t": 275.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 280.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.065,
+        "t": 285.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.067,
+        "t": 291.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 296.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 301.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "resumed",
+        "seconds": 0.251,
+        "t": 302.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 303.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 304.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 305.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 306.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 306.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 311.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.066,
+        "t": 316.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 321.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 326.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 331.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 336.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.058,
+        "t": 341.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 346.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.068,
+        "t": 352.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 357.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.058,
+        "t": 362.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.068,
+        "t": 367.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.067,
+        "t": 372.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 377.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 382.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.07,
+        "t": 387.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 392.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 397.0
+      },
+      {
+        "actor": "rare",
+        "http": 200,
+        "kind": "resumed",
+        "seconds": 0.257,
+        "t": 400.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 402.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.065,
+        "t": 408.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 413.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.056,
+        "t": 418.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 423.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 428.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 433.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 438.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 443.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.056,
+        "t": 448.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "resumed",
+        "seconds": 0.261,
+        "t": 452.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 453.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 453.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 454.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 456.0
+      },
+      {
+        "actor": "bursty",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 457.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.057,
+        "t": 458.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 463.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 469.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 474.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 479.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.063,
+        "t": 484.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 489.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 494.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 499.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 504.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 509.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 514.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 519.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 524.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 530.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 535.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 540.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.064,
+        "t": 545.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 550.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.061,
+        "t": 555.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.057,
+        "t": 560.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.062,
+        "t": 565.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.057,
+        "t": 570.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.058,
+        "t": 575.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 580.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 585.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.06,
+        "t": 591.0
+      },
+      {
+        "actor": "busy",
+        "http": 200,
+        "kind": "warm",
+        "seconds": 0.059,
+        "t": 596.0
+      }
+    ],
+    "slots": 2,
+    "suspends": [
+      {
+        "actor": "bursty",
+        "idle_seconds": 31,
+        "result": "ok",
+        "seconds": 0.386,
+        "t": 36.0
+      },
+      {
+        "actor": "rare",
+        "idle_seconds": 31,
+        "result": "ok",
+        "seconds": 0.349,
+        "t": 91.0
+      },
+      {
+        "actor": "bursty",
+        "idle_seconds": 30,
+        "result": "ok",
+        "seconds": 0.347,
+        "t": 186.0
+      },
+      {
+        "actor": "bursty",
+        "idle_seconds": 31,
+        "result": "ok",
+        "seconds": 0.354,
+        "t": 337.0
+      },
+      {
+        "actor": "rare",
+        "idle_seconds": 31,
+        "result": "ok",
+        "seconds": 0.332,
+        "t": 431.0
+      },
+      {
+        "actor": "bursty",
+        "idle_seconds": 31,
+        "result": "ok",
+        "seconds": 0.342,
+        "t": 488.0
+      },
+      {
+        "actor": "busy",
+        "idle_seconds": 30,
+        "result": "ok",
+        "seconds": 0.346,
+        "t": 626.0
+      }
+    ],
+    "with_suspender": {
+      "mean_millicores": 1345,
+      "ok": 140,
+      "requests": 140,
+      "resumed_seconds": {
+        "max": 0.487,
+        "median": 0.257,
+        "min": 0.24,
+        "n": 7
+      },
+      "suspend_cli_seconds": {
+        "max": 0.386,
+        "median": 0.347,
+        "min": 0.332,
+        "n": 7
+      },
+      "warm_seconds": {
+        "max": 0.092,
+        "median": 0.062,
+        "min": 0.056,
+        "n": 133
+      }
+    },
+    "without_suspender": {
+      "failed": [
+        {
+          "actor": "rare",
+          "http": 503,
+          "seconds": 5.055
+        }
+      ],
+      "ok": 29,
+      "requests": 30
+    }
+  },
+  "install": [
+    {
+      "exit": 0,
+      "seconds": 42.0,
+      "step": "10-kind-cluster"
+    },
+    {
+      "exit": 0,
+      "seconds": 189.0,
+      "step": "20-deploy-ate-system"
+    },
+    {
+      "exit": 0,
+      "seconds": 5.0,
+      "step": "30-install-cli"
+    }
+  ],
+  "machine": "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor",
+  "note": "four demos from capture/demos, recorded once each. The model in the agent demo is a mock server in the cluster.",
+  "sources": [
+    "capture/lab/N-demos/failure-drill/drill-run.log",
+    "capture/lab/N-demos/stateful-agent/session-memory.tsv",
+    "capture/lab/N-demos/stateful-agent/session-volumes.tsv",
+    "capture/lab/N-demos/stateful-agent/lifecycle-memory.log",
+    "capture/lab/N-demos/stateful-agent/lifecycle-volumes.log",
+    "capture/lab/N-demos/tool-sandbox/tasks.tsv",
+    "capture/lab/N-demos/idle-suspender/suspender.tsv",
+    "capture/lab/N-demos/idle-suspender/requests-with-suspender.tsv",
+    "capture/lab/N-demos/idle-suspender/requests-without-suspender.tsv",
+    "capture/lab/N-demos/idle-suspender/capacity-requests-with-suspender.tsv"
+  ],
+  "stateful_agent": {
+    "memory": {
+      "restore_seconds": {
+        "max": 0.167,
+        "median": 0.155,
+        "min": 0.151,
+        "n": 4
+      },
+      "resumed_seconds": {
+        "max": 0.323,
+        "median": 0.303,
+        "min": 0.297,
+        "n": 3
+      },
+      "turns": [
+        {
+          "db_turns": 2,
+          "http": 200,
+          "memory_turns": 2,
+          "note": null,
+          "phase": "new",
+          "process_age_s": 10.7,
+          "rehydrated_from_db": 0,
+          "scratch_file": false,
+          "seconds": 0.584,
+          "step": "turn 1, new actor"
+        },
+        {
+          "db_turns": 2,
+          "http": 200,
+          "memory_turns": 2,
+          "note": "remember the number 42",
+          "phase": "note",
+          "process_age_s": 10.8,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.072,
+          "step": "note, memory only"
+        },
+        {
+          "db_turns": 4,
+          "http": 200,
+          "memory_turns": 4,
+          "note": "remember the number 42",
+          "phase": "warm",
+          "process_age_s": 11.0,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.113,
+          "step": "turn 2, warm"
+        },
+        {
+          "db_turns": 6,
+          "http": 200,
+          "memory_turns": 6,
+          "note": "remember the number 42",
+          "phase": "resumed",
+          "process_age_s": 11.9,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.297,
+          "step": "turn 3, after suspend 1"
+        },
+        {
+          "db_turns": 8,
+          "http": 200,
+          "memory_turns": 8,
+          "note": "remember the number 42",
+          "phase": "warm",
+          "process_age_s": 12.0,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.101,
+          "step": "turn 3b, warm"
+        },
+        {
+          "db_turns": 10,
+          "http": 200,
+          "memory_turns": 10,
+          "note": "remember the number 42",
+          "phase": "resumed",
+          "process_age_s": 13.1,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.323,
+          "step": "turn 4, after suspend 2"
+        },
+        {
+          "db_turns": 12,
+          "http": 200,
+          "memory_turns": 12,
+          "note": "remember the number 42",
+          "phase": "warm",
+          "process_age_s": 13.3,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.097,
+          "step": "turn 4b, warm"
+        },
+        {
+          "db_turns": 14,
+          "http": 200,
+          "memory_turns": 14,
+          "note": "remember the number 42",
+          "phase": "resumed",
+          "process_age_s": 14.3,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.303,
+          "step": "turn 5, after suspend 3"
+        },
+        {
+          "db_turns": 16,
+          "http": 200,
+          "memory_turns": 16,
+          "note": "remember the number 42",
+          "phase": "warm",
+          "process_age_s": 14.5,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.092,
+          "step": "turn 5b, warm"
+        }
+      ],
+      "warm_seconds": {
+        "max": 0.113,
+        "median": 0.099,
+        "min": 0.092,
+        "n": 4
+      }
+    },
+    "volumes": {
+      "restore_seconds": {
+        "max": 4.814,
+        "median": 4.667,
+        "min": 4.256,
+        "n": 4
+      },
+      "resumed_seconds": {
+        "max": 5.059,
+        "median": 4.877,
+        "min": 4.495,
+        "n": 3
+      },
+      "turns": [
+        {
+          "db_turns": 2,
+          "http": 200,
+          "memory_turns": 2,
+          "note": null,
+          "phase": "new",
+          "process_age_s": 0.4,
+          "rehydrated_from_db": 0,
+          "scratch_file": false,
+          "seconds": 5.083,
+          "step": "turn 1, new actor"
+        },
+        {
+          "db_turns": 2,
+          "http": 200,
+          "memory_turns": 2,
+          "note": "remember the number 42",
+          "phase": "note",
+          "process_age_s": 0.4,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.068,
+          "step": "note, memory only"
+        },
+        {
+          "db_turns": 4,
+          "http": 200,
+          "memory_turns": 4,
+          "note": "remember the number 42",
+          "phase": "warm",
+          "process_age_s": 0.6,
+          "rehydrated_from_db": 0,
+          "scratch_file": true,
+          "seconds": 0.097,
+          "step": "turn 2, warm"
+        },
+        {
+          "db_turns": 6,
+          "http": 200,
+          "memory_turns": 6,
+          "note": null,
+          "phase": "resumed",
+          "process_age_s": 0.3,
+          "rehydrated_from_db": 4,
+          "scratch_file": false,
+          "seconds": 5.059,
+          "step": "turn 3, after suspend 1"
+        },
+        {
+          "db_turns": 8,
+          "http": 200,
+          "memory_turns": 8,
+          "note": null,
+          "phase": "warm",
+          "process_age_s": 0.5,
+          "rehydrated_from_db": 4,
+          "scratch_file": false,
+          "seconds": 0.093,
+          "step": "turn 3b, warm"
+        },
+        {
+          "db_turns": 10,
+          "http": 200,
+          "memory_turns": 10,
+          "note": null,
+          "phase": "resumed",
+          "process_age_s": 0.3,
+          "rehydrated_from_db": 8,
+          "scratch_file": false,
+          "seconds": 4.877,
+          "step": "turn 4, after suspend 2"
+        },
+        {
+          "db_turns": 12,
+          "http": 200,
+          "memory_turns": 12,
+          "note": null,
+          "phase": "warm",
+          "process_age_s": 0.5,
+          "rehydrated_from_db": 8,
+          "scratch_file": false,
+          "seconds": 0.098,
+          "step": "turn 4b, warm"
+        },
+        {
+          "db_turns": 14,
+          "http": 200,
+          "memory_turns": 14,
+          "note": null,
+          "phase": "resumed",
+          "process_age_s": 0.3,
+          "rehydrated_from_db": 12,
+          "scratch_file": false,
+          "seconds": 4.495,
+          "step": "turn 5, after suspend 3"
+        },
+        {
+          "db_turns": 16,
+          "http": 200,
+          "memory_turns": 16,
+          "note": null,
+          "phase": "warm",
+          "process_age_s": 0.5,
+          "rehydrated_from_db": 12,
+          "scratch_file": false,
+          "seconds": 0.088,
+          "step": "turn 5b, warm"
+        }
+      ],
+      "warm_seconds": {
+        "max": 0.098,
+        "median": 0.095,
+        "min": 0.088,
+        "n": 4
+      }
+    }
+  },
+  "tool_sandbox": [
+    {
+      "clean_check_seconds": 0.44,
+      "files_after_revert": 0,
+      "http": 200,
+      "label": "allowed download",
+      "result": "{\"exit\": 0, \"stdout\": \"hello package 1.0\\nhello.txt\\n\", \"stderr\": \"\", \"seconds\": 0.17}",
+      "revert_seconds": 0.47,
+      "seconds": 0.54,
+      "state": "RUNNING"
+    },
+    {
+      "clean_check_seconds": 0.45,
+      "files_after_revert": 0,
+      "http": 200,
+      "label": "send data out by name",
+      "result": "{\"exit\": 0, \"stdout\": \"** server can't find example.com: NXDOMAIN\\n\\nwget_exit=1\\n\", \"stderr\": \"wget: bad address 'example.com'\\n\", \"seconds\": 0.11}",
+      "revert_seconds": 0.48,
+      "seconds": 0.2,
+      "state": "RUNNING"
+    },
+    {
+      "clean_check_seconds": 0.45,
+      "files_after_revert": 0,
+      "http": 200,
+      "label": "send data out by IP",
+      "result": "{\"exit\": 0, \"stdout\": \"wget_exit=1\\n\", \"stderr\": \"wget: server returned error: HTTP/1.1 403 Forbidden\\n\", \"seconds\": 0.04}",
+      "revert_seconds": 0.5,
+      "seconds": 0.15,
+      "state": "RUNNING"
+    },
+    {
+      "clean_check_seconds": 0.46,
+      "files_after_revert": 0,
+      "http": 200,
+      "label": "reach the Kubernetes API",
+      "result": "{\"exit\": 0, \"stdout\": \"wget_exit=1\\n\", \"stderr\": \"wget: bad address 'kubernetes.default.svc.cluster.local'\\n\", \"seconds\": 0.04}",
+      "revert_seconds": 0.51,
+      "seconds": 0.13,
+      "state": "RUNNING"
+    },
+    {
+      "clean_check_seconds": 0.45,
+      "files_after_revert": 0,
+      "http": 200,
+      "label": "2 s of CPU work on a 500m limit",
+      "result": "{\"exit\": 0, \"stdout\": \"wall_seconds 2.38\\n\", \"stderr\": \"\", \"seconds\": 2.54}",
+      "revert_seconds": 0.48,
+      "seconds": 2.63,
+      "state": "RUNNING"
+    },
+    {
+      "clean_check_seconds": 0.44,
+      "files_after_revert": 0,
+      "http": 503,
+      "label": "memory hog on a 256 MiB limit",
+      "result": "upstream connect error or disconnect/reset before headers. reset reason: connection termination",
+      "revert_seconds": 0.43,
+      "seconds": 4.52,
+      "state": "CRASHED"
+    }
+  ]
+}

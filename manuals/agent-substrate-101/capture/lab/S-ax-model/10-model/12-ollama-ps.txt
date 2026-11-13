@@ -1,0 +1,3 @@
+NAME            ID              SIZE      PROCESSOR    CONTEXT    RUNNER      UNTIL             
+qwen2.5:3b      357c53fb659c    2.2 GB    100% CPU     4096       llamacpp    24 hours from now    
+qwen2.5:1.5b    65ec06548149    1.2 GB    100% CPU     4096       llamacpp    24 hours from now    

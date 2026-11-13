@@ -1,0 +1,27 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+    name: ax-install-check
+    atespace: default
+    createTime: 2026-11-12T15:20:14.563751694Z
+spec:
+    command:
+        - sleep
+        - infinity
+    debug: true
+status:
+    phase: Running
+    id: task-ax-install-check-1794496814
+    actor: ax-install-check
+    workerIP: 10.244.0.25
+    conditions:
+        - type: WorkspaceReady
+          status: "True"
+          updateTime: 2026-11-12T15:20:19.231338744Z
+          reason: SetupComplete
+          message: Workspace setup completed at 10.244.0.25
+        - type: Ready
+          status: "True"
+          updateTime: 2026-11-12T15:21:11.361393997Z
+          reason: TaskRunning
+          message: Task is running and its workspace is ready

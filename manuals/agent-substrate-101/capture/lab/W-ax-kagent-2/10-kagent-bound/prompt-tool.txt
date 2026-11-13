@@ -1,0 +1,1 @@
+Run the command `cat /proc/uptime` with the bash tool and tell me the first number.

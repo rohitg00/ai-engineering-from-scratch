@@ -1,0 +1,4 @@
+NAME                       SCOPE        VERSIONS            CREATED AT
+csidriverconfigs.ate.dev   Cluster      v1alpha1(storage)   2026-11-13T05:58:31Z
+sandboxconfigs.ate.dev     Cluster      v1alpha1(storage)   2026-11-13T05:58:32Z
+workerpools.ate.dev        Namespaced   v1alpha1(storage)   2026-11-13T05:58:32Z

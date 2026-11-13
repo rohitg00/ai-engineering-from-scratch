@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Namespace
+metadata: {name: sc-lab}
+---
+apiVersion: ate.dev/v1
+kind: WorkerPool
+metadata: {name: sc-pool, namespace: sc-lab, labels: {workload: sc-pool}}
+spec:
+  replicas: 200
+  workerImage: ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0
+  sandboxClasses:
+  - name: gvisor
+  template:
+    resources:
+      limits: {cpu: "1", memory: 512Mi}
+      requests: {cpu: 50m, memory: 64Mi}

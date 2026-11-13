@@ -1,0 +1,30 @@
+metadata:
+  atespace: lab-f
+  name: shell
+workerSelector:
+  matchLabels:
+    workload: egress
+containers:
+- name: shell
+  image: localhost:5001/shellprobe@sha256:f7b2c72b053a2c658ceb62838bdce20bf05cde65692898ab39cd6e2503dc680a
+  env:
+  - name: PORT
+    value: "80"
+  volumeMounts:
+  - name: system-info
+    mountPath: /run/ate
+volumes:
+- name: system-info
+  systemInfo:
+    dataSources:
+    - trustBundle:
+        names:
+        - egress-mitm.ate.dev
+        - system-roots.ate.dev
+        path: egress-trust-bundle/trust-bundle.pem
+resources:
+  limits:
+    cpuMillicores: 500
+    memoryBytes: 268435456
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

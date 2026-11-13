@@ -1,0 +1,8 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: ax031-install-check
+  atespace: default
+spec:
+  image: "localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"
+  command: ["sleep", "infinity"]

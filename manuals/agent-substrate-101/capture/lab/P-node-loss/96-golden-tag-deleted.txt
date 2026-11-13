@@ -1,0 +1,19 @@
+### after every tag in the atespace was deleted with 'kubectl ate delete tag' (golden tags of the templates included)
+## get actor-templates
+ATESPACE   NAME         GOLDEN TAG                             ERROR   AGE
+lab-n      ballast-0    d8328610-2fdb-4974-a6ab-7c8671586d37           170m
+lab-n      ballast-50   09fee120-cd19-4121-8bae-5623fcbe70eb           170m
+## get tags
+ATESPACE   NAME   SCOPE   STATE   SNAPSHOT   FIDELITY   AGE
+## create actor from template ballast-50
+Error: failed to create actor: rpc error: code = FailedPrecondition desc = Tag not found
+ATESPACE   NAME   GOLDEN TAG   ERROR   AGE
+lab-n      nb-0                        0s
+ATESPACE   NAME    GOLDEN TAG   ERROR   AGE
+lab-n      nb-50                        0s
+## new templates
+ATESPACE   NAME         GOLDEN TAG                             ERROR   AGE
+lab-n      ballast-0    d8328610-2fdb-4974-a6ab-7c8671586d37           170m
+lab-n      ballast-50   09fee120-cd19-4121-8bae-5623fcbe70eb           170m
+lab-n      nb-0         a4d47db7-39ce-4bbd-8969-2d738787c09e           9s
+lab-n      nb-50        20146d73-350e-4da3-8f82-8153e837b07b           8s

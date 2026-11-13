@@ -1,0 +1,6 @@
+NAMESPACE    NAME      DESIRED   REPLICAS   READY   SANDBOXCONFIG    RESOLVED   AGE
+ax-system    ax-pool   2         2          2       gvisor-default   True       83m
+demo-agent   agent     1         1          1       gvisor-default   True       3h55m
+demo-drill   drill     2         2          2       gvisor-default   True       3h59m
+demo-idle    idle      1         1          1       gvisor-default   True       3h53m
+demo-tools   tools     1         1          1       gvisor-default   True       3h54m

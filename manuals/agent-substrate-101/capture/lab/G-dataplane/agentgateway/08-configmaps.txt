@@ -1,0 +1,11 @@
+configmap/ate-api-authentication
+configmap/ate-api-config
+configmap/ate-api-server-envvars
+configmap/ate-otel-config
+configmap/atenet-egress
+configmap/atenet-egress-agentgateway-substrate-config
+configmap/atenet-router-agentgateway-config
+configmap/atenet-router-envoy-config
+configmap/k8s-credential-provider-namespace-policy
+configmap/kube-root-ca.crt
+configmap/postgres-config

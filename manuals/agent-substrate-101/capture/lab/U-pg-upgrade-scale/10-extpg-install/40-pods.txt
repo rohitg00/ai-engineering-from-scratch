@@ -1,0 +1,26 @@
+NAMESPACE                          NAME                                         READY   STATUS        RESTARTS      AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-system                         ate-api-server-6dfb5f89db-v78wt              2/2     Running       2 (65s ago)   3m22s   10.244.0.7    uext-control-plane   <none>           <none>
+ate-system                         ate-api-server-6dfb5f89db-wfpcs              2/2     Running       2 (66s ago)   3m22s   10.244.0.6    uext-control-plane   <none>           <none>
+ate-system                         ate-controller-7984566f8d-926px              1/1     Running       0             3m19s   10.244.0.9    uext-control-plane   <none>           <none>
+ate-system                         ate-idp-server-dcd5f565f-k9kqp               1/1     Running       0             3m21s   10.244.0.8    uext-control-plane   <none>           <none>
+ate-system                         ate-idp-server-dcd5f565f-n2nsx               1/1     Running       0             3m21s   10.244.0.11   uext-control-plane   <none>           <none>
+ate-system                         atelet-w6mw9                                 2/2     Running       0             3m18s   10.244.0.10   uext-control-plane   <none>           <none>
+ate-system                         atenet-egress-557758f6b7-z5j7k               3/3     Running       0             7s      10.244.0.21   uext-control-plane   <none>           <none>
+ate-system                         atenet-egress-7758c8fb4-kcg7b                3/3     Terminating   0             3m9s    10.244.0.20   uext-control-plane   <none>           <none>
+ate-system                         atenet-router-d844d4995-5zfms                2/2     Running       0             3m17s   10.244.0.12   uext-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-5bb6b77b65-6hnrn     1/1     Running       0             3m10s   10.244.0.19   uext-control-plane   <none>           <none>
+ate-system                         rustfs-54c86945fb-l97sj                      1/1     Running       0             3m14s   10.244.0.18   uext-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-rpzwf                     0/1     Completed     0             3m14s   10.244.0.14   uext-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-blp96                     1/1     Running       0             5m58s   10.244.0.2    uext-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-lkxl7                     1/1     Running       0             5m58s   10.244.0.4    uext-control-plane   <none>           <none>
+kube-system                        etcd-uext-control-plane                      1/1     Running       0             6m4s    172.18.0.4    uext-control-plane   <none>           <none>
+kube-system                        kindnet-vj8l4                                1/1     Running       0             5m58s   172.18.0.4    uext-control-plane   <none>           <none>
+kube-system                        kube-apiserver-uext-control-plane            1/1     Running       0             6m4s    172.18.0.4    uext-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-uext-control-plane   1/1     Running       0             6m4s    172.18.0.4    uext-control-plane   <none>           <none>
+kube-system                        kube-proxy-64r68                             1/1     Running       0             5m58s   172.18.0.4    uext-control-plane   <none>           <none>
+kube-system                        kube-scheduler-uext-control-plane            1/1     Running       0             6m4s    172.18.0.4    uext-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-q89b2      1/1     Running       0             5m58s   10.244.0.3    uext-control-plane   <none>           <none>
+otel-system                        jaeger-fb9948ddf-wdbzm                       1/1     Running       0             3m13s   10.244.0.16   uext-control-plane   <none>           <none>
+otel-system                        opentelemetry-collector-6f5b87f5dd-n7lx8     1/1     Running       0             3m13s   10.244.0.15   uext-control-plane   <none>           <none>
+otel-system                        prometheus-5b5fb67d57-4fjbw                  1/1     Running       0             3m11s   10.244.0.17   uext-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-57c94fb5b-qwsjn    1/1     Running       0             3m46s   10.244.0.5    uext-control-plane   <none>           <none>

@@ -1,0 +1,5 @@
+namespace/ax031-system unchanged
+serviceaccount/ax031-controller created
+clusterrole.rbac.authorization.k8s.io/ax031-controller created
+clusterrolebinding.rbac.authorization.k8s.io/ax031-controller created
+deployment.apps/ax031-controller created

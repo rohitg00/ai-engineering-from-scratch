@@ -1,0 +1,3 @@
+configmap/mock-llm created
+deployment.apps/mock-llm created
+service/mock-llm created

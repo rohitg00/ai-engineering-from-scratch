@@ -1,0 +1,6 @@
+total 1
+drwxrwxrwx 3 root root  80 Nov 12 15:32 .
+drwxr-xr-x 1 root root 100 Nov 12 15:32 ..
+-rw-r--r-- 1 root root  50 Nov 12 15:32 AGENTS.md
+drwxr-xr-x 3 root root  60 Nov 12 15:32 chalk
+ls: cannot access '/workspace/.ax': No such file or directory

@@ -1,0 +1,8 @@
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                                      AGE   SELECTOR
+api                       ClusterIP   None            <none>        443/TCP,8445/TCP                             12m   app=ate-api-server
+ate-controller            ClusterIP   10.96.108.102   <none>        8080/TCP                                     12m   app=ate-controller
+atenet-egress             ClusterIP   10.96.156.157   <none>        443/TCP                                      12m   app=atenet-egress
+atenet-router             ClusterIP   10.96.166.28    <none>        80/TCP,443/TCP,8081/TCP,8444/TCP,15020/TCP   12m   app=atenet-router
+idp                       ClusterIP   10.96.132.104   <none>        443/TCP                                      12m   app=ate-idp-server
+k8s-credential-provider   ClusterIP   10.96.141.16    <none>        50051/TCP                                    12m   app=k8s-credential-provider
+rustfs                    ClusterIP   10.96.84.184    <none>        9000/TCP,9001/TCP                            12m   app=rustfs

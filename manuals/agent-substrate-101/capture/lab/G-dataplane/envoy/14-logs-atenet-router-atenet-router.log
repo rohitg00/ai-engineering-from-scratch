@@ -1,0 +1,192 @@
+2026/11/12 10:32:32 INFO initializing preview gates state="[ExternalVolumes=off, GoldenEgressPolicy=off, PerTemplateSnapshotLocation=off]"
+2026/11/12 10:32:32 INFO Connecting to Kubernetes API server host=https://10.96.0.1:443
+{"time":"2026-11-12T10:32:32.057863187Z","level":"INFO","msg":"atenet router starting","version":"v1.0.0"}
+{"time":"2026-11-12T10:32:32.058381012Z","level":"INFO","msg":"Tracing initialized","sampler":"ParentBased{root:TraceIDRatioBased{0.01},remoteParentSampled:AlwaysOnSampler,remoteParentNotSampled:AlwaysOffSampler,localParentSampled:AlwaysOnSampler,localParentNotSampled:AlwaysOffSampler}","export":true}
+{"time":"2026-11-12T10:32:32.058439414Z","level":"INFO","msg":"Metrics exporters resolved","exporters":"otlp,prometheus"}
+{"time":"2026-11-12T10:32:32.058722832Z","level":"INFO","msg":"Metrics initialized","otlp_export":true}
+{"time":"2026-11-12T10:32:32.058877987Z","level":"INFO","msg":"Starting health HTTP server","addr":":9091"}
+{"time":"2026-11-12T10:32:32.058834175Z","level":"INFO","msg":"Starting metrics HTTP server","addr":":9090"}
+{"time":"2026-11-12T10:32:32.059247037Z","level":"INFO","msg":"Connecting to ateapi","address":"k8s:///api.ate-system.svc:443"}
+{"time":"2026-11-12T10:32:32.059279788Z","level":"INFO","msg":"Starting substrate router subsystem","mode":"ingress","atenet_router":"envoy"}
+{"time":"2026-11-12T10:32:32.059790863Z","level":"INFO","msg":"TLS ingress listeners require client certificates","client_ca_file":"/run/podidentity.podcert.ate.dev/trust-bundle.pem","allowed_spiffe_ids":["spiffe://cluster.local/ns/ate-system/sa/atenet-client"]}
+{"time":"2026-11-12T10:32:32.070991241Z","level":"INFO","msg":"Deploying updated xDS configuration snapshot","version":"1794479552-5TNGAJRF-1"}
+{"time":"2026-11-12T10:32:32.071153396Z","level":"INFO","msg":"Starting Envoy xDS Server","address":"127.0.0.1:18000"}
+{"time":"2026-11-12T10:32:32.07130646Z","level":"INFO","msg":"Starting ExtProc Server","address":"127.0.0.1:50051"}
+{"time":"2026-11-12T10:32:32.07128436Z","level":"INFO","msg":"Starting periodic health checker","interval":1000000000}
+{"time":"2026-11-12T10:32:32.071426714Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:32.07232148Z","level":"INFO","msg":"Deploying updated xDS configuration snapshot","version":"1794479552-5TNGAJRF-2"}
+{"time":"2026-11-12T10:32:32.072735502Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:32.083354813Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:33.072279493Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:33.072725866Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:33.073509179Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:34.072550822Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:34.072912212Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:34.073673115Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:35.072535247Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:35.072826016Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:35.07361371Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:36.071575022Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:36.071982545Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:36.072738927Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:37.071803338Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:37.072037755Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:37.072958372Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:38.071576546Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:38.071958087Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:38.07274337Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:39.071572677Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:39.071877816Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:39.072657737Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:40.071699616Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:40.071996955Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:40.072598412Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:41.071556894Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:41.071923445Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:41.072708848Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:42.071536851Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:42.071805329Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:42.072510489Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:43.071544844Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:43.072339808Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:43.073394849Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:44.072378508Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:44.07281219Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:44.073538372Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:45.071826154Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:45.072244507Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:45.073140464Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:46.071545615Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:46.071914596Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:46.072726679Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:47.071809247Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:47.072156587Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:47.07293205Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:48.071556439Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:48.072004882Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:48.072541317Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:49.071576753Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:49.072039207Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:49.072745607Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:50.07183113Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:50.07218205Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:50.072947643Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:51.07174995Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:51.072151263Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = Unavailable desc = no children to pick from"}
+{"time":"2026-11-12T10:32:51.072825772Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:52.072222563Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:52.073318085Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:52.572772125Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready"}
+{"time":"2026-11-12T10:32:53.071532686Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:53.072872075Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:53.572663997Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready"}
+{"time":"2026-11-12T10:32:54.072534002Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:54.073635045Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:54.573096661Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready"}
+{"time":"2026-11-12T10:32:55.071581757Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:55.072642449Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:55.572688633Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready"}
+{"time":"2026-11-12T10:32:56.072121179Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:56.073197502Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:56.573023151Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready"}
+{"time":"2026-11-12T10:32:57.072509182Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:57.073432479Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:57.573865979Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready"}
+{"time":"2026-11-12T10:32:58.07156738Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:58.072716844Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:58.572447295Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready"}
+{"time":"2026-11-12T10:32:59.072331062Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:32:59.073083954Z","level":"ERROR","msg":"Router dataplane health check failed","msg":"Get \"http://localhost:9901/ready\": dial tcp 127.0.0.1:9901: connect: connection refused\ndial tcp [::1]:9901: connect: connection refused"}
+{"time":"2026-11-12T10:32:59.573526679Z","level":"ERROR","msg":"ATE API gRPC health check failed","msg":"rpc error: code = DeadlineExceeded desc = context deadline exceeded while waiting for connections to become ready"}
+{"time":"2026-11-12T10:33:00.072542142Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:01.072449638Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:02.071976655Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:03.071577469Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:04.072192597Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:05.071596713Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:06.071561779Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:07.072118387Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:08.071557686Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:09.072586294Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:10.072181574Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:11.07184984Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:12.072281443Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:13.072372328Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:14.072374154Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:15.072415025Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:16.071553491Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:17.072500285Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:18.071611447Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:19.072530647Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:20.072387457Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:21.071999774Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:22.07217522Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:23.071971158Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:24.071919863Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:25.072314084Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:26.072377138Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:27.072432085Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:28.072487674Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:29.0723096Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:30.07253316Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:31.071628878Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:32.071540673Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:33.071589184Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:34.071588118Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:35.072398536Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:36.072506447Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:37.071914799Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:38.071654404Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:39.071950727Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:40.072325884Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:41.071497739Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:42.072043897Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:43.072224485Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:44.071580022Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:45.071560999Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:46.072167956Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:47.072053174Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:48.072008347Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:49.071551329Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:50.072986748Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:51.071652968Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:52.072228526Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:53.071494547Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:54.072540233Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:55.072189788Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:56.071814996Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:57.072031752Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:58.07222852Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:33:59.072524641Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:00.072577444Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:01.072300306Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:02.072502063Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:03.072246766Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:04.072043162Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:05.071543597Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:06.072241176Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:07.071780475Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:08.071571472Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:09.072428996Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:10.07157472Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:11.071732051Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:12.072249247Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:13.073609138Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:14.071642394Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:15.071699374Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:16.072449113Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:17.072537436Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:18.072208865Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:19.071957991Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:20.071581817Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:21.071645746Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:22.071503273Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:23.071566506Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:24.072293813Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:25.072312877Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:26.072408054Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:27.071563922Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:28.071534195Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:29.072415567Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:30.072373266Z","level":"INFO","msg":"Checking health"}
+{"time":"2026-11-12T10:34:31.072197591Z","level":"INFO","msg":"Checking health"}

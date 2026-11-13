@@ -1,0 +1,107 @@
+{
+  "dataplanes": {
+    "agentgateway": {
+      "changes": [
+        {
+          "change": 1,
+          "first_seen_epoch": 1794493632.272,
+          "requests_with_old_value": 233,
+          "seconds": 280.5,
+          "secret_changed_epoch": 1794493351.752,
+          "wait_before_seconds": 5
+        },
+        {
+          "change": 2,
+          "first_seen_epoch": 1794493933.328,
+          "requests_with_old_value": 168,
+          "seconds": 200.9,
+          "secret_changed_epoch": 1794493732.38,
+          "wait_before_seconds": 100
+        },
+        {
+          "change": 3,
+          "first_seen_epoch": 1794494234.122,
+          "requests_with_old_value": 84,
+          "seconds": 100.6,
+          "secret_changed_epoch": 1794494133.509,
+          "wait_before_seconds": 200
+        }
+      ],
+      "empty_or_placeholder_values": 0,
+      "probe_requests": 759,
+      "seconds": {
+        "max": 280.5,
+        "median": 200.9,
+        "min": 100.6,
+        "n": 3
+      },
+      "seconds_between_first_seen": [
+        301.056,
+        300.794
+      ],
+      "values_seen": {
+        "rot-value-agentgateway-0": 250,
+        "rot-value-agentgateway-1": 252,
+        "rot-value-agentgateway-2": 251,
+        "rot-value-agentgateway-3": 6
+      }
+    },
+    "envoy": {
+      "changes": [
+        {
+          "change": 1,
+          "first_seen_epoch": 1794494526.611,
+          "requests_with_old_value": 0,
+          "seconds": 1.0,
+          "secret_changed_epoch": 1794494525.618,
+          "wait_before_seconds": 5
+        },
+        {
+          "change": 2,
+          "first_seen_epoch": 1794494628.104,
+          "requests_with_old_value": 0,
+          "seconds": 1.0,
+          "secret_changed_epoch": 1794494627.067,
+          "wait_before_seconds": 100
+        },
+        {
+          "change": 3,
+          "first_seen_epoch": 1794494830.095,
+          "requests_with_old_value": 1,
+          "seconds": 1.6,
+          "secret_changed_epoch": 1794494828.498,
+          "wait_before_seconds": 200
+        }
+      ],
+      "empty_or_placeholder_values": 0,
+      "probe_requests": 275,
+      "seconds": {
+        "max": 1.6,
+        "median": 1.0,
+        "min": 1.0,
+        "n": 3
+      },
+      "seconds_between_first_seen": [
+        101.493,
+        201.991
+      ],
+      "values_seen": {
+        "rot-value-envoy-0": 17,
+        "rot-value-envoy-1": 84,
+        "rot-value-envoy-2": 168,
+        "rot-value-envoy-3": 6
+      }
+    }
+  },
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, one kind node, agentgateway v1.7.0 and Envoy switched in place",
+  "note": "one running actor, one http rule with replaceHeaders from a Kubernetes Secret, one request about each second to an echo service in the cluster. The Secret was changed three times on each dataplane. The values are made-up test strings.",
+  "sources": [
+    "capture/lab/Q-network/l-credential-rotation/agentgateway/20-rotations.tsv",
+    "capture/lab/Q-network/l-credential-rotation/agentgateway/10-probe.tsv",
+    "capture/lab/Q-network/l-credential-rotation/envoy/20-rotations.tsv",
+    "capture/lab/Q-network/l-credential-rotation/envoy/10-probe.tsv"
+  ],
+  "unit": {
+    "seconds": "from the change of the Secret to the first request in which the upstream saw the new value"
+  }
+}

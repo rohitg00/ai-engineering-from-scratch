@@ -1,0 +1,13 @@
+namespace/lab-m created
+workerpool.ate.dev/ballast-mvm created
+NAME    AGE
+lab-m   0s
+ATESPACE   NAME    GOLDEN TAG   ERROR   AGE
+lab-m      mvm-0                        0s
+ATESPACE   NAME      GOLDEN TAG   ERROR   AGE
+lab-m      mvm-200                        0s
+ATESPACE   NAME      GOLDEN TAG   ERROR   AGE
+lab-m      mvm-500                        0s
+Waiting for deployment "ballast-mvm" rollout to finish: 0 of 2 updated replicas are available...
+Waiting for deployment "ballast-mvm" rollout to finish: 1 of 2 updated replicas are available...
+deployment "ballast-mvm" successfully rolled out

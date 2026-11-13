@@ -1,0 +1,16 @@
+## 80-plain-http
+curl: (7) Failed to connect to atenet-router.ate-system.svc port 80 after 3 ms: Could not connect to server
+ code=000command terminated with exit code 7
+
+## 8081-plain-connect
+curl: (7) Failed to connect to atenet-router.ate-system.svc port 8081 after 3 ms: Could not connect to server
+ code=000command terminated with exit code 7
+
+## 443-nocert
+curl: (56) OpenSSL SSL_read: OpenSSL/3.3.2: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+ code=000command terminated with exit code 56
+
+## 443-wrong-identity
+curl: (56) Recv failure: Connection reset by peer
+ code=000command terminated with exit code 56
+

@@ -1,0 +1,12 @@
+CONTAINER           NAME                      CPU %               MEM                 DISK                INODES              SWAP
+07170f8a4a086       ate-api-server            2.58                67.98MB             86.02kB             23                  0B
+09f89a257125c       kube-controller-manager   1.90                94.45MB             77.82kB             22                  0B
+4e8d726816584       ate-api-server            1.87                65.77MB             86.02kB             23                  0B
+78b997977790a       postgres                  4.78                156.9MB             45.06kB             12                  0B
+a918c25b283c9       etcd                      3.34                90.8MB              28.67kB             10                  0B
+b629d6c55b7fe       controller                0.05                12.96MB             49.15kB             14                  0B
+cecee023e52a0       ate-controller            0.16                53.07MB             53.25kB             15                  0B
+d8f6efb372153       rustfs                    0.02                908.8MB             40.96kB             11                  0B
+e0e4d8eacb2e9       kube-apiserver            5.55                431.6MB             57.34kB             16                  0B
+e5a197f7906ff       atelet                    8.47                138MB               86.02kB             23                  0B
+fe45bb653ee28       atenet-router             0.39                39.36MB             57.34kB             16                  0B

@@ -1,0 +1,4 @@
+250 25000/100000 usage_usec 41467478 nr_periods 1672 nr_throttled 1649 throttled_usec 428931388 
+500 50000/100000 usage_usec 38723256 nr_periods 793 nr_throttled 765 throttled_usec 157096786 
+1000 100000/100000 usage_usec 31895780 nr_periods 345 nr_throttled 312 throttled_usec 30529410 
+2000 200000/100000 usage_usec 23220151 nr_periods 204 nr_throttled 38 throttled_usec 854079 

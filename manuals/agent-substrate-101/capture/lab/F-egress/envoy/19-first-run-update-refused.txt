@@ -1,0 +1,333 @@
+## T1 default deny: actor f-deny has no EgressPolicy
+actor "f-deny" in atespace "lab-f" has no egress policy
+### [10:45:54.927] t1-resolv
+$ cat /etc/resolv.conf; ip -4 addr 2>/dev/null | grep inet; ip route 2>/dev/null; ls -la /run/ate/egress-trust-bundle/; grep -c BEGIN /run/ate/egress-trust-bundle/trust-bundle.pem
+exit=0
+nameserver 169.254.17.1
+search ate-demo-egress.svc.cluster.local svc.cluster.local cluster.local
+options ndots:5
+    inet 127.0.0.1/8 scope host dynamic lo
+    inet 169.254.17.2/30 scope global dynamic eth0
+::1 dev lo scope link 
+fe80::/64 dev eth0 scope link 
+169.254.17.0/30 dev eth0 scope link 
+127.0.0.0/8 dev lo scope link 
+default via 169.254.17.1 dev eth0 scope link 
+total 226
+drwxr-xr-x    2 root     root          4096 Nov 12 10:45 .
+drwxr-xr-x    3 root     root          4096 Nov 12 10:45 ..
+-rw-r--r--    1 root     root        222672 Nov 12 10:45 trust-bundle.pem
+149
+
+
+### [10:45:55.420] t1-dns-incluster
+$ dig +time=2 +tries=1 +noall +comments +answer whoami.egress-target.svc.cluster.local | grep -E 'status|IN'
+exit=0
+;; WARNING: .local is reserved for Multicast DNS
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 33381
+
+
+### [10:45:55.944] t1-dns-public
+$ dig +time=2 +tries=1 +noall +comments +answer example.com | grep -E 'status|IN'; curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' http://example.com/
+exit=6 error=exit status 6
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 49238
+code=000
+
+stderr: curl: (6) Could not resolve host: example.com
+
+
+### [10:45:58.359] t1-dns-other-server
+$ dig @8.8.8.8 +time=2 +tries=1 example.com | grep -E 'status|timed out|refused|unreachable' ; echo rc=$?
+exit=0
+;; communications error to 8.8.8.8#53: timed out
+rc=0
+
+
+### [10:45:58.627] t1-http-direct-ip
+$ curl -sS -m 8 -i http://10.96.79.253/ | head -12
+exit=0
+
+stderr: curl: (56) Recv failure: Connection reset by peer
+
+
+### [10:45:58.933] t1-https-direct-ip
+$ curl -sS -k -m 8 -o /dev/null -w 'code=%{http_code}\n' https://1.1.1.1/
+exit=35 error=exit status 35
+code=000
+
+stderr: curl: (35) TLS connect error: error:0A000126:SSL routines::unexpected eof while reading
+
+
+### [10:45:59.134] t1-tcp-other
+$ (echo hello | nc -w 3 10.96.79.253 80 | head -3); echo nc_rc=$?
+exit=0
+nc_rc=0
+
+
+## T2 allowed host: f-main with P1
+### [10:45:59.141] policy create f-main <- P1.yaml
+ATESPACE   ACTOR    RULES   VERSION   AGE
+lab-f      f-main   1       1         0s
+### [10:46:12.198] t2-dns-allowed
+$ dig +time=2 +tries=1 +noall +comments +answer whoami.egress-target.svc.cluster.local | grep -E 'status|IN'
+exit=0
+;; WARNING: .local is reserved for Multicast DNS
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 6000
+;; WARNING: recursion requested but not available
+whoami.egress-target.svc.cluster.local.	30 IN A	10.96.79.253
+
+
+### [10:46:12.455] t2-http-allowed
+$ curl -sS -m 8 -i http://whoami.egress-target.svc.cluster.local/ | head -24
+exit=0
+HTTP/1.1 200 OK
+date: Thu, 12 Nov 2026 10:46:12 GMT
+content-length: 311
+content-type: text/plain; charset=utf-8
+x-envoy-upstream-service-time: 1
+server: envoy
+
+Hostname: whoami-5bdb4584f6-4gqz6
+IP: 127.0.0.1
+IP: ::1
+IP: 10.244.0.33
+IP: fe80::64ce:d1ff:fe68:d57c
+RemoteAddr: 10.244.0.22:48028
+GET / HTTP/1.1
+Host: whoami.egress-target.svc.cluster.local
+User-Agent: curl/8.14.1
+Accept: */*
+X-Forwarded-Proto: http
+X-Request-Id: 97b3493a-aa22-481a-8942-bee5fdbf6ef9
+
+
+
+### [10:46:12.748] t2-http-ip-not-in-policy
+$ curl -sS -m 8 -i http://10.96.79.253/ | head -8
+exit=0
+HTTP/1.1 403 Forbidden
+content-type: text/plain
+content-length: 13
+date: Thu, 12 Nov 2026 10:46:12 GMT
+server: envoy
+
+egress denied
+
+### [10:46:13.266] t2-dns-not-allowed
+$ dig +time=2 +tries=1 +noall +comments +answer drip.egress-target.svc.cluster.local | grep -E 'status|IN'; curl -sS -m 6 -o /dev/null -w 'code=%{http_code}\n' 'http://drip.egress-target.svc.cluster.local/drip?n=1'
+exit=6 error=exit status 6
+;; WARNING: .local is reserved for Multicast DNS
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 29943
+code=000
+
+stderr: curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local
+
+
+### [10:46:13.551] t2-other-ip-direct
+$ curl -sS -m 8 -i 'http://10.96.185.134/drip?n=1' | head -8
+exit=0
+HTTP/1.1 403 Forbidden
+content-type: text/plain
+content-length: 13
+date: Thu, 12 Nov 2026 10:46:13 GMT
+server: envoy
+
+egress denied
+
+### [10:46:13.784] t2-host-header-spoof
+$ curl -sS -m 8 -i -H 'Host: whoami.egress-target.svc.cluster.local' 'http://10.96.185.134/drip?n=1' | head -14
+exit=0
+HTTP/1.1 200 OK
+date: Thu, 12 Nov 2026 10:46:13 GMT
+content-length: 319
+content-type: text/plain; charset=utf-8
+x-envoy-upstream-service-time: 1
+server: envoy
+
+Hostname: whoami-5bdb4584f6-4gqz6
+IP: 127.0.0.1
+IP: ::1
+IP: 10.244.0.33
+IP: fe80::64ce:d1ff:fe68:d57c
+RemoteAddr: 10.244.0.22:39648
+GET /drip?n=1 HTTP/1.1
+
+
+## T3 https interception against tls_passthrough: P2
+### [10:46:13.793] policy update f-main <- P2.yaml
+Error: manifest for actor "f-main" in atespace "lab-f" lacks the metadata.uid and metadata.version preconditions that "get egress-policy -o yaml" prints
+### [10:46:26.353] t3-https-default-store
+$ curl -sS -m 15 -o /dev/null -w 'code=%{http_code} verify=%{ssl_verify_result}\n' https://example.com/
+exit=6 error=exit status 6
+code=000 verify=0
+
+stderr: curl: (6) Could not resolve host: example.com
+
+
+### [10:46:26.568] t3-https-trust-bundle
+$ curl -sS -m 15 -o /dev/null -w 'code=%{http_code} verify=%{ssl_verify_result} http=%{http_version}\n' --cacert /run/ate/egress-trust-bundle/trust-bundle.pem https://example.com/
+exit=6 error=exit status 6
+code=000 verify=0 http=0
+
+stderr: curl: (6) Could not resolve host: example.com
+
+
+### [10:46:27.569] t3-https-cert-seen
+$ echo | openssl s_client -connect example.com:443 -servername example.com 2>/dev/null | openssl x509 -noout -issuer -subject -dates -ext subjectAltName 2>&1
+exit=1 error=exit status 1
+Could not find certificate from <stdin>
+
+
+### [10:46:27.762] t3-passthrough-default-store
+$ curl -sS -m 15 -o /dev/null -w 'code=%{http_code} verify=%{ssl_verify_result} http=%{http_version}\n' https://example.org/
+exit=6 error=exit status 6
+code=000 verify=0 http=0
+
+stderr: curl: (6) Could not resolve host: example.org
+
+
+### [10:46:28.571] t3-passthrough-cert-seen
+$ echo | openssl s_client -connect example.org:443 -servername example.org 2>/dev/null | openssl x509 -noout -issuer -subject -dates 2>&1
+exit=1 error=exit status 1
+Could not find certificate from <stdin>
+
+
+### [10:46:29.149] t3-sni-unlisted
+$ IP=$(dig +short example.com | head -1); echo ip=$IP; curl -sS -m 10 -o /dev/null -w 'code=%{http_code}\n' --resolve www.iana.org:443:$IP https://www.iana.org/
+exit=49 error=exit status 49
+ip=
+code=000
+
+stderr: curl: (49) Couldn't parse CURLOPT_RESOLVE entry 'www.iana.org:443:'
+
+
+### [10:46:30.356] t3-trust-bundle-subjects
+$ grep -c BEGIN /run/ate/egress-trust-bundle/trust-bundle.pem; openssl crl2pkcs7 -nocrl -certfile /run/ate/egress-trust-bundle/trust-bundle.pem | openssl pkcs7 -print_certs -noout | grep -i -E 'ate|substrate|egress|mitm' | head -5
+exit=0
+149
+subject=C=US, O=Microsoft Corporation, CN=Microsoft ECC Root Certificate Authority 2017
+issuer=C=US, O=Microsoft Corporation, CN=Microsoft ECC Root Certificate Authority 2017
+subject=C=US, ST=Arizona, L=Scottsdale, O=Starfield Technologies, Inc., CN=Starfield Services Root Certificate Authority - G2
+issuer=C=US, ST=Arizona, L=Scottsdale, O=Starfield Technologies, Inc., CN=Starfield Services Root Certificate Authority - G2
+subject=C=US, O=Microsoft Corporation, CN=Microsoft RSA Root Certificate Authority 2017
+
+
+### [10:46:30.656] t3-websocket
+$ curl -sS -m 8 -i -H 'Connection: Upgrade' -H 'Upgrade: websocket' -H 'Sec-WebSocket-Version: 13' -H 'Sec-WebSocket-Key: dGhlIHNhbXBsZSBub25jZQ==' http://whoami.egress-target.svc.cluster.local/ | head -6
+exit=0
+HTTP/1.1 403 Forbidden
+content-type: text/plain
+content-length: 33
+date: Thu, 12 Nov 2026 10:46:30 GMT
+server: envoy
+connection: close
+
+
+## T4 policy change against open connections: P3 then back to P1
+### [10:46:30.666] policy update f-main <- P3.yaml
+Error: manifest for actor "f-main" in atespace "lab-f" lacks the metadata.uid and metadata.version preconditions that "get egress-policy -o yaml" prints
+### [10:46:43.178] t4-pre-drip
+$ curl -sS -m 6 'http://drip.egress-target.svc.cluster.local/drip?n=2'
+exit=6 error=exit status 6
+
+stderr: curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local
+
+
+### [10:46:43.762] t4-bg-http-stream
+$ curl -sS -N -m 75 'http://drip.egress-target.svc.cluster.local/drip?n=45' | tee /tmp/drip.out | wc -l; head -1 /tmp/drip.out; tail -1 /tmp/drip.out
+### [10:46:43.764] t4-bg-passthrough-one-conn
+$ (printf 'GET / HTTP/1.1\r\nHost: example.org\r\n\r\n'; sleep 22; printf 'GET / HTTP/1.1\r\nHost: example.org\r\nConnection: close\r\n\r\n'; sleep 4) | openssl s_client -quiet -connect example.org:443 -servername example.org 2>&1 | grep -a -c '^HTTP/1.1 200'
+exit=0
+0
+
+stderr: curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local
+
+exit=0
+0
+
+stderr: curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local
+
+
+
+### [10:46:48.200] policy update f-main <- P1.yaml
+Error: manifest for actor "f-main" in atespace "lab-f" lacks the metadata.uid and metadata.version preconditions that "get egress-policy -o yaml" prints
+### [10:46:48.194] +5s policy changed to P1 (drip and example.org removed)
+[10:46:51.088] +8s new requests: ["code=000\nstatus: NXDOMAIN\n0\n","curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n"]
+[10:46:56.218] +13s new requests: ["code=000\nstatus: NXDOMAIN\n0\n","curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n"]
+[10:47:03.025] +20s new requests: ["code=000\nstatus: NXDOMAIN\n0\n","curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n"]
+[10:47:13.286] +30s new requests: ["code=000\nstatus: NXDOMAIN\n0\n","curl: (6) Could not resolve host: drip.egress-target.svc.cluster.local\n"]
+[10:47:14.557] +31s background jobs done
+## T5 credential placeholder swap: P4
+### [10:47:14.702] policy update f-main <- P4.yaml
+Error: manifest for actor "f-main" in atespace "lab-f" lacks the metadata.uid and metadata.version preconditions that "get egress-policy -o yaml" prints
+### [10:47:27.259] t5-with-placeholder
+$ curl -sS -m 8 -i -H 'Authorization: placeholder-from-actor' http://whoami.egress-target.svc.cluster.local/ | grep -i -E 'HTTP/|authorization|x-forwarded|RemoteAddr|egress'
+exit=0
+HTTP/1.1 200 OK
+RemoteAddr: 10.244.0.22:57960
+GET / HTTP/1.1
+Host: whoami.egress-target.svc.cluster.local
+Authorization: placeholder-from-actor
+X-Forwarded-Proto: http
+
+
+### [10:47:27.555] t5-without-header
+$ curl -sS -m 8 -i http://whoami.egress-target.svc.cluster.local/ | grep -i -E 'HTTP/|authorization'
+exit=0
+HTTP/1.1 200 OK
+GET / HTTP/1.1
+
+
+### [10:47:27.850] t5-not-granted-namespace
+$ curl -sS -m 8 -i -H 'X-Other-Token: placeholder' http://whoami.egress-target.svc.cluster.local/ | head -12
+exit=0
+HTTP/1.1 200 OK
+date: Thu, 12 Nov 2026 10:47:27 GMT
+content-length: 339
+content-type: text/plain; charset=utf-8
+x-envoy-upstream-service-time: 0
+server: envoy
+
+Hostname: whoami-5bdb4584f6-4gqz6
+IP: 127.0.0.1
+IP: ::1
+IP: 10.244.0.33
+IP: fe80::64ce:d1ff:fe68:d57c
+
+
+### [10:47:28.152] t5-missing-secret
+$ curl -sS -m 8 -i -H 'X-Missing-Token: placeholder' http://whoami.egress-target.svc.cluster.local/ | head -12
+exit=0
+HTTP/1.1 200 OK
+date: Thu, 12 Nov 2026 10:47:28 GMT
+content-length: 341
+content-type: text/plain; charset=utf-8
+x-envoy-upstream-service-time: 0
+server: envoy
+
+Hostname: whoami-5bdb4584f6-4gqz6
+IP: 127.0.0.1
+IP: ::1
+IP: 10.244.0.33
+IP: fe80::64ce:d1ff:fe68:d57c
+
+
+### [10:47:29.167] t5-actor-env
+$ env | sort | cut -c1-80; grep -r -l 'marker' /run /etc /tmp 2>/dev/null | head -3; echo grep_done
+exit=0
+HOME=/root
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PORT=80
+PWD=/
+SHLVL=1
+grep_done
+
+
+## end state
+ATESPACE   NAME     TEMPLATE      STATE                 WORKER POD                               WORKER IPS    VERSION   AGE
+lab-f      f-deny   lab-f/shell   ACTOR_STATE_RUNNING   ate-demo-egress/egress-67f89fdb4-lg2r2   10.244.0.29   3         100s
+lab-f      f-main   lab-f/shell   ACTOR_STATE_RUNNING   ate-demo-egress/egress-67f89fdb4-9ttd8   10.244.0.28   3         100s
+## marker (the real credential value) occurrences in logs
+31-log-atenet-egress-envoy.log granted=0 ungranted=0 placeholder=0 lines=152
+31-log-atenet-egress-ext-proc.log granted=0 ungranted=0 placeholder=0 lines=905
+31-log-k8s-credential-provider-k8s-credential-provider.log granted=0 ungranted=0 placeholder=0 lines=12

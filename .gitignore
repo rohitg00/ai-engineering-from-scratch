@@ -145,6 +145,7 @@ site/lesson-code/
 
 !manuals/*/capture/out/*.log
 !manuals/*/capture/gpu/out-*/*.log
+!manuals/*/capture/lab/**/*.log
 
 .project-validation/
 projects/*/solution/output/

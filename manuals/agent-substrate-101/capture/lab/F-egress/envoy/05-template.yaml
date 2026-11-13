@@ -1,0 +1,42 @@
+containers:
+- env:
+  - name: PORT
+    value: "80"
+  image: localhost:5001/shellprobe@sha256:f7b2c72b053a2c658ceb62838bdce20bf05cde65692898ab39cd6e2503dc680a
+  name: shell
+  volumeMounts:
+  - mountPath: /run/ate
+    name: system-info
+metadata:
+  atespace: lab-f
+  createTime: "2026-11-12T10:44:30.919493849Z"
+  name: shell
+  uid: 21b5c96f-7e13-46bc-9b89-32b8543d72f4
+  updateTime: "2026-11-12T10:45:07.942870826Z"
+  version: "3"
+resources:
+  limits:
+    cpuMillicores: "500"
+    memoryBytes: "268435456"
+snapshotConfig:
+  goldenSnapshotConfig:
+    mode: GOLDEN_SNAPSHOT_MODE_ENABLED
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY
+status:
+  goldenSnapshotStatus:
+    goldenTag:
+      atespace: lab-f
+      name: 21b5c96f-7e13-46bc-9b89-32b8543d72f4
+    snapshotTime: "2026-11-12T10:45:07.542693721Z"
+volumes:
+- name: system-info
+  systemInfo:
+    dataSources:
+    - trustBundle:
+        names:
+        - egress-mitm.ate.dev
+        - system-roots.ate.dev
+        path: egress-trust-bundle/trust-bundle.pem
+workerSelector:
+  matchLabels:
+    workload: egress

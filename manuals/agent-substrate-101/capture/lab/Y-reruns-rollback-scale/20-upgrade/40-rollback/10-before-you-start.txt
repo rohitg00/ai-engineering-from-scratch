@@ -1,0 +1,4 @@
+rollback from v1.0.0 to v1.0.0-rc.3 with old.yaml, from the old checkout, in the order of the guide
+  tag: v1.0.0-rc.3
+NAMESPACE   NAME      CLASS    IMAGE
+up-lab      up-pool   gvisor   ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0-rc.3

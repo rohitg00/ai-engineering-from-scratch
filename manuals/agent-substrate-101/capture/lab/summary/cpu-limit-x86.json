@@ -1,0 +1,731 @@
+{
+  "cgroup_cpu_max_of_actor": {
+    "1000": "100000/100000",
+    "2000": "200000/100000",
+    "250": "25000/100000",
+    "500": "50000/100000"
+  },
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, one kind node, agentgateway v1.7.0 and Envoy switched in place, pool of one worker pod with a Kubernetes limit of 6 CPU",
+  "note": "a fixed number of loop steps (38,928 blocks of 200,000 steps, about 5 s on one free core) on 1 thread or on 4 threads, three runs for each row. Host CPU time is read from the cgroup of the actor on the node.",
+  "points": [
+    {
+      "cpu_seconds_reported_inside": {
+        "max": 23.78,
+        "median": 22.57,
+        "min": 22.06,
+        "n": 3
+      },
+      "host_cores_used": {
+        "max": 0.25,
+        "median": 0.25,
+        "min": 0.25,
+        "n": 3
+      },
+      "host_cpu_seconds": {
+        "max": 6.94,
+        "median": 6.89,
+        "min": 6.82,
+        "n": 3
+      },
+      "periods": {
+        "max": 283.0,
+        "median": 278.0,
+        "min": 276.0,
+        "n": 3
+      },
+      "runs": [
+        {
+          "cpu_seconds_reported_inside": 23.78,
+          "host_cores_used": 0.25,
+          "host_cpu_seconds": 6.94,
+          "periods": 283,
+          "throttled_periods": 276,
+          "wall_seconds": 27.612
+        },
+        {
+          "cpu_seconds_reported_inside": 22.57,
+          "host_cores_used": 0.25,
+          "host_cpu_seconds": 6.82,
+          "periods": 276,
+          "throttled_periods": 272,
+          "wall_seconds": 27.139
+        },
+        {
+          "cpu_seconds_reported_inside": 22.06,
+          "host_cores_used": 0.25,
+          "host_cpu_seconds": 6.89,
+          "periods": 278,
+          "throttled_periods": 275,
+          "wall_seconds": 27.448
+        }
+      ],
+      "threads": 1,
+      "throttled_periods": {
+        "max": 276.0,
+        "median": 275.0,
+        "min": 272.0,
+        "n": 3
+      },
+      "wall_seconds": {
+        "max": 27.612,
+        "median": 27.448,
+        "min": 27.139,
+        "n": 3
+      },
+      "x": 250
+    },
+    {
+      "cpu_seconds_reported_inside": {
+        "max": 13.88,
+        "median": 12.88,
+        "min": 12.59,
+        "n": 3
+      },
+      "host_cores_used": {
+        "max": 0.25,
+        "median": 0.25,
+        "min": 0.25,
+        "n": 3
+      },
+      "host_cpu_seconds": {
+        "max": 7.0,
+        "median": 6.98,
+        "min": 6.67,
+        "n": 3
+      },
+      "periods": {
+        "max": 282.0,
+        "median": 281.0,
+        "min": 269.0,
+        "n": 3
+      },
+      "runs": [
+        {
+          "cpu_seconds_reported_inside": 13.88,
+          "host_cores_used": 0.25,
+          "host_cpu_seconds": 7.0,
+          "periods": 282,
+          "throttled_periods": 279,
+          "wall_seconds": 27.86
+        },
+        {
+          "cpu_seconds_reported_inside": 12.88,
+          "host_cores_used": 0.25,
+          "host_cpu_seconds": 6.98,
+          "periods": 281,
+          "throttled_periods": 279,
+          "wall_seconds": 27.733
+        },
+        {
+          "cpu_seconds_reported_inside": 12.59,
+          "host_cores_used": 0.25,
+          "host_cpu_seconds": 6.67,
+          "periods": 269,
+          "throttled_periods": 266,
+          "wall_seconds": 26.527
+        }
+      ],
+      "threads": 4,
+      "throttled_periods": {
+        "max": 279.0,
+        "median": 279.0,
+        "min": 266.0,
+        "n": 3
+      },
+      "wall_seconds": {
+        "max": 27.86,
+        "median": 27.733,
+        "min": 26.527,
+        "n": 3
+      },
+      "x": 250
+    },
+    {
+      "cpu_seconds_reported_inside": {
+        "max": 14.72,
+        "median": 14.24,
+        "min": 13.71,
+        "n": 3
+      },
+      "host_cores_used": {
+        "max": 0.51,
+        "median": 0.5,
+        "min": 0.5,
+        "n": 3
+      },
+      "host_cpu_seconds": {
+        "max": 6.58,
+        "median": 6.53,
+        "min": 6.4,
+        "n": 3
+      },
+      "periods": {
+        "max": 134.0,
+        "median": 134.0,
+        "min": 133.0,
+        "n": 3
+      },
+      "runs": [
+        {
+          "cpu_seconds_reported_inside": 13.71,
+          "host_cores_used": 0.51,
+          "host_cpu_seconds": 6.4,
+          "periods": 134,
+          "throttled_periods": 127,
+          "wall_seconds": 12.671
+        },
+        {
+          "cpu_seconds_reported_inside": 14.24,
+          "host_cores_used": 0.5,
+          "host_cpu_seconds": 6.53,
+          "periods": 134,
+          "throttled_periods": 129,
+          "wall_seconds": 12.958
+        },
+        {
+          "cpu_seconds_reported_inside": 14.72,
+          "host_cores_used": 0.5,
+          "host_cpu_seconds": 6.58,
+          "periods": 133,
+          "throttled_periods": 131,
+          "wall_seconds": 13.061
+        }
+      ],
+      "threads": 1,
+      "throttled_periods": {
+        "max": 131.0,
+        "median": 129.0,
+        "min": 127.0,
+        "n": 3
+      },
+      "wall_seconds": {
+        "max": 13.061,
+        "median": 12.958,
+        "min": 12.671,
+        "n": 3
+      },
+      "x": 500
+    },
+    {
+      "cpu_seconds_reported_inside": {
+        "max": 8.6,
+        "median": 8.3,
+        "min": 8.22,
+        "n": 3
+      },
+      "host_cores_used": {
+        "max": 0.5,
+        "median": 0.5,
+        "min": 0.5,
+        "n": 3
+      },
+      "host_cpu_seconds": {
+        "max": 6.44,
+        "median": 6.32,
+        "min": 6.27,
+        "n": 3
+      },
+      "periods": {
+        "max": 130.0,
+        "median": 128.0,
+        "min": 128.0,
+        "n": 3
+      },
+      "runs": [
+        {
+          "cpu_seconds_reported_inside": 8.22,
+          "host_cores_used": 0.5,
+          "host_cpu_seconds": 6.44,
+          "periods": 130,
+          "throttled_periods": 128,
+          "wall_seconds": 12.764
+        },
+        {
+          "cpu_seconds_reported_inside": 8.6,
+          "host_cores_used": 0.5,
+          "host_cpu_seconds": 6.32,
+          "periods": 128,
+          "throttled_periods": 126,
+          "wall_seconds": 12.54
+        },
+        {
+          "cpu_seconds_reported_inside": 8.3,
+          "host_cores_used": 0.5,
+          "host_cpu_seconds": 6.27,
+          "periods": 128,
+          "throttled_periods": 124,
+          "wall_seconds": 12.434
+        }
+      ],
+      "threads": 4,
+      "throttled_periods": {
+        "max": 128.0,
+        "median": 126.0,
+        "min": 124.0,
+        "n": 3
+      },
+      "wall_seconds": {
+        "max": 12.764,
+        "median": 12.54,
+        "min": 12.434,
+        "n": 3
+      },
+      "x": 500
+    },
+    {
+      "cpu_seconds_reported_inside": {
+        "max": 6.58,
+        "median": 6.21,
+        "min": 5.73,
+        "n": 3
+      },
+      "host_cores_used": {
+        "max": 1.01,
+        "median": 1.01,
+        "min": 1.01,
+        "n": 3
+      },
+      "host_cpu_seconds": {
+        "max": 5.44,
+        "median": 5.11,
+        "min": 4.97,
+        "n": 3
+      },
+      "periods": {
+        "max": 58.0,
+        "median": 55.0,
+        "min": 54.0,
+        "n": 3
+      },
+      "runs": [
+        {
+          "cpu_seconds_reported_inside": 6.58,
+          "host_cores_used": 1.01,
+          "host_cpu_seconds": 5.11,
+          "periods": 55,
+          "throttled_periods": 50,
+          "wall_seconds": 5.075
+        },
+        {
+          "cpu_seconds_reported_inside": 5.73,
+          "host_cores_used": 1.01,
+          "host_cpu_seconds": 4.97,
+          "periods": 54,
+          "throttled_periods": 49,
+          "wall_seconds": 4.943
+        },
+        {
+          "cpu_seconds_reported_inside": 6.21,
+          "host_cores_used": 1.01,
+          "host_cpu_seconds": 5.44,
+          "periods": 58,
+          "throttled_periods": 53,
+          "wall_seconds": 5.409
+        }
+      ],
+      "threads": 1,
+      "throttled_periods": {
+        "max": 53.0,
+        "median": 50.0,
+        "min": 49.0,
+        "n": 3
+      },
+      "wall_seconds": {
+        "max": 5.409,
+        "median": 5.075,
+        "min": 4.943,
+        "n": 3
+      },
+      "x": 1000
+    },
+    {
+      "cpu_seconds_reported_inside": {
+        "max": 5.99,
+        "median": 5.82,
+        "min": 5.76,
+        "n": 3
+      },
+      "host_cores_used": {
+        "max": 1.01,
+        "median": 1.0,
+        "min": 1.0,
+        "n": 3
+      },
+      "host_cpu_seconds": {
+        "max": 5.49,
+        "median": 5.37,
+        "min": 5.34,
+        "n": 3
+      },
+      "periods": {
+        "max": 57.0,
+        "median": 57.0,
+        "min": 56.0,
+        "n": 3
+      },
+      "runs": [
+        {
+          "cpu_seconds_reported_inside": 5.99,
+          "host_cores_used": 1.0,
+          "host_cpu_seconds": 5.49,
+          "periods": 57,
+          "throttled_periods": 54,
+          "wall_seconds": 5.464
+        },
+        {
+          "cpu_seconds_reported_inside": 5.76,
+          "host_cores_used": 1.01,
+          "host_cpu_seconds": 5.37,
+          "periods": 56,
+          "throttled_periods": 53,
+          "wall_seconds": 5.327
+        },
+        {
+          "cpu_seconds_reported_inside": 5.82,
+          "host_cores_used": 1.0,
+          "host_cpu_seconds": 5.34,
+          "periods": 57,
+          "throttled_periods": 53,
+          "wall_seconds": 5.318
+        }
+      ],
+      "threads": 4,
+      "throttled_periods": {
+        "max": 54.0,
+        "median": 53.0,
+        "min": 53.0,
+        "n": 3
+      },
+      "wall_seconds": {
+        "max": 5.464,
+        "median": 5.327,
+        "min": 5.318,
+        "n": 3
+      },
+      "x": 1000
+    },
+    {
+      "cpu_seconds_reported_inside": {
+        "max": 5.14,
+        "median": 4.21,
+        "min": 4.07,
+        "n": 3
+      },
+      "host_cores_used": {
+        "max": 1.12,
+        "median": 1.12,
+        "min": 1.12,
+        "n": 3
+      },
+      "host_cpu_seconds": {
+        "max": 5.06,
+        "median": 5.02,
+        "min": 4.62,
+        "n": 3
+      },
+      "periods": {
+        "max": 49.0,
+        "median": 48.0,
+        "min": 44.0,
+        "n": 3
+      },
+      "runs": [
+        {
+          "cpu_seconds_reported_inside": 4.21,
+          "host_cores_used": 1.12,
+          "host_cpu_seconds": 5.02,
+          "periods": 48,
+          "throttled_periods": 0,
+          "wall_seconds": 4.474
+        },
+        {
+          "cpu_seconds_reported_inside": 5.14,
+          "host_cores_used": 1.12,
+          "host_cpu_seconds": 5.06,
+          "periods": 49,
+          "throttled_periods": 0,
+          "wall_seconds": 4.515
+        },
+        {
+          "cpu_seconds_reported_inside": 4.07,
+          "host_cores_used": 1.12,
+          "host_cpu_seconds": 4.62,
+          "periods": 44,
+          "throttled_periods": 0,
+          "wall_seconds": 4.123
+        }
+      ],
+      "threads": 1,
+      "throttled_periods": {
+        "max": 0.0,
+        "median": 0.0,
+        "min": 0.0,
+        "n": 3
+      },
+      "wall_seconds": {
+        "max": 4.515,
+        "median": 4.474,
+        "min": 4.123,
+        "n": 3
+      },
+      "x": 2000
+    },
+    {
+      "cpu_seconds_reported_inside": {
+        "max": 2.54,
+        "median": 2.53,
+        "min": 2.49,
+        "n": 3
+      },
+      "host_cores_used": {
+        "max": 2.01,
+        "median": 2.0,
+        "min": 1.96,
+        "n": 3
+      },
+      "host_cpu_seconds": {
+        "max": 2.8,
+        "median": 2.78,
+        "min": 2.75,
+        "n": 3
+      },
+      "periods": {
+        "max": 18.0,
+        "median": 18.0,
+        "min": 17.0,
+        "n": 3
+      },
+      "runs": [
+        {
+          "cpu_seconds_reported_inside": 2.53,
+          "host_cores_used": 2.01,
+          "host_cpu_seconds": 2.8,
+          "periods": 18,
+          "throttled_periods": 12,
+          "wall_seconds": 1.392
+        },
+        {
+          "cpu_seconds_reported_inside": 2.49,
+          "host_cores_used": 2.0,
+          "host_cpu_seconds": 2.75,
+          "periods": 17,
+          "throttled_periods": 13,
+          "wall_seconds": 1.375
+        },
+        {
+          "cpu_seconds_reported_inside": 2.54,
+          "host_cores_used": 1.96,
+          "host_cpu_seconds": 2.78,
+          "periods": 18,
+          "throttled_periods": 13,
+          "wall_seconds": 1.423
+        }
+      ],
+      "threads": 4,
+      "throttled_periods": {
+        "max": 13.0,
+        "median": 13.0,
+        "min": 12.0,
+        "n": 3
+      },
+      "wall_seconds": {
+        "max": 1.423,
+        "median": 1.392,
+        "min": 1.375,
+        "n": 3
+      },
+      "x": 2000
+    }
+  ],
+  "seen_inside_the_actor": {
+    "1000": {
+      "cgroup_cpu_max": "unreadable",
+      "cgroup_v1_quota": "unreadable",
+      "num_cpu": 2,
+      "proc_cpuinfo_processors": 2
+    },
+    "2000": {
+      "cgroup_cpu_max": "unreadable",
+      "cgroup_v1_quota": "unreadable",
+      "num_cpu": 2,
+      "proc_cpuinfo_processors": 2
+    },
+    "250": {
+      "cgroup_cpu_max": "unreadable",
+      "cgroup_v1_quota": "unreadable",
+      "num_cpu": 2,
+      "proc_cpuinfo_processors": 2
+    },
+    "500": {
+      "cgroup_cpu_max": "unreadable",
+      "cgroup_v1_quota": "unreadable",
+      "num_cpu": 2,
+      "proc_cpuinfo_processors": 2
+    }
+  },
+  "sources": [
+    "capture/lab/Q-network/n-cpu-limit/40-work.tsv",
+    "capture/lab/Q-network/n-cpu-limit/42-cgroup-after.txt",
+    "capture/lab/Q-network/n-cpu-limit/41-info-250.json",
+    "capture/lab/Q-network/n-cpu-limit/03-worker-pod-resources.json",
+    "capture/lab/Q-network/n-cpu-limit/10-burn.tsv"
+  ],
+  "superseded_first_test": {
+    "note": "each run stopped when the CPU time read inside the sandbox reached 10 s, so effective_cores is not valid",
+    "runs": [
+      {
+        "effective_cores_not_valid": 0.74,
+        "threads": 1,
+        "wall_seconds": 13.474,
+        "x": 250
+      },
+      {
+        "effective_cores_not_valid": 0.81,
+        "threads": 1,
+        "wall_seconds": 12.52,
+        "x": 250
+      },
+      {
+        "effective_cores_not_valid": 0.73,
+        "threads": 1,
+        "wall_seconds": 13.833,
+        "x": 250
+      },
+      {
+        "effective_cores_not_valid": 0.31,
+        "threads": 4,
+        "wall_seconds": 32.339,
+        "x": 250
+      },
+      {
+        "effective_cores_not_valid": 0.31,
+        "threads": 4,
+        "wall_seconds": 32.433,
+        "x": 250
+      },
+      {
+        "effective_cores_not_valid": 0.32,
+        "threads": 4,
+        "wall_seconds": 31.143,
+        "x": 250
+      },
+      {
+        "effective_cores_not_valid": 0.91,
+        "threads": 1,
+        "wall_seconds": 11.054,
+        "x": 500
+      },
+      {
+        "effective_cores_not_valid": 0.87,
+        "threads": 1,
+        "wall_seconds": 11.441,
+        "x": 500
+      },
+      {
+        "effective_cores_not_valid": 0.91,
+        "threads": 1,
+        "wall_seconds": 11.056,
+        "x": 500
+      },
+      {
+        "effective_cores_not_valid": 0.46,
+        "threads": 4,
+        "wall_seconds": 21.645,
+        "x": 500
+      },
+      {
+        "effective_cores_not_valid": 0.46,
+        "threads": 4,
+        "wall_seconds": 21.621,
+        "x": 500
+      },
+      {
+        "effective_cores_not_valid": 0.47,
+        "threads": 4,
+        "wall_seconds": 21.427,
+        "x": 500
+      },
+      {
+        "effective_cores_not_valid": 1.03,
+        "threads": 1,
+        "wall_seconds": 9.746,
+        "x": 1000
+      },
+      {
+        "effective_cores_not_valid": 1.02,
+        "threads": 1,
+        "wall_seconds": 9.766,
+        "x": 1000
+      },
+      {
+        "effective_cores_not_valid": 1.03,
+        "threads": 1,
+        "wall_seconds": 9.703,
+        "x": 1000
+      },
+      {
+        "effective_cores_not_valid": 0.87,
+        "threads": 4,
+        "wall_seconds": 11.482,
+        "x": 1000
+      },
+      {
+        "effective_cores_not_valid": 0.85,
+        "threads": 4,
+        "wall_seconds": 11.734,
+        "x": 1000
+      },
+      {
+        "effective_cores_not_valid": 0.86,
+        "threads": 4,
+        "wall_seconds": 11.663,
+        "x": 1000
+      },
+      {
+        "effective_cores_not_valid": 1.03,
+        "threads": 1,
+        "wall_seconds": 9.753,
+        "x": 2000
+      },
+      {
+        "effective_cores_not_valid": 1.02,
+        "threads": 1,
+        "wall_seconds": 9.806,
+        "x": 2000
+      },
+      {
+        "effective_cores_not_valid": 1.04,
+        "threads": 1,
+        "wall_seconds": 9.661,
+        "x": 2000
+      },
+      {
+        "effective_cores_not_valid": 1.58,
+        "threads": 4,
+        "wall_seconds": 6.324,
+        "x": 2000
+      },
+      {
+        "effective_cores_not_valid": 1.53,
+        "threads": 4,
+        "wall_seconds": 6.57,
+        "x": 2000
+      },
+      {
+        "effective_cores_not_valid": 1.44,
+        "threads": 4,
+        "wall_seconds": 6.954,
+        "x": 2000
+      }
+    ],
+    "source": "capture/lab/Q-network/n-cpu-limit/10-burn.tsv"
+  },
+  "unit": {
+    "host_cores_used": "host CPU seconds divided by wall seconds",
+    "x": "resources.limits.cpuMillicores of the template"
+  },
+  "worker_pod_limits": {
+    "cpu": "6",
+    "memory": "2Gi"
+  }
+}

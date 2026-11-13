@@ -1,0 +1,5 @@
+NAME                                                  SIGNER
+egress-mitm.ate.dev:mitm:primary-bundle               egress-mitm.ate.dev/mitm
+podidentity.podcert.ate.dev:identity:primary-bundle   podidentity.podcert.ate.dev/identity
+postgres.podcert.ate.dev:identity:primary-bundle      postgres.podcert.ate.dev/identity
+servicedns.podcert.ate.dev:identity:primary-bundle    servicedns.podcert.ate.dev/identity

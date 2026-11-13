@@ -1,0 +1,37 @@
+### [13:09:12.166] policy update f-main <- Pall.yaml : ATESPACE   ACTOR    RULES   VERSION   AGE lab-f      f-main   2       41        143m 
+### [13:09:16.601] warm
+$ curl -s -o /dev/null -w '%{http_code}\n' http://whoami.egress-target.svc.cluster.local/
+exit=0
+200
+
+
+### [13:09:36.094] hundred-debug
+$ ok=0; for i in $(seq 1 100); do c=$(curl -s -m 5 -o /dev/null -w '%{http_code}' -H 'X-Lab-Marker: lab-header-marker-123' -H 'Authorization: Bearer lab-auth-marker-456' http://whoami.egress-target.svc.cluster.local/); [ $c = 200 ] && ok=$((ok+1)); done; echo ok=$ok of 100
+exit=0
+ok=100 of 100
+
+
+### [13:09:49.956] warm-info-1
+$ curl -s -m 5 -o /dev/null -w '%{http_code}\n' http://whoami.egress-target.svc.cluster.local/
+exit=0
+200
+
+
+### [13:10:09.978] hundred-info
+$ ok=0; for i in $(seq 1 100); do c=$(curl -s -m 5 -o /dev/null -w '%{http_code}' -H 'X-Lab-Marker: lab-header-marker-123' -H 'Authorization: Bearer lab-auth-marker-456' http://whoami.egress-target.svc.cluster.local/); [ $c = 200 ] && ok=$((ok+1)); done; echo ok=$ok of 100
+exit=0
+ok=100 of 100
+
+
+### [13:10:23.124] warm-warn-1
+$ curl -s -m 5 -o /dev/null -w '%{http_code}\n' http://whoami.egress-target.svc.cluster.local/
+exit=0
+200
+
+
+### [13:10:43.152] hundred-warn
+$ ok=0; for i in $(seq 1 100); do c=$(curl -s -m 5 -o /dev/null -w '%{http_code}' -H 'X-Lab-Marker: lab-header-marker-123' -H 'Authorization: Bearer lab-auth-marker-456' http://whoami.egress-target.svc.cluster.local/); [ $c = 200 ] && ok=$((ok+1)); done; echo ok=$ok of 100
+exit=0
+ok=100 of 100
+
+

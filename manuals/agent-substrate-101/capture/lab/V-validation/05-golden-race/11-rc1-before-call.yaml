@@ -1,0 +1,12 @@
+actorTemplate:
+  atespace: lab-v
+  name: race-200
+metadata:
+  atespace: lab-v
+  createTime: "2026-11-12T12:49:47.145524615Z"
+  name: rc1
+  uid: 7dc2c5b1-4c96-460a-9158-a6e5f47f5677
+  updateTime: "2026-11-12T12:49:47.145524615Z"
+  version: "1"
+status:
+  state: ACTOR_STATE_SUSPENDED

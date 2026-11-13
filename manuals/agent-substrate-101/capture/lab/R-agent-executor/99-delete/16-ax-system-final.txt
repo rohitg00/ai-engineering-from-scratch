@@ -1,0 +1,8 @@
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/ax-pool-588b78fd54-29xgr     1/1     Running   0          15m
+pod/ax-pool-588b78fd54-88rc7     1/1     Running   0          15m
+pod/ax-postgres-0                1/1     Running   0          16m
+pod/ax-server-786f5878b4-g7qr8   1/1     Running   0          14m
+
+NAME                         DESIRED   REPLICAS   READY   SANDBOXCONFIG    RESOLVED   AGE
+workerpool.ate.dev/ax-pool   2         2          2       gvisor-default   True       15m

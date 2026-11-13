@@ -1,0 +1,24 @@
+ts	t	event	detail
+2026-11-12T14:28:54.370Z	t=-	actor	v3 on multi-worker2
+2026-11-12T14:28:54.464Z	t=-	v3-call	200	0.069202	count=1 mb=50 sum=6613 process_age_s=5.9
+2026-11-12T14:28:54.556Z	t=-	v3-call	200	0.067170	count=2 mb=50 sum=6613 process_age_s=6.0
+2026-11-12T14:28:54.650Z	t=-	v3-call	200	0.068960	count=3 mb=50 sum=6613 process_age_s=6.1
+2026-11-12T14:28:56.540Z	t=-	v3-call	200	0.316722	count=4 mb=50 sum=6613 process_age_s=6.4
+2026-11-12T14:28:56.637Z	t=-	v3-call	200	0.070010	count=5 mb=50 sum=6613 process_age_s=6.5
+2026-11-12T14:28:57.683Z	t=-	v3-suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:multi-worker2
+2026-11-12T14:28:57.908Z	t=-	actor	w1 on multi-worker2
+2026-11-12T14:28:58.013Z	t=-	w1-call	200	0.079156	count=1 mb=50 sum=6613 process_age_s=7.5
+2026-11-12T14:28:58.100Z	t=-	w1-call	200	0.064748	count=2 mb=50 sum=6613 process_age_s=7.6
+2026-11-12T14:28:58.193Z	t=-	w1-call	200	0.070254	count=3 mb=50 sum=6613 process_age_s=7.7
+2026-11-12T14:28:59.920Z	t=-	w1-call	200	0.329986	count=4 mb=50 sum=6613 process_age_s=8.0
+2026-11-12T14:29:00.018Z	t=-	w1-call	200	0.072689	count=5 mb=50 sum=6613 process_age_s=8.1
+2026-11-12T14:29:01.118Z	t=-	w1-suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:multi-worker2
+2026-11-12T14:29:01.122Z	t=-	node-stop	docker stop multi-worker2
+2026-11-12T14:29:01.796Z	t=0.7	node-stopped	multi-worker2
+2026-11-12T14:30:22.245Z	t=81.1	state-while-down	v3: ACTOR_STATE_SUSPENDED multi-worker2 | w1: ACTOR_STATE_SUSPENDED multi-worker2
+2026-11-12T14:30:22.553Z	t=81.4	node-start	after 81.4 s
+2026-11-12T14:30:47.356Z	t=106.2	workers-active-again	2 on multi-worker2
+2026-11-12T14:30:48.649Z	t=107.5	w1-request-without-revert	200	0.356733	count=6 mb=50 sum=6613 process_age_s=8.4	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:multi-worker2
+2026-11-12T14:30:48.960Z	t=107.8	w1-second-request	200	0.064515	count=7 mb=50 sum=6613 process_age_s=8.8	|	ACTOR_STATE_RUNNING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:multi-worker2
+2026-11-12T14:30:49.242Z	t=108.1	v3-revert	0.0 s | ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      v3     lab-n/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    11        11
+2026-11-12T14:30:50.954Z	t=109.8	v3-request-after-revert	200	0.488242	count=4 mb=50 sum=6613 process_age_s=6.4	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-

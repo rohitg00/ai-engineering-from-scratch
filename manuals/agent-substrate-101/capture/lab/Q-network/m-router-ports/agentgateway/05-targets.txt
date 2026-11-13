@@ -1,0 +1,2 @@
+router pod address family recorded as POD (value not stored)
+atenet-router-7c5c864d47-c5glg 1/1 Running

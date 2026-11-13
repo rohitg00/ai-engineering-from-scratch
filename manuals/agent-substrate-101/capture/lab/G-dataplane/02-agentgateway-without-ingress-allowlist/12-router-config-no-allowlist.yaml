@@ -1,0 +1,109 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    # yaml-language-server: $schema=https://agentgateway.dev/schema/config
+    config:
+      statsAddr: 0.0.0.0:15020
+      backend:
+        # See the ingress-only loopback rationale in ../agentgateway/configmap.yaml.
+        allowDynamicLoopback: true
+
+    frontendPolicies:
+      networkAuthorization:
+        rules:
+        - allow: >-
+            source.spiffeId in []
+      tracing:
+        host: $AGENTGATEWAY_OTLP_ADDRESS
+        protocol: grpc
+        randomSampling: 0.01
+
+    gateways:
+      https:
+        port: 8443
+        protocol: HTTPS
+        tls: &ingress-tls
+          cert: /run/servicedns.podcert.ate.dev/credential-bundle.pem
+          key: /run/servicedns.podcert.ate.dev/credential-bundle.pem
+          root: /run/podidentity.podcert.ate.dev/trust-bundle.pem
+
+    backends:
+    - name: dynamic
+      dynamic: {}
+      policies:
+        http:
+          version: HTTP/1.1
+        backendTunnel:
+          proxy:
+            backend: /dynamic
+          mode: connect
+          policies:
+            backendTLS:
+              cert: /run/podidentity.podcert.ate.dev/credential-bundle.pem
+              key: /run/podidentity.podcert.ate.dev/credential-bundle.pem
+              root: /run/podidentity.podcert.ate.dev/trust-bundle.pem
+              insecureHost: true
+
+    routes:
+    - name: substrate-actors
+      gateways:
+      - https
+      matches:
+      - path:
+          pathPrefix: /
+      policies: &substrate-ingress
+        substrateIngress:
+          host: api.ate-system.svc:443
+          connectTargetPort: 8443
+          policies:
+            backendTLS:
+              cert: /run/podidentity.podcert.ate.dev/credential-bundle.pem
+              key: /run/podidentity.podcert.ate.dev/credential-bundle.pem
+              root: /run/servicedns-ca/trust-bundle.pem
+      backends:
+      - backend: /dynamic
+    - name: substrate-actors-grpc
+      gateways:
+      - https
+      matches: &grpc-matches
+      - method: POST
+        headers:
+        - name: content-type
+          value:
+            regex: '(?i)^application/grpc([+;].*)?$'
+      policies: *substrate-ingress
+      backends: &grpc-backends
+      - backend: /dynamic
+        policies:
+          http:
+            version: HTTP/2.0
+
+    binds:
+    - port: 8444
+      tunnelProtocol: connect
+      listeners:
+      - protocol: HTTPS
+        tls: *ingress-tls
+        routes: []
+    - mode: internal
+      listeners:
+      - protocol: HTTP
+        routes:
+        - name: substrate-actors-tunneled
+          matches:
+          - path:
+              pathPrefix: /
+          policies: *substrate-ingress
+          backends:
+          - backend: /dynamic
+        - name: substrate-actors-tunneled-grpc
+          matches: *grpc-matches
+          policies: *substrate-ingress
+          backends: *grpc-backends
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2026-11-12T11:11:24Z"
+  name: atenet-router-agentgateway-config
+  namespace: ate-system
+  resourceVersion: "7550"
+  uid: 9d251e21-69e5-49e3-90cd-6905b8242ed4

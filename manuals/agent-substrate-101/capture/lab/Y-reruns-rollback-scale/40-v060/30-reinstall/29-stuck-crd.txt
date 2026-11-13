@@ -1,0 +1,6 @@
+  deletionTimestamp: "2026-11-13T06:08:35Z"
+  finalizers:
+  - customresourcecleanup.apiextensions.k8s.io
+  finalizers:
+  - sandboxconfig.ate.dev/workerpool-protection
+  generation: 2

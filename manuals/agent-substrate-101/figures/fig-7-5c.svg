@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 232" role="img" aria-labelledby="fig-7-5c-title fig-7-5c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-5c-title">A worker pod is deleted under a running Agent Executor task</title>
+  <desc id="fig-7-5c-desc">Two runs, one row each. In both, a task wrote one file, was suspended and resumed, wrote a second file, and then lost its worker pod. In the first run the suspend was 8.7 seconds before the loss and the snapshot was still PENDING: after ax resume task, which took 0.30 seconds, both files were gone. In the second run the suspend was 307 seconds before the loss and the snapshot was COMPLETED in the object store: ax resume task took 0.33 seconds, the first file was kept, and the second file was gone. In both runs the task showed the phase Failed until the resume, and no revert command was needed.</desc>
+  <defs><marker id="fig-7-5c-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-7-5c-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-7-5c-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">LAST SUSPEND</text>
+  <text x="184" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WORKER POD DELETED</text>
+  <text x="348" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AX RESUME TASK</text>
+  <text x="492" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">IN /WORKSPACE</text>
+  <rect x="20" y="28" width="150" height="72" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="28" y="51.45" font-size="11.5" font-weight="700">PENDING</text>
+  <text x="28" y="68.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">8.7 s before the loss,</text>
+  <text x="28" y="83.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">still on the worker</text>
+  <rect x="184" y="28" width="150" height="72" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="192" y="51.45" font-size="11.5" font-weight="700">CRASHED in 1.2 s</text>
+  <text x="192" y="68.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Phase: Failed for</text>
+  <text x="192" y="83.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">41 s with no command</text>
+  <rect x="348" y="28" width="130" height="72" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="356" y="51.45" font-size="11.5" font-weight="700">RUNNING, 0.30 s</text>
+  <text x="356" y="68.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on another worker,</text>
+  <text x="356" y="83.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no revert from you</text>
+  <rect x="492" y="28" width="128" height="72" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="500" y="51.45" font-size="11.5" font-weight="700">both files lost</text>
+  <text x="500" y="68.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">also the file that</text>
+  <text x="500" y="83.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the suspend saved</text>
+  <line x1="170" y1="64" x2="183" y2="64" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-5c-head-amber)"/>
+  <line x1="334" y1="64" x2="347" y2="64" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-5c-head-ink)"/>
+  <line x1="478" y1="64" x2="491" y2="64" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-5c-head-rose)"/>
+  <rect x="20" y="118" width="150" height="72" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="28" y="141.45" font-size="11.5" font-weight="700">COMPLETED</text>
+  <text x="28" y="158.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">307 s before the loss,</text>
+  <text x="28" y="173.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">uploaded after 301 s</text>
+  <rect x="184" y="118" width="150" height="72" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="192" y="141.45" font-size="11.5" font-weight="700">CRASHED in 0.9 s</text>
+  <text x="192" y="158.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Phase: Failed for</text>
+  <text x="192" y="173.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">300 s with no command</text>
+  <rect x="348" y="118" width="130" height="72" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="356" y="141.45" font-size="11.5" font-weight="700">RUNNING, 0.33 s</text>
+  <text x="356" y="158.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on another worker,</text>
+  <text x="356" y="173.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no revert from you</text>
+  <rect x="492" y="118" width="128" height="72" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="500" y="141.45" font-size="11.5" font-weight="700">saved file kept</text>
+  <text x="500" y="158.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a file written</text>
+  <text x="500" y="173.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">after it is lost</text>
+  <line x1="170" y1="154" x2="183" y2="154" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-5c-head-amber)"/>
+  <line x1="334" y1="154" x2="347" y2="154" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-5c-head-ink)"/>
+  <line x1="478" y1="154" x2="491" y2="154" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-5c-head-amber)"/>
+  <text x="20" y="218" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One run for each row, on one kind node with a pool of 2 workers. Each task ran sleep infinity.</text>
+</svg>

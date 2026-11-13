@@ -1,0 +1,19 @@
+label	phase	state	http	seconds	result
+allowed download	task	RUNNING	200	0.54	{"exit": 0, "stdout": "hello package 1.0\nhello.txt\n", "stderr": "", "seconds": 0.17}
+allowed download	revert	SUSPENDED	-	0.47	-
+allowed download	clean-check	RUNNING	200	0.44	{"exit": 0, "stdout": "0\n", "stderr": "", "seconds": 0.16}
+send data out by name	task	RUNNING	200	0.20	{"exit": 0, "stdout": "** server can't find example.com: NXDOMAIN\n\nwget_exit=1\n", "stderr": "wget: bad address 'example.com'\n", "seconds": 0.11}
+send data out by name	revert	SUSPENDED	-	0.48	-
+send data out by name	clean-check	RUNNING	200	0.45	{"exit": 0, "stdout": "0\n", "stderr": "", "seconds": 0.16}
+send data out by IP	task	RUNNING	200	0.15	{"exit": 0, "stdout": "wget_exit=1\n", "stderr": "wget: server returned error: HTTP/1.1 403 Forbidden\n", "seconds": 0.04}
+send data out by IP	revert	SUSPENDED	-	0.50	-
+send data out by IP	clean-check	RUNNING	200	0.45	{"exit": 0, "stdout": "0\n", "stderr": "", "seconds": 0.16}
+reach the Kubernetes API	task	RUNNING	200	0.13	{"exit": 0, "stdout": "wget_exit=1\n", "stderr": "wget: bad address 'kubernetes.default.svc.cluster.local'\n", "seconds": 0.04}
+reach the Kubernetes API	revert	SUSPENDED	-	0.51	-
+reach the Kubernetes API	clean-check	RUNNING	200	0.46	{"exit": 0, "stdout": "0\n", "stderr": "", "seconds": 0.1}
+2 s of CPU work on a 500m limit	task	RUNNING	200	2.63	{"exit": 0, "stdout": "wall_seconds 2.38\n", "stderr": "", "seconds": 2.54}
+2 s of CPU work on a 500m limit	revert	SUSPENDED	-	0.48	-
+2 s of CPU work on a 500m limit	clean-check	RUNNING	200	0.45	{"exit": 0, "stdout": "0\n", "stderr": "", "seconds": 0.18}
+memory hog on a 256 MiB limit	task	CRASHED	503	4.52	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+memory hog on a 256 MiB limit	revert	SUSPENDED	-	0.43	-
+memory hog on a 256 MiB limit	clean-check	RUNNING	200	0.44	{"exit": 0, "stdout": "0\n", "stderr": "", "seconds": 0.11}

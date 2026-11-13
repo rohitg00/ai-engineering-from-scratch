@@ -1,0 +1,13 @@
+ate-api-server-59dcf8d6bf-wsdxw <none>
+ate-api-server-59dcf8d6bf-zbgkv <none>
+ate-controller-7984566f8d-jm7ps <none>
+ate-idp-server-dcd5f565f-pnfr8 <none>
+ate-idp-server-dcd5f565f-r7jhz <none>
+atelet-gsmxg <none>
+atelet-tfq5g <none>
+atenet-egress-7758c8fb4-52d2z <none>
+atenet-router-d844d4995-hzq92 <none>
+k8s-credential-provider-5bb6b77b65-2gbnq <none>
+postgres-0 <none>
+rustfs-54c86945fb-dplgq <none>
+rustfs-bucket-init-pz9fw <none>

@@ -1,0 +1,5 @@
+rules:
+- http:
+    hostnames: ["ollama.ax-system.svc.cluster.local"]
+    ports:
+      numbers: [11434]

@@ -1,0 +1,144 @@
+{
+  "kagent": {
+    "machine": "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, kagent v1.0.0 with its Substrate distribution, mock model server",
+    "steps": [
+      {
+        "exit": 0,
+        "seconds": 1.1,
+        "step": "10-get-kind"
+      },
+      {
+        "exit": 0,
+        "seconds": 26.1,
+        "step": "20-kind-create"
+      },
+      {
+        "exit": 0,
+        "seconds": 0.3,
+        "step": "21-api-resources"
+      },
+      {
+        "exit": 0,
+        "seconds": 5.5,
+        "step": "30-get-kagent-cli"
+      },
+      {
+        "exit": 0,
+        "seconds": 216.1,
+        "step": "40-kagent-install"
+      },
+      {
+        "exit": 0,
+        "seconds": 0.1,
+        "step": "50-rollout"
+      },
+      {
+        "exit": 0,
+        "seconds": 0.6,
+        "step": "60-state"
+      }
+    ]
+  },
+  "note": "wall time of each install step. A step with exit 1 failed and was run again.",
+  "release_images": {
+    "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images",
+    "steps": [
+      {
+        "exit": 0,
+        "seconds": 55.0,
+        "step": "10-kind-cluster"
+      },
+      {
+        "exit": 0,
+        "seconds": 162.0,
+        "step": "20-deploy-ate-system-prebuilt"
+      },
+      {
+        "exit": 0,
+        "seconds": 94.0,
+        "step": "30-deploy-counter"
+      },
+      {
+        "exit": 0,
+        "seconds": 5.0,
+        "step": "40-install-cli"
+      },
+      {
+        "exit": 0,
+        "seconds": 0.0,
+        "step": "50-create-actor"
+      },
+      {
+        "exit": 0,
+        "seconds": 1.0,
+        "step": "60-state"
+      }
+    ]
+  },
+  "release_images_mac": {
+    "machine": "Apple silicon laptop, Docker Desktop with 10 CPU and 8 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images",
+    "steps": [
+      {
+        "exit": 0,
+        "seconds": 119.0,
+        "step": "10-kind-cluster"
+      },
+      {
+        "exit": 0,
+        "seconds": 702.0,
+        "step": "20-deploy-ate-system"
+      },
+      {
+        "exit": 0,
+        "seconds": 5.0,
+        "step": "60-state"
+      }
+    ]
+  },
+  "source_build": {
+    "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor",
+    "steps": [
+      {
+        "exit": 0,
+        "seconds": 56.0,
+        "step": "10-kind-cluster"
+      },
+      {
+        "exit": 1,
+        "seconds": 163.0,
+        "step": "20-deploy-ate-system"
+      },
+      {
+        "exit": 0,
+        "seconds": 266.0,
+        "step": "22-deploy-ate-system-retry"
+      },
+      {
+        "exit": 0,
+        "seconds": 47.0,
+        "step": "30-deploy-counter"
+      },
+      {
+        "exit": 0,
+        "seconds": 5.0,
+        "step": "40-install-cli"
+      },
+      {
+        "exit": 0,
+        "seconds": 0.0,
+        "step": "50-create-actor"
+      },
+      {
+        "exit": 0,
+        "seconds": 1.0,
+        "step": "60-state"
+      }
+    ]
+  },
+  "sources": [
+    "capture/lab/A-quickstart/02-steps.tsv",
+    "capture/lab/G-dataplane/00-install/steps.tsv",
+    "capture/lab/M-mac-arm64/02-steps.tsv",
+    "capture/lab/K-kagent/install/steps.tsv"
+  ]
+}

@@ -1,0 +1,52 @@
+containers:
+- command:
+  - /usr/local/bin/ax-task-runner
+  env:
+  - name: AX_TASK_YAML
+    value: |
+      apiVersion: ax.io/v1alpha1
+      kind: Task
+      metadata:
+          name: ax-install-check
+          atespace: default
+          createTime: 2026-11-12T15:20:14.563751694Z
+      spec:
+          image: localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31
+          command:
+              - sleep
+              - infinity
+          debug: true
+  image: localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31
+  name: guest
+  volumeMounts:
+  - mountPath: /workspace
+    name: workspace
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+    timeoutSeconds: 30
+metadata:
+  atespace: default
+  createTime: "2026-11-12T15:20:14.578915538Z"
+  name: ax-install-check-tmpl-b08f2422
+  uid: 921c52be-e85f-4bac-a5ab-1dd5700530a2
+  updateTime: "2026-11-12T15:20:17.505158335Z"
+  version: "3"
+resources:
+  limits:
+    cpuMillicores: "1000"
+    memoryBytes: "536870912"
+snapshotConfig:
+  goldenSnapshotConfig:
+    mode: GOLDEN_SNAPSHOT_MODE_ENABLED
+  preferredFidelity: SNAPSHOT_FIDELITY_VOLUMES
+status:
+  goldenSnapshotStatus:
+    goldenTag:
+      atespace: default
+      name: 921c52be-e85f-4bac-a5ab-1dd5700530a2
+    snapshotTime: "2026-11-12T15:20:17.152114953Z"
+volumes:
+- durableDir: {}
+  name: workspace

@@ -1,0 +1,22 @@
+ATESPACE   NAME   GOLDEN TAG   ERROR   AGE
+lab-n      sb-0                        0s
+ATESPACE   NAME     GOLDEN TAG   ERROR   AGE
+lab-n      sb-200                        0s
+ATESPACE   NAME      GOLDEN TAG   ERROR   AGE
+lab-n      sb-1000                        0s
+ATESPACE   NAME         GOLDEN TAG                             ERROR   AGE
+lab-n      ballast-0    d8328610-2fdb-4974-a6ab-7c8671586d37           4h37m
+lab-n      ballast-50   09fee120-cd19-4121-8bae-5623fcbe70eb           4h37m
+lab-n      nb-0         a4d47db7-39ce-4bbd-8969-2d738787c09e           106m
+lab-n      nb-50        20146d73-350e-4da3-8f82-8153e837b07b           106m
+lab-n      sb-0         74e6c2d9-ee54-4445-befc-0f7d4e6a0bad           21s
+lab-n      sb-1000      d8458581-3d2b-4279-ad19-97336ec19dc6           21s
+lab-n      sb-200       3376d4a4-0b71-47f2-a106-016023571964           21s
+lab-n      tb-0         b15f9995-908a-4aa3-bf00-3f888c307fd5           27m
+lab-n      tb-1000      ee988cc1-0e22-4c30-bd89-e3e9fa0ea4ba           27m
+lab-n      tb-200       9d19e8bf-0e00-4545-96cb-cfdd1545f933           27m
+lab-n      tb-50        e0166532-008a-4281-bb95-9b7c51662d90           27m
+lab-n      tb-big       e95e9f47-4cbf-4e2a-b3ed-e76ad3a4bac0           27m
+actor template "sb-0" deleted
+actor template "sb-200" deleted
+actor template "sb-1000" deleted

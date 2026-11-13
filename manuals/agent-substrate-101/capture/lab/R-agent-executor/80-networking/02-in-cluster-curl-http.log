@@ -1,0 +1,6 @@
+All commands and output from this session will be recorded in container logs, including credentials and sensitive information passed through the command prompt.
+If you don't see a command prompt, try pressing enter.
+curl: (28) Connection timed out after 8002 milliseconds
+http_code=000
+pod "ax-curl-check" deleted from ax-system namespace
+pod ax-system/ax-curl-check terminated (Error)

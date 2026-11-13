@@ -1,0 +1,4 @@
+ate-system	ate-api-server-776cd6fb4c-hztmx	objectstore-plugin	ghcr.io/kagent-dev/substrate/objectstore-plugin:v1.0.0
+ate-system	ate-api-server-776cd6fb4c-tnc4m	objectstore-plugin	ghcr.io/kagent-dev/substrate/objectstore-plugin:v1.0.0
+ate-system	atelet-5g655	objectstore-plugin	ghcr.io/kagent-dev/substrate/objectstore-plugin:v1.0.0
+kagent	kagent-postgresql-566dbb9bc5-8jt4z	tls-reloader	postgres:18-alpine@sha256:9a8afca54e7861fd90fab5fdf4c42477a6b1cb7d293595148e674e0a3181de15

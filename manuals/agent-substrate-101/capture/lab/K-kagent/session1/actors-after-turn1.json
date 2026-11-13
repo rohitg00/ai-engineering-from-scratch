@@ -1,0 +1,59 @@
+{
+  "actors": [
+    {
+      "actorTemplate": {
+        "atespace": "kagent",
+        "name": "lab-agent-7f643ac37f02"
+      },
+      "metadata": {
+        "atespace": "kagent",
+        "createTime": "2026-11-12T10:18:12.234601899Z",
+        "name": "session-01a1cf43-d760-747a-b907-5e0640126e4e",
+        "uid": "d64e21f4-05eb-49a3-a81e-69ca2d893b06",
+        "updateTime": "2026-11-12T10:18:19.279997476Z",
+        "version": "5"
+      },
+      "status": {
+        "assignedNode": "kagent-control-plane",
+        "lastAssignedGeneration": 2,
+        "snapshots": [
+          {
+            "actorTemplateUid": "dd7b8625-0d96-4d7d-89da-4ec9cc3b914a",
+            "durableSnapshot": {
+              "object": {
+                "snapshotUri": "s3://ate-snapshots/kagent/atespaces/kagent/actors/d64e21f4-05eb-49a3-a81e-69ca2d893b06/snapshots/716d7f0c-b191-4308-b8fb-9aaaf7867ea7"
+              },
+              "state": "SNAPSHOT_STORAGE_STATE_COMPLETED"
+            },
+            "fidelity": "SNAPSHOT_FIDELITY_VOLUMES",
+            "generation": 2,
+            "locality": "kagent-control-plane",
+            "owner": "SNAPSHOT_OWNER_ACTOR",
+            "sandboxRuntime": {
+              "sandboxClass": "gvisor",
+              "version": {
+                "attributes": [
+                  {
+                    "key": "architecture",
+                    "value": "amd64"
+                  },
+                  {
+                    "key": "cpu_features",
+                    "value": "8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203"
+                  },
+                  {
+                    "key": "sandbox_bundle_hash",
+                    "value": "sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa"
+                  }
+                ],
+                "schemaVersion": "v1"
+              }
+            },
+            "uuid": "716d7f0c-b191-4308-b8fb-9aaaf7867ea7"
+          }
+        ],
+        "state": "ACTOR_STATE_SUSPENDED"
+      }
+    }
+  ]
+}

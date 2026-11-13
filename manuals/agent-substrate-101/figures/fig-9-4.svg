@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-9-4-title fig-9-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-4-title">Six failures of the drill, from the symptom to the first good answer</title>
+  <desc id="fig-9-4-desc">Six rows, one for each failure of the drill on the second x86 server guest. Each row shows the time and status code of the first failed request as a rose bar, the fix that we ran with its time, and the time of the first request that returned 200 after the fix. worker pod deleted: 503 in 0.07 s, fix revert in 0.2 s, then 200 in 0.33 s. local snapshot removed: 500 in 0.08 s, fix revert in 0.2 s, then 200 in 0.41 s. process exits: 503 in 0.06 s, fix suspend, then revert in 0.7 s, then 200 in 0.41 s. over its memory limit: 503 in 0.06 s, fix revert in 0.2 s, then 200 in 0.36 s. pool is full: 503 in 5.05 s, fix suspend another actor in 0.4 s, then 200 in 0.32 s. Postgres away 30 s: 503 in 5.05 s, fix Postgres back in 2.1 s, then 200 in 0.90 s.</desc>
+  <text x="16" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FAILURE</text>
+  <text x="218" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-rose-ink, #b0344d)">FAILED REQUEST</text>
+  <text x="368" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-blue-ink, #2f5d9a)">FIX</text>
+  <text x="552" y="28" font-size="11" letter-spacing="1.2" fill="var(--m-green-ink, #336b40)">FIRST 200</text>
+  <line x1="16" y1="40" x2="624" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="60" font-size="12" font-weight="700">1  worker pod deleted</text>
+  <rect x="218" y="50" width="3" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="218" y="76" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 in 0.07 s</text>
+  <text x="368" y="60" font-size="11.5" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">revert</text>
+  <text x="368" y="76" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.2 s</text>
+  <circle cx="556" cy="56" r="3.5" fill="var(--m-green-ink, #336b40)"/>
+  <text x="566" y="60" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">0.33 s</text>
+  <line x1="16" y1="84" x2="624" y2="84" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="104" font-size="12" font-weight="700">2  local snapshot removed</text>
+  <rect x="218" y="94" width="3" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="218" y="120" font-size="11" fill="var(--m-rose-ink, #b0344d)">500 in 0.08 s</text>
+  <text x="368" y="104" font-size="11.5" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">revert</text>
+  <text x="368" y="120" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.2 s</text>
+  <circle cx="556" cy="100" r="3.5" fill="var(--m-green-ink, #336b40)"/>
+  <text x="566" y="104" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">0.41 s</text>
+  <line x1="16" y1="128" x2="624" y2="128" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="148" font-size="12" font-weight="700">3  process exits</text>
+  <rect x="218" y="138" width="3" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="218" y="164" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 in 0.06 s</text>
+  <text x="368" y="148" font-size="11.5" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">suspend, then revert</text>
+  <text x="368" y="164" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.7 s</text>
+  <circle cx="556" cy="144" r="3.5" fill="var(--m-green-ink, #336b40)"/>
+  <text x="566" y="148" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">0.41 s</text>
+  <line x1="16" y1="172" x2="624" y2="172" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="192" font-size="12" font-weight="700">4  over its memory limit</text>
+  <rect x="218" y="182" width="3" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="218" y="208" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 in 0.06 s</text>
+  <text x="368" y="192" font-size="11.5" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">revert</text>
+  <text x="368" y="208" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.2 s</text>
+  <circle cx="556" cy="188" r="3.5" fill="var(--m-green-ink, #336b40)"/>
+  <text x="566" y="192" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">0.36 s</text>
+  <line x1="16" y1="216" x2="624" y2="216" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="236" font-size="12" font-weight="700">5  pool is full</text>
+  <rect x="218" y="226" width="121.2" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="218" y="252" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 in 5.05 s</text>
+  <text x="368" y="236" font-size="11.5" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">suspend another actor</text>
+  <text x="368" y="252" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.4 s</text>
+  <circle cx="556" cy="232" r="3.5" fill="var(--m-green-ink, #336b40)"/>
+  <text x="566" y="236" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">0.32 s</text>
+  <line x1="16" y1="260" x2="624" y2="260" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="280" font-size="12" font-weight="700">6  Postgres away 30 s</text>
+  <rect x="218" y="270" width="121.32" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="218" y="296" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 in 5.05 s</text>
+  <text x="368" y="280" font-size="11.5" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">Postgres back</text>
+  <text x="368" y="296" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2.1 s</text>
+  <circle cx="556" cy="276" r="3.5" fill="var(--m-green-ink, #336b40)"/>
+  <text x="566" y="280" font-size="12" font-weight="700" fill="var(--m-green-ink, #336b40)">0.90 s</text>
+  <line x1="16" y1="304" x2="624" y2="304" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="218" y="322" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bar length is the time to the failed answer, 0 to 5 s</text>
+</svg>

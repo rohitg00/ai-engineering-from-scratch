@@ -1,0 +1,3 @@
+CONTAINER           IMAGE               CREATED             STATE               NAME                      ATTEMPT             POD ID              POD                                          NAMESPACE
+294793c720e6b       1d52eae857d13       46 seconds ago      Running             agentgateway              0                   473c6666b7697       atenet-egress-9fbd685d5-5q98b                ate-system
+320dbb2acf8bc       1d52eae857d13       20 minutes ago      Running             agentgateway              0                   ae18fe342a402       atenet-router-7c5c864d47-9gztj               ate-system

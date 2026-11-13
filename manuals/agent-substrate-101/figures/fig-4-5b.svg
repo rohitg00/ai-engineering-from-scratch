@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 384" role="img" aria-labelledby="fig-4-5b-title fig-4-5b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-5b-title">Resumes at one time on one node: the time of each request, and the rate</title>
+  <desc id="fig-4-5b-desc">Two panels for bursts of 1 to 300 resumes at one time on one node with 24 vCPU, in two runs. The first run had 200 workers and three bursts of each size from 1 to 150. The second run had 300 workers and bursts of 150, 200 and 300. The slowest of 10 took 0.43 s. At 300 at one time the median was 7.3 to 7.4 s. From 50 upward the node finished 32 to 39 resumes each second. 4 requests of the second run got no answer in 90 s and are not drawn.</desc>
+  <path d="M22 23 L34 13" fill="none" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <text x="42" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">one burst, its requests from first to last answer</text>
+  <line x1="410" y1="18" x2="434" y2="18" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="442" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0.5 s, from the project site</text>
+  <circle cx="26" cy="44" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="36" y="48" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">first run: 200 workers, 1 or 2 connections</text>
+  <circle cx="330" cy="44" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="340" y="48" font-size="11" fill="var(--m-teal-ink, #18696a)">second run: 300 workers, 1 connection each</text>
+  <line x1="46" y1="328" x2="386" y2="328" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="332" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="46" y1="316.4" x2="386" y2="316.4" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="320.4" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="46" y1="281.6" x2="386" y2="281.6" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="285.6" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="46" y1="235.2" x2="386" y2="235.2" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="239.2" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="46" y1="188.8" x2="386" y2="188.8" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="192.8" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="46" y1="142.4" x2="386" y2="142.4" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="146.4" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="46" y1="96" x2="386" y2="96" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="100" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="46" y1="328" x2="386" y2="328" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="46" y1="96" x2="46" y2="328" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="67.25" y1="328" x2="67.25" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="67.25" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="109.75" y1="328" x2="109.75" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="109.75" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="152.25" y1="328" x2="152.25" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="152.25" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="194.75" y1="328" x2="194.75" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="194.75" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="237.25" y1="328" x2="237.25" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="237.25" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">150</text>
+  <line x1="279.75" y1="328" x2="279.75" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="279.75" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">150</text>
+  <line x1="322.25" y1="328" x2="322.25" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="322.25" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="364.75" y1="328" x2="364.75" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="364.75" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <text x="46" y="84" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds until the reply, each request</text>
+  <line x1="46" y1="316.4" x2="386" y2="316.4" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <circle cx="55.25" cy="319.3" r="1.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="67.25" cy="320" r="1.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="79.25" cy="320.09" r="1.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M93.3 320.3 L94.3 319.3 L95.3 319.3 L96.3 319.3 L97.3 319.2 L98.3 319.2 L99.3 319.0 L100.3 319.0 L101.3 318.6 L102.3 318.1" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M105.3 320.3 L106.3 319.7 L107.3 319.7 L108.3 319.6 L109.3 319.3 L110.3 319.3 L111.3 318.8 L112.3 318.8 L113.3 318.7 L114.3 318.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M117.3 319.5 L118.3 319.4 L119.3 318.9 L120.3 318.9 L121.3 318.8 L122.3 318.7 L123.3 318.7 L124.3 318.7 L125.3 318.7 L126.3 318.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M135.8 319.7 L136.1 319.1 L136.3 319.0 L136.7 306.5 L136.9 306.2 L137.3 304.9 L137.6 303.9 L137.8 303.5 L138.2 303.5 L138.4 303.5 L138.8 301.7 L139.1 300.5 L139.3 300.5 L139.7 300.5 L139.9 300.4 L140.3 300.4 L140.6 300.4 L140.8 300.4 L141.2 300.4 L141.4 300.2 L141.8 300.1 L142.1 300.0 L142.3 299.8 L142.7 299.6 L142.9 299.3 L143.3 299.3 L143.6 299.3 L143.8 299.3 L144.2 299.2 L144.4 299.0 L144.8 298.0" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M147.8 314.2 L148.1 309.6 L148.3 308.0 L148.7 306.9 L148.9 305.2 L149.3 305.2 L149.6 304.2 L149.8 304.1 L150.2 302.0 L150.4 301.9 L150.8 301.9 L151.1 301.8 L151.3 301.8 L151.7 301.8 L151.9 301.7 L152.3 301.0 L152.6 300.9 L152.8 296.6 L153.2 296.3 L153.4 296.3 L153.8 296.3 L154.1 296.2 L154.3 296.2 L154.7 296.2 L154.9 296.2 L155.3 296.2 L155.6 296.2 L155.8 296.2 L156.2 296.2 L156.4 296.1 L156.8 296.1" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M159.8 318.3 L160.1 316.7 L160.3 316.5 L160.7 306.6 L160.9 306.2 L161.3 304.8 L161.6 297.0 L161.8 297.0 L162.2 297.0 L162.4 297.0 L162.8 297.0 L163.1 297.0 L163.3 296.9 L163.7 296.9 L163.9 296.9 L164.3 296.9 L164.6 296.9 L164.8 296.9 L165.2 296.9 L165.4 296.9 L165.8 296.9 L166.1 296.9 L166.3 296.9 L166.7 296.9 L166.9 296.9 L167.3 296.9 L167.6 296.9 L167.8 296.9 L168.2 296.9 L168.4 296.9 L168.8 296.9" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M178.3 316.1 L178.6 315.6 L178.8 312.6 L179.2 310.1 L179.4 309.1 L179.8 306.6 L180.1 299.0 L180.3 294.1 L180.7 290.0 L180.9 284.3 L181.3 281.5 L181.6 277.9 L181.8 277.7 L182.2 277.7 L182.4 277.6 L182.8 275.7 L183.1 271.2 L183.3 267.8 L183.7 267.8 L183.9 267.7 L184.3 267.7 L184.6 267.7 L184.8 267.5 L185.2 267.4 L185.4 267.4 L185.8 267.4 L186.1 267.4 L186.3 267.3 L186.7 267.3 L186.9 267.3 L187.3 267.3" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M190.3 316.8 L190.6 315.7 L190.8 307.8 L191.2 298.6 L191.4 294.6 L191.8 291.7 L192.1 287.4 L192.3 287.0 L192.7 286.1 L192.9 285.2 L193.3 284.7 L193.6 284.4 L193.8 280.1 L194.2 279.7 L194.4 279.1 L194.8 275.5 L195.1 273.7 L195.3 272.9 L195.7 269.4 L195.9 269.4 L196.3 269.4 L196.6 269.4 L196.8 269.4 L197.2 269.2 L197.4 268.4 L197.8 268.2 L198.1 266.4 L198.3 266.3 L198.7 266.2 L198.9 265.7 L199.3 264.6" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M202.3 316.6 L202.6 306.4 L202.8 300.4 L203.2 296.8 L203.4 295.1 L203.8 288.8 L204.1 288.8 L204.3 288.5 L204.7 286.9 L204.9 285.6 L205.3 282.0 L205.6 281.9 L205.8 278.8 L206.2 278.5 L206.4 277.9 L206.8 276.8 L207.1 276.8 L207.3 276.4 L207.7 275.4 L207.9 273.9 L208.3 271.5 L208.6 269.1 L208.8 268.7 L209.2 268.7 L209.4 268.6 L209.8 268.5 L210.1 268.5 L210.3 268.5 L210.7 268.5 L210.9 268.5 L211.3 268.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M220.8 317.7 L221.1 310.9 L221.3 309.1 L221.7 308.9 L221.9 307.0 L222.3 280.8 L222.6 268.4 L222.8 267.7 L223.2 265.0 L223.4 261.0 L223.8 257.8 L224.1 255.5 L224.3 255.0 L224.7 252.4 L224.9 249.7 L225.3 248.9 L225.6 248.4 L225.8 248.1 L226.2 245.7 L226.4 243.9 L226.8 241.2 L227.1 240.2 L227.3 239.9 L227.7 239.1 L227.9 238.9 L228.3 238.7 L228.6 236.8 L228.8 234.3 L229.2 234.0 L229.4 233.7 L229.8 233.3" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M232.8 317.8 L233.1 313.3 L233.3 301.1 L233.7 287.5 L233.9 279.5 L234.3 276.6 L234.6 273.4 L234.8 270.7 L235.2 268.2 L235.4 263.3 L235.8 262.1 L236.1 258.1 L236.3 255.1 L236.7 254.8 L236.9 254.7 L237.3 254.6 L237.6 254.6 L237.8 253.5 L238.2 247.6 L238.4 246.4 L238.8 246.1 L239.1 238.8 L239.3 238.8 L239.7 238.1 L239.9 237.5 L240.3 237.4 L240.6 237.4 L240.8 237.4 L241.2 237.3 L241.4 237.3 L241.8 237.0" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M244.8 318.7 L245.1 307.9 L245.3 295.1 L245.7 287.7 L245.9 274.3 L246.3 269.3 L246.6 269.2 L246.8 265.5 L247.2 261.3 L247.4 260.7 L247.8 258.4 L248.1 255.5 L248.3 250.2 L248.7 249.5 L248.9 248.7 L249.3 248.6 L249.6 248.6 L249.8 246.4 L250.2 243.4 L250.4 241.4 L250.8 233.2 L251.1 233.0 L251.3 233.0 L251.7 232.9 L251.9 232.6 L252.3 232.5 L252.6 232.5 L252.8 232.5 L253.2 232.4 L253.4 232.4 L253.8 232.0" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M263.3 314.1 L263.6 303.6 L263.9 295.7 L264.1 290.4 L264.4 285.9 L264.8 283.2 L265.1 278.5 L265.4 274.2 L265.6 273.5 L265.9 270.7 L266.3 268.3 L266.6 263.3 L266.9 258.2 L267.1 256.9 L267.4 255.6 L267.8 254.9 L268.1 252.9 L268.4 251.1 L268.6 249.2 L268.9 246.7 L269.3 246.2 L269.6 246.0 L269.9 245.8 L270.1 244.8 L270.4 243.6 L270.8 242.0 L271.1 241.0 L271.4 240.0 L271.6 239.3 L271.9 239.0 L272.3 238.6" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M275.3 314.6 L275.6 306.2 L275.9 293.8 L276.1 287.7 L276.4 283.5 L276.8 280.0 L277.1 275.6 L277.4 270.8 L277.6 268.0 L277.9 261.3 L278.3 259.1 L278.6 258.3 L278.9 258.0 L279.1 257.7 L279.4 256.8 L279.8 254.5 L280.1 252.2 L280.4 251.0 L280.6 249.9 L280.9 246.0 L281.3 245.2 L281.6 244.6 L281.9 242.5 L282.1 239.9 L282.4 239.1 L282.8 238.8 L283.1 238.4 L283.4 238.3 L283.6 237.9 L283.9 237.9 L284.3 237.7" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M287.3 313.4 L287.6 308.6 L287.9 302.3 L288.1 297.2 L288.4 285.4 L288.8 280.7 L289.1 278.2 L289.4 271.1 L289.6 266.5 L289.9 262.3 L290.3 261.2 L290.6 257.9 L290.9 257.4 L291.1 246.5 L291.4 246.2 L291.8 245.6 L292.1 245.1 L292.4 242.5 L292.6 240.4 L292.9 239.3 L293.3 236.9 L293.6 234.9 L293.9 234.7 L294.1 234.6 L294.4 234.5 L294.8 234.2 L295.1 234.2 L295.4 233.6 L295.6 233.2 L295.9 232.7 L296.3 231.5" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M311.8 313.1 L312.1 312.5 L312.4 307.0 L312.6 301.3 L312.9 300.5 L313.3 296.5 L313.6 292.5 L313.9 271.4 L314.1 252.7 L314.4 246.6 L314.8 243.9 L315.1 239.6 L315.4 233.6 L315.6 232.5 L315.9 231.2 L316.3 227.6 L316.6 225.2 L316.9 220.6 L317.1 218.8 L317.4 215.7 L317.8 213.4 L318.1 212.4 L318.4 210.9 L318.6 210.4 L318.9 209.4 L319.3 208.1 L319.6 207.1 L319.9 202.9 L320.1 202.6 L320.4 202.3 L320.8 201.3" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M323.8 314.4 L324.1 306.3 L324.4 301.3 L324.6 292.8 L324.9 283.9 L325.3 265.2 L325.6 261.4 L325.9 256.0 L326.1 251.9 L326.4 245.9 L326.8 244.7 L327.1 238.9 L327.4 232.9 L327.6 229.2 L327.9 225.5 L328.3 222.4 L328.6 220.7 L328.9 215.4 L329.1 213.3 L329.4 212.6 L329.8 209.7 L330.1 207.9 L330.4 200.2 L330.6 199.8 L330.9 199.8 L331.3 199.3 L331.6 199.1 L331.9 198.7 L332.1 198.1 L332.4 197.9 L332.8 196.2" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M354.3 307.8 L354.6 300.7 L354.9 264.7 L355.1 243.6 L355.4 229.4 L355.8 220.7 L356.1 213.9 L356.4 209.4 L356.6 199.7 L356.9 186.0 L357.3 180.0 L357.6 176.4 L357.9 172.5 L358.1 168.5 L358.4 163.2 L358.8 158.9 L359.1 154.8 L359.4 154.1 L359.6 147.1 L359.9 139.8 L360.3 138.2 L360.6 135.5 L360.9 133.3 L361.1 132.3 L361.4 131.8 L361.8 131.1 L362.1 122.8 L362.4 117.0 L362.6 115.7 L362.9 115.2 L363.3 114.0" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <path d="M366.3 306.0 L366.6 301.0 L366.9 273.6 L367.1 246.9 L367.4 237.9 L367.8 216.2 L368.1 211.5 L368.4 204.7 L368.6 196.6 L368.9 187.8 L369.3 180.5 L369.6 172.5 L369.9 169.0 L370.1 163.7 L370.4 156.9 L370.8 155.9 L371.1 153.7 L371.4 149.4 L371.6 148.5 L371.9 147.2 L372.3 139.0 L372.6 134.0 L372.9 130.6 L373.1 129.9 L373.4 128.9 L373.8 127.7 L374.1 126.9 L374.4 124.6 L374.6 119.1 L374.9 116.6 L375.3 114.4" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <line x1="436" y1="328" x2="616" y2="328" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="430" y="332" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="436" y1="281.6" x2="616" y2="281.6" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="430" y="285.6" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="436" y1="235.2" x2="616" y2="235.2" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="430" y="239.2" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="436" y1="188.8" x2="616" y2="188.8" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="430" y="192.8" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="436" y1="142.4" x2="616" y2="142.4" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="430" y="146.4" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <line x1="436" y1="96" x2="616" y2="96" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="430" y="100" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="436" y1="328" x2="616" y2="328" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="436" y1="96" x2="436" y2="328" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="445.93" y1="328" x2="445.93" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="445.93" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="510.03" y1="328" x2="510.03" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="510.03" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="574.13" y1="328" x2="574.13" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="574.13" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="604.71" y1="328" x2="604.71" y2="332" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="604.71" y="345" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <text x="436" y="84" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumes finished each second</text>
+  <circle cx="442.93" cy="315.94" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="442.93" cy="315.01" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="442.93" cy="315.01" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="507.03" cy="222.67" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="507.03" cy="217.57" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="507.03" cy="217.57" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="551.83" cy="150.75" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="551.83" cy="160.96" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="551.83" cy="157.25" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="571.13" cy="152.14" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="571.13" cy="160.03" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="571.13" cy="148.9" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="582.42" cy="158.64" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="582.42" cy="151.68" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="582.42" cy="160.5" r="2.2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M445.9 315.0 L510.0 217.6 L554.8 157.2 L574.1 152.1 L585.4 158.6" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.6" stroke-linejoin="round"/>
+  <circle cx="588.42" cy="148.43" r="2.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="588.42" cy="152.14" r="2.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="588.42" cy="164.21" r="2.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="596.43" cy="161.42" r="2.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="596.43" cy="165.6" r="2.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="607.71" cy="179.06" r="2.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="607.71" cy="178.59" r="2.2" fill="var(--m-teal-ink, #18696a)"/>
+  <path d="M585.4 152.1 L593.4 161.4 L604.7 178.6" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="465.23" y="109.92" font-size="11" class="m-serif" fill="var(--m-ink, #1a1a1a)">32 to 39 each second</text>
+  <text x="465.23" y="123.92" font-size="11" class="m-serif" fill="var(--m-ink, #1a1a1a)">from 50 at one time</text>
+  <text x="320" y="372" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumes sent at one time, to actors that each have a snapshot on the node</text>
+</svg>

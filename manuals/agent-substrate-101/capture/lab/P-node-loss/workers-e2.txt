@@ -1,0 +1,30 @@
+### e2-filled 2026-11-12T15:04:16.655Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ballast-5d6cf97747-7s65c Running multi-worker2
+ballast-5d6cf97747-9qhp8 Running multi-worker2
+ballast-5d6cf97747-zxzvv Running multi-worker
+ballast-5d6cf97747-zzzdn Running multi-worker
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY          POD                              AGE
+226312b7-e029-45f6-93eb-016c10a114ab   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi        lab-n/ballast-5d6cf97747-7s65c   3m30s
+dd87f5bc-de92-43f1-8614-ad340f578b67   ballast   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi        lab-n/ballast-5d6cf97747-9qhp8   3m31s
+e46a2421-df57-4c7c-aba7-7118e9098828   ballast   WORKER_STATE_ACTIVE   5/1000   1250/2000         1000Mi/1984Mi   lab-n/ballast-5d6cf97747-zxzvv   76m
+7acbf84d-e26f-45fd-88aa-08a1b9d816ec   ballast   WORKER_STATE_ACTIVE   6/1000   1500/2000         1200Mi/1984Mi   lab-n/ballast-5d6cf97747-zzzdn   122m
+### e2-after-scale 2026-11-12T15:05:14.984Z
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 NotReady
+ballast-5d6cf97747-7s65c Running multi-worker2
+ballast-5d6cf97747-9qhp8 Running multi-worker2
+ballast-5d6cf97747-cbwxv ContainerCreating multi-worker
+ballast-5d6cf97747-srkhc ContainerCreating multi-worker
+ballast-5d6cf97747-zxzvv Running multi-worker
+ballast-5d6cf97747-zzzdn Running multi-worker
+NAME                                   POOL      STATE                      ACTORS   CPU(MILLICORES)   MEMORY          POD                              AGE
+226312b7-e029-45f6-93eb-016c10a114ab   ballast   WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/1984Mi        lab-n/ballast-5d6cf97747-7s65c   4m29s
+dd87f5bc-de92-43f1-8614-ad340f578b67   ballast   WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/1984Mi        lab-n/ballast-5d6cf97747-9qhp8   4m29s
+c585098e-dc7a-4a47-9ff5-66d775991f54   ballast   WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/1984Mi        lab-n/ballast-5d6cf97747-cbwxv   0s
+0eb0db85-c218-41cc-8e99-24a05fc50611   ballast   WORKER_STATE_UNAVAILABLE   0/1000   0/2000            0/1984Mi        lab-n/ballast-5d6cf97747-srkhc   0s
+e46a2421-df57-4c7c-aba7-7118e9098828   ballast   WORKER_STATE_ACTIVE        6/1000   1500/2000         1250Mi/1984Mi   lab-n/ballast-5d6cf97747-zxzvv   77m
+7acbf84d-e26f-45fd-88aa-08a1b9d816ec   ballast   WORKER_STATE_ACTIVE        6/1000   1500/2000         1200Mi/1984Mi   lab-n/ballast-5d6cf97747-zzzdn   123m

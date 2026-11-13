@@ -1,0 +1,18 @@
+## default
+ATESPACE   NAME               TEMPLATE                                 STATE                   WORKER POD                           WORKER IPS    VERSION   AGE
+default    ax-install-check   default/ax-install-check-tmpl-b08f2422   ACTOR_STATE_SUSPENDED   <none>                                             52        59m
+default    s-clone            default/s-clone-tmpl-c443ad30            ACTOR_STATE_RUNNING     ax-system/ax-pool-588b78fd54-29xgr   10.244.0.40   80        5m29s
+## demo-agent
+ATESPACE     NAME              TEMPLATE                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+demo-agent   agent-memory-1    demo-agent/agent-memory    ACTOR_STATE_SUSPENDED   <none>                    18        3h31m
+demo-agent   agent-volumes-1   demo-agent/agent-volumes   ACTOR_STATE_SUSPENDED   <none>                    18        3h31m
+## demo-drill
+ATESPACE   NAME   TEMPLATE   STATE   WORKER POD   WORKER IPS   VERSION   AGE
+## demo-idle
+ATESPACE    NAME     TEMPLATE            STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+demo-idle   bursty   demo-idle/counter   ACTOR_STATE_RUNNING     demo-idle/idle-846d566ff4-2x6wh   10.244.0.32   21        3h29m
+demo-idle   busy     demo-idle/counter   ACTOR_STATE_RUNNING     demo-idle/idle-846d566ff4-2x6wh   10.244.0.32   8         3h29m
+demo-idle   rare     demo-idle/counter   ACTOR_STATE_SUSPENDED   <none>                                          12        3h29m
+## demo-tools
+ATESPACE     NAME     TEMPLATE             STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+demo-tools   task-1   demo-tools/sandbox   ACTOR_STATE_SUSPENDED   <none>                    32        3h30m

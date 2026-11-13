@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"Namespace","metadata":{"annotations":{},"labels":{"ate.dev/api-access":"true"},"name":"ax-system"}}
+  labels:
+    ate.dev/api-access: "true"
+    kubernetes.io/metadata.name: ax-system
+  name: ax-system
+spec:
+  finalizers:
+  - kubernetes
+status:
+  phase: Active

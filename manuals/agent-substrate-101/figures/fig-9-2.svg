@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 318" role="img" aria-labelledby="fig-9-2-title fig-9-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-2-title">What the agent holds on the first turn after a suspend, under each fidelity</title>
+  <desc id="fig-9-2-desc">Two columns for the same agent on its first turn after a suspend, on the second x86 server guest. Under memory fidelity it holds 6 messages, its note, its file under /tmp, and the same process at 11.9 seconds of age, and the turn took 0.30 seconds. Under volumes fidelity it holds 6 messages because it loaded 4 from SQLite, it lost the note and the file, the process is 0.3 seconds old, and the turn took 5.06 seconds.</desc>
+  <rect x="214" y="16" width="196" height="40" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="312" y="31.25" font-size="12.5" text-anchor="middle" font-weight="700">memory fidelity</text>
+  <text x="312" y="48.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SNAPSHOT_FIDELITY_MEMORY</text>
+  <rect x="430" y="16" width="196" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="528" y="31.25" font-size="12.5" text-anchor="middle" font-weight="700">volumes fidelity</text>
+  <text x="528" y="48.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SNAPSHOT_FIDELITY_VOLUMES</text>
+  <line x1="16" y1="66" x2="626" y2="66" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="88" font-size="12" font-weight="700">conversation</text>
+  <circle cx="224" cy="84" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="236" y="88" font-size="11.5" fill="var(--m-green-ink, #336b40)">6 of 6 messages</text>
+  <circle cx="440" cy="84" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="452" y="88" font-size="11.5" fill="var(--m-green-ink, #336b40)">6 of 6 messages</text>
+  <line x1="16" y1="106" x2="626" y2="106" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="128" font-size="12" font-weight="700">loaded from SQLite at start</text>
+  <circle cx="224" cy="124" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="236" y="128" font-size="11.5" fill="var(--m-green-ink, #336b40)">0 messages</text>
+  <circle cx="440" cy="124" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="452" y="128" font-size="11.5" fill="var(--m-green-ink, #336b40)">4 messages</text>
+  <line x1="16" y1="146" x2="626" y2="146" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="168" font-size="12" font-weight="700">note in a variable</text>
+  <circle cx="224" cy="164" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="236" y="168" font-size="11.5" fill="var(--m-green-ink, #336b40)">kept</text>
+  <circle cx="440" cy="164" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="452" y="168" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">lost</text>
+  <line x1="16" y1="186" x2="626" y2="186" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="208" font-size="12" font-weight="700">file under /tmp</text>
+  <circle cx="224" cy="204" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="236" y="208" font-size="11.5" fill="var(--m-green-ink, #336b40)">kept</text>
+  <circle cx="440" cy="204" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="452" y="208" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">lost</text>
+  <line x1="16" y1="226" x2="626" y2="226" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="248" font-size="12" font-weight="700">age of the process</text>
+  <circle cx="224" cy="244" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="236" y="248" font-size="11.5" fill="var(--m-green-ink, #336b40)">11.9 s, same process</text>
+  <circle cx="440" cy="244" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="452" y="248" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">0.3 s, new process</text>
+  <line x1="16" y1="266" x2="626" y2="266" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="16" y="288" font-size="12" font-weight="700">time of this turn</text>
+  <circle cx="224" cy="284" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="236" y="288" font-size="11.5" fill="var(--m-green-ink, #336b40)">0.30 s</text>
+  <circle cx="440" cy="284" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="452" y="288" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">5.06 s</text>
+</svg>

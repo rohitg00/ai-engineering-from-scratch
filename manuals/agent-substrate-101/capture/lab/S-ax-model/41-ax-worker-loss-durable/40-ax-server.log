@@ -1,0 +1,9 @@
+{"time":"2026-11-12T16:27:52.324727621Z","level":"INFO","msg":"reconciling task","name":"s-loss2","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T16:27:52.333031812Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"s-loss2-tmpl-d2e390d9"}
+{"time":"2026-11-12T16:27:52.353080293Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"s-loss2"}
+{"time":"2026-11-12T16:27:52.54838207Z","level":"INFO","msg":"task successfully resumed","name":"s-loss2","actor":"s-loss2","workerIP":"10.244.0.41","workspaceReady":true}
+{"time":"2026-11-12T16:32:58.127577291Z","level":"INFO","msg":"reconciling task","name":"s-loss2","atespace":"default","image":"localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31"}
+{"time":"2026-11-12T16:32:58.132952585Z","level":"INFO","msg":"using custom ActorTemplate for actor","templateAtespace":"default","templateName":"s-loss2-tmpl-d2e390d9"}
+{"time":"2026-11-12T16:32:58.17985217Z","level":"WARN","msg":"existing actor is crashed, reverted to its last snapshot","actor":"s-loss2"}
+{"time":"2026-11-12T16:32:58.180205175Z","level":"INFO","msg":"resuming actor on Substrate worker","actor":"s-loss2"}
+{"time":"2026-11-12T16:32:58.407850858Z","level":"INFO","msg":"task successfully resumed","name":"s-loss2","actor":"s-loss2","workerIP":"10.244.0.50","workspaceReady":true}

@@ -243,6 +243,35 @@ module.exports = figure('fig-1-2', {
 
 Save it as `figures/src/fig-1-2.js` and run `node manuals/_shared/figkit.js build manuals/<id>`. The audit fails when a committed SVG differs from its source. A figure without a source file is checked as a hand-written SVG.
 
+### Object forms and project marks
+
+Two shared modules draw objects that say what they are. [_shared/forms.js](_shared/forms.js) holds the forms, and [_shared/marks.js](_shared/marks.js) holds the project marks. Use them on the cover plate and in architecture figures. Never use them in a chart, a timeline, or a decision figure.
+
+- A form must say what the object is, such as a terminal, a gateway with ports, a server tower, or a database cylinder.
+- A surface shows containment. A floor tile is a group such as a namespace, and a platform slab is a host. An open frame is a pod, and a shell with walls is a sandbox.
+- A layered stack is a workload with its state layers. Its dashed variant is a workload that is stopped or suspended.
+- Each form takes the figure, the isometric view, a position, a hue, and an optional mark. It returns anchor points for arrows and labels.
+- Each form has a flat variant under `forms.flat`, a front view of about 28 to 44 units. Use it in sequence, flow, structure, and layers figures, where depth would fight the data.
+
+A mark is the logo of a real project. The `mark` method of the figure kit draws it as one path in one palette colour.
+
+- A mark comes only from the official artwork of the project. Never draw a mark from memory.
+- `marks.js` records the source and the license or trademark note of each mark. Add both when you add a mark.
+- Each mark returns its path on an isometric face, on a floor, or flat.
+- Leave a mark out when it does not read at the size you have. A label alone is correct.
+- The sources page of the manual says that the marks belong to their owners.
+
+```javascript
+const forms = require('../../../_shared/forms.js');
+
+const view = forms.isoView(f, { ox: 250, oy: 160, angle: 'true' });
+const router = forms.gateway(f, view, [-28, -28, 0], 'indigo', { mark: 'envoy' });
+f.leader([120, 40], router.top);
+forms.flat.tower(f, 420, 16, 'blue', { mark: 'substrate' });
+```
+
+Keep the two modules out of `figures/src`, because the build treats every file there as a figure.
+
 ## Listings and the capture kit
 
 - A JSON, HTTP, SSE, or JSONL block must be a `listing` with a `source`. The audit fails a `json` fence that is not a listing.
@@ -261,7 +290,7 @@ Save it as `figures/src/fig-1-2.js` and run `node manuals/_shared/figkit.js buil
 - Every source marker such as `{{spec §4.1}}` and every `rule` block must use a key declared in `quoteSources`. The build fails on an undeclared rule key or a missing file, and the audit flags an undeclared marker key.
 - The audit flags quoted prose of 24 or more characters next to a source marker, and a `rule` block that starts with a quote mark.
 - Citations, `Sources:` lines, and listing source paths live in the markdown for verification. They never render in a section. A reader sees no file paths, capture file names, commits, or citation chips in the prose.
-- Evidence is linked, never printed. A listing with a `source:` gets a "Full log" link to that file on GitHub. A paragraph that starts with **We measured** gets one "Raw runs" link: the summary file of the machine that the paragraph or its heading names, or the capture folder, when the section's `Sources:` line lists it. A section with no evidence path in its `Sources:` line gets no link. A ` ```lab-runs``` ` block renders one row for each sweep in `capture/gpu/summary/`. The build fails when a linked path does not exist.
+- Evidence is linked, never printed. A listing with a `source:` gets a "Full log" link to that file on GitHub. A paragraph that starts with **We measured** gets one "Raw runs" link: the summary file of the machine that the paragraph or its heading names, or the capture folder, when the section's `Sources:` line lists it. When that line lists several files under `capture/lab/summary`, the link goes to the one that a figure under the same heading cites, or to the summary folder. A section with no evidence path in its `Sources:` line gets no link. A ` ```lab-runs``` ` block renders one row for each sweep in `capture/gpu/summary/`. The build fails when a linked path does not exist.
 - A figure caption can end with a sentence that starts with "From" and names its sources. The reader view drops that sentence.
 - The sources reference page is the one place a reader sees where the facts came from. Write it for people: the kinds of sources, such as the code and docs, our measured runs, issues and pull requests, and papers, and the external reports by title and date. Do not list repository file paths there.
 

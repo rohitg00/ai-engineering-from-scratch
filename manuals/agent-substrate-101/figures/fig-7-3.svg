@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 396" role="img" aria-labelledby="fig-7-3-title fig-7-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-3-title">What the GKE installer creates, and who operates it</title>
+  <desc id="fig-7-3-desc">The installer runs on your machine and calls two tools. The setup-gcp tool creates five things in your Google Cloud project: a GKE Standard cluster, two buckets, an Artifact Registry repository, a service account, and dashboards. The ate-setup tool installs five things in the cluster that you operate: the control plane, the dataplane, atelet, PostgreSQL on a 500 GiB disk, and the CRDs.</desc>
+  <defs><marker id="fig-7-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="20" y="12" width="600" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="27.1" font-size="12" text-anchor="middle" font-weight="700">the installer, on your machine</text>
+  <text x="320" y="44.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">git, Go, and Docker with buildx. It does not run in Cloud Shell.</text>
+  <line x1="165" y1="52" x2="165" y2="92" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect class="m-knock" x="170" y="61.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="173" y="72" font-size="11.5">setup-gcp</text>
+  <line x1="475" y1="52" x2="475" y2="92" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-3-head-ink)"/>
+  <rect class="m-knock" x="480" y="61.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="483" y="72" font-size="11.5">ate-setup</text>
+  <text x="20" y="110" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">IN YOUR GOOGLE CLOUD PROJECT</text>
+  <text x="330" y="110" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">IN THE CLUSTER, OPERATED BY YOU</text>
+  <rect x="20" y="120" width="290" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="165" y="136.95" font-size="11.5" text-anchor="middle" font-weight="700">GKE Standard cluster</text>
+  <text x="165" y="154.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">version 1.37, Rapid channel, Dataplane V2</text>
+  <rect x="20" y="174" width="290" height="44" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="165" y="190.95" font-size="11.5" text-anchor="middle" font-weight="700">two Cloud Storage buckets</text>
+  <text x="165" y="208.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">snapshots, and the microVM kernel and rootfs</text>
+  <rect x="20" y="228" width="290" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="165" y="244.95" font-size="11.5" text-anchor="middle" font-weight="700">Artifact Registry: ate-images</text>
+  <text x="165" y="262.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the images that the installer builds</text>
+  <rect x="20" y="282" width="290" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="165" y="298.95" font-size="11.5" text-anchor="middle" font-weight="700">ate-snapshot-transfer</text>
+  <text x="165" y="316.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a service account, with its IAM grants</text>
+  <rect x="20" y="336" width="290" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="165" y="352.95" font-size="11.5" text-anchor="middle" font-weight="700">Cloud Monitoring dashboards</text>
+  <text x="165" y="370.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">routing latency, snapshot size, gRPC traffic</text>
+  <rect x="330" y="120" width="290" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="475" y="136.95" font-size="11.5" text-anchor="middle" font-weight="700">ate-api-server</text>
+  <text x="475" y="154.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">with ate-controller and ate-idp-server</text>
+  <rect x="330" y="174" width="290" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="475" y="190.95" font-size="11.5" text-anchor="middle" font-weight="700">atenet-router, atenet-egress</text>
+  <text x="475" y="208.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the dataplane</text>
+  <rect x="330" y="228" width="290" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="475" y="244.95" font-size="11.5" text-anchor="middle" font-weight="700">atelet</text>
+  <text x="475" y="262.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a privileged DaemonSet on every node</text>
+  <rect x="330" y="282" width="290" height="44" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="475" y="298.95" font-size="11.5" text-anchor="middle" font-weight="700">PostgreSQL</text>
+  <text x="475" y="316.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one StatefulSet on a 500 GiB disk</text>
+  <rect x="330" y="336" width="290" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="475" y="352.95" font-size="11.5" text-anchor="middle" font-weight="700">three CRDs, and the CAs for mTLS</text>
+  <text x="475" y="370.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">WorkerPool, SandboxConfig, CSIDriverConfig</text>
+</svg>

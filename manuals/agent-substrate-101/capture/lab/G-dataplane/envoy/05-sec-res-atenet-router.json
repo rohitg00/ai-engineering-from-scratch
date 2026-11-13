@@ -1,0 +1,29 @@
+[
+  {
+    "name": "atenet-router",
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "runAsNonRoot": true
+    },
+    "resources": {}
+  },
+  {
+    "name": "envoy",
+    "securityContext": {
+      "allowPrivilegeEscalation": false,
+      "capabilities": {
+        "drop": [
+          "ALL"
+        ]
+      },
+      "runAsNonRoot": true,
+      "runAsUser": 65532
+    },
+    "resources": {}
+  }
+]

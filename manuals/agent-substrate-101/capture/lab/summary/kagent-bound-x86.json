@@ -1,0 +1,765 @@
+{
+  "direct_requests_to_the_model": [
+    {
+      "curl_exit": 28,
+      "finish": null,
+      "prompt": "p1-count",
+      "seconds": 75.0
+    },
+    {
+      "curl_exit": 28,
+      "finish": null,
+      "prompt": "p2-story",
+      "seconds": 75.0
+    },
+    {
+      "curl_exit": 0,
+      "finish": "stop",
+      "prompt": "p3-count-bounded",
+      "seconds": 1.1
+    }
+  ],
+  "machine": "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, kagent v1.0.0 with its Substrate distribution, Ollama 0.40.16 in a container on the guest with 12 CPUs, one request at a time, no GPU. The guest had been restarted, and two containers of another experiment ran on it.",
+  "max_tokens_answer_ends_with": "46",
+  "modelconfig_fields": [
+    "maxTokens",
+    "maxCompletionTokens",
+    "timeout"
+  ],
+  "note": "the model is qwen2.5:1.5b, a small open model on CPU. Each turn is the first turn of a new session unless its name says next. The word prompt asks for one word 5000 times, the count prompt asks for the numbers 1 to 3000, and the tool prompt asks for one bash call. wall_seconds is the time of the kagent client command.",
+  "prompts": {
+    "count": "Do not use any tool. Count from 1 to 3000. Write every number on its own line. Do not skip any number and do not summarize.",
+    "tool": "Run the command `cat /proc/uptime` with the bash tool and tell me the first number.",
+    "word": "Do not use any tool. Write the word lab again and again, 5000 times, separated by spaces. Do not stop before you reach 5000."
+  },
+  "series": {
+    "A1-free-long": {
+      "bound": "none",
+      "completed": 1,
+      "exit_codes": {
+        "0": 1
+      },
+      "n": 1,
+      "prompt": "word",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "real-1p5b",
+          "client_timeout": "90s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "A1-free-long-1",
+          "wall_seconds": 23.532
+        }
+      ],
+      "wall_seconds": {
+        "max": 23.532,
+        "median": 23.532,
+        "min": 23.532,
+        "n": 1
+      }
+    },
+    "A1-next-turn": {
+      "bound": "none",
+      "completed": 1,
+      "exit_codes": {
+        "0": 1
+      },
+      "n": 1,
+      "prompt": "tool",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "A1-next-turn",
+          "wall_seconds": 12.703
+        }
+      ],
+      "wall_seconds": {
+        "max": 12.703,
+        "median": 12.703,
+        "min": 12.703,
+        "n": 1
+      }
+    },
+    "A2-tok-long": {
+      "bound": "maxTokens 128",
+      "completed": 3,
+      "exit_codes": {
+        "0": 3
+      },
+      "n": 3,
+      "prompt": "word",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "A2-tok-long-1",
+          "wall_seconds": 17.478
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "A2-tok-long-2",
+          "wall_seconds": 21.622
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "A2-tok-long-3",
+          "wall_seconds": 12.704
+        }
+      ],
+      "wall_seconds": {
+        "max": 21.622,
+        "median": 17.478,
+        "min": 12.704,
+        "n": 3
+      }
+    },
+    "A3-time-long": {
+      "bound": "timeout 20",
+      "completed": 3,
+      "exit_codes": {
+        "0": 3
+      },
+      "n": 3,
+      "prompt": "word",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "A3-time-long-1",
+          "wall_seconds": 15.128
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "A3-time-long-2",
+          "wall_seconds": 10.26
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "A3-time-long-3",
+          "wall_seconds": 10.262
+        }
+      ],
+      "wall_seconds": {
+        "max": 15.128,
+        "median": 10.262,
+        "min": 10.26,
+        "n": 3
+      }
+    },
+    "B-time-tool": {
+      "bound": "timeout 20",
+      "completed": 5,
+      "exit_codes": {
+        "0": 5
+      },
+      "n": 5,
+      "prompt": "tool",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-time-tool-1",
+          "wall_seconds": 12.068
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-time-tool-2",
+          "wall_seconds": 7.513
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-time-tool-3",
+          "wall_seconds": 5.815
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-time-tool-4",
+          "wall_seconds": 7.127
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-time-tool-5",
+          "wall_seconds": 11.293
+        }
+      ],
+      "wall_seconds": {
+        "max": 12.068,
+        "median": 7.513,
+        "min": 5.815,
+        "n": 5
+      }
+    },
+    "B-tok-tool": {
+      "bound": "maxTokens 128",
+      "completed": 5,
+      "exit_codes": {
+        "0": 5
+      },
+      "n": 5,
+      "prompt": "tool",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-tok-tool-1",
+          "wall_seconds": 5.508
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-tok-tool-2",
+          "wall_seconds": 6.516
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-tok-tool-3",
+          "wall_seconds": 7.364
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-tok-tool-4",
+          "wall_seconds": 6.306
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "B-tok-tool-5",
+          "wall_seconds": 7.984
+        }
+      ],
+      "wall_seconds": {
+        "max": 7.984,
+        "median": 6.516,
+        "min": 5.508,
+        "n": 5
+      }
+    },
+    "C-free-tool": {
+      "bound": "none",
+      "completed": 10,
+      "exit_codes": {
+        "0": 10
+      },
+      "n": 10,
+      "prompt": "tool",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-01",
+          "wall_seconds": 11.466
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-02",
+          "wall_seconds": 8.612
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-03",
+          "wall_seconds": 6.844
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-04",
+          "wall_seconds": 10.719
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-05",
+          "wall_seconds": 5.958
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-06",
+          "wall_seconds": 6.911
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-07",
+          "wall_seconds": 6.316
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-08",
+          "wall_seconds": 8.084
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-09",
+          "wall_seconds": 7.117
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "real-1p5b",
+          "client_timeout": "120s",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "C-free-tool-10",
+          "wall_seconds": 5.935
+        }
+      ],
+      "wall_seconds": {
+        "max": 11.466,
+        "median": 7.014,
+        "min": 5.935,
+        "n": 10
+      }
+    },
+    "F-free-count": {
+      "bound": "none",
+      "completed": 0,
+      "exit_codes": {
+        "1": 1
+      },
+      "n": 1,
+      "prompt": "count",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_RUNNING",
+          "agent": "real-1p5b",
+          "client_timeout": "60s",
+          "error": "Error: invoke Session: context deadline exceeded",
+          "exit": 1,
+          "output_tokens": null,
+          "task_state": null,
+          "turn": "F-free-count-1",
+          "wall_seconds": 60.12
+        }
+      ],
+      "wall_seconds": {
+        "max": 60.12,
+        "median": 60.12,
+        "min": 60.12,
+        "n": 1
+      }
+    },
+    "F-next-same-session": {
+      "bound": "none",
+      "completed": 0,
+      "exit_codes": {
+        "1": 1
+      },
+      "n": 1,
+      "prompt": "tool",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_RUNNING",
+          "error": "Error: invoke Session: resource conflict",
+          "exit": 1,
+          "output_tokens": null,
+          "task_state": null,
+          "turn": "F-next-same-session",
+          "wall_seconds": 0.131
+        }
+      ],
+      "wall_seconds": {
+        "max": 0.131,
+        "median": 0.131,
+        "min": 0.131,
+        "n": 1
+      }
+    },
+    "F-next-turn": {
+      "bound": "none",
+      "completed": 0,
+      "exit_codes": {
+        "1": 1
+      },
+      "n": 1,
+      "prompt": "tool",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_RUNNING",
+          "agent": "real-1p5b",
+          "client_timeout": "5m",
+          "error": "Error: invoke Session: context deadline exceeded",
+          "exit": 1,
+          "output_tokens": null,
+          "task_state": null,
+          "turn": "F-next-turn",
+          "wall_seconds": 300.128
+        }
+      ],
+      "wall_seconds": {
+        "max": 300.128,
+        "median": 300.128,
+        "min": 300.128,
+        "n": 1
+      }
+    },
+    "T-tok-count": {
+      "bound": "maxTokens 128",
+      "completed": 3,
+      "exit_codes": {
+        "0": 3
+      },
+      "n": 3,
+      "prompt": "count",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": 128,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "T-tok-count-1",
+          "wall_seconds": 18.991
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": 128,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "T-tok-count-2",
+          "wall_seconds": 15.63
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-tok",
+          "client_timeout": "5m",
+          "error": null,
+          "exit": 0,
+          "output_tokens": 128,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "T-tok-count-3",
+          "wall_seconds": 19.392
+        }
+      ],
+      "wall_seconds": {
+        "max": 19.392,
+        "median": 18.991,
+        "min": 15.63,
+        "n": 3
+      }
+    },
+    "U-time-count": {
+      "bound": "timeout 20",
+      "completed": 0,
+      "exit_codes": {
+        "1": 3
+      },
+      "n": 3,
+      "prompt": "count",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": "Error: session task <id> ended in TASK_STATE_FAILED",
+          "exit": 1,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_FAILED",
+          "turn": "U-time-count-1",
+          "wall_seconds": 20.852
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": "Error: session task <id> ended in TASK_STATE_FAILED",
+          "exit": 1,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_FAILED",
+          "turn": "U-time-count-2",
+          "wall_seconds": 21.173
+        },
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDED",
+          "agent": "w-time",
+          "client_timeout": "5m",
+          "error": "Error: session task <id> ended in TASK_STATE_FAILED",
+          "exit": 1,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_FAILED",
+          "turn": "U-time-count-3",
+          "wall_seconds": 20.809
+        }
+      ],
+      "wall_seconds": {
+        "max": 21.173,
+        "median": 20.852,
+        "min": 20.809,
+        "n": 3
+      }
+    },
+    "U2-next-same-session": {
+      "bound": "timeout 20",
+      "completed": 1,
+      "exit_codes": {
+        "0": 1
+      },
+      "n": 1,
+      "prompt": "tool",
+      "runs": [
+        {
+          "actor_state_at_end": "ACTOR_STATE_SUSPENDING",
+          "error": null,
+          "exit": 0,
+          "output_tokens": null,
+          "task_state": "TASK_STATE_COMPLETED",
+          "turn": "U2-next-same-session",
+          "wall_seconds": 17.089
+        }
+      ],
+      "wall_seconds": {
+        "max": 17.089,
+        "median": 17.089,
+        "min": 17.089,
+        "n": 1
+      }
+    }
+  },
+  "settings": {
+    "maxTokens": 128,
+    "timeout_seconds": 20
+  },
+  "sources": [
+    "capture/lab/W-ax-kagent-2/10-kagent-bound/01-bounded.yaml",
+    "capture/lab/W-ax-kagent-2/10-kagent-bound/00-explain-maxTokens.txt",
+    "capture/lab/W-ax-kagent-2/10-kagent-bound/00-explain-maxCompletionTokens.txt",
+    "capture/lab/W-ax-kagent-2/10-kagent-bound/00-explain-timeout.txt",
+    "capture/lab/W-ax-kagent-2/10-kagent-bound/events.log",
+    "capture/lab/W-ax-kagent-2/11-long-prompt/results.tsv",
+    "capture/lab/W-ax-kagent-2/12-kagent-bound-long/events.log",
+    "capture/lab/W-ax-kagent-2/12-kagent-bound-long/ollama-gin.log",
+    "capture/lab/W-ax-kagent-2/12-kagent-bound-long/T-tok-count-1.json",
+    "capture/lab/W-ax-kagent-2/12-kagent-bound-long/U-time-count-1.json",
+    "capture/lab/W-ax-kagent-2/12-kagent-bound-long/U-time-count-1.after.log",
+    "capture/lab/W-ax-kagent-2/12-kagent-bound-long/F-free-count-1.after.log"
+  ],
+  "timeout_failure": {
+    "after_the_turn": [
+      {
+        "actor_state": "ACTOR_STATE_SUSPENDED",
+        "model_server_cpu_percent": 0.0,
+        "seconds_after_turn": 5
+      },
+      {
+        "actor_state": "ACTOR_STATE_SUSPENDED",
+        "model_server_cpu_percent": 0.0,
+        "seconds_after_turn": 15
+      },
+      {
+        "actor_state": "ACTOR_STATE_SUSPENDED",
+        "model_server_cpu_percent": 0.01,
+        "seconds_after_turn": 30
+      }
+    ],
+    "code": "STREAM_ERROR",
+    "text": "context deadline exceeded (Client.Timeout or context cancellation while reading body)"
+  },
+  "unbounded_turn": {
+    "after_the_client_gave_up": [
+      {
+        "actor_state": "ACTOR_STATE_RUNNING",
+        "model_server_cpu_percent": 1195.78,
+        "seconds_after_turn": 5
+      },
+      {
+        "actor_state": "ACTOR_STATE_RUNNING",
+        "model_server_cpu_percent": 1197.71,
+        "seconds_after_turn": 15
+      },
+      {
+        "actor_state": "ACTOR_STATE_RUNNING",
+        "model_server_cpu_percent": 1196.78,
+        "seconds_after_turn": 30
+      },
+      {
+        "actor_state": "ACTOR_STATE_RUNNING",
+        "model_server_cpu_percent": 1203.73,
+        "seconds_after_turn": 60
+      },
+      {
+        "actor_state": "ACTOR_STATE_RUNNING",
+        "model_server_cpu_percent": 1202.16,
+        "seconds_after_turn": 90
+      },
+      {
+        "actor_state": "ACTOR_STATE_RUNNING",
+        "model_server_cpu_percent": 1200.88,
+        "seconds_after_turn": 120
+      },
+      {
+        "actor_state": "ACTOR_STATE_RUNNING",
+        "model_server_cpu_percent": 1196.35,
+        "seconds_after_turn": 180
+      },
+      {
+        "actor_state": "ACTOR_STATE_RUNNING",
+        "model_server_cpu_percent": 1202.04,
+        "seconds_after_turn": 240
+      }
+    ],
+    "client_error": "Error: invoke Session: context deadline exceeded",
+    "client_seconds": 60.12,
+    "client_timeout": "60s",
+    "ended_by": "restart of the model server container",
+    "model_request_code": 200,
+    "model_request_seconds": 610.0,
+    "turn_on_a_new_session_error": "Error: invoke Session: context deadline exceeded",
+    "turn_on_a_new_session_seconds": 300.128,
+    "turn_on_the_same_session_error": "Error: invoke Session: resource conflict",
+    "turn_on_the_same_session_seconds": 0.131
+  }
+}

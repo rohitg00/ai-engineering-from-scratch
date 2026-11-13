@@ -1,0 +1,71 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+{"time":"2026-11-12T16:26:53.756541619Z","message":"Actor restoring","span_id":"54b225057a57ba9a","trace_flags":"00","trace_id":"383a0d175d774d48ba0a732377645107"}
+{"time":"2026-11-12T16:26:53.833741817Z","message":"I1112 16:26:53.833590   14943 cli.go:282] **************** gVisor ****************"}
+{"time":"2026-11-12T16:26:53.833851298Z","message":"I1112 16:26:53.833685   14943 cli.go:283] Version release-20261102.0, go1.27.3, amd64, 16 CPUs, linux, PID 14943, PPID 20, UID 0, GID 0"}
+{"time":"2026-11-12T16:26:53.833875287Z","message":"I1112 16:26:53.833710   14943 cli.go:285] Args: [/var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/sandbox-assets/gvisor/runsc -log-format json --alsologtostderr --allow-suid --host-settings=ignore --cpu-num-from-quota -root /var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/runsc-state create -bundle /var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/bundles/kagent -pid-file /var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/pidfiles/kagent.pid kagent]"}
+{"time":"2026-11-12T16:26:53.833900528Z","message":"I1112 16:26:53.833759   14943 config.go:661] Platform: systrap"}
+{"time":"2026-11-12T16:26:53.833922469Z","message":"I1112 16:26:53.833788   14943 config.go:662] RootDir: /var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/runsc-state"}
+{"time":"2026-11-12T16:26:53.833952718Z","message":"I1112 16:26:53.833797   14943 config.go:663] FileAccess: exclusive / Directfs: true / Overlay: root:self"}
+{"time":"2026-11-12T16:26:53.833972958Z","message":"I1112 16:26:53.833812   14943 config.go:664] Network: sandbox"}
+{"time":"2026-11-12T16:26:53.834011999Z","message":"I1112 16:26:53.833824   14943 config.go:665] UseCPUNums: false"}
+{"time":"2026-11-12T16:26:53.834045729Z","message":"I1112 16:26:53.833833   14943 cli.go:294] **************** gVisor ****************"}
+{"time":"2026-11-12T16:26:53.836919597Z","message":"I1112 16:26:53.836823   14943 cli.go:323] Exiting with status: 0"}
+{"time":"2026-11-12T16:26:53.845749533Z","message":"I1112 16:26:53.845634   14948 cli.go:282] **************** gVisor ****************"}
+{"time":"2026-11-12T16:26:53.845796454Z","message":"I1112 16:26:53.845691   14948 cli.go:283] Version release-20261102.0, go1.27.3, amd64, 16 CPUs, linux, PID 14948, PPID 20, UID 0, GID 0"}
+{"time":"2026-11-12T16:26:53.845820374Z","message":"I1112 16:26:53.845712   14948 cli.go:285] Args: [/var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/sandbox-assets/gvisor/runsc -log-format json --alsologtostderr --allow-suid --host-settings=ignore -allow-connected-on-save -root /var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/runsc-state start kagent]"}
+{"time":"2026-11-12T16:26:53.845841504Z","message":"I1112 16:26:53.845741   14948 config.go:661] Platform: systrap"}
+{"time":"2026-11-12T16:26:53.845863523Z","message":"I1112 16:26:53.845765   14948 config.go:662] RootDir: /var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/runsc-state"}
+{"time":"2026-11-12T16:26:53.845890114Z","message":"I1112 16:26:53.845773   14948 config.go:663] FileAccess: exclusive / Directfs: true / Overlay: root:self"}
+{"time":"2026-11-12T16:26:53.845907415Z","message":"I1112 16:26:53.845785   14948 config.go:664] Network: sandbox"}
+{"time":"2026-11-12T16:26:53.845930385Z","message":"I1112 16:26:53.845795   14948 config.go:665] UseCPUNums: false"}
+{"time":"2026-11-12T16:26:53.845956855Z","message":"I1112 16:26:53.845803   14948 cli.go:294] **************** gVisor ****************"}
+{"time":"2026-11-12T16:26:53.846862523Z","message":"W1112 16:26:53.846774   14948 container.go:2097] gVisor startup is slower if `--root` (or `--shared-root`) is not reused across multiple sandboxes. You can speed up sandbox startup by setting `--shared-root` to a shared system-wide directory so that the null gofer network namespace is reused across sandboxes."}
+{"time":"2026-11-12T16:26:53.846897323Z","message":"I1112 16:26:53.846819   14948 namespace.go:201] Mapping host uid 0 to container uid 0 (size=4294967295)"}
+{"time":"2026-11-12T16:26:53.846914763Z","message":"I1112 16:26:53.846831   14948 namespace.go:209] Mapping host gid 0 to container gid 0 (size=4294967295)"}
+{"time":"2026-11-12T16:26:53.846933595Z","message":"I1112 16:26:53.846856   14948 container.go:2024] Starting gofer with command: [runsc-gofer --log-format=json --host-settings=ignore --alsologtostderr=true --allow-suid=true --allow-connected-on-save=true --root=/var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/runsc-state gofer --bundle /var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/bundles/kagent --gofer-mount-confs=lisafs:self,none:self,lisafs:none,lisafs:none --spec-fd=3 --mounts-fd=4 --io-fds=5 --io-fds=6 --io-fds=7 --sync-chroot-fd=8 kagent]"}
+{"time":"2026-11-12T16:26:53.84969095Z","message":"I1112 16:26:53.849551   14948 container.go:2033] Gofer started, PID: 14956"}
+{"time":"2026-11-12T16:26:53.849795121Z","message":"I1112 16:26:53.849715   14948 container.go:2047] Pinned null network namespace at \"/var/lib/ate/actors/b88e0032-01e5-401a-b321-d9504c1134ac/runsc-state/null-netns\""}
+{"time":"2026-11-12T16:26:53.87649581Z","message":"I1112 16:26:53.876280   14948 cpulimits.go:159] [Lifecycle CPU] Applied application CPU limit: quota=100000 period=100000"}
+{"time":"2026-11-12T16:26:53.878125577Z","message":"I1112 16:26:53.878000   14948 cli.go:323] Exiting with status: 0"}
+{"time":"2026-11-12T16:26:54.095251288Z","config_dir":"/config","level":"INFO","msg":"loaded agent config"}
+{"time":"2026-11-12T16:26:54.095998626Z","http_tools":0,"level":"INFO","model":"openai","msg":"agent configuration","remote_agents":0,"sse_tools":0,"stream":true}
+{"time":"2026-11-12T16:26:54.096250169Z","app_name":"kagent__NS__real_1p5b","kagent_name":"real-1p5b","kagent_namespace":"kagent","level":"INFO","msg":"built app_name from runtime identity"}
+{"time":"2026-11-12T16:26:54.096939816Z","level":"INFO","msg":"token service started"}
+{"time":"2026-11-12T16:26:54.178913451Z","level":"INFO","msg":"using local durable-dir session store","url":"sqlite+aiosqlite:////data/sessions.db"}
+{"time":"2026-11-12T16:26:54.179654677Z","level":"INFO","msg":"processing stdio MCP tools","stdio_tools_count":0}
+{"time":"2026-11-12T16:26:54.179746369Z","http_tools_count":0,"level":"INFO","msg":"processing HTTP MCP tools"}
+{"time":"2026-11-12T16:26:54.179796199Z","level":"INFO","msg":"processing SSE MCP tools","sse_tools_count":0}
+{"time":"2026-11-12T16:26:54.181348804Z","base_url":"http://ollama.kagent.svc.cluster.local:11434/v1","level":"INFO","model":"qwen2.5:1.5b","msg":"initialized OpenAI model"}
+{"time":"2026-11-12T16:26:54.181571056Z","has_description":true,"has_instruction":true,"level":"INFO","msg":"creating Google ADK LLM agent","name":"real_1p5b","tools_count":7,"toolsets_count":0}
+{"time":"2026-11-12T16:26:54.181658007Z","level":"INFO","msg":"successfully created Google ADK LLM agent","tools_count":7,"toolsets_count":0}
+{"time":"2026-11-12T16:26:54.181694068Z","level":"INFO","msg":"context compaction not configured"}
+{"time":"2026-11-12T16:26:54.182303013Z","addr":":80","level":"INFO","msg":"starting Go ADK server!"}
+{"time":"2026-11-12T16:26:54.187554365Z","message":"Actor restored","span_id":"54b225057a57ba9a","trace_flags":"00","trace_id":"383a0d175d774d48ba0a732377645107"}
+{"time":"2026-11-12T16:26:54.353786446Z","app_name":"kagent__NS__real_1p5b","component":"kagent-executor","context_id":"01a1d095-62c0-7038-8732-eaa0f0994d1b","level":"INFO","msg":"execute","task_id":"01a1d095-657c-7dad-915c-433cd7c38e68","user_id":"admin@kagent.dev"}
+{"time":"2026-11-12T16:26:54.357914606Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.358056528Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:186 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.358099539Z","message":"\u001b[0m\u001b[33m[2.956ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `sessions` WHERE `sessions`.`app_name` = \"kagent__NS__real_1p5b\" AND `sessions`.`user_id` = \"conversation\" AND `sessions`.`id` = \"conversation\" ORDER BY `sessions`.`id` LIMIT 1"}
+{"time":"2026-11-12T16:26:54.360016128Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.360064728Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:530 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.360087448Z","message":"\u001b[0m\u001b[33m[1.020ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `app_states` WHERE app_name = \"kagent__NS__real_1p5b\" ORDER BY `app_states`.`app_name` LIMIT 1"}
+{"time":"2026-11-12T16:26:54.360677583Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.360708543Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:542 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.360730485Z","message":"\u001b[0m\u001b[33m[0.337ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `user_states` WHERE app_name = \"kagent__NS__real_1p5b\" AND user_id = \"conversation\" ORDER BY `user_states`.`app_name` LIMIT 1"}
+{"time":"2026-11-12T16:26:54.37056775Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.37066309Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:530 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.37070061Z","message":"\u001b[0m\u001b[33m[2.163ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `app_states` WHERE app_name = \"kagent__NS__real_1p5b\" ORDER BY `app_states`.`app_name` LIMIT 1"}
+{"time":"2026-11-12T16:26:54.3726302Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.37267844Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:542 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.37270275Z","message":"\u001b[0m\u001b[33m[1.805ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `user_states` WHERE app_name = \"kagent__NS__real_1p5b\" AND user_id = \"conversation\" ORDER BY `user_states`.`app_name` LIMIT 1"}
+{"time":"2026-11-12T16:26:54.37884442Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.378925311Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:530 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.3789658Z","message":"\u001b[0m\u001b[33m[1.581ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `app_states` WHERE app_name = \"kagent__NS__real_1p5b\" ORDER BY `app_states`.`app_name` LIMIT 1"}
+{"time":"2026-11-12T16:26:54.380596546Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.380641248Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:542 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.380664288Z","message":"\u001b[0m\u001b[33m[1.489ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `user_states` WHERE app_name = \"kagent__NS__real_1p5b\" AND user_id = \"conversation\" ORDER BY `user_states`.`app_name` LIMIT 1"}
+{"time":"2026-11-12T16:26:54.382680747Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.382729917Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:530 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.382757898Z","message":"\u001b[0m\u001b[33m[0.218ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `app_states` WHERE app_name = \"kagent__NS__real_1p5b\" ORDER BY `app_states`.`app_name` LIMIT 1"}
+{"time":"2026-11-12T16:26:54.38299122Z","message":"\r"}
+{"time":"2026-11-12T16:26:54.383023391Z","message":"2026/11/12 16:26:54 \u001b[31;1m/root/go/pkg/mod/google.golang.org/adk/v2@v2.6.0/session/database/service.go:542 \u001b[35;1mrecord not found"}
+{"time":"2026-11-12T16:26:54.38304376Z","message":"\u001b[0m\u001b[33m[0.176ms] \u001b[34;1m[rows:0]\u001b[0m SELECT * FROM `user_states` WHERE app_name = \"kagent__NS__real_1p5b\" AND user_id = \"conversation\" ORDER BY `user_states`.`app_name` LIMIT 1"}

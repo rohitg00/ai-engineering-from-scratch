@@ -1,0 +1,41 @@
+containers:
+- command:
+  - /ko-app/counter
+  - --extra-port=9090
+  image: localhost:5001/counter@sha256:c7f650b4a35236c9cbf8d487c8f70c985e4b0c4523be421740966690ee201589
+  name: counter
+  volumeMounts:
+  - mountPath: /home/counter
+    name: data
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+    timeoutSeconds: 120
+metadata:
+  atespace: ate-demo-counter-microvm
+  createTime: "2026-11-12T11:56:23.993629692Z"
+  name: counter-microvm
+  uid: 14fce677-afe4-4c4f-abb0-b7a2ff7ff140
+  updateTime: "2026-11-12T11:56:37.885086111Z"
+  version: "3"
+resources:
+  limits:
+    cpuMillicores: "1000"
+    memoryBytes: "536870912"
+snapshotConfig:
+  goldenSnapshotConfig:
+    mode: GOLDEN_SNAPSHOT_MODE_ENABLED
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY
+status:
+  goldenSnapshotStatus:
+    goldenTag:
+      atespace: ate-demo-counter-microvm
+      name: 14fce677-afe4-4c4f-abb0-b7a2ff7ff140
+    snapshotTime: "2026-11-12T11:56:36.911529104Z"
+volumes:
+- durableDir: {}
+  name: data
+workerSelector:
+  matchLabels:
+    workload: counter-microvm

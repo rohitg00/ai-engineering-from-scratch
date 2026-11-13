@@ -1,0 +1,29 @@
+{"time":"2026-11-12T11:30:44.959738991Z","message":"Actor restoring","span_id":"3083174e66742c52","trace_flags":"00","trace_id":"e9033e07befb40bdea92a5ea275c0c61"}
+{"time":"2026-11-12T11:30:45.031647047Z","message":"I1112 11:30:45.031508    4612 cli.go:282] **************** gVisor ****************"}
+{"time":"2026-11-12T11:30:45.03179363Z","message":"I1112 11:30:45.031587    4612 cli.go:283] Version release-20261102.0, go1.27.3, amd64, 24 CPUs, linux, PID 4612, PPID 19, UID 0, GID 0"}
+{"time":"2026-11-12T11:30:45.031838591Z","message":"I1112 11:30:45.031609    4612 cli.go:285] Args: [/var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/sandbox-assets/gvisor/runsc -log-format json --alsologtostderr --allow-suid --host-settings=ignore --cpu-num-from-quota -root /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/runsc-state create -bundle /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/bundles/ballast -pid-file /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/pidfiles/ballast.pid ballast]"}
+{"time":"2026-11-12T11:30:45.031859512Z","message":"I1112 11:30:45.031651    4612 config.go:661] Platform: systrap"}
+{"time":"2026-11-12T11:30:45.031877252Z","message":"I1112 11:30:45.031680    4612 config.go:662] RootDir: /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/runsc-state"}
+{"time":"2026-11-12T11:30:45.031896883Z","message":"I1112 11:30:45.031688    4612 config.go:663] FileAccess: exclusive / Directfs: true / Overlay: root:self"}
+{"time":"2026-11-12T11:30:45.031930273Z","message":"I1112 11:30:45.031732    4612 config.go:664] Network: sandbox"}
+{"time":"2026-11-12T11:30:45.031947394Z","message":"I1112 11:30:45.031742    4612 config.go:665] UseCPUNums: false"}
+{"time":"2026-11-12T11:30:45.031963804Z","message":"I1112 11:30:45.031750    4612 cli.go:294] **************** gVisor ****************"}
+{"time":"2026-11-12T11:30:45.034526128Z","message":"I1112 11:30:45.034435    4612 cli.go:323] Exiting with status: 0"}
+{"time":"2026-11-12T11:30:45.044714425Z","message":"I1112 11:30:45.044542    4618 cli.go:282] **************** gVisor ****************"}
+{"time":"2026-11-12T11:30:45.044770226Z","message":"I1112 11:30:45.044616    4618 cli.go:283] Version release-20261102.0, go1.27.3, amd64, 24 CPUs, linux, PID 4618, PPID 19, UID 0, GID 0"}
+{"time":"2026-11-12T11:30:45.044792846Z","message":"I1112 11:30:45.044648    4618 cli.go:285] Args: [/var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/sandbox-assets/gvisor/runsc -log-format json --alsologtostderr --allow-suid --host-settings=ignore --cpu-num-from-quota -root /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/runsc-state restore -background -detach -bundle /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/bundles/ballast -image-path /var/lib/ate/snapshots/d2f9f63b-c795-4811-b000-c94cee5f5fa0/local-checkpoint/6f39f936-ddaf-43d1-848f-bb99e4fb26f8 -pid-file /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/pidfiles/ballast.pid ballast]"}
+{"time":"2026-11-12T11:30:45.044841037Z","message":"I1112 11:30:45.044733    4618 config.go:661] Platform: systrap"}
+{"time":"2026-11-12T11:30:45.044867388Z","message":"I1112 11:30:45.044767    4618 config.go:662] RootDir: /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/runsc-state"}
+{"time":"2026-11-12T11:30:45.044891358Z","message":"I1112 11:30:45.044778    4618 config.go:663] FileAccess: exclusive / Directfs: true / Overlay: root:self"}
+{"time":"2026-11-12T11:30:45.044916639Z","message":"I1112 11:30:45.044796    4618 config.go:664] Network: sandbox"}
+{"time":"2026-11-12T11:30:45.044941019Z","message":"I1112 11:30:45.044809    4618 config.go:665] UseCPUNums: false"}
+{"time":"2026-11-12T11:30:45.04495651Z","message":"I1112 11:30:45.044821    4618 cli.go:294] **************** gVisor ****************"}
+{"time":"2026-11-12T11:30:45.046421071Z","message":"W1112 11:30:45.046308    4618 container.go:2097] gVisor startup is slower if `--root` (or `--shared-root`) is not reused across multiple sandboxes. You can speed up sandbox startup by setting `--shared-root` to a shared system-wide directory so that the null gofer network namespace is reused across sandboxes."}
+{"time":"2026-11-12T11:30:45.046459222Z","message":"I1112 11:30:45.046370    4618 namespace.go:201] Mapping host uid 0 to container uid 0 (size=4294967295)"}
+{"time":"2026-11-12T11:30:45.046474852Z","message":"I1112 11:30:45.046388    4618 namespace.go:209] Mapping host gid 0 to container gid 0 (size=4294967295)"}
+{"time":"2026-11-12T11:30:45.046495252Z","message":"I1112 11:30:45.046427    4618 container.go:2024] Starting gofer with command: [runsc-gofer --root=/var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/runsc-state --log-format=json --host-settings=ignore --alsologtostderr=true --cpu-num-from-quota=true --allow-suid=true gofer --bundle /var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/bundles/ballast --gofer-mount-confs=lisafs:self --spec-fd=3 --mounts-fd=4 --io-fds=5 --sync-chroot-fd=6 ballast]"}
+{"time":"2026-11-12T11:30:45.049601288Z","message":"I1112 11:30:45.049475    4618 container.go:2033] Gofer started, PID: 4626"}
+{"time":"2026-11-12T11:30:45.049829473Z","message":"I1112 11:30:45.049687    4618 container.go:2047] Pinned null network namespace at \"/var/lib/ate/actors/d2f9f63b-c795-4811-b000-c94cee5f5fa0/runsc-state/null-netns\""}
+{"time":"2026-11-12T11:30:45.109230514Z","message":"I1112 11:30:45.109014    4618 cpulimits.go:159] [Lifecycle CPU] Applied application CPU limit: quota=100000 period=100000"}
+{"time":"2026-11-12T11:30:45.110560022Z","message":"I1112 11:30:45.110456    4618 cli.go:323] Exiting with status: 0"}
+{"time":"2026-11-12T11:30:45.117636572Z","message":"Actor restored","span_id":"3083174e66742c52","trace_flags":"00","trace_id":"e9033e07befb40bdea92a5ea275c0c61"}

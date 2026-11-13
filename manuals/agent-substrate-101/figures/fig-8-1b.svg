@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-8-1b-title fig-8-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-1b-title">A bucket outside the cluster, and 20 or 100 ms of added round trip</title>
+  <desc id="fig-8-1b-desc">Two panels plot every one of 49 cycles on one guest. With the bucket outside the cluster and no added delay, a resume of 1,000 MiB from the bucket took a median of 4.79 s. With 20 ms of added round trip it took 10.24 s, and the synchronous suspend took 8.39 s against 7.09 s. At 100 ms only actors with no data in memory were measured.</desc>
+  <circle cx="26" cy="18" r="1.9" fill="var(--m-ink-soft, #4a4a4a)"/>
+  <text x="36" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">one cycle</text>
+  <line x1="120" y1="18" x2="138" y2="18" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.8"/>
+  <text x="146" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">medians of one size</text>
+  <text x="620" y="22" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">not measured: 200 and 1,000 MiB at +100 ms</text>
+  <line x1="56" y1="302" x2="282" y2="302" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="306" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="56" y1="263.33" x2="282" y2="263.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="267.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="56" y1="224.67" x2="282" y2="224.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="228.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="56" y1="186" x2="282" y2="186" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="190" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="56" y1="147.33" x2="282" y2="147.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="151.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="56" y1="108.67" x2="282" y2="108.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="112.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="56" y1="70" x2="282" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="50" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">12</text>
+  <line x1="56" y1="302" x2="282" y2="302" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="56" y1="70" x2="56" y2="302" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="79.79" y1="302" x2="79.79" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="79.79" y="319" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">inside</text>
+  <line x1="139.26" y1="302" x2="139.26" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="139.26" y="319" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">outside</text>
+  <line x1="198.74" y1="302" x2="198.74" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="198.74" y="319" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+20 ms</text>
+  <line x1="258.21" y1="302" x2="258.21" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="258.21" y="319" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+100 ms</text>
+  <text x="56" y="58" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resume from the bucket, seconds</text>
+  <circle cx="72.99" cy="297.24" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="76.39" cy="297.75" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="79.79" cy="296.68" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="83.19" cy="296.93" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="86.59" cy="297.34" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="132.46" cy="297.19" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="135.86" cy="297.22" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="139.26" cy="295.52" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="142.66" cy="297.69" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="146.06" cy="297.07" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="191.94" cy="294.77" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="195.34" cy="293.38" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="198.74" cy="295.23" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="202.14" cy="294.87" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="205.54" cy="294.65" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="251.41" cy="283.19" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="254.81" cy="281.58" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="258.21" cy="285.32" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="261.61" cy="283.73" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="265.01" cy="284.75" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <path d="M79.8 297.2 L139.3 297.2 L198.7 294.8 L258.2 283.7" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="270.21" y="287.73" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">0 MiB</text>
+  <circle cx="72.99" cy="280.95" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="76.39" cy="284.33" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="79.79" cy="281.85" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="83.19" cy="283.56" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="86.59" cy="281.78" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="132.46" cy="280.89" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="135.86" cy="281.1" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="139.26" cy="282.01" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="142.66" cy="280.68" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="146.06" cy="281.7" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="191.94" cy="253.63" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="195.34" cy="253.18" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="198.74" cy="249.55" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="202.14" cy="253.86" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="205.54" cy="253.76" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <path d="M79.8 281.9 L139.3 281.1 L198.7 253.6" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="210.74" y="257.63" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">200 MiB</text>
+  <circle cx="72.99" cy="208.87" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="76.39" cy="215.14" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="79.79" cy="215" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="83.19" cy="208.45" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="86.59" cy="215.02" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="132.46" cy="209.32" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="135.86" cy="207.09" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="139.26" cy="212.7" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="142.66" cy="206.26" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="146.06" cy="214.21" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="193.64" cy="101.09" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="197.04" cy="91.9" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="200.44" cy="115.99" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="203.84" cy="107" r="1.8" fill="var(--m-teal-ink, #18696a)"/>
+  <path d="M79.8 215.0 L139.3 209.3 L198.7 104.0" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="210.74" y="95.05" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">1,000 MiB</text>
+  <line x1="356" y1="302" x2="582" y2="302" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="306" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="356" y1="263.33" x2="582" y2="263.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="267.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="356" y1="224.67" x2="582" y2="224.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="228.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="356" y1="186" x2="582" y2="186" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="190" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="356" y1="147.33" x2="582" y2="147.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="151.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="356" y1="108.67" x2="582" y2="108.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="112.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="356" y1="70" x2="582" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="350" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">12</text>
+  <line x1="356" y1="302" x2="582" y2="302" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="356" y1="70" x2="356" y2="302" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="379.79" y1="302" x2="379.79" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="379.79" y="319" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">inside</text>
+  <line x1="439.26" y1="302" x2="439.26" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="439.26" y="319" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">outside</text>
+  <line x1="498.74" y1="302" x2="498.74" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="498.74" y="319" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+20 ms</text>
+  <line x1="558.21" y1="302" x2="558.21" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="558.21" y="319" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+100 ms</text>
+  <text x="356" y="58" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">synchronous suspend, seconds</text>
+  <circle cx="372.99" cy="293.59" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="376.39" cy="291.44" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="379.79" cy="292.91" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="383.19" cy="291.91" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="386.59" cy="291.68" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="432.46" cy="293.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="435.86" cy="292.47" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="439.26" cy="293.07" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="442.66" cy="291.29" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="446.06" cy="292.99" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="491.94" cy="290.07" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="495.34" cy="290.21" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="498.74" cy="289.18" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="502.14" cy="289.28" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="505.54" cy="287.36" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="551.41" cy="274.66" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="554.81" cy="271.34" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="558.21" cy="272.48" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="561.61" cy="272.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="565.01" cy="272.05" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <path d="M379.8 291.9 L439.3 293.0 L498.7 289.3 L558.2 272.4" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="570.21" y="276.4" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">0 MiB</text>
+  <circle cx="372.99" cy="266.62" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="376.39" cy="261.98" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="379.79" cy="259.87" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="383.19" cy="259.27" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="386.59" cy="262.68" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="432.46" cy="266.37" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="435.86" cy="258.23" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="439.26" cy="260.57" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="442.66" cy="257.42" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="446.06" cy="260.68" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="491.94" cy="249.72" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="495.34" cy="248.83" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="498.74" cy="247.75" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="502.14" cy="250.63" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="505.54" cy="254.87" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <path d="M379.8 262.0 L439.3 260.6 L498.7 249.7" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="510.74" y="253.72" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">200 MiB</text>
+  <circle cx="372.99" cy="199.09" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="376.39" cy="177.44" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="379.79" cy="164.48" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="383.19" cy="167.75" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="386.59" cy="180.45" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="432.46" cy="189.87" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="435.86" cy="164.85" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="439.26" cy="162.16" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="442.66" cy="164.46" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="446.06" cy="166.09" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="493.64" cy="163.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="497.04" cy="137.22" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="500.44" cy="129.99" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="503.84" cy="142.27" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <path d="M379.8 177.4 L439.3 164.8 L498.7 139.7" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.6" stroke-linejoin="round"/>
+  <text x="510.74" y="130.74" font-size="11" font-weight="700" fill="var(--m-amber-ink, #85590c)">1,000 MiB</text>
+  <text x="320" y="344" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">where the bucket is, and the round trip added between the node and the bucket</text>
+</svg>

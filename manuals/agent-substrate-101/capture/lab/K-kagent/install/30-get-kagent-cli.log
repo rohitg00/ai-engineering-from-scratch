@@ -1,0 +1,5 @@
+Downloading https://github.com/kagent-dev/kagent/releases/download/v1.0.0/kagent-linux-amd64
+Verifying checksum... Done.
+Preparing to install kagent into /usr/local/bin
+kagent installed into /usr/local/bin/kagent
+{"backend_version":"unknown","build_date":"2026-11-09","git_commit":"a08cde7","kagent_version":"1.0.0"}

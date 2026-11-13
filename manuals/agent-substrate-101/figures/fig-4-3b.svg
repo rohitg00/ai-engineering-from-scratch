@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 318" role="img" aria-labelledby="fig-4-3b-title fig-4-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-3b-title">A suspended actor after its node stops</title>
+  <desc id="fig-4-3b-desc">A timeline of 476 seconds after the node multi-worker2 was stopped, on a cluster with two worker nodes. The actor u1 was suspended on that node with its snapshot complete in the object store. The two workers of the node stay listed as active for 43 seconds and are then marked unavailable. Their pods are evicted after 5 min 43 s. The actor is in the resuming state on the stopped node from the first request, and 43 requests fail in that time. At 5 min 44 s the actor is crashed, and the next 57 requests fail at once. The actor never moves to the other node.</desc>
+  <text x="20" y="50" font-size="11.5" font-weight="700" fill="var(--m-ink, #1a1a1a)">node</text>
+  <text x="20" y="64" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">multi-worker2</text>
+  <rect x="132" y="40" width="10.35" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect x="142.35" y="40" width="465.55" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="148.35" y="34" font-size="11" fill="var(--m-rose-ink, #b0344d)">docker stop, the node is gone after 10 s</text>
+  <text x="603.9" y="68" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">started again at 7 min 56 s</text>
+  <text x="20" y="106" font-size="11.5" font-weight="700" fill="var(--m-ink, #1a1a1a)">its 2 workers</text>
+  <text x="20" y="120" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the API list</text>
+  <rect x="132" y="96" width="42.67" height="14" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="174.67" y="96" width="300.1" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <line x1="174.67" y1="88" x2="174.67" y2="118" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="180.67" y="90" font-size="11" fill="var(--m-rose-ink, #b0344d)">WORKER_STATE_UNAVAILABLE after 43 s</text>
+  <line x1="474.77" y1="88" x2="474.77" y2="118" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="468.77" y="124" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">pods evicted, 5 min 43 s</text>
+  <text x="132" y="124" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">ACTIVE</text>
+  <text x="20" y="162" font-size="11.5" font-weight="700" fill="var(--m-ink, #1a1a1a)">actor u1</text>
+  <text x="20" y="176" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">suspended, sync</text>
+  <rect x="132" y="152" width="10.58" height="14" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="142.58" y="152" width="333.17" height="14" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="475.75" y="152" width="132.15" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="148.58" y="146" font-size="11" fill="var(--m-amber-ink, #85590c)">RESUMING on the stopped node, 5 min 33 s</text>
+  <line x1="475.75" y1="150" x2="475.75" y2="174" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="469.75" y="180" font-size="11" text-anchor="end" fill="var(--m-rose-ink, #b0344d)">ACTOR_STATE_CRASHED at 5 min 44 s</text>
+  <text x="20" y="218" font-size="11.5" font-weight="700" fill="var(--m-ink, #1a1a1a)">requests</text>
+  <text x="20" y="232" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one bar for each</text>
+  <rect x="142.58" y="208" width="10.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="154.87" y="208" width="7.78" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="164.88" y="208" width="10.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="177.19" y="208" width="7.79" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="187.2" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="194.96" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="202.26" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="209.58" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="216.87" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="224.15" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="231.5" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="238.8" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="246.09" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="253.39" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="260.69" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="267.98" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="275.29" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="282.56" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="289.85" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="297.15" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="304.44" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="311.75" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="319.04" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="326.33" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="333.62" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="340.91" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="348.2" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="355.49" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="362.78" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="370.06" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="377.78" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="385.08" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="392.37" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="399.64" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="406.96" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="414.26" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="421.55" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="428.85" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="436.14" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="443.43" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="450.7" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="457.98" y="208" width="5.06" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="465.28" y="208" width="5.05" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="472.56" y="208" width="3.19" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="477.97" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="480.26" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="482.54" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="484.84" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="487.13" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="489.42" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="491.73" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="494.04" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="496.34" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="498.65" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="500.94" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="503.25" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="505.53" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="507.81" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="510.1" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="512.39" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="514.69" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="516.99" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="519.29" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="521.59" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="523.9" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="526.19" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="528.48" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="530.79" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="533.09" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="535.38" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="537.69" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="539.99" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="542.29" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="544.57" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="546.87" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="549.16" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="551.45" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="553.74" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="556.04" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="558.34" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="560.64" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="562.91" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="565.21" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="567.51" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="569.79" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="572.09" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="574.41" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="576.75" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="579.05" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="581.37" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="583.66" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="585.97" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="588.29" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="590.59" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="592.89" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="595.19" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="597.5" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="599.81" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="602.1" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="604.41" y="208" width="1.2" height="14" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="142.58" y="238" font-size="11" fill="var(--m-rose-ink, #b0344d)">2 times 504 after 10 s, 41 times 503</text>
+  <text x="142.58" y="252" font-size="11" fill="var(--m-rose-ink, #b0344d)">actor lab-n/u1 unavailable</text>
+  <text x="612" y="238" font-size="11" text-anchor="end" fill="var(--m-rose-ink, #b0344d)">57 times 503 at once</text>
+  <text x="612" y="252" font-size="11" text-anchor="end" fill="var(--m-rose-ink, #b0344d)">AssignWorker prerequisite not met</text>
+  <line x1="132" y1="272" x2="612" y2="272" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="132" y1="268" x2="132" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="132" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="192" y1="268" x2="192" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="192" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1 min</text>
+  <line x1="252" y1="268" x2="252" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="252" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2 min</text>
+  <line x1="312" y1="268" x2="312" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="312" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3 min</text>
+  <line x1="372" y1="268" x2="372" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="372" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4 min</text>
+  <line x1="432" y1="268" x2="432" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="432" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5 min</text>
+  <line x1="492" y1="268" x2="492" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="492" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6 min</text>
+  <line x1="552" y1="268" x2="552" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="552" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">7 min</text>
+  <line x1="612" y1="268" x2="612" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="612" y="290" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8 min</text>
+  <text x="20" y="310" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Time from the stop command. The other node had two active workers with room.</text>
+</svg>

@@ -1,0 +1,17 @@
+metadata:
+  name: default
+rules:
+- http:
+    effects:
+      replaceHeaders:
+      - actorJwt:
+          audiences:
+          - lab-echo
+          expirationSeconds: "600"
+        header: authorization
+        prefix: 'Bearer '
+    hostnames:
+    - echo.lab-v.svc.cluster.local
+    ports:
+      numbers:
+      - 80

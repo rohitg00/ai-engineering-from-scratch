@@ -1,0 +1,6 @@
+{"time":"2026-11-12T11:36:47.129626622Z","message":"Actor restoring","span_id":"a194bd76298ea01c","trace_flags":"00","trace_id":"e7d5ce0e64af9523030284d883b1b236"}
+{"time":"2026-11-12T11:36:47.525901736Z","message":"Actor restored","span_id":"a194bd76298ea01c","trace_flags":"00","trace_id":"e7d5ce0e64af9523030284d883b1b236"}
+{"time":"2026-11-12T11:36:48.956984798Z","message":"Actor checkpointing","span_id":"3244abbc7472b1fb","trace_flags":"01","trace_id":"6601d5c5dcbe5eaa879b87601e1593f2"}
+{"time":"2026-11-12T11:36:49.941570854Z","message":"Actor checkpointed","span_id":"3244abbc7472b1fb","trace_flags":"01","trace_id":"6601d5c5dcbe5eaa879b87601e1593f2"}
+{"time":"2026-11-12T11:37:57.202548579Z","message":"Actor restoring","span_id":"dfc0642078b24086","trace_flags":"00","trace_id":"b336aa055af904c557a5c22d9c9f70f6"}
+{"time":"2026-11-12T11:37:57.493207729Z","message":"Actor restored","span_id":"dfc0642078b24086","trace_flags":"00","trace_id":"b336aa055af904c557a5c22d9c9f70f6"}

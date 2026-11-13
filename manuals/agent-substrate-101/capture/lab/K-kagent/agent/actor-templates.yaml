@@ -1,0 +1,97 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+actorTemplates:
+- containers:
+  - env:
+    - name: OPENAI_API_KEY
+      value: kagent-credential-injected
+    - name: OTEL_RESOURCE_ATTRIBUTES
+      value: service.version=7f643ac37f02
+    - name: SSL_CERT_FILE
+      value: /run/kagent/egress/trust-bundle.pem
+    - name: REQUESTS_CA_BUNDLE
+      value: /run/kagent/egress/trust-bundle.pem
+    - name: AWS_CA_BUNDLE
+      value: /run/kagent/egress/trust-bundle.pem
+    - name: NODE_EXTRA_CA_CERTS
+      value: /run/kagent/egress/trust-bundle.pem
+    - name: CURL_CA_BUNDLE
+      value: /run/kagent/egress/trust-bundle.pem
+    - name: GIT_SSL_CAINFO
+      value: /run/kagent/egress/trust-bundle.pem
+    - name: SSL_CERT_DIR
+      value: /run/kagent/egress
+    - name: KAGENT_BOOTSTRAP_JSON
+      value: '{"format_version":1,"control_plane_url":"http://kagent-controller.kagent.svc.cluster.local:8083","revision":"7f643ac37f02c89412284db3a7e70b235b1417cacecf90f9f9c0462500b6b348","sha256":"ef1d662b9d487e3b09cdf3624d1e15b7b08632a06a7a3acacdc9f0a8c73cf0b8"}'
+    image: ghcr.io/kagent-dev/kagent/golang-adk@sha256:f62e9f2820d3325ca147a5d39802dc3e9c914bee97b3e021bd38f6f5df10e3bf
+    name: kagent
+    volumeMounts:
+    - mountPath: /data
+      name: data
+    - mountPath: /run/kagent/egress
+      name: egress-trust
+    - mountPath: /run/kagent/identity
+      name: actor-identity
+    wakeupProbe:
+      httpGet:
+        path: /readyz
+        port: 8081
+      timeoutSeconds: 30
+  goldenEgressPolicy:
+    rules:
+    - http:
+        effects:
+          replaceHeaders:
+          - actorJwt:
+              audiences:
+              - kagent-bootstrap
+              expirationSeconds: "300"
+            header: authorization
+            prefix: 'Bearer '
+        hostnames:
+        - kagent-controller.kagent.svc.cluster.local
+        ports:
+          numbers:
+          - 8083
+  metadata:
+    atespace: kagent
+    createTime: "2026-11-12T10:16:30.836097991Z"
+    name: lab-agent-7f643ac37f02
+    uid: dd7b8625-0d96-4d7d-89da-4ec9cc3b914a
+    updateTime: "2026-11-12T10:16:54.329738443Z"
+    version: "3"
+  resources:
+    limits:
+      cpuMillicores: "1000"
+      memoryBytes: "1073741824"
+  snapshotConfig:
+    goldenSnapshotConfig:
+      mode: GOLDEN_SNAPSHOT_MODE_ENABLED
+    preferredFidelity: SNAPSHOT_FIDELITY_VOLUMES
+    storageLocation: s3://ate-snapshots/kagent/
+  status:
+    goldenSnapshotStatus:
+      goldenTag:
+        atespace: kagent
+        name: dd7b8625-0d96-4d7d-89da-4ec9cc3b914a
+      snapshotTime: "2026-11-12T10:16:54.020068656Z"
+  volumes:
+  - durableDir: {}
+    name: data
+  - name: actor-identity
+    systemInfo:
+      dataSources:
+      - actorMetadata:
+          items:
+          - field: ACTOR_METADATA_FIELD_NAME
+            path: name
+  - name: egress-trust
+    systemInfo:
+      dataSources:
+      - trustBundle:
+          names:
+          - egress-mitm.ate.dev
+          path: trust-bundle.pem
+  workerSelector:
+    matchLabels:
+      kagent.dev/worker-pool-name: kagent-default
+      kagent.dev/worker-pool-namespace: kagent

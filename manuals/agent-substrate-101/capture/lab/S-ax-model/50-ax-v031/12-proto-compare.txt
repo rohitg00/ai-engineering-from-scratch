@@ -1,0 +1,81 @@
+old module dir: /home/lab/go/pkg/mod/github.com/agent-substrate/substrate@v0.0.0-20260911232748-672533541dbf
+new module dir: /home/lab/go/pkg/mod/go.ate.dev/substrate@v1.0.0
+## /home/lab/go/pkg/mod/github.com/agent-substrate/substrate@v0.0.0-20260911232748-672533541dbf
+package ateapi;
+service Control {
+  rpc GetActor(GetActorRequest) returns (Actor) {}
+  rpc CreateActor(CreateActorRequest) returns (Actor) {}
+  rpc UpdateActor(UpdateActorRequest) returns (Actor) {}
+  rpc SuspendActor(SuspendActorRequest) returns (SuspendActorResponse) {}
+  rpc PauseActor(PauseActorRequest) returns (PauseActorResponse) {}
+  rpc ResumeActor(ResumeActorRequest) returns (ResumeActorResponse) {}
+  rpc DeleteActor(DeleteActorRequest) returns (Actor) {}
+  rpc GetActorEgressPolicy(GetActorEgressPolicyRequest) returns (EgressPolicy) {}
+  rpc CreateActorEgressPolicy(CreateActorEgressPolicyRequest) returns (EgressPolicy) {}
+  rpc UpdateActorEgressPolicy(UpdateActorEgressPolicyRequest) returns (EgressPolicy) {}
+  rpc DeleteActorEgressPolicy(DeleteActorEgressPolicyRequest) returns (EgressPolicy) {}
+  rpc MintActorJWT(MintActorJWTRequest) returns (MintActorJWTResponse) {}
+  rpc MintActorCertificate(MintActorCertificateRequest) returns (MintActorCertificateResponse) {}
+  rpc CreateTag(CreateTagRequest) returns (Tag) {}
+  rpc GetTag(GetTagRequest) returns (Tag) {}
+  rpc ListTags(ListTagsRequest) returns (ListTagsResponse) {}
+  rpc UpdateTag(UpdateTagRequest) returns (Tag) {}
+  rpc DeleteTag(DeleteTagRequest) returns (Tag) {}
+  rpc ListWorkers(ListWorkersRequest) returns (ListWorkersResponse) {}
+  rpc GetWorker(GetWorkerRequest) returns (Worker) {}
+  rpc CreateWorker(CreateWorkerRequest) returns (Worker) {}
+  rpc UpdateWorker(UpdateWorkerRequest) returns (Worker) {}
+  rpc DeleteWorker(DeleteWorkerRequest) returns (Worker) {}
+  rpc DrainWorker(DrainWorkerRequest) returns (Worker) {}
+  rpc ListWorkerActorAssignments(ListWorkerActorAssignmentsRequest) returns (ListWorkerActorAssignmentsResponse) {}
+  rpc ListActors(ListActorsRequest) returns (ListActorsResponse) {}
+  rpc CreateAtespace(CreateAtespaceRequest) returns (Atespace) {}
+  rpc GetAtespace(GetAtespaceRequest) returns (Atespace) {}
+  rpc ListAtespaces(ListAtespacesRequest) returns (ListAtespacesResponse) {}
+  rpc DeleteAtespace(DeleteAtespaceRequest) returns (Atespace) {}
+  rpc CreateActorTemplate(CreateActorTemplateRequest) returns (ActorTemplate) {}
+  rpc GetActorTemplate(GetActorTemplateRequest) returns (ActorTemplate) {}
+  rpc ListActorTemplates(ListActorTemplatesRequest) returns (ListActorTemplatesResponse) {}
+  rpc DeleteActorTemplate(DeleteActorTemplateRequest) returns (ActorTemplate) {}
+service WorkerService {
+  rpc SetWorkerCapacity(SetWorkerCapacityRequest) returns (SetWorkerCapacityResponse);
+/home/lab/go/pkg/mod/github.com/agent-substrate/substrate@v0.0.0-20260911232748-672533541dbf/pkg/proto/ateapipb/ateapi.proto
+FullMethodName                     = "/ateapi.Control/GetTag"
+FullMethodName                   = "/ateapi.Control/GetActor"
+FullMethodName                   = "/ateapi.Control/ListTags"
+FullMethodName                  = "/ateapi.Control/CreateTag"
+FullMethodName                  = "/ateapi.Control/DeleteTag"
+FullMethodName                  = "/ateapi.Control/GetWorker"
+FullMethodName                  = "/ateapi.Control/UpdateTag"
+FullMethodName                 = "/ateapi.Control/ListActors"
+FullMethodName                 = "/ateapi.Control/PauseActor"
+FullMethodName                = "/ateapi.Control/CreateActor"
+FullMethodName                = "/ateapi.Control/DeleteActor"
+FullMethodName                = "/ateapi.Control/DrainWorker"
+FullMethodName                = "/ateapi.Control/GetAtespace"
+FullMethodName                = "/ateapi.Control/ListWorkers"
+FullMethodName                = "/ateapi.Control/ResumeActor"
+FullMethodName                = "/ateapi.Control/UpdateActor"
+FullMethodName               = "/ateapi.Control/CreateWorker"
+FullMethodName               = "/ateapi.Control/DeleteWorker"
+FullMethodName               = "/ateapi.Control/MintActorJWT"
+FullMethodName               = "/ateapi.Control/SuspendActor"
+FullMethodName               = "/ateapi.Control/UpdateWorker"
+FullMethodName              = "/ateapi.Control/ListAtespaces"
+FullMethodName             = "/ateapi.Control/CreateAtespace"
+FullMethodName             = "/ateapi.Control/DeleteAtespace"
+FullMethodName           = "/ateapi.Control/GetActorTemplate"
+FullMethodName         = "/ateapi.Control/ListActorTemplates"
+FullMethodName        = "/ateapi.Control/CreateActorTemplate"
+FullMethodName        = "/ateapi.Control/DeleteActorTemplate"
+FullMethodName       = "/ateapi.Control/GetActorEgressPolicy"
+FullMethodName       = "/ateapi.Control/MintActorCertificate"
+FullMethodName    = "/ateapi.Control/CreateActorEgressPolicy"
+FullMethodName    = "/ateapi.Control/DeleteActorEgressPolicy"
+FullMethodName    = "/ateapi.Control/UpdateActorEgressPolicy"
+FullMethodName = "/ateapi.Control/ListWorkerActorAssignments"
+FullMethodName = "/ateapi.WorkerService/SetWorkerCapacity"
+ServiceName: "ateapi.Control"
+ServiceName: "ateapi.WorkerService"
+## /home/lab/go/pkg/mod/go.ate.dev/substrate@v1.0.0
+/home/lab/go/pkg/mod/go.ate.dev/substrate@v1.0.0/api/ateapi/v1/ateapi.proto

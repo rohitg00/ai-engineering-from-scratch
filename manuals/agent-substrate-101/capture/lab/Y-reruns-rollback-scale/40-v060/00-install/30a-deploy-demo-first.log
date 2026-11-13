@@ -1,0 +1,71 @@
+Deploy Agent Substrate components
+
+Usage:
+  ate-setup deploy [command]
+
+Available Commands:
+  apiserver                 Deploy ate-api-server and ate-idp-server
+  ate-controller            Deploy ate-controller only, with the CRDs it serves
+  ate-system                Deploy the core system: CRDs, RBAC, store, apiserver, controller, atenet, and atelet
+  atelet                    Deploy the atelet DaemonSet only
+  atenet                    Deploy the atenet dataplane only: router and egress
+  benchmarks                Deploy the benchmark workloads and the locust load test stack
+  demo                      Deploy a bundled demo
+  podcertificate-controller Deploy podcertificate-controller only
+  postgres                  Deploy the single-replica PostgreSQL StatefulSet
+  sandboxconfig             Deploy the SandboxConfig admission policy and the default gVisor SandboxConfig only
+
+Flags:
+  -h, --help   help for deploy
+
+Global Flags:
+      --actor-jwt-algorithm string                              Signing algorithm of the key in a new actor JWT pool: ES256 or RS256 (default "ES256")
+      --actor-jwt-issuer string                                 iss claim of actor JWTs, as https://<host> with no path. Relying parties fetch <issuer>/.well-known/openid-configuration (default https://idp.<namespace>.svc)
+      --ateapi-authz-bootstrap-owners string                    Comma-separated principals that always hold owner on global:root. Unset means kubectl-ate's ServiceAccount, system:serviceaccount:<namespace>:ate-client
+      --ateapi-expected-jwt-issuer string                       Service account token issuer ate-api-server trusts, overriding derivation and discovery
+      --ateapi-log-level string                                 ate-api-server log level: debug, info, warn, or error (default: keep the installed level, else info)
+      --ateapi-postgres-cloudsql-gsa string                     Google service account the Cloud SQL Auth Proxy authenticates as
+      --ateapi-postgres-cloudsql-iam-auth string                Enable automatic IAM database authentication: true or false
+      --ateapi-postgres-cloudsql-instance string                Cloud SQL instance connection name, PROJECT:REGION:INSTANCE
+      --ateapi-postgres-cloudsql-ip-type string                 Instance address the Cloud SQL proxy dials: private, public or psc
+      --ateapi-postgres-owner-role string                       PostgreSQL role owning the schema (default "substrate_owner")
+      --ateapi-postgres-pool-max-conns string                   Maximum connections in the apiserver's pgxpool
+      --ateapi-postgres-read-write-role string                  PostgreSQL role owning normal application access (default "substrate_readwrite")
+      --ateapi-postgres-schema string                           PostgreSQL schema holding the Substrate tables
+      --ateapi-postgres-server-ca-file string                   Local PEM file holding an external PostgreSQL server CA
+      --ateapi-postgres-storage-class string                    StorageClass for the bundled PostgreSQL volume, instead of the cluster default. An existing install must delete the postgres StatefulSet and its claim first
+      --atenet-dataplane string                                 Atenet ingress and egress dataplane: envoy or agentgateway (default "envoy")
+      --benchmark-actor-memory string                           Memory limit for benchmark actors
+      --cluster-size string                                     Coarse-grained sizing of Substrate: size0 or size10 (default "size0")
+      --config string                                           Path to the installation configuration file (or ATE_CONFIG). Its settings outrank the environment and are outranked by flags
+      --context string                                          Name of the kubeconfig context to use
+      --cordon-control-plane                                    Keep the control plane off the worker nodes. Assumes a small shared pool labeled and tainted ate.dev/workloadType=ate-control-plane:NoSchedule, and a one-node pool labeled and tainted ate.dev/workloadType=ate-postgres:NoSchedule for postgres alone
+      --credential-provider string                              Credential provider the egress gateway injects credentials from, as JSON; required by deploy ate-system and deploy atenet. {"name":"k8s.io"} for the bundled Kubernetes Secrets provider, {"enabled":false} to turn egress credential injection off, or {"name":"<provider>","address":"<host>:<port>"} for a provider you deploy. A provider requires --atenet-dataplane=envoy
+      --docker-build-flags string                               Extra docker buildx build flags for the images ko cannot build, whitespace-separated
+      --e2e-envoy-concurrency string                            Worker threads (--concurrency) for the Envoy container in atenet-egress (default "0")
+      --experimental-additional-egress-extproc-service string   Run an additional ext_proc authorization filter served by NS/SVC:PORT (requires --atenet-dataplane=envoy)
+      --fake-data-plane                                         Install the fake data plane for control-plane benchmarks: fake-atelet in place of atelet, and fake-workersync in place of ate-controller. Actors do not exist; never use it on a cluster that serves real actors
+      --gcp-cluster-location string                             GKE cluster location
+      --gcp-cluster-name string                                 GKE cluster name, used to fetch credentials and derive the JWT issuer
+      --gcp-project-id string                                   GCP project holding the target cluster
+      --image-repo string                                       Install pre-built images from this registry path instead of building from source
+      --image-tag string                                        Tag the pre-built images carry (required with --image-repo)
+      --ingress-allowed-spiffe-ids string                       SPIFFE IDs (exact match, comma-separated) of the clients the ingress router lets reach actors; any listed client may reach any actor. Required to deploy the router with --atenet-dataplane=envoy. The podidentity signer issues spiffe://cluster.local/ns/<namespace>/sa/<service-account>
+      --kind                                                    Target a local Kind cluster: kind overlays, the local registry, and host-architecture builds
+      --kind-cluster-name string                                Name of the Kind cluster to target (default "kind")
+      --ko-default-platforms string                             Platforms ko builds for
+      --ko-docker-repo string                                   Registry ko pushes built images to
+      --kubeconfig string                                       Path to the kubeconfig file
+      --namespace string                                        Namespace the control plane is installed into (default "ate-system")
+      --no-dev-env                                              Do not source .ate-dev-env.sh
+      --no-report-defaults                                      List only the settings something set in the configuration report (or ATE_NO_REPORT_DEFAULTS)
+      --otlp-endpoint string                                    Send control plane telemetry to this OTLP collector instead of the cluster default
+      --podcert-workers-per-signer string                       Worker goroutines per signer in podcertificate-controller (default "0")
+      --preview string                                          Preview gates every substrate component runs with, comma-separated; ALL enables all
+      --record-dir string                                       Directory install records are written to (default: the user cache directory)
+      --rollout-timeout string                                  Timeout for workload rollouts, as a duration string (default "1m0s")
+      --snapshot-location string                                Cluster-wide object-storage URI ate-api-server stores snapshots under, for example gs://BUCKET/PREFIX/ (required if the PerTemplateSnapshotLocation preview gate is not enabled)
+      --snapshot-transfer-gsa-name string                       Name of the Google service account snapshot transfers run as on GCS, in gcp.projectID. ate-api-server's credential exchange impersonates it (required to deploy ate-api-server on GKE, unused on kind)
+      --storage-bucket-name string                              Snapshot bucket the demos are templated with
+
+Use "ate-setup deploy [command] --help" for more information about a command.

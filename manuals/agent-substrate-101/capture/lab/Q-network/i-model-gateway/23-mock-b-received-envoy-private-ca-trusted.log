@@ -1,0 +1,2 @@
+{"t": "13:22:23", "backend": "backend-b", "path": "/v1/chat/completions", "model": "big-1", "authorization": "Bearer provider-key-for-backend-b", "x_lab": "lab-gw-client-credential-1794488723", "host": "mock-b.model-gw.svc.cluster.local"}
+{"t": "13:22:25", "backend": "backend-b", "path": "/v1/chat/completions", "model": "big-1", "authorization": "Bearer provider-key-for-backend-b", "x_lab": "lab-gw-client-credential-1794488723", "host": "mock-b.model-gw.svc.cluster.local"}

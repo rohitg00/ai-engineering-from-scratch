@@ -1,0 +1,43 @@
+ts	t	event	detail
+2026-11-12T14:07:43.533Z	t=0.3	node-start	multi-worker2 after outage of 718.2 s
+2026-11-12T14:07:45.800Z	t=2.6	node-ready	multi-worker2
+2026-11-12T14:07:48.431Z	t=5.2	watch	pool-pods-running-on-node=2 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:07:54.638Z	t=11.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:00.756Z	t=17.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:06.922Z	t=23.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:13.012Z	t=29.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:19.101Z	t=35.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:25.243Z	t=42.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:31.378Z	t=48.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:37.429Z	t=54.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:43.608Z	t=60.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:49.809Z	t=66.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:08:55.946Z	t=72.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:02.162Z	t=78.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:08.260Z	t=85.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:14.452Z	t=91.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:20.448Z	t=97.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:26.595Z	t=103.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:32.681Z	t=109.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:38.766Z	t=115.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:44.829Z	t=121.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:51.103Z	t=127.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:09:57.273Z	t=134.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:03.422Z	t=140.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:09.487Z	t=146.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:15.579Z	t=152.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:21.689Z	t=158.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:27.842Z	t=164.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:34.065Z	t=170.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:40.173Z	t=177.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:46.235Z	t=183.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:52.345Z	t=189.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:10:58.514Z	t=195.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:11:04.548Z	t=201.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:11:10.704Z	t=207.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:11:16.935Z	t=213.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:11:23.158Z	t=219.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | g1: ACTOR_STATE_DELETING multi-worker2
+2026-11-12T14:11:27.183Z	t=224.0	no-actor-on-returned-node	after 224.0 s, pool pods on node: 0
+2026-11-12T14:11:27.427Z	t=224.2	final-state	g1: ACTOR_STATE_DELETING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:11:34.877Z	t=231.7	rebalanced-by-hand	pool pods on multi-worker2 now 2 (setup for the next case)
+2026-11-12T14:11:36.007Z	t=232.8	ready-for-next-case	workers active on multi-worker2: 2

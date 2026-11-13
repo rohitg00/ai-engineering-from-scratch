@@ -1,0 +1,8 @@
+service/ollama created
+endpointslice.discovery.k8s.io/ollama-1 created
+modelconfig.api.kagent.dev/real-3b created
+modelconfig.api.kagent.dev/real-1p5b created
+agenttemplate.api.kagent.dev/real-3b-template created
+agenttemplate.api.kagent.dev/real-1p5b-template created
+agent.api.kagent.dev/real-3b created
+agent.api.kagent.dev/real-1p5b created

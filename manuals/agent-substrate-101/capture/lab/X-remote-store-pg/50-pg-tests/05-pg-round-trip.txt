@@ -1,0 +1,16 @@
+### added delay 0 ms toward Postgres 2026-11-12T18:48:23Z
+qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;qdisc netem 30: parent 1:3 limit 1000 delay 100ms;
+Time: 0.938 ms Time: 0.600 ms Time: 0.573 ms Time: 0.561 ms Time: 0.571 ms Time: 0.563 ms Time: 0.533 ms Time: 0.555 ms Time: 0.577 ms Time: 0.561 ms Time: 0.555 ms Time: 0.548 ms Time: 0.579 ms Time: 0.565 ms Time: 0.574 ms Time: 0.553 ms Time: 0.550 ms Time: 0.599 ms Time: 0.560 ms Time: 0.569 ms 
+new connection over TLS plus one query, with docker exec: 0.157 s
+new connection over TLS plus one query, with docker exec: 0.152 s
+new connection over TLS plus one query, with docker exec: 0.167 s
+new connection over TLS plus one query, with docker exec: 0.158 s
+new connection over TLS plus one query, with docker exec: 0.141 s
+### added delay 20 ms toward Postgres 2026-11-12T18:58:06Z
+qdisc prio 1: root refcnt 2 bands 3 priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0;qdisc netem 30: parent 1:3 limit 1000 delay 20ms;
+Time: 27.456 ms Time: 26.411 ms Time: 25.227 ms Time: 24.825 ms Time: 27.510 ms Time: 27.388 ms Time: 25.730 ms Time: 27.327 ms Time: 27.227 ms Time: 25.716 ms Time: 24.151 ms Time: 26.643 ms Time: 26.144 ms Time: 21.890 ms Time: 26.086 ms Time: 26.541 ms Time: 25.879 ms Time: 27.348 ms Time: 27.003 ms Time: 26.775 ms 
+new connection over TLS plus one query, with docker exec: 0.342 s
+new connection over TLS plus one query, with docker exec: 0.417 s
+new connection over TLS plus one query, with docker exec: 0.473 s
+new connection over TLS plus one query, with docker exec: 0.322 s
+new connection over TLS plus one query, with docker exec: 0.331 s

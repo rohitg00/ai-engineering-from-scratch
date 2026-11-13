@@ -1,0 +1,24 @@
+Replace the egress policy of an actor from a manifest file.
+
+The manifest is a YAML or JSON EgressPolicy, as printed by
+"kubectl ate get egress-policy <actor-name> -a <atespace> -o yaml".
+Its metadata.uid and metadata.version are required preconditions; the server
+rejects the update when they no longer match those of the stored egress policy.
+
+Usage:
+  kubectl-ate update egress-policy <actor-name> -f <manifest> [flags]
+
+Flags:
+  -a, --atespace string   the actor's atespace
+  -f, --filename string   a manifest file holding a single JSON or YAML egress-policy document, or - for stdin
+  -h, --help              help for egress-policy
+
+Global Flags:
+      --context string      kubeconfig context to use
+      --endpoint string     manual override for the gRPC target (e.g., localhost:8080); if omitted, automatically port-forwards
+      --kubeconfig string   path to the kubeconfig file
+  -o, --output string       output format: table, json, or yaml (default "table")
+      --preview             allow the use of preview features enabled on the server
+      --token-file string   path to a bearer token for ate-api authentication, or - for stdin (defaults to a Kubernetes ServiceAccount token)
+      --trace               enable tracing for the request
+  -v, --verbose count       output verbosity; may be repeated (e.g. -v, -vv, -vvvvv)

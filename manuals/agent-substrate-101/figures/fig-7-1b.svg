@@ -1,0 +1,296 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-7-1b-title fig-7-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-1b-title">A kagent turn costs the same with a pause and with no pause</title>
+  <desc id="fig-7-1b-desc">Every run of our kagent test with a mock model, as one dot each, with the median as a line. Resume 0.380 s over 98 turns, suspend 0.142 s over 99 suspends, a turn 4 seconds after the last one 0.726 s, a turn with no pause 0.738 s, and the first turn of a new Session 0.605 s.</desc>
+  <line x1="62" y1="284" x2="610" y2="284" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="56" y="288" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="62" y1="234" x2="610" y2="234" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="56" y="238" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.25</text>
+  <line x1="62" y1="184" x2="610" y2="184" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="56" y="188" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="62" y1="134" x2="610" y2="134" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="56" y="138" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.75</text>
+  <line x1="62" y1="84" x2="610" y2="84" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="56" y="88" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="62" y1="284" x2="610" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="62" y1="64" x2="62" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="62" y="52" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds for each run, with a mock model</text>
+  <text x="171.6" y="24" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-amber-ink, #85590c)">STATE CHANGES INSIDE A TURN</text>
+  <text x="445.6" y="24" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-plum-ink, #8a3d72)">THE WHOLE TURN, IN THE CLUSTER</text>
+  <line x1="281.2" y1="64" x2="281.2" y2="284" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4" stroke-opacity="0.6"/>
+  <line x1="68.8" y1="208" x2="164.8" y2="208" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.4"/>
+  <circle cx="76.8" cy="240.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="77.62" cy="228.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="78.45" cy="228.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="79.27" cy="228" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="80.1" cy="226.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="80.92" cy="226" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="81.75" cy="225.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="82.57" cy="224.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="83.4" cy="224.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="84.22" cy="224.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="85.05" cy="224.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="85.87" cy="223.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="86.7" cy="223.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="87.52" cy="222.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="88.35" cy="222.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="89.17" cy="222.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="90" cy="222.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="90.82" cy="222" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="91.65" cy="222" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="92.47" cy="221.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="93.29" cy="221.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="94.12" cy="220.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="94.94" cy="220" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="95.77" cy="218.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="96.59" cy="218" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="97.42" cy="217.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="98.24" cy="216.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="99.07" cy="216.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="99.89" cy="216.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="100.72" cy="214.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="101.54" cy="214" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="102.37" cy="213.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="103.19" cy="213.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="104.02" cy="213.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="104.84" cy="213" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="105.67" cy="212.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="106.49" cy="211.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="107.32" cy="210.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="108.14" cy="210" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="108.96" cy="210" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="109.79" cy="209.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="110.61" cy="209.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="111.44" cy="209" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="112.26" cy="209" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="113.09" cy="208.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="113.91" cy="208.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="114.74" cy="208.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="115.56" cy="208.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="116.39" cy="208.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="117.21" cy="207.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="118.04" cy="207.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="118.86" cy="207.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="119.69" cy="207.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="120.51" cy="206.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="121.34" cy="206.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="122.16" cy="206.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="122.99" cy="206.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="123.81" cy="205.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="124.64" cy="205.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="125.46" cy="205.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="126.28" cy="205.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="127.11" cy="204.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="127.93" cy="204.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="128.76" cy="204.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="129.58" cy="204.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="130.41" cy="204.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="131.23" cy="204" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="132.06" cy="203.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="132.88" cy="203.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="133.71" cy="203.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="134.53" cy="203" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="135.36" cy="202.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="136.18" cy="202.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="137.01" cy="201.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="137.83" cy="201.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="138.66" cy="201.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="139.48" cy="201" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="140.31" cy="201" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="141.13" cy="200.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="141.95" cy="200.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="142.78" cy="199.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="143.6" cy="199.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="144.43" cy="198.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="145.25" cy="198.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="146.08" cy="198.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="146.9" cy="198.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="147.73" cy="198" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="148.55" cy="197.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="149.38" cy="197.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="150.2" cy="197" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="151.03" cy="197" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="151.85" cy="196.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="152.68" cy="192.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="153.5" cy="192.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="154.33" cy="191.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="155.15" cy="181.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="155.98" cy="179.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="156.8" cy="175.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <rect class="m-knock" x="88.6" y="155.24" width="56.4" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="116.8" y="166.6" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0.380 s</text>
+  <text x="116.8" y="302" font-size="11" text-anchor="middle">resume</text>
+  <text x="116.8" y="317" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">98 runs</text>
+  <line x1="178.4" y1="255.6" x2="274.4" y2="255.6" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.4"/>
+  <circle cx="186.4" cy="260" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="187.22" cy="259.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="188.03" cy="259" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="188.85" cy="258.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="189.67" cy="258.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="190.48" cy="258.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="191.3" cy="258.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="192.11" cy="258.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="192.93" cy="258" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="193.75" cy="257.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="194.56" cy="257.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="195.38" cy="257.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="196.2" cy="257.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="197.01" cy="257.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="197.83" cy="257.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="198.64" cy="257.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="199.46" cy="257.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="200.28" cy="257.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="201.09" cy="257.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="201.91" cy="257.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="202.73" cy="257" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="203.54" cy="257" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="204.36" cy="257" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="205.18" cy="257" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="205.99" cy="256.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="206.81" cy="256.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="207.62" cy="256.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="208.44" cy="256.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="209.26" cy="256.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="210.07" cy="256.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="210.89" cy="256.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="211.71" cy="256.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="212.52" cy="256.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="213.34" cy="256.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="214.16" cy="256.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="214.97" cy="256.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="215.79" cy="256.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="216.6" cy="256.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="217.42" cy="256.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="218.24" cy="256.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="219.05" cy="256.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="219.87" cy="256" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="220.69" cy="256" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="221.5" cy="256" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="222.32" cy="256" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="223.13" cy="255.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="223.95" cy="255.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="224.77" cy="255.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="225.58" cy="255.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="226.4" cy="255.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="227.22" cy="255.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="228.03" cy="255.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="228.85" cy="255.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="229.67" cy="255.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="230.48" cy="255.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="231.3" cy="255.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="232.11" cy="255.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="232.93" cy="254.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="233.75" cy="254.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="234.56" cy="254.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="235.38" cy="254" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="236.2" cy="253.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="237.01" cy="253.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="237.83" cy="253.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="238.64" cy="253.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="239.46" cy="253" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="240.28" cy="252.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="241.09" cy="252.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="241.91" cy="252.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="242.73" cy="252.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="243.54" cy="251.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="244.36" cy="250.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="245.18" cy="248.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="245.99" cy="246.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="246.81" cy="245.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="247.62" cy="245" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="248.44" cy="244.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="249.26" cy="244.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="250.07" cy="244.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="250.89" cy="244.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="251.71" cy="244" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="252.52" cy="243.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="253.34" cy="243.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="254.16" cy="243" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="254.97" cy="242.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="255.79" cy="242.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="256.6" cy="242.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="257.42" cy="225.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="258.24" cy="224.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="259.05" cy="224.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="259.87" cy="223.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="260.69" cy="223.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="261.5" cy="223.6" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="262.32" cy="223.2" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="263.13" cy="222" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="263.95" cy="222" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="264.77" cy="204.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="265.58" cy="204.8" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <circle cx="266.4" cy="204.4" r="1.8" fill="var(--m-amber-ink, #85590c)"/>
+  <rect class="m-knock" x="198.2" y="184.04" width="56.4" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="226.4" y="195.4" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0.142 s</text>
+  <text x="226.4" y="302" font-size="11" text-anchor="middle">suspend</text>
+  <text x="226.4" y="317" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">99 runs</text>
+  <line x1="288" y1="138.8" x2="384" y2="138.8" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.4"/>
+  <circle cx="296" cy="159.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="300.21" cy="153" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="304.42" cy="149.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="308.63" cy="144.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="312.84" cy="141.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="317.05" cy="141" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="321.26" cy="141" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="325.47" cy="140.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="329.68" cy="140.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="333.89" cy="140.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="338.11" cy="137.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="342.32" cy="136.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="346.53" cy="135.4" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="350.74" cy="133.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="354.95" cy="129.4" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="359.16" cy="125.4" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="363.37" cy="124.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="367.58" cy="123.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="371.79" cy="121.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="376" cy="120.4" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <rect class="m-knock" x="307.8" y="100.04" width="56.4" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="336" y="111.4" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">0.726 s</text>
+  <text x="336" y="302" font-size="11" text-anchor="middle">turn, 4 s apart</text>
+  <text x="336" y="317" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">20 runs</text>
+  <line x1="397.6" y1="136.4" x2="493.6" y2="136.4" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.4"/>
+  <circle cx="405.6" cy="159.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="409.81" cy="157.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="414.02" cy="157.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="418.23" cy="149.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="422.44" cy="145.4" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="426.65" cy="140.4" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="430.86" cy="139" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="435.07" cy="138.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="439.28" cy="137.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="443.49" cy="137" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="447.71" cy="135.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="451.92" cy="134.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="456.13" cy="134.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="460.34" cy="133.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="464.55" cy="131.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="468.76" cy="131" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="472.97" cy="129.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="477.18" cy="129.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="481.39" cy="128.4" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="485.6" cy="124.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <rect class="m-knock" x="417.4" y="104.24" width="56.4" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="445.6" y="115.6" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">0.738 s</text>
+  <text x="445.6" y="302" font-size="11" text-anchor="middle">turn, no pause</text>
+  <text x="445.6" y="317" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">20 runs</text>
+  <line x1="507.2" y1="163" x2="603.2" y2="163" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.4"/>
+  <circle cx="515.2" cy="181.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="524.09" cy="177.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="532.98" cy="172.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="541.87" cy="169.6" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="550.76" cy="164" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="559.64" cy="161.8" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="568.53" cy="161.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="577.42" cy="156.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="586.31" cy="155.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="595.2" cy="150.2" r="1.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <rect class="m-knock" x="527" y="129.84" width="56.4" height="16" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="555.2" y="141.2" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">0.605 s</text>
+  <text x="555.2" y="302" font-size="11" text-anchor="middle">first turn</text>
+  <text x="555.2" y="317" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10 runs</text>
+  <path d="M336 103 V98 H445.59999999999997 V103" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect class="m-knock" x="307.61" y="81.42" width="166.38" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="390.8" y="92" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-plum-ink, #8a3d72)">no warm turn: 0.012 s apart</text>
+  <text x="62" y="344" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one dot: one run, sorted from the fastest to the slowest. black line: the median.</text>
+</svg>

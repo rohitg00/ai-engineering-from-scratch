@@ -1,0 +1,2 @@
+      1 request request.id=57 gateway=default/default listener=listener1 route=default/route0 src.addr=<ip> http.method=GET http.host=mock-llm.kagent http.path=/v1/models http.version=HTTP/1.1 http.status=403 protocol=http ate.actor.name=session-<uuid> ate.actor.uid=<
+      1 request request.id=56 gateway=default/default listener=listener1 route=default/route0 src.addr=<ip> http.method=GET http.host=<ip> http.path=/ http.version=HTTP/1.1 http.status=403 protocol=http ate.actor.name=session-<uuid> ate.actor.uid=<uuid> ate.atespace=k

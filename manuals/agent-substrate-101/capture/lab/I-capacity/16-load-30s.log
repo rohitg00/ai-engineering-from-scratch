@@ -1,0 +1,16 @@
+==> request-parking load test
+    duration: 30s
+    actors:   p1 p2 p3 p4 (4) vs a 2-worker pool -> oversubscribed
+
+==> ensuring atespace ate-demo-parking and actors exist (template parking)
+==> starting local proxies for actors ...
+==> generating load for 30s ...
+
+==> results
+    total requests : 92
+    200 OK         : 90
+    503 unavailable: 2
+    other          : 0
+    200 latency    : avg 0.847s, slowest 4.269406s  <- parked requests sit here
+
+    => 2 requests were shed with 503 (parking off, or lot full / budget exceeded).

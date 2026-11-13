@@ -1,0 +1,16 @@
+namespace/lab-n created
+workerpool.ate.dev/ballast created
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+NAME    AGE
+lab-n   0s
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+ATESPACE   NAME        GOLDEN TAG   ERROR   AGE
+lab-n      ballast-0                        0s
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+ATESPACE   NAME         GOLDEN TAG   ERROR   AGE
+lab-n      ballast-50                        0s
+Waiting for deployment "ballast" rollout to finish: 0 of 4 updated replicas are available...
+Waiting for deployment "ballast" rollout to finish: 1 of 4 updated replicas are available...
+Waiting for deployment "ballast" rollout to finish: 2 of 4 updated replicas are available...
+Waiting for deployment "ballast" rollout to finish: 3 of 4 updated replicas are available...
+deployment "ballast" successfully rolled out

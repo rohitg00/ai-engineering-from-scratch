@@ -1,0 +1,4 @@
+Upgrading 'v1.0.0-rc.3' -> 'v1.0.0'
+old.yaml:  tag: v1.0.0-rc.3
+new.yaml:  tag: v1.0.0
+pg_dump bytes 173855

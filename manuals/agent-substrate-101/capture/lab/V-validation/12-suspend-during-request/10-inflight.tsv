@@ -1,0 +1,16 @@
+ts	mode	event	detail
+2026-11-12T12:52:08.366Z	async	call	200	0.232322	tag=v3 count=1 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=0.1 child[none]
+2026-11-12T12:52:10.848Z	async	slow-request-ended	503	2.218030	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T12:52:10.992Z	async	suspend-2s-into-request	0.376s	ATESPACE   NAME       TEMPLATE       STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-v      sl-async   lab-v/tiny-0   ACTOR_STATE_SUSPENDED 
+2026-11-12T12:52:11.004Z	async	state	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+2026-11-12T12:52:11.221Z	async	state-after-client-ended	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+2026-11-12T12:52:11.431Z	async	next-call	200	0.228121	tag=v3 count=2 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.4 child[none]
+2026-11-12T12:52:11.680Z	async	next-call-2	200	0.064632	tag=v3 count=3 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.5 child[none]
+2026-11-12T12:52:14.087Z	sync	call	200	0.226923	tag=v3 count=1 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=0.1 child[none]
+2026-11-12T12:52:16.557Z	sync	slow-request-ended	503	2.216242	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T12:52:16.815Z	sync	suspend-2s-into-request	0.483s	ATESPACE   NAME      TEMPLATE       STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-v      sl-sync   lab-v/tiny-0   ACTOR_STATE_SUSPENDED   
+2026-11-12T12:52:16.826Z	sync	state	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2
+2026-11-12T12:52:17.030Z	sync	state-after-client-ended	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2
+2026-11-12T12:52:17.234Z	sync	next-call	200	0.231078	tag=v3 count=2 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.4 child[none]
+2026-11-12T12:52:17.486Z	sync	next-call-2	200	0.068911	tag=v3 count=3 mb=0 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.4 child[none]
+DONE

@@ -1,0 +1,166 @@
+2026-11-12T11:31:06.446108Z	info	agentgateway_app::commands::run	version: {
+  "version": "1.7.0",
+  "git_revision": "26f5aebe99a36a037fe54f8080a608aca5547e15",
+  "rust_version": "1.99.0",
+  "build_profile": "release",
+  "build_target": "x86_64-unknown-linux-gnu",
+  "crypto_backend": "aws-lc-rs",
+  "crypto_fips": false
+}	
+2026-11-12T11:31:06.446662Z	info	agentgateway_app::commands::run	running with config: ipv6Enabled: true
+network: ''
+selfIdentity: null
+terminationMaxDeadline: 5s
+terminationMinDeadline: 0s
+numWorkerThreads: 16
+adminAddr:
+  Localhost:
+  - true
+  - 15000
+statsAddr:
+  SocketAddr: '[::]:15020'
+histograms: classic
+readinessAddr:
+  SocketAddr: '[::]:15021'
+selfAddr:
+  gateway: default
+  namespace: default
+hbone:
+  windowSize: 4194304
+  connectionWindowSize: 16777216
+  frameSize: 1048576
+  poolMaxStreamsPerConn: 100
+  poolUnusedReleaseTimeout:
+    secs: 300
+    nanos: 0
+xds:
+  address: null
+  auth: none
+  caCert: Default
+  headers: []
+  namespace: default
+  gateway: default
+  localConfig: /etc/agentgateway/config.yaml
+ca: null
+spiffe: null
+tracing: null
+metrics:
+  metric_fields:
+    add: {}
+  excluded_metrics: []
+logging:
+  filter: null
+  fields:
+    remove: []
+    add: {}
+  level: ''
+  format: text
+  database: null
+database: null
+storage:
+  mode: file
+sensitiveHeaders: []
+dns:
+  resolverCfg:
+    domain: null
+    search:
+    - ate-system.svc.cluster.local
+    - svc.cluster.local
+    - cluster.local
+    name_servers:
+    - ip: 10.96.0.10
+      trust_negative_responses: true
+      connections:
+      - port: 53
+        protocol:
+          type: udp
+        bind_addr: null
+      - port: 53
+        protocol:
+          type: tcp
+        bind_addr: null
+  resolverOpts:
+    ndots: 5
+    timeout: 5
+    attempts: 2
+    edns0: false
+    ip_strategy: Ipv4thenIpv6
+    cache_size: 8192
+    use_hosts_file: Auto
+    positive_min_ttl: null
+    negative_min_ttl: null
+    positive_max_ttl: null
+    negative_max_ttl: null
+    num_concurrent_reqs: 2
+    max_active_requests: 32
+    preserve_intermediates: true
+    try_tcp_on_error: false
+    server_ordering_strategy: QueryStatistics
+    recursion_desired: true
+    avoid_local_udp_ports: []
+    os_port_selection: false
+    case_randomization: false
+    trust_anchor: null
+    allow_answers: []
+    deny_answers: []
+    edns_payload_len: 1232
+proxyMetadata:
+  instanceIp: null
+  podName: ''
+  podNamespace: ''
+  nodeName: ''
+  role: '~'
+  nodeId: agentgateway~1.1.1.1~.~.svc.cluster.local
+threadingMode: multithreaded
+sessionEncoder: base64
+oidcCookieEncoder: null
+backend:
+  keepalives:
+    enabled: true
+    time: 3m0s
+    interval: 3m0s
+    retries: 9
+  connectTimeout: 11s
+  poolIdleTimeout: 1m30s
+  poolMaxSize: null
+  h2KeepaliveInterval: 0s
+  h2KeepaliveTimeout: 5s
+  allowDynamicLoopback: false
+callouts: {}
+mcp:
+  sessionTtl: 30m0s
+dynamicCaCertCache:
+  ttl: 5m0s
+  capacity: 256
+modelCatalog:
+  sources: []
+	
+2026-11-12T11:31:06.514967Z	warn	config	failed to write generated session key	err=failed to write to file `/etc/agentgateway/config.yaml`: Read-only file system (os error 30) path=/etc/agentgateway/config.yaml
+2026-11-12T11:31:06.515005Z	warn	config	no session key configured; MCP session IDs are not encrypted. Set SESSION_KEY or config.session.key	
+2026-11-12T11:31:06.519377Z	info	management::hyper_helpers	listener established	address=[::]:15021 component="readiness"
+2026-11-12T11:31:06.519540Z	debug	app	SPIFFE not configured; skipping workload API client	
+2026-11-12T11:31:06.527271Z	debug	rustls::webpki::anchors	add_parsable_certificates processed 1 valid and 0 invalid certs	
+2026-11-12T11:31:06.528804Z	debug	rustls::webpki::anchors	add_parsable_certificates processed 1 valid and 0 invalid certs	
+2026-11-12T11:31:06.528877Z	debug	rustls::webpki::anchors	add_parsable_certificates processed 1 valid and 0 invalid certs	
+2026-11-12T11:31:06.529417Z	debug	rustls::webpki::anchors	add_parsable_certificates processed 1 valid and 0 invalid certs	
+2026-11-12T11:31:06.529502Z	debug	rustls::webpki::anchors	add_parsable_certificates processed 1 valid and 0 invalid certs	
+2026-11-12T11:31:06.531544Z	debug	rustls::webpki::anchors	add_parsable_certificates processed 1 valid and 0 invalid certs	
+2026-11-12T11:31:06.535374Z	debug	rustls::webpki::anchors	add_parsable_certificates processed 118 valid and 0 invalid certs	
+2026-11-12T11:31:06.535494Z	info	state_manager	loaded config from File("/etc/agentgateway/config.yaml")	
+2026-11-12T11:31:06.535533Z	debug	store::binds	insert bind	bind=bind/8443
+2026-11-12T11:31:06.535565Z	debug	store::binds	insert bind	bind=bind/wildcard
+2026-11-12T11:31:06.535572Z	debug	store::binds	internal bind; not opening a listener socket	bind=bind/wildcard
+2026-11-12T11:31:06.535582Z	debug	store::binds	insert route	listener=default/default/bind/wildcard/listener0 route=default/default/bind/wildcard/listener0/default/reject-websocket-upgrade
+2026-11-12T11:31:06.535587Z	debug	store::binds	insert route	listener=default/default/bind/wildcard/listener0 route=default/default/bind/wildcard/listener0/default/route1
+2026-11-12T11:31:06.535589Z	debug	store::binds	insert route	listener=default/default/bind/wildcard/listener1 route=default/default/bind/wildcard/listener1/default/reject-websocket-upgrade
+2026-11-12T11:31:06.535591Z	debug	store::binds	insert route	listener=default/default/bind/wildcard/listener1 route=default/default/bind/wildcard/listener1/default/route1
+2026-11-12T11:31:06.535593Z	debug	store::binds	insert tcp route	listener=default/default/bind/wildcard/listener2 route=default/default/bind/wildcard/listener2/default/tcproute0
+2026-11-12T11:31:06.536512Z	info	state_manager	Watching config file: /etc/agentgateway/config.yaml	
+2026-11-12T11:31:06.537742Z	info	agent_core::readiness	Task 'state manager' complete (92.12922ms), still awaiting 1 tasks	
+2026-11-12T11:31:06.538129Z	info	app	serving UI at http://localhost:15000/ui	
+2026-11-12T11:31:06.538149Z	info	agent_core::readiness	Task 'agentgateway' complete (92.536001ms), marking server ready	
+2026-11-12T11:31:06.538161Z	info	management::hyper_helpers	listener established	address=127.0.0.1:15000 component="admin"
+2026-11-12T11:31:06.538168Z	info	management::hyper_helpers	listener established	address=[::1]:15000 component="admin"
+2026-11-12T11:31:06.538184Z	info	management::hyper_helpers	listener established	address=[::]:15020 component="stats"
+2026-11-12T11:31:06.538313Z	debug	proxy::gateway	add bind 10.244.0.49:8443	
+2026-11-12T11:31:06.538488Z	info	proxy::gateway	started bind	bind="bind/8443"

@@ -1,0 +1,1 @@
+time=2026-11-12T13:16:24.291Z level=INFO msg="certificate issued" host=modelgw.model-gw.svc.cluster.local serial=3de96ff5ff49d1c8aa7bb2bc24a9664b782dd94c not_after=2026-11-12T13:31:24.000Z

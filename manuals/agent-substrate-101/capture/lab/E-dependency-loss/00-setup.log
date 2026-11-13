@@ -1,0 +1,21 @@
+namespace/lab-e created
+workerpool.ate.dev/e-pool created
+NAME    AGE
+lab-e   0s
+ATESPACE   NAME        GOLDEN TAG   ERROR   AGE
+lab-e      e-counter                        0s
+Waiting for deployment "e-pool" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "e-pool" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "e-pool" rollout to finish: 2 of 3 updated replicas are available...
+deployment "e-pool" successfully rolled out
+ATESPACE   NAME        GOLDEN TAG                             ERROR   AGE
+lab-e      e-counter   04169cbb-66ae-4cb2-a08c-3481103ee512           8s
+ATESPACE   NAME    TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+lab-e      e-run   lab-e/e-counter   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+    131 ACTOR_STATE_SUSPENDED
+      1 STATE
+pod/e-prober created
+pod/e-prober condition met
+preserved memory count: 1 | preserved file counter: 1 | preserved rootfs counter: 1
+ATESPACE   NAME    TEMPLATE          STATE                 WORKER POD                     WORKER IPS    VERSION   AGE
+lab-e      e-run   lab-e/e-counter   ACTOR_STATE_RUNNING   lab-e/e-pool-77cc8bf9f-t6nbz   10.244.0.36   3         33s

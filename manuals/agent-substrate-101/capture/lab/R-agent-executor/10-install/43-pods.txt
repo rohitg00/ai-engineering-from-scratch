@@ -1,0 +1,3 @@
+NAME                         READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+ax-postgres-0                1/1     Running   0          31s   10.244.0.34   demo-control-plane   <none>           <none>
+ax-server-7784445448-qc9gh   1/1     Running   0          7s    10.244.0.35   demo-control-plane   <none>           <none>

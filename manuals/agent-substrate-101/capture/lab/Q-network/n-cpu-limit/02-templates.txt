@@ -1,0 +1,7 @@
+ATESPACE   NAME        GOLDEN TAG                             ERROR   AGE
+lab-cpu    burn-1000   382717fd-cfb3-4480-a93a-1b0d0444874a           14s
+lab-cpu    burn-2000   530cc9b7-1d70-401f-9e93-3780b995ddbb           14s
+lab-cpu    burn-250    0ed49f5f-df2d-471c-a5be-3fbd16c1a555           14s
+lab-cpu    burn-500    4c896011-d9bd-4063-ae33-a1c6b3e85580           14s
+NAME   POOL   STATE   ACTORS   CPU(MILLICORES)   MEMORY   POD   AGE
+67a6d86d-cb7b-4105-bc82-acf5c401b1eb   burn      WORKER_STATE_ACTIVE   0/1000    0/6000            0/1984Mi           lab-cpu/burn-ddd5bc998-fq6c5                15s

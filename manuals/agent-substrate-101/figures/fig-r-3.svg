@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 596" role="img" aria-labelledby="fig-r-3-title fig-r-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-r-3-title">The seven actor states, every transition, and what a request returns in each state</title>
+  <desc id="fig-r-3-desc">A reference state figure with the enum number of each state. CreateActor makes an actor in 4 SUSPENDED. ResumeActor moves it through 1 RESUMING to 2 RUNNING, and SuspendActor moves it through 3 SUSPENDING back to SUSPENDED. A failed resume, a lost sandbox, or a failed suspend moves it to 5 CRASHED, where a request returns 503. RevertActor moves a crashed, running, or suspended actor through 7 REVERTING to SUSPENDED. DeleteActor moves an actor in every state to 6 DELETING. Each box says what a request returned in our runs.</desc>
+  <defs><marker id="fig-r-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-r-3-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-r-3-head-ink-mute" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink-mute, #6f6f6a)"/></marker><marker id="fig-r-3-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <rect x="20" y="64" width="140" height="320" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="90" y="250" font-size="12" text-anchor="middle" font-weight="700">4 SUSPENDED</text>
+  <text x="90" y="267" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">holds no worker</text>
+  <text x="90" y="282" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">request: 200 in 0.36 s</text>
+  <text x="90" y="297" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">after a resume</text>
+  <rect x="480" y="64" width="140" height="234" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="550" y="122" font-size="12" text-anchor="middle" font-weight="700">2 RUNNING</text>
+  <text x="550" y="139" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">holds a worker</text>
+  <text x="550" y="154" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">request: 200 in</text>
+  <text x="550" y="169" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.06 to 0.09 s</text>
+  <text x="550" y="214" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-rose-ink, #b0344d)">the process exits:</text>
+  <text x="550" y="229" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-rose-ink, #b0344d)">still RUNNING,</text>
+  <text x="550" y="244" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-rose-ink, #b0344d)">request: 503</text>
+  <rect x="250" y="64" width="140" height="62" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="320" y="82.6" font-size="12" text-anchor="middle" font-weight="700">3 SUSPENDING</text>
+  <text x="320" y="99.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">writes a checkpoint</text>
+  <text x="320" y="114.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">request: not recorded</text>
+  <rect x="250" y="150" width="140" height="62" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="320" y="168.6" font-size="12" text-anchor="middle" font-weight="700">1 RESUMING</text>
+  <text x="320" y="185.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">restores the sandbox</text>
+  <text x="320" y="200.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">request: not recorded</text>
+  <rect x="250" y="236" width="140" height="62" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2"/>
+  <text x="320" y="254.6" font-size="12" text-anchor="middle" font-weight="700">5 CRASHED</text>
+  <text x="320" y="271.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">until RevertActor</text>
+  <text x="320" y="286.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">request: 503 in 0.06 s</text>
+  <rect x="250" y="322" width="140" height="62" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="320" y="340.6" font-size="12" text-anchor="middle" font-weight="700">7 REVERTING</text>
+  <text x="320" y="357.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">last durable snapshot</text>
+  <text x="320" y="372.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">request: not recorded</text>
+  <line x1="90" y1="22" x2="90" y2="63" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-r-3-head-ink)"/>
+  <text x="98" y="40" font-size="11">CreateActor</text>
+  <line x1="480" y1="95" x2="391" y2="95" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-amber)"/>
+  <rect class="m-knock" x="392.9" y="78.42" width="85.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="435.5" y="89" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">SuspendActor</text>
+  <line x1="250" y1="95" x2="161" y2="95" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-amber)"/>
+  <rect class="m-knock" x="169.5" y="78.42" width="72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="205.5" y="89" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">checkpoint</text>
+  <rect class="m-knock" x="160.92" y="99.42" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="205.5" y="110" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">node or bucket</text>
+  <line x1="160" y1="181" x2="249" y2="181" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-amber)"/>
+  <rect class="m-knock" x="165.2" y="164.42" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="204.5" y="175" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">ResumeActor</text>
+  <rect class="m-knock" x="165.86" y="185.42" width="77.28" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="204.5" y="196" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">each request</text>
+  <line x1="390" y1="181" x2="479" y2="181" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-amber)"/>
+  <text x="474" y="196" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ready</text>
+  <path d="M390 118 H435 V248 H391" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fig-r-3-head-ink-mute)"/>
+  <text x="429" y="143" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">suspend failed</text>
+  <line x1="320" y1="212" x2="320" y2="235" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-rose)"/>
+  <rect class="m-knock" x="325" y="212.92" width="91.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="223.5" font-size="11" fill="var(--m-rose-ink, #b0344d)">resume failed</text>
+  <line x1="480" y1="277" x2="391" y2="277" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-rose)"/>
+  <rect class="m-knock" x="392.9" y="260.42" width="85.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="435.5" y="271" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">sandbox lost</text>
+  <rect class="m-knock" x="402.8" y="281.42" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="435.5" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">pod or OOM</text>
+  <line x1="320" y1="298" x2="320" y2="321" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-amber)"/>
+  <rect class="m-knock" x="325" y="298.92" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="328" y="309.5" font-size="11" fill="var(--m-amber-ink, #85590c)">RevertActor</text>
+  <line x1="250" y1="340" x2="161" y2="340" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-amber)"/>
+  <rect class="m-knock" x="176.1" y="323.42" width="58.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="205.5" y="334" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">reverted</text>
+  <line x1="160" y1="368" x2="249" y2="368" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-r-3-head-ink-mute)"/>
+  <rect class="m-knock" x="165.2" y="351.42" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="204.5" y="362" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">RevertActor</text>
+  <path d="M550 298 V353 H391" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#fig-r-3-head-ink-mute)"/>
+  <text x="470" y="347" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">RevertActor</text>
+  <rect x="250" y="414" width="140" height="50" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="253" y="417" width="134" height="44" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="434.1" font-size="12" text-anchor="middle" font-weight="700">6 DELETING</text>
+  <text x="320" y="451.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stops the workload</text>
+  <text x="20" y="443" font-size="11">DeleteActor, in every state</text>
+  <line x1="206" y1="439" x2="249" y2="439" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-r-3-head-ink)"/>
+  <line x1="390" y1="439" x2="440" y2="439" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-r-3-head-amber)"/>
+  <text x="448" y="443" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the record is removed</text>
+  <text x="20" y="494" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">amber arrow: a state change that our runs show. rose arrow: a failure that our runs show.</text>
+  <text x="20" y="511" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">grey dotted arrow: a transition that we read in the code and did not run.</text>
+  <text x="20" y="528" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dashed border: a state that a workflow passes through. double border: the record is removed next.</text>
+  <text x="20" y="545" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A request to a CRASHED actor returns 503 with the body: AssignWorker prerequisite not met.</text>
+  <text x="20" y="562" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ResumeActor on a CRASHED actor returns FailedPrecondition.</text>
+  <text x="20" y="579" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SuspendActor on a SUSPENDED actor changes nothing.</text>
+</svg>

@@ -1,0 +1,7 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: ax-nodebug
+  atespace: default
+spec:
+  command: ["sleep", "infinity"]

@@ -1,0 +1,20 @@
+Update an actor
+
+Usage:
+  kubectl-ate update actor <actor-name> [flags]
+
+Flags:
+  -a, --atespace string          the actor's atespace
+  -h, --help                     help for actor
+      --template string          actor-template to repoint the actor to, as <atespace>/<template-name>, or just <template-name> to use the actor's own atespace (see --atespace)
+      --worker-selector string   comma-separated key=value label selector for worker pools, or empty string to clear
+
+Global Flags:
+      --context string      kubeconfig context to use
+      --endpoint string     manual override for the gRPC target (e.g., localhost:8080); if omitted, automatically port-forwards
+      --kubeconfig string   path to the kubeconfig file
+  -o, --output string       output format: table, json, or yaml (default "table")
+      --preview             allow the use of preview features enabled on the server
+      --token-file string   path to a bearer token for ate-api authentication, or - for stdin (defaults to a Kubernetes ServiceAccount token)
+      --trace               enable tracing for the request
+  -v, --verbose count       output verbosity; may be repeated (e.g. -v, -vv, -vvvvv)

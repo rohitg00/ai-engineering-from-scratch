@@ -1,0 +1,8 @@
+step	rc	seconds
+05-apply	0	0.088
+06-describe-model	0	0.060
+08-create-egress	0	0.230
+09-resume	0	2.247
+10-env-in-task	0	0.814
+11-install-call-script	0	0.742
+14-egress-after	0	0.192

@@ -1,0 +1,38 @@
+/workspace:
+total 1
+drwxrwxrwx 4 root root 100 Nov 12 16:19 .
+drwxr-xr-x 1 root root 100 Nov 12 16:18 ..
+drwxr-xr-x 2 root root  60 Nov 12 16:19 .ax
+-rw-r--r-- 1 root root  50 Nov 12 16:18 AGENTS.md
+drwxr-xr-x 8 root root 340 Nov 12 16:19 itsdangerous
+
+/workspace/itsdangerous:
+total 177
+drwxr-xr-x 8 root root    340 Nov 12 16:19 .
+drwxrwxrwx 4 root root    100 Nov 12 16:19 ..
+drwxr-xr-x 2 root root     80 Nov 12 16:19 .devcontainer
+-rw-r--r-- 1 root root    233 Nov 12 16:19 .editorconfig
+drwxr-xr-x 8 root root    260 Nov 12 16:19 .git
+drwxr-xr-x 4 root root    100 Nov 12 16:19 .github
+-rw-r--r-- 1 root root     74 Nov 12 16:19 .gitignore
+-rw-r--r-- 1 root root    629 Nov 12 16:19 .pre-commit-config.yaml
+-rw-r--r-- 1 root root    242 Nov 12 16:19 .readthedocs.yaml
+-rw-r--r-- 1 root root   8069 Nov 12 16:19 CHANGES.rst
+-rw-r--r-- 1 root root   1475 Nov 12 16:19 LICENSE.txt
+-rw-r--r-- 1 root root   1529 Nov 12 16:19 README.md
+drwxr-xr-x 3 root root    320 Nov 12 16:19 docs
+-rw-r--r-- 1 root root   4444 Nov 12 16:19 pyproject.toml
+drwxr-xr-x 3 root root     60 Nov 12 16:19 src
+drwxr-xr-x 3 root root     60 Nov 12 16:19 tests
+-rw-r--r-- 1 root root 162288 Nov 12 16:19 uv.lock
+672971d66a2ef9f85151e53283113f33d642dabd
+Sat Jun 14 13:35:42 2025 -0700
+Merge branch 'stable'
+* (HEAD detached at FETCH_HEAD)
+  remotes/origin/main
+1.2M	/workspace
+total 1
+drwxr-xr-x 1 root root  60 Nov 12 16:19 .
+drwxr-xr-x 1 root root 100 Nov 12 16:18 ..
+-rw-r--r-- 1 root root 841 Nov 12 16:19 git-success.log
+cat: /ax/git-error.log: No such file or directory

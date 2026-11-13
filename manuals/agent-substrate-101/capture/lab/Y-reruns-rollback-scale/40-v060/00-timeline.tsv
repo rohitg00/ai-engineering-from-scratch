@@ -1,0 +1,18 @@
+1794549959	06:05:59	actors-begin
+1794549981	06:06:21	actors-done
+1794549981	06:06:21	direct-upgrade-begin
+1794549984	06:06:24	direct-upgrade-end rc=1 seconds=3
+1794550097	06:08:17	direct-upgrade-checked
+1794550097	06:08:17	reinstall-begin
+1794550443	06:14:03	delete-all-end rc=0 seconds=346
+1794550445	06:14:05	reinstall-deploy-end rc=1 seconds=1
+1794550446	06:14:06	reinstall-checked
+DONE
+1794550492	06:14:52	delete-leftover-crd sandboxconfigs
+1794550725	06:18:45	remove-finalizer gvisor-default
+1794550882	06:21:22	reinstall2-deploy-end rc=1 seconds=157
+1794550921	06:22:01	delete-node-image-cache
+1794550951	06:22:31	reinstall3-deploy-end rc=0 seconds=30
+1794550961	06:22:41	ax031-begin
+1794551089	06:24:49	v060-up
+1794551213	06:26:53	ax031-done

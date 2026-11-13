@@ -1,0 +1,62 @@
+### state left on this guest, 2026-11-12T19:48:21.216Z
+clusters: kind multi 
+multi-control-plane Ready
+multi-worker Ready
+multi-worker2 Ready
+ate-api-server-59dcf8d6bf-98kqm 2/2 Running
+ate-api-server-59dcf8d6bf-pflhc 2/2 Running
+ate-controller-7984566f8d-jm7ps 1/1 Running
+ate-idp-server-dcd5f565f-pnfr8 1/1 Running
+ate-idp-server-dcd5f565f-r7jhz 1/1 Running
+atelet-bctkn 2/2 Running
+atelet-qz4t8 2/2 Running
+atenet-egress-7758c8fb4-52d2z 3/3 Running
+atenet-router-d844d4995-hzq92 2/2 Running
+k8s-credential-provider-5bb6b77b65-2gbnq 1/1 Running
+postgres-0 2/2 Running
+rustfs-54c86945fb-dplgq 1/1 Running
+rustfs-bucket-init-pz9fw 0/1 Completed
+object-store settings of the plugin:
+ds/atelet AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 mounts=ate-base,objectstore-plugin,servicedns-ca,asset-staging
+deploy/ate-api-server AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 mounts=objectstore-plugin,servicedns,podidentity
+configmap x-store-ca: Error from server (NotFound): configmaps "x-store-ca" not found
+atelet args: --localhost-registry-replacement=kind-registry:5000 --grpc-server-cred-bundle=/run/podidentity.podcert.ate.dev/credential-bundle.pem --client-ca-certs=/run/podidentity.podcert.ate.dev/trust-bundle.pem --log-level=debug --preview=
+atelet args before the run: --localhost-registry-replacement=kind-registry:5000 --grpc-server-cred-bundle=/run/podidentity.podcert.ate.dev/credential-bundle.pem --client-ca-certs=/run/podidentity.podcert.ate.dev/trust-bundle.pem --log-level=debug --preview=
+ballast-5d6cf97747-fj7wt   Running   multi-worker2   <none>
+ballast-5d6cf97747-rcwgm   Running   multi-worker2   <none>
+ballast-5d6cf97747-zxzvv   Running   multi-worker    <none>
+ballast-5d6cf97747-zzzdn   Running   multi-worker    <none>
+      4 WORKER_STATE_ACTIVE
+actors in lab-n: 0
+ATESPACE NAME
+lab-n ballast-0
+lab-n ballast-50
+lab-n nb-0
+lab-n nb-50
+lab-n tb-0
+lab-n tb-1000
+lab-n tb-200
+lab-n tb-50
+lab-n tb-big
+lab-n xb-0
+lab-n xb-1000
+lab-n xb-200
+tc ens3: qdisc fq_codel 0: root refcnt 2 limit 10240p flows 1024 quantum 1514 target 5ms interval 100ms memory_limit 32Mb ecn drop_batch 64 ;
+tc bridge: qdisc noqueue 0: root refcnt 2 ;
+iptables rules that name 10.0.2.2: 0
+containers: multi-control-plane multi-worker2 multi-worker kind-control-plane kind-registry 
+volumes with x- or t- prefix: 
+images added in this run: postgres:18-alpine (client), localhost:5001/x-drill:v1
+img pg.env rec src tls 
+/dev/vda1        38G   27G   12G  70% /
+Mem:              23           5          10           0           8          18
+fs.inotify.max_user_instances = 8192 fs.inotify.max_user_watches = 1048576 
+2026-11-12T19:48:15.103Z check after restore: 200	0.482357	count=1 mb=50 sum=6512 process_age_s=2.0 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T19:48:16.618Z sync suspend after restore: ACTOR_STATE_SUSPENDED	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker
+2026-11-12T19:48:17.568Z RESTORE-DONE AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 
+
+### after the last clean-up, 2026-11-12T19:48:42.183Z
+templates: ballast-0 ballast-50 nb-0 nb-50 tb-0 tb-1000 tb-200 tb-50 tb-big 
+folder ~/x removed (lab CA, keys, database passwords, source clone): ls: cannot access '<home>/x': No such file or directory
+postgres client image removed: 0 left
+/dev/vda1        38G   26G   13G  68% /

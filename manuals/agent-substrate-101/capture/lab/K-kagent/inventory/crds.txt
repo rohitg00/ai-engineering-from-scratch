@@ -1,0 +1,11 @@
+agents.api.kagent.dev                 v1alpha3
+agenttemplates.api.kagent.dev         v1alpha3
+csidriverconfigs.ate.dev              v1
+egresspolicies.api.kagent.dev         v1alpha3
+harnesses.api.kagent.dev              v1alpha3
+modelconfigs.api.kagent.dev           v1alpha3
+modelproviderconfigs.api.kagent.dev   v1alpha3
+remotemcpservers.api.kagent.dev       v1alpha3
+sandboxconfigs.ate.dev                v1
+sandboxtemplates.api.kagent.dev       v1alpha3
+workerpools.ate.dev                   v1

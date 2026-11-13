@@ -1,0 +1,3 @@
+NAMESPACE          NAME      DESIRED   REPLICAS   READY   SANDBOXCONFIG    RESOLVED   AGE
+ate-demo-counter   counter   3         3          3       gvisor-default   True       10m
+ate-demo-egress    egress    2         2          2       gvisor-default   True       4m9s

@@ -1,0 +1,4 @@
+deployment.apps/echo created
+service/echo created
+Waiting for deployment "echo" rollout to finish: 0 of 1 updated replicas are available...
+deployment "echo" successfully rolled out

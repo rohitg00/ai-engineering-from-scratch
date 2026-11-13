@@ -1,0 +1,3 @@
+2026-11-12T18:14:25.286Z	ACTOR_STATE_RUNNING	demo-control-plane	 message: Task is running and its workspace is ready
+2026-11-12T18:14:33.928Z	ACTOR_STATE_CRASHED	demo-control-plane	 message: worker pod went away while hosting the actor
+2026-11-12T18:15:19.773Z	ACTOR_STATE_RUNNING	demo-control-plane	 message: Task is running and its workspace is ready

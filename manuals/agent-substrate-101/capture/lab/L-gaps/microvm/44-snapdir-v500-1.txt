@@ -1,0 +1,7 @@
+583384	/var/lib/ate/snapshots/1d439934-0e5e-4a30-90dd-9640341efe07
+36 /var/lib/ate/snapshots/1d439934-0e5e-4a30-90dd-9640341efe07/local-checkpoint/c3589d6b-59bf-45a7-ad4f-de1dee332ad4/base-id
+1177 /var/lib/ate/snapshots/1d439934-0e5e-4a30-90dd-9640341efe07/local-checkpoint/c3589d6b-59bf-45a7-ad4f-de1dee332ad4/manifest.json
+1797 /var/lib/ate/snapshots/1d439934-0e5e-4a30-90dd-9640341efe07/local-checkpoint/c3589d6b-59bf-45a7-ad4f-de1dee332ad4/config.json
+3584 /var/lib/ate/snapshots/1d439934-0e5e-4a30-90dd-9640341efe07/local-checkpoint/c3589d6b-59bf-45a7-ad4f-de1dee332ad4/rootfs-upper-ballast.tar
+71620 /var/lib/ate/snapshots/1d439934-0e5e-4a30-90dd-9640341efe07/local-checkpoint/c3589d6b-59bf-45a7-ad4f-de1dee332ad4/state.json
+792723456 /var/lib/ate/snapshots/1d439934-0e5e-4a30-90dd-9640341efe07/local-checkpoint/c3589d6b-59bf-45a7-ad4f-de1dee332ad4/memory-ranges

@@ -1,0 +1,2 @@
+ATESPACE     ACTOR            RULES   VERSION   AGE
+demo-agent   agent-memory-1   1       1         0s

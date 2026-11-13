@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 352" role="img" aria-labelledby="fig-4-4b-title fig-4-4b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4b-title">Resume time against the number of resumes at the same instant</title>
+  <desc id="fig-4-4b-desc">Seconds for one request to a suspended 50 MiB actor against the number of such requests sent at the same instant, on the x86 server guest with gVisor and a pool with room for 16 actors. Every one of the 155 requests is a small dot, five rounds for each level, and a line joins the medians. 155 of 155 requests returned 200. The median is 0.23 s at 1, 0.23 s at 2, 0.26 s at 4, 0.29 s at 8, 0.37 s at 16. The slowest of the 80 requests at 16 at once took 0.45 s. A dashed line marks 0.5 s.</desc>
+  <line x1="46" y1="310" x2="466" y2="310" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="314" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.0</text>
+  <line x1="46" y1="265" x2="466" y2="265" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="269" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.1</text>
+  <line x1="46" y1="220" x2="466" y2="220" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="224" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.2</text>
+  <line x1="46" y1="175" x2="466" y2="175" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="179" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.3</text>
+  <line x1="46" y1="130" x2="466" y2="130" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="134" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.4</text>
+  <line x1="46" y1="85" x2="466" y2="85" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="89" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="46" y1="40" x2="466" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.6</text>
+  <line x1="46" y1="310" x2="466" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="46" y1="40" x2="46" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="75.12" y1="310" x2="75.12" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="75.12" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="165.56" y1="310" x2="165.56" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="165.56" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="256" y1="310" x2="256" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="256" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="346.44" y1="310" x2="346.44" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="346.44" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="436.88" y1="310" x2="436.88" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="436.88" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <text x="256" y="344" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resumes at the same instant, one request for each suspended actor</text>
+  <text x="46" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds from request to reply, at the client</text>
+  <line x1="46" y1="85" x2="466" y2="85" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <path d="M75.1 208.3 L165.6 206.9 L256.0 192.5 L346.4 180.4 L436.9 143.0" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="68.52" cy="211.45" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="70.72" cy="210.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="72.92" cy="208.3" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="75.12" cy="204.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="77.32" cy="203.35" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="75.12" y="194.35" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">0.23 s</text>
+  <text x="75.12" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5 of 5</text>
+  <circle cx="158.96" cy="209.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="161.16" cy="208.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="163.36" cy="207.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="165.56" cy="206.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="167.76" cy="206.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="169.96" cy="206.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="172.16" cy="206.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="158.96" cy="203.8" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="161.16" cy="202" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="163.36" cy="200.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="165.56" y="191.65" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">0.23 s</text>
+  <text x="165.56" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10 of 10</text>
+  <circle cx="249.4" cy="203.8" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="251.6" cy="203.8" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="253.8" cy="202.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="256" cy="200.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="258.2" cy="200.2" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="260.4" cy="197.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262.6" cy="197.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="249.4" cy="193.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="251.6" cy="193.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="253.8" cy="192.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="256" cy="192.1" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="258.2" cy="190.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="260.4" cy="189.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="262.6" cy="186.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="249.4" cy="185.35" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="251.6" cy="184.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="253.8" cy="183.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="256" cy="183.1" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="258.2" cy="181.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="260.4" cy="170.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="256" y="161.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">0.26 s</text>
+  <text x="256" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">20 of 20</text>
+  <circle cx="339.84" cy="200.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="342.04" cy="196.6" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="344.24" cy="196.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="346.44" cy="195.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="348.64" cy="194.35" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="350.84" cy="193.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="353.04" cy="193" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="339.84" cy="192.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="342.04" cy="191.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="344.24" cy="191.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="346.44" cy="191.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="348.64" cy="187.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="350.84" cy="186.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="353.04" cy="186.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="339.84" cy="184" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="342.04" cy="183.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="344.24" cy="183.1" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="346.44" cy="182.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="348.64" cy="181.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="350.84" cy="180.4" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="353.04" cy="180.4" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="339.84" cy="180.4" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="342.04" cy="180.4" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="344.24" cy="178.6" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="346.44" cy="178.6" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="348.64" cy="178.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="350.84" cy="177.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="353.04" cy="175.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="339.84" cy="175.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="342.04" cy="174.1" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="344.24" cy="171.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="346.44" cy="171.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="348.64" cy="170.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="350.84" cy="170.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="353.04" cy="169.6" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="339.84" cy="169.6" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="342.04" cy="167.8" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="344.24" cy="167.35" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="346.44" cy="165.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="348.64" cy="160.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="346.44" y="151.15" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">0.29 s</text>
+  <text x="346.44" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">40 of 40</text>
+  <circle cx="430.28" cy="175" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="169.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="169.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="168.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="167.8" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="167.8" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="167.35" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="166" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="162.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="161.05" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="159.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="157.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="157.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="157.45" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="157" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="155.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="154.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="153.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="152.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="152.05" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="151.6" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="151.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="150.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="150.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="150.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="150.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="150.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="149.8" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="148.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="147.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="147.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="147.1" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="145.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="144.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="144.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="144.4" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="143.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="143.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="143.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="143.05" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="143.05" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="141.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="141.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="138.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="138.1" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="138.1" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="137.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="136.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="136.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="136.75" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="136.3" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="135.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="135.4" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="135.4" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="134.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="134.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="134.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="134.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="134.05" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="133.6" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="133.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="132.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="132.25" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="130.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="130.9" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="130" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="129.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="129.55" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="128.2" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="123.7" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="116.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="110.65" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="108.85" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="436.88" cy="107.95" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="439.08" cy="107.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="441.28" cy="107.5" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="443.48" cy="107.05" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="430.28" cy="106.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="432.48" cy="106.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="434.68" cy="106.15" r="1.7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="436.88" y="97.15" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">0.37 s</text>
+  <text x="436.88" y="292" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">80 of 80</text>
+  <text x="480" y="133.05" font-size="11.5" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">16 at once</text>
+  <text x="480" y="148.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.37 s median of 80</text>
+  <text x="480" y="163.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">64 percent more than 1</text>
+  <text x="480" y="178.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">slowest 0.45 s</text>
+  <text x="480" y="89" font-size="11.5" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">0.5 s</text>
+  <text x="480" y="292" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">returned 200, of sent</text>
+  <circle cx="61" cy="54" r="1.7" fill="var(--m-ink-soft, #4a4a4a)"/>
+  <text x="70" y="58" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one request</text>
+  <line x1="158" y1="54" x2="176" y2="54" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.8"/>
+  <text x="182" y="58" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median of one level</text>
+</svg>

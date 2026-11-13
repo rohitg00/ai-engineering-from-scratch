@@ -1,0 +1,3 @@
+time=2026-11-13T06:26:15.606Z level=INFO msg="starting ax-controller" redisAddr=ax-redis.ax031-system.svc.cluster.local:6379 group=ax-controllers substrateEndpoint=api.ate-system.svc.cluster.local:443 authority=api.ate-system.svc templateAtespace=ax031-system template=default-template
+time=2026-11-13T06:26:15.610Z level=INFO msg="starting AX task worker" group=ax-controllers consumer=ax-controller-858d497f88-pljfd-2127
+redis: 2026/11/13 06:26:16 pool.go:762: redis: connection pool: failed to dial after 5 attempts: dial tcp 10.96.124.103:6379: connect: connection refused

@@ -1,0 +1,89 @@
+{
+  "actorTemplate": {
+    "atespace": "up-lab",
+    "name": "up-drill"
+  },
+  "metadata": {
+    "atespace": "up-lab",
+    "createTime": "2026-11-12T16:17:51.708111385Z",
+    "name": "a-run",
+    "uid": "0ac9c434-75ab-4899-abea-8f2d3aafd26b",
+    "updateTime": "2026-11-12T16:17:52.327307982Z",
+    "version": "3"
+  },
+  "status": {
+    "assignedNode": "uupg-control-plane",
+    "lastAssignedGeneration": 1,
+    "snapshots": [
+      {
+        "actorTemplateUid": "6a6a00ee-3579-4831-9df7-297cf34eb6c3",
+        "durableSnapshot": {
+          "object": {
+            "snapshotUri": "gs://ate-snapshots/atespaces/up-lab/tags/a5e94f07-6898-412e-8b31-6a9904fe724e"
+          },
+          "state": "SNAPSHOT_STORAGE_STATE_COMPLETED"
+        },
+        "fidelity": "SNAPSHOT_FIDELITY_MEMORY",
+        "generation": 1,
+        "owner": "SNAPSHOT_OWNER_TAG",
+        "sandboxRuntime": {
+          "sandboxClass": "gvisor",
+          "version": {
+            "attributes": [
+              {
+                "key": "architecture",
+                "value": "amd64"
+              },
+              {
+                "key": "cpu_features",
+                "value": "8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203"
+              },
+              {
+                "key": "sandbox_bundle_hash",
+                "value": "sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa"
+              }
+            ],
+            "schemaVersion": "v1"
+          }
+        },
+        "uuid": "a5e94f07-6898-412e-8b31-6a9904fe724e"
+      }
+    ],
+    "state": "ACTOR_STATE_RUNNING",
+    "workerAssignment": {
+      "nodeName": "uupg-control-plane",
+      "sandboxRuntime": {
+        "sandboxClass": "gvisor",
+        "version": {
+          "attributes": [
+            {
+              "key": "architecture",
+              "value": "amd64"
+            },
+            {
+              "key": "cpu_features",
+              "value": "8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203"
+            },
+            {
+              "key": "sandbox_bundle_hash",
+              "value": "sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa"
+            }
+          ],
+          "schemaVersion": "v1"
+        }
+      },
+      "worker": {
+        "name": "a9b67524-8e33-4ace-9bb4-5a639358e9d4"
+      },
+      "workerEpoch": "1",
+      "workerNamespace": "up-lab",
+      "workerPod": "up-pool-59f744cb5d-p666v",
+      "workerPodIps": [
+        "10.244.0.29"
+      ],
+      "workerPodUid": "a9b67524-8e33-4ace-9bb4-5a639358e9d4",
+      "workerPool": "up-pool",
+      "workerSpiffeId": "spiffe://cluster.local/ns/up-lab/sa/ateworker"
+    }
+  }
+}

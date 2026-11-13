@@ -1,0 +1,2 @@
+ATESPACE   NAME     TEMPLATE      STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+lab-f      f-main   lab-f/shell   ACTOR_STATE_SUSPENDED   <none>                    5         146m

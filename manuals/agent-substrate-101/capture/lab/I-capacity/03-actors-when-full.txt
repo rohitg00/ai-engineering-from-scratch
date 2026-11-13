@@ -1,0 +1,10 @@
+ATESPACE   NAME    TEMPLATE           STATE                   WORKER POD                       WORKER IPS    VERSION   AGE
+lab-c      b0-1    lab-c/ballast-0    ACTOR_STATE_RUNNING     lab-c/ballast-65cf95d875-bzgjd   10.244.0.26   43        69s
+lab-c      b0-2    lab-c/ballast-0    ACTOR_STATE_RUNNING     lab-c/ballast-65cf95d875-f65dl   10.244.0.27   3         68s
+lab-c      b0-3    lab-c/ballast-0    ACTOR_STATE_RUNNING     lab-c/ballast-65cf95d875-bzgjd   10.244.0.26   3         66s
+lab-c      b0-4    lab-c/ballast-0    ACTOR_STATE_RUNNING     lab-c/ballast-65cf95d875-f65dl   10.244.0.27   3         65s
+lab-c      b0-5    lab-c/ballast-0    ACTOR_STATE_SUSPENDED   <none>                                         1         63s
+lab-c      b50-1   lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                                         1         36s
+lab-c      b50-2   lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                                         1         24s
+lab-c      b50-3   lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                                         1         13s
+lab-c      b50-4   lab-c/ballast-50   ACTOR_STATE_SUSPENDED   <none>                                         1         2s

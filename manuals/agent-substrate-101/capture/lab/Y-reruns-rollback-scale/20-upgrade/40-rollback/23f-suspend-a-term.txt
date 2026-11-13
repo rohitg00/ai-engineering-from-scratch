@@ -1,0 +1,2 @@
+ATESPACE   NAME     TEMPLATE         STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-term   up-lab/up-trap   ACTOR_STATE_SUSPENDED   <none>                    9         12m

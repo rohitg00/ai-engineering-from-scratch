@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata: {name: ollama, namespace: ax-system}
+spec:
+  ports: [{name: http, port: 11434, targetPort: 11434}]
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: ollama-1
+  namespace: ax-system
+  labels: {kubernetes.io/service-name: ollama}
+addressType: IPv4
+ports: [{name: http, port: 11434, protocol: TCP}]
+endpoints: [{addresses: ["172.18.0.5"]}]

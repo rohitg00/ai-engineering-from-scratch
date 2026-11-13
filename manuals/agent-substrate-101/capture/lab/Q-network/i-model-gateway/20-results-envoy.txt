@@ -1,0 +1,180 @@
+### [13:16:16.799] policy update f-main <- Pgw.yaml : ATESPACE   ACTOR    RULES   VERSION   AGE lab-f      f-main   3       47        150m 
+### [13:16:23.567] a1-plain-gw-fast
+$ curl -sS -m 15 -w '\ncode=%{http_code} t=%{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+{"model":"small-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-a model=small-1 authorization=Bearer provider-key-for-backend-a x_lab=lab-gw-client-credential-1794488723","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794489383}
+code=200 t=0.151750
+
+
+### [13:16:23.779] a2-plain-gw-smart
+$ curl -sS -m 15 -w '\ncode=%{http_code} t=%{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"smart","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+{"model":"big-1","usage":{"prompt_tokens":1,"completion_tokens":1,"total_tokens":2},"choices":[{"message":{"content":"served_by=backend-b model=big-1 authorization=Bearer provider-key-for-backend-b x_lab=lab-gw-client-credential-1794488723","role":"assistant"},"index":0,"finish_reason":"stop"}],"id":"chatcmpl-lab","object":"chat.completion","created":1794489383}
+code=200 t=0.032064
+
+
+### [13:16:24.016] a3-plain-gw-unknown-model
+$ curl -sS -m 15 -w '\ncode=%{http_code}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"other","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+{"error":{"message":"Model not found","type":"invalid_request_error","code":"model_not_found"}}
+code=404
+
+
+### [13:16:24.803] b1-tls-gw-fast
+$ curl -sS -m 15 --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '\ncode=%{http_code} t=%{time_total} verify=%{ssl_verify_result}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+upstream connect error or disconnect/reset before headers. reset reason: remote connection failure
+code=503 t=0.546079 verify=0
+
+
+### [13:16:25.598] b2-tls-gw-smart
+$ curl -sS -m 15 --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '\ncode=%{http_code} t=%{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"smart","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions
+exit=0
+upstream connect error or disconnect/reset before headers. reset reason: remote connection failure
+code=503 t=0.535555
+
+
+### [13:16:26.776] b3-tls-gw-cert-seen-by-actor
+$ echo | openssl s_client -connect modelgw.model-gw.svc.cluster.local:443 -servername modelgw.model-gw.svc.cluster.local 2>/dev/null | openssl x509 -noout -subject -issuer -dates 2>&1
+exit=0
+subject=
+issuer=CN=U7ICLCR3N66DBMBSAQNS5JHTHI
+notBefore=Nov 12 13:11:24 2026 GMT
+notAfter=Nov 12 13:31:24 2026 GMT
+
+
+### [13:16:27.693] b4-tls-gw-verbose
+$ curl -sS -m 15 -v --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -o /dev/null -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions 2>&1 | grep -E '^\* |^< HTTP|^< ' | tail -25
+exit=0
+*  issuer: CN=U7ICLCR3N66DBMBSAQNS5JHTHI
+*  SSL certificate verify ok.
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+*   Certificate level 1: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+* Connected to modelgw.model-gw.svc.cluster.local (10.96.113.67) port 443
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://modelgw.model-gw.svc.cluster.local/v1/chat/completions
+* [HTTP/2] [1] [:method: POST]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: modelgw.model-gw.svc.cluster.local]
+* [HTTP/2] [1] [:path: /v1/chat/completions]
+* [HTTP/2] [1] [user-agent: curl/8.14.1]
+* [HTTP/2] [1] [accept: */*]
+* [HTTP/2] [1] [content-type: application/json]
+* [HTTP/2] [1] [authorization: Bearer placeholder-from-actor]
+* [HTTP/2] [1] [x-lab: placeholder-from-actor]
+* [HTTP/2] [1] [content-length: 60]
+* upload completely sent off: 60 bytes
+< HTTP/2 503 
+< content-length: 98
+< content-type: text/plain
+< date: Thu, 12 Nov 2026 13:16:27 GMT
+< server: envoy
+< 
+* Connection #0 to host modelgw.model-gw.svc.cluster.local left intact
+
+
+### [13:16:35.104] l1-direct-mock
+$ for i in $(seq 1 30); do curl -s -m 10 -o /dev/null -w '%{http_code} %{time_total}\n' -H 'content-type: application/json' -d '{"model":"small-1","messages":[{"role":"user","content":"hi"}]}' http://mock-a.model-gw.svc.cluster.local/v1/chat/completions; done
+exit=0
+200 0.078046
+200 0.021372
+200 0.091696
+200 0.022591
+200 0.021435
+200 0.020381
+200 0.090529
+200 0.019952
+200 0.088730
+200 0.084168
+200 0.020399
+200 0.020886
+200 0.079736
+200 0.020928
+200 0.086350
+200 0.021889
+200 0.018649
+200 0.020521
+200 0.019731
+200 0.020486
+200 0.023626
+200 0.021125
+200 0.019801
+200 0.019625
+200 0.073118
+200 0.019979
+200 0.020343
+200 0.019372
+200 0.019846
+200 0.091674
+
+
+### [13:16:40.304] l2-via-plain-gw
+$ for i in $(seq 1 30); do curl -s -m 10 -o /dev/null -w '%{http_code} %{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' http://modelgw-plain.model-gw.svc.cluster.local/v1/chat/completions; done
+exit=0
+200 0.075899
+200 0.036649
+200 0.026494
+200 0.095260
+200 0.026856
+200 0.025535
+200 0.096596
+200 0.031932
+200 0.032054
+200 0.095234
+200 0.026274
+200 0.026509
+200 0.096047
+200 0.025544
+200 0.026300
+200 0.028577
+200 0.093056
+200 0.025537
+200 0.027570
+200 0.087525
+200 0.027816
+200 0.027889
+200 0.024899
+200 0.086766
+200 0.027274
+200 0.026791
+200 0.100434
+200 0.027145
+200 0.031230
+200 0.094838
+
+
+### [13:17:04.303] l3-via-tls-gw
+$ for i in $(seq 1 30); do curl -s -m 10 -o /dev/null --cacert /run/ate/egress-trust-bundle/trust-bundle.pem -w '%{http_code} %{time_total}\n' -H 'content-type: application/json' -H 'Authorization: Bearer placeholder-from-actor' -H 'X-Lab: placeholder-from-actor' -d '{"model":"fast","messages":[{"role":"user","content":"hi"}]}' https://modelgw.model-gw.svc.cluster.local/v1/chat/completions; done
+exit=0
+503 0.595427
+503 0.603113
+503 0.534582
+503 0.597424
+503 0.612265
+503 0.607320
+503 0.610587
+503 0.695668
+503 0.612047
+503 0.599175
+503 0.514341
+503 0.606417
+503 0.522698
+503 0.598818
+503 0.617903
+503 0.608454
+503 0.607312
+503 0.627619
+503 0.612181
+503 0.608665
+503 0.613989
+503 0.599676
+503 0.611738
+503 0.614552
+503 0.603370
+503 0.611548
+503 0.609606
+503 0.613418
+503 0.529948
+503 0.542712
+
+

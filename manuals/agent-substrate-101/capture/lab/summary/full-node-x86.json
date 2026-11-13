@@ -1,0 +1,142 @@
+{
+  "both_nodes_up_all_workers_full": {
+    "blocked_requests": {
+      "body": "actor lab-n/h1 unavailable: no worker has room for the actor",
+      "codes": {
+        "503": 2
+      },
+      "requests": 2,
+      "seconds": {
+        "max": 5.054,
+        "median": 5.051,
+        "min": 5.048,
+        "n": 2
+      },
+      "states": {
+        "ACTOR_STATE_SUSPENDED": 2
+      }
+    },
+    "freed_worker_on_node_without_the_local_snapshot": true,
+    "log_lines_with_detach_from_full_node": 39,
+    "node_after": "multi-worker",
+    "resume_command_error": "code = ResourceExhausted desc = no worker has room for the actor",
+    "served_after_free": {
+      "code": "200",
+      "count": 4,
+      "seconds": 0.608,
+      "seconds_after_free_command": 1.0
+    }
+  },
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, one control plane node and two worker nodes, default atelet timers, pool of 4 worker pods",
+  "node_stopped_other_node_full": [
+    {
+      "blocked_requests": {
+        "body": "actor lab-n/j4 unavailable: no worker has room for the actor",
+        "codes": {
+          "503": 4
+        },
+        "requests": 4,
+        "seconds": {
+          "max": 5.07,
+          "median": 5.06,
+          "min": 5.056,
+          "n": 4
+        },
+        "states": {
+          "ACTOR_STATE_SUSPENDED": 4
+        }
+      },
+      "count_at_tag": 3,
+      "create_from_tag_ok": true,
+      "resume_command_error": "code = ResourceExhausted desc = no worker has room for the actor",
+      "revert": {
+        "ok": true,
+        "seconds": 3.1,
+        "state_after": "ACTOR_STATE_SUSPENDED",
+        "t": 74.8
+      },
+      "run": "free-a-worker",
+      "served_after_unblock": [
+        {
+          "code": "200",
+          "count": 4,
+          "event": "request-after-free",
+          "seconds": 0.799,
+          "seconds_after_unblock_command": 1.6
+        },
+        {
+          "code": "200",
+          "count": 4,
+          "event": "request-new-actor-after-free",
+          "seconds": 0.637,
+          "seconds_after_unblock_command": 2.5
+        }
+      ],
+      "source": "capture/lab/T-drain-store/52-f1b-survivor-full-then-free-a-worker.tsv",
+      "unblock": {
+        "action": "free-a-worker-done",
+        "seconds": 0.6,
+        "t": 99.0
+      },
+      "workers_unavailable_t": 71.1
+    },
+    {
+      "blocked_requests": {
+        "body": "actor lab-n/k1 unavailable: no worker has room for the actor",
+        "codes": {
+          "503": 4
+        },
+        "requests": 4,
+        "seconds": {
+          "max": 5.06,
+          "median": 5.057,
+          "min": 5.054,
+          "n": 4
+        },
+        "states": {
+          "ACTOR_STATE_SUSPENDED": 4
+        }
+      },
+      "count_at_tag": 3,
+      "create_from_tag_ok": true,
+      "resume_command_error": "code = ResourceExhausted desc = no worker has room for the actor",
+      "revert": {
+        "ok": true,
+        "seconds": 2.8,
+        "state_after": "ACTOR_STATE_SUSPENDED",
+        "t": 58.6
+      },
+      "run": "scale-the-pool",
+      "served_after_unblock": [
+        {
+          "code": "200",
+          "count": 4,
+          "event": "request-after-scale",
+          "seconds": 1.553,
+          "seconds_after_unblock_command": 1.7
+        },
+        {
+          "code": "200",
+          "count": 4,
+          "event": "request-new-actor-after-scale",
+          "seconds": 0.632,
+          "seconds_after_unblock_command": 2.7
+        }
+      ],
+      "source": "capture/lab/T-drain-store/62-f2b-survivor-full-then-scale-pool.tsv",
+      "unblock": {
+        "action": "scale-up",
+        "seconds": null,
+        "t": 82.0
+      },
+      "workers_unavailable_t": 55.3
+    }
+  ],
+  "note": "each run once. One actor with a 1,900 Mi limit fills each worker of 1,984 Mi. In the node-stop runs t is seconds from the docker stop command of the node multi-worker2. The test actor has a tag from before the stop, made at count 3.",
+  "sources": [
+    "capture/lab/T-drain-store/52-f1b-survivor-full-then-free-a-worker.tsv",
+    "capture/lab/T-drain-store/62-f2b-survivor-full-then-scale-pool.tsv",
+    "capture/lab/T-drain-store/70-f3-survivor-full-no-revert-request-only.tsv",
+    "capture/lab/T-drain-store/78-control-plane-events.log"
+  ]
+}

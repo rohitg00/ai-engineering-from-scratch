@@ -1,0 +1,9 @@
+Dockerfile.task-runner:28
+--------------------
+  26 |     RUN pip install --no-cache-dir google-antigravity
+  27 |     
+  28 | >>> COPY bin/linux_amd64/ax-task-runner /usr/local/bin/ax-task-runner
+  29 |     COPY cmd/ax-task-runner/antigravity_bootstrap.py /usr/local/bin/antigravity_bootstrap.py
+  30 |     
+--------------------
+ERROR: failed to build: failed to solve: failed to compute cache key: failed to calculate checksum of ref kaev46h45z4i5oefzqbcvaj46::wusupiemxvukgavnz07eaikm2: "/bin/linux_amd64/ax-task-runner": not found

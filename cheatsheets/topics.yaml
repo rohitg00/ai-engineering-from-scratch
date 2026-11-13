@@ -1242,6 +1242,7 @@
     - phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints
     - projects/durable-agent-jobs
     - projects/cloud-agent-with-aws-strands
+    - manuals/agent-substrate-101
 
 - id: eval-driven-agents
   title: Eval-Driven Agent Development

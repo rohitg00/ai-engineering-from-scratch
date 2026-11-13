@@ -1,0 +1,16 @@
+== c-run
+Error: failed to resume actor: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+resume cmd 0.21 s
+Error: failed to get actor "c-run": rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+== c-susp
+Error: failed to resume actor: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+resume cmd 0.20 s
+Error: failed to get actor "c-susp": rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+== c-sync
+Error: failed to resume actor: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+resume cmd 0.21 s
+Error: failed to get actor "c-sync": rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+== c-fresh
+Error: failed to resume actor: rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control
+resume cmd 0.21 s
+Error: failed to get actor "c-fresh": rpc error: code = Unimplemented desc = unknown service substrate.ateapi.v1.Control

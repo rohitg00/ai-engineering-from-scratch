@@ -1,0 +1,345 @@
+apiVersion: v1
+items:
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: ate-api-server
+    namespace: ate-system
+    resourceVersion: "790"
+    uid: 8f72a7d5-bd7b-4f3a-bcc6-40a8bcb85f57
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - ate-controller
+            - atelet
+            - atenet-egress
+            - atenet-router
+      - namespaceSelector:
+          matchLabels:
+            ate.dev/api-access: "true"
+        podSelector:
+          matchExpressions:
+          - key: ate.dev/worker-pool
+            operator: DoesNotExist
+      ports:
+      - port: 443
+        protocol: TCP
+    - from:
+      - podSelector:
+          matchLabels:
+            app: atelet
+      ports:
+      - port: exchange
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: ate-api-server
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: ate-idp-server
+    namespace: ate-system
+    resourceVersion: "785"
+    uid: e2625d6c-410b-4fa7-b5bf-6698a600666b
+  spec:
+    ingress:
+    - ports:
+      - port: https
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: ate-idp-server
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: ate-system-observability
+    namespace: ate-system
+    resourceVersion: "793"
+    uid: 4f2ad5f1-ee32-41be-b492-eb8a29ced194
+  spec:
+    ingress:
+    - ports:
+      - port: metrics
+        protocol: TCP
+      - port: prometheus
+        protocol: TCP
+      - port: gw-metrics
+        protocol: TCP
+      - port: health
+        protocol: TCP
+      - port: healthz
+        protocol: TCP
+      - port: stats
+        protocol: TCP
+      - port: readiness
+        protocol: TCP
+    podSelector:
+      matchExpressions:
+      - key: app
+        operator: NotIn
+        values:
+        - k8s-credential-provider
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: atelet
+    namespace: ate-system
+    resourceVersion: "784"
+    uid: d307997c-3faf-433f-868d-a1d6d341ffba
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: ate-api-server
+      ports:
+      - port: grpc
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: atelet
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: atenet-egress
+    namespace: ate-system
+    resourceVersion: "789"
+    uid: 89dd182b-7bb0-4b46-9009-caa3b73d86f7
+  spec:
+    ingress:
+    - from:
+      - namespaceSelector: {}
+        podSelector:
+          matchExpressions:
+          - key: ate.dev/worker-pool
+            operator: Exists
+      ports:
+      - port: https
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: atenet-egress
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: atenet-router
+    namespace: ate-system
+    resourceVersion: "792"
+    uid: 9c10b53b-daad-4c5c-ad8b-f357f94867af
+  spec:
+    ingress:
+    - ports:
+      - port: http
+        protocol: TCP
+      - port: https
+        protocol: TCP
+      - port: connect
+        protocol: TCP
+      - port: connect-tls
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: atenet-router
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: default-deny-ingress
+    namespace: ate-system
+    resourceVersion: "786"
+    uid: 565ccc4c-654f-493a-94bf-03bd417a0bba
+  spec:
+    podSelector: {}
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: k8s-credential-provider
+    namespace: ate-system
+    resourceVersion: "787"
+    uid: adc7a30a-9791-45f2-9b2c-f2c518c58129
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: atenet-egress
+      ports:
+      - port: 50051
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: k8s-credential-provider
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: postgres
+    namespace: ate-system
+    resourceVersion: "791"
+    uid: e1397a98-6d35-44e8-8ab8-33b911901a17
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: ate-api-server
+      ports:
+      - port: postgres
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: postgres
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: rustfs
+    namespace: ate-system
+    resourceVersion: "788"
+    uid: 0e7ab940-df74-4e8b-943c-d585797ed556
+  spec:
+    ingress:
+    - from:
+      - podSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - ate-api-server
+            - atelet
+      - podSelector:
+          matchLabels:
+            batch.kubernetes.io/job-name: rustfs-bucket-init
+      ports:
+      - port: api
+        protocol: TCP
+    podSelector:
+      matchLabels:
+        app: rustfs
+    policyTypes:
+    - Ingress
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    generation: 1
+    labels:
+      ate.dev/worker-pool: kagent-default
+    name: substrate-kagent-default
+    namespace: kagent
+    ownerReferences:
+    - apiVersion: ate.dev/v1
+      blockOwnerDeletion: true
+      controller: true
+      kind: WorkerPool
+      name: kagent-default
+      uid: a1fb2c3b-e204-4e0d-bc6e-3b9ad0cb6ad3
+    resourceVersion: "1394"
+    uid: 9395a6a4-33a5-4d02-b12a-c3261e258d4e
+  spec:
+    ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: ate-system
+        podSelector:
+          matchLabels:
+            app: atenet-router
+    podSelector:
+      matchLabels:
+        ate.dev/worker-pool: kagent-default
+    policyTypes:
+    - Ingress
+kind: List
+metadata:
+  resourceVersion: ""

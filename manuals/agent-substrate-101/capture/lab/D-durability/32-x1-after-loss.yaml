@@ -1,0 +1,61 @@
+actorTemplate:
+  atespace: lab-c
+  name: ballast-50
+metadata:
+  atespace: lab-c
+  createTime: "2026-11-12T11:30:14.665662559Z"
+  name: x1
+  uid: 085b45fb-edb9-4523-ad30-3da55b3f34f0
+  updateTime: "2026-11-12T11:30:18.694132491Z"
+  version: "11"
+status:
+  assignedNode: kind-control-plane
+  crash:
+    crashTime: "2026-11-12T11:30:18.693957028Z"
+    message: 'resume failed: atelet Restore: snapshot "5fc50f82-8e19-4f28-a324-07e2a99d54b1"
+      has no usable local copy and no uploaded copy: open /var/lib/ate/snapshots/085b45fb-edb9-4523-ad30-3da55b3f34f0/local-checkpoint/5fc50f82-8e19-4f28-a324-07e2a99d54b1:
+      no such file or directory'
+  lastAssignedGeneration: 3
+  snapshots:
+  - actorTemplateUid: 0382e2fc-99db-461a-8845-a90d93484443
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-c/actors/085b45fb-edb9-4523-ad30-3da55b3f34f0/snapshots/cc601ee1-f25b-4038-9a69-9499719f2c1b
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 2
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: cc601ee1-f25b-4038-9a69-9499719f2c1b
+  - actorTemplateUid: 0382e2fc-99db-461a-8845-a90d93484443
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-c/actors/085b45fb-edb9-4523-ad30-3da55b3f34f0/snapshots/5fc50f82-8e19-4f28-a324-07e2a99d54b1
+      state: SNAPSHOT_STORAGE_STATE_PENDING
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 3
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 5fc50f82-8e19-4f28-a324-07e2a99d54b1
+  state: ACTOR_STATE_CRASHED

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+  namespace: lab-v
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+    spec:
+      containers:
+      - name: echo
+        image: localhost:5001/ballast@sha256:3c297fb8f6ce7067ac8180af0fc52cd422b5ee46135aa937368a731925e173b7
+        args: ["--mb=0"]
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo
+  namespace: lab-v
+spec:
+  selector:
+    app: echo
+  ports:
+  - port: 80
+    targetPort: 80

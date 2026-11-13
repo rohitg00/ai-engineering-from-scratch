@@ -1,0 +1,18 @@
+bin:
+total 96744
+drwxrwxr-x  3 lab lab     4096 Nov 13 06:25 .
+drwxrwxr-x 13 lab lab     4096 Nov 13 06:25 ..
+-rwxrwxr-x  1 lab lab 19592038 Nov 13 06:25 ax
+-rwxrwxr-x  1 lab lab 29574903 Nov 13 06:25 ax-controller
+-rwxrwxr-x  1 lab lab 29121089 Nov 13 06:25 ax-server
+-rwxrwxr-x  1 lab lab 20755930 Nov 13 06:25 ax-task-runner
+drwxrwxr-x  2 lab lab     4096 Nov 13 06:25 linux_amd64
+
+bin/linux_amd64:
+total 96740
+drwxrwxr-x 2 lab lab     4096 Nov 13 06:25 .
+drwxrwxr-x 3 lab lab     4096 Nov 13 06:25 ..
+-rwxrwxr-x 1 lab lab 19592038 Nov 13 06:25 ax
+-rwxrwxr-x 1 lab lab 29574903 Nov 13 06:25 ax-controller
+-rwxrwxr-x 1 lab lab 29121089 Nov 13 06:25 ax-server
+-rwxrwxr-x 1 lab lab 20755930 Nov 13 06:25 ax-task-runner

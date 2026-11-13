@@ -1,0 +1,7 @@
+path	n_ok	n	median_ms	min_ms	max_ms
+actor-l1-direct-mock	30	30	27.5	20.0	96.6
+actor-l2-via-plain-gw	30	30	53.7	24.4	98.5
+actor-l3-via-tls-gw	30	30	689.8	617.3	790.1
+pod-direct-mock	30	30	4.2	3.6	5.0
+pod-via-plain-gw	30	30	4.3	3.6	5.7
+pod-via-tls-gw	30	30	14.7	13.7	18.2

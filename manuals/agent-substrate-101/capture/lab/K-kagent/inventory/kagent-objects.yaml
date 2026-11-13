@@ -1,0 +1,500 @@
+apiVersion: v1
+items:
+- apiVersion: api.kagent.dev/v1alpha3
+  kind: ModelConfig
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: kagent
+      meta.helm.sh/release-namespace: kagent
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kagent
+      app.kubernetes.io/part-of: kagent
+      app.kubernetes.io/version: 1.0.0
+      helm.sh/chart: kagent-1.0.0
+    name: default-model-config
+    namespace: kagent
+    resourceVersion: "1508"
+    uid: 7d8d3b21-1c5b-482a-8a70-1b38ff8183df
+  spec:
+    apiKeySecret: kagent-openai
+    apiKeySecretKey: OPENAI_API_KEY
+    model: gpt-4.1-mini
+    provider: OpenAI
+    stream: true
+  status:
+    conditions:
+    - lastTransitionTime: "2026-11-12T10:14:10Z"
+      message: ModelConfig configuration accepted
+      observedGeneration: 1
+      reason: Accepted
+      status: "True"
+      type: Accepted
+    - lastTransitionTime: "2026-11-12T10:14:10Z"
+      message: All referenced secrets and config maps resolved
+      observedGeneration: 1
+      reason: Resolved
+      status: "True"
+      type: ResolvedRefs
+    observedGeneration: 1
+    secretHash: c03a5d1bc2ab9ec29616da255dff117e71968081014e054d454ab9cfaffcf576
+- apiVersion: api.kagent.dev/v1alpha3
+  kind: RemoteMCPServer
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: kagent
+      meta.helm.sh/release-namespace: kagent
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kagent
+      app.kubernetes.io/part-of: kagent
+      app.kubernetes.io/version: 1.0.0
+      helm.sh/chart: kagent-1.0.0
+    name: kagent-api
+    namespace: kagent
+    resourceVersion: "1605"
+    uid: 3ca082e0-27d3-4616-afee-754a7a40ccff
+  spec:
+    description: Kagent API tools for Sessions, checkpoints, and sandboxes
+    protocol: STREAMABLE_HTTP
+    sseReadTimeout: 5m0s
+    terminateOnClose: true
+    timeout: 30s
+    url: http://kagent-controller.kagent.svc.cluster.local:8083/mcp
+  status:
+    conditions:
+    - lastTransitionTime: "2026-11-12T10:14:36Z"
+      message: Discovered 27 MCP tools
+      observedGeneration: 1
+      reason: DiscoverySucceeded
+      status: "True"
+      type: Accepted
+    discoveredTools:
+    - description: Create a temporary workspace from a prepared SandboxTemplate. Retain
+        request_id and identical inputs for lifecycle retries. Check state, operation,
+        and expires_at before guest calls. No network egress is currently allowed;
+        files belong under /data/workspace.
+      name: create_sandbox
+    - description: Start a Session with an Agent, optionally sending its first message.
+        With message it returns once the turn is accepted; read the reply with get_session.
+        A retry with the same request_id returns the same Session and turn.
+      name: create_session
+    - description: Create a checkpoint at a Session turn boundary
+      name: create_session_checkpoint
+    - description: Delete a workspace and its files after retrieving needed artifacts.
+        Retry the same deletion on transient failure; inspect state and operation
+        to confirm completion.
+      name: delete_sandbox
+    - description: Delete a Session and its runtime state. Fails while the Session
+        has active turns, or with a conflict while another operation on the Session
+        is in flight; retry it.
+      name: delete_session
+    - description: Delete a checkpoint
+      name: delete_session_checkpoint
+    - description: Create a Session from a checkpoint
+      name: fork_session
+    - description: Inspect state, operation, failure, and expiration. This only observes;
+        repeat a pending lifecycle mutation to advance it.
+      name: get_sandbox
+    - description: Inspect process state. exit_code is present only for EXITED. Read
+        outputs and retrieve artifacts after completion.
+      name: get_sandbox_process
+    - description: Read a Session's state, failure and turns, oldest first, within
+        a byte budget.
+      name: get_session
+    - description: Read one checkpoint's state and failure
+      name: get_session_checkpoint
+    - description: Read one task of a Session as its A2A messages and artifacts in
+        timeline order, paged by item, or the A2A parts of one of its tool calls.
+      name: get_task
+    - description: Send a message to an existing Session with session_id, or start
+        a new Session by providing agent instead. Returns the Session and task IDs.
+        Reuse message_id with identical inputs when retrying creation.
+      name: invoke_agent
+    - description: Send SIGKILL to a sandbox process; use get_sandbox_process for
+        its exit
+      name: kill_sandbox_process
+    - description: List Agents visible to the caller, optionally filtered by namespace.
+        Pass an entry from agents as the agent argument to invoke_agent to start a
+        Session. Listing does not imply readiness or permission to invoke.
+      name: list_agents
+    - description: Discover SandboxTemplate namespace/name references visible to you.
+        Does not report readiness or installed programs; inspect the template or verify
+        programs after creation.
+      name: list_sandbox_templates
+    - description: List your temporary workspaces
+      name: list_sandboxes
+    - description: List checkpoints for a Session
+      name: list_session_checkpoints
+    - description: List Sessions visible to the caller, ready ones unless all_states
+        is set
+      name: list_sessions
+    - description: 'Page through a Session''s tasks, oldest first, each as a summary:
+        user message, reply and tool call stubs.'
+      name: list_tasks
+    - description: Read a file. Text comes back as numbered lines from offset, up
+        to limit lines or 32 KiB, with the offset to continue from. PNG, JPEG and
+        GIF images up to 10 MiB come back as images you can see. Other files are described
+        rather than returned. Paths are absolute or relative to /data/workspace.
+      name: read_sandbox_file
+    - description: Read currently available stdout/stderr as base64, up to 1 MiB combined.
+        Pass both returned byte offsets to continue. This does not wait for completion;
+        check get_sandbox_process and read again after it finishes.
+      name: read_sandbox_outputs
+    - description: Set or clear a Session's display name
+      name: rename_session
+    - description: Resume a workspace; previous guest process handles are no longer
+        valid
+      name: resume_sandbox
+    - description: Start once and retain process_id. This returns before completion;
+        use get_sandbox_process and read_sandbox_outputs next. cwd defaults to /data/workspace;
+        command is argv, not shell text. Retrying an uncertain start may execute the
+        command twice.
+      name: start_sandbox_process
+    - description: Suspend a workspace; running commands and transfers may be interrupted
+      name: suspend_sandbox
+    - description: Replace a file with decoded base64 data, up to 1 MiB. Paths are
+        absolute or relative to /data/workspace. Verify bytes_written; interrupted
+        writes may leave partial files. There is no append or offset input.
+      name: write_sandbox_file
+    observedGeneration: 1
+- apiVersion: api.kagent.dev/v1alpha3
+  kind: RemoteMCPServer
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: kagent
+      meta.helm.sh/release-namespace: kagent
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kagent
+      app.kubernetes.io/part-of: kagent
+      app.kubernetes.io/version: 1.0.0
+      helm.sh/chart: kagent-1.0.0
+    name: kagent-tool-server
+    namespace: kagent
+    resourceVersion: "1523"
+    uid: 142293d4-a593-472c-80ec-e66aed96acd6
+  spec:
+    description: Official KAgent tool server
+    protocol: STREAMABLE_HTTP
+    sseReadTimeout: 5m0s
+    terminateOnClose: true
+    timeout: 30s
+    url: http://kagent-tools.kagent.svc.cluster.local:8084/mcp
+  status:
+    conditions:
+    - lastTransitionTime: "2026-11-12T10:14:12Z"
+      message: Discovered 126 MCP tools
+      observedGeneration: 1
+      reason: DiscoverySucceeded
+      status: "True"
+      type: Accepted
+    discoveredTools:
+    - description: Check the logs of the Argo Rollouts Gateway API plugin
+      name: argo_check_plugin_logs
+    - description: Pause a rollout
+      name: argo_pause_rollout
+    - description: Promote a paused rollout to the next step
+      name: argo_promote_rollout
+    - description: List rollouts or experiments
+      name: argo_rollouts_list
+    - description: Set the image of a rollout
+      name: argo_set_rollout_image
+    - description: Verify that the Argo Rollouts controller is installed and running
+      name: argo_verify_argo_rollouts_controller_install
+    - description: Verify the installation status of the Argo Rollouts Gateway API
+        plugin
+      name: argo_verify_gateway_plugin
+    - description: Verify that the kubectl Argo Rollouts plugin is installed
+      name: argo_verify_kubectl_plugin_install
+    - description: Connect to a remote cluster for cluster mesh
+      name: cilium_connect_to_remote_cluster
+    - description: Delete a key from the kvstore for the cluster
+      name: cilium_delete_key_from_kv_store
+    - description: Delete a PCAP recorder for the cluster
+      name: cilium_delete_pcap_recorder
+    - description: Delete policy rules for the cluster
+      name: cilium_delete_policy_rules
+    - description: Delete a service from the cluster
+      name: cilium_delete_service
+    - description: Delete XDP CIDR filters for the cluster
+      name: cilium_delete_xdp_cidr_filters
+    - description: Disconnect an endpoint from the network
+      name: cilium_disconnect_endpoint
+    - description: Disconnect from a remote cluster
+      name: cilium_disconnect_remote_cluster
+    - description: Display the encryption state for the cluster
+      name: cilium_display_encryption_state
+    - description: Display policy node information for the cluster
+      name: cilium_display_policy_node_information
+    - description: Display selectors for the cluster
+      name: cilium_display_selectors
+    - description: Flush the IPsec state for the cluster
+      name: cilium_flush_ipsec_state
+    - description: Manage the FQDN cache for the cluster
+      name: cilium_fqdn_cache
+    - description: Get BPF map for the cluster
+      name: cilium_get_bpf_map
+    - description: Get the status of the Cilium daemon for the cluster
+      name: cilium_get_daemon_status
+    - description: List the details of an endpoint in the cluster
+      name: cilium_get_endpoint_details
+    - description: Get the health of an endpoint in the cluster
+      name: cilium_get_endpoint_health
+    - description: Get the logs of an endpoint in the cluster
+      name: cilium_get_endpoint_logs
+    - description: Get the list of all endpoints in the cluster
+      name: cilium_get_endpoints_list
+    - description: Get the details of an identity in the cluster
+      name: cilium_get_identity_details
+    - description: Get a key from the kvstore for the cluster
+      name: cilium_get_kv_store_key
+    - description: Get a PCAP recorder for the cluster
+      name: cilium_get_pcap_recorder
+    - description: Get information about a service in the cluster
+      name: cilium_get_service_information
+    - description: Install Cilium on the cluster
+      name: cilium_install_cilium
+    - description: List BGP peers
+      name: cilium_list_bgp_peers
+    - description: List BGP routes
+      name: cilium_list_bgp_routes
+    - description: List BPF map events for the cluster
+      name: cilium_list_bpf_map_events
+    - description: List BPF maps for the cluster
+      name: cilium_list_bpf_maps
+    - description: List cluster nodes for the cluster
+      name: cilium_list_cluster_nodes
+    - description: List the Envoy configuration for a resource in the cluster
+      name: cilium_list_envoy_config
+    - description: List all identities in the cluster
+      name: cilium_list_identities
+    - description: List the IP addresses for the cluster
+      name: cilium_list_ip_addresses
+    - description: List local redirect policies for the cluster
+      name: cilium_list_local_redirect_policies
+    - description: List metrics for the cluster
+      name: cilium_list_metrics
+    - description: List node IDs for the cluster
+      name: cilium_list_node_ids
+    - description: List PCAP recorders for the cluster
+      name: cilium_list_pcap_recorders
+    - description: List services for the cluster
+      name: cilium_list_services
+    - description: List XDP CIDR filters for the cluster
+      name: cilium_list_xdp_cidr_filters
+    - description: Manage the configuration of an endpoint in the cluster
+      name: cilium_manage_endpoint_config
+    - description: Manage the labels (add or delete) of an endpoint in the cluster
+      name: cilium_manage_endpoint_labels
+    - description: Request debugging information for the cluster
+      name: cilium_request_debugging_information
+    - description: Set a key in the kvstore for the cluster
+      name: cilium_set_kv_store_key
+    - description: Show cluster mesh status
+      name: cilium_show_cluster_mesh_status
+    - description: Show Cilium configuration options
+      name: cilium_show_configuration_options
+    - description: Show the DNS names for the cluster
+      name: cilium_show_dns_names
+    - description: Show Cilium features status
+      name: cilium_show_features_status
+    - description: Show the IP cache information for the cluster
+      name: cilium_show_ip_cache_information
+    - description: Show load information for the cluster
+      name: cilium_show_load_information
+    - description: Get the status and version of Cilium installation
+      name: cilium_status_and_version
+    - description: Enable or disable cluster mesh
+      name: cilium_toggle_cluster_mesh
+    - description: Toggle a Cilium configuration option
+      name: cilium_toggle_configuration_option
+    - description: Enable or disable Hubble
+      name: cilium_toggle_hubble
+    - description: Uninstall Cilium from the cluster
+      name: cilium_uninstall_cilium
+    - description: Update a PCAP recorder for the cluster
+      name: cilium_update_pcap_recorder
+    - description: Update a service in the cluster
+      name: cilium_update_service
+    - description: Update XDP CIDR filters for the cluster
+      name: cilium_update_xdp_cidr_filters
+    - description: Upgrade Cilium on the cluster
+      name: cilium_upgrade_cilium
+    - description: Validate Cilium network policies for the cluster
+      name: cilium_validate_cilium_network_policies
+    - description: Returns the current date and time in ISO 8601 format.
+      name: datetime_get_current_time
+    - description: Get extended information about a Helm release
+      name: helm_get_release
+    - description: List Helm releases in a namespace
+      name: helm_list_releases
+    - description: Add a Helm repository
+      name: helm_repo_add
+    - description: Update information of available charts locally from chart repositories
+      name: helm_repo_update
+    - description: Uninstall a Helm release
+      name: helm_uninstall
+    - description: Upgrade or install a Helm release
+      name: helm_upgrade
+    - description: Analyze Istio cluster configuration for issues
+      name: istio_analyze_cluster_configuration
+    - description: Apply a waypoint resource to the cluster
+      name: istio_apply_waypoint
+    - description: Delete a waypoint resource from the cluster
+      name: istio_delete_waypoint
+    - description: Generate Istio manifest for a given profile
+      name: istio_generate_manifest
+    - description: Generate a waypoint resource YAML
+      name: istio_generate_waypoint
+    - description: Install Istio with a specified configuration profile
+      name: istio_install_istio
+    - description: List all waypoints in the mesh
+      name: istio_list_waypoints
+    - description: Get specific proxy configuration for a single pod
+      name: istio_proxy_config
+    - description: Get Envoy proxy status for pods, retrieves last sent and acknowledged
+        xDS sync from Istiod to each Envoy in the mesh
+      name: istio_proxy_status
+    - description: List remote clusters registered with Istio
+      name: istio_remote_clusters
+    - description: Get Istio version information
+      name: istio_version
+    - description: Get the status of a waypoint resource
+      name: istio_waypoint_status
+    - description: Get the ztunnel configuration for a namespace
+      name: istio_ztunnel_config
+    - description: Add or update annotations on a Kubernetes resource
+      name: k8s_annotate_resource
+    - description: Apply a YAML manifest to the Kubernetes cluster
+      name: k8s_apply_manifest
+    - description: Check connectivity to a service using a temporary curl pod
+      name: k8s_check_service_connectivity
+    - description: Create a Kubernetes resource from YAML content
+      name: k8s_create_resource
+    - description: Create a Kubernetes resource from a URL pointing to a YAML manifest
+      name: k8s_create_resource_from_url
+    - description: Delete a Kubernetes resource
+      name: k8s_delete_resource
+    - description: Describe a Kubernetes resource in detail
+      name: k8s_describe_resource
+    - description: Execute a command in a Kubernetes pod
+      name: k8s_execute_command
+    - description: 'Generate a Kubernetes resource YAML from a description. Supported
+        resource_type values: istio_virtual_service, gateway_api_reference_grant,
+        gateway_api_gateway_class, gateway_api_gateway, gateway_api_http_route, gateway_api_grpc_route,
+        argo_rollout, argo_analysis_template, istio_auth_policy'
+      name: k8s_generate_resource
+    - description: Get available Kubernetes API resources
+      name: k8s_get_available_api_resources
+    - description: Get cluster configuration details
+      name: k8s_get_cluster_configuration
+    - description: Get events from a Kubernetes namespace
+      name: k8s_get_events
+    - description: Get logs from a Kubernetes pod
+      name: k8s_get_pod_logs
+    - description: Get the YAML representation of a Kubernetes resource
+      name: k8s_get_resource_yaml
+    - description: 'List Kubernetes resources with kubectl. Scope: with neither all_namespaces
+        nor namespace set, this queries ONLY the namespace this tool runs in, not
+        the cluster - set all_namespaces=true to survey the cluster. Images: the wide
+        output has a CONTAINERS/IMAGES column for workloads (deployment, daemonset,
+        statefulset, replicaset, job, cronjob) but NOT for pods, so a pod listing
+        is never a source of image versions; read them from a workload listing or
+        use k8s_get_resource_yaml for the authoritative spec. Node versions (kubelet,
+        container runtime): resource_type=node.'
+      name: k8s_get_resources
+    - description: Add or update labels on a Kubernetes resource
+      name: k8s_label_resource
+    - description: Patch a Kubernetes resource. Defaults to a strategic merge patch,
+        which is only supported for built-in types; set patch_type to "merge" (or
+        "json") to patch a CustomResource/CRD.
+      name: k8s_patch_resource
+    - description: Patch the status of a Kubernetes resource
+      name: k8s_patch_status
+    - description: Remove an annotation from a Kubernetes resource
+      name: k8s_remove_annotation
+    - description: Remove a label from a Kubernetes resource
+      name: k8s_remove_label
+    - description: Perform rollout operations on Kubernetes resources (history, pause,
+        restart, resume, status, undo)
+      name: k8s_rollout
+    - description: Scale a Kubernetes deployment
+      name: k8s_scale
+    - description: Wait for a condition on Kubernetes resources (kubectl wait). Blocks
+        until the condition is met or the timeout elapses.
+      name: k8s_wait
+    - description: Check if Kubescape operator is installed and operational. Verifies
+        namespace, operator pods, storage pods, CRDs, and scan data availability.
+      name: kubescape_check_health
+    - description: Get detailed runtime behavior profile for a specific workload.
+        Shows what processes run, what files are accessed, what system calls are made,
+        and what capabilities are used per container. Compare with CVE findings to
+        prioritize remediation - focus on vulnerabilities affecting actively used
+        components.
+      name: kubescape_get_application_profile
+    - description: Get detailed configuration security scan results for a specific
+        workload, including failed controls and remediation guidance.
+      name: kubescape_get_configuration_scan
+    - description: Get detailed network connections for a specific workload. Shows
+        all observed ingress and egress traffic with DNS names, IPs, ports, and protocols.
+        Use this to verify if a workload with a vulnerability is actually exposed
+        to the network.
+      name: kubescape_get_network_neighborhood
+    - description: Get detailed information about a specific CVE in a vulnerability
+        manifest, including affected packages and fix information.
+      name: kubescape_get_vulnerability_details
+    - description: 'List ApplicationProfiles showing runtime behavior of workloads.
+        These profiles capture: executed processes (Execs), file access patterns (Opens),
+        system calls (Syscalls), Linux capabilities used, and HTTP endpoints. Use
+        this data to prioritize vulnerability findings - a CVE in an unused package
+        is lower priority than one in an actively running process. Requires ''capabilities.runtimeObservability=enable''
+        in Kubescape Helm chart.'
+      name: kubescape_list_application_profiles
+    - description: List configuration security scan results from Kubescape operator.
+        Shows workloads that have been scanned for security misconfigurations.
+      name: kubescape_list_configuration_scans
+    - description: 'List NetworkNeighborhoods showing actual network communication
+        patterns of workloads. These capture: ingress connections (who talks TO the
+        workload), egress connections (who the workload talks TO), including DNS names,
+        IP addresses, ports, and protocols. Use this to understand attack surface
+        and prioritize network-related security findings. Requires ''capabilities.runtimeObservability=enable''
+        in Kubescape Helm chart.'
+      name: kubescape_list_network_neighborhoods
+    - description: List all CVEs/vulnerabilities found in a specific vulnerability
+        manifest. Returns severity summary and vulnerability details.
+      name: kubescape_list_vulnerabilities
+    - description: 'List vulnerability manifests from Kubescape operator, at image
+        or workload level. This is an index only: it does NOT report how many vulnerabilities
+        each manifest contains, and an entry appearing here says nothing about whether
+        that image is clean. To get vulnerability counts and severities for a manifest,
+        call kubescape_list_vulnerabilities with its manifest_name.'
+      name: kubescape_list_vulnerability_manifests
+    - description: Echo input and return all HTTP headers received with the MCP request
+        for debugging.
+      name: mcp_inspect
+    - description: Get all available labels from Prometheus
+      name: prometheus_label_names_tool
+    - description: Generate a PromQL query
+      name: prometheus_promql_tool
+    - description: Execute a PromQL range query against Prometheus
+      name: prometheus_query_range_tool
+    - description: Execute a PromQL query against Prometheus
+      name: prometheus_query_tool
+    - description: Get all Prometheus targets and their status
+      name: prometheus_targets_tool
+    - description: Execute shell commands
+      name: shell
+    observedGeneration: 1
+kind: List
+metadata:
+  resourceVersion: ""

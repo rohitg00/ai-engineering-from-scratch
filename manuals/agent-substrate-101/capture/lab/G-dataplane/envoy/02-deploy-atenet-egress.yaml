@@ -1,0 +1,302 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2026-11-12T10:32:14Z"
+  generation: 1
+  labels:
+    app: atenet-egress
+  name: atenet-egress
+  namespace: ate-system
+  resourceVersion: "1400"
+  uid: 0933c09c-ad19-4a92-b69d-0fa5b11b6e43
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: atenet-egress
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: atenet-egress
+    spec:
+      containers:
+      - args:
+        - -c
+        - /etc/envoy/envoy.yaml
+        - --service-node
+        - atenet-egress
+        - --service-cluster
+        - atenet-egress
+        image: ghcr.io/agent-substrate/substrate/envoy-dataplane:v1.0.0@sha256:fc8e4c3ee9060a01153e4d4af571f3db294e60d536422e8a8c2996fa4a72bf8b
+        imagePullPolicy: IfNotPresent
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sh
+              - -c
+              - while [ ! -f /var/run/atenet/drain-complete ]; do sleep 0.5; done
+        name: envoy
+        ports:
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        - containerPort: 15090
+          name: envoy-metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ready
+            port: envoy-metrics
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          runAsNonRoot: true
+          runAsUser: 65532
+        startupProbe:
+          failureThreshold: 60
+          httpGet:
+            path: /ready
+            port: envoy-metrics
+            scheme: HTTP
+          periodSeconds: 1
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/envoy
+          name: config
+          readOnly: true
+        - mountPath: /run/servicedns.podcert.ate.dev
+          name: servicedns
+          readOnly: true
+        - mountPath: /run/podidentity.podcert.ate.dev
+          name: podidentity
+          readOnly: true
+        - mountPath: /run/actor-id-ca-certs
+          name: actor-id-ca-certs
+          readOnly: true
+        - mountPath: /var/run/atenet
+          name: drain-signal
+          readOnly: true
+        - mountPath: /var/run/sdsmint
+          name: sdsmint-sock
+      - args:
+        - router
+        - --mode=egress
+        - --namespace=ate-system
+        - --port-extproc=50051
+        - --extproc-address=127.0.0.1
+        - --ateapi-address=dns:///api.ate-system.svc:443
+        - --ateapi-ca-file=/run/servicedns.podcert.ate.dev/trust-bundle.pem
+        - --ateapi-client-cert=/run/podidentity.podcert.ate.dev/credential-bundle.pem
+        - --actor-identity-ca-file=/run/actor-id-ca-certs/ca.crt
+        - --otlp-collector-address=
+        - --envoy-admin-address=127.0.0.1:15000
+        - --credential-provider-name=k8s.io
+        - --credential-provider-address=k8s-credential-provider.ate-system.svc:50051
+        - --credential-provider-server-name=k8s-credential-provider.ate-system.svc
+        - --credential-provider-ca-file=/run/servicedns.podcert.ate.dev/trust-bundle.pem
+        - --credential-provider-client-cert=/run/podidentity.podcert.ate.dev/credential-bundle.pem
+        - --preview=
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: POD_UID
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.uid
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: k8s.namespace.name=$(POD_NAMESPACE),k8s.pod.name=$(POD_NAME),k8s.pod.uid=$(POD_UID),service.instance.id=$(POD_UID)
+        envFrom:
+        - configMapRef:
+            name: ate-otel-config
+        image: ghcr.io/agent-substrate/substrate/atenet:v1.0.0@sha256:04f7d93dc3fb3deda688137077226c12ce2da41cd4753adff708e3737dc59e20
+        imagePullPolicy: IfNotPresent
+        name: ext-proc
+        ports:
+        - containerPort: 50051
+          name: extproc
+          protocol: TCP
+        - containerPort: 9090
+          name: metrics
+          protocol: TCP
+        - containerPort: 9091
+          name: health
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /readyz
+            port: health
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 2
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /run/servicedns.podcert.ate.dev
+          name: servicedns
+          readOnly: true
+        - mountPath: /run/podidentity.podcert.ate.dev
+          name: podidentity
+          readOnly: true
+        - mountPath: /run/actor-id-ca-certs
+          name: actor-id-ca-certs
+          readOnly: true
+        - mountPath: /var/run/atenet
+          name: drain-signal
+      dnsPolicy: ClusterFirst
+      initContainers:
+      - args:
+        - sdsmint
+        - --uds-path=/var/run/sdsmint/sdsmint.sock
+        - --ca-pool-path=/run/ca-state/mitm-pool.json
+        - --leaf-cert-ttl=15m
+        - --log-level=info
+        - --preview=
+        env:
+        - name: GOMEMLIMIT
+          value: 640MiB
+        image: ghcr.io/agent-substrate/substrate/atenet:v1.0.0@sha256:04f7d93dc3fb3deda688137077226c12ce2da41cd4753adff708e3737dc59e20
+        imagePullPolicy: IfNotPresent
+        name: sdsmint
+        resources:
+          limits:
+            memory: 768Mi
+          requests:
+            cpu: 200m
+            memory: 512Mi
+        restartPolicy: Always
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/run/sdsmint
+          name: sdsmint-sock
+        - mountPath: /run/ca-state
+          name: ca-state
+          readOnly: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 65532
+        runAsGroup: 65532
+        runAsNonRoot: true
+        runAsUser: 65532
+        sysctls:
+        - name: net.ipv4.ip_unprivileged_port_start
+          value: "0"
+      serviceAccount: atenet-egress
+      serviceAccountName: atenet-egress
+      terminationGracePeriodSeconds: 60
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: atenet-egress
+        name: config
+      - emptyDir: {}
+        name: drain-signal
+      - emptyDir: {}
+        name: sdsmint-sock
+      - name: servicedns
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: servicedns.podcert.ate.dev/identity
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: servicedns.podcert.ate.dev/identity
+      - name: podidentity
+        projected:
+          defaultMode: 420
+          sources:
+          - podCertificate:
+              credentialBundlePath: credential-bundle.pem
+              keyType: ECDSAP256
+              signerName: podidentity.podcert.ate.dev/identity
+          - clusterTrustBundle:
+              labelSelector:
+                matchLabels:
+                  podcert.ate.dev/canarying: live
+              path: trust-bundle.pem
+              signerName: podidentity.podcert.ate.dev/identity
+      - name: actor-id-ca-certs
+        secret:
+          defaultMode: 420
+          secretName: actor-id-ca-certs
+      - name: ca-state
+        projected:
+          defaultMode: 420
+          sources:
+          - secret:
+              items:
+              - key: pool
+                path: mitm-pool.json
+              name: egress-mitm-ca-pool
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-11-12T10:33:04Z"
+    lastUpdateTime: "2026-11-12T10:33:04Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-11-12T10:32:14Z"
+    lastUpdateTime: "2026-11-12T10:33:04Z"
+    message: ReplicaSet "atenet-egress-7758c8fb4" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

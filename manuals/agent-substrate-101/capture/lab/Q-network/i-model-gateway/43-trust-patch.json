@@ -1,0 +1,4 @@
+[
+  {"op": "add", "path": "/spec/template/spec/volumes/-", "value": {"name": "extra-roots", "configMap": {"name": "egress-extra-roots"}}},
+  {"op": "add", "path": "/spec/template/spec/containers/0/volumeMounts/-", "value": {"name": "extra-roots", "mountPath": "/etc/ssl/certs/ca-certificates.crt", "subPath": "ca-certificates.crt"}}
+]

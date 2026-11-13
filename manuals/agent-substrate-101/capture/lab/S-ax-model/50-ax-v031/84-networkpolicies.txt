@@ -1,0 +1,16 @@
+NAMESPACE    NAME                       POD-SELECTOR                          AGE
+ate-system   ate-api-server             app=ate-api-server                    3h53m
+ate-system   ate-idp-server             app=ate-idp-server                    3h53m
+ate-system   ate-system-observability   app notin (k8s-credential-provider)   3h53m
+ate-system   atelet                     app=atelet                            3h53m
+ate-system   atenet-egress              app=atenet-egress                     3h53m
+ate-system   atenet-router              app=atenet-router                     3h53m
+ate-system   default-deny-ingress       <none>                                3h53m
+ate-system   k8s-credential-provider    app=k8s-credential-provider           3h53m
+ate-system   postgres                   app=postgres                          3h53m
+ate-system   rustfs                     app=rustfs                            3h53m
+ax-system    substrate-ax-pool          ate.dev/worker-pool=ax-pool           75m
+demo-agent   substrate-agent            ate.dev/worker-pool=agent             3h47m
+demo-drill   substrate-drill            ate.dev/worker-pool=drill             3h52m
+demo-idle    substrate-idle             ate.dev/worker-pool=idle              3h45m
+demo-tools   substrate-tools            ate.dev/worker-pool=tools             3h46m

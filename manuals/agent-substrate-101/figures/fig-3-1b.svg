@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 352" role="img" aria-labelledby="fig-3-1b-title fig-3-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-1b-title">The first call of a new actor against the memory in its template</title>
+  <desc id="fig-3-1b-desc">Seconds for the first request to a new actor, which restores the golden snapshot, against the MiB of memory the template holds, on the x86 server guest. Each of the 25 new actors is one dot, five for each size, and a line joins the medians: 0.23 s at 0 MiB, 0.25 s at 50 MiB, 0.62 s at 200 MiB, 5.76 s at 500 MiB, 6.60 s at 1000 MiB. The five first calls at 500 MiB took 1.86, 3.03, 5.76, 6.24, 6.76 seconds, and the five at 1000 MiB took 3.46, 3.56, 6.60, 11.85, 12.75 seconds. A second line shows the median of ten later resumes of one actor from its own snapshot on the node, which reaches 2.16 s at 1000 MiB.</desc>
+  <line x1="46" y1="310" x2="486" y2="310" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="314" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="46" y1="271.43" x2="486" y2="271.43" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="275.43" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="46" y1="232.86" x2="486" y2="232.86" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="236.86" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="46" y1="194.29" x2="486" y2="194.29" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="198.29" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="46" y1="155.71" x2="486" y2="155.71" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="159.71" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="46" y1="117.14" x2="486" y2="117.14" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="121.14" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="46" y1="78.57" x2="486" y2="78.57" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="82.57" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">12</text>
+  <line x1="46" y1="40" x2="486" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="40" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">14</text>
+  <line x1="46" y1="310" x2="486" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="46" y1="40" x2="46" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="46" y1="310" x2="46" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="46" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="68" y1="310" x2="68" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="68" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="134" y1="310" x2="134" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="134" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="266" y1="310" x2="266" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="266" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="486" y1="310" x2="486" y2="314" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="486" y="327" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1000</text>
+  <text x="266" y="344" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">memory the template holds, MiB</text>
+  <text x="46" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds from request to reply, at the client</text>
+  <path d="M46.0 305.7 L68.0 305.4 L134.0 300.9 L266.0 289.4 L486.0 268.3" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M46.0 305.6 L68.0 305.1 L134.0 298.1 L266.0 198.9 L486.0 182.8" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <line x1="51" y1="305.37" x2="51" y2="305.83" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="51" cy="305.37" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="51" cy="305.56" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="51" cy="305.83" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="51" cy="305.74" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="51" cy="305.64" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="68" y1="302.29" x2="68" y2="305.33" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="68" cy="302.29" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="68" cy="304.99" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="68" cy="305.12" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="68" cy="305.33" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="68" cy="305.27" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="134" y1="293.36" x2="134" y2="299.18" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="134" cy="293.36" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="134" cy="299.18" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="134" cy="297.89" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="134" cy="298.14" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="134" cy="298.89" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="266" y1="179.63" x2="266" y2="274.09" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="266" cy="251.64" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="266" cy="274.09" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="266" cy="179.63" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="266" cy="198.88" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="266" cy="189.58" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <line x1="486" y1="64.2" x2="486" y2="243.19" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.45"/>
+  <circle cx="486" cy="81.54" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="486" cy="243.19" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="486" cy="182.75" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="486" cy="241.4" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="486" cy="64.2" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="500" y="68.2" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">12.75 s slowest</text>
+  <text x="500" y="186.75" font-size="11.5" font-weight="700" fill="var(--m-teal-ink, #18696a)">first call</text>
+  <text x="500" y="201.75" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">6.60 s median of 5</text>
+  <text x="500" y="247.19" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">3.46 s fastest</text>
+  <text x="500" y="276.34" font-size="11.5" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">later resume</text>
+  <text x="500" y="291.34" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2.16 s median of 10</text>
+  <text x="266" y="133.14" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">five new actors at 500 MiB:</text>
+  <text x="266" y="147.14" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-teal-ink, #18696a)">1.86, 3.03, 5.76, 6.24, 6.76 s</text>
+  <polyline points="94.4,230.29 134,298.14" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="134" cy="298.14" r="2" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="54.8" y="210.29" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">up to 200 MiB the first call</text>
+  <text x="54.8" y="224.29" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stays under 0.9 s</text>
+  <circle cx="57.8" cy="55.29" r="2.4" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="66.8" y="59.29" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the first call of one new actor</text>
+  <line x1="54.8" y1="69.29" x2="72.8" y2="69.29" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.8"/>
+  <text x="78.8" y="73.29" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median of one size</text>
+</svg>

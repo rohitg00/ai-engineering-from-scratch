@@ -1,0 +1,1 @@
+{"stdout":"HTTP/1.1 200 OK\r\nRemoteAddr: 10.244.0.22:36554\nGET / HTTP/1.1\r\nHost: whoami.egress-target.svc.cluster.local\r\nAuthorization: Bearer lab-granted-marker-1794480266\r\nX-Forwarded-Proto: http\r\n","stderr":"","exitCode":0}

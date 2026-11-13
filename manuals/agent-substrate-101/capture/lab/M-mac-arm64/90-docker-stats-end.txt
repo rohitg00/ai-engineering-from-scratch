@@ -1,0 +1,2 @@
+kind-control-plane 3.217GiB / 7.748GiB
+kind-registry 59.8MiB / 7.748GiB

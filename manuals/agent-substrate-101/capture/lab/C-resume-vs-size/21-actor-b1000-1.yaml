@@ -1,0 +1,36 @@
+actorTemplate:
+  atespace: lab-c
+  name: ballast-1000
+metadata:
+  atespace: lab-c
+  createTime: "2026-11-12T10:20:49.694499991Z"
+  name: b1000-1
+  uid: 4c444767-4963-4405-b6dd-69ada1d8a9ca
+  updateTime: "2026-11-12T10:22:04.239344771Z"
+  version: "45"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 12
+  snapshots:
+  - actorTemplateUid: 70f2b690-c352-418d-94b3-c867a7fc0356
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-c/actors/4c444767-4963-4405-b6dd-69ada1d8a9ca/snapshots/b1c12257-ed96-4b0c-b1ce-10154d568672
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 12
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: b1c12257-ed96-4b0c-b1ce-10154d568672
+  state: ACTOR_STATE_SUSPENDED

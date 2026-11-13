@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" role="img" aria-labelledby="fig-7-4-title fig-7-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-4-title">Five questions that decide if Agent Substrate fits</title>
+  <desc id="fig-7-4-desc">Five questions in a column, each with the fact or the run behind it. A no on any question leads right to a simpler choice: a pod for each agent on a GPU node, a pod for each agent, a sandbox for each session, a hosted sandbox, or a harness that must come first. Five yes answers lead to Agent Substrate, where one worker ran 16 actors at one time and a kagent turn paid 0.52 seconds of resume and suspend.</desc>
+  <defs><marker id="fig-7-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ANSWER IN THIS ORDER</text>
+  <text x="420" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ON THE FIRST NO, CHOOSE</text>
+  <rect x="20" y="34" width="356" height="52" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)"/>
+  <circle cx="42" cy="60" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="42" y="64" font-size="11" text-anchor="middle">1</text>
+  <text x="64" y="56" font-size="12.5" font-weight="700">Does the agent run on CPU only?</text>
+  <text x="64" y="74" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">an actor cannot use a GPU at v1.0.0</text>
+  <line x1="376" y1="60" x2="419" y2="60" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="387.6" y="43.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="397.5" y="54" font-size="11.5" text-anchor="middle">no</text>
+  <rect x="420" y="37" width="200" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="520" y="54.95" font-size="11.5" text-anchor="middle" font-weight="700">a pod for each agent</text>
+  <text x="520" y="72.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on a GPU node</text>
+  <line x1="42" y1="86" x2="42" y2="109" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="47" y="86.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="50" y="97.5" font-size="11.5">yes</text>
+  <rect x="20" y="110" width="356" height="52" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)"/>
+  <circle cx="42" cy="136" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="42" y="140" font-size="11" text-anchor="middle">2</text>
+  <text x="64" y="132" font-size="12.5" font-weight="700">Is the agent idle most of the time?</text>
+  <text x="64" y="150" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a busy actor holds its worker all day</text>
+  <line x1="376" y1="136" x2="419" y2="136" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="387.6" y="119.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="397.5" y="130" font-size="11.5" text-anchor="middle">no</text>
+  <rect x="420" y="113" width="200" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="520" y="130.95" font-size="11.5" text-anchor="middle" font-weight="700">a pod for each agent</text>
+  <text x="520" y="148.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">you free no capacity</text>
+  <line x1="42" y1="162" x2="42" y2="185" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="47" y="162.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="50" y="173.5" font-size="11.5">yes</text>
+  <rect x="20" y="186" width="356" height="52" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)"/>
+  <circle cx="42" cy="212" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="42" y="216" font-size="11" text-anchor="middle">3</text>
+  <text x="64" y="208" font-size="12.5" font-weight="700">Must state outlive the idle time?</text>
+  <text x="64" y="226" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a resume took 0.47 s at 200 MiB, 2.16 s at 1000 MiB</text>
+  <line x1="376" y1="212" x2="419" y2="212" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="387.6" y="195.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="397.5" y="206" font-size="11.5" text-anchor="middle">no</text>
+  <rect x="420" y="189" width="200" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="520" y="206.95" font-size="11.5" text-anchor="middle" font-weight="700">a sandbox for each session</text>
+  <text x="520" y="224.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no snapshot, no object store</text>
+  <line x1="42" y1="238" x2="42" y2="261" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="47" y="238.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="50" y="249.5" font-size="11.5">yes</text>
+  <rect x="20" y="262" width="356" height="52" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)"/>
+  <circle cx="42" cy="288" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="42" y="292" font-size="11" text-anchor="middle">4</text>
+  <text x="64" y="284" font-size="12.5" font-weight="700">Can you operate Postgres?</text>
+  <text x="64" y="302" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Postgres away for 61 s: 66 requests failed</text>
+  <line x1="376" y1="288" x2="419" y2="288" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="387.6" y="271.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="397.5" y="282" font-size="11.5" text-anchor="middle">no</text>
+  <rect x="420" y="265" width="200" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="520" y="282.95" font-size="11.5" text-anchor="middle" font-weight="700">a hosted sandbox</text>
+  <text x="520" y="300.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">an API and no cluster</text>
+  <line x1="42" y1="314" x2="42" y2="337" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="47" y="314.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="50" y="325.5" font-size="11.5">yes</text>
+  <rect x="20" y="338" width="356" height="52" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)"/>
+  <circle cx="42" cy="364" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="42" y="368" font-size="11" text-anchor="middle">5</text>
+  <text x="64" y="360" font-size="12.5" font-weight="700">Does something call SuspendActor?</text>
+  <text x="64" y="378" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">idle for 900 s: still RUNNING in every sample</text>
+  <line x1="376" y1="364" x2="419" y2="364" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="387.6" y="347.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="397.5" y="358" font-size="11.5" text-anchor="middle">no</text>
+  <rect x="420" y="341" width="200" height="46" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="520" y="358.95" font-size="11.5" text-anchor="middle" font-weight="700">a harness first</text>
+  <text x="520" y="376.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kagent suspends after each turn</text>
+  <line x1="42" y1="390" x2="42" y2="413" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-4-head-ink)"/>
+  <rect class="m-knock" x="47" y="390.53" width="26.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="50" y="401.5" font-size="11.5">yes</text>
+  <rect x="20" y="414" width="600" height="76" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2.4"/>
+  <text x="40" y="444" font-size="16" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">Choose Agent Substrate</text>
+  <text x="40" y="464" font-size="12" class="m-serif">many stateful actors on few worker pods</text>
+  <text x="40" y="480" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one worker ran 16 actors at one time, and a kagent turn paid 0.52 s of resume and suspend</text>
+</svg>

@@ -1,0 +1,5 @@
+rules:
+- tlsPassthrough:
+    hostnames: ["github.com"]
+    ports:
+      numbers: [443]

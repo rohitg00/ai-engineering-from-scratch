@@ -1,0 +1,438 @@
+{
+  "id": "agent-substrate-101",
+  "title": "Agent Substrate 101",
+  "subtitle": "Install, run, connect, and debug stateful agent actors on Kubernetes, with a measured answer for each decision",
+  "summary": "How to install Agent Substrate, run actors that suspend and resume, control their network, connect kagent and agentgateway, and fix a cluster from the symptom. Measured on our own clusters with Agent Substrate v1.0.0.",
+  "audience": "You run agents on Kubernetes, or you plan to. You know pods, Services, and kubectl. You have not used Agent Substrate, and you want to know what it does and what it costs before you depend on it.",
+  "edition": "2026.11",
+  "status": "draft",
+  "pin": {
+    "subject": "Agent Substrate",
+    "version": "1.0.0",
+    "source": "https://github.com/agent-substrate/substrate",
+    "commit": "b34fbee742906494b5eb4f1f36987176bf8770a4",
+    "date": "2026-11-05",
+    "verified": "2026-11-12"
+  },
+  "outcomes": [
+    "Install Agent Substrate on a kind cluster from the release images, create an actor, and send it a request.",
+    "Predict how long an actor takes to resume from the memory it holds, and choose between an asynchronous and a synchronous suspend.",
+    "Size a WorkerPool, and say what a client sees when the pool is full.",
+    "Write an egress policy, inject a credential, and choose between the Envoy and the agentgateway dataplane.",
+    "Find the cause of a 500 or a 503 from its text, and bring a crashed actor back with RevertActor.",
+    "Build the parts Substrate leaves to you: an idle suspender, a stateful agent actor, a tool sandbox, and a failure drill."
+  ],
+  "palette": [
+    {
+      "hue": "blue",
+      "meaning": "the Substrate control plane: ate-api-server, ate-controller, ate-idp-server"
+    },
+    {
+      "hue": "violet",
+      "meaning": "workers and sandboxes: atelet, worker pods, gVisor, microVM"
+    },
+    {
+      "hue": "green",
+      "meaning": "the actor: the workload you run"
+    },
+    {
+      "hue": "plum",
+      "meaning": "the agent harness and model calls: kagent, the model"
+    },
+    {
+      "hue": "olive",
+      "meaning": "the client and hosts outside the cluster"
+    },
+    {
+      "hue": "indigo",
+      "meaning": "the dataplane: atenet-router, atenet-egress, Envoy, agentgateway"
+    },
+    {
+      "hue": "amber",
+      "meaning": "lifecycle: actor states and the steps between them"
+    },
+    {
+      "hue": "teal",
+      "meaning": "durable state: Postgres, the object store, snapshots"
+    },
+    {
+      "hue": "rose",
+      "meaning": "failure: a crashed actor, a 500, a 503, lost calls"
+    },
+    {
+      "hue": "grey",
+      "meaning": "outside Substrate: Kubernetes, the node, the operator"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Recorded runs",
+      "path": "capture/lab/ (two x86 server guests and an Apple silicon laptop, Agent Substrate v1.0.0, kagent v1.0.0, agentgateway v1.7.0)",
+      "usedFor": "every listing and every number marked as measured"
+    },
+    {
+      "name": "Agent Substrate source at the release tag",
+      "path": "v1.0.0 (b34fbee7)",
+      "usedFor": "every default, state, flag, and mechanism, and the reference tables"
+    },
+    {
+      "name": "Agent Substrate documentation at the tag",
+      "path": "docs/ at v1.0.0",
+      "usedFor": "install paths and documented behaviour, checked against the code and our runs"
+    },
+    {
+      "name": "Agent Substrate GitHub issues and pull requests",
+      "path": "github.com/agent-substrate/substrate",
+      "usedFor": "known failures, limits, and the history of each feature"
+    },
+    {
+      "name": "kagent source at its release tag",
+      "path": "github.com/kagent-dev/kagent v1.0.0",
+      "usedFor": "how a Session becomes an Actor, and the egress policy that kagent writes"
+    },
+    {
+      "name": "agentgateway source at its release tag",
+      "path": "github.com/agentgateway/agentgateway v1.7.0",
+      "usedFor": "the Substrate policies of the agentgateway dataplane"
+    },
+    {
+      "name": "The Agent Substrate project site at version 1.0",
+      "path": "ate.dev, read 2026-11-12",
+      "usedFor": "the headline claims that section 1.1 sets beside our runs, checked against the docs at the tag"
+    },
+    {
+      "name": "Agent Executor source and documentation",
+      "path": "github.com/google/ax, read 2026-11-12",
+      "usedFor": "section 7.5, built from source at one commit and run"
+    }
+  ],
+  "quoteSources": {
+    "run": null,
+    "code": null,
+    "docs": null,
+    "issue": null,
+    "kagent": null,
+    "agentgateway": null
+  },
+  "capture": {
+    "run": [
+      "python3",
+      "capture/run.py"
+    ],
+    "check": [
+      "python3",
+      "capture/run.py",
+      "--check"
+    ],
+    "timeoutSeconds": 300
+  },
+  "front": "front.md",
+  "plate": {
+    "figure": "plate-substrate-request",
+    "title": "One request wakes one actor",
+    "caption": "On our test server, the first request to a suspended actor took 0.36 s, and the next four took 0.06 to 0.09 s. The router asked ate-api-server before each one. From capture/lab/B-lifecycle/10-trace.tsv."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "Substrate on One Page",
+      "thesis": "Substrate runs many actors on few worker pods, and it leaves the decision to suspend an actor to you.",
+      "summary": "What Substrate does and what it leaves to you, then one request from the client to a suspended actor and back.",
+      "accent": "blue",
+      "sections": [
+        {
+          "id": "1.1",
+          "file": "sections/1-1-what-substrate-does-and-what-it-leaves-to-you.md"
+        },
+        {
+          "id": "1.2",
+          "file": "sections/1-2-one-request-from-client-to-actor.md"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Start",
+      "thesis": "Install from the release images, create one actor, and prove that it answers before you change a setting.",
+      "summary": "The install with ate-setup, the kubectl ate plugin, a first actor behind the proxy, and the objects that the install created.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "2.1",
+          "file": "sections/2-1-install-with-ate-setup.md"
+        },
+        {
+          "id": "2.2",
+          "file": "sections/2-2-kubectl-ate.md"
+        },
+        {
+          "id": "2.3",
+          "file": "sections/2-3-your-first-actor-and-the-proxy.md"
+        },
+        {
+          "id": "2.4",
+          "file": "sections/2-4-what-the-install-created.md"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Actors",
+      "thesis": "An actor is a snapshot that runs for a while, so its speed and its safety both depend on where that snapshot is.",
+      "summary": "The ActorTemplate and its golden snapshot, the seven states, suspend and resume with their measured cost, snapshot fidelity, CRASHED and RevertActor, and atespaces.",
+      "accent": "amber",
+      "sections": [
+        {
+          "id": "3.1",
+          "file": "sections/3-1-actortemplate-and-the-golden-snapshot.md"
+        },
+        {
+          "id": "3.2",
+          "file": "sections/3-2-actor-states.md"
+        },
+        {
+          "id": "3.3",
+          "file": "sections/3-3-suspendactor-and-resumeactor.md"
+        },
+        {
+          "id": "3.4",
+          "file": "sections/3-4-snapshot-fidelity-and-where-a-snapshot-lives.md"
+        },
+        {
+          "id": "3.5",
+          "file": "sections/3-5-crashed-and-revertactor.md"
+        },
+        {
+          "id": "3.6",
+          "file": "sections/3-6-atespaces.md"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Workers and Capacity",
+      "thesis": "A WorkerPool decides how many actors run at one time, and a full pool answers with a 503 after five seconds.",
+      "summary": "The WorkerPool, the gVisor and microVM sandbox classes, placement, request parking, and how to size a pool.",
+      "accent": "violet",
+      "sections": [
+        {
+          "id": "4.1",
+          "file": "sections/4-1-workerpool.md"
+        },
+        {
+          "id": "4.2",
+          "file": "sections/4-2-sandbox-classes.md"
+        },
+        {
+          "id": "4.3",
+          "file": "sections/4-3-placement.md"
+        },
+        {
+          "id": "4.4",
+          "file": "sections/4-4-request-parking.md"
+        },
+        {
+          "id": "4.5",
+          "file": "sections/4-5-sizing-a-pool.md"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Identity and Access",
+      "thesis": "Every caller and every actor has an identity, and the default install lets all clients share one.",
+      "summary": "How a client authenticates, how an access policy limits an atespace, and what an actor JWT carries.",
+      "accent": "indigo",
+      "sections": [
+        {
+          "id": "5.1",
+          "file": "sections/5-1-client-authentication.md"
+        },
+        {
+          "id": "5.2",
+          "file": "sections/5-2-access-policies.md"
+        },
+        {
+          "id": "5.3",
+          "file": "sections/5-3-actor-jwts.md"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Network",
+      "thesis": "An actor reaches nothing until a policy names the host, and a removed rule does not close an open connection.",
+      "summary": "The router and ingress, the egress policy and default deny, the DNS relay, TLS interception, credential injection, and the choice between Envoy and agentgateway.",
+      "accent": "olive",
+      "sections": [
+        {
+          "id": "6.1",
+          "file": "sections/6-1-the-router-and-ingress.md"
+        },
+        {
+          "id": "6.2",
+          "file": "sections/6-2-egresspolicy-and-default-deny.md"
+        },
+        {
+          "id": "6.3",
+          "file": "sections/6-3-the-dns-relay.md"
+        },
+        {
+          "id": "6.4",
+          "file": "sections/6-4-tls-interception.md"
+        },
+        {
+          "id": "6.5",
+          "file": "sections/6-5-credential-injection.md"
+        },
+        {
+          "id": "6.6",
+          "file": "sections/6-6-the-dataplane-choice.md"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Integrations",
+      "thesis": "kagent does the suspending that Substrate leaves to you, and agentgateway can carry the traffic in both directions.",
+      "summary": "kagent 1.0 on Substrate, agentgateway with Substrate, Substrate on GKE, when Substrate is the right choice, and Agent Executor.",
+      "accent": "plum",
+      "sections": [
+        {
+          "id": "7.1",
+          "file": "sections/7-1-kagent-on-substrate.md"
+        },
+        {
+          "id": "7.2",
+          "file": "sections/7-2-agentgateway.md"
+        },
+        {
+          "id": "7.3",
+          "file": "sections/7-3-substrate-on-gke.md"
+        },
+        {
+          "id": "7.4",
+          "file": "sections/7-4-when-to-choose-substrate.md"
+        },
+        {
+          "id": "7.5",
+          "file": "sections/7-5-agent-executor.md"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Operate and Debug",
+      "thesis": "Postgres and ate-api-server are on every request path, so their health is the health of every actor.",
+      "summary": "Postgres and the object store, what fails when a dependency is down, symptoms and their fixes, the upgrade path, and the limits at v1.0.0.",
+      "accent": "rose",
+      "sections": [
+        {
+          "id": "8.1",
+          "file": "sections/8-1-postgres-and-the-object-store.md"
+        },
+        {
+          "id": "8.2",
+          "file": "sections/8-2-when-a-dependency-is-down.md"
+        },
+        {
+          "id": "8.3",
+          "file": "sections/8-3-symptom-cause-fix.md"
+        },
+        {
+          "id": "8.4",
+          "file": "sections/8-4-upgrade-and-stale-advice.md"
+        },
+        {
+          "id": "8.5",
+          "file": "sections/8-5-limits-at-v1-0-0.md"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Build",
+      "thesis": "Four small programs that you can run show what you must build around Substrate: an idle suspender, a stateful agent, a tool sandbox, and a failure drill.",
+      "summary": "An idle suspender, an agent actor that keeps its conversation, a sandbox for commands you do not trust, and a drill for six failures.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "9.1",
+          "file": "sections/9-1-an-idle-suspender.md"
+        },
+        {
+          "id": "9.2",
+          "file": "sections/9-2-a-stateful-agent-actor.md"
+        },
+        {
+          "id": "9.3",
+          "file": "sections/9-3-a-tool-sandbox.md"
+        },
+        {
+          "id": "9.4",
+          "file": "sections/9-4-a-failure-drill.md"
+        }
+      ]
+    }
+  ],
+  "reference": {
+    "title": "Reference",
+    "thesis": "The methods, objects, states, commands, flags, errors, terms, and sources this manual uses, in one place.",
+    "accent": "teal",
+    "sections": [
+      {
+        "id": "R.1",
+        "file": "sections/r-1-api-methods.md"
+      },
+      {
+        "id": "R.2",
+        "file": "sections/r-2-objects-and-fields.md"
+      },
+      {
+        "id": "R.3",
+        "file": "sections/r-3-states.md"
+      },
+      {
+        "id": "R.4",
+        "file": "sections/r-4-kubectl-ate.md"
+      },
+      {
+        "id": "R.5",
+        "file": "sections/r-5-flags-and-gates.md"
+      },
+      {
+        "id": "R.6",
+        "file": "sections/r-6-errors.md"
+      },
+      {
+        "id": "R.7",
+        "file": "sections/r-7-glossary.md"
+      },
+      {
+        "id": "R.8",
+        "file": "sections/r-8-sources.md"
+      },
+      {
+        "id": "R.9",
+        "file": "sections/r-9-figure-index.md"
+      },
+      {
+        "id": "R.10",
+        "file": "sections/r-10-how-this-manual-was-made.md"
+      }
+    ]
+  },
+  "related": [
+    "phases/14-agent-engineering/29-production-runtimes",
+    "phases/14-agent-engineering/45-delegate-with-isolation",
+    "phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust",
+    "phases/15-autonomous-systems/12-durable-execution",
+    "phases/15-autonomous-systems/16-checkpoints-rollback",
+    "phases/16-multi-agent-and-swarms/22-production-scaling-queues-checkpoints",
+    "phases/17-infrastructure-and-production/19-ai-gateways",
+    "phases/17-infrastructure-and-production/25-security-secrets-audit",
+    "phases/17-infrastructure-and-production/03-gpu-autoscaling-kubernetes",
+    "phases/13-tools-and-protocols/17-mcp-gateways-and-registries",
+    "phases/13-tools-and-protocols/19-a2a-protocol"
+  ]
+}

@@ -1,0 +1,57 @@
+start 2026-11-12T10:07:10Z
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+kind releases:
+v0.33.0 2026-08-26T21:58:46Z
+v0.32.0 2026-06-02T17:34:57Z
+v0.31.0 2025-12-18T00:56:59Z
+v0.30.0 2025-08-27T17:45:58Z
+kagent releases:
+v1.0.1 2026-11-12T01:05:00Z
+v1.0.0-rc4 2026-11-09T18:07:05Z
+v1.0.0 2026-11-09T18:43:27Z
+v1.0.0-rc3 2026-11-06T16:18:31Z
+v0.10.6 2026-11-05T22:41:38Z
+v1.0.0-rc2 2026-11-04T17:35:07Z
+kagent v1.0.0 assets:
+kagent-1.0.0.tgz 129933
+kagent-crds-1.0.0.tgz 24184
+kagent-darwin-amd64 110605120
+kagent-darwin-amd64.sha256 95
+kagent-darwin-arm64 105355650
+kagent-darwin-arm64.sha256 95
+kagent-linux-amd64 107296335
+kagent-linux-amd64.sha256 94
+kagent-linux-arm64 101202726
+kagent-linux-arm64.sha256 94
+kagent-windows-amd64.exe 108366336
+kagent-windows-amd64.exe.sha256 100
+substrate fork v1.0.0 assets:
+kubectl-ate-darwin-amd64 78299424
+kubectl-ate-darwin-amd64.sha256 91
+kubectl-ate-darwin-arm64 74287762
+kubectl-ate-darwin-arm64.sha256 91
+kubectl-ate-linux-amd64 75822262
+kubectl-ate-linux-amd64.sha256 90
+kubectl-ate-linux-arm64 71232883
+kubectl-ate-linux-arm64.sha256 90
+curl: (22) The requested URL returned error: 404
+fetch failed setup/quickstart
+total 64
+drwxrwxr-x 2 lab lab  4096 Nov 12 10:10 .
+drwxrwxr-x 3 lab lab  4096 Nov 12 10:07 ..
+-rw-rw-r-- 1 lab lab 21806 Nov 12 10:10 operations_upgrade-from-0x.md
+-rw-rw-r-- 1 lab lab 31217 Nov 12 10:09 setup_installation.md
+versions:
+Docker version 29.1.3, build 29.1.3-0ubuntu3~24.04.2
+Client Version: v1.37.2
+v3.22.1+gd6c1a0e
+end 2026-11-12T10:10:00Z

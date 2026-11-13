@@ -1,0 +1,11 @@
+total 0
+drwxrwxrwx 3 root root  60 Nov 12 18:45 .
+drwxr-xr-x 1 root root 120 Nov 12 18:45 ..
+drwxr-xr-x 2 root root  60 Nov 12 18:45 .ax
+cat: /workspace/agent-output.txt: No such file or directory
+  PID ELAPSED COMMAND
+    1      39 /usr/local/bin/ax-task-runner
+   60       0 sh -c ls -la /workspace; cat /workspace/agent-output.txt; ps -eo pid,etimes,args | cut -c1-160 | head -12
+   63       0 ps -eo pid,etimes,args
+   64       0 cut -c1-160
+   65       0 head -12

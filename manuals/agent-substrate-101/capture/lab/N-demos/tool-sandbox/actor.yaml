@@ -1,0 +1,58 @@
+actorTemplate:
+  atespace: demo-tools
+  name: sandbox
+metadata:
+  atespace: demo-tools
+  createTime: "2026-11-12T12:49:29.979622465Z"
+  name: task-1
+  uid: b5895837-a73b-4fe2-98dc-7c3aee907f76
+  updateTime: "2026-11-12T12:49:48.020633601Z"
+  version: "28"
+status:
+  assignedNode: demo-control-plane
+  lastAssignedGeneration: 1
+  snapshots:
+  - actorTemplateUid: 648464e7-0314-4fc5-a928-7e0e0769a3b4
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/demo-tools/tags/5529b741-a21a-4965-8bc3-a3fe0f2fc274
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 1
+    owner: SNAPSHOT_OWNER_TAG
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 5529b741-a21a-4965-8bc3-a3fe0f2fc274
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: demo-control-plane
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: 35a8a41c-106e-4636-a934-3e1fc88805b9
+    workerEpoch: "1"
+    workerNamespace: demo-tools
+    workerPod: tools-5b5f9c9fb7-nhsjh
+    workerPodIps:
+    - 10.244.0.31
+    workerPodUid: 35a8a41c-106e-4636-a934-3e1fc88805b9
+    workerPool: tools
+    workerSpiffeId: spiffe://cluster.local/ns/demo-tools/sa/ateworker

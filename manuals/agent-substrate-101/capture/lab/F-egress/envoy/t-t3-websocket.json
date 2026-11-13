@@ -1,0 +1,1 @@
+{"stdout":"HTTP/1.1 403 Forbidden\r\ncontent-type: text/plain\r\ncontent-length: 33\r\ndate: Thu, 12 Nov 2026 10:53:09 GMT\r\nserver: envoy\r\nconnection: close\r\n","stderr":"","exitCode":0}

@@ -1,0 +1,1 @@
+Error: applying document 1: rpc error: code = FailedPrecondition desc = workspace "no-such-workspace" not found in atespace "default"

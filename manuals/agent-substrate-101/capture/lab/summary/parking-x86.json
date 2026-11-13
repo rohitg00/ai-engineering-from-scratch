@@ -1,0 +1,81 @@
+{
+  "full_pool_503": {
+    "body": "actor lab-c/b0-5 unavailable: no worker has room for the actor",
+    "seconds": {
+      "max": 5.063,
+      "median": 5.059,
+      "min": 5.053,
+      "n": 8
+    }
+  },
+  "load_run": {
+    "actors": 4,
+    "ok": 90,
+    "ok_average_seconds": 0.847,
+    "ok_slowest_seconds": 4.269,
+    "other": 0,
+    "requests": 92,
+    "seconds": 30,
+    "shed_503": 2,
+    "workers": 2
+  },
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor",
+  "parking_trace": [
+    {
+      "event": "p1",
+      "fields": [
+        "200",
+        "0.357952",
+        "preserved memory count: 1 | preserved file counter: -1 | preserved rootfs counter: 1"
+      ],
+      "t": "2026-11-12T11:32:39.412Z"
+    },
+    {
+      "event": "p2",
+      "fields": [
+        "200",
+        "0.323411",
+        "preserved memory count: 1 | preserved file counter: -1 | preserved rootfs counter: 1"
+      ],
+      "t": "2026-11-12T11:32:39.790Z"
+    },
+    {
+      "event": "p3-no-free-worker",
+      "fields": [
+        "503",
+        "5.059628",
+        "actor ate-demo-parking/p3 unavailable: no worker has room for the actor"
+      ],
+      "t": "2026-11-12T11:32:40.522Z"
+    },
+    {
+      "event": "p3-request-start",
+      "fields": [
+        "parked while pool is full"
+      ],
+      "t": "2026-11-12T11:32:45.600Z"
+    },
+    {
+      "event": "suspend-p1-done",
+      "fields": [
+        "freed a worker 2 s after p3 request started"
+      ],
+      "t": "2026-11-12T11:32:47.970Z"
+    },
+    {
+      "event": "p3-served-after-park",
+      "fields": [
+        "200",
+        "2.647469",
+        "preserved memory count: 1 | preserved file counter: -1 | preserved rootfs counter: 1"
+      ],
+      "t": "2026-11-12T11:32:45.603Z"
+    }
+  ],
+  "sources": [
+    "capture/lab/I-capacity/16-load-30s.log",
+    "capture/lab/I-capacity/13-parking-trace.tsv",
+    "capture/lab/I-capacity/01-unplanned-full-pool-503.tsv",
+    "capture/lab/I-capacity/17-router-args.txt"
+  ]
+}

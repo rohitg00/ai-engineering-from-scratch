@@ -1,0 +1,21 @@
+kind gateway 172.18.0.1
+ee64682f777a6d4a1bffb0063c6941b2426b64c1d25df551c3d42318df6789b9
+ERROR:  zero-length delimited identifier at or near """"
+LINE 1: CREATE ROLE "" NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE N...
+                    ^
+QUERY:  CREATE ROLE "" NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION
+CONTEXT:  PL/pgSQL function inline_code_block line 28 at EXECUTE
+setup.sql rc=3
+                             List of roles
+ Role name |                         Attributes                         
+-----------+------------------------------------------------------------
+ postgres  | Superuser, Create role, Create DB, Replication, Bypass RLS
+
+                                       List of schemas
+  Name  |       Owner       |           Access privileges            |      Description       
+--------+-------------------+----------------------------------------+------------------------
+ public | pg_database_owner | pg_database_owner=UC/pg_database_owner+| standard public schema
+        |                   | =U/pg_database_owner                   | 
+(1 row)
+
+u-pg postgres:18-alpine 172.18.0.1:5433->5432/tcp bridge

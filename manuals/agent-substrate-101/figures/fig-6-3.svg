@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 280" role="img" aria-labelledby="fig-6-3-title fig-6-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-3-title">Four names from one kagent actor</title>
+  <desc id="fig-6-3-desc">Four rows show a name that the actor asked for, the answer of the DNS relay, and the answer of atenet-egress. example.com and the Kubernetes API name get NXDOMAIN from the relay and never reach the gateway. The full Service name mock-llm.kagent.svc.cluster.local resolves to 10.96.178.17 and the gateway returns 200. The short name mock-llm.kagent also resolves to 10.96.178.17, because the search list adds the suffix, and the gateway then returns 403 because the Host header is mock-llm.kagent:8080.</desc>
+  <defs><marker id="fig-6-3-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker><marker id="fig-6-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="12" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE ACTOR ASKS FOR</text>
+  <text x="272" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">DNS RELAY</text>
+  <text x="452" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ATENET-EGRESS</text>
+  <rect x="12" y="28" width="240" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="132" y="46.95" font-size="11.5" text-anchor="middle" font-weight="700">outside host</text>
+  <text x="132" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">example.com</text>
+  <rect x="272" y="28" width="160" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="352" y="46.95" font-size="11.5" text-anchor="middle" font-weight="700">NXDOMAIN</text>
+  <text x="352" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no rule lists it</text>
+  <line x1="252" y1="52" x2="271" y2="52" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3-head-rose)"/>
+  <rect x="452" y="28" width="176" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="540" y="46.95" font-size="11.5" text-anchor="middle" font-weight="400">not reached</text>
+  <text x="540" y="64.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no connection is opened</text>
+  <rect x="12" y="90" width="240" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="132" y="108.95" font-size="11.5" text-anchor="middle" font-weight="700">Kubernetes API</text>
+  <text x="132" y="126.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kubernetes.default.svc.cluster.local</text>
+  <rect x="272" y="90" width="160" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="352" y="108.95" font-size="11.5" text-anchor="middle" font-weight="700">NXDOMAIN</text>
+  <text x="352" y="126.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no rule lists it</text>
+  <line x1="252" y1="114" x2="271" y2="114" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3-head-rose)"/>
+  <rect x="452" y="90" width="176" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="540" y="108.95" font-size="11.5" text-anchor="middle" font-weight="400">not reached</text>
+  <text x="540" y="126.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no connection is opened</text>
+  <rect x="12" y="152" width="240" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="132" y="170.95" font-size="11.5" text-anchor="middle" font-weight="700">full Service name</text>
+  <text x="132" y="188.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mock-llm.kagent.svc.cluster.local</text>
+  <rect x="272" y="152" width="160" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="352" y="170.95" font-size="11.5" text-anchor="middle" font-weight="700">10.96.178.17</text>
+  <text x="352" y="188.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the rule lists it</text>
+  <line x1="252" y1="176" x2="271" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3-head-ink)"/>
+  <rect x="452" y="152" width="176" height="48" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="540" y="170.95" font-size="11.5" text-anchor="middle" font-weight="700">200</text>
+  <text x="540" y="188.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Host is in the policy</text>
+  <line x1="432" y1="176" x2="451" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3-head-ink)"/>
+  <rect x="12" y="214" width="240" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="132" y="232.95" font-size="11.5" text-anchor="middle" font-weight="700">short Service name</text>
+  <text x="132" y="250.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">mock-llm.kagent</text>
+  <rect x="272" y="214" width="160" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="352" y="232.95" font-size="11.5" text-anchor="middle" font-weight="700">10.96.178.17</text>
+  <text x="352" y="250.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from the search list</text>
+  <line x1="252" y1="238" x2="271" y2="238" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3-head-ink)"/>
+  <rect x="452" y="214" width="176" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="540" y="232.95" font-size="11.5" text-anchor="middle" font-weight="700">403 Forbidden</text>
+  <text x="540" y="250.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Host mock-llm.kagent:8080</text>
+  <line x1="432" y1="238" x2="451" y2="238" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3-head-rose)"/>
+</svg>

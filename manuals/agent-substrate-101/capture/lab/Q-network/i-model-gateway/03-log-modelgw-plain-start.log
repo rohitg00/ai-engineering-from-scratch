@@ -1,0 +1,30 @@
+    time: 3m0s
+    interval: 3m0s
+    retries: 9
+  connectTimeout: 11s
+  poolIdleTimeout: 1m30s
+  poolMaxSize: null
+  h2KeepaliveInterval: 0s
+  h2KeepaliveTimeout: 5s
+  allowDynamicLoopback: false
+callouts: {}
+mcp:
+  sessionTtl: 30m0s
+dynamicCaCertCache:
+  ttl: 5m0s
+  capacity: 256
+modelCatalog:
+  sources: []
+	
+2026-11-12T13:04:38.311404Z	warn	config	failed to write generated session key	err=failed to write to file `/config/plain.yaml`: Read-only file system (os error 30) path=/config/plain.yaml
+2026-11-12T13:04:38.311443Z	warn	config	no session key configured; MCP session IDs are not encrypted. Set SESSION_KEY or config.session.key	
+2026-11-12T13:04:38.315668Z	info	management::hyper_helpers	listener established	address=[::]:15021 component="readiness"
+2026-11-12T13:04:38.320713Z	info	state_manager	loaded config from File("/config/plain.yaml")	
+2026-11-12T13:04:38.321734Z	info	state_manager	Watching config file: /config/plain.yaml	
+2026-11-12T13:04:38.322380Z	info	agent_core::readiness	Task 'state manager' complete (66.055889ms), still awaiting 1 tasks	
+2026-11-12T13:04:38.322543Z	info	app	serving UI at http://localhost:15000/ui	
+2026-11-12T13:04:38.322553Z	info	agent_core::readiness	Task 'agentgateway' complete (66.228843ms), marking server ready	
+2026-11-12T13:04:38.322559Z	info	management::hyper_helpers	listener established	address=127.0.0.1:15000 component="admin"
+2026-11-12T13:04:38.322565Z	info	management::hyper_helpers	listener established	address=[::1]:15000 component="admin"
+2026-11-12T13:04:38.322582Z	info	management::hyper_helpers	listener established	address=[::]:15020 component="stats"
+2026-11-12T13:04:38.322795Z	info	proxy::gateway	started bind	bind="bind/8080"

@@ -1,0 +1,46 @@
+Error: unknown subcommand "version"
+
+Usage:
+ATESPACE   NAME                TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc               up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-m8r9r   10.244.0.71   357       13m
+up-lab     a-def               up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          10        14m
+up-lab     a-fresh             up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         13m
+up-lab     a-new-upgrade       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         5m57s
+up-lab     a-run               up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-8pgm8   10.244.0.65   13        14m
+up-lab     a-sync              up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         14m
+up-lab     a-tag               up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         13m
+up-lab     a-tag-new-upgrade   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         5m56s
+up-lab     a-term              up-lab/up-trap    ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-zhhz8   10.244.0.66   11        13m
+a-run ACTOR_STATE_RUNNING: 200	0.025348	count=84 process_age_s=855.0 
+a-term ACTOR_STATE_RUNNING: 200	0.026170	count=756 process_age_s=855.3 sigterm_seen=2 
+a-sync ACTOR_STATE_SUSPENDED: 200	0.253997	count=5 process_age_s=856.1 
+a-def ACTOR_STATE_SUSPENDED: 200	0.298267	count=5 process_age_s=856.8 
+a-tag ACTOR_STATE_SUSPENDED: 200	0.292582	count=7 process_age_s=857.5 
+a-fresh ACTOR_STATE_SUSPENDED: 200	0.280279	count=2 process_age_s=858.2 
+a-cyc ACTOR_STATE_RUNNING: 200	0.027239	count=92 process_age_s=858.6 
+up-lab     a-new-rollback   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-new-rollback (from the golden snapshot): 200	0.286309	count=1 process_age_s=859.3 
+up-lab     a-tag-new-rollback   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-tag-new-rollback (from tag pre-up, made at count 5 on v1.0.0-rc.3): 200	0.283566	count=6 process_age_s=860.0 
+ATESPACE   NAME             TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-new-rollback   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    5         1s
+a-new-rollback after a sync suspend on v1.0.0-rc.3: 200	0.280766	count=2 process_age_s=861.0 
+ATESPACE   NAME                 TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc                up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-m8r9r   10.244.0.71   357       14m
+up-lab     a-def                up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          14        14m
+up-lab     a-fresh              up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         14m
+up-lab     a-new-rollback       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         6s
+up-lab     a-new-upgrade        up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         6m7s
+up-lab     a-run                up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-8pgm8   10.244.0.65   13        14m
+up-lab     a-sync               up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          13        14m
+up-lab     a-tag                up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          13        14m
+up-lab     a-tag-new-rollback   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         5s
+up-lab     a-tag-new-upgrade    up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         6m7s
+up-lab     a-term               up-lab/up-trap    ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-zhhz8   10.244.0.66   11        14m
+ATESPACE   NAME       GOLDEN TAG                             ERROR   AGE
+up-lab     up-drill   678cbbf1-9523-495a-b6d0-8f48ab5deb20           14m
+up-lab     up-trap    062a97ef-544f-40fb-bad4-7f12a395ec5d           14m
+ATESPACE   NAME                                   SCOPE                 STATE   SNAPSHOT                                                                        FIDELITY                   AGE
+up-lab     062a97ef-544f-40fb-bad4-7f12a395ec5d   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/up-lab/tags/7f6e9f12-543a-4f58-809c-27d88452d9ad   SNAPSHOT_FIDELITY_MEMORY   14m
+up-lab     678cbbf1-9523-495a-b6d0-8f48ab5deb20   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/up-lab/tags/9a09bc5c-6514-44c7-8672-e021d6d50baa   SNAPSHOT_FIDELITY_MEMORY   14m
+up-lab     pre-up                                 TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/up-lab/tags/f57eef1a-ef85-431a-8a7b-f181938e83ee   SNAPSHOT_FIDELITY_MEMORY   14m

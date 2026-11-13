@@ -1,0 +1,40 @@
+### 2026-11-12T18:56:01Z recovery of x-run
+request before any command: 504	10.016945	
+--- goroutine hint: api-server lines that name x-run during the outage window
+18:49:36.397	/substrate.ateapi.v1.Control/ResumeActor	-	3.445292ms
+18:49:43.415	/substrate.ateapi.v1.Control/ResumeActor	-	3.549363ms
+18:49:44.425	/substrate.ateapi.v1.Control/ResumeActor	-	4.35095ms
+18:49:45.424	/substrate.ateapi.v1.Control/ResumeActor	-	3.530473ms
+18:49:46.434	/substrate.ateapi.v1.Control/ResumeActor	-	5.898532ms
+18:49:53.455	/substrate.ateapi.v1.Control/ResumeActor	-	7.014195ms
+18:49:54.454	/substrate.ateapi.v1.Control/ResumeActor	-	3.493582ms
+18:49:55.458	/substrate.ateapi.v1.Control/ResumeActor	-	4.387342ms
+18:49:56.462	/substrate.ateapi.v1.Control/ResumeActor	-	5.083515ms
+18:49:57.464	/substrate.ateapi.v1.Control/ResumeActor	-	3.550464ms
+18:50:02.482	/substrate.ateapi.v1.Control/ResumeActor	-	4.960783ms
+18:50:03.489	/substrate.ateapi.v1.Control/ResumeActor	-	4.846891ms
+18:49:41.410	/substrate.ateapi.v1.Control/ResumeActor	-	2.953842ms
+18:49:42.419	/substrate.ateapi.v1.Control/ResumeActor	-	5.86471ms
+18:49:47.440	/substrate.ateapi.v1.Control/ResumeActor	-	5.260568ms
+18:49:48.440	/substrate.ateapi.v1.Control/ResumeActor	-	5.423052ms
+18:49:49.442	/substrate.ateapi.v1.Control/ResumeActor	-	3.973752ms
+18:49:50.444	/substrate.ateapi.v1.Control/ResumeActor	-	4.290209ms
+18:49:51.449	/substrate.ateapi.v1.Control/ResumeActor	-	7.060287ms
+18:49:52.449	/substrate.ateapi.v1.Control/ResumeActor	-	4.122465ms
+18:49:58.468	/substrate.ateapi.v1.Control/ResumeActor	-	3.440972ms
+18:49:59.477	/substrate.ateapi.v1.Control/ResumeActor	-	4.117506ms
+18:50:00.474	/substrate.ateapi.v1.Control/ResumeActor	-	3.103865ms
+18:50:01.477	/substrate.ateapi.v1.Control/ResumeActor	-	3.432651ms
+--- kubectl ate resume actor x-run
+ATESPACE   NAME    TEMPLATE        STATE                 WORKER POD                      WORKER IPS    VERSION   AGE
+x-lab      x-run   x-lab/x-drill   ACTOR_STATE_RUNNING   x-lab/x-pool-556bdb665d-db2lr   10.244.0.58   3         7m5s
+resume command: 0.171 s
+request: 504	10.015367	
+--- kubectl ate suspend actor x-run --mode sync
+ATESPACE   NAME    TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+x-lab      x-run   x-lab/x-drill   ACTOR_STATE_SUSPENDED   <none>                    5         7m16s
+suspend command: 0.666 s
+state: ACTOR_STATE_SUSPENDED
+request: 504	10.012040	
+request: 504	10.014456	
+state: ACTOR_STATE_SUSPENDED

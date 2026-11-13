@@ -1,0 +1,11 @@
+namespace/egress-target created
+deployment.apps/whoami created
+service/whoami created
+configmap/drip created
+deployment.apps/drip created
+service/drip created
+namespace/cred-ns unchanged
+namespace/cred-ns-not-granted unchanged
+Waiting for deployment "whoami" rollout to finish: 0 of 1 updated replicas are available...
+deployment "whoami" successfully rolled out
+deployment "drip" successfully rolled out

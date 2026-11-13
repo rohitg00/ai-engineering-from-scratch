@@ -1,0 +1,998 @@
+{
+  "bucket_unreachable": {
+    "packets_dropped": {
+      "actor_with_snapshot_only_in_bucket": {
+        "request_after_bucket_back_with_no_command": {
+          "code": "503",
+          "count": null,
+          "seconds": 0.057
+        },
+        "request_after_revert": {
+          "code": "200",
+          "count": 4,
+          "seconds": 2.737
+        },
+        "requests_during": [
+          {
+            "body": "",
+            "code": "504",
+            "count": null,
+            "seconds": 10.049
+          },
+          {
+            "body": "",
+            "code": "504",
+            "count": null,
+            "seconds": 10.045
+          }
+        ],
+        "revert_seconds": 0.3
+      },
+      "bucket_away_seconds": 176.4,
+      "default_suspend": {
+        "newest_snapshot_pending_20s_later": true,
+        "newest_snapshot_pending_after_bucket_back": false,
+        "node_copy_present_after_bucket_back": false,
+        "request_after_bucket_back": {
+          "code": "200",
+          "count": 5,
+          "seconds": 2.406
+        },
+        "resume_from_node": {
+          "code": "200",
+          "count": 4,
+          "seconds": 0.494
+        },
+        "second_suspend_seconds": 0.731,
+        "seconds": 0.703
+      },
+      "new_actor": {
+        "create_seconds": 0.188,
+        "first_request": {
+          "code": "200",
+          "count": 1,
+          "seconds": 0.468
+        }
+      },
+      "requests_to_a_running_actor": [
+        {
+          "code": "200",
+          "count": 4,
+          "seconds": 0.058
+        },
+        {
+          "code": "200",
+          "count": 5,
+          "seconds": 0.066
+        }
+      ],
+      "running_actor_suspend_sync": {
+        "calls_lost": 2,
+        "counts_before": [
+          4,
+          5
+        ],
+        "error_names_a_deadline": true,
+        "failed_at_step": "CallAteletSuspend",
+        "request_after": {
+          "code": "503",
+          "count": null,
+          "seconds": 0.074
+        },
+        "request_after_bucket_back_with_no_command": {
+          "code": "503",
+          "count": null,
+          "seconds": 0.675
+        },
+        "request_after_revert": {
+          "code": "200",
+          "count": 4,
+          "seconds": 2.598
+        },
+        "revert_seconds": 0.4,
+        "seconds": 103.05,
+        "state_after": "ACTOR_STATE_CRASHED"
+      },
+      "suspend_sync_after_bucket_back_seconds": 2.851
+    },
+    "stopped": {
+      "actor_with_snapshot_only_in_bucket": {
+        "request_after_bucket_back_with_no_command": {
+          "code": "503",
+          "count": null,
+          "seconds": 0.064
+        },
+        "request_after_revert": {
+          "code": "200",
+          "count": 4,
+          "seconds": 2.524
+        },
+        "requests_during": [
+          {
+            "body": "error resuming actor lab-n/o-rem-stopped",
+            "code": "500",
+            "count": null,
+            "seconds": 3.866
+          },
+          {
+            "body": "actor lab-n/o-rem-stopped unavailable: AssignWorker prerequi",
+            "code": "503",
+            "count": null,
+            "seconds": 0.057
+          }
+        ],
+        "revert_seconds": 0.2
+      },
+      "bucket_away_seconds": 56.8,
+      "default_suspend": {
+        "newest_snapshot_pending_20s_later": true,
+        "newest_snapshot_pending_after_bucket_back": true,
+        "node_copy_present_after_bucket_back": true,
+        "request_after_bucket_back": {
+          "code": "200",
+          "count": 5,
+          "seconds": 0.402
+        },
+        "resume_from_node": {
+          "code": "200",
+          "count": 4,
+          "seconds": 0.386
+        },
+        "second_suspend_seconds": 0.678,
+        "seconds": 0.825
+      },
+      "new_actor": {
+        "create_seconds": 0.191,
+        "first_request": {
+          "code": "200",
+          "count": 1,
+          "seconds": 0.603
+        }
+      },
+      "requests_to_a_running_actor": [
+        {
+          "code": "200",
+          "count": 4,
+          "seconds": 0.063
+        },
+        {
+          "code": "200",
+          "count": 5,
+          "seconds": 0.058
+        }
+      ],
+      "running_actor_suspend_sync": {
+        "calls_lost": 2,
+        "counts_before": [
+          4,
+          5
+        ],
+        "error_names_a_deadline": false,
+        "failed_at_step": "CallAteletSuspend",
+        "request_after": {
+          "code": "503",
+          "count": null,
+          "seconds": 0.066
+        },
+        "request_after_bucket_back_with_no_command": {
+          "code": "503",
+          "count": null,
+          "seconds": 0.06
+        },
+        "request_after_revert": {
+          "code": "200",
+          "count": 4,
+          "seconds": 2.504
+        },
+        "revert_seconds": 0.3,
+        "seconds": 1.624,
+        "state_after": "ACTOR_STATE_CRASHED"
+      },
+      "suspend_sync_after_bucket_back_seconds": 2.743
+    }
+  },
+  "cycles": [
+    {
+      "added_round_trip_ms": 0,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "200": 5
+      },
+      "first_answer_seconds": {
+        "max": 0.276,
+        "median": 0.249,
+        "min": 0.236,
+        "n": 5,
+        "runs": [
+          0.262,
+          0.276,
+          0.24,
+          0.249,
+          0.236
+        ]
+      },
+      "mib": 0,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "1": 5
+      },
+      "seconds_to_first_200": {
+        "max": 0.304,
+        "median": 0.275,
+        "min": 0.261,
+        "n": 5,
+        "runs": [
+          0.284,
+          0.304,
+          0.267,
+          0.275,
+          0.261
+        ]
+      },
+      "store": "remote",
+      "suspend_sync_seconds": {
+        "max": 0.558,
+        "median": 0.494,
+        "min": 0.474,
+        "n": 5,
+        "runs": [
+          0.494,
+          0.474,
+          0.558,
+          0.494,
+          0.501
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "200": 5
+      },
+      "first_answer_seconds": {
+        "max": 2.659,
+        "median": 2.615,
+        "min": 2.602,
+        "n": 5,
+        "runs": [
+          2.631,
+          2.615,
+          2.659,
+          2.602,
+          2.614
+        ]
+      },
+      "mib": 200,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "1": 5
+      },
+      "seconds_to_first_200": {
+        "max": 2.684,
+        "median": 2.642,
+        "min": 2.627,
+        "n": 5,
+        "runs": [
+          2.656,
+          2.642,
+          2.684,
+          2.627,
+          2.64
+        ]
+      },
+      "store": "remote",
+      "suspend_sync_seconds": {
+        "max": 3.152,
+        "median": 3.072,
+        "min": 2.999,
+        "n": 5,
+        "runs": [
+          2.999,
+          3.004,
+          3.152,
+          3.119,
+          3.072
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "504": 5
+      },
+      "first_answer_seconds": {
+        "max": 10.05,
+        "median": 10.048,
+        "min": 10.047,
+        "n": 5,
+        "runs": [
+          10.048,
+          10.047,
+          10.048,
+          10.048,
+          10.05
+        ]
+      },
+      "mib": 1000,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "2": 5
+      },
+      "seconds_to_first_200": {
+        "max": 12.448,
+        "median": 12.152,
+        "min": 11.444,
+        "n": 5,
+        "runs": [
+          11.444,
+          11.632,
+          12.448,
+          12.395,
+          12.152
+        ]
+      },
+      "store": "remote",
+      "suspend_sync_seconds": {
+        "max": 14.062,
+        "median": 13.095,
+        "min": 11.73,
+        "n": 5,
+        "runs": [
+          11.73,
+          12.792,
+          14.062,
+          13.765,
+          13.095
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 100,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "200": 5
+      },
+      "first_answer_seconds": {
+        "max": 2.13,
+        "median": 1.95,
+        "min": 1.432,
+        "n": 5,
+        "runs": [
+          2.13,
+          1.95,
+          1.432,
+          2.027,
+          1.632
+        ]
+      },
+      "mib": 0,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "1": 5
+      },
+      "seconds_to_first_200": {
+        "max": 2.152,
+        "median": 1.975,
+        "min": 1.457,
+        "n": 5,
+        "runs": [
+          2.152,
+          1.975,
+          1.457,
+          2.053,
+          1.658
+        ]
+      },
+      "store": "remote",
+      "suspend_sync_seconds": {
+        "max": 1.79,
+        "median": 1.545,
+        "min": 1.347,
+        "n": 5,
+        "runs": [
+          1.347,
+          1.79,
+          1.635,
+          1.527,
+          1.545
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 100,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "504": 5
+      },
+      "first_answer_seconds": {
+        "max": 10.066,
+        "median": 10.059,
+        "min": 10.055,
+        "n": 5,
+        "runs": [
+          10.065,
+          10.066,
+          10.056,
+          10.059,
+          10.055
+        ]
+      },
+      "mib": 200,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "5": 5
+      },
+      "seconds_to_first_200": {
+        "max": 55.171,
+        "median": 55.078,
+        "min": 54.727,
+        "n": 5,
+        "runs": [
+          55.078,
+          55.171,
+          55.166,
+          54.727,
+          54.849
+        ]
+      },
+      "store": "remote",
+      "suspend_sync_seconds": {
+        "max": 107.555,
+        "median": 107.445,
+        "min": 106.785,
+        "n": 5,
+        "runs": [
+          106.785,
+          107.385,
+          107.555,
+          107.502,
+          107.445
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 100,
+      "ended_with_200": 1,
+      "first_answer_codes": {
+        "504": 1
+      },
+      "first_answer_seconds": {
+        "max": 10.075,
+        "median": 10.075,
+        "min": 10.075,
+        "n": 1,
+        "runs": [
+          10.075
+        ]
+      },
+      "mib": 1000,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "19": 1
+      },
+      "seconds_to_first_200": {
+        "max": 213.41,
+        "median": 213.41,
+        "min": 213.41,
+        "n": 1,
+        "runs": [
+          213.41
+        ]
+      },
+      "store": "remote",
+      "suspend_sync_seconds": {
+        "max": 424.162,
+        "median": 424.162,
+        "min": 424.162,
+        "n": 1,
+        "runs": [
+          424.162
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "504": 5
+      },
+      "first_answer_seconds": {
+        "max": 10.054,
+        "median": 10.052,
+        "min": 10.05,
+        "n": 5,
+        "runs": [
+          10.054,
+          10.05,
+          10.052,
+          10.052,
+          10.051
+        ]
+      },
+      "mib": 200,
+      "rate_mbit": 100,
+      "requests_until_200": {
+        "2": 5
+      },
+      "seconds_to_first_200": {
+        "max": 18.2,
+        "median": 18.06,
+        "min": 17.896,
+        "n": 5,
+        "runs": [
+          17.896,
+          18.18,
+          18.2,
+          18.06,
+          17.957
+        ]
+      },
+      "store": "remote",
+      "suspend_sync_seconds": {
+        "max": 18.901,
+        "median": 18.629,
+        "min": 18.418,
+        "n": 5,
+        "runs": [
+          18.418,
+          18.629,
+          18.901,
+          18.606,
+          18.76
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "504": 5
+      },
+      "first_answer_seconds": {
+        "max": 10.066,
+        "median": 10.057,
+        "min": 10.056,
+        "n": 5,
+        "runs": [
+          10.058,
+          10.057,
+          10.056,
+          10.066,
+          10.056
+        ]
+      },
+      "mib": 200,
+      "rate_mbit": 20,
+      "requests_until_200": {
+        "8": 5
+      },
+      "seconds_to_first_200": {
+        "max": 87.863,
+        "median": 87.804,
+        "min": 87.789,
+        "n": 5,
+        "runs": [
+          87.803,
+          87.804,
+          87.819,
+          87.863,
+          87.789
+        ]
+      },
+      "store": "remote",
+      "suspend_sync_seconds": {
+        "max": 88.554,
+        "median": 88.5,
+        "min": 88.322,
+        "n": 5,
+        "runs": [
+          88.322,
+          88.5,
+          88.554,
+          88.484,
+          88.543
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "200": 5
+      },
+      "first_answer_seconds": {
+        "max": 0.291,
+        "median": 0.238,
+        "min": 0.228,
+        "n": 5,
+        "runs": [
+          0.291,
+          0.236,
+          0.228,
+          0.238,
+          0.246
+        ]
+      },
+      "mib": 0,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "1": 5
+      },
+      "seconds_to_first_200": {
+        "max": 0.317,
+        "median": 0.263,
+        "min": 0.254,
+        "n": 5,
+        "runs": [
+          0.317,
+          0.261,
+          0.254,
+          0.263,
+          0.274
+        ]
+      },
+      "store": "remote-tls",
+      "suspend_sync_seconds": {
+        "max": 0.524,
+        "median": 0.481,
+        "min": 0.457,
+        "n": 5,
+        "runs": [
+          0.478,
+          0.481,
+          0.524,
+          0.457,
+          0.498
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "200": 5
+      },
+      "first_answer_seconds": {
+        "max": 2.588,
+        "median": 2.515,
+        "min": 2.452,
+        "n": 5,
+        "runs": [
+          2.492,
+          2.584,
+          2.588,
+          2.515,
+          2.452
+        ]
+      },
+      "mib": 200,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "1": 5
+      },
+      "seconds_to_first_200": {
+        "max": 2.614,
+        "median": 2.54,
+        "min": 2.478,
+        "n": 5,
+        "runs": [
+          2.519,
+          2.611,
+          2.614,
+          2.54,
+          2.478
+        ]
+      },
+      "store": "remote-tls",
+      "suspend_sync_seconds": {
+        "max": 5.015,
+        "median": 4.96,
+        "min": 4.641,
+        "n": 5,
+        "runs": [
+          4.641,
+          4.96,
+          4.861,
+          4.982,
+          5.015
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 0,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "504": 5
+      },
+      "first_answer_seconds": {
+        "max": 10.053,
+        "median": 10.052,
+        "min": 10.05,
+        "n": 5,
+        "runs": [
+          10.053,
+          10.052,
+          10.05,
+          10.05,
+          10.052
+        ]
+      },
+      "mib": 1000,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "2": 5
+      },
+      "seconds_to_first_200": {
+        "max": 12.723,
+        "median": 12.454,
+        "min": 12.241,
+        "n": 5,
+        "runs": [
+          12.241,
+          12.454,
+          12.543,
+          12.266,
+          12.723
+        ]
+      },
+      "store": "remote-tls",
+      "suspend_sync_seconds": {
+        "max": 22.35,
+        "median": 20.779,
+        "min": 20.118,
+        "n": 5,
+        "runs": [
+          20.469,
+          22.35,
+          20.779,
+          22.09,
+          20.118
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 100,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "200": 4,
+        "504": 1
+      },
+      "first_answer_seconds": {
+        "max": 10.05,
+        "median": 8.714,
+        "min": 6.951,
+        "n": 5,
+        "runs": [
+          10.05,
+          9.995,
+          6.951,
+          8.714,
+          8.633
+        ]
+      },
+      "mib": 200,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "1": 4,
+        "2": 1
+      },
+      "seconds_to_first_200": {
+        "max": 12.83,
+        "median": 8.741,
+        "min": 6.977,
+        "n": 5,
+        "runs": [
+          12.83,
+          10.022,
+          6.977,
+          8.741,
+          8.66
+        ]
+      },
+      "store": "local",
+      "suspend_sync_seconds": {
+        "max": 8.431,
+        "median": 7.172,
+        "min": 5.257,
+        "n": 5,
+        "runs": [
+          8.115,
+          5.587,
+          8.431,
+          5.257,
+          7.172
+        ]
+      }
+    },
+    {
+      "added_round_trip_ms": 100,
+      "ended_with_200": 5,
+      "first_answer_codes": {
+        "504": 5
+      },
+      "first_answer_seconds": {
+        "max": 10.055,
+        "median": 10.049,
+        "min": 10.045,
+        "n": 5,
+        "runs": [
+          10.045,
+          10.051,
+          10.047,
+          10.055,
+          10.049
+        ]
+      },
+      "mib": 1000,
+      "rate_mbit": 0,
+      "requests_until_200": {
+        "2": 5
+      },
+      "seconds_to_first_200": {
+        "max": 16.472,
+        "median": 16.165,
+        "min": 16.053,
+        "n": 5,
+        "runs": [
+          16.167,
+          16.472,
+          16.165,
+          16.116,
+          16.053
+        ]
+      },
+      "store": "local",
+      "suspend_sync_seconds": {
+        "max": 14.664,
+        "median": 14.17,
+        "min": 12.89,
+        "n": 5,
+        "runs": [
+          12.89,
+          14.045,
+          14.664,
+          14.552,
+          14.17
+        ]
+      }
+    }
+  ],
+  "cycles_ended_with_200": 61,
+  "cycles_total": 61,
+  "cycles_with_504_first": 32,
+  "machine": "x86 server guest, 16 vCPU, 23 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor. The bucket and the Postgres ran in containers on a second guest of the same server, reached through loopback forwards of the host",
+  "not_used": [
+    "capture/lab/X-remote-store-pg/20-store-cycles.tsv, a first attempt in which a 504 led to a revert",
+    "the download times of 13-path.txt under the two rate limits, because the client on the guest was not shaped on the way down"
+  ],
+  "note": "the bucket was a rustfs container on a second guest. The path between the guests is the user-mode network of the hypervisor, so read the rows with added delay as rows of this path only. atelet ran with --snapshot-upload-delay=3s and --snapshot-detach-delay=10s for these runs only. One cycle is a suspend with --mode sync, a wait for the detach, and one request. A 504 was followed by one more request each second until the first 200, with no revert, so seconds_to_first_200 is an upper bound. The rows with store local repeat the method of experiment T, with the bucket in a container on the same guest. Each outage case ran once, with actors that hold 200 MiB.",
+  "path": [
+    {
+      "connect_ms": {
+        "max": 1.817,
+        "median": 0.853,
+        "min": 0.727,
+        "n": 5,
+        "runs": [
+          1.817,
+          0.977,
+          0.853,
+          0.727,
+          0.764
+        ]
+      },
+      "copy_300_mib_seconds": {
+        "download": 4.452,
+        "upload": 3.912
+      },
+      "phase": "no shaping, plain HTTP",
+      "probes_with_no_answer": 0
+    },
+    {
+      "connect_ms": {
+        "max": 102.437,
+        "median": 101.255,
+        "min": 100.982,
+        "n": 5,
+        "runs": [
+          102.437,
+          101.602,
+          101.242,
+          101.255,
+          100.982
+        ]
+      },
+      "copy_300_mib_seconds": {
+        "download": 55.989,
+        "upload": 54.86
+      },
+      "phase": "100 ms added, plain HTTP",
+      "probes_with_no_answer": 0
+    },
+    {
+      "connect_ms": {
+        "max": 0.842,
+        "median": 0.799,
+        "min": 0.766,
+        "n": 5,
+        "runs": [
+          0.799,
+          0.826,
+          0.842,
+          0.766,
+          0.784
+        ]
+      },
+      "copy_300_mib_seconds": {
+        "download": 4.496,
+        "upload": 27.386
+      },
+      "phase": "rate 100 Mbit/s both directions, plain HTTP",
+      "probes_with_no_answer": 0
+    },
+    {
+      "connect_ms": null,
+      "copy_300_mib_seconds": {
+        "download": 4.53,
+        "upload": 132.69
+      },
+      "phase": "rate 20 Mbit/s both directions, plain HTTP",
+      "probes_with_no_answer": 5
+    },
+    {
+      "connect_ms": {
+        "max": 0.985,
+        "median": 0.88,
+        "min": 0.807,
+        "n": 5,
+        "runs": [
+          0.985,
+          0.88,
+          0.877,
+          0.807,
+          0.888
+        ]
+      },
+      "copy_300_mib_seconds": {
+        "download": 4.449,
+        "upload": 3.915
+      },
+      "phase": "no shaping, TLS",
+      "probes_with_no_answer": 0
+    },
+    {
+      "connect_ms": {
+        "max": 100.378,
+        "median": 100.316,
+        "min": 100.289,
+        "n": 5,
+        "runs": [
+          100.376,
+          100.378,
+          100.316,
+          100.289,
+          100.302
+        ]
+      },
+      "phase": "local store, 100 ms added on the bridge",
+      "probes_with_no_answer": 0
+    }
+  ],
+  "sources": [
+    "capture/lab/X-remote-store-pg/22-store-cycles.tsv",
+    "capture/lab/X-remote-store-pg/13-path.txt",
+    "capture/lab/X-remote-store-pg/10-store-run.log",
+    "capture/lab/X-remote-store-pg/19-tls-store-check.txt",
+    "capture/lab/X-remote-store-pg/30-outage-stopped.tsv",
+    "capture/lab/X-remote-store-pg/30-outage-dropped.tsv"
+  ],
+  "tls_check": [
+    "https with the lab CA: code=403 total=0.010375 verify=0",
+    "https without the CA: curl exit 60",
+    "plain http on the TLS port: curl exit 1",
+    "New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384",
+    "Verify return code: 0 (ok)"
+  ]
+}

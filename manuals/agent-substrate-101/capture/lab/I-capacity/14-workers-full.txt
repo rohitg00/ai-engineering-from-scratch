@@ -1,0 +1,8 @@
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY        POD                                         AGE
+6559bdc3-36a2-4984-b3cf-69f14f826afc   parking   WORKER_STATE_ACTIVE   1/1000   1000/1000         512Mi/960Mi   ate-demo-parking/parking-664fd7c67b-475hq   29s
+7437427a-2039-44a3-afb8-c3419a071755   parking   WORKER_STATE_ACTIVE   1/1000   1000/1000         512Mi/960Mi   ate-demo-parking/parking-664fd7c67b-l6mxf   29s
+ATESPACE           NAME   TEMPLATE                   STATE                   WORKER POD                                  WORKER IPS    VERSION   AGE
+ate-demo-parking   p1     ate-demo-parking/parking   ACTOR_STATE_RUNNING     ate-demo-parking/parking-664fd7c67b-475hq   10.244.0.31   3         5s
+ate-demo-parking   p2     ate-demo-parking/parking   ACTOR_STATE_RUNNING     ate-demo-parking/parking-664fd7c67b-l6mxf   10.244.0.30   3         5s
+ate-demo-parking   p3     ate-demo-parking/parking   ACTOR_STATE_SUSPENDED   <none>                                                    1         5s
+ate-demo-parking   p4     ate-demo-parking/parking   ACTOR_STATE_SUSPENDED   <none>                                                    1         5s

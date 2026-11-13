@@ -1,0 +1,5 @@
+NAME               ATESPACE   PHASE       ACTOR              WORKER-IP     AGE
+s-loss2            default    Running     s-loss2            10.244.0.50   13m
+s-loss             default    Suspended   s-loss             <none>        16m
+s-clone            default    Suspended   s-clone            <none>        22m
+ax-install-check   default    Suspended   ax-install-check   <none>        1h

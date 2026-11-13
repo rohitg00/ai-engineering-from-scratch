@@ -1,0 +1,4 @@
+NAME                       READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+counter-7cc7dcd596-ffxwt   1/1     Running   0          17m   10.244.0.23   kind-control-plane   <none>           <none>
+counter-7cc7dcd596-fps97   1/1     Running   0          7s    10.244.0.28   kind-control-plane   <none>           <none>
+counter-7cc7dcd596-p6g2q   1/1     Running   0          17m   10.244.0.24   kind-control-plane   <none>           <none>

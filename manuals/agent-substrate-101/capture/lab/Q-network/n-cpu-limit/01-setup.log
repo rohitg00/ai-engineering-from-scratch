@@ -1,0 +1,14 @@
+namespace/lab-cpu created
+workerpool.ate.dev/burn created
+NAME      AGE
+lab-cpu   0s
+ATESPACE   NAME       GOLDEN TAG   ERROR   AGE
+lab-cpu    burn-250                        0s
+ATESPACE   NAME       GOLDEN TAG   ERROR   AGE
+lab-cpu    burn-500                        0s
+ATESPACE   NAME        GOLDEN TAG   ERROR   AGE
+lab-cpu    burn-1000                        0s
+ATESPACE   NAME        GOLDEN TAG   ERROR   AGE
+lab-cpu    burn-2000                        0s
+Waiting for deployment "burn" rollout to finish: 0 of 1 updated replicas are available...
+deployment "burn" successfully rolled out

@@ -1,0 +1,215 @@
+{
+  "async": {
+    "note": "default mode, returns when the snapshot is on the node",
+    "points": [
+      {
+        "failed": 0,
+        "runs": [
+          0.331,
+          0.368,
+          0.347,
+          0.319,
+          0.324,
+          0.346,
+          0.32,
+          0.334,
+          0.343,
+          0.335
+        ],
+        "seconds": {
+          "max": 0.368,
+          "median": 0.335,
+          "min": 0.319,
+          "n": 10
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.504,
+          0.512,
+          0.53,
+          0.486,
+          0.572,
+          0.544,
+          0.486,
+          0.496,
+          0.487,
+          0.489
+        ],
+        "seconds": {
+          "max": 0.572,
+          "median": 0.5,
+          "min": 0.486,
+          "n": 10
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "runs": [
+          0.789,
+          0.807,
+          0.787,
+          0.729,
+          0.826,
+          0.808,
+          0.694,
+          0.791,
+          0.854,
+          0.788
+        ],
+        "seconds": {
+          "max": 0.854,
+          "median": 0.79,
+          "min": 0.694,
+          "n": 10
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "runs": [
+          1.102,
+          1.228,
+          1.16,
+          1.131,
+          1.149,
+          1.219,
+          1.224,
+          1.18,
+          1.091,
+          1.213
+        ],
+        "seconds": {
+          "max": 1.228,
+          "median": 1.17,
+          "min": 1.091,
+          "n": 10
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "runs": [
+          2.248,
+          1.904,
+          1.879,
+          1.897,
+          2.253,
+          1.867,
+          2.145,
+          1.863,
+          1.997,
+          2.022
+        ],
+        "seconds": {
+          "max": 2.253,
+          "median": 1.95,
+          "min": 1.863,
+          "n": 10
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 built from source, Envoy dataplane, gVisor",
+  "sources": [
+    "capture/lab/C-resume-vs-size/10-local.tsv"
+  ],
+  "sync": {
+    "note": "--mode sync, returns when the snapshot is in the object store",
+    "points": [
+      {
+        "failed": 0,
+        "runs": [
+          0.401,
+          0.412,
+          0.395,
+          0.424,
+          0.393
+        ],
+        "seconds": {
+          "max": 0.424,
+          "median": 0.401,
+          "min": 0.393,
+          "n": 5
+        },
+        "x": 0
+      },
+      {
+        "failed": 0,
+        "runs": [
+          1.081,
+          0.929,
+          1.029,
+          1.069,
+          1.004
+        ],
+        "seconds": {
+          "max": 1.081,
+          "median": 1.029,
+          "min": 0.929,
+          "n": 5
+        },
+        "x": 50
+      },
+      {
+        "failed": 0,
+        "runs": [
+          1.983,
+          2.059,
+          2.019,
+          1.881,
+          2.083
+        ],
+        "seconds": {
+          "max": 2.083,
+          "median": 2.019,
+          "min": 1.881,
+          "n": 5
+        },
+        "x": 200
+      },
+      {
+        "failed": 0,
+        "runs": [
+          3.274,
+          4.05,
+          3.585,
+          4.732,
+          3.591
+        ],
+        "seconds": {
+          "max": 4.732,
+          "median": 3.591,
+          "min": 3.274,
+          "n": 5
+        },
+        "x": 500
+      },
+      {
+        "failed": 0,
+        "runs": [
+          6.209,
+          6.408,
+          6.355,
+          7.64,
+          6.872
+        ],
+        "seconds": {
+          "max": 7.64,
+          "median": 6.408,
+          "min": 6.209,
+          "n": 5
+        },
+        "x": 1000
+      }
+    ]
+  },
+  "unit": {
+    "seconds": "kubectl ate suspend actor, CLI time",
+    "x": "MiB of memory the actor holds"
+  }
+}

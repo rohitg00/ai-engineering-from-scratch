@@ -1,0 +1,4 @@
+The header of capacity-requests-with-suspender.tsv and capacity-requests-without-suspender.tsv is corrected.
+The recording script wrote the three state columns in name order (bursty, busy, rare) under a header that said busy, bursty, rare.
+The values are unchanged. The script in capture/demos/idle-suspender/run.sh now writes the right header.
+The ten-minute run and the two-minute control run were started by two commands, because the first version of run.sh waited on the suspender process and did not return.

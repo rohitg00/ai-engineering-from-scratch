@@ -1,0 +1,3 @@
+atenet-egress-754678d747-hxrm8             1/1     Running     0          2m55s   10.244.0.44   kind-control-plane   <none>           <none>
+atenet-router-7c5c864d47-9gztj             1/1     Running     0          3m4s    10.244.0.42   kind-control-plane   <none>           <none>
+k8s-credential-provider-85dc8799f8-hjrbm   1/1     Running     0          29m     10.244.0.32   kind-control-plane   <none>           <none>

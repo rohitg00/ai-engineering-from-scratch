@@ -1,0 +1,46 @@
+ts	t	event	detail
+2026-11-12T14:22:00.835Z	t=0.3	node-start	multi-worker2 after outage of 404.1 s
+2026-11-12T14:22:03.093Z	t=2.6	node-ready	multi-worker2
+2026-11-12T14:22:05.668Z	t=5.1	watch	pool-pods-running-on-node=2 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:22:11.807Z	t=11.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:22:18.174Z	t=17.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:22:24.355Z	t=23.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:22:30.403Z	t=29.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:22:36.551Z	t=36.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:22:42.647Z	t=42.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:22:48.916Z	t=48.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:22:54.972Z	t=54.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:01.156Z	t=60.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:07.177Z	t=66.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:13.137Z	t=72.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:19.194Z	t=78.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:25.379Z	t=84.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:31.480Z	t=90.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:37.579Z	t=97.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:43.716Z	t=103.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:49.812Z	t=109.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:23:55.837Z	t=115.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:01.909Z	t=121.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:07.940Z	t=127.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:14.029Z	t=133.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:20.088Z	t=139.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:26.209Z	t=145.7	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:32.320Z	t=151.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:38.361Z	t=157.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:44.499Z	t=164.0	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:50.789Z	t=170.2	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:24:56.899Z	t=176.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:25:03.027Z	t=182.5	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:25:09.135Z	t=188.6	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:25:15.313Z	t=194.8	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:25:21.436Z	t=200.9	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:25:27.654Z	t=207.1	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:25:33.827Z	t=213.3	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:25:39.968Z	t=219.4	watch	pool-pods-running-on-node=0 workers-active-on-node=0 placement=multi-worker | t1: ACTOR_STATE_CRASHED multi-worker2
+2026-11-12T14:25:43.993Z	t=223.5	no-actor-on-returned-node	after 223.4 s, pool pods on node: 0
+2026-11-12T14:25:44.222Z	t=223.7	final-state	t1: ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T14:25:44.731Z	t=224.2	revert-after-node-return	t1: 0.3 s | ATESPACE   NAME   TEMPLATE           STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-n      t1     lab-n/ballast-50   ACTOR_STATE_SUSPENDED   <none>                    9         10
+2026-11-12T14:25:46.910Z	t=226.4	request-after-revert	t1: 200	0.903304	count=4 mb=50 sum=6613 process_age_s=5.2	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T14:25:47.222Z	t=226.7	request-after-revert	t1: 200	0.068148	count=5 mb=50 sum=6613 process_age_s=5.5	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T14:26:03.021Z	t=242.5	rebalanced-by-hand	pool pods on multi-worker2 now 2 (setup for the next case)
+2026-11-12T14:26:04.173Z	t=243.6	ready-for-next-case	workers active on multi-worker2: 2

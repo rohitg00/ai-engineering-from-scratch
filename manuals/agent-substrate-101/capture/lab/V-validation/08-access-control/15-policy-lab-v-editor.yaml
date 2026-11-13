@@ -1,0 +1,10 @@
+bindings:
+- members:
+  - user:system:serviceaccount:ate-users:alice
+  role: editor
+metadata:
+  createTime: "2026-11-12T12:51:47.968679335Z"
+  name: default
+  uid: a06fc82d-e269-4ce3-8471-00c1b537adff
+  updateTime: "2026-11-12T12:51:51.605795572Z"
+  version: "2"

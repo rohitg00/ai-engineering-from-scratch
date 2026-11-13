@@ -1,0 +1,25 @@
+Name:         claude-code
+Atespace:     default
+Phase:        Failed
+Actor:        claude-code
+Worker IP:    
+Workspace:    itsdangerous  path=/workspace
+Image:        localhost:5002/ax-claude-code@sha256:73fbd85b498dacfde3660cb9c5cc4c27f279a2bb2b9638e783dbf81d15919d35
+Config:
+  dangerouslySkipPermissions: true
+  maxTurns: 50
+  model: qwen2.5:3b
+  prompt: |
+      Read the repository, install it with its test dependencies, and run the
+      test suite. Fix any failing or flaky tests you find. If everything passes,
+      make one small, clearly correct improvement to the README. Finish by
+      writing a short markdown report of what you checked and what you changed
+      to /workspace/claude-output.md.
+  settings:
+      includeCoAuthoredBy: false
+
+Conditions:
+  TYPE   STATUS  REASON             MESSAGE
+  Ready  False   ActorResumeFailed  resuming actor default/claude-code: rpc error: code = ResourceExhausted desc = no worker has room for the actor
+ATESPACE   NAME                             GOLDEN TAG                             ERROR   AGE
+default    claude-code-tmpl-2ee807b8                                                       1s

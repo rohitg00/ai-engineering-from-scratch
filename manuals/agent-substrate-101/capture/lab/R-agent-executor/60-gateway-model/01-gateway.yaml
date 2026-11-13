@@ -1,0 +1,9 @@
+apiVersion: ax.io/v1alpha1
+kind: Gateway
+metadata:
+  name: review-bot-gw
+  atespace: default
+spec:
+  egress:
+    - https:
+        hostnames: ["github.com", "api.github.com", "*.githubusercontent.com"]

@@ -1,0 +1,8 @@
+step	rc	seconds
+03-delete-workspace-while-bound	0	0.029
+04-delete-task-nodebug	0	0.197
+05-delete-task-ws	0	0.206
+06-delete-workspace	0	0.028
+07-delete-gateway	0	0.027
+08-ax-get-after	0	0.099
+14-suspend-check-task	0	2.191

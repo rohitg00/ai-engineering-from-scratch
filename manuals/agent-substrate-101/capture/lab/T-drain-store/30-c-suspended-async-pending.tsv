@@ -1,0 +1,18 @@
+ts	t	event	detail
+2026-11-12T16:18:36.185Z	t=-	actor	c1 on multi-worker2 pod lab-n/ballast-5d6cf97747-chxcq
+2026-11-12T16:18:36.281Z	t=-	call	200	0.069871	count=1 mb=50 sum=6512 process_age_s=3.8
+2026-11-12T16:18:36.364Z	t=-	call	200	0.057930	count=2 mb=50 sum=6512 process_age_s=3.9
+2026-11-12T16:18:36.451Z	t=-	call	200	0.061960	count=3 mb=50 sum=6512 process_age_s=3.9
+2026-11-12T16:18:38.062Z	t=-	suspended-sync	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
+2026-11-12T16:18:38.442Z	t=-	call	200	0.355845	count=4 mb=50 sum=6512 process_age_s=4.3
+2026-11-12T16:18:38.527Z	t=-	call	200	0.059254	count=5 mb=50 sum=6512 process_age_s=4.4
+2026-11-12T16:18:39.693Z	t=-	suspended-async	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:multi-worker2
+2026-11-12T16:18:40.079Z	t=-	watch	pods: chxcq:Running:multi-worker2 m26gf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | workers: 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:18:42.420Z	t=-	watch	pods: chxcq:Running:multi-worker2 m26gf:Running:multi-worker2 zxzvv:Running:multi-worker zzzdn:Running:multi-worker | workers: 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:18:42.707Z	t=-	drain-start	kubectl drain multi-worker2 --ignore-daemonsets --delete-emptydir-data --force --timeout=600s
+2026-11-12T16:18:43.899Z	t=1.2	drain-returned	rc=0 | pod/ballast-5d6cf97747-chxcq evicted pod/ballast-5d6cf97747-m26gf evicted node/multi-worker2 drained 
+2026-11-12T16:18:44.821Z	t=-	watch	pods: fmxlc:Running:multi-worker khzxd:Running:multi-worker zxzvv:Running:multi-worker zzzdn:Running:multi-worker | workers: 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:18:45.231Z	t=2.5	pods-settled	pods: fmxlc:Running:multi-worker khzxd:Running:multi-worker zxzvv:Running:multi-worker zzzdn:Running:multi-worker | workers: 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 5d6cf97747:ACTIVE:0/1000:0/1984Mi 
+2026-11-12T16:18:48.415Z	t=5.7	state-after-drain	ACTOR_STATE_SUSPENDED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:multi-worker2
+2026-11-12T16:18:50.065Z	t=7.4	request-1-no-revert	200	1.192618	count=6 mb=50 sum=6512 process_age_s=4.7	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:- pod lab-n/ballast-5d6cf97747-fmxlc
+2026-11-12T16:18:50.358Z	t=7.7	request-2	200	0.074891	count=7 mb=50 sum=6512 process_age_s=5.3	|	ACTOR_STATE_RUNNING	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen3:-

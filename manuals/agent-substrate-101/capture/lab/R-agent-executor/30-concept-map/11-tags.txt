@@ -1,0 +1,2 @@
+ATESPACE   NAME                                   SCOPE                 STATE   SNAPSHOT                                                                         FIDELITY                    AGE
+default    921c52be-e85f-4bac-a5ab-1dd5700530a2   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/default/tags/08e9719a-26cb-488c-a1b1-10f7539627ea   SNAPSHOT_FIDELITY_VOLUMES   55s

@@ -1,0 +1,15 @@
+NAME                             READY   AGE
+agent.api.kagent.dev/lab-agent   True    5h55m
+agent.api.kagent.dev/real-1p5b   True    15s
+agent.api.kagent.dev/real-3b     True    15s
+
+NAME                                              PROVIDER   MODEL
+modelconfig.api.kagent.dev/default-model-config   OpenAI     gpt-4.1-mini
+modelconfig.api.kagent.dev/mock-model             OpenAI     mock-1
+modelconfig.api.kagent.dev/real-1p5b              OpenAI     qwen2.5:1.5b
+modelconfig.api.kagent.dev/real-3b                OpenAI     qwen2.5:3b
+
+NAME                                              AGE
+agenttemplate.api.kagent.dev/lab-template         5h55m
+agenttemplate.api.kagent.dev/real-1p5b-template   15s
+agenttemplate.api.kagent.dev/real-3b-template     15s

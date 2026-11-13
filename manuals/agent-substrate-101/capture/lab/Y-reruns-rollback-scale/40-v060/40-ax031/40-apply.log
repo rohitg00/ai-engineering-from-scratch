@@ -1,0 +1,10 @@
+namespace/ax031-system created
+deployment.apps/ax-redis created
+service/ax-redis created
+namespace/ax031-system unchanged
+serviceaccount/ax-controller created
+clusterrole.rbac.authorization.k8s.io/ax-controller created
+clusterrolebinding.rbac.authorization.k8s.io/ax-controller created
+deployment.apps/ax-controller created
+deployment.apps/ax-server created
+service/ax-server created

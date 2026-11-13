@@ -1,0 +1,21 @@
+NAME                                                 DESIRED   CURRENT   READY   AGE
+replicaset.apps/ate-api-server-69c5b6fdbf            0         0         0       11m
+replicaset.apps/ate-api-server-7bc56575c9            2         2         2       3m46s
+replicaset.apps/ate-controller-6c494655d9            0         0         0       11m
+replicaset.apps/ate-controller-7984566f8d            1         1         1       3m18s
+replicaset.apps/ate-idp-server-7564c6787b            0         0         0       11m
+replicaset.apps/ate-idp-server-dcd5f565f             2         2         2       3m45s
+replicaset.apps/atenet-egress-68bdb47d77             0         0         0       11m
+replicaset.apps/atenet-egress-76dd56d8cb             1         1         1       2m4s
+replicaset.apps/atenet-egress-7758c8fb4              0         0         0       3m4s
+replicaset.apps/atenet-egress-7b7c69fd67             0         0         0       3m4s
+replicaset.apps/atenet-router-55b84d7f66             0         0         0       11m
+replicaset.apps/atenet-router-d844d4995              1         1         1       3m5s
+replicaset.apps/k8s-credential-provider-5bb6b77b65   1         1         1       3m4s
+replicaset.apps/k8s-credential-provider-df958bc8b    0         0         0       11m
+replicaset.apps/rustfs-54c86945fb                    1         1         1       11m
+
+NAME                                          CONTROLLER                  REVISION   AGE
+controllerrevision.apps/atelet-584bc7b877     daemonset.apps/atelet       2          7m3s
+controllerrevision.apps/atelet-78678c84dc     daemonset.apps/atelet       1          11m
+controllerrevision.apps/postgres-598bfc9856   statefulset.apps/postgres   1          11m

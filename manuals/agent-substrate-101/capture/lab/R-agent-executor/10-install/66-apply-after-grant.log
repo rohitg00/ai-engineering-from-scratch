@@ -1,0 +1,11 @@
+task.ax.io/ax-install-check created
+Name:         ax-install-check
+Atespace:     default
+Phase:        Suspended
+Actor:        ax-install-check
+Worker IP:    
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE   STATUS  REASON     MESSAGE
+  Ready  False   Suspended  Actor is suspended

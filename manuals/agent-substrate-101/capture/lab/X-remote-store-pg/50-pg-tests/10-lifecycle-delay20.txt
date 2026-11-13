@@ -1,0 +1,19 @@
+ATESPACE   NAME   TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+x-lab      lc20   x-lab/x-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+create 0.416 s state ACTOR_STATE_SUSPENDED
+first request: 200	1.087526	count=1 process_age_s=729.3 
+state ACTOR_STATE_RUNNING
+request: 200	0.097208	count=2 process_age_s=730.0 
+request: 200	0.084583	count=3 process_age_s=730.2 
+ATESPACE   NAME   TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+x-lab      lc20   x-lab/x-drill   ACTOR_STATE_SUSPENDED   <none>                    5         4s
+suspend sync 1.922 s state ACTOR_STATE_SUSPENDED
+resume request: 200	0.942659	count=4 process_age_s=733.6 
+request: 200	0.091889	count=5 process_age_s=733.9 
+ATESPACE   NAME   TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+x-lab      lc20   x-lab/x-drill   ACTOR_STATE_SUSPENDED   <none>                    9         7s
+suspend default 0.887 s state ACTOR_STATE_SUSPENDED
+state after 3 s ACTOR_STATE_SUSPENDED
+resume request: 200	0.903825	count=6 process_age_s=739.4 
+ATESPACE   NAME   TEMPLATE        STATE                 WORKER POD                      WORKER IPS    VERSION   AGE
+x-lab      lc20   x-lab/x-drill   ACTOR_STATE_RUNNING   x-lab/x-pool-556bdb665d-db2lr   10.244.0.58   11        12s

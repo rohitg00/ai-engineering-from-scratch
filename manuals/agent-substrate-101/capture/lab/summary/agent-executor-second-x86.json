@@ -1,0 +1,287 @@
+{
+  "agent_executor_commit": "a72b8ca4",
+  "agent_image_second_run": {
+    "command_seconds": 19.5,
+    "file_written": false,
+    "final_text": "Done",
+    "first_resume_seconds": 2.258,
+    "model_requests": [
+      {
+        "code": 200,
+        "end": "2026-11-12T18:45:27.619437025Z",
+        "seconds": 18.03
+      }
+    ],
+    "phase_after_command_ended": "Running"
+  },
+  "clone_second_run": {
+    "commits_seen": {
+      "672971d66a2ef9f85151e53283113f33d642dabd": 5
+    },
+    "first_resume_with_passthrough_rule_seconds": 5.468,
+    "resume_after_clone": {
+      "runs": [
+        0.268,
+        0.297,
+        0.247,
+        0.231,
+        0.333
+      ],
+      "seconds": {
+        "max": 0.333,
+        "median": 0.268,
+        "min": 0.231,
+        "n": 5
+      }
+    },
+    "suspend_seconds": {
+      "max": 0.2,
+      "median": 0.176,
+      "min": 0.166,
+      "n": 5
+    }
+  },
+  "example": {
+    "command_seconds": 302.7,
+    "first_try_resume_after_recreate_exit": 1,
+    "hosts_in_the_gateway_log": {
+      "files.pythonhosted.org": 1,
+      "github.com": 5,
+      "pypi.org": 2
+    },
+    "last_message_names_import_errors": true,
+    "lines_of_git_status_and_diff": 0,
+    "model_requests": [
+      {
+        "code": 200,
+        "end": "2026-11-12T18:52:14.112414416Z",
+        "seconds": 160.0
+      },
+      {
+        "code": 200,
+        "end": "2026-11-12T18:52:54.940447905Z",
+        "seconds": 40.7
+      },
+      {
+        "code": 200,
+        "end": "2026-11-12T18:53:42.871415678Z",
+        "seconds": 42.82
+      },
+      {
+        "code": 200,
+        "end": "2026-11-12T18:54:35.050560231Z",
+        "seconds": 52.13
+      }
+    ],
+    "note": "examples/claude-code/task.yaml with the image digest, the model name, and the provider key changed. One run.",
+    "passthrough_hosts_in_the_rule": [
+      "github.com",
+      "pypi.org",
+      "files.pythonhosted.org"
+    ],
+    "phase_after_command_ended": "Running",
+    "report_first_seen_seconds_after_resume": 161,
+    "report_says_all_tests_passed": true,
+    "resume_after_recreate_seconds": 4.737,
+    "resume_with_documented_memory_error": "ResourceExhausted desc = no worker has room for the actor",
+    "resume_with_documented_memory_exit": 1,
+    "second_apply_error": "task default/claude-code already exists and is immutable",
+    "second_apply_exit": 1,
+    "worker_memory": "1984Mi"
+  },
+  "machine": "x86 server guest, 16 vCPU, 31 GB, kind v0.33.0, Kubernetes 1.37.0, Agent Substrate v1.0.0 from the release images, Envoy dataplane, gVisor, Agent Executor built from source at one commit, Ollama 0.40.16 in a container on the guest with 12 CPUs and no GPU. The guest had been restarted, and two containers of another experiment ran on it.",
+  "mcp": {
+    "general_prompt": {
+      "command_seconds": 143.6,
+      "final_text": ".done",
+      "first_resume_seconds": 9.66,
+      "methods_seen_by_the_server": {
+        "initialize": 1,
+        "notifications/initialized": 1,
+        "server/discover": 1,
+        "tools/list": 1
+      },
+      "model_requests": [
+        {
+          "code": 200,
+          "end": "2026-11-12T18:44:36.156993762Z",
+          "seconds": 130.0
+        },
+        {
+          "code": 200,
+          "end": "2026-11-12T18:44:39.433630512Z",
+          "seconds": 3.18
+        }
+      ],
+      "result_file_written": false
+    },
+    "note": "one Workspace with four server entries and one registry. The server named docs is a small HTTP server in the cluster with one tool.",
+    "prompt_that_names_the_tool": [
+      {
+        "command_seconds": 25.7,
+        "final_text_is_the_tool_result": false,
+        "first_resume_seconds": 6.058,
+        "methods_seen_by_the_server": {
+          "initialize": 1,
+          "notifications/initialized": 1,
+          "server/discover": 1,
+          "tools/call": 1,
+          "tools/list": 1
+        },
+        "model_requests": [
+          {
+            "code": 200,
+            "end": "2026-11-12T18:48:07.955516767Z",
+            "seconds": 18.62
+          },
+          {
+            "code": 200,
+            "end": "2026-11-12T18:48:13.629620734Z",
+            "seconds": 5.62
+          }
+        ],
+        "tool_call_seconds_after_command_start": 19
+      },
+      {
+        "command_seconds": 10.0,
+        "final_text_is_the_tool_result": false,
+        "first_resume_seconds": 5.702,
+        "methods_seen_by_the_server": {
+          "initialize": 1,
+          "notifications/initialized": 1,
+          "server/discover": 1,
+          "tools/call": 1,
+          "tools/list": 1
+        },
+        "model_requests": [
+          {
+            "code": 200,
+            "end": "2026-11-12T18:48:37.712155061Z",
+            "seconds": 4.61
+          },
+          {
+            "code": 200,
+            "end": "2026-11-12T18:48:41.675200971Z",
+            "seconds": 3.91
+          }
+        ],
+        "tool_call_seconds_after_command_start": 5
+      }
+    ],
+    "servers_counted_by_ax_get": 4,
+    "servers_passed_to_the_agent": {
+      "docs": "http",
+      "missing-command": "stdio"
+    },
+    "servers_skipped": [
+      {
+        "name": "neither",
+        "warning": "skipping MCP server with neither an endpoint nor a command"
+      },
+      {
+        "name": "docs",
+        "warning": "skipping MCP server with a missing or duplicate name"
+      }
+    ]
+  },
+  "model": "qwen2.5:3b, a small open model on CPU. What the model wrote or decided is a result about this model. What the task received and what the runner did is a result about Agent Executor.",
+  "skills": {
+    "entries_in_the_directory": 0,
+    "path": "/.agents/skills"
+  },
+  "sources": [
+    "capture/lab/W-ax-kagent-2/20-ax-flight/w-fl1/21-events.tsv",
+    "capture/lab/W-ax-kagent-2/20-ax-flight/w-fl1/20-inflight-stream.tsv",
+    "capture/lab/W-ax-kagent-2/20-ax-flight/w-fl1/28-files-after-resume.log",
+    "capture/lab/W-ax-kagent-2/20-ax-flight/w-fl2/21-events.tsv",
+    "capture/lab/W-ax-kagent-2/20-ax-flight/w-fl2/20-inflight-stream.tsv",
+    "capture/lab/W-ax-kagent-2/20-ax-flight/w-fl2/28-files-after-resume.log",
+    "capture/lab/W-ax-kagent-2/30-ax-mcp-skills/04-workspace.yaml",
+    "capture/lab/W-ax-kagent-2/30-ax-mcp-skills/06b-get-workspace.log",
+    "capture/lab/W-ax-kagent-2/30-ax-mcp-skills/15-claude-cmdline.txt",
+    "capture/lab/W-ax-kagent-2/30-ax-mcp-skills/16-actor.log",
+    "capture/lab/W-ax-kagent-2/30-ax-mcp-skills/18-inside.log",
+    "capture/lab/W-ax-kagent-2/30-ax-mcp-skills/20-mcp-server.log",
+    "capture/lab/W-ax-kagent-2/31-ax-mcp-call/w-mcp2/20-mcp-server.log",
+    "capture/lab/W-ax-kagent-2/31-ax-mcp-call/w-mcp3/20-mcp-server.log",
+    "capture/lab/W-ax-kagent-2/40-ax-example/steps.tsv",
+    "capture/lab/W-ax-kagent-2/40-ax-example/08-resume-4gi.log",
+    "capture/lab/W-ax-kagent-2/40-ax-example/10-apply-1536mi.log",
+    "capture/lab/W-ax-kagent-2/40-ax-example/20-actor.log",
+    "capture/lab/W-ax-kagent-2/40-ax-example/22-inside.log",
+    "capture/lab/W-ax-kagent-2/40-ax-example/24-ollama-gin.log",
+    "capture/lab/W-ax-kagent-2/40-ax-example/26b-egress-hosts.log",
+    "capture/lab/W-ax-kagent-2/40-ax-example-attempt1/steps.tsv",
+    "capture/lab/W-ax-kagent-2/50-ax-clone-2/steps.tsv",
+    "capture/lab/W-ax-kagent-2/50-ax-clone-2/10-cycles-after-clone.tsv",
+    "capture/lab/W-ax-kagent-2/51-ax-agent-image-2/steps.tsv",
+    "capture/lab/W-ax-kagent-2/51-ax-agent-image-2/19-actor.log",
+    "capture/lab/W-ax-kagent-2/51-ax-agent-image-2/21-workspace.log"
+  ],
+  "unit": {
+    "seconds": "wall time of the ax command at the client, on the guest that runs the cluster, unless a field says otherwise"
+  },
+  "worker_loss_in_flight": {
+    "note": "two ax ssh commands were open when the worker pod was deleted: one prints a tick each second and writes /workspace/progress.txt, the other is sleep 120. Each run is one task.",
+    "snapshot_durable": {
+      "ax_resume_exit": 0,
+      "ax_resume_seconds": 0.527,
+      "crashed_seen_after_seconds": 0.6,
+      "durable_snapshot_at_last_suspend": "SNAPSHOT_STORAGE_STATE_COMPLETED",
+      "file_from_before_last_suspend_kept": true,
+      "file_of_the_command_in_flight_kept": false,
+      "message_after_loss": "worker pod went away while hosting the actor",
+      "phase_after_loss": "Failed",
+      "seconds_since_start_of_pid_1": 5.3,
+      "sleep_request_ended_after_delete_seconds": 0.16,
+      "sleep_request_error": "Error: receiving output stream: rpc error: code = Unknown desc = unexpected HTTP status code received from server: 200 (OK); malformed header: missing HTTP content-type",
+      "ssh_while_failed": "Error: task \"w-fl2\" is in phase \"Failed\" (must be Running to ssh)",
+      "stream_ended_after_delete_seconds": 0.16,
+      "stream_error": "Error: receiving output stream: rpc error: code = Internal desc = server closed the stream without sending trailers",
+      "stream_exit": 1,
+      "suspend_to_loss_seconds": 328.9,
+      "tick_seconds_from_delete": [
+        -7.21,
+        -6.19,
+        -5.15,
+        -4.12,
+        -3.09,
+        -2.06,
+        -1.04,
+        -0.01
+      ],
+      "ticks_received": 8,
+      "watched_with_no_command_seconds": 45.8
+    },
+    "snapshot_pending": {
+      "ax_resume_exit": 0,
+      "ax_resume_seconds": 0.278,
+      "crashed_seen_after_seconds": 1.9,
+      "durable_snapshot_at_last_suspend": "SNAPSHOT_STORAGE_STATE_PENDING",
+      "file_from_before_last_suspend_kept": false,
+      "file_of_the_command_in_flight_kept": false,
+      "message_after_loss": "worker pod went away while hosting the actor",
+      "phase_after_loss": "Failed",
+      "seconds_since_start_of_pid_1": 5.17,
+      "sleep_request_ended_after_delete_seconds": 0.16,
+      "sleep_request_error": "Error: receiving output stream: rpc error: code = Unknown desc = unexpected HTTP status code received from server: 200 (OK); malformed header: missing HTTP content-type",
+      "ssh_while_failed": "Error: task \"w-fl1\" is in phase \"Failed\" (must be Running to ssh)",
+      "stream_ended_after_delete_seconds": 0.17,
+      "stream_error": "Error: receiving output stream: rpc error: code = Internal desc = server closed the stream without sending trailers",
+      "stream_exit": 1,
+      "suspend_to_loss_seconds": 11.9,
+      "tick_seconds_from_delete": [
+        -7.17,
+        -6.14,
+        -5.11,
+        -4.08,
+        -3.05,
+        -2.02,
+        -0.99,
+        0.04
+      ],
+      "ticks_received": 8,
+      "watched_with_no_command_seconds": 45.8
+    }
+  }
+}

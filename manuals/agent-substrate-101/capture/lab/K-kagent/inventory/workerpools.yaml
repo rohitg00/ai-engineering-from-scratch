@@ -1,0 +1,92 @@
+apiVersion: v1
+items:
+- apiVersion: ate.dev/v1
+  kind: WorkerPool
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: kagent
+      meta.helm.sh/release-namespace: kagent
+    creationTimestamp: "2026-11-12T10:13:34Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/instance: kagent
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/name: kagent
+      app.kubernetes.io/part-of: kagent
+      app.kubernetes.io/version: 1.0.0
+      helm.sh/chart: kagent-1.0.0
+      kagent.dev/worker-pool-name: kagent-default
+      kagent.dev/worker-pool-namespace: kagent
+    name: kagent-default
+    namespace: kagent
+    resourceVersion: "1585"
+    uid: a1fb2c3b-e204-4e0d-bc6e-3b9ad0cb6ad3
+  spec:
+    replicas: 1
+    sandboxClasses:
+    - configRef:
+        name: gvisor-default
+      name: gvisor
+    template:
+      serviceAccountName: kagent-default
+    workerImage: ghcr.io/kagent-dev/substrate/ateworker-gvisor:v1.0.0
+  status:
+    readyReplicas: 1
+    replicas: 1
+    sandboxClasses:
+    - conditions:
+      - lastTransitionTime: "2026-11-12T10:13:34Z"
+        message: resolved to SandboxConfig "gvisor-default"
+        observedGeneration: 1
+        reason: Resolved
+        status: "True"
+        type: Resolved
+      configRef:
+        name: gvisor-default
+      name: gvisor
+    selector: ate.dev/worker-pool=kagent-default
+- apiVersion: ate.dev/v1
+  kind: SandboxConfig
+  metadata:
+    annotations:
+      meta.helm.sh/release-name: substrate
+      meta.helm.sh/release-namespace: ate-system
+      sandboxconfig.ate.dev/is-class-default: "true"
+    creationTimestamp: "2026-11-12T10:12:13Z"
+    finalizers:
+    - sandboxconfig.ate.dev/workerpool-protection
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: gvisor-default
+    resourceVersion: "1391"
+    uid: 83db3da7-abd4-489a-b419-897acdecfc85
+  spec:
+    defaultVersion: v7
+    sandboxClass: gvisor
+    versions:
+    - assets:
+        amd64:
+          gvisor:
+            sha256: 708afc62f2ee82d19930c703e85f9dab4f27a78c0aec40c0f55eb1040107f1a7
+            url: gs://gvisor/releases/release/20261026.0/x86_64/gvisor.tar.zstd
+        arm64:
+          gvisor:
+            sha256: 6257e49955f13e6caceb2c4181c5dc5406c460e805940c944e67ad65553f5b02
+            url: gs://gvisor/releases/release/20261026.0/aarch64/gvisor.tar.zstd
+      name: v6
+      state: Enabled
+    - assets:
+        amd64:
+          gvisor:
+            sha256: a1439ffbba7d212e0fde32ea79fa9bb51cbc4c5f6c16af1f047260290b861d42
+            url: gs://gvisor/releases/release/20261102.0/x86_64/gvisor.tar.zstd
+        arm64:
+          gvisor:
+            sha256: f702ae92ad7a0c4134be34ca23f52966dbb696db0c0f5b8ec439210ab2cd7c6a
+            url: gs://gvisor/releases/release/20261102.0/aarch64/gvisor.tar.zstd
+      name: v7
+      state: Enabled
+kind: List
+metadata:
+  resourceVersion: ""

@@ -1,0 +1,23 @@
+metadata:
+  atespace: lab-m
+  name: mvm-0
+workerSelector:
+  matchLabels:
+    workload: ballast-mvm
+containers:
+- name: ballast
+  image: localhost:5001/ballast@sha256:93dba82ad560e7fc4ccb2a33a63d64713b519a7895ba3fd98130ce789eab7fd3
+  command:
+  - /ballast
+  - --mb=0
+  wakeupProbe:
+    httpGet:
+      path: /readyz
+      port: 80
+    timeoutSeconds: 120
+resources:
+  limits:
+    cpuMillicores: 1000
+    memoryBytes: 268435456
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

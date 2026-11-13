@@ -1,0 +1,4 @@
+101c101
+<       memory: "4Gi"
+---
+>       memory: "1536Mi"

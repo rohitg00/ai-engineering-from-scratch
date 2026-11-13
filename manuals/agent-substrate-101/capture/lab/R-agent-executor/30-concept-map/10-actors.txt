@@ -1,0 +1,2 @@
+ATESPACE   NAME               TEMPLATE                                 STATE                 WORKER POD                         WORKER IPS    VERSION   AGE
+default    ax-install-check   default/ax-install-check-tmpl-b08f2422   ACTOR_STATE_RUNNING   demo-drill/drill-8bc8cbccc-mrs22   10.244.0.25   3         58s

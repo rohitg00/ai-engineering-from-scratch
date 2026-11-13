@@ -1,0 +1,11 @@
+ATESPACE   NAME    TEMPLATE          STATE                   WORKER POD                        WORKER IPS     VERSION   AGE
+sc-lab     t-004   sc-lab/sc-drill   ACTOR_STATE_RESUMING    sc-lab/sc-pool-5dd9f7f8b6-7svvs   10.244.0.65    49        22m
+sc-lab     t-010   sc-lab/sc-drill   ACTOR_STATE_RESUMING    sc-lab/sc-pool-5dd9f7f8b6-qjln2   10.244.0.254   53        22m
+sc-lab     t-039   sc-lab/sc-drill   ACTOR_STATE_CRASHED     <none>                                           50        22m
+sc-lab     t-052   sc-lab/sc-drill   ACTOR_STATE_CRASHED     <none>                                           54        22m
+sc-lab     t-059   sc-lab/sc-drill   ACTOR_STATE_CRASHED     <none>                                           50        22m
+sc-lab     t-062   sc-lab/sc-drill   ACTOR_STATE_CRASHED     <none>                                           53        22m
+sc-lab     t-078   sc-lab/sc-drill   ACTOR_STATE_CRASHED     <none>                                           53        22m
+sc-lab     t-091   sc-lab/sc-drill   ACTOR_STATE_CRASHED     <none>                                           49        22m
+sc-lab     t-093   sc-lab/sc-drill   ACTOR_STATE_CRASHED     <none>                                           53        22m
+sc-lab     t-123   sc-lab/sc-drill   ACTOR_STATE_CRASHED     <none>                                           49        22m

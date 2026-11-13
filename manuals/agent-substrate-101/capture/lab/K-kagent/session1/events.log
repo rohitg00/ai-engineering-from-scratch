@@ -1,0 +1,14 @@
+2026-11-12T10:18:11.868Z session-create-start
+2026-11-12T10:18:12.271Z session-create-end dur=.397825141
+SID=01a1cf43-d760-747a-b907-5e0640126e4e
+2026-11-12T10:18:17.471Z turn1-start
+2026-11-12T10:18:19.156Z turn1-end rc=0 dur=1.679213919
+2026-11-12T10:18:39.169Z after-20s
+2026-11-12T10:19:33.390Z turn2-start
+2026-11-12T10:19:35.172Z turn2-end rc=0 dur=1.773591626
+2026-11-12T10:19:35.192Z turn3-back-to-back-start
+2026-11-12T10:19:41.765Z turn3-back-to-back-end rc=0 dur=6.563357408
+2026-11-12T10:19:41.785Z turn4-back-to-back-start
+2026-11-12T10:19:43.166Z turn4-back-to-back-end rc=0 dur=1.370286356
+2026-11-12T10:19:49.191Z turn5-egress-start
+2026-11-12T10:19:50.808Z turn5-egress-end rc=0 dur=1.608025448

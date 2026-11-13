@@ -1,0 +1,5 @@
+namespace/probe created
+pod/wrong-id created
+Error from server (Forbidden): error when creating "probe.yaml": pods "right-id" is forbidden: error looking up service account ate-system/atenet-client: serviceaccount "atenet-client" not found
+pod/wrong-id condition met
+Error from server (NotFound): pods "right-id" not found

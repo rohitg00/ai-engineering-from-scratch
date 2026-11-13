@@ -1,0 +1,5 @@
+namespace/probe unchanged
+pod/wrong-id configured
+pod/right-id configured
+pod/wrong-id condition met
+pod/right-id condition met

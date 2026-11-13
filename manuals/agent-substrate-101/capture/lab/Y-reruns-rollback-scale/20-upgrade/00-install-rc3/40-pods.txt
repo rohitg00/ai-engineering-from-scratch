@@ -1,0 +1,26 @@
+NAMESPACE                          NAME                                         READY   STATUS      RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-system                         ate-api-server-69c5b6fdbf-jcwz7              2/2     Running     0          63s     10.244.0.8    yupg-control-plane   <none>           <none>
+ate-system                         ate-api-server-69c5b6fdbf-x6t2h              2/2     Running     0          63s     10.244.0.10   yupg-control-plane   <none>           <none>
+ate-system                         ate-controller-6c494655d9-p4ckq              1/1     Running     0          60s     10.244.0.9    yupg-control-plane   <none>           <none>
+ate-system                         ate-idp-server-7564c6787b-fpf26              1/1     Running     0          62s     10.244.0.13   yupg-control-plane   <none>           <none>
+ate-system                         ate-idp-server-7564c6787b-gsxq5              1/1     Running     0          62s     10.244.0.12   yupg-control-plane   <none>           <none>
+ate-system                         atelet-x9wfp                                 2/2     Running     0          59s     10.244.0.11   yupg-control-plane   <none>           <none>
+ate-system                         atenet-egress-68bdb47d77-ljf9z               3/3     Running     0          50s     10.244.0.22   yupg-control-plane   <none>           <none>
+ate-system                         atenet-router-55b84d7f66-glf7l               2/2     Running     0          58s     10.244.0.16   yupg-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-df958bc8b-k22fx      1/1     Running     0          51s     10.244.0.21   yupg-control-plane   <none>           <none>
+ate-system                         postgres-0                                   2/2     Running     0          96s     10.244.0.7    yupg-control-plane   <none>           <none>
+ate-system                         rustfs-54c86945fb-gw9jm                      1/1     Running     0          55s     10.244.0.20   yupg-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-ddwsd                     0/1     Completed   0          55s     10.244.0.15   yupg-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-8b98l                     1/1     Running     0          2m8s    10.244.0.2    yupg-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-szk8h                     1/1     Running     0          2m8s    10.244.0.4    yupg-control-plane   <none>           <none>
+kube-system                        etcd-yupg-control-plane                      1/1     Running     0          2m16s   172.18.0.3    yupg-control-plane   <none>           <none>
+kube-system                        kindnet-s2764                                1/1     Running     0          2m8s    172.18.0.3    yupg-control-plane   <none>           <none>
+kube-system                        kube-apiserver-yupg-control-plane            1/1     Running     0          2m16s   172.18.0.3    yupg-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-yupg-control-plane   1/1     Running     0          2m17s   172.18.0.3    yupg-control-plane   <none>           <none>
+kube-system                        kube-proxy-dtthq                             1/1     Running     0          2m8s    172.18.0.3    yupg-control-plane   <none>           <none>
+kube-system                        kube-scheduler-yupg-control-plane            1/1     Running     0          2m16s   172.18.0.3    yupg-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-zzmpf      1/1     Running     0          2m8s    10.244.0.5    yupg-control-plane   <none>           <none>
+otel-system                        jaeger-fb9948ddf-bwvk2                       1/1     Running     0          54s     10.244.0.18   yupg-control-plane   <none>           <none>
+otel-system                        opentelemetry-collector-6f5b87f5dd-6q4sr     1/1     Running     0          54s     10.244.0.17   yupg-control-plane   <none>           <none>
+otel-system                        prometheus-5b5fb67d57-qwbs7                  1/1     Running     0          53s     10.244.0.19   yupg-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-77d4889549-mbq8x   1/1     Running     0          2m4s    10.244.0.3    yupg-control-plane   <none>           <none>

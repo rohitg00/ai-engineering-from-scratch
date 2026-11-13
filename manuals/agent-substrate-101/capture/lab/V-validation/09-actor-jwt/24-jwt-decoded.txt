@@ -1,0 +1,29 @@
+headers the upstream saw, without Authorization:
+status=200
+Accept-Encoding: gzip
+User-Agent: Go-http-client/1.1
+X-Forwarded-Proto: http
+X-Request-Id: 03fc47f7-10c6-4244-b6c0-36e0a2de2b8b
+header: {
+ "typ": "JWT",
+ "alg": "ES256",
+ "kid": "E38XLIprTZzZkY7RinXF7sPyw-HxHT-ysnVHFvvTCAU"
+}
+claims: {
+ "iss": "https://idp.ate-system.svc",
+ "sub": "actor/lab-v/jw2",
+ "aud": [
+  "lab-echo"
+ ],
+ "exp": 1794488570,
+ "nbf": 1794487670,
+ "iat": 1794487970,
+ "jti": "VLZDMDBJ2UA3ME2Z5M62BADKQK",
+ "actor.ate.dev": {
+  "atespace": "lab-v",
+  "actorName": "jw2",
+  "actorUID": "93e670a4-3215-41e5-be33-4dffaca75d42"
+ }
+}
+signature_chars: 86
+lifetime_s: 600 nbf_minus_iat: -300 seconds_until_exp_now: 599

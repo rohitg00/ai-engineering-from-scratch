@@ -1,0 +1,88 @@
+{
+  "actorTemplate": {
+    "atespace": "lab-c",
+    "name": "ballast-500"
+  },
+  "metadata": {
+    "atespace": "lab-c",
+    "createTime": "2026-11-12T10:19:27.063733681Z",
+    "name": "b500-1",
+    "uid": "9b5df341-5145-4785-90ff-6eb4008754b0",
+    "updateTime": "2026-11-12T10:19:32.227070383Z",
+    "version": "5"
+  },
+  "status": {
+    "assignedNode": "kind-control-plane",
+    "lastAssignedGeneration": 2,
+    "snapshots": [
+      {
+        "actorTemplateUid": "2fa7aaf9-1fe8-4076-9350-af27ba338a6b",
+        "durableSnapshot": {
+          "object": {
+            "snapshotUri": "gs://ate-snapshots/atespaces/lab-c/tags/a82d9bbc-1f59-46d1-8200-c9e8b150d6ea"
+          },
+          "state": "SNAPSHOT_STORAGE_STATE_COMPLETED"
+        },
+        "fidelity": "SNAPSHOT_FIDELITY_MEMORY",
+        "generation": 1,
+        "owner": "SNAPSHOT_OWNER_TAG",
+        "sandboxRuntime": {
+          "sandboxClass": "gvisor",
+          "version": {
+            "attributes": [
+              {
+                "key": "architecture",
+                "value": "amd64"
+              },
+              {
+                "key": "cpu_features",
+                "value": "8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203"
+              },
+              {
+                "key": "sandbox_bundle_hash",
+                "value": "sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa"
+              }
+            ],
+            "schemaVersion": "v1"
+          }
+        },
+        "uuid": "a82d9bbc-1f59-46d1-8200-c9e8b150d6ea"
+      },
+      {
+        "actorTemplateUid": "2fa7aaf9-1fe8-4076-9350-af27ba338a6b",
+        "durableSnapshot": {
+          "object": {
+            "snapshotUri": "gs://ate-snapshots/atespaces/lab-c/actors/9b5df341-5145-4785-90ff-6eb4008754b0/snapshots/00f18d6f-1d36-4944-bfe4-7d9bf2b9a1a9"
+          },
+          "state": "SNAPSHOT_STORAGE_STATE_PENDING"
+        },
+        "fidelity": "SNAPSHOT_FIDELITY_MEMORY",
+        "generation": 2,
+        "locality": "kind-control-plane",
+        "owner": "SNAPSHOT_OWNER_ACTOR",
+        "sandboxRuntime": {
+          "sandboxClass": "gvisor",
+          "version": {
+            "attributes": [
+              {
+                "key": "architecture",
+                "value": "amd64"
+              },
+              {
+                "key": "cpu_features",
+                "value": "8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203"
+              },
+              {
+                "key": "sandbox_bundle_hash",
+                "value": "sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa"
+              }
+            ],
+            "schemaVersion": "v1"
+          }
+        },
+        "uuid": "00f18d6f-1d36-4944-bfe4-7d9bf2b9a1a9"
+      }
+    ],
+    "state": "ACTOR_STATE_SUSPENDED"
+  }
+}

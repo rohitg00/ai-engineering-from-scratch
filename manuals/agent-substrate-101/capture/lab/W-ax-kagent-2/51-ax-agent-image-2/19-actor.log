@@ -1,0 +1,14 @@
+{"time":"2026-11-12T18:45:08.037314975Z","message":"Actor starting","span_id":"0e1c1e2038bee374","trace_flags":"01","trace_id":"c63727bd81fddda4680df0536685bbd7"}
+{"time":"2026-11-12T18:45:08.168054539Z","message":"time=2026-11-12T18:45:08.167Z level=INFO msg=\"initializing AX task runner\" port=80 workspace=\"\" wsPath=/workspace"}
+{"time":"2026-11-12T18:45:08.168917168Z","message":"time=2026-11-12T18:45:08.168Z level=INFO msg=\"guest services enabled (spec.debug is true)\""}
+{"time":"2026-11-12T18:45:08.170272877Z","message":"time=2026-11-12T18:45:08.170Z level=INFO msg=\"probe and guest server started\" addr=[::]:80"}
+{"time":"2026-11-12T18:45:08.170317178Z","message":"time=2026-11-12T18:45:08.170Z level=INFO msg=\"metadata server started\" addr=127.0.0.1:8099"}
+{"time":"2026-11-12T18:45:08.171019753Z","message":"time=2026-11-12T18:45:08.170Z level=INFO msg=\"executing workspace maiden run setup\" path=/workspace"}
+{"time":"2026-11-12T18:45:08.171768239Z","message":"time=2026-11-12T18:45:08.171Z level=INFO msg=\"maiden run workspace setup completed successfully\" path=/workspace"}
+{"time":"2026-11-12T18:45:08.171849131Z","message":"time=2026-11-12T18:45:08.171Z level=INFO msg=\"workspace maiden run setup marked ready\" path=/workspace"}
+{"time":"2026-11-12T18:45:08.179214268Z","message":"time=2026-11-12T18:45:08.178Z level=INFO msg=\"started task command\" pid=10 command=\"[claude --print --dangerously-skip-permissions --max-turns=4 --model=qwen2.5:3b --system-prompt=You are a coding agent in a Linux sandbox. Use the tools to do what the user asks. --tools=Bash,Write,Read -- Run this shell command with the Bash tool: echo agent-was-here > /workspace/agent-output.txt . Then answer with the single word done.]\""}
+{"time":"2026-11-12T18:45:08.179426822Z","message":"Actor started","span_id":"0e1c1e2038bee374","trace_flags":"01","trace_id":"c63727bd81fddda4680df0536685bbd7"}
+{"time":"2026-11-12T18:45:09.133898882Z","message":"Claude Code doesn't recognize the model \"qwen2.5:3b\", so it assumes a context window of 200k tokens. Update Claude Code, or see https://code.claude.com/docs/en/model-config#correct-the-window-for-a-gateway-or-custom-model-id to set the window."}
+{"time":"2026-11-12T18:45:09.462499014Z","message":"[claude-code:unrecognized_model] {\"model\":\"qwen2.5:3b\",\"query_source\":\"sdk\"}"}
+{"time":"2026-11-12T18:45:27.643055068Z","message":"Done"}
+{"time":"2026-11-12T18:45:27.684310076Z","message":"time=2026-11-12T18:45:27.684Z level=INFO msg=\"task command completed successfully\" pid=10"}

@@ -1,0 +1,2 @@
+Warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod "counter-7cc7dcd596-5tj9h" force deleted from ate-demo-counter namespace

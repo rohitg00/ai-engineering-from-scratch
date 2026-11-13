@@ -1,0 +1,7 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+{"time":"2026-11-12T16:17:31.230946972Z","message":"time=2026-11-12T16:17:31.230Z level=WARN msg=\"git fetch error (continuing setup)\" repo=https://github.com/pallets/itsdangerous.git error=\"git fetch: exit status 128\" output=\"Reinitialized existing Git repository in /workspace/itsdangerous/.git
+{"time":"2026-11-12T16:17:31.23164907Z","message":"time=2026-11-12T16:17:31.231Z level=WARN msg=\"maiden run workspace setup completed with errors; marker omitted to allow retry\" path=/workspace"}
+{"time":"2026-11-12T16:17:31.231702161Z","message":"time=2026-11-12T16:17:31.231Z level=INFO msg=\"workspace maiden run setup marked ready\" path=/workspace"}
+{"time":"2026-11-12T16:19:11.905950789Z","message":"time=2026-11-12T16:19:11.904Z level=INFO msg=\"initializing AX task runner\" port=80 workspace=s-ws wsPath=/workspace"}
+{"time":"2026-11-12T16:19:11.908650967Z","message":"time=2026-11-12T16:19:11.908Z level=INFO msg=\"workspace already initialized; skipping maiden run setup\" path=/workspace"}
+{"time":"2026-11-12T16:19:11.908678418Z","message":"time=2026-11-12T16:19:11.908Z level=INFO msg=\"workspace maiden run setup marked ready\" path=/workspace"}

@@ -1,0 +1,13 @@
+a-run ACTOR_STATE_RUNNING 200	0.028798	count=214 process_age_s=525.1 
+a-term ACTOR_STATE_RUNNING 200	0.027338	count=448 process_age_s=525.3 sigterm_seen=1 
+a-cyc ACTOR_STATE_CRASHED 503	0.024770	actor up-lab/a-cyc unavailable: AssignWorker prerequisite not met for Actor: up-lab/a-cyc (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPEN
+ATESPACE   NAME                TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc               up-lab/up-drill   ACTOR_STATE_CRASHED     <none>                                          77        8m29s
+up-lab     a-def               up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          10        8m31s
+up-lab     a-fresh             up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         8m24s
+up-lab     a-new-upgrade       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         28s
+up-lab     a-run               up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-2gmrc   10.244.0.39   8         8m34s
+up-lab     a-sync              up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         8m32s
+up-lab     a-tag               up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         8m30s
+up-lab     a-tag-new-upgrade   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         28s
+up-lab     a-term              up-lab/up-trap    ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-rx4ks   10.244.0.36   7         8m28s

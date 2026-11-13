@@ -1,0 +1,1 @@
+ls: cannot access '<home>/u/rec/installs': No such file or directory

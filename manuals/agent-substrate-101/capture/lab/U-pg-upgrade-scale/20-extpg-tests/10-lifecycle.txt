@@ -1,0 +1,19 @@
+ATESPACE   NAME   TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+u-lab      lc1    u-lab/u-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+create 0.238 s state ACTOR_STATE_SUSPENDED
+first request: 200	0.476548	count=1 process_age_s=12.8 
+state ACTOR_STATE_RUNNING
+request: 200	0.026405	count=2 process_age_s=13.3 
+request: 200	0.030297	count=3 process_age_s=13.5 
+ATESPACE   NAME   TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+u-lab      lc1    u-lab/u-drill   ACTOR_STATE_SUSPENDED   <none>                    5         2s
+suspend sync 0.798 s state ACTOR_STATE_SUSPENDED
+resume request: 200	0.333700	count=4 process_age_s=15.0 
+request: 200	0.029002	count=5 process_age_s=15.2 
+ATESPACE   NAME   TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+u-lab      lc1    u-lab/u-drill   ACTOR_STATE_SUSPENDED   <none>                    9         3s
+suspend default 0.464 s state ACTOR_STATE_SUSPENDED
+state after 3 s ACTOR_STATE_SUSPENDED
+resume request: 200	0.491163	count=6 process_age_s=20.3 
+ATESPACE   NAME   TEMPLATE        STATE                 WORKER POD                      WORKER IPS    VERSION   AGE
+u-lab      lc1    u-lab/u-drill   ACTOR_STATE_RUNNING   u-lab/u-pool-545b846b8c-zn7pz   10.244.0.43   11        8s

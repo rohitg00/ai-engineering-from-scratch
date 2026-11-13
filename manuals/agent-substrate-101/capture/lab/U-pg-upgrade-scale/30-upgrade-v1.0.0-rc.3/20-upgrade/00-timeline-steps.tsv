@@ -1,0 +1,24 @@
+1794500377.239	16:19:37	21-step1-podcertificate-controller begin
+1794500411.152	16:20:11	21-step1-podcertificate-controller end rc=0 seconds=33.898
+1794500411.161	16:20:11	22-step2-atelet begin
+1794500442.101	16:20:42	22-step2-atelet end rc=0 seconds=30.926
+1794500445.866	16:20:45	23-step3-patch begin
+1794500446.306	16:20:46	23-step3-deployment-has-new-image
+1794500607.528	16:23:27	23-owner-suspends-a-run state-before=ACTOR_STATE_CRASHED
+1794500607.977	16:23:27	23-a-run-suspended seconds=0.222 state=ACTOR_STATE_CRASHED
+1794500608.138	16:23:28	23-step3-roll-done rc=0 seconds=0.147
+1794500608.295	16:23:28	23-no-terminating-worker-left
+1794500608.431	16:23:28	24a-step4a-apiserver begin
+1794500636.813	16:23:56	24a-step4a-apiserver end rc=0 seconds=28.368
+1794500637.338	16:23:57	24a-rollouts-done
+1794500637.346	16:23:57	24b-step4b-ate-controller begin
+1794500649.698	16:24:09	24b-step4b-ate-controller end rc=0 seconds=12.337
+1794500649.828	16:24:09	24c-step4c-atenet begin
+1794500671.674	16:24:31	24c-step4c-atenet end rc=0 seconds=21.830
+1794500672.008	16:24:32	24c-rollouts-done
+1794500672.016	16:24:32	24d-step4d-sandboxconfig begin
+1794500690.711	16:24:50	24d-step4d-sandboxconfig end rc=0 seconds=18.680
+1794500690.719	16:24:50	24e-step4e-ate-system begin
+1794500720.275	16:25:20	24e-step4e-ate-system end rc=0 seconds=29.540
+1794500786.172	16:26:26	upgrade-commands-done
+1794500816.183	16:26:56	end

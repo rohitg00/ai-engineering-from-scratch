@@ -1,0 +1,12 @@
+          List of relations
+ Schema |    Name    | Type  | Owner 
+--------+------------+-------+-------
+ public | gateways   | table | ax
+ public | locks      | table | ax
+ public | models     | table | ax
+ public | tasks      | table | ax
+ public | workspaces | table | ax
+(5 rows)
+
+NAME                 STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE     VOLUMEMODE
+data-ax-postgres-0   Bound    pvc-4ae2ae2a-6090-476a-8233-ac71df8e18fa   10Gi       RWO            standard       <unset>                 2m18s   Filesystem

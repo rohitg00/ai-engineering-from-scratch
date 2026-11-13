@@ -1,0 +1,63 @@
+2026-11-12T18:10:49.470Z phase prep: remove what experiment T left, timers, endpoint to the store on the other guest
+t-store
+t-store-data
+2026-11-12T18:11:12.079Z cluster ready: workers active 4; AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 
+2026-11-12T18:11:39.233Z cluster ready: workers active 4; AWS_ENDPOINT_URL=http://10.0.2.2:19000 AWS_ENDPOINT_URL=http://10.0.2.2:19000 
+2026-11-12T18:12:10.758Z PREP-DONE
+2026-11-12T18:13:07.891Z phase plain: no shaping
+2026-11-12T18:13:09.520Z remote-0-0-0 warmup 200	0.274829	count=1 mb=0 sum=0 process_age_s=0.1 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T18:14:20.861Z remote-0-0-0 done; guest disk free 17G; local snapshots MiB 1+1
+2026-11-12T18:14:24.774Z remote-0-0-200 warmup 200	2.543931	count=1 mb=200 sum=26971 process_age_s=1.0 | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T18:16:03.237Z remote-0-0-200 done; guest disk free 17G; local snapshots MiB 1+1
+2026-11-12T18:16:14.553Z remote-0-0-1000 warmup 504	10.052269	 | ACTOR_STATE_RESUMING	multi-worker
+2026-11-12T18:16:53.406Z remote-0-0-1000 cycle 1 did not return 200; reverted: ACTOR_STATE_SUSPENDED
+2026-11-12T18:18:33.780Z restart of the cycles with retry-until-200 logic; rows so far are in 20-store-cycles.tsv
+2026-11-12T18:18:35.750Z phase plain: no shaping
+2026-11-12T18:18:37.195Z remote-0-0-1000 cycle 2 did not return 200; reverted: 
+2026-11-12T18:18:37.431Z remote-0-0-0 first activation: first answer 200	0.261096, tries 1, 200 after 0.289 s | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T18:19:49.224Z remote-0-0-0 done; guest disk free 16G; local snapshots MiB 1+1
+2026-11-12T18:19:51.236Z remote-0-0-200 first activation: first answer 200	0.612427, tries 1, 200 after 0.639 s | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T18:21:30.295Z remote-0-0-200 done; guest disk free 16G; local snapshots MiB 1+1
+2026-11-12T18:21:43.914Z remote-0-0-1000 first activation: first answer 504	10.055019, tries 2, 200 after 12.258 s | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T18:25:07.656Z remote-0-0-1000 done; guest disk free 15G; local snapshots MiB 1+1
+2026-11-12T18:25:08.070Z PLAIN-DONE
+2026-11-12T18:25:08.701Z phase rtt100
+2026-11-12T18:27:05.888Z remote-100-0-0 first activation: first answer 200	0.212975, tries 1, 200 after 0.237 s | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T18:28:28.503Z remote-100-0-0 done; guest disk free 15G; local snapshots MiB 1+1
+2026-11-12T18:29:23.651Z remote-100-0-200 first activation: first answer 504	10.051195, tries 5, 200 after 53.816 s | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T18:45:46.167Z remote-100-0-200 done; guest disk free 8.5G; local snapshots MiB 1+1
+2026-11-12T18:45:50.874Z remote-100-0-1000 first activation: first answer 200	3.282815, tries 1, 200 after 3.314 s | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T18:58:04.708Z the 100 ms phase at 1,000 MiB was stopped by hand after cycle 1: one cycle takes about 11 minutes on this path
+2026-11-12T18:58:05.948Z RTT100-DONE (cut short)
+2026-11-12T18:58:47.601Z restart of the cycles with retry-until-200 logic; rows so far are in 20-store-cycles.tsv
+2026-11-12T18:58:50.004Z phase rate 100 mbit
+2026-11-12T18:59:27.305Z remote-0-100-200 first activation: first answer 200	0.586750, tries 1, 200 after 0.613 s | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T19:03:54.128Z remote-0-100-200 done; guest disk free 7.6G; local snapshots MiB 1+1
+2026-11-12T19:03:54.602Z phase rate 20 mbit
+2026-11-12T19:06:17.226Z remote-0-20-200 first activation: first answer 200	0.592214, tries 1, 200 after 0.619 s | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T19:23:33.754Z remote-0-20-200 done; guest disk free 13G; local snapshots MiB 1+1
+2026-11-12T19:23:34.166Z RATE-DONE
+2026-11-12T19:30:18.796Z phase tls: endpoint https://10.0.2.2:19001 with AWS_CA_BUNDLE
+2026-11-12T19:30:41.790Z cluster ready: workers active 4; AWS_ENDPOINT_URL=https://10.0.2.2:19001,AWS_CA_BUNDLE=/x-store-ca/ca.crt AWS_ENDPOINT_URL=https://10.0.2.2:19001,AWS_CA_BUNDLE=/x-store-ca/ca.crt 
+2026-11-12T19:30:54.911Z remote-tls-0-0-0 first activation: first answer 200	0.251500, tries 1, 200 after 0.276 s | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T19:32:06.627Z remote-tls-0-0-0 done; guest disk free 13G; local snapshots MiB 1+1
+2026-11-12T19:32:08.587Z remote-tls-0-0-200 first activation: first answer 200	0.546059, tries 1, 200 after 0.572 s | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T19:33:58.759Z remote-tls-0-0-200 done; guest disk free 13G; local snapshots MiB 1+1
+2026-11-12T19:34:03.161Z remote-tls-0-0-1000 first activation: first answer 200	3.002780, tries 1, 200 after 3.031 s | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T19:38:17.663Z remote-tls-0-0-1000 done; guest disk free 13G; local snapshots MiB 1+1
+2026-11-12T19:38:18.742Z TLS-DONE
+2026-11-12T19:38:59.778Z phase local100: the method of experiment T (store as a container on this guest, host network), 100 ms added on the bridge
+2026-11-12T19:39:19.573Z cluster ready: workers active 4; AWS_ENDPOINT_URL=http://172.18.0.1:9100,AWS_CA_BUNDLE=/x-store-ca/ca.crt AWS_ENDPOINT_URL=http://172.18.0.1:9100,AWS_CA_BUNDLE=/x-store-ca/ca.crt 
+2026-11-12T19:40:04.407Z local-100-0-200 first activation: first answer 504	10.054897, tries 2, 200 after 15.950 s | ACTOR_STATE_RUNNING	multi-worker2
+2026-11-12T19:42:34.724Z local-100-0-200 done; guest disk free 11G
+2026-11-12T19:42:52.413Z local-100-0-1000 first activation: first answer 504	10.050692, tries 2, 200 after 16.300 s | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T19:46:42.137Z local-100-0-1000 done; guest disk free 10G
+2026-11-12T19:47:00.993Z cluster ready: workers active 4; AWS_ENDPOINT_URL=http://10.0.2.2:19000,AWS_CA_BUNDLE=/x-store-ca/ca.crt AWS_ENDPOINT_URL=http://10.0.2.2:19000,AWS_CA_BUNDLE=/x-store-ca/ca.crt 
+2026-11-12T19:47:01.595Z LOCAL100-DONE AWS_ENDPOINT_URL=http://10.0.2.2:19000,AWS_CA_BUNDLE=/x-store-ca/ca.crt AWS_ENDPOINT_URL=http://10.0.2.2:19000,AWS_CA_BUNDLE=/x-store-ca/ca.crt 
+2026-11-12T19:47:02.026Z phase restore
+2026-11-12T19:47:31.254Z cluster ready: workers active 4; AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000,AWS_CA_BUNDLE=/x-store-ca/ca.crt AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000,AWS_CA_BUNDLE=/x-store-ca/ca.crt 
+2026-11-12T19:47:51.225Z cluster ready: workers active 4; AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 
+2026-11-12T19:48:08.412Z cluster ready: workers active 4; AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 
+2026-11-12T19:48:15.103Z check after restore: 200	0.482357	count=1 mb=50 sum=6512 process_age_s=2.0 | ACTOR_STATE_RUNNING	multi-worker
+2026-11-12T19:48:16.618Z sync suspend after restore: ACTOR_STATE_SUSPENDED	multi-worker	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker
+2026-11-12T19:48:17.568Z RESTORE-DONE AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 AWS_ENDPOINT_URL=http://rustfs.ate-system.svc:9000 

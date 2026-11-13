@@ -1,0 +1,12 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+ATESPACE   NAME               TEMPLATE                                 STATE                 WORKER POD                         WORKER IPS    VERSION   AGE
+default    ax-install-check   default/ax-install-check-tmpl-b08f2422   ACTOR_STATE_RUNNING   demo-drill/drill-8bc8cbccc-mrs22   10.244.0.25   3         6s
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY        POD                                  AGE
+fd9cf386-1eff-45b6-9bfa-13703bdd04f4   ax-pool   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi      ax-system/ax-pool-588b78fd54-29xgr   16s
+fc5d3c2d-1542-49d3-9585-5f1b18b4f43d   ax-pool   WORKER_STATE_ACTIVE   0/1000   0/2000            0/1984Mi      ax-system/ax-pool-588b78fd54-88rc7   16s
+6e9d45e1-1617-41ab-972b-b4a6b5ed3380   agent     WORKER_STATE_ACTIVE   0/1000   0/2000            0/960Mi       demo-agent/agent-845f48c9bf-k8lkw    152m
+e844701e-05f4-4480-b58f-379781074a83   drill     WORKER_STATE_ACTIVE   0/1000   0/1000            0/960Mi       demo-drill/drill-8bc8cbccc-jk55c     156m
+981cf291-9c0c-432d-abbc-27b602c9eaf7   drill     WORKER_STATE_ACTIVE   1/1000   1000/1000         512Mi/960Mi   demo-drill/drill-8bc8cbccc-mrs22     156m
+6708c2c4-991b-4ea3-80f7-83ce5af320a3   idle      WORKER_STATE_ACTIVE   2/1000   2000/2000         512Mi/960Mi   demo-idle/idle-846d566ff4-2x6wh      150m
+35a8a41c-106e-4636-a934-3e1fc88805b9   tools     WORKER_STATE_ACTIVE   0/1000   0/2000            0/960Mi       demo-tools/tools-5b5f9c9fb7-nhsjh    151m

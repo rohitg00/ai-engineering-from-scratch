@@ -1,0 +1,2 @@
+1931	/var/lib/ate/snapshots
+910	/var/local-path-provisioner

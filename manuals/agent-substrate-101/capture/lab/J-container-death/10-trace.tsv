@@ -1,0 +1,40 @@
+ts	case	event	detail
+2026-11-12T11:30:43.622Z	j1	call	200	0.410878	count=1 mb=50 fill=random sum=5886 process_age_s=0.3
+2026-11-12T11:30:43.700Z	j1	call	200	0.058464	count=2 mb=50 fill=random sum=5886 process_age_s=0.4
+2026-11-12T11:30:44.877Z	j1	after-sync-suspend	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:30:45.144Z	j1	call	200	0.247937	count=3 mb=50 fill=random sum=5886 process_age_s=0.6
+2026-11-12T11:30:45.229Z	j1	exit-request	200	0.065314	exiting with code 3
+2026-11-12T11:30:47.441Z	j1	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:30:47.518Z	j1	call	503	0.058459	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T11:30:49.710Z	j1	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:30:49.787Z	j1	call	503	0.057582	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T11:30:52.002Z	j1	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:30:52.090Z	j1	call	503	0.069035	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T11:30:54.302Z	j1	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:30:54.377Z	j1	call	503	0.056090	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T11:30:56.583Z	j1	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:30:56.662Z	j1	call	503	0.058293	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T11:30:58.878Z	j1	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane
+2026-11-12T11:30:58.958Z	j1	call	503	0.058297	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T11:31:00.122Z	j1	suspend-attempt	Error: failed to suspend actor: rpc error: code = Internal desc = internal server error: workflow failed at step CallAteletSuspend: actor lab-c/j1 crashed: rpc error: code = Internal desc = while calling worker Checkpoin
+2026-11-12T11:31:00.333Z	j1	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:-
+2026-11-12T11:31:00.418Z	j1	call-after-suspend-attempt	503	0.065574	actor lab-c/j1 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)
+2026-11-12T11:31:00.631Z	j1	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:kind-control-plane,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_PENDING:gen3:-
+2026-11-12T11:31:00.862Z	j1	revert	ATESPACE   NAME   TEMPLATE        STATE                   WORKER POD   WORKER IPS   VERSION   AGE lab-c      j1     lab-c/fail-50   ACTOR_STATE_SUSPENDED   <none>                    11        18s 
+2026-11-12T11:31:01.273Z	j1	call-after-revert	200	0.391692	count=3 mb=50 fill=random sum=5886 process_age_s=0.7
+2026-11-12T11:31:01.475Z	j1	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:-
+2026-11-12T11:31:02.891Z	j2	call	200	0.272209	count=1 mb=50 fill=random sum=5886 process_age_s=0.3
+2026-11-12T11:31:02.971Z	j2	call	200	0.062073	count=2 mb=50 fill=random sum=5886 process_age_s=0.4
+2026-11-12T11:31:03.058Z	j2	oom-request	200	0.067820	allocating until killed
+2026-11-12T11:31:05.277Z	j2	state	ACTOR_STATE_RUNNING	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T11:31:05.353Z	j2	call	503	0.057289	upstream connect error or disconnect/reset before headers. reset reason: connection termination
+2026-11-12T11:31:07.557Z	j2	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T11:31:07.641Z	j2	call	503	0.064760	actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)
+2026-11-12T11:31:09.851Z	j2	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T11:31:09.928Z	j2	call	503	0.058019	actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)
+2026-11-12T11:31:12.133Z	j2	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T11:31:12.217Z	j2	call	503	0.063996	actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)
+2026-11-12T11:31:14.424Z	j2	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T11:31:14.514Z	j2	call	503	0.068600	actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)
+2026-11-12T11:31:16.724Z	j2	state	ACTOR_STATE_CRASHED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1:-
+2026-11-12T11:31:16.807Z	j2	call	503	0.061831	actor lab-c/j2 unavailable: AssignWorker prerequisite not met for Actor: lab-c/j2 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)

@@ -1,0 +1,2 @@
+ATESPACE   NAME               TEMPLATE                                 STATE                 WORKER POD                          WORKER IPS    VERSION   AGE
+default    ax-install-check   default/ax-install-check-tmpl-b08f2422   ACTOR_STATE_RUNNING   demo-tools/tools-5b5f9c9fb7-nhsjh   10.244.0.31   48        14m

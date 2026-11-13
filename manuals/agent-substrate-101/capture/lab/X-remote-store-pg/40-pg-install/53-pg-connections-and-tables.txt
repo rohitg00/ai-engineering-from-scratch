@@ -1,0 +1,30 @@
+ERROR:  syntax error at end of input
+LINE 1: ...n pg_stat_activity using (pid) where usename like substrate%
+                                                                       ^
+                                List of tables
+  Schema   |            Name             |       Type        |      Owner      
+-----------+-----------------------------+-------------------+-----------------
+ substrate | actor_egress_policies       | table             | substrate_owner
+ substrate | actor_templates             | table             | substrate_owner
+ substrate | actors                      | table             | substrate_owner
+ substrate | assertion                   | table             | substrate_owner
+ substrate | atespace_access_policies    | table             | substrate_owner
+ substrate | atespaces                   | table             | substrate_owner
+ substrate | authorization_model         | table             | substrate_owner
+ substrate | changelog                   | table             | substrate_owner
+ substrate | global_access_policy        | table             | substrate_owner
+ substrate | leases                      | table             | substrate_owner
+ substrate | schema_migrations           | table             | substrate_owner
+ substrate | store                       | table             | substrate_owner
+ substrate | tags                        | table             | substrate_owner
+ substrate | tuple                       | table             | substrate_owner
+ substrate | worker_assignments          | table             | substrate_owner
+ substrate | worker_outbox               | partitioned table | substrate_owner
+ substrate | worker_outbox_default       | table             | substrate_owner
+ substrate | worker_outbox_p202611121830 | table             | substrate_owner
+ substrate | worker_outbox_p202611121845 | table             | substrate_owner
+ substrate | worker_outbox_p202611121900 | table             | substrate_owner
+ substrate | worker_outbox_trim          | table             | substrate_owner
+ substrate | workers                     | table             | substrate_owner
+(22 rows)
+

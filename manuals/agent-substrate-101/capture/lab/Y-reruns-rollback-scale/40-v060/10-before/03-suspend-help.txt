@@ -1,0 +1,22 @@
+Suspend a resource
+
+Usage:
+  kubectl-ate suspend [command]
+
+Available Commands:
+  actor       Suspend an actor
+
+Flags:
+  -h, --help   help for suspend
+
+Global Flags:
+      --context string      kubeconfig context to use
+      --endpoint string     manual override for the gRPC target (e.g., localhost:8080); if omitted, automatically port-forwards
+      --kubeconfig string   path to the kubeconfig file
+  -o, --output string       output format: table, json, or yaml (default "table")
+      --preview             allow the use of preview features enabled on the server
+      --token-file string   path to a bearer token for ate-api authentication, or - for stdin (defaults to a Kubernetes ServiceAccount token)
+      --trace               enable tracing for the request
+  -v, --verbose count       output verbosity; may be repeated (e.g. -v, -vv, -vvvvv)
+
+Use "kubectl-ate suspend [command] --help" for more information about a command.

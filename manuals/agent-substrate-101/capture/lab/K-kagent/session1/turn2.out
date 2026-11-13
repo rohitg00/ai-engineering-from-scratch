@@ -1,0 +1,80 @@
+note=hello-from-turn1
+scratch=cat: can't open '/tmp/scratch.txt': No such file or directory
+bg=
+uptime=0.74
+PID   ELAPSED COMMAND
+    1  0:01   /app
+   10  0:01   bash -c echo "note=$(cat /data/workspace/note.txt 2>&1)"; echo "scratch=$(cat /tmp/scratch.txt 2>&1)"; echo "bg=$(pgrep -x sleep | tr '\n' ' ')"; echo "uptime=$(cut -d' ' -f1 /proc/uptime)"; ps -o pid,etime,args | head -12; echo ---env; env | grep -i -E 'key|token|openai|proxy|ssl|ca_|kagent' | cut -c1-110; echo ---mounts; ls -la /data /run/kagent 2>&1 | head -24; df -h /data /tmp / 2>&1
+   19  0:01   ps -o pid,etime,args
+   20  0:01   head -12
+---env
+NODE_EXTRA_CA_CERTS=/run/kagent/egress/trust-bundle.pem
+OPENAI_API_KEY=kagent-credential-injected
+HOME=/home/kagent
+GIT_SSL_CAINFO=/run/kagent/egress/trust-bundle.pem
+SSL_CERT_DIR=/run/kagent/egress
+KAGENT_BOOTSTRAP_JSON={"format_version":1,"control_plane_url":"http://kagent-controller.kagent.svc.cluster.loc
+CURL_CA_BUNDLE=/run/kagent/egress/trust-bundle.pem
+SSL_CERT_FILE=/run/kagent/egress/trust-bundle.pem
+REQUESTS_CA_BUNDLE=/run/kagent/egress/trust-bundle.pem
+AWS_CA_BUNDLE=/run/kagent/egress/trust-bundle.pem
+---mounts
+/data:
+total 44
+drwxrwxrwx    4 root     root           100 Nov 12 10:19 .
+drwxr-xr-x    1 root     root            80 Nov 12 10:19 ..
+drwx------    3 kagent   kagent          60 Nov 12 10:16 kagent
+-rw-r--r--    1 kagent   kagent       45056 Nov 12 10:19 sessions.db
+drwxr-xr-x    2 kagent   kagent          60 Nov 12 10:18 workspace
+
+/run/kagent:
+total 16
+drwxr-xr-x    1 root     root          4096 Nov 12 10:19 .
+drwxr-xr-x    1 root     root          4096 Nov 12 10:19 ..
+drwxr-xr-x    2 root     root          4096 Nov 12 10:19 egress
+drwxr-xr-x    2 root     root          4096 Nov 12 10:19 identity
+Filesystem                Size      Used Available Use% Mounted on
+none                      8.0E     52.0K      8.0E   0% /data
+none                    512.0M         0    512.0M   0% /tmp
+none                      8.0E      8.0K      8.0E   0% /
+TOOL_OUTPUT_BEGIN
+note=hello-from-turn1
+scratch=cat: can't open '/tmp/scratch.txt': No such file or directory
+bg=
+uptime=0.74
+PID   ELAPSED COMMAND
+    1  0:01   /app
+   10  0:01   bash -c echo "note=$(cat /data/workspace/note.txt 2>&1)"; echo "scratch=$(cat /tmp/scratch.txt 2>&1)"; echo "bg=$(pgrep -x sleep | tr '\n' ' ')"; echo "uptime=$(cut -d' ' -f1 /proc/uptime)"; ps -o pid,etime,args | head -12; echo ---env; env | grep -i -E 'key|token|openai|proxy|ssl|ca_|kagent' | cut -c1-110; echo ---mounts; ls -la /data /run/kagent 2>&1 | head -24; df -h /data /tmp / 2>&1
+   19  0:01   ps -o pid,etime,args
+   20  0:01   head -12
+---env
+NODE_EXTRA_CA_CERTS=/run/kagent/egress/trust-bundle.pem
+OPENAI_API_KEY=kagent-credential-injected
+HOME=/home/kagent
+GIT_SSL_CAINFO=/run/kagent/egress/trust-bundle.pem
+SSL_CERT_DIR=/run/kagent/egress
+KAGENT_BOOTSTRAP_JSON={"format_version":1,"control_plane_url":"http://kagent-controller.kagent.svc.cluster.loc
+CURL_CA_BUNDLE=/run/kagent/egress/trust-bundle.pem
+SSL_CERT_FILE=/run/kagent/egress/trust-bundle.pem
+REQUESTS_CA_BUNDLE=/run/kagent/egress/trust-bundle.pem
+AWS_CA_BUNDLE=/run/kagent/egress/trust-bundle.pem
+---mounts
+/data:
+total 44
+drwxrwxrwx    4 root     root           100 Nov 12 10:19 .
+drwxr-xr-x    1 root     root            80 Nov 12 10:19 ..
+drwx------    3 kagent   kagent          60 Nov 12 10:16 kagent
+-rw-r--r--    1 kagent   kagent       45056 Nov 12 10:19 sessions.db
+drwxr-xr-x    2 kagent   kagent          60 Nov 12 10:18 workspace
+
+/run/kagent:
+total 16
+drwxr-xr-x    1 root     root          4096 Nov 12 10:19 .
+drwxr-xr-x    1 root     root          4096 Nov 12 10:19 ..
+drwxr-xr-x    2 root     root          4096 Nov 12 10:19 egress
+drwxr-xr-x    2 root     root          4096 Nov 12 10:19 identity
+Filesystem                Size      Used Available Use% Mounted on
+none                      8.0E     52.0K      8.0E   0% /data
+none                    512.0M         0    512.0M   0% /tmp
+none                      8.0E      8.0K      8.0E   0% /
+TOOL_OUTPUT_END

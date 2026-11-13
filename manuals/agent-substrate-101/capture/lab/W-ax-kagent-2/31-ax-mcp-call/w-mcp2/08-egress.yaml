@@ -1,0 +1,13 @@
+rules:
+- http:
+    hostnames: ["ollama.ax-system.svc.cluster.local"]
+    ports:
+      numbers: [11434]
+- http:
+    hostnames: ["lab-mcp.ax-system.svc.cluster.local"]
+    ports:
+      numbers: [8080]
+- tlsPassthrough:
+    hostnames: ["github.com"]
+    ports:
+      numbers: [443]

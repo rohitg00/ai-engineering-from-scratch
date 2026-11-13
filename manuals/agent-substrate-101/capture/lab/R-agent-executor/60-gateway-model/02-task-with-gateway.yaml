@@ -1,0 +1,10 @@
+apiVersion: ax.io/v1alpha1
+kind: Task
+metadata:
+  name: ax-gw-task
+  atespace: default
+spec:
+  debug: true
+  command: ["sleep", "infinity"]
+  gateway:
+    name: review-bot-gw

@@ -1,0 +1,5 @@
+      1 2026-11-13 06:58:59.066 GMT [7210] FATAL:  remaining connection slots are reserved for roles with the SUPERUSER attribute
+      1 2026-11-13 06:58:58.982 GMT [7207] FATAL:  remaining connection slots are reserved for roles with the SUPERUSER attribute
+      1 2026-11-13 06:58:58.980 GMT [7208] FATAL:  remaining connection slots are reserved for roles with the SUPERUSER attribute
+      1 2026-11-13 06:58:58.979 GMT [7203] FATAL:  remaining connection slots are reserved for roles with the SUPERUSER attribute
+      1 2026-11-13 06:58:58.976 GMT [7204] FATAL:  remaining connection slots are reserved for roles with the SUPERUSER attribute

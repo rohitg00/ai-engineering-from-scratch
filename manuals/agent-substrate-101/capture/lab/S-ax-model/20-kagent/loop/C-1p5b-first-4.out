@@ -1,0 +1,3 @@
+184.07 0.00
+184.10
+The first number returned by the command `cat /proc/uptime` is 184.10.

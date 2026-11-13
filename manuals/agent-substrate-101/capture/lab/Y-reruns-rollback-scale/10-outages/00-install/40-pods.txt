@@ -1,0 +1,26 @@
+NAMESPACE                          NAME                                         READY   STATUS      RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-system                         ate-api-server-7bc56575c9-528gj              2/2     Running     0          62s     10.244.0.10   yout-control-plane   <none>           <none>
+ate-system                         ate-api-server-7bc56575c9-jcshl              2/2     Running     0          62s     10.244.0.8    yout-control-plane   <none>           <none>
+ate-system                         ate-controller-7984566f8d-zmh29              1/1     Running     0          59s     10.244.0.9    yout-control-plane   <none>           <none>
+ate-system                         ate-idp-server-dcd5f565f-cmf7m               1/1     Running     0          61s     10.244.0.13   yout-control-plane   <none>           <none>
+ate-system                         ate-idp-server-dcd5f565f-vm2j6               1/1     Running     0          61s     10.244.0.12   yout-control-plane   <none>           <none>
+ate-system                         atelet-hm2s9                                 2/2     Running     0          58s     10.244.0.11   yout-control-plane   <none>           <none>
+ate-system                         atenet-egress-7758c8fb4-tzj6r                3/3     Running     0          49s     10.244.0.22   yout-control-plane   <none>           <none>
+ate-system                         atenet-router-d844d4995-lj6mg                2/2     Running     0          57s     10.244.0.16   yout-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-5bb6b77b65-z98qf     1/1     Running     0          50s     10.244.0.21   yout-control-plane   <none>           <none>
+ate-system                         postgres-0                                   2/2     Running     0          92s     10.244.0.7    yout-control-plane   <none>           <none>
+ate-system                         rustfs-54c86945fb-hzrcd                      1/1     Running     0          54s     10.244.0.20   yout-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-vzdrl                     0/1     Completed   0          54s     10.244.0.15   yout-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-p8lxh                     1/1     Running     0          2m6s    10.244.0.2    yout-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-s8l6k                     1/1     Running     0          2m6s    10.244.0.4    yout-control-plane   <none>           <none>
+kube-system                        etcd-yout-control-plane                      1/1     Running     0          2m14s   172.18.0.3    yout-control-plane   <none>           <none>
+kube-system                        kindnet-g9flt                                1/1     Running     0          2m6s    172.18.0.3    yout-control-plane   <none>           <none>
+kube-system                        kube-apiserver-yout-control-plane            1/1     Running     0          2m14s   172.18.0.3    yout-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-yout-control-plane   1/1     Running     0          2m14s   172.18.0.3    yout-control-plane   <none>           <none>
+kube-system                        kube-proxy-t2dc4                             1/1     Running     0          2m6s    172.18.0.3    yout-control-plane   <none>           <none>
+kube-system                        kube-scheduler-yout-control-plane            1/1     Running     0          2m14s   172.18.0.3    yout-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-pxl9r      1/1     Running     0          2m6s    10.244.0.5    yout-control-plane   <none>           <none>
+otel-system                        jaeger-fb9948ddf-dv2j6                       1/1     Running     0          53s     10.244.0.18   yout-control-plane   <none>           <none>
+otel-system                        opentelemetry-collector-6f5b87f5dd-b8xq4     1/1     Running     0          53s     10.244.0.17   yout-control-plane   <none>           <none>
+otel-system                        prometheus-5b5fb67d57-rrkvp                  1/1     Running     0          52s     10.244.0.19   yout-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-57c94fb5b-pmk2v    1/1     Running     0          2m2s    10.244.0.3    yout-control-plane   <none>           <none>

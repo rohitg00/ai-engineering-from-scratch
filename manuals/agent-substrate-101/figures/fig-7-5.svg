@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 472" role="img" aria-labelledby="fig-7-5-title fig-7-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-5-title">What each Agent Executor object became on Agent Substrate in our run</title>
+  <desc id="fig-7-5-desc">Six rows map Agent Executor to Agent Substrate, as recorded in our run of one commit on Substrate v1.0.0. A Task is a row in the Agent Executor database and became one actor and one template with the same name, a files-only snapshot, and a golden snapshot. A Workspace was prepared inside the sandbox by the task runner at each start. A Gateway was stored, but a task that named it was rejected with Unimplemented, so no egress policy existed. A Model was stored without a check of its Secret, and no field of a task names a Model, so no key reached a task. The resume and suspend commands became the two Substrate calls, and a task with no request stayed RUNNING for 600 seconds. The template named no pool, and every task ran on a WorkerPool of another namespace.</desc>
+  <defs><marker id="fig-7-5-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-7-5-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENT EXECUTOR</text>
+  <text x="380" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENT SUBSTRATE</text>
+  <rect x="20" y="34" width="240" height="48" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="140" y="53.1" font-size="12" text-anchor="middle" font-weight="700">Task</text>
+  <text x="140" y="70.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a row in its own database</text>
+  <rect x="380" y="34" width="240" height="48" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="500" y="53.1" font-size="12" text-anchor="middle" font-weight="700">Actor and ActorTemplate</text>
+  <text x="500" y="70.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">same name, files-only snapshot</text>
+  <line x1="260" y1="58" x2="379" y2="58" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-5-head-ink)"/>
+  <rect class="m-knock" x="282" y="41.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="52" font-size="11.5" text-anchor="middle">one to one</text>
+  <rect x="20" y="106" width="240" height="48" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="140" y="125.1" font-size="12" text-anchor="middle" font-weight="700">Workspace</text>
+  <text x="140" y="142.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inline files and Git repositories</text>
+  <rect x="380" y="106" width="240" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="500" y="125.1" font-size="12" text-anchor="middle" font-weight="700">ax-task-runner, PID 1</text>
+  <text x="500" y="142.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">writes files, then tries the clone</text>
+  <line x1="260" y1="130" x2="379" y2="130" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-5-head-ink)"/>
+  <rect class="m-knock" x="271.65" y="113.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="124" font-size="11.5" text-anchor="middle">at each start</text>
+  <rect x="20" y="178" width="240" height="48" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="140" y="197.1" font-size="12" text-anchor="middle" font-weight="700">Gateway</text>
+  <text x="140" y="214.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stored, 1 egress rule</text>
+  <rect x="380" y="178" width="240" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="500" y="197.1" font-size="12" text-anchor="middle" font-weight="700">no EgressPolicy</text>
+  <text x="500" y="214.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">spec.gateway: Unimplemented</text>
+  <line x1="260" y1="202" x2="379" y2="202" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-5-head-rose)"/>
+  <rect class="m-knock" x="288.9" y="185.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="196" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">rejected</text>
+  <rect x="20" y="250" width="240" height="48" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="140" y="269.1" font-size="12" text-anchor="middle" font-weight="700">Model</text>
+  <text x="140" y="286.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stored, the Secret is not checked</text>
+  <rect x="380" y="250" width="240" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="500" y="269.1" font-size="12" text-anchor="middle" font-weight="700">nothing on Substrate</text>
+  <text x="500" y="286.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no task field names a Model</text>
+  <line x1="260" y1="274" x2="379" y2="274" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-5-head-rose)"/>
+  <rect class="m-knock" x="288.9" y="257.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="268" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">not used</text>
+  <rect x="20" y="322" width="240" height="48" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="140" y="341.1" font-size="12" text-anchor="middle" font-weight="700">ax resume, ax suspend</text>
+  <text x="140" y="358.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the commands that you send</text>
+  <rect x="380" y="322" width="240" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="500" y="341.1" font-size="12" text-anchor="middle" font-weight="700">ResumeActor, SuspendActor</text>
+  <text x="500" y="358.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">600 s idle: still RUNNING</text>
+  <line x1="260" y1="346" x2="379" y2="346" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-7-5-head-ink)"/>
+  <rect class="m-knock" x="285.45" y="329.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="340" font-size="11.5" text-anchor="middle">your call</text>
+  <rect x="20" y="394" width="240" height="48" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="140" y="413.1" font-size="12" text-anchor="middle" font-weight="700">no worker selector</text>
+  <text x="140" y="430.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the template names no pool</text>
+  <rect x="380" y="394" width="240" height="48" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="500" y="413.1" font-size="12" text-anchor="middle" font-weight="700">a WorkerPool of another team</text>
+  <text x="500" y="430.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every task ran outside our pool</text>
+  <line x1="260" y1="418" x2="379" y2="418" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-7-5-head-rose)"/>
+  <rect class="m-knock" x="288.9" y="401.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="319.5" y="412" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">any pool</text>
+</svg>

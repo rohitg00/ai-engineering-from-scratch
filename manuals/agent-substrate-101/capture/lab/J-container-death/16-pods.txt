@@ -1,0 +1,6 @@
+NAME                       READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+ballast-65cf95d875-bzgjd   1/1     Running   0          75m   10.244.0.26   kind-control-plane   <none>           <none>
+ballast-65cf95d875-f65dl   1/1     Running   0          75m   10.244.0.27   kind-control-plane   <none>           <none>
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY         POD                              AGE
+b17a6492-9643-42f1-bfdb-8bb88ee46772   ballast   WORKER_STATE_ACTIVE   1/1000   1000/2000         306Mi/3008Mi   lab-c/ballast-65cf95d875-bzgjd   75m
+ee4ba8b4-dbfa-4555-a621-7cf7662c1091   ballast   WORKER_STATE_ACTIVE   2/1000   2000/2000         612Mi/3008Mi   lab-c/ballast-65cf95d875-f65dl   75m

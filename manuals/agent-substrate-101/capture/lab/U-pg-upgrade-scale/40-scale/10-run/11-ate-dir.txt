@@ -1,0 +1,17 @@
+actors
+atelet-otlp.sock
+cache-boot-id
+image-cache
+sandbox-asset-cache
+sandbox-asset-scratch
+sandbox-runtime-index.json
+snapshot-cache
+snapshot-scratch
+snapshots
+worker-support.sock
+workers
+13	/var/lib/ate/snapshot-cache
+54	/var/lib/ate/image-cache
+159	/var/lib/ate/sandbox-asset-cache
+169	/var/lib/ate/actors
+1928	/var/lib/ate/snapshots

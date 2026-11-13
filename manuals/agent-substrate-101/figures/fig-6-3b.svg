@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 236" role="img" aria-labelledby="fig-6-3b-title fig-6-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-3b-title">DNS answers for example.com after a rule for it is added</title>
+  <desc id="fig-6-3b-desc">Three tracks over a time axis in seconds, where zero is the moment the policy update returned. In the polled run on Envoy and in the polled run on agentgateway, the samples up to 2 seconds before zero are NXDOMAIN and every later sample is an answer. In a third run on Envoy, with no earlier lookup of the name, requests at 14 and 16 seconds did not resolve the host, and a request at 18 seconds did.</desc>
+  <line x1="289" y1="22" x2="289" y2="180" stroke="var(--m-ink, #1a1a1a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="294" y="18" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">update returned</text>
+  <text x="16" y="53" font-size="11.5" font-weight="700">Envoy, polled</text>
+  <text x="16" y="67" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rule added</text>
+  <line x1="190" y1="56" x2="619" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="221.04" cy="56" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="254.04" cy="56" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="287.04" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="320.04" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="336.54" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="369.54" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="402.54" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="435.54" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="452.04" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="485.04" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="518.04" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="551.04" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="584.04" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="600.54" cy="56" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="16" y="99" font-size="11.5" font-weight="700">agentgateway, polled</text>
+  <text x="16" y="113" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rule added</text>
+  <line x1="190" y1="102" x2="619" y2="102" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="193.04" cy="102" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="226.04" cy="102" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="242.54" cy="102" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="275.54" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="308.54" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="341.54" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="358.04" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="391.04" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="424.04" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="440.54" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="473.54" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="506.54" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="523.04" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="556.04" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="589.04" cy="102" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="16" y="145" font-size="11.5" font-weight="700">Envoy, first lookups</text>
+  <text x="16" y="159" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">of a new name</text>
+  <line x1="190" y1="148" x2="619" y2="148" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <circle cx="524.27" cy="148" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="553.51" cy="148" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="583.39" cy="148" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="557.51" y="136" font-size="11" text-anchor="end" fill="var(--m-rose-ink, #b0344d)">not resolved</text>
+  <line x1="190" y1="180" x2="619" y2="180" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="190" y1="176" x2="190" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="223" y1="176" x2="223" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="223" y="198" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">-4</text>
+  <line x1="256" y1="176" x2="256" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="289" y1="176" x2="289" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="289" y="198" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="322" y1="176" x2="322" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="355" y1="176" x2="355" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="355" y="198" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="388" y1="176" x2="388" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="421" y1="176" x2="421" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="421" y="198" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="454" y1="176" x2="454" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="487" y1="176" x2="487" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="487" y="198" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">12</text>
+  <line x1="520" y1="176" x2="520" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="553" y1="176" x2="553" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="553" y="198" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">16</text>
+  <line x1="586" y1="176" x2="586" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="619" y1="176" x2="619" y2="184" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="619" y="198" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <text x="16" y="198" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SECONDS</text>
+  <circle cx="196" cy="222" r="4" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="206" y="226" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">NXDOMAIN or not resolved</text>
+  <circle cx="380" cy="222" r="4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="390" y="226" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the relay answered</text>
+</svg>

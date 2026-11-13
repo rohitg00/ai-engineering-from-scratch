@@ -1,0 +1,2 @@
+ATESPACE                   NAME           TEMPLATE                                   STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+ate-demo-counter-microvm   mv-counter-1   ate-demo-counter-microvm/counter-microvm   ACTOR_STATE_SUSPENDED   <none>                    1         0s

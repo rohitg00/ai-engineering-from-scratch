@@ -1,0 +1,14 @@
+total 0
+drwxrwxrwx 3 root root  60 Nov 12 18:08 .
+drwxr-xr-x 1 root root 100 Nov 12 18:08 ..
+drwxr-xr-x 2 root root  60 Nov 12 18:08 .ax
+cat: /workspace/note.txt: No such file or directory
+progress:
+cat: /workspace/progress.txt: No such file or directory
+  PID     ELAPSED COMMAND
+    1       00:05 /usr/local/bin/ax-task-runner
+    9       00:05 sleep infinity
+   11       00:00 sh -c ls -la /workspace; cat /workspace/note.txt; echo progress:; cat /workspace/progress.txt; ps -o pid,etime,args 2>/dev/null | head -8; cat /proc/uptime
+   18       00:00 ps -o pid,etime,args
+   19       00:00 head -8
+5.17 0.00

@@ -1,0 +1,3 @@
+deployment.apps/ax031-controller patched
+Waiting for deployment "ax031-controller" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ax031-controller" successfully rolled out

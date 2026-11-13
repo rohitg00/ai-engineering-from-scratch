@@ -1,0 +1,3 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+NAME                                   POOL      STATE                 ACTORS   CPU(MILLICORES)   MEMORY        POD                                         AGE
+ec15263e-4c0f-45eb-adc1-53f5f60c2331   counter   WORKER_STATE_ACTIVE   1/1000   1000/1000         512Mi/960Mi   ate-demo-counter/counter-7cc7dcd596-ffxwt   74s

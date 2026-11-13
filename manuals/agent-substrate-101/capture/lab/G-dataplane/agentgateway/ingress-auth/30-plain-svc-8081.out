@@ -1,0 +1,4 @@
+curl: (7) Failed to connect to atenet-router.ate-system.svc port 8081 after 2 ms: Could not connect to server
+code=000
+command terminated with exit code 7
+exit=7

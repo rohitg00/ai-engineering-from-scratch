@@ -1,0 +1,266 @@
+template	phase	i	http	value	detail
+zero-200	golden-ready-wait	1	-	17.090	poll-1s
+zero-200	create-actor	1	-	0.291	cli
+zero-200	first-call-golden	1	200	0.409410	tag=v3 count=1 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=0.6 child[none]
+zero-200	warm-call	0	200	0.069088	tag=v3 count=2 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=0.7 child[none]
+zero-200	suspend-async	1	-	0.554	cli
+zero-200	local-snapshot-kib	1	-	4092	du
+zero-200	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+zero-200	resume-local	1	200	0.354649	tag=v3 count=3 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.0 child[none]
+zero-200	warm-call	1	200	0.078713	tag=v3 count=4 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.1 child[none]
+zero-200	suspend-async	2	-	0.394	cli
+zero-200	resume-local	2	200	0.232554	tag=v3 count=5 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.4 child[none]
+zero-200	warm-call	2	200	0.065158	tag=v3 count=6 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.5 child[none]
+zero-200	suspend-async	3	-	0.352	cli
+zero-200	resume-local	3	200	0.622813	tag=v3 count=7 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.9 child[none]
+zero-200	warm-call	3	200	0.069093	tag=v3 count=8 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.0 child[none]
+zero-200	suspend-async	4	-	0.815	cli
+zero-200	resume-local	4	200	0.213179	tag=v3 count=9 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.2 child[none]
+zero-200	warm-call	4	200	0.068951	tag=v3 count=10 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.3 child[none]
+zero-200	suspend-async	5	-	0.337	cli
+zero-200	resume-local	5	200	0.218772	tag=v3 count=11 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.6 child[none]
+zero-200	warm-call	5	200	0.069493	tag=v3 count=12 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.7 child[none]
+zero-200	suspend-async	6	-	0.326	cli
+zero-200	resume-local	6	200	0.241266	tag=v3 count=13 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.9 child[none]
+zero-200	warm-call	6	200	0.075268	tag=v3 count=14 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.0 child[none]
+zero-200	suspend-async	7	-	0.357	cli
+zero-200	resume-local	7	200	0.237016	tag=v3 count=15 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.3 child[none]
+zero-200	warm-call	7	200	0.068996	tag=v3 count=16 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.4 child[none]
+zero-200	suspend-async	8	-	0.357	cli
+zero-200	resume-local	8	200	0.238629	tag=v3 count=17 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.7 child[none]
+zero-200	warm-call	8	200	0.070353	tag=v3 count=18 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.8 child[none]
+zero-200	suspend-async	9	-	0.344	cli
+zero-200	resume-local	9	200	0.234313	tag=v3 count=19 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.0 child[none]
+zero-200	warm-call	9	200	0.064171	tag=v3 count=20 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.1 child[none]
+zero-200	suspend-async	10	-	0.313	cli
+zero-200	resume-local	10	200	0.216500	tag=v3 count=21 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.4 child[none]
+zero-200	warm-call	10	200	0.062679	tag=v3 count=22 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.5 child[none]
+zero-200	suspend-sync	1	-	0.419	cli
+zero-200	store-snapshot-kib	1	-	1144	du-in-rustfs
+zero-200	local-after-sync-kib	1	-	4192	du
+zero-200	resume-after-sync	1	200	0.238710	tag=v3 count=23 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.7 child[none]
+zero-200	suspend-sync	2	-	0.519	cli
+zero-200	resume-after-sync	2	200	0.226798	tag=v3 count=24 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=5.0 child[none]
+zero-200	suspend-sync	3	-	0.523	cli
+zero-200	resume-after-sync	3	200	0.206650	tag=v3 count=25 mb=200 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=5.3 child[none]
+zero-500	golden-ready-wait	1	-	0.205	poll-1s
+zero-500	create-actor	1	-	0.207	cli
+zero-500	first-call-golden	1	200	0.262564	tag=v3 count=1 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.4 child[none]
+zero-500	warm-call	0	200	0.064949	tag=v3 count=2 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.5 child[none]
+zero-500	suspend-async	1	-	0.345	cli
+zero-500	local-snapshot-kib	1	-	4720	du
+zero-500	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+zero-500	resume-local	1	200	0.220473	tag=v3 count=3 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.7 child[none]
+zero-500	warm-call	1	200	0.064406	tag=v3 count=4 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=1.8 child[none]
+zero-500	suspend-async	2	-	0.314	cli
+zero-500	resume-local	2	200	0.236295	tag=v3 count=5 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.1 child[none]
+zero-500	warm-call	2	200	0.072483	tag=v3 count=6 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.2 child[none]
+zero-500	suspend-async	3	-	0.302	cli
+zero-500	resume-local	3	200	0.221406	tag=v3 count=7 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.4 child[none]
+zero-500	warm-call	3	200	0.059503	tag=v3 count=8 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.5 child[none]
+zero-500	suspend-async	4	-	0.340	cli
+zero-500	resume-local	4	200	0.234096	tag=v3 count=9 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.7 child[none]
+zero-500	warm-call	4	200	0.063218	tag=v3 count=10 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=2.8 child[none]
+zero-500	suspend-async	5	-	0.342	cli
+zero-500	resume-local	5	200	0.209016	tag=v3 count=11 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.1 child[none]
+zero-500	warm-call	5	200	0.064461	tag=v3 count=12 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.2 child[none]
+zero-500	suspend-async	6	-	0.353	cli
+zero-500	resume-local	6	200	0.239440	tag=v3 count=13 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.4 child[none]
+zero-500	warm-call	6	200	0.070043	tag=v3 count=14 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.5 child[none]
+zero-500	suspend-async	7	-	0.360	cli
+zero-500	resume-local	7	200	0.232676	tag=v3 count=15 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.8 child[none]
+zero-500	warm-call	7	200	0.065897	tag=v3 count=16 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=3.9 child[none]
+zero-500	suspend-async	8	-	0.370	cli
+zero-500	resume-local	8	200	0.238888	tag=v3 count=17 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.2 child[none]
+zero-500	warm-call	8	200	0.065023	tag=v3 count=18 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.3 child[none]
+zero-500	suspend-async	9	-	0.357	cli
+zero-500	resume-local	9	200	0.220681	tag=v3 count=19 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.5 child[none]
+zero-500	warm-call	9	200	0.063082	tag=v3 count=20 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.6 child[none]
+zero-500	suspend-async	10	-	0.362	cli
+zero-500	resume-local	10	200	0.238886	tag=v3 count=21 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=4.9 child[none]
+zero-500	warm-call	10	200	0.068704	tag=v3 count=22 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=5.0 child[none]
+zero-500	suspend-sync	1	-	0.457	cli
+zero-500	store-snapshot-kib	1	-	1132	du-in-rustfs
+zero-500	local-after-sync-kib	1	-	4872	du
+zero-500	resume-after-sync	1	200	0.235573	tag=v3 count=23 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=5.3 child[none]
+zero-500	suspend-sync	2	-	0.563	cli
+zero-500	resume-after-sync	2	200	0.234967	tag=v3 count=24 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=5.6 child[none]
+zero-500	suspend-sync	3	-	0.534	cli
+zero-500	resume-after-sync	3	200	0.254482	tag=v3 count=25 mb=500 fill=zero sum=0 rootfs=-1 data=-1 pid=1 process_age_s=5.8 child[none]
+mixed-200	golden-ready-wait	1	-	0.222	poll-1s
+mixed-200	create-actor	1	-	0.234	cli
+mixed-200	first-call-golden	1	200	0.629006	tag=v3 count=1 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=0.8 child[none]
+mixed-200	warm-call	0	200	0.064618	tag=v3 count=2 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=0.9 child[none]
+mixed-200	suspend-async	1	-	0.678	cli
+mixed-200	local-snapshot-kib	1	-	106316	du
+mixed-200	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+mixed-200	resume-local	1	200	0.275731	tag=v3 count=3 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=1.2 child[none]
+mixed-200	warm-call	1	200	0.071115	tag=v3 count=4 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=1.3 child[none]
+mixed-200	suspend-async	2	-	0.624	cli
+mixed-200	resume-local	2	200	0.307982	tag=v3 count=5 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=1.6 child[none]
+mixed-200	warm-call	2	200	0.069817	tag=v3 count=6 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=1.7 child[none]
+mixed-200	suspend-async	3	-	0.643	cli
+mixed-200	resume-local	3	200	0.276416	tag=v3 count=7 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=2.0 child[none]
+mixed-200	warm-call	3	200	0.067112	tag=v3 count=8 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=2.1 child[none]
+mixed-200	suspend-async	4	-	0.670	cli
+mixed-200	resume-local	4	200	0.282081	tag=v3 count=9 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=2.4 child[none]
+mixed-200	warm-call	4	200	0.065355	tag=v3 count=10 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=2.4 child[none]
+mixed-200	suspend-async	5	-	0.674	cli
+mixed-200	resume-local	5	200	0.330758	tag=v3 count=11 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=2.8 child[none]
+mixed-200	warm-call	5	200	0.061856	tag=v3 count=12 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=2.9 child[none]
+mixed-200	suspend-async	6	-	0.654	cli
+mixed-200	resume-local	6	200	0.275626	tag=v3 count=13 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=3.2 child[none]
+mixed-200	warm-call	6	200	0.066292	tag=v3 count=14 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=3.3 child[none]
+mixed-200	suspend-async	7	-	0.683	cli
+mixed-200	resume-local	7	200	0.271252	tag=v3 count=15 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=3.6 child[none]
+mixed-200	warm-call	7	200	0.066200	tag=v3 count=16 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=3.7 child[none]
+mixed-200	suspend-async	8	-	0.701	cli
+mixed-200	resume-local	8	200	0.265536	tag=v3 count=17 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=4.0 child[none]
+mixed-200	warm-call	8	200	0.066192	tag=v3 count=18 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=4.1 child[none]
+mixed-200	suspend-async	9	-	0.657	cli
+mixed-200	resume-local	9	200	0.270158	tag=v3 count=19 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=4.4 child[none]
+mixed-200	warm-call	9	200	0.067858	tag=v3 count=20 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=4.5 child[none]
+mixed-200	suspend-async	10	-	0.638	cli
+mixed-200	resume-local	10	200	0.254391	tag=v3 count=21 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=4.8 child[none]
+mixed-200	warm-call	10	200	0.062225	tag=v3 count=22 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=4.8 child[none]
+mixed-200	suspend-sync	1	-	1.333	cli
+mixed-200	store-snapshot-kib	1	-	103556	du-in-rustfs
+mixed-200	local-after-sync-kib	1	-	106460	du
+mixed-200	resume-after-sync	1	200	0.248884	tag=v3 count=23 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=5.2 child[none]
+mixed-200	suspend-sync	2	-	1.476	cli
+mixed-200	resume-after-sync	2	200	0.267862	tag=v3 count=24 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=5.5 child[none]
+mixed-200	suspend-sync	3	-	1.445	cli
+mixed-200	resume-after-sync	3	200	0.257366	tag=v3 count=25 mb=200 fill=mixed sum=11655 rootfs=-1 data=-1 pid=1 process_age_s=5.8 child[none]
+mixed-500	golden-ready-wait	1	-	0.213	poll-1s
+mixed-500	create-actor	1	-	0.226	cli
+mixed-500	first-call-golden	1	200	1.309178	tag=v3 count=1 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=2.0 child[none]
+mixed-500	warm-call	0	200	0.066968	tag=v3 count=2 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=2.1 child[none]
+mixed-500	suspend-async	1	-	0.768	cli
+mixed-500	local-snapshot-kib	1	-	260488	du
+mixed-500	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+mixed-500	resume-local	1	200	0.559720	tag=v3 count=3 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=2.7 child[none]
+mixed-500	warm-call	1	200	0.063726	tag=v3 count=4 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=2.7 child[none]
+mixed-500	suspend-async	2	-	0.847	cli
+mixed-500	resume-local	2	200	0.463846	tag=v3 count=5 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=3.3 child[none]
+mixed-500	warm-call	2	200	0.065979	tag=v3 count=6 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=3.3 child[none]
+mixed-500	suspend-async	3	-	0.840	cli
+mixed-500	resume-local	3	200	0.580023	tag=v3 count=7 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=3.9 child[none]
+mixed-500	warm-call	3	200	0.060989	tag=v3 count=8 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=4.0 child[none]
+mixed-500	suspend-async	4	-	0.864	cli
+mixed-500	resume-local	4	200	0.574896	tag=v3 count=9 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=4.6 child[none]
+mixed-500	warm-call	4	200	0.065326	tag=v3 count=10 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=4.7 child[none]
+mixed-500	suspend-async	5	-	0.782	cli
+mixed-500	resume-local	5	200	0.505442	tag=v3 count=11 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=5.2 child[none]
+mixed-500	warm-call	5	200	0.062354	tag=v3 count=12 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=5.3 child[none]
+mixed-500	suspend-async	6	-	0.687	cli
+mixed-500	resume-local	6	200	0.570194	tag=v3 count=13 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=5.9 child[none]
+mixed-500	warm-call	6	200	0.073695	tag=v3 count=14 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=6.0 child[none]
+mixed-500	suspend-async	7	-	0.705	cli
+mixed-500	resume-local	7	200	0.622017	tag=v3 count=15 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=6.7 child[none]
+mixed-500	warm-call	7	200	0.066896	tag=v3 count=16 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=6.8 child[none]
+mixed-500	suspend-async	8	-	0.826	cli
+mixed-500	resume-local	8	200	0.460278	tag=v3 count=17 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=7.3 child[none]
+mixed-500	warm-call	8	200	0.064493	tag=v3 count=18 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=7.3 child[none]
+mixed-500	suspend-async	9	-	0.805	cli
+mixed-500	resume-local	9	200	0.775760	tag=v3 count=19 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=8.0 child[none]
+mixed-500	warm-call	9	200	0.063669	tag=v3 count=20 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=8.1 child[none]
+mixed-500	suspend-async	10	-	0.745	cli
+mixed-500	resume-local	10	200	0.579029	tag=v3 count=21 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=8.7 child[none]
+mixed-500	warm-call	10	200	0.073661	tag=v3 count=22 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=8.8 child[none]
+mixed-500	suspend-sync	1	-	2.310	cli
+mixed-500	store-snapshot-kib	1	-	257224	du-in-rustfs
+mixed-500	local-after-sync-kib	1	-	260600	du
+mixed-500	resume-after-sync	1	200	0.469538	tag=v3 count=23 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=9.3 child[none]
+mixed-500	suspend-sync	2	-	2.579	cli
+mixed-500	resume-after-sync	2	200	0.496752	tag=v3 count=24 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=9.8 child[none]
+mixed-500	suspend-sync	3	-	2.652	cli
+mixed-500	resume-after-sync	3	200	0.445506	tag=v3 count=25 mb=500 fill=mixed sum=32834 rootfs=-1 data=-1 pid=1 process_age_s=10.3 child[none]
+rand-200	golden-ready-wait	1	-	0.208	poll-1s
+rand-200	create-actor	1	-	0.208	cli
+rand-200	first-call-golden	1	200	1.083077	tag=v3 count=1 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=1.1 child[none]
+rand-200	warm-call	0	200	0.068549	tag=v3 count=2 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=1.2 child[none]
+rand-200	suspend-async	1	-	0.664	cli
+rand-200	local-snapshot-kib	1	-	208696	du
+rand-200	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+rand-200	resume-local	1	200	0.381909	tag=v3 count=3 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=1.6 child[none]
+rand-200	warm-call	1	200	0.062922	tag=v3 count=4 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=1.7 child[none]
+rand-200	suspend-async	2	-	0.777	cli
+rand-200	resume-local	2	200	0.423627	tag=v3 count=5 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=2.2 child[none]
+rand-200	warm-call	2	200	0.064214	tag=v3 count=6 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=2.3 child[none]
+rand-200	suspend-async	3	-	0.815	cli
+rand-200	resume-local	3	200	0.355174	tag=v3 count=7 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=2.7 child[none]
+rand-200	warm-call	3	200	0.064281	tag=v3 count=8 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=2.7 child[none]
+rand-200	suspend-async	4	-	0.687	cli
+rand-200	resume-local	4	200	0.467606	tag=v3 count=9 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=3.3 child[none]
+rand-200	warm-call	4	200	0.065522	tag=v3 count=10 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=3.3 child[none]
+rand-200	suspend-async	5	-	0.800	cli
+rand-200	resume-local	5	200	0.402666	tag=v3 count=11 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=3.8 child[none]
+rand-200	warm-call	5	200	0.064316	tag=v3 count=12 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=3.9 child[none]
+rand-200	suspend-async	6	-	0.793	cli
+rand-200	resume-local	6	200	0.359214	tag=v3 count=13 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=4.3 child[none]
+rand-200	warm-call	6	200	0.066309	tag=v3 count=14 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=4.4 child[none]
+rand-200	suspend-async	7	-	0.976	cli
+rand-200	resume-local	7	200	0.457368	tag=v3 count=15 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=5.0 child[none]
+rand-200	warm-call	7	200	0.062015	tag=v3 count=16 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=5.0 child[none]
+rand-200	suspend-async	8	-	0.789	cli
+rand-200	resume-local	8	200	0.415888	tag=v3 count=17 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=5.5 child[none]
+rand-200	warm-call	8	200	0.063454	tag=v3 count=18 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=5.6 child[none]
+rand-200	suspend-async	9	-	0.926	cli
+rand-200	resume-local	9	200	0.449856	tag=v3 count=19 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=6.1 child[none]
+rand-200	warm-call	9	200	0.066051	tag=v3 count=20 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=6.2 child[none]
+rand-200	suspend-async	10	-	0.854	cli
+rand-200	resume-local	10	200	0.508644	tag=v3 count=21 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=6.8 child[none]
+rand-200	warm-call	10	200	0.067250	tag=v3 count=22 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=6.8 child[none]
+rand-200	suspend-sync	1	-	2.234	cli
+rand-200	store-snapshot-kib	1	-	205996	du-in-rustfs
+rand-200	local-after-sync-kib	1	-	208804	du
+rand-200	resume-after-sync	1	200	0.484431	tag=v3 count=23 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=7.4 child[none]
+rand-200	suspend-sync	2	-	2.312	cli
+rand-200	resume-after-sync	2	200	0.483397	tag=v3 count=24 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=7.9 child[none]
+rand-200	suspend-sync	3	-	2.384	cli
+rand-200	resume-after-sync	3	200	0.506147	tag=v3 count=25 mb=200 fill=random sum=26536 rootfs=-1 data=-1 pid=1 process_age_s=8.4 child[none]
+rand-500	golden-ready-wait	1	-	0.215	poll-1s
+rand-500	create-actor	1	-	0.235	cli
+rand-500	first-call-golden	1	200	2.541084	tag=v3 count=1 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=3.0 child[none]
+rand-500	warm-call	0	200	0.066685	tag=v3 count=2 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=3.1 child[none]
+rand-500	suspend-async	1	-	1.062	cli
+rand-500	local-snapshot-kib	1	-	516212	du
+rand-500	state-after-async	1	-	0	ACTOR_STATE_SUSPENDED	kind-control-plane	SNAPSHOT_OWNER_TAG:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_COMPLETED:gen1,SNAPSHOT_OWNER_ACTOR:SNAPSHOT_FIDELITY_MEMORY:SNAPSHOT_STORAGE_STATE_PENDING:gen2
+rand-500	resume-local	1	200	1.054599	tag=v3 count=3 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=4.2 child[none]
+rand-500	warm-call	1	200	0.068630	tag=v3 count=4 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=4.3 child[none]
+rand-500	suspend-async	2	-	1.067	cli
+rand-500	resume-local	2	200	1.068239	tag=v3 count=5 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=5.4 child[none]
+rand-500	warm-call	2	200	0.080816	tag=v3 count=6 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=5.5 child[none]
+rand-500	suspend-async	3	-	0.978	cli
+rand-500	resume-local	3	200	1.118031	tag=v3 count=7 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=6.7 child[none]
+rand-500	warm-call	3	200	0.073523	tag=v3 count=8 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=6.8 child[none]
+rand-500	suspend-async	4	-	1.177	cli
+rand-500	resume-local	4	200	1.150506	tag=v3 count=9 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=8.0 child[none]
+rand-500	warm-call	4	200	0.067841	tag=v3 count=10 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=8.1 child[none]
+rand-500	suspend-async	5	-	1.125	cli
+rand-500	resume-local	5	200	1.404586	tag=v3 count=11 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=9.3 child[none]
+rand-500	warm-call	5	200	0.071976	tag=v3 count=12 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=9.4 child[none]
+rand-500	suspend-async	6	-	1.107	cli
+rand-500	resume-local	6	200	1.074032	tag=v3 count=13 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=10.5 child[none]
+rand-500	warm-call	6	200	0.065370	tag=v3 count=14 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=10.6 child[none]
+rand-500	suspend-async	7	-	0.944	cli
+rand-500	resume-local	7	200	1.062764	tag=v3 count=15 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=11.7 child[none]
+rand-500	warm-call	7	200	0.057152	tag=v3 count=16 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=11.8 child[none]
+rand-500	suspend-async	8	-	1.215	cli
+rand-500	resume-local	8	200	1.115109	tag=v3 count=17 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=13.0 child[none]
+rand-500	warm-call	8	200	0.064976	tag=v3 count=18 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=13.1 child[none]
+rand-500	suspend-async	9	-	0.920	cli
+rand-500	resume-local	9	200	1.057201	tag=v3 count=19 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=14.1 child[none]
+rand-500	warm-call	9	200	0.066264	tag=v3 count=20 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=14.2 child[none]
+rand-500	suspend-async	10	-	1.043	cli
+rand-500	resume-local	10	200	1.034619	tag=v3 count=21 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=15.3 child[none]
+rand-500	warm-call	10	200	0.069087	tag=v3 count=22 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=15.4 child[none]
+rand-500	suspend-sync	1	-	4.075	cli
+rand-500	store-snapshot-kib	1	-	513292	du-in-rustfs
+rand-500	local-after-sync-kib	1	-	516372	du
+rand-500	resume-after-sync	1	200	1.277898	tag=v3 count=23 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=16.6 child[none]
+rand-500	suspend-sync	2	-	4.464	cli
+rand-500	resume-after-sync	2	200	1.106554	tag=v3 count=24 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=17.8 child[none]
+rand-500	suspend-sync	3	-	4.370	cli
+rand-500	resume-after-sync	3	200	1.079078	tag=v3 count=25 mb=500 fill=random sum=64656 rootfs=-1 data=-1 pid=1 process_age_s=18.9 child[none]
+DONE

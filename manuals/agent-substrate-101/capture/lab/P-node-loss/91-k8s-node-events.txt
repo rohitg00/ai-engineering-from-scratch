@@ -1,0 +1,20 @@
+lab-n         54m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-mmgjz    Cancelling deletion of Pod lab-n/ballast-5d6cf97747-mmgjz
+lab-n         54m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-2vzqf    Cancelling deletion of Pod lab-n/ballast-5d6cf97747-2vzqf
+lab-n         51m         Warning   NodeNotReady              pod/ballast-5d6cf97747-2vzqf    Node is not ready
+lab-n         51m         Warning   NodeNotReady              pod/ballast-5d6cf97747-mmgjz    Node is not ready
+lab-n         46m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-2vzqf    Marking for deletion Pod lab-n/ballast-5d6cf97747-2vzqf
+lab-n         46m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-mmgjz    Marking for deletion Pod lab-n/ballast-5d6cf97747-mmgjz
+lab-n         36m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-88557    Cancelling deletion of Pod lab-n/ballast-5d6cf97747-88557
+lab-n         36m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-nsbsx    Cancelling deletion of Pod lab-n/ballast-5d6cf97747-nsbsx
+lab-n         15m         Warning   NodeNotReady              pod/ballast-5d6cf97747-nsbsx    Node is not ready
+lab-n         15m         Warning   NodeNotReady              pod/ballast-5d6cf97747-88557    Node is not ready
+lab-n         10m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-nsbsx    Marking for deletion Pod lab-n/ballast-5d6cf97747-nsbsx
+lab-n         10m         Normal    TaintManagerEviction      pod/ballast-5d6cf97747-88557    Marking for deletion Pod lab-n/ballast-5d6cf97747-88557
+kube-system   2m3s        Warning   NodeNotReady              pod/kube-proxy-x5hc4            Node is not ready
+kube-system   2m3s        Warning   NodeNotReady              pod/kindnet-qpscg               Node is not ready
+lab-n         2m3s        Warning   NodeNotReady              pod/ballast-5d6cf97747-9qhp8    Node is not ready
+ate-system    2m3s        Warning   NodeNotReady              pod/atelet-gsmxg                Node is not ready
+default       2m3s        Normal    NodeNotReady              node/multi-worker2              Node multi-worker2 status is now: NodeNotReady
+lab-n         2m3s        Warning   NodeNotReady              pod/ballast-5d6cf97747-7s65c    Node is not ready
+lab-n         108s        Normal    TaintManagerEviction      pod/ballast-5d6cf97747-9qhp8    Cancelling deletion of Pod lab-n/ballast-5d6cf97747-9qhp8
+lab-n         108s        Normal    TaintManagerEviction      pod/ballast-5d6cf97747-7s65c    Cancelling deletion of Pod lab-n/ballast-5d6cf97747-7s65c

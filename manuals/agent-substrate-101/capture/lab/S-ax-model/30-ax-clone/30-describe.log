@@ -1,0 +1,12 @@
+Name:         s-clone
+Atespace:     default
+Phase:        Running
+Actor:        s-clone
+Worker IP:    10.244.0.40
+Workspace:    s-ws  path=/workspace
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE            STATUS  REASON         MESSAGE
+  WorkspaceReady  True    SetupComplete  Workspace setup completed at 10.244.0.25
+  Ready           True    TaskRunning    Task is running and its workspace is ready

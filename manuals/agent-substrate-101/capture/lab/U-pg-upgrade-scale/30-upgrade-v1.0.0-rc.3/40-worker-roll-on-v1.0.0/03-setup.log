@@ -1,0 +1,23 @@
+ATESPACE   NAME      GOLDEN TAG   ERROR   AGE
+up-lab     up-trap                        0s
+ATESPACE   NAME      TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     t-plain   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+ATESPACE   NAME     TEMPLATE         STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     t-trap   up-lab/up-trap   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+t-plain: 200	0.347291	count=1 process_age_s=662.5 
+t-trap: 200	0.408317	count=1 process_age_s=3.8 sigterm_seen=0 
+t-plain: 200	0.028477	count=2 process_age_s=663.3 
+t-trap: 200	0.034150	count=2 process_age_s=4.2 sigterm_seen=0 
+t-plain: 200	0.032453	count=3 process_age_s=663.8 
+t-trap: 200	0.029326	count=3 process_age_s=4.7 sigterm_seen=0 
+ATESPACE   NAME        TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          417       10m
+up-lab     a-def       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          10        10m
+up-lab     a-fresh     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         10m
+up-lab     a-fromtag   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         82s
+up-lab     a-new       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         83s
+up-lab     a-run       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          10        10m
+up-lab     a-sync      up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         10m
+up-lab     a-tag       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         10m
+up-lab     t-plain     up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-wdp8x   10.244.0.37   3         2s
+up-lab     t-trap      up-lab/up-trap    ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-ftrrt   10.244.0.35   3         2s

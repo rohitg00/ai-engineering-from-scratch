@@ -1,0 +1,9 @@
+t-trap after the roll: 200	0.402031	count=40 process_age_s=187.2 sigterm_seen=1 
+t-plain after the roll: 503	0.026152	actor up-lab/t-plain unavailable: AssignWorker prerequisite not met for Actor: up-lab/t-plain (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SU
+ATESPACE   NAME        TEMPLATE          STATE                   WORKER POD                       WORKER IPS    VERSION   AGE
+up-lab     t-plain     up-lab/up-drill   ACTOR_STATE_CRASHED     <none>                                         4         3m5s
+up-lab     t-trap      up-lab/up-trap    ACTOR_STATE_RUNNING     up-lab/up-pool-547c8f7d9-ds5kx   10.244.0.54   7         3m5s
+ATESPACE   NAME      TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     t-plain   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    6         3m5s
+revert t-plain 0.228 s
+t-plain after revert: 200	0.389796	count=1 process_age_s=847.8 

@@ -1,0 +1,79 @@
+actorTemplate:
+  atespace: lab-c
+  name: ballast-50
+metadata:
+  atespace: lab-c
+  createTime: "2026-11-12T11:33:46.412801549Z"
+  name: m50
+  uid: 175fbe50-1278-4d55-a5a4-ab7d7ed7cd65
+  updateTime: "2026-11-12T11:34:00.301038763Z"
+  version: "43"
+status:
+  assignedNode: kind-control-plane
+  lastAssignedGeneration: 11
+  snapshots:
+  - actorTemplateUid: 351062e0-d0a2-4f83-9e44-fd37cd5c42a3
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-c/tags/35d20400-23e3-4f39-b059-34eee475527a
+      state: SNAPSHOT_STORAGE_STATE_COMPLETED
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 1
+    owner: SNAPSHOT_OWNER_TAG
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: arm64
+        - key: cpu_features
+          value: b3ffff
+        - key: sandbox_bundle_hash
+          value: sha256:4c1a00064c5bc9885a27e352493f76913420073ba2294b2ac95f31a775164410
+        schemaVersion: v1
+    uuid: 35d20400-23e3-4f39-b059-34eee475527a
+  - actorTemplateUid: 351062e0-d0a2-4f83-9e44-fd37cd5c42a3
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/lab-c/actors/175fbe50-1278-4d55-a5a4-ab7d7ed7cd65/snapshots/af90014a-1bdb-49d8-96cd-bad1b8ae54bf
+      state: SNAPSHOT_STORAGE_STATE_PENDING
+    fidelity: SNAPSHOT_FIDELITY_MEMORY
+    generation: 11
+    locality: kind-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: arm64
+        - key: cpu_features
+          value: b3ffff
+        - key: sandbox_bundle_hash
+          value: sha256:4c1a00064c5bc9885a27e352493f76913420073ba2294b2ac95f31a775164410
+        schemaVersion: v1
+    uuid: af90014a-1bdb-49d8-96cd-bad1b8ae54bf
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: kind-control-plane
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: arm64
+        - key: cpu_features
+          value: b3ffff
+        - key: sandbox_bundle_hash
+          value: sha256:4c1a00064c5bc9885a27e352493f76913420073ba2294b2ac95f31a775164410
+        schemaVersion: v1
+    worker:
+      name: adadcd26-22e5-4a42-814c-69ef4f2ef3e2
+    workerEpoch: "1"
+    workerNamespace: lab-c
+    workerPod: ballast-78ff84c85c-dnfv5
+    workerPodIps:
+    - 10.244.0.20
+    workerPodUid: adadcd26-22e5-4a42-814c-69ef4f2ef3e2
+    workerPool: ballast
+    workerSpiffeId: spiffe://cluster.local/ns/lab-c/sa/ateworker

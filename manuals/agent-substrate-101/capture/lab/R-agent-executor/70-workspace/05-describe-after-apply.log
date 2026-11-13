@@ -1,0 +1,17 @@
+NAME    ATESPACE   GIT-REPOS   MCP-SERVERS
+ax-ws   default    1           0
+Name:         ax-ws
+Atespace:     default
+Git Repositories:
+  - origin (https://github.com/chalk/chalk.git, branch: main)
+Name:         ax-ws-task
+Atespace:     default
+Phase:        Suspended
+Actor:        ax-ws-task
+Worker IP:    
+Workspace:    ax-ws  path=/workspace
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE   STATUS  REASON     MESSAGE
+  Ready  False   Suspended  Actor is suspended

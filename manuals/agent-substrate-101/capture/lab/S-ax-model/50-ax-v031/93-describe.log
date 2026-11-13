@@ -1,0 +1,11 @@
+Name:         ax031-install-check
+Atespace:     default
+Phase:        Failed
+Actor:        
+Worker IP:    
+Image:        localhost:5002/ax-task-runner@sha256:8535e4f0a1603dc5ce55cb5823e30590bacbd6165d612ed8e2c933ffe3729d31
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE   STATUS  REASON                  MESSAGE
+  Ready  False   AtespaceCreationFailed  creating atespace "default": rpc error: code = Unimplemented desc = unknown service ateapi.Control

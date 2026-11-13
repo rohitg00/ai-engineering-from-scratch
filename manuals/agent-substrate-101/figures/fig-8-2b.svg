@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 338" role="img" aria-labelledby="fig-8-2b-title fig-8-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-2b-title">One node restart, and what the actor r1 returned</title>
+  <desc id="fig-8-2b-desc">A timeline of a kind node restart. The Kubernetes API answers again after 8 seconds and all pods run after 147 seconds. The first request to the actor r1 then returns 500, the second returns 503 because the actor is crashed, and after a revert the third waits 5.06 seconds and returns 503 because no worker has room. A request 78 seconds later returns 200.</desc>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE NODE, BY CLOCK TIME</text>
+  <rect x="40" y="52" width="350.02" height="12" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect x="390.02" y="52" width="28.16" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="418.18" y="52" width="170.28" height="12" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <line x1="82.68" y1="44" x2="82.68" y2="72" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="87.68" y="44" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">kube-api-back: 8 s</text>
+  <line x1="390.02" y1="44" x2="390.02" y2="72" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="385.02" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">pods-ready: 147 s</text>
+  <circle cx="588.46" cy="58" r="4" fill="var(--m-green-ink, #336b40)"/>
+  <text x="596.46" y="44" font-size="11" text-anchor="end" fill="var(--m-green-ink, #336b40)">200, count=4</text>
+  <text x="588.46" y="82" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-rose-ink, #b0344d)">3 failed requests, then none sent until +90 s</text>
+  <text x="216" y="82" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">docker restart kind-control-plane</text>
+  <line x1="40" y1="96" x2="590" y2="96" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="128.66" y1="92" x2="128.66" y2="100" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="128.66" y="114" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11:42</text>
+  <line x1="260.66" y1="92" x2="260.66" y2="100" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="260.66" y="114" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11:43</text>
+  <line x1="392.66" y1="92" x2="392.66" y2="100" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="392.66" y="114" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11:44</text>
+  <line x1="524.66" y1="92" x2="524.66" y2="100" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="524.66" y="114" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">11:45</text>
+  <line x1="390.02" y1="120" x2="40" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <line x1="418.4" y1="120" x2="600" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <text x="20" y="172" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE 14 SECONDS AFTER ALL PODS RAN</text>
+  <text x="95.6" y="196" font-size="11" fill="var(--m-rose-ink, #b0344d)">500 error resuming actor lab-c/r1</text>
+  <text x="336.2" y="196" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 AssignWorker prerequisite not met</text>
+  <line x1="104" y1="200" x2="104" y2="214" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <line x1="322.8" y1="200" x2="322.8" y2="214" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <rect x="95.6" y="214" width="16.4" height="12" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="321.2" y="214" width="4" height="12" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="349.6" y="214" width="202.4" height="12" fill="var(--m-rose-ink, #b0344d)"/>
+  <line x1="120" y1="226" x2="120" y2="242" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="125" y="252" font-size="11" fill="var(--m-amber-ink, #85590c)">ACTOR_STATE_CRASHED</text>
+  <line x1="348.8" y1="226" x2="348.8" y2="242" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
+  <text x="353.8" y="252" font-size="11" fill="var(--m-amber-ink, #85590c)">RevertActor: ACTOR_STATE_SUSPENDED</text>
+  <text x="353.8" y="270" font-size="11" fill="var(--m-rose-ink, #b0344d)">503 after 5.06 s: no worker has room</text>
+  <line x1="40" y1="290" x2="600" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="40" y1="286" x2="40" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="40" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+0 s</text>
+  <line x1="120" y1="286" x2="120" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="120" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+2 s</text>
+  <line x1="200" y1="286" x2="200" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="200" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+4 s</text>
+  <line x1="280" y1="286" x2="280" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="280" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+6 s</text>
+  <line x1="360" y1="286" x2="360" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="360" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+8 s</text>
+  <line x1="440" y1="286" x2="440" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="440" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+10 s</text>
+  <line x1="520" y1="286" x2="520" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="520" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+12 s</text>
+  <line x1="600" y1="286" x2="600" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="600" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">+14 s</text>
+  <text x="20" y="328" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rose bar: one request, from sent to answered</text>
+</svg>

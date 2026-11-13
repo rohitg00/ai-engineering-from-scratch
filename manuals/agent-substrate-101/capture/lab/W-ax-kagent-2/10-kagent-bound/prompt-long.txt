@@ -1,0 +1,1 @@
+Do not use any tool. Write the word lab again and again, 5000 times, separated by spaces. Do not stop before you reach 5000.

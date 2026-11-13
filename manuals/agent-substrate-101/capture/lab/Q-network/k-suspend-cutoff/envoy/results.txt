@@ -1,0 +1,25 @@
+### [13:18:59.478] warm
+$ curl -s -o /dev/null -w '%{http_code}\n' http://whoami.egress-target.svc.cluster.local/
+exit=0
+200
+
+
+### [13:19:09.739] k1-open-stream
+$ curl -sS -m 80 -N 'http://drip.egress-target.svc.cluster.local/drip?n=70' 2>&1 | tail -4
+raw reply:
+upstream connect error or disconnect/reset before headers. reset reason: connection termination
+### [13:19:38.278] k2-after-resume
+$ date -u +%T; ps | grep -c '[c]url' ; echo curl-processes-above
+exit=0
+13:19:38
+3
+curl-processes-above
+
+
+### [13:19:46.778] k3-after-resume-later
+$ ps | grep -c '[c]url'; echo curl-processes-above
+exit=0
+3
+curl-processes-above
+
+

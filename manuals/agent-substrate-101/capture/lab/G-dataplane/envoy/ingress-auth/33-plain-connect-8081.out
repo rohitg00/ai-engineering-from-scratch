@@ -1,0 +1,9 @@
+* Host atenet-router.ate-system.svc:8081 was resolved.
+* IPv6: (none)
+* IPv4: 10.96.5.247
+*   Trying 10.96.5.247:8081...
+* Connection timed out after 10002 milliseconds
+* closing connection #0
+curl: (28) Connection timed out after 10002 milliseconds
+command terminated with exit code 28
+exit=28

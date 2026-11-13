@@ -1,0 +1,43 @@
+ATESPACE   NAME   GOLDEN TAG   ERROR   AGE
+lab-n      xb-0                        0s
+ATESPACE   NAME     GOLDEN TAG   ERROR   AGE
+lab-n      xb-200                        0s
+ATESPACE   NAME      GOLDEN TAG   ERROR   AGE
+lab-n      xb-1000                        0s
+ATESPACE   NAME         GOLDEN TAG                             ERROR   AGE
+lab-n      ballast-0    d8328610-2fdb-4974-a6ab-7c8671586d37           6h12m
+lab-n      ballast-50   09fee120-cd19-4121-8bae-5623fcbe70eb           6h12m
+lab-n      nb-0         a4d47db7-39ce-4bbd-8969-2d738787c09e           3h22m
+lab-n      nb-50        20146d73-350e-4da3-8f82-8153e837b07b           3h22m
+lab-n      tb-0         b15f9995-908a-4aa3-bf00-3f888c307fd5           123m
+lab-n      tb-1000      ee988cc1-0e22-4c30-bd89-e3e9fa0ea4ba           123m
+lab-n      tb-200       9d19e8bf-0e00-4545-96cb-cfdd1545f933           123m
+lab-n      tb-50        e0166532-008a-4281-bb95-9b7c51662d90           123m
+lab-n      tb-big       e95e9f47-4cbf-4e2a-b3ed-e76ad3a4bac0           123m
+lab-n      xb-0         d5382956-e859-40ad-b1cc-8fcc5cdffe2e           30s
+lab-n      xb-1000      85e492dd-47c3-493b-a19a-0ba2ecaa3bc4           29s
+lab-n      xb-200       9411891f-6385-4ec6-8334-f22d0d727601           29s
+ATESPACE   NAME     GOLDEN TAG   ERROR   AGE
+lab-n      lb-200                        0s
+ATESPACE   NAME      GOLDEN TAG   ERROR   AGE
+lab-n      lb-1000                        0s
+ATESPACE   NAME         GOLDEN TAG                             ERROR   AGE
+lab-n      ballast-0    d8328610-2fdb-4974-a6ab-7c8671586d37           7h40m
+lab-n      ballast-50   09fee120-cd19-4121-8bae-5623fcbe70eb           7h40m
+lab-n      lb-1000      8e963d6a-2a39-4559-881e-69895d397888           25s
+lab-n      lb-200       422bbede-2f68-4ea1-b33b-816b97da3f41           25s
+lab-n      nb-0         a4d47db7-39ce-4bbd-8969-2d738787c09e           4h49m
+lab-n      nb-50        20146d73-350e-4da3-8f82-8153e837b07b           4h49m
+lab-n      tb-0         b15f9995-908a-4aa3-bf00-3f888c307fd5           3h30m
+lab-n      tb-1000      ee988cc1-0e22-4c30-bd89-e3e9fa0ea4ba           3h30m
+lab-n      tb-200       9d19e8bf-0e00-4545-96cb-cfdd1545f933           3h30m
+lab-n      tb-50        e0166532-008a-4281-bb95-9b7c51662d90           3h30m
+lab-n      tb-big       e95e9f47-4cbf-4e2a-b3ed-e76ad3a4bac0           3h30m
+lab-n      xb-0         d5382956-e859-40ad-b1cc-8fcc5cdffe2e           88m
+lab-n      xb-1000      85e492dd-47c3-493b-a19a-0ba2ecaa3bc4           88m
+lab-n      xb-200       9411891f-6385-4ec6-8334-f22d0d727601           88m
+actor template "lb-200" deleted
+actor template "lb-1000" deleted
+Error: failed to delete actor template: rpc error: code = Internal desc = internal server error: workflow failed at step DeleteGoldenTag: while deleting golden tag: workflow failed at step ReleaseTagSnapshot: while releasing the external snapshot "gs://ate-snapshots/atespaces/lab-n/tags/067b9bae-4b85-45e9-be46-dc8ce8c3e762" of tag lab-n/d5382956-e859-40ad-b1cc-8fcc5cdffe2e: rpc error: code = Internal desc = while listing gs://ate-snapshots/atespaces/lab-n/tags/067b9bae-4b85-45e9-be46-dc8ce8c3e762: while listing objects under s3://ate-snapshots/atespaces/lab-n/tags/067b9bae-4b85-45e9-be46-dc8ce8c3e762/: operation error S3: ListObjectsV2, exceeded maximum number of attempts, 3, https response error StatusCode: 0, RequestID: , HostID: , request send failed, Get "http://10.0.2.2:19000/ate-snapshots?list-type=2&prefix=atespaces%2Flab-n%2Ftags%2F067b9bae-4b85-45e9-be46-dc8ce8c3e762%2F": EOF
+Error: failed to delete actor template: rpc error: code = Internal desc = internal server error: workflow failed at step DeleteGoldenTag: while deleting golden tag: workflow failed at step ReleaseTagSnapshot: while releasing the external snapshot "gs://ate-snapshots/atespaces/lab-n/tags/fc668051-8c6f-49bf-a365-cccfc3cd86c1" of tag lab-n/9411891f-6385-4ec6-8334-f22d0d727601: rpc error: code = Internal desc = while listing gs://ate-snapshots/atespaces/lab-n/tags/fc668051-8c6f-49bf-a365-cccfc3cd86c1: while listing objects under s3://ate-snapshots/atespaces/lab-n/tags/fc668051-8c6f-49bf-a365-cccfc3cd86c1/: operation error S3: ListObjectsV2, exceeded maximum number of attempts, 3, https response error StatusCode: 0, RequestID: , HostID: , request send failed, Get "http://10.0.2.2:19000/ate-snapshots?list-type=2&prefix=atespaces%2Flab-n%2Ftags%2Ffc668051-8c6f-49bf-a365-cccfc3cd86c1%2F": EOF
+Error: failed to delete actor template: rpc error: code = Internal desc = internal server error: workflow failed at step DeleteGoldenTag: while deleting golden tag: workflow failed at step ReleaseTagSnapshot: while releasing the external snapshot "gs://ate-snapshots/atespaces/lab-n/tags/29cdb0be-02e6-499b-b222-ecc90914c792" of tag lab-n/85e492dd-47c3-493b-a19a-0ba2ecaa3bc4: rpc error: code = Internal desc = while listing gs://ate-snapshots/atespaces/lab-n/tags/29cdb0be-02e6-499b-b222-ecc90914c792: while listing objects under s3://ate-snapshots/atespaces/lab-n/tags/29cdb0be-02e6-499b-b222-ecc90914c792/: operation error S3: ListObjectsV2, exceeded maximum number of attempts, 3, https response error StatusCode: 0, RequestID: , HostID: , request send failed, Get "http://10.0.2.2:19000/ate-snapshots?list-type=2&prefix=atespaces%2Flab-n%2Ftags%2F29cdb0be-02e6-499b-b222-ecc90914c792%2F": EOF

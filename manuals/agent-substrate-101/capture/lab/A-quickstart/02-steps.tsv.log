@@ -1,0 +1,2 @@
+### 10-kind-cluster: hack/create-kind-cluster.sh
+### 20-deploy-ate-system: go run ./cmd/ate-setup deploy ate-system --credential-provider='{"name":"k8s.io"}' --ingress-allowed-spiffe-ids=spiffe://cluster.local/ns/ate-system/sa/atenet-client

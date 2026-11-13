@@ -1,0 +1,60 @@
+    edns_payload_len: 1232
+proxyMetadata:
+  instanceIp: null
+  podName: ''
+  podNamespace: ''
+  nodeName: ''
+  role: '~'
+  nodeId: agentgateway~1.1.1.1~.~.svc.cluster.local
+threadingMode: multithreaded
+sessionEncoder: base64
+oidcCookieEncoder: null
+backend:
+  keepalives:
+    enabled: true
+    time: 3m0s
+    interval: 3m0s
+    retries: 9
+  connectTimeout: 11s
+  poolIdleTimeout: 1m30s
+  poolMaxSize: null
+  h2KeepaliveInterval: 0s
+  h2KeepaliveTimeout: 5s
+  allowDynamicLoopback: true
+callouts: {}
+mcp:
+  sessionTtl: 30m0s
+dynamicCaCertCache:
+  ttl: 5m0s
+  capacity: 256
+modelCatalog:
+  sources: []
+	
+2026-11-12T11:11:36.853852Z	warn	config	failed to write generated session key	err=failed to write to file `/etc/agentgateway/config.yaml`: Read-only file system (os error 30) path=/etc/agentgateway/config.yaml
+2026-11-12T11:11:36.853899Z	warn	config	no session key configured; MCP session IDs are not encrypted. Set SESSION_KEY or config.session.key	
+2026-11-12T11:11:36.861506Z	info	management::hyper_helpers	listener established	address=[::]:15021 component="readiness"
+2026-11-12T11:11:36.870187Z	info	state_manager	loaded config from File("/etc/agentgateway/config.yaml")	
+2026-11-12T11:11:36.870946Z	info	state_manager	Watching config file: /etc/agentgateway/config.yaml	
+2026-11-12T11:11:36.871851Z	info	app	serving UI at http://localhost:15000/ui	
+2026-11-12T11:11:36.871909Z	info	agent_core::readiness	Task 'agentgateway' complete (69.968056ms), still awaiting 1 tasks	
+2026-11-12T11:11:36.871916Z	info	management::hyper_helpers	listener established	address=127.0.0.1:15000 component="admin"
+2026-11-12T11:11:36.871923Z	info	management::hyper_helpers	listener established	address=[::1]:15000 component="admin"
+2026-11-12T11:11:36.871940Z	info	management::hyper_helpers	listener established	address=0.0.0.0:15020 component="stats"
+2026-11-12T11:11:36.872146Z	info	proxy::gateway	started bind	bind="bind/8443"
+2026-11-12T11:11:36.872148Z	info	proxy::gateway	started bind	bind="bind/8444"
+2026-11-12T11:11:36.872357Z	info	agent_core::readiness	Task 'state manager' complete (70.415667ms), marking server ready	
+2026-11-12T11:12:15.581288Z	warn	downstream connection	failed to terminate TLS	connection.id=1 src.addr=10.244.0.26:42160 protocol=tls error="peer sent no certificates"
+2026-11-12T11:12:15.804924Z	warn	downstream connection	failed to terminate TLS	connection.id=2 src.addr=10.244.0.26:42174 protocol=tls error="peer sent no certificates"
+2026-11-12T11:12:16.236781Z	info	request gateway=default/default listener=https route=default/substrate-actors endpoint=atenet-router.ate-system.svc:80 src.addr=10.244.0.27:58404 src.identity=spiffe://cluster.local/ns/ate-system/sa/atenet-client http.method=POST http.host=atenet-router.ate-system.svc http.path=/ http.version=HTTP/2.0 http.status=200 protocol=http ate.actor.name=my-counter-1 ate.actor.uid=4e58e211-2e46-498a-b020-82b11eb936e8 ate.atespace=ate-demo-counter ate.router.resume=none ate.router.route.duration=0.018841953 duration=29ms
+2026-11-12T11:12:16.445296Z	warn	proxy::gateway	connect tunnel TLS termination error: peer sent no certificates	connection.id=5 src.addr=10.244.0.26:45882
+2026-11-12T11:12:16.660360Z	warn	proxy::gateway	proxy error: network authorization denied: authorization failed	src.addr=10.244.0.26:45896
+2026-11-12T11:12:16.893003Z	info	request gateway=default/default listener=listener0 route=default/substrate-actors-tunneled endpoint=actor:80 src.addr=10.244.0.27:50428 src.identity=spiffe://cluster.local/ns/ate-system/sa/atenet-client http.method=POST http.host=actor http.path=/ http.version=HTTP/1.1 http.status=200 protocol=http ate.actor.name=my-counter-1 ate.actor.uid=4e58e211-2e46-498a-b020-82b11eb936e8 ate.atespace=ate-demo-counter ate.router.resume=none ate.router.route.duration=0.009128134 duration=17ms
+2026-11-12T11:12:36.488397Z	warn	downstream connection	failed to terminate TLS	connection.id=8 src.addr=10.244.0.26:41506 protocol=tls error="received corrupt message of type InvalidContentType"
+2026-11-12T11:12:36.682717Z	warn	proxy::gateway	connect tunnel TLS termination error: client sent an HTTP request to an HTTPS listener: received corrupt message of type InvalidContentType	connection.id=9 src.addr=10.244.0.26:60650
+2026-11-12T11:12:36.884962Z	warn	proxy::gateway	connect tunnel TLS termination error: client sent an HTTP request to an HTTPS listener: received corrupt message of type InvalidContentType	connection.id=10 src.addr=10.244.0.26:39486
+2026-11-12T11:13:53.385632Z	info	request gateway=default/default listener=listener0 route=default/substrate-actors-tunneled endpoint=my-counter-1:80 src.addr=127.0.0.1:53900 src.identity=spiffe://cluster.local/ns/ate-system/sa/atenet-client http.method=POST http.host=127.0.0.1 http.path=/ http.version=HTTP/1.1 http.status=200 protocol=http ate.actor.name=my-counter-1 ate.actor.uid=4e58e211-2e46-498a-b020-82b11eb936e8 ate.atespace=ate-demo-counter ate.router.resume=none ate.router.route.duration=0.013060697 duration=22ms
+2026-11-12T11:14:23.998949Z	info	request gateway=default/default listener=https route=default/substrate-actors endpoint=atenet-router.ate-system.svc:80 src.addr=10.244.0.27:57290 src.identity=spiffe://cluster.local/ns/ate-system/sa/atenet-client http.method=POST http.host=atenet-router.ate-system.svc http.path=/ http.version=HTTP/2.0 http.status=200 protocol=http ate.actor.name=my-counter-1 ate.actor.uid=4e58e211-2e46-498a-b020-82b11eb936e8 ate.atespace=ate-demo-counter ate.router.resume=none ate.router.route.duration=0.01160997 duration=18ms
+2026-11-12T11:14:24.219223Z	info	request gateway=default/default listener=listener0 route=default/substrate-actors-tunneled endpoint=actor:80 src.addr=10.244.0.27:60870 src.identity=spiffe://cluster.local/ns/ate-system/sa/atenet-client http.method=POST http.host=actor http.path=/ http.version=HTTP/1.1 http.status=200 protocol=http ate.actor.name=my-counter-1 ate.actor.uid=4e58e211-2e46-498a-b020-82b11eb936e8 ate.atespace=ate-demo-counter ate.router.resume=none ate.router.route.duration=0.005780669 duration=13ms
+2026-11-12T11:14:24.436123Z	warn	http::substrate::ingress	substrate ResumeActor failed	request.id=6 actor="does-not-exist" atespace="ate-demo-counter" grpc.code=NotFound grpc.message="Actor ate-demo-counter/does-not-exist not found"
+2026-11-12T11:14:24.436399Z	error	request gateway=default/default listener=https route=default/substrate-actors src.addr=10.244.0.27:57300 src.identity=spiffe://cluster.local/ns/ate-system/sa/atenet-client http.method=POST http.host=atenet-router.ate-system.svc http.path=/ http.version=HTTP/2.0 http.status=404 protocol=http ate.actor.name=does-not-exist ate.atespace=ate-demo-counter ate.router.resume=none ate.router.route.duration=0.005362109 error="actor \"does-not-exist\" not found" reason=NotFound duration=5ms
+2026-11-12T11:14:24.649521Z	error	request gateway=default/default listener=https route=default/substrate-actors src.addr=10.244.0.27:57314 src.identity=spiffe://cluster.local/ns/ate-system/sa/atenet-client http.method=POST http.host=atenet-router.ate-system.svc http.path=/ http.version=HTTP/2.0 http.status=404 protocol=http error="invalid \"ate-target-actor\": expected <atespace>/<actor>" reason=NotFound duration=0ms

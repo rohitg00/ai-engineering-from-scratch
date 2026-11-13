@@ -1,0 +1,16 @@
+metadata:
+  atespace: lab-cpu
+  name: work-250
+workerSelector:
+  matchLabels: {workload: burn}
+containers:
+- name: burn
+  image: localhost:5001/burn@sha256:c5b6b8f88ae39a2487c462fddda773c5935c9332552f560163725d9369f371ad
+  wakeupProbe:
+    httpGet: {path: /readyz, port: 80}
+resources:
+  limits:
+    cpuMillicores: 250
+    memoryBytes: 134217728
+snapshotConfig:
+  preferredFidelity: SNAPSHOT_FIDELITY_MEMORY

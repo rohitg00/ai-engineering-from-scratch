@@ -1,0 +1,70 @@
+Setting up local docker registry 'kind-registry' on port 5001...
+Unable to find image 'registry:3' locally
+3: Pulling from library/registry
+ca774b37efed: Pulling fs layer
+91cd85cbb999: Pulling fs layer
+77c315b2f195: Pulling fs layer
+881fc932939e: Pulling fs layer
+ccf28731d908: Pulling fs layer
+ca774b37efed: Download complete
+91cd85cbb999: Download complete
+ccf28731d908: Download complete
+881fc932939e: Download complete
+77c315b2f195: Download complete
+881fc932939e: Pull complete
+91cd85cbb999: Pull complete
+41ca4e53b739: Download complete
+77c315b2f195: Pull complete
+ca774b37efed: Pull complete
+ccf28731d908: Pull complete
+e7a3c6187b86: Download complete
+Digest: sha256:82f6ff4a7f982960c8aa51617fea3aabc485df6e55cce80d22deb1de36f1bc3c
+Status: Downloaded newer image for registry:3
+ee4c128ec91ea046b674e0eab0f0c24f5b0e5cbbb63e39b15274342b2ab9e697
+Probing for /dev/kvm in the Docker environment...
+/dev/kvm found: micro-VM (kata + cloud-hypervisor) support will be enabled.
+Creating kind configuration for cluster 'kind' (ipFamily=ipv4)...
+Deleting existing kind cluster 'kind' if it exists...
+go: downloading sigs.k8s.io/kind v0.33.0
+go: downloading github.com/spf13/pflag v1.0.5
+go: downloading github.com/pkg/errors v0.9.1
+go: downloading al.essio.dev/pkg/shellescape v1.5.1
+go: downloading github.com/spf13/cobra v1.8.0
+go: downloading github.com/mattn/go-isatty v0.0.20
+go: downloading github.com/pelletier/go-toml v1.9.5
+go: downloading go.yaml.in/yaml/v3 v3.0.4
+go: downloading github.com/BurntSushi/toml v1.4.0
+go: downloading github.com/evanphx/json-patch/v5 v5.6.0
+go: downloading sigs.k8s.io/yaml v1.4.0
+go: downloading golang.org/x/sys v0.49.0
+Deleting cluster "kind" ...
+Creating kind cluster 'kind'...
+Creating cluster "kind" ...
+ • Ensuring node image (kindest/node:v1.37.0) 🖼️  ...
+ ✓ Ensuring node image (kindest/node:v1.37.0) 🖼️
+ • Preparing nodes 📦   ...
+ ✓ Preparing nodes 📦 
+ • Writing configuration 📜  ...
+ ✓ Writing configuration 📜
+ • Starting control-plane 🕹️  ...
+ ✓ Starting control-plane 🕹️
+ • Installing CNI 🔌  ...
+ ✓ Installing CNI 🔌
+ • Installing StorageClass 💾  ...
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Not sure what to do next? 😅  Check out https://kind.sigs.k8s.io/docs/user/quick-start/
+warning: net.ipv4.neigh.default.gc_thresh3=1024; above about 1000 sandboxes on this host set
+         net.ipv4.neigh.default.gc_thresh1=4096 gc_thresh2=16384 gc_thresh3=32768 (sysctl -w, as root)
+Enabling Proxy ARP/NDP on kind nodes...
+net.ipv4.conf.all.proxy_arp = 1
+net.ipv6.conf.all.proxy_ndp = 1
+Preparing kind nodes for micro-VM (kata + cloud-hypervisor) runtime...
+Adding registry config to kind nodes...
+Connecting local registry to cluster network...
+Documenting local registry in cluster...
+configmap/local-registry-hosting created

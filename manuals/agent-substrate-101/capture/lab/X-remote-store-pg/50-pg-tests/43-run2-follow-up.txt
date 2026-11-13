@@ -1,0 +1,18 @@
+### 2026-11-12T19:06:23Z run 2 follow-up, 147 s after Postgres was ready
+request y-run: 200	0.029910	count=152 process_age_s=1222.2 
+request y-run: 200	0.031736	count=153 process_age_s=1222.4 
+request to a running y-s-030: 200	0.032130	count=2 process_age_s=1222.7 
+y-run state: ACTOR_STATE_RUNNING
+--- router log for y-run, last 30 s
+19:06:23.755	INFO	ResumeActor result	-	ACTOR_STATE_RUNNING
+19:06:23.755	INFO	Route ok	-	-
+19:06:23.967	INFO	ResumeActor	-	-
+19:06:23.975	INFO	ResumeActor result	-	ACTOR_STATE_RUNNING
+19:06:23.975	INFO	Route ok	-	-
+--- api-server RPCs that name y-run, last 30 s
+19:05:57.699	/substrate.ateapi.v1.Control/ResumeActor	-	4.717922ms
+19:05:58.703	/substrate.ateapi.v1.Control/ResumeActor	-	4.523827ms
+19:06:23.754	/substrate.ateapi.v1.Control/ResumeActor	-	5.414588ms
+19:06:24.430	/substrate.ateapi.v1.Control/GetActor	-	3.447565ms
+19:05:55.691	/substrate.ateapi.v1.Control/ResumeActor	-	4.481077ms
+19:06:23.974	/substrate.ateapi.v1.Control/ResumeActor	-	5.855448ms

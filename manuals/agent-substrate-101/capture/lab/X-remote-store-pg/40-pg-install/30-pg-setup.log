@@ -1,0 +1,21 @@
+setup.sql run from this guest over TLS with --single-transaction
+DO
+setup.sql rc=0
+                                     List of roles
+        Role name         |                         Attributes                         
+--------------------------+------------------------------------------------------------
+ postgres                 | Superuser, Create role, Create DB, Replication, Bypass RLS
+ substrate_owner          | Cannot login
+ substrate_owner_user     | No inheritance
+ substrate_readwrite      | Cannot login
+ substrate_readwrite_user | No inheritance
+
+                                         List of schemas
+   Name    |       Owner       |           Access privileges            |      Description       
+-----------+-------------------+----------------------------------------+------------------------
+ public    | pg_database_owner | pg_database_owner=UC/pg_database_owner+| standard public schema
+           |                   | =U/pg_database_owner                   | 
+ substrate | substrate_owner   | substrate_owner=UC/substrate_owner    +| 
+           |                   | substrate_readwrite=U/substrate_owner  | 
+(2 rows)
+

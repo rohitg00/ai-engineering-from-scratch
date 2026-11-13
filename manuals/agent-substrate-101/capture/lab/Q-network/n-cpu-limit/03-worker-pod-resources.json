@@ -1,0 +1,13 @@
+{
+  "resources": {
+    "limits": {
+      "cpu": "6",
+      "memory": "2Gi"
+    },
+    "requests": {
+      "cpu": "500m",
+      "memory": "1Gi"
+    }
+  },
+  "qos": "Burstable"
+}

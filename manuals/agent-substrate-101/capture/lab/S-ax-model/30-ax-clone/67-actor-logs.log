@@ -1,0 +1,9 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+{"time":"2026-11-12T16:18:30.773885356Z","message":"time=2026-11-12T16:18:30.773Z level=WARN msg=\"maiden run workspace setup completed with errors; marker omitted to allow retry\" path=/workspace"}
+{"time":"2026-11-12T16:18:30.773927887Z","message":"time=2026-11-12T16:18:30.773Z level=INFO msg=\"workspace maiden run setup marked ready\" path=/workspace"}
+{"time":"2026-11-12T16:18:51.29813212Z","message":"time=2026-11-12T16:18:51.296Z level=INFO msg=\"initializing AX task runner\" port=80 workspace=s-ws wsPath=/workspace"}
+{"time":"2026-11-12T16:18:51.317266715Z","message":"time=2026-11-12T16:18:51.317Z level=INFO msg=\"executing workspace maiden run setup\" path=/workspace"}
+{"time":"2026-11-12T16:18:51.318160408Z","message":"time=2026-11-12T16:18:51.318Z level=INFO msg=\"wrote inlined workspace file\" path=/workspace/AGENTS.md"}
+{"time":"2026-11-12T16:18:51.318357403Z","message":"time=2026-11-12T16:18:51.318Z level=INFO msg=\"initializing and fetching git repo\" repo=https://github.com/pallets/itsdangerous.git branch=main dir=/workspace/itsdangerous depth=0"}
+{"time":"2026-11-12T16:19:00.522735577Z","message":"time=2026-11-12T16:19:00.522Z level=INFO msg=\"maiden run workspace setup completed successfully\" path=/workspace"}
+{"time":"2026-11-12T16:19:00.523113886Z","message":"time=2026-11-12T16:19:00.523Z level=INFO msg=\"workspace maiden run setup marked ready\" path=/workspace"}

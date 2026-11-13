@@ -1,0 +1,470 @@
+{
+  "client_limit_seconds": {
+    "running": 9,
+    "running2": 9,
+    "suspended": 14
+  },
+  "machine": "x86 server guest, 24 vCPU, 47 GB, nested KVM, one kind node, Agent Substrate from the release images, Envoy dataplane, gVisor, bundled Postgres, pool of 60 workers, template with 500 millicores and 128 MiB",
+  "not_valid": [
+    "kube-apiserver-1 stream suspended: every failure is no worker has room for the actor"
+  ],
+  "note": "second runs of the three outages of experiment E, in this order on one cluster. Three running actors got one request each second with a client limit of 9 s (stream running is one actor, running2 the other two). A new suspended actor got one request every 5 s with a limit of 14 s. Outage seconds run from the moment the dependency was gone to the moment it was ready. A failure in the run counts the whole window, from 30 s before the outage to 120 s after it. After each run six running actors got three requests each. In kube-apiserver-1 the suspended stream is not valid: the pool was full of running actors from the earlier runs.",
+  "runs": {
+    "ate-api-server-1": {
+      "command_to_gone_seconds": 15.1,
+      "gateway_timeouts": [],
+      "log_lines_with_worker_cache_not_ready": 0,
+      "outage_seconds": 70.1,
+      "running_actors_checked_after": {
+        "actors": 6,
+        "ok": 18,
+        "requests": 18
+      },
+      "states_after": {
+        "ACTOR_STATE_RESUMING": 3,
+        "ACTOR_STATE_RUNNING": 111,
+        "ACTOR_STATE_SUSPENDED": 92
+      },
+      "states_before": {
+        "ACTOR_STATE_RESUMING": 3,
+        "ACTOR_STATE_RUNNING": 78,
+        "ACTOR_STATE_SUSPENDED": 125
+      },
+      "streams": {
+        "running": {
+          "codes_of_failures": {
+            "503": 75
+          },
+          "failed_in_run": 75,
+          "failure_bodies": {
+            "actor y-lab/<actor> unavailable": 75
+          },
+          "first_ok_sent_seconds_after_ready": 0.2,
+          "last_failure_sent_seconds_after_ready": -4.8,
+          "ok_during_outage": 4,
+          "requests_during_outage": 69,
+          "requests_in_run": 235,
+          "seconds_of_503": {
+            "max": 5.024,
+            "median": 3.014,
+            "min": 1.003,
+            "n": 75
+          }
+        },
+        "running2": {
+          "codes_of_failures": {
+            "503": 150
+          },
+          "failed_in_run": 150,
+          "failure_bodies": {
+            "actor y-lab/<actor> unavailable": 150
+          },
+          "first_ok_sent_seconds_after_ready": 0.2,
+          "last_failure_sent_seconds_after_ready": -4.8,
+          "ok_during_outage": 8,
+          "requests_during_outage": 138,
+          "requests_in_run": 470,
+          "seconds_of_503": {
+            "max": 5.024,
+            "median": 3.014,
+            "min": 1.003,
+            "n": 150
+          }
+        },
+        "suspended": {
+          "codes_of_failures": {
+            "503": 14
+          },
+          "failed_in_run": 14,
+          "failure_bodies": {
+            "actor y-lab/<actor> unavailable": 14
+          },
+          "first_ok_sent_seconds_after_ready": 0.2,
+          "last_failure_sent_seconds_after_ready": -10.8,
+          "ok_during_outage": 1,
+          "requests_during_outage": 13,
+          "requests_in_run": 47,
+          "seconds_of_503": {
+            "max": 5.022,
+            "median": 5.019,
+            "min": 5.017,
+            "n": 14
+          }
+        }
+      },
+      "stuck_line": "stuck: []",
+      "worker_cache_synced_seconds_after_ready": null
+    },
+    "kube-apiserver-1": {
+      "command_to_gone_seconds": 0.2,
+      "gateway_timeouts": [],
+      "log_lines_with_worker_cache_not_ready": 0,
+      "outage_seconds": 90.7,
+      "running_actors_checked_after": {
+        "actors": 6,
+        "ok": 18,
+        "requests": 18
+      },
+      "states_after": {
+        "ACTOR_STATE_RESUMING": 3,
+        "ACTOR_STATE_RUNNING": 117,
+        "ACTOR_STATE_SUSPENDED": 136
+      },
+      "states_before": {
+        "ACTOR_STATE_RESUMING": 3,
+        "ACTOR_STATE_RUNNING": 111,
+        "ACTOR_STATE_SUSPENDED": 142
+      },
+      "streams": {
+        "running": {
+          "codes_of_failures": {},
+          "failed_in_run": 0,
+          "failure_bodies": {},
+          "first_ok_sent_seconds_after_ready": 0.9,
+          "last_failure_sent_seconds_after_ready": null,
+          "ok_during_outage": 91,
+          "requests_during_outage": 91,
+          "requests_in_run": 241,
+          "seconds_of_503": null
+        },
+        "running2": {
+          "codes_of_failures": {},
+          "failed_in_run": 0,
+          "failure_bodies": {},
+          "first_ok_sent_seconds_after_ready": 0.9,
+          "last_failure_sent_seconds_after_ready": null,
+          "ok_during_outage": 182,
+          "requests_during_outage": 182,
+          "requests_in_run": 482,
+          "seconds_of_503": null
+        },
+        "suspended": {
+          "codes_of_failures": {
+            "503": 43
+          },
+          "failed_in_run": 43,
+          "failure_bodies": {
+            "actor y-lab/<actor> unavailable: no worker has room for the ": 43
+          },
+          "first_ok_sent_seconds_after_ready": null,
+          "last_failure_sent_seconds_after_ready": 119.9,
+          "ok_during_outage": 0,
+          "requests_during_outage": 18,
+          "requests_in_run": 49,
+          "seconds_of_503": {
+            "max": 5.023,
+            "median": 5.019,
+            "min": 5.017,
+            "n": 43
+          }
+        }
+      },
+      "stuck_line": "stuck: []",
+      "worker_cache_synced_seconds_after_ready": null
+    },
+    "postgres-1": {
+      "command_to_gone_seconds": 2.1,
+      "gateway_timeouts": [
+        {
+          "actor": "pg1-s-008",
+          "seconds": 10.016,
+          "stream": "suspended"
+        }
+      ],
+      "log_lines_with_worker_cache_not_ready": 2,
+      "outage_seconds": 63.0,
+      "running_actors_checked_after": {
+        "actors": 6,
+        "ok": 18,
+        "requests": 18
+      },
+      "states_after": {
+        "ACTOR_STATE_RESUMING": 1,
+        "ACTOR_STATE_RUNNING": 30,
+        "ACTOR_STATE_SUSPENDED": 25
+      },
+      "states_before": {
+        "ACTOR_STATE_RUNNING": 6,
+        "ACTOR_STATE_SUSPENDED": 50
+      },
+      "streams": {
+        "running": {
+          "codes_of_failures": {
+            "000": 61,
+            "500": 9
+          },
+          "failed_in_run": 70,
+          "failure_bodies": {
+            "<empty>": 61,
+            "error resuming actor y-lab/<actor>": 9
+          },
+          "first_ok_sent_seconds_after_ready": 5.4,
+          "last_failure_sent_seconds_after_ready": 4.4,
+          "ok_during_outage": 0,
+          "requests_during_outage": 63,
+          "requests_in_run": 215,
+          "seconds_of_503": null
+        },
+        "running2": {
+          "codes_of_failures": {
+            "000": 117,
+            "500": 18
+          },
+          "failed_in_run": 135,
+          "failure_bodies": {
+            "<empty>": 117,
+            "error resuming actor y-lab/<actor>": 18
+          },
+          "first_ok_sent_seconds_after_ready": 0.4,
+          "last_failure_sent_seconds_after_ready": 4.4,
+          "ok_during_outage": 0,
+          "requests_during_outage": 126,
+          "requests_in_run": 430,
+          "seconds_of_503": null
+        },
+        "suspended": {
+          "codes_of_failures": {
+            "500": 6,
+            "503": 12,
+            "504": 1
+          },
+          "failed_in_run": 19,
+          "failure_bodies": {
+            "<empty>": 1,
+            "actor y-lab/<actor> unavailable": 12,
+            "error resuming actor y-lab/<actor>": 6
+          },
+          "first_ok_sent_seconds_after_ready": 29.4,
+          "last_failure_sent_seconds_after_ready": 24.4,
+          "ok_during_outage": 0,
+          "requests_during_outage": 13,
+          "requests_in_run": 43,
+          "seconds_of_503": {
+            "max": 5.028,
+            "median": 5.023,
+            "min": 5.02,
+            "n": 12
+          }
+        }
+      },
+      "stuck_line": "stuck: []",
+      "worker_cache_synced_seconds_after_ready": 28.1
+    },
+    "postgres-2": {
+      "command_to_gone_seconds": 2.1,
+      "gateway_timeouts": [],
+      "log_lines_with_worker_cache_not_ready": 3,
+      "outage_seconds": 63.3,
+      "running_actors_checked_after": {
+        "actors": 6,
+        "ok": 18,
+        "requests": 18
+      },
+      "states_after": {
+        "ACTOR_STATE_RESUMING": 2,
+        "ACTOR_STATE_RUNNING": 54,
+        "ACTOR_STATE_SUSPENDED": 50
+      },
+      "states_before": {
+        "ACTOR_STATE_RESUMING": 1,
+        "ACTOR_STATE_RUNNING": 30,
+        "ACTOR_STATE_SUSPENDED": 75
+      },
+      "streams": {
+        "running": {
+          "codes_of_failures": {
+            "000": 58,
+            "500": 9
+          },
+          "failed_in_run": 67,
+          "failure_bodies": {
+            "<empty>": 58,
+            "error resuming actor y-lab/<actor>": 9
+          },
+          "first_ok_sent_seconds_after_ready": 2.8,
+          "last_failure_sent_seconds_after_ready": 1.8,
+          "ok_during_outage": 0,
+          "requests_during_outage": 63,
+          "requests_in_run": 215,
+          "seconds_of_503": null
+        },
+        "running2": {
+          "codes_of_failures": {
+            "000": 58,
+            "500": 15,
+            "503": 55
+          },
+          "failed_in_run": 128,
+          "failure_bodies": {
+            "<empty>": 58,
+            "actor y-lab/<actor> unavailable": 55,
+            "error resuming actor y-lab/<actor>": 15
+          },
+          "first_ok_sent_seconds_after_ready": 0.8,
+          "last_failure_sent_seconds_after_ready": 1.8,
+          "ok_during_outage": 4,
+          "requests_during_outage": 126,
+          "requests_in_run": 430,
+          "seconds_of_503": {
+            "max": 5.022,
+            "median": 3.012,
+            "min": 1.001,
+            "n": 55
+          }
+        },
+        "suspended": {
+          "codes_of_failures": {
+            "500": 8,
+            "503": 11
+          },
+          "failed_in_run": 19,
+          "failure_bodies": {
+            "actor y-lab/<actor> unavailable": 11,
+            "error resuming actor y-lab/<actor>": 8
+          },
+          "first_ok_sent_seconds_after_ready": 29.8,
+          "last_failure_sent_seconds_after_ready": 24.8,
+          "ok_during_outage": 0,
+          "requests_during_outage": 13,
+          "requests_in_run": 43,
+          "seconds_of_503": {
+            "max": 5.024,
+            "median": 5.022,
+            "min": 5.019,
+            "n": 11
+          }
+        }
+      },
+      "stuck_line": "stuck: []",
+      "worker_cache_synced_seconds_after_ready": 25.8
+    },
+    "postgres-3": {
+      "command_to_gone_seconds": 1.5,
+      "gateway_timeouts": [],
+      "log_lines_with_worker_cache_not_ready": 3,
+      "outage_seconds": 62.6,
+      "running_actors_checked_after": {
+        "actors": 6,
+        "ok": 18,
+        "requests": 18
+      },
+      "states_after": {
+        "ACTOR_STATE_RESUMING": 3,
+        "ACTOR_STATE_RUNNING": 78,
+        "ACTOR_STATE_SUSPENDED": 75
+      },
+      "states_before": {
+        "ACTOR_STATE_RESUMING": 2,
+        "ACTOR_STATE_RUNNING": 54,
+        "ACTOR_STATE_SUSPENDED": 100
+      },
+      "streams": {
+        "running": {
+          "codes_of_failures": {
+            "500": 5,
+            "503": 55
+          },
+          "failed_in_run": 60,
+          "failure_bodies": {
+            "actor y-lab/<actor> unavailable": 55,
+            "error resuming actor y-lab/<actor>": 5
+          },
+          "first_ok_sent_seconds_after_ready": 0.9,
+          "last_failure_sent_seconds_after_ready": -4.1,
+          "ok_during_outage": 4,
+          "requests_during_outage": 63,
+          "requests_in_run": 214,
+          "seconds_of_503": {
+            "max": 5.025,
+            "median": 3.013,
+            "min": 0.999,
+            "n": 55
+          }
+        },
+        "running2": {
+          "codes_of_failures": {
+            "500": 12,
+            "503": 110
+          },
+          "failed_in_run": 122,
+          "failure_bodies": {
+            "actor y-lab/<actor> unavailable": 110,
+            "error resuming actor y-lab/<actor>": 12
+          },
+          "first_ok_sent_seconds_after_ready": 0.9,
+          "last_failure_sent_seconds_after_ready": -3.1,
+          "ok_during_outage": 6,
+          "requests_during_outage": 126,
+          "requests_in_run": 428,
+          "seconds_of_503": {
+            "max": 5.026,
+            "median": 3.014,
+            "min": 0.997,
+            "n": 110
+          }
+        },
+        "suspended": {
+          "codes_of_failures": {
+            "500": 8,
+            "503": 11
+          },
+          "failed_in_run": 19,
+          "failure_bodies": {
+            "actor y-lab/<actor> unavailable": 11,
+            "error resuming actor y-lab/<actor>": 8
+          },
+          "first_ok_sent_seconds_after_ready": 30.9,
+          "last_failure_sent_seconds_after_ready": 25.9,
+          "ok_during_outage": 0,
+          "requests_during_outage": 12,
+          "requests_in_run": 43,
+          "seconds_of_503": {
+            "max": 5.024,
+            "median": 5.019,
+            "min": 5.018,
+            "n": 11
+          }
+        }
+      },
+      "stuck_line": "stuck: []",
+      "worker_cache_synced_seconds_after_ready": 29.3
+    }
+  },
+  "sources": [
+    "capture/lab/Y-reruns-rollback-scale/10-outages/10-pg-run1/00-timeline.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/10-pg-run1/10-probe.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/10-pg-run1/11-running-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/10-pg-run1/12-stuck.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/10-pg-run1/14-ateapi-worker-cache.log",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/10-pg-run1/01-states-before.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/10-pg-run1/17-states-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/11-pg-run2/00-timeline.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/11-pg-run2/10-probe.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/11-pg-run2/11-running-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/11-pg-run2/12-stuck.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/11-pg-run2/14-ateapi-worker-cache.log",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/11-pg-run2/01-states-before.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/11-pg-run2/17-states-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/12-pg-run3/00-timeline.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/12-pg-run3/10-probe.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/12-pg-run3/11-running-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/12-pg-run3/12-stuck.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/12-pg-run3/14-ateapi-worker-cache.log",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/12-pg-run3/01-states-before.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/12-pg-run3/17-states-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/20-api-run1/00-timeline.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/20-api-run1/10-probe.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/20-api-run1/11-running-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/20-api-run1/12-stuck.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/20-api-run1/14-ateapi-worker-cache.log",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/20-api-run1/01-states-before.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/20-api-run1/17-states-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/30-k8s-run1/00-timeline.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/30-k8s-run1/10-probe.tsv",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/30-k8s-run1/11-running-after.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/30-k8s-run1/12-stuck.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/30-k8s-run1/14-ateapi-worker-cache.log",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/30-k8s-run1/01-states-before.txt",
+    "capture/lab/Y-reruns-rollback-scale/10-outages/30-k8s-run1/17-states-after.txt"
+  ]
+}

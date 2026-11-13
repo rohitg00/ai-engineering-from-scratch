@@ -1,0 +1,5 @@
+NAME               ATESPACE   PHASE     ACTOR              WORKER-IP     AGE
+ax-install-check   default    Running   ax-install-check   10.244.0.31   14m
+NAME   ATESPACE   GIT-REPOS   MCP-SERVERS
+NAME   ATESPACE   EGRESS-RULES
+NAME   ATESPACE   PROVIDER   MODEL

@@ -1,0 +1,60 @@
+Warning: no --token-file given; acting as the shared identity system:serviceaccount:ate-system:ate-client rather than as yourself. Pass --token-file to act as yourself.
+actorTemplate:
+  atespace: default
+  name: s-loss-tmpl-5b21b621
+metadata:
+  atespace: default
+  createTime: "2026-11-12T16:19:51.253674226Z"
+  name: s-loss
+  uid: 8e6e98a2-3de3-45d6-a675-18982a729e39
+  updateTime: "2026-11-12T16:19:56.745771042Z"
+  version: "7"
+status:
+  assignedNode: demo-control-plane
+  lastAssignedGeneration: 1
+  snapshots:
+  - actorTemplateUid: 46290f32-a3fb-4acb-bf2d-7a1f5ce22aaa
+    durableSnapshot:
+      object:
+        snapshotUri: gs://ate-snapshots/atespaces/default/actors/8e6e98a2-3de3-45d6-a675-18982a729e39/snapshots/2cfb381f-f78f-491d-b436-a8e1849699ce
+      state: SNAPSHOT_STORAGE_STATE_PENDING
+    fidelity: SNAPSHOT_FIDELITY_VOLUMES
+    generation: 1
+    locality: demo-control-plane
+    owner: SNAPSHOT_OWNER_ACTOR
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    uuid: 2cfb381f-f78f-491d-b436-a8e1849699ce
+  state: ACTOR_STATE_RUNNING
+  workerAssignment:
+    nodeName: demo-control-plane
+    sandboxRuntime:
+      sandboxClass: gvisor
+      version:
+        attributes:
+        - key: architecture
+          value: amd64
+        - key: cpu_features
+          value: 8c0000002e500800008003f70000000f00400004219c01ab178bfbfffff83203
+        - key: sandbox_bundle_hash
+          value: sha256:88e9809119d7fa2204897a60f8bb155add102018b4b4947e7876c9bc447312fa
+        schemaVersion: v1
+    worker:
+      name: fd9cf386-1eff-45b6-9bfa-13703bdd04f4
+    workerEpoch: "1"
+    workerNamespace: ax-system
+    workerPod: ax-pool-588b78fd54-29xgr
+    workerPodIps:
+    - 10.244.0.40
+    workerPodUid: fd9cf386-1eff-45b6-9bfa-13703bdd04f4
+    workerPool: ax-pool
+    workerSpiffeId: spiffe://cluster.local/ns/ax-system/sa/ateworker

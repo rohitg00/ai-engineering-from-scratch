@@ -1,0 +1,27 @@
+NAMESPACE                          NAME                                           READY   STATUS      RESTARTS   AGE     IP            NODE                   NOMINATED NODE   READINESS GATES
+ate-system                         ate-api-server-776cd6fb4c-hztmx                2/2     Running     0          3m22s   10.244.0.19   kagent-control-plane   <none>           <none>
+ate-system                         ate-api-server-776cd6fb4c-tnc4m                2/2     Running     0          3m23s   10.244.0.18   kagent-control-plane   <none>           <none>
+ate-system                         ate-controller-84d4d99bbb-zwnz5                1/1     Running     0          3m23s   10.244.0.10   kagent-control-plane   <none>           <none>
+ate-system                         ate-idp-server-85cfb75cfb-6sxpc                1/1     Running     0          3m23s   10.244.0.9    kagent-control-plane   <none>           <none>
+ate-system                         ate-idp-server-85cfb75cfb-ck8mh                1/1     Running     0          3m23s   10.244.0.16   kagent-control-plane   <none>           <none>
+ate-system                         atelet-5g655                                   2/2     Running     0          3m48s   10.244.0.8    kagent-control-plane   <none>           <none>
+ate-system                         atenet-egress-787d98dc77-gvl59                 1/1     Running     0          3m23s   10.244.0.17   kagent-control-plane   <none>           <none>
+ate-system                         atenet-router-556c5ff957-489rl                 1/1     Running     0          3m23s   10.244.0.14   kagent-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-6946fd687c-bjv4q       1/1     Running     0          3m23s   10.244.0.13   kagent-control-plane   <none>           <none>
+ate-system                         rustfs-545745bdf6-9z76v                        1/1     Running     0          3m23s   10.244.0.15   kagent-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-mlmkk                       0/1     Completed   0          3m23s   10.244.0.11   kagent-control-plane   <none>           <none>
+kagent                             kagent-controller-6fff5c8696-7trwv             1/1     Running     0          2m2s    10.244.0.22   kagent-control-plane   <none>           <none>
+kagent                             kagent-default-679c58c6cb-pljdk                1/1     Running     0          2m2s    10.244.0.23   kagent-control-plane   <none>           <none>
+kagent                             kagent-postgresql-566dbb9bc5-8jt4z             2/2     Running     0          4m14s   10.244.0.7    kagent-control-plane   <none>           <none>
+kagent                             kagent-tools-5b7c6fbcc5-dm9sr                  1/1     Running     0          2m2s    10.244.0.20   kagent-control-plane   <none>           <none>
+kagent                             kagent-ui-7945b67c54-s9ftd                     1/1     Running     0          2m2s    10.244.0.21   kagent-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-58h5n                       1/1     Running     0          4m38s   10.244.0.2    kagent-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-hccbv                       1/1     Running     0          4m38s   10.244.0.4    kagent-control-plane   <none>           <none>
+kube-system                        etcd-kagent-control-plane                      1/1     Running     0          4m44s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kindnet-jlrzw                                  1/1     Running     0          4m38s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kube-apiserver-kagent-control-plane            1/1     Running     0          4m46s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-kagent-control-plane   1/1     Running     0          4m44s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kube-proxy-t9jdl                               1/1     Running     0          4m38s   172.18.0.2    kagent-control-plane   <none>           <none>
+kube-system                        kube-scheduler-kagent-control-plane            1/1     Running     0          4m44s   172.18.0.2    kagent-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-4vbch        1/1     Running     0          4m38s   10.244.0.3    kagent-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-64fd9584b5-2cl2g     1/1     Running     0          4m22s   10.244.0.5    kagent-control-plane   <none>           <none>

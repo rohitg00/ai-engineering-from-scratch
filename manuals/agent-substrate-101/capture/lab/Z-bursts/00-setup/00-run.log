@@ -1,0 +1,5 @@
+06:32:37 start disk=13910MB mem=44856MB inotify=8192
+06:37:51 STOP growth at 50: not ready in time
+06:37:51 pool size N=0
+06:38:47 growth rerun: the first pass counted workers with -a, which lists none; the 50-worker pool was created with the cluster at about 06:35
+06:40:38 pool size N=300
