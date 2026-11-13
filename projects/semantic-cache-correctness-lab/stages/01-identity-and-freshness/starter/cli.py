@@ -1,6 +1,6 @@
 """CLI runner for Semantic Cache Correctness Lab.
 
-Executes correctness benchmarks and exports audit receipts.
+Executes correctness benchmarks, threshold sensitivity analysis, and exports audit receipts.
 """
 
 from __future__ import annotations
@@ -14,6 +14,7 @@ from main import (
     CacheAdapter,
     CacheEntry,
     SemanticCacheStore,
+    analyze_threshold_sensitivity,
     export_report,
     run_correctness_benchmark,
 )
@@ -22,7 +23,7 @@ from main import (
 def build_parser() -> argparse.ArgumentParser:
     """Construct command-line argument parser."""
     parser = argparse.ArgumentParser(
-        description="Run semantic cache correctness benchmark and verification gate."
+        description="Run semantic cache correctness benchmark, sensitivity profiling, and verification gate."
     )
     parser.add_argument(
         "--benchmark",
@@ -39,6 +40,11 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=0.85,
         help="Cosine similarity threshold for semantic cache hits (default: 0.85).",
+    )
+    parser.add_argument(
+        "--sensitivity",
+        action="store_true",
+        help="Run threshold sensitivity profiling across 0.65 - 0.95 cutoffs.",
     )
     parser.add_argument(
         "--strict",
@@ -74,6 +80,13 @@ def main() -> int:
         threshold=args.threshold,
     )
 
+    if args.sensitivity:
+        curve = analyze_threshold_sensitivity(
+            dataset=test_queries,
+            store=store,
+        )
+        results["sensitivity_curve"] = curve
+
     export_report(args.output, results)
 
     print("==================================================")
@@ -88,7 +101,15 @@ def main() -> int:
     print(f"False Hits (Critical):      {results['false_hits']}")
     print(f"Accuracy Rate:              {results['accuracy_pct']}%")
     print(f"Estimated Latency Saved:    {results['estimated_latency_saved_ms']} ms")
-    print(f"Report exported to:         {args.output}")
+
+    if args.sensitivity and "sensitivity_curve" in results:
+        print("\nThreshold Sensitivity Analysis:")
+        print(" Threshold | Semantic Hits | False Hits | Accuracy")
+        print("-----------+---------------+------------+---------")
+        for pt in results["sensitivity_curve"]:
+            print(f"   {pt['threshold']:.2f}    |       {pt['semantic_hits']:<7} |     {pt['false_hits']:<6} | {pt['accuracy_pct']:.1f}%")
+
+    print(f"\nReport exported to:         {args.output}")
     print("==================================================")
 
     if args.strict and (results["false_hits"] > 0 or not results["compatible"]):

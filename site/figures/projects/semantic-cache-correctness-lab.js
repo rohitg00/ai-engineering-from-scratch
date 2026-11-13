@@ -78,7 +78,22 @@
       diffTenant: false,
       diffRev: true,
       isNegation: false,
-      isNumber: false
+      isNumber: false,
+      isTemporal: false
+    },
+    {
+      id: "q7",
+      name: "Temporal Near-Miss",
+      tenant: "tenant-alpha",
+      prompt: "Show me the error logs from tomorrow",
+      cachedPrompt: "Show me the error logs from yesterday",
+      similarity: 0.92,
+      isExact: false,
+      diffTenant: false,
+      diffRev: false,
+      isNegation: false,
+      isNumber: false,
+      isTemporal: true
     }
   ];
 
@@ -113,6 +128,12 @@
     {
       key: "blockNegation",
       label: "Block inverted negation ('deploy' vs 'do not deploy')",
+      type: "checkbox",
+      value: true
+    },
+    {
+      key: "blockTemporal",
+      label: "Block temporal near-misses ('yesterday' vs 'tomorrow')",
       type: "checkbox",
       value: true
     },
@@ -165,6 +186,14 @@
         } else if (q.isNumber && !v.blockNumbers) {
           outcome = "HIT-FALSE";
           reason = "Hallucination: number mismatch ($50 vs $500)!";
+          isFalseHit = true;
+        } else if (q.isTemporal && v.blockTemporal) {
+          outcome = "MISS";
+          reason = "Blocked: temporal shift (yesterday vs tomorrow)";
+          blockedNearMisses++;
+        } else if (q.isTemporal && !v.blockTemporal) {
+          outcome = "HIT-FALSE";
+          reason = "Hallucination: temporal shift ignored!";
           isFalseHit = true;
         } else {
           outcome = "HIT-SEMANTIC";

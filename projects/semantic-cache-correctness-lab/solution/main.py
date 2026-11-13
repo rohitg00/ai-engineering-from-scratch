@@ -1,17 +1,19 @@
 """Semantic Cache Correctness Lab.
 
-Implements an opt-in multi-tenant semantic answer cache for LLM queries.
-Enforces strict tenant isolation, source-revision freshness, TTL expiration,
-and adversarial near-miss rejection (numbers, negation, and directional antonyms).
+Advanced multi-tenant semantic caching engine for LLM applications.
+Enforces cryptographic tenant isolation, source-revision freshness,
+per-tenant LRU quota eviction, sublinear n-gram similarity, and deep
+adversarial near-miss filters (numerical, units, negation, temporal, antonyms).
 
 Cites:
   - RFC 9111: HTTP Caching
   - NIST SP 800-88: Data Isolation and Sanitization
+  - Information Retrieval: Sublinear TF-IDF and N-Gram Cosine Matching
 """
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 import hashlib
 import json
 import math
@@ -20,9 +22,21 @@ import time
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
 
+class CacheError(Exception):
+    """Base exception for caching engine errors."""
+
+
+class TenantIsolationError(CacheError):
+    """Raised when an operation attempts to breach tenant partition boundaries."""
+
+
+class MalformedRequestError(CacheError):
+    """Raised when an incoming cache query is malformed or invalid."""
+
+
 @dataclass
 class CacheEntry:
-    """Represents a cached LLM response bound to identity and freshness constraints."""
+    """Represents a cached LLM response bound to identity, freshness, and audit metadata."""
 
     entry_id: str
     tenant_id: str
@@ -32,10 +46,19 @@ class CacheEntry:
     response: str
     created_at: float
     ttl_seconds: float
-    metadata: Dict[str, Any]
+    soft_ttl_seconds: float = 0.0
+    last_accessed_at: float = field(default=0.0)
+    hit_count: int = 0
+    tags: List[str] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        """Initialize access timestamp if unset."""
+        if self.last_accessed_at == 0.0:
+            self.last_accessed_at = self.created_at
 
     def to_dict(self) -> Dict[str, Any]:
-        """Serialize cache entry to a plain dictionary."""
+        """Serialize cache entry to a standard dictionary."""
         return asdict(self)
 
     @classmethod
@@ -60,6 +83,10 @@ class CacheEntry:
             response=str(data["response"]),
             created_at=float(data["created_at"]),
             ttl_seconds=float(data.get("ttl_seconds", 3600.0)),
+            soft_ttl_seconds=float(data.get("soft_ttl_seconds", 0.0)),
+            last_accessed_at=float(data.get("last_accessed_at", data["created_at"])),
+            hit_count=int(data.get("hit_count", 0)),
+            tags=list(data.get("tags", [])),
             metadata=dict(data.get("metadata", {})),
         )
 
@@ -74,12 +101,12 @@ def compute_exact_key(
     """Generate a deterministic cryptographic cache key.
 
     Binds tenant ID, model, source revision, normalized prompt, and extra parameters
-    so that entries across tenants or revisions never collide.
+    so that entries across tenants, revisions, or models never collide.
 
     Args:
         tenant_id: The tenant or customer partition identifier.
         model: Target model name (e.g. 'claude-3-5-sonnet', 'gpt-4o').
-        source_revision: Version hash or tag of underlying documents or system prompt.
+        source_revision: Version hash or tag of underlying documents or prompt template.
         prompt: Raw user prompt string.
         extra_params: Optional configuration like temperature or system parameters.
 
@@ -89,11 +116,11 @@ def compute_exact_key(
     Raises:
         ValueError: If tenant_id, model, or prompt is empty or invalid.
     """
-    if not tenant_id or not tenant_id.strip():
+    if not tenant_id or not isinstance(tenant_id, str) or not tenant_id.strip():
         raise ValueError("tenant_id must be a non-empty string")
-    if not model or not model.strip():
+    if not model or not isinstance(model, str) or not model.strip():
         raise ValueError("model must be a non-empty string")
-    if not prompt or not prompt.strip():
+    if not prompt or not isinstance(prompt, str) or not prompt.strip():
         raise ValueError("prompt must be a non-empty string")
 
     norm_tenant = tenant_id.strip()
@@ -113,7 +140,7 @@ def compute_exact_key(
 
 
 def is_fresh(entry: CacheEntry, current_time: float) -> bool:
-    """Determine whether a cache entry remains within its time-to-live period.
+    """Determine whether a cache entry remains within its hard time-to-live period.
 
     Args:
         entry: The CacheEntry to inspect.
@@ -125,6 +152,21 @@ def is_fresh(entry: CacheEntry, current_time: float) -> bool:
     if entry.ttl_seconds <= 0:
         return True
     return current_time <= (entry.created_at + entry.ttl_seconds)
+
+
+def is_soft_expired(entry: CacheEntry, current_time: float) -> bool:
+    """Determine whether a cache entry has exceeded its soft TTL (stale-while-revalidate).
+
+    Args:
+        entry: The CacheEntry to inspect.
+        current_time: Current epoch timestamp.
+
+    Returns:
+        True if soft_ttl_seconds is configured and exceeded.
+    """
+    if entry.soft_ttl_seconds <= 0:
+        return False
+    return current_time > (entry.created_at + entry.soft_ttl_seconds)
 
 
 def validate_cache_request(request: Dict[str, Any]) -> Dict[str, Any]:
@@ -159,32 +201,54 @@ def validate_cache_request(request: Dict[str, Any]) -> Dict[str, Any]:
     except (ValueError, TypeError):
         raise ValueError("Field 'ttl_seconds' must be a non-negative finite number")
 
+    soft_ttl = request.get("soft_ttl_seconds", 0.0)
+    try:
+        soft_ttl_float = float(soft_ttl)
+        if math.isnan(soft_ttl_float) or math.isinf(soft_ttl_float) or soft_ttl_float < 0:
+            raise ValueError()
+    except (ValueError, TypeError):
+        raise ValueError("Field 'soft_ttl_seconds' must be a non-negative finite number")
+
+    tags = request.get("tags", [])
+    if not isinstance(tags, list):
+        raise ValueError("Field 'tags' must be a list of strings")
+
     return {
         "tenant_id": request["tenant_id"].strip(),
         "model": request["model"].strip(),
         "source_revision": source_rev.strip(),
         "prompt": request["prompt"].strip(),
         "ttl_seconds": ttl_float,
+        "soft_ttl_seconds": soft_ttl_float,
+        "tags": [str(t).strip() for t in tags if str(t).strip()],
         "metadata": dict(request.get("metadata", {})),
         "extra_params": dict(request.get("extra_params", {})),
     }
 
 
 class ExactCacheStore:
-    """In-memory key-value cache store with strict isolation and TTL eviction."""
+    """In-memory key-value cache store with per-tenant LRU capacity and scoped invalidation."""
 
-    def __init__(self) -> None:
-        """Initialize an empty ExactCacheStore."""
+    def __init__(self, max_entries_per_tenant: int = 1000) -> None:
+        """Initialize an ExactCacheStore.
+
+        Args:
+            max_entries_per_tenant: Maximum active cache entries allowed per tenant before LRU eviction.
+        """
+        self.max_entries_per_tenant = max_entries_per_tenant
         self._entries: Dict[str, CacheEntry] = {}
+        # Tenant partition index: tenant_id -> list of keys in access order
+        self._tenant_keys: Dict[str, List[str]] = {}
         self._stats: Dict[str, int] = {
             "hits": 0,
             "misses": 0,
             "evictions": 0,
             "invalidations": 0,
+            "capacity_evictions": 0,
         }
 
     def put(self, entry: CacheEntry) -> str:
-        """Insert or replace a cache entry.
+        """Insert or replace a cache entry with tenant quota management.
 
         Args:
             entry: The CacheEntry to store.
@@ -199,7 +263,26 @@ class ExactCacheStore:
             prompt=entry.prompt,
             extra_params=entry.metadata.get("extra_params"),
         )
+
+        tenant = entry.tenant_id
+        if tenant not in self._tenant_keys:
+            self._tenant_keys[tenant] = []
+
+        # If key already exists in tenant list, remove to update LRU position
+        if key in self._entries:
+            if key in self._tenant_keys[tenant]:
+                self._tenant_keys[tenant].remove(key)
+        else:
+            # Check tenant quota; evict least recently used entry if full
+            if len(self._tenant_keys[tenant]) >= self.max_entries_per_tenant:
+                lru_key = self._tenant_keys[tenant].pop(0)
+                if lru_key in self._entries:
+                    del self._entries[lru_key]
+                    self._stats["capacity_evictions"] += 1
+                    self._stats["evictions"] += 1
+
         self._entries[key] = entry
+        self._tenant_keys[tenant].append(key)
         return key
 
     def get(
@@ -236,18 +319,34 @@ class ExactCacheStore:
             self._stats["misses"] += 1
             return None
 
+        # Hard TTL expiration check
         if not is_fresh(entry, current_time):
-            del self._entries[key]
+            self._remove_key(key, tenant_id)
             self._stats["evictions"] += 1
             self._stats["misses"] += 1
             return None
 
+        # Boundary safety check
         if entry.tenant_id != tenant_id or entry.model != model or entry.source_revision != source_revision:
             self._stats["misses"] += 1
             return None
 
+        # Update LRU and hit stats
+        entry.hit_count += 1
+        entry.last_accessed_at = current_time
+        if tenant_id in self._tenant_keys and key in self._tenant_keys[tenant_id]:
+            self._tenant_keys[tenant_id].remove(key)
+            self._tenant_keys[tenant_id].append(key)
+
         self._stats["hits"] += 1
         return entry
+
+    def _remove_key(self, key: str, tenant_id: str) -> None:
+        """Internal helper to remove key from store and tenant index."""
+        if key in self._entries:
+            del self._entries[key]
+        if tenant_id in self._tenant_keys and key in self._tenant_keys[tenant_id]:
+            self._tenant_keys[tenant_id].remove(key)
 
     def invalidate_tenant(self, tenant_id: str) -> int:
         """Evict all cached entries belonging to a specific tenant.
@@ -258,12 +357,12 @@ class ExactCacheStore:
         Returns:
             Count of evicted entries.
         """
-        keys_to_delete = [
-            k for k, entry in self._entries.items() if entry.tenant_id == tenant_id
-        ]
-        for k in keys_to_delete:
-            del self._entries[k]
-        count = len(keys_to_delete)
+        keys = list(self._tenant_keys.get(tenant_id, []))
+        for k in keys:
+            if k in self._entries:
+                del self._entries[k]
+        self._tenant_keys[tenant_id] = []
+        count = len(keys)
         self._stats["invalidations"] += count
         return count
 
@@ -277,15 +376,51 @@ class ExactCacheStore:
             Count of evicted entries.
         """
         keys_to_delete = [
-            k for k, entry in self._entries.items() if entry.source_revision == source_revision
+            (k, entry.tenant_id)
+            for k, entry in self._entries.items()
+            if entry.source_revision == source_revision
         ]
-        for k in keys_to_delete:
-            del self._entries[k]
+        for k, tenant in keys_to_delete:
+            self._remove_key(k, tenant)
         count = len(keys_to_delete)
         self._stats["invalidations"] += count
         return count
 
-    def stats(self) -> Dict[str, int]:
+    def invalidate_tag(self, tag: str, tenant_id: Optional[str] = None) -> int:
+        """Evict all cached entries carrying a specific metadata tag.
+
+        Args:
+            tag: Metadata tag to invalidate.
+            tenant_id: Optional tenant filter.
+
+        Returns:
+            Count of evicted entries.
+        """
+        keys_to_delete = [
+            (k, entry.tenant_id)
+            for k, entry in self._entries.items()
+            if tag in entry.tags and (tenant_id is None or entry.tenant_id == tenant_id)
+        ]
+        for k, t in keys_to_delete:
+            self._remove_key(k, t)
+        count = len(keys_to_delete)
+        self._stats["invalidations"] += count
+        return count
+
+    def copy(self) -> SemanticCacheStore:
+        """Create an isolated deep copy of the store for benchmark evaluations.
+
+        Returns:
+            A cloned SemanticCacheStore containing copies of all active entries.
+        """
+        new_store = SemanticCacheStore(
+            max_entries_per_tenant=self.exact_store.max_entries_per_tenant
+        )
+        for entry in self.exact_store._entries.values():
+            new_store.put(CacheEntry.from_dict(entry.to_dict()))
+        return new_store
+
+    def stats(self) -> Dict[str, Any]:
         """Obtain a snapshot of cache performance metrics.
 
         Returns:
@@ -293,11 +428,12 @@ class ExactCacheStore:
         """
         res = dict(self._stats)
         res["active_entries"] = len(self._entries)
+        res["active_tenants"] = len([t for t, keys in self._tenant_keys.items() if keys])
         return res
 
 
 # ---------------------------------------------------------------------------
-# Stage 3: Semantic Matching and Adversarial Near-Miss Guards
+# Stage 3: Sublinear N-Gram Vector Math and Deep Adversarial Filters
 # ---------------------------------------------------------------------------
 
 NEGATION_TERMS: Set[str] = {
@@ -336,30 +472,51 @@ ANTONYM_PAIRS: List[Tuple[str, str]] = [
     ("up", "down"),
     ("start", "stop"),
     ("above", "below"),
+    ("create", "delete"),
+    ("credit", "debit"),
+    ("internal", "external"),
+    ("public", "private"),
+]
+
+TEMPORAL_MARKERS: List[Tuple[str, str]] = [
+    ("yesterday", "tomorrow"),
+    ("past", "future"),
+    ("earlier", "later"),
+    ("previous", "next"),
 ]
 
 
-def tokenize(text: str) -> List[str]:
-    """Split text into normalized lowercase alphanumeric tokens.
+def tokenize(text: str, ngrams: bool = False) -> List[str]:
+    """Split text into normalized lowercase unigrams and optional bigrams.
+
+    Preserves token order and local context through character normalization.
 
     Args:
         text: Raw text string.
+        ngrams: Whether to include consecutive bigram tokens.
 
     Returns:
         List of cleaned token strings.
     """
     clean = re.sub(r"[^\w\s]", " ", text.lower())
-    return [t for t in clean.split() if t]
+    words = [t for t in clean.split() if t]
+    tokens = list(words)
+    if ngrams and len(words) > 1:
+        for i in range(len(words) - 1):
+            tokens.append(f"{words[i]}_{words[i+1]}")
+    return tokens
 
 
 def compute_tf_vector(tokens: List[str]) -> Dict[str, float]:
-    """Calculate term-frequency vector with L2 Euclidean normalization.
+    """Calculate sublinear term-frequency vector with L2 Euclidean normalization.
+
+    Uses 1 + log(tf) sublinear scaling to prevent frequent word repetition distortion.
 
     Args:
-        tokens: Tokenized words.
+        tokens: Tokenized words and bigrams.
 
     Returns:
-        Dictionary mapping word to normalized frequency weight.
+        Dictionary mapping token to normalized frequency weight.
     """
     if not tokens:
         return {}
@@ -367,11 +524,15 @@ def compute_tf_vector(tokens: List[str]) -> Dict[str, float]:
     for tok in tokens:
         counts[tok] = counts.get(tok, 0.0) + 1.0
 
-    sum_sq = sum(v * v for v in counts.values())
+    sublinear: Dict[str, float] = {}
+    for tok, c in counts.items():
+        sublinear[tok] = 1.0 + math.log(c)
+
+    sum_sq = sum(v * v for v in sublinear.values())
     norm = math.sqrt(sum_sq)
     if norm == 0:
         return {}
-    return {k: v / norm for k, v in counts.items()}
+    return {k: v / norm for k, v in sublinear.items()}
 
 
 def cosine_similarity(vec1: Dict[str, float], vec2: Dict[str, float]) -> float:
@@ -382,7 +543,7 @@ def cosine_similarity(vec1: Dict[str, float], vec2: Dict[str, float]) -> float:
         vec2: Second normalized frequency vector.
 
     Returns:
-        Cosine similarity float between 0.0 and 1.0.
+        Cosine similarity float bounded between 0.0 and 1.0.
     """
     if not vec1 or not vec2:
         return 0.0
@@ -391,8 +552,30 @@ def cosine_similarity(vec1: Dict[str, float], vec2: Dict[str, float]) -> float:
     return max(0.0, min(1.0, float(dot)))
 
 
+def extract_numbers_and_units(text: str) -> List[str]:
+    """Extract and normalize all numbers, percentages, and measurement units.
+
+    Matches quantities like '50', '$50', '50.0', '500MB', '2024'.
+
+    Args:
+        text: Raw query text.
+
+    Returns:
+        Sorted list of normalized numerical/unit tokens.
+    """
+    pattern = r"[\$€£¥]?\b\d+(?:[.,]\d+)?(?:\s*(?:%|k|m|b|gb|mb|tb|ms|s|hr|days?|users?|seats?))?\b"
+    matches = re.findall(pattern, text.lower())
+    cleaned = []
+    for m in matches:
+        norm = m.replace(",", "").strip()
+        # Clean floating points like '50.0' -> '50'
+        norm = re.sub(r"(\d+)\.0+\b", r"\1", norm)
+        cleaned.append(norm)
+    return sorted(cleaned)
+
+
 def extract_numbers(text: str) -> List[str]:
-    """Extract and normalize all numbers and currency amounts from text.
+    """Extract raw numerical quantities from text (backward compatible).
 
     Args:
         text: Raw query text.
@@ -419,7 +602,7 @@ def extract_negations(text: str) -> Set[str]:
     Returns:
         Set of detected negation words.
     """
-    tokens = set(tokenize(text))
+    tokens = set(re.sub(r"[^\w\s]", " ", text.lower()).split())
     return tokens & NEGATION_TERMS
 
 
@@ -427,9 +610,10 @@ def check_adversarial_near_miss(query: str, cached_prompt: str) -> Tuple[bool, s
     """Inspect whether a candidate match is an adversarial semantic near-miss.
 
     Blocks false hits caused by:
-      1. Altered numerical values (e.g. '$50' vs '$500', '2023' vs '2024').
+      1. Altered numerical values and units (e.g. '$50' vs '$500', '50GB' vs '500GB').
       2. Inverted negation polarity ('deploy to prod' vs 'do not deploy to prod').
       3. Critical antonym swaps ('increase limit' vs 'decrease limit').
+      4. Temporal marker divergence ('yesterday' vs 'tomorrow').
 
     Args:
         query: New incoming query string.
@@ -438,33 +622,45 @@ def check_adversarial_near_miss(query: str, cached_prompt: str) -> Tuple[bool, s
     Returns:
         Tuple of (is_adversarial: bool, reason: str).
     """
-    nums_q = extract_numbers(query)
-    nums_c = extract_numbers(cached_prompt)
-    if nums_q != nums_c:
-        return True, f"number_mismatch: {nums_q} != {nums_c}"
+    # 1. Number and unit check
+    units_q = extract_numbers_and_units(query)
+    units_c = extract_numbers_and_units(cached_prompt)
+    if units_q != units_c:
+        return True, f"number_mismatch: {units_q} != {units_c}"
 
+    # 2. Negation check
     neg_q = extract_negations(query)
     neg_c = extract_negations(cached_prompt)
     if bool(neg_q) != bool(neg_c):
-        return True, f"negation_inversion: {list(neg_q)} vs {list(neg_c)}"
+        return True, f"negation_inversion: {sorted(neg_q)} vs {sorted(neg_c)}"
     if neg_q != neg_c:
-        return True, f"negation_mismatch: {list(neg_q)} != {list(neg_c)}"
+        return True, f"negation_mismatch: {sorted(neg_q)} != {sorted(neg_c)}"
 
-    tokens_q = set(tokenize(query))
-    tokens_c = set(tokenize(cached_prompt))
+    # 3. Antonym swaps
+    tokens_q = set(tokenize(query, ngrams=False))
+    tokens_c = set(tokenize(cached_prompt, ngrams=False))
     for w1, w2 in ANTONYM_PAIRS:
         if (w1 in tokens_q and w2 in tokens_c) or (w2 in tokens_q and w1 in tokens_c):
             return True, f"antonym_divergence: {w1} vs {w2}"
+
+    # 4. Temporal divergence
+    for t1, t2 in TEMPORAL_MARKERS:
+        if (t1 in tokens_q and t2 in tokens_c) or (t2 in tokens_q and t1 in tokens_c):
+            return True, f"temporal_divergence: {t1} vs {t2}"
 
     return False, "safe"
 
 
 class SemanticCacheStore:
-    """Semantic caching store with strict partition isolation and near-miss guardrails."""
+    """Multi-tenant semantic caching store with partitioned index and near-miss verification."""
 
-    def __init__(self) -> None:
-        """Initialize semantic cache store."""
-        self.exact_store = ExactCacheStore()
+    def __init__(self, max_entries_per_tenant: int = 1000) -> None:
+        """Initialize semantic cache store.
+
+        Args:
+            max_entries_per_tenant: Maximum entries per tenant partition.
+        """
+        self.exact_store = ExactCacheStore(max_entries_per_tenant=max_entries_per_tenant)
         # Partitioned index: (tenant_id, model, source_revision) -> list of (entry, tf_vec)
         self._partitions: Dict[Tuple[str, str, str], List[Tuple[CacheEntry, Dict[str, float]]]] = {}
 
@@ -498,7 +694,7 @@ class SemanticCacheStore:
     ) -> Tuple[Optional[CacheEntry], float, str]:
         """Search the cache for an exact match or safe semantic match.
 
-        Never considers candidates from another tenant, model, or source revision.
+        Restricts search strictly to the matching (tenant_id, model, source_revision) partition.
 
         Args:
             tenant_id: Tenant partition identifier.
@@ -512,7 +708,7 @@ class SemanticCacheStore:
         Returns:
             Tuple of (matched_entry or None, similarity_score, reason_string).
         """
-        # Step 1: Exact match check
+        # Step 1: Exact match check (O(1))
         exact_hit = self.exact_store.get(
             tenant_id=tenant_id,
             model=model,
@@ -524,7 +720,7 @@ class SemanticCacheStore:
         if exact_hit is not None:
             return exact_hit, 1.0, "exact_hit"
 
-        # Step 2: Semantic candidate search inside strictly matching partition
+        # Step 2: Semantic candidate search inside isolated partition
         part_key = (tenant_id, model, source_revision)
         candidates = self._partitions.get(part_key, [])
         if not candidates:
@@ -553,6 +749,10 @@ class SemanticCacheStore:
         is_adversarial, reason = check_adversarial_near_miss(prompt, best_entry.prompt)
         if is_adversarial:
             return None, round(best_score, 4), f"adversarial_blocked: {reason}"
+
+        # Update access stats
+        best_entry.hit_count += 1
+        best_entry.last_accessed_at = current_time
 
         return best_entry, round(best_score, 4), "semantic_hit"
 
@@ -586,14 +786,46 @@ class SemanticCacheStore:
             del self._partitions[k]
         return count
 
+    def invalidate_tag(self, tag: str, tenant_id: Optional[str] = None) -> int:
+        """Purge entries carrying a specific tag across exact and semantic indices.
+
+        Args:
+            tag: Tag to purge.
+            tenant_id: Optional tenant filter.
+
+        Returns:
+            Number of entries removed.
+        """
+        count = self.exact_store.invalidate_tag(tag, tenant_id=tenant_id)
+        for part_key, items in list(self._partitions.items()):
+            if tenant_id is not None and part_key[0] != tenant_id:
+                continue
+            self._partitions[part_key] = [
+                (e, v) for e, v in items if tag not in e.tags
+            ]
+        return count
+
+    def copy(self) -> SemanticCacheStore:
+        """Create an isolated deep copy of the semantic cache store.
+
+        Returns:
+            A cloned SemanticCacheStore containing copies of all active entries.
+        """
+        new_store = SemanticCacheStore(
+            max_entries_per_tenant=self.exact_store.max_entries_per_tenant
+        )
+        for entry in self.exact_store._entries.values():
+            new_store.put(CacheEntry.from_dict(entry.to_dict()))
+        return new_store
+
 
 # ---------------------------------------------------------------------------
-# Stage 4: HTTP Adapter and Correctness Benchmark Report
+# Stage 4: HTTP Adapter, Threshold Sensitivity, and Benchmark Report
 # ---------------------------------------------------------------------------
 
 
 class CacheAdapter:
-    """HTTP middleware adapter simulating transparent caching with response headers."""
+    """HTTP middleware adapter simulating transparent caching with RFC 9111 headers."""
 
     def __init__(self, store: Optional[SemanticCacheStore] = None) -> None:
         """Initialize CacheAdapter with an underlying SemanticCacheStore."""
@@ -605,17 +837,19 @@ class CacheAdapter:
         upstream_handler: Optional[Callable[[str], str]] = None,
         threshold: float = 0.85,
         current_time: float = 0.0,
+        write_through: bool = True,
     ) -> Dict[str, Any]:
-        """Process an LLM query through the caching layer.
+        """Process an LLM query through the caching layer with HTTP headers.
 
         Args:
             request: Validated query dictionary.
             upstream_handler: Optional callable invoked on cache miss.
             threshold: Semantic similarity threshold.
             current_time: Current epoch timestamp.
+            write_through: Whether to populate cache on miss.
 
         Returns:
-            Dictionary with response text, headers, and performance audit metadata.
+            Dictionary with response text, HTTP headers, and performance audit metadata.
         """
         validated = validate_cache_request(request)
         entry, score, match_type = self.store.query(
@@ -632,14 +866,20 @@ class CacheAdapter:
             "X-Cache-Tenant": validated["tenant_id"],
             "X-Cache-Model": validated["model"],
             "X-Cache-Revision": validated["source_revision"],
+            "Cache-Control": f"private, max-age={int(validated['ttl_seconds'])}",
         }
 
         if entry is not None:
             cache_status = "HIT-EXACT" if match_type == "exact_hit" else "HIT-SEMANTIC"
+            age_seconds = max(0, int(current_time - entry.created_at))
             headers["X-Cache"] = cache_status
             headers["X-Cache-Score"] = score
             headers["X-Cache-Match-Type"] = match_type
             headers["X-Cache-Latency-Saved-Ms"] = 350.0
+            headers["Age"] = str(age_seconds)
+            if is_soft_expired(entry, current_time):
+                headers["Warning"] = '110 - "Response is Stale"'
+
             return {
                 "status": 200,
                 "response": entry.response,
@@ -647,30 +887,34 @@ class CacheAdapter:
                 "cached": True,
             }
 
-        # Cache Miss: call upstream
+        # Cache Miss
         headers["X-Cache"] = "MISS"
         headers["X-Cache-Score"] = score
         headers["X-Cache-Miss-Reason"] = match_type
         headers["X-Cache-Latency-Saved-Ms"] = 0.0
+        headers["Age"] = "0"
 
         if upstream_handler is not None:
             upstream_response = upstream_handler(validated["prompt"])
         else:
             upstream_response = f"Simulated generation for: {validated['prompt']}"
 
-        # Write through to cache
-        new_entry = CacheEntry(
-            entry_id=hashlib.md5(validated["prompt"].encode("utf-8")).hexdigest()[:12],
-            tenant_id=validated["tenant_id"],
-            model=validated["model"],
-            source_revision=validated["source_revision"],
-            prompt=validated["prompt"],
-            response=upstream_response,
-            created_at=current_time,
-            ttl_seconds=validated["ttl_seconds"],
-            metadata=validated["metadata"],
-        )
-        self.store.put(new_entry)
+        # Write through to cache if enabled
+        if write_through:
+            new_entry = CacheEntry(
+                entry_id=hashlib.md5(validated["prompt"].encode("utf-8")).hexdigest()[:12],
+                tenant_id=validated["tenant_id"],
+                model=validated["model"],
+                source_revision=validated["source_revision"],
+                prompt=validated["prompt"],
+                response=upstream_response,
+                created_at=current_time,
+                ttl_seconds=validated["ttl_seconds"],
+                soft_ttl_seconds=validated["soft_ttl_seconds"],
+                tags=validated["tags"],
+                metadata=validated["metadata"],
+            )
+            self.store.put(new_entry)
 
         return {
             "status": 200,
@@ -678,6 +922,48 @@ class CacheAdapter:
             "headers": headers,
             "cached": False,
         }
+
+
+def analyze_threshold_sensitivity(
+    dataset: List[Dict[str, Any]],
+    store: Optional[SemanticCacheStore] = None,
+    threshold_range: Optional[List[float]] = None,
+    current_time: float = 0.0,
+) -> List[Dict[str, Any]]:
+    """Evaluate cache accuracy and savings across multiple threshold cutoffs.
+
+    Identifies the optimal similarity threshold where false hits remain zero.
+
+    Args:
+        dataset: List of benchmark query dictionaries.
+        store: Seeded SemanticCacheStore.
+        threshold_range: List of threshold cutoffs to evaluate.
+        current_time: Current epoch timestamp.
+
+    Returns:
+        List of sensitivity data points with hits, false hits, and accuracy.
+    """
+    thresholds = threshold_range or [0.65, 0.75, 0.80, 0.85, 0.90, 0.95]
+    curve = []
+
+    for thresh in thresholds:
+        isolated_store = store.copy() if store is not None else None
+        benchmark = run_correctness_benchmark(
+            dataset=dataset,
+            store=isolated_store,
+            threshold=thresh,
+            current_time=current_time,
+        )
+        curve.append({
+            "threshold": thresh,
+            "exact_hits": benchmark["exact_hits"],
+            "semantic_hits": benchmark["semantic_hits"],
+            "false_hits": benchmark["false_hits"],
+            "accuracy_pct": benchmark["accuracy_pct"],
+            "latency_saved_ms": benchmark["estimated_latency_saved_ms"],
+            "safe": benchmark["false_hits"] == 0,
+        })
+    return curve
 
 
 def run_correctness_benchmark(
@@ -719,6 +1005,7 @@ def run_correctness_benchmark(
             upstream_handler=lambda p: item.get("expected_response", f"Response for {p}"),
             threshold=threshold,
             current_time=current_time,
+            write_through=False,
         )
         actual = res["headers"]["X-Cache"]
         score = res["headers"].get("X-Cache-Score", 0.0)

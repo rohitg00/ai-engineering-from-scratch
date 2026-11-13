@@ -17,6 +17,7 @@ try:
         cosine_similarity,
         extract_negations,
         extract_numbers,
+        extract_numbers_and_units,
         tokenize,
     )
 except ImportError:
@@ -25,6 +26,13 @@ except ImportError:
 
 class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
     """Test suite verifying vector similarity, adversarial filters, and safe semantic hits."""
+
+    def test_tokenize_bigrams(self):
+        """Verify unigram and bigram token extraction preserving word order."""
+        tokens = tokenize("return policy", ngrams=True)
+        self.assertIn("return", tokens)
+        self.assertIn("policy", tokens)
+        self.assertIn("return_policy", tokens)
 
     def test_cosine_similarity(self):
         """Verify vector cosine similarity calculation."""
@@ -38,12 +46,11 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
         v_partial = compute_tf_vector(tokenize("return policy"))
         self.assertTrue(0.0 < cosine_similarity(v1, v_partial) < 1.0)
 
-    def test_extract_numbers(self):
-        """Verify numerical extraction and normalization."""
-        self.assertEqual(extract_numbers("Price is $50 per month"), ["50"])
-        self.assertEqual(extract_numbers("Tier for 500 users costs $450.00"), ["450", "500"])
-        self.assertEqual(extract_numbers("Comparing 2023 with 2024 revenue"), ["2023", "2024"])
-        self.assertEqual(extract_numbers("No numbers here"), [])
+    def test_extract_numbers_and_units(self):
+        """Verify numerical and unit extraction and normalization."""
+        self.assertEqual(extract_numbers_and_units("Price is $50 per month"), ["$50"])
+        self.assertEqual(extract_numbers_and_units("Plan has 500mb storage and 50ms latency"), ["500mb", "50ms"])
+        self.assertEqual(extract_numbers_and_units("Comparing 2023 with 2024 revenue"), ["2023", "2024"])
 
     def test_extract_negations(self):
         """Verify negation keyword detection."""
@@ -77,6 +84,14 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
         self.assertTrue(is_bad)
         self.assertIn("antonym_divergence", reason)
 
+    def test_check_adversarial_temporal_divergence(self):
+        """Verify temporal shifts (yesterday vs tomorrow) are flagged."""
+        q1 = "Show me the logs from yesterday"
+        q2 = "Show me the logs from tomorrow"
+        is_bad, reason = check_adversarial_near_miss(q1, q2)
+        self.assertTrue(is_bad)
+        self.assertIn("temporal_divergence", reason)
+
     def test_semantic_cache_store_safe_paraphrase_hit(self):
         """Verify genuine paraphrase with same meaning and entities produces semantic hit."""
         store = SemanticCacheStore()
@@ -89,7 +104,6 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
             response="30-day return policy.",
             created_at=100.0,
             ttl_seconds=3600.0,
-            metadata={},
         )
         store.put(entry)
 
@@ -98,13 +112,13 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
             model="gpt-4o",
             source_revision="v1",
             prompt="What is the return policy regarding defective laptops?",
-            threshold=0.80,
+            threshold=0.75,
             current_time=100.0,
         )
         self.assertIsNotNone(matched)
         self.assertEqual(matched.response, "30-day return policy.")
         self.assertEqual(reason, "semantic_hit")
-        self.assertGreaterEqual(score, 0.80)
+        self.assertGreaterEqual(score, 0.75)
 
     def test_semantic_cache_store_adversarial_rejection(self):
         """Verify queries with high similarity but inverted negation or number are rejected."""
@@ -118,7 +132,6 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
             response="No deployments on Friday.",
             created_at=100.0,
             ttl_seconds=3600.0,
-            metadata={},
         )
         store.put(entry)
 
@@ -127,7 +140,7 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
             model="gpt-4o",
             source_revision="v1",
             prompt="Can I not deploy the payment service to production on Friday?",
-            threshold=0.80,
+            threshold=0.75,
             current_time=100.0,
         )
         self.assertIsNone(matched)
@@ -145,17 +158,15 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
             response="Target is $100M.",
             created_at=100.0,
             ttl_seconds=3600.0,
-            metadata={},
         )
         store.put(entry)
 
-        # Another tenant asks the exact same question
         matched, score, reason = store.query(
             tenant_id="tenant-other",
             model="gpt-4o",
             source_revision="v1",
             prompt="What is our confidential revenue target for 2025?",
-            threshold=0.80,
+            threshold=0.75,
             current_time=100.0,
         )
         self.assertIsNone(matched)

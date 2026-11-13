@@ -5,7 +5,6 @@ import os
 import sys
 import unittest
 
-# Ensure learner workspace or stage directory is in path
 WORKSPACE = os.environ.get("PROJECT_WORKSPACE")
 if WORKSPACE and WORKSPACE not in sys.path:
     sys.path.insert(0, WORKSPACE)
@@ -15,6 +14,7 @@ try:
         CacheEntry,
         compute_exact_key,
         is_fresh,
+        is_soft_expired,
         validate_cache_request,
     )
 except ImportError:
@@ -65,6 +65,12 @@ class TestStage01IdentityAndFreshness(unittest.TestCase):
         self.assertNotEqual(base, diff_rev)
         self.assertNotEqual(base, diff_model)
 
+    def test_compute_exact_key_extra_parameters(self):
+        """Verify extra parameters like temperature alter the exact key."""
+        k1 = compute_exact_key("t1", "m1", "v1", "hello", {"temperature": 0.0})
+        k2 = compute_exact_key("t1", "m1", "v1", "hello", {"temperature": 0.7})
+        self.assertNotEqual(k1, k2)
+
     def test_compute_exact_key_validation(self):
         """Verify invalid or blank arguments raise ValueError."""
         with self.assertRaises(ValueError):
@@ -87,7 +93,6 @@ class TestStage01IdentityAndFreshness(unittest.TestCase):
             response="answer",
             created_at=100.0,
             ttl_seconds=50.0,
-            metadata={},
         )
         self.assertTrue(is_fresh(entry, current_time=120.0))
         self.assertTrue(is_fresh(entry, current_time=150.0))
@@ -103,9 +108,25 @@ class TestStage01IdentityAndFreshness(unittest.TestCase):
             response="answer",
             created_at=100.0,
             ttl_seconds=0.0,
-            metadata={},
         )
         self.assertTrue(is_fresh(perm_entry, current_time=999999.0))
+
+    def test_is_soft_expired(self):
+        """Verify soft TTL expiration for stale-while-revalidate."""
+        entry = CacheEntry(
+            entry_id="e1",
+            tenant_id="t1",
+            model="m1",
+            source_revision="v1",
+            prompt="query",
+            response="answer",
+            created_at=100.0,
+            ttl_seconds=3600.0,
+            soft_ttl_seconds=300.0,
+        )
+        self.assertFalse(is_soft_expired(entry, current_time=250.0))
+        self.assertTrue(is_soft_expired(entry, current_time=450.0))
+        self.assertTrue(is_fresh(entry, current_time=450.0))
 
     def test_validate_cache_request(self):
         """Verify valid requests are normalized and invalid ones raise ValueError."""
@@ -115,6 +136,8 @@ class TestStage01IdentityAndFreshness(unittest.TestCase):
             "source_revision": "rev-1",
             "prompt": " What is AI? ",
             "ttl_seconds": 1800,
+            "soft_ttl_seconds": 600,
+            "tags": ["finance", "reporting"],
             "metadata": {"user": "alice"},
         }
         sanitized = validate_cache_request(valid)
@@ -122,6 +145,8 @@ class TestStage01IdentityAndFreshness(unittest.TestCase):
         self.assertEqual(sanitized["model"], "claude-3-5-sonnet")
         self.assertEqual(sanitized["prompt"], "What is AI?")
         self.assertEqual(sanitized["ttl_seconds"], 1800.0)
+        self.assertEqual(sanitized["soft_ttl_seconds"], 600.0)
+        self.assertEqual(sanitized["tags"], ["finance", "reporting"])
 
         # Invalid requests
         with self.assertRaises(ValueError):
@@ -142,6 +167,8 @@ class TestStage01IdentityAndFreshness(unittest.TestCase):
             response="Quantum computing leverages qubits...",
             created_at=500.0,
             ttl_seconds=3600.0,
+            soft_ttl_seconds=900.0,
+            tags=["tech", "physics"],
             metadata={"priority": "high"},
         )
         d = entry.to_dict()

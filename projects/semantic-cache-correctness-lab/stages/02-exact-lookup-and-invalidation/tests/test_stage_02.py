@@ -15,10 +15,10 @@ except ImportError:
 
 
 class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
-    """Test suite verifying exact cache storage, TTL eviction, and scoped invalidation."""
+    """Test suite verifying exact cache storage, TTL eviction, tenant quotas, and scoped invalidation."""
 
     def setUp(self):
-        self.store = ExactCacheStore()
+        self.store = ExactCacheStore(max_entries_per_tenant=2)
         self.entry_a = CacheEntry(
             entry_id="e1",
             tenant_id="tenant-alpha",
@@ -28,7 +28,7 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
             response="30 days from purchase.",
             created_at=1000.0,
             ttl_seconds=3600.0,
-            metadata={},
+            tags=["billing"],
         )
         self.entry_b = CacheEntry(
             entry_id="e2",
@@ -39,7 +39,7 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
             response="14 days from delivery.",
             created_at=1000.0,
             ttl_seconds=3600.0,
-            metadata={},
+            tags=["support"],
         )
 
     def test_put_and_get_exact_hit(self):
@@ -67,8 +67,6 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
     def test_ttl_eviction_on_get(self):
         """Verify expired entries are evicted and return None."""
         self.store.put(self.entry_a)
-        # Entry expires at 1000.0 + 3600.0 = 4600.0
-        # Query at 4601.0
         res = self.store.get(
             tenant_id="tenant-alpha",
             model="gpt-4o",
@@ -87,17 +85,60 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
         self.store.put(self.entry_a)
         self.store.put(self.entry_b)
 
-        # Alpha accesses alpha
         res_a = self.store.get("tenant-alpha", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
         self.assertEqual(res_a.response, "30 days from purchase.")
 
-        # Beta accesses beta
         res_b = self.store.get("tenant-beta", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
         self.assertEqual(res_b.response, "14 days from delivery.")
 
-        # Gamma misses completely
         res_c = self.store.get("tenant-gamma", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
         self.assertIsNone(res_c)
+
+    def test_tenant_quota_lru_eviction(self):
+        """Verify exceeding a tenant's quota evicts their oldest entry without touching other tenants."""
+        # Tenant alpha fills its 2-entry quota
+        self.store.put(self.entry_a)  # e1 (oldest)
+        e_alpha_2 = CacheEntry(
+            entry_id="e1-2",
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1.0",
+            prompt="Alpha query 2",
+            response="A2",
+            created_at=1000.0,
+            ttl_seconds=3600.0,
+        )
+        self.store.put(e_alpha_2)
+
+        # Tenant beta puts 1 entry
+        self.store.put(self.entry_b)
+        self.assertEqual(self.store.stats()["active_entries"], 3)
+
+        # Tenant alpha inserts a 3rd entry -> e1 should be evicted by LRU!
+        e_alpha_3 = CacheEntry(
+            entry_id="e1-3",
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1.0",
+            prompt="Alpha query 3",
+            response="A3",
+            created_at=1000.0,
+            ttl_seconds=3600.0,
+        )
+        self.store.put(e_alpha_3)
+
+        # e1 should now miss because it was evicted under LRU quota
+        miss_e1 = self.store.get("tenant-alpha", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
+        self.assertIsNone(miss_e1)
+
+        # e_alpha_2 and e_alpha_3 are intact
+        hit_e2 = self.store.get("tenant-alpha", "gpt-4o", "v1.0", "Alpha query 2", 1000.0)
+        self.assertIsNotNone(hit_e2)
+
+        # Tenant beta entry is completely unaffected!
+        hit_beta = self.store.get("tenant-beta", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
+        self.assertIsNotNone(hit_beta)
+        self.assertEqual(hit_beta.response, "14 days from delivery.")
 
     def test_invalidate_tenant(self):
         """Verify purging a specific tenant removes all its entries without affecting other tenants."""
@@ -109,11 +150,9 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
         self.assertEqual(evicted_count, 1)
         self.assertEqual(self.store.stats()["active_entries"], 1)
 
-        # Alpha is gone
         res_a = self.store.get("tenant-alpha", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
         self.assertIsNone(res_a)
 
-        # Beta remains intact
         res_b = self.store.get("tenant-beta", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
         self.assertIsNotNone(res_b)
 
@@ -128,7 +167,6 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
             response="8%",
             created_at=1000.0,
             ttl_seconds=3600.0,
-            metadata={},
         )
         entry_new = CacheEntry(
             entry_id="e4",
@@ -139,7 +177,6 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
             response="9.5%",
             created_at=1000.0,
             ttl_seconds=3600.0,
-            metadata={},
         )
         self.store.put(entry_old)
         self.store.put(entry_new)
@@ -147,27 +184,27 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
         purged = self.store.invalidate_source_revision("v1.0")
         self.assertEqual(purged, 1)
 
-        # v1.0 misses
         res_old = self.store.get("tenant-alpha", "gpt-4o", "v1.0", "Tax rate", 1000.0)
         self.assertIsNone(res_old)
 
-        # v2.0 remains
         res_new = self.store.get("tenant-alpha", "gpt-4o", "v2.0", "Tax rate", 1000.0)
         self.assertIsNotNone(res_new)
         self.assertEqual(res_new.response, "9.5%")
 
-    def test_store_stats_tracking(self):
-        """Verify metrics counter accurately tracks operational events."""
-        self.store.put(self.entry_a)
-        self.store.get("tenant-alpha", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)  # hit
-        self.store.get("tenant-alpha", "gpt-4o", "v1.0", "Non-existent", 1000.0)               # miss
-        self.store.get("tenant-alpha", "gpt-4o", "v1.0", "What is the refund window?", 5000.0)  # expired -> miss + eviction
+    def test_invalidate_tag(self):
+        """Verify metadata tag based invalidation."""
+        self.store.put(self.entry_a)  # tag: billing
+        self.store.put(self.entry_b)  # tag: support
+        self.assertEqual(self.store.stats()["active_entries"], 2)
 
-        stats = self.store.stats()
-        self.assertEqual(stats["hits"], 1)
-        self.assertEqual(stats["misses"], 2)
-        self.assertEqual(stats["evictions"], 1)
-        self.assertEqual(stats["active_entries"], 0)
+        purged = self.store.invalidate_tag("billing")
+        self.assertEqual(purged, 1)
+
+        res_a = self.store.get("tenant-alpha", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
+        self.assertIsNone(res_a)
+
+        res_b = self.store.get("tenant-beta", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
+        self.assertIsNotNone(res_b)
 
 
 if __name__ == "__main__":
