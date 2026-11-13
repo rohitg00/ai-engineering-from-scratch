@@ -37,7 +37,7 @@ Timeline:
 - 2 Dec 2027: high-risk obligations for Annex III systems.
 - 2 Aug 2028: high-risk obligations for Annex I systems (products, or safety components of products, covered by Annex I harmonisation law).
 
-The Commission proposed delaying the high-risk dates in late 2025. Regulation (EU) 2026/1744 adopted that delay: it entered into force on 27 July 2026 and amended Article 113 so that Chapter III, Sections 1 to 3, applies from 2 December 2027 for Annex III systems and from 2 August 2028 for Annex I systems.
+The Commission proposed delaying the high-risk dates in late 2025. Regulation (EU) 2026/1744 adopted that delay: it entered into force on 27 July 2026 and amended Article 113 so that Chapter III, Sections 1 to 3 (except Article 6(5)), applies from 2 December 2027 for Annex III systems and from 2 August 2028 for Annex I systems.
 
 ### GPAI Code of Practice
 
