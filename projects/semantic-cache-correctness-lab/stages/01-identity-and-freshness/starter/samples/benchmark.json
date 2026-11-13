@@ -1,0 +1,143 @@
+{
+  "seed_cache": [
+    {
+      "entry_id": "entry-001",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "What is the return policy for defective laptops?",
+      "response": "Defective laptops can be returned within 30 days of purchase with original receipt.",
+      "created_at": 1000.0,
+      "ttl_seconds": 7200.0,
+      "metadata": {
+        "department": "support"
+      }
+    },
+    {
+      "entry_id": "entry-002",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "Can I deploy the payment service to production on Friday?",
+      "response": "No, deployments of the payment service on Friday are restricted by company policy.",
+      "created_at": 1000.0,
+      "ttl_seconds": 7200.0,
+      "metadata": {
+        "department": "devops"
+      }
+    },
+    {
+      "entry_id": "entry-003",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "What is the monthly subscription price for the 50 user tier?",
+      "response": "The monthly subscription fee for the 50 user tier is $450 billed monthly.",
+      "created_at": 1000.0,
+      "ttl_seconds": 7200.0,
+      "metadata": {
+        "department": "billing"
+      }
+    },
+    {
+      "entry_id": "entry-004",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "How do I increase the database connection pool limit?",
+      "response": "Adjust max_connections in postgresql.conf and reload the database configuration.",
+      "created_at": 1000.0,
+      "ttl_seconds": 7200.0,
+      "metadata": {
+        "department": "engineering"
+      }
+    },
+    {
+      "entry_id": "entry-005",
+      "tenant_id": "tenant-beta",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "What are our internal employee discount guidelines?",
+      "response": "Tenant Beta employees receive 25% discount across all store locations.",
+      "created_at": 1000.0,
+      "ttl_seconds": 7200.0,
+      "metadata": {
+        "department": "hr"
+      }
+    }
+  ],
+  "queries": [
+    {
+      "name": "exact_query_match",
+      "category": "exact",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "What is the return policy for defective laptops?",
+      "expected_outcome": "HIT-EXACT"
+    },
+    {
+      "name": "paraphrase_semantic_match",
+      "category": "semantic",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "What is the return policy regarding defective laptops?",
+      "expected_outcome": "HIT-SEMANTIC"
+    },
+    {
+      "name": "cross_tenant_isolation_check",
+      "category": "cross_tenant",
+      "tenant_id": "tenant-gamma",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "What is the return policy for defective laptops?",
+      "expected_outcome": "MISS"
+    },
+    {
+      "name": "adversarial_negation_inversion",
+      "category": "adversarial_negation",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "Can I not deploy the payment service to production on Friday?",
+      "expected_outcome": "MISS"
+    },
+    {
+      "name": "adversarial_numerical_near_miss",
+      "category": "adversarial_number",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "What is the monthly subscription price for the 500 user tier?",
+      "expected_outcome": "MISS"
+    },
+    {
+      "name": "adversarial_antonym_divergence",
+      "category": "adversarial_antonym",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v1.0.0",
+      "prompt": "How do I decrease the database connection pool limit?",
+      "expected_outcome": "MISS"
+    },
+    {
+      "name": "source_revision_invalidation_boundary",
+      "category": "source_revision",
+      "tenant_id": "tenant-alpha",
+      "model": "claude-3-5-sonnet",
+      "source_revision": "v2.0.0",
+      "prompt": "What is the return policy for defective laptops?",
+      "expected_outcome": "MISS"
+    },
+    {
+      "name": "model_boundary_isolation",
+      "category": "model",
+      "tenant_id": "tenant-alpha",
+      "model": "gpt-4o",
+      "source_revision": "v1.0.0",
+      "prompt": "What is the return policy for defective laptops?",
+      "expected_outcome": "MISS"
+    }
+  ]
+}
