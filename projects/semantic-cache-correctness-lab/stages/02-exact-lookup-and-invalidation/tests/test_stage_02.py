@@ -224,6 +224,30 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
         res_b = self.store.get("tenant-beta", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
         self.assertIsNotNone(res_b)
 
+    def test_zero_tenant_quota_does_not_crash(self):
+        """Verify zero tenant quota stores no entries and does not crash."""
+        zero_store = ExactCacheStore(max_entries_per_tenant=0)
+        key = zero_store.put(self.entry_a)
+        self.assertEqual(len(key), 64)
+        self.assertEqual(zero_store.stats()["active_entries"], 0)
+        res = zero_store.get("tenant-alpha", "gpt-4o", "v1.0", "What is the refund window?", 1000.0)
+        self.assertIsNone(res)
+
+    def test_touch_promotes_mru(self):
+        """Verify touch updates access timestamp and moves key to MRU."""
+        store = ExactCacheStore(max_entries_per_tenant=2)
+        e1 = CacheEntry("1", "t1", "m", "v", "p1", "r1", 100.0, 3600.0)
+        e2 = CacheEntry("2", "t1", "m", "v", "p2", "r2", 100.0, 3600.0)
+        e3 = CacheEntry("3", "t1", "m", "v", "p3", "r3", 100.0, 3600.0)
+        store.put(e1)
+        store.put(e2)
+        # Touch e1 to promote it over e2
+        store.touch(e1, 150.0)
+        # Putting e3 should evict e2 (LRU), keeping e1!
+        store.put(e3)
+        self.assertIsNotNone(store.get("t1", "m", "v", "p1", 150.0))
+        self.assertIsNone(store.get("t1", "m", "v", "p2", 150.0))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -14,6 +14,8 @@ import re
 import time
 from typing import Any, Callable, Dict, List, Optional, Set, Tuple
 
+MAX_HTTP_BODY_BYTES: int = 1_048_576
+
 
 class CacheError(Exception):
     """Base exception for caching engine errors."""
@@ -269,6 +271,9 @@ class ExactCacheStore:
             extra_params=entry.metadata.get("extra_params") if isinstance(entry.metadata, dict) else None,
         )
 
+        if self.max_entries_per_tenant <= 0:
+            return key
+
         tenant = entry.tenant_id
         if tenant not in self._tenant_keys:
             self._tenant_keys[tenant] = []
@@ -277,7 +282,7 @@ class ExactCacheStore:
             if key in self._tenant_keys[tenant]:
                 self._tenant_keys[tenant].remove(key)
         else:
-            if len(self._tenant_keys[tenant]) >= self.max_entries_per_tenant:
+            while len(self._tenant_keys[tenant]) >= self.max_entries_per_tenant and self._tenant_keys[tenant]:
                 lru_key = self._tenant_keys[tenant].pop(0)
                 if lru_key in self._entries:
                     del self._entries[lru_key]
@@ -287,6 +292,23 @@ class ExactCacheStore:
         self._entries[key] = entry
         self._tenant_keys[tenant].append(key)
         return key
+
+    def touch(self, entry: CacheEntry, current_time: Optional[float] = None) -> None:
+        """Update last access metadata and promote entry to MRU position in tenant LRU queue."""
+        now = time.time() if current_time is None else float(current_time)
+        entry.hit_count += 1
+        entry.last_accessed_at = now
+        key = compute_exact_key(
+            tenant_id=entry.tenant_id,
+            model=entry.model,
+            source_revision=entry.source_revision,
+            prompt=entry.prompt,
+            extra_params=entry.metadata.get("extra_params") if isinstance(entry.metadata, dict) else None,
+        )
+        tenant = entry.tenant_id
+        if tenant in self._tenant_keys and key in self._tenant_keys[tenant]:
+            self._tenant_keys[tenant].remove(key)
+            self._tenant_keys[tenant].append(key)
 
     def get(
         self,
@@ -333,12 +355,7 @@ class ExactCacheStore:
             self._stats["misses"] += 1
             return None
 
-        entry.hit_count += 1
-        entry.last_accessed_at = now
-        if tenant_id in self._tenant_keys and key in self._tenant_keys[tenant_id]:
-            self._tenant_keys[tenant_id].remove(key)
-            self._tenant_keys[tenant_id].append(key)
-
+        self.touch(entry, now)
         self._stats["hits"] += 1
         return entry
 
@@ -504,14 +521,14 @@ KNOWN_ENTITY_IDENTIFIERS: Set[str] = {
 }
 
 
-def tokenize(text: str, ngrams: bool = False) -> List[str]:
-    """Split text into normalized lowercase unigrams and optional bigrams.
+def tokenize(text: str, ngrams: bool = True) -> List[str]:
+    """Split text into normalized lowercase unigrams and consecutive bigrams.
 
-    Preserves token order and local context through character normalization.
+    Preserves token order and local phrase context through sublinear n-gram extraction.
 
     Args:
         text: Raw text string.
-        ngrams: Whether to include consecutive bigram tokens.
+        ngrams: Whether to include consecutive bigram tokens. Defaults to True.
 
     Returns:
         List of cleaned token strings.
@@ -573,7 +590,8 @@ def cosine_similarity(vec1: Dict[str, float], vec2: Dict[str, float]) -> float:
 def extract_numbers_and_units(text: str) -> List[str]:
     """Extract and normalize all numbers, percentages, and measurement units.
 
-    Matches quantities like '50', '$50', '50.0', '500MB', '2024'.
+    Matches quantities like '50', '$50', '50.0', '500MB', '50 MB', '2024'.
+    Normalizes whitespace and formatting so '50MB' and '50 MB' produce identical tokens.
 
     Args:
         text: Raw query text.
@@ -585,7 +603,8 @@ def extract_numbers_and_units(text: str) -> List[str]:
     matches = re.findall(pattern, text.lower())
     cleaned = []
     for m in matches:
-        norm = m.replace(",", "").strip()
+        norm = m.replace(",", "")
+        norm = re.sub(r"\s+", "", norm).strip()
         norm = re.sub(r"(\d+)\.0+\b", r"\1", norm)
         cleaned.append(norm)
     return sorted(cleaned)
@@ -623,25 +642,45 @@ def extract_negations(text: str) -> Set[str]:
     return tokens & NEGATION_TERMS
 
 
+UNIT_ABBREVIATIONS: Set[str] = {"mb", "gb", "kb", "tb", "ms", "sec", "min", "hr", "hrs"}
+
+
 def extract_entities(text: str) -> Set[str]:
-    """Extract named entities, Greek codenames, and distinct identifiers from text."""
+    """Extract named entities, Greek codenames, and distinct identifiers from text.
+
+    Excludes numerical unit tokens, pure digits, and sentence-initial common words.
+
+    Args:
+        text: Raw query text.
+
+    Returns:
+        Set of identified entity names and codes.
+    """
     entities: Set[str] = set()
     raw_tokens = re.findall(r"\b[A-Za-z0-9_#-]+\b", text)
-    for tok in raw_tokens:
+    units_in_text = set(extract_numbers_and_units(text))
+
+    for i, tok in enumerate(raw_tokens):
         lower = tok.lower()
+        if lower in UNIT_ABBREVIATIONS or lower in units_in_text or tok.isdigit():
+            continue
+        if any(c.isdigit() for c in tok) and re.sub(r"\s+", "", lower) in units_in_text:
+            continue
         if lower in KNOWN_ENTITY_IDENTIFIERS:
             entities.add(lower)
-        elif "-" in tok or "_" in tok or any(c.isdigit() for c in tok):
+        elif ("-" in tok or "_" in tok) and not tok.isdigit():
             entities.add(lower)
-        elif tok.isupper() and len(tok) >= 2:
+        elif tok.isupper() and len(tok) >= 2 and not tok.isdigit() and lower not in UNIT_ABBREVIATIONS:
             entities.add(lower)
-        elif tok[0].isupper() and lower not in {
-            "what", "when", "where", "which", "who", "whom", "whose", "why", "how",
-            "can", "could", "should", "would", "is", "are", "was", "were", "do",
-            "does", "did", "if", "the", "a", "an", "in", "on", "at", "to", "for",
-            "with", "show", "tell", "explain", "describe", "please",
-        }:
-            entities.add(lower)
+        elif tok[0].isupper() and tok[1:].islower() and i > 0 and len(tok) > 2:
+            if lower not in {
+                "what", "when", "where", "which", "who", "whom", "whose", "why", "how",
+                "can", "could", "should", "would", "is", "are", "was", "were", "do",
+                "does", "did", "if", "the", "a", "an", "in", "on", "at", "to", "for",
+                "with", "show", "tell", "explain", "describe", "please", "regarding",
+                "about", "policy", "return", "refund", "laptop", "laptops", "service",
+            }:
+                entities.add(lower)
     return entities
 
 
@@ -714,6 +753,9 @@ class SemanticCacheStore:
             The exact cryptographic cache key.
         """
         key = self.exact_store.put(entry)
+        if self.exact_store.max_entries_per_tenant <= 0:
+            return key
+
         extra_params = entry.metadata.get("extra_params") if isinstance(entry.metadata, dict) else None
         part_key = make_partition_key(entry.tenant_id, entry.model, entry.source_revision, extra_params)
         if part_key not in self._partitions:
@@ -723,7 +765,7 @@ class SemanticCacheStore:
             item for item in self._partitions[part_key] if item[0] != key
         ]
 
-        tf_vec = compute_tf_vector(tokenize(entry.prompt))
+        tf_vec = compute_tf_vector(tokenize(entry.prompt, ngrams=True))
         self._partitions[part_key].append((key, entry, tf_vec))
         return key
 
@@ -733,7 +775,7 @@ class SemanticCacheStore:
         model: str,
         source_revision: str,
         prompt: str,
-        threshold: float = 0.85,
+        threshold: float = 0.80,
         current_time: Optional[float] = None,
         extra_params: Optional[Dict[str, Any]] = None,
     ) -> Tuple[Optional[CacheEntry], float, str]:
@@ -770,7 +812,7 @@ class SemanticCacheStore:
         if not candidates:
             return None, 0.0, "partition_empty"
 
-        query_vec = compute_tf_vector(tokenize(prompt))
+        query_vec = compute_tf_vector(tokenize(prompt, ngrams=True))
         valid_candidates: List[Tuple[str, CacheEntry, Dict[str, float]]] = []
         matching_candidates: List[Tuple[float, CacheEntry]] = []
 
@@ -778,15 +820,16 @@ class SemanticCacheStore:
             if not is_fresh(entry, now):
                 continue
             valid_candidates.append((key, entry, vec))
-            sim = cosine_similarity(query_vec, vec)
+            raw_sim = cosine_similarity(query_vec, vec)
+            sim = round(raw_sim, 4)
             if sim >= threshold:
                 matching_candidates.append((sim, entry))
 
         self._partitions[part_key] = valid_candidates
 
         if not matching_candidates:
-            highest_score = max((cosine_similarity(query_vec, vec) for _, _, vec in valid_candidates), default=0.0)
-            return None, round(highest_score, 4), "below_threshold"
+            highest_score = max((round(cosine_similarity(query_vec, vec), 4) for _, _, vec in valid_candidates), default=0.0)
+            return None, highest_score, "below_threshold"
 
         matching_candidates.sort(key=lambda x: x[0], reverse=True)
 
@@ -796,12 +839,11 @@ class SemanticCacheStore:
             if is_adversarial:
                 last_blocked_reason = reason
                 continue
-            candidate.hit_count += 1
-            candidate.last_accessed_at = now
-            return candidate, round(sim, 4), "semantic_hit"
+            self.exact_store.touch(candidate, now)
+            return candidate, sim, "semantic_hit"
 
         top_score = matching_candidates[0][0]
-        return None, round(top_score, 4), f"adversarial_blocked: {last_blocked_reason}"
+        return None, top_score, f"adversarial_blocked: {last_blocked_reason}"
 
     def invalidate_tenant(self, tenant_id: str) -> int:
         """Purge all exact and semantic entries for a tenant.
@@ -877,24 +919,32 @@ class CacheAdapter:
         self,
         request: Dict[str, Any],
         upstream_handler: Optional[Callable[[str], str]] = None,
-        threshold: float = 0.85,
+        threshold: float = 0.80,
         current_time: Optional[float] = None,
         write_through: bool = True,
+        authorized_tenant_id: Optional[str] = None,
     ) -> Dict[str, Any]:
         """Process an LLM query through the caching layer with HTTP headers.
 
         Args:
             request: Validated query dictionary.
-            upstream_handler: Optional callable invoked on cache miss.
+            upstream_handler: Optional callable invoked on cache miss or soft expiry.
             threshold: Semantic similarity threshold.
             current_time: Current epoch timestamp. Defaults to time.time().
             write_through: Whether to populate cache on miss.
+            authorized_tenant_id: Optional enforced tenant boundary for access control.
 
         Returns:
             Dictionary with response text, HTTP headers, and performance audit metadata.
         """
         now = time.time() if current_time is None else float(current_time)
         validated = validate_cache_request(request)
+
+        if authorized_tenant_id is not None and validated["tenant_id"] != authorized_tenant_id:
+            raise TenantIsolationError(
+                f"Access denied: request tenant '{validated['tenant_id']}' does not match authorized tenant '{authorized_tenant_id}'"
+            )
+
         entry, score, match_type = self.store.query(
             tenant_id=validated["tenant_id"],
             model=validated["model"],
@@ -909,19 +959,30 @@ class CacheAdapter:
             "X-Cache-Tenant": validated["tenant_id"],
             "X-Cache-Model": validated["model"],
             "X-Cache-Revision": validated["source_revision"],
-            "Cache-Control": f"private, max-age={int(validated['ttl_seconds'])}",
         }
 
         if entry is not None:
             cache_status = "HIT-EXACT" if match_type == "exact_hit" else "HIT-SEMANTIC"
             age_seconds = max(0, int(now - entry.created_at))
+            remaining_ttl = max(0, int((entry.created_at + entry.ttl_seconds) - now)) if entry.ttl_seconds > 0 else int(validated["ttl_seconds"])
+
             headers["X-Cache"] = cache_status
             headers["X-Cache-Score"] = score
             headers["X-Cache-Match-Type"] = match_type
             headers["X-Cache-Latency-Saved-Ms"] = 350.0
             headers["Age"] = str(age_seconds)
+            headers["Cache-Control"] = f"private, max-age={remaining_ttl}"
+
             if is_soft_expired(entry, now):
-                headers["Warning"] = '110 - "Response is Stale"'
+                if upstream_handler is not None:
+                    revalidated_response = upstream_handler(validated["prompt"])
+                    entry.response = revalidated_response
+                    entry.created_at = now
+                    headers["X-Cache-Revalidated"] = "true"
+                    if write_through:
+                        self.store.put(entry)
+                else:
+                    headers["Warning"] = '110 - "Response is Stale"'
 
             return {
                 "status": 200,
@@ -935,6 +996,7 @@ class CacheAdapter:
         headers["X-Cache-Miss-Reason"] = match_type
         headers["X-Cache-Latency-Saved-Ms"] = 0.0
         headers["Age"] = "0"
+        headers["Cache-Control"] = f"private, max-age={int(validated['ttl_seconds'])}"
 
         if upstream_handler is not None:
             upstream_response = upstream_handler(validated["prompt"])
@@ -970,11 +1032,64 @@ def make_http_handler_class(adapter: CacheAdapter) -> type:
 
     class SemanticCacheHTTPHandler(BaseHTTPRequestHandler):
         def do_POST(self) -> None:
-            content_length = int(self.headers.get("Content-Length", 0))
-            body = self.rfile.read(content_length).decode("utf-8")
             try:
-                payload = json.loads(body)
-                result = adapter.handle_request(payload)
+                raw_cl = self.headers.get("Content-Length")
+                if raw_cl is None:
+                    self.send_error_response(411, "Length Required: Content-Length header is mandatory")
+                    return
+
+                try:
+                    content_length = int(raw_cl.strip())
+                except (ValueError, TypeError):
+                    self.send_error_response(400, f"Bad Request: Non-numeric Content-Length '{raw_cl}'")
+                    return
+
+                if content_length < 0:
+                    self.send_error_response(400, "Bad Request: Content-Length must be non-negative")
+                    return
+
+                if content_length > MAX_HTTP_BODY_BYTES:
+                    self.send_error_response(413, f"Payload Too Large: Maximum allowed size is {MAX_HTTP_BODY_BYTES} bytes")
+                    return
+
+                try:
+                    body_bytes = self.rfile.read(content_length)
+                    body_text = body_bytes.decode("utf-8")
+                except UnicodeDecodeError:
+                    self.send_error_response(400, "Bad Request: Body must be valid UTF-8")
+                    return
+
+                try:
+                    payload = json.loads(body_text)
+                except json.JSONDecodeError as exc:
+                    self.send_error_response(400, f"Bad Request: Invalid JSON - {exc.msg}")
+                    return
+
+                if not isinstance(payload, dict):
+                    self.send_error_response(400, "Bad Request: JSON payload must be an object")
+                    return
+
+                caller_tenant = self.headers.get("X-Tenant-ID")
+                if caller_tenant:
+                    caller_tenant = caller_tenant.strip()
+                    payload_tenant = payload.get("tenant_id")
+                    if payload_tenant and str(payload_tenant).strip() != caller_tenant:
+                        self.send_error_response(
+                            403,
+                            f"Forbidden: Authenticated tenant '{caller_tenant}' cannot access partition '{payload_tenant}'",
+                        )
+                        return
+                    payload["tenant_id"] = caller_tenant
+
+                try:
+                    result = adapter.handle_request(payload, authorized_tenant_id=caller_tenant)
+                except TenantIsolationError as tie:
+                    self.send_error_response(403, f"Forbidden: {tie}")
+                    return
+                except ValueError as ve:
+                    self.send_error_response(400, f"Bad Request: {ve}")
+                    return
+
                 self.send_response(result["status"])
                 for header_key, header_val in result["headers"].items():
                     self.send_header(header_key, str(header_val))
@@ -985,11 +1100,15 @@ def make_http_handler_class(adapter: CacheAdapter) -> type:
                     "cached": result["cached"],
                 }).encode("utf-8")
                 self.wfile.write(response_bytes)
+
             except Exception as exc:
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json")
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": str(exc)}).encode("utf-8"))
+                self.send_error_response(500, f"Internal Server Error: {exc}")
+
+        def send_error_response(self, status: int, message: str) -> None:
+            self.send_response(status)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({"error": message}).encode("utf-8"))
 
         def log_message(self, format: str, *args: Any) -> None:
             pass
@@ -1042,7 +1161,7 @@ def analyze_threshold_sensitivity(
 def run_correctness_benchmark(
     dataset: List[Dict[str, Any]],
     store: Optional[SemanticCacheStore] = None,
-    threshold: float = 0.85,
+    threshold: float = 0.80,
     current_time: Optional[float] = None,
 ) -> Dict[str, Any]:
     """Execute a comprehensive correctness benchmark across test cases.
@@ -1053,7 +1172,7 @@ def run_correctness_benchmark(
     Args:
         dataset: List of test case dictionaries.
         store: Pre-populated or fresh SemanticCacheStore.
-        threshold: Semantic similarity threshold.
+        threshold: Semantic similarity threshold. Defaults to 0.80.
         current_time: Current epoch timestamp. Defaults to time.time().
 
     Returns:

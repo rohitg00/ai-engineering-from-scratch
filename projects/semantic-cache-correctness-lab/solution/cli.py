@@ -38,8 +38,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--threshold",
         type=float,
-        default=0.85,
-        help="Cosine similarity threshold for semantic cache hits (default: 0.85).",
+        default=0.80,
+        help="Cosine similarity threshold for semantic cache hits (default: 0.80).",
     )
     parser.add_argument(
         "--current-time",

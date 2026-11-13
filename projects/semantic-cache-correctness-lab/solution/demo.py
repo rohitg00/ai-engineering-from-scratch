@@ -41,7 +41,7 @@ def main() -> int:
     results = run_correctness_benchmark(
         dataset=data.get("queries", []),
         store=store,
-        threshold=0.85,
+        threshold=0.80,
         current_time=bench_time,
     )
 

@@ -38,18 +38,20 @@ pj-semantic-cache-correctness-lab-3
 
 In your workspace `main.py`, implement:
 
-1. `tokenize(text)` and `compute_tf_vector(tokens)`: Normalized term vectors with L2 normalization.
+1. `tokenize(text, ngrams=True)` and `compute_tf_vector(tokens)`: Sublinear term vectors with L2 normalization and bigram extraction.
 2. `cosine_similarity(vec1, vec2)`: Returns cosine similarity between 0.0 and 1.0.
-3. `extract_numbers(text)`: Extracts and normalizes numerical quantities and currency amounts.
+3. `extract_numbers_and_units(text)`: Extracts and normalizes numerical quantities and measurement units, collapsing whitespace (e.g. `50MB` and `50 MB`).
 4. `extract_negations(text)`: Detects negation keywords (`not`, `never`, `no`, `cannot`, etc.).
-5. `check_adversarial_near_miss(query, cached_prompt)`: Returns `(is_adversarial, reason)`.
-6. `SemanticCacheStore`:
+5. `extract_entities(text)`: Identifies distinct entity names and Greek codenames, excluding sentence-initial common words.
+6. `check_adversarial_near_miss(query, cached_prompt)`: Returns `(is_adversarial, reason)`.
+7. `SemanticCacheStore`:
    - `put(entry: CacheEntry) -> str`: Registers entry in exact store and partitioned semantic index.
-   - `query(tenant_id, model, source_revision, prompt, threshold=0.85, current_time=0.0) -> (entry, score, reason)`:
+   - `query(tenant_id, model, source_revision, prompt, threshold=0.80, current_time=None, extra_params=None) -> (entry, score, reason)`:
      - Returns exact hit if matched.
-     - Searches candidates in the same partition.
-     - Enforces similarity threshold.
-     - Applies adversarial near-miss verification before approving any semantic hit.
+     - Searches candidates in the isolated `(tenant_id, model, source_revision, extra_params)` partition.
+     - Enforces similarity threshold (defaults to 0.80).
+     - Ranks candidates and evaluates adversarial near-miss verification, falling back to safe candidates.
+     - Defaults `current_time` to system clock (`time.time()`) when omitted.
 
 ## Verify and inspect
 

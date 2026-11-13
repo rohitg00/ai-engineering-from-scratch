@@ -288,6 +288,44 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
         self.assertIsNone(matched)
         self.assertEqual(reason, "partition_empty")
 
+    def test_extract_numbers_and_units_equivalent_whitespace(self):
+        """Verify equivalent unit quantities with differing whitespace produce identical tokens."""
+        u1 = extract_numbers_and_units("Plan offers 50MB storage")
+        u2 = extract_numbers_and_units("Plan offers 50 MB storage")
+        self.assertEqual(u1, u2)
+        is_bad, _ = check_adversarial_near_miss("Plan offers 50MB storage", "Plan offers 50 MB storage")
+        self.assertFalse(is_bad)
+
+    def test_semantic_hit_preserves_lru_protection(self):
+        """Verify a semantic hit updates LRU in the exact store so it is protected from eviction."""
+        store = SemanticCacheStore(max_entries_per_tenant=2)
+        e1 = CacheEntry("1", "t1", "m", "v", "What is the return policy for defective laptops?", "R1", 100.0, 3600.0)
+        e2 = CacheEntry("2", "t1", "m", "v", "How do I update billing?", "R2", 100.0, 3600.0)
+        store.put(e1)
+        store.put(e2)
+
+        # Trigger semantic hit on e1 via paraphrase -> promotes e1 to MRU!
+        matched, _, reason = store.query("t1", "m", "v", "What is the return policy regarding defective laptops?", threshold=0.75, current_time=150.0)
+        self.assertIsNotNone(matched)
+        self.assertEqual(reason, "semantic_hit")
+
+        # Now insert a 3rd entry -> e2 (not touched) must be evicted, e1 must remain!
+        e3 = CacheEntry("3", "t1", "m", "v", "How do I reset password?", "R3", 150.0, 3600.0)
+        store.put(e3)
+
+        hit_e1 = store.exact_store.get("t1", "m", "v", "What is the return policy for defective laptops?", 150.0)
+        self.assertIsNotNone(hit_e1)
+        miss_e2 = store.exact_store.get("t1", "m", "v", "How do I update billing?", 150.0)
+        self.assertIsNone(miss_e2)
+
+    def test_capitalized_noun_reordering_safe(self):
+        """Verify moving a capitalized opening noun in a paraphrase does not cause entity mismatch."""
+        q1 = "Laptops that are defective: what is the return policy?"
+        q2 = "What is the return policy for defective laptops?"
+        is_bad, reason = check_adversarial_near_miss(q1, q2)
+        self.assertFalse(is_bad)
+        self.assertEqual(reason, "safe")
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -22,6 +22,8 @@ In this stage, you will build the foundational identity and freshness model. Eve
 2. `model`: Target LLM model name.
 3. `source_revision`: Version hash of underlying documents, prompt templates, or embeddings.
 4. `ttl_seconds`: Expiration duration relative to creation timestamp.
+5. `soft_ttl_seconds`: Duration for stale-while-revalidate before hard expiry.
+6. `tags`: Metadata labels enabling scoped tag invalidation.
 
 ## Work through one concrete case
 
@@ -35,14 +37,17 @@ pj-semantic-cache-correctness-lab-1
 
 Open `main.py` in your workspace and implement:
 
-1. `CacheEntry`: Dataclass holding cached responses with `to_dict()` and `from_dict()` serialization.
+1. `CacheEntry`: Dataclass holding cached responses with `to_dict()` and `from_dict()` serialization. Supports `soft_ttl_seconds` and `tags`.
 2. `compute_exact_key(tenant_id, model, source_revision, prompt, extra_params=None)`:
    - Validates that `tenant_id`, `model`, and `prompt` are non-empty strings.
    - Computes a deterministic SHA-256 hash across canonicalized parameters.
-3. `is_fresh(entry, current_time)`:
+3. `is_fresh(entry, current_time=None)`:
    - Returns `True` if `ttl_seconds <= 0` (permanent) or if `current_time <= entry.created_at + entry.ttl_seconds`.
-4. `validate_cache_request(request)`:
-   - Validates required fields, strips whitespace, and ensures `ttl_seconds` is a non-negative finite number.
+   - Defaults to system clock (`time.time()`) when `current_time` is omitted.
+4. `is_soft_expired(entry, current_time=None)`:
+   - Returns `True` if `soft_ttl_seconds > 0` and current time exceeds `entry.created_at + entry.soft_ttl_seconds`.
+5. `validate_cache_request(request)`:
+   - Validates required fields, strips whitespace, and ensures `ttl_seconds` and `soft_ttl_seconds` are non-negative finite numbers.
 
 ## Verify and inspect
 

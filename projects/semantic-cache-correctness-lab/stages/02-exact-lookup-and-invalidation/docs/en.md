@@ -48,10 +48,14 @@ class ExactCacheStore:
         model: str,
         source_revision: str,
         prompt: str,
-        current_time: float,
+        current_time: Optional[float] = None,
         extra_params: Optional[Dict[str, Any]] = None,
     ) -> Optional[CacheEntry]:
-        """Look up an entry, evict if expired, and verify tenant/revision matches."""
+        """Look up an entry, evict if expired, promote to MRU, and verify matches."""
+        ...
+
+    def touch(self, entry: CacheEntry, current_time: Optional[float] = None) -> None:
+        """Update last accessed timestamp and promote entry to MRU in tenant LRU queue."""
         ...
 
     def invalidate_tenant(self, tenant_id: str) -> int:

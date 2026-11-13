@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any, Dict, Optional
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
@@ -18,7 +18,11 @@ class CacheEntry:
     response: str
     created_at: float
     ttl_seconds: float
-    metadata: Dict[str, Any]
+    soft_ttl_seconds: float = 0.0
+    last_accessed_at: float = 0.0
+    hit_count: int = 0
+    tags: List[str] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         """Serialize cache entry to a plain dictionary."""
@@ -44,6 +48,11 @@ def compute_exact_key(
 def is_fresh(entry: CacheEntry, current_time: Optional[float] = None) -> bool:
     """Determine whether a cache entry remains within its time-to-live period."""
     raise NotImplementedError("implement is_fresh")
+
+
+def is_soft_expired(entry: CacheEntry, current_time: Optional[float] = None) -> bool:
+    """Determine whether a cache entry has exceeded its soft TTL (stale-while-revalidate)."""
+    raise NotImplementedError("implement is_soft_expired")
 
 
 def validate_cache_request(request: Dict[str, Any]) -> Dict[str, Any]:

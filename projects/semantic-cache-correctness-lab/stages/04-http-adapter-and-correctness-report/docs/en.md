@@ -34,12 +34,14 @@ pj-semantic-cache-correctness-lab-4
 In your workspace `main.py`, implement:
 
 1. `CacheAdapter`:
-   - `handle_request(request, upstream_handler=None, threshold=0.85, current_time=0.0) -> dict`:
-     Returns `{status: 200, response: str, headers: dict, cached: bool}`.
-2. `run_correctness_benchmark(dataset, store=None, threshold=0.85, current_time=0.0) -> dict`:
+   - `handle_request(request, upstream_handler=None, threshold=0.80, current_time=None, write_through=True, authorized_tenant_id=None) -> dict`:
+     Returns `{status: 200, response: str, headers: dict, cached: bool}`. Emits `max-age` based on remaining TTL on hits and revalidates soft-expired answers. Enforces `authorized_tenant_id` access control.
+2. `make_http_handler_class(adapter) -> type`:
+   - Returns a standard library `BaseHTTPRequestHandler` class enforcing bounded payload sizes (1MB max), UTF-8 decoding, JSON validation, and `X-Tenant-ID` header authorization.
+3. `run_correctness_benchmark(dataset, store=None, threshold=0.80, current_time=None) -> dict`:
    - Calculates `total_queries`, `exact_hits`, `semantic_hits`, `safe_misses`, `false_hits`, `near_misses_blocked`, `cross_tenant_blocks`, `accuracy_pct`, and `estimated_latency_saved_ms`.
-   - Requires `false_hits == 0` for compatibility.
-3. `export_report(output_path, benchmark_result)`:
+   - Requires `false_hits == 0` and 100% accuracy for compatibility.
+4. `export_report(output_path, benchmark_result)`:
    - Writes the benchmark dictionary to `output_path`.
 
 The included `cli.py` connects your functions to command-line flags:

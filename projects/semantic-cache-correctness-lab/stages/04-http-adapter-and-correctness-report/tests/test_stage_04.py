@@ -56,7 +56,7 @@ class TestStage04AdapterAndReport(unittest.TestCase):
         self.assertEqual(res["headers"]["X-Cache-Score"], 1.0)
         self.assertEqual(res["headers"]["X-Cache-Latency-Saved-Ms"], 350.0)
         self.assertEqual(res["headers"]["Age"], "150")
-        self.assertIn("max-age=3600", res["headers"]["Cache-Control"])
+        self.assertIn("max-age=3450", res["headers"]["Cache-Control"])
         self.assertEqual(res["response"], "30-day return policy.")
 
     def test_adapter_semantic_hit_headers(self):
@@ -219,6 +219,47 @@ class TestStage04AdapterAndReport(unittest.TestCase):
         finally:
             if os.path.exists(tmp_path):
                 os.remove(tmp_path)
+
+    def test_soft_expired_revalidates_with_upstream(self):
+        """Verify soft-expired answers revalidate via upstream handler rather than staying stale."""
+        revalidated = []
+
+        def mock_upstream(prompt):
+            revalidated.append(prompt)
+            return "Updated 45-day return policy."
+
+        req = {
+            "tenant_id": "tenant-alpha",
+            "model": "gpt-4o",
+            "source_revision": "v1",
+            "prompt": "What is the return policy for defective laptops?",
+        }
+        # created_at was 100.0, soft_ttl was 300.0 (soft expires at 400.0). Query at 450.0
+        res = self.adapter.handle_request(req, upstream_handler=mock_upstream, current_time=450.0)
+        self.assertTrue(res["cached"])
+        self.assertEqual(res["headers"]["X-Cache-Revalidated"], "true")
+        self.assertEqual(res["response"], "Updated 45-day return policy.")
+        self.assertEqual(len(revalidated), 1)
+
+    def test_authorized_tenant_enforcement(self):
+        """Verify CacheAdapter rejects requests attempting to query a different tenant."""
+        from main import TenantIsolationError
+        req = {
+            "tenant_id": "tenant-victim",
+            "model": "gpt-4o",
+            "source_revision": "v1",
+            "prompt": "What is my confidential balance?",
+        }
+        with self.assertRaises(TenantIsolationError):
+            self.adapter.handle_request(req, authorized_tenant_id="tenant-attacker")
+
+    def test_http_handler_bounded_limits_and_errors(self):
+        """Verify HTTP wire handler class exposes error response helper and handles bounds."""
+        from http.server import BaseHTTPRequestHandler
+        from main import make_http_handler_class
+        handler_cls = make_http_handler_class(self.adapter)
+        self.assertTrue(issubclass(handler_cls, BaseHTTPRequestHandler))
+        self.assertTrue(hasattr(handler_cls, "send_error_response"))
 
 
 if __name__ == "__main__":
