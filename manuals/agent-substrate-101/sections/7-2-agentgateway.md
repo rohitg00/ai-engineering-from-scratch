@@ -170,7 +170,7 @@ code=404
 
 So the model gateway selects the model, and the egress policy does not. Two keys are in the path, and the actor sends neither. Our mock backend printed both in its reply, so the actor read them there. A real backend must not return a credential.
 
-The egress gateway injects the header that identifies the caller. The model gateway replaces `Authorization` with its own provider key. A credential for the model gateway itself must therefore travel in another header. We did not configure client authentication on the model gateway, and we did not use an Actor JWT here.
+The egress gateway injects the header that identifies the caller. The model gateway replaces `Authorization` with its own provider key. A credential for the model gateway itself must therefore travel in another header. Client authentication on the model gateway, with an Actor JWT, is planned for the next edition.
 
 **The private CA failed at first.** With the default install, the request through the `https` rule returned 503 on both dataplanes. The egress gateway verifies the upstream certificate against the system roots of its own container, and it did not know our CA. [TLS interception](#s-tls-interception) has the two error texts and the patch that fixed it. The patch is lost when the installer runs again.
 
@@ -185,7 +185,7 @@ The egress gateway injects the header that identifies the caller. The model gate
 
 The last row is the one to design for. Each new connection under an `https` rule cost about 0.6 s on both dataplanes. Almost all of it was the TLS handshake with the interception endpoint: 606 of 618 ms on agentgateway, and 600 of 614 ms on Envoy. On a reused connection the same request took 10 to 12 ms. An agent that opens a new HTTPS connection for each model call pays 0.6 s each time. Keep one client with a connection pool for the life of the actor.
 
-A second cluster ran node tests on the same guest at the same time, so read a difference of a few milliseconds as noise. We did not find where the 0.6 s goes inside the handshake. We did not test a real model host, a streamed reply, or an MCP gateway.
+A second cluster ran node tests on the same guest at the same time, so read a difference of a few milliseconds as noise. We have not found yet where the 0.6 s goes inside the handshake. That search, a real model host, a streamed reply, and an MCP gateway are planned for the next edition.
 
 Three limits of the egress gateway apply to this design, and one section proves each:
 

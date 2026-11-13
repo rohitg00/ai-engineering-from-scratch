@@ -1,6 +1,6 @@
 # Agent Substrate 101: fact brief
 
-This is the brief the sections were written from. It states what we concluded, which run proved it, and what we did not test. The recordings are in `capture/lab/`, and `capture/README.md` describes each folder.
+This is the brief the sections were written from. It states what we concluded, which run proved it, and which runs come next. The recordings are in `capture/lab/`, and `capture/README.md` describes each folder.
 
 ## Pins
 
@@ -55,7 +55,9 @@ Each value is one machine and one day. `capture/lab/summary/` holds the full sta
 - We first expected the kagent install to create three default Harness objects. At v1.0.0 it created none.
 - We expected suspend and resume to fail on arm64. On Apple silicon they worked for our test actor in 66 of 66 requests.
 
-## What we did not test
+## Coming next
+
+These runs are planned for the next edition. Until then, this edition does not measure them.
 
 - Substrate on GKE. That section is written from the documentation and the code.
 - kagent with a hosted model or a model on a GPU, and its codex, claude, and bring-your-own harnesses.

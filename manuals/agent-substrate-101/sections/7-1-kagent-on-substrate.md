@@ -94,7 +94,7 @@ spec:
     name: lab-harness
 ```
 
-**Harness:** the runtime that executes the agent, with the WorkerPool and the snapshot location that it uses. `kagent: {}` selects the engine of kagent. The other types are `codex`, `claude`, and `byo`, and we did not test them.
+**Harness:** the runtime that executes the agent, with the WorkerPool and the snapshot location that it uses. `kagent: {}` selects the engine of kagent. The other types are `codex`, `claude`, and `byo`. The `codex` and `claude` harnesses are planned for the next edition.
 
 **AgentTemplate:** the model, the prompt, and the tools. It has no Substrate field.
 
@@ -250,7 +250,7 @@ Neither bound broke a normal tool turn. With `maxTokens: 128`, 5 of 5 tool turns
 
 The row with no bound shows what a client timeout does not do. After the CLI gave up, the model request ran on for 10 minutes and 10 s, until we restarted the model server. A turn on a new Session waited behind it and reached the CLI default at 300.13 s. A second turn on the first Session returned `resource conflict` after 0.13 s. The timeout of the client stops the client. It does not stop the model call, and it does not suspend the actor.
 
-We did not see a runaway happen by itself while a bound was set, and we did not test `maxCompletionTokens`.
+We did not see a runaway happen by itself while a bound was set. That case and `maxCompletionTokens` are planned for the next edition.
 
 **Our position:** set `timeout` on every ModelConfig, because it also ends a model call that stalls. Add `maxTokens` when a cut answer is better for your users than a failed turn. Do not count the client timeout as a bound. Then count how many Sessions can wait for the model at one time, because each one holds 1 CPU of a worker. The subsection on parallel turns below has that arithmetic.
 

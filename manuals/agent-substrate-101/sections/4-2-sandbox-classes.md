@@ -6,7 +6,7 @@ A security reviewer asks one question about your agent platform: is each agent i
 
 When you finish this section, you can choose a class for a pool and check that a node can run it. You can also name the behaviours that differ between the two classes.
 
-Most measurements in this manual come from the `gvisor` class. On the x86 server guest we also ran one test actor on both classes, at 0, 200, and 500 MiB of memory. This section reports that comparison, and it names what stays untested.
+Most measurements in this manual come from the `gvisor` class. On the x86 server guest we also ran one test actor on both classes, at 0, 200, and 500 MiB of memory. This section reports that comparison, and it names the runs that come next.
 
 ## Two classes, one field
 
@@ -209,9 +209,9 @@ The test actor reports the age of its process in every reply. The two classes co
 
 So a microVM actor sees the time that passed while it was suspended. A gVisor actor sees only the time that it ran. A timeout, a cache lifetime, or a token check inside the actor gives a different result on each class. We read the elapsed-time clock of the process only, and we did not compare the calendar time.
 
-### What stays untested
+### Coming next
 
-All of these numbers come from one x86 machine with one CPU model. We did not run `microvm` in these cases:
+All of these numbers come from one x86 machine with one CPU model. The next edition runs `microvm` in these cases:
 
 - on arm64
 - with the agentgateway dataplane

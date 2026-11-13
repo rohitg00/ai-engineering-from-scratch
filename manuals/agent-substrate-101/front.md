@@ -54,13 +54,13 @@ The Agent Substrate documentation describes each object and each flag. This manu
 
 We hold eight positions, and each one comes from a run. [Section 1.1](#s-what-substrate-does-and-what-it-leaves-to-you) lists them with the number behind each one. The first position matters most: Substrate does not suspend an idle actor, so something that you run must do it.
 
-## What we did not test
+## Coming in the next edition
 
-All our clusters but one had one kind node, and the sandbox class was gVisor in every run behind Parts 1 and 2. We did not run Agent Substrate on GKE. Our object stores outside the cluster ran on the same guest and on a second guest of the same server. We did not use a cloud bucket. Our scale runs used one node, with up to 300 workers and 300 resumes at one time.
+All our clusters but one had one kind node, and the sandbox class was gVisor in every run behind Parts 1 and 2. Our object stores outside the cluster ran on the same guest and on a second guest of the same server. Our scale runs used one node, with up to 300 workers and 300 resumes at one time. The next edition adds a run on GKE, a cloud bucket, and more than one node at scale.
 
-The only real model in our runs was a small open model on CPU, behind kagent and behind Agent Executor. So no model time in this manual is the time of a GPU or of a hosted model.
+The only real model in our runs was a small open model on CPU, behind kagent and behind Agent Executor. So no model time in this manual is the time of a GPU or of a hosted model. A run with a hosted model and one on a GPU are planned for the next edition.
 
-Each section says so where one of those limits applies. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines, the method, and the full list.
+Each section says so where one of those limits applies. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method. [Coming in the next edition](#s-next-edition) lists every planned run.
 
 ## How the parts are ordered
 

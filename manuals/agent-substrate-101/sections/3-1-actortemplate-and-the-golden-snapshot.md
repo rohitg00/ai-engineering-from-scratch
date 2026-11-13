@@ -63,7 +63,7 @@ note: One line of the trace. The time and the event name at the start of the lin
 …Error: failed to update actor: rpc error: code = FailedPrecondition desc = actor must be ACTOR_STATE_SUSPENDED to change its actor template (got: ACTOR_STATE_RUNNING) 
 ```
 
-On the suspended actor the update was accepted, and the next call ran the new image. The count in memory started again at 1, and so did the count on the root filesystem. The count on the `durableDir` volume continued at 4. So this move kept the `durableDir` volume and dropped the old memory snapshot. We did not test a move with an external volume. Suspend first, and expect a cold start of the new image on the next call.
+On the suspended actor the update was accepted, and the next call ran the new image. The count in memory started again at 1, and so did the count on the root filesystem. The count on the `durableDir` volume continued at 4. So this move kept the `durableDir` volume and dropped the old memory snapshot. A move with an external volume is a run for the next edition. Suspend first, and expect a cold start of the new image on the next call.
 
 ## The golden snapshot is built once
 

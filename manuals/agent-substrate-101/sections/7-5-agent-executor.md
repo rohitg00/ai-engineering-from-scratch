@@ -17,7 +17,7 @@ Three versions exist, and only one fits Substrate v1.0.0.
 | Version | Substrate that its module file requires | In this manual |
 |---|---|---|
 | release v0.3.1, 2026-09-25 | a Substrate commit from 2026-09-11, with Redis and a controller | installed on v1.0.0 and on v0.6.0, and no task started on either |
-| the baseline commit of the installation page | v0.6.0 | read, not run |
+| the baseline commit of the installation page | v0.6.0 | read only, because the head commit needs v1.0.0 |
 | commit `a72b8ca4`, 2026-11-11 | v1.0.0 | built and run |
 
 The installation page at that commit still names the v0.6.0 baseline. Check the module file of the commit that you install, and not the page.
@@ -355,7 +355,7 @@ Egress from a task is closed, so the MCP host needs a rule on the actor, as the 
 
 What the model did with the tool is a second result, and it is about the 3b model. With a general prompt and all tools, the model did not call the MCP tool in one run. Its first request took 130 s, and its answer was `.done`. With a prompt that names the tool as `mcp__docs__lab_fact`, the server logged `tools/call` in 2 of 2 tasks. The call came 19 s and 5 s after the agent command started. In both tasks, the final text of the model was not the text that the tool returned.
 
-We did not run a stdio MCP server that exists in the image, a registry with listed servers, or an MCP server outside the cluster.
+Three MCP runs are planned for the next edition. One uses a stdio server in the image, one a registry with listed servers, and one a server outside the cluster.
 
 ## The example with its own prompt and repository
 
@@ -519,13 +519,15 @@ Phase:        Failed
 Ready  False   ActorCreationFailed  creating actor default/ax031-install-check: rpc error: code = InvalidArgument desc = [actor.actor_template.atespace: Required value, actor.actor_template.name: Required value]
 ```
 
-The controller log shows the step before it. The release first tried to create a template for the task, and v0.6.0 refused two fields that it did not know, `snapshot_config` and `resources`. The release then created the actor with no template, and v0.6.0 requires one. So the release fails on v0.6.0 too. We did not build the Substrate commit that the release names.
+The controller log shows the step before it. The release first tried to create a template for the task, and v0.6.0 refused two fields that it did not know, `snapshot_config` and `resources`. The release then created the actor with no template, and v0.6.0 requires one. So the release fails on v0.6.0 too. A build of the Substrate commit that the release names is planned for the next edition.
 
-## What we did not run
+## Coming next
 
-- **A model that can do real agent work.** Our model was small and on CPU, and its report on the example was false. We ran no hosted model and no model on a GPU.
+These runs are planned for the next edition, with the rest of [Coming in the next edition](#s-next-edition).
+
+- **A model that can do real agent work.** Our model was small and on CPU, and its report on the example was false. A hosted model and a model on a GPU come next.
 - **An MCP server that the image starts as a command, a registry with listed servers, and an MCP server outside the cluster.**
-- **A node loss under a task.** The cluster had one node.
+- **A node loss under a task.** The cluster had one node, so this needs a second one.
 - **A large or private repository.** The time of a first resume with a large clone is not measured.
 - **The release v0.3.1 on the Substrate commit that it names.** On v1.0.0 and on v0.6.0 it started no task.
 

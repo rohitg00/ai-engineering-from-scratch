@@ -2,7 +2,7 @@
 
 > Agent Substrate on GKE is an installer and its documentation for a system that you operate in your own GKE Standard cluster, and Google does not run its control plane.
 
-Your team runs GKE, and you read that Agent Substrate is generally available there. You open the cluster page and look for a checkbox. You find none, and `gcloud` has no command for it. We did not run Substrate on GKE. This section comes from the Google documentation and the installer code, both read on 2026-11-12, and it says so where that matters.
+Your team runs GKE, and you read that Agent Substrate is generally available there. You open the cluster page and look for a checkbox. You find none, and `gcloud` has no command for it. This edition does not run Substrate on GKE. This section comes from the Google documentation and the installer code, both read on 2026-11-12, and it says so where that matters. A measured GKE run is the first item planned for the next edition, listed in [Coming in the next edition](#s-next-edition).
 
 When you finish this section, you can say what the GKE installer creates and what it leaves for you to operate. You can also check a cluster against the requirements and find the quota that limits your resume rate.
 
@@ -62,7 +62,7 @@ The GPU row is a limit of Substrate, and GKE cannot remove it. [Limits at v1.0.0
 
 ## The quotas and limits that bound your scale
 
-The documentation names these numbers {{docs}}. We did not test them.
+The documentation names these numbers {{docs}}. The planned GKE run will test them.
 
 | Limit | Value | Why you care |
 |---|---|---|

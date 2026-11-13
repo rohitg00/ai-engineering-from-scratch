@@ -115,7 +115,7 @@ caption: Each dot is the snapshot of one actor on the node, and each line joins 
 
 So the size follows the memory that holds data, and the resume time follows the same bytes. An actor with 500 MiB of zero pages resumed in 0.23 seconds, as fast as an actor that holds nothing. Do not count on that for a real heap. A Python process with a dict of one million random values reported a peak of 245 MiB. Its snapshot on the node was 215.2 MiB. [Section 3.3](#s-suspendactor-and-resumeactor) has its resume time.
 
-The object store did not make the random snapshots smaller. Substrate compresses each object before the upload {{code}}, and random bytes do not compress. The copy of the Python actor was 110.1 MiB in the object store, about half of its node copy. We did not find out which step made it smaller.
+The object store did not make the random snapshots smaller. Substrate compresses each object before the upload {{code}}, and random bytes do not compress. The copy of the Python actor was 110.1 MiB in the object store, about half of its node copy. We have not found yet which step made it smaller, and that search is planned for the next edition.
 
 | Where | With 25 suspended actors | After we deleted them |
 |---|---|---|
@@ -237,7 +237,7 @@ Error: failed to create actor: rpc error: code = FailedPrecondition desc = Tag n
 …
 ```
 
-The template looks healthy and is broken. `get actor-templates` still lists the old golden tag id, and the `ERROR` column is empty. Each `create actor --template` fails with `Tag not found`. We saw this once, on the same guest. We made new templates to continue, and we did not test whether a golden tag can be restored.
+The template looks healthy and is broken. `get actor-templates` still lists the old golden tag id, and the `ERROR` column is empty. Each `create actor --template` fails with `Tag not found`. We saw this once, on the same guest. We made new templates to continue. Whether a golden tag can be restored is a test for the next edition.
 
 ```takeaways
 - Choose SNAPSHOT_FIDELITY_MEMORY only when the processes must continue.

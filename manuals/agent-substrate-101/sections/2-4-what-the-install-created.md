@@ -91,7 +91,7 @@ workerpools.ate.dev        Namespaced   v1(storage)   2026-11-12T10:05:33Z
 
 **WorkerPool:** a namespaced object that asks for a number of worker pods of one sandbox class. It is the only Substrate object that you manage with plain `kubectl` day to day. [Section 4.1](#s-workerpool) covers it.
 
-`SandboxConfig` describes a sandbox class for the whole cluster. The install created two of them: `gvisor-default` and `microvm` {{docs}}. `CSIDriverConfig` belongs to a preview feature for volumes, and we did not use it.
+`SandboxConfig` describes a sandbox class for the whole cluster. The install created two of them: `gvisor-default` and `microvm` {{docs}}. `CSIDriverConfig` belongs to a preview feature for volumes. A run with it is planned for the next edition.
 
 Everything else is a row in Postgres: atespaces, templates, actors, tags, workers, egress policies, and access policies. So `kubectl get` does not list them, a backup of etcd does not hold them, and no Kubernetes RBAC rule names them. To back up your actors, back up Postgres and the object store. A snapshot from a default suspend reaches the object store about 5 minutes later, so an earlier backup does not hold it. [Section 3.4](#s-snapshot-fidelity-and-where-a-snapshot-lives) has the timers. [Section 3.6](#s-atespaces) and [section 5.2](#s-access-policies) cover names and access.
 

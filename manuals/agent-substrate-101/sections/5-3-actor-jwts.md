@@ -161,7 +161,7 @@ The documentation lists these limits {{docs}}. We saw the second one in our run,
 - **No exchange for cloud credentials.** Cloud token services want the JWT in the request body, and the gateway replaces only headers (issue 1661) {{issue #1661}}.
 - **Key rotation is manual.** Keys do not expire. You add, activate and remove keys with `kubectl ate admin`.
 
-Three things stay unverified after our run. We did not check the signature with the published key, as a service must. We did not rotate a key. And we did not set up federation with a second issuer or a cloud provider.
+Three checks come in the next edition. One checks the signature with the published key, as a service must. One rotates a key. One sets up federation with a second issuer or a cloud provider.
 
 ## Our position
 

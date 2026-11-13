@@ -5,7 +5,7 @@ Agent Substrate v1.0.0 on Kubernetes, from the first actor to a cluster that you
 ## What is in it
 
 - 40 sections in 9 parts, then ten reference sections. Part 1 puts the whole system on one page. Parts 2 to 6 cover the install, actors, workers and capacity, identity and access, and the network. Part 7 connects kagent 1.0, agentgateway v1.7.0, and Agent Executor. Part 8 covers operation, failure, and upgrade. Part 9 builds four agents that you can run.
-- Each measured number names its machine and the number of runs. Pages that we could not measure say so, and section 8.5 lists what stays untested.
+- Each measured number names its machine and the number of runs. Pages that this edition does not measure yet say so, and section 8.5 lists the runs that come in the next edition.
 - 75 figures and a cover plate, drawn with the figure kit. The charts read the summary files, and most show each run, not only a median.
 - 177 listings. Each one is cut from a recorded file or from the source at the pinned tag, and the audit checks it line for line.
 - Section 1.1 sets each headline claim of the project site beside the result that we measured.

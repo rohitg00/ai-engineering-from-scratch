@@ -77,7 +77,7 @@ The first of those two outages ended in another way. **We measured** it once. Af
 
 The router logged `ResumeActor` for that actor and no result. A `kubectl ate resume actor` returned in 0.17 s and changed nothing. A synchronous suspend worked in 0.67 s, and the next two requests still returned 504. We restarted the `atenet-router` Deployment 357 s after Postgres was ready, and the restart took 7 s. The next request returned 200 in 0.33 s with count 49, so the actor had kept its state.
 
-We did not find the cause. It happened in 1 of these 2 outages. It did not happen in the outage of the database on the same machine, or in four outages of the bundled one. After each of the last three, we sent three requests to each of six running actors, and 18 of 18 returned 200 each time. So we saw it in 1 of 7 database outages.
+We have not found the cause yet, and finding it is on the list for the next edition. It happened in 1 of these 2 outages. It did not happen in the outage of the database on the same machine, or in four outages of the bundled one. After each of the last three, we sent three requests to each of six running actors, and 18 of 18 returned 200 each time. So we saw it in 1 of 7 database outages.
 
 **Our position:** after a database outage, send one request to each running actor that matters. If one returns 504 after 10 s while the others answer, restart `atenet-router`. Do not revert that actor, because its state is intact.
 
@@ -170,13 +170,13 @@ ATESPACE   NAME      TEMPLATE          STATE                   WORKER POD       
 lab-e      e-s-007   lab-e/e-counter   ACTOR_STATE_RESUMING    lab-e/e-pool-77cc8bf9f-p888v   10.244.0.37   2         9m54s
 ```
 
-Five minutes later it was still the only actor of 131 in `ACTOR_STATE_RESUMING`. It held a worker for all that time. We deleted it. We did not try `RevertActor` or a second resume on it, so we cannot tell you which one repairs it. After any database outage, list the actors and look for this state.
+Five minutes later it was still the only actor of 131 in `ACTOR_STATE_RESUMING`. It held a worker for all that time. We deleted it. We did not try `RevertActor` or a second resume on it, so we cannot tell you yet which one repairs it. After any database outage, list the actors and look for this state.
 
 **We measured** the same thing in the three outages of the bundled database on the x86 server guest (24 vCPU, 47 GB, nested KVM). After each one, one more actor was in `ACTOR_STATE_RESUMING`: 1, then 2, then 3. The outages of `ate-api-server` and of the Kubernetes API server that followed added none. Our files hold the count of actors in each state and not their names, so we cannot say which request left each one.
 
 **We measured** two more in the burst run of [section 4.5](#s-sizing-a-pool), with four replicas of `ate-api-server` and the bundled Postgres out of connections. Two actors got a 500 with `error resuming actor`. Both were still in `ACTOR_STATE_RESUMING` 4 s later and 4 min 12 s later. The next request to each, about 6 minutes after the 500, returned 200.
 
-The same run had a second kind of stall, with no outage. 4 of 2,800 burst requests got no answer before the client limit of 90 s. Each of those actors answered 200 in a later burst. We did not find the cause of either stall.
+The same run had a second kind of stall, with no outage. 4 of 2,800 burst requests got no answer before the client limit of 90 s. Each of those actors answered 200 in a later burst. We have not found the cause of either stall yet. Both searches are on the list in [Coming in the next edition](#s-next-edition).
 
 ## A node restart: the API returns in 8 s, the actors do not
 
@@ -316,7 +316,7 @@ The pool had no PodDisruptionBudget. In the two cases with no request during the
 | Suspended in the default mode, newest snapshot still `PENDING` on the node | Nothing | Yes, at its first request | Send the request. It returned 200 in 1.19 s | Nothing. The count was 6 after 5 |
 | `RUNNING`, with one request of 120 s open | The open request got 503 `connection termination` 0.4 s after the drain command. Then 16 of 16 requests got 503 | No. It was `ACTOR_STATE_CRASHED` | One `revert`, 0.2 s. The next request returned 200 0.7 s later | The open request, and the 2 calls after the last durable snapshot |
 
-The script sent the revert 64.8 s after the drain in the first case and 24.8 s after it in the last. We did not test an earlier revert.
+The script sent the revert 64.8 s after the drain in the first case and 24.8 s after it in the last. An earlier revert is a run for the next edition.
 
 Two results stand out. A drain does not suspend a running actor. It ends the worker pod, and the actor was `ACTOR_STATE_CRASHED` within 7 s, in two of two cases. The worker pods had a termination grace period of 3,600 s, and the drain still returned in about 2 s.
 
@@ -377,15 +377,15 @@ One result changed. With packets dropped, the actor whose only copy was in the b
 
 **Our position:** check that the bucket answers before a batch of synchronous suspends, such as the batch before a drain or a worker upgrade. If it does not answer, leave the actors running, or suspend in the default mode and accept the node copy.
 
-## What we did not test
+## Coming next
 
-Each node-stop case, each drain case, and each bucket case ran once. On Envoy the Postgres outage ran seven times in four setups, and the other two outages twice each. On agentgateway each outage ran once. Every outage ran on one kind node. We did not test egress from an actor during an outage, or a connection that stays open across one.
+Each node-stop case, each drain case, and each bucket case ran once. On Envoy the Postgres outage ran seven times in four setups, and the other two outages twice each. On agentgateway each outage ran once. Every outage ran on one kind node. Egress from an actor during an outage, and a connection that stays open across one, are runs for the next edition.
 
-The node-stop cases have four gaps. A stop here was `docker stop`, which ends the kubelet and `atelet` cleanly, so a power loss or a network loss can differ. We did not change the node timers of Kubernetes, use more than two worker nodes, or repeat the cases on agentgateway. We filled the other node by memory, and not by CPU or by a count of actors.
+The node-stop cases have four gaps. A stop here was `docker stop`, which ends the kubelet and `atelet` cleanly, so a power loss or a network loss can differ. The next edition changes the node timers of Kubernetes, adds a third worker node, and repeats the cases on agentgateway. We filled the other node by memory. A node full by CPU or by a count of actors is planned next.
 
-The drain cases have three gaps. The pool had no PodDisruptionBudget. We did not drain the node that runs `ate-system`. We sent no `revert` in the first 20 s after a drain.
+The drain cases have three next steps. The pool had no PodDisruptionBudget, and the next run adds one. It also drains the node that runs `ate-system`, and it sends a `revert` in the first 20 s after a drain.
 
-The bucket cases with data in memory ran once each, with 200 MiB. We did not record when a pending snapshot is uploaded after a stopped bucket returns. We did not find why one running actor stayed at 504 after a database outage. We did not test a database outage with dropped packets.
+The bucket cases with data in memory ran once each, with 200 MiB. The next edition records when a pending snapshot is uploaded after a stopped bucket returns. It also tests a database outage with dropped packets. We have not found yet why one running actor stayed at 504 after a database outage. That search is on the same list, in [Coming in the next edition](#s-next-edition).
 
 ```takeaways
 - Read a client timeout followed by `error resuming actor` as a database outage.
