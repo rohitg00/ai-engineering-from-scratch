@@ -1,0 +1,113 @@
+{
+  "version": 2,
+  "skills": {
+    "blueprint-figure": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/blueprint-figure/SKILL.md",
+      "computedHash": "3a858ed92ce8e91bff2766612dc649fb408436aa96f026679cb5537c351dd1b2"
+    },
+    "build-project": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/build-project/SKILL.md",
+      "computedHash": "dacb7b62fcad52a47324013bbe9628d71aa00ebb3531d3a3e38926040a07a3e5"
+    },
+    "check-understanding": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/check-understanding/SKILL.md",
+      "computedHash": "160cee1a183db3cc3bde5d58b317d73e39827d968b872306702c9399f2960190"
+    },
+    "claude-certification": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/claude-certification/SKILL.md",
+      "computedHash": "4364e3a8a0c8969730ff85c2fb389c6d979cf36422c002a5890f3bf3324117ed"
+    },
+    "course-guide": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/course-guide/SKILL.md",
+      "computedHash": "cd5a05451f3cad0aaa41c87a46aa7449ad87bac2c3c7001038a195df0b016afd"
+    },
+    "course-style": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/course-style/SKILL.md",
+      "computedHash": "e3cf3bddc751194be0bfa751396549005f8a6ddefe99e47cdc7553aa232a5cea"
+    },
+    "find-your-level": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/find-your-level/SKILL.md",
+      "computedHash": "e87a35bcedec47cc83478d1f2e21c52f9784371f05547c5ec65a856d86b261ae"
+    },
+    "interview-prep": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/interview-prep/SKILL.md",
+      "computedHash": "414772bfe5f91f44436e1e123aa97fb1a7b19a477999d659dd291adbbbff1655"
+    },
+    "isometric-explainer": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/isometric-explainer/SKILL.md",
+      "computedHash": "7eb4269d933c9af2e166a07a38539a5c7988b67342854dcc5d9f1c4b24e8952d"
+    },
+    "learn": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/learn/SKILL.md",
+      "computedHash": "a1b9d6c898c4e0f06f276c7c339882a0dcd1d7d74de98fea68b72acce49b33d8"
+    },
+    "learn-agent-skills": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/learn-agent-skills/SKILL.md",
+      "computedHash": "0bb0e2cf400bbbda29e795c87a3848ed9098ddb9b6af8da4b36c11abfa63680c"
+    },
+    "learn-mcp": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/learn-mcp/SKILL.md",
+      "computedHash": "bd4b6d2fd27bec3f9150f6d27fb3bbeffbcff019357b1774f5ffa694682866b1"
+    },
+    "learn-reverse-engineering": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/learn-reverse-engineering/SKILL.md",
+      "computedHash": "65e6940310f582d5bb4c81b087f816f9f5f8e3480fdd94b0889c439ee8791821"
+    },
+    "lesson-screen": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/lesson-screen/SKILL.md",
+      "computedHash": "123dc078fb4f9c63cc5ca31ed871dc6bd7284f8dde93022f1b82be2cd2c3678f"
+    },
+    "mcpa-certification": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/mcpa-certification/SKILL.md",
+      "computedHash": "fe7f38c3583d8d86d8feb5c6f865ee1e0b73a4fcd98ecd0ecdd76f1035704721"
+    },
+    "motion-figure": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/motion-figure/SKILL.md",
+      "computedHash": "f773e8532e455e913159ebe3f8e1be119190417a7121c8473df16aa7d3cf5bb3"
+    },
+    "start-learning": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/start-learning/SKILL.md",
+      "computedHash": "9161fdd19829e5326e93d14fe5273a4381599f832d9dac32cb4cd8c15e11d4e4"
+    },
+    "write-manual": {
+      "source": "rohitg00/ai-engineering-from-scratch",
+      "sourceType": "github",
+      "skillPath": "skills/write-manual/SKILL.md",
+      "computedHash": "a5b8660cc599122662de45403a2ea0ad3b6cb591d835c8055c5f83439a314461"
+    }
+  }
+}

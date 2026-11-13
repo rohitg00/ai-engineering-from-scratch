@@ -1,0 +1,4 @@
+interface:
+  display_name: "Claude Certification Tutor"
+  short_description: "AI-native certification path, labs, and review"
+  default_prompt: "Use claude-certification to choose a Claude certification track and teach me the next step."

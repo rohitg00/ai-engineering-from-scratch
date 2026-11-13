@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lesson Screen"
+  short_description: "Browser screen with lesson figures, code traces, and figures built per lesson"
+  default_prompt: "Use lesson-screen to open a browser screen for the lesson I am learning."
