@@ -1,0 +1,11 @@
+NAME                       READY   STATUS    RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+up-pool-678bcc9bfd-2gmrc   1/1     Running   0          2m3s    10.244.0.39   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-57gwl   1/1     Running   0          117s    10.244.0.45   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-7vv8x   1/1     Running   0          2m4s    10.244.0.38   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-9x7ss   1/1     Running   0          2m1s    10.244.0.41   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-mdwwn   1/1     Running   0          2m2s    10.244.0.40   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-nkql8   1/1     Running   0          118s    10.244.0.44   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-nmp59   1/1     Running   0          2m6s    10.244.0.37   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-rx4ks   1/1     Running   0          2m15s   10.244.0.36   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-xmw2f   1/1     Running   0          2m      10.244.0.42   yupg-control-plane   <none>           <none>
+up-pool-678bcc9bfd-zr2vw   1/1     Running   0          119s    10.244.0.43   yupg-control-plane   <none>           <none>

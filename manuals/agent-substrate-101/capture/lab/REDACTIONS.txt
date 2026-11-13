@@ -865,3 +865,56 @@ dropped	X-remote-store-pg/t0-dropped	marker file that holds one start time
 dropped	X-remote-store-pg/t0-stopped	marker file that holds one start time
 note	X-remote-store-pg	the access key of the lab bucket shows as <store-key>, and the connection strings show <user> and <password>. The CA key, the server keys, and the database passwords of the lab were never copied
 note	X-remote-store-pg	the address 10.0.2.2 is the gateway of the user-mode network of the guest, and the other addresses are inside the kind clusters and the container network of the test guests
+redacted	Y-reruns-rollback-scale/10-outages/00-install/20-deploy-ate-system.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/10-outages/01-setup/00-image.txt	the home folder of the guest user is replaced with <home>
+dropped	Y-reruns-rollback-scale/10-outages/01-setup/99-done	an empty marker that the script wrote at the end of a part
+cut	Y-reruns-rollback-scale/10-outages/10-pg-run1/14-ateapi-tail.excerpt.log	the last 400 lines of the ate-api-server log are cut to the lines with an error, a warning, or the worker cache; each line kept is complete
+dropped	Y-reruns-rollback-scale/10-outages/10-pg-run1/99-done	an empty marker that the script wrote at the end of a part
+cut	Y-reruns-rollback-scale/10-outages/11-pg-run2/14-ateapi-tail.excerpt.log	the last 400 lines of the ate-api-server log are cut to the lines with an error, a warning, or the worker cache; each line kept is complete
+dropped	Y-reruns-rollback-scale/10-outages/11-pg-run2/99-done	an empty marker that the script wrote at the end of a part
+cut	Y-reruns-rollback-scale/10-outages/12-pg-run3/14-ateapi-tail.excerpt.log	the last 400 lines of the ate-api-server log are cut to the lines with an error, a warning, or the worker cache; each line kept is complete
+dropped	Y-reruns-rollback-scale/10-outages/12-pg-run3/99-done	an empty marker that the script wrote at the end of a part
+cut	Y-reruns-rollback-scale/10-outages/20-api-run1/14-ateapi-tail.excerpt.log	the last 400 lines of the ate-api-server log are cut to the lines with an error, a warning, or the worker cache; each line kept is complete
+dropped	Y-reruns-rollback-scale/10-outages/20-api-run1/99-done	an empty marker that the script wrote at the end of a part
+cut	Y-reruns-rollback-scale/10-outages/30-k8s-run1/14-ateapi-tail.excerpt.log	the last 400 lines of the ate-api-server log are cut to the lines with an error, a warning, or the worker cache; each line kept is complete
+dropped	Y-reruns-rollback-scale/10-outages/30-k8s-run1/99-done	an empty marker that the script wrote at the end of a part
+dropped	Y-reruns-rollback-scale/10-outages/90-teardown/00-pods-before-delete.txt	the teardown of the cluster after the runs; no result reads it
+dropped	Y-reruns-rollback-scale/10-outages/90-teardown/01-delete.log	the teardown of the cluster after the runs; no result reads it
+redacted	Y-reruns-rollback-scale/20-upgrade/00-install-rc3/20-deploy-ate-system.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/10-before/00-cli.txt	the home folder of the guest user is replaced with <home>
+dropped	Y-reruns-rollback-scale/20-upgrade/10-before/99-done	an empty marker that the script wrote at the end of a part
+redacted	Y-reruns-rollback-scale/20-upgrade/20-upgrade/21-step1-podcertificate-controller.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/20-upgrade/22-step2-atelet.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/20-upgrade/24a-step4a-apiserver.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/20-upgrade/24b-step4b-ate-controller.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/20-upgrade/24c-step4c-atenet.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/20-upgrade/24d-step4d-sandboxconfig.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/20-upgrade/24e-step4e-ate-system.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/20-upgrade/34-record-after.yaml	the home folder of the guest user is replaced with <home>
+dropped	Y-reruns-rollback-scale/20-upgrade/20-upgrade/99-done	an empty marker that the script wrote at the end of a part
+redacted	Y-reruns-rollback-scale/20-upgrade/40-rollback/21-rb1-podcertificate-controller.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/40-rollback/22-rb2-atelet.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/40-rollback/24a-rb4-apiserver.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/40-rollback/24b-rb4-ate-controller.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/40-rollback/24c-rb4-atenet.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/40-rollback/24d-rb4-sandboxconfig.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/20-upgrade/40-rollback/34-record-after.yaml	the home folder of the guest user is replaced with <home>
+dropped	Y-reruns-rollback-scale/20-upgrade/40-rollback/99-done	an empty marker that the script wrote at the end of a part
+dropped	Y-reruns-rollback-scale/20-upgrade/90-teardown/00-pods-before-delete.txt	the teardown of the cluster after the runs; no result reads it
+dropped	Y-reruns-rollback-scale/20-upgrade/90-teardown/01-atelet-tail.log	the teardown of the cluster after the runs; no result reads it
+dropped	Y-reruns-rollback-scale/20-upgrade/90-teardown/02-delete.log	the teardown of the cluster after the runs; no result reads it
+redacted	Y-reruns-rollback-scale/40-v060/00-install/20-deploy-ate-system.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/40-v060/00-install/21-deploy-ate-system-with-ingress-id.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/40-v060/00-install/32-deploy-demo-counter.log	terminal escape codes are stripped
+redacted	Y-reruns-rollback-scale/40-v060/20-direct-upgrade/10-deploy.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/40-v060/30-reinstall/10-delete.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/40-v060/30-reinstall/20-deploy.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/40-v060/30-reinstall/31-deploy-after-crd-delete.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/40-v060/30-reinstall/38-deploy-third.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Y-reruns-rollback-scale/40-v060/40-ax031/02-deploy-v060.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+dropped	Y-reruns-rollback-scale/40-v060/40-ax031/10-clone.log	empty file
+dropped	Y-reruns-rollback-scale/_scripts/y0-boot.sh, y3d-drive.sh	the guest boot fix and the driver that ran the steps from the workstation; they name the lab access helper
+dropped	Y-reruns-rollback-scale/30-scale/10-run/bursts/, cpu/, 12-*, 3*-*, and the other setup files	the burst part produced no data: the 29 burst files are empty, and the CPU snapshots were taken while the Kubernetes API server of that cluster did not answer
+dropped	Y-reruns-rollback-scale/00-boot/	notes on the restart of the guest; no result reads them
+note	Y-reruns-rollback-scale	pod, Service, and node addresses in these files are addresses inside the kind clusters of the test guest
+dropped	Y-reruns-rollback-scale/10-outages/*/15-router-tail.log	the last 400 lines of the router log after each run; no result reads them, and the router log during each outage is kept as 06-router-during.log

@@ -81,7 +81,7 @@ caption: Read top to bottom. Each row is one step. The left box holds the compon
 ```
 
 1. `podcertificate-controller`, which signs the certificates that components show each other. Running actors see nothing.
-2. `atelet`, one node at a time. Running actors keep running. In our run, suspends and resumes on the node failed for 24 s.
+2. `atelet`, one node at a time. Running actors keep running. In our two runs, suspends and resumes on the node failed for 24 s and for 34 s.
 3. The workers. You change `spec.workerImage` of each WorkerPool, and the pool replaces 10 percent of its workers in each batch.
 4. `ate-api-server` and `ate-idp-server`, then the CRDs and `ate-controller`, then the router and the egress gateway, then the SandboxConfig, then the rest of the system bundle.
 
@@ -93,46 +93,52 @@ Step 4 has one action that cannot be undone. The first new `ate-api-server` pod 
 
 **Our position:** before any worker upgrade, stop new requests and wait for the open ones. Then suspend every actor with `--mode sync` yourself. Keep requests stopped until the workers are replaced, because a request resumes an actor. A synchronous suspend puts the snapshot in the bucket before it returns. Then step 3 finds no running actors, and the 30 minutes do not matter.
 
-## One upgrade that we ran: v1.0.0-rc.3 to v1.0.0
+## Two upgrades that we ran: v1.0.0-rc.3 to v1.0.0
 
-No supported older release exists yet, because the policy starts at 1.0.0. The registry holds images for three release candidates and for v1.0.0, and for nothing older. An install of v0.6.0 from the release images failed with a 404 for its first image. So we installed v1.0.0-rc.3 and moved it to v1.0.0 by the steps above. The policy does not cover this path, and the two releases have the same schema version. [Figure 8.4b](#fig-8-4b) sets the steps against two request streams.
+No supported older release exists yet, because the policy starts at 1.0.0. The registry holds images for three release candidates and for v1.0.0, and for nothing older. An install of v0.6.0 from the release images failed with a 404 for its first image. So we installed v1.0.0-rc.3 and moved it to v1.0.0 by the steps above, twice, each time on a new cluster. The policy does not cover this path, and the two releases have the same schema version. [Figure 8.4b](#fig-8-4b) sets the steps of both runs against the request streams.
 
 ```figure
 id: fig-8-4b
 kind: timeline
-title: one upgrade from v1.0.0-rc.3 to v1.0.0, against two request streams
-claim: Suspends and resumes failed for 24 s in the atelet step, and the running actor crashed when the worker image changed.
-caption: Read left to right. The top row shows when each step ran. The two rows below show each request of two streams, green for 200 and rose for a failure. From capture/lab/summary/upgrade-x86.json.
+title: two upgrades from v1.0.0-rc.3 to v1.0.0, against the request streams
+claim: In both runs suspends and resumes failed in the atelet step, and a running actor that exits on SIGTERM crashed when the worker image changed.
+caption: Read each panel left to right. The top row of a panel shows when each step ran. The rows below show each request of a stream, green for 200 and rose for a failure. The second run had a second running actor, which handles SIGTERM. From capture/lab/summary/upgrade-x86.json and capture/lab/summary/upgrade-rerun-x86.json.
 ```
 
-**We measured** one upgrade, on the x86 server guest (24 vCPU, 47 GB, nested KVM), on one kind node with a pool of 8 workers. Three streams ran during it. One suspended and resumed one actor about every 3.5 s. One listed the actors every 2 s. One sent a request each second to a `RUNNING` actor.
+**We measured** the first upgrade on the x86 server guest (24 vCPU, 47 GB, nested KVM). It had one kind node and a pool of 8 workers. Three streams ran during it. One suspended and resumed one actor about every 3.5 s. One listed the actors every 2 s. One sent a request each second to a `RUNNING` actor.
 
-| Step | Seconds | What a client saw |
+**We measured** a second upgrade on the same guest, once, on a new cluster with the bundled Postgres and a pool of 10 workers. The streams were the same, and the request stream went to two `RUNNING` actors. The process of one exits on `SIGTERM`, and the process of the other handles it.
+
+| Step | Seconds, first run | Seconds, second run | What a client saw |
+|---|---|---|---|
+| 1, `podcertificate-controller` | 33.9 | 19.3 | nothing |
+| 2, `atelet` | 30.9 | 40.7 | 7 suspend and resume cycles in a row failed over 24 s in the first run, and 10 over 34 s in the second. The suspend failed with `while getting atelet conn` or with `Unavailable` from `atelet`, and the request got 503 |
+| 3, the worker image of the pool | 0.4 for the patch | 0.3 for the patch | the `RUNNING` actor that exits on `SIGTERM` crashed. In the first run it answered 503 from 1.2 s after the patch. In the second it answered 503 from 18 s, and it was `ACTOR_STATE_CRASHED` at the sample 22 s after the patch |
+| 4a, `ate-api-server` and `ate-idp-server` | 28.4 | 45.3 | nothing |
+| 4b, the CRDs and `ate-controller` | 12.3 | 19.4 | nothing |
+| 4c, the router and the egress gateway | 21.8 | 40.7 | nothing |
+| 4d, the SandboxConfig | 18.7 | 3.6 | nothing |
+| 4e, the system bundle | 29.5 | 36.1 | nothing |
+
+In the first run, step 1 to the end of step 4e took 343 s. That includes 160 s of watching the pool in step 3. The cycle stream had 103 good cycles of 110, and all 7 failures were in step 2. The list stream got an answer 211 of 211 times.
+
+In the second run that time was 346 s, with 135 s of the worker step in it. The list stream got an answer 199 of 199 times. In both runs the schema version did not change, and every Substrate pod ran v1.0.0 at the end.
+
+We made one actor of each kind before each upgrade and called each one after it.
+
+| The actor before the upgrade | First run | Second run |
 |---|---|---|
-| 1, `podcertificate-controller` | 33.9 | nothing |
-| 2, `atelet` | 30.9 | 7 suspend and resume cycles in a row failed, over 24 s. The suspend failed with `Unavailable` from `atelet`, and the request got 503 |
-| 3, the worker image of the pool | 0.4 for the patch | the `RUNNING` actor answered 503 from 1.2 s after the patch. It was `ACTOR_STATE_CRASHED` at our first look, 5 s after the patch |
-| 4a, `ate-api-server` and `ate-idp-server` | 28.4 | nothing |
-| 4b, the CRDs and `ate-controller` | 12.3 | nothing |
-| 4c, the router and the egress gateway | 21.8 | nothing |
-| 4d, the SandboxConfig | 18.7 | nothing |
-| 4e, the system bundle | 29.5 | nothing |
+| Suspended with `--mode sync` at count 3 | 200, count 4 | 200, count 4 |
+| Suspended in the default mode at count 3 | 200, count 4 | 200, count 4 |
+| Suspended at count 5, with a tag | 200, count 6 | 200, count 6 |
+| Created and never run | 200, count 1 | 200, count 1 |
+| A new actor from the golden snapshot that the release candidate made | 200, count 1 | 200, count 1 |
+| A new actor from the tag | 200, count 6 | 200, count 6 |
+| `RUNNING` during step 3, with a process that exits on `SIGTERM` | `ACTOR_STATE_CRASHED`. 368 of 469 requests got 503. A `revert` took 0.22 s, and the count went back to 1 | `ACTOR_STATE_CRASHED`. 118 of 441 requests got 503. A `revert` took 0.22 s, and the count started again from the golden snapshot |
+| `RUNNING` during step 3, with a process that handles `SIGTERM` | not in this run | 441 of 441 requests served. A suspend of 0.62 s moved it to a new worker, and it kept its count |
+| In the suspend and resume loop during step 3 | every cycle of step 3 served | `ACTOR_STATE_CRASHED` 15 s after the patch, when its suspend failed with `Unavailable` from `atelet`. It stayed crashed for 395 s, until our `revert`. One call was lost |
 
-The time from the start of step 1 to the end of step 4e was 343 s. We watched the pool for 160 s of that time, in step 3. The cycle stream had 103 good cycles of 110, and all 7 failures were in step 2. The list stream got an answer 211 of 211 times. The schema version did not change, and every Substrate pod ran v1.0.0 at the end.
-
-We made one actor of each kind before the upgrade and called each one after it.
-
-| The actor before the upgrade | After the upgrade |
-|---|---|
-| Suspended with `--mode sync` at count 3 | 200, count 4 |
-| Suspended in the default mode at count 3 | 200, count 4 |
-| Suspended at count 5, with a tag | 200, count 6 |
-| Created and never run | 200, count 1 |
-| A new actor from the golden snapshot that the release candidate made | 200, count 1 |
-| A new actor from the tag | 200, count 6 |
-| `RUNNING` during step 3 | `ACTOR_STATE_CRASHED`. 368 of 469 requests got 503. A `revert` took 0.22 s, and the count went back to 1 |
-
-So snapshots, tags, and the golden snapshot from the release candidate all worked on v1.0.0. The one loss was the running actor.
+So snapshots, tags, and the golden snapshot from the release candidate worked on v1.0.0 in both runs. The losses were in step 3. An actor that exits on `SIGTERM` crashed each time. An actor whose suspend was in progress when its worker went away crashed once, in the second run. Nothing repaired it until we sent a `revert`.
 
 ### The 30 minutes depend on the actor
 
@@ -142,24 +148,88 @@ The upgrade page gives each running actor `SIGTERM` and then 30 minutes {{docs}}
 
 We then suspended it with `--mode sync` in 0.64 s. It resumed on a new worker, and its count continued.
 
+The second upgrade and the rollback below each had the same two actors, once. In both, the actor without a handler crashed, and the actor with a handler served every request and kept its count after a suspend. So the result holds in all our rolls of a pool. An actor without a handler crashed in 4 of 4, and an actor with a handler survived in 3 of 3.
+
 So the window exists only for an actor whose main process survives `SIGTERM`. A program exits on that signal unless it has a handler.
 
-Our run also moves the suspend earlier than the upgrade page puts it. Suspends and resumes failed for 24 s while `atelet` restarted on our one node. So stop requests and suspend every actor before step 2, and resume traffic after step 3.
+Our runs also move the suspend earlier than the upgrade page puts it. Suspends and resumes failed for 24 s and for 34 s while `atelet` restarted on our one node. So stop requests and suspend every actor before step 2, and resume traffic after step 3. The actor that crashed in the loop shows the cost of a suspend that is still in progress when the worker goes away.
+
+## A rollback that we ran: v1.0.0 to v1.0.0-rc.3
+
+The upgrade page gives one sentence for a rollback. It is the same list in reverse, from the old release, and an actor that crashes goes back to its last snapshot with `kubectl ate revert actor` {{docs}}.
+
+**We measured** one rollback, right after the second upgrade, on the same cluster. We ran it from the checkout of v1.0.0-rc.3 with the configuration that we saved before the upgrade, in the reverse order. Before it started, we reverted the actor that had crashed in the loop. The same three streams ran.
+
+| Step | Seconds | What a client saw |
+|---|---|---|
+| 4d, the SandboxConfig | 3.5 | nothing |
+| 4c, the router and the egress gateway | 23.3 | nothing |
+| 4b, the CRDs and `ate-controller` | 5.0 | nothing |
+| 4a, `ate-api-server` and `ate-idp-server` | 25.0 | nothing |
+| 3, the worker image of the pool, back to v1.0.0-rc.3 | 0.4 for the patch | the actor that exits on `SIGTERM` answered 503 from 6.4 s after the patch, and 130 of 306 requests failed. A `revert` took 0.21 s, and its count started again from the golden snapshot. The actor with a handler served 306 of 306 |
+| 2, `atelet` | 12.7 | one suspend and resume cycle failed |
+| 1, `podcertificate-controller` | 3.7 | nothing |
+
+We did not run step 4e in reverse. After the rollback every actor returned 200, and each suspended actor kept its count. Every Substrate image was v1.0.0-rc.3, and the schema version had not changed. The list stream got an answer 138 of 138 times.
+
+The rollback cost the same as the upgrade, and in the same step. This pair of releases has no schema change, so our run cannot show what a rollback does to a new schema. The upgrade page says that the new schema stays, and you need the backup from before step 4 for that case.
+
+## From v0.6.0: no upgrade, and a reinstall that needs two fixes
+
+The registry has no images for v0.6.0, so we built it from its tag, on a new cluster on the same guest, once. Its README quickstart failed twice. The first deploy stopped at once.
+
+```listing
+title: the install command of the v0.6.0 README
+source: capture/lab/Y-reruns-rollback-scale/40-v060/00-install/20-deploy-ate-system.log
+lang: text
+note: The last useful line of the output.
+---
+Error: at least one of ATE_INGRESS_ALLOWED_SPIFFE_IDS, config.ingressAllowedSPIFFEIDs or --ingress-allowed-spiffe-ids must be set, got none
+```
+
+With an ingress identity added, the deploy took 278 s. The README command for the demo, `deploy demo-counter`, printed the help and returned 0, and `deploy demo counter` worked. The README then sends a request through port 80 of the router, and the port-forward failed with `Service atenet-router does not have a service port 80`. So no request reached the four actors that we made on v0.6.0 by the path of the README.
+
+We then ran the v1.0.0 installer on that cluster, as a direct upgrade. It stopped in 3 s.
+
+```listing
+title: a direct upgrade from v0.6.0 to v1.0.0
+source: capture/lab/Y-reruns-rollback-scale/40-v060/20-direct-upgrade/10-deploy.log
+lang: text
+note: The error line is cut after the first sentence.
+---
+[step]: deploy_crds
+[step]: images: pre-built from ghcr.io/agent-substrate/substrate, tag v1.0.0
+…
+Error: while applying customresourcedefinition/csidriverconfigs.ate.dev: CustomResourceDefinition.apiextensions.k8s.io "csidriverconfigs.ate.dev" is invalid: status.storedVersions[0]: Invalid value: "v1alpha1": missing from spec.versions …
+```
+
+The v0.6.0 system kept running. The v1.0.0 CLI could not talk to it: `unknown service substrate.ateapi.v1.Control`. Requests through `kubectl ate proxy` of v1.0.0 still reached three of the four actors, on the old system. The upgrade page of v0.6.0 says to install again, so we did that on the same cluster.
+
+| Step | Result |
+|---|---|
+| `ate-setup delete all` of v1.0.0 | done in 346 s. It removed every Substrate namespace and volume |
+| deploy v1.0.0 | failed in 1 s, on the stored version of the `sandboxconfigs.ate.dev` CRD. That CRD stayed in deletion, because the SandboxConfig `gvisor-default` kept the finalizer `sandboxconfig.ate.dev/workerpool-protection` and its controller was gone |
+| remove the finalizer, deploy again | failed after 157 s. `atelet` stopped with `image cache at "/var/lib/ate/image-cache" has layout version "2" and this atelet supports "3"` |
+| delete that folder on the node, deploy again | done in 30 s |
+
+The new system had no actor and no atespace. Nothing that we made on v0.6.0 survived.
+
+**Our position:** do not move a 0.x cluster to 1.0. Install 1.0 on a new cluster, create your templates again, and move traffic. If you must reuse the cluster, plan for the finalizer and the image cache, and for an empty system at the end.
 
 ## What we did not test
 
-We ran one upgrade, once, on one node, and it started from a release candidate. We did not test an upgrade from v0.6.0. The upgrade page says to install again for any release before 1.0, and the registry has no images for it. We did not test a rollback, an upgrade between two supported releases, more than one node, or the microVM class. We did not test an upgrade with a Postgres outside the cluster.
+We ran two upgrades and one rollback, each once, on one node, and both upgrades started from a release candidate. We did not test an upgrade between two supported releases, a rollback that crosses a schema change, more than one node, or the microVM class. We did not test an upgrade with a Postgres outside the cluster. From v0.6.0 we found no path that keeps an actor.
 
 A new kagent release, v1.0.1, appeared on the day of our kagent run. All our kagent results are from v1.0.0.
 
 ```takeaways
 - Check the date of a Substrate tutorial, and distrust anything written before 2026-11-05.
-- Install again to move from any 0.x release, with a new database.
+- Install 1.0 on a new cluster to move from any 0.x release, because no actor survives.
 - Store actor state names, never the numbers.
 - Stop requests and suspend every actor with `--mode sync` before the `atelet` step of an upgrade.
-- Handle `SIGTERM` in the actor process, or a worker upgrade crashes the actor in seconds.
+- Handle `SIGTERM` in the actor process, or every roll of the workers crashes the actor.
 - Take a database backup before the API server step of an upgrade.
 - Upgrade one minor release at a time, in the documented component order.
 ```
 
-Sources: capture/lab/summary/upgrade-x86.json, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/20-upgrade/00-timeline-steps.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/20-upgrade/02-cycle-stream.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/30-after/10-actors-after.txt, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/40-worker-roll-on-v1.0.0/10-watch.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v0.6.0/00-install-v0.6.0/51-ghcr-release-tags.txt, capture/lab/U-pg-upgrade-scale/30-upgrade-v0.6.0/00-install-v0.6.0/20-deploy-ate-system.log, capture/lab/Q-network/m-router-ports/agentgateway/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/envoy/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/agentgateway/11-port-probes-supplement.txt, README.md, the ActorState enum and the CLI at v0.1.0 and at v1.0.0 (the old and new commands); cmd/kubectl-ate/internal/cmd/actor.go, api/ateapi/v1/ateapi.proto, manifests/ate-install/generated/ate.dev_workerpools.yaml, cmd/ate-setup/commands.md and go.mod at v1.0.0; docs/guides/upgrade.md, docs/reference/version-skew-policy.md, docs/dev/postgresql-schema-evolution.md and docs/get-started/quickstart.md at v1.0.0; capture/lab/B-lifecycle/10-trace.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/G-dataplane/envoy/ingress-auth/, capture/lab/G-dataplane/agentgateway/ingress-auth/, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/timers-x86.json, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/envoy/06-services.txt; manifests/ate-install/atenet-router.yaml and manifests/ate-install/components/agentgateway/kustomization.yaml at v1.0.0.
+Sources: capture/lab/summary/upgrade-x86.json, capture/lab/summary/upgrade-rerun-x86.json, capture/lab/summary/v060-x86.json, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/20-upgrade/00-timeline-steps.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/20-upgrade/02-cycle-stream.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/30-after/10-actors-after.txt, capture/lab/U-pg-upgrade-scale/30-upgrade-v1.0.0-rc.3/40-worker-roll-on-v1.0.0/10-watch.tsv, capture/lab/U-pg-upgrade-scale/30-upgrade-v0.6.0/00-install-v0.6.0/51-ghcr-release-tags.txt, capture/lab/U-pg-upgrade-scale/30-upgrade-v0.6.0/00-install-v0.6.0/20-deploy-ate-system.log, capture/lab/Q-network/m-router-ports/agentgateway/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/envoy/10-port-probes.tsv, capture/lab/Q-network/m-router-ports/agentgateway/11-port-probes-supplement.txt, README.md, the ActorState enum and the CLI at v0.1.0 and at v1.0.0 (the old and new commands); cmd/kubectl-ate/internal/cmd/actor.go, api/ateapi/v1/ateapi.proto, manifests/ate-install/generated/ate.dev_workerpools.yaml, cmd/ate-setup/commands.md and go.mod at v1.0.0; docs/guides/upgrade.md, docs/reference/version-skew-policy.md, docs/dev/postgresql-schema-evolution.md and docs/get-started/quickstart.md at v1.0.0; capture/lab/B-lifecycle/10-trace.tsv, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/G-dataplane/envoy/ingress-auth/, capture/lab/G-dataplane/agentgateway/ingress-auth/, capture/lab/G-dataplane/02-agentgateway-without-ingress-allowlist/, capture/lab/F-egress/agentgateway/20-results.txt, capture/lab/summary/failures-x86.json, capture/lab/summary/timers-x86.json, capture/lab/G-dataplane/agentgateway/06-services.txt, capture/lab/G-dataplane/agentgateway/11-listening.txt, capture/lab/G-dataplane/agentgateway/10-atenet-router-agentgateway-config.yaml, capture/lab/G-dataplane/envoy/06-services.txt; manifests/ate-install/atenet-router.yaml and manifests/ate-install/components/agentgateway/kustomization.yaml at v1.0.0.

@@ -1,0 +1,26 @@
+1794515088.077	20:24:48	start-baseline
+1794515118.505	20:25:18	21-step1-podcertificate-controller begin
+1794515137.822	20:25:37	21-step1-podcertificate-controller end rc=0 seconds=19.304
+1794515137.829	20:25:37	22-step2-atelet begin
+1794515178.528	20:26:18	22-step2-atelet end rc=0 seconds=40.687
+1794515181.979	20:26:21	pool-patch begin image=ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0@sha256:f8987236c6256f58c4b2625e543b43f4ae4bdded6ee6821c03d966effb7c0f17
+1794515182.325	20:26:22	pool-deployment-has-image
+1794515315.967	20:28:35	owner-suspends-a-term state-before=ACTOR_STATE_RUNNING a-run-state=ACTOR_STATE_CRASHED
+1794515316.819	20:28:36	a-term-suspended seconds=0.622 state=ACTOR_STATE_SUSPENDED
+1794515317.158	20:28:37	pool-roll-done rc=0 seconds=0.151
+1794515317.303	20:28:37	no-terminating-worker-left
+1794515318.538	20:28:38	a-run-reverted seconds=0.223
+1794515319.044	20:28:39	24a-step4a-apiserver begin
+1794515364.378	20:29:24	24a-step4a-apiserver end rc=0 seconds=45.319
+1794515364.667	20:29:24	24a-rollouts-done
+1794515364.674	20:29:24	24b-step4b-ate-controller begin
+1794515384.068	20:29:44	24b-step4b-ate-controller end rc=0 seconds=19.381
+1794515384.076	20:29:44	24c-step4c-atenet begin
+1794515424.761	20:30:24	24c-step4c-atenet end rc=0 seconds=40.672
+1794515425.055	20:30:25	24c-rollouts-done
+1794515425.063	20:30:25	24d-step4d-sandboxconfig begin
+1794515428.703	20:30:28	24d-step4d-sandboxconfig end rc=0 seconds=3.626
+1794515428.710	20:30:28	24e-step4e-ate-system begin
+1794515464.804	20:31:04	24e-step4e-ate-system end rc=0 seconds=36.079
+1794515509.815	20:31:49	commands-done
+1794515529.826	20:32:09	end

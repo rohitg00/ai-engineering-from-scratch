@@ -1,0 +1,607 @@
+configuration: 9 set, 44 default
+  actorJWT.algorithm                          ES256                                                  (from default)
+  actorJWT.issuer                             ""                                                     (from default)
+  ateapi.authz.bootstrapOwners                ""                                                     (from default)
+  ateapi.expectedJWTIssuer                    ""                                                     (from default)
+  ateapi.logLevel                             ""                                                     (from default)
+  ateapi.postgres.cloudsql.gsa                ""                                                     (from default)
+  ateapi.postgres.cloudsql.iamAuth            ""                                                     (from default)
+  ateapi.postgres.cloudsql.instance           ""                                                     (from default)
+  ateapi.postgres.cloudsql.ipType             ""                                                     (from default)
+  ateapi.postgres.owner.connectionString      ""                                                     (from default)
+  ateapi.postgres.owner.role                  substrate_owner                                        (from default)
+  ateapi.postgres.poolMaxConns                ""                                                     (from default)
+  ateapi.postgres.readWrite.connectionString  ""                                                     (from default)
+  ateapi.postgres.readWrite.role              substrate_readwrite                                    (from default)
+  ateapi.postgres.schema                      ""                                                     (from default)
+  ateapi.postgres.serverCAFile                ""                                                     (from default)
+  ateapi.postgres.storageClass                ""                                                     (from default)
+  atenet.dataplane                            envoy                                                  (from default)
+  atenet.egress.additionalExtprocService      ""                                                     (from default)
+  atenet.egress.credentialProvider            {"name":"k8s.io"}                                      (from --credential-provider)
+  benchmark.actorMemory                       ""                                                     (from default)
+  benchmark.sandboxClass                      gvisor                                                 (from default)
+  benchmark.workerCount                       1                                                      (from default)
+  clusterSize                                 size0                                                  (from default)
+  context                                     kind-y060                                              (from KUBECTL_CONTEXT)
+  cordonControlPlane                          false                                                  (from default)
+  csi.setup                                   none                                                   (from default)
+  demo.anthropicAPIKey                        ""                                                     (from default)
+  demo.counter.storageClass                   standard                                               (from default)
+  demo.counter.withExternalVolume             false                                                  (from default)
+  docker.buildFlags                           ""                                                     (from default)
+  e2e.envoyConcurrency                        0                                                      (from default)
+  fakeDataPlane.enabled                       false                                                  (from default)
+  gcp.clusterLocation                         ""                                                     (from default)
+  gcp.clusterName                             ""                                                     (from default)
+  gcp.projectID                               ""                                                     (from default)
+  images.repo                                 ""                                                     (from default)
+  images.tag                                  ""                                                     (from default)
+  ingressAllowedSPIFFEIDs                     spiffe://cluster.local/ns/ate-system/sa/atenet-client  (from --ingress-allowed-spiffe-ids)
+  kindCluster.enabled                         true                                                   (from ATE_INSTALL_KIND)
+  kindCluster.name                            y060                                                   (from KIND_CLUSTER_NAME)
+  ko.defaultPlatforms                         linux/amd64                                            (from the --kind profile)
+  ko.dockerRepo                               localhost:5001                                         (from KO_DOCKER_REPO)
+  kubeconfig                                  ""                                                     (from default)
+  namespace                                   ate-system                                             (from default)
+  otlpEndpoint                                ""                                                     (from default)
+  podcert.workersPerSigner                    0                                                      (from default)
+  preview                                     ""                                                     (from default)
+  record.dir                                  ""                                                     (from default)
+  rolloutTimeout                              1m0s                                                   (from default)
+  storage.bucketName                          ate-snapshots                                          (from the --kind profile)
+  storage.snapshotLocation                    gs://ate-snapshots/                                    (from the --kind profile)
+  storage.transferGSAName                     ""                                                     (from default)
+[step]: deploy_ate_system
+  (apply of 1 objects took 0.014s)
+[step]: deploy_crds
+[step]: images: built from source with ko
+  (ko resolve -f - took 0.114s)
+  (apply of 5 objects took 0.113s)
+[step]: ensure_apiserver_prerequisites
+[step]: create_jwt_authority_pool_secret
+  created pool secret ate-system/actor-id-jwt-pool
+[step]: create_actor_id_ca_pool_secret
+  created pool secret ate-system/actor-id-ca-pool
+[step]: create_actor_id_ca_certs_secret
+[step]: create_api_server_env_vars
+[step]: create_api_config
+ate-api-config apiconfig.textproto:
+  | logging: {
+  |   level: "info"
+  | }
+[step]: create_api_authentication_config
+ate-api-authentication authentication.yaml:
+  | jwtProviders:
+  | - name: kubernetes
+  |   issuer: https://kubernetes.default.svc.cluster.local
+  |   audiences: [api.ate-system.svc]
+  |   certificateAuthorityFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  |   discoveryTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+[step]: create_podcertificate_controller_cas
+  created pool secret podcertificate-controller-system/service-dns-ca-pool
+  created pool secret podcertificate-controller-system/pod-identity-ca-pool
+  created pool secret podcertificate-controller-system/postgres-ca-pool
+2026/11/13 05:58:39 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/podcertcontroller
+2026/11/13 05:58:40 Building go.ate.dev/substrate/cmd/podcertcontroller for linux/amd64
+2026/11/13 05:58:47 Publishing localhost:5001/podcertcontroller:latest
+2026/11/13 05:58:47 existing blob: sha256:7c12895b777bcaa8ccae0605b4de635b68fc32d60fa08f421dc3818bf55ee212
+2026/11/13 05:58:47 existing blob: sha256:dd64bf2dd177757451a98fcdc999a339c35dee5d9872d8f4dc69c8f3c4dd0112
+2026/11/13 05:58:47 existing blob: sha256:b839dfae01f66e15c6a8b63520557ed315bdfe036342fa7a0c537259f10d7a9a
+2026/11/13 05:58:47 existing blob: sha256:ebddc55facdc6b1f7e0f30816a5fc7cc62f38abdf76c0a8b0a0ce52085754795
+2026/11/13 05:58:47 existing blob: sha256:2780920e5dbfbe103d03a583ed75345306e572ec5a48cb10361f046767d9f29a
+2026/11/13 05:58:47 existing blob: sha256:3214acf345c0cc6bbdb56b698a41ccdefc624a09d6beb0d38b5de0b2303ecaf4
+2026/11/13 05:58:47 existing blob: sha256:d6b1b89eccacc15c2420b2776d72c1dae334a00805ed9af54bf2f71e4d536f28
+2026/11/13 05:58:47 existing blob: sha256:4a2796d8ea5ef7ae1a64ba20ba56759987f49f2ea2091ddce6bade81c0ad1fa6
+2026/11/13 05:58:47 existing blob: sha256:52630fc75a18675c530ed9eba5f55eca09b03e91bd5bc15307918bbc1a7e7296
+2026/11/13 05:58:47 existing blob: sha256:c172f21841dff4c8cf45cde46589c1c2616cefe7e819965e92e6d3475c428aa0
+2026/11/13 05:58:47 pushed blob: sha256:de29a53f5311fbfd1150c2a6f0025267a2bb422c7e5c076387d809a960a72634
+2026/11/13 05:58:47 pushed blob: sha256:4abf78e04abc3b0a72febb2fe8970823e32b21ace73a82bfea78290764637c66
+2026/11/13 05:58:47 localhost:5001/podcertcontroller:sha256-8339d76dbffe151b303111b7f524e413532b6038671a27f95757b2fd9739c6db.sbom: digest: sha256:4ca1cf66975dc4b2d4d9e8e96c7eba6904e54f8f95f0b24c679b04cef179f99a size: 374
+2026/11/13 05:58:47 Published SBOM localhost:5001/podcertcontroller:sha256-8339d76dbffe151b303111b7f524e413532b6038671a27f95757b2fd9739c6db.sbom
+2026/11/13 05:58:47 pushed blob: sha256:31ce2412107616b3c3044043bd31118df25eb15698a8c42a138162df9c88a79f
+2026/11/13 05:58:47 pushed blob: sha256:fdb531f94e22cf5f55953923db9787864955fbcfafaf656e013033d08c2e6020
+2026/11/13 05:58:49 pushed blob: sha256:c4bc6f35ff5e25aa1afe7a148a0b6f10a760f54e298f86a4a4d44b91f1afbfab
+2026/11/13 05:58:50 pushed blob: sha256:99515e7b4d35e0652d3b0fde571b6ec269222ecacc506f026e1758d6261e9109
+2026/11/13 05:58:50 pushed blob: sha256:1eed391ea893e6015bf4ce4ed366909975d2acdbe907670919236a8d18ea6b07
+2026/11/13 05:58:51 pushed blob: sha256:99ba982a9142213c751a1709dcf088e63d8601f03b3f211bae037be698fef270
+2026/11/13 05:58:51 localhost:5001/podcertcontroller:latest: digest: sha256:8339d76dbffe151b303111b7f524e413532b6038671a27f95757b2fd9739c6db size: 2937
+2026/11/13 05:58:51 Published localhost:5001/podcertcontroller@sha256:8339d76dbffe151b303111b7f524e413532b6038671a27f95757b2fd9739c6db
+  (ko resolve -f - took 15.770s)
+  (apply of 6 objects took 0.070s)
+  (rollout status deployment/podcertificate-controller took 2.006s)
+Waiting for podcertificate ClusterTrustBundles to be ready...
+  (wait for clustertrustbundles took 8.020s)
+[step]: setup_csi
+Skipping CSI driver setup.
+[step]: deploy_sandboxconfig
+[step]: ensure_crds
+  (apply of 2 objects took 0.032s)
+  (apply of 1 objects took 0.008s)
+  (apply of 1 objects took 0.007s)
+  (apply of 3 objects took 0.146s)
+  (rollout status statefulset/postgres took 16.008s)
+[step]: setup_bundled_postgres
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.01kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/rust:bookworm@sha256:93ce27a88655056a51dbdd8f5f2d7ddc071c7b0070fb288a37b5a285fc83971e
+#2 DONE 1.5s
+
+#3 [internal] load metadata for docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01
+#3 DONE 3.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [builder 1/5] FROM docker.io/library/rust:bookworm@sha256:93ce27a88655056a51dbdd8f5f2d7ddc071c7b0070fb288a37b5a285fc83971e
+#5 resolve docker.io/library/rust:bookworm@sha256:93ce27a88655056a51dbdd8f5f2d7ddc071c7b0070fb288a37b5a285fc83971e 0.0s done
+#5 DONE 0.0s
+
+#6 [builder 2/5] WORKDIR /usr/src/dynamic-modules
+#6 CACHED
+
+#7 [internal] load build context
+#7 transferring context: 61.69kB done
+#7 DONE 0.0s
+
+#8 [stage-1 1/2] FROM docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01
+#8 resolve docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01 0.0s done
+#8 DONE 0.1s
+
+#9 [builder 3/5] RUN apt-get update && apt-get install -y --no-install-recommends     clang     libclang-dev     && rm -rf /var/lib/apt/lists/*
+#9 ...
+
+#8 [stage-1 1/2] FROM docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01
+#8 sha256:2cc5b6c234e1939108b89499811cb4848e9380c26b8d2bac86d40ebeaaf47470 37.42MB / 37.42MB 1.5s done
+#8 sha256:69fd812e988b23013faf76feadc8ee5fb415cc1d523695cf472b936399b7db9a 4.68kB / 4.68kB 0.9s done
+#8 sha256:c102602871d1bcd40eaf7b8b09abdda6670ac4dc90cbce76e19d178e290c1c54 483B / 483B 1.1s done
+#8 sha256:6c90c330396b51b028b5f9a83e789f7d52df1aa9a75d0aeeefc2ec060c7be9f3 788B / 788B 0.9s done
+#8 sha256:115309240873e7b5a40ed1fe73efece164da56a0fbb4b60243762188898b0f7f 4.24MB / 4.24MB 0.4s done
+#8 sha256:243692265e26db13a662a70f8751cdf0e3ea6a0fa217c23f69c3db23af055e40 173B / 173B 0.3s done
+#8 sha256:a164a3b44b10149266951b657ae24f5857b21599bb4962c7b3bac7e39d024f7f 1.40kB / 1.40kB 0.3s done
+#8 extracting sha256:a164a3b44b10149266951b657ae24f5857b21599bb4962c7b3bac7e39d024f7f 0.0s done
+#8 extracting sha256:243692265e26db13a662a70f8751cdf0e3ea6a0fa217c23f69c3db23af055e40 0.1s done
+#8 extracting sha256:115309240873e7b5a40ed1fe73efece164da56a0fbb4b60243762188898b0f7f 0.5s done
+#8 DONE 2.2s
+
+#8 [stage-1 1/2] FROM docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01
+#8 extracting sha256:6c90c330396b51b028b5f9a83e789f7d52df1aa9a75d0aeeefc2ec060c7be9f3 0.0s done
+#8 extracting sha256:c102602871d1bcd40eaf7b8b09abdda6670ac4dc90cbce76e19d178e290c1c54 0.0s done
+#8 extracting sha256:69fd812e988b23013faf76feadc8ee5fb415cc1d523695cf472b936399b7db9a 0.0s done
+#8 extracting sha256:2cc5b6c234e1939108b89499811cb4848e9380c26b8d2bac86d40ebeaaf47470
+#8 extracting sha256:2cc5b6c234e1939108b89499811cb4848e9380c26b8d2bac86d40ebeaaf47470 0.6s done
+#8 DONE 2.8s
+
+#9 [builder 3/5] RUN apt-get update && apt-get install -y --no-install-recommends     clang     libclang-dev     && rm -rf /var/lib/apt/lists/*
+#9 ...
+
+#8 [stage-1 1/2] FROM docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01
+#8 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 0.0s done
+#8 DONE 2.8s
+
+#9 [builder 3/5] RUN apt-get update && apt-get install -y --no-install-recommends     clang     libclang-dev     && rm -rf /var/lib/apt/lists/*
+#9 5.357 Get:1 http://deb.debian.org/debian bookworm InRelease [151 kB]
+#9 5.373 Get:2 http://deb.debian.org/debian bookworm-updates InRelease [55.4 kB]
+#9 5.373 Get:3 http://deb.debian.org/debian-security bookworm-security InRelease [34.8 kB]
+#9 5.517 Get:4 http://deb.debian.org/debian bookworm/main amd64 Packages [8790 kB]
+#9 5.628 Get:5 http://deb.debian.org/debian bookworm-updates/main amd64 Packages [6924 B]
+#9 5.732 Get:6 http://deb.debian.org/debian-security bookworm-security/main amd64 Packages [368 kB]
+#9 6.482 Fetched 9407 kB in 6s (1530 kB/s)
+#9 6.482 Reading package lists...
+#9 7.037 Reading package lists...
+#9 7.578 Building dependency tree...
+#9 7.731 Reading state information...
+#9 7.864 The following additional packages will be installed:
+#9 7.864   clang-14 libclang-14-dev libclang-common-14-dev libclang-cpp14 libclang1-14
+#9 7.864   libgc1 libllvm14 libobjc-12-dev libobjc4 libz3-4 llvm-14-linker-tools
+#9 7.865 Suggested packages:
+#9 7.865   clang-14-doc wasi-libc
+#9 7.865 Recommended packages:
+#9 7.865   llvm-14-dev libclang-rt-14-dev
+#9 8.001 The following NEW packages will be installed:
+#9 8.001   clang clang-14 libclang-14-dev libclang-common-14-dev libclang-cpp14
+#9 8.002   libclang-dev libclang1-14 libgc1 libllvm14 libobjc-12-dev libobjc4 libz3-4
+#9 8.002   llvm-14-linker-tools
+#9 8.029 0 upgraded, 13 newly installed, 0 to remove and 47 not upgraded.
+#9 8.029 Need to get 72.1 MB of archives.
+#9 8.029 After this operation, 496 MB of additional disk space will be used.
+#9 8.029 Get:1 http://deb.debian.org/debian bookworm/main amd64 libz3-4 amd64 4.8.12-3.1 [7216 kB]
+#9 8.087 Get:2 http://deb.debian.org/debian bookworm/main amd64 libllvm14 amd64 1:14.0.6-12 [21.8 MB]
+#9 8.189 Get:3 http://deb.debian.org/debian bookworm/main amd64 libclang-cpp14 amd64 1:14.0.6-12 [11.1 MB]
+#9 8.230 Get:4 http://deb.debian.org/debian bookworm/main amd64 libgc1 amd64 1:8.2.2-3 [245 kB]
+#9 8.231 Get:5 http://deb.debian.org/debian bookworm/main amd64 libobjc4 amd64 12.2.0-14+deb12u1 [43.2 kB]
+#9 8.231 Get:6 http://deb.debian.org/debian bookworm/main amd64 libobjc-12-dev amd64 12.2.0-14+deb12u1 [170 kB]
+#9 8.232 Get:7 http://deb.debian.org/debian bookworm/main amd64 libclang-common-14-dev all 1:14.0.6-12 [890 kB]
+#9 8.235 Get:8 http://deb.debian.org/debian bookworm/main amd64 llvm-14-linker-tools amd64 1:14.0.6-12 [1288 kB]
+#9 8.243 Get:9 http://deb.debian.org/debian bookworm/main amd64 libclang1-14 amd64 1:14.0.6-12 [6157 kB]
+#9 8.291 Get:10 http://deb.debian.org/debian bookworm/main amd64 clang-14 amd64 1:14.0.6-12 [102 kB]
+#9 8.292 Get:11 http://deb.debian.org/debian bookworm/main amd64 clang amd64 1:14.0-55.7~deb12u1 [5144 B]
+#9 8.292 Get:12 http://deb.debian.org/debian bookworm/main amd64 libclang-14-dev amd64 1:14.0.6-12 [23.1 MB]
+#9 8.389 Get:13 http://deb.debian.org/debian bookworm/main amd64 libclang-dev amd64 1:14.0-55.7~deb12u1 [4728 B]
+#9 8.674 debconf: delaying package configuration, since apt-utils is not installed
+#9 8.726 Fetched 72.1 MB in 0s (189 MB/s)
+#9 8.764 Selecting previously unselected package libz3-4:amd64.
+#9 8.764 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 23263 files and directories currently installed.)
+#9 8.874 Preparing to unpack .../00-libz3-4_4.8.12-3.1_amd64.deb ...
+#9 8.879 Unpacking libz3-4:amd64 (4.8.12-3.1) ...
+#9 9.439 Selecting previously unselected package libllvm14:amd64.
+#9 9.444 Preparing to unpack .../01-libllvm14_1%3a14.0.6-12_amd64.deb ...
+#9 9.447 Unpacking libllvm14:amd64 (1:14.0.6-12) ...
+#9 10.43 Selecting previously unselected package libclang-cpp14.
+#9 10.43 Preparing to unpack .../02-libclang-cpp14_1%3a14.0.6-12_amd64.deb ...
+#9 10.44 Unpacking libclang-cpp14 (1:14.0.6-12) ...
+#9 11.06 Selecting previously unselected package libgc1:amd64.
+#9 11.06 Preparing to unpack .../03-libgc1_1%3a8.2.2-3_amd64.deb ...
+#9 11.07 Unpacking libgc1:amd64 (1:8.2.2-3) ...
+#9 11.11 Selecting previously unselected package libobjc4:amd64.
+#9 11.12 Preparing to unpack .../04-libobjc4_12.2.0-14+deb12u1_amd64.deb ...
+#9 11.12 Unpacking libobjc4:amd64 (12.2.0-14+deb12u1) ...
+#9 11.16 Selecting previously unselected package libobjc-12-dev:amd64.
+#9 11.16 Preparing to unpack .../05-libobjc-12-dev_12.2.0-14+deb12u1_amd64.deb ...
+#9 11.16 Unpacking libobjc-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#9 11.23 Selecting previously unselected package libclang-common-14-dev.
+#9 11.23 Preparing to unpack .../06-libclang-common-14-dev_1%3a14.0.6-12_all.deb ...
+#9 11.23 Unpacking libclang-common-14-dev (1:14.0.6-12) ...
+#9 11.46 Selecting previously unselected package llvm-14-linker-tools.
+#9 11.46 Preparing to unpack .../07-llvm-14-linker-tools_1%3a14.0.6-12_amd64.deb ...
+#9 11.46 Unpacking llvm-14-linker-tools (1:14.0.6-12) ...
+#9 11.63 Selecting previously unselected package libclang1-14.
+#9 11.63 Preparing to unpack .../08-libclang1-14_1%3a14.0.6-12_amd64.deb ...
+#9 11.63 Unpacking libclang1-14 (1:14.0.6-12) ...
+#9 12.14 Selecting previously unselected package clang-14.
+#9 12.15 Preparing to unpack .../09-clang-14_1%3a14.0.6-12_amd64.deb ...
+#9 12.15 Unpacking clang-14 (1:14.0.6-12) ...
+#9 12.20 Selecting previously unselected package clang.
+#9 12.21 Preparing to unpack .../10-clang_1%3a14.0-55.7~deb12u1_amd64.deb ...
+#9 12.21 Unpacking clang (1:14.0-55.7~deb12u1) ...
+#9 12.25 Selecting previously unselected package libclang-14-dev.
+#9 12.25 Preparing to unpack .../11-libclang-14-dev_1%3a14.0.6-12_amd64.deb ...
+#9 12.25 Unpacking libclang-14-dev (1:14.0.6-12) ...
+#9 13.76 Selecting previously unselected package libclang-dev.
+#9 13.76 Preparing to unpack .../12-libclang-dev_1%3a14.0-55.7~deb12u1_amd64.deb ...
+#9 13.76 Unpacking libclang-dev (1:14.0-55.7~deb12u1) ...
+#9 13.80 Setting up libz3-4:amd64 (4.8.12-3.1) ...
+#9 13.81 Setting up libgc1:amd64 (1:8.2.2-3) ...
+#9 13.81 Setting up libllvm14:amd64 (1:14.0.6-12) ...
+#9 13.82 Setting up llvm-14-linker-tools (1:14.0.6-12) ...
+#9 13.83 Setting up libclang1-14 (1:14.0.6-12) ...
+#9 13.83 Setting up libobjc4:amd64 (12.2.0-14+deb12u1) ...
+#9 13.84 Setting up libclang-common-14-dev (1:14.0.6-12) ...
+#9 13.84 Setting up libclang-cpp14 (1:14.0.6-12) ...
+#9 13.85 Setting up libobjc-12-dev:amd64 (12.2.0-14+deb12u1) ...
+#9 13.86 Setting up libclang-14-dev (1:14.0.6-12) ...
+#9 13.86 Setting up clang-14 (1:14.0.6-12) ...
+#9 13.87 Setting up libclang-dev (1:14.0-55.7~deb12u1) ...
+#9 13.87 Setting up clang (1:14.0-55.7~deb12u1) ...
+#9 13.91 Processing triggers for libc-bin (2.36-9+deb12u14) ...
+#9 DONE 15.3s
+
+#10 [builder 4/5] COPY dynamic-modules/ .
+#10 DONE 0.0s
+
+#11 [builder 5/5] RUN cargo build --release --locked
+#11 0.461     Updating git repository `https://github.com/envoyproxy/envoy`
+#11 90.22     Updating crates.io index
+#11 95.12  Downloading crates ...
+#11 95.16   Downloaded either v1.18.0
+#11 95.17   Downloaded cfg-if v1.0.4
+#11 95.17   Downloaded downcast v0.11.0
+#11 95.17   Downloaded anstyle v1.0.14
+#11 95.17   Downloaded cexpr v0.6.0
+#11 95.18   Downloaded aho-corasick v1.1.5
+#11 95.19   Downloaded bindgen v0.70.1
+#11 95.20   Downloaded predicates-core v1.0.10
+#11 95.21   Downloaded bitflags v2.13.1
+#11 95.22   Downloaded clang-sys v1.9.1
+#11 95.22   Downloaded fragile v2.1.0
+#11 95.22   Downloaded futures-core v0.3.34
+#11 95.23   Downloaded glob v0.3.4
+#11 95.23   Downloaded itoa v1.0.18
+#11 95.23   Downloaded mockall_derive v0.13.1
+#11 95.23   Downloaded predicates-tree v1.0.13
+#11 95.23   Downloaded thread_local v1.1.10
+#11 95.24   Downloaded libloading v0.8.9
+#11 95.24   Downloaded predicates v3.1.4
+#11 95.24   Downloaded quote v1.0.47
+#11 95.25   Downloaded rustc-hash v1.1.0
+#11 95.25   Downloaded serde_core v1.0.229
+#11 95.25   Downloaded shlex v1.3.0
+#11 95.25   Downloaded termtree v0.5.1
+#11 95.25   Downloaded log v0.4.34
+#11 95.25   Downloaded mockall v0.13.1
+#11 95.25   Downloaded rustversion v1.0.23
+#11 95.26   Downloaded serde_derive v1.0.229
+#11 95.26   Downloaded unicode-ident v1.0.24
+#11 95.26   Downloaded zmij v1.0.23
+#11 95.26   Downloaded proc-macro2 v1.0.107
+#11 95.27   Downloaded prettyplease v0.2.37
+#11 95.27   Downloaded rapidhash v4.5.1
+#11 95.27   Downloaded memchr v2.8.3
+#11 95.28   Downloaded minimal-lexical v0.2.1
+#11 95.28   Downloaded serde v1.0.229
+#11 95.29   Downloaded nom v7.1.3
+#11 95.29   Downloaded serde_json v1.0.151
+#11 95.30   Downloaded itertools v0.13.0
+#11 95.31   Downloaded regex v1.13.1
+#11 95.31   Downloaded syn v2.0.119
+#11 95.32   Downloaded syn v3.0.6
+#11 95.33   Downloaded regex-syntax v0.8.11
+#11 95.34   Downloaded regex-automata v0.4.18
+#11 95.35   Downloaded libc v0.2.189
+#11 95.43    Compiling proc-macro2 v1.0.107
+#11 95.43    Compiling unicode-ident v1.0.24
+#11 95.43    Compiling quote v1.0.47
+#11 95.43    Compiling cfg-if v1.0.4
+#11 95.44    Compiling glob v0.3.4
+#11 95.44    Compiling libc v0.2.189
+#11 95.44    Compiling prettyplease v0.2.37
+#11 95.45    Compiling regex-syntax v0.8.11
+#11 95.45    Compiling memchr v2.8.3
+#11 95.45    Compiling minimal-lexical v0.2.1
+#11 95.46    Compiling either v1.18.0
+#11 95.47    Compiling bindgen v0.70.1
+#11 95.47    Compiling mockall_derive v0.13.1
+#11 95.48    Compiling bitflags v2.13.1
+#11 95.48    Compiling shlex v1.3.0
+#11 95.48    Compiling log v0.4.34
+#11 95.49    Compiling rustc-hash v1.1.0
+#11 95.49    Compiling serde_core v1.0.229
+#11 95.49    Compiling predicates-core v1.0.10
+#11 95.49    Compiling rustversion v1.0.23
+#11 95.51    Compiling anstyle v1.0.14
+#11 95.51    Compiling termtree v0.5.1
+#11 95.51    Compiling futures-core v0.3.34
+#11 95.55    Compiling libloading v0.8.9
+#11 95.59    Compiling zmij v1.0.23
+#11 95.59    Compiling serde v1.0.229
+#11 95.60    Compiling serde_json v1.0.151
+#11 95.65    Compiling itertools v0.13.0
+#11 95.65    Compiling fragile v2.1.0
+#11 95.65    Compiling downcast v0.11.0
+#11 95.66    Compiling itoa v1.0.18
+#11 95.69    Compiling predicates-tree v1.0.13
+#11 95.69    Compiling predicates v3.1.4
+#11 95.70    Compiling thread_local v1.1.10
+#11 95.77    Compiling clang-sys v1.9.1
+#11 95.92    Compiling nom v7.1.3
+#11 96.04    Compiling rapidhash v4.5.1
+#11 96.31    Compiling syn v2.0.119
+#11 96.31    Compiling syn v3.0.6
+#11 96.38    Compiling regex-automata v0.4.18
+#11 97.04    Compiling cexpr v0.6.0
+#11 97.51    Compiling regex v1.13.1
+#11 97.69    Compiling serde_derive v1.0.229
+#11 100.4    Compiling mockall v0.13.1
+#11 102.1    Compiling envoy-proxy-dynamic-modules-rust-sdk v0.1.0 (https://github.com/envoyproxy/envoy?rev=b579d07d3ad7ee11d32b105e91a5a39ad24718d7#b579d07d)
+#11 134.2    Compiling substrate-envoy-egress-policy v0.1.0 (/usr/src/dynamic-modules/egress-policy)
+#11 134.9     Finished `release` profile [optimized] target(s) in 2m 14s
+#11 DONE 135.2s
+
+#12 [stage-1 2/2] COPY --from=builder /usr/src/dynamic-modules/target/release/libenvoy_substrate_egress_policy.so /usr/local/lib/libenvoy_substrate_egress_policy.so
+#12 DONE 0.0s
+
+#13 exporting to image
+#13 exporting layers 0.1s done
+#13 exporting manifest sha256:4a5daf89fa42541afc7e44ee64695c61254b95a02da8ea0a5d22f7a4bebb3640 0.0s done
+#13 exporting config sha256:04a352858a18fe331635ce7c04e4228f9f99d18b2a41438cca175d10b89c4255 done
+#13 exporting attestation manifest sha256:a17053b7464f5f3eab6da61eb5e730026b8585900c7ba549663eb259d369e020 0.0s done
+#13 exporting manifest list sha256:fcf5c1dc5bd1e317b60942a761337491ebd57d5f0b556264e3184c1eb83c32a0 done
+#13 naming to localhost:5001/envoy-dataplane:build-1794549558 done
+#13 unpacking to localhost:5001/envoy-dataplane:build-1794549558 0.0s done
+#13 pushing layers
+#13 pushing layers 0.3s done
+#13 pushing manifest for localhost:5001/envoy-dataplane:build-1794549558@sha256:fcf5c1dc5bd1e317b60942a761337491ebd57d5f0b556264e3184c1eb83c32a0
+#13 pushing manifest for localhost:5001/envoy-dataplane:build-1794549558@sha256:fcf5c1dc5bd1e317b60942a761337491ebd57d5f0b556264e3184c1eb83c32a0 0.0s done
+#13 DONE 0.7s
+2026/11/13 06:01:58 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/ateapi
+2026/11/13 06:01:58 Using base gcr.io/distroless/base-debian13:latest@sha256:389cad21f73e4c37b94ffe5b13736d5a92bd5bd3c6c6b38c2be1c881e14ba2bd for go.ate.dev/substrate/cmd/atelet
+2026/11/13 06:02:00 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/ate-idp-server
+2026/11/13 06:02:00 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/objectstore-plugin
+2026/11/13 06:02:00 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/atenet
+2026/11/13 06:02:00 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/atecontroller
+2026/11/13 06:02:00 Building go.ate.dev/substrate/cmd/ateapi for linux/amd64
+2026/11/13 06:02:01 Building go.ate.dev/substrate/cmd/atelet for linux/amd64
+2026/11/13 06:02:02 Building go.ate.dev/substrate/cmd/ate-idp-server for linux/amd64
+2026/11/13 06:02:02 Building go.ate.dev/substrate/cmd/objectstore-plugin for linux/amd64
+2026/11/13 06:02:02 Building go.ate.dev/substrate/cmd/atenet for linux/amd64
+2026/11/13 06:02:02 Building go.ate.dev/substrate/cmd/atecontroller for linux/amd64
+2026/11/13 06:02:05 Publishing localhost:5001/ate-idp-server:latest
+2026/11/13 06:02:05 existing blob: sha256:dd64bf2dd177757451a98fcdc999a339c35dee5d9872d8f4dc69c8f3c4dd0112
+2026/11/13 06:02:05 existing blob: sha256:ebddc55facdc6b1f7e0f30816a5fc7cc62f38abdf76c0a8b0a0ce52085754795
+2026/11/13 06:02:05 existing blob: sha256:7c12895b777bcaa8ccae0605b4de635b68fc32d60fa08f421dc3818bf55ee212
+2026/11/13 06:02:05 existing blob: sha256:4a2796d8ea5ef7ae1a64ba20ba56759987f49f2ea2091ddce6bade81c0ad1fa6
+2026/11/13 06:02:05 existing blob: sha256:b839dfae01f66e15c6a8b63520557ed315bdfe036342fa7a0c537259f10d7a9a
+2026/11/13 06:02:05 existing blob: sha256:3214acf345c0cc6bbdb56b698a41ccdefc624a09d6beb0d38b5de0b2303ecaf4
+2026/11/13 06:02:05 existing blob: sha256:c172f21841dff4c8cf45cde46589c1c2616cefe7e819965e92e6d3475c428aa0
+2026/11/13 06:02:05 existing blob: sha256:2780920e5dbfbe103d03a583ed75345306e572ec5a48cb10361f046767d9f29a
+2026/11/13 06:02:05 existing blob: sha256:52630fc75a18675c530ed9eba5f55eca09b03e91bd5bc15307918bbc1a7e7296
+2026/11/13 06:02:05 existing blob: sha256:d6b1b89eccacc15c2420b2776d72c1dae334a00805ed9af54bf2f71e4d536f28
+2026/11/13 06:02:05 pushed blob: sha256:d0aa9de03a9db44e748dd1677fd4b943e6a8ab4a794548de1b4835e5d88bd5fb
+2026/11/13 06:02:05 pushed blob: sha256:e85dc7e9c40a717dfdae95cf0bcc2b613cdb92ce5745185b82d0a3de9d358025
+2026/11/13 06:02:05 pushed blob: sha256:9d3e205d5ee7f25064c023f4048e3852af0333dcc2c2a58746d07ee04715edfa
+2026/11/13 06:02:05 localhost:5001/ate-idp-server:sha256-df59f6ad392a844130501ccee1829b5d84b7ff80a26103d5780334f0ca69f001.sbom: digest: sha256:b5fa9a84344194d0fa002f631c1566b6d9fbc98140b316ecbf49e926e4acea3d size: 374
+2026/11/13 06:02:05 Published SBOM localhost:5001/ate-idp-server:sha256-df59f6ad392a844130501ccee1829b5d84b7ff80a26103d5780334f0ca69f001.sbom
+2026/11/13 06:02:05 pushed blob: sha256:2d8dc72f9627c3034ec0f08e12c78257d8eeb6cd32972a69249ce4220a853465
+2026/11/13 06:02:07 pushed blob: sha256:c4bc6f35ff5e25aa1afe7a148a0b6f10a760f54e298f86a4a4d44b91f1afbfab
+2026/11/13 06:02:08 pushed blob: sha256:1eed391ea893e6015bf4ce4ed366909975d2acdbe907670919236a8d18ea6b07
+2026/11/13 06:02:08 pushed blob: sha256:99515e7b4d35e0652d3b0fde571b6ec269222ecacc506f026e1758d6261e9109
+2026/11/13 06:02:08 pushed blob: sha256:99ba982a9142213c751a1709dcf088e63d8601f03b3f211bae037be698fef270
+2026/11/13 06:02:08 localhost:5001/ate-idp-server:latest: digest: sha256:df59f6ad392a844130501ccee1829b5d84b7ff80a26103d5780334f0ca69f001 size: 2937
+2026/11/13 06:02:08 Published localhost:5001/ate-idp-server@sha256:df59f6ad392a844130501ccee1829b5d84b7ff80a26103d5780334f0ca69f001
+2026/11/13 06:02:12 Publishing localhost:5001/atecontroller:latest
+2026/11/13 06:02:12 existing blob: sha256:b839dfae01f66e15c6a8b63520557ed315bdfe036342fa7a0c537259f10d7a9a
+2026/11/13 06:02:12 existing blob: sha256:4a2796d8ea5ef7ae1a64ba20ba56759987f49f2ea2091ddce6bade81c0ad1fa6
+2026/11/13 06:02:12 existing blob: sha256:ebddc55facdc6b1f7e0f30816a5fc7cc62f38abdf76c0a8b0a0ce52085754795
+2026/11/13 06:02:12 existing blob: sha256:2780920e5dbfbe103d03a583ed75345306e572ec5a48cb10361f046767d9f29a
+2026/11/13 06:02:12 existing blob: sha256:d6b1b89eccacc15c2420b2776d72c1dae334a00805ed9af54bf2f71e4d536f28
+2026/11/13 06:02:12 existing blob: sha256:52630fc75a18675c530ed9eba5f55eca09b03e91bd5bc15307918bbc1a7e7296
+2026/11/13 06:02:12 existing blob: sha256:7c12895b777bcaa8ccae0605b4de635b68fc32d60fa08f421dc3818bf55ee212
+2026/11/13 06:02:12 existing blob: sha256:3214acf345c0cc6bbdb56b698a41ccdefc624a09d6beb0d38b5de0b2303ecaf4
+2026/11/13 06:02:12 existing blob: sha256:dd64bf2dd177757451a98fcdc999a339c35dee5d9872d8f4dc69c8f3c4dd0112
+2026/11/13 06:02:12 existing blob: sha256:c172f21841dff4c8cf45cde46589c1c2616cefe7e819965e92e6d3475c428aa0
+2026/11/13 06:02:12 pushed blob: sha256:94293a9e02f1a2f736917fcc3119a58b75b8a4d67fcb232c42400a016647f56f
+2026/11/13 06:02:12 pushed blob: sha256:c3cb47a8507b54dbae8b28a43cb31ff9360f0a9f0c63d8c806ffd3d5b2c8a496
+2026/11/13 06:02:12 pushed blob: sha256:453e918d092c3e2778a0d5aeefc1e5ad723c1e96720099b66bcac98d0fba0b68
+2026/11/13 06:02:12 localhost:5001/atecontroller:sha256-5256362bc87c4903fe8faadf0e60a7e7c513f987c2d946f8ddedd3bb688b3324.sbom: digest: sha256:87d89494aab73800246e2d0d375cb6de54c800ebf9bcbba210f023fac68fe178 size: 374
+2026/11/13 06:02:12 Published SBOM localhost:5001/atecontroller:sha256-5256362bc87c4903fe8faadf0e60a7e7c513f987c2d946f8ddedd3bb688b3324.sbom
+2026/11/13 06:02:12 pushed blob: sha256:aeb6ef46596270bcedfdce2602e537b4c2cdf83b4ec4aaec8dd54478f19cd49e
+2026/11/13 06:02:12 Publishing localhost:5001/atenet:latest
+2026/11/13 06:02:12 existing blob: sha256:4a2796d8ea5ef7ae1a64ba20ba56759987f49f2ea2091ddce6bade81c0ad1fa6
+2026/11/13 06:02:12 existing blob: sha256:3214acf345c0cc6bbdb56b698a41ccdefc624a09d6beb0d38b5de0b2303ecaf4
+2026/11/13 06:02:12 existing blob: sha256:52630fc75a18675c530ed9eba5f55eca09b03e91bd5bc15307918bbc1a7e7296
+2026/11/13 06:02:12 existing blob: sha256:b839dfae01f66e15c6a8b63520557ed315bdfe036342fa7a0c537259f10d7a9a
+2026/11/13 06:02:12 existing blob: sha256:ebddc55facdc6b1f7e0f30816a5fc7cc62f38abdf76c0a8b0a0ce52085754795
+2026/11/13 06:02:12 existing blob: sha256:7c12895b777bcaa8ccae0605b4de635b68fc32d60fa08f421dc3818bf55ee212
+2026/11/13 06:02:12 existing blob: sha256:2780920e5dbfbe103d03a583ed75345306e572ec5a48cb10361f046767d9f29a
+2026/11/13 06:02:12 existing blob: sha256:d6b1b89eccacc15c2420b2776d72c1dae334a00805ed9af54bf2f71e4d536f28
+2026/11/13 06:02:12 existing blob: sha256:dd64bf2dd177757451a98fcdc999a339c35dee5d9872d8f4dc69c8f3c4dd0112
+2026/11/13 06:02:12 existing blob: sha256:c172f21841dff4c8cf45cde46589c1c2616cefe7e819965e92e6d3475c428aa0
+2026/11/13 06:02:12 pushed blob: sha256:8dd4491471bdf1d0bbf150c5a76f4242da21699d8f6eeb2f7b057dcfbaae4b13
+2026/11/13 06:02:12 pushed blob: sha256:ab639bec24fe5373323a39cc6e4c4c9fa941cfdf8c9f1e268ee39e2f934754d2
+2026/11/13 06:02:12 pushed blob: sha256:280809ff0ec8e8a4c9b36e82cffe38f09639000616473f3d49a0c85a3045403c
+2026/11/13 06:02:12 localhost:5001/atenet:sha256-dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6.sbom: digest: sha256:cada5af7fc99f67ca2fbe37c73f997074e9d0f5ae8f1e86d6482f19888deeb22 size: 374
+2026/11/13 06:02:12 Published SBOM localhost:5001/atenet:sha256-dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6.sbom
+2026/11/13 06:02:12 Publishing localhost:5001/objectstore-plugin:latest
+2026/11/13 06:02:12 existing blob: sha256:2780920e5dbfbe103d03a583ed75345306e572ec5a48cb10361f046767d9f29a
+2026/11/13 06:02:12 existing blob: sha256:4a2796d8ea5ef7ae1a64ba20ba56759987f49f2ea2091ddce6bade81c0ad1fa6
+2026/11/13 06:02:12 existing blob: sha256:d6b1b89eccacc15c2420b2776d72c1dae334a00805ed9af54bf2f71e4d536f28
+2026/11/13 06:02:12 existing blob: sha256:b839dfae01f66e15c6a8b63520557ed315bdfe036342fa7a0c537259f10d7a9a
+2026/11/13 06:02:12 existing blob: sha256:ebddc55facdc6b1f7e0f30816a5fc7cc62f38abdf76c0a8b0a0ce52085754795
+2026/11/13 06:02:12 existing blob: sha256:c172f21841dff4c8cf45cde46589c1c2616cefe7e819965e92e6d3475c428aa0
+2026/11/13 06:02:12 existing blob: sha256:3214acf345c0cc6bbdb56b698a41ccdefc624a09d6beb0d38b5de0b2303ecaf4
+2026/11/13 06:02:12 existing blob: sha256:52630fc75a18675c530ed9eba5f55eca09b03e91bd5bc15307918bbc1a7e7296
+2026/11/13 06:02:12 existing blob: sha256:dd64bf2dd177757451a98fcdc999a339c35dee5d9872d8f4dc69c8f3c4dd0112
+2026/11/13 06:02:12 existing blob: sha256:7c12895b777bcaa8ccae0605b4de635b68fc32d60fa08f421dc3818bf55ee212
+2026/11/13 06:02:12 pushed blob: sha256:5fdb26248503e879f4d2d862a7907e25ac7eaab29ca80a521ad6b2b9d40372aa
+2026/11/13 06:02:12 pushed blob: sha256:8ecdba616ffc5fb0dbf8fd121d9b1d7c7cd3310f51f5fc7554a2c3e0118a66fa
+2026/11/13 06:02:12 pushed blob: sha256:a6a44e6145e55b3f4caf617826c23bbbf184d2913dbbee3a6f342d89a36febf8
+2026/11/13 06:02:12 pushed blob: sha256:3a106098e73a6517b379baca4e3748e807348c29dd169f4d3d23f200d63b499a
+2026/11/13 06:02:12 localhost:5001/objectstore-plugin:sha256-93b026526d45e7baad1b00fa9f71d6c88ab95b847c2c689a71652dd4b4e25b8d.sbom: digest: sha256:c1e5889cfccc13000612a34d7b80bef3e1808184084f6c383ca171d37ac35190 size: 375
+2026/11/13 06:02:12 Published SBOM localhost:5001/objectstore-plugin:sha256-93b026526d45e7baad1b00fa9f71d6c88ab95b847c2c689a71652dd4b4e25b8d.sbom
+2026/11/13 06:02:13 pushed blob: sha256:8004ca16365dd4ade968f06ad897fbc9bc522be412f3e2fc892029dc9e8a4c4e
+2026/11/13 06:02:13 Publishing localhost:5001/atelet:latest
+2026/11/13 06:02:13 existing blob: sha256:3214acf345c0cc6bbdb56b698a41ccdefc624a09d6beb0d38b5de0b2303ecaf4
+2026/11/13 06:02:13 existing blob: sha256:dd64bf2dd177757451a98fcdc999a339c35dee5d9872d8f4dc69c8f3c4dd0112
+2026/11/13 06:02:13 existing blob: sha256:b839dfae01f66e15c6a8b63520557ed315bdfe036342fa7a0c537259f10d7a9a
+2026/11/13 06:02:13 existing blob: sha256:ebddc55facdc6b1f7e0f30816a5fc7cc62f38abdf76c0a8b0a0ce52085754795
+2026/11/13 06:02:13 existing blob: sha256:2cc7ee286bf3a9e6af5f71756d7fc8e22e23ce65fec9047d774511ffcef79fa8
+2026/11/13 06:02:13 existing blob: sha256:4a2796d8ea5ef7ae1a64ba20ba56759987f49f2ea2091ddce6bade81c0ad1fa6
+2026/11/13 06:02:13 existing blob: sha256:c172f21841dff4c8cf45cde46589c1c2616cefe7e819965e92e6d3475c428aa0
+2026/11/13 06:02:13 existing blob: sha256:52630fc75a18675c530ed9eba5f55eca09b03e91bd5bc15307918bbc1a7e7296
+2026/11/13 06:02:13 existing blob: sha256:2780920e5dbfbe103d03a583ed75345306e572ec5a48cb10361f046767d9f29a
+2026/11/13 06:02:13 existing blob: sha256:810e2b405a0884835290e120ef380aa14dd1f53198a0cfa2260147e736d82cd5
+2026/11/13 06:02:13 existing blob: sha256:7c12895b777bcaa8ccae0605b4de635b68fc32d60fa08f421dc3818bf55ee212
+2026/11/13 06:02:13 existing blob: sha256:d6b1b89eccacc15c2420b2776d72c1dae334a00805ed9af54bf2f71e4d536f28
+2026/11/13 06:02:13 existing blob: sha256:cac2ae0193cb073e7492050b05fc342a888651b4bbc966908c8793f889c299ba
+2026/11/13 06:02:13 existing blob: sha256:bd8962e292918c50c90edebd9684c053bc386b9c5503acd8fec75d0c6f93a0b7
+2026/11/13 06:02:13 existing blob: sha256:b96fe2995f90d0ef0bf14f9b4a67b5f4e77d478e6108166e0565adc9efd6e4a3
+2026/11/13 06:02:13 pushed blob: sha256:be85617ce7e2c73a1e5fc038041f439ee1b26c2a971d2dad3db6de4d55ad6c42
+2026/11/13 06:02:13 pushed blob: sha256:6c29b24fb005b4f5ee2790e04b505594cd92a4fff2da61841e4d333bf26d0bf8
+2026/11/13 06:02:13 pushed blob: sha256:d5883bd57f73c6eef3181bf562407e68fd7647461e77102cbf6227d307ef4c6e
+2026/11/13 06:02:13 localhost:5001/atelet:sha256-3aa7e922f81aff1bf8c7a5989c341bc5915ccb8b9d0022a17607a91c83d7e92d.sbom: digest: sha256:0d66b3b396d6c3867ebc2214f5247a9dd59189acb2b9164aeedad0d2773eb501 size: 375
+2026/11/13 06:02:13 Published SBOM localhost:5001/atelet:sha256-3aa7e922f81aff1bf8c7a5989c341bc5915ccb8b9d0022a17607a91c83d7e92d.sbom
+2026/11/13 06:02:13 pushed blob: sha256:3c58deac8209000b79b7cdfb533dd286366cb14e2bfb20fbf15cf97f9920608a
+2026/11/13 06:02:14 pushed blob: sha256:99515e7b4d35e0652d3b0fde571b6ec269222ecacc506f026e1758d6261e9109
+2026/11/13 06:02:14 Publishing localhost:5001/ateapi:latest
+2026/11/13 06:02:14 existing blob: sha256:7c12895b777bcaa8ccae0605b4de635b68fc32d60fa08f421dc3818bf55ee212
+2026/11/13 06:02:14 existing blob: sha256:c172f21841dff4c8cf45cde46589c1c2616cefe7e819965e92e6d3475c428aa0
+2026/11/13 06:02:14 existing blob: sha256:ebddc55facdc6b1f7e0f30816a5fc7cc62f38abdf76c0a8b0a0ce52085754795
+2026/11/13 06:02:14 existing blob: sha256:52630fc75a18675c530ed9eba5f55eca09b03e91bd5bc15307918bbc1a7e7296
+2026/11/13 06:02:14 existing blob: sha256:4a2796d8ea5ef7ae1a64ba20ba56759987f49f2ea2091ddce6bade81c0ad1fa6
+2026/11/13 06:02:14 existing blob: sha256:3214acf345c0cc6bbdb56b698a41ccdefc624a09d6beb0d38b5de0b2303ecaf4
+2026/11/13 06:02:14 existing blob: sha256:2780920e5dbfbe103d03a583ed75345306e572ec5a48cb10361f046767d9f29a
+2026/11/13 06:02:14 existing blob: sha256:dd64bf2dd177757451a98fcdc999a339c35dee5d9872d8f4dc69c8f3c4dd0112
+2026/11/13 06:02:14 existing blob: sha256:d6b1b89eccacc15c2420b2776d72c1dae334a00805ed9af54bf2f71e4d536f28
+2026/11/13 06:02:14 existing blob: sha256:b839dfae01f66e15c6a8b63520557ed315bdfe036342fa7a0c537259f10d7a9a
+2026/11/13 06:02:14 pushed blob: sha256:bf95b23f3cce2ec65188cb01a91ca28cd2fdad45d9b9b8bfaebddad122d1fe86
+2026/11/13 06:02:14 pushed blob: sha256:39aad20e29567cc13678ad068a9c6d9867fb8975da2e6fc7dbe6317c72b22055
+2026/11/13 06:02:14 pushed blob: sha256:1eed391ea893e6015bf4ce4ed366909975d2acdbe907670919236a8d18ea6b07
+2026/11/13 06:02:14 pushed blob: sha256:a6ce5894544c9ec141a130e24f0ccb7ba46f4ba50cb6b027ae6dc809e963cf0f
+2026/11/13 06:02:14 localhost:5001/ateapi:sha256-b47e9d773f15e814df6b2aacdd587751ead53004f7244213061bcfb2c4315ae7.sbom: digest: sha256:e7cc5b7a7bb8456a62918f21d7facd4df7e830b544ec68763020cd3fc02c9151 size: 375
+2026/11/13 06:02:14 Published SBOM localhost:5001/ateapi:sha256-b47e9d773f15e814df6b2aacdd587751ead53004f7244213061bcfb2c4315ae7.sbom
+2026/11/13 06:02:15 pushed blob: sha256:45804e7192d3540d50ced9386175a5b2df3f3e839390fefda6c86c53c63631fd
+2026/11/13 06:02:15 pushed blob: sha256:c4bc6f35ff5e25aa1afe7a148a0b6f10a760f54e298f86a4a4d44b91f1afbfab
+2026/11/13 06:02:15 pushed blob: sha256:99ba982a9142213c751a1709dcf088e63d8601f03b3f211bae037be698fef270
+2026/11/13 06:02:15 localhost:5001/atecontroller:latest: digest: sha256:5256362bc87c4903fe8faadf0e60a7e7c513f987c2d946f8ddedd3bb688b3324 size: 2937
+2026/11/13 06:02:15 Published localhost:5001/atecontroller@sha256:5256362bc87c4903fe8faadf0e60a7e7c513f987c2d946f8ddedd3bb688b3324
+2026/11/13 06:02:15 pushed blob: sha256:99515e7b4d35e0652d3b0fde571b6ec269222ecacc506f026e1758d6261e9109
+2026/11/13 06:02:16 pushed blob: sha256:c4bc6f35ff5e25aa1afe7a148a0b6f10a760f54e298f86a4a4d44b91f1afbfab
+2026/11/13 06:02:17 pushed blob: sha256:1eed391ea893e6015bf4ce4ed366909975d2acdbe907670919236a8d18ea6b07
+2026/11/13 06:02:17 pushed blob: sha256:1eed391ea893e6015bf4ce4ed366909975d2acdbe907670919236a8d18ea6b07
+2026/11/13 06:02:18 pushed blob: sha256:99ba982a9142213c751a1709dcf088e63d8601f03b3f211bae037be698fef270
+2026/11/13 06:02:18 localhost:5001/atenet:latest: digest: sha256:dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6 size: 2937
+2026/11/13 06:02:18 Published localhost:5001/atenet@sha256:dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6
+2026/11/13 06:02:19 pushed blob: sha256:99ba982a9142213c751a1709dcf088e63d8601f03b3f211bae037be698fef270
+2026/11/13 06:02:19 pushed blob: sha256:c4bc6f35ff5e25aa1afe7a148a0b6f10a760f54e298f86a4a4d44b91f1afbfab
+2026/11/13 06:02:20 pushed blob: sha256:99515e7b4d35e0652d3b0fde571b6ec269222ecacc506f026e1758d6261e9109
+2026/11/13 06:02:20 localhost:5001/objectstore-plugin:latest: digest: sha256:93b026526d45e7baad1b00fa9f71d6c88ab95b847c2c689a71652dd4b4e25b8d size: 2937
+2026/11/13 06:02:20 Published localhost:5001/objectstore-plugin@sha256:93b026526d45e7baad1b00fa9f71d6c88ab95b847c2c689a71652dd4b4e25b8d
+2026/11/13 06:02:20 pushed blob: sha256:f6069939f718601b38d25ec5ed5631ed047e4da24acec2e252f8f29d251be718
+2026/11/13 06:02:22 pushed blob: sha256:218cf840d0d95a86231eb9d33d26ac8a520a4299c6096cb70a0c2fb2a87c9e0a
+2026/11/13 06:02:22 pushed blob: sha256:1eed391ea893e6015bf4ce4ed366909975d2acdbe907670919236a8d18ea6b07
+2026/11/13 06:02:22 pushed blob: sha256:c4bc6f35ff5e25aa1afe7a148a0b6f10a760f54e298f86a4a4d44b91f1afbfab
+2026/11/13 06:02:22 localhost:5001/atelet:latest: digest: sha256:3aa7e922f81aff1bf8c7a5989c341bc5915ccb8b9d0022a17607a91c83d7e92d size: 3565
+2026/11/13 06:02:22 Published localhost:5001/atelet@sha256:3aa7e922f81aff1bf8c7a5989c341bc5915ccb8b9d0022a17607a91c83d7e92d
+2026/11/13 06:02:24 pushed blob: sha256:99ba982a9142213c751a1709dcf088e63d8601f03b3f211bae037be698fef270
+2026/11/13 06:02:24 pushed blob: sha256:99515e7b4d35e0652d3b0fde571b6ec269222ecacc506f026e1758d6261e9109
+2026/11/13 06:02:24 pushed blob: sha256:c4bc6f35ff5e25aa1afe7a148a0b6f10a760f54e298f86a4a4d44b91f1afbfab
+2026/11/13 06:02:24 localhost:5001/ateapi:latest: digest: sha256:b47e9d773f15e814df6b2aacdd587751ead53004f7244213061bcfb2c4315ae7 size: 2937
+2026/11/13 06:02:24 Published localhost:5001/ateapi@sha256:b47e9d773f15e814df6b2aacdd587751ead53004f7244213061bcfb2c4315ae7
+  (ko resolve -f - took 31.164s)
+  (delete of 8 objects took 0.027s)
+Warning: system:serviceaccount:ate-system:ate-client is a bootstrap owner, so anyone who can mint a token for it is a global owner of this install. It is the default so the demos, benchmarks and e2e tests work; for a shared or production install, set --ateapi-authz-bootstrap-owners (ATE_API_AUTHZ_BOOTSTRAP_OWNERS) to your operators' own principals. See docs/authorization.md.
+  (apply of 57 objects took 10.964s)
+[step]: create_egress_mitm_ca_pool_secret
+  created pool secret ate-system/egress-mitm-ca-pool
+[step]: deploy_k8s_credential_provider
+  (apply of 1 objects took 0.237s)
+2026/11/13 06:02:39 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/credential-provider/kubernetes-secrets
+2026/11/13 06:02:41 Building go.ate.dev/substrate/cmd/credential-provider/kubernetes-secrets for linux/amd64
+2026/11/13 06:02:46 Publishing localhost:5001/kubernetes-secrets:latest
+2026/11/13 06:02:46 existing blob: sha256:c172f21841dff4c8cf45cde46589c1c2616cefe7e819965e92e6d3475c428aa0
+2026/11/13 06:02:46 existing blob: sha256:b839dfae01f66e15c6a8b63520557ed315bdfe036342fa7a0c537259f10d7a9a
+2026/11/13 06:02:46 existing blob: sha256:4a2796d8ea5ef7ae1a64ba20ba56759987f49f2ea2091ddce6bade81c0ad1fa6
+2026/11/13 06:02:46 existing blob: sha256:7c12895b777bcaa8ccae0605b4de635b68fc32d60fa08f421dc3818bf55ee212
+2026/11/13 06:02:46 existing blob: sha256:d6b1b89eccacc15c2420b2776d72c1dae334a00805ed9af54bf2f71e4d536f28
+2026/11/13 06:02:46 existing blob: sha256:dd64bf2dd177757451a98fcdc999a339c35dee5d9872d8f4dc69c8f3c4dd0112
+2026/11/13 06:02:46 existing blob: sha256:ebddc55facdc6b1f7e0f30816a5fc7cc62f38abdf76c0a8b0a0ce52085754795
+2026/11/13 06:02:46 existing blob: sha256:52630fc75a18675c530ed9eba5f55eca09b03e91bd5bc15307918bbc1a7e7296
+2026/11/13 06:02:46 existing blob: sha256:3214acf345c0cc6bbdb56b698a41ccdefc624a09d6beb0d38b5de0b2303ecaf4
+2026/11/13 06:02:46 existing blob: sha256:2780920e5dbfbe103d03a583ed75345306e572ec5a48cb10361f046767d9f29a
+2026/11/13 06:02:46 pushed blob: sha256:88a77b9db08e145387e29b7089e812ac3dd68b82409e917df51bcd7781ec3a56
+2026/11/13 06:02:46 pushed blob: sha256:0db1c80546347633f432d10b6d6e622cb31a455d19e1da52c531de67febcafb1
+2026/11/13 06:02:46 pushed blob: sha256:55789f009ae7a02d8f1111ae3bad468e6af081a51ef885ea4b33e78063baea8a
+2026/11/13 06:02:46 localhost:5001/kubernetes-secrets:sha256-b97ad45fe22e7ca1f0c5baaeab5f77100c45b3461910c0c81bd1dabb3b98360a.sbom: digest: sha256:357dc5f2888752cb4251f66ff214858a5b0a1932f777064ae52f98febc521f98 size: 374
+2026/11/13 06:02:46 Published SBOM localhost:5001/kubernetes-secrets:sha256-b97ad45fe22e7ca1f0c5baaeab5f77100c45b3461910c0c81bd1dabb3b98360a.sbom
+2026/11/13 06:02:46 pushed blob: sha256:b1867303e59e4444bb7376508c1cec7a57bdc1de5859850932a8f45994eb41a6
+2026/11/13 06:02:49 pushed blob: sha256:1eed391ea893e6015bf4ce4ed366909975d2acdbe907670919236a8d18ea6b07
+2026/11/13 06:02:50 pushed blob: sha256:c4bc6f35ff5e25aa1afe7a148a0b6f10a760f54e298f86a4a4d44b91f1afbfab
+2026/11/13 06:02:50 pushed blob: sha256:99ba982a9142213c751a1709dcf088e63d8601f03b3f211bae037be698fef270
+2026/11/13 06:02:50 pushed blob: sha256:99515e7b4d35e0652d3b0fde571b6ec269222ecacc506f026e1758d6261e9109
+2026/11/13 06:02:50 localhost:5001/kubernetes-secrets:latest: digest: sha256:b97ad45fe22e7ca1f0c5baaeab5f77100c45b3461910c0c81bd1dabb3b98360a size: 2937
+2026/11/13 06:02:50 Published localhost:5001/kubernetes-secrets@sha256:b97ad45fe22e7ca1f0c5baaeab5f77100c45b3461910c0c81bd1dabb3b98360a
+  (ko resolve -f - took 14.674s)
+  (apply of 6 objects took 0.056s)
+2026/11/13 06:02:54 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/atenet
+2026/11/13 06:02:56 Building go.ate.dev/substrate/cmd/atenet for linux/amd64
+2026/11/13 06:03:02 Publishing localhost:5001/atenet:latest
+2026/11/13 06:03:02 existing manifest: latest@sha256:dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6
+2026/11/13 06:03:02 existing manifest: sha256-dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6.sbom@sha256:cada5af7fc99f67ca2fbe37c73f997074e9d0f5ae8f1e86d6482f19888deeb22
+2026/11/13 06:03:02 Published SBOM localhost:5001/atenet:sha256-dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6.sbom
+2026/11/13 06:03:02 Published localhost:5001/atenet@sha256:dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6
+  (ko resolve -f - took 11.638s)
+  (apply of 4 objects took 0.093s)
+[step]: Waiting for ATE system components to be ready...
+  (rollout status deployment/ate-api-server took 0.004s)
+  (rollout status deployment/ate-idp-server took 0.004s)
+  (rollout status deployment/ate-controller took 0.003s)
+  (rollout status deployment/atenet-router took 0.003s)
+  (rollout status deployment/atenet-egress took 6.006s)
+  (rollout status daemonset/atelet took 0.005s)
+  (rollout status deployment/k8s-credential-provider took 0.003s)
+recorded this configuration in <home>/.cache/ate-setup/installs/kind-y060.yaml

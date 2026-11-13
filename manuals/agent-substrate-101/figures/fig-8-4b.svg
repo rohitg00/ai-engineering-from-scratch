@@ -1,55 +1,93 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-8-4b-title fig-8-4b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
-  <title id="fig-8-4b-title">One upgrade from v1.0.0-rc.3 to v1.0.0, against two request streams</title>
-  <desc id="fig-8-4b-desc">A timeline of one upgrade on one kind node, 343 seconds from the start of step 1 to the end of step 4e. An actor that was suspended and resumed in a loop failed 7 of 110 cycles, all during step 2, the atelet step. An actor that was RUNNING answered 503 from 69.8 seconds, about one second after the worker image changed in step 3, and stayed crashed.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 488" role="img" aria-labelledby="fig-8-4b-title fig-8-4b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-4b-title">Two upgrades from v1.0.0-rc.3 to v1.0.0, against the request streams</title>
+  <desc id="fig-8-4b-desc">Two timelines of the same upgrade on one kind node, run once each. In the first run the loop actor failed 7 of 110 suspend and resume cycles, all in the atelet step, and the RUNNING actor crashed when the worker image changed. In the second run the loop actor failed 10 cycles in a row in the atelet step, then crashed in the worker step and stayed crashed. The RUNNING actor that exits on SIGTERM crashed again, and the one that handles SIGTERM failed 0 of 441 requests.</desc>
   <rect x="20" y="14" width="12" height="8" fill="var(--m-green-ink, #336b40)"/>
   <text x="38" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">returned 200</text>
-  <rect x="150" y="14" width="12" height="8" fill="var(--m-rose-ink, #b0344d)"/>
-  <text x="168" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">failed</text>
-  <rect x="236" y="12" width="12" height="12" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="254" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">a control plane step runs</text>
-  <rect x="446" y="12" width="12" height="12" fill="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="464" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">a worker step runs</text>
-  <text x="20" y="72" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">upgrade step</text>
-  <rect x="170" y="58" width="43.59" height="22" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
-  <text x="191.79" y="96" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">1</text>
-  <rect x="213.59" y="58" width="39.86" height="22" fill="var(--m-violet-ink, #5b4fa3)" stroke="var(--m-panel, #f3f1e8)"/>
-  <text x="233.51" y="50" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">2</text>
-  <rect x="258.2" y="58" width="3" height="22" fill="var(--m-violet-ink, #5b4fa3)" stroke="var(--m-panel, #f3f1e8)"/>
-  <text x="268.7" y="50" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">3</text>
-  <rect x="467.26" y="58" width="36.51" height="22" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
-  <text x="485.51" y="50" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4a</text>
-  <rect x="504.41" y="58" width="15.94" height="22" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
-  <text x="512.39" y="96" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4b</text>
-  <rect x="520.49" y="58" width="28.03" height="22" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
-  <text x="534.5" y="50" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4c</text>
-  <rect x="549.03" y="58" width="24.04" height="22" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
-  <text x="561.05" y="96" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4d</text>
-  <rect x="573.07" y="58" width="37.93" height="22" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
-  <text x="592.04" y="50" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4e</text>
-  <text x="363.05" y="73" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">we watched the pool for 160 s</text>
-  <text x="20" y="136" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">suspend and resume,</text>
-  <text x="20" y="151" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one actor in a loop</text>
+  <rect x="140" y="14" width="12" height="8" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="158" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">failed</text>
+  <rect x="216" y="12" width="12" height="12" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="234" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">a control plane step</text>
+  <rect x="390" y="12" width="12" height="12" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="408" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">a worker step</text>
+  <text x="20" y="58" font-size="12.5" font-weight="700" fill="var(--m-ink, #1a1a1a)">First run</text>
+  <text x="20" y="86" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">upgrade step</text>
+  <rect x="170" y="74" width="43.59" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="191.79" y="103" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">1</text>
+  <rect x="213.59" y="74" width="39.86" height="16" fill="var(--m-violet-ink, #5b4fa3)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="233.51" y="69" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">2</text>
+  <rect x="258.2" y="74" width="3" height="16" fill="var(--m-violet-ink, #5b4fa3)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="259.7" y="103" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">3</text>
+  <rect x="467.26" y="74" width="36.51" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="485.51" y="69" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4a</text>
+  <rect x="504.41" y="74" width="15.94" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="512.39" y="103" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4b</text>
+  <rect x="520.49" y="74" width="28.03" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="534.5" y="69" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4c</text>
+  <rect x="549.03" y="74" width="24.04" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="561.05" y="103" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4d</text>
+  <rect x="573.07" y="74" width="37.93" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="592.04" y="69" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4e</text>
+  <text x="363.05" y="86" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">we watched the pool for 160 s</text>
+  <text x="20" y="140" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">suspend and resume,</text>
+  <text x="20" y="154" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one actor in a loop</text>
   <rect x="170" y="132" width="48.6" height="12" fill="var(--m-green-ink, #336b40)"/>
   <rect x="218.6" y="132" width="30.86" height="12" fill="var(--m-rose-ink, #b0344d)"/>
   <rect x="249.46" y="132" width="370.54" height="12" fill="var(--m-green-ink, #336b40)"/>
-  <text x="218.6" y="124" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">7 of 110 cycles failed, in 24 s of step 2</text>
-  <text x="20" y="196" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">one request each second</text>
-  <text x="20" y="211" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">to a RUNNING actor</text>
-  <rect x="170" y="192" width="89.74" height="12" fill="var(--m-green-ink, #336b40)"/>
-  <rect x="259.74" y="192" width="360.26" height="12" fill="var(--m-rose-ink, #b0344d)"/>
-  <text x="263.74" y="184" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">CRASHED after the image change, 503 until a revert</text>
-  <line x1="170" y1="244" x2="620" y2="244" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="170" y1="240" x2="170" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="170" y="262" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
-  <line x1="247.14" y1="240" x2="247.14" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="247.14" y="262" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">60 s</text>
-  <line x1="324.29" y1="240" x2="324.29" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="324.29" y="262" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">120 s</text>
-  <line x1="401.43" y1="240" x2="401.43" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="401.43" y="262" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">180 s</text>
-  <line x1="478.57" y1="240" x2="478.57" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="478.57" y="262" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">240 s</text>
-  <line x1="555.71" y1="240" x2="555.71" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="555.71" y="262" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300 s</text>
-  <text x="395" y="284" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds since the start of step 1</text>
+  <text x="218.6" y="125" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">7 cycles failed, in 24 s of step 2</text>
+  <text x="20" y="180" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">RUNNING actor that</text>
+  <text x="20" y="194" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">exits on SIGTERM</text>
+  <rect x="170" y="172" width="89.74" height="12" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="259.74" y="172" width="360.26" height="12" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="263.74" y="165" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">CRASHED after the image change, 503 until a revert</text>
+  <line x1="20" y1="208" x2="620" y2="208" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="20" y="234" font-size="12.5" font-weight="700" fill="var(--m-ink, #1a1a1a)">Second run</text>
+  <text x="20" y="262" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">upgrade step</text>
+  <rect x="170" y="250" width="24.82" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="182.41" y="279" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">1</text>
+  <rect x="194.81" y="250" width="52.31" height="16" fill="var(--m-violet-ink, #5b4fa3)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="220.97" y="245" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">2</text>
+  <rect x="427.79" y="250" width="58.27" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="456.92" y="279" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4a</text>
+  <rect x="486.54" y="250" width="24.92" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="499" y="245" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4b</text>
+  <rect x="511.49" y="250" width="52.29" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="537.63" y="279" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4c</text>
+  <rect x="564.2" y="250" width="4.66" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="566.53" y="245" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4d</text>
+  <rect x="568.83" y="250" width="46.39" height="16" fill="var(--m-blue-ink, #2f5d9a)" stroke="var(--m-panel, #f3f1e8)"/>
+  <text x="592.02" y="279" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">4e</text>
+  <rect x="251.64" y="250" width="176.14" height="16" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="339.71" y="279" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">3, the pool rolls</text>
+  <text x="20" y="318" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">suspend and resume,</text>
+  <text x="20" y="332" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one actor in a loop</text>
+  <rect x="170" y="310" width="30.21" height="12" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="200.21" y="310" width="43.71" height="12" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="243.93" y="310" width="27" height="12" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="270.93" y="310" width="349.07" height="12" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="200.21" y="303" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">10 failed in 34 s of step 2</text>
+  <text x="620" y="303" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-rose-ink, #b0344d)">then CRASHED until a revert</text>
+  <text x="20" y="358" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">RUNNING actor that</text>
+  <text x="20" y="372" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">exits on SIGTERM</text>
+  <rect x="170" y="350" width="104.79" height="12" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="274.79" y="350" width="151.71" height="12" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="426.5" y="350" width="193.5" height="12" fill="var(--m-green-ink, #336b40)"/>
+  <text x="278.79" y="343" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">118 of 441 failed, CRASHED until a revert</text>
+  <text x="20" y="398" font-size="11.5" class="m-serif" fill="var(--m-ink, #1a1a1a)">RUNNING actor that</text>
+  <text x="20" y="412" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">handles SIGTERM</text>
+  <rect x="170" y="390" width="450" height="12" fill="var(--m-green-ink, #336b40)"/>
+  <text x="324.29" y="383" font-size="11" class="m-serif" fill="var(--m-green-ink, #336b40)">0 of 441 failed</text>
+  <line x1="170" y1="428" x2="620" y2="428" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="170" y1="424" x2="170" y2="432" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="170" y="446" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
+  <line x1="247.14" y1="424" x2="247.14" y2="432" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="247.14" y="446" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">60 s</text>
+  <line x1="324.29" y1="424" x2="324.29" y2="432" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="324.29" y="446" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">120 s</text>
+  <line x1="401.43" y1="424" x2="401.43" y2="432" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="401.43" y="446" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">180 s</text>
+  <line x1="478.57" y1="424" x2="478.57" y2="432" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="478.57" y="446" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">240 s</text>
+  <line x1="555.71" y1="424" x2="555.71" y2="432" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="555.71" y="446" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">300 s</text>
+  <text x="395" y="470" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds since the start of step 1</text>
 </svg>

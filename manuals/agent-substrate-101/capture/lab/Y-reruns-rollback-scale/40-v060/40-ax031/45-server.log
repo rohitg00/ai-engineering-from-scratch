@@ -1,0 +1,1 @@
+time=2026-11-13T06:26:15.832Z level=INFO msg="starting ax-server" listenAddr=:8080 redisAddr=ax-redis.ax031-system.svc.cluster.local:6379

@@ -157,8 +157,8 @@ Second, what happened to the actor in each of the four runs.
 
 | The actor when the node stopped | What the caller saw | The actor state |
 |---|---|---|
-| Suspended with `--mode sync`, snapshot `COMPLETED`, then a request every few seconds | 504 after the client timeout of 10 s, then 503 `actor lab-n/u1 unavailable` after 5 to 8 s. From 5 min 44 s after the stop command, 503 at once with `AssignWorker prerequisite not met` | `RESUMING` on the stopped node from the first request, then `CRASHED` |
-| The same, with a `revert` 31 s after the stop command and before any request | The `revert` returned `SUSPENDED` with no node. The first request then bound the actor to a worker of the stopped node. It got 504 at the client timeout of 10 s, and each of the next 19 requests got 503 | `RESUMING` on the stopped node for the 2.5 min that we probed |
+| Suspended with `--mode sync`, snapshot `COMPLETED`, then a request every few seconds | 504 after 10 s, when Envoy stopped its wait for the router, then 503 `actor lab-n/u1 unavailable` after 5 to 8 s. From 5 min 44 s after the stop command, 503 at once with `AssignWorker prerequisite not met` | `RESUMING` on the stopped node from the first request, then `CRASHED` |
+| The same, with a `revert` 31 s after the stop command and before any request | The `revert` returned `SUSPENDED` with no node. The first request then bound the actor to a worker of the stopped node. It got 504 after 10 s, when Envoy stopped its wait, and each of the next 19 requests got 503 | `RESUMING` on the stopped node for the 2.5 min that we probed |
 | Suspended in the default mode, snapshot `PENDING`, requests for 2 min and then none | 504, then 503. A `revert` after the first request failed: `another operation is in progress for this actor` | Still `RESUMING` 10 min 42 s after the stop command, with no request in the last 8 min 43 s. A second `revert` failed: `not in a revertable state`. The actor was `CRASHED` at the next request, 0.6 s after that second attempt. The trace cannot say which of the two caused the change |
 | `RUNNING` on the node | 503 for each of 150 requests: `upstream connect error or disconnect/reset before headers`. A `revert` failed: `while calling atelet Terminate` | `RUNNING` for the 10 min that we probed, then `REVERTING` after the failed revert |
 
@@ -177,6 +177,8 @@ note: Seven lines of the trace. The 40 requests between the second request and t
 2026-11-12T12:08:14.892Z	probe	503	5.051588	actor lab-n/u1 unavailable	|	ACTOR_STATE_RESUMING	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
 2026-11-12T12:08:20.312Z	probe	503	3.190662	actor lab-n/u1 unavailable: AssignWorker prerequisite not met for Actor: lab-n/u1 (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPENDED)	|	ACTOR_STATE_CRASHED	multi-worker2	SNAPSHOT_OWNER_ACTOR:SNAPSHOT_STORAGE_STATE_COMPLETED:gen2:multi-worker2
 ```
+
+Our client allowed 12 s for each of these requests. So the 504 at 10.06 s came from the dataplane, at the limit that [section 4.4](#s-request-parking) describes. We first read it as our own timeout.
 
 **A suspended actor did not move to the other node.** This is the result that is against our reading of the code. In the first run the snapshot was complete in the object store, and the other node had two free workers. The actor still stayed bound to the stopped node. It was in `ACTOR_STATE_RESUMING` for 5 min 33 s from its first request, and it was `ACTOR_STATE_CRASHED` 5 min 44 s after the stop command. Substrate v1.0.0 did not move an actor off a dead node by itself in any of our runs.
 

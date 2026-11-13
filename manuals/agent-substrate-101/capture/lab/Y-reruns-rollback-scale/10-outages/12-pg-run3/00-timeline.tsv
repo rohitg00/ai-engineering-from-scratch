@@ -1,0 +1,8 @@
+1794514072.082	20:07:52	start-baseline
+1794514102.093	20:08:22	outage-begin postgres-scale-0
+1794514103.584	20:08:23	dependency-gone
+1794514163.914	20:09:23	restore-begin postgres-scale-1
+1794514166.138	20:09:26	dependency-ready
+1794514286.150	20:11:26	end-streams
+1794514306.734	20:11:46	running-actors-checked
+1794514316.631	20:11:56	done

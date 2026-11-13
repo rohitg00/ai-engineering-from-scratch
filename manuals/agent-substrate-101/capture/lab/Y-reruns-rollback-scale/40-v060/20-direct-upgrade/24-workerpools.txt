@@ -1,0 +1,2 @@
+NS                 NAME      IMAGE
+ate-demo-counter   counter   localhost:5001/ateworker-gvisor@sha256:6b23cbffbd3a778693c5c1749d89c3d0f829eba8048f3cae7a81f9e87b082adf

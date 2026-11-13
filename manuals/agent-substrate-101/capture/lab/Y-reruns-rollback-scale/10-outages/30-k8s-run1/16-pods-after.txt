@@ -1,0 +1,14 @@
+NAME                                       READY   STATUS      RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-api-server-7bc56575c9-fs5jw            2/2     Running     0          7m16s   10.244.0.88   yout-control-plane   <none>           <none>
+ate-api-server-7bc56575c9-jd6pk            2/2     Running     0          7m16s   10.244.0.87   yout-control-plane   <none>           <none>
+ate-controller-7984566f8d-zmh29            1/1     Running     0          24m     10.244.0.9    yout-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-cmf7m             1/1     Running     0          24m     10.244.0.13   yout-control-plane   <none>           <none>
+ate-idp-server-dcd5f565f-vm2j6             1/1     Running     0          24m     10.244.0.12   yout-control-plane   <none>           <none>
+atelet-hm2s9                               2/2     Running     0          24m     10.244.0.11   yout-control-plane   <none>           <none>
+atenet-egress-7758c8fb4-tzj6r              3/3     Running     0          24m     10.244.0.22   yout-control-plane   <none>           <none>
+atenet-router-d844d4995-lj6mg              2/2     Running     0          24m     10.244.0.16   yout-control-plane   <none>           <none>
+k8s-credential-provider-5bb6b77b65-z98qf   1/1     Running     0          24m     10.244.0.21   yout-control-plane   <none>           <none>
+postgres-0                                 2/2     Running     0          11m     10.244.0.86   yout-control-plane   <none>           <none>
+rustfs-54c86945fb-hzrcd                    1/1     Running     0          24m     10.244.0.20   yout-control-plane   <none>           <none>
+rustfs-bucket-init-vzdrl                   0/1     Completed   0          24m     10.244.0.15   yout-control-plane   <none>           <none>
+u-prober                                   1/1     Running     0          22m     10.244.0.83   yout-control-plane   <none>           <none>

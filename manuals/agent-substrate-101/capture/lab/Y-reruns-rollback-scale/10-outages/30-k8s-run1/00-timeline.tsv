@@ -1,0 +1,8 @@
+1794514610.089	20:16:50	start-baseline
+1794514640.230	20:17:20	outage-begin kube-apiserver-manifest-moved-out livez=200
+1794514640.416	20:17:20	dependency-gone livez=000
+1794514726.371	20:18:46	restore-begin kube-apiserver-manifest-moved-back
+1794514731.144	20:18:51	dependency-ready livez=200
+1794514851.154	20:20:51	end-streams
+1794514871.427	20:21:11	running-actors-checked
+1794514881.069	20:21:21	done

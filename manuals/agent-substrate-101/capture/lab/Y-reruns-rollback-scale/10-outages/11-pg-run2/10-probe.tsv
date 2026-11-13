@@ -1,0 +1,688 @@
+1794513811	running	y-run	200	0.030880	count=152 process_age_s=303.5 
+1794513811	running2	y-r1	200	0.031714	count=157 process_age_s=303.5 
+1794513811	running2	y-r2	200	0.030657	count=152 process_age_s=303.5 
+1794513811	suspended	pg2-s-001	200	0.346811	count=1 process_age_s=303.8 
+1794513812	running	y-run	200	0.026134	count=153 process_age_s=304.5 
+1794513812	running2	y-r1	200	0.027778	count=158 process_age_s=304.5 
+1794513812	running2	y-r2	200	0.027514	count=153 process_age_s=304.5 
+1794513813	running	y-run	200	0.029822	count=154 process_age_s=305.5 
+1794513813	running2	y-r1	200	0.029539	count=159 process_age_s=305.5 
+1794513813	running2	y-r2	200	0.030287	count=154 process_age_s=305.5 
+1794513814	running	y-run	200	0.027607	count=155 process_age_s=306.5 
+1794513814	running2	y-r1	200	0.028231	count=160 process_age_s=306.5 
+1794513814	running2	y-r2	200	0.027276	count=155 process_age_s=306.5 
+1794513815	running	y-run	200	0.030409	count=156 process_age_s=307.5 
+1794513815	running2	y-r1	200	0.027590	count=161 process_age_s=307.5 
+1794513815	running2	y-r2	200	0.027357	count=156 process_age_s=307.5 
+1794513816	running	y-run	200	0.032555	count=157 process_age_s=308.5 
+1794513816	running2	y-r1	200	0.029013	count=162 process_age_s=308.5 
+1794513816	running2	y-r2	200	0.033631	count=157 process_age_s=308.5 
+1794513816	suspended	pg2-s-002	200	0.323732	count=1 process_age_s=308.8 
+1794513817	running	y-run	200	0.029603	count=158 process_age_s=309.5 
+1794513817	running2	y-r1	200	0.028968	count=163 process_age_s=309.5 
+1794513817	running2	y-r2	200	0.027971	count=158 process_age_s=309.5 
+1794513818	running	y-run	200	0.027486	count=159 process_age_s=310.5 
+1794513818	running2	y-r1	200	0.026926	count=164 process_age_s=310.5 
+1794513818	running2	y-r2	200	0.028006	count=159 process_age_s=310.5 
+1794513819	running	y-run	200	0.028455	count=160 process_age_s=311.5 
+1794513819	running2	y-r1	200	0.028563	count=165 process_age_s=311.5 
+1794513819	running2	y-r2	200	0.026802	count=160 process_age_s=311.5 
+1794513820	running	y-run	200	0.028605	count=161 process_age_s=312.5 
+1794513820	running2	y-r1	200	0.027346	count=166 process_age_s=312.5 
+1794513820	running2	y-r2	200	0.028206	count=161 process_age_s=312.5 
+1794513821	running	y-run	200	0.030700	count=162 process_age_s=313.5 
+1794513821	running2	y-r1	200	0.031301	count=167 process_age_s=313.5 
+1794513821	running2	y-r2	200	0.030777	count=162 process_age_s=313.5 
+1794513821	suspended	pg2-s-003	200	0.349778	count=1 process_age_s=313.8 
+1794513822	running	y-run	200	0.026921	count=163 process_age_s=314.5 
+1794513822	running2	y-r1	200	0.026548	count=168 process_age_s=314.5 
+1794513822	running2	y-r2	200	0.026834	count=163 process_age_s=314.5 
+1794513823	running	y-run	200	0.026629	count=164 process_age_s=315.5 
+1794513823	running2	y-r1	200	0.027865	count=169 process_age_s=315.5 
+1794513823	running2	y-r2	200	0.026788	count=164 process_age_s=315.5 
+1794513824	running	y-run	200	0.028005	count=165 process_age_s=316.5 
+1794513824	running2	y-r1	200	0.025807	count=170 process_age_s=316.5 
+1794513824	running2	y-r2	200	0.026836	count=165 process_age_s=316.5 
+1794513825	running	y-run	200	0.030037	count=166 process_age_s=317.5 
+1794513825	running2	y-r1	200	0.028903	count=171 process_age_s=317.5 
+1794513825	running2	y-r2	200	0.028740	count=166 process_age_s=317.5 
+1794513826	running	y-run	200	0.029988	count=167 process_age_s=318.5 
+1794513826	running2	y-r1	200	0.030213	count=172 process_age_s=318.5 
+1794513826	running2	y-r2	200	0.052542	count=167 process_age_s=318.6 
+1794513826	suspended	pg2-s-004	200	0.336008	count=1 process_age_s=318.8 
+1794513827	running	y-run	200	0.030047	count=168 process_age_s=319.5 
+1794513827	running2	y-r1	200	0.030517	count=173 process_age_s=319.5 
+1794513827	running2	y-r2	200	0.028257	count=168 process_age_s=319.5 
+1794513828	running	y-run	200	0.030024	count=169 process_age_s=320.5 
+1794513828	running2	y-r1	200	0.027342	count=174 process_age_s=320.5 
+1794513828	running2	y-r2	200	0.025768	count=169 process_age_s=320.5 
+1794513829	running	y-run	200	0.030230	count=170 process_age_s=321.5 
+1794513829	running2	y-r1	200	0.030829	count=175 process_age_s=321.5 
+1794513829	running2	y-r2	200	0.030082	count=170 process_age_s=321.5 
+1794513830	running	y-run	200	0.026212	count=171 process_age_s=322.5 
+1794513830	running2	y-r1	200	0.026752	count=176 process_age_s=322.5 
+1794513830	running2	y-r2	200	0.029194	count=171 process_age_s=322.5 
+1794513831	running	y-run	200	0.029940	count=172 process_age_s=323.5 
+1794513831	running2	y-r1	200	0.028711	count=177 process_age_s=323.5 
+1794513831	running2	y-r2	200	0.029587	count=172 process_age_s=323.5 
+1794513831	suspended	pg2-s-005	200	0.309801	count=1 process_age_s=323.8 
+1794513832	running	y-run	200	0.029636	count=173 process_age_s=324.6 
+1794513832	running2	y-r1	200	0.028114	count=178 process_age_s=324.6 
+1794513832	running2	y-r2	200	0.028912	count=173 process_age_s=324.6 
+1794513833	running	y-run	200	0.027745	count=174 process_age_s=325.6 
+1794513833	running2	y-r1	200	0.026130	count=179 process_age_s=325.6 
+1794513833	running2	y-r2	200	0.027372	count=174 process_age_s=325.6 
+1794513834	running	y-run	200	0.026406	count=175 process_age_s=326.6 
+1794513834	running2	y-r1	200	0.029286	count=180 process_age_s=326.6 
+1794513834	running2	y-r2	200	0.027995	count=175 process_age_s=326.6 
+1794513835	running	y-run	200	0.027712	count=176 process_age_s=327.6 
+1794513835	running2	y-r1	200	0.027439	count=181 process_age_s=327.6 
+1794513835	running2	y-r2	200	0.027480	count=176 process_age_s=327.6 
+1794513836	running	y-run	200	0.028675	count=177 process_age_s=328.6 
+1794513836	running2	y-r1	200	0.027492	count=182 process_age_s=328.6 
+1794513836	running2	y-r2	200	0.028321	count=177 process_age_s=328.6 
+1794513836	suspended	pg2-s-006	200	0.301668	count=1 process_age_s=328.8 
+1794513837	running	y-run	200	0.029240	count=178 process_age_s=329.6 
+1794513837	running2	y-r1	200	0.027982	count=183 process_age_s=329.6 
+1794513837	running2	y-r2	200	0.026162	count=178 process_age_s=329.6 
+1794513838	running	y-run	200	0.031150	count=179 process_age_s=330.6 
+1794513838	running2	y-r1	200	0.030829	count=184 process_age_s=330.6 
+1794513838	running2	y-r2	200	0.033426	count=179 process_age_s=330.6 
+1794513839	running	y-run	200	0.028219	count=180 process_age_s=331.6 
+1794513839	running2	y-r1	200	0.026790	count=185 process_age_s=331.6 
+1794513839	running2	y-r2	200	0.027807	count=180 process_age_s=331.6 
+1794513840	running	y-run	200	0.029167	count=181 process_age_s=332.6 
+1794513840	running2	y-r1	200	0.028824	count=186 process_age_s=332.6 
+1794513840	running2	y-r2	200	0.028437	count=181 process_age_s=332.6 
+1794513841	running	y-run	200	0.032459	count=182 process_age_s=333.6 
+1794513841	running2	y-r1	200	0.029444	count=187 process_age_s=333.6 
+1794513841	running2	y-r2	200	0.028436	count=182 process_age_s=333.6 
+1794513841	suspended	pg2-s-007	500	0.069907	error resuming actor y-lab/pg2-s-007
+1794513842	running	y-run	000	9.002929	
+1794513842	running2	y-r1	500	5.051292	error resuming actor y-lab/y-r1
+1794513842	running2	y-r2	000	9.002288	
+1794513843	running	y-run	000	9.002739	
+1794513843	running2	y-r1	500	4.047547	error resuming actor y-lab/y-r1
+1794513843	running2	y-r2	000	9.002194	
+1794513844	running	y-run	000	9.002770	
+1794513844	running2	y-r1	500	3.043831	error resuming actor y-lab/y-r1
+1794513844	running2	y-r2	000	9.002588	
+1794513845	running	y-run	000	9.002788	
+1794513845	running2	y-r1	500	2.040799	error resuming actor y-lab/y-r1
+1794513845	running2	y-r2	000	9.002087	
+1794513846	running	y-run	000	9.002246	
+1794513846	running2	y-r1	500	1.036659	error resuming actor y-lab/y-r1
+1794513846	running2	y-r2	000	9.002928	
+1794513846	suspended	pg2-s-008	500	0.030274	error resuming actor y-lab/pg2-s-008
+1794513847	running	y-run	000	9.002763	
+1794513847	running2	y-r1	500	0.031061	error resuming actor y-lab/y-r1
+1794513847	running2	y-r2	000	9.002385	
+1794513848	running	y-run	000	9.002529	
+1794513848	running2	y-r1	503	5.018250	actor y-lab/y-r1 unavailable
+1794513848	running2	y-r2	000	9.002041	
+1794513849	running	y-run	000	9.002774	
+1794513849	running2	y-r1	503	4.014303	actor y-lab/y-r1 unavailable
+1794513849	running2	y-r2	000	9.002179	
+1794513850	running	y-run	000	9.002918	
+1794513850	running2	y-r1	503	3.009076	actor y-lab/y-r1 unavailable
+1794513850	running2	y-r2	000	9.002335	
+1794513851	running	y-run	000	9.002916	
+1794513851	running2	y-r1	503	2.006559	actor y-lab/y-r1 unavailable
+1794513851	running2	y-r2	000	9.001898	
+1794513851	suspended	pg2-s-009	503	5.018543	actor y-lab/pg2-s-009 unavailable
+1794513852	running	y-run	000	9.002073	
+1794513852	running2	y-r1	503	1.001259	actor y-lab/y-r1 unavailable
+1794513852	running2	y-r2	000	9.002314	
+1794513853	running	y-run	000	9.001981	
+1794513853	running2	y-r1	503	5.020557	actor y-lab/y-r1 unavailable
+1794513853	running2	y-r2	000	9.002438	
+1794513854	running	y-run	000	9.002582	
+1794513854	running2	y-r1	503	4.018483	actor y-lab/y-r1 unavailable
+1794513854	running2	y-r2	000	9.002088	
+1794513855	running	y-run	000	9.002585	
+1794513855	running2	y-r1	503	3.013260	actor y-lab/y-r1 unavailable
+1794513855	running2	y-r2	000	9.002528	
+1794513856	running	y-run	000	9.002072	
+1794513856	running2	y-r1	503	2.010401	actor y-lab/y-r1 unavailable
+1794513856	running2	y-r2	000	9.002097	
+1794513856	suspended	pg2-s-010	503	5.023749	actor y-lab/pg2-s-010 unavailable
+1794513857	running	y-run	000	9.002560	
+1794513857	running2	y-r1	503	1.004882	actor y-lab/y-r1 unavailable
+1794513857	running2	y-r2	000	9.002489	
+1794513858	running	y-run	000	9.002018	
+1794513858	running2	y-r1	503	5.020295	actor y-lab/y-r1 unavailable
+1794513858	running2	y-r2	000	9.002190	
+1794513859	running	y-run	000	9.002759	
+1794513859	running2	y-r1	503	4.016544	actor y-lab/y-r1 unavailable
+1794513859	running2	y-r2	000	9.002862	
+1794513860	running	y-run	000	9.002391	
+1794513860	running2	y-r1	503	3.011550	actor y-lab/y-r1 unavailable
+1794513860	running2	y-r2	000	9.002091	
+1794513861	running	y-run	000	9.002609	
+1794513861	running2	y-r1	503	2.006440	actor y-lab/y-r1 unavailable
+1794513861	running2	y-r2	000	9.002945	
+1794513861	suspended	pg2-s-011	503	5.022836	actor y-lab/pg2-s-011 unavailable
+1794513862	running	y-run	000	9.002582	
+1794513862	running2	y-r1	503	1.003399	actor y-lab/y-r1 unavailable
+1794513862	running2	y-r2	000	9.002346	
+1794513863	running	y-run	000	9.002588	
+1794513863	running2	y-r1	503	5.020907	actor y-lab/y-r1 unavailable
+1794513863	running2	y-r2	000	9.002205	
+1794513864	running	y-run	000	9.002796	
+1794513864	running2	y-r1	503	4.021340	actor y-lab/y-r1 unavailable
+1794513864	running2	y-r2	000	9.002684	
+1794513865	running	y-run	000	9.002611	
+1794513865	running2	y-r1	503	3.012363	actor y-lab/y-r1 unavailable
+1794513865	running2	y-r2	000	9.002647	
+1794513866	running	y-run	000	9.002754	
+1794513866	running2	y-r1	503	2.014221	actor y-lab/y-r1 unavailable
+1794513866	running2	y-r2	000	9.001917	
+1794513866	suspended	pg2-s-012	503	5.019740	actor y-lab/pg2-s-012 unavailable
+1794513867	running	y-run	000	9.002962	
+1794513867	running2	y-r1	503	1.004320	actor y-lab/y-r1 unavailable
+1794513867	running2	y-r2	000	9.002287	
+1794513868	running	y-run	000	9.002420	
+1794513868	running2	y-r1	503	5.019649	actor y-lab/y-r1 unavailable
+1794513868	running2	y-r2	000	9.002499	
+1794513870	running	y-run	000	9.002025	
+1794513870	running2	y-r1	503	4.017081	actor y-lab/y-r1 unavailable
+1794513870	running2	y-r2	000	9.002794	
+1794513871	running	y-run	000	9.002228	
+1794513871	running2	y-r1	503	3.013375	actor y-lab/y-r1 unavailable
+1794513871	running2	y-r2	000	9.002023	
+1794513872	running	y-run	000	9.002084	
+1794513872	running2	y-r1	503	2.008690	actor y-lab/y-r1 unavailable
+1794513872	running2	y-r2	000	9.002005	
+1794513872	suspended	pg2-s-013	503	5.020589	actor y-lab/pg2-s-013 unavailable
+1794513873	running	y-run	000	9.002402	
+1794513873	running2	y-r1	503	1.003450	actor y-lab/y-r1 unavailable
+1794513873	running2	y-r2	000	9.002354	
+1794513874	running	y-run	000	9.002261	
+1794513874	running2	y-r1	503	5.019485	actor y-lab/y-r1 unavailable
+1794513874	running2	y-r2	000	9.002292	
+1794513875	running	y-run	000	9.001991	
+1794513875	running2	y-r1	503	4.019399	actor y-lab/y-r1 unavailable
+1794513875	running2	y-r2	000	9.002066	
+1794513876	running	y-run	000	9.002564	
+1794513876	running2	y-r1	503	3.010654	actor y-lab/y-r1 unavailable
+1794513876	running2	y-r2	000	9.002295	
+1794513877	running	y-run	000	9.002627	
+1794513877	running2	y-r1	503	2.008282	actor y-lab/y-r1 unavailable
+1794513877	running2	y-r2	000	9.002853	
+1794513877	suspended	pg2-s-014	503	5.020969	actor y-lab/pg2-s-014 unavailable
+1794513878	running	y-run	000	9.002744	
+1794513878	running2	y-r1	503	1.003448	actor y-lab/y-r1 unavailable
+1794513878	running2	y-r2	000	9.002243	
+1794513879	running	y-run	000	9.002724	
+1794513879	running2	y-r1	503	5.020412	actor y-lab/y-r1 unavailable
+1794513879	running2	y-r2	000	9.002166	
+1794513880	running	y-run	000	9.002383	
+1794513880	running2	y-r1	503	4.016565	actor y-lab/y-r1 unavailable
+1794513880	running2	y-r2	000	9.002627	
+1794513881	running	y-run	000	9.002029	
+1794513881	running2	y-r1	503	3.012394	actor y-lab/y-r1 unavailable
+1794513881	running2	y-r2	000	9.002171	
+1794513882	running	y-run	000	9.002741	
+1794513882	running2	y-r1	503	2.008905	actor y-lab/y-r1 unavailable
+1794513882	running2	y-r2	000	9.002333	
+1794513882	suspended	pg2-s-015	503	5.021148	actor y-lab/pg2-s-015 unavailable
+1794513883	running	y-run	000	9.002902	
+1794513883	running2	y-r1	503	1.002995	actor y-lab/y-r1 unavailable
+1794513883	running2	y-r2	000	9.002659	
+1794513884	running	y-run	000	9.002326	
+1794513884	running2	y-r1	503	5.019859	actor y-lab/y-r1 unavailable
+1794513884	running2	y-r2	000	9.001986	
+1794513885	running	y-run	000	9.002589	
+1794513885	running2	y-r1	503	4.014579	actor y-lab/y-r1 unavailable
+1794513885	running2	y-r2	000	9.002916	
+1794513886	running	y-run	000	9.002760	
+1794513886	running2	y-r1	503	3.011185	actor y-lab/y-r1 unavailable
+1794513886	running2	y-r2	000	9.001971	
+1794513887	running	y-run	000	9.002723	
+1794513887	running2	y-r1	503	2.008430	actor y-lab/y-r1 unavailable
+1794513887	running2	y-r2	000	9.001960	
+1794513887	suspended	pg2-s-016	503	5.022705	actor y-lab/pg2-s-016 unavailable
+1794513888	running	y-run	000	9.001538	
+1794513888	running2	y-r1	503	1.003796	actor y-lab/y-r1 unavailable
+1794513888	running2	y-r2	000	9.002167	
+1794513889	running	y-run	000	9.002412	
+1794513889	running2	y-r1	503	5.021934	actor y-lab/y-r1 unavailable
+1794513889	running2	y-r2	000	9.002560	
+1794513890	running	y-run	000	9.002728	
+1794513890	running2	y-r1	503	4.018423	actor y-lab/y-r1 unavailable
+1794513890	running2	y-r2	000	9.002850	
+1794513891	running	y-run	000	9.002425	
+1794513891	running2	y-r1	503	3.013980	actor y-lab/y-r1 unavailable
+1794513891	running2	y-r2	000	9.001883	
+1794513892	running	y-run	000	9.002244	
+1794513892	running2	y-r1	503	2.011019	actor y-lab/y-r1 unavailable
+1794513892	running2	y-r2	000	9.002629	
+1794513892	suspended	pg2-s-017	503	5.021986	actor y-lab/pg2-s-017 unavailable
+1794513893	running	y-run	000	9.002351	
+1794513893	running2	y-r1	503	1.005169	actor y-lab/y-r1 unavailable
+1794513893	running2	y-r2	000	9.002367	
+1794513894	running	y-run	000	9.002712	
+1794513894	running2	y-r1	503	5.020256	actor y-lab/y-r1 unavailable
+1794513894	running2	y-r2	000	9.002661	
+1794513895	running	y-run	000	9.002020	
+1794513895	running2	y-r1	503	4.016072	actor y-lab/y-r1 unavailable
+1794513895	running2	y-r2	000	9.002800	
+1794513896	running	y-run	000	9.002776	
+1794513896	running2	y-r1	503	3.013068	actor y-lab/y-r1 unavailable
+1794513896	running2	y-r2	000	9.001788	
+1794513897	running	y-run	000	9.002437	
+1794513897	running2	y-r1	503	2.008710	actor y-lab/y-r1 unavailable
+1794513897	running2	y-r2	000	9.002727	
+1794513897	suspended	pg2-s-018	503	5.022886	actor y-lab/pg2-s-018 unavailable
+1794513898	running	y-run	000	9.002461	
+1794513898	running2	y-r1	503	1.004557	actor y-lab/y-r1 unavailable
+1794513898	running2	y-r2	000	9.001962	
+1794513899	running	y-run	000	9.002842	
+1794513899	running2	y-r1	503	5.021285	actor y-lab/y-r1 unavailable
+1794513899	running2	y-r2	000	9.002147	
+1794513900	running	y-run	000	9.002007	
+1794513900	running2	y-r1	503	4.016990	actor y-lab/y-r1 unavailable
+1794513900	running2	y-r2	000	9.002221	
+1794513901	running	y-run	500	8.287626	error resuming actor y-lab/y-run
+1794513901	running2	y-r1	503	3.014421	actor y-lab/y-r1 unavailable
+1794513901	running2	y-r2	500	8.265952	error resuming actor y-lab/y-r2
+1794513902	running	y-run	500	7.285096	error resuming actor y-lab/y-run
+1794513902	running2	y-r1	503	2.011149	actor y-lab/y-r1 unavailable
+1794513902	running2	y-r2	500	7.263970	error resuming actor y-lab/y-r2
+1794513902	suspended	pg2-s-019	503	5.023129	actor y-lab/pg2-s-019 unavailable
+1794513903	running	y-run	500	6.278812	error resuming actor y-lab/y-run
+1794513903	running2	y-r1	503	1.005702	actor y-lab/y-r1 unavailable
+1794513903	running2	y-r2	500	6.257147	error resuming actor y-lab/y-r2
+1794513904	running	y-run	500	5.275255	error resuming actor y-lab/y-run
+1794513904	running2	y-r1	200	3.428522	count=189 process_age_s=399.2 
+1794513904	running2	y-r2	500	5.254987	error resuming actor y-lab/y-r2
+1794513905	running	y-run	500	4.271368	error resuming actor y-lab/y-run
+1794513905	running2	y-r1	200	2.431833	count=191 process_age_s=399.2 
+1794513905	running2	y-r2	500	4.250119	error resuming actor y-lab/y-r2
+1794513906	running	y-run	500	3.264422	error resuming actor y-lab/y-run
+1794513906	running2	y-r1	200	1.423739	count=190 process_age_s=399.2 
+1794513906	running2	y-r2	500	3.245344	error resuming actor y-lab/y-r2
+1794513907	running	y-run	500	2.262474	error resuming actor y-lab/y-run
+1794513907	running2	y-r1	200	0.413330	count=188 process_age_s=399.2 
+1794513907	running2	y-r2	500	2.242025	error resuming actor y-lab/y-r2
+1794513907	suspended	pg2-s-020	500	0.287155	error resuming actor y-lab/pg2-s-020
+1794513908	running	y-run	500	1.259305	error resuming actor y-lab/y-run
+1794513908	running2	y-r1	200	0.055177	count=192 process_age_s=399.9 
+1794513908	running2	y-r2	500	1.237976	error resuming actor y-lab/y-r2
+1794513909	running	y-run	500	0.254765	error resuming actor y-lab/y-run
+1794513909	running2	y-r1	200	0.031781	count=193 process_age_s=400.9 
+1794513909	running2	y-r2	500	0.234337	error resuming actor y-lab/y-r2
+1794513910	running	y-run	200	0.033654	count=183 process_age_s=401.9 
+1794513910	running2	y-r1	200	0.031269	count=194 process_age_s=401.9 
+1794513910	running2	y-r2	200	0.030577	count=183 process_age_s=401.9 
+1794513911	running	y-run	200	0.053864	count=184 process_age_s=402.9 
+1794513911	running2	y-r1	200	0.031450	count=195 process_age_s=402.9 
+1794513911	running2	y-r2	200	0.031598	count=184 process_age_s=402.9 
+1794513912	running	y-run	200	0.035652	count=185 process_age_s=403.9 
+1794513912	running2	y-r1	200	0.039052	count=196 process_age_s=403.9 
+1794513912	running2	y-r2	200	0.038240	count=185 process_age_s=403.9 
+1794513912	suspended	pg2-s-021	500	0.038480	error resuming actor y-lab/pg2-s-021
+1794513913	running	y-run	200	0.033836	count=186 process_age_s=404.9 
+1794513913	running2	y-r1	200	0.031345	count=197 process_age_s=404.9 
+1794513913	running2	y-r2	200	0.033151	count=186 process_age_s=404.9 
+1794513914	running	y-run	200	0.029784	count=187 process_age_s=405.9 
+1794513914	running2	y-r1	200	0.029764	count=198 process_age_s=405.9 
+1794513914	running2	y-r2	200	0.033567	count=187 process_age_s=405.9 
+1794513915	running	y-run	200	0.029888	count=188 process_age_s=406.9 
+1794513915	running2	y-r1	200	0.030124	count=199 process_age_s=406.9 
+1794513915	running2	y-r2	200	0.031386	count=188 process_age_s=406.9 
+1794513916	running	y-run	200	0.030536	count=189 process_age_s=407.9 
+1794513916	running2	y-r1	200	0.028686	count=200 process_age_s=407.9 
+1794513916	running2	y-r2	200	0.032512	count=189 process_age_s=407.9 
+1794513917	running	y-run	200	0.033899	count=190 process_age_s=408.9 
+1794513917	running2	y-r1	200	0.032186	count=201 process_age_s=408.9 
+1794513917	running2	y-r2	200	0.032657	count=190 process_age_s=408.9 
+1794513917	suspended	pg2-s-022	500	0.033389	error resuming actor y-lab/pg2-s-022
+1794513918	running	y-run	200	0.028612	count=191 process_age_s=409.9 
+1794513918	running2	y-r1	200	0.027608	count=202 process_age_s=409.9 
+1794513918	running2	y-r2	200	0.028833	count=191 process_age_s=409.9 
+1794513919	running	y-run	200	0.031401	count=192 process_age_s=410.9 
+1794513919	running2	y-r1	200	0.031630	count=203 process_age_s=410.9 
+1794513919	running2	y-r2	200	0.030750	count=192 process_age_s=410.9 
+1794513920	running	y-run	200	0.028253	count=193 process_age_s=411.9 
+1794513920	running2	y-r1	200	0.026618	count=204 process_age_s=411.9 
+1794513920	running2	y-r2	200	0.027902	count=193 process_age_s=411.9 
+1794513921	running	y-run	200	0.033210	count=194 process_age_s=412.9 
+1794513921	running2	y-r1	200	0.032611	count=205 process_age_s=412.9 
+1794513921	running2	y-r2	200	0.033307	count=194 process_age_s=412.9 
+1794513922	running	y-run	200	0.030622	count=195 process_age_s=413.9 
+1794513922	running2	y-r1	200	0.030774	count=206 process_age_s=413.9 
+1794513922	running2	y-r2	200	0.029583	count=195 process_age_s=413.9 
+1794513922	suspended	pg2-s-023	500	0.028477	error resuming actor y-lab/pg2-s-023
+1794513923	running	y-run	200	0.030696	count=196 process_age_s=414.9 
+1794513923	running2	y-r1	200	0.032834	count=207 process_age_s=414.9 
+1794513923	running2	y-r2	200	0.030905	count=196 process_age_s=414.9 
+1794513924	running	y-run	200	0.029444	count=197 process_age_s=415.9 
+1794513924	running2	y-r1	200	0.027738	count=208 process_age_s=415.9 
+1794513924	running2	y-r2	200	0.028269	count=197 process_age_s=415.9 
+1794513925	running	y-run	200	0.029332	count=198 process_age_s=416.9 
+1794513925	running2	y-r1	200	0.028991	count=209 process_age_s=416.9 
+1794513925	running2	y-r2	200	0.028038	count=198 process_age_s=416.9 
+1794513926	running	y-run	200	0.029599	count=199 process_age_s=417.9 
+1794513926	running2	y-r1	200	0.029054	count=210 process_age_s=417.9 
+1794513926	running2	y-r2	200	0.029035	count=199 process_age_s=417.9 
+1794513927	running	y-run	200	0.050823	count=200 process_age_s=419.0 
+1794513927	running2	y-r1	200	0.031724	count=211 process_age_s=418.9 
+1794513927	running2	y-r2	200	0.031372	count=200 process_age_s=418.9 
+1794513927	suspended	pg2-s-024	500	0.032302	error resuming actor y-lab/pg2-s-024
+1794513928	running	y-run	200	0.029623	count=201 process_age_s=419.9 
+1794513928	running2	y-r1	200	0.029864	count=212 process_age_s=419.9 
+1794513928	running2	y-r2	200	0.046612	count=201 process_age_s=420.0 
+1794513929	running	y-run	200	0.030702	count=202 process_age_s=420.9 
+1794513929	running2	y-r1	200	0.030191	count=213 process_age_s=420.9 
+1794513929	running2	y-r2	200	0.030807	count=202 process_age_s=420.9 
+1794513930	running	y-run	200	0.029323	count=203 process_age_s=421.9 
+1794513930	running2	y-r1	200	0.029521	count=214 process_age_s=421.9 
+1794513930	running2	y-r2	200	0.029672	count=203 process_age_s=421.9 
+1794513931	running	y-run	200	0.030198	count=204 process_age_s=423.0 
+1794513931	running2	y-r1	200	0.029892	count=215 process_age_s=423.0 
+1794513931	running2	y-r2	200	0.029129	count=204 process_age_s=423.0 
+1794513932	running	y-run	200	0.029720	count=205 process_age_s=424.0 
+1794513932	running2	y-r1	200	0.031435	count=216 process_age_s=424.0 
+1794513932	running2	y-r2	200	0.030938	count=205 process_age_s=424.0 
+1794513932	suspended	pg2-s-025	500	0.034900	error resuming actor y-lab/pg2-s-025
+1794513933	running	y-run	200	0.031336	count=206 process_age_s=425.0 
+1794513933	running2	y-r1	200	0.029997	count=217 process_age_s=425.0 
+1794513933	running2	y-r2	200	0.028969	count=206 process_age_s=425.0 
+1794513934	running	y-run	200	0.028367	count=207 process_age_s=426.0 
+1794513934	running2	y-r1	200	0.028987	count=218 process_age_s=426.0 
+1794513934	running2	y-r2	200	0.028389	count=207 process_age_s=426.0 
+1794513935	running	y-run	200	0.032332	count=208 process_age_s=427.0 
+1794513935	running2	y-r1	200	0.029654	count=219 process_age_s=427.0 
+1794513935	running2	y-r2	200	0.030957	count=208 process_age_s=427.0 
+1794513936	running	y-run	200	0.030006	count=209 process_age_s=428.0 
+1794513936	running2	y-r1	200	0.029015	count=220 process_age_s=428.0 
+1794513936	running2	y-r2	200	0.030995	count=209 process_age_s=428.0 
+1794513937	running	y-run	200	0.030576	count=210 process_age_s=429.0 
+1794513937	running2	y-r1	200	0.030754	count=221 process_age_s=429.0 
+1794513937	running2	y-r2	200	0.030942	count=210 process_age_s=429.0 
+1794513937	suspended	pg2-s-026	200	0.340306	count=1 process_age_s=429.3 
+1794513938	running	y-run	200	0.028397	count=211 process_age_s=430.0 
+1794513938	running2	y-r1	200	0.028272	count=222 process_age_s=430.0 
+1794513938	running2	y-r2	200	0.028708	count=211 process_age_s=430.0 
+1794513939	running	y-run	200	0.028571	count=212 process_age_s=431.0 
+1794513939	running2	y-r1	200	0.028917	count=223 process_age_s=431.0 
+1794513939	running2	y-r2	200	0.028059	count=212 process_age_s=431.0 
+1794513940	running	y-run	200	0.032860	count=213 process_age_s=432.0 
+1794513940	running2	y-r1	200	0.031718	count=224 process_age_s=432.0 
+1794513940	running2	y-r2	200	0.030825	count=213 process_age_s=432.0 
+1794513941	running	y-run	200	0.027378	count=214 process_age_s=433.0 
+1794513941	running2	y-r1	200	0.028079	count=225 process_age_s=433.0 
+1794513941	running2	y-r2	200	0.029952	count=214 process_age_s=433.0 
+1794513942	running	y-run	200	0.034835	count=215 process_age_s=434.0 
+1794513942	running2	y-r1	200	0.031633	count=226 process_age_s=434.0 
+1794513942	running2	y-r2	200	0.035718	count=215 process_age_s=434.0 
+1794513942	suspended	pg2-s-027	200	0.349755	count=1 process_age_s=434.3 
+1794513943	running	y-run	200	0.028121	count=216 process_age_s=435.0 
+1794513943	running2	y-r1	200	0.028554	count=227 process_age_s=435.0 
+1794513943	running2	y-r2	200	0.028090	count=216 process_age_s=435.0 
+1794513944	running	y-run	200	0.030372	count=217 process_age_s=436.0 
+1794513944	running2	y-r1	200	0.029023	count=228 process_age_s=436.0 
+1794513944	running2	y-r2	200	0.030843	count=217 process_age_s=436.0 
+1794513945	running	y-run	200	0.025807	count=218 process_age_s=437.0 
+1794513945	running2	y-r1	200	0.027866	count=229 process_age_s=437.0 
+1794513945	running2	y-r2	200	0.027954	count=218 process_age_s=437.0 
+1794513946	running	y-run	200	0.031213	count=219 process_age_s=438.0 
+1794513946	running2	y-r1	200	0.030832	count=230 process_age_s=438.0 
+1794513946	running2	y-r2	200	0.029758	count=219 process_age_s=438.0 
+1794513947	running	y-run	200	0.032547	count=220 process_age_s=439.0 
+1794513947	running2	y-r1	200	0.031029	count=231 process_age_s=439.0 
+1794513947	running2	y-r2	200	0.030935	count=220 process_age_s=439.0 
+1794513947	suspended	pg2-s-028	200	0.359080	count=1 process_age_s=439.4 
+1794513948	running	y-run	200	0.028933	count=221 process_age_s=440.0 
+1794513948	running2	y-r1	200	0.028871	count=232 process_age_s=440.0 
+1794513948	running2	y-r2	200	0.028995	count=221 process_age_s=440.0 
+1794513949	running	y-run	200	0.029267	count=222 process_age_s=441.0 
+1794513949	running2	y-r1	200	0.027353	count=233 process_age_s=441.0 
+1794513949	running2	y-r2	200	0.026847	count=222 process_age_s=441.0 
+1794513950	running	y-run	200	0.029465	count=223 process_age_s=442.0 
+1794513950	running2	y-r1	200	0.029166	count=234 process_age_s=442.0 
+1794513950	running2	y-r2	200	0.027973	count=223 process_age_s=442.0 
+1794513951	running	y-run	200	0.030852	count=224 process_age_s=443.0 
+1794513951	running2	y-r1	200	0.034385	count=235 process_age_s=443.0 
+1794513951	running2	y-r2	200	0.031694	count=224 process_age_s=443.0 
+1794513952	running	y-run	200	0.034149	count=225 process_age_s=444.0 
+1794513952	running2	y-r1	200	0.033408	count=236 process_age_s=444.0 
+1794513952	running2	y-r2	200	0.034477	count=225 process_age_s=444.0 
+1794513952	suspended	pg2-s-029	200	0.372478	count=1 process_age_s=444.4 
+1794513953	running	y-run	200	0.026806	count=226 process_age_s=445.0 
+1794513953	running2	y-r1	200	0.027514	count=237 process_age_s=445.0 
+1794513953	running2	y-r2	200	0.027807	count=226 process_age_s=445.0 
+1794513954	running	y-run	200	0.029747	count=227 process_age_s=446.0 
+1794513954	running2	y-r1	200	0.031278	count=238 process_age_s=446.0 
+1794513954	running2	y-r2	200	0.031178	count=227 process_age_s=446.0 
+1794513955	running	y-run	200	0.028654	count=228 process_age_s=447.0 
+1794513955	running2	y-r1	200	0.027097	count=239 process_age_s=447.0 
+1794513955	running2	y-r2	200	0.028021	count=228 process_age_s=447.0 
+1794513956	running	y-run	200	0.028641	count=229 process_age_s=448.1 
+1794513956	running2	y-r1	200	0.027573	count=240 process_age_s=448.1 
+1794513956	running2	y-r2	200	0.026491	count=229 process_age_s=448.1 
+1794513957	running	y-run	200	0.028893	count=230 process_age_s=449.1 
+1794513957	running2	y-r1	200	0.028592	count=241 process_age_s=449.1 
+1794513957	running2	y-r2	200	0.031173	count=230 process_age_s=449.1 
+1794513957	suspended	pg2-s-030	200	0.311349	count=1 process_age_s=449.3 
+1794513958	running	y-run	200	0.027159	count=231 process_age_s=450.1 
+1794513958	running2	y-r1	200	0.026882	count=242 process_age_s=450.1 
+1794513958	running2	y-r2	200	0.026403	count=231 process_age_s=450.1 
+1794513959	running	y-run	200	0.026715	count=232 process_age_s=451.1 
+1794513959	running2	y-r1	200	0.028022	count=243 process_age_s=451.1 
+1794513959	running2	y-r2	200	0.026964	count=232 process_age_s=451.1 
+1794513960	running	y-run	200	0.028218	count=233 process_age_s=452.1 
+1794513960	running2	y-r1	200	0.027458	count=244 process_age_s=452.1 
+1794513960	running2	y-r2	200	0.027776	count=233 process_age_s=452.1 
+1794513961	running	y-run	200	0.029745	count=234 process_age_s=453.1 
+1794513961	running2	y-r1	200	0.028662	count=245 process_age_s=453.1 
+1794513961	running2	y-r2	200	0.030865	count=234 process_age_s=453.1 
+1794513962	running	y-run	200	0.029663	count=235 process_age_s=454.1 
+1794513962	running2	y-r1	200	0.031641	count=246 process_age_s=454.1 
+1794513962	running2	y-r2	200	0.029950	count=235 process_age_s=454.1 
+1794513962	suspended	pg2-s-031	200	0.340922	count=1 process_age_s=454.4 
+1794513963	running	y-run	200	0.027907	count=236 process_age_s=455.1 
+1794513963	running2	y-r1	200	0.027714	count=247 process_age_s=455.1 
+1794513963	running2	y-r2	200	0.027521	count=236 process_age_s=455.1 
+1794513964	running	y-run	200	0.025819	count=237 process_age_s=456.1 
+1794513964	running2	y-r1	200	0.028145	count=248 process_age_s=456.1 
+1794513964	running2	y-r2	200	0.027591	count=237 process_age_s=456.1 
+1794513965	running	y-run	200	0.028349	count=238 process_age_s=457.1 
+1794513965	running2	y-r1	200	0.029145	count=249 process_age_s=457.1 
+1794513965	running2	y-r2	200	0.029484	count=238 process_age_s=457.1 
+1794513966	running	y-run	200	0.030015	count=239 process_age_s=458.1 
+1794513966	running2	y-r1	200	0.028845	count=250 process_age_s=458.1 
+1794513966	running2	y-r2	200	0.029603	count=239 process_age_s=458.1 
+1794513967	running	y-run	200	0.032002	count=240 process_age_s=459.1 
+1794513967	running2	y-r1	200	0.034356	count=251 process_age_s=459.1 
+1794513967	running2	y-r2	200	0.032380	count=240 process_age_s=459.1 
+1794513967	suspended	pg2-s-032	200	0.366514	count=1 process_age_s=459.4 
+1794513968	running	y-run	200	0.027953	count=241 process_age_s=460.1 
+1794513968	running2	y-r1	200	0.028873	count=252 process_age_s=460.1 
+1794513968	running2	y-r2	200	0.028057	count=241 process_age_s=460.1 
+1794513969	running	y-run	200	0.029263	count=242 process_age_s=461.1 
+1794513969	running2	y-r1	200	0.029428	count=253 process_age_s=461.1 
+1794513969	running2	y-r2	200	0.028340	count=242 process_age_s=461.1 
+1794513970	running	y-run	200	0.027829	count=243 process_age_s=462.1 
+1794513970	running2	y-r1	200	0.027299	count=254 process_age_s=462.1 
+1794513970	running2	y-r2	200	0.028282	count=243 process_age_s=462.1 
+1794513971	running	y-run	200	0.028711	count=244 process_age_s=463.1 
+1794513971	running2	y-r1	200	0.028040	count=255 process_age_s=463.1 
+1794513971	running2	y-r2	200	0.027985	count=244 process_age_s=463.1 
+1794513972	running	y-run	200	0.032159	count=245 process_age_s=464.1 
+1794513972	running2	y-r1	200	0.032653	count=256 process_age_s=464.1 
+1794513972	running2	y-r2	200	0.031501	count=245 process_age_s=464.1 
+1794513972	suspended	pg2-s-033	200	0.343017	count=1 process_age_s=464.4 
+1794513973	running	y-run	200	0.027775	count=246 process_age_s=465.1 
+1794513973	running2	y-r1	200	0.026627	count=257 process_age_s=465.1 
+1794513973	running2	y-r2	200	0.028939	count=246 process_age_s=465.1 
+1794513974	running	y-run	200	0.027158	count=247 process_age_s=466.1 
+1794513974	running2	y-r1	200	0.030326	count=258 process_age_s=466.1 
+1794513974	running2	y-r2	200	0.028545	count=247 process_age_s=466.1 
+1794513975	running	y-run	200	0.028161	count=248 process_age_s=467.1 
+1794513975	running2	y-r1	200	0.027477	count=259 process_age_s=467.1 
+1794513975	running2	y-r2	200	0.027183	count=248 process_age_s=467.1 
+1794513976	running	y-run	200	0.027735	count=249 process_age_s=468.1 
+1794513976	running2	y-r1	200	0.027732	count=260 process_age_s=468.1 
+1794513976	running2	y-r2	200	0.027093	count=249 process_age_s=468.1 
+1794513977	running	y-run	200	0.028298	count=250 process_age_s=469.1 
+1794513977	running2	y-r1	200	0.028982	count=261 process_age_s=469.1 
+1794513977	running2	y-r2	200	0.028331	count=250 process_age_s=469.1 
+1794513977	suspended	pg2-s-034	200	0.341123	count=1 process_age_s=469.5 
+1794513978	running	y-run	200	0.027299	count=251 process_age_s=470.1 
+1794513978	running2	y-r1	200	0.027107	count=262 process_age_s=470.1 
+1794513978	running2	y-r2	200	0.027375	count=251 process_age_s=470.1 
+1794513979	running	y-run	200	0.028135	count=252 process_age_s=471.1 
+1794513979	running2	y-r1	200	0.028155	count=263 process_age_s=471.1 
+1794513979	running2	y-r2	200	0.028541	count=252 process_age_s=471.1 
+1794513980	running	y-run	200	0.028058	count=253 process_age_s=472.2 
+1794513980	running2	y-r1	200	0.025879	count=264 process_age_s=472.2 
+1794513980	running2	y-r2	200	0.025749	count=253 process_age_s=472.2 
+1794513981	running	y-run	200	0.044123	count=254 process_age_s=473.2 
+1794513981	running2	y-r1	200	0.026695	count=265 process_age_s=473.2 
+1794513981	running2	y-r2	200	0.027447	count=254 process_age_s=473.2 
+1794513982	running	y-run	200	0.027999	count=255 process_age_s=474.2 
+1794513982	running2	y-r1	200	0.027777	count=266 process_age_s=474.2 
+1794513982	running2	y-r2	200	0.028690	count=255 process_age_s=474.2 
+1794513982	suspended	pg2-s-035	200	0.341595	count=1 process_age_s=474.5 
+1794513983	running	y-run	200	0.029520	count=256 process_age_s=475.2 
+1794513983	running2	y-r1	200	0.028490	count=267 process_age_s=475.2 
+1794513983	running2	y-r2	200	0.028608	count=256 process_age_s=475.2 
+1794513984	running	y-run	200	0.032220	count=257 process_age_s=476.2 
+1794513984	running2	y-r1	200	0.029736	count=268 process_age_s=476.2 
+1794513984	running2	y-r2	200	0.031458	count=257 process_age_s=476.2 
+1794513985	running	y-run	200	0.027325	count=258 process_age_s=477.2 
+1794513985	running2	y-r1	200	0.026568	count=269 process_age_s=477.2 
+1794513985	running2	y-r2	200	0.026631	count=258 process_age_s=477.2 
+1794513986	running	y-run	200	0.026588	count=259 process_age_s=478.2 
+1794513986	running2	y-r1	200	0.027082	count=270 process_age_s=478.2 
+1794513986	running2	y-r2	200	0.027220	count=259 process_age_s=478.2 
+1794513987	running	y-run	200	0.034576	count=260 process_age_s=479.2 
+1794513987	running2	y-r1	200	0.030850	count=271 process_age_s=479.2 
+1794513987	running2	y-r2	200	0.030059	count=260 process_age_s=479.2 
+1794513987	suspended	pg2-s-036	200	0.305194	count=1 process_age_s=479.5 
+1794513988	running	y-run	200	0.028835	count=261 process_age_s=480.2 
+1794513988	running2	y-r1	200	0.028940	count=272 process_age_s=480.2 
+1794513988	running2	y-r2	200	0.027918	count=261 process_age_s=480.2 
+1794513989	running	y-run	200	0.029267	count=262 process_age_s=481.2 
+1794513989	running2	y-r1	200	0.028134	count=273 process_age_s=481.2 
+1794513989	running2	y-r2	200	0.029788	count=262 process_age_s=481.2 
+1794513990	running	y-run	200	0.027674	count=263 process_age_s=482.2 
+1794513990	running2	y-r1	200	0.027728	count=274 process_age_s=482.2 
+1794513990	running2	y-r2	200	0.046402	count=263 process_age_s=482.2 
+1794513991	running	y-run	200	0.031712	count=264 process_age_s=483.2 
+1794513991	running2	y-r1	200	0.030043	count=275 process_age_s=483.2 
+1794513991	running2	y-r2	200	0.029367	count=264 process_age_s=483.2 
+1794513992	running	y-run	200	0.028749	count=265 process_age_s=484.2 
+1794513992	running2	y-r1	200	0.032300	count=276 process_age_s=484.2 
+1794513992	running2	y-r2	200	0.028452	count=265 process_age_s=484.2 
+1794513992	suspended	pg2-s-037	200	0.348005	count=1 process_age_s=484.5 
+1794513993	running	y-run	200	0.029370	count=266 process_age_s=485.2 
+1794513993	running2	y-r1	200	0.027241	count=277 process_age_s=485.2 
+1794513993	running2	y-r2	200	0.027482	count=266 process_age_s=485.2 
+1794513994	running	y-run	200	0.028001	count=267 process_age_s=486.2 
+1794513994	running2	y-r1	200	0.026282	count=278 process_age_s=486.2 
+1794513994	running2	y-r2	200	0.028211	count=267 process_age_s=486.2 
+1794513995	running	y-run	200	0.029171	count=268 process_age_s=487.2 
+1794513995	running2	y-r1	200	0.029962	count=279 process_age_s=487.2 
+1794513995	running2	y-r2	200	0.029334	count=268 process_age_s=487.2 
+1794513996	running	y-run	200	0.028309	count=269 process_age_s=488.2 
+1794513996	running2	y-r1	200	0.027575	count=280 process_age_s=488.2 
+1794513996	running2	y-r2	200	0.026916	count=269 process_age_s=488.2 
+1794513997	running	y-run	200	0.029468	count=270 process_age_s=489.2 
+1794513997	running2	y-r1	200	0.032518	count=281 process_age_s=489.2 
+1794513997	running2	y-r2	200	0.030699	count=270 process_age_s=489.2 
+1794513997	suspended	pg2-s-038	200	0.373185	count=1 process_age_s=489.6 
+1794513998	running	y-run	200	0.031930	count=271 process_age_s=490.2 
+1794513998	running2	y-r1	200	0.030540	count=282 process_age_s=490.2 
+1794513998	running2	y-r2	200	0.029037	count=271 process_age_s=490.2 
+1794513999	running	y-run	200	0.030176	count=272 process_age_s=491.2 
+1794513999	running2	y-r1	200	0.028290	count=283 process_age_s=491.2 
+1794513999	running2	y-r2	200	0.029440	count=272 process_age_s=491.2 
+1794514000	running	y-run	200	0.029168	count=273 process_age_s=492.2 
+1794514000	running2	y-r1	200	0.028441	count=284 process_age_s=492.2 
+1794514000	running2	y-r2	200	0.029437	count=273 process_age_s=492.2 
+1794514001	running	y-run	200	0.032013	count=274 process_age_s=493.2 
+1794514001	running2	y-r1	200	0.032684	count=285 process_age_s=493.3 
+1794514001	running2	y-r2	200	0.030695	count=274 process_age_s=493.2 
+1794514002	running	y-run	200	0.031577	count=275 process_age_s=494.3 
+1794514002	running2	y-r1	200	0.033007	count=286 process_age_s=494.3 
+1794514002	running2	y-r2	200	0.033795	count=275 process_age_s=494.3 
+1794514002	suspended	pg2-s-039	200	0.362524	count=1 process_age_s=494.6 
+1794514003	running	y-run	200	0.030153	count=276 process_age_s=495.3 
+1794514003	running2	y-r1	200	0.028846	count=287 process_age_s=495.3 
+1794514003	running2	y-r2	200	0.028712	count=276 process_age_s=495.3 
+1794514004	running	y-run	200	0.030193	count=277 process_age_s=496.3 
+1794514004	running2	y-r1	200	0.029471	count=288 process_age_s=496.3 
+1794514004	running2	y-r2	200	0.027948	count=277 process_age_s=496.3 
+1794514005	running	y-run	200	0.028905	count=278 process_age_s=497.3 
+1794514005	running2	y-r1	200	0.028587	count=289 process_age_s=497.3 
+1794514005	running2	y-r2	200	0.028160	count=278 process_age_s=497.3 
+1794514006	running	y-run	200	0.033739	count=279 process_age_s=498.3 
+1794514006	running2	y-r1	200	0.049146	count=290 process_age_s=498.3 
+1794514006	running2	y-r2	200	0.029530	count=279 process_age_s=498.3 
+1794514007	running	y-run	200	0.031905	count=280 process_age_s=499.3 
+1794514007	running2	y-r1	200	0.031705	count=291 process_age_s=499.3 
+1794514007	running2	y-r2	200	0.030751	count=280 process_age_s=499.3 
+1794514007	suspended	pg2-s-040	200	0.355086	count=1 process_age_s=499.6 
+1794514008	running	y-run	200	0.028870	count=281 process_age_s=500.3 
+1794514008	running2	y-r1	200	0.032047	count=292 process_age_s=500.3 
+1794514008	running2	y-r2	200	0.029354	count=281 process_age_s=500.3 
+1794514009	running	y-run	200	0.030223	count=282 process_age_s=501.3 
+1794514009	running2	y-r1	200	0.034002	count=293 process_age_s=501.3 
+1794514009	running2	y-r2	200	0.029577	count=282 process_age_s=501.3 
+1794514010	running	y-run	200	0.046664	count=283 process_age_s=502.3 
+1794514010	running2	y-r1	200	0.029845	count=294 process_age_s=502.3 
+1794514010	running2	y-r2	200	0.029281	count=283 process_age_s=502.3 
+1794514011	running	y-run	200	0.031532	count=284 process_age_s=503.3 
+1794514011	running2	y-r1	200	0.028172	count=295 process_age_s=503.3 
+1794514011	running2	y-r2	200	0.028881	count=284 process_age_s=503.3 
+1794514012	running	y-run	200	0.034065	count=285 process_age_s=504.3 
+1794514012	running2	y-r1	200	0.033402	count=296 process_age_s=504.3 
+1794514012	running2	y-r2	200	0.029987	count=285 process_age_s=504.3 
+1794514012	suspended	pg2-s-041	200	0.361644	count=1 process_age_s=504.6 
+1794514013	running	y-run	200	0.030023	count=286 process_age_s=505.3 
+1794514013	running2	y-r1	200	0.027886	count=297 process_age_s=505.3 
+1794514013	running2	y-r2	200	0.028440	count=286 process_age_s=505.3 
+1794514014	running	y-run	200	0.029092	count=287 process_age_s=506.3 
+1794514014	running2	y-r1	200	0.027570	count=298 process_age_s=506.3 
+1794514014	running2	y-r2	200	0.049514	count=287 process_age_s=506.3 
+1794514015	running	y-run	200	0.029264	count=288 process_age_s=507.3 
+1794514015	running2	y-r1	200	0.028542	count=299 process_age_s=507.3 
+1794514015	running2	y-r2	200	0.027396	count=288 process_age_s=507.3 
+1794514016	running	y-run	200	0.031697	count=289 process_age_s=508.3 
+1794514016	running2	y-r1	200	0.030448	count=300 process_age_s=508.3 
+1794514016	running2	y-r2	200	0.031903	count=289 process_age_s=508.3 
+1794514017	running	y-run	200	0.032315	count=290 process_age_s=509.3 
+1794514017	running2	y-r1	200	0.030556	count=301 process_age_s=509.3 
+1794514017	running2	y-r2	200	0.030912	count=290 process_age_s=509.3 
+1794514017	suspended	pg2-s-042	200	0.344582	count=1 process_age_s=509.6 
+1794514018	running	y-run	200	0.030333	count=291 process_age_s=510.3 
+1794514018	running2	y-r1	200	0.027331	count=302 process_age_s=510.3 
+1794514018	running2	y-r2	200	0.030289	count=291 process_age_s=510.3 
+1794514019	running	y-run	200	0.026585	count=292 process_age_s=511.3 
+1794514019	running2	y-r1	200	0.026776	count=303 process_age_s=511.3 
+1794514019	running2	y-r2	200	0.026750	count=292 process_age_s=511.3 
+1794514020	running	y-run	200	0.027656	count=293 process_age_s=512.3 
+1794514020	running2	y-r1	200	0.027551	count=304 process_age_s=512.3 
+1794514020	running2	y-r2	200	0.028644	count=293 process_age_s=512.3 
+1794514021	running	y-run	200	0.028257	count=294 process_age_s=513.3 
+1794514021	running2	y-r1	200	0.029136	count=305 process_age_s=513.3 
+1794514021	running2	y-r2	200	0.028429	count=294 process_age_s=513.3 
+1794514022	running	y-run	200	0.035971	count=295 process_age_s=514.3 
+1794514022	running2	y-r1	200	0.031247	count=306 process_age_s=514.3 
+1794514022	running2	y-r2	200	0.030327	count=295 process_age_s=514.3 
+1794514022	suspended	pg2-s-043	200	0.362750	count=1 process_age_s=514.7 
+1794514023	running	y-run	200	0.032898	count=296 process_age_s=515.3 
+1794514023	running2	y-r1	200	0.031044	count=307 process_age_s=515.3 
+1794514023	running2	y-r2	200	0.032216	count=296 process_age_s=515.3 
+1794514024	running	y-run	200	0.033612	count=297 process_age_s=516.3 
+1794514024	running2	y-r1	200	0.035111	count=308 process_age_s=516.4 
+1794514024	running2	y-r2	200	0.031188	count=297 process_age_s=516.3 
+1794514025	running	y-run	200	0.031895	count=298 process_age_s=517.4 
+1794514025	running2	y-r1	200	0.031248	count=309 process_age_s=517.4 
+1794514025	running2	y-r2	200	0.031614	count=298 process_age_s=517.4 
+1794514026	running	y-run	200	0.030535	count=299 process_age_s=518.4 
+1794514026	running2	y-r1	200	0.030640	count=310 process_age_s=518.4 
+1794514026	running2	y-r2	200	0.027994	count=299 process_age_s=518.4 

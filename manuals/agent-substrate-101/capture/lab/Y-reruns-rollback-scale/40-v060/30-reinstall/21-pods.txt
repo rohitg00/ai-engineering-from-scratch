@@ -1,0 +1,10 @@
+NAMESPACE            NAME                                         READY   STATUS    RESTARTS   AGE
+kube-system          coredns-559f6c778d-55grx                     1/1     Running   0          20m
+kube-system          coredns-559f6c778d-jbdbc                     1/1     Running   0          20m
+kube-system          etcd-y060-control-plane                      1/1     Running   0          20m
+kube-system          kindnet-tx8rk                                1/1     Running   0          20m
+kube-system          kube-apiserver-y060-control-plane            1/1     Running   0          20m
+kube-system          kube-controller-manager-y060-control-plane   1/1     Running   0          20m
+kube-system          kube-proxy-nwvwl                             1/1     Running   0          20m
+kube-system          kube-scheduler-y060-control-plane            1/1     Running   0          20m
+local-path-storage   local-path-provisioner-75f7fc7dc5-2sv54      1/1     Running   0          20m

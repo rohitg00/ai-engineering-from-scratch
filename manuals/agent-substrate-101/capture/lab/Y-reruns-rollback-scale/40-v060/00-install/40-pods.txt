@@ -1,0 +1,26 @@
+NAMESPACE                          NAME                                         READY   STATUS      RESTARTS   AGE     IP            NODE                 NOMINATED NODE   READINESS GATES
+ate-system                         ate-api-server-977bc449c-6nwv6               2/2     Running     0          44s     10.244.0.8    y060-control-plane   <none>           <none>
+ate-system                         ate-api-server-977bc449c-t6dlm               2/2     Running     0          44s     10.244.0.10   y060-control-plane   <none>           <none>
+ate-system                         ate-controller-6455879dd5-j99rd              1/1     Running     0          42s     10.244.0.9    y060-control-plane   <none>           <none>
+ate-system                         ate-idp-server-86b44647c9-bm5t7              1/1     Running     0          43s     10.244.0.12   y060-control-plane   <none>           <none>
+ate-system                         ate-idp-server-86b44647c9-gn294              1/1     Running     0          43s     10.244.0.13   y060-control-plane   <none>           <none>
+ate-system                         atelet-6kjbb                                 2/2     Running     0          40s     10.244.0.11   y060-control-plane   <none>           <none>
+ate-system                         atenet-egress-5cbf555b56-cdvsn               3/3     Running     0          7s      10.244.0.22   y060-control-plane   <none>           <none>
+ate-system                         atenet-router-5968bdb84-z2mzm                2/2     Running     0          39s     10.244.0.16   y060-control-plane   <none>           <none>
+ate-system                         k8s-credential-provider-7c6b4fd648-l8ls6     1/1     Running     0          19s     10.244.0.21   y060-control-plane   <none>           <none>
+ate-system                         postgres-0                                   2/2     Running     0          4m8s    10.244.0.7    y060-control-plane   <none>           <none>
+ate-system                         rustfs-6c4c677cb6-kzff6                      1/1     Running     0          37s     10.244.0.20   y060-control-plane   <none>           <none>
+ate-system                         rustfs-bucket-init-ltb4s                     0/1     Completed   0          36s     10.244.0.15   y060-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-55grx                     1/1     Running     0          9m11s   10.244.0.2    y060-control-plane   <none>           <none>
+kube-system                        coredns-559f6c778d-jbdbc                     1/1     Running     0          9m11s   10.244.0.4    y060-control-plane   <none>           <none>
+kube-system                        etcd-y060-control-plane                      1/1     Running     0          9m17s   172.18.0.3    y060-control-plane   <none>           <none>
+kube-system                        kindnet-tx8rk                                1/1     Running     0          9m11s   172.18.0.3    y060-control-plane   <none>           <none>
+kube-system                        kube-apiserver-y060-control-plane            1/1     Running     0          9m17s   172.18.0.3    y060-control-plane   <none>           <none>
+kube-system                        kube-controller-manager-y060-control-plane   1/1     Running     0          9m17s   172.18.0.3    y060-control-plane   <none>           <none>
+kube-system                        kube-proxy-nwvwl                             1/1     Running     0          9m11s   172.18.0.3    y060-control-plane   <none>           <none>
+kube-system                        kube-scheduler-y060-control-plane            1/1     Running     0          9m17s   172.18.0.3    y060-control-plane   <none>           <none>
+local-path-storage                 local-path-provisioner-75f7fc7dc5-2sv54      1/1     Running     0          9m11s   10.244.0.3    y060-control-plane   <none>           <none>
+otel-system                        jaeger-7c8b79c5f5-lfnks                      1/1     Running     0          35s     10.244.0.18   y060-control-plane   <none>           <none>
+otel-system                        opentelemetry-collector-6dbdcddc48-lzkc8     1/1     Running     0          35s     10.244.0.17   y060-control-plane   <none>           <none>
+otel-system                        prometheus-6558ccf4df-2ggwk                  1/1     Running     0          34s     10.244.0.19   y060-control-plane   <none>           <none>
+podcertificate-controller-system   podcertificate-controller-69868d9578-98pfc   1/1     Running     0          4m18s   10.244.0.5    y060-control-plane   <none>           <none>

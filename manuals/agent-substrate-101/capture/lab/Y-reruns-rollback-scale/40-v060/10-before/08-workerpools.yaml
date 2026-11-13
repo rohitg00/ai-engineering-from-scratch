@@ -1,0 +1,44 @@
+apiVersion: v1
+items:
+- apiVersion: ate.dev/v1alpha1
+  kind: WorkerPool
+  metadata:
+    creationTimestamp: "2026-11-13T06:05:30Z"
+    generation: 1
+    labels:
+      workload: counter
+    name: counter
+    namespace: ate-demo-counter
+    resourceVersion: "2229"
+    uid: e6f5924c-6a4a-4a5b-a58f-309637998f8c
+  spec:
+    replicas: 3
+    sandboxClasses:
+    - name: gvisor
+    template:
+      resources:
+        limits:
+          cpu: "1"
+          memory: 1Gi
+        requests:
+          cpu: 250m
+          memory: 1Gi
+    workerImage: localhost:5001/ateworker-gvisor@sha256:6b23cbffbd3a778693c5c1749d89c3d0f829eba8048f3cae7a81f9e87b082adf
+  status:
+    readyReplicas: 3
+    replicas: 3
+    sandboxClasses:
+    - conditions:
+      - lastTransitionTime: "2026-11-13T06:05:30Z"
+        message: resolved to SandboxConfig "gvisor-default"
+        observedGeneration: 1
+        reason: Resolved
+        status: "True"
+        type: Resolved
+      configRef:
+        name: gvisor-default
+      name: gvisor
+    selector: ate.dev/worker-pool=counter
+kind: List
+metadata:
+  resourceVersion: ""

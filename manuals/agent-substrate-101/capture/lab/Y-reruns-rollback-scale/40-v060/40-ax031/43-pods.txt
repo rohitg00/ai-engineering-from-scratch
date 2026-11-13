@@ -1,0 +1,4 @@
+NAME                             READY   STATUS    RESTARTS   AGE   IP            NODE                 NOMINATED NODE   READINESS GATES
+ax-controller-858d497f88-pljfd   1/1     Running   0          7s    10.244.0.24   y060-control-plane   <none>           <none>
+ax-redis-86df786c87-xdcjk        1/1     Running   0          7s    10.244.0.23   y060-control-plane   <none>           <none>
+ax-server-69b796c5d8-z7hfv       1/1     Running   0          7s    10.244.0.25   y060-control-plane   <none>           <none>

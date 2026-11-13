@@ -1,0 +1,3 @@
+a-term	0 of 306 failed
+a-run	130 of 306 failed
+cycle	4 of 74 not 200

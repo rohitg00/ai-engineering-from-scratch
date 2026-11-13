@@ -1,0 +1,9 @@
+== atelet
+{"time":"2026-11-13T06:21:22.400246013Z","level":"INFO","msg":"atelet starting","version":"v1.0.0"}
+{"time":"2026-11-13T06:21:22.401632117Z","level":"INFO","msg":"Tracing initialized","sampler":"ParentBased{root:TraceIDRatioBased{0.1},remoteParentSampled:AlwaysOnSampler,remoteParentNotSampled:AlwaysOffSampler,localParentSampled:AlwaysOnSampler,localParentNotSampled:AlwaysOffSampler}","export":true
+{"time":"2026-11-13T06:21:22.401718328Z","level":"INFO","msg":"Metrics exporters resolved","exporters":"otlp,prometheus"}
+{"time":"2026-11-13T06:21:22.402209823Z","level":"INFO","msg":"Metrics initialized","otlp_export":true}
+{"time":"2026-11-13T06:21:22.40283609Z","level":"INFO","msg":"Starting metrics HTTP server","addr":":9090"}
+{"time":"2026-11-13T06:21:22.402928831Z","level":"INFO","msg":"OTLP relay forwarding to collector","collector":"opentelemetry-collector.otel-system.svc:4317","compression":"none","traceHeaders":[],"metricHeaders":[],"logHeaders":[]}
+{"time":"2026-11-13T06:21:22.402946151Z","level":"INFO","msg":"Starting health HTTP server","addr":":9091"}
+{"time":"2026-11-13T06:21:22.403323805Z","level":"ERROR","msg":"Failed to open image cache","err":"image cache at \"/var/lib/ate/image-cache\" has layout version \"2\" and this atelet supports \"3\", so delete it once no actor runs on this node"}

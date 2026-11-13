@@ -1,0 +1,244 @@
+configuration: 11 set, 42 default
+  actorJWT.algorithm                          ES256                                                                                                                                      (from default)
+  actorJWT.issuer                             ""                                                                                                                                         (from default)
+  ateapi.authz.bootstrapOwners                system:serviceaccount:ate-system:ate-client,system:serviceaccount:ax031-system:ax-controller,system:serviceaccount:ax031-system:ax-server  (from --ateapi-authz-bootstrap-owners)
+  ateapi.expectedJWTIssuer                    ""                                                                                                                                         (from default)
+  ateapi.logLevel                             ""                                                                                                                                         (from default)
+  ateapi.postgres.cloudsql.gsa                ""                                                                                                                                         (from default)
+  ateapi.postgres.cloudsql.iamAuth            ""                                                                                                                                         (from default)
+  ateapi.postgres.cloudsql.instance           ""                                                                                                                                         (from default)
+  ateapi.postgres.cloudsql.ipType             ""                                                                                                                                         (from default)
+  ateapi.postgres.owner.connectionString      ""                                                                                                                                         (from default)
+  ateapi.postgres.owner.role                  substrate_owner                                                                                                                            (from default)
+  ateapi.postgres.poolMaxConns                ""                                                                                                                                         (from default)
+  ateapi.postgres.readWrite.connectionString  ""                                                                                                                                         (from default)
+  ateapi.postgres.readWrite.role              substrate_readwrite                                                                                                                        (from default)
+  ateapi.postgres.schema                      ""                                                                                                                                         (from default)
+  ateapi.postgres.serverCAFile                ""                                                                                                                                         (from default)
+  ateapi.postgres.storageClass                ""                                                                                                                                         (from default)
+  atenet.dataplane                            envoy                                                                                                                                      (from default)
+  atenet.egress.additionalExtprocService      ""                                                                                                                                         (from default)
+  atenet.egress.credentialProvider            {"name":"k8s.io"}                                                                                                                          (from --credential-provider)
+  benchmark.actorMemory                       ""                                                                                                                                         (from default)
+  benchmark.sandboxClass                      gvisor                                                                                                                                     (from default)
+  benchmark.workerCount                       1                                                                                                                                          (from default)
+  clusterSize                                 size0                                                                                                                                      (from default)
+  context                                     kind-y060                                                                                                                                  (from KUBECTL_CONTEXT)
+  cordonControlPlane                          false                                                                                                                                      (from default)
+  csi.setup                                   none                                                                                                                                       (from default)
+  demo.anthropicAPIKey                        ""                                                                                                                                         (from default)
+  demo.counter.storageClass                   standard                                                                                                                                   (from default)
+  demo.counter.withExternalVolume             false                                                                                                                                      (from default)
+  docker.buildFlags                           ""                                                                                                                                         (from default)
+  e2e.envoyConcurrency                        0                                                                                                                                          (from default)
+  fakeDataPlane.enabled                       false                                                                                                                                      (from default)
+  gcp.clusterLocation                         ""                                                                                                                                         (from default)
+  gcp.clusterName                             ""                                                                                                                                         (from default)
+  gcp.projectID                               ""                                                                                                                                         (from default)
+  images.repo                                 ""                                                                                                                                         (from default)
+  images.tag                                  ""                                                                                                                                         (from default)
+  ingressAllowedSPIFFEIDs                     spiffe://cluster.local/ns/ate-system/sa/atenet-client,spiffe://cluster.local/ns/ax031-system/sa/ax-server                                  (from --ingress-allowed-spiffe-ids)
+  kindCluster.enabled                         true                                                                                                                                       (from ATE_INSTALL_KIND)
+  kindCluster.name                            y060                                                                                                                                       (from KIND_CLUSTER_NAME)
+  ko.defaultPlatforms                         linux/amd64                                                                                                                                (from the --kind profile)
+  ko.dockerRepo                               localhost:5001                                                                                                                             (from KO_DOCKER_REPO)
+  kubeconfig                                  <home>/u/kc-y060                                                                                                                        (from KUBECONFIG)
+  namespace                                   ate-system                                                                                                                                 (from default)
+  otlpEndpoint                                ""                                                                                                                                         (from default)
+  podcert.workersPerSigner                    0                                                                                                                                          (from default)
+  preview                                     ""                                                                                                                                         (from default)
+  record.dir                                  ""                                                                                                                                         (from default)
+  rolloutTimeout                              1m0s                                                                                                                                       (from default)
+  storage.bucketName                          ate-snapshots                                                                                                                              (from the --kind profile)
+  storage.snapshotLocation                    gs://ate-snapshots/                                                                                                                        (from the --kind profile)
+  storage.transferGSAName                     ""                                                                                                                                         (from default)
+[step]: deploy_ate_system
+  (apply of 1 objects took 0.013s)
+[step]: deploy_crds
+[step]: images: built from source with ko
+  (ko resolve -f - took 0.058s)
+  (apply of 5 objects took 0.121s)
+[step]: ensure_apiserver_prerequisites
+[step]: create_jwt_authority_pool_secret
+  created pool secret ate-system/actor-id-jwt-pool
+[step]: create_actor_id_ca_pool_secret
+  created pool secret ate-system/actor-id-ca-pool
+[step]: create_actor_id_ca_certs_secret
+[step]: create_api_server_env_vars
+[step]: create_api_config
+ate-api-config apiconfig.textproto:
+  | logging: {
+  |   level: "info"
+  | }
+[step]: create_api_authentication_config
+ate-api-authentication authentication.yaml:
+  | jwtProviders:
+  | - name: kubernetes
+  |   issuer: https://kubernetes.default.svc.cluster.local
+  |   audiences: [api.ate-system.svc]
+  |   certificateAuthorityFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+  |   discoveryTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+[step]: create_podcertificate_controller_cas
+  created pool secret podcertificate-controller-system/service-dns-ca-pool
+  created pool secret podcertificate-controller-system/pod-identity-ca-pool
+  created pool secret podcertificate-controller-system/postgres-ca-pool
+2026/11/13 06:23:15 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/podcertcontroller
+2026/11/13 06:23:18 Building go.ate.dev/substrate/cmd/podcertcontroller for linux/amd64
+2026/11/13 06:23:22 Publishing localhost:5001/podcertcontroller:latest
+2026/11/13 06:23:22 existing manifest: latest@sha256:8339d76dbffe151b303111b7f524e413532b6038671a27f95757b2fd9739c6db
+2026/11/13 06:23:22 existing manifest: sha256-8339d76dbffe151b303111b7f524e413532b6038671a27f95757b2fd9739c6db.sbom@sha256:4ca1cf66975dc4b2d4d9e8e96c7eba6904e54f8f95f0b24c679b04cef179f99a
+2026/11/13 06:23:22 Published SBOM localhost:5001/podcertcontroller:sha256-8339d76dbffe151b303111b7f524e413532b6038671a27f95757b2fd9739c6db.sbom
+2026/11/13 06:23:22 Published localhost:5001/podcertcontroller@sha256:8339d76dbffe151b303111b7f524e413532b6038671a27f95757b2fd9739c6db
+  (ko resolve -f - took 9.673s)
+  (apply of 6 objects took 0.059s)
+  (rollout status deployment/podcertificate-controller took 2.005s)
+Waiting for podcertificate ClusterTrustBundles to be ready...
+  (wait for clustertrustbundles took 10.017s)
+[step]: setup_csi
+Skipping CSI driver setup.
+[step]: deploy_sandboxconfig
+[step]: ensure_crds
+  (apply of 2 objects took 0.036s)
+  (apply of 1 objects took 0.027s)
+  (apply of 1 objects took 0.009s)
+  (apply of 3 objects took 0.308s)
+  (rollout status statefulset/postgres took 18.005s)
+[step]: setup_bundled_postgres
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.01kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/rust:bookworm@sha256:93ce27a88655056a51dbdd8f5f2d7ddc071c7b0070fb288a37b5a285fc83971e
+#2 ...
+
+#3 [internal] load metadata for docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01
+#3 DONE 1.9s
+
+#2 [internal] load metadata for docker.io/library/rust:bookworm@sha256:93ce27a88655056a51dbdd8f5f2d7ddc071c7b0070fb288a37b5a285fc83971e
+#2 DONE 2.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [builder 1/5] FROM docker.io/library/rust:bookworm@sha256:93ce27a88655056a51dbdd8f5f2d7ddc071c7b0070fb288a37b5a285fc83971e
+#6 resolve docker.io/library/rust:bookworm@sha256:93ce27a88655056a51dbdd8f5f2d7ddc071c7b0070fb288a37b5a285fc83971e 0.0s done
+#6 DONE 0.0s
+
+#7 [stage-1 1/2] FROM docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01
+#7 resolve docker.io/envoyproxy/envoy:v1.39.4@sha256:74bd4eb5629708d3fadca1a5e6b85d208f338d7bb54e06b69565905c5294cc01 0.0s done
+#7 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 750B done
+#5 DONE 0.0s
+
+#8 [builder 5/5] RUN cargo build --release --locked
+#8 CACHED
+
+#9 [builder 2/5] WORKDIR /usr/src/dynamic-modules
+#9 CACHED
+
+#10 [builder 4/5] COPY dynamic-modules/ .
+#10 CACHED
+
+#11 [builder 3/5] RUN apt-get update && apt-get install -y --no-install-recommends     clang     libclang-dev     && rm -rf /var/lib/apt/lists/*
+#11 CACHED
+
+#12 [stage-1 2/2] COPY --from=builder /usr/src/dynamic-modules/target/release/libenvoy_substrate_egress_policy.so /usr/local/lib/libenvoy_substrate_egress_policy.so
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 exporting manifest sha256:4a5daf89fa42541afc7e44ee64695c61254b95a02da8ea0a5d22f7a4bebb3640 done
+#13 exporting config sha256:04a352858a18fe331635ce7c04e4228f9f99d18b2a41438cca175d10b89c4255 done
+#13 exporting attestation manifest sha256:f3f3c553a748290a061ce7fc88d9ec9c8ecf51165809e80d536ca25104190434 0.0s done
+#13 exporting manifest list sha256:d18e7867c20c22749a6829bf39981710def1afcc835f2f5911c8105fce17c19a done
+#13 naming to localhost:5001/envoy-dataplane:build-1794551033 done
+#13 unpacking to localhost:5001/envoy-dataplane:build-1794551033 0.0s done
+#13 pushing layers
+#13 pushing layers 0.0s done
+#13 pushing manifest for localhost:5001/envoy-dataplane:build-1794551033@sha256:d18e7867c20c22749a6829bf39981710def1afcc835f2f5911c8105fce17c19a 0.0s done
+#13 DONE 0.2s
+2026/11/13 06:24:00 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/atenet
+2026/11/13 06:24:00 Using base gcr.io/distroless/base-debian13:latest@sha256:389cad21f73e4c37b94ffe5b13736d5a92bd5bd3c6c6b38c2be1c881e14ba2bd for go.ate.dev/substrate/cmd/atelet
+2026/11/13 06:24:00 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/objectstore-plugin
+2026/11/13 06:24:01 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/atecontroller
+2026/11/13 06:24:01 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/ateapi
+2026/11/13 06:24:01 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/ate-idp-server
+2026/11/13 06:24:02 Building go.ate.dev/substrate/cmd/atenet for linux/amd64
+2026/11/13 06:24:03 Building go.ate.dev/substrate/cmd/atelet for linux/amd64
+2026/11/13 06:24:03 Building go.ate.dev/substrate/cmd/objectstore-plugin for linux/amd64
+2026/11/13 06:24:03 Building go.ate.dev/substrate/cmd/ateapi for linux/amd64
+2026/11/13 06:24:03 Building go.ate.dev/substrate/cmd/ate-idp-server for linux/amd64
+2026/11/13 06:24:03 Building go.ate.dev/substrate/cmd/atecontroller for linux/amd64
+2026/11/13 06:24:05 Publishing localhost:5001/ate-idp-server:latest
+2026/11/13 06:24:05 existing manifest: latest@sha256:df59f6ad392a844130501ccee1829b5d84b7ff80a26103d5780334f0ca69f001
+2026/11/13 06:24:05 existing manifest: sha256-df59f6ad392a844130501ccee1829b5d84b7ff80a26103d5780334f0ca69f001.sbom@sha256:b5fa9a84344194d0fa002f631c1566b6d9fbc98140b316ecbf49e926e4acea3d
+2026/11/13 06:24:05 Published SBOM localhost:5001/ate-idp-server:sha256-df59f6ad392a844130501ccee1829b5d84b7ff80a26103d5780334f0ca69f001.sbom
+2026/11/13 06:24:05 Published localhost:5001/ate-idp-server@sha256:df59f6ad392a844130501ccee1829b5d84b7ff80a26103d5780334f0ca69f001
+2026/11/13 06:24:09 Publishing localhost:5001/atenet:latest
+2026/11/13 06:24:09 existing manifest: latest@sha256:dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6
+2026/11/13 06:24:09 existing manifest: sha256-dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6.sbom@sha256:cada5af7fc99f67ca2fbe37c73f997074e9d0f5ae8f1e86d6482f19888deeb22
+2026/11/13 06:24:09 Published SBOM localhost:5001/atenet:sha256-dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6.sbom
+2026/11/13 06:24:09 Published localhost:5001/atenet@sha256:dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6
+2026/11/13 06:24:09 Publishing localhost:5001/atecontroller:latest
+2026/11/13 06:24:09 existing manifest: sha256-5256362bc87c4903fe8faadf0e60a7e7c513f987c2d946f8ddedd3bb688b3324.sbom@sha256:87d89494aab73800246e2d0d375cb6de54c800ebf9bcbba210f023fac68fe178
+2026/11/13 06:24:09 Published SBOM localhost:5001/atecontroller:sha256-5256362bc87c4903fe8faadf0e60a7e7c513f987c2d946f8ddedd3bb688b3324.sbom
+2026/11/13 06:24:09 existing manifest: latest@sha256:5256362bc87c4903fe8faadf0e60a7e7c513f987c2d946f8ddedd3bb688b3324
+2026/11/13 06:24:09 Published localhost:5001/atecontroller@sha256:5256362bc87c4903fe8faadf0e60a7e7c513f987c2d946f8ddedd3bb688b3324
+2026/11/13 06:24:09 Publishing localhost:5001/objectstore-plugin:latest
+2026/11/13 06:24:09 existing manifest: sha256-93b026526d45e7baad1b00fa9f71d6c88ab95b847c2c689a71652dd4b4e25b8d.sbom@sha256:c1e5889cfccc13000612a34d7b80bef3e1808184084f6c383ca171d37ac35190
+2026/11/13 06:24:09 Published SBOM localhost:5001/objectstore-plugin:sha256-93b026526d45e7baad1b00fa9f71d6c88ab95b847c2c689a71652dd4b4e25b8d.sbom
+2026/11/13 06:24:09 existing manifest: latest@sha256:93b026526d45e7baad1b00fa9f71d6c88ab95b847c2c689a71652dd4b4e25b8d
+2026/11/13 06:24:09 Published localhost:5001/objectstore-plugin@sha256:93b026526d45e7baad1b00fa9f71d6c88ab95b847c2c689a71652dd4b4e25b8d
+2026/11/13 06:24:09 Publishing localhost:5001/ateapi:latest
+2026/11/13 06:24:10 existing manifest: sha256-b47e9d773f15e814df6b2aacdd587751ead53004f7244213061bcfb2c4315ae7.sbom@sha256:e7cc5b7a7bb8456a62918f21d7facd4df7e830b544ec68763020cd3fc02c9151
+2026/11/13 06:24:10 Published SBOM localhost:5001/ateapi:sha256-b47e9d773f15e814df6b2aacdd587751ead53004f7244213061bcfb2c4315ae7.sbom
+2026/11/13 06:24:10 existing manifest: latest@sha256:b47e9d773f15e814df6b2aacdd587751ead53004f7244213061bcfb2c4315ae7
+2026/11/13 06:24:10 Published localhost:5001/ateapi@sha256:b47e9d773f15e814df6b2aacdd587751ead53004f7244213061bcfb2c4315ae7
+2026/11/13 06:24:10 Publishing localhost:5001/atelet:latest
+2026/11/13 06:24:10 existing manifest: latest@sha256:3aa7e922f81aff1bf8c7a5989c341bc5915ccb8b9d0022a17607a91c83d7e92d
+2026/11/13 06:24:10 existing manifest: sha256-3aa7e922f81aff1bf8c7a5989c341bc5915ccb8b9d0022a17607a91c83d7e92d.sbom@sha256:0d66b3b396d6c3867ebc2214f5247a9dd59189acb2b9164aeedad0d2773eb501
+2026/11/13 06:24:10 Published SBOM localhost:5001/atelet:sha256-3aa7e922f81aff1bf8c7a5989c341bc5915ccb8b9d0022a17607a91c83d7e92d.sbom
+2026/11/13 06:24:10 Published localhost:5001/atelet@sha256:3aa7e922f81aff1bf8c7a5989c341bc5915ccb8b9d0022a17607a91c83d7e92d
+  (ko resolve -f - took 14.531s)
+  (delete of 8 objects took 0.029s)
+Warning: system:serviceaccount:ate-system:ate-client is a bootstrap owner, so anyone who can mint a token for it is a global owner of this install. It is the default so the demos, benchmarks and e2e tests work; for a shared or production install, set --ateapi-authz-bootstrap-owners (ATE_API_AUTHZ_BOOTSTRAP_OWNERS) to your operators' own principals. See docs/authorization.md.
+  (apply of 57 objects took 11.062s)
+[step]: create_egress_mitm_ca_pool_secret
+  created pool secret ate-system/egress-mitm-ca-pool
+[step]: deploy_k8s_credential_provider
+  (apply of 1 objects took 0.063s)
+2026/11/13 06:24:24 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/credential-provider/kubernetes-secrets
+2026/11/13 06:24:26 Building go.ate.dev/substrate/cmd/credential-provider/kubernetes-secrets for linux/amd64
+2026/11/13 06:24:30 Publishing localhost:5001/kubernetes-secrets:latest
+2026/11/13 06:24:30 existing manifest: latest@sha256:b97ad45fe22e7ca1f0c5baaeab5f77100c45b3461910c0c81bd1dabb3b98360a
+2026/11/13 06:24:30 existing manifest: sha256-b97ad45fe22e7ca1f0c5baaeab5f77100c45b3461910c0c81bd1dabb3b98360a.sbom@sha256:357dc5f2888752cb4251f66ff214858a5b0a1932f777064ae52f98febc521f98
+2026/11/13 06:24:30 Published SBOM localhost:5001/kubernetes-secrets:sha256-b97ad45fe22e7ca1f0c5baaeab5f77100c45b3461910c0c81bd1dabb3b98360a.sbom
+2026/11/13 06:24:30 Published localhost:5001/kubernetes-secrets@sha256:b97ad45fe22e7ca1f0c5baaeab5f77100c45b3461910c0c81bd1dabb3b98360a
+  (ko resolve -f - took 8.819s)
+  (apply of 6 objects took 0.100s)
+2026/11/13 06:24:34 Using base gcr.io/distroless/static-debian13:latest@sha256:f2ea2709ac8db56323cbd7d014277f32cb572d9ea124b0076f7aafe5980678fe for go.ate.dev/substrate/cmd/atenet
+2026/11/13 06:24:35 Building go.ate.dev/substrate/cmd/atenet for linux/amd64
+2026/11/13 06:24:41 Publishing localhost:5001/atenet:latest
+2026/11/13 06:24:41 existing manifest: latest@sha256:dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6
+2026/11/13 06:24:41 existing manifest: sha256-dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6.sbom@sha256:cada5af7fc99f67ca2fbe37c73f997074e9d0f5ae8f1e86d6482f19888deeb22
+2026/11/13 06:24:41 Published SBOM localhost:5001/atenet:sha256-dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6.sbom
+2026/11/13 06:24:41 Published localhost:5001/atenet@sha256:dc8b1c1c8ef46b97ec1d05eac31191654c0d4e5d273b312a17a9c56b37c116c6
+  (ko resolve -f - took 11.398s)
+  (apply of 4 objects took 0.088s)
+[step]: Waiting for ATE system components to be ready...
+  (rollout status deployment/ate-api-server took 0.004s)
+  (rollout status deployment/ate-idp-server took 0.004s)
+  (rollout status deployment/ate-controller took 0.003s)
+  (rollout status deployment/atenet-router took 0.004s)
+  (rollout status deployment/atenet-egress took 8.006s)
+  (rollout status daemonset/atelet took 0.004s)
+  (rollout status deployment/k8s-credential-provider took 0.003s)
+recorded this configuration in <home>/.cache/ate-setup/installs/kind-y060.yaml

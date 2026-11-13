@@ -1,0 +1,2 @@
+NAMESPACE                          NAME                                         READY   STATUS        RESTARTS   AGE
+ate-system                         atenet-egress-7758c8fb4-kdqs9                3/3     Terminating   0          2m54s

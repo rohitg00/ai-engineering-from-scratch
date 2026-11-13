@@ -1,0 +1,7 @@
+22:04:36 start disk=13164MB mem=32006MB snap=341MB
+22:15:10 created 500 actors in 633.467 s, 500 failed
+22:17:41 after first activation:  disk=13152MB mem=31919MB
+22:28:14 suspend commands for 500 in 633.537 s, 500 failed
+22:29:15 after suspend:  disk=13143MB snap=341MB
+00:24:49 main series end:  disk=13075MB snap=341MB
+02:20:49 end:  disk=13001MB mem=31577MB snap=341MB

@@ -1,0 +1,6 @@
+y-run ACTOR_STATE_RUNNING 200	0.026349	count=461 process_age_s=819.7 
+y-r1 ACTOR_STATE_RUNNING 200	0.025677	count=471 process_age_s=820.1 
+y-r2 ACTOR_STATE_RUNNING 200	0.025038	count=460 process_age_s=820.6 
+y-r3 ACTOR_STATE_RUNNING 200	0.026396	count=14 process_age_s=821.0 
+y-r4 ACTOR_STATE_RUNNING 200	0.025757	count=14 process_age_s=821.5 
+y-r5 ACTOR_STATE_RUNNING 200	0.025368	count=14 process_age_s=821.9 

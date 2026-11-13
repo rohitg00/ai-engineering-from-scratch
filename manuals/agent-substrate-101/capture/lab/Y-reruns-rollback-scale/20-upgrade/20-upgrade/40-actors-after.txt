@@ -1,0 +1,42 @@
+Error: unknown subcommand "version"
+
+Usage:
+ATESPACE   NAME      TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc     up-lab/up-drill   ACTOR_STATE_CRASHED     <none>                                          77        7m56s
+up-lab     a-def     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          6         7m58s
+up-lab     a-fresh   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          1         7m51s
+up-lab     a-run     up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-2gmrc   10.244.0.39   8         8m
+up-lab     a-sync    up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         7m59s
+up-lab     a-tag     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         7m57s
+up-lab     a-term    up-lab/up-trap    ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-rx4ks   10.244.0.36   7         7m54s
+a-run ACTOR_STATE_RUNNING: 200	0.025943	count=213 process_age_s=493.2 
+a-term ACTOR_STATE_RUNNING: 200	0.027247	count=447 process_age_s=493.4 sigterm_seen=1 
+a-sync ACTOR_STATE_SUSPENDED: 200	0.310952	count=4 process_age_s=494.3 
+a-def ACTOR_STATE_SUSPENDED: 200	0.357372	count=4 process_age_s=495.1 
+a-tag ACTOR_STATE_SUSPENDED: 200	0.348366	count=6 process_age_s=495.8 
+a-fresh ACTOR_STATE_SUSPENDED: 200	0.327466	count=1 process_age_s=496.6 
+a-cyc ACTOR_STATE_CRASHED: 503	0.029231	actor up-lab/a-cyc unavailable: AssignWorker prerequisite not met for Actor: up-lab/a-cyc (got: ACTOR_STATE_CRASHED, want ACTOR_STATE_SUSPEN
+up-lab     a-new-upgrade   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-new-upgrade (from the golden snapshot): 200	0.328670	count=1 process_age_s=497.7 
+up-lab     a-tag-new-upgrade   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    1         0s
+a-tag-new-upgrade (from tag pre-up, made at count 5 on v1.0.0-rc.3): 200	0.434425	count=6 process_age_s=498.6 
+ATESPACE   NAME            TEMPLATE          STATE                   WORKER POD   WORKER IPS   VERSION   AGE
+up-lab     a-new-upgrade   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                    5         2s
+a-new-upgrade after a sync suspend on v1.0.0: 200	0.339799	count=2 process_age_s=499.8 
+ATESPACE   NAME                TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc               up-lab/up-drill   ACTOR_STATE_CRASHED     <none>                                          77        8m7s
+up-lab     a-def               up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          10        8m9s
+up-lab     a-fresh             up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         8m2s
+up-lab     a-new-upgrade       up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         6s
+up-lab     a-run               up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-2gmrc   10.244.0.39   8         8m11s
+up-lab     a-sync              up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         8m10s
+up-lab     a-tag               up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          9         8m8s
+up-lab     a-tag-new-upgrade   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         6s
+up-lab     a-term              up-lab/up-trap    ACTOR_STATE_RUNNING     up-lab/up-pool-678bcc9bfd-rx4ks   10.244.0.36   7         8m6s
+ATESPACE   NAME       GOLDEN TAG                             ERROR   AGE
+up-lab     up-drill   678cbbf1-9523-495a-b6d0-8f48ab5deb20           8m43s
+up-lab     up-trap    062a97ef-544f-40fb-bad4-7f12a395ec5d           8m43s
+ATESPACE   NAME                                   SCOPE                 STATE   SNAPSHOT                                                                        FIDELITY                   AGE
+up-lab     062a97ef-544f-40fb-bad4-7f12a395ec5d   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/up-lab/tags/7f6e9f12-543a-4f58-809c-27d88452d9ad   SNAPSHOT_FIDELITY_MEMORY   8m23s
+up-lab     678cbbf1-9523-495a-b6d0-8f48ab5deb20   TAG_SCOPE_PUBLISHED   Ready   gs://ate-snapshots/atespaces/up-lab/tags/9a09bc5c-6514-44c7-8672-e021d6d50baa   SNAPSHOT_FIDELITY_MEMORY   8m23s
+up-lab     pre-up                                 TAG_SCOPE_ATESPACE    Ready   gs://ate-snapshots/atespaces/up-lab/tags/f57eef1a-ef85-431a-8a7b-f181938e83ee   SNAPSHOT_FIDELITY_MEMORY   8m3s

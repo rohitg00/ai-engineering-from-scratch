@@ -1,0 +1,1 @@
+up-lab/up-pool ghcr.io/agent-substrate/substrate/ateworker-gvisor:v1.0.0-rc.3

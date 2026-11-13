@@ -1,0 +1,6 @@
+total 20
+drwx------  4 root root 4096 Nov 13 06:02 .
+drwxr-xr-x 10 root root 4096 Nov 13 06:21 ..
+drwx------  3 root root 4096 Nov 13 06:02 layers
+drwx------  3 root root 4096 Nov 13 06:02 manifests
+pod "atelet-vtvsl" deleted from ate-system namespace

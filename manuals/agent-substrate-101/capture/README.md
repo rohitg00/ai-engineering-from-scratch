@@ -24,7 +24,7 @@ The guests and the Mac are different machines. Do not compare a number from one 
 
 | Folder | Machine |
 |---|---|
-| `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart`, `U-pg-upgrade-scale` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
+| `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart`, `U-pg-upgrade-scale`, `Y-reruns-rollback-scale` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
 | `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode`, `P-node-loss`, `Q-network`, `T-drain-store`, `X-remote-store-pg` | a second x86 server guest (16 vCPU, 23 GB) |
 | `K-kagent`, `N-demos`, `R-agent-executor`, `S-ax-model`, `W-ax-kagent-2` | a second x86 server guest (16 vCPU, 31 GB) |
 | `M-mac-arm64` | the Mac |
@@ -278,6 +278,27 @@ All runs used a second x86 server guest (16 vCPU, 23 GB), with the Envoy datapla
 These parts are not valid, and the summaries do not use them. `20-store-cycles.tsv` is a first attempt in which a 504 led to a revert; `22-store-cycles.tsv` replaces it. In `13-path.txt`, the download times under the two rate limits are not shaped, and one block of probes under 20 Mbit/s shows code `000`. In `30-outage-*.tsv`, the row `async-state-after-wait` is one sample and not a wait. In `50-pg-tests/33-probe.tsv`, the one row with code 404 came from a list of actors that ran out. In `50-pg-tests/05-pg-round-trip.txt`, the line that starts with `qdisc` under the first heading shows the rule for another address.
 
 The rows with 100 ms of added delay on the path between the guests are valid for that path only. The access key of the bucket shows as `<store-key>`, and the connection strings show `<user>` and `<password>`.
+
+### Y-reruns-rollback-scale: second runs of the outages and the upgrade, a rollback, and v0.6.0
+
+All runs used the x86 server guest (24 vCPU, 47 GB, nested KVM), on new kind clusters with one node. The outages and the upgrade used the release images, the Envoy dataplane, gVisor, and the bundled Postgres. The v0.6.0 runs used a build from source at that tag. Each outage, upgrade, and rollback ran once.
+
+| File | What it shows |
+|---|---|
+| `10-outages/00-install/`, `01-setup/` | the install, the pool of 60 workers, the template, and the probe loop with its client limits |
+| `10-outages/1*-pg-run*/`, `20-api-run1/`, `30-k8s-run1/` | three outages of Postgres, one of `ate-api-server`, and one of the Kubernetes API server, in that order on one cluster |
+| `10-outages/*/00-timeline.tsv`, `10-probe.tsv` | the moments of each outage, and every request of the three streams |
+| `10-outages/*/11-running-after.txt`, `12-stuck.txt` | three requests to each of six running actors after each run, and the list of actors that did not answer |
+| `10-outages/*/14-ateapi-worker-cache.log`, `17-states-after.txt` | the retries of the worker cache, and the count of actors in each state after each run |
+| `20-upgrade/00-install-rc3/`, `10-before/` | the install of v1.0.0-rc.3 and the actors made before the upgrade |
+| `20-upgrade/20-upgrade/`, `20-upgrade/40-rollback/` | the upgrade and the rollback, each with its timeline, its three streams, the watch of the pool roll, and one request to each actor after it |
+| `40-v060/00-install/`, `10-before/` | the install of v0.6.0 by its README, and the four actors made on it |
+| `40-v060/20-direct-upgrade/` | the v1.0.0 installer on the v0.6.0 cluster, and what the old system and the new CLI did after it |
+| `40-v060/30-reinstall/` | the delete, the three deploys, the stuck CRD, the image cache error, and the empty system at the end |
+| `40-v060/40-ax031/` | the release v0.3.1 of Agent Executor on a fresh v0.6.0 |
+| `30-scale/` | the setup of a burst run that produced no data |
+
+These parts are not valid, and the summaries do not use them. In `10-outages/30-k8s-run1/10-probe.tsv` the stream `suspended` failed because running actors from the earlier runs filled the pool. `10-outages/*/19-summary.txt` counts the whole window of a run. `10-outages/*/18-states-after-cleanup.txt` repeats `17-states-after.txt`, because the cleanup step did not run. In `30-scale/` the Kubernetes API server of the cluster stopped answering, and no burst has a row.
 
 ### U-pg-upgrade-scale: a Postgres outside the cluster, one upgrade, and bursts on one node
 

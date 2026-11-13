@@ -2482,6 +2482,275 @@ def upgrade_x86():
     }
 
 
+Y = "Y-reruns-rollback-scale"
+Y_OUT = f"{Y}/10-outages"
+Y_UP = f"{Y}/20-upgrade"
+Y_OLD = f"{Y}/40-v060"
+GUEST_Y = GUEST_U + ", bundled Postgres"
+
+
+def first_marks(rel):
+    out = {}
+    for row in rows(rel):
+        if len(row) >= 3:
+            out.setdefault(row[2].split(" ")[0], float(row[0]))
+    return out
+
+
+def mark_value(rel, name, key):
+    for row in rows(rel):
+        if len(row) >= 3 and row[2].startswith(name):
+            found = re.search(rf"{key}=([\w.]+)", row[2])
+            if found:
+                return found.group(1)
+    return None
+
+
+def outage_stream(items, gone, ready):
+    failed = [item for item in items if item[1] != "200"]
+    during = [item for item in items if gone <= item[0] < ready]
+    ok_after = [item for item in items if item[1] == "200" and item[0] >= ready]
+    slow = [item[2] for item in failed if item[1] == "503"]
+    return {
+        "requests_in_run": len(items),
+        "failed_in_run": len(failed),
+        "codes_of_failures": tally(item[1] for item in failed),
+        "requests_during_outage": len(during),
+        "ok_during_outage": sum(1 for item in during if item[1] == "200"),
+        "last_failure_sent_seconds_after_ready": round(failed[-1][0] - ready, 1) if failed else None,
+        "first_ok_sent_seconds_after_ready": round(ok_after[0][0] - ready, 1) if ok_after else None,
+        "seconds_of_503": stat(slow) if slow else None,
+        "failure_bodies": tally(re.sub(r"y-lab/[\w-]+", "y-lab/<actor>", item[3])[:60] or "<empty>" for item in failed),
+    }
+
+
+def state_counts(rel):
+    return {parts[1]: int(parts[0]) for parts in (line.split() for line in lines(rel)) if len(parts) == 2}
+
+
+def outage_run(folder, postgres):
+    base = f"{Y_OUT}/{folder}"
+    at = first_marks(f"{base}/00-timeline.tsv")
+    begin, gone, ready = at["outage-begin"], at["dependency-gone"], at["dependency-ready"]
+    probes = [row for row in rows(f"{base}/10-probe.tsv") if len(row) >= 5 and row[0].isdigit()]
+    streams = {}
+    for name in ("running", "running2", "suspended"):
+        items = [(int(row[0]), row[3], float(row[4]), row[5] if len(row) > 5 else "") for row in probes if row[1] == name]
+        streams[name] = outage_stream(items, gone, ready)
+    gateway_timeouts = [{"stream": row[1], "actor": row[2], "seconds": round(float(row[4]), 3)} for row in probes if row[3] == "504"]
+    checks = [line.split() for line in lines(f"{base}/11-running-after.txt") if line.strip()]
+    cache = [json.loads(line) for line in lines(f"{base}/14-ateapi-worker-cache.log") if line.startswith("{")]
+    synced = [stamp(item["time"]) - ready for item in cache if item["msg"] == "worker cache synced" and stamp(item["time"]) > gone]
+    return {
+        "command_to_gone_seconds": round(gone - begin, 1),
+        "outage_seconds": round(ready - gone, 1),
+        "streams": streams,
+        "gateway_timeouts": gateway_timeouts,
+        "running_actors_checked_after": {"actors": len({parts[1] for parts in checks}), "requests": len(checks), "ok": sum(1 for parts in checks if parts[3] == "200")},
+        "stuck_line": lines(f"{base}/12-stuck.txt")[0],
+        "states_before": state_counts(f"{base}/01-states-before.txt"),
+        "states_after": state_counts(f"{base}/17-states-after.txt"),
+        "worker_cache_synced_seconds_after_ready": round(synced[0], 1) if postgres and synced else None,
+        "log_lines_with_worker_cache_not_ready": sum(1 for item in cache if "worker cache not ready" in json.dumps(item)),
+    }
+
+
+def dependency_reruns_x86():
+    folders = {"postgres-1": "10-pg-run1", "postgres-2": "11-pg-run2", "postgres-3": "12-pg-run3", "ate-api-server-1": "20-api-run1", "kube-apiserver-1": "30-k8s-run1"}
+    files = ("00-timeline.tsv", "10-probe.tsv", "11-running-after.txt", "12-stuck.txt", "14-ateapi-worker-cache.log", "01-states-before.txt", "17-states-after.txt")
+    return {
+        "machine": GUEST_Y + ", pool of 60 workers, template with 500 millicores and 128 MiB",
+        "note": "second runs of the three outages of experiment E, in this order on one cluster. Three running actors got one request each second with a client limit of 9 s (stream running is one actor, running2 the other two). A new suspended actor got one request every 5 s with a limit of 14 s. Outage seconds run from the moment the dependency was gone to the moment it was ready. A failure in the run counts the whole window, from 30 s before the outage to 120 s after it. After each run six running actors got three requests each. In kube-apiserver-1 the suspended stream is not valid: the pool was full of running actors from the earlier runs.",
+        "sources": [f"capture/lab/{Y_OUT}/{folder}/{name}" for folder in folders.values() for name in files],
+        "runs": {key: outage_run(folder, key.startswith("postgres")) for key, folder in folders.items()},
+        "client_limit_seconds": {"running": 9, "running2": 9, "suspended": 14},
+        "not_valid": ["kube-apiserver-1 stream suspended: every failure is no worker has room for the actor"],
+    }
+
+
+def cycle_windows(cycles):
+    windows = []
+    for index, cycle in enumerate(cycles):
+        if cycle["ok"]:
+            continue
+        if windows and windows[-1]["last_index"] == index - 1:
+            window = windows[-1]
+        else:
+            window = {"first_t": cycle["t"], "cycles": 0, "errors": [], "last_index": index}
+            windows.append(window)
+        window["cycles"] += 1
+        window["last_t"] = cycle["t"]
+        window["last_index"] = index
+        window["errors"].append(cycle["error"])
+    out = []
+    for window in windows:
+        later = [cycle["t"] for cycle in cycles[window["last_index"] + 1:] if cycle["ok"]]
+        out.append({"first_t": window["first_t"], "last_t": window["last_t"], "cycles": window["cycles"], "next_ok_t": later[0] if later else None, "errors": tally(window["errors"])})
+    return out
+
+
+def cycle_error(text):
+    for key in ("while getting atelet conn", "atelet Checkpoint", "CheckpointWorkload", "MarkSuspending prerequisite"):
+        if key in text:
+            return key
+    return "other"
+
+
+def upgrade_direction(folder):
+    base = f"{Y_UP}/{folder}"
+    timeline = [row for row in rows(f"{base}/00-timeline.tsv") if len(row) >= 3]
+    zero = float(timeline[1][0])
+    steps = []
+    begun = {}
+    for at, _, text in timeline:
+        name = text.split(" ")[0]
+        if text.endswith(" begin") or text.startswith("pool-patch begin"):
+            begun[name] = float(at)
+        ended = re.search(r"end rc=(\d+) seconds=([\d.]+)", text)
+        if ended and name in begun:
+            steps.append({"step": name, "begin_t": round(begun[name] - zero, 1), "seconds": float(ended.group(2)), "exit": int(ended.group(1))})
+    at = first_marks(f"{base}/00-timeline.tsv")
+    patch = at["pool-patch"]
+    cycles = []
+    for row in rows(f"{base}/02-cycle-stream.tsv"):
+        code = re.search(r"resume: (\d{3})", row[3]).group(1) if len(row) > 3 else "?"
+        ok = code == "200" and "Error" not in row[2]
+        count = re.search(r"count=(\d+)", row[-1])
+        cycles.append({"epoch": int(row[0]), "t": round(int(row[0]) - zero, 1), "ok": ok, "error": None if ok else cycle_error(row[2]), "count": int(count.group(1)) if ok and count else None})
+    api = lines(f"{base}/03-api-stream.tsv")
+    running = [row for row in rows(f"{base}/05-running-stream.tsv") if len(row) >= 5]
+    actors = {}
+    for name in ("a-run", "a-term"):
+        items = [row for row in running if row[2] == name]
+        failed = [row for row in items if row[3] != "200"]
+        actors[name] = {
+            "requests": len(items),
+            "failed": len(failed),
+            "codes": tally(row[3] for row in failed),
+            "first_failure_seconds_after_pool_patch": round(int(failed[0][0]) - patch, 1) if failed else None,
+            "per_second": [{"t": round(int(row[0]) - zero, 1), "code": row[3]} for row in items],
+        }
+    watch = [row for row in rows(f"{base}/23d-roll-watch.tsv") if row[0].replace(".", "").isdigit()]
+    crashed = [float(row[0]) - patch for row in watch if row[1] == "ACTOR_STATE_CRASHED"]
+    before_crash = [float(row[0]) - patch for row in watch if row[1] != "ACTOR_STATE_CRASHED" and float(row[0]) - patch < crashed[0]]
+    roll = read(f"{base}/23i-after-roll.txt")
+    after = []
+    seen = set()
+    for line in lines(f"{base}/40-actors-after.txt"):
+        found = re.match(r"(a-[\w-]+) (.*?): (\d{3})\t([\d.]+)\t(.*)", line)
+        if found and (found.group(1), found.group(2)) not in seen:
+            seen.add((found.group(1), found.group(2)))
+            count = re.search(r"count=(\d+)", found.group(5))
+            after.append({"actor": found.group(1), "label": found.group(2), "code": found.group(3), "count": int(count.group(1)) if count else None})
+    return {
+        "steps": steps,
+        "pool_patch_t": round(patch - zero, 1),
+        "first_step_begin_to_last_step_end_seconds": round(max(float(row[0]) for row in timeline if "end rc=" in row[2]) - zero, 1),
+        "cycles": {"total": len(cycles), "failed": sum(1 for cycle in cycles if not cycle["ok"]), "windows": cycle_windows(cycles), "per_cycle": [{"t": cycle["t"], "ok": cycle["ok"]} for cycle in cycles]},
+        "list_actors_stream": {"calls": len(api), "answered": sum(1 for line in api if "actors listed" in line)},
+        "running_actors": actors,
+        "actor_without_handler": {
+            "crashed_first_seen_seconds_after_pool_patch": round(crashed[0], 1),
+            "last_running_sample_seconds_after_pool_patch": round(before_crash[-1], 1),
+            "revert_seconds": float(mark_value(f"{base}/00-timeline.tsv", "a-run-reverted", "seconds")),
+            "count_after_revert": int(re.search(r"a-run after revert: 200\t[\d.]+\tcount=(\d+)", roll).group(1)),
+        },
+        "actor_with_handler": {
+            "suspend_seconds": float(mark_value(f"{base}/00-timeline.tsv", "a-term-suspended", "seconds")),
+            "after_roll": {"code": re.search(r"a-term after the roll: (\d{3})", roll).group(1), "count": int(re.search(r"a-term after the roll: .*?count=(\d+)", roll).group(1)), "sigterm_seen": int(re.search(r"sigterm_seen=(\d+)", roll).group(1))},
+        },
+        "actors_after": after,
+        "schema_rows_after": len(lines(f"{base}/33-schema-migrations-after.txt")),
+        "substrate_image_tags_after": tally(found.group(1) for found in (re.search(r"substrate/[\w-]+:(v[\w.-]+?)(?:@|\s|$)", line) for line in lines(f"{base}/30-images-after.txt")) if found),
+        "_cycles": cycles,
+    }
+
+
+def upgrade_rerun_x86():
+    up = upgrade_direction("20-upgrade")
+    back = upgrade_direction("40-rollback")
+    cyc_crash = next(cycle for cycle in up.pop("_cycles") if cycle["t"] > up["pool_patch_t"] and not cycle["ok"])
+    back_cycles = back.pop("_cycles")
+    revert_epoch = int(lines(f"{Y_UP}/40-rollback/00-manual-revert-a-cyc.txt")[0].split()[0])
+    count_after = next(cycle["count"] for cycle in back_cycles if cycle["ok"] and cycle["epoch"] > revert_epoch)
+    before_rows = lines(f"{Y_UP}/10-before/15-schema-migrations-before.txt")
+    return {
+        "machine": GUEST_Y + ", pool of 10 workers",
+        "note": "a second upgrade from v1.0.0-rc.3 to v1.0.0 by the steps of the upgrade guide, then a rollback to v1.0.0-rc.3 in the reverse order, each once. t is seconds from the start of the first step of each direction. A stream suspended and resumed one actor, a-cyc, about each 3.5 s. A second stream listed actors each 2 s. A third sent one request each second to two RUNNING actors: a-run exits on SIGTERM, and a-term handles it. In the worker step the script waited for the old worker of a-term, then suspended a-term, then reverted a-run.",
+        "sources": [f"capture/lab/{Y_UP}/{folder}/{name}" for folder in ("20-upgrade", "40-rollback") for name in ("00-timeline.tsv", "02-cycle-stream.tsv", "03-api-stream.tsv", "05-running-stream.tsv", "23d-roll-watch.tsv", "23i-after-roll.txt", "30-images-after.txt", "33-schema-migrations-after.txt", "40-actors-after.txt")] + [f"capture/lab/{Y_UP}/10-before/15-schema-migrations-before.txt", f"capture/lab/{Y_UP}/40-rollback/00-manual-revert-a-cyc.txt"],
+        "schema_rows_before": len(before_rows),
+        "upgrade": up,
+        "rollback": back,
+        "cycling_actor": {
+            "crashed_in_upgrade_t": cyc_crash["t"],
+            "crashed_seconds_after_pool_patch": round(cyc_crash["t"] - up["pool_patch_t"], 1),
+            "error_of_first_failure": cyc_crash["error"],
+            "manual_revert_seconds_after_crash": revert_epoch - cyc_crash["epoch"],
+            "count_after_manual_revert": count_after,
+        },
+    }
+
+
+def error_line(rel):
+    return next(line for line in lines(rel) if line.startswith("Error:"))
+
+
+def v060_x86():
+    install = f"{Y_OLD}/00-install"
+    before = f"{Y_OLD}/10-before"
+    direct = f"{Y_OLD}/20-direct-upgrade"
+    again = f"{Y_OLD}/30-reinstall"
+    ax = f"{Y_OLD}/40-ax031"
+    at = {row[2].split(" ")[0]: row[2] for row in rows(f"{Y_OLD}/00-timeline.tsv") if len(row) >= 3}
+    ended = lambda name: {key: int(value) for key, value in re.findall(r"(rc|seconds)=(\d+)", at[name])}
+    crd_error = lambda rel: re.search(r"CustomResourceDefinition[^;]*", error_line(rel)).group(0)
+    requests = [row for row in rows(f"{before}/02-requests.txt") if len(row) >= 3]
+    after_upgrade = [line for line in lines(f"{direct}/27-requests.txt") if line.strip()]
+    controller = read(f"{ax}/60-controller-after.log")
+    describe = read(f"{ax}/53-describe.log")
+    return {
+        "machine": GUEST_Y + ", Agent Substrate v0.6.0 built from source with ko",
+        "note": "one install of v0.6.0 by its README, one direct upgrade to v1.0.0 from the release images, one reinstall on the same cluster, and the release v0.3.1 of Agent Executor on a fresh v0.6.0. Each ran once.",
+        "sources": [f"capture/lab/{path}" for path in (f"{install}/steps.tsv", f"{install}/20-deploy-ate-system.log", f"{install}/30-deploy-demo.log", f"{before}/pf.log", f"{before}/02-requests.txt", f"{before}/04-actors.txt", f"{before}/06-schema.txt", f"{Y_OLD}/00-timeline.tsv", f"{direct}/10-deploy.log", f"{direct}/22-schema.txt", f"{direct}/23-actors.txt", f"{direct}/27-requests.txt", f"{again}/20-deploy.log", f"{again}/29-stuck-crd.txt", f"{again}/36-atelet-crash.log", f"{again}/40-atespaces.txt", f"{again}/41-actor-rows.txt", f"{again}/33-schema.txt", f"{ax}/steps.tsv", f"{ax}/11-ax-commit.txt", f"{ax}/12-gomod.txt", f"{ax}/53-describe.log", f"{ax}/60-controller-after.log")],
+        "install": {
+            "steps": attempts(f"{install}/steps.tsv")[0],
+            "readme_deploy_error": error_line(f"{install}/20-deploy-ate-system.log"),
+            "readme_demo_command_prints_help": read(f"{install}/30-deploy-demo.log").startswith("Deploy Agent Substrate components"),
+            "readme_port_forward_error": lines(f"{before}/pf.log")[0],
+            "actors_made": len([line for line in lines(f"{before}/04-actors.txt")[1:] if line.strip()]),
+            "request_codes_before_upgrade": tally(row[1] for row in requests),
+            "schema_rows": len(lines(f"{before}/06-schema.txt")),
+        },
+        "direct_upgrade": {
+            **ended("direct-upgrade-end"),
+            "error": crd_error(f"{direct}/10-deploy.log"),
+            "schema_rows_after": len(lines(f"{direct}/22-schema.txt")),
+            "new_cli_error": lines(f"{direct}/23-actors.txt")[0],
+            "requests_after": tally(line.rsplit("\t", 2)[1] for line in after_upgrade),
+        },
+        "reinstall": {
+            "delete_all": ended("delete-all-end"),
+            "deploy_1": ended("reinstall-deploy-end"),
+            "deploy_1_error": crd_error(f"{again}/20-deploy.log"),
+            "stuck_crd_finalizer": "sandboxconfig.ate.dev/workerpool-protection" in read(f"{again}/29-stuck-crd.txt"),
+            "deploy_2": ended("reinstall2-deploy-end"),
+            "atelet_error": json.loads(next(line for line in lines(f"{again}/36-atelet-crash.log") if "image cache" in line))["err"],
+            "deploy_3": ended("reinstall3-deploy-end"),
+            "actor_rows_after": int(lines(f"{again}/41-actor-rows.txt")[0]),
+            "atespaces_after": len([line for line in lines(f"{again}/40-atespaces.txt") if line.strip() and not line.startswith(("NAME", "Warning"))]),
+            "schema_rows_after": len(lines(f"{again}/33-schema.txt")),
+        },
+        "agent_executor_v0_3_1": {
+            "commit": lines(f"{ax}/11-ax-commit.txt")[0].split()[0],
+            "substrate_requirement": re.search(r"github.com/agent-substrate/substrate (\S+)", read(f"{ax}/12-gomod.txt")).group(1),
+            "steps": attempts(f"{ax}/steps.tsv")[0],
+            "task_phase": re.search(r"Phase:\s+(\w+)", describe).group(1),
+            "task_condition": re.search(r"ActorCreationFailed\s+(.*)", describe).group(1).strip(),
+            "template_error": re.search(r'could not create custom ActorTemplate.*?desc = (\[[^\]]*\])', controller).group(1),
+        },
+    }
+
+
 def burst_line(text):
     grab = lambda key: re.search(rf"{key}=([\d.]+)", text).group(1)
     return {"requests": int(grab("n")), "ok": int(grab("ok")), "wall_seconds": float(grab("wall")), "per_second": float(grab("rate")), "median_seconds": float(grab("p50")), "p95_seconds": float(grab("p95")), "max_seconds": float(grab("max")), "connections": int(grab("connects"))}
@@ -2574,6 +2843,9 @@ BUILDERS = {
     "remote-store-x86.json": remote_store_x86,
     "remote-postgres-x86.json": remote_postgres_x86,
     "upgrade-x86.json": upgrade_x86,
+    "dependency-reruns-x86.json": dependency_reruns_x86,
+    "upgrade-rerun-x86.json": upgrade_rerun_x86,
+    "v060-x86.json": v060_x86,
     "scale-x86.json": scale_x86,
     "kagent-model-x86.json": kagent_model_x86,
     "kagent-bound-x86.json": kagent_bound_x86,

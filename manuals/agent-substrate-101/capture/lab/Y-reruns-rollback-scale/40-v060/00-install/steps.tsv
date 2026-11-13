@@ -1,0 +1,8 @@
+10-kind-cluster	0	18
+20-deploy-ate-system	1	2
+30-deploy-demo	0	1
+DONE
+21-deploy-ate-system-with-ingress-id	0	278
+31-deploy-demo	0	1
+DONE2
+32-deploy-demo-counter	0	43

@@ -1,0 +1,11 @@
+a-run ACTOR_STATE_RUNNING 200	0.029390	count=4 process_age_s=28.1 
+a-term ACTOR_STATE_RUNNING 200	0.034292	count=4 process_age_s=28.4 sigterm_seen=0 
+a-cyc ACTOR_STATE_RUNNING 200	0.029980	count=4 process_age_s=29.0 
+ATESPACE   NAME      TEMPLATE          STATE                   WORKER POD                        WORKER IPS    VERSION   AGE
+up-lab     a-cyc     up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-c2z9r   10.244.0.24   3         12s
+up-lab     a-def     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         14s
+up-lab     a-fresh   up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          1         7s
+up-lab     a-run     up-lab/up-drill   ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-ht5jg   10.244.0.30   3         17s
+up-lab     a-sync    up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         15s
+up-lab     a-tag     up-lab/up-drill   ACTOR_STATE_SUSPENDED   <none>                                          5         13s
+up-lab     a-term    up-lab/up-trap    ACTOR_STATE_RUNNING     up-lab/up-pool-59f744cb5d-59zsc   10.244.0.26   3         11s

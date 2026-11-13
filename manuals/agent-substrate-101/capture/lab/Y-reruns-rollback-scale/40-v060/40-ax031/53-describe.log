@@ -1,0 +1,13 @@
+Name:         ax031-install-check
+Atespace:     default
+Phase:        Failed
+Actor:        ax031-install-check
+Worker IP:    
+Image:        localhost:5001/ax031-task-runner@sha256:153550b4030ed929e8913b0cf6f4a5602626b346d12502a4790d46f01799d1ea
+Command:      [sleep infinity]
+
+Conditions:
+  TYPE   STATUS  REASON               MESSAGE
+  Ready  False   ActorCreationFailed  creating actor default/ax031-install-check: rpc error: code = InvalidArgument desc = [actor.actor_template.atespace: Required value, actor.actor_template.name: Required value]
+NAME                  ATESPACE   PHASE    ACTOR                 WORKER-IP   AGE
+ax031-install-check   default    Failed   ax031-install-check   <none>      10s
