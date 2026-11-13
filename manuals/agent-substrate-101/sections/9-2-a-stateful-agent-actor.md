@@ -125,7 +125,7 @@ This result differs from the kagent run in [kagent 1.0 on Substrate](#s-kagent-o
 ## Limits of the demo
 
 - The model is a mock. A real model adds its own time to each turn.
-- One actor ran in each session. We did not measure many agents that resume at the same time.
+- One actor ran in each session. We did not measure many agents that resume at the same time. [Sizing a pool](#s-sizing-a-pool) has bursts of up to 300 counter actors.
 - SQLite holds each turn after the model answers. A crash between the answer and the write loses that turn.
 - The agent has no authentication. Each caller that can reach the router can read the conversation.
 

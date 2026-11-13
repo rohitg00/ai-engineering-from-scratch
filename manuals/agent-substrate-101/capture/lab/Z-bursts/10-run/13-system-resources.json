@@ -1,0 +1,24 @@
+{
+  "name": "ate-api-server",
+  "replicas": 2,
+  "resources": [
+    {
+      "name": "ate-api-server",
+      "resources": {}
+    }
+  ]
+}
+{
+  "name": "atenet-router",
+  "replicas": 1,
+  "resources": [
+    {
+      "name": "atenet-router",
+      "resources": {}
+    },
+    {
+      "name": "envoy",
+      "resources": {}
+    }
+  ]
+}

@@ -24,7 +24,7 @@ The guests and the Mac are different machines. Do not compare a number from one 
 
 | Folder | Machine |
 |---|---|
-| `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart`, `U-pg-upgrade-scale`, `Y-reruns-rollback-scale` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
+| `A-quickstart`, `B-lifecycle`, `C-resume-vs-size`, `D-durability`, `I-capacity`, `J-container-death`, `V-validation`, `L-gaps/microvm`, `L-gaps/restart`, `U-pg-upgrade-scale`, `Y-reruns-rollback-scale`, `Z-bursts` | the x86 server guest (24 vCPU, 47 GB, nested KVM) |
 | `E-dependency-loss`, `F-egress`, `G-dataplane`, `L-gaps/multinode`, `P-node-loss`, `Q-network`, `T-drain-store`, `X-remote-store-pg` | a second x86 server guest (16 vCPU, 23 GB) |
 | `K-kagent`, `N-demos`, `R-agent-executor`, `S-ax-model`, `W-ax-kagent-2` | a second x86 server guest (16 vCPU, 31 GB) |
 | `M-mac-arm64` | the Mac |
@@ -278,6 +278,23 @@ All runs used a second x86 server guest (16 vCPU, 23 GB), with the Envoy datapla
 These parts are not valid, and the summaries do not use them. `20-store-cycles.tsv` is a first attempt in which a 504 led to a revert; `22-store-cycles.tsv` replaces it. In `13-path.txt`, the download times under the two rate limits are not shaped, and one block of probes under 20 Mbit/s shows code `000`. In `30-outage-*.tsv`, the row `async-state-after-wait` is one sample and not a wait. In `50-pg-tests/33-probe.tsv`, the one row with code 404 came from a list of actors that ran out. In `50-pg-tests/05-pg-round-trip.txt`, the line that starts with `qdisc` under the first heading shows the rule for another address.
 
 The rows with 100 ms of added delay on the path between the guests are valid for that path only. The access key of the bucket shows as `<store-key>`, and the connection strings show `<user>` and `<password>`.
+
+### Z-bursts: bursts of up to 300 resumes on one node, and what sets the rate
+
+All runs used the x86 server guest (24 vCPU, 47 GB, nested KVM), on a new kind cluster with one node and a limit of 700 pods, from the release images, with the Envoy dataplane, gVisor, and the bundled Postgres. Each worker had limits of 1 CPU and 512Mi. The actor was a Python counter with a 500 millicore and 128 MiB limit and the memory fidelity.
+
+| File | What it shows |
+|---|---|
+| `00-setup/02-kind-script-change.diff`, `21-node.json`, `pool.yaml`, `template.yaml` | the change to the kind script for 700 pods, the node, the pool, and the template |
+| `00-setup/20-growth.tsv` | the pool grown from 50 to 300 workers in steps of 50, with the time to ready and the answer time of the Kubernetes API at each step |
+| `10-run/10-first-activation.tsv`, `21-sequential.tsv` | the first start of 300 new actors, 150 at a time, and 20 single resumes |
+| `10-run/20-concurrency.tsv`, `10-run/bursts/` | each burst, and every request of each burst: actor, code, and seconds |
+| `10-run/cpu/`, `sampler.py` | the CPU of the node and of each named process, each second of each burst |
+| `10-run/50-atelet-restore-timing.excerpt.log`, `51-restore-concurrency.txt` | the restore log of `atelet`, and the count of restores at once in each burst |
+| `10-run/40-errors/`, `41-non-200-rows.tsv`, `42-postgres-max-connections.txt`, `43-ateapi-pool-settings.json` | the bursts with four replicas of `ate-api-server`: the logs, the actor lists, the connection limit of Postgres, and the server arguments |
+| `10-run/00-run.log`, `30-scale.log` | the order of the run, the replica changes, and the steps that we took by hand |
+
+The folder README names the parts that are not valid. The certificate chains in the API server logs are replaced with a marker.
 
 ### Y-reruns-rollback-scale: second runs of the outages and the upgrade, a rollback, and v0.6.0
 

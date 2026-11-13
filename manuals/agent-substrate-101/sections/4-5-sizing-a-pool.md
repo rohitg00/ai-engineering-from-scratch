@@ -72,17 +72,17 @@ On a pool that spans nodes, size each node by itself. A suspended actor resumes 
 
 ## Many resumes at one time
 
-A pool with free workers still has a limit on how fast it starts actors. We sent bursts of resumes to one node and timed each request. [Figure 4.5b](#fig-4-5b) shows every request.
+A pool with free workers still has a limit on how fast it starts actors. We sent bursts of resumes to one node and timed each request. [Figure 4.5b](#fig-4-5b) shows every request of two runs.
 
 ```figure
 id: fig-4-5b
 kind: chart
 title: resumes at one time on one node
-claim: One node finished 36 to 39 resumes each second, so the wait grew with the size of the burst.
-caption: In the left panel each line is one burst, with its requests in order from the first answer to the last. The right panel has the rate of each burst. The sizes on the horizontal axis are not to scale. The dashed line is the 0.5 s that the project site states. From capture/lab/summary/scale-x86.json.
+claim: One node finished 32 to 39 resumes each second from 50 to 300 at one time, so the wait grew with the size of the burst.
+caption: In the left panel each line is one burst, with its requests in order from the first answer to the last. A line passes through 31 of them. The sizes on its horizontal axis are not to scale. The right panel has the rate of each burst against the burst size. The dashed line is the 0.5 s that the project site states. Four requests of the second run got no answer in 90 s and are not drawn. From capture/lab/summary/scale-x86.json and capture/lab/summary/bursts-one-node-x86.json.
 ```
 
-**We measured** this on the x86 server guest (24 vCPU, 47 GB, nested KVM), on one kind node with a pool of 200 gVisor workers. The actor was a Python counter with a 128 MiB limit, and each actor had its own snapshot on the node. One client process in a pod sent each burst to the router, over one or two HTTP/2 connections. Each burst size ran three times, and all 933 requests returned 200.
+**We measured** the first run on the x86 server guest (24 vCPU, 47 GB, nested KVM). It had one kind node and a pool of 200 gVisor workers. The actor was a Python counter with a 128 MiB limit, and each actor had its own snapshot on the node. One client process in a pod sent each burst to the router, over one or two HTTP/2 connections. Each burst size ran three times, and all 933 requests returned 200.
 
 | Resumes at one time | Median of each burst | Slowest request | Resumes each second |
 |---|---|---|---|
@@ -92,13 +92,57 @@ caption: In the left panel each line is one burst, with its requests in order fr
 | 100 | 2.21 to 2.26 s | 2.73 s | 36 to 39 |
 | 150 | 3.16 to 3.42 s | 4.14 s | 36 to 38 |
 
-The rate stops rising at about 37 resumes each second. From there a larger burst only waits longer, and twice the burst took twice the time. We did not measure what sets that rate, and we did not record CPU use during a burst. A first start from the golden snapshot ran at the same rate: 34 to 38 each second for 150 new actors, in three waves.
+The rate stops rising at about 37 resumes each second. From there a larger burst only waits longer, and twice the burst took twice the time. A first start from the golden snapshot ran at the same rate: 34 to 38 each second for 150 new actors, in three waves.
 
-The count of stored actors did not change these numbers. We then raised the count to 10,750 actor rows in Postgres. A single resume took a median of 0.36 to 0.38 s at each of four sizes, with 10 resumes each. The database was 20 MB at 10,750 rows, and `kubectl ate get actors` took 0.86 s. The creates ran at 76 to 86 each second, and none of 10,000 failed.
+**We measured** a second run on the same guest, on a new kind node with a limit of 700 pods. The pool grew from 50 to 300 workers in steps of 50, and each step was ready in 17 to 21 s. At every step the Kubernetes API answered `/readyz` in a median of 105 to 108 ms, so 300 workers did not slow it. The actor was the same counter, and each request opened its own connection. A single resume took a median of 0.35 s, in 20 resumes.
 
-**Our position:** plan the pool for the burst, and not only for the peak count. If 100 sessions wake in the same second on one node like ours, the last one waits about 2.7 s. Spread a wake-up of many actors over time in your client. More nodes are the other answer, and we did not test them, so measure that rate yourself.
+| Resumes at one time | Bursts | Median of each burst | 95th percentile | Resumes each second |
+|---|---|---|---|---|
+| 150 | 3 | 3.15 to 3.55 s | 3.83 to 4.09 s | 35 to 39 |
+| 200 | 2 | 4.33 and 4.55 s | 5.42 and 5.61 s | 35 and 36 |
+| 300 | 2 | 7.29 and 7.42 s | 9.10 and 9.17 s | 32 and 32 |
 
-Two limits stopped the ramp. Each suspended actor of this kind kept 12.9 MB on the node disk, and 450 of them left 3.9 GB free on the guest. We also stopped at 10,750 rows, below the 20,000 that we planned. An idle worker used a median of 16.7 MB of memory, in 200 workers.
+1,448 of 1,450 requests in these bursts returned 200. The other two got no answer in 90 s, and the rate counts the answered requests up to the slowest answer. A first start of 300 new actors, 150 at a time, ran at 30 and 34 each second. So the rate held at 32 to 39 from 50 to 300 at one time, and fell a little at 300.
+
+## What sets that rate
+
+[Figure 4.5c](#fig-4-5c) shows the restore inside the worker, the step of a resume that took the most time.
+
+```figure
+id: fig-4-5c
+kind: chart
+title: the worker restore of each actor, alone and inside a burst
+claim: Inside a burst about 100 restores ran at once, and each one took about ten times as long as a restore alone.
+caption: The first column has 20 restores sent one at a time, one dot each. Each other column is one burst of 134 to 150 resumes, as a box of its restore times. The number over a box is the median count of restores in progress at one moment. The bursts of 200 and 300 are not in the log. From capture/lab/summary/restore-limit-x86.json.
+```
+
+**We measured** this in the second run, from the restore log of `atelet` and the CPU of each process, sampled each second. Alone, the restore inside the worker took a median of 0.27 s, in 20 restores. In eight bursts, a median of 75 to 116 restores were in progress at one moment. Each one took a median of 2.1 to 2.9 s inside the worker, and each burst finished 35 to 41 restores each second. So nothing limits how many restores start at once, and each one slows when about 100 run together.
+
+We ruled out the parts that we could change or watch, in 13 bursts with no hung request:
+
+- `ate-api-server`: with 1, 2, and 4 replicas the rate was 36 to 37, 35 to 39, and 32 to 36 each second. It used 0.24 to 0.39 cores on average in a burst, and no thread more than 0.06 cores.
+- The router: with 1 replica of `atenet-router` the rate was 35 to 39, and with 4 replicas 35.5 and 36.3.
+- Postgres, `kube-apiserver`, and etcd: each used less than 0.25 cores on average, and no thread more than 0.07 cores.
+- The client: one or four curl processes gave the same rate. So did one connection for each request, against one or two in the first run.
+- The node: 9.5 to 11.4 of its 24 cores were busy on average in a burst, with peaks of 14 to 16. I/O wait was 0.02 to 0.12 cores on average, in the bursts that recorded it.
+
+The busiest processes were the gVisor sandboxes, at 2.1 to 2.9 cores on average, and the worker processes, at 1.5 to 2.2. So the limit is on the node, inside the gVisor restores that run together. Plain CPU, disk wait, and the control plane of Substrate are ruled out. We did not measure its cause. Lock contention in the guest kernel or in gVisor, and a cost of nested virtualisation, are possible. We are sure of what the limit is not, and less sure of where it is.
+
+## More replicas of ate-api-server
+
+**We measured** two bursts of 150 with four replicas of `ate-api-server`, in the second run. 33 of 300 requests returned 500 and 3 returned 503. The bundled Postgres allows 100 connections, and the four replicas ran it out of them. The API server logged `FATAL: remaining connection slots are reserved for roles with the SUPERUSER attribute (SQLSTATE 53300)` and `FATAL: sorry, too many clients already`. Its arguments have no flag for the size of its connection pool.
+
+Eight actors ended `ACTOR_STATE_CRASHED`, and one `revert` brought each one back, in 0.33 to 0.38 s. Two more actors stayed in `ACTOR_STATE_RESUMING` for at least 4 minutes, and [section 8.2](#s-when-a-dependency-is-down) has them.
+
+**Our position:** keep the two replicas of `ate-api-server` that the install sets, when you use the bundled Postgres. More replicas did not raise the rate on one node, and four of them failed resumes and crashed actors. If you need more replicas for availability, raise the connection limit of Postgres first. We did not test that change.
+
+## The count of stored actors
+
+The count of stored actors did not change these numbers. In the first run we raised the count to 10,750 actor rows in Postgres. A single resume took a median of 0.36 to 0.38 s at each of four sizes, with 10 resumes each. The database was 20 MB at 10,750 rows, and `kubectl ate get actors` took 0.86 s. The creates ran at 76 to 86 each second, and none of 10,000 failed.
+
+**Our position:** plan the pool for the burst, and not only for the peak count. If 100 sessions wake in the same second on one node like ours, the last one waits about 2.7 s. With 300 it waits about 9 s. Spread a wake-up of many actors over time in your client. More nodes are the other answer, and we did not test them, so measure that rate yourself.
+
+Two limits stopped the runs. Each suspended actor of this kind kept 12.9 MB on the node disk, and 450 of them left 3.9 GB free on the guest. We also stopped at 10,750 rows, below the 20,000 that we planned. In the second run the delayed upload of 300 snapshots took the guest disk from 4.9 to 4.0 GB in one minute. So 200 and 300 at one time ran twice each, and not three times. An idle worker used a median of 16.7 MB of memory, in 200 workers.
 
 ## No autoscaler
 
@@ -140,7 +184,8 @@ Read the table as four separate limits: missing limits, node memory, Postgres ro
 - Size node disk as suspends in 30 minutes times the snapshot size.
 - Size the pool for the peak, because Substrate has no autoscaler.
 - Plan for about 37 resumes each second on one node, and spread a larger wake-up over time.
+- Keep two replicas of ate-api-server with the bundled Postgres, because four ran it out of connections.
 - Watch node memory, node disk, and Postgres before you add CPU.
 ```
 
-Sources: capture/lab/summary/scale-x86.json, capture/lab/summary/full-node-x86.json, capture/lab/U-pg-upgrade-scale/40-scale/10-run/20-concurrency.tsv, capture/lab/U-pg-upgrade-scale/40-scale/10-run/30-rows.tsv, capture/lab/U-pg-upgrade-scale/40-scale/00-setup/30-setup.log, capture/lab/summary/microvm-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/demos-x86.json, capture/lab/summary/cpu-limit-x86.json, capture/lab/Q-network/n-cpu-limit/40-work.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/summary/parking-x86.json, capture/lab/K-kagent/parallel/workers-during.txt, capture/lab/K-kagent/parallel/states-during.txt, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/E-dependency-loss/00-setup.log, capture/lab/E-dependency-loss/22-actors-5min-later.txt; cmd/ateapi/internal/scheduling/scheduling.go, cmd/ateworker-gvisor/memory.go, cmd/ateworker-gvisor/main.go, api/infra/k8s/ate/v1/workerpool_types.go, cmd/atelet/main.go at v1.0.0; docs/reference/api-guide.md, docs/guides/observability.md, docs/guides/node-storage.md, docs/guides/benchmarking.md, site/layouts/_shortcodes/home.html at v1.0.0; issues https://github.com/agent-substrate/substrate/issues/3479, https://github.com/agent-substrate/substrate/issues/3408, https://github.com/agent-substrate/substrate/issues/3702, https://github.com/agent-substrate/substrate/issues/3101, https://github.com/agent-substrate/substrate/issues/3441, https://github.com/agent-substrate/substrate/issues/3431.
+Sources: capture/lab/summary/scale-x86.json, capture/lab/summary/bursts-one-node-x86.json, capture/lab/summary/restore-limit-x86.json, capture/lab/Z-bursts/10-run/20-concurrency.tsv, capture/lab/Z-bursts/00-setup/20-growth.tsv, capture/lab/Z-bursts/10-run/51-restore-concurrency.txt, capture/lab/Z-bursts/10-run/40-errors/40-postgres.log, capture/lab/Z-bursts/10-run/43-ateapi-pool-settings.json, capture/lab/summary/full-node-x86.json, capture/lab/U-pg-upgrade-scale/40-scale/10-run/20-concurrency.tsv, capture/lab/U-pg-upgrade-scale/40-scale/10-run/30-rows.tsv, capture/lab/U-pg-upgrade-scale/40-scale/00-setup/30-setup.log, capture/lab/summary/microvm-x86.json, capture/lab/summary/validation-parallel-x86.json, capture/lab/summary/validation-memory-x86.json, capture/lab/summary/demos-x86.json, capture/lab/summary/cpu-limit-x86.json, capture/lab/Q-network/n-cpu-limit/40-work.tsv, capture/lab/V-validation/03-parallel-resume/11-workers-before-32.txt, capture/lab/V-validation/11-process-exit-long-watch/11-workers-end.txt, capture/lab/N-demos/tool-sandbox/tasks.tsv, capture/lab/L-gaps/multinode/52-placement-counts.txt, capture/lab/L-gaps/multinode/70-stop-after-upload.tsv, capture/lab/L-gaps/multinode/85-node-return.tsv, capture/lab/I-capacity/01-unplanned-full-pool-503.tsv, capture/lab/I-capacity/02-workers-when-full.txt, capture/lab/I-capacity/03-actors-when-full.txt, capture/lab/C-resume-vs-size/pool.yaml, capture/lab/C-resume-vs-size/tmpl-0.yaml, capture/lab/C-resume-vs-size/20-storage-footprint.txt, capture/lab/C-resume-vs-size/23-storage-after-delete.txt, capture/lab/summary/footprint-x86.json, capture/lab/summary/parking-x86.json, capture/lab/K-kagent/parallel/workers-during.txt, capture/lab/K-kagent/parallel/states-during.txt, capture/lab/K-kagent/parallel/timings.tsv, capture/lab/K-kagent/inventory/workers-end.txt, capture/lab/D-durability/10-watch-part1.tsv, capture/lab/E-dependency-loss/00-setup.log, capture/lab/E-dependency-loss/22-actors-5min-later.txt; cmd/ateapi/internal/scheduling/scheduling.go, cmd/ateworker-gvisor/memory.go, cmd/ateworker-gvisor/main.go, api/infra/k8s/ate/v1/workerpool_types.go, cmd/atelet/main.go at v1.0.0; docs/reference/api-guide.md, docs/guides/observability.md, docs/guides/node-storage.md, docs/guides/benchmarking.md, site/layouts/_shortcodes/home.html at v1.0.0; issues https://github.com/agent-substrate/substrate/issues/3479, https://github.com/agent-substrate/substrate/issues/3408, https://github.com/agent-substrate/substrate/issues/3702, https://github.com/agent-substrate/substrate/issues/3101, https://github.com/agent-substrate/substrate/issues/3441, https://github.com/agent-substrate/substrate/issues/3431.

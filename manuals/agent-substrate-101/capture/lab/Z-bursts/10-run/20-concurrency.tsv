@@ -1,0 +1,15 @@
+level	procs	http	rep	result	disk_mb	mem_mb
+150	1	h2	r1	c150-p1-h2-r1	n=150	ok=149	wall=90.06	rate=1.7/s	min=0.600	p50=3.152	p95=3.833	max=3.854	codes={'200': 149, '000': 1}	connects=150	http=2	4876	31940
+200	1	h2	r1	c200-p1-h2-r1	n=200	ok=200	wall=5.57	rate=35.9/s	min=0.643	p50=4.326	p95=5.416	max=5.463	codes={'200': 200}	connects=200	http=2	4762	29572
+300	1	h2	r1	c300-p1-h2-r1	n=300	ok=300	wall=9.34	rate=32.1/s	min=0.869	p50=7.288	p95=9.167	max=9.222	codes={'200': 300}	connects=300	http=2	4551	26962
+150	1	h2	r2	c150-p1-h2-r2	n=150	ok=150	wall=3.96	rate=37.9/s	min=0.578	p50=3.168	p95=3.884	max=3.892	codes={'200': 150}	connects=150	http=2	4811	30450
+200	1	h2	r2	c200-p1-h2-r2	n=200	ok=199	wall=90.10	rate=2.2/s	min=0.586	p50=4.550	p95=5.607	max=5.681	codes={'200': 199, '000': 1}	connects=200	http=2	4716	30162
+300	1	h2	r2	c300-p1-h2-r2	n=300	ok=300	wall=9.33	rate=32.2/s	min=0.947	p50=7.418	p95=9.098	max=9.208	codes={'200': 300}	connects=300	http=2	4510	26293
+150	1	h2	r3	c150-p1-h2-r3	n=150	ok=150	wall=4.25	rate=35.3/s	min=0.631	p50=3.551	p95=4.092	max=4.160	codes={'200': 150}	connects=150	http=2	4592	30728
+150	4	h2	p4	c150-p4-h2-p4	n=150	ok=148	wall=90.03	rate=1.6/s	min=0.524	p50=3.281	p95=3.904	max=3.942	codes={'200': 148, '000': 2}	connects=150	http=2	5952	30689
+150	1	h2	api1-r1	c150-p1-h2-api1-r1	n=150	ok=150	wall=4.20	rate=35.7/s	min=0.631	p50=3.496	p95=4.101	max=4.128	codes={'200': 150}	connects=150	http=2	6125	29845
+150	1	h2	api1-r2	c150-p1-h2-api1-r2	n=150	ok=150	wall=4.05	rate=37.0/s	min=0.558	p50=3.608	p95=3.968	max=4.007	codes={'200': 150}	connects=150	http=2	6115	29741
+150	1	h2	api4-r1	c150-p1-h2-api4-r1	n=150	ok=130	wall=4.09	rate=31.8/s	min=0.852	p50=3.390	p95=4.001	max=4.023	codes={'500': 20, '200': 130}	connects=150	http=2	6154	30066
+150	1	h2	api4-r2	c150-p1-h2-api4-r2	n=150	ok=134	wall=3.72	rate=36.0/s	min=0.695	p50=3.116	p95=3.648	max=3.666	codes={'500': 13, '200': 134, '503': 3}	connects=150	http=2	5617	30199
+150	1	h2	router4-r1	c150-p1-h2-router4-r1	n=150	ok=149	wall=4.11	rate=36.3/s	min=0.766	p50=3.302	p95=3.965	max=4.020	codes={'404': 1, '200': 149}	connects=150	http=2	5742	29801
+150	1	h2	router4-r2	c150-p1-h2-router4-r2	n=150	ok=149	wall=4.20	rate=35.5/s	min=0.675	p50=3.359	p95=4.096	max=4.149	codes={'404': 1, '200': 149}	connects=150	http=2	6119	29750

@@ -56,7 +56,7 @@ We hold eight positions, and each one comes from a run. [Section 1.1](#s-what-su
 
 ## What we did not test
 
-All our clusters but one had one kind node, and the sandbox class was gVisor in every run behind Parts 1 and 2. We did not run Agent Substrate on GKE. Our object stores outside the cluster ran on the same guest and on a second guest of the same server. We did not use a cloud bucket.
+All our clusters but one had one kind node, and the sandbox class was gVisor in every run behind Parts 1 and 2. We did not run Agent Substrate on GKE. Our object stores outside the cluster ran on the same guest and on a second guest of the same server. We did not use a cloud bucket. Our scale runs used one node, with up to 300 workers and 300 resumes at one time.
 
 The only real model in our runs was a small open model on CPU, behind kagent and behind Agent Executor. So no model time in this manual is the time of a GPU or of a hosted model.
 

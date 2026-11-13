@@ -1,0 +1,102 @@
+t	name	cores	max_thread_cores
+1794553626.10	NODE_BUSY	3.58	
+1794553626.10	NODE_IOWAIT	0.02	
+1794553626.10	containerd-shim	0.86	0.02
+1794553626.10	kworker/1:2-mm_percpu_wq	0.63	
+1794553626.10	kworker/10:0-mm_percpu_wq	0.58	
+1794553626.10	kubelet	0.56	0.08
+1794553626.10	kworker/4:0-mm_percpu_wq	0.55	
+1794553626.10	kworker/u48:21-ext4-rsv-conversion	0.53	
+1794553626.10	ateworker-gviso	0.48	0.02
+1794553626.10	kworker/9:0-rcu_par_gp	0.36	
+1794553626.10	kworker/18:1-mm_percpu_wq	0.35	
+1794553626.10	containerd	0.24	0.08
+1794553626.10	kworker/21:2-mm_percpu_wq	0.24	
+1794553626.10	kworker/16:0-mm_percpu_wq	0.23	
+1794553626.10	python3	0.23	
+1794553626.10	kworker/17:1-mm_percpu_wq	0.22	
+1794553626.10	kworker/8:0-mm_percpu_wq	0.20	
+1794553626.10	kworker/15:1-mm_percpu_wq	0.19	
+1794553626.10	kube-apiserver	0.18	0.03
+1794553626.10	kworker/13:1-mm_percpu_wq	0.18	
+1794553626.10	kworker/9:3-mm_percpu_wq	0.18	
+1794553626.10	kworker/7:4-mm_percpu_wq	0.16	
+1794553626.10	kworker/20:2-mm_percpu_wq	0.15	
+1794553626.10	kworker/23:1-mm_percpu_wq	0.15	
+1794553626.10	kworker/11:2-mm_percpu_wq	0.13	
+1794553626.10	kworker/19:0-mm_percpu_wq	0.12	
+1794553626.10	kworker/6:2-mm_percpu_wq	0.12	
+1794553626.10	etcd	0.12	0.02
+1794553626.10	kworker/0:4-mm_percpu_wq	0.12	
+1794553626.10	ateapi	0.11	0.01
+1794553626.10	kworker/2:5-mm_percpu_wq	0.11	
+1794553626.10	atelet	0.10	0.02
+1794553626.10	kworker/14:2-mm_percpu_wq	0.10	
+1794553626.10	gvisor_sentry	0.10	
+1794553626.10	otelcol-contrib	0.08	
+1794553626.10	kworker/u48:17-flush-253:0	0.08	
+1794553626.10	envoy	0.06	0.01
+1794553626.10	atenet	0.02	0.01
+1794553626.10	rustfs	0.00	0.01
+1794553626.10	postgres	-0.02	0.02
+1794553627.42	NODE_BUSY	3.60	
+1794553627.42	NODE_IOWAIT	0.00	
+1794553627.42	containerd-shim	0.97	0.02
+1794553627.42	kubelet	0.83	0.10
+1794553627.42	kworker/1:2-events	0.62	
+1794553627.42	kworker/10:0-events	0.57	
+1794553627.42	kworker/4:0-events	0.55	
+1794553627.42	kworker/u48:21-ipv6_addrconf	0.53	
+1794553627.42	ateworker-gviso	0.39	0.01
+1794553627.42	containerd	0.35	0.12
+1794553627.42	kworker/18:1-events	0.34	
+1794553627.42	python3	0.24	
+1794553627.42	kworker/21:2-events	0.24	
+1794553627.42	kworker/16:0-events	0.23	
+1794553627.42	kworker/17:1-events	0.21	
+1794553627.42	kworker/8:0-events	0.20	
+1794553627.42	kworker/15:1-events	0.19	
+1794553627.42	kworker/13:1-events	0.18	
+1794553627.42	kworker/18:4-rcu_par_gp	0.18	
+1794553627.42	kworker/9:3-events	0.17	
+1794553627.42	kworker/7:4-events	0.16	
+1794553627.42	kworker/20:2-events	0.15	
+1794553627.42	otelcol-contrib	0.14	
+1794553627.42	kworker/23:1-events	0.14	
+1794553627.42	kworker/20:0-rcu_par_gp	0.14	
+1794553627.42	kworker/11:2-events	0.13	
+1794553627.42	kube-apiserver	0.12	0.02
+1794553627.42	kworker/19:0-events	0.12	
+1794553627.42	kworker/6:2-events	0.12	
+1794553627.42	kworker/0:4-events	0.11	
+1794553627.42	kworker/2:5-events	0.11	
+1794553627.42	ateapi	0.10	0.02
+1794553627.42	kworker/14:2-events	0.10	
+1794553627.42	kworker/10:4-events	0.09	
+1794553627.42	envoy	0.06	0.01
+1794553627.42	postgres	0.05	0.02
+1794553627.42	atelet	0.05	0.02
+1794553627.42	etcd	0.05	0.02
+1794553627.42	atenet	0.02	0.01
+1794553627.42	rustfs	0.00	0.00
+1794553628.74	NODE_BUSY	3.49	
+1794553628.74	NODE_IOWAIT	0.04	
+1794553628.74	containerd	0.95	0.15
+1794553628.74	containerd-shim	0.76	0.02
+1794553628.74	kworker/u48:9-ext4-rsv-conversion	0.58	
+1794553628.74	kworker/u48:21-ext4-rsv-conversion	0.54	
+1794553628.74	kubelet	0.53	0.10
+1794553628.74	ateworker-gviso	0.36	0.01
+1794553628.74	jaeger-linux	0.28	
+1794553628.74	python3	0.24	
+1794553628.74	otelcol-contrib	0.18	
+1794553628.74	kube-apiserver	0.11	0.02
+1794553628.74	ateapi	0.11	0.01
+1794553628.74	prometheus	0.08	
+1794553628.74	kworker/u48:17-ext4-rsv-conversion	0.08	
+1794553628.74	etcd	0.07	0.02
+1794553628.74	envoy	0.06	0.01
+1794553628.74	postgres	0.05	0.02
+1794553628.74	atenet	0.03	0.01
+1794553628.74	atelet	0.02	0.01
+1794553628.74	rustfs	0.00	0.00

@@ -918,3 +918,15 @@ dropped	Y-reruns-rollback-scale/30-scale/10-run/bursts/, cpu/, 12-*, 3*-*, and t
 dropped	Y-reruns-rollback-scale/00-boot/	notes on the restart of the guest; no result reads them
 note	Y-reruns-rollback-scale	pod, Service, and node addresses in these files are addresses inside the kind clusters of the test guest
 dropped	Y-reruns-rollback-scale/10-outages/*/15-router-tail.log	the last 400 lines of the router log after each run; no result reads them, and the router log during each outage is kept as 06-router-during.log
+redacted	Z-bursts/00-setup/20-deploy-ate-system.log	terminal escape codes are stripped; the home folder of the guest user is replaced with <home>
+redacted	Z-bursts/10-run/12-crictl-stats-before.txt	terminal escape codes are stripped
+redacted	Z-bursts/10-run/32-crictl-stats-end.txt	terminal escape codes are stripped
+redacted	Z-bursts/10-run/35-ateapi-tail.log	certificate chains and signing requests in RPC responses are replaced with a marker; they held public certificates and no key
+redacted	Z-bursts/10-run/40-errors/10-ate-api-server-59dcf8d6bf-h74tc.log	certificate chains and signing requests in RPC responses are replaced with a marker; they held public certificates and no key
+redacted	Z-bursts/10-run/40-errors/10-ate-api-server-59dcf8d6bf-n57l5.log	certificate chains and signing requests in RPC responses are replaced with a marker; they held public certificates and no key
+redacted	Z-bursts/10-run/40-errors/10-ate-api-server-59dcf8d6bf-srn4n.log	certificate chains and signing requests in RPC responses are replaced with a marker; they held public certificates and no key
+cut	Z-bursts/10-run/50-atelet-restore-timing.excerpt.log	the atelet timing log is cut to its 1192 restore lines; the checkpoint lines are left out and each line kept is complete
+dropped	Z-bursts/10-run/99-done	an empty marker that the script wrote at the end of a part
+dropped	Z-bursts/FINDINGS.md	internal findings note, restated in sections 4.5, 8.2, 8.3 and 1.1
+redacted	Z-bursts/_scripts/z3-trim.sh	the home folder of the guest user is replaced with <home>
+note	Z-bursts	pod and Service addresses in these files are addresses inside the kind cluster of the test guest

@@ -2835,6 +2835,191 @@ def scale_x86():
     }
 
 
+Z = "Z-bursts"
+Z_RUN = f"{Z}/10-run"
+Z_SETUP = f"{Z}/00-setup"
+Z_PARTS = ("ateapi", "atelet", "envoy", "atenet", "postgres", "kube-apiserver", "etcd", "gvisor_sentry", "ateworker-gviso")
+
+
+def z_burst(name, text):
+    entry = burst_line(text)
+    answers = [row for row in rows(f"{Z_RUN}/bursts/{name}.tsv") if len(row) >= 3]
+    ok = sorted(round(float(row[2]), 3) for row in answers if row[1] == "200")
+    hung = [row[0] for row in answers if row[1] == "000"]
+    entry.update({"burst": name, "codes": tally(row[1] for row in answers), "request_seconds": ok, "hung_actors": hung})
+    if hung:
+        entry["per_second_answered"] = round(len(ok) / ok[-1], 1)
+    return entry
+
+
+def z_level(entries):
+    rate = lambda entry: entry.get("per_second_answered", entry["per_second"])
+    return {
+        "bursts": len(entries),
+        "requests": sum(entry["requests"] for entry in entries),
+        "ok": sum(entry["ok"] for entry in entries),
+        "median_seconds_each_burst": [entry["median_seconds"] for entry in entries],
+        "p95_seconds_each_burst": [entry["p95_seconds"] for entry in entries],
+        "max_seconds_each_burst": [entry["max_seconds"] for entry in entries],
+        "per_second_each_burst": [rate(entry) for entry in entries],
+        "runs": entries,
+    }
+
+
+def z_log_lines(rel, needle):
+    return [line for line in lines(rel) if needle in line]
+
+
+def bursts_one_node_x86():
+    growth_rows = rows(f"{Z_SETUP}/20-growth.tsv")
+    growth = [dict(zip(growth_rows[0], row)) for row in growth_rows[1:]]
+    node = read_json(f"{Z_SETUP}/21-node.json")["allocatable"]
+    groups = {}
+    for row in rows(f"{Z_RUN}/20-concurrency.tsv")[1:]:
+        entry = z_burst(row[4], "\t".join(row[5:]))
+        kind = "default" if re.fullmatch(r"r\d", row[3]) else re.sub(r"-r\d$", "", row[3])
+        groups.setdefault((int(row[0]), int(row[1]), kind), []).append(entry)
+    default = {level: z_level(entries) for (level, procs, kind), entries in groups.items() if procs == 1 and kind == "default"}
+    variant = lambda kind, procs=1: z_level(groups[(150, procs, kind)])
+    first = [z_burst(row[1], "\t".join(row[2:])) for row in rows(f"{Z_RUN}/10-first-activation.tsv")[1:]]
+    single = [burst_line("\t".join(row[1:]))["median_seconds"] for row in rows(f"{Z_RUN}/21-sequential.tsv")]
+    every = [entry for entries in groups.values() for entry in entries] + first
+    log = lines(f"{Z_RUN}/00-run.log")
+    reverts = [int(m.group(1)) for line in log for m in [re.match(r"revert \S+ rc=0 (\d+) ms", line)] if m]
+    pg_errors = {}
+    for path in sorted((LAB / Z_RUN / "40-errors").glob("10-ate-api-server-*.log")):
+        text = path.read_text(encoding="utf-8")
+        pg_errors[path.name] = {"connection_slots": text.count("SQLSTATE 53300"), "mint_actor_certificate": text.count("mint actor certificate")}
+    actor_table = lambda rel: [line.split() for line in lines(rel)[1:] if line.strip()]
+    listed = lambda rel, state: sorted(row[1] for row in actor_table(rel) if state in row[3])
+    stuck_rel = f"{Z_RUN}/40-errors/00-actors-065903.txt"
+    later_rel = f"{Z_RUN}/40-errors/01-actors-before-unstick.txt"
+    stuck = listed(stuck_rel, "RESUMING")
+    router = {name: rows(f"{Z_RUN}/bursts/{name}.tsv") for name in ("c150-p1-h2-router4-r1", "c150-p1-h2-router4-r2")}
+    after = {name: [row[1] for row in router["c150-p1-h2-router4-r1"] if row[0] == name] for name in stuck}
+    t023 = read(f"{Z_RUN}/40-errors/02-t-023.yaml")
+    return {
+        "machine": GUEST_Y,
+        "note": "one kind node with the pod limit raised to 700. The pool grew from 50 to 300 workers in steps of 50, each worker with limits of 1 CPU and 512Mi and requests of 50m and 64Mi. The actor is a Python counter with a 500 millicore and 128 MiB limit and memory fidelity. A burst is one curl process with --parallel in a pod, one HTTP/2 connection for each request, one request to each of N suspended actors that have their own snapshot on the node, through the router on port 443. A request with code 000 got no answer before the curl limit of 90 s. per_second_answered is the answered requests divided by the slowest answer, for a burst whose wall time holds a 90 s hang.",
+        "sources": [f"capture/lab/{path}" for path in (f"{Z_SETUP}/20-growth.tsv", f"{Z_SETUP}/21-node.json", f"{Z_SETUP}/pool.yaml", f"{Z_SETUP}/template.yaml", f"{Z_SETUP}/02-kind-script-change.diff", f"{Z_RUN}/20-concurrency.tsv", f"{Z_RUN}/10-first-activation.tsv", f"{Z_RUN}/21-sequential.tsv", f"{Z_RUN}/bursts/", f"{Z_RUN}/00-run.log", f"{Z_RUN}/42-postgres-max-connections.txt", f"{Z_RUN}/43-ateapi-pool-settings.json", f"{Z_RUN}/40-errors/", f"{Z_RUN}/41-non-200-rows.tsv")],
+        "node": {"cpus": int(node["cpu"]), "pod_limit": int(node["pods"])},
+        "growth": [{"workers": int(step["replicas"]), "ready_seconds": int(step["ready_s"]), "all_active_seconds": int(step["active_s"]), "api_readyz_ms_median_of_5": int(step["api_readyz_ms_median5"]), "get_pods_all_ms": int(step["get_pods_ms"]), "node_memory": step["node_mem"], "pods": int(step["pods_total"])} for step in growth],
+        "single_resume_seconds": {**stat(single), "runs": rounded(single)},
+        "first_activation": z_level(first),
+        "bursts": [{"at_one_time": level, **default[level]} for level in sorted(default)],
+        "variants": {
+            "four_client_processes": variant("p4", 4),
+            "ate_api_server_1_replica": variant("api1"),
+            "ate_api_server_4_replicas": variant("api4"),
+            "atenet_router_4_replicas": variant("router4"),
+        },
+        "hung_requests": {
+            "requests_in_all_bursts": sum(entry["requests"] for entry in every),
+            "hung": [{"burst": entry["burst"], "actor": actor} for entry in every for actor in entry["hung_actors"]],
+        },
+        "ate_api_server_4_replicas": {
+            "postgres_max_connections": int(read(f"{Z_RUN}/42-postgres-max-connections.txt").split()[0]),
+            "connection_pool_flag_in_args": any("max-conn" in arg or "pool-size" in arg or "pool-max" in arg for arg in read_json(f"{Z_RUN}/43-ateapi-pool-settings.json")[0]["args"]),
+            "postgres_refusals_logged": len(z_log_lines(f"{Z_RUN}/40-errors/40-postgres.log", "remaining connection slots")),
+            "errors_in_each_api_server_log": pg_errors,
+            "crashed_after": listed(stuck_rel, "CRASHED"),
+            "revert_ms": reverts,
+            "resuming_at_06_59_03": stuck,
+            "resuming_at_07_03_11": listed(later_rel, "RESUMING"),
+            "next_request_code_at_07_05": after,
+        },
+        "deleted_actor_t_023": {"state_at_06_59_03": next(row[3] for row in actor_table(stuck_rel) if row[1] == "t-023"), "state_in_record_before_delete": re.search(r"\n  state: (\S+)", t023).group(1), "code_in_router_bursts_after_delete": [row[1] for burst in router.values() for row in burst if row[0] == "t-023"]},
+        "operator_steps": [line for line in log if "operator" in line or "deleting" in line or "deleted" in line],
+    }
+
+
+def z_restores():
+    events = []
+    for line in z_log_lines(f"{Z_RUN}/50-atelet-restore-timing.excerpt.log", "Restore timing breakdown"):
+        item = json.loads(line)
+        end = datetime.fromisoformat(item["time"][:26]).replace(tzinfo=timezone.utc).timestamp()
+        total = item["ate.actor.restore.duration.total"]
+        events.append((end - total, end, total, item["ate.actor.restore.duration.worker_restore"], item["ate.snapshot.kind"], item["time"][11:19]))
+    events.sort()
+    groups = []
+    for event in events:
+        if groups and event[0] - groups[-1][-1][1] < 3:
+            groups[-1].append(event)
+        else:
+            groups.append([event])
+    return events, groups
+
+
+def z_burst_window(group):
+    start, end = group[0][0], max(event[1] for event in group)
+    inflight = []
+    moment = start
+    while moment < end:
+        inflight.append(sum(1 for event in group if event[0] <= moment < event[1]))
+        moment += 0.05
+    edges = sorted([(event[0], 1) for event in group] + [(event[1], -1) for event in group])
+    running, peak = 0, 0
+    for _, step in edges:
+        running += step
+        peak = max(peak, running)
+    totals = sorted(event[2] for event in group)
+    worker = sorted(event[3] for event in group)
+    return {
+        "first_restore_utc": group[0][5],
+        "restores": len(group),
+        "span_seconds": round(end - start, 2),
+        "restores_per_second": round(len(group) / (end - start), 1),
+        "in_flight_max": peak,
+        "in_flight_median": sorted(inflight)[len(inflight) // 2],
+        "total_seconds_median": round(totals[len(totals) // 2], 3),
+        "total_seconds_p95": round(totals[int(0.95 * len(totals))], 3),
+        "worker_restore_seconds_median": round(worker[len(worker) // 2], 3),
+        "worker_restore_seconds": rounded(worker),
+    }
+
+
+def z_cpu(name):
+    samples, threads = {}, {}
+    for row in rows(f"{Z_RUN}/cpu/{name}.tsv")[1:]:
+        if row[1] in ("NODE_BUSY", "NODE_IOWAIT") + Z_PARTS:
+            samples.setdefault(row[1], []).append(float(row[2]))
+            if len(row) > 3 and row[3]:
+                threads[row[1]] = max(threads.get(row[1], 0), float(row[3]))
+    out = {"samples": len(samples["NODE_BUSY"])}
+    for key, values in samples.items():
+        out[key] = {"mean_cores": round(statistics.mean(values), 2), "peak_cores": round(max(values), 2)}
+        if key in threads:
+            out[key]["busiest_thread_cores"] = threads[key]
+    return out
+
+
+def restore_limit_x86():
+    events, groups = z_restores()
+    singles = [group[0] for group in groups if len(group) == 1]
+    bursts = [z_burst_window(group) for group in groups if len(group) >= 40]
+    clean = [row[4] for row in rows(f"{Z_RUN}/20-concurrency.tsv")[1:] if "'000'" not in "\t".join(row)] + [row[1] for row in rows(f"{Z_RUN}/10-first-activation.tsv")[1:]]
+    cpu = {name: z_cpu(name) for name in clean}
+
+    def span(key, field):
+        values = [burst[key][field] for burst in cpu.values() if field in burst.get(key, {})]
+        return [min(values), max(values)]
+
+    return {
+        "machine": GUEST_Y,
+        "note": "restores are the Restore timing breakdown lines of atelet. A burst is a run of restores with less than 3 s between the end of one and the start of the next, and only runs of 40 or more count. In flight is sampled every 50 ms. The log does not reach back to the bursts of 200 and 300. CPU is sampled each second on the guest, which runs the one kind node, for the bursts with no hung request. A name sums every process with that name, so a process that starts or ends inside a second can give a wrong value for that second, and Postgres backends can give a negative mean.",
+        "sources": [f"capture/lab/{Z_RUN}/50-atelet-restore-timing.excerpt.log", f"capture/lab/{Z_RUN}/51-restore-concurrency.txt", f"capture/lab/{Z_RUN}/cpu/", f"capture/lab/{Z_RUN}/sampler.py", f"capture/lab/{Z_RUN}/20-concurrency.tsv"],
+        "restores_in_log": len(events),
+        "snapshot_kinds": tally(event[4] for event in events),
+        "single_restores": {"worker_restore_seconds": {**stat([event[3] for event in singles]), "runs": rounded([event[3] for event in singles])}, "total_seconds": stat([event[2] for event in singles])},
+        "bursts": bursts,
+        "cpu_bursts": sorted(cpu),
+        "cpu": cpu,
+        "cpu_range_over_bursts": {key: {"mean_cores": span(key, "mean_cores"), "peak_cores": span(key, "peak_cores"), **({"busiest_thread_cores": span(key, "busiest_thread_cores")} if key not in ("NODE_BUSY", "gvisor_sentry") else {})} for key in ("NODE_BUSY",) + Z_PARTS},
+        "node_iowait_mean_cores": span("NODE_IOWAIT", "mean_cores"),
+        "node_cpus": int(read_json(f"{Z_SETUP}/21-node.json")["allocatable"]["cpu"]),
+    }
+
+
 BUILDERS = {
     "node-drain-x86.json": node_drain_x86,
     "full-node-x86.json": full_node_x86,
@@ -2847,6 +3032,8 @@ BUILDERS = {
     "upgrade-rerun-x86.json": upgrade_rerun_x86,
     "v060-x86.json": v060_x86,
     "scale-x86.json": scale_x86,
+    "bursts-one-node-x86.json": bursts_one_node_x86,
+    "restore-limit-x86.json": restore_limit_x86,
     "kagent-model-x86.json": kagent_model_x86,
     "kagent-bound-x86.json": kagent_bound_x86,
     "agent-executor-second-x86.json": agent_executor_second_x86,

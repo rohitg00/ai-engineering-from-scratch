@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 368" role="img" aria-labelledby="fig-4-5c-title fig-4-5c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-5c-title">The worker restore of each actor, alone and inside a burst</title>
+  <desc id="fig-4-5c-desc">One dot for each of 1192 restores that atelet logged on one node with 24 vCPU. Alone, the restore inside the worker took a median of 0.27 s in 20 restores. Inside 8 bursts of 134 to 150 restores, a median of 75 to 116 ran at the same time, and the median restore took 2.1 to 2.9 s. Each burst finished 35 to 41 restores each second.</desc>
+  <line x1="22" y1="18" x2="34" y2="18" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="40" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">a burst: median, box of the middle half, line from 5 to 95 percent</text>
+  <circle cx="26" cy="40" r="2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="36" y="44" font-size="11" fill="var(--m-green-ink, #336b40)">one restore alone</text>
+  <text x="200" y="44" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">number over a burst: median count of restores at once</text>
+  <line x1="50" y1="318" x2="610" y2="318" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="44" y="322" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="50" y1="288.5" x2="610" y2="288.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="44" y="292.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="50" y1="259" x2="610" y2="259" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="44" y="263" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="50" y1="200" x2="610" y2="200" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="44" y="204" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="50" y1="141" x2="610" y2="141" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="44" y="145" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="50" y1="82" x2="610" y2="82" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="44" y="86" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="50" y1="318" x2="610" y2="318" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="50" y1="82" x2="50" y2="318" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="81.11" y1="318" x2="81.11" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="81.11" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">alone</text>
+  <line x1="143.33" y1="318" x2="143.33" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="143.33" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">burst 1</text>
+  <line x1="205.56" y1="318" x2="205.56" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="205.56" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">burst 2</text>
+  <line x1="267.78" y1="318" x2="267.78" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="267.78" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">burst 3</text>
+  <line x1="330" y1="318" x2="330" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="330" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">burst 4</text>
+  <line x1="392.22" y1="318" x2="392.22" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="392.22" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">burst 5</text>
+  <line x1="454.44" y1="318" x2="454.44" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="454.44" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">burst 6</text>
+  <line x1="516.67" y1="318" x2="516.67" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="516.67" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">burst 7</text>
+  <line x1="578.89" y1="318" x2="578.89" y2="322" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="578.89" y="335" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">burst 8</text>
+  <text x="50" y="70" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds of the worker restore, each actor</text>
+  <circle cx="66.11" cy="302.96" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="84.65" cy="302.31" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="73.19" cy="302.66" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="91.73" cy="299.89" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="80.28" cy="302.01" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="68.82" cy="301.36" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="87.36" cy="302.37" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="75.9" cy="302.37" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="94.44" cy="299.89" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="82.98" cy="302.01" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="71.52" cy="300.24" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="90.06" cy="301.95" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="78.6" cy="301.07" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="67.14" cy="302.78" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="85.69" cy="302.25" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="74.23" cy="303.01" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="92.77" cy="302.48" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="81.31" cy="301.42" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="69.85" cy="301.83" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="88.39" cy="301.89" r="1.6" fill="var(--m-green-ink, #336b40)"/>
+  <line x1="143.33" y1="289.03" x2="143.33" y2="122.06" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2"/>
+  <rect x="130.33" y="134.27" width="26" height="72.81" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="130.33" y1="162" x2="156.33" y2="162" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="143.33" y="94" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">106</text>
+  <line x1="205.56" y1="290.62" x2="205.56" y2="119.64" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2"/>
+  <rect x="192.56" y="134.57" width="26" height="79.71" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="192.56" y1="161.89" x2="218.56" y2="161.89" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="205.56" y="94" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">104</text>
+  <line x1="267.78" y1="259.06" x2="267.78" y2="108.67" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2"/>
+  <rect x="254.78" y="121.77" width="26" height="73.22" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="254.78" y1="147.9" x2="280.78" y2="147.9" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="267.78" y="94" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">116</text>
+  <line x1="330" y1="292.33" x2="330" y2="119.35" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2"/>
+  <rect x="317" y="131.97" width="26" height="72.33" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="317" y1="153.45" x2="343" y2="153.45" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="330" y="94" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">110</text>
+  <line x1="392.22" y1="301.89" x2="392.22" y2="155.1" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2"/>
+  <rect x="379.22" y="164.25" width="26" height="94.7" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="379.22" y1="193.98" x2="405.22" y2="193.98" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="392.22" y="94" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">75</text>
+  <line x1="454.44" y1="302.42" x2="454.44" y2="157.4" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2"/>
+  <rect x="441.44" y="172.03" width="26" height="67.61" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="441.44" y1="189.62" x2="467.44" y2="189.62" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="454.44" y="94" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">90</text>
+  <line x1="516.67" y1="288.15" x2="516.67" y2="127.02" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2"/>
+  <rect x="503.67" y="147.84" width="26" height="82.89" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="503.67" y1="168.97" x2="529.67" y2="168.97" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="516.67" y="94" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">96</text>
+  <line x1="578.89" y1="285.08" x2="578.89" y2="115.87" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2"/>
+  <rect x="565.89" y="135.75" width="26" height="71.21" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="565.89" y1="159.41" x2="591.89" y2="159.41" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2.4"/>
+  <text x="578.89" y="94" font-size="11" text-anchor="middle" fill="var(--m-ink, #1a1a1a)">102</text>
+  <text x="81.11" y="277.89" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-green-ink, #336b40)">0.27 s</text>
+  <text x="330" y="356" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bursts of 134 to 150 resumes; each burst finished 35 to 41 restores each second</text>
+</svg>

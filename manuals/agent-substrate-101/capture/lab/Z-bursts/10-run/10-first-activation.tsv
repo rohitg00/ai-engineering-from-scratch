@@ -1,0 +1,3 @@
+chunk	result
+1-150	first-1	n=150	ok=150	wall=4.44	rate=33.8/s	min=1.101	p50=3.627	p95=4.358	max=4.384	codes={'200': 150}	connects=150	http=2
+151-300	first-151	n=150	ok=150	wall=4.93	rate=30.4/s	min=0.657	p50=4.089	p95=4.849	max=4.858	codes={'200': 150}	connects=150	http=2

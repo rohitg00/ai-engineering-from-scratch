@@ -1,0 +1,29 @@
+06:37:51 N=0 below 150, nothing to run
+06:40:39 start N=300 disk=9039MB mem=36638MB snap=381MB
+06:40:43 created 300 actors in 3705 ms, 0 failed
+06:41:00 after first activation:     300 ACTOR_STATE_RUNNING  disk=8458MB mem=28830MB
+06:41:10 suspend commands for 300 in 10488 ms, 0 failed
+06:41:11 after suspend:     300 ACTOR_STATE_SUSPENDED  disk=5122MB snap=4262MB
+06:48:16 operator stopped the run in rep 3 after c150-r3: the delayed upload of 300 snapshots to the in-cluster bucket took guest disk from 4.9 to 4.0 GB in one minute; deleting actors t-201 to t-300 to keep the guest disk safe
+06:48:19 deleted t-201..t-300 in 3467 ms, 0 failed
+06:49:20 after delete:       1 ACTOR_STATE_RUNNING     199 ACTOR_STATE_SUSPENDED  disk=5588MB snap=2978MB
+06:49:44 deleting t-151..t-200 as well: 200 snapshots still to upload would take guest disk near 3 GB; the rest of the run uses 150 actors
+06:49:46 running before continuing: t-023
+06:50:02 continue:     150 ACTOR_STATE_SUSPENDED  disk=6435MB snap=2330MB
+06:50:14 sampler patched to also record NODE_IOWAIT; bursts before this line have no iowait
+06:51:46 ate-api-server replicas at start: 2
+06:52:01 ate-api-server replicas=1 (1 ready)
+06:53:01 ate-api-server replicas=4 (4 ready)
+07:03:11 operator: t-023 stays ACTOR_STATE_RESUMING since about 06:49 and makes each settle wait 300 s; t-023 is deleted and the CRASHED actors are reverted so the run can finish
+revert t-039 rc=0 330 ms
+revert t-052 rc=0 357 ms
+revert t-059 rc=0 359 ms
+revert t-062 rc=0 365 ms
+revert t-078 rc=0 378 ms
+revert t-091 rc=0 353 ms
+revert t-093 rc=0 344 ms
+revert t-123 rc=0 355 ms
+07:04:56 atenet-router replicas at start: 1
+07:05:22 atenet-router replicas=4 (4 ready)
+07:05:59 replicas restored: ate-api-server=2 atenet-router=1
+07:07:42 end:     149 ACTOR_STATE_SUSPENDED  disk=6358MB mem=33979MB

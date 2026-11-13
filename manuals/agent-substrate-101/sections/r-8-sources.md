@@ -20,7 +20,7 @@ Our runs rank above the code on purpose. The code says what the system is built 
 
 ## Rank 1: our recorded runs
 
-Twenty-three experiments, each with its scripts and raw output in [the capture folder](manuals/agent-substrate-101/capture/lab). [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
+Twenty-four experiments, each with its scripts and raw output in [the capture folder](manuals/agent-substrate-101/capture/lab). [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
 
 | Experiment | What it recorded | Used in |
 |---|---|---|
@@ -46,6 +46,7 @@ Twenty-three experiments, each with its scripts and raw output in [the capture f
 | X, a bucket and a Postgres on another machine | bucket cycles with TLS, with a rate limit, and with added delay, two bucket outages with actors that hold data, an install with Postgres on a second guest, and two outages of that database, on the second guest (16 vCPU, 23 GB) | [4.4](#s-request-parking), [8.1](#s-postgres-and-the-object-store), [8.2](#s-when-a-dependency-is-down), [8.3](#s-symptom-cause-fix) |
 | W, bounds and open commands | two settings that bound a kagent turn, and Agent Executor again: a worker loss with a command open, the skills and MCP servers of a workspace, the example with its own prompt and repository, and second runs of the clone and of the agent image | [7.1](#s-kagent-on-substrate), [7.5](#s-agent-executor) |
 | Y, second runs, a rollback, and v0.6.0 | three outages of the bundled Postgres and one each of `ate-api-server` and the Kubernetes API server, a second upgrade from v1.0.0-rc.3 to v1.0.0 and a rollback, and an install of v0.6.0 with a direct upgrade, a reinstall, and Agent Executor v0.3.1, on the first guest | [4.3](#s-placement), [7.5](#s-agent-executor), [8.2](#s-when-a-dependency-is-down), [8.4](#s-upgrade-and-stale-advice) |
+| Z, bursts on one node | a pool grown to 300 workers in steps of 50, bursts of 150, 200, and 300 resumes, the restore time inside each worker, the CPU of each component, and 1 to 4 replicas of `ate-api-server` and of the router, on the first guest | [1.1](#s-what-substrate-does-and-what-it-leaves-to-you), [4.5](#s-sizing-a-pool), [8.2](#s-when-a-dependency-is-down), [8.3](#s-symptom-cause-fix) |
 | V, validation | twelve checks on the first guest: memory that holds no data, a Python runtime, resumes at the same instant, fidelity, templates, access policies, actor JWTs, a preview feature, a process exit, and a suspend during a request | Part 3, [4.4](#s-request-parking), [4.5](#s-sizing-a-pool), Part 5, [8.5](#s-limits-at-v1-0-0) |
 
 ## Rank 2: the code
