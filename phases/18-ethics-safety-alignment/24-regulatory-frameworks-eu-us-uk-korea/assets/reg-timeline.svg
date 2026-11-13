@@ -43,7 +43,7 @@
   <line x1="780" y1="250" x2="780" y2="270" class="tick"/>
   <text x="780" y="290" text-anchor="middle" class="small">2026-08</text>
   <rect x="720" y="330" width="200" height="70" class="hot"/>
-  <text x="820" y="355" text-anchor="middle" class="step">EU AI Act full applicability</text>
+  <text x="820" y="355" text-anchor="middle" class="step">EU AI Act general application</text>
   <text x="820" y="375" text-anchor="middle" class="small">Article 50 transparency</text>
   <text x="820" y="395" text-anchor="middle" class="small">penalties up to 15M EUR / 3%</text>
 

@@ -18,8 +18,11 @@ const TIMELINE: [string, string][] = [
   ["2026-01-00", "Korean AI Framework Act effective"],
   ["2026-03-00", "Transparency Code second draft"],
   ["2026-06-00", "Transparency Code final version"],
-  ["2026-08-02", "EU AI Act: full applicability + Article 50 transparency + penalties"],
-  ["2027-08-02", "EU AI Act: legacy GPAI + embedded high-risk systems"],
+  ["2026-07-27", "Regulation (EU) 2026/1744 in force: high-risk dates moved"],
+  ["2026-08-02", "EU AI Act: general application + Article 50 transparency + penalties"],
+  ["2027-08-02", "EU AI Act: legacy GPAI models comply"],
+  ["2027-12-02", "EU AI Act: high-risk obligations, Annex III systems"],
+  ["2028-08-02", "EU AI Act: high-risk obligations, Annex I systems"],
 ];
 
 function main(): void {
@@ -30,7 +33,7 @@ function main(): void {
     console.log(`  ${date}  ${event}`);
   }
   console.log("\n" + "=".repeat(78));
-  console.log("TAKEAWAY: EU AI Act sets the global bar. full enforcement August 2026.");
+  console.log("TAKEAWAY: EU AI Act sets the global bar. high-risk duties from Dec 2027.");
   console.log("UK narrowed to frontier security. US pivoted pro-growth. Korea is the");
   console.log("first Asian comprehensive framework. deployers in multiple jurisdictions");
   console.log("comply with the strictest, which is usually the EU.");
