@@ -42,6 +42,12 @@ def build_parser() -> argparse.ArgumentParser:
         help="Cosine similarity threshold for semantic cache hits (default: 0.85).",
     )
     parser.add_argument(
+        "--current-time",
+        type=float,
+        default=None,
+        help="Optional explicit epoch timestamp for freshness evaluation.",
+    )
+    parser.add_argument(
         "--sensitivity",
         action="store_true",
         help="Run threshold sensitivity profiling across 0.65 - 0.95 cutoffs.",
@@ -69,6 +75,7 @@ def main() -> int:
 
     seed_entries = data.get("seed_cache", [])
     test_queries = data.get("queries", [])
+    bench_time = args.current_time if args.current_time is not None else data.get("current_time")
 
     store = SemanticCacheStore()
     for raw in seed_entries:
@@ -78,12 +85,14 @@ def main() -> int:
         dataset=test_queries,
         store=store,
         threshold=args.threshold,
+        current_time=bench_time,
     )
 
     if args.sensitivity:
         curve = analyze_threshold_sensitivity(
             dataset=test_queries,
             store=store,
+            current_time=bench_time,
         )
         results["sensitivity_curve"] = curve
 

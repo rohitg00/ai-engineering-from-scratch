@@ -1,6 +1,6 @@
 {
   "title": "Semantic Cache Correctness Lab | Build and verify",
-  "recordedAt": "2026-11-13T00:59:17Z",
+  "recordedAt": "2026-11-13T01:24:49Z",
   "records": [
     {
       "command": [
@@ -12,8 +12,8 @@
       ],
       "cwd": "/Users/iitian/Desktop/contribution github",
       "exitCode": 0,
-      "output": "workspace  /private/tmp/project-demo-learner-cache\n  kept     README.md\n  kept     cli.py\n  kept     main.py\n  kept     samples/benchmark.json\n  kept     README.md\n  kept     README.md\n  kept     README.md\nnext: python3 scripts/project_test.py semantic-cache-correctness-lab --stage 1 --path /private/tmp/project-demo-learner-cache\n",
-      "durationMs": 57
+      "output": "workspace  /private/tmp/project-demo-learner-cache\n  created  README.md\n  created  cli.py\n  created  main.py\n  created  samples/benchmark.json\n  kept     README.md\n  kept     README.md\n  kept     README.md\nnext: python3 scripts/project_test.py semantic-cache-correctness-lab --stage 1 --path /private/tmp/project-demo-learner-cache\n",
+      "durationMs": 97
     },
     {
       "command": [
@@ -27,8 +27,8 @@
       ],
       "cwd": "/Users/iitian/Desktop/contribution github",
       "exitCode": 1,
-      "output": "Semantic Cache Correctness Lab: grading learner\n  FAIL stage 1: Enforce identity, freshness and tenant boundaries (9 tests)\n       not implemented yet: implement compute_exact_key\n",
-      "durationMs": 123
+      "output": "Semantic Cache Correctness Lab: grading learner\n  FAIL stage 1: Enforce identity, freshness and tenant boundaries (10 tests)\n       not implemented yet: implement compute_exact_key\n",
+      "durationMs": 117
     },
     {
       "command": [
@@ -41,8 +41,8 @@
       ],
       "cwd": "/Users/iitian/Desktop/contribution github",
       "exitCode": 0,
-      "output": "Semantic Cache Correctness Lab: grading solution\n  PASS stage 1: Enforce identity, freshness and tenant boundaries (9 tests)\n  PASS stage 2: Implement exact-match lookup and scoped invalidation (8 tests)\n  PASS stage 3: Evaluate semantic candidates against adversarial near-miss pairs (11 tests)\n  PASS stage 4: Export a bounded HTTP adapter and correctness report (7 tests)\n",
-      "durationMs": 319
+      "output": "Semantic Cache Correctness Lab: grading solution\n  PASS stage 1: Enforce identity, freshness and tenant boundaries (10 tests)\n  PASS stage 2: Implement exact-match lookup and scoped invalidation (9 tests)\n  PASS stage 3: Evaluate semantic candidates against adversarial near-miss pairs (15 tests)\n  PASS stage 4: Export a bounded HTTP adapter and correctness report (9 tests)\n",
+      "durationMs": 384
     }
   ]
 }

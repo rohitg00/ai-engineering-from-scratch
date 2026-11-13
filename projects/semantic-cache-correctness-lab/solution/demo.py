@@ -35,11 +35,14 @@ def main() -> int:
     print("Semantic Cache Correctness Lab: Advanced Demo")
     print("==================================================")
 
+    bench_time = data.get("current_time", 1000.0)
+
     # 1. Benchmark Execution
     results = run_correctness_benchmark(
         dataset=data.get("queries", []),
         store=store,
         threshold=0.85,
+        current_time=bench_time,
     )
 
     print(f"Total Queries Evaluated:         {results['total_queries']}")
@@ -73,7 +76,7 @@ def main() -> int:
 
     # 3. Threshold Sensitivity Analysis
     print("\n--- Threshold Sensitivity Profiling ---")
-    curve = analyze_threshold_sensitivity(data.get("queries", []), store=store)
+    curve = analyze_threshold_sensitivity(data.get("queries", []), store=store, current_time=bench_time)
     print(" Threshold | Semantic Hits | False Hits | Accuracy")
     print("-----------+---------------+------------+---------")
     for pt in curve:

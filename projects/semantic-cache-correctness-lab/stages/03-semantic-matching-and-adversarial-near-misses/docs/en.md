@@ -26,6 +26,14 @@ In this stage, you build a semantic cache store with strict guardrails:
 2. If similarity exceeds the threshold, `check_adversarial_near_miss` validates numerical identity, negation alignment, and directional antonyms.
 3. If any adversarial difference is detected, the candidate is safely rejected and reported as a miss.
 
+## Work through one concrete case
+
+Incoming queries with high vector similarity pass through adversarial guardrails. Inverted negations, changed numerical quantities, antonym replacements, and entity substitutions are rejected before reaching the tenant partition.
+
+```figure
+pj-semantic-cache-correctness-lab-3
+```
+
 ## Implement the contract
 
 In your workspace `main.py`, implement:

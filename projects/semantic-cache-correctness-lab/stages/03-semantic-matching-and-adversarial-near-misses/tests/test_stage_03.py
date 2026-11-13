@@ -146,6 +146,122 @@ class TestStage03SemanticMatchingAndNearMisses(unittest.TestCase):
         self.assertIsNone(matched)
         self.assertIn("adversarial_blocked", reason)
 
+    def test_check_adversarial_near_miss_entity_swap(self):
+        """Verify entity identifier swaps (such as alpha vs beta) are flagged."""
+        q1 = "What is the deployment status of project alpha?"
+        q2 = "What is the deployment status of project beta?"
+        is_bad, reason = check_adversarial_near_miss(q1, q2)
+        self.assertTrue(is_bad)
+        self.assertIn("entity_mismatch", reason)
+
+    def test_semantic_cache_store_replaced_entry_overwrites_partition(self):
+        """Verify replacing an exact key updates semantic partition without leaving stale answers."""
+        store = SemanticCacheStore()
+        entry_old = CacheEntry(
+            entry_id="e-rep",
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1",
+            prompt="What is the refund policy for defective laptops?",
+            response="Old 14-day policy.",
+            created_at=100.0,
+            ttl_seconds=3600.0,
+        )
+        store.put(entry_old)
+
+        entry_new = CacheEntry(
+            entry_id="e-rep",
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1",
+            prompt="What is the refund policy for defective laptops?",
+            response="Updated 60-day policy.",
+            created_at=100.0,
+            ttl_seconds=3600.0,
+        )
+        store.put(entry_new)
+
+        matched, _, _ = store.query(
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1",
+            prompt="What is the refund policy regarding defective laptops?",
+            threshold=0.75,
+            current_time=100.0,
+        )
+        self.assertIsNotNone(matched)
+        self.assertEqual(matched.response, "Updated 60-day policy.")
+
+    def test_semantic_cache_store_safe_candidate_fallback(self):
+        """Verify query falls back to a safe candidate when the top candidate is an adversarial near-miss."""
+        store = SemanticCacheStore()
+        # Candidate 1: Very high similarity to query, but inverted negation (adversarial)
+        adv_entry = CacheEntry(
+            entry_id="e-adv",
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1",
+            prompt="Can I not deploy the payment service to production on Friday?",
+            response="Adversarial answer.",
+            created_at=100.0,
+            ttl_seconds=3600.0,
+        )
+        store.put(adv_entry)
+
+        # Candidate 2: High similarity safe paraphrase
+        safe_entry = CacheEntry(
+            entry_id="e-safe",
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1",
+            prompt="Can I deploy the payment service to production on Friday?",
+            response="Safe approved answer.",
+            created_at=100.0,
+            ttl_seconds=3600.0,
+        )
+        store.put(safe_entry)
+
+        query = "Can I deploy the payment service to production on Friday afternoon?"
+        matched, score, reason = store.query(
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1",
+            prompt=query,
+            threshold=0.70,
+            current_time=100.0,
+        )
+        self.assertIsNotNone(matched)
+        self.assertEqual(matched.response, "Safe approved answer.")
+        self.assertEqual(reason, "semantic_hit")
+
+    def test_semantic_cache_store_policy_context_isolation(self):
+        """Verify semantic matching does not cross differing extra_params policy contexts."""
+        store = SemanticCacheStore()
+        entry_admin = CacheEntry(
+            entry_id="e-admin",
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1",
+            prompt="What is the support contact email?",
+            response="admin-vip@example.com",
+            created_at=100.0,
+            ttl_seconds=3600.0,
+            metadata={"extra_params": {"audience": "internal"}},
+        )
+        store.put(entry_admin)
+
+        matched_diff_policy, _, reason = store.query(
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1",
+            prompt="What is the support contact address?",
+            threshold=0.75,
+            current_time=100.0,
+            extra_params={"audience": "public"},
+        )
+        self.assertIsNone(matched_diff_policy)
+        self.assertEqual(reason, "partition_empty")
+
     def test_semantic_cache_store_cross_tenant_isolation(self):
         """Verify semantic matching never crosses tenant partition even for identical prompts."""
         store = SemanticCacheStore()

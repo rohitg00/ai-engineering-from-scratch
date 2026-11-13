@@ -21,6 +21,14 @@ When an application queries the cache:
 2. On a cache miss, the adapter sets `X-Cache: MISS`, records the miss reason (such as `partition_empty`, `below_threshold`, or `adversarial_blocked`), invokes the upstream handler, and writes the fresh response back to the cache.
 3. The benchmark runner processes a test suite of queries, verifying that false hits remain strictly at zero while saving latency on valid queries.
 
+## Work through one concrete case
+
+The HTTP middleware adapter attaches RFC 9111 headers (`X-Cache`, `Age`, `Cache-Control`) to outgoing responses. The automated benchmark audits accuracy and ensures zero false cache hits across adversarial near-miss test sets.
+
+```figure
+pj-semantic-cache-correctness-lab-4
+```
+
 ## Implement the contract
 
 In your workspace `main.py`, implement:

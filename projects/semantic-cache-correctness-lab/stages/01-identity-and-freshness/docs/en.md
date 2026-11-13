@@ -23,6 +23,14 @@ In this stage, you will build the foundational identity and freshness model. Eve
 3. `source_revision`: Version hash of underlying documents, prompt templates, or embeddings.
 4. `ttl_seconds`: Expiration duration relative to creation timestamp.
 
+## Work through one concrete case
+
+When Tenant Alpha and Tenant Beta submit the same query, naive caching would reuse Tenant Alpha's answer for Tenant Beta. By binding the tenant identifier, model, and source revision into a canonical SHA-256 hash, each tenant operates inside a cryptographically isolated partition.
+
+```figure
+pj-semantic-cache-correctness-lab-1
+```
+
 ## Implement the contract
 
 Open `main.py` in your workspace and implement:

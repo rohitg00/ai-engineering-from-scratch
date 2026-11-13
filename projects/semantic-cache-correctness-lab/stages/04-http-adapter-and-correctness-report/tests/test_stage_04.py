@@ -159,6 +159,28 @@ class TestStage04AdapterAndReport(unittest.TestCase):
         self.assertTrue(results["compatible"])
         self.assertEqual(results["cross_tenant_blocks"], 1)
 
+    def test_benchmark_strict_gate_rejects_outcome_mismatch(self):
+        """Verify compatible is False when any query outcome differs from expected."""
+        dataset = [
+            {
+                "name": "expect_exact_but_miss",
+                "tenant_id": "tenant-alpha",
+                "model": "gpt-4o",
+                "source_revision": "v1",
+                "prompt": "Uncached question",
+                "expected_outcome": "HIT-EXACT",
+            }
+        ]
+        results = run_correctness_benchmark(dataset, store=self.store, threshold=0.75, current_time=100.0)
+        self.assertFalse(results["compatible"])
+
+    def test_make_http_handler_class(self):
+        """Verify HTTP wire adapter handler class creation."""
+        from http.server import BaseHTTPRequestHandler
+        from main import make_http_handler_class
+        handler_cls = make_http_handler_class(self.adapter)
+        self.assertTrue(issubclass(handler_cls, BaseHTTPRequestHandler))
+
     def test_analyze_threshold_sensitivity(self):
         """Verify sensitivity analysis over varying thresholds."""
         dataset = [

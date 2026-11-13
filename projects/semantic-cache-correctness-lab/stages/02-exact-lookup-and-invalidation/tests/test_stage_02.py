@@ -58,6 +58,24 @@ class TestStage02ExactLookupAndInvalidation(unittest.TestCase):
         self.assertEqual(retrieved.response, "30 days from purchase.")
         self.assertEqual(self.store.stats()["hits"], 1)
 
+    def test_get_default_clock_freshness(self):
+        """Verify default clock uses system time for unexpired entries."""
+        import time
+        now = time.time()
+        fresh = CacheEntry(
+            entry_id="fresh-1",
+            tenant_id="tenant-alpha",
+            model="gpt-4o",
+            source_revision="v1.0",
+            prompt="Fresh prompt",
+            response="Fresh response",
+            created_at=now,
+            ttl_seconds=3600.0,
+        )
+        self.store.put(fresh)
+        res = self.store.get("tenant-alpha", "gpt-4o", "v1.0", "Fresh prompt")
+        self.assertIsNotNone(res)
+
     def test_get_miss_on_unknown(self):
         """Verify cache miss on non-existent query."""
         res = self.store.get("tenant-alpha", "gpt-4o", "v1.0", "Unknown query", 1000.0)

@@ -111,6 +111,34 @@ class TestStage01IdentityAndFreshness(unittest.TestCase):
         )
         self.assertTrue(is_fresh(perm_entry, current_time=999999.0))
 
+    def test_is_fresh_default_clock(self):
+        """Verify default clock uses system time rather than epoch zero."""
+        import time
+        now = time.time()
+        fresh_entry = CacheEntry(
+            entry_id="e-fresh",
+            tenant_id="t1",
+            model="m1",
+            source_revision="v1",
+            prompt="query",
+            response="answer",
+            created_at=now,
+            ttl_seconds=3600.0,
+        )
+        self.assertTrue(is_fresh(fresh_entry))
+
+        expired_entry = CacheEntry(
+            entry_id="e-expired",
+            tenant_id="t1",
+            model="m1",
+            source_revision="v1",
+            prompt="query",
+            response="answer",
+            created_at=now - 5000.0,
+            ttl_seconds=3600.0,
+        )
+        self.assertFalse(is_fresh(expired_entry))
+
     def test_is_soft_expired(self):
         """Verify soft TTL expiration for stale-while-revalidate."""
         entry = CacheEntry(

@@ -41,7 +41,7 @@ def compute_exact_key(
     raise NotImplementedError("implement compute_exact_key")
 
 
-def is_fresh(entry: CacheEntry, current_time: float) -> bool:
+def is_fresh(entry: CacheEntry, current_time: Optional[float] = None) -> bool:
     """Determine whether a cache entry remains within its time-to-live period."""
     raise NotImplementedError("implement is_fresh")
 

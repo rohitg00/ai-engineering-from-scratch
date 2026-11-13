@@ -21,6 +21,14 @@ With exact identity keys established, you now implement the exact cache store. I
 2. When documentation or system prompt templates change, `invalidate_source_revision(source_revision)` must evict all entries generated under previous versions.
 3. Requests arriving after TTL expiration must be evicted immediately and recorded as misses.
 
+## Work through one concrete case
+
+The exact store routes lookups in O(1) time and enforces per-tenant LRU capacity limits. Stale entries are evicted lazily upon retrieval, and documentation updates trigger instant scoped invalidation by source revision tag.
+
+```figure
+pj-semantic-cache-correctness-lab-2
+```
+
 ## Implement the contract
 
 In your workspace `main.py`, implement the `ExactCacheStore` class:
