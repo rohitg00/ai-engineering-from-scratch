@@ -5,7 +5,7 @@
   "summary": "How to install Agent Substrate, run actors that suspend and resume, control their network, connect kagent and agentgateway, and fix a cluster from the symptom. Measured on our own clusters with Agent Substrate v1.0.0.",
   "audience": "You run agents on Kubernetes, or you plan to. You know pods, Services, and kubectl. You have not used Agent Substrate, and you want to know what it does and what it costs before you depend on it.",
   "edition": "2026.11",
-  "status": "draft",
+  "status": "ready",
   "pin": {
     "subject": "Agent Substrate",
     "version": "1.0.0",
