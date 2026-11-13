@@ -1612,15 +1612,22 @@ body.js-anim .toc-row.in-view {
 .search-toggle {
   background: transparent;
   border: 1px solid var(--rule-soft);
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--ink-soft);
+  color: var(--ink);
   transition: transform var(--motion-press) var(--ease-out), border-color var(--motion-feedback) ease, color var(--motion-feedback) ease;
-  flex-shrink: 0;
+  flex: 0 0 44px;
+}
+
+.search-toggle svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
 }
 
 .search-toggle:hover {
@@ -1980,11 +1987,6 @@ body[data-palette-open] {
     border-right: none;
     border-top: 2px solid var(--ink);
     box-shadow: none;
-  }
-
-  .search-toggle {
-    width: 44px;
-    height: 44px;
   }
 
   /* Keep only the "navigate" hint on small screens */
