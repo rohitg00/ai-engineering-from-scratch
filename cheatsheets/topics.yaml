@@ -975,6 +975,7 @@
     - phases/17-infrastructure-and-production/27-finops-llms
     - projects/token-counter-and-cost-meter
     - projects/agent-budget-planner
+    - projects/semantic-cache-correctness-lab
 
 - id: guardrails-moderation
   title: Guardrails, Moderation and Redaction

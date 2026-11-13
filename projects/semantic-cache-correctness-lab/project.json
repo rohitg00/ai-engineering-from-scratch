@@ -1,0 +1,108 @@
+{
+  "id": "semantic-cache-correctness-lab",
+  "title": "Semantic Cache Correctness Lab",
+  "level": 3,
+  "levelName": "Engineer",
+  "tagline": "Measure when a similar question can reuse an answer and when it must miss.",
+  "summary": "Build an opt-in answer cache that binds entries to tenant, model, source revision and expiry. Compare exact and semantic candidate matching using authored near-miss questions, including changed numbers and negation. Export a local HTTP adapter and a false-hit report; similarity alone must not authorize cross-user reuse.",
+  "youWillBuild": "A tenant-isolated semantic caching layer, adversarial near-miss filter, and HTTP correctness report.",
+  "usefulFor": [
+    "Prevent privacy leaks and hallucinated cache hits in multi-tenant LLM applications.",
+    "Block false semantic hits on critical near-misses such as changed dates, numbers, or negation."
+  ],
+  "hours": 8,
+  "languages": ["Python"],
+  "languageWhy": {
+    "Python": "Standard-library data structures, cryptographic hashing, and text tokenization expose exact and semantic cache safety without third-party dependencies."
+  },
+  "status": "ready",
+  "source": "community",
+  "author": {
+    "name": "Nivesh Kumar Meena",
+    "github": "iitking"
+  },
+  "skills": [
+    "Enforce tenant and freshness isolation boundaries",
+    "Implement exact cache lookup and invalidation",
+    "Filter adversarial semantic near-misses",
+    "Export an HTTP caching adapter and correctness report"
+  ],
+  "prerequisites": [
+    "Python 3.10+",
+    "Basic hashing and vector similarity concepts",
+    "semantic-notes-search"
+  ],
+  "figures": true,
+  "overviewFigure": "pj-semantic-cache-correctness-lab-1",
+  "demo": {
+    "cwd": "solution",
+    "command": [
+      "python3",
+      "cli.py",
+      "--benchmark",
+      "samples/benchmark.json",
+      "--output",
+      "report.json"
+    ]
+  },
+  "demos": [
+    {
+      "title": "Build and verify",
+      "gif": "media/run.gif",
+      "poster": "media/run.png",
+      "record": "media/run.json"
+    },
+    {
+      "title": "Actual artifact output",
+      "gif": "media/output.gif",
+      "poster": "media/output.png",
+      "record": "media/output.json"
+    }
+  ],
+  "stages": [
+    {
+      "id": "01-identity-and-freshness",
+      "title": "Enforce identity, freshness and tenant boundaries",
+      "summary": "Structure cache entries with cryptographic keys binding tenant ID, model, source revision, and time-to-live expiration.",
+      "hours": 2,
+      "difficulty": "starter",
+      "language": "python",
+      "languageWhy": "Use explicit hash construction and deterministic standard-library dataclasses.",
+      "concepts": ["tenant isolation", "canonical hashing", "TTL expiration"],
+      "figure": "pj-semantic-cache-correctness-lab-1"
+    },
+    {
+      "id": "02-exact-lookup-and-invalidation",
+      "title": "Implement exact-match lookup and scoped invalidation",
+      "summary": "Build an in-memory cache store with exact lookup, expiry eviction, and bulk invalidation by tenant or source revision.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use standard-library dictionaries and deterministic iteration order.",
+      "concepts": ["exact lookup", "scoped invalidation", "cache eviction"],
+      "figure": "pj-semantic-cache-correctness-lab-2"
+    },
+    {
+      "id": "03-semantic-matching-and-adversarial-near-misses",
+      "title": "Evaluate semantic candidates against adversarial near-miss pairs",
+      "summary": "Score query similarity while detecting adversarial near-misses such as numerical changes, negation inversion, and entity divergence.",
+      "hours": 2,
+      "difficulty": "core",
+      "language": "python",
+      "languageWhy": "Use standard-library tokenization, vector math, and regex pattern matching.",
+      "concepts": ["semantic similarity", "adversarial near-misses", "negation detection"],
+      "figure": "pj-semantic-cache-correctness-lab-3"
+    },
+    {
+      "id": "04-http-adapter-and-correctness-report",
+      "title": "Export a bounded HTTP adapter and correctness report",
+      "summary": "Connect the cache engine to an HTTP proxy adapter with audit headers and generate a false-hit, latency, and savings report.",
+      "hours": 2,
+      "difficulty": "advanced",
+      "language": "python",
+      "languageWhy": "Use standard-library HTTP primitives and structured JSON reporting.",
+      "concepts": ["HTTP adapter", "cache headers", "correctness benchmark"],
+      "figure": "pj-semantic-cache-correctness-lab-4"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ title: LLM Cost, Caching and Batch APIs
 code: LC
 subtitle: Price each call, cache prefixes and meanings, batch offline work and cap spend. Python and Rust from the lessons.
 hue: 40
-sources: phases/11-llm-engineering/11-caching-cost, phases/11-llm-engineering/15-prompt-caching, phases/17-infrastructure-and-production/14-prompt-semantic-caching, phases/17-infrastructure-and-production/15-batch-apis, phases/17-infrastructure-and-production/27-finops-llms, projects/token-counter-and-cost-meter, projects/agent-budget-planner
+sources: phases/11-llm-engineering/11-caching-cost, phases/11-llm-engineering/15-prompt-caching, phases/17-infrastructure-and-production/14-prompt-semantic-caching, phases/17-infrastructure-and-production/15-batch-apis, phases/17-infrastructure-and-production/27-finops-llms, projects/token-counter-and-cost-meter, projects/agent-budget-planner, projects/semantic-cache-correctness-lab
 source_hash: 379e5b3c4af278f4
 ---
 

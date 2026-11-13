@@ -1,0 +1,48 @@
+{
+  "title": "Semantic Cache Correctness Lab | Build and verify",
+  "recordedAt": "2026-11-13T02:11:27Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "semantic-cache-correctness-lab",
+        "--init",
+        "/tmp/project-demo-learner-cache"
+      ],
+      "cwd": "/Users/iitian/Desktop/contribution github",
+      "exitCode": 0,
+      "output": "workspace  /private/tmp/project-demo-learner-cache\n  created  README.md\n  created  cli.py\n  created  main.py\n  created  samples/benchmark.json\n  kept     README.md\n  kept     README.md\n  kept     README.md\nnext: python3 scripts/project_test.py semantic-cache-correctness-lab --stage 1 --path /private/tmp/project-demo-learner-cache\n",
+      "durationMs": 88
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "semantic-cache-correctness-lab",
+        "--stage",
+        "1",
+        "--path",
+        "/tmp/project-demo-learner-cache"
+      ],
+      "cwd": "/Users/iitian/Desktop/contribution github",
+      "exitCode": 1,
+      "output": "Semantic Cache Correctness Lab: grading learner\n  FAIL stage 1: Enforce identity, freshness and tenant boundaries (10 tests)\n       not implemented yet: implement CacheEntry.to_dict\n",
+      "durationMs": 107
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/project_test.py",
+        "semantic-cache-correctness-lab",
+        "--all",
+        "--solution",
+        "--strict"
+      ],
+      "cwd": "/Users/iitian/Desktop/contribution github",
+      "exitCode": 0,
+      "output": "Semantic Cache Correctness Lab: grading solution\n  PASS stage 1: Enforce identity, freshness and tenant boundaries (10 tests)\n  PASS stage 2: Implement exact-match lookup and scoped invalidation (11 tests)\n  PASS stage 3: Evaluate semantic candidates against adversarial near-miss pairs (18 tests)\n  PASS stage 4: Export a bounded HTTP adapter and correctness report (12 tests)\n",
+      "durationMs": 384
+    }
+  ]
+}

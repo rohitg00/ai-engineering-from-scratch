@@ -1,6 +1,6 @@
 # Project roadmap
 
-The catalog contains **104 projects: 79 ready to build and 25 planned**. The plans below describe future work; they do not have runnable stages, completion tests or certificates yet.
+The catalog contains **104 projects: 80 ready to build and 24 planned**. The plans below describe future work; they do not have runnable stages, completion tests or certificates yet.
 
 Ready project manifests own implementation metadata; `roadmap.json` owns the remaining plans. These briefs give each plan a concrete deliverable, a starting path through existing projects and four proposed milestones. Milestones can expand into four to eight tested stages during implementation. No delivery dates are promised.
 
@@ -8,7 +8,7 @@ Ready project manifests own implementation metadata; `roadmap.json` owns the rem
 |---|---:|---:|---:|
 | 1. Starter | 12 | 1 | 13 |
 | 2. Builder | 30 | 2 | 32 |
-| 3. Engineer | 24 | 6 | 30 |
+| 3. Engineer | 25 | 5 | 30 |
 | 4. Systems | 9 | 12 | 21 |
 | 5. Frontier | 4 | 4 | 8 |
 
@@ -188,31 +188,6 @@ Proposed milestones:
 2. Align spoken segments to candidate slides
 3. Measure pacing and review apparent coverage gaps
 4. Export a rehearsal report and compare a second attempt
-
-<a id="semantic-cache-correctness-lab"></a>
-
-### Semantic Cache Correctness Lab
-
-Build an opt-in answer cache that binds entries to tenant, model, source revision and expiry. Compare exact and semantic candidate matching using authored near-miss questions, including changed numbers and negation. Export a local HTTP adapter and a false-hit report; similarity alone must not authorize cross-user reuse.
-
-**Distinct focus:** RAG Freshness Pipeline versions source content; this decides whether a prior answer can be reused for a new query under identity and freshness constraints.
-
-**First demo to build:** Show a cache hit for a paraphrase and a miss when the question changes a critical number or tenant.
-
-**Languages:** Go, Python
-
-**Deliverable:** Local cache adapter and false-hit, latency and invalidation report
-
-**Builds on:** [Semantic Notes Search](semantic-notes-search/), [RAG Freshness Pipeline](rag-freshness-pipeline/)
-
-Proposed milestones:
-
-1. Define identity, freshness and privacy boundaries
-2. Implement exact-match lookup and invalidation
-3. Evaluate semantic candidates against adversarial pairs
-4. Export a bounded HTTP adapter and reuse evidence
-
-Primary references: [Reference 1](https://www.rfc-editor.org/rfc/rfc9111.html).
 
 <a id="video-highlight-storyboard"></a>
 

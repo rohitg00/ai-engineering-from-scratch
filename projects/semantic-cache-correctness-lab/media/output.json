@@ -1,0 +1,22 @@
+{
+  "title": "Semantic Cache Correctness Lab | Actual artifact output",
+  "recordedAt": "2026-11-13T02:11:27Z",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "cli.py",
+        "--benchmark",
+        "samples/benchmark.json",
+        "--output",
+        "report.json",
+        "--sensitivity",
+        "--strict"
+      ],
+      "cwd": "/Users/iitian/Desktop/contribution github/projects/semantic-cache-correctness-lab/solution",
+      "exitCode": 0,
+      "output": "==================================================\nSemantic Cache Correctness Benchmark Report\n==================================================\nTotal Queries Evaluated:    8\nExact Matches:              1\nSafe Semantic Matches:      1\nSafe Misses Enforced:       6\nAdversarial Near-Misses Blocked: 3\nCross-Tenant Blocks:        1\nFalse Hits (Critical):      0\nAccuracy Rate:              100.0%\nEstimated Latency Saved:    700.0 ms\n\nThreshold Sensitivity Analysis:\n Threshold | Semantic Hits | False Hits | Accuracy\n-----------+---------------+------------+---------\n   0.65    |       1       |     0      | 100.0%\n   0.75    |       1       |     0      | 100.0%\n   0.80    |       1       |     0      | 100.0%\n   0.85    |       0       |     0      | 87.5%\n   0.90    |       0       |     0      | 87.5%\n   0.95    |       0       |     0      | 87.5%\n\nReport exported to:         report.json\n==================================================\nCI Gate: PASSED - All identity boundaries and near-misses preserved.\n",
+      "durationMs": 65
+    }
+  ]
+}
