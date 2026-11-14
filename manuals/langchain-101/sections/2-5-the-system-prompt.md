@@ -31,7 +31,7 @@ note: Cut to the message list of call 2.
     ],
 ```
 
-[Figure 2.5](#fig-2-5) draws the request that the model node builds. Three things follow from it.
+[Figure](#fig-2-5) draws the request that the model node builds. Three things follow from it.
 
 ```figure
 id: fig-2-5

@@ -314,8 +314,118 @@
           "file": "sections/6-5-evaluation-with-langsmith.md"
         }
       ]
+    },
+    {
+      "number": 7,
+      "title": "Operate and Debug",
+      "thesis": "Running an agent for other people adds a server, a bill, attackers, old code, and failures at night, and each one has a recorded answer.",
+      "summary": "Agent Server under langgraph dev, up, and deploy, and the cost of each layer against a plain SDK loop. Then security at five boundaries, migration from 0.x, a table of symptoms, and the limits of this edition.",
+      "accent": "grey",
+      "sections": [
+        {
+          "id": "7.1",
+          "file": "sections/7-1-agent-server-langgraph-dev-up-and-deploy.md"
+        },
+        {
+          "id": "7.2",
+          "file": "sections/7-2-cost-the-framework-against-a-plain-sdk-loop.md"
+        },
+        {
+          "id": "7.3",
+          "file": "sections/7-3-security-deserialization-store-isolation-approvals-and-mcp-subprocesses.md"
+        },
+        {
+          "id": "7.4",
+          "file": "sections/7-4-migration-from-0-x-and-stale-advice.md"
+        },
+        {
+          "id": "7.5",
+          "file": "sections/7-5-symptom-cause-fix.md"
+        },
+        {
+          "id": "7.6",
+          "file": "sections/7-6-limits-at-the-pin-and-what-comes-in-the-next-edition.md"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Build",
+      "thesis": "Four small programs on a local model and one offline drill show what to build around LangChain, and which failures come from the model and which from the code.",
+      "summary": "A SQL agent with approved writes, a retrieval agent with sources, and an assistant that survives a restart. Then a deep agent with a subagent, and a drill for seven failures.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "8.1",
+          "file": "sections/8-1-a-sql-agent-over-a-local-sqlite-database.md"
+        },
+        {
+          "id": "8.2",
+          "file": "sections/8-2-a-retrieval-agent-over-a-local-corpus.md"
+        },
+        {
+          "id": "8.3",
+          "file": "sections/8-3-an-assistant-with-memory-and-approvals-that-survives-a-restart.md"
+        },
+        {
+          "id": "8.4",
+          "file": "sections/8-4-a-deep-agent-with-a-subagent-and-files.md"
+        },
+        {
+          "id": "8.5",
+          "file": "sections/8-5-a-failure-drill.md"
+        }
+      ]
     }
   ],
+  "reference": {
+    "title": "Reference",
+    "thesis": "The parameters, hooks, stream events, persistence methods, variables, errors, terms, sources, and figures of this manual, in one place.",
+    "summary": "Lookup tables for create_agent, middleware, streams, persistence, environment variables, and errors. Then a glossary, the sources and conflicts, the figure index, and how the manual was made.",
+    "accent": "teal",
+    "sections": [
+      {
+        "id": "R.1",
+        "file": "sections/r-1-create-agent-parameters.md"
+      },
+      {
+        "id": "R.2",
+        "file": "sections/r-2-middleware-hooks-and-classes.md"
+      },
+      {
+        "id": "R.3",
+        "file": "sections/r-3-stream-modes-and-event-types.md"
+      },
+      {
+        "id": "R.4",
+        "file": "sections/r-4-checkpointer-and-store-api.md"
+      },
+      {
+        "id": "R.5",
+        "file": "sections/r-5-environment-variables.md"
+      },
+      {
+        "id": "R.6",
+        "file": "sections/r-6-errors.md"
+      },
+      {
+        "id": "R.7",
+        "file": "sections/r-7-glossary.md"
+      },
+      {
+        "id": "R.8",
+        "file": "sections/r-8-sources-and-conflicts.md"
+      },
+      {
+        "id": "R.9",
+        "file": "sections/r-9-figure-index.md"
+      },
+      {
+        "id": "R.10",
+        "file": "sections/r-10-how-this-manual-was-made.md"
+      }
+    ]
+  },
   "related": [
     "phases/11-llm-engineering/16-langgraph-state-machines",
     "phases/11-llm-engineering/17-agent-framework-tradeoffs",

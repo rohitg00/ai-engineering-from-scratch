@@ -27,7 +27,7 @@ Each instance handles one type: `email`, `credit_card`, `ip`, `mac_address`, `ur
 | `apply_to_tool_results` | `False` | the tool messages after the newest AI message, in `before_model` |
 | `strategy` | `redact` | what it does with a match |
 
-The middleware changes the message in the state, so the checkpoint and the trace hold the changed text too. The kit sends one input with four kinds of data, through one middleware at a time. [Figure 3.6](#fig-3-6) sets the results side by side.
+The middleware changes the message in the state, so the checkpoint and the trace hold the changed text too. The kit sends one input with four kinds of data, through one middleware at a time. [Figure](#fig-3-6) sets the results side by side.
 
 ```figure
 id: fig-3-6
@@ -71,7 +71,7 @@ lang: python
 
 The model received `my key is [REDACTED_API_KEY]`. With `apply_to_output=True`, the AI reply `Write to grace@example.org.` became `Write to [REDACTED_EMAIL].` in the state.
 
-The guardrails page describes a stream transformer for `apply_to_output=True`. It holds back the last 128 characters of each text block, so a match split across chunks is not sent {{docs oss/python/langchain/guardrails}}. The kit did not stream through `PIIMiddleware`. That test is coming in the next edition, and section 7.6 lists it.
+The guardrails page describes a stream transformer for `apply_to_output=True`. It holds back the last 128 characters of each text block, so a match split across chunks is not sent {{docs oss/python/langchain/guardrails}}. The kit did not stream through `PIIMiddleware`. That test is coming in the next edition, and [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
 ## Decision models
 
@@ -129,7 +129,7 @@ note: The two ToolMessages. The ids are cut.
     "name": "add",
 ```
 
-[Figure 3.6b](#fig-3-6b) draws the two paths. The question that the decision model received has `criteria` set to `null`:
+[Figure](#fig-3-6b) draws the two paths. The question that the decision model received has `criteria` set to `null`:
 
 ```listing
 title: the question AutoModeMiddleware sent

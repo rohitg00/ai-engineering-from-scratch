@@ -60,8 +60,10 @@ def reducers_send_command(cap):
     cap.section("graph")
     cap.text(app.get_graph().draw_mermaid())
     cap.section("updates, one chunk per node run")
-    for chunk in app.stream({"topic": "animals", "subjects": [], "jokes": [], "log": [], "best": ""}, stream_mode="updates"):
-        cap.json(chunk)
+    chunks = list(app.stream({"topic": "animals", "subjects": [], "jokes": [], "log": [], "best": ""}, stream_mode="updates"))
+    parallel = iter(sorted((c for c in chunks if "write_joke" in c), key=lambda c: c["write_joke"]["jokes"]))
+    for chunk in chunks:
+        cap.json(next(parallel) if "write_joke" in chunk else chunk)
     cap.section("final state: operator.add merged the parallel writes")
     cap.json(app.invoke({"topic": "animals", "subjects": [], "jokes": [], "log": [], "best": ""}))
     cap.section("two parallel writes to a key with no reducer")

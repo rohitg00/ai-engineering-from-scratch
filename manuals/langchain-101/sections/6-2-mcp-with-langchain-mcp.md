@@ -126,7 +126,7 @@ lang: json
 
 A failure of the transport is different. It is not a `ToolException`, so it skips the error handling and raises out of the run. The docs say the same: a server error reaches the model, and a transport or session failure raises {{docs oss/python/langchain/mcp/tools}}. The kit cannot crash an in-process server, so we tested the other cases with a real server on the Mac.
 
-**We measured** each failure on the Mac, Apple M1 Max, 10 cores, 64 GiB, with `langchain` 1.5.0 and `fastmcp` 4.2.0. The FastMCP server ran over stdio and over Streamable HTTP, and we ran each case once. [Figure 6.2](#fig-6-2) shows the result of each case.
+**We measured** each failure on the Mac, Apple M1 Max, 10 cores, 64 GiB, with `langchain` 1.5.0 and `fastmcp` 4.2.0. The FastMCP server ran over stdio and over Streamable HTTP, and we ran each case once. [Figure](#fig-6-2) shows the result of each case.
 
 ```figure
 id: fig-6-2

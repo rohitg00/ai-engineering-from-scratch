@@ -52,7 +52,7 @@ def install_size():
 
 
 def overhead():
-    out = {"machine": MAC, "unit": "milliseconds of wall time for one run of three model calls", "sources": ["capture/lab/T01-overhead-mac/02-stub-runs.jsonl", "capture/lab/T01-overhead-mac/04-ollama-runs.jsonl", "capture/lab/T01-overhead-mac/09-request-body-diff.txt"]}
+    out = {"machine": MAC, "unit": "milliseconds of wall time for one run of three model calls", "sources": ["capture/lab/T01-overhead-mac/02-stub-runs.jsonl", "capture/lab/T01-overhead-mac/03-ollama-proxy-usage.jsonl", "capture/lab/T01-overhead-mac/04-ollama-runs.jsonl", "capture/lab/T01-overhead-mac/09-request-body-diff.txt"]}
     for key, rel in (("stub", "T01-overhead-mac/02-stub-runs.jsonl"), ("ollama", "T01-overhead-mac/04-ollama-runs.jsonl")):
         variants = {}
         for row in rows(rel):
@@ -64,8 +64,17 @@ def overhead():
         for entry in variants.values():
             entry["n"] = len(entry["wall_ms"])
             entry["median_ms"] = r(statistics.median(entry["wall_ms"]), 2)
-            del entry["wall_ms"]
         out[key] = variants
+    proxy = rows("T01-overhead-mac/03-ollama-proxy-usage.jsonl")
+    calls = {}
+    for row in rows("T01-overhead-mac/04-ollama-runs.jsonl"):
+        if row.get("warmup") or "t_end_ns" not in row:
+            continue
+        seen = [p for p in proxy if row["t_start_ns"] <= p["t_recv_ns"] <= row["t_end_ns"]]
+        shape = json.dumps([[p["req_bytes"], p["usage"]["prompt_tokens"], p["usage"]["completion_tokens"]] for p in seen])
+        entry = calls.setdefault(row["variant"], {})
+        entry[shape] = entry.get(shape, 0) + 1
+    out["ollama_requests"] = {"per_call": "request bytes, prompt tokens, completion tokens of each of the three model calls, with the number of runs that had that shape", "variants": {variant: [{"calls": json.loads(shape), "runs": n} for shape, n in sorted(shapes.items())] for variant, shapes in sorted(calls.items())}}
     return out
 
 
@@ -145,9 +154,13 @@ def agent_server():
     return {
         "machine": X86,
         "server": "langgraph dev, langgraph-cli 0.4.43, langgraph-api 0.18.0, in-memory runtime",
-        "sources": ["capture/lab/T15-agent-server-x86/02-recursion.jsonl", "capture/lab/T15-agent-server-x86/03-workers.jsonl", "capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt"],
+        "sources": ["capture/lab/T15-agent-server-x86/02-recursion.jsonl", "capture/lab/T15-agent-server-x86/03-workers.jsonl", "capture/lab/T15-agent-server-x86/04-double-texting.jsonl", "capture/lab/T15-agent-server-x86/05-load.jsonl", "capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt", "capture/lab/T15-agent-server-x86/12-latency-floor.jsonl"],
         "recursion": [{"config": row["config"], "steps_in_state": row["n_in_state"], "status": row["run_status"]} for row in recursion_rows],
         "workers": [{"server": row["server"], "background_runs": row["background_runs"], "seconds_per_run": row["seconds_per_run"], "max_inflight": row["max_inflight"], "wall_s": r(row["wall_s"], 1)} for row in worker_rows],
+        "load_graph": "create_agent with a fake model of 2 calls of 50 ms and 1 tool call; a new thread and runs.wait for each run; one run per level",
+        "load": [{"server": row["server"], "concurrency": row["concurrency"], "runs": row["runs"], "ok": row["ok"], "errors": row["errors"], "runs_per_s": r(row["runs_per_s"], 1), "p50_ms": round(row["lat_ms"]["p50"]), "p99_ms": round(row["lat_ms"]["p99"])} for row in rows("T15-agent-server-x86/05-load.jsonl")],
+        "latency_floor": {kind: {"n": entry["n"], "client_ms_p50": round(entry["client_ms_p50"]), "server_ms_p50": None if entry["run_created_to_updated_ms_p50"] is None else round(entry["run_created_to_updated_ms_p50"])} for row in rows("T15-agent-server-x86/12-latency-floor.jsonl") for kind, entry in row["results"].items()},
+        "double_texting": [{"strategy": row["strategy"], "second_run": "accepted" if row["second_run"]["accepted"] else f"HTTP {row['second_run']['http_status']}: {json.loads(row['second_run']['body'])['detail']}", "first_run_after": row["first_run_status_after"], "done": row["final_state_done"], "history": row["history_len"], "node_events": row["node_events"]} for row in rows("T15-agent-server-x86/04-double-texting.jsonl")],
         "langgraph_up": first,
     }
 
@@ -504,7 +517,263 @@ def tracing():
     }
 
 
+HOOK_CALLS = {"before_model": 2, "after_model": 2, "before_agent": 1, "wrap_model_call": 2, "wrap_tool_call": 1}
+
+
+def middleware():
+    folder = "T11-middleware-cost-mac"
+
+    def cells(rel):
+        out = {}
+        for row in rows(f"{folder}/{rel}"):
+            cell = out.setdefault((row["cell"], row["k"], row["history"]), {"wall_us": [], "bad_runs": 0, "graph_nodes": row["n_nodes"]})
+            cell["wall_us"].extend(row["walls_us"][row["warm"]:])
+            cell["bad_runs"] += row["bad_runs"]
+        for cell in out.values():
+            cell["n"] = len(cell["wall_us"])
+            cell["median_us"] = median(cell["wall_us"], 1)
+            cell["wall_us"] = [r(v, 0) for v in cell["wall_us"]]
+        return out
+
+    custom = cells("01-custom-runs.jsonl")
+    base = custom[("none", 0, 2)]
+    ks = [0, 1, 3, 10, 20]
+    hooks = {}
+    for hook, calls in HOOK_CALLS.items():
+        meds = [base["median_us"]] + [custom[(hook, k, 2)]["median_us"] for k in ks[1:]]
+        mean_k, mean_m = sum(ks) / len(ks), sum(meds) / len(meds)
+        slope = sum((k - mean_k) * (m - mean_m) for k, m in zip(ks, meds)) / sum((k - mean_k) ** 2 for k in ks)
+        hooks[hook] = {"calls_per_run": calls, "us_per_hook_call": r(slope / calls, 1), "median_us_by_count": dict(zip(map(str, ks), meds)), "graph_nodes_at_20": custom[(hook, 20, 2)]["graph_nodes"], "runs_at_20": custom[(hook, 20, 2)]["wall_us"]}
+    builtin = cells("02-builtin-runs.jsonl")
+    added = {}
+    for (name, _, size), cell in sorted(builtin.items(), key=lambda item: (item[0][2], item[0][0])):
+        if name == "none":
+            continue
+        added.setdefault(name, {})[f"history_{size}"] = {"added_us": r(cell["median_us"] - builtin[("none", None, size)]["median_us"], 0), "graph_nodes": cell["graph_nodes"], "n": cell["n"], "bad_runs": cell["bad_runs"]}
+    return {
+        "machine": MAC,
+        "run": "create_agent with an in-process fake model, 2 model calls and 1 tool call, sync invoke; 6 shuffled blocks of 50 timed runs per cell after 5 warm-up runs that the summary leaves out",
+        "baseline_median_us": base["median_us"],
+        "baseline_runs": base["wall_us"],
+        "sources": [f"capture/lab/{folder}/01-custom-runs.jsonl", f"capture/lab/{folder}/02-builtin-runs.jsonl", f"capture/lab/{folder}/t11_run.py"],
+        "hooks": hooks,
+        "builtin": added,
+    }
+
+
+def p95(values, digits=3):
+    data = sorted(values)
+    k = (len(data) - 1) * 0.95
+    low = int(k)
+    high = min(low + 1, len(data) - 1)
+    return r(data[low] + (data[high] - data[low]) * (k - low), digits)
+
+
+STREAM_VARIANTS = ["plain_openai", "chatopenai_stream", "agent_messages", "agent_messages_updates", "astream_events_v2", "stream_events_v3", "stream_events_v3_raw", "astream_events_v3", "astream_events_v3_gather"]
+
+
+def streaming():
+    folder = "T04-streaming-mac"
+    phases = {}
+    for phase in ("text", "tool", "subagent", "ollama"):
+        data = rows(f"{folder}/{phase}-per-run.jsonl")
+        good = [row for row in data if not row["warmup"] and not row["error"]]
+        variants = {}
+        for name in STREAM_VARIANTS:
+            runs = [row for row in good if row["variant"] == name]
+            if not runs:
+                continue
+            entry = {
+                "n": len(runs),
+                "errors": sum(1 for row in data if row["variant"] == name and row["error"] and not row["warmup"]),
+                "first_delay_ms": [r(row["first_delay_ms"], 2) for row in runs],
+                "first_delay_ms_median": median([row["first_delay_ms"] for row in runs], 2),
+                "first_delay_ms_p95": p95([row["first_delay_ms"] for row in runs], 2),
+                "token_delay_ms_median": median([row["median_delay_ms"] for row in runs], 2),
+                "burst_frac_median": median([row["burst_frac"] for row in runs], 2),
+                "cpu_ms_median": median([row["cpu_ms"] for row in runs], 1),
+            }
+            if phase != "ollama":
+                entry["request_overhead_ms_median"] = median([row["req_overhead_ms"] for row in runs], 1)
+            if phase == "text":
+                entry["client_gap_ms_median"] = median([row["client_gap_median_ms"] for row in runs], 1)
+                entry["server_gap_ms_median"] = median([row["server_gap_median_ms"] for row in runs], 1)
+            if phase == "tool":
+                tool = [row["tool_first_delay_ms"] for row in runs if row.get("tool_first_delay_ms") is not None]
+                if tool:
+                    entry["tool_first_delay_ms_median"] = median(tool, 1)
+            variants[name] = entry
+        loads = [row["load1"] for row in good]
+        phases[phase] = {"load1": [r(min(loads), 1), r(max(loads), 1)], "variants": variants}
+    isolation = {}
+    for row in rows(f"{folder}/iso38484-runs.jsonl"):
+        if row["warmup"]:
+            continue
+        cell = isolation.setdefault(f"{row['scenario']} {row['pattern']}", {"runs": 0, "text_in_one_burst": 0})
+        cell["runs"] += 1
+        cell["text_in_one_burst"] += 1 if row["main_burst_frac"] == 1.0 else 0
+    reasoning = {}
+    for row in rows(f"{folder}/reasoning-ollama-runs.jsonl"):
+        if row["warmup"]:
+            continue
+        cell = reasoning.setdefault(" then ".join(row["order"]), {"runs": 0, "reasoning_deltas": [], "text_deltas": [], "reasoning_burst_frac": [], "text_burst_frac": [], "text_after_reasoning_ms": []})
+        cell["runs"] += 1
+        cell["reasoning_deltas"].append(row["reasoning"]["n"])
+        cell["text_deltas"].append(row["text"]["n"])
+        cell["reasoning_burst_frac"].append(row["reasoning"]["burst_frac"])
+        cell["text_burst_frac"].append(row["text"]["burst_frac"])
+        cell["text_after_reasoning_ms"].append(row["text"]["first_ms"] - row["reasoning"]["last_ms"])
+    servers = {row["tag"]: row for row in rows(f"{folder}/text-server-excerpt.jsonl")}
+    timeline = {}
+    for run in rows(f"{folder}/text-runs-excerpt.jsonl"):
+        sent = {event[3].strip(): event[0] for event in servers[run["tag"]]["events"] if event[1] == "text"}
+        seen = {}
+        for stamp, _, ids, _ in run["text"]:
+            for token in ids:
+                seen.setdefault(token, stamp)
+        timeline[run["variant"]] = {"block": run["block"], "run": run["i"], "tokens": [[token, r((sent[token] - run["t0"]) / 1e6, 1), r((seen[token] - run["t0"]) / 1e6, 1)] for token in sorted(sent)]}
+    return {
+        "machine": MAC,
+        "stub": "an OpenAI-compatible SSE stub on 127.0.0.1 that sends 40 text tokens after 50 ms, about 24 ms apart, and stamps each token as it writes it",
+        "delivery_delay": "the time the consumer saw a token minus the time the stub sent it, on one clock",
+        "phases_note": "text: 40 tokens; tool: a tool call of 202 argument chunks, then 40 tokens; subagent: a supervisor tool that calls an inner agent; ollama: qwen3:4b-instruct-2507-q4_K_M through a stamping proxy",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("text-per-run.jsonl", "tool-per-run.jsonl", "subagent-per-run.jsonl", "ollama-per-run.jsonl", "iso38484-runs.jsonl", "reasoning-ollama-runs.jsonl", "text-runs-excerpt.jsonl", "text-server-excerpt.jsonl", "t04_run.py", "t04_analyze.py")],
+        "phases": phases,
+        "isolation_38484": isolation,
+        "reasoning_model": reasoning,
+        "timeline": timeline,
+    }
+
+
+def parallel_tools():
+    folder = "T08-parallel-tools-mac"
+    cells = {}
+    data = [row for row in rows(f"{folder}/01-concurrency-runs.jsonl") if not row["warmup"]]
+    for row in data:
+        cap = "none" if row["max_concurrency"] is None else row["max_concurrency"]
+        cell = cells.setdefault(f"{row['kind']} {row['mode']} {row['tool']} N={row['n_calls']} cap={cap}", {"runs": 0, "errors": {}, "wall_ms": [], "overlap": [], "executions": []})
+        cell["runs"] += 1
+        if row["error"]:
+            cell["errors"][row["error"]] = cell["errors"].get(row["error"], 0) + 1
+            continue
+        cell["wall_ms"].append(r(row["wall_ms"], 1))
+        cell["overlap"].append(row["max_overlap"])
+        cell["executions"].append(row["n_exec"])
+    for cell in cells.values():
+        if cell["wall_ms"]:
+            cell["wall_ms_median"] = median(cell["wall_ms"], 1)
+    ids = []
+    for row in rows(f"{folder}/02-idless-and-dupnames.jsonl"):
+        entry = {"case": row["case"], "executions": len(row["executions"]), "tool_messages": [[m[0], m[2]] for m in row["tool_messages"]], "error": row.get("error")}
+        for key in ("how", "fake_last_chunk", "order", "bound_to_model"):
+            if key in row:
+                entry[key] = row[key]
+        if "order" in row:
+            entry["ran"] = [name for name, _ in row["executions"]]
+        ids.append(entry)
+    local = {}
+    for row in rows(f"{folder}/03-ollama-parallel.jsonl"):
+        cell = local.setdefault(f"{row['llm']} {row['how']}", {"runs": 0, "both_tools_ran": 0, "errors": 0})
+        cell["runs"] += 1
+        cell["both_tools_ran"] += 1 if len({name for name, _ in row["executions"]}) == 2 else 0
+        cell["errors"] += 1 if row["error"] else 0
+    loads = [row["load_block"][0] for row in data]
+    return {
+        "machine": MAC,
+        "cpu_count": data[0]["cpu_count"],
+        "load1": [r(min(loads), 1), r(max(loads), 1)],
+        "run": "a fake model asks for N calls of one tool that sleeps 200 ms; overlap is the largest number of calls running at one time, from the start and end stamps of each call",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-concurrency-runs.jsonl", "02-idless-and-dupnames.jsonl", "03-ollama-parallel.jsonl", "t08_run.py", "t08_ids.py", "t08_ollama.py")],
+        "cells": dict(sorted(cells.items())),
+        "ids_and_names": ids,
+        "ollama": dict(sorted(local.items())),
+    }
+
+
+SQL_CHECKS = {
+    "tables": lambda row, expected: all(name in (row["answer"] or "") for name in expected["tables"]),
+    "largest": lambda row, expected: "PlaylistTrack" in (row["answer"] or ""),
+    "genre": lambda row, expected: "Sci Fi" in (row["answer"] or ""),
+    "add-genre": lambda row, expected: row["db_after"]["chiptune"] == 1,
+    "delete": lambda row, expected: row["db_after"]["invoices_2009"] == expected["invoices_2009"],
+}
+
+
+def demo_sql():
+    out = {}
+    for tag in ("4b", "8b"):
+        data = rows(f"sql-agent/run-{tag}.jsonl")
+        meta = data[-1]
+        questions = {}
+        for row in data[:-1]:
+            if row["error"]:
+                outcome = "raised"
+            else:
+                outcome = "right" if SQL_CHECKS[row["question"]](row, meta["expected"]) else "wrong"
+            questions[row["question"]] = {"outcome": outcome, "error": row["error"], "tools": [c["name"] for c in row["tool_calls"]], "decisions": [d["decision"] for d in row["decisions"]], "model_calls": row["model_calls"], "prompt_tokens": sum(row["prompt_tokens"]), "seconds": row["seconds"]}
+        out[meta["model"]] = {"questions": questions, "db_final": meta["db_final"]}
+    return {"rules": "tables: every table name in the answer; largest: PlaylistTrack in the answer; genre: Sci Fi in the answer; add-genre: one Chiptune row after the run; delete: 83 invoices of 2009 after the run", "expected": meta["expected"], "models": out}
+
+
+def demo_retrieval():
+    out = {}
+    for tag in ("4b", "8b"):
+        data = rows(f"retrieval-agent/run-{tag}.jsonl")
+        meta = data[0]
+        questions = {}
+        for row in data[1:]:
+            questions[row["question"]] = {"searched": len(row["searches"]), "cited": row["cited"], "cited_expected": row["cited_expected"], "top1": row["top4"][0][0], "top1_expected": row["top4"][0][0] in row["expected_sources"] if row["expected_sources"] else None, "top4_scores": [hit[2] for hit in row["top4"]], "model_calls": row["model_calls"], "prompt_tokens": sum(row["prompt_tokens"]), "seconds": row["seconds"]}
+        out[meta["model"]] = questions
+    return {"chunks": meta["chunks"], "files": len(meta["corpus"]), "embed_s": meta["embed_s"], "models": out}
+
+
+def demo_assistant():
+    out = {}
+    for tag in ("", "-sync"):
+        exits = dict(re.findall(r"== (\S+): process.*?\n.*?  exit       (-?\d+)", read(f"assistant/run{tag}.log"), re.S))
+        by_step = {row["step"]: row for row in rows(f"assistant/run{tag}.jsonl")}
+        steps = []
+        for name, code in exits.items():
+            row = by_step.get(name)
+            entry = {"step": name, "exit": int(code)}
+            if row:
+                entry.update({"seconds": row["seconds"], "next": row["next"], "messages": len(row["messages"]), "checkpoints": row["checkpoints"], "pending": len(row["pending"]), "sent": row["sent"], "attempts": len(row["attempts"]), "summaries": row["summaries"], "memories": len(row["memories"])})
+            steps.append(entry)
+        out["sync" if tag else "default"] = steps
+    return out
+
+
+def demo_deep():
+    data = rows("deep-agent/run.jsonl")
+    calls = [{"n": row["n"], "agent": row["agent"], "tools": len(row["tools"]), "input_tokens": row["input_tokens"], "output_tokens": row["output_tokens"], "seconds": row["seconds"], "tool_calls": row["tool_calls"]} for row in data[1:]]
+    totals = {}
+    for row in calls:
+        entry = totals.setdefault(row["agent"], {"calls": 0, "input_tokens": 0, "output_tokens": 0})
+        entry["calls"] += 1
+        entry["input_tokens"] += row["input_tokens"]
+        entry["output_tokens"] += row["output_tokens"]
+    return {"model": data[0]["model"], "seconds": data[0]["seconds"], "files": data[0]["files"], "todos": [t["status"] for t in data[0]["todos"]], "calls": calls, "totals": totals}
+
+
+def demos():
+    return {
+        "machine": MAC,
+        "runs": "one run of each demo; the SQL and retrieval demos once with each model",
+        "models": "Ollama 0.31.1, temperature 0, seed 42, reasoning off; nomic-embed-text for embeddings",
+        "sources": ["capture/lab/sql-agent/", "capture/lab/retrieval-agent/", "capture/lab/assistant/", "capture/lab/deep-agent/", "capture/lab/failure-drill/"],
+        "sql_agent": demo_sql(),
+        "retrieval_agent": demo_retrieval(),
+        "assistant": demo_assistant(),
+        "deep_agent": demo_deep(),
+        "failure_drill": rows("failure-drill/drill.jsonl"),
+    }
+
+
 SUMMARIES = {
+    "demos-mac.json": demos,
+    "streaming-mac.json": streaming,
+    "parallel-tools-mac.json": parallel_tools,
+    "middleware-mac.json": middleware,
     "structured-output-mac.json": structured_output,
     "import-times-mac.json": import_times,
     "install-size-mac.json": install_size,

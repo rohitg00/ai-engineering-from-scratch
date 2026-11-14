@@ -133,7 +133,7 @@ writes: 13 rows, columns ['thread_id', 'checkpoint_ns', 'checkpoint_id', 'task_i
 
 **Pending write:** a value that a node wrote during a step, saved in the `writes` table before the checkpoint of that step. On a resume, LangGraph applies the pending writes of the last checkpoint and does not run those nodes again.
 
-Each turn starts with a checkpoint whose `source` is `input`, and the step count goes on across turns. [Figure 4.2](#fig-4-2) draws the 11 rows.
+Each turn starts with a checkpoint whose `source` is `input`, and the step count goes on across turns. [Figure](#fig-4-2) draws the 11 rows.
 
 ```figure
 id: fig-4-2
@@ -161,7 +161,7 @@ caption: Each dot is one run, two runs per point. Each line joins the medians of
 
 The limit was the client process. At a pool of 20 and more, the one process used about 110 percent CPU, and the pool was full. We then ran 8 and 16 client processes, with a pool of 10 in each. At 200 threads, their sums were 1,744 and 3,797 steps per second, with 0 errors. At 16 processes, Postgres reached its `max_connections` of 100 and refused our monitor connection. So we do not report the connection count of those runs.
 
-Size the pool to the threads that run at once, and add processes before you add connections. A second run on a thread that is still running is a different problem, double texting, and section 7.1 covers it on Agent Server.
+Size the pool to the threads that run at once, and add processes before you add connections. A second run on a thread that is still running is a different problem, double texting, and [section 7.1](#s-agent-server-langgraph-dev-up-and-deploy) covers it on Agent Server.
 
 ```takeaways
 - Pass a checkpointer and the same thread_id on every turn of a conversation.

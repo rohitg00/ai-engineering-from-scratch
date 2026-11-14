@@ -100,7 +100,7 @@ raised langgraph.errors.InvalidUpdateError: At key 'value': Can receive only one
 For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CONCURRENT_GRAPH_UPDATE
 ```
 
-[Figure 5.1](#fig-5-1) sets the two keys side by side.
+[Figure](#fig-5-1) sets the two keys side by side.
 
 ```figure
 id: fig-5-1
@@ -151,7 +151,7 @@ So the `messages` key of an agent can change in place. The agents page calls it 
 
 ## Clearing a key that has a reducer
 
-A node that returns an empty list for `log` does not clear it, because `operator.add` joins the empty list to the old one. The state page says to wrap the value in `Overwrite` to skip the reducer {{docs oss/python/langgraph/graph-api-state}}. The kit does not run `Overwrite` yet. A capture of it comes in the next edition, with the other open items of section 7.6.
+A node that returns an empty list for `log` does not clear it, because `operator.add` joins the empty list to the old one. The state page says to wrap the value in `Overwrite` to skip the reducer {{docs oss/python/langgraph/graph-api-state}}. The kit does not run `Overwrite` yet. A capture of it comes in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Return only the keys a node changes, and let each reducer merge them.

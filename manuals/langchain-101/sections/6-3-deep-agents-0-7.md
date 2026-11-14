@@ -57,7 +57,7 @@ note: The first of five calls. The fourth call is the subagent, which has the sa
     "message count": 2
 ```
 
-[Figure 6.3b](#fig-6-3b) shows where each tool and each piece of state comes from.
+[Figure](#fig-6-3b) shows where each tool and each piece of state comes from.
 
 ```figure
 id: fig-6-3b
@@ -120,7 +120,7 @@ The empty message costs no tokens. On Qwen3, the request with it and the request
 
 ## The token cost of the harness
 
-**We measured** the prompt tokens of three harnesses on the Mac, Apple M1 Max, 10 cores, 64 GiB. The model was Qwen3 8B on Ollama at temperature 0 and seed 42. Each task ran three times per harness, and all 27 runs answered correctly. The three harnesses were a plain loop on the `ollama` client, `create_agent`, and `create_deep_agent`, each with the same user tools. [Figure 6.3](#fig-6-3) shows each model call.
+**We measured** the prompt tokens of three harnesses on the Mac, Apple M1 Max, 10 cores, 64 GiB. The model was Qwen3 8B on Ollama at temperature 0 and seed 42. Each task ran three times per harness, and all 27 runs answered correctly. The three harnesses were a plain loop on the `ollama` client, `create_agent`, and `create_deep_agent`, each with the same user tools. [Figure](#fig-6-3) shows each model call.
 
 ```figure
 id: fig-6-3

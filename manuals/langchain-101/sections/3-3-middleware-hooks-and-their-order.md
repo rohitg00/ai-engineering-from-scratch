@@ -123,7 +123,7 @@ note: Cut to the first model call and the tool call. The second model call repea
   "A.after_agent"
 ```
 
-Three rules give this order, and [figure 3.3](#fig-3-3) draws them:
+Three rules give this order, and [figure](#fig-3-3) draws them:
 
 1. `before_agent` and `before_model` hooks run in list order, A then B then C.
 2. `after_model` and `after_agent` hooks run in reverse list order, C then B then A.
@@ -173,7 +173,7 @@ lang: python
         return self.label
 ```
 
-The cost of each hook is not in this section. Our measurements of it come in the next edition. Section 7.6 lists what is still to be measured.
+[Section 7.2](#s-cost-the-framework-against-a-plain-sdk-loop) gives the measured cost of each hook.
 
 ```takeaways
 - Put a middleware first when it must see the raw request and the final response.

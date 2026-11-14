@@ -28,7 +28,7 @@ The stack splits across these distributions at the pin:
 
 Each provider has its own package, such as `langchain-openai` 1.8.0, `langchain-anthropic` 1.7.10, and `langchain-ollama` 1.1.0. They live in the same repository as `langchain`, but each is released from its own tag. At the `langchain` 1.5.0 tag, the OpenAI package in the tree is still 1.7.4 {{code libs/partners/openai/pyproject.toml}}.
 
-`langgraph`, `langgraph-prebuilt`, `langgraph-checkpoint`, and `langgraph-checkpoint-postgres` came from one commit at the pin, with four different version numbers. [Figure 2.1](#fig-2-1) shows what each package requires.
+`langgraph`, `langgraph-prebuilt`, `langgraph-checkpoint`, and `langgraph-checkpoint-postgres` came from one commit at the pin, with four different version numbers. [Figure](#fig-2-1) shows what each package requires.
 
 ```figure
 id: fig-2-1
@@ -106,7 +106,7 @@ Then install from `requirements.lock` everywhere else, so that every machine res
 
 **We measured** two fresh installs on the Mac, with the same lockfile as constraints, before any import wrote bytecode. `openai` alone installed 14 packages in 26,356 KiB. `langchain` with `langchain-openai` installed 44 packages in 54,312 KiB.
 
-**We measured** the import time on the Mac, 10 runs of each import in a new process. [Figure 2.1b](#fig-2-1b) shows each run. With bytecode already written, `import openai` took 0.329 s at the median, and the imports for `create_agent` with `ChatOpenAI` took 0.831 s. With no bytecode, they took 1.064 s and 2.64 s. The Mac is a shared laptop, so read these as upper bounds.
+**We measured** the import time on the Mac, 10 runs of each import in a new process. [Figure](#fig-2-1b) shows each run. With bytecode already written, `import openai` took 0.329 s at the median, and the imports for `create_agent` with `ChatOpenAI` took 0.831 s. With no bytecode, they took 1.064 s and 2.64 s. The Mac is a shared laptop, so read these as upper bounds.
 
 ```figure
 id: fig-2-1b

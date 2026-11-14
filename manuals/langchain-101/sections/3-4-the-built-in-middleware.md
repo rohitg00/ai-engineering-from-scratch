@@ -34,7 +34,7 @@ The package exports 50 names from that module. Nineteen of them are middleware c
 | `ShellToolMiddleware` | `before_agent`, `after_agent` | Adds a `shell` tool with one shell session per run. It runs on the host by default. | this section |
 | `FilesystemFileSearchMiddleware` | none, tools only | Adds `glob_search` and `grep_search` over one root folder. | this section |
 
-[Figure 3.4](#fig-3-4) groups the classes by the hook they use. The hook tells you where a class acts: on the request, on the result, or on the state between steps.
+[Figure](#fig-3-4) groups the classes by the hook they use. The hook tells you where a class acts: on the request, on the result, or on the state between steps.
 
 ```figure
 id: fig-3-4
@@ -154,7 +154,7 @@ note: The bound tools of the first agent model call. The agent had add, get_weat
 
 `LLMToolEmulator` sends each listed tool call to a model and returns its text as the result. The tool body never ran, and the `ToolMessage` held `Emulated: sent to ops@example.com`. Pass `model`, because the default is a named Anthropic model, and the default warns that it is deprecated {{code libs/langchain_v1/langchain/agents/middleware/tool_emulator.py}}.
 
-`ProviderToolSearchMiddleware` needs a provider with server-side tool search. On the fake model it raised `ValueError` with the text `supported providers: anthropic, openai`. With no tools to defer, it passed the request through. We did not run it against a provider, and that test comes in the next edition. Section 7.6 lists it.
+`ProviderToolSearchMiddleware` needs a provider with server-side tool search. On the fake model it raised `ValueError` with the text `supported providers: anthropic, openai`. With no tools to defer, it passed the request through. We did not run it against a provider, and that test comes in the next edition. [Section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
 ## Shell and file search
 
@@ -169,7 +169,7 @@ note: The content of the ToolMessage.
     "content": "hello from shell\nnotes.md\nsrc\n",
 ```
 
-With no `execution_policy`, the middleware uses `HostExecutionPolicy`, which runs commands on your machine with your rights {{code libs/langchain_v1/langchain/agents/middleware/shell_tool.py}}. `DockerExecutionPolicy` and `CodexSandboxExecutionPolicy` are the isolated choices. Section 7.3 covers the risk.
+With no `execution_policy`, the middleware uses `HostExecutionPolicy`, which runs commands on your machine with your rights {{code libs/langchain_v1/langchain/agents/middleware/shell_tool.py}}. `DockerExecutionPolicy` and `CodexSandboxExecutionPolicy` are the isolated choices. [Section 7.3](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) covers the risk.
 
 `FilesystemFileSearchMiddleware` adds `glob_search` and `grep_search` under `root_path`. The paths in the results start at that root, such as `/src/app.py`. With `use_ripgrep=False` it searches in Python.
 

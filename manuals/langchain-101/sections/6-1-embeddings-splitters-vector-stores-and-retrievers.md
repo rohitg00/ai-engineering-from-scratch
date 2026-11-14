@@ -30,7 +30,7 @@ The documentation has no retrieval page in the LangChain tab. The Retrieval entr
 
 ## The pipeline in the capture kit
 
-[Figure 6.1](#fig-6-1) shows the pipeline of the kit. It runs at index time once, and the agent uses it at query time on each tool call.
+[Figure](#fig-6-1) shows the pipeline of the kit. It runs at index time once, and the agent uses it at query time on each tool call.
 
 ```figure
 id: fig-6-1

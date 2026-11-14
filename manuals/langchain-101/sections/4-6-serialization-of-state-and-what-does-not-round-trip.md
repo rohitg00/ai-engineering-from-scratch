@@ -23,7 +23,7 @@ When you finish this section, you can predict which values survive a checkpoint,
 - `Decimal`, `UUID`, `Path`, `date`, `timedelta`, and a `datetime` in UTC
 - an `Enum`, a dataclass, a Pydantic model, and an `AIMessage`
 
-Nine came back changed or did not save. [Figure 4.6](#fig-4-6) sorts them.
+Nine came back changed or did not save. [Figure](#fig-4-6) sorts them.
 
 ```figure
 id: fig-4-6
@@ -73,9 +73,9 @@ The same rule protects you from a changed checkpoint row. A row names a module a
 
 **We measured** what the loaders accept on the Mac, one run per case. A lab class wrote a marker file when it was built. With the default settings, 5 of 26 cases built the class. Two were the opt-in options `allowed_json_modules=True` and `pickle_fallback=True`, and two were msgpack values that named the lab class. The fifth was a `SqliteSaver` checkpoint row that we edited to name the class, and `get_state` built it. With `LANGGRAPH_STRICT_MSGPACK=true`, only the two opt-in cases built the class, and the edited row came back as a plain dict.
 
-So at the pin, anyone who can write a checkpoint row can make your process import and build a class of their choice. The `JsonPlusSerializer` docstring warns of this {{code libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py}}. Set `LANGGRAPH_STRICT_MSGPACK=true`, register your modules, and give write access to the checkpoint database only to the service that runs the graph. Section 7.3 covers `load()` and the advisories behind these cases.
+So at the pin, anyone who can write a checkpoint row can make your process import and build a class of their choice. The `JsonPlusSerializer` docstring warns of this {{code libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py}}. Set `LANGGRAPH_STRICT_MSGPACK=true`, register your modules, and give write access to the checkpoint database only to the service that runs the graph. [Section 7.3](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) covers `load()` and the advisories behind these cases.
 
-`PostgresSaver` uses the same serializer, and we did not run it. `EncryptedSerializer` and issue #8938, on plaintext rows that it accepts, come in the next edition, as section 7.6 will say.
+`PostgresSaver` uses the same serializer, and we did not run it. `EncryptedSerializer` and issue #8938, on plaintext rows that it accepts, come in the next edition, as [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
 
 ```takeaways
 - Keep state in types that round-trip: dicts, lists, strings, numbers, models, and dataclasses.

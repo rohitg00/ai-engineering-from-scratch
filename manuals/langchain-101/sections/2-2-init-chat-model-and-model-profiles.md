@@ -38,7 +38,7 @@ init_chat_model('qwen3:4b'):
 raised builtins.ValueError: Unable to infer model provider for model='qwen3:4b'. Please specify 'model_provider' directly.
 ```
 
-So `ollama:qwen3:4b` works and `qwen3:4b` does not. The colon inside an Ollama tag is part of the model name, because only the first colon splits. [Figure 2.2](#fig-2-2) draws the three paths.
+So `ollama:qwen3:4b` works and `qwen3:4b` does not. The colon inside an Ollama tag is part of the model name, because only the first colon splits. [Figure](#fig-2-2) draws the three paths.
 
 ```figure
 id: fig-2-2
@@ -81,7 +81,7 @@ The profile of `ollama:qwen3:4b` is `null`, and so is the profile of the fake mo
 
 The models page says that a chat model retries up to 6 times by default for network errors, 429, and 5xx {{docs oss/python/langchain/models}}. The retry middleware page says that its defaults make 3 attempts in total {{docs oss/python/langchain/middleware/built-in}}. We counted both at the pin.
 
-**We measured** the attempts on the Mac, 3 runs for each cell. `ChatOpenAI` from `langchain-openai` 1.8.0 called a local stub that failed on a schedule. The counts were the same in all 3 runs. [Figure 2.2b](#fig-2-2b) shows each run.
+**We measured** the attempts on the Mac, 3 runs for each cell. `ChatOpenAI` from `langchain-openai` 1.8.0 called a local stub that failed on a schedule. The counts were the same in all 3 runs. [Figure](#fig-2-2b) shows each run.
 
 | Failure at the stub | Client default | Middleware only | Both layers |
 |---|---|---|---|

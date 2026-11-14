@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="fig-7-1-title fig-7-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-1-title">Runs per second under langgraph dev, by concurrent clients</title>
+  <desc id="fig-7-1-desc">A dot chart of runs per second against concurrent clients, 1 to 100, on a log scale, for langgraph dev on the x86 server guest, one load run per point. Default of one job per worker: 0.9, 7.1, 8, 7.7 runs per second. Ten jobs per worker: 1, 8.8, 50.6, 56.3. One hundred jobs per worker: 1, 9.8, 41.7, 52.8. No run failed.</desc>
+  <line x1="70" y1="280" x2="450" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="284" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="240" x2="450" y2="240" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="244" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="70" y1="200" x2="450" y2="200" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="204" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="70" y1="160" x2="450" y2="160" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="164" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="70" y1="120" x2="450" y2="120" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="124" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <line x1="70" y1="80" x2="450" y2="80" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="84" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="70" y1="40" x2="450" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">60</text>
+  <line x1="70" y1="280" x2="450" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="40" x2="70" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="86.79" y1="280" x2="86.79" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="86.79" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="260" y1="280" x2="260" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="260" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="381.07" y1="280" x2="381.07" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="381.07" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="433.21" y1="280" x2="433.21" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="433.21" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <text x="260" y="314" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">concurrent clients</text>
+  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">runs per second</text>
+  <path d="M86.8 276.4 L260.0 251.6 L381.1 248.0 L433.2 249.2" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="86.79" cy="276.4" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="260" cy="251.6" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="381.07" cy="248" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="433.21" cy="249.2" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <path d="M86.8 276.0 L260.0 244.8 L381.1 77.6 L433.2 54.8" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="86.79" cy="276" r="3.2" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="260" cy="244.8" r="3.2" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="381.07" cy="77.6" r="3.2" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="433.21" cy="54.8" r="3.2" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <path d="M86.8 276.0 L260.0 240.8 L381.1 113.2 L433.2 68.8" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="86.79" cy="276" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="260" cy="240.8" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="381.07" cy="113.2" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="433.21" cy="68.8" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="460" y="58.8" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">10 jobs per worker</text>
+  <text x="460" y="73.8" font-size="11" fill="var(--m-teal-ink, #18696a)">100 jobs per worker</text>
+  <text x="460" y="253.2" font-size="11" fill="var(--m-rose-ink, #b0344d)">default, 1 job</text>
+  <text x="70" y="334" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one load run of the agent graph, 50 runs or 5 per client.</text>
+  <text x="70" y="350" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Every one of the 2,550 runs answered, with no error.</text>
+</svg>

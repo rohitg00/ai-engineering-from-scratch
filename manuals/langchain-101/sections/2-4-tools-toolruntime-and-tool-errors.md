@@ -126,7 +126,7 @@ Test such a tool inside an agent with a fake model, as the kit does.
 
 **Tool error:** a failure while the agent runs a tool call. Its kind decides if the run raises or goes on.
 
-The agent runs tools with a `ToolNode`. `create_agent` uses the default error handler of `ToolNode`, which turns an invalid call into a message and raises every other exception {{code libs/prebuilt/langgraph/prebuilt/tool_node.py}}. [Figure 2.4](#fig-2-4) draws the four cases of the kit.
+The agent runs tools with a `ToolNode`. `create_agent` uses the default error handler of `ToolNode`, which turns an invalid call into a message and raises every other exception {{code libs/prebuilt/langgraph/prebuilt/tool_node.py}}. [Figure](#fig-2-4) draws the four cases of the kit.
 
 ```figure
 id: fig-2-4
@@ -175,6 +175,22 @@ note: The ToolMessage only.
 
 `ToolErrorMiddleware()` with no `on_error` raises `ValueError` when you build it. A retry is a different choice: `ToolRetryMiddleware` runs the tool again, and Part 3 counts its attempts.
 
+## Tool names and tool call ids
+
+**Tool call id:** the id that the model gives each tool call, which the `ToolMessage` of that call carries back.
+
+**We measured** three cases on the Mac, an Apple M1 Max with 10 cores and 64 GiB. Each case ran once for each call style, because nothing in it varies.
+
+Two tools with the same name raised no error in `create_agent`. We passed `safe_lookup` and `privileged_delete`, both named `account_action`. The later tool in the list won: the model got only its schema, and each call ran only that tool. With `privileged_delete` second, the call of `account_action` ran `privileged_delete`. Issue langgraph#7988 reports this {{issue langgraph#7988}}. Give every tool a unique name.
+
+A server that sends tool calls with no id breaks the run in two ways. We sent two parallel calls with no id from a stub to `ChatOpenAI` and `create_agent`. Under `invoke` and `stream_mode="messages"`, both tools ran, and then the run raised `TypeError: Tool lookup returned unexpected type: <class 'str'>`. So the side effects happened, and the run failed. Under `stream_events` v3, each id became `""`, both tools ran, and both `ToolMessage` objects had the id `""`. Issue langchain#40531 reports this coercion {{issue langchain#40531}}.
+
+Qwen3 4B on Ollama sent ids. Through `ChatOllama` and through `ChatOpenAI` on the `/v1` path, 18 of 18 runs made two calls with ids, and both tools ran. That was 3 runs for each of `invoke`, `messages` mode, and v3 on each path.
+
+Under v3, a tool call piece on the last chunk of a stream is lost. A chunk with `chunk_position="last"` reports parsed tool calls from `content_blocks`, and only the calls with an id, in place of chunk blocks {{code libs/core/langchain_core/messages/ai.py}}. A fragment of arguments does not parse alone, so `chunks_to_events` gets no delta for it {{code libs/core/langchain_core/language_models/_compat_bridge.py}}. In our fake, the second call became an invalid tool call and got an error `ToolMessage`. With no ids, one of the two calls never ran.
+
+`ChatOpenAI` ends its stream with an empty chunk, so it is safe. Make a custom model do the same.
+
 ## One ToolMessage for each tool call
 
 The tools page says that each tool call in the history needs a `ToolMessage` that answers it {{docs oss/python/langchain/tools}}. The agent keeps this rule for you in every case above, including the errors. Code that edits the messages, such as a trim or a summary, must keep it too.
@@ -185,6 +201,8 @@ The tools page says that each tool call in the history needs a `ToolMessage` tha
 - Call runtime.stream_writer(value) as a function.
 - Add ToolErrorMiddleware when an exception inside a tool must not end the run.
 - Keep one ToolMessage for each tool call when you edit messages.
+- Give every tool a unique name, because the last duplicate wins without an error.
+- End a custom model stream with an empty chunk marked last.
 ```
 
-Sources: capture/common.py, capture/out/03-tools.txt, capture/out/04-tool-errors.txt; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/tools); libs/prebuilt/langgraph/prebuilt/tool_node.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/core/langchain_core/tools at langchain==1.5.0.
+Sources: capture/common.py, capture/out/03-tools.txt, capture/out/04-tool-errors.txt; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/02-idless-and-dupnames.jsonl, capture/lab/T08-parallel-tools-mac/03-ollama-parallel.jsonl, capture/lab/T08-parallel-tools-mac/t08_ids.py, capture/lab/T08-parallel-tools-mac/t08_ollama.py; issue langgraph#7988, issue langchain#40531; libs/core/langchain_core/messages/ai.py and libs/core/langchain_core/language_models/_compat_bridge.py at langchain-core 1.8.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/tools); libs/prebuilt/langgraph/prebuilt/tool_node.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/core/langchain_core/tools at langchain==1.5.0.

@@ -18,7 +18,7 @@ A plain schema, such as a Pydantic class, becomes `AutoStrategy` {{code libs/lan
 
 ## How AutoStrategy chooses
 
-`AutoStrategy` picks `ProviderStrategy` when the model profile says `structured_output` is true. With no profile, it checks the model name against a fixed list of names, such as `gpt-4o`, `gpt-4.1`, and some Claude models. Otherwise it picks `ToolStrategy` {{code libs/langchain_v1/langchain/agents/factory.py}}. [Figure 3.2](#fig-3-2) draws the choice.
+`AutoStrategy` picks `ProviderStrategy` when the model profile says `structured_output` is true. With no profile, it checks the model name against a fixed list of names, such as `gpt-4o`, `gpt-4.1`, and some Claude models. Otherwise it picks `ToolStrategy` {{code libs/langchain_v1/langchain/agents/factory.py}}. [Figure](#fig-3-2) draws the choice.
 
 ```figure
 id: fig-3-2
@@ -167,7 +167,7 @@ With at least one tool of your own, the same plain text answer ends the run. The
 | `qwen3:4b-instruct` | 11 of 40, 28% | 13 of 40, 32% | 3 of 30 |
 | `qwen3:8b` | 10 of 40, 25% | 10 of 40, 25% | 0 of 30 |
 
-Every `ProviderStrategy` failure on the 0.6B, 1.7B, and 8B models was the union at build time. Without the union, `ToolStrategy` failed 36 of 60, 6 of 30, 11 of 30, and 10 of 30. [Figure 3.2b](#fig-3-2b) shows each run.
+Every `ProviderStrategy` failure on the 0.6B, 1.7B, and 8B models was the union at build time. Without the union, `ToolStrategy` failed 36 of 60, 6 of 30, 11 of 30, and 10 of 30. [Figure](#fig-3-2b) shows each run.
 
 ```figure
 id: fig-3-2b

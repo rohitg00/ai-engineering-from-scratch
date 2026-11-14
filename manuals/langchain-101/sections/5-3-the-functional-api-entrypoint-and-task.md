@@ -95,7 +95,7 @@ task runs:
 ]
 ```
 
-The list of task runs still has three entries. The docs say the same. A resume starts at the top of the entrypoint, and the checkpointer gives back the results of finished tasks {{docs oss/python/langgraph/functional-api}}. [Figure 5.3](#fig-5-3) draws both runs.
+The list of task runs still has three entries. The docs say the same. A resume starts at the top of the entrypoint, and the checkpointer gives back the results of finished tasks {{docs oss/python/langgraph/functional-api}}. [Figure](#fig-5-3) draws both runs.
 
 ```figure
 id: fig-5-3
@@ -147,7 +147,7 @@ The first call got `None` as `previous`. Each later call got the number that the
 
 The graph of the workflow has three nodes: `__start__`, `workflow`, and `__end__`. The tasks are not nodes, so a graph drawing shows none of them. The functional API page says to use the graph API for new agents and workflows. It suggests the functional API for an agent that already exists in other code and must run on Agent Server {{docs oss/python/langgraph/functional-api}}.
 
-A task can also take `retry_policy`, `cache_policy`, and `timeout` {{code libs/langgraph/langgraph/func/__init__.py}}. The kit does not run them on a task yet. Captures of them come in the next edition, with the other open items of section 7.6.
+A task can also take `retry_policy`, `cache_policy`, and `timeout` {{code libs/langgraph/langgraph/func/__init__.py}}. The kit does not run them on a task yet. Captures of them come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Put each side effect in a task, because entrypoint code runs again on every resume.

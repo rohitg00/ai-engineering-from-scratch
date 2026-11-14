@@ -87,7 +87,7 @@ So the agent sends the whole conversation on every call, and it adds the system 
 
 ## Step by step
 
-[Figure 1.2](#fig-1-2) draws the run. The numbers in this list match the rows of the figure.
+[Figure](#fig-1-2) draws the run. The numbers in this list match the rows of the figure.
 
 ```figure
 id: fig-1-2
@@ -232,7 +232,7 @@ chain agent_turn
       llm ScriptedChatModel
 ```
 
-The tree has eight runs. The outer `agent_turn` is the `traceable` function of the kit, and it stayed in memory. The seven LangChain runs below it each got one `POST` when it started and one `PATCH` when it ended. [Figure 1.2b](#fig-1-2b) draws the tree. Each node of the graph is a `chain` run, and the model calls and the tool call are leaves.
+The tree has eight runs. The outer `agent_turn` is the `traceable` function of the kit, and it stayed in memory. The seven LangChain runs below it each got one `POST` when it started and one `PATCH` when it ended. [Figure](#fig-1-2b) draws the tree. Each node of the graph is a `chain` run, and the model calls and the tool call are leaves.
 
 ```figure
 id: fig-1-2b

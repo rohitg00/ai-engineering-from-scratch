@@ -48,7 +48,7 @@ note: The edge lines of the Mermaid text. The node lines and the styles are cut.
 
 No `add_edge` call leaves `pick`, but the graph has two edges out of it. They come from the return type of `pick`, as the next part shows.
 
-[Figure 5.2](#fig-5-2) draws the graph and one run through it.
+[Figure](#fig-5-2) draws the graph and one run through it.
 
 ```figure
 id: fig-5-2
@@ -156,7 +156,7 @@ lang: json
 
 Use a conditional edge when the route depends only on the state. Use `Command` when the node that computes the update also knows the route, as `pick` does.
 
-`Command` has two more uses. With `resume`, it is the input that answers an interrupt, and [section 5.4](#s-interrupt-and-resume) shows it. With `graph=Command.PARENT`, a node inside a subgraph routes to a node of the parent graph {{docs oss/python/langgraph/graph-api-send-command}}. The kit does not run `Command.PARENT` yet. A capture of it comes in the next edition, with the other open items of section 7.6.
+`Command` has two more uses. With `resume`, it is the input that answers an interrupt, and [section 5.4](#s-interrupt-and-resume) shows it. With `graph=Command.PARENT`, a node inside a subgraph routes to a node of the parent graph {{docs oss/python/langgraph/graph-api-send-command}}. The kit does not run `Command.PARENT` yet. A capture of it comes in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - List the possible targets of a conditional edge in its third argument.

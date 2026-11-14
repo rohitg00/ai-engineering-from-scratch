@@ -73,7 +73,7 @@ node runs:
 ]
 ```
 
-`write` ran once, because it finished before the pause. `review` ran twice, and the line before `interrupt` ran on both runs. The interrupts page says the same: the runtime starts the node again from the beginning {{docs oss/python/langgraph/interrupts}}. [Figure 5.4](#fig-5-4) draws the two calls.
+`write` ran once, because it finished before the pause. `review` ran twice, and the line before `interrupt` ran on both runs. The interrupts page says the same: the runtime starts the node again from the beginning {{docs oss/python/langgraph/interrupts}}. [Figure](#fig-5-4) draws the two calls.
 
 ```figure
 id: fig-5-4
@@ -134,7 +134,7 @@ returned:
 }
 ```
 
-Nothing saved the pause, so it cannot resume. A `Command(resume=...)` with no checkpointer raises `RuntimeError` with the text `Cannot use Command(resume=...) without checkpointer` {{code libs/langgraph/langgraph/pregel/_loop.py}}. The kit does not record that error yet. A capture of it comes in the next edition, with the other open items of section 7.6.
+Nothing saved the pause, so it cannot resume. A `Command(resume=...)` with no checkpointer raises `RuntimeError` with the text `Cannot use Command(resume=...) without checkpointer` {{code libs/langgraph/langgraph/pregel/_loop.py}}. The kit does not record that error yet. A capture of it comes in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 **Resume of a thread that is not waiting.** The kit sent `Command(resume='x')` to the review thread after it had finished. The call did not raise. It returned the finished state with no interrupts, and no node ran:
 

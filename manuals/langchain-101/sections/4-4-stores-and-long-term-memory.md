@@ -77,7 +77,7 @@ search(('users', 'ada')):
     "theme",
 ```
 
-The stores page adds that the order of the results depends on the backend {{docs oss/python/langgraph/stores}}. A `filter` matches values inside the prefix, and `delete` removes one item, so `get` returns `null` after it. A store with an `index` adds semantic search over the fields that you name. With `DeterministicFakeEmbedding`, a query for `works in Pune` scored 1.0 on its own item and 0.048932 on the next one. [Figure 4.4](#fig-4-4) draws the tree that these calls walk.
+The stores page adds that the order of the results depends on the backend {{docs oss/python/langgraph/stores}}. A `filter` matches values inside the prefix, and `delete` removes one item, so `get` returns `null` after it. A store with an `index` adds semantic search over the fields that you name. With `DeterministicFakeEmbedding`, a query for `works in Pune` scored 1.0 on its own item and 0.048932 on the next one. [Figure](#fig-4-4) draws the tree that these calls walk.
 
 ```figure
 id: fig-4-4
@@ -144,7 +144,7 @@ users.alice.memories|k1|$|3072
 users.bob.memories|k1|$|3072
 ```
 
-`PostgresStore` with an index needs pgvector, which our Postgres did not have. That run, and the store permissions of Agent Server, come in the next edition, as section 7.6 will say.
+`PostgresStore` with an index needs pgvector, which our Postgres did not have. That run, and the store permissions of Agent Server, come in the next edition, as [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
 
 ```takeaways
 - Use a store for facts that outlive a thread, and a checkpointer for the thread itself.

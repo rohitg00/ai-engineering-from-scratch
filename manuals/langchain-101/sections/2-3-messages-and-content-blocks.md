@@ -57,7 +57,7 @@ note: The first section of the file. The SystemMessage is cut.
 
 **Tool call:** an entry in `AIMessage.tool_calls` with a `name`, parsed `args`, and an `id`. The `ToolMessage` that answers it carries the same id in `tool_call_id`.
 
-The `AIMessage` that asks for a tool has empty `content`. Its request is in `tool_calls`, already parsed from the JSON text of the provider. `usage_metadata` holds the token counts when the provider reports them. [Figure 2.3](#fig-2-3) shows where each field is.
+The `AIMessage` that asks for a tool has empty `content`. Its request is in `tool_calls`, already parsed from the JSON text of the provider. `usage_metadata` holds the token counts when the provider reports them. [Figure](#fig-2-3) shows where each field is.
 
 ```figure
 id: fig-2-3

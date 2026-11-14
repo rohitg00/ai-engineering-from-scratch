@@ -78,7 +78,7 @@ note: The B and C nodes are cut. They follow the same pattern.
 ]
 ```
 
-The `wrap_model_call` and `wrap_tool_call` hooks add no node. They run inside the `model` node and the `tools` node. [Section 3.3](#s-middleware-hooks-and-their-order) gives the order of all six hooks. [Figure 3.1](#fig-3-1) maps each argument to the part of the graph it builds.
+The `wrap_model_call` and `wrap_tool_call` hooks add no node. They run inside the `model` node and the `tools` node. [Section 3.3](#s-middleware-hooks-and-their-order) gives the order of all six hooks. [Figure](#fig-3-1) maps each argument to the part of the graph it builds.
 
 ```figure
 id: fig-3-1
@@ -120,6 +120,27 @@ The edge function reads the state after each model call, in this order {{code li
 
 A structured output tool call is not sent to `tools`. The `model` node handles it, as [section 3.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) shows. An agent with no tools and a structured output strategy has a `model` to `model` edge in place of the `tools` node.
 
+## Parallel tool calls and max_concurrency
+
+**max_concurrency:** the key of the run config that caps how many tasks of one step run at the same time.
+
+**We measured** parallel tool calls on the Mac, an Apple M1 Max with 10 cores and 64 GiB. A fake model asked for 1 to 16 calls of one tool that sleeps 200 ms, sync or async. We ran `create_agent`, and a plain `StateGraph` with one `ToolNode`, under `invoke` and `ainvoke`. `max_concurrency` was unset, 1, 2, 4, or 8. Each of the 200 cells ran 5 times, with a load average of 3.6 to 5.2.
+
+| Harness and call | 16 calls, cap 1 | 16 calls, cap 8 | 16 calls, no cap |
+|---|---|---|---|
+| `create_agent`, `invoke`, sync tool | 3,382.0 ms, 1 at a time | 432.9 ms, 8 at a time | 426.6 ms, 14 at a time |
+| `create_agent`, `ainvoke`, async tool | 3,277.5 ms, 1 at a time | 423.5 ms, 8 at a time | 214.9 ms, 16 at a time |
+| `create_agent`, `ainvoke`, sync tool | 3,393.0 ms, 1 at a time | 444.0 ms, 8 at a time | 431.5 ms, 14 at a time |
+| `ToolNode`, `invoke`, sync tool | 3,350.1 ms, 1 at a time | 422.3 ms, 8 at a time | 419.3 ms, 14 at a time |
+| `ToolNode`, `ainvoke`, async tool | 207.3 ms, 16 at a time | 208.1 ms, 16 at a time | 208.0 ms, 16 at a time |
+| `ToolNode`, `ainvoke`, sync tool | 421.2 ms, 14 at a time | 428.2 ms, 14 at a time | 420.2 ms, 14 at a time |
+
+Each cell gives the median wall time and the largest number of calls that ran at one time. Every successful run executed each call once and wrote one `ToolMessage` for it.
+
+`create_agent` applied the cap in every mode, because each call is its own `Send` task. With no cap, sync tools ran in a thread pool of 14 on this machine, so 16 calls took two waves. Async tools under `ainvoke` had no default cap. A tool with only an async body raised `NotImplementedError` under `invoke` in 125 of 125 runs for each harness.
+
+A plain `ToolNode` under `ainvoke` ignored the cap, for async tools and for sync tools. Issue langgraph#8517 reports the async case {{issue langgraph#8517}}. Our runs reproduce it and show that sync tools on the async path are affected too. Under `invoke`, `ToolNode` applied the cap. Set `max_concurrency` on the run when a tool calls a service with a rate limit, and use `create_agent` when you need the cap under `ainvoke`.
+
 ## The defaults on the compiled graph
 
 `create_agent` sets a config on the graph before it returns it:
@@ -156,7 +177,7 @@ The limit of 9999 steps applies to every run that does not pass its own `recursi
 | `create_agent` | 7.67 ms | 1550.32 ms |
 | `create_agent` with `InMemorySaver` | 8.94 ms | not run |
 
-Against the stub, the agent layer added about 1.2 ms for each model call. Against Ollama, the gap of about 99 ms between the medians was in the model time, on a shared machine, so read it as noise. Section 7.2 gives the full cost story, with tokens, request bytes, and import time.
+Against the stub, the agent layer added about 1.2 ms for each model call. Against Ollama, the gap of about 99 ms between the medians was in the model time, on a shared machine, so read it as noise. [Section 7.2](#s-cost-the-framework-against-a-plain-sdk-loop) gives the full cost story, with tokens, request bytes, and import time.
 
 ```takeaways
 - Expect a tools node only when the agent has a tool or a wrap_tool_call middleware.
@@ -164,6 +185,8 @@ Against the stub, the agent layer added about 1.2 ms for each model call. Agains
 - Pass recursion_limit on each run, because the agent default is 9999 steps.
 - Stream with no mode to get updates, the default of every agent.
 - Budget about 1 ms of agent overhead for each model call, far below model time.
+- Set max_concurrency on the run to cap parallel tool calls.
+- Give each tool a sync body when the agent runs under invoke.
 ```
 
-Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.
+Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/01-concurrency-runs.jsonl, capture/lab/T08-parallel-tools-mac/t08_run.py; issue langgraph#8517; capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.

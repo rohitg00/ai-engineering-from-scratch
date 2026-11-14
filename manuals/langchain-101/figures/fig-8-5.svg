@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-8-5-title fig-8-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-5-title">Seven failures of the drill, before and after each fix</title>
+  <desc id="fig-8-5-desc">A table of seven rows, one per case of the failure drill on the Mac, with the symptom on the left and the result after the fix on the right. Retry layers: 9 requests against 3. A crash after a charge: 2 charges against 1. A middleware that jumps past review: the tool ran before any decision, and per-call mode stopped it. No structured output: None with no exception, and a check that raises. A tracing endpoint that is down: exit 12 s after the run against 0.1 s. The same tool name twice: one tool bound with no error. Endless tool calls: GraphRecursionError at limit 10, and a model call limit that ends the run at limit 25.</desc>
+  <text x="176" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE SYMPTOM</text>
+  <text x="408" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AFTER THE FIX</text>
+  <text x="20" y="59" font-size="11.5" font-weight="700">retry layers</text>
+  <rect x="176" y="32" width="220" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="188" y="50.1" font-size="12" font-weight="700">9 requests, 6.45 s</text>
+  <text x="188" y="67.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one call to a 500 stub</text>
+  <rect x="408" y="32" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="420" y="50.1" font-size="12" font-weight="700">3 requests, 3.16 s</text>
+  <text x="420" y="67.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">max_retries=0 on the model</text>
+  <text x="20" y="117" font-size="11.5" font-weight="700">crash after a charge</text>
+  <rect x="176" y="90" width="220" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="188" y="108.1" font-size="12" font-weight="700">2 charges</text>
+  <text x="188" y="125.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SIGKILL, then a resume</text>
+  <rect x="408" y="90" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="420" y="108.1" font-size="12" font-weight="700">1 charge</text>
+  <text x="420" y="125.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">tool_call_id as the key</text>
+  <text x="20" y="175" font-size="11.5" font-weight="700">jump past review</text>
+  <rect x="176" y="148" width="220" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="188" y="166.1" font-size="12" font-weight="700">ran 1 time, no decision</text>
+  <text x="188" y="183.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">batched mode</text>
+  <rect x="408" y="148" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="420" y="166.1" font-size="12" font-weight="700">ran 0 times, 1 interrupt</text>
+  <text x="420" y="183.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">interrupt_mode per_call</text>
+  <text x="20" y="233" font-size="11.5" font-weight="700">no structured output</text>
+  <rect x="176" y="206" width="220" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="188" y="224.1" font-size="12" font-weight="700">None, no exception</text>
+  <text x="188" y="241.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ToolStrategy and a tool</text>
+  <rect x="408" y="206" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="420" y="224.1" font-size="12" font-weight="700">your check raises</text>
+  <text x="420" y="241.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test for None</text>
+  <text x="20" y="291" font-size="11.5" font-weight="700">tracing endpoint down</text>
+  <rect x="176" y="264" width="220" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="188" y="282.1" font-size="12" font-weight="700">exit 12 s after the run</text>
+  <text x="188" y="299.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one run, nothing listens</text>
+  <rect x="408" y="264" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="420" y="282.1" font-size="12" font-weight="700">exit 0.1 s after the run</text>
+  <text x="420" y="299.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">probe, then tracing off</text>
+  <text x="20" y="349" font-size="11.5" font-weight="700">same tool name twice</text>
+  <rect x="176" y="322" width="220" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="188" y="340.1" font-size="12" font-weight="700">1 tool bound, no error</text>
+  <text x="188" y="357.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the second function ran</text>
+  <rect x="408" y="322" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="420" y="340.1" font-size="12" font-weight="700">duplicate found</text>
+  <text x="420" y="357.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">check names first</text>
+  <text x="20" y="407" font-size="11.5" font-weight="700">endless tool calls</text>
+  <rect x="176" y="380" width="220" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="188" y="398.1" font-size="12" font-weight="700">raised at 5 model calls</text>
+  <text x="188" y="415.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">recursion_limit 10</text>
+  <rect x="408" y="380" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="420" y="398.1" font-size="12" font-weight="700">ended at 3 calls</text>
+  <text x="420" y="415.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">call limit, limit 25</text>
+  <text x="20" y="452" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One run of drill.py, offline, with a scripted fake model and a local stub.</text>
+</svg>

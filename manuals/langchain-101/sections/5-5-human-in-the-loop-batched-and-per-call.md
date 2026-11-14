@@ -182,7 +182,7 @@ type
   Input should be 'approve' [type=literal_error, input_value='reject', input_type=str]
 ```
 
-After the error, `next` was still `["tools"]`. Per-call mode needs `langchain` 1.4.6 or later. The docs suggest it for new agents and plan to make it the default in the next major release {{docs oss/python/langchain/human-in-the-loop}}. [Figure 5.5](#fig-5-5) sets the two modes side by side.
+After the error, `next` was still `["tools"]`. Per-call mode needs `langchain` 1.4.6 or later. The docs suggest it for new agents and plan to make it the default in the next major release {{docs oss/python/langchain/human-in-the-loop}}. [Figure](#fig-5-5) sets the two modes side by side.
 
 ```figure
 id: fig-5-5
@@ -194,7 +194,7 @@ caption: Read each row across the two columns. The rows are the pause, the resum
 
 ## What the lab found
 
-**We measured** the middleware on the Mac in 27 cases, 3 runs of each. The tools were `send_email` and `delete_file`, both under review, with a scripted fake model. Each start and each resume ran in a new process against `SqliteSaver`, so every resume was a restart. All 3 runs of each case gave the same tool runs, apart from the order of two calls in one step. [Figure 5.5b](#fig-5-5b) shows each run.
+**We measured** the middleware on the Mac in 27 cases, 3 runs of each. The tools were `send_email` and `delete_file`, both under review, with a scripted fake model. Each start and each resume ran in a new process against `SqliteSaver`, so every resume was a restart. All 3 runs of each case gave the same tool runs, apart from the order of two calls in one step. [Figure](#fig-5-5b) shows each run.
 
 ```figure
 id: fig-5-5b
@@ -239,7 +239,7 @@ These settings kept every review in force in the lab runs:
 5. Put no middleware that jumps to `tools` in an agent with review, unless you test it in your mode.
 6. List `HumanInTheLoopMiddleware` before tool retry and error middleware, as the docs say {{docs oss/python/langchain/human-in-the-loop}}.
 
-The docs also warn about one invalid answer among several sent together. The tools of the valid answers can run while their interrupts still look pending, and a second answer runs them twice {{docs oss/python/langchain/human-in-the-loop}}. The lab did not run that case, or any case with `PostgresSaver`. Both come in the next edition, with the other open items of section 7.6.
+The docs also warn about one invalid answer among several sent together. The tools of the valid answers can run while their interrupts still look pending, and a second answer runs them twice {{docs oss/python/langchain/human-in-the-loop}}. The lab did not run that case, or any case with `PostgresSaver`. Both come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Set interrupt_mode="per_call" on every new agent with review.

@@ -10,7 +10,7 @@ When you finish this section, you can count the attempts of each retry layer and
 
 **Retry layer:** one piece of code that calls the model or the tool again after a failure.
 
-A model call has two retry layers. The client inside the provider package retries first, and `ModelRetryMiddleware` retries around it. [Section 2.2](#s-init-chat-model-and-model-profiles) counted them with `ChatOpenAI`. The client made 3 attempts, the middleware made 3, and both together made 9. [Figure 2.2b](#fig-2-2b) shows each run. The 6 retries of the models page did not hold for `ChatOpenAI` at the pin.
+A model call has two retry layers. The client inside the provider package retries first, and `ModelRetryMiddleware` retries around it. [Section 2.2](#s-init-chat-model-and-model-profiles) counted them with `ChatOpenAI`. The client made 3 attempts, the middleware made 3, and both together made 9. [Figure](#fig-2-2b) shows each run. The 6 retries of the models page did not hold for `ChatOpenAI` at the pin.
 
 A tool call has one layer, `ToolRetryMiddleware`. A tool that raises with no middleware ends the run, as [section 2.4](#s-tools-toolruntime-and-tool-errors) shows. Both retry middlewares take the same options, with these defaults {{code libs/langchain_v1/langchain/agents/middleware/tool_retry.py}}:
 
@@ -68,7 +68,7 @@ A model 400 is a `ModelError` that is not retryable, so it got 1 attempt in ever
 | timeout once | raised, 1 request | 2 requests, then success |
 | timeout on every call | raised, 1 request | 3 requests, then an error `ToolMessage` |
 
-Every request after a timeout reached the service. So a tool whose reply was lost ran its action again, up to 3 times. Issue langchain#40688 reports this for tools that are not idempotent {{issue langchain#40688}}. It is open at the pin, and our runs reproduce it. The default also retried the 400, which no retry can fix. [Figure 3.5](#fig-3-5) draws the timeout case.
+Every request after a timeout reached the service. So a tool whose reply was lost ran its action again, up to 3 times. Issue langchain#40688 reports this for tools that are not idempotent {{issue langchain#40688}}. It is open at the pin, and our runs reproduce it. The default also retried the 400, which no retry can fix. [Figure](#fig-3-5) draws the timeout case.
 
 ```figure
 id: fig-3-5
@@ -132,7 +132,7 @@ note: The message of the run.
     "content": "The sum is 5, from the backup.",
 ```
 
-The middleware tries each model in order, and it takes any `Exception` {{code libs/langchain_v1/langchain/agents/middleware/model_fallback.py}}. When every model raises, the run raises the last error, here `ConnectionError: third is down`. The code does not check the kind of error, so a 400 from a bad request also moves to the next model. That run is coming in the next edition, and section 7.6 lists it.
+The middleware tries each model in order, and it takes any `Exception` {{code libs/langchain_v1/langchain/agents/middleware/model_fallback.py}}. When every model raises, the run raises the last error, here `ConnectionError: third is down`. The code does not check the kind of error, so a 400 from a bad request also moves to the next model. That run is coming in the next edition, and [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
 A refusal is not an exception. Without `ModelRefusalMiddleware`, a refusal block is a normal answer. With it, the run raises `ModelRefusalError: Model refused to produce the requested output: I can't help with that.`. List `ModelFallbackMiddleware` first and `ModelRefusalMiddleware` second, and the refusal goes to the backup. In the kit, the backup then answered `Here is a safe answer.`.
 
@@ -140,7 +140,7 @@ A refusal is not an exception. Without `ModelRefusalMiddleware`, a refusal block
 
 A chat model takes a `rate_limiter`. `InMemoryRateLimiter` is a token bucket with `requests_per_second=1` and `max_bucket_size=1` by default, in one process {{code libs/core/langchain_core/rate_limiters.py}}. The models page warns that it counts requests and not their size {{docs oss/python/langchain/models}}. Two processes each get their own bucket.
 
-There are two caches. `set_llm_cache` caches model replies in LangChain. The `cache` argument of `create_agent` is a LangGraph node cache. We did not run either one, or the rate limiter, against a model. Those runs come in the next edition, and section 7.6 lists them.
+There are two caches. `set_llm_cache` caches model replies in LangChain. The `cache` argument of `create_agent` is a LangGraph node cache. We did not run either one, or the rate limiter, against a model. Those runs come in the next edition, and [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them.
 
 ```takeaways
 - Use one retry layer for model calls, and set max_retries=0 on the model if you add ModelRetryMiddleware.

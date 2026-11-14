@@ -58,7 +58,7 @@ A LangChain run makes a deeper tree, with one chain run for each graph node and 
 
 `tracing_context` accepts `True`, `False`, `None`, and the string `"local"` for `enabled` {{code src/langsmith/run_helpers.py}}. The docstring of `langsmith.configure` describes the four values {{code src/langsmith/run_trees.py}}. `True` traces and sends, `False` turns tracing off, `None` reads the environment, and `"local"` traces and keeps the data local. The `traceable` code of `langsmith` keeps that promise. It sends a run only when the value is `True` {{code src/langsmith/run_helpers.py}}.
 
-LangChain code does not. The callback manager of `langchain-core` asks `tracing_is_enabled()` and treats any truthy answer as on {{code libs/core/langchain_core/callbacks/manager.py}}. The string `"local"` is truthy, so the manager adds a `LangChainTracer`, and that tracer sends each run {{code libs/core/langchain_core/tracers/context.py}}. [Figure 6.4c](#fig-6-4c) follows both paths.
+LangChain code does not. The callback manager of `langchain-core` asks `tracing_is_enabled()` and treats any truthy answer as on {{code libs/core/langchain_core/callbacks/manager.py}}. The string `"local"` is truthy, so the manager adds a `LangChainTracer`, and that tracer sends each run {{code libs/core/langchain_core/tracers/context.py}}. [Figure](#fig-6-4c) follows both paths.
 
 ```figure
 id: fig-6-4c
@@ -139,7 +139,7 @@ HTTP requests the client received:
 
 The LangSmith product page says that the SDK sends traces in the background and that application performance is never affected {{site langchain.com/langsmith/observability}}.
 
-**We measured** an agent with two model calls and one tool call, seven traced runs in all, on the Mac. The endpoint was a local recorder that answered at once. Each condition ran in three processes of 60 runs, interleaved, and we left out the first run of each process. That leaves 177 runs per condition. [Figure 6.4](#fig-6-4) shows each run with tracing off and on.
+**We measured** an agent with two model calls and one tool call, seven traced runs in all, on the Mac. The endpoint was a local recorder that answered at once. Each condition ran in three processes of 60 runs, interleaved, and we left out the first run of each process. That leaves 177 runs per condition. [Figure](#fig-6-4) shows each run with tracing off and on.
 
 ```figure
 id: fig-6-4
@@ -155,7 +155,7 @@ The median run took 2.59 ms with tracing off and 7.56 ms with tracing on. The fi
 
 The same product page says that your agent keeps running normally during a LangSmith incident {{site langchain.com/langsmith/observability}}. The tracing docs warn that the process can end before all traces are sent {{docs langsmith/trace-with-langchain}}.
 
-**We measured** one process of 50 agent runs, 350 traced runs, for each state of the endpoint, on the Mac. [Figure 6.4b](#fig-6-4b) shows the time from the last run to the exit of the process.
+**We measured** one process of 50 agent runs, 350 traced runs, for each state of the endpoint, on the Mac. [Figure](#fig-6-4b) shows the time from the last run to the exit of the process.
 
 ```figure
 id: fig-6-4b
@@ -177,7 +177,7 @@ At the pin, the exit waited for the traces, so the warning in the docs did not a
 
 The usage page of the docs says that the SDK batches up to 100 runs of one session into one API call {{docs langsmith/usage-and-billing}}. In our runs the client posted to `/runs/multipart`, and each full post held 49 to 51 runs. The first post of a process held one run, and the last held the rest. So a block of 60 agent runs averaged 42 to 47 runs per post. We never saw 100 runs in one post. The kit turns batching off with `auto_batch_tracing=False`, so it shows one `POST /runs` for each run.
 
-The claims that need a LangSmith account are coming in the next edition. They are retention, rate limits, the limit of runs per trace, and the speed of the hosted store. Section 7.6 lists them.
+The claims that need a LangSmith account are coming in the next edition. They are retention, rate limits, the limit of runs per trace, and the speed of the hosted store. [Section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them.
 
 ```takeaways
 - Wrap LangChain code in tracing_context(enabled=False) when its traces must stay on the machine.

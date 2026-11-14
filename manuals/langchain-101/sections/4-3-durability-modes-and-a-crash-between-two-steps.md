@@ -55,7 +55,7 @@ The loop waits on a checkpoint write that it never started {{code libs/langgraph
 
 **Side effect:** a change that a node or tool makes outside the graph state, such as a charge or an email. A checkpoint cannot undo it.
 
-The lab graph has three nodes, `prepare`, `effect`, and `finish`. The `effect` node appends one line to a file and calls `fsync`, so the line is on disk before the node returns. A test driver started the graph in a new process and killed it with SIGKILL at one of five points. It then resumed the thread in another new process with `invoke(None, config)`. [Figure 4.3b](#fig-4-3b) shows the five points in one step.
+The lab graph has three nodes, `prepare`, `effect`, and `finish`. The `effect` node appends one line to a file and calls `fsync`, so the line is on disk before the node returns. A test driver started the graph in a new process and killed it with SIGKILL at one of five points. It then resumed the thread in another new process with `invoke(None, config)`. [Figure](#fig-4-3b) shows the five points in one step.
 
 ```figure
 id: fig-4-3b
@@ -73,7 +73,7 @@ caption: Read the rows from top to bottom. Each rose line is one kill point of t
 
 An agent version used `create_agent` with a scripted fake model and one tool that appends the line. The kill points are the same, with the tool in place of the node.
 
-**We measured** this on the Mac, Apple M1 Max with 10 cores and 64 GiB. We ran three modes, two savers, and five kill points, five trials in each cell, with `SqliteSaver` and `PostgresSaver` on PostgreSQL 14. The line was written twice in 80 of 150 graph trials and in 82 of 150 agent trials. The final state was correct in all 300. [Figure 4.3](#fig-4-3) shows every trial.
+**We measured** this on the Mac, Apple M1 Max with 10 cores and 64 GiB. We ran three modes, two savers, and five kill points, five trials in each cell, with `SqliteSaver` and `PostgresSaver` on PostgreSQL 14. The line was written twice in 80 of 150 graph trials and in 82 of 150 agent trials. The final state was correct in all 300. [Figure](#fig-4-3) shows every trial.
 
 ```figure
 id: fig-4-3
@@ -129,7 +129,9 @@ lang: python
 
 **We measured** the same 150 graph trials on the Mac with the key on. The line was written twice in 0 of 150 trials, and the final state was correct in all of them. The check and the write are one line in one file here, so the key and the effect become durable together. With an outside service, send the key with the request, and let the service refuse a second request with the same key.
 
-In a tool, the `tool_call_id` from `ToolRuntime` works as a key once the AI message that holds it is in a durable checkpoint. A maintainer suggests this key on issue #9185 {{issue 9185}}. When the crash comes before that checkpoint, the model runs again, and a real model returns a new id. Our agent matrix ran without a key, so the agent with a key comes in the next edition, as section 7.6 will say. `AsyncSqliteSaver`, `AsyncPostgresSaver` under a crash, and Agent Server under a crash come in the next edition too.
+In a tool, the `tool_call_id` from `ToolRuntime` works as a key once the AI message that holds it is in a durable checkpoint. A maintainer suggests this key on issue #9185 {{issue 9185}}. When the crash comes before that checkpoint, the model runs again, and a real model returns a new id.
+
+Our agent matrix ran without a key. [Section 8.3](#s-an-assistant-with-memory-and-approvals-that-survives-a-restart) records one trial of an agent with this key in each of two durability modes, so n is 1 for each. The key kept the outbox at one email after a crash. The full crash matrix with a key comes in the next edition, as [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says. `AsyncSqliteSaver`, `AsyncPostgresSaver` under a crash, and Agent Server under a crash come in the next edition too.
 
 ```takeaways
 - Use durability="sync" when a crash must lose at most the running step, and only with a checkpointer.

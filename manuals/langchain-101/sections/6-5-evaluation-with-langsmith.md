@@ -94,7 +94,7 @@ HTTP requests the client received:
 }
 ```
 
-[Figure 6.5](#fig-6-5) sets the two targets side by side.
+[Figure](#fig-6-5) sets the two targets side by side.
 
 ```figure
 id: fig-6-5
@@ -124,7 +124,7 @@ The variable `LANGSMITH_TEST_TRACKING=false` turns the record off. The decorated
 
 ## Coming in the next edition
 
-The rest of LangSmith evaluation needs an account, which we did not use for this edition. These runs are coming in the next edition, and section 7.6 lists them with the other account runs:
+The rest of LangSmith evaluation needs an account, which we did not use for this edition. These runs are coming in the next edition, and [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them with the other account runs:
 
 - A dataset in LangSmith, given to `evaluate` by name, and its versions and splits.
 - An experiment with `upload_results=True`, and its retention, which the billing page says is extended by default {{docs langsmith/usage-and-billing}}.

@@ -92,7 +92,7 @@ With no `trigger`, the middleware never summarizes. The built-in middleware page
 | `("tokens", 6000)`, keep 1,500 tokens | 60 | 63.2 ms | 42.9 ms | 166 messages | 240.98 MB |
 | `("messages", 20)`, keep 1 | 399 | 32.1 ms | 32.3 ms | 19 messages | 43.83 MB |
 
-[Figure 4.5](#fig-4-5) shows the median of each block of 100 turns. Without summarization, the turn time grew in a straight line with the thread. The largest request had about 269,000 tokens by the count of the run. With any trigger, the turn time stayed flat. The tool messages stayed paired in every case: 0 of 13,336 model requests had a `ToolMessage` without its tool call. Issue #38352 reports such orphans after a summary, and they did not happen in our runs.
+[Figure](#fig-4-5) shows the median of each block of 100 turns. Without summarization, the turn time grew in a straight line with the thread. The largest request had about 269,000 tokens by the count of the run. With any trigger, the turn time stayed flat. The tool messages stayed paired in every case: 0 of 13,336 model requests had a `ToolMessage` without its tool call. Issue #38352 reports such orphans after a summary, and they did not happen in our runs.
 
 ```figure
 id: fig-4-5
@@ -133,7 +133,7 @@ lang: python
 
 **We measured** checkpoint cost on the x86 server guest with `durability="sync"`, one 400-character message per step, and one thread per run. We ran 3 runs at 10, 100, and 1,000 steps and 1 run at 5,000, for `InMemorySaver`, `SqliteSaver`, and `PostgresSaver`. On Postgres, a plain thread held 0.05 MB at 10 steps and 3.08 MB at 100. It held 292.58 MB at 1,000 steps and 7,289.37 MB at 5,000.
 
-With `DeltaChannel` and a snapshot every 100 steps, the 5,000-step thread held 81.2 MB. With a snapshot every 1,000, it held 15.7 MB. The plain thread had the same size on the three savers, within 0.1 percent. [Figure 4.5b](#fig-4-5b) plots every run.
+With `DeltaChannel` and a snapshot every 100 steps, the 5,000-step thread held 81.2 MB. With a snapshot every 1,000, it held 15.7 MB. The plain thread had the same size on the three savers, within 0.1 percent. [Figure](#fig-4-5b) plots every run.
 
 ```figure
 id: fig-4-5b

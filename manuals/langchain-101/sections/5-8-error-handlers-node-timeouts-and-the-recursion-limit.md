@@ -85,7 +85,7 @@ lang: text
 raised langgraph.errors.NodeTimeoutError: Node 'slow' exceeded its run timeout of 0.050s (elapsed: <seconds>).
 ```
 
-A timeout is one failed attempt, so the retry policy and then the error handler see it. With a handler, the same node gave the state `NodeTimeoutError: Node 'slow' exceeded its run timeout of 0.050s (elapsed: <seconds>).` in `status`, and the run went on. [Figure 5.8](#fig-5-8) draws the path of a failure.
+A timeout is one failed attempt, so the retry policy and then the error handler see it. With a handler, the same node gave the state `NodeTimeoutError: Node 'slow' exceeded its run timeout of 0.050s (elapsed: <seconds>).` in `status`, and the run went on. [Figure](#fig-5-8) draws the path of a failure.
 
 ```figure
 id: fig-5-8
@@ -95,7 +95,7 @@ claim: Every failed attempt, a timeout too, goes to retry_on first, and the erro
 caption: Read from the failed attempt at the top. Each grey box is one check, with the outcome of the kit beside its arrow. The rose box is the error that leaves invoke. From capture/out/37-error-handler-timeout.txt.
 ```
 
-A timeout applies only to async nodes. The code refuses a timeout on a sync node, because a sync Python function cannot be stopped from outside {{code libs/langgraph/langgraph/_internal/_timeout.py}}. The kit does not record that refusal yet. A capture of it comes in the next edition, with the other open items of section 7.6.
+A timeout applies only to async nodes. The code refuses a timeout on a sync node, because a sync Python function cannot be stopped from outside {{code libs/langgraph/langgraph/_internal/_timeout.py}}. The kit does not record that refusal yet. A capture of it comes in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ## The recursion limit
 
@@ -120,9 +120,9 @@ Three numbers are the default limit in different places, and they are easy to mi
 | a `create_agent` graph | 9999 | the config that `create_agent` binds to its graph |
 | a `langchain-core` runnable config | 25 | `DEFAULT_RECURSION_LIMIT` in `langchain_core` |
 
-The graph API page gives 10,007 since `langgraph` 1.1.4, and 10,000 between 1.0.6 and 1.1.3 {{docs oss/python/langgraph/graph-api}}. Older advice names 25 as the graph default. At the pin, 25 is the default of a `langchain_core` runnable config, and a graph does not use it {{code libs/core/langchain_core/runnables/config.py}}. Pass `recursion_limit` at the top level of the config, not under `configurable` {{docs oss/python/langgraph/graph-api}}. This manual records the different numbers as conflict D105, and section 7.1 shows the limit of Agent Server.
+The graph API page gives 10,007 since `langgraph` 1.1.4, and 10,000 between 1.0.6 and 1.1.3 {{docs oss/python/langgraph/graph-api}}. Older advice names 25 as the graph default. At the pin, 25 is the default of a `langchain_core` runnable config, and a graph does not use it {{code libs/core/langchain_core/runnables/config.py}}. Pass `recursion_limit` at the top level of the config, not under `configurable` {{docs oss/python/langgraph/graph-api}}. This manual records the different numbers as conflict D105, and [section 7.1](#s-agent-server-langgraph-dev-up-and-deploy) shows the limit of Agent Server.
 
-**We measured** each default on the Mac, one run of each case, from the summary that [section 1.2](#s-one-create-agent-run) also uses. A plain loop stopped at 10007 steps. With the variable set to 25, or with `recursion_limit=25`, it stopped at 25. The agent with a model that always calls a tool stopped at 9999 steps, after 5000 model calls and 4999 tool calls. With `recursion_limit=25`, the agent made 13 model calls. [Figure 5.8b](#fig-5-8b) shows each run.
+**We measured** each default on the Mac, one run of each case, from the summary that [section 1.2](#s-one-create-agent-run) also uses. A plain loop stopped at 10007 steps. With the variable set to 25, or with `recursion_limit=25`, it stopped at 25. The agent with a model that always calls a tool stopped at 9999 steps, after 5000 model calls and 4999 tool calls. With `recursion_limit=25`, the agent made 13 model calls. [Figure](#fig-5-8b) shows each run.
 
 ```figure
 id: fig-5-8b

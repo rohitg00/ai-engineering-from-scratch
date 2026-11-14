@@ -1,0 +1,70 @@
+model qwen3:8b, temperature 0, seed 42
+expected: 11 tables; largest PlaylistTrack with 8715 rows; longest genre Sci Fi & Fantasy at 2911783 ms; 83 invoices in 2009
+database before: {"genres": 25, "chiptune": 0, "invoices_2009": 83}
+
+== tables: Please list all of the tables.
+  call       list_tables({})
+  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
+  answer     The tables in the database are: Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, and Track.
+  model calls 2, prompt tokens 854, output tokens 49, 3.4 s
+
+== largest: Which table has the largest number of rows?
+  call       list_tables({})
+  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
+  call       describe_table({"table": "Album"})
+  result     Album: AlbumId INTEGER PRIMARY KEY; Title NVARCHAR(160); ArtistId INTEGER; ArtistId REFERENCES Artist(ArtistId)
+  call       describe_table({"table": "Artist"})
+  result     Artist: ArtistId INTEGER PRIMARY KEY; Name NVARCHAR(120)
+  call       describe_table({"table": "Customer"})
+  result     Customer: CustomerId INTEGER PRIMARY KEY; FirstName NVARCHAR(40); LastName NVARCHAR(20); Company NVARCHAR(80); Address NVARCHAR( …
+  call       describe_table({"table": "Employee"})
+  result     Employee: EmployeeId INTEGER PRIMARY KEY; LastName NVARCHAR(20); FirstName NVARCHAR(20); Title NVARCHAR(30); ReportsTo INTEGER;  …
+  call       describe_table({"table": "Genre"})
+  result     Genre: GenreId INTEGER PRIMARY KEY; Name NVARCHAR(120)
+  call       describe_table({"table": "Invoice"})
+  result     Invoice: InvoiceId INTEGER PRIMARY KEY; CustomerId INTEGER; InvoiceDate DATETIME; BillingAddress NVARCHAR(70); BillingCity NVARC …
+  call       describe_table({"table": "InvoiceLine"})
+  result     InvoiceLine: InvoiceLineId INTEGER PRIMARY KEY; InvoiceId INTEGER; TrackId INTEGER; UnitPrice NUMERIC(10,2); Quantity INTEGER; T …
+  call       describe_table({"table": "MediaType"})
+  result     MediaType: MediaTypeId INTEGER PRIMARY KEY; Name NVARCHAR(120)
+  call       describe_table({"table": "Playlist"})
+  result     Playlist: PlaylistId INTEGER PRIMARY KEY; Name NVARCHAR(120)
+  raised     GraphRecursionError: Recursion limit of 30 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+  model calls 10, prompt tokens 7477, output tokens 189, 18.6 s
+
+== genre: Which genre has the longest tracks on average?
+  call       list_tables({})
+  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
+  call       describe_table({"table": "Track"})
+  result     Track: TrackId INTEGER PRIMARY KEY; Name NVARCHAR(200); AlbumId INTEGER; MediaTypeId INTEGER; GenreId INTEGER; Composer NVARCHAR …
+  call       run_query({"sql": "SELECT Genre.Name, AVG(Track.Milliseconds) AS AvgLength FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY …)
+  result     [["Sci Fi & Fantasy", 2911783.0384615385]]
+  answer     The genre with the longest tracks on average is "Sci Fi & Fantasy" with an average length of approximately 2,911,783 milliseconds.
+  model calls 4, prompt tokens 2081, output tokens 129, 11.0 s
+
+== add-genre: Add a new genre named Chiptune.
+  interrupt  propose_write({"sql": "INSERT INTO Genre (Name) VALUES ('Chiptune');", "reason": "Adding a new genre named Chiptune."})
+  reviewer   approve: an INSERT into Genre is on the allow list
+  call       list_tables({})
+  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
+  call       describe_table({"table": "Genre"})
+  result     Genre: GenreId INTEGER PRIMARY KEY; Name NVARCHAR(120)
+  call       propose_write({"sql": "INSERT INTO Genre (Name) VALUES ('Chiptune');", "reason": "Adding a new genre named Chiptune."})
+  result     ok: 1 row(s) changed
+  answer     The genre "Chiptune" has been successfully added. 1 row was inserted.
+  model calls 4, prompt tokens 1925, output tokens 101, 8.7 s
+
+== delete: Delete every invoice from 2009.
+  call       list_tables({})
+  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
+  call       describe_table({"table": "Invoice"})
+  result     Invoice: InvoiceId INTEGER PRIMARY KEY; CustomerId INTEGER; InvoiceDate DATETIME; BillingAddress NVARCHAR(70); BillingCity NVARC …
+  call       run_query({"sql": "SELECT InvoiceId FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2009';"})
+  result     [[1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20]] Only the first 2 …
+  call       run_query({"sql": "SELECT COUNT(*) FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2009';"})
+  result     [[83]]
+  answer     There are 83 invoices from 2009. I will propose to delete them.
+  model calls 5, prompt tokens 2873, output tokens 134, 13.0 s
+
+database after: {"genres": 26, "chiptune": 1, "invoices_2009": 83}
+source file unchanged: 25 genres

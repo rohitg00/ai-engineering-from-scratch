@@ -170,3 +170,4 @@ The kit binds no ports.
 - `bind_tools` returns the model itself, so a `RunnableBinding` with bound keyword arguments never appears.
 - The LangSmith client in `42` uses a recording HTTP session. A real client sends the same requests to `api.smith.langchain.com`.
 - The shell tool runs with `PATH=/usr/bin:/bin` and `LC_ALL=C`.
+- `_stream` puts each tool call whole, with its id, on the last chunk, which has `chunk_position="last"`. On that chunk, `AIMessageChunk.content_blocks` returns the parsed call, so the v3 run in `25` has a `content-block-start` with empty `args`, no `content-block-delta`, and a `content-block-finish` with the full call. `ChatOpenAI` ends with a separate empty chunk and sends `tool-call-delta` events. The v3 bridge drops a piece of a tool call that rides on a chunk marked last (lab T08, section 2.4). No kit script splits a call, so no recorded run lost one: the tool of `25` ran with `{"a": 2, "b": 3}`.

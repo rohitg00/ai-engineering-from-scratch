@@ -132,7 +132,7 @@ The tool did not run. Use this when a person did the work of a tool outside the 
 
 **We measured** replays and forks on the Mac, one run of each case, with `InMemorySaver`. A graph ran three nodes `a`, `b`, and `c` in a row, and each added one to `x`. The first run saved 5 checkpoints. A replay from the checkpoint before `b` ran `b` once and `c` once, ran `a` zero times, and added 3 checkpoints. One of the three had the source `fork`.
 
-`update_state` on the same checkpoint set `x` to 100. It ran no node, added one checkpoint with the source `update`, and kept every old checkpoint. The run from it ran `b` and `c` once each and ended with `x` at 102. The thread then held 11 checkpoints in three branches. [Figure 5.6](#fig-5-6) draws them.
+`update_state` on the same checkpoint set `x` to 100. It ran no node, added one checkpoint with the source `update`, and kept every old checkpoint. The run from it ran `b` and `c` once each and ended with `x` at 102. The thread then held 11 checkpoints in three branches. [Figure](#fig-5-6) draws them.
 
 ```figure
 id: fig-5-6
@@ -144,7 +144,7 @@ caption: Read from the input checkpoint at the top. Each box is one checkpoint w
 
 The same lab ran an agent with one tool. A replay from step 0, whose `next` is `model`, made 2 model calls and 1 tool call. A replay from step 1, whose `next` is `tools`, made 1 model call and 1 tool call. So a replay costs what the original run cost from that point on. Make every node after the checkpoint safe to run twice before you replay.
 
-The docs say that you cannot time travel to a point between the nodes of a default subgraph {{docs oss/python/langgraph/use-time-travel}}. The lab did not run time travel inside a subgraph. It comes in the next edition, with the other open items of section 7.6.
+The docs say that you cannot time travel to a point between the nodes of a default subgraph {{docs oss/python/langgraph/use-time-travel}}. The lab did not run time travel inside a subgraph. It comes in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Read get_state_history newest first, and use the config of an entry as its address.

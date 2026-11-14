@@ -143,7 +143,7 @@ Each hue keeps one meaning in every figure:
 ```palette
 ```
 
-[Figure 0.1](#fig-0-1) teaches the arrow styles with exchanges from our captures. A solid arrow is a call, and a dashed arrow in the same ink is its reply. The other six styles each mark one kind of event, and the colour of the arrow matches the table above.
+[Figure](#fig-0-1) teaches the arrow styles with exchanges from our captures. A solid arrow is a call, and a dashed arrow in the same ink is its reply. The other six styles each mark one kind of event, and the colour of the arrow matches the table above.
 
 ```figure
 id: fig-0-1

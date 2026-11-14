@@ -1,0 +1,52 @@
+
+== 1 retry layers stack on one model call (section 3.5)
+  symptom   one model call sent 9 requests to a stub that always returns 500, in 6.4 s
+  state     the run ended without an exception, last AIMessage: Model call failed after 3 attempts with OpenAIAPIError: Error code: 500 - stub is failing
+  fix       ChatOpenAI(max_retries=0), so ModelRetryMiddleware is the only retry layer
+  after     3 requests in 3.2 s
+  time      10.39 s
+
+== 2 a crash between a side effect and its checkpoint (section 4.3)
+  symptom   the first process exited with -9 inside charge_card, the resume ran charge_card again: 2 charges
+  state     after the resume: next [], 4 messages, charges ['start', 'resume']
+  fix       check runtime.tool_call_id against the charges before the charge, with durability sync
+  after     exit -9, then the resume: 1 charge, next []
+  time      2.29 s
+
+== 3 an approval skipped by a middleware that jumps to tools (section 5.5)
+  symptom   send_email ran 1 time before any decision, with 0 interrupts
+  state     batched mode, middleware=[HumanInTheLoopMiddleware, JumpToTools], next []
+  fix       interrupt_mode="per_call", which pauses inside the tool call
+  after     send_email ran 0 times, 1 interrupt waits, next ['tools']
+  time      0.02 s
+
+== 4 a run that ends with no structured response (section 3.2)
+  symptom   no exception, structured_response is None
+  state     2 messages, the last is plain text: 'The total is 5.'
+  fix       check structured_response for None after each run, and treat None as a failure
+  after     the check raised RuntimeError: the agent returned no structured response
+  time      0.00 s
+
+== 5 a tracing endpoint that is down (section 6.4)
+  symptom   the agent run took 121.7 ms, and the process exited 12.0 s after it (12.6 s in all)
+  state     LANGSMITH_TRACING=true, nothing listens on the endpoint, 2 lines of upload errors on stderr
+  fix       probe GET /info with a 1 s timeout at start, and run inside tracing_context(enabled=False) when it fails
+  after     tracing False, exit 0.1 s after the run (0.6 s in all), 0 lines of upload errors
+  time      13.22 s
+
+== 6 two tools with the same name (section 2.4)
+  symptom   create_agent raised nothing, the model saw 1 tool named ['lookup']
+  state     the call to lookup ran the second function: 'from the refunds table'
+  fix       check that tool names are unique before create_agent
+  after     the check found duplicate names ['lookup']
+  time      0.01 s
+
+== 7 a model that calls a tool forever (section 5.8)
+  symptom   GraphRecursionError: Recursion limit of 10 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+  state     the model was called 5 times before the limit
+  fix       ModelCallLimitMiddleware(run_limit=3, exit_behavior="end"), first with the same recursion_limit of 10
+  after     recursion_limit 10: 3 model calls, GraphRecursionError: Recursion limit of 10 reached without hi …
+  after     recursion_limit 25: 3 model calls, no exception, last message 'Model call limits exceeded: run limit (3/3)'
+  time      0.04 s
+
+total 26.0 s

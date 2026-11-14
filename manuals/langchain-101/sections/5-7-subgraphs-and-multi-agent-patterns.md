@@ -93,7 +93,7 @@ lang: json
 }
 ```
 
-`outer.prepare` appears twice, and no node wrote it twice. The subgraph started with `steps` set to `["outer.prepare"]` and added its two entries. It returned all three as its output. The parent applied that output as one update, and `operator.add` joined it to the list that already held `outer.prepare`. [Figure 5.7](#fig-5-7) follows the list through the run.
+`outer.prepare` appears twice, and no node wrote it twice. The subgraph started with `steps` set to `["outer.prepare"]` and added its two entries. It returned all three as its output. The parent applied that output as one update, and `operator.add` joined it to the list that already held `outer.prepare`. [Figure](#fig-5-7) follows the list through the run.
 
 ```figure
 id: fig-5-7
@@ -105,11 +105,11 @@ caption: Read from left to right. Each box shows steps after one node, and the d
 
 Any reducer that only appends adds the copy. `add_messages` replaces a message that has the same id, as [section 5.1](#s-stategraph-state-and-reducers) showed, so its copies replace the originals.
 
-Two changes avoid the copy. Call the subgraph inside a node and return only its new entries, or give the subgraph a schema without the shared key. The subgraphs page describes the first as the way for schemas that share no keys {{docs oss/python/langgraph/use-subgraphs}}. The kit does not run either change, or a subgraph with `add_messages`, yet. Captures of them come in the next edition, with the other open items of section 7.6.
+Two changes avoid the copy. Call the subgraph inside a node and return only its new entries, or give the subgraph a schema without the shared key. The subgraphs page describes the first as the way for schemas that share no keys {{docs oss/python/langgraph/use-subgraphs}}. The kit does not run either change, or a subgraph with `add_messages`, yet. Captures of them come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ## Persistence of a subgraph
 
-`compile` of a subgraph takes `checkpointer=None`, `True`, or `False`. `None`, the default, gives each call of the subgraph its own fresh state, and it uses the checkpointer of the parent for interrupts. `True` keeps the state of the subgraph across calls on the thread, and `False` turns checkpoints off {{docs oss/python/langgraph/use-subgraphs}}. The kit used `None`, and the interrupt inside the subgraph paused and resumed through the parent. The kit does not run `True` or `False` yet. They come in the next edition, with the other open items of section 7.6.
+`compile` of a subgraph takes `checkpointer=None`, `True`, or `False`. `None`, the default, gives each call of the subgraph its own fresh state, and it uses the checkpointer of the parent for interrupts. `True` keeps the state of the subgraph across calls on the thread, and `False` turns checkpoints off {{docs oss/python/langgraph/use-subgraphs}}. The kit used `None`, and the interrupt inside the subgraph paused and resumed through the parent. The kit does not run `True` or `False` yet. They come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ## An agent as a node
 
@@ -169,7 +169,7 @@ note: The third model call of the main agent and the ToolMessage that answered i
 
 The model call of the subagent was the fourth call of the fake. It got its own system prompt and two messages, and its tools had no `task`. The main agent saw one `ToolMessage` with the text `yes`. So a subagent keeps its work out of the context of its caller. Part 6 covers Deep Agents.
 
-The kit runs only the subagent pattern. Captures of the other four patterns come in the next edition, with the other open items of section 7.6.
+The kit runs only the subagent pattern. Captures of the other four patterns come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Expect a subgraph with a shared appending key to add its input entries twice.
