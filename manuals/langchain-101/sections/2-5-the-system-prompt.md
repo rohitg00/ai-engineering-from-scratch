@@ -38,7 +38,7 @@ id: fig-2-5
 kind: flow
 title: how the model node builds each request
 claim: Each model request is the system prompt from the agent plus the messages from the state, and only the model reply goes back into the state.
-caption: Read from left to right. The violet box is set when you build the agent, and the teal box is the saved state. The plum arrow is the model call, and only its reply returns to the state. From capture/out/06-agent-run.txt and capture/out/18-mw-selection-emulation.txt.
+caption: Read each row from left to right, one row for each model call. The dashed violet line is the system prompt, sent first and never saved. The teal lines are the saved state. The plum arrow is the model call, and the teal arrow appends only its reply. From capture/out/06-agent-run.txt and capture/out/18-mw-selection-emulation.txt.
 ```
 
 - A checkpoint holds no prompt. A thread resumed by new code uses the new prompt from its next model call.

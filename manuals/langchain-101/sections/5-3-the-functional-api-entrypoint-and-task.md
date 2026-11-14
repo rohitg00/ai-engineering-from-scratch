@@ -102,7 +102,7 @@ id: fig-5-3
 kind: sequence
 title: two runs of one entrypoint
 claim: The resume runs workflow from its top, the three double tasks return saved results without running, and only ask_human runs again.
-caption: Read run 1 at the top and run 2 under it. Plum arrows are task bodies that ran, teal arrows are saved results, and the amber row is the interrupt. From capture/out/35-functional-api.txt.
+caption: Read run 1 at the top and run 2 under it. Teal arrows are saved results, and the amber row is the interrupt. The right column is the log of task bodies that ran. From capture/out/35-functional-api.txt.
 ```
 
 Code in the entrypoint itself is not a task, so it runs again on every resume, as the docs say. The sum in the kit is such code, and the kit records only the task runs. Put each side effect inside a task, so that a resume does not repeat it.

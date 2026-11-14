@@ -134,7 +134,7 @@ id: fig-3-3
 kind: flow
 title: the order of hooks from three middlewares
 claim: Node hooks run A, B, C before the model and C, B, A after it, and wrap hooks nest with A as the outer layer.
-caption: Read the left panel from top to bottom as the graph nodes of one model call. The right panel is the model node, with each wrap hook as a layer around the call. From capture/out/09-middleware-order.txt.
+caption: Read the trace from left to right. Each dot is one node hook in lane A, B, or C, and each bar is one wrap hook from enter to exit. The numbered phases are keyed under the trace, and the bottom row is the edges around the model node. From capture/out/09-middleware-order.txt.
 ```
 
 The custom middleware page states the same three rules {{docs oss/python/langchain/middleware/custom}}. Our capture agrees with it at the pin.

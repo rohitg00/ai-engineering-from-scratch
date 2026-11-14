@@ -101,7 +101,7 @@ id: fig-4-5
 kind: chart
 title: turn time over 2,000 turns, with and without summarization
 claim: Without summarization the median turn grows from 37 ms to 663 ms, and with a trigger it stays between 32 and 47 ms after turn 100.
-caption: Each dot is the median turn time of 100 turns in one run, one run per variant. The x axis is the turn number. From capture/lab/summary/long-threads-x86.json.
+caption: Each dot is the median turn time of 100 turns in one run, one run per variant. The shaded band spans the 10th to the 90th percentile of the same 100 turns, from the per-turn logs. The x axis is the turn number. From capture/lab/summary/long-threads-x86.json.
 ```
 
 The thread still grew with a summary. Every old checkpoint stays in Postgres, so storage grew in a straight line. With the 60-message trigger, it grew from 4.49 MB at turn 100 to 92.55 MB at turn 2,000. A summary limits what the model gets. It does not limit what the checkpointer keeps.

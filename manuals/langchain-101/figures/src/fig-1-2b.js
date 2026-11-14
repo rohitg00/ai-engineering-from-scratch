@@ -1,23 +1,72 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const { figure } = require('../../../_shared/figkit.js');
+const { flat } = require('../../../_shared/forms.js');
+
+const text = fs.readFileSync(path.join(__dirname, '../../capture/out/42-langsmith.txt'), 'utf8');
+const section = text.slice(text.indexOf('## a create_agent run inside a local trace'));
+const requests = JSON.parse(/by method and path:\n(\{[\s\S]*?\})/.exec(section)[1]);
+const posts = requests['POST /runs'];
+const patches = requests['PATCH /runs/<run-id>'];
+const runs = /\n\n((?:chain|llm|tool) [\s\S]*?)\n\n/.exec(section)[1].split('\n').map(line => {
+  const [, indent, type, name] = /^( *)(\w+) (.+)$/.exec(line);
+  return { depth: indent.length / 2, type, name };
+});
+if (runs.length - 1 !== posts || posts !== patches) throw new Error('fig-1-2b: the tree and the request counts disagree');
+
+const hueOf = run => {
+  if (run.depth === 0) return 'violet';
+  if (run.type === 'llm') return 'plum';
+  if (run.type === 'tool') return 'green';
+  return 'indigo';
+};
+const CLIENT = 566;
+const TOP = 92;
+const PITCH = 40;
 
 module.exports = figure('fig-1-2b', {
-  height: 330,
+  height: 480,
   title: 'The runs of one traced agent turn',
-  desc: 'A tree of eight runs. The root is the chain run agent_turn, the traceable function of the kit. Under it is the chain run LangGraph. Under that are three chain runs in order: model, tools, and model. The first model run has one llm leaf ScriptedChatModel, the tools run has one tool leaf add, and the second model run has one llm leaf ScriptedChatModel. The client got one POST /runs and one PATCH for each of the seven runs below agent_turn, which stayed in memory.',
+  desc: `An indented tree of ${runs.length} runs in the order they started, one row each: ${runs.map(run => `${run.type} ${run.name}`).join(', ')}. The root agent_turn is the traceable function of the kit, inside tracing_context with enabled local, and it stayed in memory. Each of the ${posts} runs below it has a dashed olive arrow to a client lane on the right, because the client got one POST /runs when the run started and one PATCH when it ended: ${posts} POST and ${patches} PATCH in all. Each graph node is a chain run, the two model calls are llm leaves, and the tool call is a tool leaf.`,
 }, f => {
-  const node = (cx, y, type, name, hue) => f.box({ x: cx, y, w: 168, h: 44, hue, title: name, sub: type, anchor: 'middle', titleSize: 12 });
-  const root = node(320, 14, 'chain run', 'agent_turn', 'violet');
-  const graph = node(320, 92, 'chain run', 'LangGraph', 'indigo');
-  f.line(320, root.y + root.h, 320, graph.y - 1, { style: 'call', head: false });
-  const xs = [118, 320, 522];
-  const names = ['model', 'tools', 'model'];
-  xs.forEach((x, i) => {
-    const chain = node(x, 172, 'chain run', names[i], 'indigo');
-    f.path(`M320 ${graph.y + graph.h} L320 158 L${x} 158 L${x} ${chain.y - 1}`, { style: 'call', head: false });
-    const leaf = i === 1 ? node(x, 252, 'tool run', 'add', 'green') : node(x, 252, 'llm run', 'ScriptedChatModel', 'plum');
-    f.line(x, chain.y + chain.h, x, leaf.y - 1, { style: 'call', head: false });
+  flat.gateway(f, CLIENT, 6, 'olive', { w: 52, h: 36, ports: 4 });
+  f.text(CLIENT, 58, 'the client', { size: 11, weight: 700, hue: 'olive', anchor: 'middle' });
+  f.text(CLIENT, 72, 'records each request', { size: 11, serif: true, hue: 'ink-soft', anchor: 'middle' });
+  f.lifeline(CLIENT, 78, TOP + runs.length * PITCH - 10);
+  f.kicker(20, 20, 'run tree, in the order the runs started');
+  f.text(20, 38, 'name above its run type', { size: 11, serif: true, hue: 'ink-soft' });
+
+  const parents = [];
+  runs.forEach((run, index) => {
+    const y = TOP + index * PITCH;
+    const x = 20 + run.depth * 40;
+    const hue = hueOf(run);
+    f.beat(index + 1);
+    parents[run.depth] = { x, y };
+    if (run.depth) {
+      const parent = parents[run.depth - 1];
+      f.path(`M${parent.x + 12} ${parent.y + 14} V${y} H${x - 1}`, { hue: 'ink-mute', head: false, packet: false });
+    }
+    const w = Math.max(run.name.length, run.type.length + 4) * 7.2 + 20;
+    f.rect(x, y - 14, w, 30, { hue });
+    f.text(x + 10, y, run.name, { size: 11.5, weight: 700, hue });
+    f.text(x + 10, y + 12, `${run.type} run`, { size: 11, serif: true, hue: 'ink-soft' });
+    if (run.depth === 0) {
+      f.text(x + w + 12, y + 4, "kept in memory: tracing_context(enabled='local')", { size: 11, serif: true, hue: 'ink-mute' });
+      return;
+    }
+    f.arrow([x + w, y], [CLIENT - 1, y], { style: 'effect', label: index === 1 ? 'POST, then PATCH' : undefined, labelX: 440 });
   });
-  f.text(20, 322, 'the 7 runs below agent_turn: POST /runs 7 times, PATCH 7 times', { size: 11, serif: true, hue: 'ink-soft' });
+
+  f.beat(0);
+  const bottom = TOP + runs.length * PITCH + 8;
+  f.rule(20, bottom, 620, bottom, { opacity: 0.4 });
+  f.text(20, bottom + 22, `${runs.length - 1} runs below the root, ${posts} POST /runs and ${patches} PATCH at the client.`, { size: 11, serif: true, hue: 'ink-soft' });
+  const key = [['indigo', 'a graph node'], ['plum', 'a model call'], ['green', 'a tool call']];
+  key.forEach(([hue, name], i) => {
+    f.rect(20 + i * 150, bottom + 36, 14, 12, { hue });
+    f.text(40 + i * 150, bottom + 46, name, { size: 11, serif: true, hue: 'ink-soft' });
+  });
 });

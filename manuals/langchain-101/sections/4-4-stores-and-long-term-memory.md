@@ -84,7 +84,7 @@ id: fig-4-4
 kind: tree
 title: the namespaces of the kit store
 claim: A search for users and ada covers both namespaces under ada, and no prefix that ends at a full label reaches the items of grace.
-caption: Read from the root at the top. Each box is one label, and each leaf lists the keys of its items. The shaded part is what search with the prefix users, ada returns. From capture/out/33-store.txt.
+caption: Read from the root at the top. Each box is one label, and each card under a namespace is one item, with its key and value. The shaded part is what search with the prefix users, ada returns. From capture/out/33-store.txt and capture/lab/summary/stores-mac.json.
 ```
 
 ## A tool reads the store

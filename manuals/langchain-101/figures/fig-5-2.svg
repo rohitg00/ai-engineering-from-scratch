@@ -1,49 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 270" role="img" aria-labelledby="fig-5-2-title fig-5-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="fig-5-2-title fig-5-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-5-2-title">The joke graph and one run</title>
-  <desc id="fig-5-2-desc">A flow from __start__ to plan, then three Send arrows from plan to three write_joke tasks for cats, dogs, and owls in one step, then plain edges to pick. pick returns a Command with best set to a joke about cats and goto publish, so publish runs and then __end__. The retry node, the other target of pick, did not run.</desc>
-  <defs><marker id="fig-5-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-5-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-5-2-head-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-grey-ink, #5e5e59)"/></marker></defs>
-  <rect x="12" y="96" width="74" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <text x="49" y="119.45" font-size="11.5" text-anchor="middle" font-weight="700">__start__</text>
-  <rect x="104" y="96" width="66" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="137" y="111.25" font-size="12.5" text-anchor="middle" font-weight="700">plan</text>
-  <text x="137" y="128.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">subjects</text>
-  <line x1="86" y1="116" x2="103" y2="116" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-2-head-ink)"/>
-  <rect x="206" y="40" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="257" y="54.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
-  <text x="257" y="72.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cats</text>
-  <rect x="206" y="96" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="257" y="110.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
-  <text x="257" y="128.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dogs</text>
-  <rect x="206" y="152" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="257" y="166.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
-  <text x="257" y="184.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">owls</text>
-  <path d="M170 116 H186 V60 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
-  <path d="M308 60 H324 V116 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
-  <path d="M170 116 H186 V116 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
-  <path d="M308 116 H324 V116 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-ink)"/>
-  <path d="M170 116 H186 V172 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
-  <path d="M308 172 H324 V116 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
-  <text x="188" y="30" font-size="11" fill="var(--m-amber-ink, #85590c)">Send x 3</text>
-  <rect x="344" y="96" width="66" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="377" y="111.25" font-size="12.5" text-anchor="middle" font-weight="700">pick</text>
-  <text x="377" y="128.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Command</text>
-  <rect x="452" y="56" width="82" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="493" y="71.25" font-size="12.5" text-anchor="middle" font-weight="700">publish</text>
-  <text x="493" y="88.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ran</text>
-  <rect x="452" y="150" width="82" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
-  <text x="493" y="165.25" font-size="12.5" text-anchor="middle" font-weight="700">retry</text>
-  <text x="493" y="182.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">did not run</text>
-  <path d="M410 110 H428 V76 H451" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
-  <path d="M410 122 H428 V170 H451" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-grey)"/>
-  <text x="431" y="50" font-size="11" fill="var(--m-amber-ink, #85590c)">goto</text>
-  <rect x="560" y="96" width="68" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <text x="594" y="119.45" font-size="11.5" text-anchor="middle" font-weight="700">__end__</text>
-  <path d="M534 76 H546 V110 H559" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-ink)"/>
-  <path d="M534 170 H546 V122 H559" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-grey)"/>
-  <line x1="20" y1="214" x2="620" y2="214" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
-  <text x="137" y="232" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 1</text>
-  <text x="257" y="232" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 2</text>
-  <text x="377" y="232" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 3</text>
-  <text x="493" y="232" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">step 4</text>
-  <text x="20" y="258" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">pick sets best to a joke about cats, so its Command goes to publish.</text>
+  <desc id="fig-5-2-desc">The top is the graph from the capture: __start__ to plan, then three Send arrows from plan to three write_joke tasks for cats, dogs, owls in one step, then plain edges to pick. pick returns a Command with best set to &quot;a joke about cats&quot; and goto publish, so publish runs and then __end__. The retry node, the other target of pick, did not run. The bottom is a table of what each node wrote to the state in each of the 4 steps, read from the updates stream: plan wrote subjects, each write_joke wrote one joke, operator.add joined the three into a list of 3, and pick wrote best. The log key ends with 6 entries.</desc>
+  <defs><marker id="fig-5-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-5-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-5-2-head-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-grey-ink, #5e5e59)"/></marker><marker id="fig-5-2-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <rect x="12" y="76" width="74" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="49" y="99.45" font-size="11.5" text-anchor="middle" font-weight="700">__start__</text>
+  <rect x="104" y="76" width="66" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="137" y="91.25" font-size="12.5" text-anchor="middle" font-weight="700">plan</text>
+  <text x="137" y="108.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step 1</text>
+  <line x1="86" y1="96" x2="103" y2="96" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-2-head-ink)"/>
+  <rect x="206" y="24" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="257" y="38.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
+  <text x="257" y="56.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cats</text>
+  <path d="M170 96 H186 V44 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
+  <path d="M308 44 H324 V96 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="206" y="76" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="257" y="90.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
+  <text x="257" y="108.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dogs</text>
+  <path d="M170 96 H186 V96 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
+  <path d="M308 96 H324 V96 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-ink)"/>
+  <rect x="206" y="128" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="257" y="142.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
+  <text x="257" y="160.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">owls</text>
+  <path d="M170 96 H186 V148 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
+  <path d="M308 148 H324 V96 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <text x="178" y="16" font-size="11" fill="var(--m-amber-ink, #85590c)">Send x 3</text>
+  <rect x="344" y="76" width="66" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="377" y="91.25" font-size="12.5" text-anchor="middle" font-weight="700">pick</text>
+  <text x="377" y="108.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Command</text>
+  <rect x="452" y="36" width="82" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="493" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">publish</text>
+  <text x="493" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ran</text>
+  <rect x="452" y="124" width="82" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
+  <text x="493" y="139.25" font-size="12.5" text-anchor="middle" font-weight="700">retry</text>
+  <text x="493" y="156.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">did not run</text>
+  <path d="M410 90 H428 V56 H451" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
+  <path d="M410 102 H428 V144 H451" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-grey)"/>
+  <text x="431" y="28" font-size="11" fill="var(--m-amber-ink, #85590c)">goto publish</text>
+  <rect x="560" y="76" width="68" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="594" y="99.45" font-size="11.5" text-anchor="middle" font-weight="700">__end__</text>
+  <path d="M534 56 H546 V90 H559" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-ink)"/>
+  <path d="M534 144 H546 V102 H559" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-grey)"/>
+  <text x="20" y="186" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT EACH STEP WROTE TO THE STATE</text>
+  <text x="137" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 1</text>
+  <line x1="77" y1="216" x2="77" y2="418" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="257" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 2</text>
+  <line x1="197" y1="216" x2="197" y2="418" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="377" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 3</text>
+  <line x1="317" y1="216" x2="317" y2="418" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="493" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 4</text>
+  <line x1="433" y1="216" x2="433" y2="418" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="20" y="240" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">subjects</text>
+  <rect x="78" y="227" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="137" y="240" font-size="11" text-anchor="middle">cats, dogs, owls</text>
+  <text x="20" y="274" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">jokes</text>
+  <rect x="198" y="261" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="257" y="274" font-size="11" text-anchor="middle">a joke about cats</text>
+  <rect x="198" y="281" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="257" y="294" font-size="11" text-anchor="middle">a joke about dogs</text>
+  <rect x="198" y="301" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="257" y="314" font-size="11" text-anchor="middle">a joke about owls</text>
+  <line x1="317" y1="290" x2="347" y2="290" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-2-head-teal)"/>
+  <rect class="m-knock" x="350" y="275.42" width="144.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="353" y="286" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">operator.add: 3 items</text>
+  <rect class="m-knock" x="350" y="289.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="353" y="300" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one list in the state</text>
+  <text x="20" y="348" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">best</text>
+  <rect x="318" y="335" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="377" y="348" font-size="11" text-anchor="middle">a joke about cats</text>
+  <text x="20" y="382" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">log</text>
+  <rect x="78" y="369" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="137" y="382" font-size="11" text-anchor="middle">plan</text>
+  <rect x="198" y="369" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="257" y="382" font-size="11" text-anchor="middle">write_joke(cats)</text>
+  <rect x="198" y="389" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="257" y="402" font-size="11" text-anchor="middle">write_joke(dogs)</text>
+  <rect x="198" y="409" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="257" y="422" font-size="11" text-anchor="middle">write_joke(owls)</text>
+  <rect x="318" y="369" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="377" y="382" font-size="11" text-anchor="middle">pick -&gt; publish</text>
+  <rect x="434" y="369" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
+  <text x="493" y="382" font-size="11" text-anchor="middle">publish</text>
+  <text x="20" y="450" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Three writes to jokes in one step joined into one list. The log key ends with 6 entries.</text>
+  <text x="20" y="468" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each teal cell is one value a node returned, read from the updates stream.</text>
 </svg>

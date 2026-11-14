@@ -55,7 +55,7 @@ id: fig-5-2
 kind: flow
 title: the joke graph and one run
 claim: Send starts three write_joke tasks in one step, and Command from pick updates best and goes to publish, so retry never runs.
-caption: Read from __start__ at the left to __end__ at the right. Solid arrows are plain edges, and dashed amber arrows are routes chosen at run time. The grey retry node did not run. From capture/out/34-stategraph-reducers-send-command.txt.
+caption: Read from __start__ at the left to __end__ at the right. Solid arrows are plain edges, and dashed amber arrows are routes chosen at run time. The grey retry node did not run. The table below shows what each step wrote to the state. From capture/out/34-stategraph-reducers-send-command.txt.
 ```
 
 ## Plain and conditional edges

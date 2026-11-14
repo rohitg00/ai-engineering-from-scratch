@@ -94,7 +94,7 @@ id: fig-1-2
 kind: sequence
 title: one create_agent run, step by step
 claim: The model node runs twice and the tools node once, and the checkpointer saves the state after the input and after each of the four steps.
-caption: Read the rows from top to bottom. Each teal arrow is one checkpoint, with its step number. The amber note under each checkpoint is the node that runs next. From capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, and capture/out/30-state-history-forks.txt.
+caption: Read the rows from top to bottom. Each teal arrow is one checkpoint, with its step number. The amber note under each checkpoint is the node that runs next. The chips on the right are the messages in each checkpoint, and a bold chip is new in that step. From capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, and capture/out/30-state-history-forks.txt.
 ```
 
 1. `invoke` puts the input on the graph. With a checkpointer, LangGraph saves the input checkpoint, step `-1`.

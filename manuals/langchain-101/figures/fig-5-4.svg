@@ -1,124 +1,129 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-labelledby="fig-5-4-title fig-5-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-5-4-title">One interrupt and one resume</title>
-  <desc id="fig-5-4-desc">Five lifelines: your code, the graph loop, the write node, the review node, and the checkpointer. The first invoke runs write, then review up to its interrupt, saves the pause with next review, and returns the interrupt Approve this draft. The resume with Command resume yes runs review again from its first line, so the line before the interrupt runs a second time, then the line after it, and the verdict approved is saved. write does not run again.</desc>
+  <desc id="fig-5-4-desc">Five lifelines: your code, the graph loop, the write node, the review node, and the checkpointer. A sixth column is the log of node bodies that ran, in order, from the capture. The first invoke runs write, then review up to its interrupt, saves the pause with next review, and returns the interrupt &quot;Approve this draft?&quot;. The resume with Command resume yes runs review again from its first line. The log shows &quot;review before interrupt&quot; 2 times, then &quot;review after interrupt: yes&quot;, and the verdict approved is saved. write does not run again.</desc>
   <defs><marker id="fig-5-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-5-4-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-5-4-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
-  <rect x="6" y="8" width="116" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="64" y="22.95" font-size="11.5" text-anchor="middle" font-weight="700">your code</text>
-  <text x="64" y="40.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">invoke</text>
-  <line x1="64" y1="48" x2="64" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="134" y="8" width="116" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="192" y="22.95" font-size="11.5" text-anchor="middle" font-weight="700">graph</text>
-  <text x="192" y="40.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Pregel loop</text>
-  <line x1="192" y1="48" x2="192" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="262" y="8" width="116" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="320" y="22.95" font-size="11.5" text-anchor="middle" font-weight="700">write</text>
-  <text x="320" y="40.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">node</text>
-  <line x1="320" y1="48" x2="320" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="390" y="8" width="116" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="448" y="22.95" font-size="11.5" text-anchor="middle" font-weight="700">review</text>
-  <text x="448" y="40.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">node</text>
-  <line x1="448" y1="48" x2="448" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
-  <rect x="518" y="8" width="116" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
-  <text x="576" y="22.95" font-size="11.5" text-anchor="middle" font-weight="700">checkpointer</text>
-  <text x="576" y="40.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">InMemorySaver</text>
-  <line x1="576" y1="48" x2="576" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="4" y="8" width="84" height="40" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="46" y="22.8" font-size="11" text-anchor="middle" font-weight="700">your code</text>
+  <text x="46" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">invoke</text>
+  <line x1="46" y1="48" x2="46" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="90" y="8" width="84" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="132" y="22.8" font-size="11" text-anchor="middle" font-weight="700">graph</text>
+  <text x="132" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Pregel loop</text>
+  <line x1="132" y1="48" x2="132" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="176" y="8" width="84" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="218" y="22.8" font-size="11" text-anchor="middle" font-weight="700">write</text>
+  <text x="218" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">node</text>
+  <line x1="218" y1="48" x2="218" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="262" y="8" width="84" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="304" y="22.8" font-size="11" text-anchor="middle" font-weight="700">review</text>
+  <text x="304" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">node</text>
+  <line x1="304" y1="48" x2="304" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="348" y="8" width="84" height="40" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="390" y="22.8" font-size="11" text-anchor="middle" font-weight="700">checkpointer</text>
+  <text x="390" y="39.8" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">InMemorySaver</text>
+  <line x1="390" y1="48" x2="390" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <text x="446" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NODE BODIES RUN</text>
+  <text x="446" y="38" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the log, in order</text>
+  <line x1="434" y1="8" x2="434" y2="590" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
   <rect class="m-knock" x="17" y="59.42" width="51.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
   <text x="20" y="70" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">INVOKE</text>
   <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="92" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="16" y="96" font-size="11" text-anchor="middle">1</text>
-  <line x1="64" y1="92" x2="191" y2="92" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M64 92 L191 92" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="79.65" y="75.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="127.5" y="86" font-size="11.5" text-anchor="middle">invoke(input)</text>
+  <line x1="46" y1="92" x2="131" y2="92" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M46 92 L131 92" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="40.65" y="75.03" width="95.7" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="88.5" y="86" font-size="11.5" text-anchor="middle">invoke(input)</text>
   </g>
   <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="136" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="16" y="140" font-size="11" text-anchor="middle">2</text>
-  <line x1="192" y1="136" x2="319" y2="136" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M192 136 L319 136" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="221.45" y="119.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="255.5" y="130" font-size="11.5" text-anchor="middle">run write</text>
-  <rect class="m-knock" x="226.27" y="140.42" width="59.46" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="256" y="151" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">draft set</text>
+  <line x1="132" y1="136" x2="217" y2="136" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M132 136 L217 136" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="140.45" y="119.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="174.5" y="130" font-size="11.5" text-anchor="middle">run write</text>
+  <rect x="446" y="126" width="188" height="20" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="452" y="140" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">write</text>
   </g>
   <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="180" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="16" y="184" font-size="11" text-anchor="middle">3</text>
-  <line x1="192" y1="180" x2="447" y2="180" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M192 180 L447 180" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="282" y="163.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="319.5" y="174" font-size="11.5" text-anchor="middle">run review</text>
-  <rect class="m-knock" x="254.63" y="184.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="320" y="195" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">line before interrupt</text>
+  <line x1="132" y1="180" x2="303" y2="180" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M132 180 L303 180" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="180" y="163.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217.5" y="174" font-size="11.5" text-anchor="middle">run review</text>
+  <rect x="446" y="170" width="188" height="20" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="452" y="184" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">review before interrupt</text>
   </g>
   <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="224" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1"/>
   <text x="16" y="228" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">4</text>
-  <line x1="448" y1="224" x2="575" y2="224" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-teal)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M448 224 L575 224" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="470.55" y="207.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="511.5" y="218" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">pause saved</text>
-  <rect class="m-knock" x="473.36" y="228.42" width="77.28" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="512" y="239" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-amber-ink, #85590c)">next: review</text>
+  <line x1="304" y1="224" x2="389" y2="224" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M304 224 L389 224" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="305.55" y="207.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="346.5" y="218" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">pause saved</text>
+  <rect class="m-knock" x="304.4" y="228.42" width="85.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="347" y="239" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">next: review</text>
   </g>
   <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="268" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1"/>
   <text x="16" y="272" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">5</text>
-  <line x1="192" y1="268" x2="65" y2="268" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-4-head-amber)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M192 268 L65 268" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="107.5" y="251.03" width="213" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="214" y="262" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">interrupt: Approve this draft?</text>
-  <line x1="20" y1="308" x2="620" y2="308" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="132" y1="268" x2="47" y2="268" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-4-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M132 268 L47 268" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="111.5" y="251.03" width="213" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="218" y="262" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">interrupt: Approve this draft?</text>
+  <line x1="20" y1="308" x2="426" y2="308" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
   <rect class="m-knock" x="17" y="313.42" width="82.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
   <text x="20" y="324" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE RESUME</text>
-  <rect class="m-knock" x="263.54" y="313.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="320" y="324" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">write does not run</text>
+  <rect class="m-knock" x="161.54" y="313.42" width="112.92" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="218" y="324" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">write does not run</text>
   </g>
   <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="356" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="16" y="360" font-size="11" text-anchor="middle">6</text>
-  <line x1="64" y1="356" x2="191" y2="356" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M64 356 L191 356" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="52.05" y="339.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="127.5" y="350" font-size="11.5" text-anchor="middle">Command(resume=&#39;yes&#39;)</text>
+  <line x1="46" y1="356" x2="131" y2="356" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M46 356 L131 356" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="46.55" y="339.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="122" y="350" font-size="11.5" text-anchor="middle">Command(resume=&#39;yes&#39;)</text>
   </g>
   <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="400" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="16" y="404" font-size="11" text-anchor="middle">7</text>
-  <line x1="192" y1="400" x2="447" y2="400" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M192 400 L447 400" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="261.3" y="383.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="319.5" y="394" font-size="11.5" text-anchor="middle">run review again</text>
-  <rect class="m-knock" x="254.63" y="404.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="320" y="415" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">line before interrupt</text>
+  <line x1="132" y1="400" x2="303" y2="400" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M132 400 L303 400" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="159.3" y="383.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="217.5" y="394" font-size="11.5" text-anchor="middle">run review again</text>
+  <rect x="446" y="390" width="188" height="20" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="452" y="404" font-size="11" fill="var(--m-rose-ink, #b0344d)">review before interrupt</text>
   </g>
   <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="444" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="16" y="448" font-size="11" text-anchor="middle">8</text>
-  <line x1="448" y1="444" x2="193" y2="444" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-4-head-ink)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M448 444 L193 444" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="258.85" y="427.03" width="123.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="320.5" y="438" font-size="11.5" text-anchor="middle">verdict: approved</text>
-  <rect class="m-knock" x="257.6" y="448.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="320" y="459" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">line after interrupt</text>
+  <line x1="304" y1="444" x2="133" y2="444" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M304 444 L133 444" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="156.85" y="427.03" width="123.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="218.5" y="438" font-size="11.5" text-anchor="middle">verdict: approved</text>
+  <rect x="446" y="434" width="188" height="20" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="452" y="448" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">review after interrupt: yes</text>
   </g>
   <g data-beat="9"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.914;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.25s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="488" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1"/>
   <text x="16" y="492" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">9</text>
-  <line x1="192" y1="488" x2="575" y2="488" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-teal)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M192 488 L575 488" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="346" y="471.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="383.5" y="482" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">step saved</text>
-  <rect class="m-knock" x="351.3" y="492.42" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="384" y="503" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-amber-ink, #85590c)">next: none</text>
+  <line x1="132" y1="488" x2="389" y2="488" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-4-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M132 488 L389 488" keyPoints="0;0;1;1" keyTimes="0;0.857;0.955;1" calcMode="linear" dur="5.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.857;0.871;0.955;1" dur="5.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="223" y="471.03" width="75" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="260.5" y="482" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">step saved</text>
+  <rect class="m-knock" x="225" y="492.42" width="72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="261" y="503" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">next: none</text>
   </g>
   <g data-beat="10"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.923;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="5.85s" begin="indefinite" fill="freeze"/>
   <circle cx="16" cy="532" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
   <text x="16" y="536" font-size="11" text-anchor="middle">10</text>
-  <line x1="192" y1="532" x2="65" y2="532" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-4-head-ink)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M192 532 L65 532" keyPoints="0;0;1;1" keyTimes="0;0.871;0.96;1" calcMode="linear" dur="6.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.871;0.884;0.96;1" dur="6.2s" begin="indefinite" fill="freeze"/></circle>
-  <rect class="m-knock" x="87.55" y="515.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="128.5" y="526" font-size="11.5" text-anchor="middle">final state</text>
+  <line x1="132" y1="532" x2="47" y2="532" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-4-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M132 532 L47 532" keyPoints="0;0;1;1" keyTimes="0;0.871;0.96;1" calcMode="linear" dur="6.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.871;0.884;0.96;1" dur="6.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="48.55" y="515.03" width="81.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="89.5" y="526" font-size="11.5" text-anchor="middle">final state</text>
   </g>
+  <text x="446" y="574" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">&quot;review before interrupt&quot;</text>
+  <text x="446" y="588" font-size="11" font-weight="700" class="m-serif" fill="var(--m-rose-ink, #b0344d)">ran 2 times</text>
 </svg>

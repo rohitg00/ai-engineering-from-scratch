@@ -85,7 +85,7 @@ id: fig-3-1
 kind: structure
 title: what each argument of create_agent builds
 claim: Tools build the tools node, middleware builds hook nodes and wrappers, and the prompt and response format change each model call without a node of their own.
-caption: Read each row from the argument on the left to the part of the compiled graph on the right. The band at the bottom is the config that create_agent sets on every agent. From capture/out/05-agent-graph.txt and capture/out/09-middleware-order.txt.
+caption: Read the three graphs from the top. Each one adds one argument to create_agent. A solid edge has one next node, and a dashed amber edge chooses the next node at run time. From capture/out/05-agent-graph.txt and capture/out/09-middleware-order.txt.
 ```
 
 ## The state

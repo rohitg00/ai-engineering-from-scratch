@@ -1,60 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 384" role="img" aria-labelledby="fig-7-1b-title fig-7-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 396" role="img" aria-labelledby="fig-7-1b-title fig-7-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-7-1b-title">The nodes of run A and run B under each multitask strategy</title>
   <desc id="fig-7-1b-desc">Four tracks on a time axis of 0 to 7 seconds, one thread each under langgraph dev on the x86 server guest. Run A runs two nodes of 2 s each, and run B, sent about 1 s later on the same thread, runs two nodes of 1 s each. Under reject, B is refused with HTTP 409 and A finishes. Under enqueue, B starts when A ends at 4.8 s. Under interrupt, B starts at 1.0 s, and the first node of A never finishes. Under rollback, the first node of A starts just before B is sent, B starts at 1.0 s, and A is deleted.</desc>
-  <line x1="196" y1="30" x2="196" y2="300" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
-  <text x="196" y="22" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">run B sent</text>
-  <text x="20" y="58" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">REJECT</text>
-  <text x="20" y="74" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">B refused, HTTP 409</text>
-  <rect x="186.76" y="44" width="130" height="12" fill="var(--m-amber-ink, #85590c)"/>
-  <text x="252.76" y="40" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">A first</text>
-  <rect x="318.76" y="44" width="130" height="12" fill="var(--m-amber-ink, #85590c)"/>
-  <text x="384.76" y="40" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">A second</text>
-  <text x="204" y="76" font-size="11" fill="var(--m-rose-ink, #b0344d)">409, nothing ran</text>
-  <text x="20" y="122" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ENQUEUE</text>
-  <text x="20" y="138" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">B waits for A, then runs</text>
-  <rect x="182.14" y="108" width="130" height="12" fill="var(--m-amber-ink, #85590c)"/>
-  <text x="248.14" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">A first</text>
-  <rect x="314.14" y="108" width="130" height="12" fill="var(--m-amber-ink, #85590c)"/>
-  <text x="380.14" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">A second</text>
-  <rect x="446.8" y="130" width="64" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
-  <text x="479.8" y="156" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">B first</text>
-  <rect x="512.8" y="130" width="64" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
-  <text x="545.8" y="156" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">B second</text>
+  <line x1="214" y1="30" x2="214" y2="318" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="214" y="22" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">run B sent</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="46" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">REJECT</text>
+  <text x="20" y="62" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">B refused, HTTP 409</text>
+  <text x="136" y="80" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">A</text>
+  <text x="136" y="100" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">B</text>
+  <line x1="150" y1="76" x2="598" y2="76" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="150" y1="96" x2="598" y2="96" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="205.04" y="68" width="126" height="16" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="269.04" y="80" font-size="11" text-anchor="middle" fill="var(--m-paper, #fafaf5)">first</text>
+  <rect x="333.04" y="68" width="126" height="16" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="397.04" y="80" font-size="11" text-anchor="middle" fill="var(--m-paper, #fafaf5)">second</text>
+  <rect class="m-knock" x="217" y="89.42" width="111.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="220" y="100" font-size="11" fill="var(--m-rose-ink, #b0344d)">409, nothing ran</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="116" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ENQUEUE</text>
+  <text x="20" y="132" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">B waits for A, then runs</text>
+  <text x="136" y="150" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">A</text>
+  <text x="136" y="170" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">B</text>
+  <line x1="150" y1="146" x2="598" y2="146" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="150" y1="166" x2="598" y2="166" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="200.56" y="138" width="126" height="16" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="264.56" y="150" font-size="11" text-anchor="middle" fill="var(--m-paper, #fafaf5)">first</text>
+  <rect x="328.56" y="138" width="126" height="16" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="392.56" y="150" font-size="11" text-anchor="middle" fill="var(--m-paper, #fafaf5)">second</text>
+  <rect x="457.2" y="158" width="62" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="489.2" y="170" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">first</text>
+  <rect x="521.2" y="158" width="62" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="553.2" y="170" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">second</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
   <text x="20" y="186" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">INTERRUPT</text>
   <text x="20" y="202" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A interrupted, its node lost</text>
-  <rect x="177.52" y="172" width="18.48" height="12" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
-  <rect class="m-knock" x="160.66" y="157.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="186.76" y="168" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">A first</text>
-  <rect x="197.32" y="194" width="64" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
-  <text x="230.32" y="220" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">B first</text>
-  <rect x="263.32" y="194" width="64" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
-  <text x="296.32" y="220" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">B second</text>
-  <text x="20" y="250" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ROLLBACK</text>
-  <text x="20" y="266" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A deleted, B runs alone</text>
-  <rect x="194.68" y="236" width="10" height="12" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
-  <rect class="m-knock" x="173.58" y="221.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="199.68" y="232" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">A first</text>
-  <rect x="197.32" y="258" width="64" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
-  <text x="230.32" y="284" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">B first</text>
-  <rect x="263.32" y="258" width="64" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
-  <text x="296.32" y="284" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">B second</text>
-  <line x1="130" y1="306" x2="592" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="130" y1="302" x2="130" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="130" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
-  <line x1="196" y1="302" x2="196" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="196" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1 s</text>
-  <line x1="262" y1="302" x2="262" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="262" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2 s</text>
-  <line x1="328" y1="302" x2="328" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="328" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3 s</text>
-  <line x1="394" y1="302" x2="394" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="394" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4 s</text>
-  <line x1="460" y1="302" x2="460" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="460" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5 s</text>
-  <line x1="526" y1="302" x2="526" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="526" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6 s</text>
-  <line x1="592" y1="302" x2="592" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="592" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">7 s</text>
-  <text x="20" y="352" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Filled: a node of run A. Outlined: a node of run B. Dashed rose: a node of A</text>
-  <text x="20" y="368" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">that started and never wrote. Times are from the node events, one run each.</text>
+  <text x="136" y="220" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">A</text>
+  <text x="136" y="240" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">B</text>
+  <line x1="150" y1="216" x2="598" y2="216" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="150" y1="236" x2="598" y2="236" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="196.08" y="208" width="17.92" height="16" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <rect class="m-knock" x="221" y="209.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="224" y="220" font-size="11" fill="var(--m-rose-ink, #b0344d)">first node of A never wrote</text>
+  <rect x="215.28" y="228" width="62" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="247.28" y="240" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">first</text>
+  <rect x="279.28" y="228" width="62" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="311.28" y="240" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">second</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="256" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ROLLBACK</text>
+  <text x="20" y="272" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A deleted, B runs alone</text>
+  <text x="136" y="290" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">A</text>
+  <text x="136" y="310" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-amber-ink, #85590c)">B</text>
+  <line x1="150" y1="286" x2="598" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="150" y1="306" x2="598" y2="306" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="212.72" y="278" width="8" height="16" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <rect class="m-knock" x="227.72" y="279.42" width="184.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="230.72" y="290" font-size="11" fill="var(--m-rose-ink, #b0344d)">first node of A never wrote</text>
+  <rect x="215.28" y="298" width="62" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="247.28" y="310" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">first</text>
+  <rect x="279.28" y="298" width="62" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="311.28" y="310" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">second</text>
+  </g>
+  <line x1="150" y1="326" x2="598" y2="326" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="150" y1="322" x2="150" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="150" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 s</text>
+  <line x1="214" y1="322" x2="214" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="214" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1 s</text>
+  <line x1="278" y1="322" x2="278" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="278" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2 s</text>
+  <line x1="342" y1="322" x2="342" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="342" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3 s</text>
+  <line x1="406" y1="322" x2="406" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="406" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4 s</text>
+  <line x1="470" y1="322" x2="470" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="470" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5 s</text>
+  <line x1="534" y1="322" x2="534" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="534" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6 s</text>
+  <line x1="598" y1="322" x2="598" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="598" y="344" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">7 s</text>
+  <text x="20" y="370" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Lane A: the nodes of run A, filled. Lane B: the nodes of run B, outlined. Dashed rose: a node</text>
+  <text x="20" y="386" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">of A that started and never wrote. Times are from the node events, one run each.</text>
 </svg>

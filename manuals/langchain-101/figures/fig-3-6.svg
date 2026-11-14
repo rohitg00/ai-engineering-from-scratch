@@ -1,42 +1,87 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-3-6-title fig-3-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 468" role="img" aria-labelledby="fig-3-6-title fig-3-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-3-6-title">Four PII strategies on one input</title>
-  <desc id="fig-3-6-desc">One human message holds an email address, a card number, an IP address, and a URL. Five rows each run one PIIMiddleware. email with redact gives [REDACTED_EMAIL]. credit_card with mask gives four groups of stars and the last four digits 1111. ip with hash gives ip_hash:55235459 in angle brackets. url with redact gives [REDACTED_URL]. email with block raises PIIDetectionError, and the model gets no call.</desc>
+  <desc id="fig-3-6-desc">One human message holds an email address, a card number, an IP address, and a URL, each underlined in the hue of the row that matched it. Five rows each ran one PIIMiddleware. email with redact replaced &quot;ada@example.com&quot; with &quot;[REDACTED_EMAIL]&quot;. credit_card with mask replaced &quot;4111 1111 1111&quot; with &quot;**** **** ****&quot;. ip with hash replaced &quot;192.168.1.20&quot; with &quot;&lt;ip_hash:55235459&gt;&quot;. url with redact replaced &quot;https://example.com/x&quot; with &quot;[REDACTED_URL]&quot;. email with block raised PIIDetectionError, &quot;Detected 1 instance(s) of email in text content&quot;, and the model got 0 calls. Each other run made 1 model call, and only the matched span of the newest human message changed.</desc>
   <defs><marker id="fig-3-6-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-6-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
-  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE HUMAN MESSAGE</text>
-  <rect x="20" y="30" width="600" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="32" y="53.1" font-size="12" font-weight="400">Mail ada@example.com, card 4111 1111 1111 1111,</text>
-  <text x="32" y="70.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from 192.168.1.20, see https://example.com/x</text>
-  <text x="20" y="118" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PIIMIDDLEWARE(TYPE, STRATEGY=)</text>
-  <text x="300" y="118" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE MODEL RECEIVED</text>
-  <rect x="20" y="130" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="32" y="149.25" font-size="12.5" font-weight="700">&#39;email&#39;</text>
-  <text x="32" y="166.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;redact&#39;</text>
-  <rect x="300" y="130" width="320" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="312" y="157.6" font-size="12" font-weight="400">Mail [REDACTED_EMAIL], card 4111</text>
-  <line x1="240" y1="154" x2="299" y2="154" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
-  <rect x="20" y="194" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="32" y="213.25" font-size="12.5" font-weight="700">&#39;credit_card&#39;</text>
-  <text x="32" y="230.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;mask&#39;</text>
-  <rect x="300" y="194" width="320" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="312" y="221.6" font-size="12" font-weight="400">card **** **** **** 1111</text>
-  <line x1="240" y1="218" x2="299" y2="218" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
-  <rect x="20" y="258" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="32" y="277.25" font-size="12.5" font-weight="700">&#39;ip&#39;</text>
-  <text x="32" y="294.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;hash&#39;</text>
-  <rect x="300" y="258" width="320" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="312" y="285.6" font-size="12" font-weight="400">from &lt;ip_hash:55235459&gt;</text>
-  <line x1="240" y1="282" x2="299" y2="282" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
-  <rect x="20" y="322" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="32" y="341.25" font-size="12.5" font-weight="700">&#39;url&#39;</text>
-  <text x="32" y="358.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;redact&#39;</text>
-  <rect x="300" y="322" width="320" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="312" y="349.6" font-size="12" font-weight="400">see [REDACTED_URL]</text>
-  <line x1="240" y1="346" x2="299" y2="346" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
-  <rect x="20" y="386" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="32" y="405.25" font-size="12.5" font-weight="700">&#39;email&#39;</text>
-  <text x="32" y="422.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;block&#39;</text>
-  <rect x="300" y="386" width="320" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
-  <text x="312" y="413.6" font-size="12" font-weight="400">PIIDetectionError, no model call</text>
-  <line x1="240" y1="410" x2="299" y2="410" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-6-head-rose)"/>
-  <text x="20" y="458" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each row is one run. Only the newest human message changed, because apply_to_input is the default.</text>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE HUMAN MESSAGE</text>
+  <rect x="20" y="28" width="600" height="76" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="68" y1="65" x2="176" y2="65" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2"/>
+  <text x="122" y="46" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">1</text>
+  <line x1="226.4" y1="65" x2="327.2" y2="65" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2"/>
+  <text x="276.8" y="46" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">2</text>
+  <text x="32" y="60" font-size="12">Mail ada@example.com, card 4111 1111 1111 1111,</text>
+  <line x1="68" y1="97" x2="154.4" y2="97" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2"/>
+  <text x="111.2" y="78" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">3</text>
+  <line x1="197.6" y1="97" x2="348.8" y2="97" stroke="var(--m-rose-ink, #b0344d)" stroke-width="2"/>
+  <text x="273.2" y="78" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">4</text>
+  <text x="32" y="92" font-size="12">from 192.168.1.20, see https://example.com/x</text>
+  <text x="32" y="128" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PIIMIDDLEWARE</text>
+  <text x="250" y="128" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE MATCHED SPAN BECOMES</text>
+  <text x="620" y="128" font-size="11" text-anchor="end" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MODEL CALLS</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="162" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="166" font-size="11" text-anchor="middle">1</text>
+  <rect x="32" y="140" width="190" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="44" y="157.25" font-size="12.5" font-weight="700">&#39;email&#39;</text>
+  <text x="44" y="174.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;redact&#39;</text>
+  <rect x="250" y="140" width="324" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="262" y="158" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">ada@example.com</text>
+  <text x="262" y="175" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">[REDACTED_EMAIL]</text>
+  <line x1="222" y1="162" x2="249" y2="162" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M222 162 L249 162" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <text x="600" y="167" font-size="13" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">1</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="218" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="222" font-size="11" text-anchor="middle">2</text>
+  <rect x="32" y="196" width="190" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="44" y="213.25" font-size="12.5" font-weight="700">&#39;credit_card&#39;</text>
+  <text x="44" y="230.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;mask&#39;</text>
+  <rect x="250" y="196" width="324" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="262" y="214" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">4111 1111 1111</text>
+  <text x="262" y="231" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">**** **** ****</text>
+  <line x1="222" y1="218" x2="249" y2="218" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M222 218 L249 218" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <text x="600" y="223" font-size="13" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">1</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="274" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="278" font-size="11" text-anchor="middle">3</text>
+  <rect x="32" y="252" width="190" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="44" y="269.25" font-size="12.5" font-weight="700">&#39;ip&#39;</text>
+  <text x="44" y="286.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;hash&#39;</text>
+  <rect x="250" y="252" width="324" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="262" y="270" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">192.168.1.20</text>
+  <text x="262" y="287" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">&lt;ip_hash:55235459&gt;</text>
+  <line x1="222" y1="274" x2="249" y2="274" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M222 274 L249 274" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <text x="600" y="279" font-size="13" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">1</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="330" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="334" font-size="11" text-anchor="middle">4</text>
+  <rect x="32" y="308" width="190" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="44" y="325.25" font-size="12.5" font-weight="700">&#39;url&#39;</text>
+  <text x="44" y="342.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;redact&#39;</text>
+  <rect x="250" y="308" width="324" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="262" y="326" font-size="11" fill="var(--m-ink-mute, #6f6f6a)">https://example.com/x</text>
+  <text x="262" y="343" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">[REDACTED_URL]</text>
+  <line x1="222" y1="330" x2="249" y2="330" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M222 330 L249 330" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <text x="600" y="335" font-size="13" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">1</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="16" cy="386" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="16" y="390" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">5</text>
+  <rect x="32" y="364" width="190" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="44" y="381.25" font-size="12.5" font-weight="700">&#39;email&#39;</text>
+  <text x="44" y="398.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;block&#39;</text>
+  <rect x="250" y="364" width="324" height="44" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="262" y="381.1" font-size="12" font-weight="700">PIIDetectionError</text>
+  <text x="262" y="398.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Detected 1 instance(s) of email in text content</text>
+  <line x1="222" y1="386" x2="249" y2="386" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-6-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M222 386 L249 386" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <text x="600" y="391" font-size="13" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">0</text>
+  </g>
+  <text x="20" y="442" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each row is one run. Grey: what the input held. Bold: what was saved and sent instead.</text>
+  <text x="20" y="458" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Only the newest human message changed, because apply_to_input is the default.</text>
 </svg>

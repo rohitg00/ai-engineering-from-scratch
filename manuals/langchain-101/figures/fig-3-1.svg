@@ -1,52 +1,85 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" role="img" aria-labelledby="fig-3-1-title fig-3-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" role="img" aria-labelledby="fig-3-1-title fig-3-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-3-1-title">What each argument of create_agent builds</title>
-  <desc id="fig-3-1-desc">Six rows map an argument of create_agent to the part of the compiled graph it builds. model builds the model node. tools builds the tools node, with one Send for each tool call. system_prompt and response_format change each model call and add no node. middleware builds hook nodes such as A.before_model, with wrap hooks inside the model and tools nodes. checkpointer saves one checkpoint after each step. A band at the bottom shows the config create_agent sets on every agent: recursion_limit 9999, stream_mode updates, and the ls_integration metadata.</desc>
-  <defs><marker id="fig-3-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
-  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ARGUMENT OF CREATE_AGENT</text>
-  <text x="360" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE COMPILED GRAPH GETS</text>
-  <rect x="20" y="34" width="230" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="32" y="54.25" font-size="12.5" font-weight="700">model</text>
-  <text x="32" y="71.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a string or a chat model</text>
-  <rect x="360" y="34" width="260" height="50" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="372" y="54.25" font-size="12.5" font-weight="700">model node</text>
-  <text x="372" y="71.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">calls the chat model</text>
-  <line x1="250" y1="59" x2="359" y2="59" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
-  <rect x="20" y="98" width="230" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="32" y="118.25" font-size="12.5" font-weight="700">tools</text>
-  <text x="32" y="135.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">functions and BaseTool</text>
-  <rect x="360" y="98" width="260" height="50" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="372" y="118.25" font-size="12.5" font-weight="700">tools node</text>
-  <text x="372" y="135.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one Send for each tool call</text>
-  <line x1="250" y1="123" x2="359" y2="123" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
-  <rect x="20" y="162" width="230" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="32" y="182.25" font-size="12.5" font-weight="700">system_prompt</text>
-  <text x="32" y="199.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a string or SystemMessage</text>
-  <rect x="360" y="162" width="260" height="50" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
-  <text x="372" y="182.25" font-size="12.5" font-weight="700">each model call</text>
-  <text x="372" y="199.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">first message, not in state</text>
-  <line x1="250" y1="187" x2="359" y2="187" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
-  <rect x="20" y="226" width="230" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="32" y="246.25" font-size="12.5" font-weight="700">middleware</text>
-  <text x="32" y="263.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">[A, B, C]</text>
-  <rect x="360" y="226" width="260" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="372" y="246.25" font-size="12.5" font-weight="700">A.before_model and more</text>
-  <text x="372" y="263.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a node per hook, wraps run inside</text>
-  <line x1="250" y1="251" x2="359" y2="251" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
-  <rect x="20" y="290" width="230" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="32" y="310.25" font-size="12.5" font-weight="700">response_format</text>
-  <text x="32" y="327.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a schema or a strategy</text>
-  <rect x="360" y="290" width="260" height="50" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
-  <text x="372" y="310.25" font-size="12.5" font-weight="700">each model call</text>
-  <text x="372" y="327.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a structured tool or a format</text>
-  <line x1="250" y1="315" x2="359" y2="315" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
-  <rect x="20" y="354" width="230" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
-  <text x="32" y="374.25" font-size="12.5" font-weight="700">checkpointer</text>
-  <text x="32" y="391.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">InMemorySaver</text>
-  <rect x="360" y="354" width="260" height="50" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
-  <text x="372" y="374.25" font-size="12.5" font-weight="700">checkpoints</text>
-  <text x="372" y="391.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one after each step</text>
-  <line x1="250" y1="379" x2="359" y2="379" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-teal)"/>
-  <rect x="20" y="432" width="600" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
-  <text x="32" y="452.25" font-size="12.5" font-weight="700">with_config on every agent</text>
-  <text x="32" y="469.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">recursion_limit 9999, stream_mode updates, ls_integration langchain_create_agent</text>
+  <desc id="fig-3-1-desc">Three compiled graphs read from the capture kit. create_agent with a model and no tools has 3 nodes: __start__, model, __end__. Adding tools=[add] adds the tools node, 4 nodes. Adding middleware=[A, B, C] with all four node hooks adds 12 hook nodes, 16 in all, drawn as a grid with the 17 edges of the graph: the before hooks run A, B, C, the after_model hooks run C, B, A, and A.after_model routes to tools, back to A.before_model, or to the after_agent hooks. A dashed amber edge leaves a node with more than one next node. The system_prompt and the response_format add no node. They change each request inside the model node. Every agent gets the config recursion_limit 9999 and stream_mode updates.</desc>
+  <defs><marker id="fig-3-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-1-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE NODES OF THE COMPILED GRAPH</text>
+  <text x="20" y="42" font-size="11.5" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">create_agent(model)</text>
+  <text x="620" y="42" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3 nodes</text>
+  <rect x="20" y="50" width="104" height="24" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="72" y="65.3" font-size="11" text-anchor="middle" font-weight="700">__start__</text>
+  <rect x="160" y="50" width="104" height="24" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="212" y="65.3" font-size="11" text-anchor="middle" font-weight="700">model</text>
+  <rect x="300" y="50" width="104" height="24" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="352" y="65.3" font-size="11" text-anchor="middle" font-weight="700">__end__</text>
+  <line x1="124" y1="62" x2="159" y2="62" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="264" y1="62" x2="299" y2="62" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <text x="20" y="106" font-size="11.5" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">create_agent(model, tools=[add])</text>
+  <text x="620" y="106" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4 nodes</text>
+  <rect x="20" y="114" width="104" height="24" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="72" y="129.3" font-size="11" text-anchor="middle" font-weight="700">__start__</text>
+  <rect x="160" y="114" width="104" height="24" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="212" y="129.3" font-size="11" text-anchor="middle" font-weight="700">model</text>
+  <rect x="300" y="114" width="104" height="24" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="352" y="129.3" font-size="11" text-anchor="middle" font-weight="700">tools</text>
+  <rect x="440" y="114" width="104" height="24" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="492" y="129.3" font-size="11" text-anchor="middle" font-weight="700">__end__</text>
+  <line x1="124" y1="126" x2="159" y2="126" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <path d="M232 138 V150 H492 V139" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-3-1-head-amber)"/>
+  <line x1="264" y1="121" x2="299" y2="121" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-1-head-amber)"/>
+  <line x1="300" y1="131" x2="265" y2="131" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-1-head-amber)"/>
+  <text x="20" y="170" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a graph with no tools has one next node after model. Tools add the tools node and a choice.</text>
+  <text x="20" y="204" font-size="11.5" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">create_agent(model, tools=[add], middleware=[A, B, C])</text>
+  <text x="620" y="204" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">16 nodes, 12 of them hooks</text>
+  <rect x="20" y="228" width="130" height="24" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="85" y="243.3" font-size="11" text-anchor="middle" font-weight="700">__start__</text>
+  <rect x="476" y="282" width="130" height="24" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="541" y="297.3" font-size="11" text-anchor="middle" font-weight="700">model</text>
+  <rect x="20" y="336" width="130" height="24" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="85" y="351.3" font-size="11" text-anchor="middle" font-weight="700">tools</text>
+  <rect x="172" y="228" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="237" y="243.3" font-size="11" text-anchor="middle" font-weight="400">A.before_agent</text>
+  <rect x="20" y="282" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="85" y="297.3" font-size="11" text-anchor="middle" font-weight="400">A.before_model</text>
+  <rect x="172" y="336" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="237" y="351.3" font-size="11" text-anchor="middle" font-weight="400">A.after_model</text>
+  <rect x="324" y="390" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="389" y="405.3" font-size="11" text-anchor="middle" font-weight="400">A.after_agent</text>
+  <rect x="324" y="228" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="389" y="243.3" font-size="11" text-anchor="middle" font-weight="400">B.before_agent</text>
+  <rect x="172" y="282" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="237" y="297.3" font-size="11" text-anchor="middle" font-weight="400">B.before_model</text>
+  <rect x="324" y="336" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="389" y="351.3" font-size="11" text-anchor="middle" font-weight="400">B.after_model</text>
+  <rect x="172" y="390" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="237" y="405.3" font-size="11" text-anchor="middle" font-weight="400">B.after_agent</text>
+  <rect x="476" y="228" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="541" y="243.3" font-size="11" text-anchor="middle" font-weight="400">C.before_agent</text>
+  <rect x="324" y="282" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="389" y="297.3" font-size="11" text-anchor="middle" font-weight="400">C.before_model</text>
+  <rect x="476" y="336" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="541" y="351.3" font-size="11" text-anchor="middle" font-weight="400">C.after_model</text>
+  <rect x="20" y="390" width="130" height="24" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="85" y="405.3" font-size="11" text-anchor="middle" font-weight="400">C.after_agent</text>
+  <rect x="476" y="390" width="130" height="24" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="541" y="405.3" font-size="11" text-anchor="middle" font-weight="700">__end__</text>
+  <path d="M237 336 V321 H71 V307" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-3-1-head-amber)"/>
+  <path d="M237 360 V375 H71 V389" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-3-1-head-amber)"/>
+  <line x1="172" y1="348" x2="151" y2="348" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-1-head-amber)"/>
+  <line x1="302" y1="240" x2="323" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="150" y1="294" x2="171" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="302" y1="402" x2="323" y2="402" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="324" y1="348" x2="303" y2="348" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="454" y1="240" x2="475" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="302" y1="294" x2="323" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="150" y1="402" x2="171" y2="402" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="476" y1="348" x2="455" y2="348" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <path d="M541 252 V267 H85 V281" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="454" y1="294" x2="475" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="150" y1="240" x2="171" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="541" y1="306" x2="541" y2="335" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="85" y1="336" x2="85" y2="307" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <line x1="454" y1="402" x2="475" y2="402" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-1-head-ink)"/>
+  <text x="20" y="464" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Solid: the only next node. Dashed amber: a conditional edge, the next node is chosen at run time.</text>
+  <text x="20" y="482" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">system_prompt and response_format add no node: they change each request inside model.</text>
+  <text x="20" y="500" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Every agent also gets recursion_limit 9999 and stream_mode updates in its config.</text>
 </svg>

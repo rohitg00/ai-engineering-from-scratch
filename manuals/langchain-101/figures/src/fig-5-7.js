@@ -1,13 +1,29 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const { figure } = require('../../../_shared/figkit.js');
 
+const text = fs.readFileSync(path.join(__dirname, '../../capture/out/36-subgraphs.txt'), 'utf8');
+const objectAfter = heading => {
+  const at = text.indexOf('{', text.indexOf(heading));
+  return JSON.parse(text.slice(at, text.indexOf('\n}', at) + 2));
+};
+const prepared = objectAfter("## stream(subgraphs=True)").chunk.prepare.steps;
+const waiting = objectAfter('## state while the subgraph waits')['subgraph values'].steps;
+const final = objectAfter('## resume').steps;
+const parent = final.slice(0, prepared.length);
+const returned = final.slice(prepared.length, final.length - 1);
+if (JSON.stringify(parent) !== JSON.stringify(prepared) || JSON.stringify(returned.slice(0, waiting.length)) !== JSON.stringify(waiting)) {
+  throw new Error('fig-5-7: the final steps list is not the parent list plus the subgraph list');
+}
+const mark = list => list.map((step, i) => (i === 0 && step === parent[0] ? `${step}*` : step));
 const rows = [
-  ['prepare', 'outer', ['outer.prepare']],
-  ['shout', 'inner', ['outer.prepare', 'inner.shout']],
-  ['ask_ok', 'inner', ['outer.prepare', 'inner.shout', 'inner.ask_ok=yes']],
-  ['operator.add', 'parent update', ['outer.prepare', '+', 'outer.prepare*', 'inner.shout', 'inner.ask_ok=yes']],
-  ['finish', 'outer', ['outer.prepare', 'outer.prepare*', 'inner.shout', 'inner.ask_ok=yes', 'outer.finish']],
+  ['prepare', 'outer', prepared],
+  ['shout', 'inner', waiting],
+  ['ask_ok', 'inner', returned],
+  ['operator.add', 'parent update', [...parent, '+', ...mark(returned)]],
+  ['finish', 'outer', [...parent, ...mark(returned), final[final.length - 1]]],
 ];
 
 module.exports = figure('fig-5-7', {

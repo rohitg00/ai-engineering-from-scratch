@@ -1,27 +1,62 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const { figure, color } = require('../../../_shared/figkit.js');
 
+const text = fs.readFileSync(path.join(__dirname, '../../capture/out/33-store.txt'), 'utf8');
+const after = (heading, from = 0) => {
+  const at = text.indexOf('\n[', text.indexOf(heading, from)) + 1;
+  return JSON.parse(text.slice(at, text.indexOf('\n]', at) + 2));
+};
+const namespaces = after('list_namespaces():');
+const shallow = after('list_namespaces(max_depth=2):');
+const found = after("search(('users', 'ada')):");
+const filtered = after("search(('users',), filter=...):");
+const items = [...found, ...filtered].map(([ns, key, value]) => ({ ns: ns.join('/'), key, value: value.text || value.value }));
+const lab = JSON.parse(fs.readFileSync(path.join(__dirname, '../../capture/lab/summary/stores-mac.json'), 'utf8'));
+const partial = Object.entries(lab.backends).filter(([, b]) => b.cases && "search(('users','ali')) partial label" in b.cases);
+if (!partial.length || partial.some(([, b]) => b.cases["search(('users','ali')) partial label"].length)) throw new Error('fig-4-4: a partial label matched in the lab');
+
+const users = [...new Set(namespaces.map(ns => ns[1]))];
+const leaves = namespaces.map(ns => ({ user: ns[1], name: ns[2], path: ns.join('/') }));
+const CX = { 'users/ada/memories': 112, 'users/ada/settings': 306, 'users/grace/memories': 520 };
+const userX = user => {
+  const xs = leaves.filter(l => l.user === user).map(l => CX[l.path]);
+  return (Math.min(...xs) + Math.max(...xs)) / 2;
+};
+
 module.exports = figure('fig-4-4', {
-  height: 340,
+  height: 388,
   title: 'The namespaces of the kit store',
-  desc: 'A tree of namespace labels. The root label users has two children, ada and grace. ada has two children, memories with the keys m1 and m2, and settings with the key theme. grace has one child, memories with the key m1. A shaded area covers ada and both of its children, which is what search with the prefix users, ada returns. grace is outside it.',
+  desc: `A tree of the namespace labels that list_namespaces returned: users, then ${users.join(' and ')}, then ${leaves.map(l => `${l.name} under ${l.user}`).join(', ')}. Under each namespace are its items with their key and value: ${items.map(i => `${i.key} "${i.value}" in ${i.ns}`).join(', ')}. A shaded area covers ada and its two namespaces: search with the prefix users, ada returned those ${found.length} items. A dashed line under the second row shows where list_namespaces with max_depth 2 stops, at ${shallow.length} namespaces. A note says that a partial label such as ali matched nothing in ${partial.length} store backends in the lab.`,
 }, f => {
-  f.rect(20, 124, 372, 172, { fill: color('teal-fill'), stroke: color('teal-ink'), dash: 'dashed' });
-  f.text(32, 288, "search(('users', 'ada'))", { size: 11.5, hue: 'teal', weight: 700 });
-  const node = (cx, y, title, sub, hue) => f.box({ x: cx, y, w: 150, h: sub ? 44 : 34, hue, title, sub, anchor: 'middle', titleSize: 12 });
-  const root = node(320, 16, 'users', null, 'grey');
-  const ada = node(206, 132, 'ada', null, 'violet');
-  const grace = node(500, 132, 'grace', null, 'violet');
-  const join = (parent, child) => f.path(`M${parent.cx} ${parent.y + parent.h} L${parent.cx} ${child.y - 14} L${child.cx} ${child.y - 14} L${child.cx} ${child.y - 1}`, { style: 'call', head: false });
-  join(root, ada);
-  join(root, grace);
-  const mem = node(110, 222, 'memories', 'keys m1, m2', 'teal');
-  const set = node(300, 222, 'settings', 'key theme', 'teal');
-  const gmem = node(500, 222, 'memories', 'key m1', 'teal');
-  join(ada, mem);
-  join(ada, set);
-  join(grace, gmem);
-  f.text(20, 314, "list_namespaces(max_depth=2) stops at the second row: ('users', 'ada') and ('users', 'grace').", { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, 332, 'A user label is a full label. The prefix users, ali matches nothing.', { size: 11, serif: true, hue: 'ink-soft' });
+  const adaLeaves = leaves.filter(l => l.user === 'ada');
+  const left = Math.min(...adaLeaves.map(l => CX[l.path])) - 100;
+  const right = Math.max(...adaLeaves.map(l => CX[l.path])) + 100;
+  f.rect(left, 82, right - left, 252, { fill: color('teal-fill'), stroke: color('teal-ink'), dash: 'dashed' });
+  f.text(left + 10, 324, `search(('users', 'ada')): ${found.length} items`, { size: 11.5, hue: 'teal', weight: 700 });
+
+  const root = f.box({ x: 320, y: 12, w: 120, h: 30, hue: 'grey', title: 'users', anchor: 'middle', titleSize: 12 });
+  const join = (from, to) => f.path(`M${from.cx} ${from.y + from.h} V${to.y - 10} H${to.cx} V${to.y - 1}`, { style: 'call', head: false });
+  const userBox = {};
+  users.forEach(user => {
+    userBox[user] = f.box({ x: userX(user), y: 96, w: 120, h: 30, hue: 'violet', title: user, anchor: 'middle', titleSize: 12 });
+    join(root, userBox[user]);
+  });
+  f.rule(20, 140, 620, 140, { hue: 'ink-mute', dash: 'dashed' });
+  f.text(30, 153, `max_depth=2: ${shallow.length} namespaces`, { size: 11, hue: 'ink-soft' });
+  leaves.forEach(leaf => {
+    const box = f.box({ x: CX[leaf.path], y: 168, w: 140, h: 30, hue: 'teal', title: leaf.name, anchor: 'middle', titleSize: 12 });
+    join(userBox[leaf.user], box);
+    items.filter(item => item.ns === leaf.path).forEach((item, k) => {
+      const y = 216 + k * 36;
+      if (!k) f.rule(CX[leaf.path], 198, CX[leaf.path], y, { hue: 'teal' });
+      f.rect(CX[leaf.path] - 92, y, 184, 30, { fill: color('paper'), stroke: color('teal-ink') });
+      f.text(CX[leaf.path] - 84, y + 13, `key ${item.key}`, { size: 11, weight: 700, hue: 'teal' });
+      f.text(CX[leaf.path] - 84, y + 26, item.value, { size: 11, serif: true, hue: 'ink-soft' });
+    });
+  });
+  f.text(20, 362, `The namespace is a tuple of full labels. A search for ('users', 'ali') returned nothing`, { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 378, `in each of the ${partial.length} backends of the lab, because a label never matches part of another.`, { size: 11, serif: true, hue: 'ink-soft' });
 });

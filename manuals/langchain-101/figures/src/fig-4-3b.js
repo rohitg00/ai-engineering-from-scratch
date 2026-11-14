@@ -1,6 +1,10 @@
 'use strict';
 
+const path = require('path');
 const { figure } = require('../../../_shared/figkit.js');
+const { load } = require('../../../_shared/chart.js');
+
+const recorded = new Set(Object.keys(load(path.join(__dirname, '../../capture/lab/summary/crash-resume-mac.json')).graph.cells).map(cell => cell.split(' ')[2]));
 
 const lanes = [
   { title: 'graph loop', sub: 'Pregel, sync', hue: 'indigo', x: 220 },
@@ -16,6 +20,9 @@ const rows = [
   [0, 3, 'write', 'put, the step', null],
   [0, 1, 'call', 'run finish', '5 after_tool'],
 ];
+
+const drawn = rows.filter(row => row[4]).map(row => row[4].split(' ')[1]);
+if (drawn.length !== recorded.size || drawn.some(name => !recorded.has(name))) throw new Error('fig-4-3b: the kill points differ from the lab summary');
 
 module.exports = figure('fig-4-3b', {
   height: 470,

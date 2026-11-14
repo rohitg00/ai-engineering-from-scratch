@@ -78,7 +78,7 @@ id: fig-4-1
 kind: timeline
 title: the chunks of one agent run in each stream mode
 claim: The same run yields 3 chunks in updates mode, 4 in values mode, 9 in messages mode, and 21 events from stream_events v3.
-caption: Each row is one stream of the same agent run. Each mark is one chunk, placed on the node run that made it. The tools row is the slow_sum agent, which emits two deltas. From capture/out/21-stream-updates-values.txt, capture/out/22-stream-messages.txt, capture/out/23-stream-tasks-custom-debug.txt, capture/out/25-stream-events-v3.txt, and capture/out/26-stream-tools-mode.txt.
+caption: Each row is one stream of the same agent run. Each mark is one chunk, placed on the node run that made it. Colour shows what a chunk carries: indigo a whole state, plum model output, green tool output, amber a task that starts (outlined) or ends. The tools row is the slow_sum agent, which emits two deltas. From capture/out/21-stream-updates-values.txt, capture/out/22-stream-messages.txt, capture/out/23-stream-tasks-custom-debug.txt, capture/out/25-stream-events-v3.txt, and capture/out/26-stream-tools-mode.txt.
 ```
 
 | Mode | One chunk is | Chunks for the add run |

@@ -80,7 +80,7 @@ id: fig-5-4
 kind: sequence
 title: one interrupt and one resume
 claim: The resume runs review from its first line, so the line before interrupt runs twice, and write does not run again.
-caption: Read the rows from top to bottom. Teal arrows are checkpoints, the amber row is the pause, and the rows in the lower half belong to the resume. From capture/out/32-interrupt-resume.txt.
+caption: Read the rows from top to bottom. Teal arrows are checkpoints, the amber row is the pause, and the rows in the lower half belong to the resume. The right column is the log of node bodies that ran. From capture/out/32-interrupt-resume.txt.
 ```
 
 So the code before an `interrupt` must be safe to run twice. The docs ask for side effects before an interrupt to be idempotent {{docs oss/python/langgraph/interrupts}}. Move a side effect after the `interrupt`, or into its own node before the review node.

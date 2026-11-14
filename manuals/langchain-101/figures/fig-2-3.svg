@@ -1,36 +1,54 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-2-3-title">The fields of an AIMessage and its ToolMessage</title>
-  <desc id="fig-2-3-desc">Two cards side by side. The left card is the AIMessage that asks for a tool: type AIMessage, content an empty string, id lc_run--&lt;uuid&gt;-0, and tool_calls with name add, args a 2 and b 3, and id call_1. The right card is the ToolMessage that answers it: content 5, name add, tool_call_id call_1, and status success. A line joins the id call_1 in the tool call to tool_call_id call_1 in the ToolMessage.</desc>
-  <defs><marker id="fig-2-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
-  <rect x="20" y="20" width="280" height="230" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
-  <text x="34" y="44" font-size="13" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">AIMessage</text>
-  <text x="34" y="76" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">content</text>
-  <text x="150" y="76" font-size="11.5">&quot;&quot;</text>
-  <text x="34" y="102" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">id</text>
-  <text x="150" y="102" font-size="11.5">lc_run--&lt;uuid&gt;-0</text>
-  <text x="34" y="128" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">tool_calls</text>
-  <text x="150" y="128" font-size="11.5"></text>
-  <text x="34" y="154" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">  .name</text>
-  <text x="150" y="154" font-size="11.5">add</text>
-  <text x="34" y="180" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">  .args</text>
-  <text x="150" y="180" font-size="11.5">{a: 2, b: 3}</text>
-  <text x="34" y="206" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">  .id</text>
-  <text x="150" y="206" font-size="11.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">call_1</text>
-  <text x="34" y="232" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">usage</text>
-  <text x="150" y="232" font-size="11.5">when reported</text>
-  <rect x="340" y="20" width="280" height="230" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
-  <text x="354" y="44" font-size="13" font-weight="700" fill="var(--m-green-ink, #336b40)">ToolMessage</text>
-  <text x="354" y="76" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">content</text>
-  <text x="470" y="76" font-size="11.5">&quot;5&quot;</text>
-  <text x="354" y="102" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">name</text>
-  <text x="470" y="102" font-size="11.5">add</text>
-  <text x="354" y="128" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">id</text>
-  <text x="470" y="128" font-size="11.5">&lt;uuid&gt;</text>
-  <text x="354" y="154" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">tool_call_id</text>
-  <text x="470" y="154" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">call_1</text>
-  <text x="354" y="180" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">status</text>
-  <text x="470" y="180" font-size="11.5">success</text>
-  <path d="M198 202 L270 202 L270 150 L339 150" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-2-3-head-ink)"/>
-  <text x="20" y="276" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The request for a tool is in tool_calls, already parsed. The content is empty.</text>
-  <text x="20" y="294" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The ToolMessage repeats the id of the call it answers.</text>
+  <desc id="fig-2-3-desc">Three cards read from one agent run. The first is the AIMessage that asks for a tool: content &quot;&quot;, id lc_run--&lt;uuid-2&gt;-0, and tool_calls with name add, args {a: 2, b: 3}, and id call_1. The second is the ToolMessage that answers it: content &quot;5&quot;, name add, tool_call_id call_1, and status success. A dashed line joins the id call_1 in the tool call to tool_call_id call_1. The third, below, is the final AIMessage with content &quot;The sum is 5.&quot; and no tool_calls, which ends the loop. A reply from a real provider also carries usage_metadata, such as 12 input and 6 output tokens in the messages capture.</desc>
+  <defs><marker id="fig-2-3-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-2-3-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker></defs>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="14" width="280" height="200" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="34" y="36" font-size="13" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">AIMessage</text>
+  <text x="34" y="64" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">content</text>
+  <text x="148" y="64" font-size="11.5">&quot;&quot;</text>
+  <text x="34" y="88" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">id</text>
+  <text x="148" y="88" font-size="11.5">lc_run--&lt;uuid-2&gt;-0</text>
+  <text x="34" y="112" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">tool_calls</text>
+  <text x="148" y="112" font-size="11.5"></text>
+  <text x="34" y="136" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">  .name</text>
+  <text x="148" y="136" font-size="11.5">add</text>
+  <text x="34" y="160" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">  .args</text>
+  <text x="148" y="160" font-size="11.5">{a: 2, b: 3}</text>
+  <text x="34" y="184" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">  .id</text>
+  <text x="148" y="184" font-size="11.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">call_1</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="340" y="14" width="280" height="200" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="354" y="36" font-size="13" font-weight="700" fill="var(--m-green-ink, #336b40)">ToolMessage</text>
+  <text x="354" y="64" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">content</text>
+  <text x="468" y="64" font-size="11.5">&quot;5&quot;</text>
+  <text x="354" y="88" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">name</text>
+  <text x="468" y="88" font-size="11.5">add</text>
+  <text x="354" y="112" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">id</text>
+  <text x="468" y="112" font-size="11.5">&lt;uuid-3&gt;</text>
+  <text x="354" y="136" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">tool_call_id</text>
+  <text x="468" y="136" font-size="11.5" font-weight="700" fill="var(--m-green-ink, #336b40)">call_1</text>
+  <text x="354" y="160" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">status</text>
+  <text x="468" y="160" font-size="11.5">success</text>
+  <path d="M195.4 180 L318 180 L318 132 L339 132" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-2-3-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M195.4 180 L318 180 L318 132 L339 132" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="294.21" y="187.42" width="47.58" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="318" y="198" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">same id</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <line x1="400" y1="214" x2="400" y2="241" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" marker-end="url(#fig-2-3-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M400 214 L400 241" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <text x="410" y="232" font-size="11" class="m-serif" fill="var(--m-plum-ink, #8a3d72)">the next model call reads both</text>
+  <rect x="20" y="242" width="600" height="112" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="34" y="264" font-size="13" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">AIMessage, the final answer</text>
+  <text x="34" y="292" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">content</text>
+  <text x="148" y="292" font-size="11.5">&quot;The sum is 5.&quot;</text>
+  <text x="34" y="316" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">tool_calls</text>
+  <text x="148" y="316" font-size="11.5">none, so the agent stops</text>
+  <text x="34" y="340" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">usage</text>
+  <text x="148" y="340" font-size="11.5">12 in, 6 out, when the provider reports it</text>
+  </g>
+  <text x="20" y="376" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The request for a tool is in tool_calls, already parsed, and its content is empty.</text>
+  <text x="20" y="392" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The ToolMessage repeats the id of the call it answers.</text>
 </svg>
