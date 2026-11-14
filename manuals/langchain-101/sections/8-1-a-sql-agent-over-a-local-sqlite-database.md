@@ -2,166 +2,192 @@
 
 > A SQL agent is safe to point at real data when the database refuses writes on the read path and every write pauses for a person, whatever the model does.
 
-Someone asks for an agent that answers questions about the sales database. The first prototype passes the model a connection string and one tool that runs any SQL. It works in the demo. Then a user types "delete the test invoices", and the model writes a `DELETE`.
+Someone asks for an agent that answers questions about the sales database. The first prototype passes the model a connection string and one tool that runs any SQL. It works in the demo. Then a user types "delete the cancelled orders", and the model writes a `DELETE`.
 
 When you finish this section, you can build a SQL agent that reads through a read-only connection and writes only after an approval. You can also tell a model failure from a framework failure in its run.
 
 ## What the demo builds
 
-The demo starts from the SQL agent lab of LangChain Academy, which is MIT licensed {{academy}}. That lab connects `create_agent` to the Chinook music store database, a SQLite file of 11 tables. It reads the database through `SQLDatabase` from `langchain_community`, a package that is being sunset. The demo folder keeps the MIT notice of the lab.
+The demo answers questions about the order book of a small bakery. The script builds the SQLite file on every run, with four tables: `customers`, `products`, `orders`, and `order_items`. The rows come from a seeded random generator, so each run starts from the same data. Nothing is downloaded.
 
-We changed four things. Plain `sqlite3` replaces `SQLDatabase`. The read path is read-only in SQLite itself. Writes go through a separate tool under human review. Each write runs on a copy of the file, so the source never changes.
+The agent has three tools. `describe_database` returns every table with its row count, its columns, and its foreign keys, in one call. `run_select` runs one read query. `request_change` runs one write, and only after a person approves it.
 
 The demo applies these sections:
 
-- [Tools, ToolRuntime, and tool errors](#s-tools-toolruntime-and-tool-errors): each tool returns an `Error:` text in place of a raise, so the model can fix its SQL.
-- [The system prompt](#s-the-system-prompt): the rules of the agent.
-- [Human in the loop, batched and per call](#s-human-in-the-loop-batched-and-per-call): `propose_write` pauses in `per_call` mode.
+- [Tools, ToolRuntime, and tool errors](#s-tools-toolruntime-and-tool-errors): each tool reads the database path from `runtime.context`. A failed query comes back as text, so the model can fix its SQL.
+- [The system prompt](#s-the-system-prompt): the order of work for the agent.
+- [Human in the loop, batched and per call](#s-human-in-the-loop-batched-and-per-call): `request_change` pauses in `per_call` mode.
 - [Security](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses): the model never holds a connection that can write.
-- [The recursion limit](#s-error-handlers-node-timeouts-and-the-recursion-limit): each question runs with `recursion_limit` 30.
+- [The recursion limit](#s-error-handlers-node-timeouts-and-the-recursion-limit): each question runs with `recursion_limit` 25.
 
-## The read path
+## The database path as context
 
-The read tools open the file with `mode=ro` and turn on `query_only`. A second check refuses a statement that is not a `SELECT`, holds a write keyword outside a string literal, or holds two statements. The check is the one of the lab, written again for `sqlite3`:
-
-```listing
-title: the read-only connection and the SELECT check
-source: capture/demos/sql-agent/sql_agent.py
-lang: python
----
-def read_only():
-    conn = sqlite3.connect(f"file:{DB}?mode=ro", uri=True)
-    conn.execute("PRAGMA query_only = ON")
-    return conn
-
-
-def checked_select(sql: str) -> str:
-    sql = sql.strip()
-    if sql.count(";") > 1 or (sql.endswith(";") and ";" in sql[:-1]):
-        raise ValueError("Error: send one statement at a time.")
-    sql = sql.rstrip(";").strip()
-    if not sql.lower().startswith(("select", "with")):
-        raise ValueError("Error: run_query takes only SELECT statements. Use propose_write for a change.")
-    if WRITE_WORDS.search(STRING_LITERAL.sub("''", sql)):
-        raise ValueError("Error: the query holds a write keyword. Use propose_write for a change.")
-    if not LIMIT_AT_END.search(sql):
-        sql += " LIMIT 21"
-    return sql
-```
-
-The keyword check alone is not a defence, because a model can write SQL that the regular expression does not expect. The read-only connection is the defence. The check gives the model a clear error message before SQLite refuses the statement.
-
-`run_query` cuts its result at 20 rows and says so in the text. Without that line, a model that counts the rows it sees gets a wrong number. In the run below, Qwen3 8B read the line and sent a `COUNT(*)` query next.
-
-## The write path
-
-`propose_write` is an ordinary tool. The middleware makes it safe:
+The model never sees the path of the file. The docs present runtime context as the place for a dependency such as a database connection {{docs oss/python/langchain/runtime}}. The demo declares a dataclass `Shop` with one field, `db`, and passes it as `context_schema`. Each tool takes a `runtime: ToolRuntime[Shop]` argument, which `ToolNode` fills and leaves out of the schema that the model gets {{docs oss/python/langchain/tools}}.
 
 ```listing
-title: the agent, with review on the write tool
+title: the agent, with context and review on the write tool
 source: capture/demos/sql-agent/sql_agent.py
 lang: python
 ---
     agent = create_agent(
         model(),
-        tools=[list_tables, describe_table, run_query, propose_write],
-        system_prompt=SYSTEM_PROMPT,
-        middleware=[HumanInTheLoopMiddleware(interrupt_on={"propose_write": {"allowed_decisions": ["approve", "reject"]}}, interrupt_mode="per_call")],
+        tools=[describe_database, run_select, request_change],
+        system_prompt=INSTRUCTIONS,
+        context_schema=Shop,
+        middleware=[
+            HumanInTheLoopMiddleware(
+                interrupt_on={"request_change": {"allowed_decisions": ["approve", "reject"], "description": "A change to the bakery database waits for review"}},
+                interrupt_mode="per_call",
+            )
+        ],
         checkpointer=InMemorySaver(),
     )
 ```
 
-The interrupt needs a checkpointer, so the agent has `InMemorySaver`. The demo answers each interrupt with a scripted reviewer. It approves an `INSERT` into `Genre` and rejects every other write. In a real system, a person reads the SQL and the reason before the resume.
+Each call to `invoke` passes the same `Shop` value, on the first request and on each resume:
+
+```listing
+title: one question, with its context
+source: capture/demos/sql-agent/sql_agent.py
+lang: python
+---
+        result = agent.invoke({"messages": [{"role": "user", "content": question}]}, config, context=shop, version="v2")
+```
+
+## The read path
+
+`run_select` checks the SQL with `guard`, then runs it on a connection from `reader`. The connection refuses writes in three ways. The URI opens the file with `mode=ro`, and the `query_only` pragma refuses writes. An authorizer from the Python `sqlite3` module denies every action except a read.
+
+```listing
+title: the read-only connection and the guard
+source: capture/demos/sql-agent/sql_agent.py
+lang: python
+---
+def reader(path: str) -> sqlite3.Connection:
+    conn = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+    conn.execute("PRAGMA query_only = ON")
+    conn.set_authorizer(lambda action, *_: sqlite3.SQLITE_OK if action in READ_ACTIONS else sqlite3.SQLITE_DENY)
+    return conn
+
+
+def guard(sql: str) -> str:
+    text = sql.strip().rstrip(";").strip()
+    bare = QUOTED.sub("''", text)
+    if ";" in bare:
+        raise ValueError("refused: one statement per call")
+    if "--" in bare or "/*" in bare:
+        raise ValueError("refused: remove the SQL comments")
+    if not re.match(r"(?i)(select|with)\b", bare):
+        raise ValueError("refused: start with SELECT or WITH")
+    word = WRITE_WORD.search(bare)
+    if word:
+        raise ValueError(f"refused: {word.group(0).upper()} changes data, so call request_change")
+    if not TAIL_LIMIT.search(text):
+        text = f"{text} LIMIT {MAX_ROWS + 1}"
+    return text
+```
+
+`guard` blanks each string literal before it looks for a write keyword, so a text value such as `'delete'` is not a write. `REPLACE` counts as a write unless an opening parenthesis follows it, as in the `replace()` function. A query with no `LIMIT n`, `LIMIT n, m`, or `LIMIT n OFFSET m` at its end gets `LIMIT 26`.
+
+The guard alone is not a defence, because a model can write SQL that the regular expressions do not expect. The read-only connection is the defence. The guard gives the model a clear message before SQLite refuses the statement. `run_select` shows at most 25 rows, and it says so in the result when it cuts more.
+
+Before the agent runs, the script sends 13 fixed queries through `guard` and two through `reader`. The log of each run prints the result of each one:
+
+```listing
+title: the guard cases, Qwen3 8B run
+source: capture/lab/sql-agent/run-8b.log
+lang: text
+note: Five accepted cases and one refused case are cut. The long cases are cut by the script at 90 characters.
+---
+== guard
+  sent      SELECT name FROM products  =>  SELECT name FROM products LIMIT 26
+…
+  sent      SELECT 'drop table orders; delete' AS note  =>  SELECT 'drop table orders; delete' AS note LIMIT 26
+…
+  refused   WITH n AS (SELECT 1) REPLACE INTO products (id, name, category, price_cents) SELECT 1, ' …  =>  refused: REPLACE changes data, so call request_change
+  refused   WITH old AS (SELECT id FROM orders) DELETE FROM orders WHERE id IN old  =>  refused: DELETE changes data, so call request_change
+  refused   SELECT 1; DROP TABLE orders  =>  refused: one statement per call
+…
+  refused   DELETE FROM orders  =>  refused: start with SELECT or WITH
+  refused   UPDATE products SET price_cents = 0  =>  refused: start with SELECT or WITH
+  reader    DELETE FROM orders  =>  DatabaseError: not authorized
+  reader    SELECT COUNT(*) FROM orders  =>  [(60,)]
+```
+
+The two `WITH` cases start like a read and still change data, so the keyword check is the step that refuses them. The `reader` lines skip the guard. SQLite itself refused the `DELETE`.
+
+## The write path
+
+`request_change` is an ordinary tool that opens a connection that can write. The middleware makes it safe. In `per_call` mode, each call to the tool raises its own interrupt before the tool body runs {{code libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py}}. The interrupt value carries the id of the tool call, its name, and its arguments.
+
+The demo answers each interrupt with a scripted reviewer. It approves an `INSERT` into `products` and refuses every other change. In a real system, a person reads the statement and the reason before the resume. The interrupt needs a checkpointer, so the agent has `InMemorySaver`.
+
+Qwen3 8B added the product after one approval:
+
+```listing
+title: the approved insert, Qwen3 8B
+source: capture/lab/sql-agent/run-8b.log
+lang: text
+note: The result of describe_database is cut.
+---
+== add-product: Add a new product: Rye Loaf, category bread, price 4.50.
+  tool call  describe_database({})
+…
+  tool call  request_change({"statement": "INSERT INTO products (name, category, price_cents) VALUES ('Rye Loaf', 'bread', 450);", "reason": "Adding a new product to  …)
+  paused     approved: new products are allowed
+  tool says  change applied, 1 row(s)
+  final      The product "Rye Loaf" has been successfully added to the bakery's menu with the category "bread" and a price of $4.50.
+  3 model calls, 1524 prompt tokens, 111 output tokens, 6.6 s
+```
+
+Qwen3 4B looked up the cancelled orders and proposed a `DELETE` of four ids. The reviewer refused it. The middleware sent the reason back to the model as the result of the call, and no row changed:
+
+```listing
+title: the refused delete, Qwen3 4B
+source: capture/lab/sql-agent/run-4b.log
+lang: text
+note: The result of describe_database is cut.
+---
+== drop-cancelled: Delete all of the cancelled orders.
+  tool call  describe_database({})
+…
+  tool call  run_select({"sql": "SELECT o.id FROM orders o WHERE o.status = 'cancelled'"})
+  tool says  {"columns": ["id"], "rows": [[13], [15], [21], [32]]}
+  tool call  request_change({"statement": "DELETE FROM orders WHERE id IN (13, 15, 21, 32)", "reason": "Remove all cancelled orders from the database."})
+  paused     refused: only new products are allowed
+  tool says  User rejected the tool call for `request_change` with reason: Refused by the reviewer. This agent can only add products.
+  final      The request to delete cancelled orders was rejected because the agent can only add products, not delete or modify existing data. No changes were made to the database.
+```
 
 ## The recorded run
 
-The demo asks five questions. They ask for the tables, the largest table, and the genre with the longest tracks. Then they ask to add the genre Chiptune and to delete the invoices of 2009. The script computes the right answers with its own SQL first. It runs once with Qwen3 4B and once with Qwen3 8B on Ollama, at temperature 0 and seed 42.
+The demo asks five questions. They ask for the tables and their row counts, the customer with the largest total on paid orders, and the orders of March 2026. Then they ask to add a product and to delete the cancelled orders. The script computes the right answers with its own SQL first. It runs once with Qwen3 4B and once with Qwen3 8B on Ollama, at temperature 0 and seed 42, with reasoning off.
 
-Qwen3 8B answered the genre question with three tool calls:
-
-```listing
-title: the genre question, Qwen3 8B
-source: capture/lab/sql-agent/run-8b.log
-lang: text
-note: The tool results are cut.
----
-== genre: Which genre has the longest tracks on average?
-  call       list_tables({})
-…
-  call       describe_table({"table": "Track"})
-…
-  call       run_query({"sql": "SELECT Genre.Name, AVG(Track.Milliseconds) AS AvgLength FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY …)
-…
-  answer     The genre with the longest tracks on average is "Sci Fi & Fantasy" with an average length of approximately 2,911,783 milliseconds.
-  model calls 4, prompt tokens 2081, output tokens 129, 11.0 s
-```
-
-The write question paused before any SQL ran. The reviewer approved, and one row went into the copy of the database:
-
-```listing
-title: the approved write, Qwen3 8B
-source: capture/lab/sql-agent/run-8b.log
-lang: text
-note: The read calls in the middle are cut.
----
-== add-genre: Add a new genre named Chiptune.
-  interrupt  propose_write({"sql": "INSERT INTO Genre (Name) VALUES ('Chiptune');", "reason": "Adding a new genre named Chiptune."})
-  reviewer   approve: an INSERT into Genre is on the allow list
-…
-  answer     The genre "Chiptune" has been successfully added. 1 row was inserted.
-```
-
-Qwen3 4B proposed the `DELETE`, and the reviewer rejected it. The middleware sent the reason back to the model as the result of the call, and no row changed:
-
-```listing
-title: the rejected delete, Qwen3 4B
-source: capture/lab/sql-agent/run-4b.log
-lang: text
----
-  interrupt  propose_write({"sql": "DELETE FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2009'", "reason": "Delete all invoices from 2009 as  …)
-  reviewer   reject: not on the allow list
-```
-
-## What the run shows
-
-**We measured** one run of each model on the Mac, Apple M1 Max, 10 cores, 64 GiB, with Ollama 0.31.1. Each model got the same five questions, so n is 5 per model. A run counts as right when the answer names the right value or the database holds the right rows afterwards.
+**We measured** one run of each model on the Mac, Apple M1 Max, 10 cores, 64 GiB, with Ollama 0.31.1. Each model got the same five questions, so n is 5 per model. A read counts as right when the answer names the right values. A write counts as right when the database holds the right rows afterwards.
 
 | Question | Qwen3 4B | Qwen3 8B |
 |---|---|---|
-| list the tables | right, 2 model calls | right, 2 model calls |
-| the largest table | `GraphRecursionError` after 10 model calls | `GraphRecursionError` after 10 model calls |
-| the longest genre | stopped with a plan and no query | right, Sci Fi & Fantasy |
-| add a genre | stopped with a plan, no write proposed | approved, 1 row added |
-| delete the 2009 invoices | proposed, rejected, 83 invoices kept | counted 83, stopped before a proposal |
+| the tables and their rows | right, 2 model calls, 4.0 s | right, 2 model calls, 4.9 s |
+| the top customer | right, Garden Bistro at 100550 cents, 3 calls, 2.5 s | right, the same, 3 calls, 7.8 s |
+| the orders of March 2026 | right, 18, 3 calls, 1.7 s | right, 18, 3 calls, 4.0 s |
+| add a product | approved, 1 row added, 4 calls, 10.4 s | approved, 1 row added, 3 calls, 6.6 s |
+| delete the cancelled orders | proposed, refused, 4 kept, 4 calls, 3.3 s | proposed, refused, 4 kept, 4 calls, 8.9 s |
 
-Qwen3 4B ended the genre question with a plan in place of a query:
+Both models got all five right, and each one called `describe_database` first on every question. Qwen3 4B used 9,862 prompt tokens over the five questions, and Qwen3 8B used 8,739. The most model calls on one question was 4, so no question came near the recursion limit.
 
-```listing
-title: the genre question, Qwen3 4B
-source: capture/lab/sql-agent/run-4b.log
-lang: text
-note: The tool results are cut.
----
-== genre: Which genre has the longest tracks on average?
-  call       list_tables({})
-…
-  call       describe_table({"table": "Track"})
-…
-  call       describe_table({"table": "Genre"})
-…
-  answer     To determine which genre has the longest tracks on average, I need to join the `Track` and `Genre` tables using their `GenreId` column. The average track length is calculated using the `Milliseconds` column from the `Track` table. I will now run a query to find the genre with the longest average track length.
-```
+## What the run shows
 
-Read the table in two layers. The framework part held in every row. No write ran without an approval, the read connection refused writes, and the source file still had 25 genres at the end. The recursion limit stopped both runs of the largest-table question at 30 steps.
+Read the table in two layers. The framework part held in every row. No write ran without an approval, the read connection refused a write, and the cancelled orders were still there at the end.
 
-The rest are model results. Qwen3 4B twice described its next query and then ended the turn without calling the tool. Both models described the tables one at a time for the largest-table question, and the plan needed more steps than the limit allowed. A tool that returns the row counts of all tables in one call would shorten that plan. LangChain did what the code asked in each case.
+The rest are model results, and two of them are wrong in the text only. Qwen3 4B stored a price of 450 cents and then told the user the price was 4.50 cents. Qwen3 8B read all 60 orders before its refused `DELETE`, and got 25 rows with the note that the result was cut. Then it ended its turn with a promise of a list that it never sent. LangChain did what the code asked in each case.
 
 ```takeaways
 - Open the read path with a read-only connection, and treat a keyword check as an error message only.
+- Pass the database path as context, so the model never sees it.
 - Put every write behind its own tool, and pause that tool with per_call review.
+- Give the model one tool that describes every table, with its row count.
 - Say in the tool result when you cut rows, so the model does not count a partial list.
-- Set recursion_limit for each question, and read GraphRecursionError as a plan that needed more steps.
-- Separate model failures from framework failures before you change the agent.
+- Check the stored rows after a write, because the reply can state a wrong value.
 ```
 
-Sources: capture/demos/sql-agent/sql_agent.py, capture/demos/sql-agent/run.sh, capture/demos/sql-agent/README.md, capture/demos/sql-agent/LICENSE-langchain-academy; capture/lab/sql-agent/run-4b.log, capture/lab/sql-agent/run-8b.log, capture/lab/sql-agent/run-4b.jsonl, capture/lab/sql-agent/run-8b.jsonl, capture/lab/summary/demos-mac.json; langchain-ai/lca-langchainV1-essentials at commit ab3492d (python_local, sql_db.py, studio/sql_agent1.py, L1_fast_agent.ipynb), MIT.
+Sources: capture/demos/sql-agent/sql_agent.py, capture/demos/sql-agent/run.sh, capture/demos/sql-agent/README.md; capture/lab/sql-agent/run-4b.log, capture/lab/sql-agent/run-8b.log, capture/lab/sql-agent/run-4b.jsonl, capture/lab/sql-agent/run-8b.jsonl, capture/lab/summary/demos-mac.json; libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; libs/prebuilt/langgraph/prebuilt/tool_node.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/runtime, oss/python/langchain/tools, oss/python/langchain/human-in-the-loop).

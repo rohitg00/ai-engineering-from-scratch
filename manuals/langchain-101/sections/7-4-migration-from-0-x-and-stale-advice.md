@@ -1,6 +1,6 @@
 # Migration from 0.x, and stale advice
 
-> Most 0.x code moved to `langchain-classic` or changed its name, and old advice survives in tutorials, course notebooks, and some docs pages, so check each import against the pin.
+> Most 0.x code moved to `langchain-classic` or changed its name, and old advice survives in tutorials, notebooks, and some docs pages, so check each import against the pin.
 
 You open a project from 2024. It imports `AgentExecutor` from `langchain.agents`, a loader from `langchain_community`, and `MultiServerMCPClient` from `langchain_mcp_adapters`. On `langchain` 1.5.0 the first import fails, the second comes from a package that is sunset, and the third conflicts with `langchain[mcp]`.
 
@@ -102,23 +102,13 @@ These pages still teach an older state at docs commit `04d4d4a`. Each one has an
 | `oss/python/deepagents/overview` | planning named as a default in its first paragraph | D109 |
 | `oss/python/langgraph/local-server` | the old name LangGraph Studio | D116 |
 
-## Stale code in LangChain Academy
+## Old notebooks and tutorials
 
-LangChain Academy teaches the stack in courses with notebooks in public repositories {{academy}}. Most of the code is current. These old APIs still appear in the repositories we read on 2026-11-14:
+A notebook or a tutorial runs on the versions that its author locked. A floor such as `langchain>=0.3.9` lets pip install 1.5.0, so the code then runs on a line that its author never tested. Read the lockfile first, then run the code with warnings shown. The table of moved imports above gives the fix for each old name.
 
-| Old API | Where it still appears | Current replacement |
-|---|---|---|
-| `from langgraph.errors import NodeInterrupt` | `langchain-academy`, module 3, the dynamic breakpoints lesson | `interrupt()` from `langgraph.types`, then `Command(resume=...)` |
-| `from langgraph.constants import Send` | `langchain-academy`, module 4, the studio files for map reduce and the research assistant | `from langgraph.types import Send` |
-| `from langgraph.prebuilt import create_react_agent`, with `prompt=` | `ambient-agent-101`, the ambient agent notebook | `create_agent` from `langchain.agents`, with `system_prompt=` |
-| `write_todos` as a default tool of a deep agent | `langgraph-101`, the deep agents notebooks, locked to `deepagents` 0.5.3 | `create_deep_agent(..., middleware=[TodoListMiddleware()])` |
-| `MultiServerMCPClient` from `langchain_mcp_adapters` | the MCP lessons of `lca-lc-foundations`, `lca-langchainV1-essentials`, and `lca-deepagents` | `MCPAdapter` from `langchain.mcp` |
-| `WikipediaLoader` from `langchain_community` | `langchain-academy`, module 4, parallelization and the research assistant | the same import works, from a sunset package. Prefer a maintained package |
-| `from langchain_community.chat_models import ChatOllama`, as text in sample logs | `langchain-academy`, module 4, the subgraph notebook | `from langchain_ollama import ChatOllama`, or `init_chat_model("ollama:<model>")` |
-| `langchain>=0.3.9`, `langgraph>=0.4.2` as floors | `ambient-agent-101`, its `pyproject.toml` | floors on the 1.x lines, from a lockfile |
-| `deepagents==0.5.9`, and `deepagents>=0.6,<0.7` | `lca-deployment` and `lca-engine` | the pin of this manual, 0.7.38, with the tests run again |
+Two of those old names still import at the pin and warn. `NodeInterrupt` warns that it is deprecated and points to `interrupt` {{code libs/langgraph/langgraph/errors.py}}. An import of `Send` from `langgraph.constants` warns and points to `langgraph.types` {{code libs/langgraph/langgraph/constants.py}}.
 
-The import of `ChatOllama` from `langchain_community.chat_models` fails at the pin with `ImportError`. Each of the other rows still runs, and most of them warn. Static `interrupt_before` on `compile` is not stale: the course uses it for breakpoints, and it is still supported. Teach `interrupt()` first, and keep `interrupt_before` for debugging.
+Static `interrupt_before` on `compile` is not stale, because `compile` still accepts it {{code libs/langgraph/langgraph/graph/state.py}}. Teach `interrupt()` first, and keep `interrupt_before` for debugging.
 
 ```takeaways
 - Pin every package in a lockfile before you move 0.x code.
@@ -129,4 +119,4 @@ The import of `ChatOllama` from `langchain_community.chat_models` fails at the p
 - Read the changelog of each minor release before you raise it.
 ```
 
-Sources: capture/out/31-durability.txt, capture/out/24-stream-v2.txt; libs/langchain/langchain_classic/chains/llm.py, libs/langchain/langchain_classic/hub.py, libs/langchain/langchain_classic/agents/initialize.py, and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/errors.py, libs/prebuilt/langgraph/prebuilt/chat_agent_executor.py, and libs/checkpoint/langgraph/checkpoint/memory/__init__.py at langgraph 1.2.22; the GitHub releases langchain==0.3.30, langchain-core==0.3.86, langchain-core==1.7.0, langchain==1.5.0, and deepagents==0.7.0; docs.langchain.com at docs commit 04d4d4a (oss/python/migrate/langchain-v1, oss/python/migrate/langgraph-v1, oss/python/release-policy, oss/python/releases/changelog, and the pages in the stale table); LangChain Academy repositories langchain-academy, ambient-agent-101, langgraph-101, lca-lc-foundations, lca-langchainV1-essentials, lca-deepagents, lca-deployment, and lca-engine, read 2026-11-14.
+Sources: capture/out/31-durability.txt, capture/out/24-stream-v2.txt; libs/langchain/langchain_classic/chains/llm.py, libs/langchain/langchain_classic/hub.py, libs/langchain/langchain_classic/agents/initialize.py, and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/errors.py, libs/langgraph/langgraph/constants.py, libs/langgraph/langgraph/graph/state.py, libs/prebuilt/langgraph/prebuilt/chat_agent_executor.py, and libs/checkpoint/langgraph/checkpoint/memory/__init__.py at langgraph 1.2.22; the GitHub releases langchain==0.3.30, langchain-core==0.3.86, langchain-core==1.7.0, langchain==1.5.0, and deepagents==0.7.0; docs.langchain.com at docs commit 04d4d4a (oss/python/migrate/langchain-v1, oss/python/migrate/langgraph-v1, oss/python/release-policy, oss/python/releases/changelog, and the pages in the stale table).

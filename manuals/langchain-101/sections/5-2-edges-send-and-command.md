@@ -110,7 +110,7 @@ note: Three of the six chunks of the updates stream, cut to the jokes key.
 
 The three tasks write `jokes` in the same step, so the key needs the reducer of section 5.1. The docs page for `Send` and `Command` calls this pattern map-reduce {{docs oss/python/langgraph/graph-api-send-command}}.
 
-Import `Send` from `langgraph.types`. An import from `langgraph.constants` still works at the pin, and it warns that the path is deprecated {{code libs/langgraph/langgraph/constants.py}}. Some LangChain Academy files still use the old path {{academy langchain-academy}}. This manual records the disagreement as conflict D303.
+Import `Send` from `langgraph.types`. An import from `langgraph.constants` still works at the pin, and it warns that the path is deprecated {{code libs/langgraph/langgraph/constants.py}}.
 
 ## Command: update and route in one return
 
@@ -166,4 +166,4 @@ Use a conditional edge when the route depends only on the state. Use `Command` w
 - Import Send and Command from langgraph.types.
 ```
 
-Sources: capture/s_graph.py, capture/out/34-stategraph-reducers-send-command.txt; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/constants.py, and libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/graph-api, oss/python/langgraph/graph-api-send-command); LangChain Academy, langchain-academy repository, read 2026-11-14.
+Sources: capture/s_graph.py, capture/out/34-stategraph-reducers-send-command.txt; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/constants.py, and libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/graph-api, oss/python/langgraph/graph-api-send-command).

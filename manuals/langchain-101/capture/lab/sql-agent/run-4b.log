@@ -1,70 +1,67 @@
 model qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42
-expected: 11 tables; largest PlaylistTrack with 8715 rows; longest genre Sci Fi & Fantasy at 2911783 ms; 83 invoices in 2009
-database before: {"genres": 25, "chiptune": 0, "invoices_2009": 83}
+database built: {"customers": 8, "order_items": 162, "orders": 60, "products": 10}, data digest 12e6ab279419b666
+expected: top customer Garden Bistro with 100550 cents; 18 orders in March 2026
+before: {"products": 10, "rye_loaf": 0, "orders": 60, "cancelled": 4}
 
-== tables: Please list all of the tables.
-  call       list_tables({})
-  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
-  answer     The tables in the database are: Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, and Track.
-  model calls 2, prompt tokens 972, output tokens 49, 1.2 s
+== guard
+  sent      SELECT name FROM products  =>  SELECT name FROM products LIMIT 26
+  sent      select name from products limit 5  =>  select name from products limit 5
+  sent      SELECT name FROM products LIMIT 5, 10  =>  SELECT name FROM products LIMIT 5, 10
+  sent      SELECT name FROM products LIMIT 5 OFFSET 10  =>  SELECT name FROM products LIMIT 5 OFFSET 10
+  sent      WITH paid AS (SELECT * FROM orders WHERE status = 'paid') SELECT COUNT(*) FROM paid  =>  WITH paid AS (SELECT * FROM orders WHERE status = 'paid') SELECT COUNT(*) FROM paid LIMIT 26
+  sent      SELECT 'drop table orders; delete' AS note  =>  SELECT 'drop table orders; delete' AS note LIMIT 26
+  sent      SELECT replace(name, ' ', '-') FROM products  =>  SELECT replace(name, ' ', '-') FROM products LIMIT 26
+  refused   WITH n AS (SELECT 1) REPLACE INTO products (id, name, category, price_cents) SELECT 1, ' …  =>  refused: REPLACE changes data, so call request_change
+  refused   WITH old AS (SELECT id FROM orders) DELETE FROM orders WHERE id IN old  =>  refused: DELETE changes data, so call request_change
+  refused   SELECT 1; DROP TABLE orders  =>  refused: one statement per call
+  refused   SELECT * FROM orders -- WHERE status = 'paid'  =>  refused: remove the SQL comments
+  refused   DELETE FROM orders  =>  refused: start with SELECT or WITH
+  refused   UPDATE products SET price_cents = 0  =>  refused: start with SELECT or WITH
+  reader    DELETE FROM orders  =>  DatabaseError: not authorized
+  reader    SELECT COUNT(*) FROM orders  =>  [(60,)]
 
-== largest: Which table has the largest number of rows?
-  call       list_tables({})
-  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
-  call       describe_table({"table": "Album"})
-  result     Album: AlbumId INTEGER PRIMARY KEY; Title NVARCHAR(160); ArtistId INTEGER; ArtistId REFERENCES Artist(ArtistId)
-  call       describe_table({"table": "Artist"})
-  result     Artist: ArtistId INTEGER PRIMARY KEY; Name NVARCHAR(120)
-  call       describe_table({"table": "Customer"})
-  result     Customer: CustomerId INTEGER PRIMARY KEY; FirstName NVARCHAR(40); LastName NVARCHAR(20); Company NVARCHAR(80); Address NVARCHAR( …
-  call       describe_table({"table": "Employee"})
-  result     Employee: EmployeeId INTEGER PRIMARY KEY; LastName NVARCHAR(20); FirstName NVARCHAR(20); Title NVARCHAR(30); ReportsTo INTEGER;  …
-  call       describe_table({"table": "Genre"})
-  result     Genre: GenreId INTEGER PRIMARY KEY; Name NVARCHAR(120)
-  call       describe_table({"table": "Invoice"})
-  result     Invoice: InvoiceId INTEGER PRIMARY KEY; CustomerId INTEGER; InvoiceDate DATETIME; BillingAddress NVARCHAR(70); BillingCity NVARC …
-  call       describe_table({"table": "InvoiceLine"})
-  result     InvoiceLine: InvoiceLineId INTEGER PRIMARY KEY; InvoiceId INTEGER; TrackId INTEGER; UnitPrice NUMERIC(10,2); Quantity INTEGER; T …
-  call       describe_table({"table": "MediaType"})
-  result     MediaType: MediaTypeId INTEGER PRIMARY KEY; Name NVARCHAR(120)
-  call       describe_table({"table": "Playlist"})
-  result     Playlist: PlaylistId INTEGER PRIMARY KEY; Name NVARCHAR(120)
-  raised     GraphRecursionError: Recursion limit of 30 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
-  model calls 10, prompt tokens 8103, output tokens 197, 12.0 s
+== tables: Which tables are in the database, and how many rows does each one hold?
+  tool call  describe_database({})
+  tool says  customers (8 rows): id INTEGER, name TEXT, district TEXT order_items (162 rows): order_id INTEGER, product_id INTEGER, quantity INTEGER; product_id  …
+  final      The database contains the following tables with their respective row counts: - `customers`: 8 rows - `order_items`: 162 rows - `orders`: 60 rows - `products`: 10 rows These tables are related through foreign keys, such as `order_items` linking to `orders` and `products`.
+  2 model calls, 1001 prompt tokens, 89 output tokens, 4.0 s
 
-== genre: Which genre has the longest tracks on average?
-  call       list_tables({})
-  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
-  call       describe_table({"table": "Track"})
-  result     Track: TrackId INTEGER PRIMARY KEY; Name NVARCHAR(200); AlbumId INTEGER; MediaTypeId INTEGER; GenreId INTEGER; Composer NVARCHAR …
-  call       describe_table({"table": "Genre"})
-  result     Genre: GenreId INTEGER PRIMARY KEY; Name NVARCHAR(120)
-  answer     To determine which genre has the longest tracks on average, I need to join the `Track` and `Genre` tables using their `GenreId` column. The average track length is calculated using the `Milliseconds` column from the `Track` table. I will now run a query to find the genre with the longest average track length.
-  model calls 4, prompt tokens 2270, output tokens 126, 6.3 s
+== top-customer: Which customer has spent the most on paid orders, and how much?
+  tool call  describe_database({})
+  tool says  customers (8 rows): id INTEGER, name TEXT, district TEXT order_items (162 rows): order_id INTEGER, product_id INTEGER, quantity INTEGER; product_id  …
+  tool call  run_select({"sql": "SELECT SUM(oi.quantity * p.price_cents) AS total_spent, c.name AS customer_name FROM orders o JOIN customers c ON o.customer_id = …)
+  tool says  {"columns": ["total_spent", "customer_name"], "rows": [[100550, "Garden Bistro"]]}
+  final      Garden Bistro has spent the most on paid orders, totaling 100550 cents.
+  3 model calls, 1691 prompt tokens, 133 output tokens, 2.5 s
 
-== add-genre: Add a new genre named Chiptune.
-  call       list_tables({})
-  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
-  call       describe_table({"table": "Genre"})
-  result     Genre: GenreId INTEGER PRIMARY KEY; Name NVARCHAR(120)
-  answer     The Genre table has a GenreId (INTEGER PRIMARY KEY) and a Name (NVARCHAR(120)) column. Since the Name column is where genre names are stored, I can now propose to add a new genre named "Chiptune" to the database.
-  model calls 3, prompt tokens 1649, output tokens 166, 7.4 s
+== march: How many orders were placed in March 2026?
+  tool call  describe_database({})
+  tool says  customers (8 rows): id INTEGER, name TEXT, district TEXT order_items (162 rows): order_id INTEGER, product_id INTEGER, quantity INTEGER; product_id  …
+  tool call  run_select({"sql": "SELECT COUNT(*) AS order_count FROM orders WHERE placed_on LIKE '2026-03-%'"})
+  tool says  {"columns": ["order_count"], "rows": [[18]]}
+  final      18 orders were placed in March 2026.
+  3 model calls, 1620 prompt tokens, 71 output tokens, 1.7 s
 
-== delete: Delete every invoice from 2009.
-  interrupt  propose_write({"sql": "DELETE FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2009'", "reason": "Delete all invoices from 2009 as  …)
-  reviewer   reject: not on the allow list
-  call       list_tables({})
-  result     Album, Artist, Customer, Employee, Genre, Invoice, InvoiceLine, MediaType, Playlist, PlaylistTrack, Track
-  call       describe_table({"table": "Invoice"})
-  result     Invoice: InvoiceId INTEGER PRIMARY KEY; CustomerId INTEGER; InvoiceDate DATETIME; BillingAddress NVARCHAR(70); BillingCity NVARC …
-  call       run_query({"sql": "SELECT InvoiceDate FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2009'"})
-  result     [["2009-01-01 00:00:00"], ["2009-01-02 00:00:00"], ["2009-01-03 00:00:00"], ["2009-01-06 00:00:00"], ["2009-01-11 00:00:00"], [" …
-  call       run_query({"sql": "SELECT COUNT(*) FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2009'"})
-  result     [[83]]
-  call       propose_write({"sql": "DELETE FROM Invoice WHERE strftime('%Y', InvoiceDate) = '2009'", "reason": "Delete all invoices from 2009 as requested  …)
-  result     User rejected the tool call for `propose_write` with reason: Rejected by the reviewer: only new genres may be added.
-  answer     The user rejected the deletion of invoices from 2009, as only new genres may be added. There are 83 invoices from 2009 in the database, but no changes were made to the data.
-  model calls 6, prompt tokens 5708, output tokens 455, 22.0 s
+== add-product: Add a new product: Rye Loaf, category bread, price 4.50.
+  tool call  describe_database({})
+  tool says  customers (8 rows): id INTEGER, name TEXT, district TEXT order_items (162 rows): order_id INTEGER, product_id INTEGER, quantity INTEGER; product_id  …
+  tool call  run_select({"sql": "SELECT * FROM products;"})
+  tool says  {"columns": ["id", "name", "category", "price_cents"], "rows": [[1, "Sourdough Loaf", "bread", 520], [2, "Seeded Batch", "bread", 460], [3, "Baguett …
+  tool call  request_change({"statement": "INSERT INTO products (name, category, price_cents) VALUES ('Rye Loaf', 'bread', 450);", "reason": "Add new product 'Rye Loa …)
+  paused     approved: new products are allowed
+  tool says  change applied, 1 row(s)
+  final      The new product "Rye Loaf" has been successfully added to the products table with a price of 4.50 cents in the "bread" category.
+  4 model calls, 3234 prompt tokens, 431 output tokens, 10.4 s
 
-database after: {"genres": 25, "chiptune": 0, "invoices_2009": 83}
-source file unchanged: 25 genres
+== drop-cancelled: Delete all of the cancelled orders.
+  tool call  describe_database({})
+  tool says  customers (8 rows): id INTEGER, name TEXT, district TEXT order_items (162 rows): order_id INTEGER, product_id INTEGER, quantity INTEGER; product_id  …
+  tool call  run_select({"sql": "SELECT o.id FROM orders o WHERE o.status = 'cancelled'"})
+  tool says  {"columns": ["id"], "rows": [[13], [15], [21], [32]]}
+  tool call  request_change({"statement": "DELETE FROM orders WHERE id IN (13, 15, 21, 32)", "reason": "Remove all cancelled orders from the database."})
+  paused     refused: only new products are allowed
+  tool says  User rejected the tool call for `request_change` with reason: Refused by the reviewer. This agent can only add products.
+  final      The request to delete cancelled orders was rejected because the agent can only add products, not delete or modify existing data. No changes were made to the database.
+  4 model calls, 2316 prompt tokens, 133 output tokens, 3.3 s
+
+after: {"products": 11, "rye_loaf": 1, "orders": 60, "cancelled": 4}

@@ -42,9 +42,8 @@ The sources have a rank. When two of them disagree, the higher one wins, and the
 | 1 | The source code at the tags above | every class, parameter, default, and error text | `code` |
 | 2 | The documentation at docs.langchain.com, built from commit `04d4d4a` of its repository, MIT license | the documented behaviour, in our own words | `docs` |
 | 3 | The changelog and the release notes of each package | when a change came, and in which package | `docs` for the changelog page, `code` for a release |
-| 4 | LangChain Academy, the courses LangChain publishes, and their MIT repositories | the order in which LangChain teaches the stack, and the starting points of Part 8 | `academy` |
-| 5 | The capture kit in `capture/` | every listing | the file name |
-| 6 | The lab recordings in `capture/lab/` | every measured number | the file name |
+| 4 | The capture kit in `capture/` | every listing | the file name |
+| 5 | The lab recordings in `capture/lab/` | every measured number | the file name |
 
 GitHub issues and pull requests are evidence for a behaviour at the pin, and the text names each one by its number. The product pages at www.langchain.com have no open license. Section 1.1 states their claims in our words and sets each one beside our result.
 

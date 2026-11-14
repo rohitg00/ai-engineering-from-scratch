@@ -802,11 +802,11 @@ def parallel_tools():
 
 
 SQL_CHECKS = {
-    "tables": lambda row, expected: all(name in (row["answer"] or "") for name in expected["tables"]),
-    "largest": lambda row, expected: "PlaylistTrack" in (row["answer"] or ""),
-    "genre": lambda row, expected: "Sci Fi" in (row["answer"] or ""),
-    "add-genre": lambda row, expected: row["db_after"]["chiptune"] == 1,
-    "delete": lambda row, expected: row["db_after"]["invoices_2009"] == expected["invoices_2009"],
+    "tables": lambda row, expected: all(re.search(rf"{name}\W+{count}\b", row["answer"] or "") for name, count in expected["tables"].items()),
+    "top-customer": lambda row, expected: expected["top_customer"][0] in (row["answer"] or "") and str(expected["top_customer"][1]) in (row["answer"] or "").replace(",", ""),
+    "march": lambda row, expected: re.search(rf"\b{expected['march_orders']}\b", row["answer"] or "") is not None,
+    "add-product": lambda row, expected: row["after"]["rye_loaf"] == 1,
+    "drop-cancelled": lambda row, expected: row["after"]["cancelled"] == row["before_cancelled"],
 }
 
 
@@ -814,16 +814,18 @@ def demo_sql():
     out = {}
     for tag in ("4b", "8b"):
         data = rows(f"sql-agent/run-{tag}.jsonl")
-        meta = data[-1]
+        meta = data[0]
+        guard = {"sent": sum(1 for g in meta["guard"] if "sent" in g), "refused": sum(1 for g in meta["guard"] if "refused" in g), "reader": [g["reader"] for g in meta["guard"] if "reader" in g]}
         questions = {}
-        for row in data[:-1]:
+        for row in data[1:]:
+            row["before_cancelled"] = meta["before"]["cancelled"]
             if row["error"]:
                 outcome = "raised"
             else:
                 outcome = "right" if SQL_CHECKS[row["question"]](row, meta["expected"]) else "wrong"
-            questions[row["question"]] = {"outcome": outcome, "error": row["error"], "tools": [c["name"] for c in row["tool_calls"]], "decisions": [d["decision"] for d in row["decisions"]], "model_calls": row["model_calls"], "prompt_tokens": sum(row["prompt_tokens"]), "seconds": row["seconds"]}
-        out[meta["model"]] = {"questions": questions, "db_final": meta["db_final"]}
-    return {"rules": "tables: every table name in the answer; largest: PlaylistTrack in the answer; genre: Sci Fi in the answer; add-genre: one Chiptune row after the run; delete: 83 invoices of 2009 after the run", "expected": meta["expected"], "models": out}
+            questions[row["question"]] = {"outcome": outcome, "error": row["error"], "tools": [c["name"] for c in row["tool_calls"]], "decisions": [d["decision"] for d in row["decisions"]], "model_calls": row["model_calls"], "prompt_tokens": sum(row["prompt_tokens"]), "output_tokens": sum(row["output_tokens"]), "seconds": row["seconds"]}
+        out[meta["model"]] = {"questions": questions, "guard": guard, "before": meta["before"], "after": data[-1]["after"]}
+    return {"rules": "tables: each table name followed by its row count in the answer; top-customer: the name and the total in cents in the answer; march: the count in the answer; add-product: one Rye Loaf row after the run; drop-cancelled: as many cancelled orders after the run as before", "expected": meta["expected"], "models": out}
 
 
 def demo_retrieval():

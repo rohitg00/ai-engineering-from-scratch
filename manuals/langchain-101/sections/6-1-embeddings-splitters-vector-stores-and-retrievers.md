@@ -24,8 +24,6 @@ The base classes are in core {{code libs/core/langchain_core/retrievers.py}}. `I
 
 PyPI lists `langchain-community` 0.4.2 as its last release, and its repository is archived {{site pypi.org/project/langchain-community}}. Most loaders and stores of the 0.x years came from there. The Chroma and Qdrant packages live in the main repository, under `libs/partners`, and each has its own version. For any other store, look for a partner package before you install the community one.
 
-LangChain Academy still teaches retrieval with a community loader. Its retrieval lesson loads a PDF with `PyPDFLoader` from `langchain-community` and stores the chunks in `InMemoryVectorStore` from core {{academy}}. Both work at the pin. Only the loader comes from the sunset package.
-
 The documentation has no retrieval page in the LangChain tab. The Retrieval entry of the navigation opens a Deep Agents page {{docs oss/python/deepagents/retrieval}}. That page names two styles: a fixed retrieve-then-answer step, and an agent that decides when to search. The semantic search tutorial builds the pipeline of this section step by step {{docs oss/python/langchain/knowledge-base}}.
 
 ## The pipeline in the capture kit
@@ -162,4 +160,4 @@ Index time and query time do different work. The kit embeds every chunk once, be
 - Embed the corpus once at index time, outside the agent run.
 ```
 
-Sources: capture/s_integrations.py, capture/out/39-retrieval.txt; libs/core/langchain_core/retrievers.py, libs/core/langchain_core/vectorstores/in_memory.py, libs/core/langchain_core/vectorstores/base.py, libs/core/langchain_core/embeddings/fake.py, libs/core/langchain_core/tools/retriever.py, libs/langchain_v1/langchain/embeddings/__init__.py, and libs/partners at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/langchain-v1, oss/python/deepagents/retrieval, oss/python/langchain/knowledge-base); the LangChain Academy repository lca-lc-foundations, bonus_rag, read 2026-11-14; the archived langchain-community repository, read 2026-11-14.
+Sources: capture/s_integrations.py, capture/out/39-retrieval.txt; libs/core/langchain_core/retrievers.py, libs/core/langchain_core/vectorstores/in_memory.py, libs/core/langchain_core/vectorstores/base.py, libs/core/langchain_core/embeddings/fake.py, libs/core/langchain_core/tools/retriever.py, libs/langchain_v1/langchain/embeddings/__init__.py, and libs/partners at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/langchain-v1, oss/python/deepagents/retrieval, oss/python/langchain/knowledge-base); the archived langchain-community repository, read 2026-11-14.

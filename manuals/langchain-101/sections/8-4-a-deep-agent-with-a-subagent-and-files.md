@@ -8,7 +8,7 @@ When you finish this section, you can build a deep agent with one subagent on a 
 
 ## What the demo builds
 
-The code is our own. The Deep Agents course of LangChain Academy has no license, so the demo copies nothing from it. It uses `deepagents` 0.7.38 with `ChatOllama` and Qwen3 8B, at temperature 0, seed 42, and with reasoning off.
+The code is our own. It uses `deepagents` 0.7.38 with `ChatOllama` and Qwen3 8B, at temperature 0, seed 42, and with reasoning off.
 
 The demo applies these sections:
 

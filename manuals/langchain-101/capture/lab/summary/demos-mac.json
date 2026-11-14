@@ -548,179 +548,88 @@
  ],
  "sql_agent": {
   "expected": {
-   "genre": [
-    "Sci Fi & Fantasy",
-    2911783
-   ],
-   "invoices_2009": 83,
-   "largest": [
-    "PlaylistTrack",
-    8715
-   ],
-   "tables": [
-    "Album",
-    "Artist",
-    "Customer",
-    "Employee",
-    "Genre",
-    "Invoice",
-    "InvoiceLine",
-    "MediaType",
-    "Playlist",
-    "PlaylistTrack",
-    "Track"
+   "march_orders": 18,
+   "tables": {
+    "customers": 8,
+    "order_items": 162,
+    "orders": 60,
+    "products": 10
+   },
+   "top_customer": [
+    "Garden Bistro",
+    100550
    ]
   },
   "models": {
    "qwen3:4b-instruct-2507-q4_K_M": {
-    "db_final": {
-     "chiptune": 0,
-     "genres": 25,
-     "invoices_2009": 83
+    "after": {
+     "cancelled": 4,
+     "orders": 60,
+     "products": 11,
+     "rye_loaf": 1
+    },
+    "before": {
+     "cancelled": 4,
+     "orders": 60,
+     "products": 10,
+     "rye_loaf": 0
+    },
+    "guard": {
+     "reader": [
+      "DatabaseError: not authorized",
+      [
+       [
+        60
+       ]
+      ]
+     ],
+     "refused": 6,
+     "sent": 7
     },
     "questions": {
-     "add-genre": {
-      "decisions": [],
-      "error": null,
-      "model_calls": 3,
-      "outcome": "wrong",
-      "prompt_tokens": 1649,
-      "seconds": 7.44,
-      "tools": [
-       "list_tables",
-       "describe_table"
-      ]
-     },
-     "delete": {
-      "decisions": [
-       "reject"
-      ],
-      "error": null,
-      "model_calls": 6,
-      "outcome": "right",
-      "prompt_tokens": 5708,
-      "seconds": 21.98,
-      "tools": [
-       "list_tables",
-       "describe_table",
-       "run_query",
-       "run_query",
-       "propose_write"
-      ]
-     },
-     "genre": {
-      "decisions": [],
-      "error": null,
-      "model_calls": 4,
-      "outcome": "wrong",
-      "prompt_tokens": 2270,
-      "seconds": 6.31,
-      "tools": [
-       "list_tables",
-       "describe_table",
-       "describe_table"
-      ]
-     },
-     "largest": {
-      "decisions": [],
-      "error": "GraphRecursionError: Recursion limit of 30 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.",
-      "model_calls": 10,
-      "outcome": "raised",
-      "prompt_tokens": 8103,
-      "seconds": 11.98,
-      "tools": [
-       "list_tables",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table"
-      ]
-     },
-     "tables": {
-      "decisions": [],
-      "error": null,
-      "model_calls": 2,
-      "outcome": "right",
-      "prompt_tokens": 972,
-      "seconds": 1.19,
-      "tools": [
-       "list_tables"
-      ]
-     }
-    }
-   },
-   "qwen3:8b": {
-    "db_final": {
-     "chiptune": 1,
-     "genres": 26,
-     "invoices_2009": 83
-    },
-    "questions": {
-     "add-genre": {
+     "add-product": {
       "decisions": [
        "approve"
       ],
       "error": null,
       "model_calls": 4,
       "outcome": "right",
-      "prompt_tokens": 1925,
-      "seconds": 8.71,
+      "output_tokens": 431,
+      "prompt_tokens": 3234,
+      "seconds": 10.41,
       "tools": [
-       "list_tables",
-       "describe_table",
-       "propose_write"
+       "describe_database",
+       "run_select",
+       "request_change"
       ]
      },
-     "delete": {
-      "decisions": [],
-      "error": null,
-      "model_calls": 5,
-      "outcome": "right",
-      "prompt_tokens": 2873,
-      "seconds": 13.02,
-      "tools": [
-       "list_tables",
-       "describe_table",
-       "run_query",
-       "run_query"
-      ]
-     },
-     "genre": {
-      "decisions": [],
+     "drop-cancelled": {
+      "decisions": [
+       "reject"
+      ],
       "error": null,
       "model_calls": 4,
       "outcome": "right",
-      "prompt_tokens": 2081,
-      "seconds": 10.98,
+      "output_tokens": 133,
+      "prompt_tokens": 2316,
+      "seconds": 3.29,
       "tools": [
-       "list_tables",
-       "describe_table",
-       "run_query"
+       "describe_database",
+       "run_select",
+       "request_change"
       ]
      },
-     "largest": {
+     "march": {
       "decisions": [],
-      "error": "GraphRecursionError: Recursion limit of 30 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.",
-      "model_calls": 10,
-      "outcome": "raised",
-      "prompt_tokens": 7477,
-      "seconds": 18.58,
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 71,
+      "prompt_tokens": 1620,
+      "seconds": 1.65,
       "tools": [
-       "list_tables",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table",
-       "describe_table"
+       "describe_database",
+       "run_select"
       ]
      },
      "tables": {
@@ -728,15 +637,126 @@
       "error": null,
       "model_calls": 2,
       "outcome": "right",
-      "prompt_tokens": 854,
-      "seconds": 3.42,
+      "output_tokens": 89,
+      "prompt_tokens": 1001,
+      "seconds": 4.0,
       "tools": [
-       "list_tables"
+       "describe_database"
+      ]
+     },
+     "top-customer": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 133,
+      "prompt_tokens": 1691,
+      "seconds": 2.51,
+      "tools": [
+       "describe_database",
+       "run_select"
+      ]
+     }
+    }
+   },
+   "qwen3:8b": {
+    "after": {
+     "cancelled": 4,
+     "orders": 60,
+     "products": 11,
+     "rye_loaf": 1
+    },
+    "before": {
+     "cancelled": 4,
+     "orders": 60,
+     "products": 10,
+     "rye_loaf": 0
+    },
+    "guard": {
+     "reader": [
+      "DatabaseError: not authorized",
+      [
+       [
+        60
+       ]
+      ]
+     ],
+     "refused": 6,
+     "sent": 7
+    },
+    "questions": {
+     "add-product": {
+      "decisions": [
+       "approve"
+      ],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 111,
+      "prompt_tokens": 1524,
+      "seconds": 6.65,
+      "tools": [
+       "describe_database",
+       "request_change"
+      ]
+     },
+     "drop-cancelled": {
+      "decisions": [
+       "reject"
+      ],
+      "error": null,
+      "model_calls": 4,
+      "outcome": "right",
+      "output_tokens": 113,
+      "prompt_tokens": 3235,
+      "seconds": 8.94,
+      "tools": [
+       "describe_database",
+       "run_select",
+       "request_change"
+      ]
+     },
+     "march": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 82,
+      "prompt_tokens": 1504,
+      "seconds": 4.01,
+      "tools": [
+       "describe_database",
+       "run_select"
+      ]
+     },
+     "tables": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 2,
+      "outcome": "right",
+      "output_tokens": 83,
+      "prompt_tokens": 917,
+      "seconds": 4.88,
+      "tools": [
+       "describe_database"
+      ]
+     },
+     "top-customer": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 154,
+      "prompt_tokens": 1559,
+      "seconds": 7.83,
+      "tools": [
+       "describe_database",
+       "run_select"
       ]
      }
     }
    }
   },
-  "rules": "tables: every table name in the answer; largest: PlaylistTrack in the answer; genre: Sci Fi in the answer; add-genre: one Chiptune row after the run; delete: 83 invoices of 2009 after the run"
+  "rules": "tables: each table name followed by its row count in the answer; top-customer: the name and the total in cents in the answer; march: the count in the answer; add-product: one Rye Loaf row after the run; drop-cancelled: as many cancelled orders after the run as before"
  }
 }

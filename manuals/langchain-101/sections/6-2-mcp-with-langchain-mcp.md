@@ -20,7 +20,7 @@ lang: text
 warning LangChainBetaWarning: `langchain.mcp` is in beta. It is actively being worked on, so the API may change.
 ```
 
-The package exports three names: `MCPAdapter`, `MCPToolArtifact`, and `as_langchain_tool`. Do not install the old adapter in the same environment. `langchain-mcp-adapters` 0.3.2 requires `mcp` below 2.0 {{code langchain-mcp-adapters pyproject.toml}}, and `fastmcp` 4.2.0 needs `mcp` 2.3.0. We tried it: pip would downgrade `mcp` to 1.30.0. Every MCP lesson of LangChain Academy still imports `MultiServerMCPClient` {{academy}}, and the register records this as conflict D305.
+The package exports three names: `MCPAdapter`, `MCPToolArtifact`, and `as_langchain_tool`. Do not install the old adapter in the same environment. `langchain-mcp-adapters` 0.3.2 requires `mcp` below 2.0 {{code langchain-mcp-adapters pyproject.toml}}, and `fastmcp` 4.2.0 needs `mcp` 2.3.0. We tried it: pip would downgrade `mcp` to 1.30.0.
 
 ## From a server to an agent
 
@@ -167,7 +167,7 @@ Server launch markers in T12/_marks after the langchain-mcp-adapters 0.3.2 run: 
 So langchain-mcp-adapters 0.3.2 starts one stdio subprocess per tool call (MultiServerMCPClient without an explicit session).
 ```
 
-Each stdio call started a new server, and the median call took 1,887 ms over 50 calls. Over HTTP, a server crash in the middle of a call never returned, and our script cut it after 40 s. Code from Academy lessons or older answers carries both behaviours. Move it to `langchain.mcp`.
+Each stdio call started a new server, and the median call took 1,887 ms over 50 calls. Over HTTP, a server crash in the middle of a call never returned, and our script cut it after 40 s. Older code that uses the adapter carries both behaviours. Move it to `langchain.mcp`.
 
 ## Elicitation, structured errors, and progress
 
@@ -263,4 +263,4 @@ This edition did not record OAuth, URL-mode elicitation, or several input reques
 - Keep the adapter open with async with for the whole agent run.
 ```
 
-Sources: capture/s_integrations.py, capture/out/40-mcp.txt; capture/lab/summary/mcp-mac.json, capture/lab/T12-mcp-mac/01-langchain-mcp.jsonl, capture/lab/T12-mcp-mac/02-langchain-mcp-adapters-0.3.2.jsonl, capture/lab/T12-mcp-mac/03-adapters-launch-count.txt, capture/lab/T12-mcp-mac/00-venv-adapters-freeze.txt; capture/lab/summary/mcp-edges-mac.json, capture/lab/T20-mcp-edges-mac/01-mcp-edges.jsonl, capture/lab/T20-mcp-edges-mac/t20_mcp.py, capture/lab/T20-mcp-edges-mac/t20_server.py; libs/langchain_v1/langchain/mcp/adapter.py, libs/langchain_v1/langchain/mcp/elicitation.py, libs/langchain_v1/langchain/mcp/tools.py, and libs/langchain_v1/pyproject.toml at langchain==1.5.0; libs/langgraph/langgraph/types.py at langgraph 1.2.22; issue langchain#40471; pyproject.toml of langchain-mcp-adapters 0.3.2 (cc0f2843); docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/langchain/mcp, oss/python/langchain/mcp/tools, oss/python/migrate/langchain-mcp-adapters); the MCP lessons of LangChain Academy, read 2026-11-14.
+Sources: capture/s_integrations.py, capture/out/40-mcp.txt; capture/lab/summary/mcp-mac.json, capture/lab/T12-mcp-mac/01-langchain-mcp.jsonl, capture/lab/T12-mcp-mac/02-langchain-mcp-adapters-0.3.2.jsonl, capture/lab/T12-mcp-mac/03-adapters-launch-count.txt, capture/lab/T12-mcp-mac/00-venv-adapters-freeze.txt; capture/lab/summary/mcp-edges-mac.json, capture/lab/T20-mcp-edges-mac/01-mcp-edges.jsonl, capture/lab/T20-mcp-edges-mac/t20_mcp.py, capture/lab/T20-mcp-edges-mac/t20_server.py; libs/langchain_v1/langchain/mcp/adapter.py, libs/langchain_v1/langchain/mcp/elicitation.py, libs/langchain_v1/langchain/mcp/tools.py, and libs/langchain_v1/pyproject.toml at langchain==1.5.0; libs/langgraph/langgraph/types.py at langgraph 1.2.22; issue langchain#40471; pyproject.toml of langchain-mcp-adapters 0.3.2 (cc0f2843); docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/langchain/mcp, oss/python/langchain/mcp/tools, oss/python/migrate/langchain-mcp-adapters).

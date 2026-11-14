@@ -90,9 +90,9 @@ lang: json
 
 A checkpointer saves this channel with the rest of the state, so the files of a thread survive a restart when the thread does. [Section 5.7](#s-subgraphs-and-multi-agent-patterns) follows the `task` call and the subagent.
 
-Three sources disagree with this tool list.
+Two sources disagree with this tool list.
 
-The docstring of `create_deep_agent` names `execute` among the default tools and does not name `delete` {{code libs/deepagents/deepagents/graph.py}}. `execute` appears only with a backend that can run commands, and the default backend cannot. The register records this as conflict D8. The overview page of the docs says that Deep Agents adds planning {{docs oss/python/deepagents/overview}}, which is conflict D109. A LangChain Academy notebook teaches `write_todos` as a built-in tool, at a pinned `deepagents` 0.5.3 {{academy}}, which is conflict D306. The code at the pin wins: no todo list, and a `delete` tool.
+The docstring of `create_deep_agent` names `execute` among the default tools and does not name `delete` {{code libs/deepagents/deepagents/graph.py}}. `execute` appears only with a backend that can run commands, and the default backend cannot. The register records this as conflict D8. The overview page of the docs says that Deep Agents adds planning {{docs oss/python/deepagents/overview}}, which is conflict D109. The code at the pin wins: no todo list, and a `delete` tool.
 
 ## What changed in 0.7
 
@@ -122,7 +122,9 @@ The empty message costs no tokens. On Qwen3, the request with it and the request
 
 ## The token cost of the harness
 
-**We measured** the prompt tokens of three harnesses on the Mac, Apple M1 Max, 10 cores, 64 GiB. The model was Qwen3 8B on Ollama at temperature 0 and seed 42. Each task ran three times per harness, 27 runs in all. The three harnesses were a plain loop on the `ollama` client, `create_agent`, and `create_deep_agent`, each with the same user tools. [Figure](#fig-6-3) shows each model call.
+**We measured** the prompt tokens of three harnesses on the Mac, Apple M1 Max, 10 cores, 64 GiB. The model was Qwen3 8B on Ollama at temperature 0 and seed 42. Each task ran three times per harness, 27 runs in all. The three harnesses were a plain loop on the `ollama` client, `create_agent`, and `create_deep_agent`. [Figure](#fig-6-3) shows each model call.
+
+All three harnesses got the same user tools in the tools task. In the files task, the plain loop and `create_agent` got our `write_file` and `read_file`. The deep agent got no user tools there and used its own.
 
 All 27 final answers passed a check on the answer text. That check did not look at files or tool calls, so we read them in the rows. Every run of the tools task called `add` and `multiply`. Every run of the files task called `write_file` and then `read_file`, and `/notes.txt` existed at the end.
 
@@ -168,4 +170,4 @@ The direction of the claim holds, and the size does not: we measured a drop of 5
 - Update parsers of ls, glob, and read_file output when you move to 0.7.
 ```
 
-Sources: capture/s_integrations.py, capture/out/41-deep-agent.txt; capture/lab/summary/tokens-mac.json, capture/lab/T09-tokens-mac/04-agent-runs.jsonl, capture/lab/T09-tokens-mac/04-agent-runs.log, capture/lab/T09-tokens-mac/05-analysis.txt, capture/lab/T09-tokens-mac/01-baseprompt-0.7.38.jsonl, capture/lab/T09-tokens-mac/02-baseprompt-0.6.12.jsonl, capture/lab/T09-tokens-mac/03-qwen3-token-counts.jsonl, capture/lab/T09-tokens-mac/00-venv-da06-freeze.txt; libs/deepagents/deepagents/graph.py and libs/deepagents/deepagents/middleware/filesystem.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/deepagents/overview); the LangChain Academy repository langgraph-101, notebooks/201/deep_agents.ipynb, read 2026-11-14.
+Sources: capture/s_integrations.py, capture/out/41-deep-agent.txt; capture/lab/summary/tokens-mac.json, capture/lab/T09-tokens-mac/04-agent-runs.jsonl, capture/lab/T09-tokens-mac/04-agent-runs.log, capture/lab/T09-tokens-mac/05-analysis.txt, capture/lab/T09-tokens-mac/01-baseprompt-0.7.38.jsonl, capture/lab/T09-tokens-mac/02-baseprompt-0.6.12.jsonl, capture/lab/T09-tokens-mac/03-qwen3-token-counts.jsonl, capture/lab/T09-tokens-mac/00-venv-da06-freeze.txt; libs/deepagents/deepagents/graph.py and libs/deepagents/deepagents/middleware/filesystem.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/deepagents/overview).

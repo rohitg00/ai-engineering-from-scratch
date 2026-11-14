@@ -82,11 +82,6 @@
       "usedFor": "when each change came, and which package version holds it; cited as docs for the changelog page and as code for a release"
     },
     {
-      "name": "LangChain Academy",
-      "path": "LangChain's own courses and their MIT repositories: lca-lc-foundations, lca-langchainV1-essentials, lca-langgraph-essentials, and langchain-academy, read 2026-11-14",
-      "usedFor": "the order in which LangChain teaches the stack, and the starting points of the build part; cited as academy"
-    },
-    {
       "name": "The capture kit",
       "path": "capture/run.py and capture/out/, with a scripted fake chat model, offline, no keys",
       "usedFor": "every listing in the manual; cited by file"
@@ -111,8 +106,7 @@
     "docs": null,
     "code": null,
     "issue": null,
-    "site": null,
-    "academy": null
+    "site": null
   },
   "capture": {
     "run": [
@@ -130,7 +124,7 @@
   "plate": {
     "figure": "plate-langchain-run",
     "title": "One invoke, two model calls, one tool call",
-    "caption": "The agent from the capture kit answers `What is 2 + 3?` with two model calls and one tool call. The checkpointer saves five checkpoints on the thread. From capture/out/06-agent-run.txt, capture/out/28-checkpoint-memory.txt, and capture/out/30-state-history-forks.txt."
+    "caption": "One `invoke` of the kit's agent answers `What is 2 + 3?` with two model calls and one call of the `add` tool. `InMemorySaver` keeps five checkpoints, steps -1 to 3, and the last has no next node. With tracing on, LangSmith gets seven runs. On the Mac, `create_agent` took 7.67 ms per run against 4.10 ms for a plain `openai` loop. From capture/out/00-versions.txt, capture/out/05-agent-graph.txt, capture/out/06-agent-run.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/42-langsmith.txt, and capture/lab/summary/overhead-mac.json."
   },
   "parts": [
     {

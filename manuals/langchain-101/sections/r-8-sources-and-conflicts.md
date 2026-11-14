@@ -1,6 +1,6 @@
 # Sources and conflicts
 
-> The manual ranks the code at the tags above the documentation, uses its own recorded runs for every listing and measured number, and records 30 conflicts between its sources.
+> The manual ranks the code at the tags above the documentation, uses its own recorded runs for every listing and measured number, and records 26 conflicts between its sources.
 
 The ranks are the same as in [How to read this manual](#s-front). When two sources disagree, the higher one wins, and the section says so. We read every source and checked every fact on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
 
@@ -11,9 +11,8 @@ The ranks are the same as in [How to read this manual](#s-front). When two sourc
 | 1 | the source code of each package at its release tag | every class, parameter, default, and error text, and the reference tables |
 | 2 | the LangChain documentation, built from one commit of its repository | the documented behaviour, in our own words, checked against the code and our runs |
 | 3 | the changelog and the release notes of each package | when a change came, and which package version holds it |
-| 4 | LangChain Academy, the courses that LangChain publishes, and their open repositories | the order in which LangChain teaches the stack, and the starting points of Part 8 |
-| 5 | the capture kit, with a scripted fake model, offline | every listing |
-| 6 | the lab recordings on two machines | every number in a paragraph that starts with "We measured" |
+| 4 | the capture kit, with a scripted fake model, offline | every listing |
+| 5 | the lab recordings on two machines | every number in a paragraph that starts with "We measured" |
 
 GitHub issues, pull requests, and security advisories are evidence for a behaviour at the pin. The text names each one by its number, and it never presents an issue as our result. The product pages of the project have no open license. [Section 1.1](#s-langchain-langgraph-langsmith-and-deep-agents) states their claims in our words and sets each one beside a run.
 
@@ -53,11 +52,9 @@ The site serves its main branch, and no tag of the docs matches a package releas
 
 The changelog page and the GitHub release of each package give the version of each change. [Section 7.4](#s-migration-from-0-x-and-stale-advice) uses them to date each change since 0.x.
 
-## Rank 4: LangChain Academy
+The LangChain, LangGraph, and Python marks in the figures belong to their owners, and we use them only to identify the projects.
 
-We read four MIT repositories of the courses: `lca-lc-foundations`, `lca-langchainV1-essentials`, `lca-langgraph-essentials`, and `langchain-academy`. Their order of topics matches Parts 2 to 4. Some of their code is older than the pin, and four rows of the register below record it.
-
-## Ranks 5 and 6: the kit and the lab
+## Ranks 4 and 5: the kit and the lab
 
 The capture kit writes 44 files, and the lab holds 26 experiment folders and 27 summary files. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
 
@@ -114,11 +111,7 @@ Each row is one disagreement between two sources. The choice is what this manual
 | D130 | The built-in middleware page lists 22 classes. `langchain` has 19, and three come from `deepagents`. | the code: 19 in `langchain` | [3.4](#s-the-built-in-middleware) | open |
 | D209 | Users report errors, with no switch to tool calling, from an explicit `ProviderStrategy` on Bedrock and Ollama. The docs say that it switches. | the code and the lab: no switch | [3.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) | issue langchain #35119 |
 | D211 | A web page says that LangGraph streaming adds 100 to 300 ms to the first token, with no method. | the lab: under 2 ms at the median | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) | no upstream item |
-| D302 | Some Academy lessons teach `NodeInterrupt`, which is deprecated at the pin. | the code: `interrupt` | [5.4](#s-interrupt-and-resume) | Academy not updated |
-| D303 | Some Academy files import `Send` from `langgraph.constants`, which warns at the pin. | the code: import from `langgraph.types` | [5.2](#s-edges-send-and-command) | Academy not updated |
-| D305 | Every Academy MCP lesson imports `MultiServerMCPClient` from the archived adapter. | the code: `langchain.mcp`, in beta | [6.2](#s-mcp-with-langchain-mcp) | Academy not updated |
-| D306 | An Academy notebook at `deepagents` 0.5.3 teaches `write_todos` as a default tool. | the code at 0.7.38: no todo list by default | [6.3](#s-deep-agents-0-7) | Academy not updated |
 
-The ids are not continuous. The research kept one range of ids for each kind of source. D1 to D17 are the code, and D101 to D130 are the docs. D201 to D211 are posts and issues, and D301 to D313 are the Academy. This register holds every id that a section cites.
+The ids are not continuous. The research kept one range of ids for each kind of source. D1 to D17 are the code, and D101 to D130 are the docs. D201 to D211 are posts and issues. This register holds every id that a section cites.
 
 Sources: front.md; manual.json (pin, sources); the Sources line and the citations of every file under sections/; capture/README.md, capture/lab/README.md.

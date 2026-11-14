@@ -160,7 +160,7 @@ The answer `x` went nowhere, and the caller got no sign of it. Before you resume
 
 **We measured** both modes on the Mac, 3 runs of each case, with `SqliteSaver` and a new process for each step. An agent in `per_call` mode made two calls that needed approval. The first resume approved one call by its interrupt id, and the second resume sent the same answer again. With `__pregel_strict_resume` set, the second resume raised `UnknownInterruptError: Unknown or already-consumed interrupt` in 3 of 3 runs. Without it, the second resume raised nothing and ran nothing in 3 of 3 runs. In every run, `send_email` ran once and the model ran once.
 
-**NodeInterrupt.** Older code raises `NodeInterrupt` in a node. The class is deprecated at the pin, and its warning points to `interrupt` {{code libs/langgraph/langgraph/errors.py}}. Some LangChain Academy lessons still teach it {{academy langchain-academy}}. This manual records the disagreement as conflict D302.
+**NodeInterrupt.** Older code raises `NodeInterrupt` in a node. The class is deprecated at the pin, and its warning points to `interrupt` {{code libs/langgraph/langgraph/errors.py}}.
 
 ```takeaways
 - Make the code before an interrupt safe to run twice, or move it to another node.
@@ -171,4 +171,4 @@ The answer `x` went nowhere, and the caller got no sign of it. Before you resume
 - Keep the order of interrupt calls in a node the same on every run.
 ```
 
-Sources: capture/s_persist.py, capture/out/32-interrupt-resume.txt; capture/lab/summary/approvals-mac.json, capture/lab/T07-approvals-mac/01-cases.jsonl; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/errors.py, libs/langgraph/langgraph/pregel/_loop.py, and libs/langgraph/langgraph/_internal/_constants.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/interrupts); LangChain Academy, langchain-academy repository, read 2026-11-14.
+Sources: capture/s_persist.py, capture/out/32-interrupt-resume.txt; capture/lab/summary/approvals-mac.json, capture/lab/T07-approvals-mac/01-cases.jsonl; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/errors.py, libs/langgraph/langgraph/pregel/_loop.py, and libs/langgraph/langgraph/_internal/_constants.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/interrupts).
