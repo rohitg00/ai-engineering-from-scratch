@@ -98,6 +98,6 @@ A `messages` frame carries one of these events for one model message:
 
 {{code langchain_protocol/protocol.py:470-495}}
 
-A provider that streams the arguments of a tool call sends `tool-call-delta` deltas {{code langchain_protocol/protocol.py:177}}. The kit fake sends each call whole on its last chunk, so our run has no `tool-call-delta`. The capture kit README says how the fake differs from `ChatOpenAI` here.
+A provider that streams the arguments of a tool call sends `tool-call-delta` deltas {{code langchain_protocol/protocol.py:177}}. `ChatOllama` sends each call whole on one chunk before the last. So the v3 run of the kit has one `tool-call-delta`, which carries the whole call.
 
 Sources: libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/pregel/main.py, and libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22; libs/prebuilt/langgraph/prebuilt/tool_node.py at langgraph-prebuilt 1.1.2; libs/core/langchain_core/runnables/base.py at langchain-core 1.8.0; langchain_protocol/protocol.py at langchain-protocol 0.0.21; capture/requirements.txt, capture/README.md, capture/out/21-stream-updates-values.txt, capture/out/22-stream-messages.txt, capture/out/23-stream-tasks-custom-debug.txt, capture/out/24-stream-v2.txt, capture/out/25-stream-events-v3.txt, capture/out/25-stream-events-v3.events.json, capture/out/26-stream-tools-mode.txt.

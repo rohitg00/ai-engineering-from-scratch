@@ -118,39 +118,3 @@ get_subgraphs():
 [
   "inner"
 ]
-
-## an agent as a subgraph node
-
-{
-  "namespace": [
-    "adder:<uuid-2>"
-  ],
-  "nodes": [
-    "model"
-  ]
-}
-
-{
-  "namespace": [
-    "adder:<uuid-2>"
-  ],
-  "nodes": [
-    "tools"
-  ]
-}
-
-{
-  "namespace": [
-    "adder:<uuid-2>"
-  ],
-  "nodes": [
-    "model"
-  ]
-}
-
-{
-  "namespace": [],
-  "nodes": [
-    "adder"
-  ]
-}

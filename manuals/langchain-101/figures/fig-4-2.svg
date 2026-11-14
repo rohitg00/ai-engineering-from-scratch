@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-4-2-title fig-4-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-4-2-title">Three turns of one thread in the SQLite file</title>
-  <desc id="fig-4-2-desc">11 rows of the checkpoints table of SqliteSaver for the thread sqlite-thread, on one step axis from -1 to 9. Turn 1, &quot;What is 2 + 3?&quot;, has an input checkpoint at step -1 and loop checkpoints at steps 0, 1, 2, 3, and leaves 4 messages in the state. Turn 2, &quot;What did I ask you?&quot;, has an input checkpoint at step 4 and loop checkpoints at steps 5, 6, and leaves 6 messages in the state. Turn 3, &quot;Remind me again.&quot;, has an input checkpoint at step 7 and loop checkpoints at steps 8, 9, and leaves 8 messages in the state. Between turn 2 and turn 3 the connection was closed and a new process opened the same file. The file holds 11 checkpoint rows and 13 rows of pending writes.</desc>
+  <desc id="fig-4-2-desc">11 rows of the checkpoints table of SqliteSaver for the thread sqlite-thread, on one step axis from -1 to 9. Turn 1, &quot;What is 2 + 3?&quot;, has an input checkpoint at step -1 and loop checkpoints at steps 0, 1, 2, 3, and leaves 4 messages in the state. Turn 2, &quot;What did I ask you?&quot;, has an input checkpoint at step 4 and loop checkpoints at steps 5, 6, and leaves 6 messages in the state. Turn 3, &quot;Remind me what my first question was.&quot;, has an input checkpoint at step 7 and loop checkpoints at steps 8, 9, and leaves 8 messages in the state. Between turn 2 and turn 3 the connection was closed and a new process opened the same file. The file holds 11 checkpoint rows and 13 rows of pending writes.</desc>
   <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THREAD SQLITE-THREAD, ONE ROW PER CHECKPOINT</text>
   <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
   <line x1="61" y1="62" x2="267" y2="62" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
@@ -49,7 +49,7 @@
   <line x1="397" y1="58" x2="397" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
   <line x1="519" y1="58" x2="519" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
   <text x="403" y="38" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">turn 3</text>
-  <text x="403" y="52" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">Remind me again.</text>
+  <text x="403" y="52" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">Remind me what my first question was.</text>
   <rect x="397" y="82" width="38" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.3"/>
   <text x="416" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
   <line x1="416" y1="116" x2="416" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>

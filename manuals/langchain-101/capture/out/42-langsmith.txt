@@ -1,5 +1,7 @@
 # langsmith traceable with tracing off and local run trees
 
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
 ## tracing off: traceable is a plain call
 
 {
@@ -79,7 +81,7 @@ HTTP requests the client received for the traceable runs:
 
 ## a create_agent run inside a local trace: the LangChain runs are sent to the client
 
-answer: The sum is 5.
+answer: 2 + 3 = 5.
 
 HTTP requests the client received, by method and path:
 {
@@ -90,21 +92,21 @@ HTTP requests the client received, by method and path:
 chain agent_turn
   chain LangGraph
     chain model
-      llm ScriptedChatModel
+      llm ChatOllama
     chain tools
       tool add
     chain model
-      llm ScriptedChatModel
+      llm ChatOllama
 
 ## tracing_context(enabled=False) with collect_runs: the LangChain runs stay in memory
 
-answer: The sum is 5.
+answer: 2 + 3 = 5.
 
 collect_runs().traced_runs:
 [
-  "llm ScriptedChatModel",
+  "llm ChatOllama",
   "tool add",
-  "llm ScriptedChatModel",
+  "llm ChatOllama",
   "chain LangGraph"
 ]
 
@@ -190,13 +192,13 @@ rows:
       "question": "What is 2 + 3?"
     },
     "outputs": {
-      "answer": "The sum is 5."
+      "answer": "2 + 3 = 5."
     },
     "reference": {
       "answer": "The sum is 5."
     },
     "scores": {
-      "same_answer": true
+      "same_answer": false
     }
   }
 ]
@@ -220,13 +222,13 @@ rows:
       "question": "What is 2 + 3?"
     },
     "outputs": {
-      "answer": "The sum is 5."
+      "answer": "2 + 3 = 5."
     },
     "reference": {
       "answer": "The sum is 5."
     },
     "scores": {
-      "same_answer": true
+      "same_answer": false
     }
   }
 ]

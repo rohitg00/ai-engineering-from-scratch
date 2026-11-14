@@ -11,7 +11,7 @@ The ranks are the same as in [How to read this manual](#s-front). When two sourc
 | 1 | the source code of each package at its release tag | every class, parameter, default, and error text, and the reference tables |
 | 2 | the LangChain documentation, built from one commit of its repository | the documented behaviour, in our own words, checked against the code and our runs |
 | 3 | the changelog and the release notes of each package | when a change came, and which package version holds it |
-| 4 | the capture kit, with a scripted fake model, offline | every listing |
+| 4 | the capture kit, with Qwen3 4B on Ollama where a scenario needs a model | every listing |
 | 5 | the lab recordings on two machines | every number in a paragraph that starts with "We measured" |
 
 GitHub issues, pull requests, and security advisories are evidence for a behaviour at the pin. The text names each one by its number, and it never presents an issue as our result. The product pages of the project have no open license. [Section 1.1](#s-langchain-langgraph-langsmith-and-deep-agents) states their claims in our words and sets each one beside a run.
@@ -85,7 +85,7 @@ Each row is one disagreement between two sources. The choice is what this manual
 
 | Id | The sources say | The manual follows | Sections | Upstream |
 |---|---|---|---|---|
-| D2 | The docstring of `GenericFakeChatModel` says that it does not stream, and the unit testing page says that it does. The code streams text and drops tool calls. | the code and the capture: use a fake that streams tool calls | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) | no issue found |
+| D2 | The docstring of `GenericFakeChatModel` says that it does not stream, and the unit testing page says that it does. The code streams text and drops tool calls. | the code: test streaming against a real model, or a fake that streams tool calls | [7.5](#s-symptom-cause-fix) | no issue found |
 | D3 | The example in the `ToolRuntime` docstring calls `stream_writer.write`. The type is a plain callable. | the code: call `runtime.stream_writer(value)` | [2.4](#s-tools-toolruntime-and-tool-errors) | not checked |
 | D4 | `StreamMode` and the streaming page list seven modes. The loop also accepts `tools`. | the code and the capture: `tools` is a mode | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode), [R.3](#s-ref-stream-modes-and-event-types) | not checked |
 | D6 | `durability="sync"` is a documented mode. Without a checkpointer it raises `AttributeError`. | the run: use `sync` only with a checkpointer | [4.3](#s-durability-modes-and-a-crash-between-two-steps) | issue #9267 open at the pin. Fix PR #9268 closed without a merge |

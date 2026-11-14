@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="fig-1-2b-title fig-1-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-1-2b-title">The runs of one traced agent turn</title>
-  <desc id="fig-1-2b-desc">An indented tree of 8 runs in the order they started, one row each: chain agent_turn, chain LangGraph, chain model, llm ScriptedChatModel, chain tools, tool add, chain model, llm ScriptedChatModel. The root agent_turn is the traceable function of the kit, inside tracing_context with enabled local, and it stayed in memory. Each of the 7 runs below it has a dashed olive arrow to a client lane on the right, because the client got one POST /runs when the run started and one PATCH when it ended: 7 POST and 7 PATCH in all. Each graph node is a chain run, the two model calls are llm leaves, and the tool call is a tool leaf.</desc>
+  <desc id="fig-1-2b-desc">An indented tree of 8 runs in the order they started, one row each: chain agent_turn, chain LangGraph, chain model, llm ChatOllama, chain tools, tool add, chain model, llm ChatOllama. The root agent_turn is the traceable function of the kit, inside tracing_context with enabled local, and it stayed in memory. Each of the 7 runs below it has a dashed olive arrow to a client lane on the right, because the client got one POST /runs when the run started and one PATCH when it ended: 7 POST and 7 PATCH in all. Each graph node is a chain run, the two model calls are llm leaves, and the tool call is a tool leaf.</desc>
   <defs><marker id="fig-1-2b-head-olive" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-olive-ink, #515f26)"/></marker></defs>
   <polygon points="540,6 592,6 592,42 540,42" fill="var(--m-panel, #f3f1e8)"/>
   <polygon points="540,6 592,6 592,42 540,42" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.3" stroke-linejoin="round"/>
@@ -40,11 +40,11 @@
   </g>
   <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
   <path d="M112 186 V212 H139" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
-  <rect x="140" y="198" width="142.4" height="30" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
-  <text x="150" y="212" font-size="11.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">ScriptedChatModel</text>
+  <rect x="140" y="198" width="92" height="30" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="150" y="212" font-size="11.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">ChatOllama</text>
   <text x="150" y="224" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">llm run</text>
-  <line x1="282.4" y1="212" x2="565" y2="212" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2b-head-olive)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-olive-ink, #515f26)" opacity="0"><animateMotion path="M282.4 212 L565 212" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <line x1="232" y1="212" x2="565" y2="212" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2b-head-olive)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-olive-ink, #515f26)" opacity="0"><animateMotion path="M232 212 L565 212" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
   </g>
   <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
   <path d="M72 146 V252 H99" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
@@ -72,11 +72,11 @@
   </g>
   <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
   <path d="M112 346 V372 H139" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1.2" stroke-linejoin="round"/>
-  <rect x="140" y="358" width="142.4" height="30" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
-  <text x="150" y="372" font-size="11.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">ScriptedChatModel</text>
+  <rect x="140" y="358" width="92" height="30" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="150" y="372" font-size="11.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">ChatOllama</text>
   <text x="150" y="384" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">llm run</text>
-  <line x1="282.4" y1="372" x2="565" y2="372" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2b-head-olive)"/>
-  <circle class="m-packet" r="3.5" fill="var(--m-olive-ink, #515f26)" opacity="0"><animateMotion path="M282.4 372 L565 372" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <line x1="232" y1="372" x2="565" y2="372" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-1-2b-head-olive)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-olive-ink, #515f26)" opacity="0"><animateMotion path="M232 372 L565 372" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
   </g>
   <line x1="20" y1="420" x2="620" y2="420" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
   <text x="20" y="442" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">7 runs below the root, 7 POST /runs and 7 PATCH at the client.</text>

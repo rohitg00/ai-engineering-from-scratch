@@ -1,5 +1,7 @@
 # SqliteSaver across turns and a restart
 
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
 ## SqliteSaver: two turns, then close the connection
 
 messages after turn 2:
@@ -7,17 +9,17 @@ messages after turn 2:
   "human: What is 2 + 3?",
   "ai: ",
   "tool: 5",
-  "ai: The sum is 5.",
+  "ai: 2 + 3 = 5.",
   "human: What did I ask you?",
-  "ai: You asked me to add 2 and 3."
+  "ai: You asked what 2 + 3 is, and I calculated that it equals 5."
 ]
 
 what the model received on turn 2:
 [
   "human: What is 2 + 3?",
-  "ai",
+  "ai: calls add",
   "tool: 5",
-  "ai: The sum is 5.",
+  "ai: 2 + 3 = 5.",
   "human: What did I ask you?"
 ]
 
@@ -27,11 +29,11 @@ what the model received on turn 2:
   "human: What is 2 + 3?",
   "ai: ",
   "tool: 5",
-  "ai: The sum is 5.",
+  "ai: 2 + 3 = 5.",
   "human: What did I ask you?",
-  "ai: You asked me to add 2 and 3.",
-  "human: Remind me again.",
-  "ai: Earlier you asked what 2 + 3 is."
+  "ai: You asked what 2 + 3 is, and I calculated that it equals 5.",
+  "human: Remind me what my first question was.",
+  "ai: Your first question was, \"What is 2 + 3?\" I answered that 2 + 3 = 5."
 ]
 
 ## what is in the file

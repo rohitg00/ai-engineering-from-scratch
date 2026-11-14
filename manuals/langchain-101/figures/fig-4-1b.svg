@@ -37,5 +37,5 @@
   <text x="428" y="218" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seq 8</text>
   <line x1="217" y1="10" x2="217" y2="226" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
   <line x1="423" y1="10" x2="423" y2="226" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
-  <text x="16" y="254" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">All three carry the same ToolMessage, with content 5 and tool_call_id call_1.</text>
+  <text x="16" y="254" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">All three carry the same ToolMessage, with content 5 and the tool_call_id of the call.</text>
 </svg>

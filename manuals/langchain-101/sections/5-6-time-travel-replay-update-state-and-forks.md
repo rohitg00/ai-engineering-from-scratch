@@ -55,7 +55,7 @@ charge calls so far (the tool ran again on replay):
 checkpoints on the thread now: 8
 ```
 
-The model answered with the next line of its script, `Charged again after replay.`. A real model would get the same messages as on the first run and could answer in another way. The time travel page says the same: a replay runs the nodes again, with their model calls, API requests, and interrupts {{docs oss/python/langgraph/use-time-travel}}.
+The model got the same messages as on the first run. At temperature 0 it gave the same answer, `The card has been successfully charged with 10 units.`, and the card had two charges. A model with sampling on can answer in another way on a replay. The time travel page says the same: a replay runs the nodes again, with their model calls, API requests, and interrupts {{docs oss/python/langgraph/use-time-travel}}.
 
 ## update_state makes a fork
 
@@ -111,7 +111,7 @@ lang: json
   "human: Charge 5.",
   "ai: ",
   "tool: charged 5 by hand",
-  "ai: Done, per the manual entry."
+  "ai: It seems there was a misunderstanding. I cannot perform actions like charging a card manually. If you'd like, I can assist you with other tasks or help guide you through the correct process. Let me know how I can assist!"
 ]
 
 charge calls (unchanged):
@@ -122,7 +122,7 @@ charge calls (unchanged):
 ]
 ```
 
-The tool did not run. Use this when a person did the work of a tool outside the agent. The `ToolMessage` must carry the `tool_call_id` of the waiting call.
+The tool did not run. The model then answered that it cannot charge a card manually, so it misread the result written by hand. Write such a result in the words the tool would use, such as `charged 5`. Use this when a person did the work of a tool outside the agent. The `ToolMessage` must carry the `tool_call_id` of the waiting call.
 
 ## The address must be complete
 

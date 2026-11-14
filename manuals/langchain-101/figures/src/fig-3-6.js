@@ -9,7 +9,7 @@ const sections = text.split('\n## ').slice(1).map(part => ({ heading: part.slice
 const runOf = (type, strategy) => {
   const s = sections.find(item => item.heading.startsWith(`PIIMiddleware('${type}', strategy='${strategy}')`));
   if (!s) throw new Error(`fig-3-6: no run for ${type} ${strategy}`);
-  const calls = JSON.parse(s.body.slice(s.body.indexOf('[', s.body.indexOf('model calls seen by the fake:')), s.body.lastIndexOf(']') + 1));
+  const calls = JSON.parse(s.body.slice(s.body.indexOf('[', s.body.indexOf('model calls, as the model received them:')), s.body.lastIndexOf(']') + 1));
   const raised = /raised [\w.]+\.(\w+): (.+)/.exec(s.body);
   const first = raised ? null : JSON.parse(s.body.slice(s.body.indexOf('['), s.body.indexOf('\n]') + 2))[0].content;
   return { type, strategy, calls: calls.length, raised, content: first };

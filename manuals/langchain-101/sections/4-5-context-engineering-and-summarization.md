@@ -58,11 +58,11 @@ The result keeps the `ToolMessage` of `call_1` and drops the AI message that mad
 title: the state after the summary
 source: capture/out/10-mw-summarization.txt
 lang: json
-note: The ids of the last two messages are cut.
+note: The summary is cut after its first section. The ids of the last two messages are cut.
 ---
   {
     "type": "HumanMessage",
-    "content": "Here is a summary of the conversation to date:\n\nThe user asked to add numbers; the tool returned 5 and 9.",
+    "content": "Here is a summary of the conversation to date:\n\n## SESSION INTENT  \nCalculate the sum of two numbers provided by the user.…",
     "id": "<uuid-1>",
     "additional_kwargs": {
       "lc_source": "summarization"
@@ -77,7 +77,9 @@ note: The ids of the last two messages are cut.
     "content": "Now 1 + 1?",
 ```
 
-The agent model then got three messages: the summary, the last answer, and the new question. The middleware replaced the messages in the state, so later turns start from the summary.
+The agent model then got three messages: the summary, the last answer, and the new question. It called `add` with 1 and 1, and answered `The sum is 2.`.
+
+The summary is a model output, so it can be wrong. The summarizer saw only the five old messages. It wrote that 4 + 5 got no answer, and listed an `add` call for it that never ran. The answer `The sum is 9.` was in the two kept messages, out of its sight. The middleware replaced the messages in the state, so later turns start from the summary.
 
 With no `trigger`, the middleware never summarizes. The built-in middleware page says the same {{docs oss/python/langchain/middleware/built-in}}. In the kit, the model got all seven messages. Set the trigger. The default `keep` is `("messages", 20)`. Part 3 covers `ContextEditingMiddleware`, which clears old tool results in place of a summary.
 

@@ -1,6 +1,6 @@
 # How to read this manual
 
-> This manual explains the LangChain Python stack at one pin, and every listing in it comes from an offline capture that you can run again yourself.
+> This manual explains the LangChain Python stack at one pin, and every listing in it comes from a capture of a real run that you can check yourself.
 
 ## Who this manual is for
 
@@ -51,15 +51,17 @@ The documentation site serves its main branch, and no docs tag matches a package
 
 ## The capture kit and the lab
 
-**Capture kit:** the program in `capture/` that drives the stack in one Python process, offline, and writes what it sees to `capture/out/`. It covers LangChain, LangGraph, Deep Agents, `langchain.mcp`, and the LangSmith SDK.
+**Capture kit:** the program in `capture/` that drives the stack in one Python process and writes what it sees to `capture/out/`. It covers LangChain, LangGraph, Deep Agents, `langchain.mcp`, and the LangSmith SDK.
 
-The kit uses a scripted fake chat model in place of a provider. The fake returns a fixed script of messages and tool calls, and it records what `create_agent` sent it on each call. So a listing shows the real messages, graph nodes, checkpoints, and errors of the stack, and the model part is our script. The kit needs no network and no API keys. It masks values that change on every run, such as message ids.
+The kit uses no fake chat model. Where a scenario needs a model, it calls Qwen3 4B Instruct, `qwen3:4b-instruct-2507-q4_K_M`, through `ChatOllama`. The settings are temperature 0, seed 42, `num_ctx` 16384, and `num_predict` 512. We recorded those captures on the x86 server guest, on CPU, on 2026-11-14. Each file names its model, its settings, the machine, and the date.
+
+The other captures call no model, such as the versions, the messages, the graph structure, and the store. They run offline with no keys, and they give the same bytes on every run. The kit masks values that change on every run, such as message ids and the timings in each reply. A real model answers in its own words. So a listing shows what the model did on our run, even where the prompt asked for more.
 
 **Lab recording:** a run against a real model or a real database on one of our machines, kept as raw files in `capture/lab/`. `capture/run.py` computes a summary of each data set into `capture/lab/summary/`, and each chart reads one summary.
 
-We recorded on two machines. The Mac is an Apple M1 Max with 10 cores and 64 GiB, with Ollama and PostgreSQL 14. The x86 server guest has 32 vCPU and 48 GiB, with PostgreSQL 16 and Redis 7. The two machines differ, so this manual never sets a number from one beside a number from the other.
+We recorded on two machines. The Mac is an Apple M1 Max with 10 cores and 64 GiB, with Ollama and PostgreSQL 14. The x86 server guest has 32 vCPU and 48 GiB, with PostgreSQL 16, Redis 7, and Ollama 0.31.1 on CPU. The two machines differ, so this manual never sets a number from one beside a number from the other.
 
-The Mac is a shared laptop, and other work ran on it during every timed run. Read each time from the Mac as an upper bound for that machine. The real models in our runs were Qwen3 models of 0.6B to 8B parameters on Ollama on the Mac, and `nomic-embed-text` for embeddings. No model time in this manual is the time of a hosted model.
+The Mac is a shared laptop, and other work ran on it during every timed run. Read each time from the Mac as an upper bound for that machine. The real models of the lab were Qwen3 models of 0.6B to 8B parameters on Ollama on the Mac, and `nomic-embed-text` for embeddings. The capture kit used Qwen3 4B Instruct on the x86 server guest. No model time in this manual is the time of a hosted model.
 
 ## Conventions
 
@@ -81,7 +83,7 @@ capture/.venv/bin/pip install -r capture/requirements.txt
 python3 capture/run.py --check
 ```
 
-The check runs every scenario again into a temporary folder, compares each file with `capture/out/`, and prints `ok: 44 files match`. It then rebuilds the lab summaries from the raw recordings and compares them too. It does not record the lab runs again, because those need Ollama and Postgres.
+The check runs the 14 model-free scenarios again into a temporary folder and compares each file with `capture/out/`. It checks that each of the 34 recorded files names its model. It also checks the structure that the manual relies on, such as the message types and the tool names. It then rebuilds the lab summaries from the raw recordings and compares them too. It does not call a model, so it prints one `skipped:` line for the recorded scenarios. `python3 capture/run.py --check --live` records them again when Ollama runs on your machine.
 
 This is the scenario behind [section 1.2](#s-one-create-agent-run). It builds an agent with one tool and a system prompt, and it asks one question:
 
@@ -89,15 +91,15 @@ This is the scenario behind [section 1.2](#s-one-create-agent-run). It builds an
 title: the agent of the first run
 source: capture/s_start.py
 lang: python
-note: The scenario function from the kit. The fake model, the add tool, and ASK come from capture/common.py.
+note: The scenario function from the kit. llm(), the add tool, and ASK come from capture/common.py.
 ---
 def agent_run(cap):
-    fake = model(*sum_script())
-    agent = create_agent(fake, tools=[add], system_prompt="You add numbers.")
+    m = llm()
+    agent = create_agent(m, tools=[add], system_prompt="You add numbers.")
     out = agent.invoke(ASK)
 ```
 
-The model is scripted to call `add` with 2 and 3 and then to say the sum. The run ends with four messages:
+`llm()` builds `ChatOllama` on Qwen3 4B with the settings above. The model called `add` with 2 and 3 and then said the sum. The run ended with four messages:
 
 ```listing
 title: the messages at the end of the first run
@@ -115,10 +117,10 @@ note: Each message is cut to its type and content. The ids and the tool call are
     "content": "5",
 …
     "type": "AIMessage",
-    "content": "The sum is 5.",
+    "content": "2 + 3 = 5.",
 ```
 
-To use a real model, replace the fake with a model string such as `"ollama:qwen3:4b"` and install the provider package. [Section 2.2](#s-init-chat-model-and-model-profiles) shows how the string resolves.
+To use another model, pass a model string such as `"openai:gpt-4.1"` in place of `m`, and install the provider package. [Section 2.2](#s-init-chat-model-and-model-profiles) shows how the string resolves.
 
 ## How the parts are ordered
 

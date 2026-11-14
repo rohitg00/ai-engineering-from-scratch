@@ -2,7 +2,7 @@
   "id": "langchain-101",
   "title": "LangChain 101",
   "subtitle": "Build, run, persist, and debug agents with LangChain 1.5, LangGraph 1.2, and Deep Agents 0.7, with a recorded answer for each decision",
-  "summary": "How the LangChain Python stack turns a model, tools, and a prompt into an agent. The agent streams, pauses for approval, survives a crash, and leaves a trace. Every listing comes from an offline capture of langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Every measured number comes from a recorded run on our own machines.",
+  "summary": "How the LangChain Python stack turns a model, tools, and a prompt into an agent. The agent streams, pauses for approval, survives a crash, and leaves a trace. Every listing comes from a capture of a real run on Qwen3 4B with langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Every measured number comes from a recorded run on our own machines.",
   "audience": "You write Python and you have called a chat model API. You have read some LangChain code, maybe from the 0.x years. You want to know what the 1.x stack does before you build on it.",
   "edition": "2026.11",
   "status": "ready",
@@ -83,7 +83,7 @@
     },
     {
       "name": "The capture kit",
-      "path": "capture/run.py and capture/out/, with a scripted fake chat model, offline, no keys",
+      "path": "capture/run.py and capture/out/, with Qwen3 4B on Ollama where a scenario needs a model, no keys",
       "usedFor": "every listing in the manual; cited by file"
     },
     {

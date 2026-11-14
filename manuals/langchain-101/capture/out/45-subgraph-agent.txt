@@ -1,0 +1,39 @@
+# An agent as a subgraph node
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## an agent as a subgraph node
+
+{
+  "namespace": [
+    "adder:<uuid-1>"
+  ],
+  "nodes": [
+    "model"
+  ]
+}
+
+{
+  "namespace": [
+    "adder:<uuid-1>"
+  ],
+  "nodes": [
+    "tools"
+  ]
+}
+
+{
+  "namespace": [
+    "adder:<uuid-1>"
+  ],
+  "nodes": [
+    "model"
+  ]
+}
+
+{
+  "namespace": [],
+  "nodes": [
+    "adder"
+  ]
+}

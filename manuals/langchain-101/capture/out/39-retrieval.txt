@@ -108,39 +108,6 @@ The fake embedding hashes the whole text, so only an exact text match scores 1.0
   "doc-3"
 ]
 
-## as_retriever, wrapped as a tool for an agent
-
-[
-  {
-    "type": "AIMessage",
-    "content": "",
-    "id": "lc_run--<uuid-1>-0",
-    "tool_calls": [
-      {
-        "name": "search_docs",
-        "args": {
-          "query": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a"
-        },
-        "id": "call_1",
-        "type": "tool_call"
-      }
-    ]
-  },
-  {
-    "type": "ToolMessage",
-    "content": "[checkpoints.md] A checkpointer saves graph state after each step. InMemorySaver keeps it in a",
-    "name": "search_docs",
-    "id": "<uuid-2>",
-    "tool_call_id": "call_1",
-    "status": "success"
-  },
-  {
-    "type": "AIMessage",
-    "content": "A checkpointer saves state after each step.",
-    "id": "lc_run--<uuid-3>-0"
-  }
-]
-
 ## delete and get_by_ids
 
 [

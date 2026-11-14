@@ -1,0 +1,78 @@
+# A retriever wrapped as a tool for an agent
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## as_retriever(k=1), wrapped as a tool for an agent
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "search_docs",
+        "args": {
+          "query": "What does a checkpointer do?"
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 169,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 26,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 169,
+      "output_tokens": 26,
+      "total_tokens": 195
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "[stores.md] A store holds long-term memory across threads. Items live under a namespace",
+    "name": "search_docs",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "A checkpointer does not have a defined role in the provided documentation. The only relevant information is that a store holds long-term memory across threads, with items living under a namespace. There is no mention of a checkpointer in the retrieved content.",
+    "id": "lc_run--<uuid-4>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 226,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 50,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 226,
+      "output_tokens": 50,
+      "total_tokens": 276
+    }
+  }
+]
+
+the hit is chunk 3 of 7

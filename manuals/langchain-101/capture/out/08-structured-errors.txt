@@ -1,11 +1,13 @@
 # Structured output: validation errors and retries
 
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
 ## ToolStrategy validation error, then the retry
 
 structured_response:
 {
-  "value": 5,
-  "unit": "none"
+  "value": 3,
+  "unit": "5"
 }
 
 structured_response type: Answer
@@ -19,79 +21,55 @@ structured_response type: Answer
       {
         "name": "Answer",
         "args": {
-          "value": "five"
+          "value": 3,
+          "unit": "5"
         },
-        "id": "call_a",
+        "id": "<uuid-2>",
         "type": "tool_call"
       }
-    ]
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 181,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 181,
+      "output_tokens": 25,
+      "total_tokens": 206
+    }
   },
   {
     "type": "ToolMessage",
-    "content": "Error: Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer\nvalue\n  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='five', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.14/v/int_parsing.\n Please fix your mistakes.",
+    "content": "Returning structured response: value=3 unit='5'",
     "name": "Answer",
-    "id": "<uuid-2>",
-    "tool_call_id": "call_a",
-    "status": "success"
-  },
-  {
-    "type": "AIMessage",
-    "content": "",
-    "id": "lc_run--<uuid-3>-0",
-    "tool_calls": [
-      {
-        "name": "Answer",
-        "args": {
-          "value": 5
-        },
-        "id": "call_b",
-        "type": "tool_call"
-      }
-    ]
-  },
-  {
-    "type": "ToolMessage",
-    "content": "Returning structured response: value=5 unit='none'",
-    "name": "Answer",
-    "id": "<uuid-4>",
-    "tool_call_id": "call_b",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
     "status": "success"
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "retry",
     "call": 1,
     "messages": [
-      "human: What is 2 + 3?"
+      "human: What is 7 divided by 2? Put the exact decimal value, 3.5, in the value field."
     ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
-  },
-  {
-    "model": "retry",
-    "call": 2,
-    "messages": [
-      "human: What is 2 + 3?",
-      "ai",
-      "tool: Error: Failed to parse structured output for tool 'Answer': Failed to parse data"
-    ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
+    "tools": [
+      "Answer"
+    ]
   }
 ]
 
@@ -100,7 +78,7 @@ model calls seen by the fake:
 structured_response:
 {
   "value": 5,
-  "unit": "none"
+  "unit": ""
 }
 
 structured_response type: Answer
@@ -109,103 +87,135 @@ structured_response type: Answer
   {
     "type": "AIMessage",
     "content": "",
-    "id": "lc_run--<uuid-5>-0",
+    "id": "lc_run--<uuid-4>-0",
     "tool_calls": [
       {
         "name": "Answer",
         "args": {
-          "value": 5
+          "value": 5,
+          "unit": ""
         },
-        "id": "call_a",
+        "id": "<uuid-5>",
         "type": "tool_call"
       },
       {
         "name": "Refusal",
         "args": {
-          "reason": "x"
+          "reason": "The question is straightforward and does not require refusal."
         },
-        "id": "call_b",
+        "id": "<uuid-6>",
         "type": "tool_call"
       }
-    ]
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 227,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 53,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 227,
+      "output_tokens": 53,
+      "total_tokens": 280
+    }
   },
   {
     "type": "ToolMessage",
     "content": "Error: Model incorrectly returned multiple structured responses (Answer, Refusal) when only one is expected.\n Please fix your mistakes.",
     "name": "Answer",
-    "id": "<uuid-6>",
-    "tool_call_id": "call_a",
+    "id": "<uuid-7>",
+    "tool_call_id": "<uuid-5>",
     "status": "success"
   },
   {
     "type": "ToolMessage",
     "content": "Error: Model incorrectly returned multiple structured responses (Answer, Refusal) when only one is expected.\n Please fix your mistakes.",
     "name": "Refusal",
-    "id": "<uuid-7>",
-    "tool_call_id": "call_b",
+    "id": "<uuid-8>",
+    "tool_call_id": "<uuid-6>",
     "status": "success"
   },
   {
     "type": "AIMessage",
     "content": "",
-    "id": "lc_run--<uuid-8>-0",
+    "id": "lc_run--<uuid-9>-0",
     "tool_calls": [
       {
         "name": "Answer",
         "args": {
-          "value": 5
+          "value": 5,
+          "unit": ""
         },
-        "id": "call_c",
+        "id": "<uuid-10>",
         "type": "tool_call"
       }
-    ]
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 346,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 24,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 346,
+      "output_tokens": 24,
+      "total_tokens": 370
+    }
   },
   {
     "type": "ToolMessage",
-    "content": "Returning structured response: value=5 unit='none'",
+    "content": "Returning structured response: value=5 unit=''",
     "name": "Answer",
-    "id": "<uuid-9>",
-    "tool_call_id": "call_c",
+    "id": "<uuid-11>",
+    "tool_call_id": "<uuid-10>",
     "status": "success"
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "multiple",
     "call": 1,
     "messages": [
-      "human: What is 2 + 3?"
+      "human: What is 2 + 3? Call the Answer tool and the Refusal tool together in one reply."
     ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer",
-        "Refusal"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
+    "tools": [
+      "Answer",
+      "Refusal"
+    ]
   },
   {
     "model": "multiple",
     "call": 2,
     "messages": [
-      "human: What is 2 + 3?",
-      "ai",
+      "human: What is 2 + 3? Call the Answer tool and the Refusal tool together in one reply.",
+      "ai: calls Answer, Refusal",
       "tool: Error: Model incorrectly returned multiple structured responses (Answer, Refusal",
       "tool: Error: Model incorrectly returned multiple structured responses (Answer, Refusal"
     ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer",
-        "Refusal"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
+    "tools": [
+      "Answer",
+      "Refusal"
+    ]
   }
 ]
 
@@ -213,36 +223,13 @@ model calls seen by the fake:
 
 structured_response:
 {
-  "value": 5,
-  "unit": "none"
+  "value": 3,
+  "unit": "5"
 }
 
 structured_response type: Answer
 
 [
-  {
-    "type": "AIMessage",
-    "content": "",
-    "id": "lc_run--<uuid-10>-0",
-    "tool_calls": [
-      {
-        "name": "Answer",
-        "args": {
-          "value": "five"
-        },
-        "id": "call_a",
-        "type": "tool_call"
-      }
-    ]
-  },
-  {
-    "type": "ToolMessage",
-    "content": "Return value as an integer.",
-    "name": "Answer",
-    "id": "<uuid-11>",
-    "tool_call_id": "call_a",
-    "status": "success"
-  },
   {
     "type": "AIMessage",
     "content": "",
@@ -251,143 +238,180 @@ structured_response type: Answer
       {
         "name": "Answer",
         "args": {
-          "value": 5
+          "value": 3,
+          "unit": "5"
         },
-        "id": "call_b",
+        "id": "<uuid-13>",
         "type": "tool_call"
       }
-    ]
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 181,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 181,
+      "output_tokens": 25,
+      "total_tokens": 206
+    }
   },
   {
     "type": "ToolMessage",
-    "content": "Returning structured response: value=5 unit='none'",
+    "content": "Returning structured response: value=3 unit='5'",
     "name": "Answer",
-    "id": "<uuid-13>",
-    "tool_call_id": "call_b",
+    "id": "<uuid-14>",
+    "tool_call_id": "<uuid-13>",
     "status": "success"
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "message",
     "call": 1,
     "messages": [
-      "human: What is 2 + 3?"
+      "human: What is 7 divided by 2? Put the exact decimal value, 3.5, in the value field."
     ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
-  },
-  {
-    "model": "message",
-    "call": 2,
-    "messages": [
-      "human: What is 2 + 3?",
-      "ai",
-      "tool: Return value as an integer."
-    ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
+    "tools": [
+      "Answer"
+    ]
   }
 ]
 
 ## ToolStrategy handle_errors=False: the run raises
 
-invoke:
+structured_response:
+{
+  "value": 3,
+  "unit": "5"
+}
 
-raised langchain.agents.structured_output.StructuredOutputValidationError: Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer
-value
-  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='five', input_type=str]
-    For further information visit https://errors.pydantic.dev/2.14/v/int_parsing.
+structured_response type: Answer
 
-model calls seen by the fake:
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-15>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": 3,
+          "unit": "5"
+        },
+        "id": "<uuid-16>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 181,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 181,
+      "output_tokens": 25,
+      "total_tokens": 206
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: value=3 unit='5'",
+    "name": "Answer",
+    "id": "<uuid-17>",
+    "tool_call_id": "<uuid-16>",
+    "status": "success"
+  }
+]
+
+model calls, as the model received them:
 [
   {
     "model": "no-retry",
     "call": 1,
     "messages": [
-      "human: What is 2 + 3?"
+      "human: What is 7 divided by 2? Put the exact decimal value, 3.5, in the value field."
     ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
+    "tools": [
+      "Answer"
+    ]
   }
 ]
 
-## ProviderStrategy with JSON that fails validation
+## ProviderStrategy when the answer is not an integer
 
-invoke:
+structured_response:
+{
+  "value": 3,
+  "unit": "decimal"
+}
 
-raised langchain.agents.structured_output.StructuredOutputValidationError: Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer
-value
-  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='five', input_type=str]
-    For further information visit https://errors.pydantic.dev/2.14/v/int_parsing.
+structured_response type: Answer
 
-model calls seen by the fake:
 [
   {
-    "model": "provider-bad",
-    "call": 1,
-    "messages": [
-      "human: What is 2 + 3?"
-    ],
-    "bound": {
-      "tools": [
-        "add"
-      ],
-      "tool_choice": null,
-      "kwargs": [
-        "response_format"
-      ]
+    "type": "AIMessage",
+    "content": "{ \"value\": 3, \"unit\": \"decimal\" }",
+    "id": "lc_run--<uuid-18>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 33,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 15,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 33,
+      "output_tokens": 15,
+      "total_tokens": 48
     }
   }
 ]
 
-## ProviderStrategy with text that is not JSON
-
-invoke:
-
-raised langchain.agents.structured_output.StructuredOutputValidationError: Failed to parse structured output for tool 'Answer': Native structured output expected valid JSON for Answer, but parsing failed: Expecting value: line 1 column 1 (char 0)..
-
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
-    "model": "provider-text",
+    "model": "provider-half",
     "call": 1,
     "messages": [
-      "human: What is 2 + 3?"
+      "human: What is 7 divided by 2? Put the exact decimal value, 3.5, in the value field."
     ],
-    "bound": {
-      "tools": [
-        "add"
-      ],
-      "tool_choice": null,
-      "kwargs": [
-        "response_format"
-      ]
-    }
+    "format": "json schema"
   }
 ]
 
-## ToolStrategy, the model calls a normal tool first
+## ProviderStrategy when the prompt asks for a word
 
 structured_response:
 {
@@ -400,8 +424,108 @@ structured_response type: Answer
 [
   {
     "type": "AIMessage",
+    "content": "{\"value\": 5}",
+    "id": "lc_run--<uuid-19>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 32,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 13,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 32,
+      "output_tokens": 13,
+      "total_tokens": 45
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "provider-word",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3? Give the value as the English word, for example five, not as digi"
+    ],
+    "format": "json schema"
+  }
+]
+
+## ProviderStrategy when the prompt asks for plain text
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "{ \"value\": 5 }",
+    "id": "lc_run--<uuid-20>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 26,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 8,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 26,
+      "output_tokens": 8,
+      "total_tokens": 34
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "provider-text",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3? Reply with one plain English sentence, not JSON."
+    ],
+    "format": "json schema"
+  }
+]
+
+## ToolStrategy, the model calls a normal tool first
+
+structured_response:
+{
+  "value": 5,
+  "unit": ""
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
     "content": "",
-    "id": "lc_run--<uuid-14>-0",
+    "id": "lc_run--<uuid-21>-0",
     "tool_calls": [
       {
         "name": "add",
@@ -409,76 +533,109 @@ structured_response type: Answer
           "a": 2,
           "b": 3
         },
-        "id": "call_a",
+        "id": "<uuid-22>",
         "type": "tool_call"
       }
-    ]
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 240,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 240,
+      "output_tokens": 25,
+      "total_tokens": 265
+    }
   },
   {
     "type": "ToolMessage",
     "content": "5",
     "name": "add",
-    "id": "<uuid-15>",
-    "tool_call_id": "call_a",
+    "id": "<uuid-23>",
+    "tool_call_id": "<uuid-22>",
     "status": "success"
   },
   {
     "type": "AIMessage",
     "content": "",
-    "id": "lc_run--<uuid-16>-0",
+    "id": "lc_run--<uuid-24>-0",
     "tool_calls": [
       {
         "name": "Answer",
         "args": {
-          "value": 5
+          "value": 5,
+          "unit": ""
         },
-        "id": "call_b",
+        "id": "<uuid-25>",
         "type": "tool_call"
       }
-    ]
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 279,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 24,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 279,
+      "output_tokens": 24,
+      "total_tokens": 303
+    }
   },
   {
     "type": "ToolMessage",
-    "content": "Returning structured response: value=5 unit='none'",
+    "content": "Returning structured response: value=5 unit=''",
     "name": "Answer",
-    "id": "<uuid-17>",
-    "tool_call_id": "call_b",
+    "id": "<uuid-26>",
+    "tool_call_id": "<uuid-25>",
     "status": "success"
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "tool-first",
     "call": 1,
     "messages": [
-      "human: What is 2 + 3?"
+      "human: What is 2 + 3? First call the add tool, then give the structured answer."
     ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
+    "tools": [
+      "add",
+      "Answer"
+    ]
   },
   {
     "model": "tool-first",
     "call": 2,
     "messages": [
-      "human: What is 2 + 3?",
-      "ai",
+      "human: What is 2 + 3? First call the add tool, then give the structured answer.",
+      "ai: calls add",
       "tool: 5"
     ],
-    "bound": {
-      "tools": [
-        "add",
-        "Answer"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
+    "tools": [
+      "add",
+      "Answer"
+    ]
   }
 ]

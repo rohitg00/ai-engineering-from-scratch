@@ -1,0 +1,25 @@
+# An agent loop past its recursion limit
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## create_agent sets recursion_limit 9999; a model told to keep calling a tool, with recursion_limit=6
+
+agent.config['recursion_limit']:
+9999
+
+invoke with recursion_limit=6:
+
+raised langgraph.errors.GraphRecursionError: Recursion limit of 6 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+
+model calls before the stop: 3
+
+what the model received on its last call:
+[
+  "system: You count upward with the add tool. Every reply must call add once, adding 1 to ",
+  "human: Start at 0 and never stop.",
+  "ai: calls add",
+  "tool: 1",
+  "ai: calls add",
+  "tool: 2"
+]

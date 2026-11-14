@@ -1,0 +1,18 @@
+# A tool reads the store through ToolRuntime
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## a tool reads the store through ToolRuntime, scoped by context
+
+user ada: tool returned ['prefers short answers']
+
+user ada: answer 'I know you prefer short answers.'
+
+user grace: tool returned ['prefers long answers']
+
+user grace: answer "I know that you prefer long answers. This means that when I respond to your questions, I will provide detailed and comprehensive information rather than brief or concise responses. I will make sure to cover all relevant aspects of the topic to meet your preference for depth and thoroughness. If you have any specific topics or questions you'd like to explore, feel free to let me know!"
+
+warning UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected `none` - serialized value may not be as expected [field_name='context', input_value={'user': 'ada'}, input_type=dict])
+warning UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected `none` - serialized value may not be as expected [field_name='context', input_value={'user': 'grace'}, input_type=dict])

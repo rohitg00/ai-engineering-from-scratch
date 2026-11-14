@@ -55,7 +55,7 @@ note: The model log after the error is empty.
 ---
 raised langchain.agents.middleware._redaction.PIIDetectionError: Detected 1 instance(s) of email in text content
 
-model calls seen by the fake:
+model calls, as the model received them:
 []
 ```
 
@@ -69,7 +69,9 @@ lang: python
         middleware=[PIIMiddleware("api_key", detector=r"sk-[a-z0-9]{8}", strategy="redact")], inp=ask("my key is sk-abcd1234"), first=0)
 ```
 
-The model received `my key is [REDACTED_API_KEY]`. With `apply_to_output=True`, the AI reply `Write to grace@example.org.` became `Write to [REDACTED_EMAIL].` in the state.
+The model received `my key is [REDACTED_API_KEY]`, and it answered that the key was redacted. With `apply_to_output=True`, the kit asked the model to reply `Write to grace@example.org.`. That reply became `Write to [REDACTED_EMAIL].` in the state.
+
+The four runs on input each got the same answer from Qwen3 4B: `I'm sorry, but I can't assist with that request.`. The input still held a card number, an address, or a URL, and the model refused. Redaction changes what the model reads, and it does not make the request look safe to the model.
 
 The guardrails page describes a stream transformer for `apply_to_output=True`. It holds back the last 128 characters of each text block, so a match split across chunks is not sent {{docs oss/python/langchain/guardrails}}. The kit did not stream through `PIIMiddleware`. That test is coming in the next edition, and [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
@@ -77,7 +79,9 @@ The guardrails page describes a stream transformer for `apply_to_output=True`. I
 
 **Decision model:** a `BaseDecisionModel` from `langchain_core.decisions`, new in `langchain-core` 1.8.0. It answers typed questions, such as a choice among named options or the probability that a statement is true.
 
-Both decision middlewares are new in `langchain` 1.5.0, and both are in beta. The prebuilt middleware page marks both as beta {{docs oss/python/langchain/middleware/built-in}}. In the code, `ModelRouterMiddleware` has the `beta` decorator and warns when you build it. `AutoModeMiddleware` says beta in its docstring only, so it gives no warning {{code libs/langchain_v1/langchain/agents/middleware/auto_mode.py}}. The kit uses a scripted decision model, so the answers below are ours and the questions are what the middleware sent.
+Both decision middlewares are new in `langchain` 1.5.0, and both are in beta. The prebuilt middleware page marks both as beta {{docs oss/python/langchain/middleware/built-in}}. In the code, `ModelRouterMiddleware` has the `beta` decorator and warns when you build it. `AutoModeMiddleware` says beta in its docstring only, so it gives no warning {{code libs/langchain_v1/langchain/agents/middleware/auto_mode.py}}. LangChain has decision models for OpenAI and Google only.
+
+So the kit answers with `OllamaDecisionModel`, about 40 lines of its own. It sends each question and the state to Qwen3 4B in JSON mode, and turns the JSON reply into the typed answer. The questions below are what the middleware sent, and the answers are what the model said.
 
 ## ModelRouterMiddleware
 
@@ -100,7 +104,7 @@ lang: json
     }
 ```
 
-The scripted answer was `fast`. The `fast` model got the only model call, the model passed to `create_agent` got none, and the answer went into `state["model_route"]`. The run warned `LangChainBetaWarning: The middleware `ModelRouterMiddleware` is in beta.`.
+The decision model answered `fast`, with probability 0.999 against 0.001 for `deep`. The `deep` route was `qwen3:8b`, and it got no call. The `fast` model got the only model call, the model passed to `create_agent` got none, and the answer went into `state["model_route"]`. The run warned `LangChainBetaWarning: The middleware `ModelRouterMiddleware` is in beta.`.
 
 ## AutoModeMiddleware
 
@@ -108,7 +112,7 @@ The scripted answer was `fast`. The `fast` model got the only model call, the mo
 
 The middleware sends the tool call, the tool description, and up to 30 recent messages {{code libs/langchain_v1/langchain/agents/middleware/auto_mode.py}}. A blocked call gets an error `ToolMessage`, and the tool does not run. A tool you do not list runs with no question. When the decision model raises, the error goes up and the tool does not run. The middleware blocks. It never asks a person.
 
-The kit lists `delete_branch` and `add`. Its scripted model answers 0.93 for `delete_branch` and 0.05 for `add`:
+The kit lists `delete_branch` and `add`, and asks the model to call both in one reply. The decision model answered 0.999 for `delete_branch` and 0.0 for `add`:
 
 ```listing
 title: one blocked call and one allowed call
@@ -117,10 +121,10 @@ lang: json
 note: The two ToolMessages. The ids are cut.
 ---
     "type": "ToolMessage",
-    "content": "The tool call `delete_branch` was blocked because it was classified as risky (probability: 0.93). The tool was not executed.",
+    "content": "The tool call `delete_branch` was blocked because it was classified as risky (probability: 1.00). The tool was not executed.",
     "name": "delete_branch",
 …
-    "tool_call_id": "call_d",
+    "tool_call_id": "<uuid-3>",
     "status": "error"
   },
   {
@@ -128,6 +132,8 @@ note: The two ToolMessages. The ids are cut.
     "content": "5",
     "name": "add",
 ```
+
+The user asked for the deletion in plain words, and the call was still blocked. The instructions of the middleware count destructive actions as risky. In an earlier recording of the same scenario, the decision model also gave `add` 0.999 and blocked it. A small decision model can block a safe call, so measure it on your own calls before you rely on it.
 
 [Figure](#fig-3-6b) draws the two paths. The question that the decision model received has `criteria` set to `null`:
 

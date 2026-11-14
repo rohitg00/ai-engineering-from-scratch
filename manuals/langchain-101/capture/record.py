@@ -20,6 +20,8 @@ ISO = re.compile(r"\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:\+00:00|Z)
 DOTTED = re.compile(r"\d{8}T\d{6,}Z")
 ADDR = re.compile(r"0x[0-9a-f]{6,}")
 ELAPSED = re.compile(r"(elapsed: )\d+\.\d+s")
+HOME = re.compile(r"/(?:home|Users)/[^/\s\"']+")
+PORT = re.compile(r"127\.0\.0\.1:(?!11434\b|9\b)\d+")
 MASK_TIME = "<epoch-ms>"
 TIME_KEYS = {"timestamp","created_at", "updated_at", "start_time", "end_time", "ts", "time"}
 MESSAGE_FIELDS = ("name", "id", "tool_calls", "invalid_tool_calls", "tool_call_chunks", "tool_call_id", "status", "artifact", "additional_kwargs", "response_metadata", "usage_metadata", "chunk_position")
@@ -42,7 +44,7 @@ def plain(value):
     if dataclasses.is_dataclass(value) and not isinstance(value, type):
         return {f.name: plain(getattr(value, f.name)) for f in dataclasses.fields(value)}
     if isinstance(value, dict):
-        return {str(k): (MASK_TIME if k in TIME_KEYS and isinstance(v, (int, float)) and v > 1e9 else plain(v)) for k, v in value.items()}
+        return {str(k): entry(k, v) for k, v in value.items()}
     if all(hasattr(value, attr) for attr in ("namespace", "key", "value", "dict")):
         return {"__type__": type(value).__name__, **plain(value.dict())}
     if hasattr(value, "_asdict"):
@@ -59,6 +61,14 @@ def plain(value):
     if isinstance(value, type):
         return value.__name__
     return repr(value)
+
+
+def entry(key, value):
+    if key in TIME_KEYS and isinstance(value, (int, float)) and value > 1e9:
+        return MASK_TIME
+    if str(key).endswith("_duration") and isinstance(value, int):
+        return "<ns>"
+    return plain(value)
 
 
 def error_text(exc):
@@ -89,6 +99,8 @@ class Masker:
         text = ISO.sub("<time>", text)
         text = ADDR.sub("0x<addr>", text)
         text = ELAPSED.sub(r"\1<seconds>", text)
+        text = HOME.sub("<home>", text)
+        text = PORT.sub("127.0.0.1:<port>", text)
         return text
 
 
@@ -97,6 +109,7 @@ class Capture:
         self.out_dir = out_dir
         self.stem = stem
         self.lines = [f"# {title}", ""]
+        self.recorded = None
         self.sidecars = []
 
     def section(self, title):
@@ -154,6 +167,8 @@ class Capture:
 
     def finish(self):
         mask = Masker()
+        if self.recorded:
+            self.lines[2:2] = [self.recorded, ""]
         files = [(f"{self.stem}.txt", "\n".join(self.lines).rstrip("\n") + "\n"), *self.sidecars]
         for name, body in files:
             with open(os.path.join(self.out_dir, name), "w", encoding="utf-8") as handle:

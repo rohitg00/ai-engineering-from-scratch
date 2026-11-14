@@ -3,8 +3,8 @@
 const { figure } = require('../../../_shared/figkit.js');
 
 const rows = [
-  ['bad arguments', "{'a': 'two'}", 'ToolMessage, status error', 'the model tries again', 'green'],
-  ['unknown tool name', 'subtract', 'ToolMessage, status error', 'the model tries again', 'green'],
+  ['bad arguments', "{'command': {'command': 'ls'}}", 'ToolMessage, status error', 'the model tries again', 'green'],
+  ['unknown tool name', 'subtract, from an older deploy', 'ToolMessage, status error', 'the model answers in text', 'green'],
   ['exception, middleware', 'ToolErrorMiddleware', 'ToolMessage, status error', 'text from on_error', 'green'],
   ['exception, no middleware', 'RuntimeError', 'invoke raises', 'disk on fire', 'rose'],
 ];
@@ -12,7 +12,7 @@ const rows = [
 module.exports = figure('fig-2-4', {
   height: 330,
   title: 'What each kind of tool failure does to a run',
-  desc: 'Four rows, each from a failure on the left to its result on the right. Bad arguments such as a equal to two become a ToolMessage with status error and the model tries again. An unknown tool name such as subtract becomes a ToolMessage with status error. An exception with ToolErrorMiddleware becomes a ToolMessage with status error that holds the text from on_error. An exception with no middleware, RuntimeError disk on fire, raises out of invoke and ends the run.',
+  desc: 'Four rows, each from a failure on the left to its result on the right. Bad arguments, such as a shell command sent as an object in place of a string, become a ToolMessage with status error and the model tries again. An unknown tool name, subtract from an older deploy, becomes a ToolMessage with status error, and the model answers in text. An exception with ToolErrorMiddleware becomes a ToolMessage with status error that holds the text from on_error. An exception with no middleware, RuntimeError disk on fire, raises out of invoke and ends the run.',
 }, f => {
   f.kicker(20, 20, 'the failure');
   f.kicker(380, 20, 'what the run gets');

@@ -20,8 +20,8 @@ source: capture/s_persist.py
 lang: python
 ---
 def two_turns(cap, checkpointer, name):
-    fake = model(*sum_script(), AIMessage("You asked me to add 2 and 3."), label=name)
-    agent = create_agent(fake, tools=[add], checkpointer=checkpointer)
+    m = llm(name)
+    agent = create_agent(m, tools=[add], checkpointer=checkpointer)
     cfg = thread(name)
     agent.invoke(ask("What is 2 + 3?"), cfg)
     out = agent.invoke(ask("What did I ask you?"), cfg)
@@ -37,12 +37,14 @@ lang: json
 what the model received on turn 2:
 [
   "human: What is 2 + 3?",
-  "ai",
+  "ai: calls add",
   "tool: 5",
-  "ai: The sum is 5.",
+  "ai: 2 + 3 = 5.",
   "human: What did I ask you?"
 ]
 ```
+
+Qwen3 4B answered `You asked what 2 + 3 is, and I calculated that it equals 5.`.
 
 So short-term memory is the message list in the checkpoint. The `add_messages` reducer appends the new human message to it, and every model call gets all of it. The cost of a long thread is in [section 4.5](#s-context-engineering-and-summarization).
 
@@ -56,7 +58,7 @@ lang: text
 raised builtins.ValueError: Checkpointer requires one or more of the following 'configurable' keys: thread_id, checkpoint_ns, checkpoint_id
 ```
 
-A new `thread_id` starts empty. In the kit, a second agent on the same saver with the thread `other-thread` saw only its own question. `delete_thread("memory-thread")` removed all 8 checkpoints of the first thread.
+A new `thread_id` starts empty. In the kit, a second agent on the same saver with the thread `other-thread` saw only its own question. Asked `What did I ask you?`, the model said that this was their first exchange. `delete_thread("memory-thread")` removed all 8 checkpoints of the first thread.
 
 You do not create a thread first. The first checkpoint creates it. The checkpointers page says that a thread must be created before a run, and that rule belongs to the Agent Server API {{docs oss/python/langgraph/checkpointers}}. This manual records it as conflict D118.
 
@@ -114,12 +116,11 @@ source: capture/s_persist.py
 lang: python
 ---
     with SqliteSaver.from_conn_string(path) as saver:
-        fake = model(AIMessage("Earlier you asked what 2 + 3 is."), label="after-restart")
-        agent = create_agent(fake, tools=[add], checkpointer=saver)
-        out = agent.invoke(ask("Remind me again."), thread("sqlite-thread"))
+        agent = create_agent(llm("after-restart"), tools=[add], checkpointer=saver)
+        out = agent.invoke(ask("Remind me what my first question was."), thread("sqlite-thread"))
 ```
 
-The third turn got all six earlier messages. The file has two tables, `checkpoints` and `writes`:
+The third turn got all six earlier messages, and the model answered `Your first question was, "What is 2 + 3?"`. The file has two tables, `checkpoints` and `writes`:
 
 ```listing
 title: the two tables after three turns

@@ -1,5 +1,7 @@
 # PIIMiddleware strategies
 
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
 ## PIIMiddleware('email', strategy='redact') on input
 
 [
@@ -10,12 +12,32 @@
   },
   {
     "type": "AIMessage",
-    "content": "Noted.",
-    "id": "lc_run--<uuid-2>-0"
+    "content": "I'm sorry, but I can't assist with that request.",
+    "id": "lc_run--<uuid-2>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 59,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 14,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 59,
+      "output_tokens": 14,
+      "total_tokens": 73
+    }
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "pii-email-redact",
@@ -36,12 +58,32 @@ model calls seen by the fake:
   },
   {
     "type": "AIMessage",
-    "content": "Noted.",
-    "id": "lc_run--<uuid-4>-0"
+    "content": "I'm sorry, but I can't assist with that request.",
+    "id": "lc_run--<uuid-4>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 44,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 14,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 44,
+      "output_tokens": 14,
+      "total_tokens": 58
+    }
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "pii-credit_card-mask",
@@ -62,12 +104,32 @@ model calls seen by the fake:
   },
   {
     "type": "AIMessage",
-    "content": "Noted.",
-    "id": "lc_run--<uuid-6>-0"
+    "content": "I'm sorry, but I can't assist with that request.",
+    "id": "lc_run--<uuid-6>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 55,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 14,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 55,
+      "output_tokens": 14,
+      "total_tokens": 69
+    }
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "pii-ip-hash",
@@ -88,12 +150,32 @@ model calls seen by the fake:
   },
   {
     "type": "AIMessage",
-    "content": "Noted.",
-    "id": "lc_run--<uuid-8>-0"
+    "content": "I'm sorry, but I can't assist with that request.",
+    "id": "lc_run--<uuid-8>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 58,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 14,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 58,
+      "output_tokens": 14,
+      "total_tokens": 72
+    }
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "pii-url-redact",
@@ -110,7 +192,7 @@ invoke:
 
 raised langchain.agents.middleware._redaction.PIIDetectionError: Detected 1 instance(s) of email in text content
 
-model calls seen by the fake:
+model calls, as the model received them:
 []
 
 ## PIIMiddleware('email', apply_to_output=True) on the model's answer
@@ -118,23 +200,43 @@ model calls seen by the fake:
 [
   {
     "type": "HumanMessage",
-    "content": "Who do I write to?",
+    "content": "Reply with exactly this sentence: Write to grace@example.org.",
     "id": "<uuid-9>"
   },
   {
     "type": "AIMessage",
     "content": "Write to [REDACTED_EMAIL].",
-    "id": "lc_run--<uuid-10>-0"
+    "id": "lc_run--<uuid-10>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 20,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 7,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 20,
+      "output_tokens": 7,
+      "total_tokens": 27
+    }
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "pii-out",
     "call": 1,
     "messages": [
-      "human: Who do I write to?"
+      "human: Reply with exactly this sentence: Write to grace@example.org."
     ]
   }
 ]
@@ -149,12 +251,32 @@ model calls seen by the fake:
   },
   {
     "type": "AIMessage",
-    "content": "ok",
-    "id": "lc_run--<uuid-12>-0"
+    "content": "It looks like you've shared a placeholder or redacted API key, which is good — security best practices recommend never sharing or exposing API keys in public or unsecured environments.\n\nIf you're asking for help with something related to an API (like authentication, usage, or troubleshooting), feel free to provide more context, and I’ll assist you securely and responsibly.\n\nJust remember:\n- Never share your actual API keys publicly.\n- Store them securely (e.g., environment variables, secure vaults).\n- Use them only for authorized purposes.\n\nLet me know how I can help! 😊",
+    "id": "lc_run--<uuid-12>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 19,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 118,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 19,
+      "output_tokens": 118,
+      "total_tokens": 137
+    }
   }
 ]
 
-model calls seen by the fake:
+model calls, as the model received them:
 [
   {
     "model": "pii-custom",

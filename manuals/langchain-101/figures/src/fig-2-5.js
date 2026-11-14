@@ -6,7 +6,7 @@ const { figure, color } = require('../../../_shared/figkit.js');
 
 const run = fs.readFileSync(path.join(__dirname, '../../capture/out/06-agent-run.txt'), 'utf8');
 const after = heading => run.slice(run.indexOf(heading) + heading.length);
-const callText = after('model calls seen by the fake:');
+const callText = after('model calls, as the model received them:');
 const calls = JSON.parse(callText.slice(0, callText.lastIndexOf(']') + 1));
 const finalText = after('## final state');
 const start = finalText.indexOf('\n[\n', finalText.indexOf('"messages"\n]')) + 1;
@@ -50,7 +50,7 @@ module.exports = figure('fig-2-5', {
     state.forEach((message, k) => line(f, 244, top + 26 + k * 24, 184, short(message), 'teal'));
     f.arrow([216, top + 14 + 24], [235, top + 14 + 24], { style: 'call' });
 
-    const model = f.box({ x: 510, y: top - 4, w: 110, h: 44, hue: 'plum', title: `call ${calls[r].call}`, sub: `tools: ${calls[r].bound.tools.join(', ')}`, titleSize: 11.5 });
+    const model = f.box({ x: 510, y: top - 4, w: 110, h: 44, hue: 'plum', title: `call ${calls[r].call}`, sub: `tools: ${calls[r].tools.join(', ')}`, titleSize: 11.5 });
     f.arrow([436, top + 16], [model.x - 1, top + 16], { style: 'model', label: `${request.length} messages`, labelX: 473 });
 
     f.beat(r * 2 + 2);

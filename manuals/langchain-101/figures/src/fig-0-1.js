@@ -5,7 +5,7 @@ const { figure } = require('../../../_shared/figkit.js');
 const lanes = [
   { title: 'your code', sub: 'agent.invoke', hue: 'violet' },
   { title: 'agent graph', sub: 'create_agent', hue: 'indigo' },
-  { title: 'chat model', sub: 'scripted fake', hue: 'plum' },
+  { title: 'chat model', sub: 'Qwen3 4B', hue: 'plum' },
   { title: 'tool', sub: 'add, flaky_disk', hue: 'green' },
   { title: 'checkpointer', sub: 'InMemorySaver', hue: 'teal' },
   { title: 'LangSmith', sub: 'outside', hue: 'olive' },
@@ -26,7 +26,7 @@ const rows = [
 module.exports = figure('fig-0-1', {
   height: 470,
   title: 'Reading a sequence figure in this manual',
-  desc: 'Six lifelines: your code, the agent graph from create_agent, the chat model, a tool, the checkpointer, and LangSmith outside the process. Eight numbered rows use the eight arrow styles: invoke with What is 2 + 3? as a solid ink call, the system prompt You add numbers. as a solid plum model call, the tool call add with a=2 and b=3 as a dashed ink reply, checkpoint step 1 as a solid teal durable write, next tools as a dashed amber state change, the custom stream value lookup A-17 as a dotted indigo stream, seven POST /runs requests as a dashed olive outside effect, and RuntimeError disk on fire as a dashed rose failure.',
+  desc: 'Six lifelines: your code, the agent graph from create_agent, the chat model Qwen3 4B on Ollama, a tool, the checkpointer, and LangSmith outside the process. Eight numbered rows use the eight arrow styles: invoke with What is 2 + 3? as a solid ink call, the system prompt You add numbers. as a solid plum model call, the tool call add with a=2 and b=3 as a dashed ink reply, checkpoint step 1 as a solid teal durable write, next tools as a dashed amber state change, the custom stream value lookup A-17 as a dotted indigo stream, seven POST /runs requests as a dashed olive outside effect, and RuntimeError disk on fire as a dashed rose failure.',
 }, f => {
   lanes.forEach((lane, index) => {
     f.box({ x: cx(index), y: 8, w: 100, h: 40, hue: lane.hue, title: lane.title, sub: lane.sub, titleSize: 11, anchor: 'middle', pad: 3 });

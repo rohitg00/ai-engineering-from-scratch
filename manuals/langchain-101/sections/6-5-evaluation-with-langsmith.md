@@ -96,6 +96,8 @@ HTTP requests the client received:
 }
 ```
 
+The row scored `false`. Qwen3 4B answered `2 + 3 = 5.`, and the evaluator `same_answer` compares the text with the reference `The sum is 5.`. An exact match fails a real model that is right, so score the number, or use a judge.
+
 [Figure](#fig-6-5) sets the two targets side by side, with the kit client.
 
 ```figure
@@ -136,7 +138,7 @@ The sent runs have two defects for a real server. The `LangGraph` run had a pare
 
 ## Keep an agent target offline
 
-To keep the runs of an agent target in the process, turn tracing off inside the target. The kit wraps the agent in `tracing_context(enabled=False)`. The kit client then received nothing, while the row still scored `true`:
+To keep the runs of an agent target in the process, turn tracing off inside the target. The kit wraps the agent in `tracing_context(enabled=False)`. The kit client then received nothing, and the row scored the same as before:
 
 ```listing
 title: the agent target with tracing off inside it

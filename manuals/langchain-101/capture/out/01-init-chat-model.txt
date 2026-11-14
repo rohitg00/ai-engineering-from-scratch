@@ -101,15 +101,15 @@ type _ConfigurableModel
 
 with_config llm_model=ollama:qwen3:4b -> _ConfigurableModel
 
-## the fake chat model used by this kit
+## the chat model used by this kit
 
-type ScriptedChatModel, _llm_type=scripted-fake-chat-model, profile=None
+type langchain_ollama.chat_models.ChatOllama, _llm_type=chat-ollama, profile=None
 
-invoke('hi'):
-[
-  {
-    "type": "AIMessage",
-    "content": "hello",
-    "id": "lc_run--<uuid-1>-0"
-  }
-]
+settings:
+{
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
+  "temperature": 0.0,
+  "seed": 42,
+  "num_ctx": 16384,
+  "reasoning": null
+}

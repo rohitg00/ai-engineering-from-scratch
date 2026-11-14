@@ -1,15 +1,12 @@
 from langchain.agents import create_agent
 from langchain.tools import ToolRuntime, tool
-from langchain_core.language_models import GenericFakeChatModel
-from langchain_core.messages import AIMessage
 
-from common import ASK, add, model, sum_script
-from fake import call
+from common import ASK, add, ask, llm, show_log
 from record import message
 
 
-def agent(**kwargs):
-    return create_agent(model(*sum_script(), stream_delimiter=r"(\s)", **kwargs), tools=[add])
+def agent():
+    return create_agent(llm("stream"), tools=[add])
 
 
 def short(chunk):
@@ -94,14 +91,18 @@ def slow_sum(a: int, b: int, runtime: ToolRuntime) -> int:
     return a + b
 
 
-def slow_sum_agent():
-    return create_agent(model(call("slow_sum", {"a": 2, "b": 3}), AIMessage("The sum is 5.")), tools=[slow_sum])
+def slow_sum_agent(m=None):
+    return create_agent(m or llm("slow-sum"), tools=[slow_sum])
 
 
 def stream_tools(cap):
     cap.section("stream_mode='tools': tool lifecycle events and output deltas")
-    for index, chunk in enumerate(slow_sum_agent().stream(ASK, stream_mode="tools")):
+    m = llm("slow-sum")
+    chunks = list(slow_sum_agent(m).stream(ASK, stream_mode="tools"))
+    cap.text(f"{len(chunks)} chunks")
+    for index, chunk in enumerate(chunks):
         cap.json(chunk, f"chunk {index}")
+    show_log(cap, m)
     cap.section("'tools' with 'updates', version='v2'")
     for index, part in enumerate(slow_sum_agent().stream(ASK, stream_mode=["tools", "updates"], version="v2")):
         data = part["data"] if part["type"] == "tools" else sorted(part["data"])
@@ -110,35 +111,24 @@ def stream_tools(cap):
     cap.json([sorted(c) for c in slow_sum_agent().stream(ASK, stream_mode="updates")], "updates chunks")
 
 
-class BindOnlyFake(GenericFakeChatModel):
-    def bind_tools(self, tools, *, tool_choice=None, **kwargs):
-        return self
-
-
-def stock_fake(cap):
-    cap.section("the stock GenericFakeChatModel cannot bind tools")
-    stock = create_agent(GenericFakeChatModel(messages=iter(sum_script())), tools=[add])
-    cap.attempt("invoke", lambda: stock.invoke(ASK))
-    cap.section("a subclass that only overrides bind_tools works with invoke")
-    out = create_agent(BindOnlyFake(messages=iter(sum_script())), tools=[add]).invoke(ASK)
-    cap.json([m.type for m in out["messages"]], "message types")
-    cap.section("the same subclass with stream_mode='messages', empty content and a tool call")
-    cap.attempt("stream", lambda: list(create_agent(BindOnlyFake(messages=iter(sum_script())), tools=[add]).stream(ASK, stream_mode="messages")))
-    cap.section("the same subclass with stream_mode='messages', text and a tool call: the tool call is lost")
-    script = [call("add", {"a": 2, "b": 3}, content="Let me add."), AIMessage("The sum is 5.")]
-    chunks = list(create_agent(BindOnlyFake(messages=iter(script)), tools=[add]).stream(ASK, stream_mode="messages"))
-    cap.json([short(c) for c in chunks])
-    cap.section("this kit's ScriptedChatModel with the same script")
-    chunks = list(create_agent(model(*script, stream_delimiter=r"(\s)"), tools=[add]).stream(ASK, stream_mode="messages"))
-    cap.json([short(c) for c in chunks])
+def tool_call_chunks(cap):
+    cap.section("stream_mode='messages': how ChatOllama streams a tool call")
+    chunks = list(agent().stream(ASK, stream_mode="messages"))
+    calls = [c for c in chunks if getattr(c[0], "tool_call_chunks", None)]
+    cap.text(f"{len(chunks)} chunks, {len(calls)} with tool_call_chunks")
+    cap.json([short(c) for c in calls], "the chunks that carry the tool call")
+    cap.section("text before a tool call in the same reply")
+    chunks = list(agent().stream(ask("First say 'Let me add.' in words, then call the add tool for 2 and 3 in the same reply."), stream_mode="messages"))
+    first = [c for c in chunks if c[1]["langgraph_step"] == 1]
+    cap.json([short(c) for c in first], "the chunks of the first model call")
 
 
 SCENARIOS = [
-    ("stream-updates-values", "Streaming v1: updates, values, and the default mode", stream_updates),
-    ("stream-messages", "Streaming v1: messages mode and several modes at once", stream_messages),
-    ("stream-tasks-custom-debug", "Streaming v1: tasks, custom, and debug", stream_tasks),
-    ("stream-v2", "Streaming v2: StreamPart dicts and GraphOutput", stream_v2),
-    ("stream-events-v3", "stream_events v3", stream_v3),
-    ("stream-tools-mode", "The tools stream mode", stream_tools),
-    ("stream-stock-fakes", "Why the stock fakes fail under streaming", stock_fake),
+    ("stream-updates-values", "Streaming v1: updates, values, and the default mode", stream_updates, True),
+    ("stream-messages", "Streaming v1: messages mode and several modes at once", stream_messages, True),
+    ("stream-tasks-custom-debug", "Streaming v1: tasks, custom, and debug", stream_tasks, True),
+    ("stream-v2", "Streaming v2: StreamPart dicts and GraphOutput", stream_v2, True),
+    ("stream-events-v3", "stream_events v3", stream_v3, True),
+    ("stream-tools-mode", "The tools stream mode", stream_tools, True),
+    ("stream-tool-call-chunks", "How a real model streams a tool call", tool_call_chunks, True),
 ]

@@ -123,9 +123,9 @@ lang: json
 ---
 collect_runs().traced_runs:
 [
-  "llm ScriptedChatModel",
+  "llm ChatOllama",
   "tool add",
-  "llm ScriptedChatModel",
+  "llm ChatOllama",
   "chain LangGraph"
 ]
 

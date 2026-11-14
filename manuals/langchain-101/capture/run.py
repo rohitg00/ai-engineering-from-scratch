@@ -13,13 +13,15 @@ if os.environ.get("PYTHONHASHSEED") != "0":
     os.execv(sys.executable, [sys.executable, *sys.argv])
 
 import difflib
-import shutil
+import re
 import tempfile
+import time
 from importlib import metadata
 
 HERE = os.path.dirname(os.path.realpath(__file__))
 OUT = os.path.join(HERE, "out")
 sys.path.insert(0, HERE)
+MODEL_NAME = "qwen3:4b-instruct-2507-q4_K_M"
 
 
 def pins():
@@ -67,20 +69,41 @@ def scenarios():
     import s_persist
     import s_start
     import s_stream
-    listed = [*s_start.SCENARIOS, *s_agents.SCENARIOS, *s_middleware.SCENARIOS, *s_stream.SCENARIOS, *s_persist.SCENARIOS, *s_graph.SCENARIOS, *s_integrations.SCENARIOS]
-    return [(f"{index:02d}-{slug}", title, fn) for index, (slug, title, fn) in enumerate(listed)]
+    listed = [*s_start.SCENARIOS, *s_agents.SCENARIOS, *s_middleware.SCENARIOS, *s_stream.SCENARIOS, *s_persist.SCENARIOS, *s_graph.SCENARIOS, *s_integrations.SCENARIOS,
+              *s_start.LATE, *s_persist.LATE, *s_graph.LATE, *s_integrations.LATE]
+    return [(f"{index:02d}-{slug}", title, fn, needs_model) for index, (slug, title, fn, needs_model) in enumerate(listed)]
 
 
-def capture(out_dir, only=None):
+def recorded_line():
+    import datetime
+    import common
+    version = common.ollama_version() or "unknown"
+    machine = os.environ.get("LC101_MACHINE", "an unnamed machine")
+    day = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
+
+    def line():
+        models = ", ".join(sorted(common.USED)) or "no model call"
+        return f"Recorded on {day} on {machine} with Ollama {version} on CPU. Models: {models}. ChatOllama settings: temperature 0, seed {common.SEED}, num_ctx {common.NUM_CTX}, num_predict {common.NUM_PREDICT}."
+
+    return line
+
+
+def capture(out_dir, only=None, with_model=True, without_model=True):
     from record import Capture
+    import common
     guard_network()
     os.makedirs(out_dir, exist_ok=True)
+    line = recorded_line() if with_model else None
     written = []
     failed = []
-    for stem, title, fn in scenarios():
+    for stem, title, fn, needs_model in scenarios():
         if only and not any(stem.startswith(prefix) or stem[3:].startswith(prefix) for prefix in only):
             continue
+        if (needs_model and not with_model) or (not needs_model and not without_model):
+            continue
         cap = Capture(out_dir, stem, title)
+        common.USED.clear()
+        started = time.monotonic()
         try:
             with cap.warnings():
                 fn(cap)
@@ -91,22 +114,48 @@ def capture(out_dir, only=None):
         if BLOCKED:
             cap.text("network attempts blocked: " + ", ".join(sorted(set(BLOCKED))))
             BLOCKED.clear()
+        if needs_model:
+            cap.recorded = line()
+            print(f"recorded {stem} in {time.monotonic() - started:.0f} s", file=sys.stderr, flush=True)
         written.extend(cap.finish())
     return written, failed
 
 
-def check():
+RECORDED = re.compile(r"^Recorded on \d{4}-\d{2}-\d{2} on .+ with Ollama \S+ on CPU\. Models: .+\. ChatOllama settings: temperature 0, seed \d+, num_ctx \d+, num_predict \d+\.$", re.M)
+
+
+def structure(folder, stems):
+    from expect import EXPECT
+    problems = []
+    for stem in stems:
+        path = os.path.join(folder, f"{stem}.txt")
+        if not os.path.exists(path):
+            problems.append(f"{stem}.txt: missing")
+            continue
+        with open(path, encoding="utf-8") as handle:
+            body = handle.read()
+        if not RECORDED.search(body):
+            problems.append(f"{stem}.txt: no 'Recorded on ...' line with the model and its settings")
+        for bad in ("SCENARIO FAILED", "network attempts blocked"):
+            if bad in body:
+                problems.append(f"{stem}.txt: contains {bad!r}")
+        for needle in EXPECT.get(stem[3:], []):
+            if needle not in body:
+                problems.append(f"{stem}.txt: expected {needle!r}")
+    return problems
+
+
+def check(live):
+    listed = scenarios()
+    free = [stem for stem, _, _, needs_model in listed if not needs_model]
+    recorded = [stem for stem, _, _, needs_model in listed if needs_model]
+    drift = []
     with tempfile.TemporaryDirectory(prefix="lc101-check-") as fresh:
-        written, failed = capture(fresh)
-        names = sorted(set(written) | {n for n in os.listdir(OUT) if not n.startswith(".")})
-        drift = []
-        for name in names:
+        written, failed = capture(fresh, with_model=False)
+        for name in sorted(written):
             old_path, new_path = os.path.join(OUT, name), os.path.join(fresh, name)
             if not os.path.exists(old_path):
                 drift.append(f"{name}: new in the fresh run, missing in out/")
-                continue
-            if not os.path.exists(new_path):
-                drift.append(f"{name}: in out/, missing in the fresh run")
                 continue
             with open(old_path, encoding="utf-8") as a, open(new_path, encoding="utf-8") as b:
                 old, new = a.read(), b.read()
@@ -114,12 +163,27 @@ def check():
                 diff = difflib.unified_diff(old.splitlines(keepends=True), new.splitlines(keepends=True), f"out/{name}", f"fresh/{name}")
                 drift.append("".join(list(diff)[:80]))
     if failed:
-        drift.append("scenarios that raised: " + ", ".join(failed))
+        drift.append("model-free scenarios that raised: " + ", ".join(failed))
+    known = set(written) | {f"{stem}.txt" for stem in recorded}
+    sidecars = {n for n in os.listdir(OUT) if any(n.startswith(stem + ".") for stem in recorded)}
+    for name in sorted(n for n in os.listdir(OUT) if not n.startswith(".")):
+        if name not in known and name not in sidecars:
+            drift.append(f"{name}: in out/, written by no scenario")
+    drift.extend(structure(OUT, recorded))
+    if live:
+        with tempfile.TemporaryDirectory(prefix="lc101-live-") as fresh:
+            _, failed = capture(fresh, without_model=False)
+            drift.extend(f"live: {p}" for p in structure(fresh, recorded))
     if drift:
         print("\n".join(drift))
-        print(f"drift: {len(drift)} of {len(names)} files differ")
+        print(f"drift: {len(drift)} problems")
         return 1
-    print(f"ok: {len(names)} files match")
+    print(f"ok: {len(written)} model-free files match")
+    print(f"ok: {len(recorded)} recorded files have their model line and expected structure")
+    if live:
+        print(f"ok: {len(recorded)} recorded scenarios ran again against Ollama and kept that structure")
+    else:
+        print(f"skipped: running the {len(recorded)} recorded scenarios again needs Ollama with {MODEL_NAME}; run.py --check --live does it")
     return 0
 
 
@@ -155,10 +219,14 @@ def main():
         print("skipped: the installed packages do not match capture/requirements.txt (" + "; ".join(shown) + "). Create capture/.venv from requirements.txt with Python 3.13, or set LANGCHAIN101_PYTHON.")
         return 0 if "--check" in args else 1
     if "--check" in args:
-        return check()
-    if not only:
-        shutil.rmtree(OUT, ignore_errors=True)
-    written, failed = capture(OUT, only)
+        return check("--live" in args)
+    with_model = "--model-free" not in args
+    if with_model:
+        import common
+        if common.ollama_version() is None:
+            print(f"no Ollama at {common.OLLAMA_URL}; set LC101_OLLAMA_URL, or run with --model-free to write only the model-free files")
+            return 1
+    written, failed = capture(OUT, only, with_model=with_model)
     print(f"wrote {len(written)} files to {OUT}")
     if failed:
         print("scenarios that raised: " + ", ".join(failed))

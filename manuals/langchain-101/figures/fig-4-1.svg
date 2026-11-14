@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 404" role="img" aria-labelledby="fig-4-1-title fig-4-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-4-1-title">The chunks of one agent run in each stream mode</title>
-  <desc id="fig-4-1-desc">Eight rows, one for each stream of the same agent run, over four columns: the input, the model node at step 1, the tools node at step 2, and the model node at step 3. Each mark is one chunk read from the capture, coloured by what it carries: indigo a whole state, plum model output, green tool output, amber a task that starts or ends. updates has 3, values 4, messages 9, tasks 6, debug 6, custom 0, the tools mode 4 on the slow_sum agent, and stream_events v3 has 21 events. The v3 stream closes each step with a values event.</desc>
+  <desc id="fig-4-1-desc">Eight rows, one for each stream of the same agent run, over four columns: the input, the model node at step 1, the tools node at step 2, and the model node at step 3. Each mark is one chunk read from the capture, coloured by what it carries: indigo a whole state, plum model output, green tool output, amber a task that starts or ends. updates has 3, values 4, messages 13, tasks 6, debug 6, custom 0, the tools mode 4 on the slow_sum agent, and stream_events v3 has 23 events. The v3 stream closes each step with a values event.</desc>
   <text x="138" y="24" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">input</text>
   <line x1="106" y1="34" x2="106" y2="300" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
   <text x="242" y="24" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">model, step 1</text>
@@ -29,16 +29,20 @@
   </g>
   <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
   <text x="20" y="120" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">messages</text>
-  <rect x="239" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="233" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="245" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
   <rect x="365" y="109" width="6" height="14" fill="var(--m-green-ink, #336b40)" stroke="var(--m-green-ink, #336b40)" stroke-width="1.2"/>
-  <rect x="464" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="476" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="488" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="500" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="512" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="524" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="536" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <text x="606" y="120" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">9</text>
+  <rect x="446" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="458" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="470" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="482" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="494" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="506" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="518" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="530" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="542" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="554" y="109" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <text x="606" y="120" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">13</text>
   </g>
   <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
   <text x="20" y="152" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">tasks</text>
@@ -75,27 +79,29 @@
   <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
   <text x="20" y="280" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">v3 events</text>
   <rect x="135" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2"/>
-  <rect x="215" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="227" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="239" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="251" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="263" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2"/>
+  <rect x="209" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="221" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="233" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="245" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="257" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="269" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2"/>
   <rect x="353" y="269" width="6" height="14" fill="var(--m-green-ink, #336b40)" stroke="var(--m-green-ink, #336b40)" stroke-width="1.2"/>
   <rect x="365" y="269" width="6" height="14" fill="var(--m-green-ink, #336b40)" stroke="var(--m-green-ink, #336b40)" stroke-width="1.2"/>
   <rect x="377" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2"/>
-  <rect x="434.92" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="446.75" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="458.58" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="470.42" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="482.25" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="494.08" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="505.92" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="517.75" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="529.58" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="541.42" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="553.25" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
-  <rect x="565.08" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2"/>
-  <text x="606" y="280" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">21</text>
+  <rect x="434.46" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="445.38" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="456.31" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="467.23" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="478.15" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="489.08" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="500" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="510.92" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="521.85" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="532.77" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="543.69" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="554.62" y="269" width="6" height="14" fill="var(--m-plum-ink, #8a3d72)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2"/>
+  <rect x="565.54" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2"/>
+  <text x="606" y="280" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">23</text>
   </g>
   <rect x="20" y="318" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2"/>
   <text x="32" y="330" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">whole state</text>

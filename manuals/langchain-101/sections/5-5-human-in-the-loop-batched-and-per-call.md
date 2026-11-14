@@ -17,7 +17,7 @@ title: an agent with two tools under review, batched mode
 source: capture/s_middleware.py
 lang: python
 ---
-    agent = create_agent(fake, tools=[add, lookup_order], middleware=[HumanInTheLoopMiddleware(interrupt_on={"add": True, "lookup_order": {"allowed_decisions": ["approve", "reject"]}})], checkpointer=checkpointer)
+    agent = create_agent(m, tools=[add, lookup_order], middleware=[HumanInTheLoopMiddleware(interrupt_on={"add": True, "lookup_order": {"allowed_decisions": ["approve", "reject"]}})], checkpointer=checkpointer)
 ```
 
 A tool that is not in the map runs with no pause. The middleware pauses with `interrupt`, so the agent needs a checkpointer, as [section 5.4](#s-interrupt-and-resume) showed. The human-in-the-loop page names `AsyncPostgresSaver` for production {{docs oss/python/langchain/human-in-the-loop}}.
@@ -39,7 +39,7 @@ A tool that is not in the map runs with no pause. The middleware pauses with `in
 
 **Batched mode:** the default `interrupt_mode`. One interrupt holds every paused call of one model message, and one resume answers all of them in order.
 
-The fake model asked for `add` and `lookup_order` in one message. The run paused with one interrupt. Its value lists the calls and the decisions that each one allows:
+The kit asked Qwen3 4B to call `add` and `lookup_order` in one reply, and it did. The run paused with one interrupt. Its value lists the calls and the decisions that each one allows:
 
 ```listing
 title: one interrupt for two calls
@@ -88,12 +88,15 @@ While the run waits, `next` is `HumanInTheLoopMiddleware.after_model`. The resum
 title: the resume for two calls in batched mode
 source: capture/s_middleware.py
 lang: python
+note: The kit builds the list from the interrupt, so it holds one decision for each call that the model made.
 ---
-    decisions = {"decisions": [
-        {"type": "edit", "edited_action": {"name": "add", "args": {"a": 20, "b": 30}}},
-        {"type": "reject", "message": "Do not look up orders."},
-    ]}
-    result = agent.invoke(Command(resume=decisions), cfg, version="v2")
+    decisions = []
+    for request in gated(result):
+        if request["name"] == "add":
+            decisions.append({"type": "edit", "edited_action": {"name": "add", "args": {"a": 20, "b": 30}}})
+        else:
+            decisions.append({"type": "reject", "message": "Do not look up orders."})
+    result = agent.invoke(Command(resume={"decisions": decisions}), cfg, version="v2")
 ```
 
 The model got two `ToolMessage` objects. The rejected call came first. The edited call ran with the new arguments, and its result starts with a notice that tells the model what ran:
@@ -107,17 +110,17 @@ note: The names and the ids are cut.
     "type": "ToolMessage",
     "content": "User rejected the tool call for `lookup_order` with reason: Do not look up orders.",
 …
-    "tool_call_id": "call_b",
+    "tool_call_id": "<uuid-3>",
     "status": "error"
 …
     "type": "ToolMessage",
     "content": "Note: a human reviewer replaced this tool call before it ran. The call recorded in your message is the one you produced, not the one that executed. This was intentional and authorized. Do not re-issue your original call. Executed instead: add with arguments {\"a\": 20, \"b\": 30}.\n\nTool response:\n50",
 …
-    "tool_call_id": "call_a",
+    "tool_call_id": "<uuid-2>",
     "status": "success"
 ```
 
-The `AIMessage` in the state still holds the original call with 2 and 3. A list with one decision for two calls raised `ValueError: Number of human decisions (1) does not match number of hanging tool calls (2).`, and nothing ran.
+The model then answered `The result of the addition is 50.`. The `AIMessage` in the state still holds the original call with 2 and 3. A list with one decision for two calls raised `ValueError: Number of human decisions (1) does not match number of hanging tool calls (2).`, and nothing ran.
 
 ## Per-call mode
 
@@ -128,10 +131,10 @@ title: an agent in per-call mode
 source: capture/s_middleware.py
 lang: python
 ---
-    agent = create_agent(fake, tools=[add], middleware=[HumanInTheLoopMiddleware(interrupt_on={"add": True}, interrupt_mode="per_call")], checkpointer=InMemorySaver())
+    agent = create_agent(m, tools=[add], middleware=[HumanInTheLoopMiddleware(interrupt_on={"add": True}, interrupt_mode="per_call")], checkpointer=InMemorySaver())
 ```
 
-The fake asked for `add` twice. The run paused with two interrupts, and `next` was `["tools", "tools"]`. Each interrupt names one call:
+The model asked for `add` twice in one reply, for 2 and 3 and for 4 and 5. The run paused with two interrupts, and `next` was `["tools", "tools"]`. Each interrupt names one call:
 
 ```listing
 title: the interrupt for the first call
@@ -139,12 +142,12 @@ source: capture/out/16-mw-hitl-per-call.txt
 lang: json
 note: The description is cut.
 ---
-interrupt for call_a:
+interrupt for add(2, 3):
 {
   "id": "<hex-1>",
   "value": {
     "type": "tool_approval",
-    "tool_call_id": "call_a",
+    "tool_call_id": "<uuid-1>",
     "name": "add",
     "args": {
       "a": 2,
@@ -169,7 +172,7 @@ note: One definition from the schema of the first interrupt.
         },
 ```
 
-The kit resumed with a map from each interrupt id to its decision: approve the first call, reject the second. The first `add` returned `5`, and the second got the reason with status `error`. An answer that the schema rejects raises, and the run keeps waiting. The kit allowed only `approve` on one tool and sent `reject`:
+The kit resumed with a map from each interrupt id to its decision: approve the first call, reject the second. The first `add` returned `5`, and the second got the reason with status `error`. The model did not report the 5. It answered `I see that the tool call was rejected.` and offered to try again. An answer that the schema rejects raises, and the run keeps waiting. The kit allowed only `approve` on one tool and sent `reject`:
 
 ```listing
 title: a decision outside the allowed decisions

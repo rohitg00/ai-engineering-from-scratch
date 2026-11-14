@@ -13,7 +13,7 @@ const block = (text, heading, skip = 0) => {
 };
 const run = out('06-agent-run.txt');
 const final = block(run, '## final state', 1);
-const calls = block(run, 'model calls seen by the fake:');
+const calls = block(run, 'model calls, as the model received them:');
 const history = out('30-state-history-forks.txt').split('## get_state_history, newest first')[1].split('\n## ')[0];
 const checkpoints = history.split(/\n(?=\{)/).filter(chunk => chunk.trim().startsWith('{')).map(chunk => JSON.parse(chunk.slice(0, chunk.lastIndexOf('}') + 1))).reverse();
 const call = final[1].tool_calls[0];

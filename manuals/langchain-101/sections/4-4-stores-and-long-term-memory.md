@@ -105,13 +105,16 @@ lang: python
 
 ```listing
 title: the same tool for two users
-source: capture/out/33-store.txt
+source: capture/out/44-store-agent.txt
 lang: text
+note: The answers of the model are cut.
 ---
-user ada: prefers short answers
-
-user grace: prefers long answers
+user ada: tool returned ['prefers short answers']
+…
+user grace: tool returned ['prefers long answers']
 ```
+
+Qwen3 4B called `recall` in both runs. It answered Ada with `I know you prefer short answers.`, and Grace with a long reply about her taste for long answers.
 
 The user comes from `context`, which your code sets, and never from the model. If the model could name the user in a tool argument, it could read another user's items. Each run also warned `PydanticSerializationUnexpectedValue` for the field `context`, because the agent had no `context_schema` for the dict. The warning did not change the result.
 
@@ -155,4 +158,4 @@ users.bob.memories|k1|$|3072
 - Delete the vector rows yourself after a delete in SqliteStore.
 ```
 
-Sources: capture/s_persist.py, capture/out/33-store.txt; capture/lab/summary/stores-mac.json, capture/lab/T14-stores-mac/01-memory-sqlite.jsonl, capture/lab/T14-stores-mac/02-inmemory-getop-side-effect.txt, capture/lab/T14-stores-mac/03-postgres.jsonl, capture/lab/T14-stores-mac/04-index.jsonl, capture/lab/T14-stores-mac/05-orphan-vectors.txt; libs/checkpoint/langgraph/store/base/__init__.py, libs/checkpoint/langgraph/store/memory/__init__.py, libs/checkpoint-sqlite/langgraph/store/sqlite/base.py, and libs/checkpoint-postgres/langgraph/store/postgres/base.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/stores, oss/python/langchain/long-term-memory); GitHub issue langchain-ai/langgraph#8757 and advisories GHSA-47pj-3jcm-6whg and GHSA-6hmw-9432-67qq.
+Sources: capture/s_persist.py, capture/out/33-store.txt, capture/out/44-store-agent.txt; capture/lab/summary/stores-mac.json, capture/lab/T14-stores-mac/01-memory-sqlite.jsonl, capture/lab/T14-stores-mac/02-inmemory-getop-side-effect.txt, capture/lab/T14-stores-mac/03-postgres.jsonl, capture/lab/T14-stores-mac/04-index.jsonl, capture/lab/T14-stores-mac/05-orphan-vectors.txt; libs/checkpoint/langgraph/store/base/__init__.py, libs/checkpoint/langgraph/store/memory/__init__.py, libs/checkpoint-sqlite/langgraph/store/sqlite/base.py, and libs/checkpoint-postgres/langgraph/store/postgres/base.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/stores, oss/python/langchain/long-term-memory); GitHub issue langchain-ai/langgraph#8757 and advisories GHSA-47pj-3jcm-6whg and GHSA-6hmw-9432-67qq.

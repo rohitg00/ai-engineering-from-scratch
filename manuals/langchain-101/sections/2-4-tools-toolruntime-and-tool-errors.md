@@ -87,7 +87,7 @@ Inside an agent, `lookup_order` reads `runtime.context` and `runtime.tool_call_i
 
 ```listing
 title: ToolRuntime inside create_agent
-source: capture/out/03-tools.txt
+source: capture/out/43-tool-runtime-agent.txt
 lang: json
 note: The custom chunk and the tool update. The two model updates are cut.
 ---
@@ -100,7 +100,7 @@ updates tools:
 [
   {
     "type": "ToolMessage",
-    "content": "order A-17: shipped (asked by ada, tool_call_id=call_7)",
+    "content": "order A-17: shipped (asked by ada, tool_call_id=<uuid-2>)",
 ```
 
 Call `runtime.stream_writer(value)` as a function. The example in the `ToolRuntime` docstring calls `stream_writer.write(...)` {{code libs/prebuilt/langgraph/prebuilt/tool_node.py:1746}}. That method does not exist, because `StreamWriter` is a plain callable {{code libs/langgraph/langgraph/types.py}}. This manual records the disagreement as conflict D3.
@@ -120,7 +120,7 @@ runtime
   Field required [type=missing, input_value={'order_id': 'A-17'}, input_type=dict]
 ```
 
-Test such a tool inside an agent with a fake model, as the kit does.
+Test such a tool inside an agent, as the kit does with Qwen3 4B.
 
 ## Tool errors
 
@@ -133,29 +133,30 @@ id: fig-2-4
 kind: decision
 title: what each kind of tool failure does to a run
 claim: Bad arguments and an unknown tool name become an error ToolMessage, and an exception inside the tool ends the run unless middleware converts it.
-caption: Read each row from the failure on the left to the result on the right. Green rows go on to the next model call, and the rose row raises out of invoke. From capture/out/04-tool-errors.txt.
+caption: Read each row from the failure on the left to the result on the right. Green rows go on to the next model call, and the rose row raises out of invoke. From capture/out/04-tool-errors.txt and capture/out/19-mw-shell-files.txt.
 ```
 
-Bad arguments become a `ToolMessage` with `status` `error`, and the model gets a second chance:
+Bad arguments become a `ToolMessage` with `status` `error`, and the model gets a second chance. The kit could not make Qwen3 4B send a bad argument to `add`. Asked for `2.5 + 3`, it sent 2 and 3, and then told the user that the tool takes integers. Asked to set a volume of 0 to 10 to 11, it called no tool and said that 10 is the maximum.
+
+The bad arguments came from the shell tool of [section 3.4](#s-the-built-in-middleware). The model sent the command as an object in place of a string, six times in a row:
 
 ```listing
 title: the model sends bad arguments
-source: capture/out/04-tool-errors.txt
+source: capture/out/19-mw-shell-files.txt
 lang: json
-note: The ToolMessage and the reply after it.
+note: The first ToolMessage of the run that asked for ls.
 ---
-    "content": "Error invoking tool 'add' with kwargs {'a': 'two'} with error:\n a: Input should be a valid integer, unable to parse string as an integer\nb: Field required\n Please fix the error and try again.",
-    "name": "add",
-    "id": "<uuid-3>",
-    "tool_call_id": "call_1",
+    "content": "Error invoking tool 'shell' with kwargs {'command': {'command': 'ls'}} with error:\n command: Input should be a valid string\n Please fix the error and try again.",
+    "name": "shell",
+…
     "status": "error"
-  },
-  {
-    "type": "AIMessage",
-    "content": "I could not add them.",
 ```
 
-An unknown tool name also becomes an error message: `Error: subtract is not a valid tool, try one of [add].`. An exception inside the tool is different. With no middleware, `invoke` raised `RuntimeError: disk on fire`, and the run ended.
+A second chance does not help when the model repeats the same mistake, so set a recursion limit or a tool call limit.
+
+A real model rarely names a tool that it was not given. Told about a `subtract` tool that did not exist, Qwen3 4B called `add` with 5 and -3. An unknown name comes when the tools change under a thread. The kit paused an agent that had `subtract`, then resumed the thread with an agent that had only `add`. The saved call became an error message: `Error: subtract is not a valid tool, try one of [add].`.
+
+An exception inside the tool is different. With no middleware, `invoke` raised `RuntimeError: disk on fire`, and the run ended.
 
 `ToolErrorMiddleware` turns that exception into a message. Its `on_error` function returns the text, and the run goes on:
 
@@ -168,8 +169,8 @@ note: The ToolMessage only.
     "type": "ToolMessage",
     "content": "RuntimeError in flaky_disk: disk on fire",
     "name": "flaky_disk",
-    "id": "<uuid-7>",
-    "tool_call_id": "call_1",
+    "id": "<uuid-11>",
+    "tool_call_id": "<uuid-10>",
     "status": "error"
 ```
 
@@ -205,4 +206,4 @@ The tools page says that each tool call in the history needs a `ToolMessage` tha
 - End a custom model stream with an empty chunk marked last.
 ```
 
-Sources: capture/common.py, capture/out/03-tools.txt, capture/out/04-tool-errors.txt; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/02-idless-and-dupnames.jsonl, capture/lab/T08-parallel-tools-mac/03-ollama-parallel.jsonl, capture/lab/T08-parallel-tools-mac/t08_ids.py, capture/lab/T08-parallel-tools-mac/t08_ollama.py; issue langgraph#7988, issue langchain#40531; libs/core/langchain_core/messages/ai.py and libs/core/langchain_core/language_models/_compat_bridge.py at langchain-core 1.8.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/tools); libs/prebuilt/langgraph/prebuilt/tool_node.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/core/langchain_core/tools at langchain==1.5.0.
+Sources: capture/common.py, capture/s_start.py, capture/out/03-tools.txt, capture/out/43-tool-runtime-agent.txt, capture/out/04-tool-errors.txt, capture/out/19-mw-shell-files.txt; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/02-idless-and-dupnames.jsonl, capture/lab/T08-parallel-tools-mac/03-ollama-parallel.jsonl, capture/lab/T08-parallel-tools-mac/t08_ids.py, capture/lab/T08-parallel-tools-mac/t08_ollama.py; issue langgraph#7988, issue langchain#40531; libs/core/langchain_core/messages/ai.py and libs/core/langchain_core/language_models/_compat_bridge.py at langchain-core 1.8.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/tools); libs/prebuilt/langgraph/prebuilt/tool_node.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/core/langchain_core/tools at langchain==1.5.0.

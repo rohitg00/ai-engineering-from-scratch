@@ -1,5 +1,7 @@
 # State history, replay, and update_state forks
 
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
 ## get_state_history, newest first
 
 {
@@ -12,7 +14,7 @@
     "human: Charge 10.",
     "ai: ",
     "tool: charged 10",
-    "ai: Charged 10."
+    "ai: The card has been successfully charged with 10 units."
   ],
   "tasks": []
 }
@@ -89,7 +91,7 @@ messages:
   "human: Charge 10.",
   "ai: ",
   "tool: charged 10",
-  "ai: Charged again after replay."
+  "ai: The card has been successfully charged with 10 units."
 ]
 
 charge calls so far (the tool ran again on replay):
@@ -126,7 +128,7 @@ after running the fork:
   "human: Actually, charge 99.",
   "ai: ",
   "tool: charged 99",
-  "ai: Charged 99 on the fork."
+  "ai: The card has been charged with 99."
 ]
 
 charge calls:
@@ -147,7 +149,7 @@ paused before:
   "human: Charge 5.",
   "ai: ",
   "tool: charged 5 by hand",
-  "ai: Done, per the manual entry."
+  "ai: It seems there was a misunderstanding. I cannot perform actions like charging a card manually. If you'd like, I can assist you with other tasks or help guide you through the correct process. Let me know how I can assist!"
 ]
 
 charge calls (unchanged):

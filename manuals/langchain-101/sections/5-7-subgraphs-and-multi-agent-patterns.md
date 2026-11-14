@@ -117,13 +117,13 @@ A `create_agent` graph is a compiled graph, so it can be a node. The kit adds an
 
 ```listing
 title: an agent in a parent graph
-source: capture/out/36-subgraphs.txt
+source: capture/out/45-subgraph-agent.txt
 lang: json
 note: The first and the last of four chunks.
 ---
 {
   "namespace": [
-    "adder:<uuid-2>"
+    "adder:<uuid-1>"
   ],
   "nodes": [
     "model"
@@ -146,28 +146,28 @@ The multi-agent page of the docs names five patterns: subagents, `handoffs`, ski
 
 **Subagent:** an agent that another agent calls as a tool. The caller sees only the last message of the subagent.
 
-Deep Agents gives every agent a `task` tool that starts a subagent. In the kit run, the main agent called `task` with a description, and the subagent answered `yes`:
+Deep Agents gives every agent a `task` tool that starts a subagent. In the kit run, the main agent called `task` with a description that it wrote, and the subagent answered in one sentence:
 
 ```listing
 title: the task call and its answer
 source: capture/out/41-deep-agent.txt
 lang: json
-note: The third model call of the main agent and the ToolMessage that answered it.
+note: The fourth model call of the main agent and the ToolMessage that answered it.
 ---
         "name": "task",
         "args": {
-          "description": "Check that 2 + 3 is 5 and reply yes or no.",
+          "description": "Verify that 2 + 3 equals 5 by performing a mathematical calculation and confirming the result.",
           "subagent_type": "general-purpose"
         },
-        "id": "call_t",
+        "id": "<uuid-11>",
         "type": "tool_call"
 …
     "type": "ToolMessage",
-    "content": "yes",
+    "content": "2 + 3 equals 5. This is a basic arithmetic fact and can be verified through direct calculation: 2 plus 3 is indeed 5.",
     "name": "task",
 ```
 
-The model call of the subagent was the fourth call of the fake. It got two messages, its own system prompt and one other message, and its tools had no `task`. The main agent saw one `ToolMessage` with the text `yes`. So a subagent keeps its work out of the context of its caller. Part 6 covers Deep Agents.
+The model call of the subagent was the fifth of six calls. It got two messages, its own system prompt and the description, and its tools had no `task`. The main agent saw one `ToolMessage` with the answer of the subagent. So a subagent keeps its work out of the context of its caller. Part 6 covers Deep Agents.
 
 The kit runs only the subagent pattern. Captures of the other four patterns come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
@@ -179,4 +179,4 @@ The kit runs only the subagent pattern. Captures of the other four patterns come
 - Start with one agent, and add a subagent when a task needs its own context.
 ```
 
-Sources: capture/s_graph.py, capture/out/36-subgraphs.txt, capture/out/41-deep-agent.txt; capture/lab/summary/approvals-mac.json; libs/langgraph/langgraph/pregel/main.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-subgraphs, oss/python/langchain/multi-agent/index, oss/python/langchain/multi-agent/subagents).
+Sources: capture/s_graph.py, capture/out/36-subgraphs.txt, capture/out/45-subgraph-agent.txt, capture/out/41-deep-agent.txt; capture/lab/summary/approvals-mac.json; libs/langgraph/langgraph/pregel/main.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-subgraphs, oss/python/langchain/multi-agent/index, oss/python/langchain/multi-agent/subagents).

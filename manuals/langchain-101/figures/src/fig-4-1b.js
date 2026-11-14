@@ -22,5 +22,5 @@ module.exports = figure('fig-4-1b', {
   });
   f.rule(217, 10, 217, 226, { dash: 'dashed' });
   f.rule(423, 10, 423, 226, { dash: 'dashed' });
-  f.text(16, 254, 'All three carry the same ToolMessage, with content 5 and tool_call_id call_1.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(16, 254, 'All three carry the same ToolMessage, with content 5 and the tool_call_id of the call.', { size: 11, serif: true, hue: 'ink-soft' });
 });

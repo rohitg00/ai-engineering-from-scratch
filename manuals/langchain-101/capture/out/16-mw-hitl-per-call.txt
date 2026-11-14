@@ -1,13 +1,15 @@
 # Human in the loop, per call
 
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
 ## per_call: one interrupt per gated call
 
-interrupt for call_a:
+interrupt for add(2, 3):
 {
   "id": "<hex-1>",
   "value": {
     "type": "tool_approval",
-    "tool_call_id": "call_a",
+    "tool_call_id": "<uuid-1>",
     "name": "add",
     "args": {
       "a": 2,
@@ -155,12 +157,12 @@ response_schema:
   ]
 }
 
-interrupt for call_b:
+interrupt for add(4, 5):
 {
   "id": "<hex-2>",
   "value": {
     "type": "tool_approval",
-    "tool_call_id": "call_b",
+    "tool_call_id": "<uuid-2>",
     "name": "add",
     "args": {
       "a": 4,
@@ -314,13 +316,13 @@ state.next:
   "tools"
 ]
 
-## resume with a map of interrupt id to decision
+## resume with a map of interrupt id to decision: approve the first, reject the rest
 
 [
   {
     "type": "AIMessage",
     "content": "",
-    "id": "lc_run--<uuid-1>-0",
+    "id": "lc_run--<uuid-3>-0",
     "tool_calls": [
       {
         "name": "add",
@@ -328,7 +330,7 @@ state.next:
           "a": 2,
           "b": 3
         },
-        "id": "call_a",
+        "id": "<uuid-1>",
         "type": "tool_call"
       },
       {
@@ -337,31 +339,98 @@ state.next:
           "a": 4,
           "b": 5
         },
-        "id": "call_b",
+        "id": "<uuid-2>",
         "type": "tool_call"
       }
-    ]
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 178,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 50,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 178,
+      "output_tokens": 50,
+      "total_tokens": 228
+    }
   },
   {
     "type": "ToolMessage",
     "content": "5",
     "name": "add",
-    "id": "<uuid-2>",
-    "tool_call_id": "call_a",
+    "id": "<uuid-4>",
+    "tool_call_id": "<uuid-1>",
     "status": "success"
   },
   {
     "type": "ToolMessage",
     "content": "User rejected the tool call for `add` with reason: Not this one.",
     "name": "add",
-    "id": "<uuid-3>",
-    "tool_call_id": "call_b",
+    "id": "<uuid-5>",
+    "tool_call_id": "<uuid-2>",
     "status": "error"
   },
   {
     "type": "AIMessage",
-    "content": "Done.",
-    "id": "lc_run--<uuid-4>-0"
+    "content": "I see that the tool call was rejected. Let me know if you'd like me to try again or assist in a different way!",
+    "id": "lc_run--<uuid-6>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 262,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 28,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 262,
+      "output_tokens": 28,
+      "total_tokens": 290
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "hitl-per-call",
+    "call": 1,
+    "messages": [
+      "human: Use the add tool twice in one reply: add 2 and 3, and add 4 and 5."
+    ],
+    "tools": [
+      "add"
+    ]
+  },
+  {
+    "model": "hitl-per-call",
+    "call": 2,
+    "messages": [
+      "human: Use the add tool twice in one reply: add 2 and 3, and add 4 and 5.",
+      "ai: calls add, add",
+      "tool: 5",
+      "tool: User rejected the tool call for `add` with reason: Not this one."
+    ],
+    "tools": [
+      "add"
+    ]
   }
 ]
 

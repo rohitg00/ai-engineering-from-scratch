@@ -76,7 +76,7 @@ note: The two ToolMessages. The ids are cut.
     "content": "Tool call limit exceeded. Do not call 'add' again.",
     "name": "add",
 …
-    "tool_call_id": "call_b",
+    "tool_call_id": "<uuid-10>",
     "status": "error"
   },
   {
@@ -84,15 +84,17 @@ note: The two ToolMessages. The ids are cut.
     "content": "2",
     "name": "add",
 …
-    "tool_call_id": "call_a",
+    "tool_call_id": "<uuid-9>",
     "status": "success"
 ```
 
-With `exit_behavior="end"`, the run stops after that batch with `Tool call limit reached: run limit exceeded (2/1 calls).`. With `error`, it raises `ToolCallLimitExceededError`. The model can still ask again after `continue`, so add a model call limit as well when cost matters.
+The model asked for `add(1, 1)` as `<uuid-9>` and `add(2, 2)` as `<uuid-10>` in one reply. The second call was blocked, and the error message comes first in the state. The model still answered that 2 + 2 is 4, from its own arithmetic.
+
+With `exit_behavior="end"`, the run stops after that batch with `Tool call limit reached: run limit exceeded (2/1 calls).`. With `error`, it raises `ToolCallLimitExceededError`. The model can still ask again after `continue`, or answer without the tool, so add a model call limit as well when cost matters.
 
 ## Planning and context
 
-`TodoListMiddleware` adds the `write_todos` tool and a system prompt section about it. Each call replaces the list in `state["todos"]`. After the kit run, the state held the final list:
+`TodoListMiddleware` adds the `write_todos` tool and a system prompt section about it. Each call replaces the list in `state["todos"]`. The kit asked Qwen3 4B to plan, add, and mark the plan done. It called `write_todos`, `add`, and `write_todos` again, and its own plan had two items. After the run, the state held the final list:
 
 ```listing
 title: state["todos"] after the run
@@ -103,11 +105,11 @@ note: The todos key of the output state.
 todos:
 [
   {
-    "content": "Add 2 and 3",
+    "content": "Understand the task: calculate 2 + 3",
     "status": "completed"
   },
   {
-    "content": "Report the sum",
+    "content": "Perform the addition: 2 + 3",
     "status": "completed"
   }
 ]
@@ -121,7 +123,7 @@ source: capture/out/17-mw-todo-context-editing.txt
 lang: json
 ---
 [
-  "Add three pairs.",
+  "Add three pairs: 1 + 1, 2 + 2, and 3 + 3.",
   "",
   "[cleared]",
   "",
@@ -131,7 +133,7 @@ lang: json
 ]
 ```
 
-The edit is a `wrap_model_call` hook, so it changes only the request. The state keeps every tool result, and the checkpoint grows as before. [Section 4.5](#s-context-engineering-and-summarization) compares it with summarization.
+The model still answered 2, 4, and 6, because the question names the pairs. The edit is a `wrap_model_call` hook, so it changes only the request. The state keeps every tool result, and the checkpoint grows as before. [Section 4.5](#s-context-engineering-and-summarization) compares it with summarization.
 
 ## Tool selection, emulation, and tool search
 
@@ -141,37 +143,40 @@ The edit is a `wrap_model_call` hook, so it changes only the request. The state 
 title: the agent model with LLMToolSelectorMiddleware(max_tools=1)
 source: capture/out/18-mw-selection-emulation.txt
 lang: json
-note: The bound tools of the first agent model call. The agent had add, get_weather, and send_email.
+note: The first agent model call. The agent had add, get_weather, and send_email.
 ---
-    "bound": {
-      "tools": [
-        "get_weather"
-      ],
-      "tool_choice": null,
-      "kwargs": []
-    }
+    "model": "agent",
+    "call": 1,
+    "messages": [
+      "human: Weather in Pune?"
+    ],
+    "tools": [
+      "get_weather"
+    ]
 ```
 
-`LLMToolEmulator` sends each listed tool call to a model and returns its text as the result. The tool body never ran, and the `ToolMessage` held `Emulated: sent to ops@example.com`. Pass `model`, because the default is a named Anthropic model, and the default warns that it is deprecated {{code libs/langchain_v1/langchain/agents/middleware/tool_emulator.py}}.
+`LLMToolEmulator` sends each listed tool call to a model and returns its text as the result. The tool body never ran. The emulator model wrote the result, and the `ToolMessage` held `Email sent successfully to ops@example.com. 📩`. Pass `model`, because the default is a named Anthropic model, and the default warns that it is deprecated {{code libs/langchain_v1/langchain/agents/middleware/tool_emulator.py}}.
 
-`ProviderToolSearchMiddleware` needs a provider with server-side tool search. On the fake model it raised `ValueError` with the text `supported providers: anthropic, openai`. With no tools to defer, it passed the request through. We did not run it against a provider, and that test comes in the next edition. [Section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
+`ProviderToolSearchMiddleware` needs a provider with server-side tool search. On `ChatOllama` it raised `ValueError` with the text `but got 'ollama'; supported providers: anthropic, openai`. With no tools to defer, it passed the request through. We did not run it against a provider, and that test comes in the next edition. [Section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
 ## Shell and file search
 
-`ShellToolMiddleware` adds a `shell` tool. It starts one shell in `before_agent` and stops it in `after_agent`. The kit listed its workspace:
+`ShellToolMiddleware` adds a `shell` tool. It starts one shell in `before_agent` and stops it in `after_agent`. The kit asked Qwen3 4B to run a command in its workspace, in two runs. The model never ran one. It sent the command as an object in place of a string, 13 times in all, and each call failed validation:
 
 ```listing
-title: the shell tool result
+title: the shell tool call that failed
 source: capture/out/19-mw-shell-files.txt
 lang: json
-note: The content of the ToolMessage.
+note: The content of the first ToolMessage of the run that asked for ls.
 ---
-    "content": "hello from shell\nnotes.md\nsrc\n",
+    "content": "Error invoking tool 'shell' with kwargs {'command': {'command': 'ls'}} with error:\n command: Input should be a valid string\n Please fix the error and try again.",
 ```
+
+The model then said the tool had a problem of its own. So check a middleware tool with the model you will use, before you rely on it.
 
 With no `execution_policy`, the middleware uses `HostExecutionPolicy`, which runs commands on your machine with your rights {{code libs/langchain_v1/langchain/agents/middleware/shell_tool.py}}. `DockerExecutionPolicy` and `CodexSandboxExecutionPolicy` are the isolated choices. [Section 7.3](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) covers the risk.
 
-`FilesystemFileSearchMiddleware` adds `glob_search` and `grep_search` under `root_path`. The paths in the results start at that root, such as `/src/app.py`. With `use_ripgrep=False` it searches in Python.
+`FilesystemFileSearchMiddleware` adds `glob_search` and `grep_search` under `root_path`. The paths in the results start at that root. With `use_ripgrep=False` it searches in Python. In the kit, `glob_search` with `**/*.py` returned `/src/app.py`. All 8 `grep_search` calls failed, because the model sent `include` as an object, such as `{'pattern': '*.py'}`. After 10 model calls it gave up and blamed the tool.
 
 ```takeaways
 - Set trigger on SummarizationMiddleware, because the default never summarizes.

@@ -136,14 +136,3 @@ null
     "score": 0.048932
   }
 ]
-
-## a tool reads the store through ToolRuntime, scoped by context
-
-user ada: prefers short answers
-
-user grace: prefers long answers
-
-warning UserWarning: Pydantic serializer warnings:
-  PydanticSerializationUnexpectedValue(Expected `none` - serialized value may not be as expected [field_name='context', input_value={'user': 'ada'}, input_type=dict])
-warning UserWarning: Pydantic serializer warnings:
-  PydanticSerializationUnexpectedValue(Expected `none` - serialized value may not be as expected [field_name='context', input_value={'user': 'grace'}, input_type=dict])

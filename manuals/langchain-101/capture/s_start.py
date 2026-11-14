@@ -1,17 +1,32 @@
 import os
 import platform
 from importlib import metadata
+from typing import Annotated
 
 from langchain.agents import create_agent
 from langchain.agents.middleware import ToolErrorMiddleware
 from langchain.chat_models import init_chat_model
 from langchain.messages import AIMessage, AIMessageChunk, HumanMessage, SystemMessage, ToolMessage, trim_messages
+from langchain.tools import tool
 from langchain_core.messages import convert_to_messages
+from langgraph.checkpoint.memory import InMemorySaver
+from pydantic import Field
 
-from common import ASK, add, ask, flaky_disk, lookup_order, model, show_log, sum_script
-from fake import call
+from common import ASK, add, ask, flaky_disk, llm, lookup_order, show_log
 
 OFFLINE_KEY = "offline-placeholder-not-a-key"
+
+
+@tool
+def set_volume(level: Annotated[int, Field(ge=0, le=10)]) -> str:
+    """Set the speaker volume, from 0 to 10."""
+    return f"volume {level}"
+
+
+@tool
+def subtract(a: int, b: int) -> int:
+    """Subtract b from a."""
+    return a - b
 
 
 def versions(cap):
@@ -39,11 +54,10 @@ def init_models(cap):
     cap.text(f"type {type(m).__name__}")
     bound = m.with_config({"configurable": {"llm_model": "ollama:qwen3:4b"}})
     cap.text(f"with_config llm_model=ollama:qwen3:4b -> {type(bound).__name__}")
-    cap.section("the fake chat model used by this kit")
-    fake = model("hello")
-    cap.text(f"type {type(fake).__name__}, _llm_type={fake._llm_type}, profile={fake.profile}")
-    reply = fake.invoke("hi")
-    cap.messages([reply], "invoke('hi')")
+    cap.section("the chat model used by this kit")
+    m = llm()
+    cap.text(f"type {type(m).__module__}.{type(m).__name__}, _llm_type={m._llm_type}, profile={m.profile}")
+    cap.json({"model": m.model, "temperature": m.temperature, "seed": m.seed, "num_ctx": m.num_ctx, "reasoning": m.reasoning}, "settings")
 
 
 def messages(cap):
@@ -99,9 +113,11 @@ def tools(cap):
     cap.messages([add.invoke({"name": "add", "args": {"a": 2, "b": 3}, "id": "call_9", "type": "tool_call"})])
     cap.section("invoke a ToolRuntime tool outside an agent")
     cap.attempt("lookup_order.invoke({'order_id': 'A-17'})", lambda: lookup_order.invoke({"order_id": "A-17"}))
+
+
+def tool_runtime_agent(cap):
     cap.section("ToolRuntime inside create_agent, with context and the custom stream")
-    fake = model(call("lookup_order", {"order_id": "A-17"}, "call_7"), AIMessage("Order A-17 has shipped."))
-    agent = create_agent(fake, tools=[lookup_order])
+    agent = create_agent(llm("tools"), tools=[lookup_order])
     for mode, chunk in agent.stream(ask("Where is order A-17?"), context={"user": "ada"}, stream_mode=["custom", "updates"]):
         if mode == "custom":
             cap.json(chunk, "custom")
@@ -112,28 +128,39 @@ def tools(cap):
 
 def tool_errors(cap):
     cap.section("a tool raises, no middleware: the run raises")
-    agent = create_agent(model(call("flaky_disk", {"path": "/etc/motd"}), AIMessage("done")), tools=[flaky_disk])
-    cap.attempt("invoke", lambda: agent.invoke(ask("Read /etc/motd")))
+    agent = create_agent(llm("raises"), tools=[flaky_disk])
+    cap.attempt("invoke", lambda: agent.invoke(ask("Read /etc/motd with the flaky_disk tool.")))
     cap.section("the model sends bad arguments: ToolNode returns an error ToolMessage and the loop continues")
-    fake = model(call("add", {"a": "two"}), AIMessage("I could not add them."))
-    out = create_agent(fake, tools=[add]).invoke(ASK)
+    out = create_agent(llm("bad-args"), tools=[add]).invoke(ask("What is 2.5 + 3? Use the add tool."))
+    cap.messages(out["messages"])
+    cap.section("a tool argument outside the schema: the model asks for volume 11 on a 0 to 10 tool")
+    out = create_agent(llm("bad-range"), tools=[set_volume]).invoke(ask("Set the volume to 11."))
     cap.messages(out["messages"])
     cap.section("a tool raises, ToolErrorMiddleware turns it into a ToolMessage")
     handler = ToolErrorMiddleware(on_error=lambda exc, request: f"{type(exc).__name__} in {request.tool_call['name']}: {exc}")
-    fake = model(call("flaky_disk", {"path": "/etc/motd"}), AIMessage("The disk failed."))
-    out = create_agent(fake, tools=[flaky_disk], middleware=[handler]).invoke(ask("Read /etc/motd"))
+    out = create_agent(llm("handled"), tools=[flaky_disk], middleware=[handler]).invoke(ask("Read /etc/motd with the flaky_disk tool."))
     cap.messages(out["messages"])
     cap.section("ToolErrorMiddleware with no handler")
     cap.attempt("ToolErrorMiddleware()", lambda: ToolErrorMiddleware())
     cap.section("an unknown tool name from the model")
-    fake = model(call("subtract", {"a": 5, "b": 3}), AIMessage("No such tool."))
-    out = create_agent(fake, tools=[add]).invoke(ASK)
-    cap.messages(out["messages"][1:3])
+    m = llm("unknown-tool")
+    prompt = "Besides add, you have a tool named subtract that takes a and b. Use subtract for every subtraction."
+    out = create_agent(m, tools=[add], system_prompt=prompt).invoke(ask("What is 5 - 3? Use the subtract tool."))
+    cap.messages(out["messages"][1:])
+    show_log(cap, m)
+    cap.section("a tool removed between two deploys: the saved call names a tool the new agent lacks")
+    saver = InMemorySaver()
+    cfg = {"configurable": {"thread_id": "removed-tool"}}
+    old = create_agent(llm("old-deploy"), tools=[add, subtract], checkpointer=saver, interrupt_before=["tools"])
+    old.invoke(ask("What is 5 - 3? Use the subtract tool."), cfg)
+    cap.json(list(old.get_state(cfg).next), "the old agent paused before")
+    new = create_agent(llm("new-deploy"), tools=[add], checkpointer=saver)
+    out = new.invoke(None, cfg)
+    cap.messages(out["messages"][1:])
 
 
 def agent_graph(cap):
-    fake = model(*sum_script())
-    agent = create_agent(fake, tools=[add], system_prompt="You add numbers.")
+    agent = create_agent(llm(), tools=[add], system_prompt="You add numbers.")
     graph = agent.get_graph()
     cap.section("nodes")
     cap.json(list(graph.nodes))
@@ -145,26 +172,30 @@ def agent_graph(cap):
     cap.json(agent.config, "agent.config")
     cap.text(f"agent.stream_mode = {agent.stream_mode!r}", f"type {type(agent).__module__}.{type(agent).__name__}")
     cap.section("a graph with no tools")
-    cap.json(list(create_agent(model("hi")).get_graph().nodes))
+    cap.json(list(create_agent(llm()).get_graph().nodes))
 
 
 def agent_run(cap):
-    fake = model(*sum_script())
-    agent = create_agent(fake, tools=[add], system_prompt="You add numbers.")
+    m = llm()
+    agent = create_agent(m, tools=[add], system_prompt="You add numbers.")
     out = agent.invoke(ASK)
     cap.section("final state")
     cap.json(sorted(out), "keys")
     cap.messages(out["messages"])
     cap.section("what the model received on each call")
-    show_log(cap, fake)
+    show_log(cap, m)
 
 
 SCENARIOS = [
-    ("versions", "Package versions at the pin", versions),
-    ("init-chat-model", "init_chat_model and model profiles", init_models),
-    ("messages", "Messages and content blocks", messages),
-    ("tools", "Tools, schemas, and ToolRuntime", tools),
-    ("tool-errors", "A tool that raises, bad arguments, and ToolErrorMiddleware", tool_errors),
-    ("agent-graph", "The graph create_agent builds", agent_graph),
-    ("agent-run", "One full create_agent run", agent_run),
+    ("versions", "Package versions at the pin", versions, False),
+    ("init-chat-model", "init_chat_model and model profiles", init_models, False),
+    ("messages", "Messages and content blocks", messages, False),
+    ("tools", "Tools, schemas, and ToolRuntime", tools, False),
+    ("tool-errors", "A tool that raises, bad arguments, and ToolErrorMiddleware", tool_errors, True),
+    ("agent-graph", "The graph create_agent builds", agent_graph, False),
+    ("agent-run", "One full create_agent run", agent_run, True),
+]
+
+LATE = [
+    ("tool-runtime-agent", "ToolRuntime inside create_agent", tool_runtime_agent, True),
 ]

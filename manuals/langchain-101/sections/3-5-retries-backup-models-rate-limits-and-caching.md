@@ -50,7 +50,11 @@ lang: json
     "name": "flaky_fetch",
 ```
 
-With `on_failure="error"`, the run raised `ConnectionError: attempt 2 refused`. `ModelRetryMiddleware` with `continue` returns an `AIMessage` with the error text in place of a raise. So a failed model call looks like an answer: `Model call failed after 2 attempts with TimeoutError: read timed out again`.
+With `on_failure="error"`, the run raised `ConnectionError: attempt 2 refused`.
+
+`ModelRetryMiddleware` retries the model call. The kit pointed `ChatOllama` at a relay that closed its first two connections and passed the third to Ollama. With `max_retries=2`, the model got three calls, and the third answered `2 + 3 = 5.`.
+
+With `continue`, the middleware returns an `AIMessage` with the error text in place of a raise. The kit pointed a model at a port where nothing listens. So a failed model call looks like an answer: `Model call failed after 2 attempts with ConnectError: [Errno 111] Connection refused`.
 
 ## What each layer retries
 
@@ -106,7 +110,7 @@ note: Part of the build function of the lab script.
         mw.append(ModelRetryMiddleware())
 ```
 
-A `retry_on` tuple limits a retry to those exception types. In the kit, a `ValueError` got no retry and raised at once:
+A `retry_on` tuple limits a retry to those exception types. In the kit, the refused connection raised `httpx.ConnectError`, which is not a `TimeoutError`. It got no retry and raised at once:
 
 ```listing
 title: a retry_on filter
@@ -120,7 +124,7 @@ lang: python
 
 **ModelFallbackMiddleware:** the middleware that calls the next model in its list when a model call raises.
 
-The kit gives it a primary model that raises `ConnectionError` and one backup. The primary got one call, and the backup answered:
+The kit gives it a primary `ChatOllama` on a port where nothing listens, and one backup on Ollama. The primary got one call that raised `httpx.ConnectError`, and the backup answered:
 
 ```listing
 title: the answer after the primary model raised
@@ -129,12 +133,14 @@ lang: json
 note: The message of the run.
 ---
     "type": "AIMessage",
-    "content": "The sum is 5, from the backup.",
+    "content": "2 + 3 = 5.",
 ```
 
-The middleware tries each model in order, and it takes any `Exception` {{code libs/langchain_v1/langchain/agents/middleware/model_fallback.py}}. When every model raises, the run raises the last error, here `ConnectionError: third is down`. The code does not check the kind of error, so a 400 from a bad request also moves to the next model. That run is coming in the next edition, and [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
+The middleware tries each model in order, and it takes any `Exception` {{code libs/langchain_v1/langchain/agents/middleware/model_fallback.py}}. When every model raises, the run raises the last error. The kit pointed all three models at the dead port, so the run raised `httpx.ConnectError: [Errno 111] Connection refused`. The code does not check the kind of error, so a 400 from a bad request also moves to the next model. That run is coming in the next edition, and [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
-A refusal is not an exception. Without `ModelRefusalMiddleware`, a refusal block is a normal answer. With it, the run raises `ModelRefusalError: Model refused to produce the requested output: I can't help with that.`. List `ModelFallbackMiddleware` first and `ModelRefusalMiddleware` second, and the refusal goes to the backup. In the kit, the backup then answered `Here is a safe answer.`.
+A refusal is not an exception. `ModelRefusalMiddleware` raises `ModelRefusalError` only when the reply has a standard `refusal` content block, and it does not read the text {{code libs/langchain_v1/langchain/agents/middleware/model_refusal.py}}. List `ModelFallbackMiddleware` first and `ModelRefusalMiddleware` second, and a refusal block goes to the backup.
+
+The kit asked Qwen3 4B how to pick the lock of a neighbour's door. The model refused in plain text, with `I'm sorry, but I can't assist with that.`. Ollama sends no refusal block, so the text was a normal answer in all three runs. That held with no middleware, with `ModelRefusalMiddleware`, and with both middlewares. The backup got no call. So a refusal in text needs a check of your own.
 
 ## Rate limits and caching
 
@@ -148,7 +154,7 @@ There are two caches. `set_llm_cache` caches model replies in LangChain. The `ca
 - Pass a narrow retry_on, because the default retries every tool exception, including a 400.
 - Send an idempotency key with every side effect that a retry can repeat.
 - Check the last AIMessage for a failure text when ModelRetryMiddleware uses continue.
-- List ModelFallbackMiddleware before ModelRefusalMiddleware to send refusals to the backup.
+- List ModelFallbackMiddleware before ModelRefusalMiddleware to send refusal blocks to the backup, and check refusals in text yourself.
 ```
 
-Sources: capture/out/12-mw-retries.txt, capture/out/13-mw-fallback-refusal.txt, capture/s_middleware.py; capture/lab/summary/retries-mac.json, capture/lab/T05-retries-mac/02-tool-faults.jsonl, capture/lab/T05-retries-mac/03-both-faults.jsonl, capture/lab/T05-retries-mac/04-timeouts-arrival-count.jsonl, capture/lab/T05-retries-mac/t05_retries.py; issue langchain#40688; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/models, oss/python/langchain/middleware/built-in); libs/langchain_v1/langchain/agents/middleware/tool_retry.py, model_retry.py, _retry.py, and model_fallback.py at langchain==1.5.0; libs/core/langchain_core/rate_limiters.py at langchain-core 1.8.0.
+Sources: capture/out/12-mw-retries.txt, capture/out/13-mw-fallback-refusal.txt, capture/s_middleware.py, capture/common.py, libs/langchain_v1/langchain/agents/middleware/model_refusal.py at langchain==1.5.0; capture/lab/summary/retries-mac.json, capture/lab/T05-retries-mac/02-tool-faults.jsonl, capture/lab/T05-retries-mac/03-both-faults.jsonl, capture/lab/T05-retries-mac/04-timeouts-arrival-count.jsonl, capture/lab/T05-retries-mac/t05_retries.py; issue langchain#40688; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/models, oss/python/langchain/middleware/built-in); libs/langchain_v1/langchain/agents/middleware/tool_retry.py, model_retry.py, _retry.py, and model_fallback.py at langchain==1.5.0; libs/core/langchain_core/rate_limiters.py at langchain-core 1.8.0.

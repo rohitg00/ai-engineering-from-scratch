@@ -4,11 +4,9 @@ from typing import TypedDict
 from langchain.agents import create_agent
 from langchain.agents.middleware import AgentMiddleware
 from langchain.agents.structured_output import AutoStrategy, ProviderStrategy, ToolStrategy
-from langchain_core.messages import AIMessage
 from pydantic import BaseModel, Field
 
-from common import ASK, add, model, show_log, sum_script
-from fake import call, calls
+from common import ASK, add, ask, llm, show_log
 
 
 class Answer(BaseModel):
@@ -29,52 +27,64 @@ class AnswerData:
     value: int
 
 
-def run_structured(cap, title, fake, response_format, tools=(add,)):
+WORD = ask("What is 2 + 3? Give the value as the English word, for example five, not as digits.")
+HALF = ask("What is 7 divided by 2? Put the exact decimal value, 3.5, in the value field.")
+BOTH = ask("What is 2 + 3? Call the Answer tool and the Refusal tool together in one reply.")
+LIMIT = {"recursion_limit": 12}
+
+
+def run_structured(cap, title, m, response_format, tools=(), inp=ASK):
     cap.section(title)
-    agent = create_agent(fake, tools=list(tools), response_format=response_format)
-    out = cap.attempt("invoke", lambda: agent.invoke(ASK))
+    agent = create_agent(m, tools=list(tools), response_format=response_format)
+    out = cap.attempt("invoke", lambda: agent.invoke(inp, LIMIT))
     if out is not None:
         cap.json(out.get("structured_response"), "structured_response")
         cap.text(f"structured_response type: {type(out.get('structured_response')).__name__}")
         cap.messages(out["messages"][1:])
-    show_log(cap, fake)
+    show_log(cap, m)
 
 
 def structured_strategies(cap):
     run_structured(cap, "a bare schema on a model with no profile: AutoStrategy picks ToolStrategy",
-                   model(call("Answer", {"value": 5}), label="no-profile"), Answer)
+                   llm("no-profile"), Answer)
     run_structured(cap, "a bare schema on a model whose profile says structured_output: AutoStrategy picks ProviderStrategy",
-                   model(AIMessage('{"value": 5, "unit": "none"}'), label="profiled", profile={"structured_output": True}), Answer)
+                   llm("profiled", profile={"structured_output": True}), Answer)
     run_structured(cap, "AutoStrategy written out",
-                   model(call("Answer", {"value": 5}), label="auto"), AutoStrategy(Answer))
-    run_structured(cap, "ProviderStrategy on the fake",
-                   model(AIMessage('{"value": 5, "unit": "none"}'), label="provider"), ProviderStrategy(Answer))
+                   llm("auto"), AutoStrategy(Answer))
+    run_structured(cap, "ProviderStrategy on ChatOllama",
+                   llm("provider"), ProviderStrategy(Answer))
     run_structured(cap, "ToolStrategy with a TypedDict",
-                   model(call("AnswerDict", {"value": 5}), label="typeddict"), ToolStrategy(AnswerDict))
+                   llm("typeddict"), ToolStrategy(AnswerDict))
     run_structured(cap, "ToolStrategy with a dataclass",
-                   model(call("AnswerData", {"value": 5}), label="dataclass"), ToolStrategy(AnswerData))
+                   llm("dataclass"), ToolStrategy(AnswerData))
     schema = {"title": "answer_schema", "description": "A numeric answer.", "type": "object", "properties": {"value": {"type": "integer"}}, "required": ["value"]}
     run_structured(cap, "ToolStrategy with a raw JSON schema dict: returned without validation",
-                   model(call("answer_schema", {"value": "not a number"}), label="json-schema"), ToolStrategy(schema))
+                   llm("json-schema"), ToolStrategy(schema), inp=WORD)
     run_structured(cap, "ToolStrategy with a union: one tool per schema",
-                   model(call("Refusal", {"reason": "no numbers"}), label="union"), ToolStrategy(Answer | Refusal))
+                   llm("union"), ToolStrategy(Answer | Refusal))
+    run_structured(cap, "ToolStrategy with the add tool bound: the model may answer in text",
+                   llm("tool-and-text"), ToolStrategy(Answer), tools=(add,))
+    run_structured(cap, "ProviderStrategy with the add tool bound",
+                   llm("provider-and-tool"), ProviderStrategy(Answer), tools=(add,))
 
 
 def structured_errors(cap):
     run_structured(cap, "ToolStrategy validation error, then the retry",
-                   model(call("Answer", {"value": "five"}, "call_a"), call("Answer", {"value": 5}, "call_b"), label="retry"), ToolStrategy(Answer))
+                   llm("retry"), ToolStrategy(Answer), inp=HALF)
     run_structured(cap, "ToolStrategy two structured calls in one message, then the retry",
-                   model(calls(("Answer", {"value": 5}, "call_a"), ("Refusal", {"reason": "x"}, "call_b")), call("Answer", {"value": 5}, "call_c"), label="multiple"), ToolStrategy(Answer | Refusal))
+                   llm("multiple"), ToolStrategy(Answer | Refusal), inp=BOTH)
     run_structured(cap, "ToolStrategy handle_errors with a custom message",
-                   model(call("Answer", {"value": "five"}, "call_a"), call("Answer", {"value": 5}, "call_b"), label="message"), ToolStrategy(Answer, handle_errors="Return value as an integer."))
+                   llm("message"), ToolStrategy(Answer, handle_errors="Return value as an integer."), inp=HALF)
     run_structured(cap, "ToolStrategy handle_errors=False: the run raises",
-                   model(call("Answer", {"value": "five"}), label="no-retry"), ToolStrategy(Answer, handle_errors=False))
-    run_structured(cap, "ProviderStrategy with JSON that fails validation",
-                   model(AIMessage('{"value": "five"}'), label="provider-bad"), ProviderStrategy(Answer))
-    run_structured(cap, "ProviderStrategy with text that is not JSON",
-                   model(AIMessage("The answer is 5."), label="provider-text"), ProviderStrategy(Answer))
+                   llm("no-retry"), ToolStrategy(Answer, handle_errors=False), inp=HALF)
+    run_structured(cap, "ProviderStrategy when the answer is not an integer",
+                   llm("provider-half"), ProviderStrategy(Answer), inp=HALF)
+    run_structured(cap, "ProviderStrategy when the prompt asks for a word",
+                   llm("provider-word"), ProviderStrategy(Answer), inp=WORD)
+    run_structured(cap, "ProviderStrategy when the prompt asks for plain text",
+                   llm("provider-text"), ProviderStrategy(Answer), inp=ask("What is 2 + 3? Reply with one plain English sentence, not JSON."))
     run_structured(cap, "ToolStrategy, the model calls a normal tool first",
-                   model(call("add", {"a": 2, "b": 3}, "call_a"), call("Answer", {"value": 5}, "call_b"), label="tool-first"), ToolStrategy(Answer))
+                   llm("tool-first"), ToolStrategy(Answer), tools=(add,), inp=ask("What is 2 + 3? First call the add tool, then give the structured answer."))
 
 
 class Traced(AgentMiddleware):
@@ -114,16 +124,7 @@ class Traced(AgentMiddleware):
 
 def hook_order(cap):
     log = []
-    fake = model(*sum_script())
-    original = fake.next_reply
-
-    def logged(messages):
-        log.append("  model called")
-        return original(messages)
-
-    object.__setattr__(fake, "next_reply", logged)
-
-    agent = create_agent(fake, tools=[add], middleware=[Traced("A", log), Traced("B", log), Traced("C", log)])
+    agent = create_agent(llm("order", sink=log), tools=[add], middleware=[Traced("A", log), Traced("B", log), Traced("C", log)])
     cap.section("middleware=[A, B, C], graph nodes")
     cap.json(list(agent.get_graph().nodes))
     cap.section("edges")
@@ -132,11 +133,11 @@ def hook_order(cap):
     agent.invoke(ASK)
     cap.json(log)
     cap.section("two middleware with the same name")
-    cap.attempt("create_agent(middleware=[A, A])", lambda: create_agent(model("hi"), middleware=[Traced("A", []), Traced("A", [])]))
+    cap.attempt("create_agent(middleware=[A, A])", lambda: create_agent(llm(), middleware=[Traced("A", []), Traced("A", [])]))
 
 
 SCENARIOS = [
-    ("structured-output", "Structured output: each strategy", structured_strategies),
-    ("structured-errors", "Structured output: validation errors and retries", structured_errors),
-    ("middleware-order", "Middleware hook order with three middlewares", hook_order),
+    ("structured-output", "Structured output: each strategy", structured_strategies, True),
+    ("structured-errors", "Structured output: validation errors and retries", structured_errors, True),
+    ("middleware-order", "Middleware hook order with three middlewares", hook_order, True),
 ]

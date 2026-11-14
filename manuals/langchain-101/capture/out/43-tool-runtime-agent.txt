@@ -1,0 +1,93 @@
+# ToolRuntime inside create_agent
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## ToolRuntime inside create_agent, with context and the custom stream
+
+updates model:
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "lookup_order",
+        "args": {
+          "order_id": "A-17"
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 157,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 24,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 157,
+      "output_tokens": 24,
+      "total_tokens": 181
+    }
+  }
+]
+
+custom:
+{
+  "lookup": "A-17"
+}
+
+updates tools:
+[
+  {
+    "type": "ToolMessage",
+    "content": "order A-17: shipped (asked by ada, tool_call_id=<uuid-2>)",
+    "name": "lookup_order",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  }
+]
+
+updates model:
+[
+  {
+    "type": "AIMessage",
+    "content": "Order A-17 has been shipped.",
+    "id": "lc_run--<uuid-4>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 243,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 10,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 243,
+      "output_tokens": 10,
+      "total_tokens": 253
+    }
+  }
+]
+
+warning UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected `none` - serialized value may not be as expected [field_name='context', input_value={'user': 'ada'}, input_type=dict])

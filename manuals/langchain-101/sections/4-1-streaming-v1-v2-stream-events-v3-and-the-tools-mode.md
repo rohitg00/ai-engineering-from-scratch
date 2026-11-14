@@ -32,18 +32,18 @@ chunk 0:
           {
             "name": "add",
 …
-            "id": "call_1",
+            "id": "<uuid-2>",
 ```
 
 In `values` mode, each chunk is the whole state. The first chunk holds only the input, so the same run gives four chunks in `values` mode and three in `updates` mode.
 
-In `messages` mode, each chunk is a pair: a message chunk and its metadata. The metadata names the node and the step. The tool call comes whole on one chunk, and the `ToolMessage` of the tools node comes as a chunk too:
+In `messages` mode, each chunk is a pair: a message chunk and its metadata. The metadata names the node and the step. `ChatOllama` sent the tool call whole on one chunk, then an empty chunk marked `last`. The `ToolMessage` of the tools node comes as a chunk too:
 
 ```listing
-title: the first two chunks in messages mode
+title: the first three chunks in messages mode
 source: capture/out/22-stream-messages.txt
 lang: json
-note: The tool call and the triggers are cut.
+note: The tool call, the metadata of the reply, and the triggers are cut.
 ---
 chunk 0:
 {
@@ -52,13 +52,20 @@ chunk 0:
     "content": "",
     "id": "lc_run--<uuid-1>",
 …
-    "chunk_position": "last"
-  },
   "metadata": {
     "langgraph_node": "model",
     "langgraph_step": 1,
 …
 chunk 1:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "",
+    "id": "lc_run--<uuid-1>",
+    "chunk_position": "last"
+  },
+…
+chunk 2:
 {
   "message": {
     "type": "ToolMessage",
@@ -69,7 +76,7 @@ chunk 1:
     "langgraph_step": 2,
 ```
 
-The final answer `The sum is 5.` then comes as seven text chunks. The fake splits its text at each space, and a real model splits it in its own way.
+The final answer `2 + 3 = 5.` then came as eight text chunks, such as `2`, ` +`, and ` `. Two empty chunks followed, and the second was marked `last`. Ollama chose those pieces, so another model or another version splits the text in another way.
 
 [Figure](#fig-4-1) puts the chunks of each mode on the three node runs of this one run.
 
@@ -77,7 +84,7 @@ The final answer `The sum is 5.` then comes as seven text chunks. The fake split
 id: fig-4-1
 kind: timeline
 title: the chunks of one agent run in each stream mode
-claim: The same run yields 3 chunks in updates mode, 4 in values mode, 9 in messages mode, and 21 events from stream_events v3.
+claim: The same run yields 3 chunks in updates mode, 4 in values mode, 13 in messages mode, and 23 events from stream_events v3.
 caption: Each row is one stream of the same agent run. Each mark is one chunk, placed on the node run that made it. Colour shows what a chunk carries: indigo a whole state, plum model output, green tool output, amber a task that starts (outlined) or ends. The tools row is the slow_sum agent, which emits two deltas. From capture/out/21-stream-updates-values.txt, capture/out/22-stream-messages.txt, capture/out/23-stream-tasks-custom-debug.txt, capture/out/25-stream-events-v3.txt, and capture/out/26-stream-tools-mode.txt.
 ```
 
@@ -85,7 +92,7 @@ caption: Each row is one stream of the same agent run. Each mark is one chunk, p
 |---|---|---|
 | `updates` | `{node: what it wrote}` | 3 |
 | `values` | the whole state after a step | 4 |
-| `messages` | a message chunk and its metadata | 9 |
+| `messages` | a message chunk and its metadata | 13 |
 | `tasks` | the start or the result of one node run | 6 |
 | `debug` | a task or a task result, with the step and a time | 6 |
 | `custom` | a value that a node or tool writes with its stream writer | 0, because `add` writes nothing |
@@ -101,7 +108,7 @@ Pass a list of modes, and each v1 chunk becomes a tuple of the mode and the data
 title: two modes in v1
 source: capture/out/22-stream-messages.txt
 lang: json
-note: The kit printed the mode, the text, and the node of each tuple. Chunks 2 to 10 are cut.
+note: The kit printed the mode, the text, and the node of each tuple. Chunks 3 to 14 are cut.
 ---
 chunk 0:
 {
@@ -112,13 +119,20 @@ chunk 0:
 
 chunk 1:
 {
+  "mode": "messages",
+  "chunk": "",
+  "node": "model"
+}
+
+chunk 2:
+{
   "mode": "updates",
   "nodes": [
     "model"
   ]
 }
 …
-chunk 11:
+chunk 15:
 {
   "mode": "updates",
   "nodes": [
@@ -141,7 +155,7 @@ source: capture/out/24-stream-v2.txt
 lang: json
 note: The state update is cut. The kit added the keys list.
 ---
-part 1:
+part 2:
 {
   "type": "updates",
   "ns": [],
@@ -203,7 +217,7 @@ public members of GraphRunStream:
   "values"
 ]
 
-21 events
+23 events
 ```
 
 Each event has a `method`, a `params` object with a namespace and a time, and a sequence number `seq`. The tool call of the run is two events of the method `tools`:
@@ -221,7 +235,7 @@ lang: json
       "timestamp": "<epoch-ms>",
       "data": {
         "event": "tool-started",
-        "tool_call_id": "call_1",
+        "tool_call_id": "<uuid-2>",
         "tool_name": "add",
         "input": {
           "a": 2,
@@ -229,11 +243,11 @@ lang: json
         }
       }
     },
-    "seq": 7
+    "seq": 8
   },
 ```
 
-A model call is a group of `messages` events: `message-start`, `content-block-start`, one `content-block-delta` for each piece of text, `content-block-finish`, and `message-finish`. A `values` event follows each step. That is 21 events for the run, against 9 chunks in `messages` mode.
+A model call is a group of `messages` events: `message-start`, `content-block-start`, the deltas, `content-block-finish`, and `message-finish`. The first call had one `content-block-delta` of type `tool-call-delta`, which carried the whole call. The second had eight of type `text-delta`, one for each piece of text. A `values` event follows each step. That is 23 events for the run, against 13 chunks in `messages` mode.
 
 Three differences from v1 and v2 break code that you port:
 
@@ -251,15 +265,16 @@ lang: json
     "content": [
       {
         "type": "text",
-        "text": "The sum is 5.",
+        "text": "2 + 3 = 5.",
         "index": 0
       }
     ],
-    "id": "lc_run--<uuid-4>",
+    "id": "lc_run--<uuid-5>",
     "response_metadata": {
+…
+      "model_provider": "ollama",
       "output_version": "v1"
-    }
-  }
+    },
 ```
 
 Read the text of such a message with `message.text`, which works for both forms, as [section 2.3](#s-messages-and-content-blocks) shows.
@@ -292,7 +307,7 @@ note: The finished event is cut to its first lines.
 chunk 0:
 {
   "event": "tool-started",
-  "tool_call_id": "call_1",
+  "tool_call_id": "<uuid-1>",
   "tool_name": "slow_sum",
   "input": {
     "a": 2,
@@ -303,7 +318,7 @@ chunk 0:
 chunk 1:
 {
   "event": "tool-output-delta",
-  "tool_call_id": "call_1",
+  "tool_call_id": "<uuid-1>",
   "delta": {
     "partial": 2
   }
@@ -312,7 +327,7 @@ chunk 1:
 chunk 3:
 {
   "event": "tool-finished",
-  "tool_call_id": "call_1",
+  "tool_call_id": "<uuid-1>",
 ```
 
 In a stream without `tools` mode, `emit_output_delta` does nothing. The kit streamed the same agent in `updates` mode and got the three node chunks only. In v2, a tool event is a StreamPart with `type` `tools`.
@@ -397,11 +412,30 @@ def run_v3_raw(ctx, model, scenario, tag, rec):
 
 Its first tool call delta arrived 3.8 ms after the send, against 646.8 ms for the docs loop. Read one projection per message, or read the raw events. A task for each projection could also work, and [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it as not run.
 
-## Fake models and streaming
+## How a real model streams a tool call
 
-The stock `GenericFakeChatModel` raises `NotImplementedError` when `create_agent` binds tools. A subclass that only adds `bind_tools` works with `invoke`, and fails in `messages` mode. With empty content and a tool call, the stream raised `ValueError: No generations found in stream.`. With text and a tool call, the text arrived, the tool call was lost, and the tool never ran. Test streaming with a fake whose stream sends tool calls, such as the `ScriptedChatModel` of the kit. This manual records the docstring and docs claims as conflict D2.
+`ChatOllama` sends each tool call whole, with its id, on one chunk. Its `tool_call_chunks` entry has the full arguments as one string and the `index` `null`. An empty chunk marked `chunk_position="last"` ends the reply:
 
-The `ScriptedChatModel` puts each tool call whole, with its id, on the last chunk, which has `chunk_position="last"`. On such a chunk, `content_blocks` returns the parsed call in place of a chunk block {{code libs/core/langchain_core/messages/ai.py}}. So the v3 run of the kit has a `content-block-start` with empty `args`, no delta, and a `content-block-finish` with the full call. The call is complete, and the tool ran. A fake that splits the arguments and ends on a flagged chunk loses the last piece under v3, as [section 2.4](#s-tools-toolruntime-and-tool-errors) shows.
+```listing
+title: the chunk that carries the tool call
+source: capture/out/27-stream-tool-call-chunks.txt
+lang: json
+note: The usage and the metadata are cut.
+---
+13 chunks, 1 with tool_call_chunks
+…
+      "tool_call_chunks": [
+        {
+          "name": "add",
+          "args": "{\"a\": 2, \"b\": 3}",
+          "id": "<uuid-2>",
+          "index": null,
+          "type": "tool_call_chunk"
+        }
+      ],
+```
+
+The kit also asked the model to write `Let me add.` before the call. Four text chunks came first, then the chunk with the call, then the empty `last` chunk. So the call never rides on the chunk marked `last`, and v3 got one `tool-call-delta` for it. A model or a fake that splits the arguments and ends on a flagged chunk loses the last piece under v3, as [section 2.4](#s-tools-toolruntime-and-tool-errors) shows.
 
 ```takeaways
 - Use version="v2" and switch on part["type"], so a new mode does not change the shape.
@@ -409,9 +443,9 @@ The `ScriptedChatModel` puts each tool call whole, with its id, on the last chun
 - Pass a checkpointer only when you need checkpoints, because tasks and debug work without one.
 - Add "tools" to stream_mode to get tool progress from emit_output_delta.
 - Treat stream_events v3 as beta, and read message.text for content in either form.
-- Test streaming with a fake model that streams tool calls.
+- Test streaming against a real model, because a fake decides how a tool call is chunked.
 - Read the raw v3 events, or one projection per message, when tokens must arrive live.
 - Expect about 1 ms of delivery delay from any stream API on one machine.
 ```
 
-Sources: capture/s_stream.py, capture/out/21-stream-updates-values.txt, capture/out/22-stream-messages.txt, capture/out/23-stream-tasks-custom-debug.txt, capture/out/24-stream-v2.txt, capture/out/25-stream-events-v3.txt, capture/out/25-stream-events-v3.events.json, capture/out/26-stream-tools-mode.txt, capture/out/27-stream-stock-fakes.txt; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/pregel/main.py, and libs/langgraph/langgraph/pregel/_tools.py at langgraph 1.2.22; libs/core/langchain_core/language_models/fake_chat_models.py at langchain==1.5.0; capture/lab/summary/streaming-mac.json, capture/lab/T04-streaming-mac/text-per-run.jsonl, capture/lab/T04-streaming-mac/tool-per-run.jsonl, capture/lab/T04-streaming-mac/subagent-per-run.jsonl, capture/lab/T04-streaming-mac/ollama-per-run.jsonl, capture/lab/T04-streaming-mac/iso38484-runs.jsonl, capture/lab/T04-streaming-mac/reasoning-ollama-runs.jsonl, capture/lab/T04-streaming-mac/text-runs-excerpt.jsonl, capture/lab/T04-streaming-mac/text-server-excerpt.jsonl, capture/lab/T04-streaming-mac/t04_run.py; libs/core/langchain_core/messages/ai.py and libs/core/langchain_core/language_models/_compat_bridge.py at langchain-core 1.8.0; issue langchain#38484; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/streaming, oss/python/langchain/streaming, oss/python/langchain/event-streaming, oss/python/langgraph/event-streaming).
+Sources: capture/s_stream.py, capture/out/21-stream-updates-values.txt, capture/out/22-stream-messages.txt, capture/out/23-stream-tasks-custom-debug.txt, capture/out/24-stream-v2.txt, capture/out/25-stream-events-v3.txt, capture/out/25-stream-events-v3.events.json, capture/out/26-stream-tools-mode.txt, capture/out/27-stream-tool-call-chunks.txt; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/pregel/main.py, and libs/langgraph/langgraph/pregel/_tools.py at langgraph 1.2.22; libs/partners/ollama/langchain_ollama/chat_models.py at langchain-ollama 1.1.0; capture/lab/summary/streaming-mac.json, capture/lab/T04-streaming-mac/text-per-run.jsonl, capture/lab/T04-streaming-mac/tool-per-run.jsonl, capture/lab/T04-streaming-mac/subagent-per-run.jsonl, capture/lab/T04-streaming-mac/ollama-per-run.jsonl, capture/lab/T04-streaming-mac/iso38484-runs.jsonl, capture/lab/T04-streaming-mac/reasoning-ollama-runs.jsonl, capture/lab/T04-streaming-mac/text-runs-excerpt.jsonl, capture/lab/T04-streaming-mac/text-server-excerpt.jsonl, capture/lab/T04-streaming-mac/t04_run.py; libs/core/langchain_core/messages/ai.py and libs/core/langchain_core/language_models/_compat_bridge.py at langchain-core 1.8.0; issue langchain#38484; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/streaming, oss/python/langchain/streaming, oss/python/langchain/event-streaming, oss/python/langgraph/event-streaming).

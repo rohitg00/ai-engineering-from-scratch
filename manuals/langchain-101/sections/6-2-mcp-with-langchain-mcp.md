@@ -59,12 +59,12 @@ lang: json
       {
         "type": "text",
         "text": "42",
-        "id": "lc_<uuid-2>"
+        "id": "lc_<uuid-5>"
       }
     ],
     "name": "multiply",
-    "id": "<uuid-3>",
-    "tool_call_id": "call_m",
+    "id": "<uuid-6>",
+    "tool_call_id": "<uuid-2>",
     "status": "success",
     "artifact": {
       "structured_content": {
@@ -103,7 +103,7 @@ A target that comes from configuration or from a model is a string. Keep it a st
 
 **MCP tool error:** a tool result with `isError` set to true. A FastMCP server sends it when the tool raises `ToolError` or any other exception.
 
-The adapter turns a tool error into a `ToolMessage` with `status` `error` {{code libs/langchain_v1/langchain/mcp/tools.py}}. The model reads the text of the server, and the run goes on. In the kit, `divide` with a zero divisor raised `ToolError`:
+The adapter turns a tool error into a `ToolMessage` with `status` `error` {{code libs/langchain_v1/langchain/mcp/tools.py}}. The model reads the text of the server, and the run goes on. Here the model reported each result, and said that the division gave `division by zero`. In the kit, Qwen3 4B called `multiply`, `divide`, and `stats` in one reply. `divide` with a zero divisor raised `ToolError`:
 
 ```listing
 title: a tool error becomes an error ToolMessage
@@ -115,12 +115,12 @@ lang: json
       {
         "type": "text",
         "text": "division by zero",
-        "id": "lc_<uuid-5>"
+        "id": "lc_<uuid-7>"
       }
     ],
     "name": "divide",
-    "id": "<uuid-6>",
-    "tool_call_id": "call_d",
+    "id": "<uuid-8>",
+    "tool_call_id": "<uuid-3>",
     "status": "error"
 ```
 

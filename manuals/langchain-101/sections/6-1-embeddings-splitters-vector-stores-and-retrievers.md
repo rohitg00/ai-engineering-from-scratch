@@ -132,21 +132,23 @@ lang: python
         return "\n".join(f"[{d.metadata['source']}] {d.page_content}" for d in retriever.invoke(query))
 ```
 
-The scripted model calls `search_docs` once, and the tool returns one chunk with its source in brackets:
+The kit asked Qwen3 4B `What does a checkpointer do?`. The model called `search_docs` once with that question, and the tool returned one chunk with its source in brackets:
 
 ```listing
 title: the tool call and its result
-source: capture/out/39-retrieval.txt
+source: capture/out/47-retrieval-agent.txt
 lang: json
 note: The ToolMessage only. The model call before it and the answer after it are cut.
 ---
     "type": "ToolMessage",
-    "content": "[checkpoints.md] A checkpointer saves graph state after each step. InMemorySaver keeps it in a",
+    "content": "[stores.md] A store holds long-term memory across threads. Items live under a namespace",
     "name": "search_docs",
-    "id": "<uuid-2>",
-    "tool_call_id": "call_1",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
     "status": "success"
 ```
+
+The hash embedding picked a chunk about stores, which does not answer the question. The model said so: `A checkpointer does not have a defined role in the provided documentation.`. So a test with a fake embedding checks that the tool, the store, and the agent work together. A real embedding model must judge the search.
 
 Put the source into the text of the result. The model sees only the content of the `ToolMessage`, so it can cite a file only when the tool writes the name into that text. Core also has `create_retriever_tool`, which builds the same kind of tool from a retriever, a name, and a description {{code libs/core/langchain_core/tools/retriever.py}}. With `response_format="content_and_artifact"`, it also keeps the documents as the artifact of the message.
 
@@ -160,4 +162,4 @@ Index time and query time do different work. The kit embeds every chunk once, be
 - Embed the corpus once at index time, outside the agent run.
 ```
 
-Sources: capture/s_integrations.py, capture/out/39-retrieval.txt; libs/core/langchain_core/retrievers.py, libs/core/langchain_core/vectorstores/in_memory.py, libs/core/langchain_core/vectorstores/base.py, libs/core/langchain_core/embeddings/fake.py, libs/core/langchain_core/tools/retriever.py, libs/langchain_v1/langchain/embeddings/__init__.py, and libs/partners at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/langchain-v1, oss/python/deepagents/retrieval, oss/python/langchain/knowledge-base); the archived langchain-community repository, read 2026-11-14.
+Sources: capture/s_integrations.py, capture/out/39-retrieval.txt, capture/out/47-retrieval-agent.txt; libs/core/langchain_core/retrievers.py, libs/core/langchain_core/vectorstores/in_memory.py, libs/core/langchain_core/vectorstores/base.py, libs/core/langchain_core/embeddings/fake.py, libs/core/langchain_core/tools/retriever.py, libs/langchain_v1/langchain/embeddings/__init__.py, and libs/partners at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/langchain-v1, oss/python/deepagents/retrieval, oss/python/langchain/knowledge-base); the archived langchain-community repository, read 2026-11-14.

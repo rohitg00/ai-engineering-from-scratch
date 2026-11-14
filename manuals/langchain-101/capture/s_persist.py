@@ -7,7 +7,6 @@ from typing import Annotated, TypedDict
 from langchain.agents import create_agent
 from langchain.tools import ToolRuntime, tool
 from langchain_core.embeddings import DeterministicFakeEmbedding
-from langchain_core.messages import AIMessage
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph import END, START, StateGraph
@@ -15,8 +14,7 @@ from langgraph.store.memory import InMemoryStore
 from langgraph.types import Command, interrupt
 from pydantic import BaseModel
 
-from common import add, ask, model, sum_script, thread
-from fake import call
+from common import add, ask, llm, recorder, thread
 
 
 def transcript(messages):
@@ -36,13 +34,13 @@ def snapshot(s):
 
 
 def two_turns(cap, checkpointer, name):
-    fake = model(*sum_script(), AIMessage("You asked me to add 2 and 3."), label=name)
-    agent = create_agent(fake, tools=[add], checkpointer=checkpointer)
+    m = llm(name)
+    agent = create_agent(m, tools=[add], checkpointer=checkpointer)
     cfg = thread(name)
     agent.invoke(ask("What is 2 + 3?"), cfg)
     out = agent.invoke(ask("What did I ask you?"), cfg)
     cap.json(transcript(out["messages"]), "messages after turn 2")
-    cap.json(fake.log[-1]["messages"], "what the model received on turn 2")
+    cap.json(recorder(m).rows[-1]["messages"], "what the model received on turn 2")
     return agent, cfg
 
 
@@ -58,13 +56,13 @@ def memory_saver(cap):
     cap.section("checkpoints on the thread")
     cap.text(f"{len(list(saver.list(cfg)))} checkpoints")
     cap.section("another thread starts empty")
-    out = create_agent(model(AIMessage("I have no history.")), checkpointer=saver).invoke(ask("What did I ask you?"), thread("other-thread"))
+    out = create_agent(llm("other"), checkpointer=saver).invoke(ask("What did I ask you?"), thread("other-thread"))
     cap.json(transcript(out["messages"]))
     cap.section("delete_thread")
     saver.delete_thread("memory-thread")
     cap.text(f"after delete: {len(list(saver.list(cfg)))} checkpoints")
     cap.section("a thread_id is required once a checkpointer is set")
-    cap.attempt("invoke without config", lambda: create_agent(model("hi"), checkpointer=InMemorySaver()).invoke(ask("hi")))
+    cap.attempt("invoke without config", lambda: create_agent(llm(), checkpointer=InMemorySaver()).invoke(ask("hi")))
 
 
 def sqlite_saver(cap):
@@ -75,9 +73,8 @@ def sqlite_saver(cap):
         two_turns(cap, saver, "sqlite-thread")
     cap.section("a new process opens the same file and continues the thread")
     with SqliteSaver.from_conn_string(path) as saver:
-        fake = model(AIMessage("Earlier you asked what 2 + 3 is."), label="after-restart")
-        agent = create_agent(fake, tools=[add], checkpointer=saver)
-        out = agent.invoke(ask("Remind me again."), thread("sqlite-thread"))
+        agent = create_agent(llm("after-restart"), tools=[add], checkpointer=saver)
+        out = agent.invoke(ask("Remind me what my first question was."), thread("sqlite-thread"))
         cap.json(transcript(out["messages"]))
     cap.section("what is in the file")
     conn = sqlite3.connect(path)
@@ -102,9 +99,7 @@ def history(cap):
         calls_made.append(amount)
         return f"charged {amount}"
 
-    script = [call("charge", {"amount": 10}), AIMessage("Charged 10."), AIMessage("Charged again after replay."), call("charge", {"amount": 99}), AIMessage("Charged 99 on the fork.")]
-    fake = model(*script, label="history")
-    agent = create_agent(fake, tools=[charge], checkpointer=saver)
+    agent = create_agent(llm("history"), tools=[charge], checkpointer=saver)
     cfg = thread("history")
     agent.invoke(ask("Charge 10."), cfg)
     cap.section("get_state_history, newest first")
@@ -125,8 +120,7 @@ def history(cap):
     cap.json(transcript(out["messages"]), "after running the fork")
     cap.json(calls_made, "charge calls")
     cap.section("update_state as_node='tools' writes a tool result without running the tool")
-    fake = model(call("charge", {"amount": 5}), AIMessage("Done, per the manual entry."), label="as-node")
-    agent = create_agent(fake, tools=[charge], checkpointer=InMemorySaver(), interrupt_before=["tools"])
+    agent = create_agent(llm("as-node"), tools=[charge], checkpointer=InMemorySaver(), interrupt_before=["tools"])
     cfg = thread("as-node")
     agent.invoke(ask("Charge 5."), cfg)
     cap.json(list(agent.get_state(cfg).next), "paused before")
@@ -290,6 +284,12 @@ def store(cap):
         indexed.put(("ada",), key, {"text": text})
     hits = indexed.search(("ada",), query="works in Pune", limit=2)
     cap.json([{"key": h.key, "text": h.value["text"], "score": round(h.score, 6)} for h in hits])
+
+
+def store_agent(cap):
+    st = InMemoryStore()
+    st.put(("users", "ada", "memories"), "m1", {"text": "prefers short answers"})
+    st.put(("users", "grace", "memories"), "m1", {"text": "prefers long answers"})
     cap.section("a tool reads the store through ToolRuntime, scoped by context")
 
     @tool
@@ -299,16 +299,21 @@ def store(cap):
         return "; ".join(i.value["text"] for i in runtime.store.search(("users", user, "memories")))
 
     for user in ("ada", "grace"):
-        fake = model(call("recall", {}), AIMessage("Noted."), label=f"recall-{user}")
-        out = create_agent(fake, tools=[recall], store=st).invoke(ask("What do you know about me?"), context={"user": user})
-        cap.text(f"user {user}: {out['messages'][2].content}")
+        out = create_agent(llm(f"recall-{user}"), tools=[recall], store=st).invoke(ask("What do you know about me? Use the recall tool."), context={"user": user})
+        tool_results = [m.content for m in out["messages"] if m.type == "tool"]
+        cap.text(f"user {user}: tool returned {tool_results!r}")
+        cap.text(f"user {user}: answer {out['messages'][-1].content!r}")
 
 
 SCENARIOS = [
-    ("checkpoint-memory", "InMemorySaver across turns", memory_saver),
-    ("checkpoint-sqlite", "SqliteSaver across turns and a restart", sqlite_saver),
-    ("state-history-forks", "State history, replay, and update_state forks", history),
-    ("durability", "Durability modes, and sync without a checkpointer", durability),
-    ("interrupt-resume", "interrupt() and Command(resume=...)", interrupts),
-    ("store", "InMemoryStore: put, search, and namespaces", store),
+    ("checkpoint-memory", "InMemorySaver across turns", memory_saver, True),
+    ("checkpoint-sqlite", "SqliteSaver across turns and a restart", sqlite_saver, True),
+    ("state-history-forks", "State history, replay, and update_state forks", history, True),
+    ("durability", "Durability modes, and sync without a checkpointer", durability, False),
+    ("interrupt-resume", "interrupt() and Command(resume=...)", interrupts, False),
+    ("store", "InMemoryStore: put, search, and namespaces", store, False),
+]
+
+LATE = [
+    ("store-agent", "A tool reads the store through ToolRuntime", store_agent, True),
 ]

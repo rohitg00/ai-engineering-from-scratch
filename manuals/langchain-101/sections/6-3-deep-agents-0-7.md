@@ -35,13 +35,13 @@ The model and tools nodes are the loop of [section 1.2](#s-one-create-agent-run)
 
 ## The tools of a deep agent at 0.7.38
 
-The kit called `create_deep_agent` with the fake model, the `add` tool, and the system prompt `You keep notes.`. The model got nine tools on each call of the main agent:
+The kit called `create_deep_agent` with Qwen3 4B on Ollama, the `add` tool, and the system prompt `You keep notes.`. The model got nine tools on each call of the main agent:
 
 ```listing
 title: the tools bound on the first model call
 source: capture/out/41-deep-agent.txt
 lang: json
-note: The first of five calls. The fourth call is the subagent, which has the same tools without task.
+note: The first of six calls. The fifth call is the subagent, which has the same tools without task.
 ---
     "call": 1,
     "tools": [
@@ -71,7 +71,7 @@ caption: Read from the call at the top down to the tools, the state, and the sub
 
 **Virtual filesystem:** the `files` channel in the state of a deep agent. With the default backend, the file tools read and write this channel and never touch the disk.
 
-The run wrote `/notes.md` with `write_file`, listed it with `ls`, and asked the general-purpose subagent through `task`. The file ended in the state of the thread, with its content and two times:
+The model called `add`, wrote `/notes.md` with `write_file`, listed it with `ls`, and asked the general-purpose subagent through `task`. It wrote only the sum, `5`, into the file. The file ended in the state of the thread, with its content and two times:
 
 ```listing
 title: files in the final state
@@ -80,7 +80,7 @@ lang: json
 ---
 {
   "/notes.md": {
-    "content": "2 + 3 = 5\n",
+    "content": "5",
     "encoding": "utf-8",
     "created_at": "<time>",
     "modified_at": "<time>"

@@ -8,13 +8,13 @@ When you finish this section, you can name each step of one agent run and the st
 
 ## The run
 
-The agent from the [first run](#s-front) has one tool, `add`, and the system prompt `You add numbers.`. Its fake model is scripted to call `add` with 2 and 3, and then to answer. This is the state at the end of the run:
+The agent from the [first run](#s-front) has one tool, `add`, and the system prompt `You add numbers.`. Its model is Qwen3 4B on Ollama. It called `add` with 2 and 3, and then answered. This is the state at the end of the run:
 
 ```listing
 title: the final state of one run
 source: capture/out/06-agent-run.txt
 lang: json
-note: The key list is cut. All four messages are shown.
+note: The key list and the metadata of each reply are cut. All four messages are shown.
 ---
   {
     "type": "HumanMessage",
@@ -32,53 +32,51 @@ note: The key list is cut. All four messages are shown.
           "a": 2,
           "b": 3
         },
-        "id": "call_1",
+        "id": "<uuid-3>",
         "type": "tool_call"
       }
-    ]
-  },
+    ],
+…
   {
     "type": "ToolMessage",
     "content": "5",
     "name": "add",
-    "id": "<uuid-3>",
-    "tool_call_id": "call_1",
+    "id": "<uuid-4>",
+    "tool_call_id": "<uuid-3>",
     "status": "success"
   },
   {
     "type": "AIMessage",
-    "content": "The sum is 5.",
-    "id": "lc_run--<uuid-4>-0"
-  }
+    "content": "2 + 3 = 5.",
+    "id": "lc_run--<uuid-5>-0",
 ```
 
-The state holds one key, `messages`. The system prompt is not in it. The two model replies have ids that start with `lc_run--`, because LangChain gives each model output the id of its run. The human and tool messages get a plain UUID when the graph adds them.
+The state holds one key, `messages`. The system prompt is not in it. The two model replies have ids that start with `lc_run--`, because LangChain gives each model output the id of its run. The human and tool messages get a plain UUID when the graph adds them. The tool call id is a UUID too, because `ChatOllama` makes one for each call. Each reply also carries `response_metadata` and `usage_metadata` from Ollama, with the token counts of the call.
 
 ## What the model received
 
-The fake records each call. The model ran twice, and both calls got the system prompt first and the same bound tool:
+The kit records each call with a callback handler. The model ran twice, and both calls got the system prompt first and the same bound tool:
 
 ```listing
 title: the two model calls
 source: capture/out/06-agent-run.txt
 lang: json
-note: Cut to the messages and the bound tools. The model label and the keyword list are cut.
+note: Cut to the messages and the bound tools. The model label is cut.
 ---
     "call": 1,
     "messages": [
       "system: You add numbers.",
       "human: What is 2 + 3?"
     ],
-    "bound": {
-      "tools": [
-        "add"
-      ],
+    "tools": [
+      "add"
+    ]
 …
     "call": 2,
     "messages": [
       "system: You add numbers.",
       "human: What is 2 + 3?",
-      "ai",
+      "ai: calls add",
       "tool: 5"
     ],
 ```
@@ -100,7 +98,7 @@ caption: Read the rows from top to bottom. Each teal arrow is one checkpoint, wi
 1. `invoke` puts the input on the graph. With a checkpointer, LangGraph saves the input checkpoint, step `-1`.
 2. The `__start__` node writes the human message into `messages`. Checkpoint step `0` says the next node is `model`.
 3. The `model` node adds the system prompt, binds the tools, and calls the model. The model answers with one tool call. Checkpoint step `1` says the next node is `tools`.
-4. The `tools` node runs `add(a=2, b=3)` and appends a `ToolMessage` whose `tool_call_id` is `call_1`. Checkpoint step `2` says the next node is `model`.
+4. The `tools` node runs `add(a=2, b=3)` and appends a `ToolMessage` whose `tool_call_id` is the id of the call. Checkpoint step `2` says the next node is `model`.
 5. The `model` node calls the model again with all three messages. The model answers with text and no tool call.
 6. The edge after `model` sees no tool call and goes to `__end__`. Checkpoint step `3` has no next node, and `invoke` returns the state.
 
@@ -225,11 +223,11 @@ note: The last section of the file, cut to the request counts and the tree of ru
 chain agent_turn
   chain LangGraph
     chain model
-      llm ScriptedChatModel
+      llm ChatOllama
     chain tools
       tool add
     chain model
-      llm ScriptedChatModel
+      llm ChatOllama
 ```
 
 The tree has eight runs. The outer `agent_turn` is the `traceable` function of the kit, and it stayed in memory. The seven LangChain runs below it each got one `POST` when it started and one `PATCH` when it ended. [Figure](#fig-1-2b) draws the tree. Each node of the graph is a `chain` run, and the model calls and the tool call are leaves.
@@ -261,7 +259,7 @@ note: The config of the compiled graph, from the same file.
 }
 ```
 
-A model that never stops asking for a tool runs until the limit. With `recursion_limit=6` in the config, the kit stopped after three model calls with `GraphRecursionError: Recursion limit of 6 reached without hitting a stop condition.`
+A model that never stops asking for a tool runs until the limit. The kit told Qwen3 4B to count upward with `add` and never stop. With `recursion_limit=6` in the config, the run stopped after three model calls and two tool calls, with `GraphRecursionError: Recursion limit of 6 reached without hitting a stop condition.`
 
 **We measured** the default limit on the Mac, one run each, with a fake model that always calls a tool. The agent stopped at 9999 steps, after 5000 model calls and 4999 tool calls. That took 35.8 s with no checkpointer and 150.17 s with `InMemorySaver`. Set a limit that fits your task, because a loop costs every model call it makes.
 
@@ -273,4 +271,4 @@ A model that never stops asking for a tool runs until the limit. With `recursion
 - Set recursion_limit for each run, because the agent default allows 5000 model calls.
 ```
 
-Sources: capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/21-stream-updates-values.txt, capture/out/38-recursion-limit.txt, capture/out/42-langsmith.txt; capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0, libs/langgraph/langgraph/graph/state.py and libs/langgraph/langgraph/_internal/_config.py at langgraph 1.2.22.
+Sources: capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/21-stream-updates-values.txt, capture/out/46-recursion-agent.txt, capture/out/42-langsmith.txt; capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0, libs/langgraph/langgraph/graph/state.py and libs/langgraph/langgraph/_internal/_config.py at langgraph 1.2.22.

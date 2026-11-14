@@ -26,7 +26,7 @@ note: Cut to the message list of call 2.
     "messages": [
       "system: You add numbers.",
       "human: What is 2 + 3?",
-      "ai",
+      "ai: calls add",
       "tool: 5"
     ],
 ```
@@ -55,13 +55,13 @@ The `dynamic_prompt` decorator turns a function of the model request into middle
 title: a dynamic prompt
 source: capture/s_middleware.py
 lang: python
-note: Cut from the scenario. The fake model returns one message.
+note: Cut from the scenario. The model is Qwen3 4B on Ollama.
 ---
     @dynamic_prompt
     def by_user(request):
         return f"You are helping {request.runtime.context['user']}."
 …
-    create_agent(fake, middleware=[by_user]).invoke(ask("hi"), context={"user": "Ada"})
+    out = create_agent(m, middleware=[by_user]).invoke(ask("hi, who are you helping?"), context={"user": "Ada"})
 ```
 
 The model got the prompt with the name filled in:
@@ -74,9 +74,11 @@ note: The last section of the file, cut to the messages.
 ---
     "messages": [
       "system: You are helping Ada.",
-      "human: hi"
+      "human: hi, who are you helping?"
     ]
 ```
+
+The model did not use the name. It answered `Hi! I'm here to help you with any questions or tasks you might have.` and more. A prompt sets what the model reads, not what it says.
 
 For more control, a `wrap_model_call` middleware can read and replace the prompt of each request. The custom middleware page says to read and change the prompt through the `system_message` field of `ModelRequest` {{docs oss/python/langchain/middleware/custom}}. Part 3 explains the middleware hooks and their order.
 

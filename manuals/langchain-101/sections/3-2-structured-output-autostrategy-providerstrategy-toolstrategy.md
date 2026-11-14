@@ -28,42 +28,39 @@ claim: An explicit strategy is never changed, and AutoStrategy chooses before ea
 caption: Read from the top. The amber boxes are choices that create_agent makes before the request. The rose boxes are the failures each strategy ends in. From capture/out/07-structured-output.txt, capture/out/08-structured-errors.txt, and capture/lab/summary/structured-output-mac.json.
 ```
 
-The kit runs the same schema on two fakes. The first has no profile, and the agent binds a tool named after the schema:
+The kit runs the same schema on two `ChatOllama` models with no tools of their own. The first has no profile, and the agent binds a tool named after the schema:
 
 ```listing
 title: a plain schema on a model with no profile
 source: capture/out/07-structured-output.txt
 lang: json
-note: The bound tools of the first model call.
+note: The first model call, cut to its messages and bound tools.
 ---
-    "bound": {
-      "tools": [
-        "add",
-        "Answer"
-      ],
-      "tool_choice": "any",
-      "kwargs": []
-    }
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "tools": [
+      "Answer"
+    ]
 ```
 
-The second fake has the profile `{"structured_output": True}`. The agent binds only `add`, sets no `tool_choice`, and passes `response_format`:
+The agent also asks for `tool_choice="any"`. `ChatOllama.bind_tools` drops that argument, because Ollama has no such option {{code libs/partners/ollama/langchain_ollama/chat_models.py}}. So on Ollama nothing forces the call of the schema tool. Here the model called `Answer` anyway, with `value` 5.
+
+The second model has the profile `{"structured_output": True}`. The agent binds no schema tool and passes `response_format`, which `ChatOllama` sends to Ollama as a JSON schema format:
 
 ```listing
 title: a plain schema on a model whose profile says structured_output
 source: capture/out/07-structured-output.txt
 lang: json
-note: The bound tools of the first model call.
+note: The first model call, cut to its messages and its format.
 ---
-    "bound": {
-      "tools": [
-        "add"
-      ],
-      "tool_choice": null,
-      "kwargs": [
-        "response_format"
-      ]
-    }
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "format": "json schema"
 ```
+
+The reply was the text `{"value": 5}`, and the agent filled `unit` from its default.
 
 `ChatOllama` has no profile, and Ollama model names are not in the list. So on Ollama a plain schema and `AutoStrategy` always run as `ToolStrategy`.
 
@@ -77,53 +74,55 @@ source: capture/out/07-structured-output.txt
 lang: json
 note: The bound tools of the union run.
 ---
-      "tools": [
-        "add",
-        "Answer",
-        "Refusal"
-      ],
+    "tools": [
+      "Answer",
+      "Refusal"
+    ]
 ```
 
-A `TypedDict` gives back a `dict`, and a dataclass gives back an instance of it. A JSON schema `dict` gives back the arguments with no validation. The kit sent `"not a number"` for an integer field, and the run returned it as the result:
+A `TypedDict` gives back a `dict`, and a dataclass gives back an instance of it. A JSON schema `dict` gives back the arguments with no validation {{code libs/langchain_v1/langchain/agents/structured_output.py}}. The kit asked for the value as an English word, to send a string to an integer field. Qwen3 4B sent the number anyway:
 
 ```listing
-title: a JSON schema dict is not validated
+title: the JSON schema run
 source: capture/out/07-structured-output.txt
 lang: text
 note: The structured_response of the JSON schema run.
 ---
 structured_response:
 {
-  "value": "not a number"
+  "value": 5
 }
 ```
 
-When the arguments fail validation, `ToolStrategy` writes the error into a `ToolMessage` and calls the model again. The message ends with `Please fix your mistakes.`:
+When the arguments fail validation, `ToolStrategy` writes the error into a `ToolMessage` and calls the model again. The message ends with `Please fix your mistakes.` {{code libs/langchain_v1/langchain/agents/structured_output.py}}. Our model never sent an invalid value. Asked to put 3.5 into the integer field `value`, it sent `value` 3 and `unit` `"5"`, which is valid.
+
+Two structured tool calls in one AI message get the same kind of retry. The kit asked for `Answer` and `Refusal` in one reply, and the model sent both:
 
 ```listing
-title: the retry message after a validation error
+title: the retry message after two structured calls
 source: capture/out/08-structured-errors.txt
 lang: json
-note: The ToolMessage between the bad call and the good call. The pydantic help line is part of the content.
+note: The first of the two ToolMessages. The second has the same text.
 ---
-    "content": "Error: Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer\nvalue\n  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='five', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.14/v/int_parsing.\n Please fix your mistakes.",
+    "content": "Error: Model incorrectly returned multiple structured responses (Answer, Refusal) when only one is expected.\n Please fix your mistakes.",
     "name": "Answer",
-    "id": "<uuid-2>",
-    "tool_call_id": "call_a",
+…
     "status": "success"
 ```
 
-The `status` of that message is `success`, though it carries an error. Code that counts error `ToolMessage` objects does not count these retries. Two structured tool calls in one AI message also get a retry, with the text `Model incorrectly returned multiple structured responses (Answer, Refusal) when only one is expected.`
+The model then sent one `Answer` call, and the run ended with `value` 5. The `status` of each retry message is `success`, though it carries an error. Code that counts error `ToolMessage` objects does not count these retries.
 
 **handle_errors:** the `ToolStrategy` parameter that sets the retry. `True`, the default, retries on every parse error. A string replaces the retry text. An exception type or a tuple retries only those errors. A callable gets the error and returns the retry text. `False` raises `StructuredOutputValidationError` on the first bad call {{code libs/langchain_v1/langchain/agents/structured_output.py}}.
 
 ## ProviderStrategy
 
-`ProviderStrategy` sends the schema to the provider and reads the text of the reply as JSON. When the text is not JSON, or fails validation, the run raises on the first call:
+`ProviderStrategy` sends the schema to the provider and reads the text of the reply as JSON. When the text is not JSON, or fails validation, the run raises on the first call.
+
+On Ollama the schema becomes the format of the request, and the reply must fit it. The kit asked for a word, for 3.5, and for one plain English sentence. Each time the model returned valid JSON, such as `{ "value": 5 }`. The failure came from a tool. With `add` bound, the reply had no text, and the agent parsed the empty content as JSON:
 
 ```listing
-title: ProviderStrategy with text that is not JSON
-source: capture/out/08-structured-errors.txt
+title: ProviderStrategy with the add tool bound
+source: capture/out/07-structured-output.txt
 lang: text
 ---
 raised langchain.agents.structured_output.StructuredOutputValidationError: Failed to parse structured output for tool 'Answer': Native structured output expected valid JSON for Answer, but parsing failed: Expecting value: line 1 column 1 (char 0)..
@@ -152,7 +151,25 @@ One request, one error, and no second request with tools. `AutoStrategy` with th
 
 `handle_errors=True` has no retry count. With `tools=[]`, the agent graph has a `model` to `model` edge that loops until a structured response exists. Only the recursion limit stops it, and the agent default is 9999 steps. In the lab, a fake that answered in plain text made 12 model calls under `recursion_limit=12`, and raised `GraphRecursionError`.
 
-With at least one tool of your own, the same plain text answer ends the run. The fake case gave `structured_response` of `None`, one model call, and no exception. `ProviderStrategy` ends the same way when the model answers with a tool call. Check `structured_response` for `None` after every run.
+The kit ran into this loop with Qwen3 4B. With a `TypedDict` and with a dataclass, the model answered `2 + 3 = 5.` in text, twice. The agent sent the third request with two AI messages at the end, and Ollama refused it:
+
+```listing
+title: the third request of the TypedDict run
+source: capture/out/07-structured-output.txt
+lang: text
+note: The error, then the messages of the third model call.
+---
+raised ollama._types.ResponseError: {"error":{"code":400,"message":"Cannot have 2 or more assistant messages at the end of the list.","type":"invalid_request_error"}} (status code: 400)
+…
+    "call": 3,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai: 2 + 3 = 5.",
+      "ai: 2 + 3 = 5."
+    ],
+```
+
+With at least one tool of your own, a plain text answer ends the run. With `add` bound, the model called `add`, then answered in text. `structured_response` was `None` after two model calls, with no exception. Check `structured_response` for `None` after every run.
 
 ## Failure rates on four model sizes
 
@@ -194,4 +211,4 @@ A valid object matches the schema. It can still hold the wrong values. In the en
 - Test the values of structured output against labels, because a valid object can be wrong.
 ```
 
-Sources: capture/out/07-structured-output.txt, capture/out/08-structured-errors.txt, capture/s_agents.py; capture/lab/summary/structured-output-mac.json, capture/lab/T06-structured-output-mac/01-ollama-runs.jsonl, capture/lab/T06-structured-output-mac/02-d209-fake-and-stub.jsonl, capture/lab/T06-structured-output-mac/03-ollama-seq-n10.jsonl, capture/lab/T06-structured-output-mac/t06_run.py, capture/lab/T06-structured-output-mac/t06_schemas.py, capture/lab/T06-structured-output-mac/t06_d209.py; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/structured-output); libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/structured_output.py at langchain==1.5.0.
+Sources: capture/out/07-structured-output.txt, capture/out/08-structured-errors.txt, capture/s_agents.py; libs/partners/ollama/langchain_ollama/chat_models.py at langchain-ollama 1.1.0; capture/lab/summary/structured-output-mac.json, capture/lab/T06-structured-output-mac/01-ollama-runs.jsonl, capture/lab/T06-structured-output-mac/02-d209-fake-and-stub.jsonl, capture/lab/T06-structured-output-mac/03-ollama-seq-n10.jsonl, capture/lab/T06-structured-output-mac/t06_run.py, capture/lab/T06-structured-output-mac/t06_schemas.py, capture/lab/T06-structured-output-mac/t06_d209.py; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/structured-output); libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/structured_output.py at langchain==1.5.0.

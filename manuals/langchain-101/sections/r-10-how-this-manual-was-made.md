@@ -14,7 +14,7 @@ Each fact carries one of four labels, and [the sources page](#s-ref-sources-and-
 
 **The code:** a class, a default, or an error text read in the source at the tag. A paragraph says when we also ran it.
 
-**A capture:** a listing from the capture kit, which drives the real stack with a scripted fake model. The model part is our script, and everything else is the stack.
+**A capture:** a listing from the capture kit, which drives the real stack. Where a capture needs a model, the model is Qwen3 4B Instruct on Ollama on the x86 server guest. The file names the model, its settings, the machine, and the date.
 
 **We measured:** a number from one of our lab runs. The paragraph names the machine and the number of runs.
 
@@ -25,13 +25,13 @@ Each fact carries one of four labels, and [the sources page](#s-ref-sources-and-
 | Name in the manual | Machine | Software |
 |---|---|---|
 | the Mac | an Apple M1 Max laptop with 10 cores and 64 GiB, shared with other work | macOS 26.2, Python 3.13.12, Ollama 0.31.1, PostgreSQL 14.21 |
-| the x86 server guest | a KVM guest with 32 vCPU and 48 GiB on a shared server with an AMD EPYC 7452. Its disk was in the memory of the server | Ubuntu 24.04, Python 3.13.18, PostgreSQL 16.15, Redis 7.0.15, Docker 29.1.3 |
+| the x86 server guest | a KVM guest with 32 vCPU and 48 GiB on a shared server with an AMD EPYC 7452. Its disk was in the memory of the server | Ubuntu 24.04, Python 3.13.18, PostgreSQL 16.15, Redis 7.0.15, Docker 29.1.3, Ollama 0.31.1 on CPU |
 
 The two machines differ, so no section sets a number from one beside a number from the other. Every time from the Mac is an upper bound for that machine, because other work ran on it during every timed run. The disk of the guest was in memory, so its write times are lower bounds for a real disk.
 
 ## The lab method
 
-- **Real models on the Mac only.** The real models were Qwen3 models of 0.6B to 8B parameters on Ollama, and `nomic-embed-text` for embeddings. No hosted model ran, so no time in this manual is the time of a hosted model.
+- **Real models of the lab on the Mac.** The real models of the lab were Qwen3 models of 0.6B to 8B parameters on Ollama, and `nomic-embed-text` for embeddings. The capture kit is apart from the lab, and it recorded on the x86 server guest. No hosted model ran, so no time in this manual is the time of a hosted model.
 - **Fakes on the guest.** Every model on the x86 server guest was a fake with a fixed delay, or no delay. Those times hold the cost of the stack and the database only.
 - **Local stubs.** A stub server on `127.0.0.1` stood in for a provider, a flaky service, a stream, or a LangSmith endpoint. The streaming stub stamped each send, so the lab could time each token on one clock.
 - **A new process for each step.** The crash, approval, and assistant runs started each step in a new Python process, so each resume was a restart.
@@ -85,15 +85,23 @@ No file holds a key, a token, or the name of a person. The only host names are `
 
 ## The capture kit
 
-[The capture kit](manuals/langchain-101/capture) drives the stack in one Python process, offline, with no keys. It writes 44 files to `capture/out/`, and every listing in the manual is cut from one of them.
+[The capture kit](manuals/langchain-101/capture) drives the stack in one Python process, with no keys. It writes 49 files to `capture/out/`, and every listing in the manual is cut from one of them.
+
+- **14 model-free files.** They call no model. They cover the versions, the messages, the tool schemas, and the graph structure. They also cover durability, interrupts, the store, reducers, the functional API, subgraphs, error handlers, the recursion limit, and retrieval. They give the same bytes on every run.
+- **34 recorded files and one sidecar.** They call `ChatOllama` on `qwen3:4b-instruct-2507-q4_K_M`, with temperature 0, seed 42, `num_ctx` 16384, and `num_predict` 512. We recorded them on the x86 server guest, on CPU, on 2026-11-14. The first line under each title names the model, the settings, the machine, and the date.
+
+No scenario uses a fake chat model. A failure comes from a tool that raises, from a port where nothing listens, or from a relay that drops connections. The decision middleware asks Qwen3 4B through a small adapter of the kit. The two embedding scenarios hash the text with `DeterministicFakeEmbedding`, because the guest has no embedding model.
 
 ```bash
 cd manuals/langchain-101
-python3 capture/run.py
+python3 capture/run.py --model-free
 python3 capture/run.py --check
+python3 capture/run.py --check --live
 ```
 
-The first command writes the captures and the lab summaries. The second captures again into a temporary folder and compares each file. It then computes the summaries again and compares them, and it prints one `skipped` line for the lab runs, because they need Ollama and Postgres.
+The first command writes the model-free files and the lab summaries, offline. A plain `python3 capture/run.py` writes every file and needs Ollama.
+
+The check runs the model-free scenarios again and compares each file byte for byte. For each recorded file, it checks the model line and the strings that the manual relies on. These are message types, tool names, and error texts. It then computes the summaries again and compares them. It prints one `skipped` line for the recorded scenarios and one for the lab runs. With `--live`, it records the model scenarios again into a temporary folder and checks the same structure.
 
 ## Record it again on your machine
 
@@ -102,6 +110,6 @@ The first command writes the captures and the lab summaries. The second captures
 3. Run the script of one experiment, from a folder that keeps one. Each script writes the files of its own folder.
 4. Run `python3 capture/run.py` from the manual directory to compute the summaries again.
 
-Your times will differ from ours. The messages, the error texts, the checkpoints, and the order of events must not. If one of them differs at the pin, a claim of this manual depends on our machines.
+Your times will differ from ours, and so can the words of the model. The message types, the error texts, the checkpoints, and the order of events must not. If one of them differs at the pin, a claim of this manual depends on our machines.
 
 Sources: manual.json (pin, sources); capture/README.md, capture/run.py, capture/requirements.txt, capture/lab/README.md, capture/lab/x86-guest-machine.txt; capture/lab/summary/overhead-mac.json, capture/lab/summary/crash-resume-mac.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/streaming-mac.json, capture/lab/summary/retries-mac.json, capture/lab/summary/structured-output-mac.json, capture/lab/summary/approvals-mac.json, capture/lab/summary/parallel-tools-mac.json, capture/lab/summary/tokens-mac.json, capture/lab/summary/long-threads-x86.json, capture/lab/summary/middleware-mac.json, capture/lab/summary/mcp-mac.json, capture/lab/summary/serde-mac.json, capture/lab/summary/stores-mac.json, capture/lab/summary/agent-server-x86.json, capture/lab/summary/concurrency-x86.json, capture/lab/summary/recursion-mac.json, capture/lab/summary/tracing-mac.json, capture/lab/summary/evaluate-mac.json, capture/lab/summary/pytest-plugin-mac.json, capture/lab/summary/mcp-edges-mac.json, capture/lab/summary/demos-mac.json; the measured paragraphs of the sections linked in each row.
