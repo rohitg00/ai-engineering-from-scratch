@@ -1,0 +1,9 @@
+{"deepagents": "0.7.38", "profile_model": "anthropic:claude-sonnet-4-6", "variant": "system+user 'hi'+tools", "qwen3_prompt_eval_count_x3": [2543, 2543, 2543]}
+{"deepagents": "0.7.38", "profile_model": "anthropic:claude-sonnet-4-6", "variant": "user 'hi' only", "qwen3_prompt_eval_count_x3": [17, 17, 17]}
+{"deepagents": "0.7.38", "profile_model": "anthropic:claude-sonnet-4-6", "variant": "system+user 'hi', no tools", "qwen3_prompt_eval_count_x3": [297, 297, 297]}
+{"deepagents": "0.7.38", "profile_model": "ollama:qwen3:8b", "variant": "system+user 'hi'+tools", "qwen3_prompt_eval_count_x3": [2268, 2268, 2268]}
+{"deepagents": "0.7.38", "profile_model": "ollama:qwen3:8b", "variant": "user 'hi' only", "qwen3_prompt_eval_count_x3": [17, 17, 17]}
+{"deepagents": "0.7.38", "profile_model": "ollama:qwen3:8b", "variant": "system+user 'hi', no tools", "qwen3_prompt_eval_count_x3": [17, 17, 17]}
+{"deepagents": "0.6.12", "profile_model": "anthropic:claude-sonnet-4-6", "variant": "system+user 'hi'+tools", "qwen3_prompt_eval_count_x3": [5814, 5814, 5814]}
+{"deepagents": "0.6.12", "profile_model": "anthropic:claude-sonnet-4-6", "variant": "user 'hi' only", "qwen3_prompt_eval_count_x3": [17, 17, 17]}
+{"deepagents": "0.6.12", "profile_model": "anthropic:claude-sonnet-4-6", "variant": "system+user 'hi', no tools", "qwen3_prompt_eval_count_x3": [1851, 1851, 1851]}

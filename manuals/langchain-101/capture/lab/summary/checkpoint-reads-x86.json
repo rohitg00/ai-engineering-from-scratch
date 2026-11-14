@@ -1,0 +1,677 @@
+{
+ "cells": {
+  "memory delta100 10": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    0.29,
+    0.59,
+    0.6
+   ],
+   "ms_per_step": [
+    1.36,
+    1.78,
+    1.8
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    1208,
+    1208,
+    1208
+   ],
+   "steps": 10
+  },
+  "memory delta100 100": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    1.87,
+    1.84,
+    1.85
+   ],
+   "ms_per_step": [
+    1.4,
+    1.5,
+    1.62
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    1209,
+    1208,
+    1208
+   ],
+   "steps": 100
+  },
+  "memory delta100 1000": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    10.58,
+    10.17,
+    10.15
+   ],
+   "ms_per_step": [
+    1.53,
+    1.63,
+    1.75
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    1212,
+    1216,
+    1220
+   ],
+   "steps": 1000
+  },
+  "memory delta100 5000": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    59.17
+   ],
+   "ms_per_step": [
+    1.81
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    1217
+   ],
+   "steps": 5000
+  },
+  "memory delta1000 10": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    0.28,
+    0.56,
+    0.59
+   ],
+   "ms_per_step": [
+    1.04,
+    1.76,
+    1.73
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    1207,
+    1207,
+    1204
+   ],
+   "steps": 10
+  },
+  "memory delta1000 100": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    1.71,
+    2.92,
+    2.94
+   ],
+   "ms_per_step": [
+    1.12,
+    1.33,
+    1.28
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    1209,
+    1212,
+    1210
+   ],
+   "steps": 100
+  },
+  "memory delta1000 1000": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    10.86,
+    10.52,
+    10.15
+   ],
+   "ms_per_step": [
+    1.48,
+    1.53,
+    1.41
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    1214,
+    1215,
+    1215
+   ],
+   "steps": 1000
+  },
+  "memory delta1000 5000": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    59.98
+   ],
+   "ms_per_step": [
+    1.57
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    1214
+   ],
+   "steps": 5000
+  },
+  "memory plain 10": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    0.18,
+    0.4,
+    0.37
+   ],
+   "ms_per_step": [
+    1.4,
+    1.98,
+    1.98
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    7100,
+    6521,
+    7103
+   ],
+   "steps": 10
+  },
+  "memory plain 100": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    2.3,
+    2.31,
+    2.31
+   ],
+   "ms_per_step": [
+    2.14,
+    2.12,
+    2.13
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    61713,
+    59960,
+    58799
+   ],
+   "steps": 100
+  },
+  "memory plain 1000": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    10.08,
+    16.31,
+    16.4
+   ],
+   "ms_per_step": [
+    6.35,
+    6.32,
+    6.45
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    583047,
+    583046,
+    583044
+   ],
+   "steps": 1000
+  },
+  "memory plain 5000": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    55.38
+   ],
+   "ms_per_step": [
+    24.02
+   ],
+   "saver": "memory",
+   "serialized_bytes_last_put": [
+    2914438
+   ],
+   "steps": 5000
+  },
+  "postgres delta100 10": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    4.28,
+    4.23,
+    4.26
+   ],
+   "ms_per_step": [
+    5.15,
+    4.93,
+    4.99
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    583,
+    583,
+    583
+   ],
+   "steps": 10
+  },
+  "postgres delta100 100": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    9.54,
+    9.72,
+    10.07
+   ],
+   "ms_per_step": [
+    3.91,
+    4.07,
+    3.69
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    584,
+    584,
+    584
+   ],
+   "steps": 100
+  },
+  "postgres delta100 1000": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    62.79,
+    61.48,
+    65.61
+   ],
+   "ms_per_step": [
+    4.48,
+    4.42,
+    4.41
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    586,
+    586,
+    586
+   ],
+   "steps": 1000
+  },
+  "postgres delta100 5000": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    158.76
+   ],
+   "ms_per_step": [
+    6.24
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    587
+   ],
+   "steps": 5000
+  },
+  "postgres delta1000 10": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    4.24,
+    4.26,
+    4.28
+   ],
+   "ms_per_step": [
+    5.1,
+    5.07,
+    5.14
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    583,
+    583,
+    583
+   ],
+   "steps": 10
+  },
+  "postgres delta1000 100": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    15.72,
+    15.68,
+    16.05
+   ],
+   "ms_per_step": [
+    3.85,
+    4.04,
+    3.97
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    584,
+    584,
+    584
+   ],
+   "steps": 100
+  },
+  "postgres delta1000 1000": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    43.24,
+    58.6,
+    61.67
+   ],
+   "ms_per_step": [
+    4.32,
+    4.23,
+    4.19
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    586,
+    586,
+    586
+   ],
+   "steps": 1000
+  },
+  "postgres delta1000 5000": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    104.87
+   ],
+   "ms_per_step": [
+    5.31
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    587
+   ],
+   "steps": 5000
+  },
+  "postgres plain 10": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    1.65,
+    1.68,
+    1.62
+   ],
+   "ms_per_step": [
+    5.37,
+    5.36,
+    5.64
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    6521,
+    6521,
+    6521
+   ],
+   "steps": 10
+  },
+  "postgres plain 100": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    4.23,
+    4.37,
+    2.73
+   ],
+   "ms_per_step": [
+    6.57,
+    6.44,
+    5.86
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    58798,
+    58798,
+    58799
+   ],
+   "steps": 100
+  },
+  "postgres plain 1000": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    29.28,
+    31.8,
+    31.42
+   ],
+   "ms_per_step": [
+    23.01,
+    24.46,
+    22.59
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    582459,
+    582459,
+    582459
+   ],
+   "steps": 1000
+  },
+  "postgres plain 5000": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    103.53
+   ],
+   "ms_per_step": [
+    73.37
+   ],
+   "saver": "postgres",
+   "serialized_bytes_last_put": [
+    2913851
+   ],
+   "steps": 5000
+  },
+  "sqlite delta100 10": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    0.81,
+    0.86,
+    0.82
+   ],
+   "ms_per_step": [
+    4.29,
+    4.35,
+    4.53
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    1153,
+    1153,
+    1154
+   ],
+   "steps": 10
+  },
+  "sqlite delta100 100": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    2.64,
+    2.65,
+    2.59
+   ],
+   "ms_per_step": [
+    3.97,
+    4.05,
+    4.14
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    1158,
+    1157,
+    1153
+   ],
+   "steps": 100
+  },
+  "sqlite delta100 1000": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    15.89,
+    15.51,
+    21.66
+   ],
+   "ms_per_step": [
+    4.16,
+    4.15,
+    4.02
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    1161,
+    1161,
+    1159
+   ],
+   "steps": 1000
+  },
+  "sqlite delta100 5000": {
+   "channel": "delta100",
+   "get_state_ms_best_of_3": [
+    61.94
+   ],
+   "ms_per_step": [
+    5.83
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    1160
+   ],
+   "steps": 5000
+  },
+  "sqlite delta1000 10": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    0.8,
+    0.83,
+    0.79
+   ],
+   "ms_per_step": [
+    4.66,
+    4.99,
+    4.52
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    1153,
+    1152,
+    1154
+   ],
+   "steps": 10
+  },
+  "sqlite delta1000 100": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    4.66,
+    4.7,
+    4.68
+   ],
+   "ms_per_step": [
+    3.94,
+    4.18,
+    4.08
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    1157,
+    1158,
+    1156
+   ],
+   "steps": 100
+  },
+  "sqlite delta1000 1000": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    15.72,
+    16.62,
+    17.26
+   ],
+   "ms_per_step": [
+    4.09,
+    4.02,
+    4.03
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    1162,
+    1159,
+    1161
+   ],
+   "steps": 1000
+  },
+  "sqlite delta1000 5000": {
+   "channel": "delta1000",
+   "get_state_ms_best_of_3": [
+    65.28
+   ],
+   "ms_per_step": [
+    5.07
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    1163
+   ],
+   "steps": 5000
+  },
+  "sqlite plain 10": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    0.46,
+    0.46,
+    0.45
+   ],
+   "ms_per_step": [
+    4.21,
+    4.65,
+    4.77
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    7101,
+    7105,
+    7100
+   ],
+   "steps": 10
+  },
+  "sqlite plain 100": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    2.36,
+    2.37,
+    2.36
+   ],
+   "ms_per_step": [
+    4.74,
+    4.92,
+    4.92
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    59381,
+    59374,
+    59376
+   ],
+   "steps": 100
+  },
+  "sqlite plain 1000": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    16.57,
+    17.38,
+    17.6
+   ],
+   "ms_per_step": [
+    10.04,
+    10.17,
+    10.11
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    583041,
+    583042,
+    583040
+   ],
+   "steps": 1000
+  },
+  "sqlite plain 5000": {
+   "channel": "plain",
+   "get_state_ms_best_of_3": [
+    63.21
+   ],
+   "ms_per_step": [
+    35.65
+   ],
+   "saver": "sqlite",
+   "serialized_bytes_last_put": [
+    2914436
+   ],
+   "steps": 5000
+  }
+ },
+ "durability": "sync",
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "message_chars_per_step": 400,
+ "sources": [
+  "capture/lab/T03-checkpoint-cost-x86/01-steps.jsonl",
+  "capture/lab/T03-checkpoint-cost-x86/02-steps-5000.jsonl"
+ ]
+}

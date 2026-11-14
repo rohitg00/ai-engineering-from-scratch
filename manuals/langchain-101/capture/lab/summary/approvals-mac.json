@@ -1,0 +1,1429 @@
+{
+ "cases": {
+  "B1_single_approve": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "B2_single_edit_args": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ]
+   ]
+  },
+  "B3_single_edit_switch_tool": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "delete_file {\"path\": \"/tmp/g\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/g\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/g\"} at step 1"
+    ]
+   ]
+  },
+  "B4_single_reject": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "error"
+    ],
+    [
+     "error"
+    ],
+    [
+     "error"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "B5_single_respond": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "B6_parallel_approve_both": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "parallel",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 1",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 1",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 1",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "B7_parallel_approve_reject": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "parallel",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "B8_parallel_edit_approve": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "parallel",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 1",
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 1",
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 1",
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ]
+   ]
+  },
+  "B9_parallel_one_decision_for_two": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [],
+    [],
+    []
+   ],
+   "calls": "parallel",
+   "errors": [
+    [
+     "step 1: ValueError: Number of human decisions (1) does not match number of hanging tool calls (2)."
+    ],
+    [
+     "step 1: ValueError: Number of human decisions (1) does not match number of hanging tool calls (2)."
+    ],
+    [
+     "step 1: ValueError: Number of human decisions (1) does not match number of hanging tool calls (2)."
+    ]
+   ],
+   "mode": "batched",
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "G1_topgraph_two_interrupts_resume_one_then_other": {
+   "app": "topgraph_parallel",
+   "branch_effects": [
+    [
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ],
+    [
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ],
+    [
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ]
+   ],
+   "branch_entries": [
+    [
+     [
+      "branch_a",
+      0
+     ],
+     [
+      "branch_b",
+      0
+     ],
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ],
+    [
+     [
+      "branch_b",
+      0
+     ],
+     [
+      "branch_a",
+      0
+     ],
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ],
+    [
+     [
+      "branch_b",
+      0
+     ],
+     [
+      "branch_a",
+      0
+     ],
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ]
+   ],
+   "c1_tool_messages": [
+    [],
+    [],
+    []
+   ],
+   "calls": null,
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": null,
+   "model_calls": [
+    0,
+    0,
+    0
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "G2_subgraph_two_interrupts_resume_one_then_other": {
+   "app": "subgraph_parallel",
+   "branch_effects": [
+    [
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ],
+    [
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ],
+    [
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ]
+   ],
+   "branch_entries": [
+    [
+     [
+      "branch_a",
+      0
+     ],
+     [
+      "branch_b",
+      0
+     ],
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ],
+    [
+     [
+      "branch_b",
+      0
+     ],
+     [
+      "branch_a",
+      0
+     ],
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ],
+    [
+     [
+      "branch_a",
+      0
+     ],
+     [
+      "branch_b",
+      0
+     ],
+     [
+      "branch_a",
+      1
+     ],
+     [
+      "branch_b",
+      1
+     ],
+     [
+      "branch_b",
+      2
+     ]
+    ]
+   ],
+   "c1_tool_messages": [
+    [],
+    [],
+    []
+   ],
+   "calls": null,
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": null,
+   "model_calls": [
+    0,
+    0,
+    0
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "G3_agent_in_subgraph_per_call_resume_one_then_other": {
+   "app": "agent_in_subgraph",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": null,
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": null,
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 2",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 2",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 2",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "J1_batched_jumper_after_hitl_in_list_approve": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 0"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 0"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 0"
+    ]
+   ]
+  },
+  "J2_batched_jumper_before_hitl_in_list_reject": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "error",
+     "success"
+    ],
+    [
+     "error",
+     "success"
+    ],
+    [
+     "error",
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "J3_batched_jumper_after_hitl_in_list_reject": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "batched",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 0"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 0"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 0"
+    ]
+   ]
+  },
+  "J4_per_call_jumper_after_hitl_in_list_reject": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "error"
+    ],
+    [
+     "error"
+    ],
+    [
+     "error"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "J5_per_call_jumper_before_hitl_in_list_reject": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "error"
+    ],
+    [
+     "error"
+    ],
+    [
+     "error"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "P1_single_approve": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "P2_single_edit_args": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"b@x\"} at step 1"
+    ]
+   ]
+  },
+  "P3_single_edit_switch_tool": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [],
+    [],
+    []
+   ],
+   "calls": "single",
+   "errors": [
+    [
+     "step 1: ValidationError: 2 validation errors for tagged-union[ApproveDecision,function-wrap[_as_sent()],RejectDecision,RespondDecision]"
+    ],
+    [
+     "step 1: ValidationError: 2 validation errors for tagged-union[ApproveDecision,function-wrap[_as_sent()],RejectDecision,RespondDecision]"
+    ],
+    [
+     "step 1: ValidationError: 2 validation errors for tagged-union[ApproveDecision,function-wrap[_as_sent()],RejectDecision,RespondDecision]"
+    ]
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "P4_single_reject": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "error"
+    ],
+    [
+     "error"
+    ],
+    [
+     "error"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "P5_single_respond": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "single",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "P6_parallel_answer_both_at_once": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "parallel",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "P7_parallel_answer_one_then_other": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "parallel",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 2",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 2",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "delete_file {\"path\": \"/tmp/f\"} at step 2",
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "P8_parallel_plain_value_two_pending": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [],
+    [],
+    []
+   ],
+   "calls": "parallel",
+   "errors": [
+    [
+     "step 1: RuntimeError: When there are multiple pending interrupts, you must specify the interrupt id when resuming. Docs: https://docs.langchain.com/oss/python/langgraph/interrupts#handling-multiple-interrupts."
+    ],
+    [
+     "step 1: RuntimeError: When there are multiple pending interrupts, you must specify the interrupt id when resuming. Docs: https://docs.langchain.com/oss/python/langgraph/interrupts#handling-multiple-interrupts."
+    ],
+    [
+     "step 1: RuntimeError: When there are multiple pending interrupts, you must specify the interrupt id when resuming. Docs: https://docs.langchain.com/oss/python/langgraph/interrupts#handling-multiple-interrupts."
+    ]
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "runs": 3,
+   "tools_run": [
+    [],
+    [],
+    []
+   ]
+  },
+  "S1_strict_stale_answer": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "parallel",
+   "errors": [
+    [
+     "step 2: UnknownInterruptError: Unknown or already-consumed interrupt: <id>"
+    ],
+    [
+     "step 2: UnknownInterruptError: Unknown or already-consumed interrupt: <id>"
+    ],
+    [
+     "step 2: UnknownInterruptError: Unknown or already-consumed interrupt: <id>"
+    ]
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  },
+  "S2_nonstrict_stale_answer": {
+   "app": "agent",
+   "branch_effects": [
+    [],
+    [],
+    []
+   ],
+   "branch_entries": [
+    [],
+    [],
+    []
+   ],
+   "c1_tool_messages": [
+    [
+     "success"
+    ],
+    [
+     "success"
+    ],
+    [
+     "success"
+    ]
+   ],
+   "calls": "parallel",
+   "errors": [
+    [],
+    [],
+    []
+   ],
+   "mode": "per_call",
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "runs": 3,
+   "tools_run": [
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ],
+    [
+     "send_email {\"to\": \"a@x\"} at step 1"
+    ]
+   ]
+  }
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "runs_per_case": 3,
+ "saver": "SqliteSaver, with the start and each resume in a new process",
+ "sources": [
+  "capture/lab/T07-approvals-mac/01-cases.jsonl"
+ ]
+}

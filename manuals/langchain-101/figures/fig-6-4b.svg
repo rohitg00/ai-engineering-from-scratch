@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 414" role="img" aria-labelledby="fig-6-4b-title fig-6-4b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-4b-title">Seconds from the last run to process exit, by endpoint</title>
+  <desc id="fig-6-4b-desc">A dot chart of the time from the last agent run to process exit on the Mac, one process of 50 agent runs per endpoint condition. With wait_for_all_tracers at the end: 0.4 s against a working endpoint and 0.4 s against a slow one. Without it: slow 18 s, slow with background callbacks off 15.7 s, an endpoint that returns 500 72.2 s, an endpoint that is down 80.7 s with 0 of 350 runs received, and an endpoint that hangs never exited and was killed at 900 s with 300 of 350 runs received. Every agent run returned its answer in every condition.</desc>
+  <defs><marker id="fig-6-4b-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <line x1="70" y1="282" x2="610" y2="282" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="286" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="236" x2="610" y2="236" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="240" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="70" y1="190" x2="610" y2="190" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="194" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <line x1="70" y1="144" x2="610" y2="144" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="148" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">60</text>
+  <line x1="70" y1="98" x2="610" y2="98" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="102" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">80</text>
+  <line x1="70" y1="52" x2="610" y2="52" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="56" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="282" x2="610" y2="282" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="52" x2="70" y2="282" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="40" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds from the last run to exit</text>
+  <circle cx="108.57" cy="281.08" r="3.4" fill="var(--m-olive-ink, #515f26)"/>
+  <rect class="m-knock" x="89.07" y="260.5" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="108.57" y="271.08" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">0.4 s</text>
+  <rect class="m-knock" x="82.47" y="246.5" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="108.57" y="257.08" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">350/350</text>
+  <text x="108.57" y="300" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">ok</text>
+  <text x="108.57" y="314" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">flush</text>
+  <circle cx="185.71" cy="281.08" r="3.4" fill="var(--m-olive-ink, #515f26)"/>
+  <rect class="m-knock" x="166.21" y="260.5" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185.71" y="271.08" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">0.4 s</text>
+  <rect class="m-knock" x="159.61" y="246.5" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185.71" y="257.08" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">350/350</text>
+  <text x="185.71" y="300" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">slow</text>
+  <text x="185.71" y="314" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">flush</text>
+  <circle cx="262.86" cy="245.89" r="3.4" fill="var(--m-olive-ink, #515f26)"/>
+  <rect class="m-knock" x="240.06" y="225.31" width="45.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="262.86" y="235.89" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">15.7 s</text>
+  <rect class="m-knock" x="236.76" y="211.31" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="262.86" y="221.89" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">350/350</text>
+  <text x="262.86" y="300" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">slow</text>
+  <text x="262.86" y="314" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">bg off</text>
+  <circle cx="340" cy="240.6" r="3.4" fill="var(--m-olive-ink, #515f26)"/>
+  <rect class="m-knock" x="323.8" y="220.02" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="340" y="230.6" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">18 s</text>
+  <rect class="m-knock" x="313.9" y="206.02" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="340" y="216.6" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">350/350</text>
+  <text x="340" y="300" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">slow</text>
+  <circle cx="417.14" cy="115.94" r="3.4" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect class="m-knock" x="394.34" y="95.36" width="45.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="417.14" y="105.94" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">72.2 s</text>
+  <rect class="m-knock" x="391.04" y="81.36" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="417.14" y="91.94" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">350/350</text>
+  <text x="417.14" y="300" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">returns</text>
+  <text x="417.14" y="314" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <circle cx="494.29" cy="96.39" r="3.4" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect class="m-knock" x="471.49" y="75.81" width="45.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="494.29" y="86.39" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">80.7 s</text>
+  <rect class="m-knock" x="474.79" y="61.81" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="494.29" y="72.39" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0/350</text>
+  <text x="494.29" y="300" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">down</text>
+  <line x1="571.43" y1="144" x2="571.43" y2="44" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-4b-head-rose)"/>
+  <text x="571.43" y="38" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">killed</text>
+  <rect class="m-knock" x="545.33" y="147.22" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="571.43" y="157.8" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">300/350</text>
+  <rect class="m-knock" x="542.03" y="165.62" width="58.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="571.43" y="176.2" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">at 900 s</text>
+  <text x="571.43" y="300" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">hangs</text>
+  <text x="70" y="344" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one process of 50 agent runs, 350 traced runs in all.</text>
+  <text x="70" y="362" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The fraction over a dot is the traced runs that reached the endpoint.</text>
+  <text x="70" y="380" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">flush: wait_for_all_tracers() after the last run. bg off:</text>
+  <text x="70" y="398" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LANGCHAIN_CALLBACKS_BACKGROUND=false. All 50 runs answered in each process.</text>
+</svg>

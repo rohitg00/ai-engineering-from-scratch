@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="fig-4-1-title fig-4-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-1-title">The chunks of one agent run in each stream mode</title>
+  <desc id="fig-4-1-desc">Eight rows, one for each stream of the same agent run, over four columns: the input, the model node at step 1, the tools node at step 2, and the model node at step 3. Each mark is one chunk. updates has 3, values 4, messages 9, tasks 6, debug 6, custom 0, the tools mode 4 on the slow_sum agent, and stream_events v3 has 21 events.</desc>
+  <text x="150" y="24" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">input</text>
+  <line x1="125" y1="34" x2="125" y2="296" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="240" y="24" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">model, step 1</text>
+  <line x1="175" y1="34" x2="175" y2="296" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="360" y="24" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">tools, step 2</text>
+  <line x1="305" y1="34" x2="305" y2="296" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="490" y="24" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">model, step 3</text>
+  <line x1="415" y1="34" x2="415" y2="296" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="565" y1="34" x2="565" y2="296" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="24" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">STREAM</text>
+  <text x="600" y="24" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">N</text>
+  <text x="20" y="56" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">updates</text>
+  <rect x="237" y="45" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="357" y="45" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="487" y="45" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="600" y="56" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">3</text>
+  <text x="20" y="88" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">values</text>
+  <rect x="147" y="77" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="237" y="77" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="357" y="77" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="487" y="77" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="600" y="88" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">4</text>
+  <text x="20" y="120" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">messages</text>
+  <rect x="237" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="357" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="445" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="459" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="473" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="487" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="501" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="515" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="529" y="109" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="600" y="120" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">9</text>
+  <text x="20" y="152" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">tasks</text>
+  <rect x="230" y="141" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="244" y="141" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="350" y="141" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="364" y="141" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="480" y="141" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="494" y="141" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="600" y="152" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">6</text>
+  <text x="20" y="184" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">debug</text>
+  <rect x="230" y="173" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="244" y="173" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="350" y="173" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="364" y="173" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="480" y="173" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="494" y="173" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="600" y="184" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">6</text>
+  <text x="20" y="216" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">custom</text>
+  <text x="600" y="216" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-ink-mute, #6f6f6a)">0</text>
+  <text x="20" y="248" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">tools</text>
+  <rect x="336" y="237" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="350" y="237" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="364" y="237" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="378" y="237" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="600" y="248" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">4</text>
+  <text x="20" y="280" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">v3 events</text>
+  <rect x="147" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="209" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="223" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="237" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="251" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="265" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="343" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="357" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="371" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="426.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="437.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="448.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="459.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="470.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="481.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="492.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="503.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="514.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="525.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="536.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="547.5" y="269" width="6" height="14" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="600" y="280" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">21</text>
+  <text x="20" y="322" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each mark is one chunk. tasks and debug ran with no checkpointer.</text>
+  <text x="20" y="340" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The tools row is the slow_sum agent: started, two deltas, finished.</text>
+</svg>

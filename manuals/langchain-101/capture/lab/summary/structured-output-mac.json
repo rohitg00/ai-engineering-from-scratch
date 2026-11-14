@@ -1,0 +1,2784 @@
+{
+ "cells": {
+  "qwen3:0.6b enum auto": {
+   "correct": [
+    null,
+    false,
+    null,
+    null,
+    null,
+    null,
+    false,
+    false,
+    null,
+    null,
+    false,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    false,
+    null
+   ],
+   "errors": {
+    "GraphRecursionError": 15
+   },
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    10,
+    6,
+    10,
+    10,
+    10,
+    10,
+    4,
+    8,
+    10,
+    10,
+    4,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    4,
+    10
+   ],
+   "outcomes": [
+    "raised",
+    "retried_valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "retried_valid",
+    "retried_valid",
+    "raised",
+    "raised",
+    "retried_valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "retried_valid",
+    "raised"
+   ],
+   "schema": "enum",
+   "strategy": "auto"
+  },
+  "qwen3:0.6b enum provider": {
+   "correct": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    false,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "enum",
+   "strategy": "provider"
+  },
+  "qwen3:0.6b enum tool": {
+   "correct": [
+    null,
+    false,
+    null,
+    null,
+    null,
+    null,
+    false,
+    false,
+    null,
+    null,
+    false,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    false,
+    null
+   ],
+   "errors": {
+    "GraphRecursionError": 15
+   },
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    10,
+    6,
+    10,
+    10,
+    10,
+    10,
+    4,
+    8,
+    10,
+    10,
+    4,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    4,
+    10
+   ],
+   "outcomes": [
+    "raised",
+    "retried_valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "retried_valid",
+    "retried_valid",
+    "raised",
+    "raised",
+    "retried_valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "retried_valid",
+    "raised"
+   ],
+   "schema": "enum",
+   "strategy": "tool"
+  },
+  "qwen3:0.6b flat auto": {
+   "correct": [
+    true,
+    true,
+    null,
+    true,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+    true,
+    null,
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    true
+   ],
+   "errors": {
+    "GraphRecursionError": 2
+   },
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    1,
+    1,
+    10,
+    1,
+    7,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    10,
+    1,
+    1,
+    1,
+    7,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "raised",
+    "valid",
+    "retried_valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "raised",
+    "valid",
+    "valid",
+    "valid",
+    "retried_valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "auto"
+  },
+  "qwen3:0.6b flat provider": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    false,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "provider"
+  },
+  "qwen3:0.6b flat tool": {
+   "correct": [
+    true,
+    true,
+    null,
+    true,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+    true,
+    null,
+    false,
+    false,
+    true,
+    true,
+    false,
+    true,
+    true
+   ],
+   "errors": {
+    "GraphRecursionError": 2
+   },
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    1,
+    1,
+    10,
+    1,
+    7,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    10,
+    1,
+    1,
+    1,
+    7,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "raised",
+    "valid",
+    "retried_valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "raised",
+    "valid",
+    "valid",
+    "valid",
+    "retried_valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "tool"
+  },
+  "qwen3:0.6b nested auto": {
+   "correct": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    true,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "GraphRecursionError": 19
+   },
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    3,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "retried_valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "nested",
+   "strategy": "auto"
+  },
+  "qwen3:0.6b nested provider": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "nested",
+   "strategy": "provider"
+  },
+  "qwen3:0.6b nested tool": {
+   "correct": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    true,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "GraphRecursionError": 19
+   },
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    3,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "retried_valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "nested",
+   "strategy": "tool"
+  },
+  "qwen3:0.6b union auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "union",
+   "strategy": "auto"
+  },
+  "qwen3:0.6b union provider": {
+   "correct": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "build: ValueError: Unsupported schema type:": 20
+   },
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "union",
+   "strategy": "provider"
+  },
+  "qwen3:0.6b union tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:0.6b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "union",
+   "strategy": "tool"
+  },
+  "qwen3:1.7b enum auto": {
+   "correct": [
+    true,
+    null,
+    null,
+    false,
+    false,
+    true,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "GraphRecursionError": 6
+   },
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    10,
+    10,
+    2,
+    1,
+    5,
+    10,
+    10,
+    10,
+    10
+   ],
+   "outcomes": [
+    "valid",
+    "raised",
+    "raised",
+    "retried_valid",
+    "valid",
+    "retried_valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "enum",
+   "strategy": "auto"
+  },
+  "qwen3:1.7b enum provider": {
+   "correct": [
+    false,
+    false,
+    true,
+    false,
+    false,
+    false,
+    true,
+    true,
+    false,
+    false
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "enum",
+   "strategy": "provider"
+  },
+  "qwen3:1.7b enum tool": {
+   "correct": [
+    true,
+    null,
+    null,
+    false,
+    false,
+    true,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "GraphRecursionError": 6
+   },
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    10,
+    10,
+    2,
+    1,
+    5,
+    10,
+    10,
+    10,
+    10
+   ],
+   "outcomes": [
+    "valid",
+    "raised",
+    "raised",
+    "retried_valid",
+    "valid",
+    "retried_valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "enum",
+   "strategy": "tool"
+  },
+  "qwen3:1.7b flat auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "auto"
+  },
+  "qwen3:1.7b flat provider": {
+   "correct": [
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "provider"
+  },
+  "qwen3:1.7b flat tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "tool"
+  },
+  "qwen3:1.7b nested auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "retried_valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "nested",
+   "strategy": "auto"
+  },
+  "qwen3:1.7b nested provider": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "nested",
+   "strategy": "provider"
+  },
+  "qwen3:1.7b nested tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    2,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "retried_valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "nested",
+   "strategy": "tool"
+  },
+  "qwen3:1.7b union auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "union",
+   "strategy": "auto"
+  },
+  "qwen3:1.7b union provider": {
+   "correct": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "build: ValueError: Unsupported schema type:": 10
+   },
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "union",
+   "strategy": "provider"
+  },
+  "qwen3:1.7b union tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:1.7b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "union",
+   "strategy": "tool"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M enum auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    false,
+    true,
+    null,
+    null,
+    null,
+    false,
+    true
+   ],
+   "errors": {
+    "ResponseError": 3
+   },
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    3,
+    3,
+    3,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "raised",
+    "raised",
+    "raised",
+    "valid",
+    "valid"
+   ],
+   "schema": "enum",
+   "strategy": "auto"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M enum provider": {
+   "correct": [
+    true,
+    null,
+    true,
+    false,
+    null,
+    true,
+    true,
+    false,
+    false,
+    null
+   ],
+   "errors": {
+    "StructuredOutputValidationError": 3
+   },
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "raised",
+    "valid",
+    "valid",
+    "raised",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "raised"
+   ],
+   "schema": "enum",
+   "strategy": "provider"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M enum tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    false,
+    true,
+    null,
+    null,
+    null,
+    false,
+    true
+   ],
+   "errors": {
+    "ResponseError": 3
+   },
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    3,
+    3,
+    3,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "raised",
+    "raised",
+    "raised",
+    "valid",
+    "valid"
+   ],
+   "schema": "enum",
+   "strategy": "tool"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M flat auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "auto"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M flat provider": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "provider"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M flat tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "tool"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M nested auto": {
+   "correct": [
+    null,
+    null,
+    null,
+    true,
+    null,
+    null,
+    null,
+    null,
+    null,
+    true
+   ],
+   "errors": {
+    "GraphRecursionError": 5,
+    "ResponseError": 3
+   },
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    3,
+    10,
+    10,
+    1,
+    10,
+    2,
+    10,
+    10,
+    3,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "valid"
+   ],
+   "schema": "nested",
+   "strategy": "auto"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M nested provider": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "nested",
+   "strategy": "provider"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M nested tool": {
+   "correct": [
+    null,
+    null,
+    null,
+    true,
+    null,
+    null,
+    null,
+    null,
+    null,
+    true
+   ],
+   "errors": {
+    "GraphRecursionError": 5,
+    "ResponseError": 3
+   },
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    3,
+    10,
+    10,
+    1,
+    10,
+    2,
+    10,
+    10,
+    3,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "valid",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "valid"
+   ],
+   "schema": "nested",
+   "strategy": "tool"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M union auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false
+   ],
+   "errors": {},
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "union",
+   "strategy": "auto"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M union provider": {
+   "correct": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "build: ValueError: Unsupported schema type:": 10
+   },
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "union",
+   "strategy": "provider"
+  },
+  "qwen3:4b-instruct-2507-q4_K_M union tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false
+   ],
+   "errors": {},
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "union",
+   "strategy": "tool"
+  },
+  "qwen3:8b enum auto": {
+   "correct": [
+    false,
+    true,
+    true,
+    false,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    1,
+    3,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "retried_valid",
+    "valid",
+    "retried_valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "enum",
+   "strategy": "auto"
+  },
+  "qwen3:8b enum provider": {
+   "correct": [
+    true,
+    false,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+    false
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "enum",
+   "strategy": "provider"
+  },
+  "qwen3:8b enum tool": {
+   "correct": [
+    false,
+    true,
+    true,
+    false,
+    true,
+    true,
+    false,
+    false,
+    false,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    6,
+    1,
+    3,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "retried_valid",
+    "valid",
+    "retried_valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "enum",
+   "strategy": "tool"
+  },
+  "qwen3:8b flat auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "auto"
+  },
+  "qwen3:8b flat provider": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "provider"
+  },
+  "qwen3:8b flat tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "flat",
+   "strategy": "tool"
+  },
+  "qwen3:8b nested auto": {
+   "correct": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "GraphRecursionError": 10
+   },
+   "model": "qwen3:8b",
+   "model_calls": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "nested",
+   "strategy": "auto"
+  },
+  "qwen3:8b nested provider": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "nested",
+   "strategy": "provider"
+  },
+  "qwen3:8b nested tool": {
+   "correct": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "GraphRecursionError": 10
+   },
+   "model": "qwen3:8b",
+   "model_calls": [
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10,
+    10
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "nested",
+   "strategy": "tool"
+  },
+  "qwen3:8b union auto": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "union",
+   "strategy": "auto"
+  },
+  "qwen3:8b union provider": {
+   "correct": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "build: ValueError: Unsupported schema type:": 10
+   },
+   "model": "qwen3:8b",
+   "model_calls": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "schema": "union",
+   "strategy": "provider"
+  },
+  "qwen3:8b union tool": {
+   "correct": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+   ],
+   "errors": {},
+   "model": "qwen3:8b",
+   "model_calls": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "schema": "union",
+   "strategy": "tool"
+  }
+ },
+ "enum_correct": {
+  "qwen3:0.6b enum auto": {
+   "agreed_with_labels": 0,
+   "with_structured_response": 5
+  },
+  "qwen3:0.6b enum provider": {
+   "agreed_with_labels": 4,
+   "with_structured_response": 20
+  },
+  "qwen3:0.6b enum tool": {
+   "agreed_with_labels": 0,
+   "with_structured_response": 5
+  },
+  "qwen3:1.7b enum auto": {
+   "agreed_with_labels": 2,
+   "with_structured_response": 4
+  },
+  "qwen3:1.7b enum provider": {
+   "agreed_with_labels": 3,
+   "with_structured_response": 10
+  },
+  "qwen3:1.7b enum tool": {
+   "agreed_with_labels": 2,
+   "with_structured_response": 4
+  },
+  "qwen3:4b-instruct-2507-q4_K_M enum auto": {
+   "agreed_with_labels": 5,
+   "with_structured_response": 7
+  },
+  "qwen3:4b-instruct-2507-q4_K_M enum provider": {
+   "agreed_with_labels": 4,
+   "with_structured_response": 7
+  },
+  "qwen3:4b-instruct-2507-q4_K_M enum tool": {
+   "agreed_with_labels": 5,
+   "with_structured_response": 7
+  },
+  "qwen3:8b enum auto": {
+   "agreed_with_labels": 5,
+   "with_structured_response": 10
+  },
+  "qwen3:8b enum provider": {
+   "agreed_with_labels": 4,
+   "with_structured_response": 10
+  },
+  "qwen3:8b enum tool": {
+   "agreed_with_labels": 5,
+   "with_structured_response": 10
+  }
+ },
+ "failure_rate": {
+  "qwen3:0.6b": {
+   "auto": {
+    "all": {
+     "failed": 36,
+     "pct": 45,
+     "runs": 80
+    },
+    "without_union": {
+     "failed": 36,
+     "pct": 60,
+     "runs": 60
+    }
+   },
+   "provider": {
+    "all": {
+     "failed": 20,
+     "pct": 25,
+     "runs": 80
+    },
+    "without_union": {
+     "failed": 0,
+     "pct": 0,
+     "runs": 60
+    }
+   },
+   "tool": {
+    "all": {
+     "failed": 36,
+     "pct": 45,
+     "runs": 80
+    },
+    "without_union": {
+     "failed": 36,
+     "pct": 60,
+     "runs": 60
+    }
+   }
+  },
+  "qwen3:1.7b": {
+   "auto": {
+    "all": {
+     "failed": 6,
+     "pct": 15,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 6,
+     "pct": 20,
+     "runs": 30
+    }
+   },
+   "provider": {
+    "all": {
+     "failed": 10,
+     "pct": 25,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 0,
+     "pct": 0,
+     "runs": 30
+    }
+   },
+   "tool": {
+    "all": {
+     "failed": 6,
+     "pct": 15,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 6,
+     "pct": 20,
+     "runs": 30
+    }
+   }
+  },
+  "qwen3:4b-instruct-2507-q4_K_M": {
+   "auto": {
+    "all": {
+     "failed": 11,
+     "pct": 28,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 11,
+     "pct": 37,
+     "runs": 30
+    }
+   },
+   "provider": {
+    "all": {
+     "failed": 13,
+     "pct": 32,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 3,
+     "pct": 10,
+     "runs": 30
+    }
+   },
+   "tool": {
+    "all": {
+     "failed": 11,
+     "pct": 28,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 11,
+     "pct": 37,
+     "runs": 30
+    }
+   }
+  },
+  "qwen3:8b": {
+   "auto": {
+    "all": {
+     "failed": 10,
+     "pct": 25,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 10,
+     "pct": 33,
+     "runs": 30
+    }
+   },
+   "provider": {
+    "all": {
+     "failed": 10,
+     "pct": 25,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 0,
+     "pct": 0,
+     "runs": 30
+    }
+   },
+   "tool": {
+    "all": {
+     "failed": 10,
+     "pct": 25,
+     "runs": 40
+    },
+    "without_union": {
+     "failed": 10,
+     "pct": 33,
+     "runs": 30
+    }
+   }
+  }
+ },
+ "fake_and_stub": [
+  {
+   "case": "fake ProviderStrategy, valid JSON text",
+   "error_type": null,
+   "model_calls": 1,
+   "outcome": "valid",
+   "requests": null
+  },
+  {
+   "case": "fake ProviderStrategy, non-JSON text",
+   "error_type": "StructuredOutputValidationError",
+   "model_calls": 1,
+   "outcome": "raised",
+   "requests": null
+  },
+  {
+   "case": "fake ProviderStrategy, JSON failing validation",
+   "error_type": "StructuredOutputValidationError",
+   "model_calls": 1,
+   "outcome": "raised",
+   "requests": null
+  },
+  {
+   "case": "fake AutoStrategy (no profile), tool call",
+   "error_type": null,
+   "model_calls": 1,
+   "outcome": "valid",
+   "requests": null
+  },
+  {
+   "case": "fake bare schema (no profile), tool call",
+   "error_type": null,
+   "model_calls": 1,
+   "outcome": "valid",
+   "requests": null
+  },
+  {
+   "case": "fake ToolStrategy, model answers in text, no tool call",
+   "error_type": "GraphRecursionError",
+   "model_calls": 12,
+   "outcome": "raised",
+   "requests": null
+  },
+  {
+   "case": "fake ToolStrategy, invalid args then valid",
+   "error_type": null,
+   "model_calls": 2,
+   "outcome": "valid",
+   "requests": null
+  },
+  {
+   "case": "fake ToolStrategy, always invalid, handle_errors=True, recursion_limit=12",
+   "error_type": "GraphRecursionError",
+   "model_calls": 12,
+   "outcome": "raised",
+   "requests": null
+  },
+  {
+   "case": "fake ToolStrategy, invalid, handle_errors=False",
+   "error_type": "StructuredOutputValidationError",
+   "model_calls": 1,
+   "outcome": "raised",
+   "requests": null
+  },
+  {
+   "case": "fake ToolStrategy, wrong tool name",
+   "error_type": "GraphRecursionError",
+   "model_calls": 12,
+   "outcome": "raised",
+   "requests": null
+  },
+  {
+   "case": "fake ToolStrategy + one user tool, model answers in text",
+   "error_type": null,
+   "model_calls": 1,
+   "outcome": "missing",
+   "requests": null
+  },
+  {
+   "case": "fake ProviderStrategy + one user tool, non-JSON text",
+   "error_type": "StructuredOutputValidationError",
+   "model_calls": 1,
+   "outcome": "raised",
+   "requests": null
+  },
+  {
+   "case": "fake ToolStrategy + one user tool, always invalid args",
+   "error_type": "GraphRecursionError",
+   "model_calls": 12,
+   "outcome": "raised",
+   "requests": null
+  },
+  {
+   "case": "fake ProviderStrategy, model emits a tool call",
+   "error_type": null,
+   "model_calls": 1,
+   "outcome": "missing",
+   "requests": null
+  },
+  {
+   "case": "ChatOpenAI(local-model) ProviderStrategy, server 400s on response_format",
+   "error_type": "OpenAIInvalidRequestError",
+   "model_calls": null,
+   "outcome": "raised",
+   "requests": 1
+  },
+  {
+   "case": "ChatOpenAI(local-model) AutoStrategy, server 400s on response_format",
+   "error_type": null,
+   "model_calls": null,
+   "outcome": "valid",
+   "requests": 1
+  },
+  {
+   "case": "ChatOpenAI(local-model) ToolStrategy, server 400s on response_format",
+   "error_type": null,
+   "model_calls": null,
+   "outcome": "valid",
+   "requests": 1
+  },
+  {
+   "case": "ChatOpenAI(gpt-4o) ProviderStrategy, server 400s on response_format",
+   "error_type": "OpenAIInvalidRequestError",
+   "model_calls": null,
+   "outcome": "raised",
+   "requests": 1
+  },
+  {
+   "case": "ChatOpenAI(gpt-4o) AutoStrategy, server 400s on response_format",
+   "error_type": "OpenAIInvalidRequestError",
+   "model_calls": null,
+   "outcome": "raised",
+   "requests": 1
+  },
+  {
+   "case": "ChatOpenAI(gpt-4o) ToolStrategy, server 400s on response_format",
+   "error_type": null,
+   "model_calls": null,
+   "outcome": "valid",
+   "requests": 1
+  }
+ ],
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "model_settings": "ChatOllama with temperature 0, seed 42, reasoning off, num_predict 512; create_agent with tools=[] and recursion_limit 10 per run",
+ "not_used": "the qwen3:1.7b rows of 01, which ran beside other processes that made Ollama fail; 03 holds the same cells run one at a time",
+ "runs": 600,
+ "runs_per_cell": {
+  "qwen3:0.6b": 20,
+  "qwen3:1.7b": 10,
+  "qwen3:4b-instruct-2507-q4_K_M": 10,
+  "qwen3:8b": 10
+ },
+ "sources": [
+  "capture/lab/T06-structured-output-mac/01-ollama-runs.jsonl",
+  "capture/lab/T06-structured-output-mac/02-d209-fake-and-stub.jsonl",
+  "capture/lab/T06-structured-output-mac/03-ollama-seq-n10.jsonl",
+  "capture/lab/T06-structured-output-mac/t06_schemas.py",
+  "capture/lab/T06-structured-output-mac/t06_run.py",
+  "capture/lab/T06-structured-output-mac/t06_d209.py"
+ ]
+}

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-4-4-title fig-4-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4-title">The namespaces of the kit store</title>
+  <desc id="fig-4-4-desc">A tree of namespace labels. The root label users has two children, ada and grace. ada has two children, memories with the keys m1 and m2, and settings with the key theme. grace has one child, memories with the key m1. A shaded area covers ada and both of its children, which is what search with the prefix users, ada returns. grace is outside it.</desc>
+  <rect x="20" y="124" width="372" height="172" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-dasharray="5 4"/>
+  <text x="32" y="288" font-size="11.5" font-weight="700" fill="var(--m-teal-ink, #18696a)">search((&#39;users&#39;, &#39;ada&#39;))</text>
+  <rect x="245" y="16" width="150" height="34" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="36.6" font-size="12" text-anchor="middle" font-weight="700">users</text>
+  <rect x="131" y="132" width="150" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="206" y="152.6" font-size="12" text-anchor="middle" font-weight="700">ada</text>
+  <rect x="425" y="132" width="150" height="34" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="500" y="152.6" font-size="12" text-anchor="middle" font-weight="700">grace</text>
+  <path d="M320 50 L320 118 L206 118 L206 131" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M320 50 L320 118 L500 118 L500 131" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="35" y="222" width="150" height="44" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="110" y="239.1" font-size="12" text-anchor="middle" font-weight="700">memories</text>
+  <text x="110" y="256.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">keys m1, m2</text>
+  <rect x="225" y="222" width="150" height="44" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="300" y="239.1" font-size="12" text-anchor="middle" font-weight="700">settings</text>
+  <text x="300" y="256.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">key theme</text>
+  <rect x="425" y="222" width="150" height="44" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="500" y="239.1" font-size="12" text-anchor="middle" font-weight="700">memories</text>
+  <text x="500" y="256.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">key m1</text>
+  <path d="M206 166 L206 208 L110 208 L110 221" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M206 166 L206 208 L300 208 L300 221" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <path d="M500 166 L500 208 L500 208 L500 221" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <text x="20" y="314" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">list_namespaces(max_depth=2) stops at the second row: (&#39;users&#39;, &#39;ada&#39;) and (&#39;users&#39;, &#39;grace&#39;).</text>
+  <text x="20" y="332" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">A user label is a full label. The prefix users, ali matches nothing.</text>
+</svg>

@@ -1,0 +1,9 @@
+{"meta": {"langgraph": "1.2.22", "langgraph-checkpoint": "4.3.2", "langgraph-checkpoint-sqlite": "3.1.3", "langgraph-checkpoint-postgres": "3.2.1"}}
+{"backend": "InMemoryStore+index", "case": "semantic search(('users','bob'), query='vault code')", "result": [["bob", 0.288]]}
+{"backend": "InMemoryStore+index", "case": "semantic search(('users',), query='vault code')", "result": [["alice", 0.766], ["bob", 0.288]]}
+{"backend": "SqliteStore+index", "case": "semantic search(('users','bob'), query='vault code')", "result": [["bob", 0.349]]}
+{"backend": "SqliteStore+index", "case": "semantic search(('users',), query='vault code')", "result": [["alice", 0.696], ["bob", 0.349]]}
+{"backend": "SqliteStore+index", "case": "store_vectors rows before delete", "result": 2}
+{"backend": "SqliteStore+index", "case": "store_vectors rows after delete of alice/k1", "result": 2}
+{"backend": "SqliteStore+index", "case": "store_vectors rows for alice prefix after delete", "result": 1}
+{"backend": "SqliteStore+index", "case": "semantic search(('users',), 'vault code') after delete", "result": ["bob"]}

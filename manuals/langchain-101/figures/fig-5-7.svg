@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="fig-5-7-title fig-5-7-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-7-title">The steps list through a subgraph</title>
+  <desc id="fig-5-7-desc">Five rows from top to bottom, each a node and the steps list after it. prepare writes outer.prepare. Inside the namespace of the subgraph inner, shout adds inner.shout and ask_ok adds inner.ask_ok=yes, so the subgraph returns three entries. The parent applies that output with operator.add to its list that already holds outer.prepare, so outer.prepare appears twice. finish adds outer.finish, and the final list has five entries.</desc>
+  <defs><marker id="fig-5-7-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NODE</text>
+  <text x="128" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">STEPS AFTER THE NODE</text>
+  <rect x="10" y="92" width="620" height="126" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-dasharray="5 4"/>
+  <text x="620" y="210" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-indigo-ink, #4b4f9e)">namespace inner:&lt;uuid-1&gt;</text>
+  <rect x="16" y="32" width="100" height="42" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="66" y="47.95" font-size="11.5" text-anchor="middle" font-weight="700">prepare</text>
+  <text x="66" y="65.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">outer</text>
+  <line x1="66" y1="74" x2="66" y2="97" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-7-head-ink)"/>
+  <rect x="128" y="42" width="94" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="132" y="58" font-size="11">outer.prepare</text>
+  <rect x="16" y="98" width="100" height="42" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="66" y="113.95" font-size="11.5" text-anchor="middle" font-weight="700">shout</text>
+  <text x="66" y="131.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inner</text>
+  <line x1="66" y1="140" x2="66" y2="163" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-7-head-ink)"/>
+  <rect x="128" y="108" width="94" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="132" y="124" font-size="11">outer.prepare</text>
+  <rect x="228" y="108" width="81" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="232" y="124" font-size="11">inner.shout</text>
+  <rect x="16" y="164" width="100" height="42" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="66" y="179.95" font-size="11.5" text-anchor="middle" font-weight="700">ask_ok</text>
+  <text x="66" y="197.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inner</text>
+  <line x1="66" y1="206" x2="66" y2="229" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-7-head-ink)"/>
+  <rect x="128" y="174" width="94" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="132" y="190" font-size="11">outer.prepare</text>
+  <rect x="228" y="174" width="81" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="232" y="190" font-size="11">inner.shout</text>
+  <rect x="315" y="174" width="114" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="319" y="190" font-size="11">inner.ask_ok=yes</text>
+  <rect x="16" y="230" width="100" height="42" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="66" y="245.95" font-size="11.5" text-anchor="middle" font-weight="700">operator.add</text>
+  <text x="66" y="263.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">parent update</text>
+  <line x1="66" y1="272" x2="66" y2="295" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-7-head-ink)"/>
+  <rect x="128" y="240" width="94" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="132" y="256" font-size="11">outer.prepare</text>
+  <text x="231" y="256" font-size="13" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">+</text>
+  <rect x="244" y="240" width="94" height="24" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="248" y="256" font-size="11" fill="var(--m-rose-ink, #b0344d)">outer.prepare</text>
+  <rect x="344" y="240" width="81" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="348" y="256" font-size="11">inner.shout</text>
+  <rect x="431" y="240" width="114" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="435" y="256" font-size="11">inner.ask_ok=yes</text>
+  <rect x="16" y="296" width="100" height="42" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="66" y="311.95" font-size="11.5" text-anchor="middle" font-weight="700">finish</text>
+  <text x="66" y="329.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">outer</text>
+  <rect x="128" y="306" width="94" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="132" y="322" font-size="11">outer.prepare</text>
+  <rect x="228" y="306" width="94" height="24" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="232" y="322" font-size="11" fill="var(--m-rose-ink, #b0344d)">outer.prepare</text>
+  <rect x="328" y="306" width="81" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="332" y="322" font-size="11">inner.shout</text>
+  <rect x="415" y="306" width="114" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="419" y="322" font-size="11">inner.ask_ok=yes</text>
+  <rect x="535" y="306" width="88" height="24" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="539" y="322" font-size="11">outer.finish</text>
+  <text x="20" y="372" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The rose entry is the copy that operator.add in the parent added to its own list.</text>
+</svg>

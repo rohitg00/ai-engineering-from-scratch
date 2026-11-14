@@ -147,7 +147,7 @@ The kit binds no ports.
 | `39-retrieval.txt` | `RecursiveCharacterTextSplitter`, `DeterministicFakeEmbedding`, `InMemoryVectorStore` search, filter, retriever as a tool, delete, MMR |
 | `40-mcp.txt` | `langchain.mcp` beta warning, `MCPAdapter.list_tools()` on an in-process FastMCP server, tool results and artifacts, an MCP tool error, a resource read through `adapter.client`, the bare-string target error |
 | `41-deep-agent.txt` | `create_deep_agent` nodes, a run with `write_file`, `ls` and a `task` subagent, `files` in state, the tools bound on each call, both system prompts |
-| `42-langsmith.txt` | `traceable` with tracing off, `tracing_context(enabled="local")` run trees through `on_end`, an error run, and the requests a local trace sends when it wraps a `create_agent` run |
+| `42-langsmith.txt` | `traceable` with tracing off, `tracing_context(enabled="local")` run trees through `on_end`, an error run, the requests a local trace sends when it wraps a `create_agent` run, `collect_runs` with `enabled=False`, and `evaluate(upload_results=False)` on a function, an agent, and an agent with tracing off |
 
 ## The lab recordings
 
@@ -158,7 +158,7 @@ The kit binds no ports.
 - A real provider call: request bytes, provider usage numbers, provider streaming chunks, and provider tool call streaming. The lab recordings with Ollama cover these.
 - `ProviderToolSearchMiddleware` with a real deferral. It needs an Anthropic or OpenAI model, so on the fake it raises `ValueError`.
 - `ProviderStrategy` against a provider that enforces the schema. The fake returns the JSON text in its script.
-- LangSmith tracing to a server, `evaluate`, datasets, and the prompt hub. The kit only builds run trees in memory and records what a client would have sent.
+- LangSmith tracing to a server, datasets, experiments that upload, and the prompt hub. The kit only builds run trees in memory, runs `evaluate` with `upload_results=False`, and records what a client would have sent.
 - `langchain.mcp` over stdio and HTTP transports, elicitation, and OAuth. The kit uses the in-process transport only.
 - `PostgresSaver` and `PostgresStore`. They need a running Postgres.
 - Agent Server (`langgraph dev`, `up`, `deploy`).

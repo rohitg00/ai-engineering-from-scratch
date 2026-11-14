@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-3-6-title fig-3-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-3-6-title">Four PII strategies on one input</title>
+  <desc id="fig-3-6-desc">One human message holds an email address, a card number, an IP address, and a URL. Five rows each run one PIIMiddleware. email with redact gives [REDACTED_EMAIL]. credit_card with mask gives four groups of stars and the last four digits 1111. ip with hash gives ip_hash:55235459 in angle brackets. url with redact gives [REDACTED_URL]. email with block raises PIIDetectionError, and the model gets no call.</desc>
+  <defs><marker id="fig-3-6-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-3-6-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE HUMAN MESSAGE</text>
+  <rect x="20" y="30" width="600" height="56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="53.1" font-size="12" font-weight="400">Mail ada@example.com, card 4111 1111 1111 1111,</text>
+  <text x="32" y="70.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">from 192.168.1.20, see https://example.com/x</text>
+  <text x="20" y="118" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PIIMIDDLEWARE(TYPE, STRATEGY=)</text>
+  <text x="300" y="118" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE MODEL RECEIVED</text>
+  <rect x="20" y="130" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="149.25" font-size="12.5" font-weight="700">&#39;email&#39;</text>
+  <text x="32" y="166.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;redact&#39;</text>
+  <rect x="300" y="130" width="320" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="312" y="157.6" font-size="12" font-weight="400">Mail [REDACTED_EMAIL], card 4111</text>
+  <line x1="240" y1="154" x2="299" y2="154" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
+  <rect x="20" y="194" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="213.25" font-size="12.5" font-weight="700">&#39;credit_card&#39;</text>
+  <text x="32" y="230.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;mask&#39;</text>
+  <rect x="300" y="194" width="320" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="312" y="221.6" font-size="12" font-weight="400">card **** **** **** 1111</text>
+  <line x1="240" y1="218" x2="299" y2="218" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
+  <rect x="20" y="258" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="277.25" font-size="12.5" font-weight="700">&#39;ip&#39;</text>
+  <text x="32" y="294.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;hash&#39;</text>
+  <rect x="300" y="258" width="320" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="312" y="285.6" font-size="12" font-weight="400">from &lt;ip_hash:55235459&gt;</text>
+  <line x1="240" y1="282" x2="299" y2="282" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
+  <rect x="20" y="322" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="341.25" font-size="12.5" font-weight="700">&#39;url&#39;</text>
+  <text x="32" y="358.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;redact&#39;</text>
+  <rect x="300" y="322" width="320" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="312" y="349.6" font-size="12" font-weight="400">see [REDACTED_URL]</text>
+  <line x1="240" y1="346" x2="299" y2="346" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-3-6-head-ink)"/>
+  <rect x="20" y="386" width="220" height="48" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="32" y="405.25" font-size="12.5" font-weight="700">&#39;email&#39;</text>
+  <text x="32" y="422.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">strategy=&#39;block&#39;</text>
+  <rect x="300" y="386" width="320" height="48" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="312" y="413.6" font-size="12" font-weight="400">PIIDetectionError, no model call</text>
+  <line x1="240" y1="410" x2="299" y2="410" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-3-6-head-rose)"/>
+  <text x="20" y="458" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each row is one run. Only the newest human message changed, because apply_to_input is the default.</text>
+</svg>

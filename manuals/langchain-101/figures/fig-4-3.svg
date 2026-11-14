@@ -1,0 +1,331 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-3-title fig-4-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-3-title">Crash trials that ran the side effect twice</title>
+  <desc id="fig-4-3-desc">A grid of dots, one dot per trial, five per cell, for six rows of saver and durability mode and five kill points, in two panels for the graph and the agent. Rose dots ran the side effect twice: 80 of 150 graph trials and 82 of 150 agent trials. Every trial killed inside the effect ran it twice, and sync with a kill after the step ran it once on both savers.</desc>
+  <text x="140" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GRAPH</text>
+  <text x="164" y="42" font-size="11" text-anchor="middle" font-weight="700">1</text>
+  <text x="212" y="42" font-size="11" text-anchor="middle" font-weight="700">2</text>
+  <text x="260" y="42" font-size="11" text-anchor="middle" font-weight="700">3</text>
+  <text x="308" y="42" font-size="11" text-anchor="middle" font-weight="700">4</text>
+  <text x="356" y="42" font-size="11" text-anchor="middle" font-weight="700">5</text>
+  <circle cx="148" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="196" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="244" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="252" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="260" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="268" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="276" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="292" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="300" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="308" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="316" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="324" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="340" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="348" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="356" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="364" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="372" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="148" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="196" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="244" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="252" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="260" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="268" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="276" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="292" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="300" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="308" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="316" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="324" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="340" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="348" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="356" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="372" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="148" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="196" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="244" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="252" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="260" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="268" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="276" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="292" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="300" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="308" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="316" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="324" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="340" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="348" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="356" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="372" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="148" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="196" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="244" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="252" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="260" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="268" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="276" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="292" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="300" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="308" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="316" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="324" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="340" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="348" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="356" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="364" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="372" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="148" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="196" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="244" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="252" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="260" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="268" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="276" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="292" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="300" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="308" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="316" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="324" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="340" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="348" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="356" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="372" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="148" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="196" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="244" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="252" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="260" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="268" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="276" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="292" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="300" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="308" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="316" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="324" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="340" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="348" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="356" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="372" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="390" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENT</text>
+  <text x="414" y="42" font-size="11" text-anchor="middle" font-weight="700">1</text>
+  <text x="462" y="42" font-size="11" text-anchor="middle" font-weight="700">2</text>
+  <text x="510" y="42" font-size="11" text-anchor="middle" font-weight="700">3</text>
+  <text x="558" y="42" font-size="11" text-anchor="middle" font-weight="700">4</text>
+  <text x="606" y="42" font-size="11" text-anchor="middle" font-weight="700">5</text>
+  <circle cx="398" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="406" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="414" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="422" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="430" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="446" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="454" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="462" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="470" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="478" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="494" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="502" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="510" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="518" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="526" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="542" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="550" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="558" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="566" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="574" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="590" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="598" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="606" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="614" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="622" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="398" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="406" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="414" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="422" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="430" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="446" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="454" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="462" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="470" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="478" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="494" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="502" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="510" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="518" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="526" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="542" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="550" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="558" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="566" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="574" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="590" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="598" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="614" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="622" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="398" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="406" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="414" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="422" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="430" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="446" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="454" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="462" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="470" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="478" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="494" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="502" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="510" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="518" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="526" cy="126" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="542" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="550" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="558" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="566" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="574" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="590" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="598" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="614" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="622" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="398" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="406" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="414" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="422" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="430" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="446" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="454" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="462" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="470" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="478" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="494" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="502" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="510" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="518" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="526" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="542" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="550" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="558" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="566" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="574" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="590" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="598" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="606" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="614" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="622" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="398" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="406" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="414" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="422" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="430" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="446" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="454" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="462" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="470" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="478" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="494" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="502" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="510" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="518" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="526" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="542" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="550" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="558" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="566" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="574" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="590" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="598" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="614" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="622" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="398" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="406" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="414" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="422" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="430" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="446" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="454" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="462" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="470" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="478" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="494" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="502" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="510" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="518" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="526" cy="216" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="542" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="550" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="558" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="566" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="574" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="590" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="598" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="606" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="614" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="622" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="20" y="70" font-size="11.5" fill="var(--m-teal-ink, #18696a)">sqlite sync</text>
+  <text x="20" y="100" font-size="11.5" fill="var(--m-ink, #1a1a1a)">sqlite async</text>
+  <text x="20" y="130" font-size="11.5" fill="var(--m-ink, #1a1a1a)">sqlite exit</text>
+  <text x="20" y="160" font-size="11.5" fill="var(--m-teal-ink, #18696a)">postgres sync</text>
+  <text x="20" y="190" font-size="11.5" fill="var(--m-ink, #1a1a1a)">postgres async</text>
+  <text x="20" y="220" font-size="11.5" fill="var(--m-ink, #1a1a1a)">postgres exit</text>
+  <line x1="20" y1="141" x2="620" y2="141" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="264" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">1 before_tool   2 inside_tool   3 before_put_writes   4 before_put   5 after_tool</text>
+  <circle cx="26" cy="290" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="36" y="294" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">ran twice</text>
+  <circle cx="120" cy="290" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="130" y="294" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">ran once</text>
+  <circle cx="210" cy="290" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="220" y="294" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">not killed, exit mode never reached it</text>
+  <text x="20" y="318" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Totals: graph 80 of 150, agent 82 of 150, graph with a key 0 of 150. The Mac.</text>
+</svg>

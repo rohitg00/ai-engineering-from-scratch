@@ -268,7 +268,76 @@ def langsmith_trace(cap):
         return rows
 
     cap.text(*names(agent_trees[0]))
+    from langchain_core.tracers.context import collect_runs
+    cap.section("tracing_context(enabled=False) with collect_runs: the LangChain runs stay in memory")
+    with tracing_context(enabled="local", client=client):
+        with tracing_context(enabled=False), collect_runs() as collector:
+            fake = model(*sum_script(), label="collected")
+            answer = create_agent(fake, tools=[add]).invoke(ask("What is 2 + 3?"))["messages"][-1].content
+    client.flush()
+    wait_for_all_tracers()
+    cap.text(f"answer: {answer}")
+    cap.json([f"{run.run_type} {run.name}" for run in collector.traced_runs], "collect_runs().traced_runs")
+    cap.json(session.summary(), "HTTP requests the client received")
     cap.text(f"langsmith {langsmith.__version__}")
+    langsmith_evaluate(cap, client, session)
+
+
+def langsmith_evaluate(cap, client, session):
+    import contextlib
+    import datetime
+    import io
+    import uuid
+    from langsmith import evaluate, schemas, tracing_context
+    from langchain_core.tracers.langchain import wait_for_all_tracers
+
+    created = datetime.datetime(2026, 11, 14, tzinfo=datetime.timezone.utc)
+    dataset = uuid.UUID(int=101)
+    sums = [schemas.Example(id=uuid.UUID(int=i + 1), dataset_id=dataset, inputs={"a": a, "b": b}, outputs={"sum": a + b}, created_at=created) for i, (a, b) in enumerate([(2, 3), (4, 4), (1, 1)])]
+
+    def adder(inputs: dict) -> dict:
+        return {"sum": inputs["a"] + inputs["b"] + (1 if inputs["a"] == 4 else 0)}
+
+    def exact(outputs: dict, reference_outputs: dict) -> dict:
+        return {"key": "exact", "score": outputs["sum"] == reference_outputs["sum"]}
+
+    def accuracy(outputs: list, reference_outputs: list) -> dict:
+        hits = sum(o["sum"] == r["sum"] for o, r in zip(outputs, reference_outputs))
+        return {"key": "accuracy", "score": hits / len(outputs)}
+
+    def run(target, data, evaluators, summary=()):
+        printed = io.StringIO()
+        with cap.warnings(), contextlib.redirect_stdout(printed):
+            results = evaluate(target, data=data, evaluators=evaluators, summary_evaluators=list(summary), upload_results=False, client=client)
+            rows = list(results)
+        wait_for_all_tracers()
+        client.flush()
+        cap.text("stdout: " + re.sub(r"(experiment: %s )\S+", r"\1<experiment-name>", printed.getvalue().strip()))
+        cap.json([{"inputs": row["example"].inputs, "outputs": row["run"].outputs, "reference": row["example"].outputs, "scores": {r.key: r.score for r in row["evaluation_results"]["results"]}} for row in rows], "rows")
+        if summary:
+            cap.json({r.key: r.score for r in results._summary_results["results"]}, "summary evaluators")
+        cap.json(session.summary(), "HTTP requests the client received")
+
+    cap.section("evaluate(upload_results=False) on a plain function, three examples")
+    run(adder, sums, [exact], [accuracy])
+    cap.section("evaluate(upload_results=False) on a create_agent target: the LangChain runs are sent")
+    question = [schemas.Example(id=uuid.UUID(int=11), dataset_id=dataset, inputs={"question": "What is 2 + 3?"}, outputs={"answer": "The sum is 5."}, created_at=created)]
+
+    def agent_target(inputs: dict) -> dict:
+        fake = model(*sum_script(), label="evaluated")
+        return {"answer": create_agent(fake, tools=[add]).invoke(ask(inputs["question"]))["messages"][-1].content}
+
+    def same_answer(outputs: dict, reference_outputs: dict) -> dict:
+        return {"key": "same_answer", "score": outputs["answer"] == reference_outputs["answer"]}
+
+    run(agent_target, question, [same_answer])
+    cap.section("evaluate(upload_results=False) with the agent inside tracing_context(enabled=False)")
+
+    def quiet_target(inputs: dict) -> dict:
+        with tracing_context(enabled=False):
+            return agent_target(inputs)
+
+    run(quiet_target, question, [same_answer])
 
 
 SCENARIOS = [

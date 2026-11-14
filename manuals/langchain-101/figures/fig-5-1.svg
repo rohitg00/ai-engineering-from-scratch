@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-5-1-title fig-5-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-1-title">Two writes to one key in one step</title>
+  <desc id="fig-5-1-desc">Two columns. On the left, three write_joke tasks in one step each write one joke to the key jokes, whose reducer is operator.add, and the state ends with three jokes about cats, dogs, and owls. On the right, the nodes a and b both write the key value, which has no reducer, and the run raises InvalidUpdateError at key value because the key can receive only one value per step.</desc>
+  <defs><marker id="fig-5-1-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-5-1-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">JOKES, REDUCER OPERATOR.ADD</text>
+  <text x="352" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">VALUE, NO REDUCER</text>
+  <line x1="336" y1="8" x2="336" y2="262" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="32" width="96" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="68" y="49.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
+  <text x="68" y="67.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">jokes: [cats]</text>
+  <path d="M68 78 V96 H156 V112" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="124" y="32" width="96" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="172" y="49.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
+  <text x="172" y="67.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">jokes: [dogs]</text>
+  <path d="M172 78 V96 H156 V112" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-1-head-teal)"/>
+  <rect x="228" y="32" width="96" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="276" y="49.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
+  <text x="276" y="67.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">jokes: [owls]</text>
+  <path d="M276 78 V96 H156 V112" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="20" y="114" width="296" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="168" y="131.25" font-size="12.5" text-anchor="middle" font-weight="700">operator.add</text>
+  <text x="168" y="148.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">joins the three updates in one step</text>
+  <line x1="168" y1="158" x2="168" y2="189" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-1-head-teal)"/>
+  <rect x="20" y="190" width="296" height="60" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="168" y="207.75" font-size="12.5" text-anchor="middle" font-weight="700">state: jokes, 3 items</text>
+  <text x="168" y="225.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a joke about cats</text>
+  <text x="168" y="240.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a joke about dogs, a joke about owls</text>
+  <rect x="352" y="32" width="128" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="416" y="49.95" font-size="11.5" text-anchor="middle" font-weight="700">node a</text>
+  <text x="416" y="67.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">value: &quot;a&quot;</text>
+  <path d="M416 78 V96 H486 V112" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-1-head-rose)"/>
+  <rect x="492" y="32" width="128" height="46" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="556" y="49.95" font-size="11.5" text-anchor="middle" font-weight="700">node b</text>
+  <text x="556" y="67.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">value: &quot;b&quot;</text>
+  <path d="M556 78 V96 H486 V112" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <rect x="352" y="114" width="268" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="486" y="131.25" font-size="12.5" text-anchor="middle" font-weight="700">no reducer</text>
+  <text x="486" y="148.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LastValue takes one write per step</text>
+  <line x1="486" y1="158" x2="486" y2="189" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-5-1-head-rose)"/>
+  <rect x="352" y="190" width="268" height="60" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="486" y="207.75" font-size="12.5" text-anchor="middle" font-weight="700">InvalidUpdateError</text>
+  <text x="486" y="225.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">At key &#39;value&#39;: Can receive</text>
+  <text x="486" y="240.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">only one value per step.</text>
+  <text x="20" y="282" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Both runs start from one step with parallel writes. Only the reducer differs.</text>
+</svg>

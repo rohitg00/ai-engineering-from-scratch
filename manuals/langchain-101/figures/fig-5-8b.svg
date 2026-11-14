@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 356" role="img" aria-labelledby="fig-5-8b-title fig-5-8b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-8b-title">Steps before GraphRecursionError</title>
+  <desc id="fig-5-8b-desc">A dot chart on a log scale of the steps each run made before GraphRecursionError on the Mac, one run each. A StateGraph loop stopped at 25 steps with recursion_limit 25 and with the environment variable set to 25, and at 10007 with no config. A create_agent agent whose model always calls a tool stopped at 25 with recursion_limit 25 after 13 model calls, and at 9999 with no config after 5000 model calls, with and without a checkpointer.</desc>
+  <line x1="70" y1="240" x2="610" y2="240" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="244" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="70" y1="182.48" x2="610" y2="182.48" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="186.48" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="124.96" x2="610" y2="124.96" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="128.96" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="67.44" x2="610" y2="67.44" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="71.44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10k</text>
+  <line x1="70" y1="240" x2="610" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="40" x2="70" y2="240" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">steps before the error, log scale</text>
+  <circle cx="142" cy="217.11" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect class="m-knock" x="132.4" y="196.53" width="19.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="142" y="207.11" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">25</text>
+  <text x="142" y="258" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">config 25</text>
+  <circle cx="214" cy="217.11" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect class="m-knock" x="204.4" y="196.53" width="19.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="214" y="207.11" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">25</text>
+  <text x="214" y="258" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">env var 25</text>
+  <circle cx="286" cy="67.43" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect class="m-knock" x="266.5" y="46.85" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="286" y="57.43" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">10007</text>
+  <text x="286" y="258" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">default</text>
+  <circle cx="394" cy="217.11" r="3.5" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="384.4" y="196.53" width="19.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="394" y="207.11" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">25</text>
+  <text x="394" y="258" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">config 25</text>
+  <text x="394" y="274" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">13 calls</text>
+  <circle cx="466" cy="67.45" r="3.5" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="449.8" y="46.87" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="466" y="57.45" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">9999</text>
+  <text x="466" y="258" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">default</text>
+  <text x="466" y="274" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5000 calls</text>
+  <circle cx="538" cy="67.45" r="3.5" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="521.8" y="46.87" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="538" y="57.45" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">9999</text>
+  <text x="538" y="258" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">with saver</text>
+  <text x="538" y="274" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5000 calls</text>
+  <text x="214" y="296" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">StateGraph loop</text>
+  <text x="466" y="296" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">create_agent</text>
+  <text x="70" y="326" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one run on the Mac. Calls under an agent case are its model calls.</text>
+  <text x="70" y="344" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The agent default took 150.17 s with a saver and 35.8 s without one.</text>
+</svg>

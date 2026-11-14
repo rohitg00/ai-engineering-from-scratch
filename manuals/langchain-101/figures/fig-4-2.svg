@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 236" role="img" aria-labelledby="fig-4-2-title fig-4-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-2-title">Three turns of one thread in the SQLite file</title>
+  <desc id="fig-4-2-desc">Eleven rows of the checkpoints table of SqliteSaver on one step axis from -1 to 9. Turn 1 has an input checkpoint at step -1 and loop checkpoints at steps 0 to 3. Turn 2 has an input checkpoint at step 4 and loop checkpoints at 5 and 6. The connection was closed and the file opened again. Turn 3 has an input checkpoint at step 7 and loop checkpoints at 8 and 9.</desc>
+  <line x1="60" y1="44" x2="280" y2="44" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <line x1="60" y1="40" x2="60" y2="48" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <line x1="280" y1="40" x2="280" y2="48" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <text x="170" y="32" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">turn 1: What is 2 + 3?</text>
+  <line x1="310" y1="44" x2="430" y2="44" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <line x1="310" y1="40" x2="310" y2="48" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <line x1="430" y1="40" x2="430" y2="48" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <text x="370" y="32" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">turn 2</text>
+  <line x1="460" y1="44" x2="580" y2="44" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <line x1="460" y1="40" x2="460" y2="48" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <line x1="580" y1="40" x2="580" y2="48" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1"/>
+  <text x="520" y="32" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">turn 3, after the restart</text>
+  <line x1="445" y1="56" x2="445" y2="150" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <text x="445" y="166" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">file closed, opened again</text>
+  <rect x="61" y="78" width="18" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="70" y="130" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <rect x="111" y="78" width="18" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="120" y="130" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <rect x="161" y="78" width="18" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="170" y="130" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <rect x="211" y="78" width="18" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="220" y="130" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <rect x="261" y="78" width="18" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="270" y="130" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <rect x="311" y="78" width="18" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="130" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <rect x="361" y="78" width="18" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="370" y="130" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <rect x="411" y="78" width="18" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="420" y="130" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <rect x="461" y="78" width="18" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="470" y="130" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <rect x="511" y="78" width="18" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="520" y="130" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <rect x="561" y="78" width="18" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="570" y="130" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="50" y1="186" x2="630" y2="186" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="182" x2="70" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">-1</text>
+  <line x1="120" y1="182" x2="120" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="120" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="170" y1="182" x2="170" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="170" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="220" y1="182" x2="220" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="220" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="270" y1="182" x2="270" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="270" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="320" y1="182" x2="320" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="320" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="370" y1="182" x2="370" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="370" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="420" y1="182" x2="420" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="420" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="470" y1="182" x2="470" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="470" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">7</text>
+  <line x1="520" y1="182" x2="520" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="520" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="570" y1="182" x2="570" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="570" y="204" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">9</text>
+  <text x="20" y="226" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">STEP IN METADATA</text>
+</svg>

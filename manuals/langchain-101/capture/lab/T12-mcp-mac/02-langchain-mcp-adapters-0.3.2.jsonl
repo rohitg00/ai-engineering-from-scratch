@@ -1,0 +1,15 @@
+{"meta": {"langchain-mcp-adapters": "0.3.2", "mcp": "1.30.0", "langchain-core": "1.8.0"}}
+{"transport": "stdio", "case": "get_tools", "tools": [["add", "Add two integers.", ["a", "b"]], ["fail", "Always fails with the given reason.", ["reason"]], ["boom", "Raises an unexpected Python error.", []], ["slow", "Sleep, then answer.", ["seconds"]], ["crash", "Kill the server process mid-call.", []]], "secs": 1.724}
+{"transport": "stdio", "case": "call add(2,3)", "ok": {"type": "ToolMessage", "status": "success", "content": "[{'type': 'text', 'text': '5', 'id': 'lc_a8f80532-d01b-4cda-a7d6-8a7041aca396'}]", "artifact": "{'structured_content': {'result': 5}}"}, "secs": 1.884}
+{"transport": "stdio", "case": "call fail (isError)", "ok": {"type": "ToolMessage", "status": "error", "content": "[{'type': 'text', 'text': 'refused: nope', 'id': 'lc_fa7c4293-75bc-4d47-8416-bacfc06e461d'}]", "artifact": "None"}, "secs": 1.874}
+{"transport": "stdio", "case": "call boom", "ok": {"type": "ToolMessage", "status": "error", "content": "[{'type': 'text', 'text': \"Error calling tool 'boom': unexpected internal failure\", 'id': 'lc_e14d0383-660b-4a03-9aac-bf0a5404d72c'}]", "artifact": "None"}, "secs": 2.049}
+{"transport": "stdio", "case": "50 x add (new session per call)", "median_ms": 1887.21, "p95_ms": 2911.99}
+{"transport": "stdio", "case": "call crash", "raised": "McpError: Connection closed", "secs": 1.3}
+{"transport": "stdio", "case": "call add after crash", "ok": {"type": "ToolMessage", "status": "success", "content": "[{'type': 'text', 'text': '3', 'id': 'lc_2a225d1f-e3c1-4402-aa67-d1b80eaca48a'}]", "artifact": "{'structured_content': {'result': 3}}"}, "secs": 1.115}
+{"transport": "http", "case": "get_tools", "tools": [["add", "Add two integers.", ["a", "b"]], ["fail", "Always fails with the given reason.", ["reason"]], ["boom", "Raises an unexpected Python error.", []], ["slow", "Sleep, then answer.", ["seconds"]], ["crash", "Kill the server process mid-call.", []]], "secs": 0.466}
+{"transport": "http", "case": "call add(2,3)", "ok": {"type": "ToolMessage", "status": "success", "content": "[{'type': 'text', 'text': '5', 'id': 'lc_251f8fbb-6dac-4633-99a0-cf21c2970855'}]", "artifact": "{'structured_content': {'result': 5}}"}, "secs": 0.063}
+{"transport": "http", "case": "call fail (isError)", "ok": {"type": "ToolMessage", "status": "error", "content": "[{'type': 'text', 'text': 'refused: nope', 'id': 'lc_d2231639-b3ad-452f-b8b6-c74611434f15'}]", "artifact": "None"}, "secs": 0.068}
+{"transport": "http", "case": "call boom", "ok": {"type": "ToolMessage", "status": "error", "content": "[{'type': 'text', 'text': \"Error calling tool 'boom': unexpected internal failure\", 'id': 'lc_5a51d013-0611-4644-b5d9-bf7f04a08671'}]", "artifact": "None"}, "secs": 0.156}
+{"transport": "http", "case": "50 x add (new session per call)", "median_ms": 63.61, "p95_ms": 91.79}
+{"transport": "http", "case": "call crash", "hung": "no result after 40s", "secs": 40.008}
+{"transport": "http", "case": "call add after crash", "raised": "ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)", "secs": 0.024}
