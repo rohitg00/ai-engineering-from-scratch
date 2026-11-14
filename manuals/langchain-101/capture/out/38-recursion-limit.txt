@@ -1,0 +1,30 @@
+# The recursion limit
+
+## a StateGraph loop with recursion_limit=5
+
+invoke:
+
+raised langgraph.errors.GraphRecursionError: Recursion limit of 5 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+
+## the default limit of a plain compiled graph, on a loop of 20000 steps
+
+raised GraphRecursionError: Recursion limit of 10007 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+
+## create_agent sets recursion_limit 9999; a model that always calls a tool, with recursion_limit=6
+
+agent.config['recursion_limit']:
+9999
+
+invoke with recursion_limit=6:
+
+raised langgraph.errors.GraphRecursionError: Recursion limit of 6 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/GRAPH_RECURSION_LIMIT
+
+model calls before the stop: 3
+
+## RemainingSteps lets a node stop before the limit
+
+{
+  "n": 3
+}

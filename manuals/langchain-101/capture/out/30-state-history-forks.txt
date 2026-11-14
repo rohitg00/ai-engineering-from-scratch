@@ -1,0 +1,158 @@
+# State history, replay, and update_state forks
+
+## get_state_history, newest first
+
+{
+  "step": 3,
+  "source": "loop",
+  "next": [],
+  "checkpoint_id": "<uuid-1>",
+  "parent_checkpoint_id": "<uuid-2>",
+  "messages": [
+    "human: Charge 10.",
+    "ai: ",
+    "tool: charged 10",
+    "ai: Charged 10."
+  ],
+  "tasks": []
+}
+
+{
+  "step": 2,
+  "source": "loop",
+  "next": [
+    "model"
+  ],
+  "checkpoint_id": "<uuid-2>",
+  "parent_checkpoint_id": "<uuid-3>",
+  "messages": [
+    "human: Charge 10.",
+    "ai: ",
+    "tool: charged 10"
+  ],
+  "tasks": [
+    "model"
+  ]
+}
+
+{
+  "step": 1,
+  "source": "loop",
+  "next": [
+    "tools"
+  ],
+  "checkpoint_id": "<uuid-3>",
+  "parent_checkpoint_id": "<uuid-4>",
+  "messages": [
+    "human: Charge 10.",
+    "ai: "
+  ],
+  "tasks": [
+    "tools"
+  ]
+}
+
+{
+  "step": 0,
+  "source": "loop",
+  "next": [
+    "model"
+  ],
+  "checkpoint_id": "<uuid-4>",
+  "parent_checkpoint_id": "<uuid-5>",
+  "messages": [
+    "human: Charge 10."
+  ],
+  "tasks": [
+    "model"
+  ]
+}
+
+{
+  "step": -1,
+  "source": "input",
+  "next": [
+    "__start__"
+  ],
+  "checkpoint_id": "<uuid-5>",
+  "parent_checkpoint_id": null,
+  "messages": [],
+  "tasks": [
+    "__start__"
+  ]
+}
+
+## replay from the checkpoint before 'tools': invoke(None, that config)
+
+messages:
+[
+  "human: Charge 10.",
+  "ai: ",
+  "tool: charged 10",
+  "ai: Charged again after replay."
+]
+
+charge calls so far (the tool ran again on replay):
+[
+  10,
+  10
+]
+
+checkpoints on the thread now: 8
+
+## update_state forks from the first model checkpoint
+
+the fork:
+{
+  "step": 1,
+  "source": "update",
+  "next": [
+    "model"
+  ],
+  "checkpoint_id": "<uuid-6>",
+  "parent_checkpoint_id": "<uuid-4>",
+  "messages": [
+    "human: Charge 10.",
+    "human: Actually, charge 99."
+  ],
+  "tasks": [
+    "model"
+  ]
+}
+
+after running the fork:
+[
+  "human: Charge 10.",
+  "human: Actually, charge 99.",
+  "ai: ",
+  "tool: charged 99",
+  "ai: Charged 99 on the fork."
+]
+
+charge calls:
+[
+  10,
+  10,
+  99
+]
+
+## update_state as_node='tools' writes a tool result without running the tool
+
+paused before:
+[
+  "tools"
+]
+
+[
+  "human: Charge 5.",
+  "ai: ",
+  "tool: charged 5 by hand",
+  "ai: Done, per the manual entry."
+]
+
+charge calls (unchanged):
+[
+  10,
+  10,
+  99
+]

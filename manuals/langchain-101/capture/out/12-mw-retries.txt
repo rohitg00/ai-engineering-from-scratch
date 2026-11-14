@@ -1,0 +1,252 @@
+# Tool retry and model retry
+
+## ToolRetryMiddleware(max_retries=2): the tool fails twice, then succeeds
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "flaky_fetch",
+        "args": {
+          "url": "http://svc.local/a"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "200 OK from http://svc.local/a",
+    "name": "flaky_fetch",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "fetched",
+    "id": "lc_run--<uuid-3>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "tool-retry",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "flaky_fetch"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "tool-retry",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: 200 OK from http://svc.local/a"
+    ],
+    "bound": {
+      "tools": [
+        "flaky_fetch"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+tool attempts:
+[
+  "http://svc.local/a",
+  "http://svc.local/a",
+  "http://svc.local/a"
+]
+
+## ToolRetryMiddleware(max_retries=1, on_failure='continue'): retries run out
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-4>-0",
+    "tool_calls": [
+      {
+        "name": "flaky_fetch",
+        "args": {
+          "url": "http://svc.local/b"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Tool 'flaky_fetch' failed after 2 attempts with ConnectionError: attempt 2 refused. Please try again.",
+    "name": "flaky_fetch",
+    "id": "<uuid-5>",
+    "tool_call_id": "call_1",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "gave up",
+    "id": "lc_run--<uuid-6>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "tool-retry-out",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "flaky_fetch"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "tool-retry-out",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: Tool 'flaky_fetch' failed after 2 attempts with ConnectionError: attempt 2 refus"
+    ],
+    "bound": {
+      "tools": [
+        "flaky_fetch"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+tool attempts:
+[
+  "http://svc.local/b",
+  "http://svc.local/b"
+]
+
+## ToolRetryMiddleware(max_retries=1, on_failure='error')
+
+invoke:
+
+raised builtins.ConnectionError: attempt 2 refused
+
+model calls seen by the fake:
+[
+  {
+    "model": "tool-retry-error",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "flaky_fetch"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+## ModelRetryMiddleware(max_retries=2): the model fails twice, then answers
+
+[
+  {
+    "type": "AIMessage",
+    "content": "The sum is 5.",
+    "id": "lc_run--<uuid-7>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "model-retry",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  },
+  {
+    "model": "model-retry",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  },
+  {
+    "model": "model-retry",
+    "call": 3,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## ModelRetryMiddleware(max_retries=1), on_failure='continue': the error becomes an AIMessage
+
+[
+  {
+    "type": "AIMessage",
+    "content": "Model call failed after 2 attempts with TimeoutError: read timed out again",
+    "id": "<uuid-8>"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "model-retry-out",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  },
+  {
+    "model": "model-retry-out",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## ModelRetryMiddleware(retry_on=(TimeoutError,)) does not retry a ValueError
+
+invoke:
+
+raised builtins.ValueError: bad request
+
+model calls seen by the fake:
+[
+  {
+    "model": "model-retry-filter",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]

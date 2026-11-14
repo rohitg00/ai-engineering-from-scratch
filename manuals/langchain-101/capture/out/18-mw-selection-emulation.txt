@@ -1,0 +1,215 @@
+# Tool selection, tool emulation, provider tool search, dynamic prompt
+
+## LLMToolSelectorMiddleware(model=selector, max_tools=1)
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "get_weather",
+        "args": {
+          "city": "Pune"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Sunny in Pune",
+    "name": "get_weather",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "It is sunny in Pune.",
+    "id": "lc_run--<uuid-3>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "agent",
+    "call": 1,
+    "messages": [
+      "human: Weather in Pune?"
+    ],
+    "bound": {
+      "tools": [
+        "get_weather"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "agent",
+    "call": 2,
+    "messages": [
+      "human: Weather in Pune?",
+      "ai",
+      "tool: Sunny in Pune"
+    ],
+    "bound": {
+      "tools": [
+        "get_weather"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "selector",
+    "call": 1,
+    "messages": [
+      "system: Your goal is to select the most relevant tools for answering the user's query.\nI",
+      "human: Weather in Pune?"
+    ],
+    "bound": {
+      "tools": [
+        "ToolSelectionResponse"
+      ],
+      "tool_choice": "any",
+      "kwargs": [
+        "ls_structured_output_format"
+      ]
+    }
+  },
+  {
+    "model": "selector",
+    "call": 2,
+    "messages": [
+      "system: Your goal is to select the most relevant tools for answering the user's query.\nI",
+      "human: Weather in Pune?"
+    ],
+    "bound": {
+      "tools": [
+        "ToolSelectionResponse"
+      ],
+      "tool_choice": "any",
+      "kwargs": [
+        "ls_structured_output_format"
+      ]
+    }
+  }
+]
+
+## LLMToolEmulator(tools=['send_email'], model=emulator): the tool body never runs
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-4>-0",
+    "tool_calls": [
+      {
+        "name": "send_email",
+        "args": {
+          "to": "ops@example.com",
+          "body": "hi"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Emulated: sent to ops@example.com",
+    "name": "send_email",
+    "id": "<uuid-5>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Email sent.",
+    "id": "lc_run--<uuid-6>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "agent-emulated",
+    "call": 1,
+    "messages": [
+      "human: Email ops."
+    ],
+    "bound": {
+      "tools": [
+        "send_email"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "agent-emulated",
+    "call": 2,
+    "messages": [
+      "human: Email ops.",
+      "ai",
+      "tool: Emulated: sent to ops@example.com"
+    ],
+    "bound": {
+      "tools": [
+        "send_email"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "emulator",
+    "call": 1,
+    "messages": [
+      "human: You are emulating a tool call for testing purposes.\n\nTool: send_email\nDescriptio"
+    ]
+  }
+]
+
+## ProviderToolSearchMiddleware on a model with no tool search
+
+invoke:
+
+raised builtins.ValueError: ProviderToolSearchMiddleware requires a provider with server-side tool search, but got 'scriptedchatmodel'; supported providers: anthropic, openai
+
+## ProviderToolSearchMiddleware with nothing deferred passes the request through
+
+[
+  {
+    "type": "AIMessage",
+    "content": "No search needed.",
+    "id": "lc_run--<uuid-7>-0"
+  }
+]
+
+## dynamic_prompt sets the system prompt from runtime context
+
+model calls seen by the fake:
+[
+  {
+    "model": "dynamic",
+    "call": 1,
+    "messages": [
+      "system: You are helping Ada.",
+      "human: hi"
+    ]
+  }
+]

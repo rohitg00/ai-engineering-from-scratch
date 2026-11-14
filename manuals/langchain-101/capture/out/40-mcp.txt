@@ -1,0 +1,193 @@
+# langchain.mcp with an in-process FastMCP server
+
+warning LangChainBetaWarning: `langchain.mcp` is in beta. It is actively being worked on, so the API may change.
+
+## list_tools() on an in-process FastMCP server
+
+[
+  {
+    "name": "multiply",
+    "description": "Multiply two integers.",
+    "args": {
+      "a": {
+        "type": "integer"
+      },
+      "b": {
+        "type": "integer"
+      }
+    },
+    "response_format": "content_and_artifact"
+  },
+  {
+    "name": "divide",
+    "description": "Divide a by b.",
+    "args": {
+      "a": {
+        "type": "integer"
+      },
+      "b": {
+        "type": "integer"
+      }
+    },
+    "response_format": "content_and_artifact"
+  },
+  {
+    "name": "stats",
+    "description": "Return the count and mean of a list.",
+    "args": {
+      "values": {
+        "items": {
+          "type": "number"
+        },
+        "type": "array"
+      }
+    },
+    "response_format": "content_and_artifact"
+  }
+]
+
+## an agent calls multiply, divide by zero, and stats
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "multiply",
+        "args": {
+          "a": 6,
+          "b": 7
+        },
+        "id": "call_m",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "42",
+        "id": "lc_<uuid-2>"
+      }
+    ],
+    "name": "multiply",
+    "id": "<uuid-3>",
+    "tool_call_id": "call_m",
+    "status": "success",
+    "artifact": {
+      "structured_content": {
+        "result": 42
+      }
+    }
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-4>-0",
+    "tool_calls": [
+      {
+        "name": "divide",
+        "args": {
+          "a": 1,
+          "b": 0
+        },
+        "id": "call_d",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "division by zero",
+        "id": "lc_<uuid-5>"
+      }
+    ],
+    "name": "divide",
+    "id": "<uuid-6>",
+    "tool_call_id": "call_d",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-7>-0",
+    "tool_calls": [
+      {
+        "name": "stats",
+        "args": {
+          "values": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "id": "call_s",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"count\":4,\"mean\":2.5}",
+        "id": "lc_<uuid-8>"
+      }
+    ],
+    "name": "stats",
+    "id": "<uuid-9>",
+    "tool_call_id": "call_s",
+    "status": "success",
+    "artifact": {
+      "structured_content": {
+        "count": 4,
+        "mean": 2.5
+      }
+    }
+  },
+  {
+    "type": "AIMessage",
+    "content": "6 x 7 = 42; 1 / 0 failed; the mean is 2.5.",
+    "id": "lc_run--<uuid-10>-0"
+  }
+]
+
+## a resource, read through adapter.client (langchain.mcp has no resource API)
+
+list_resources:
+[
+  {
+    "uri": "docs://readme",
+    "name": "readme"
+  }
+]
+
+read_resource:
+[
+  {
+    "uri": "docs://readme",
+    "text": "calc server: multiply, divide, stats"
+  }
+]
+
+## a string target that is not an http(s) URL
+
+MCPAdapter('server.py'):
+
+raised builtins.ValueError: MCP target 'server.py' is not a valid URL. To run a local MCP server over stdio, ask for it explicitly with `Path('server.py')`, a `fastmcp` transport, or an `MCPConfig` — a bare string is read as a URL so that it cannot silently become a subprocess.
+
+langchain.mcp exports:
+[
+  "MCPAdapter",
+  "MCPToolArtifact",
+  "as_langchain_tool"
+]

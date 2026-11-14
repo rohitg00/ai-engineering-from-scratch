@@ -1,0 +1,217 @@
+# Streaming v1: tasks, custom, and debug
+
+## stream_mode='tasks'
+
+6 chunks
+
+chunk 0:
+{
+  "id": "<uuid-1>",
+  "name": "model",
+  "input": {
+    "messages": [
+      {
+        "type": "HumanMessage",
+        "content": "What is 2 + 3?",
+        "id": "<uuid-2>"
+      }
+    ]
+  },
+  "triggers": [
+    "branch:to:model"
+  ],
+  "metadata": {
+    "ls_integration": "langchain_create_agent"
+  }
+}
+
+chunk 1:
+{
+  "id": "<uuid-1>",
+  "name": "model",
+  "error": null,
+  "result": {
+    "messages": [
+      {
+        "type": "AIMessage",
+        "content": "",
+        "id": "lc_run--<uuid-3>-0",
+        "tool_calls": [
+          {
+            "name": "add",
+            "args": {
+              "a": 2,
+              "b": 3
+            },
+            "id": "call_1",
+            "type": "tool_call"
+          }
+        ]
+      }
+    ]
+  },
+  "interrupts": []
+}
+
+chunk 2:
+{
+  "id": "<uuid-4>",
+  "name": "tools",
+  "input": [
+    {
+      "name": "add",
+      "args": {
+        "a": 2,
+        "b": 3
+      },
+      "id": "call_1",
+      "type": "tool_call"
+    }
+  ],
+  "triggers": [
+    "__pregel_push"
+  ],
+  "metadata": {
+    "ls_integration": "langchain_create_agent"
+  }
+}
+
+chunk 3:
+{
+  "id": "<uuid-4>",
+  "name": "tools",
+  "error": null,
+  "result": {
+    "messages": [
+      {
+        "type": "ToolMessage",
+        "content": "5",
+        "name": "add",
+        "id": "<uuid-5>",
+        "tool_call_id": "call_1",
+        "status": "success"
+      }
+    ]
+  },
+  "interrupts": []
+}
+
+## stream_mode='custom'
+
+0 chunks
+
+## stream_mode='debug'
+
+6 chunks
+
+chunk 0:
+{
+  "step": 1,
+  "timestamp": "<time>",
+  "type": "task",
+  "payload": {
+    "id": "<uuid-6>",
+    "name": "model",
+    "input": {
+      "messages": [
+        {
+          "type": "HumanMessage",
+          "content": "What is 2 + 3?",
+          "id": "<uuid-7>"
+        }
+      ]
+    },
+    "triggers": [
+      "branch:to:model"
+    ],
+    "metadata": {
+      "ls_integration": "langchain_create_agent"
+    }
+  }
+}
+
+chunk 1:
+{
+  "step": 1,
+  "timestamp": "<time>",
+  "type": "task_result",
+  "payload": {
+    "id": "<uuid-6>",
+    "name": "model",
+    "error": null,
+    "result": {
+      "messages": [
+        {
+          "type": "AIMessage",
+          "content": "",
+          "id": "lc_run--<uuid-8>-0",
+          "tool_calls": [
+            {
+              "name": "add",
+              "args": {
+                "a": 2,
+                "b": 3
+              },
+              "id": "call_1",
+              "type": "tool_call"
+            }
+          ]
+        }
+      ]
+    },
+    "interrupts": []
+  }
+}
+
+chunk 2:
+{
+  "step": 2,
+  "timestamp": "<time>",
+  "type": "task",
+  "payload": {
+    "id": "<uuid-9>",
+    "name": "tools",
+    "input": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ],
+    "triggers": [
+      "__pregel_push"
+    ],
+    "metadata": {
+      "ls_integration": "langchain_create_agent"
+    }
+  }
+}
+
+chunk 3:
+{
+  "step": 2,
+  "timestamp": "<time>",
+  "type": "task_result",
+  "payload": {
+    "id": "<uuid-9>",
+    "name": "tools",
+    "error": null,
+    "result": {
+      "messages": [
+        {
+          "type": "ToolMessage",
+          "content": "5",
+          "name": "add",
+          "id": "<uuid-10>",
+          "tool_call_id": "call_1",
+          "status": "success"
+        }
+      ]
+    },
+    "interrupts": []
+  }
+}

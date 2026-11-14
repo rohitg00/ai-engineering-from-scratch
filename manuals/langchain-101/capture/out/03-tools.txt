@@ -1,0 +1,119 @@
+# Tools, schemas, and ToolRuntime
+
+## schema the model sees for @tool add
+
+name=add description='Add two integers.'
+
+{
+  "description": "Add two integers.",
+  "properties": {
+    "a": {
+      "title": "A",
+      "type": "integer"
+    },
+    "b": {
+      "title": "B",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "a",
+    "b"
+  ],
+  "title": "add",
+  "type": "object"
+}
+
+## lookup_order: the ToolRuntime parameter is hidden from the model
+
+lookup_order.args:
+[
+  "order_id"
+]
+
+tool_call_schema:
+{
+  "description": "Look up an order by its id.",
+  "properties": {
+    "order_id": {
+      "title": "Order Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_id"
+  ],
+  "title": "lookup_order",
+  "type": "object"
+}
+
+## invoke a tool with a ToolCall dict
+
+[
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "tool_call_id": "call_9",
+    "status": "success"
+  }
+]
+
+## invoke a ToolRuntime tool outside an agent
+
+lookup_order.invoke({'order_id': 'A-17'}):
+
+raised pydantic_core._pydantic_core.ValidationError: 1 validation error for lookup_order
+runtime
+  Field required [type=missing, input_value={'order_id': 'A-17'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing
+
+## ToolRuntime inside create_agent, with context and the custom stream
+
+updates model:
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "lookup_order",
+        "args": {
+          "order_id": "A-17"
+        },
+        "id": "call_7",
+        "type": "tool_call"
+      }
+    ]
+  }
+]
+
+custom:
+{
+  "lookup": "A-17"
+}
+
+updates tools:
+[
+  {
+    "type": "ToolMessage",
+    "content": "order A-17: shipped (asked by ada, tool_call_id=call_7)",
+    "name": "lookup_order",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_7",
+    "status": "success"
+  }
+]
+
+updates model:
+[
+  {
+    "type": "AIMessage",
+    "content": "Order A-17 has shipped.",
+    "id": "lc_run--<uuid-3>-0"
+  }
+]
+
+warning UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected `none` - serialized value may not be as expected [field_name='context', input_value={'user': 'ada'}, input_type=dict])

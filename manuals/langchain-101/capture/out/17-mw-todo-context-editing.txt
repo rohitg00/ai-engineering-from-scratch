@@ -1,0 +1,210 @@
+# Todo list and context editing
+
+## TodoListMiddleware: write_todos updates state['todos']
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "write_todos",
+        "args": {
+          "todos": [
+            {
+              "content": "Add 2 and 3",
+              "status": "in_progress"
+            },
+            {
+              "content": "Report the sum",
+              "status": "pending"
+            }
+          ]
+        },
+        "id": "call_t1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Updated todo list to [{'content': 'Add 2 and 3', 'status': 'in_progress'}, {'content': 'Report the sum', 'status': 'pending'}]",
+    "name": "write_todos",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_t1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-3>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_a",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-4>",
+    "tool_call_id": "call_a",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-5>-0",
+    "tool_calls": [
+      {
+        "name": "write_todos",
+        "args": {
+          "todos": [
+            {
+              "content": "Add 2 and 3",
+              "status": "completed"
+            },
+            {
+              "content": "Report the sum",
+              "status": "completed"
+            }
+          ]
+        },
+        "id": "call_t2",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Updated todo list to [{'content': 'Add 2 and 3', 'status': 'completed'}, {'content': 'Report the sum', 'status': 'completed'}]",
+    "name": "write_todos",
+    "id": "<uuid-6>",
+    "tool_call_id": "call_t2",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 5.",
+    "id": "lc_run--<uuid-7>-0"
+  }
+]
+
+todos:
+[
+  {
+    "content": "Add 2 and 3",
+    "status": "completed"
+  },
+  {
+    "content": "Report the sum",
+    "status": "completed"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "todo",
+    "call": 1,
+    "messages": [
+      "system: ## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage a",
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "write_todos",
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "todo",
+    "call": 2,
+    "messages": [
+      "system: ## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage a",
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: Updated todo list to [{'content': 'Add 2 and 3', 'status': 'in_progress'}, {'con"
+    ],
+    "bound": {
+      "tools": [
+        "write_todos",
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "todo",
+    "call": 3,
+    "messages": [
+      "system: ## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage a",
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: Updated todo list to [{'content': 'Add 2 and 3', 'status': 'in_progress'}, {'con",
+      "ai",
+      "tool: 5"
+    ],
+    "bound": {
+      "tools": [
+        "write_todos",
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "todo",
+    "call": 4,
+    "messages": [
+      "system: ## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage a",
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: Updated todo list to [{'content': 'Add 2 and 3', 'status': 'in_progress'}, {'con",
+      "ai",
+      "tool: 5",
+      "ai",
+      "tool: Updated todo list to [{'content': 'Add 2 and 3', 'status': 'completed'}, {'conte"
+    ],
+    "bound": {
+      "tools": [
+        "write_todos",
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+## the system prompt TodoListMiddleware adds (first 300 characters)
+
+system: ## `write_todos`
+
+You have access to the `write_todos` tool to help you manage a
+
+## ContextEditingMiddleware(ClearToolUsesEdit(trigger=10, keep=1))
+
+message contents the model received:
+[
+  "Add three pairs.",
+  "",
+  "[cleared]",
+  "",
+  "[cleared]",
+  "",
+  "result 6 result 6 result 6 result 6 result 6 "
+]

@@ -1,0 +1,170 @@
+# StateGraph: reducers, Send fan-out, and Command goto
+
+## graph
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	plan(plan)
+	write_joke(write_joke)
+	pick(pick)
+	publish(publish)
+	retry(retry)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> plan;
+	pick -.-> publish;
+	pick -.-> retry;
+	plan -.-> write_joke;
+	write_joke --> pick;
+	publish --> __end__;
+	retry --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## updates, one chunk per node run
+
+{
+  "plan": {
+    "subjects": [
+      "cats",
+      "dogs",
+      "owls"
+    ],
+    "log": [
+      "plan"
+    ]
+  }
+}
+
+{
+  "write_joke": {
+    "jokes": [
+      "a joke about cats"
+    ],
+    "log": [
+      "write_joke(cats)"
+    ]
+  }
+}
+
+{
+  "write_joke": {
+    "jokes": [
+      "a joke about dogs"
+    ],
+    "log": [
+      "write_joke(dogs)"
+    ]
+  }
+}
+
+{
+  "write_joke": {
+    "jokes": [
+      "a joke about owls"
+    ],
+    "log": [
+      "write_joke(owls)"
+    ]
+  }
+}
+
+{
+  "pick": {
+    "best": "a joke about cats",
+    "log": [
+      "pick -> publish"
+    ]
+  }
+}
+
+{
+  "publish": {
+    "log": [
+      "publish"
+    ]
+  }
+}
+
+## final state: operator.add merged the parallel writes
+
+{
+  "topic": "animals",
+  "subjects": [
+    "cats",
+    "dogs",
+    "owls"
+  ],
+  "jokes": [
+    "a joke about cats",
+    "a joke about dogs",
+    "a joke about owls"
+  ],
+  "log": [
+    "plan",
+    "write_joke(cats)",
+    "write_joke(dogs)",
+    "write_joke(owls)",
+    "pick -> publish",
+    "publish"
+  ],
+  "best": "a joke about cats"
+}
+
+## two parallel writes to a key with no reducer
+
+invoke:
+
+raised langgraph.errors.InvalidUpdateError: At key 'value': Can receive only one value per step. Use an Annotated key to handle multiple values.
+For troubleshooting, visit: https://docs.langchain.com/oss/python/langgraph/errors/INVALID_CONCURRENT_GRAPH_UPDATE
+
+## add_messages: append, replace by id, and remove
+
+replace m2, append m3:
+[
+  {
+    "type": "HumanMessage",
+    "content": "first",
+    "id": "m1"
+  },
+  {
+    "type": "HumanMessage",
+    "content": "second, edited",
+    "id": "m2"
+  },
+  {
+    "type": "HumanMessage",
+    "content": "third",
+    "id": "m3"
+  }
+]
+
+remove m1:
+[
+  {
+    "type": "HumanMessage",
+    "content": "second",
+    "id": "m2"
+  }
+]
+
+## MessagesState accepts dicts and returns messages
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "hi",
+    "id": "<uuid-1>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "you said hi",
+    "id": "<uuid-2>"
+  }
+]

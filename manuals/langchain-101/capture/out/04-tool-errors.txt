@@ -1,0 +1,118 @@
+# A tool that raises, bad arguments, and ToolErrorMiddleware
+
+## a tool raises, no middleware: the run raises
+
+invoke:
+
+raised builtins.RuntimeError: disk on fire
+
+## the model sends bad arguments: ToolNode returns an error ToolMessage and the loop continues
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "What is 2 + 3?",
+    "id": "<uuid-1>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-2>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": "two"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Error invoking tool 'add' with kwargs {'a': 'two'} with error:\n a: Input should be a valid integer, unable to parse string as an integer\nb: Field required\n Please fix the error and try again.",
+    "name": "add",
+    "id": "<uuid-3>",
+    "tool_call_id": "call_1",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "I could not add them.",
+    "id": "lc_run--<uuid-4>-0"
+  }
+]
+
+## a tool raises, ToolErrorMiddleware turns it into a ToolMessage
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Read /etc/motd",
+    "id": "<uuid-5>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-6>-0",
+    "tool_calls": [
+      {
+        "name": "flaky_disk",
+        "args": {
+          "path": "/etc/motd"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "RuntimeError in flaky_disk: disk on fire",
+    "name": "flaky_disk",
+    "id": "<uuid-7>",
+    "tool_call_id": "call_1",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The disk failed.",
+    "id": "lc_run--<uuid-8>-0"
+  }
+]
+
+## ToolErrorMiddleware with no handler
+
+ToolErrorMiddleware():
+
+raised builtins.ValueError: ToolErrorMiddleware requires `on_error` and/or `aon_error`.
+
+## an unknown tool name from the model
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-9>-0",
+    "tool_calls": [
+      {
+        "name": "subtract",
+        "args": {
+          "a": 5,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Error: subtract is not a valid tool, try one of [add].",
+    "name": "subtract",
+    "id": "<uuid-10>",
+    "tool_call_id": "call_1",
+    "status": "error"
+  }
+]

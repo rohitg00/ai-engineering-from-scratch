@@ -1,0 +1,83 @@
+# One full create_agent run
+
+## final state
+
+keys:
+[
+  "messages"
+]
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "What is 2 + 3?",
+    "id": "<uuid-1>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-2>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-3>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 5.",
+    "id": "lc_run--<uuid-4>-0"
+  }
+]
+
+## what the model received on each call
+
+model calls seen by the fake:
+[
+  {
+    "model": "scripted",
+    "call": 1,
+    "messages": [
+      "system: You add numbers.",
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "scripted",
+    "call": 2,
+    "messages": [
+      "system: You add numbers.",
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: 5"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]

@@ -1,0 +1,142 @@
+# The tools stream mode
+
+## stream_mode='tools': tool lifecycle events and output deltas
+
+chunk 0:
+{
+  "event": "tool-started",
+  "tool_call_id": "call_1",
+  "tool_name": "slow_sum",
+  "input": {
+    "a": 2,
+    "b": 3
+  }
+}
+
+chunk 1:
+{
+  "event": "tool-output-delta",
+  "tool_call_id": "call_1",
+  "delta": {
+    "partial": 2
+  }
+}
+
+chunk 2:
+{
+  "event": "tool-output-delta",
+  "tool_call_id": "call_1",
+  "delta": {
+    "partial": 5
+  }
+}
+
+chunk 3:
+{
+  "event": "tool-finished",
+  "tool_call_id": "call_1",
+  "output": {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "slow_sum",
+    "id": "<uuid-1>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  }
+}
+
+## 'tools' with 'updates', version='v2'
+
+part 0:
+{
+  "type": "updates",
+  "data": [
+    "model"
+  ]
+}
+
+part 1:
+{
+  "type": "tools",
+  "data": {
+    "event": "tool-started",
+    "tool_call_id": "call_1",
+    "tool_name": "slow_sum",
+    "input": {
+      "a": 2,
+      "b": 3
+    }
+  }
+}
+
+part 2:
+{
+  "type": "tools",
+  "data": {
+    "event": "tool-output-delta",
+    "tool_call_id": "call_1",
+    "delta": {
+      "partial": 2
+    }
+  }
+}
+
+part 3:
+{
+  "type": "tools",
+  "data": {
+    "event": "tool-output-delta",
+    "tool_call_id": "call_1",
+    "delta": {
+      "partial": 5
+    }
+  }
+}
+
+part 4:
+{
+  "type": "tools",
+  "data": {
+    "event": "tool-finished",
+    "tool_call_id": "call_1",
+    "output": {
+      "type": "ToolMessage",
+      "content": "5",
+      "name": "slow_sum",
+      "id": "<uuid-2>",
+      "tool_call_id": "call_1",
+      "status": "success"
+    }
+  }
+}
+
+part 5:
+{
+  "type": "updates",
+  "data": [
+    "tools"
+  ]
+}
+
+part 6:
+{
+  "type": "updates",
+  "data": [
+    "model"
+  ]
+}
+
+## emit_output_delta outside the tools mode is a no-op
+
+updates chunks:
+[
+  [
+    "model"
+  ],
+  [
+    "tools"
+  ],
+  [
+    "model"
+  ]
+]

@@ -1,0 +1,124 @@
+# stream_events v3
+
+## stream_events(version='v3') returns a GraphRunStream
+
+warning LangChainBetaWarning: The v3 streaming protocol on Pregel is experimental.
+
+public members of GraphRunStream:
+[
+  "abort",
+  "extensions",
+  "interleave",
+  "interrupted",
+  "interrupts",
+  "lifecycle",
+  "messages",
+  "output",
+  "subagents",
+  "subgraphs",
+  "tool_calls",
+  "values"
+]
+
+21 events
+
+seq, method, and event name:
+[
+  "1 values ",
+  "2 messages message-start",
+  "3 messages content-block-start",
+  "4 messages content-block-finish",
+  "5 messages message-finish",
+  "6 values ",
+  "7 tools tool-started",
+  "8 tools tool-finished",
+  "9 values ",
+  "10 messages message-start",
+  "11 messages content-block-start",
+  "12 messages content-block-delta",
+  "13 messages content-block-delta",
+  "14 messages content-block-delta",
+  "15 messages content-block-delta",
+  "16 messages content-block-delta",
+  "17 messages content-block-delta",
+  "18 messages content-block-delta",
+  "19 messages content-block-finish",
+  "20 messages message-finish",
+  "21 values "
+]
+
+full frames: 25-stream-events-v3.events.json
+
+## run.output after the stream ends
+
+output['messages']:
+[
+  {
+    "type": "HumanMessage",
+    "content": "What is 2 + 3?",
+    "id": "<uuid-1>"
+  },
+  {
+    "type": "AIMessage",
+    "content": [
+      {
+        "type": "tool_call",
+        "id": "call_1",
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        }
+      }
+    ],
+    "id": "lc_run--<uuid-2>",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "output_version": "v1"
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-3>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "The sum is 5.",
+        "index": 0
+      }
+    ],
+    "id": "lc_run--<uuid-4>",
+    "response_metadata": {
+      "output_version": "v1"
+    }
+  }
+]
+
+## stream_mode is rejected under v3
+
+stream_events(version='v3', stream_mode='updates'):
+
+raised builtins.TypeError: stream_events(version='v3') / astream_events(version='v3') do not accept stream_mode; v3 owns these (stream_mode is built from the transformer mux, subgraphs is forced True so nested namespaces flow through scoped muxes).
+
+## sync stream_events with version='v2'
+
+list(stream_events(version='v2')):
+
+raised builtins.NotImplementedError: stream_events(version='v2') is not supported. Use astream_events() for v1/v2, or stream_events(version='v3') on a supported subclass.

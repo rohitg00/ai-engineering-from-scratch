@@ -1,0 +1,99 @@
+# langsmith traceable with tracing off and local run trees
+
+## tracing off: traceable is a plain call
+
+{
+  "tracing_is_enabled()": false,
+  "result": {
+    "answer": "value-for-alpha"
+  }
+}
+
+get_current_run_tree() inside the call: None
+
+## tracing_context(enabled='local'): run trees are built in memory
+
+{
+  "tracing_is_enabled()": "local"
+}
+
+{
+  "name": "pipeline",
+  "run_type": "chain",
+  "id": "<uuid-1>",
+  "trace_id": "<uuid-1>",
+  "parent_run_id": null,
+  "dotted_order": "<dotted-time><uuid-1>",
+  "inputs": {
+    "question": "look up beta"
+  },
+  "outputs": {
+    "answer": "value-for-beta"
+  },
+  "tags": [
+    "m101"
+  ],
+  "metadata": {
+    "manual": "langchain-101",
+    "ls_method": "traceable"
+  },
+  "error": null,
+  "child_runs": [
+    {
+      "name": "lookup",
+      "run_type": "tool",
+      "id": "<uuid-2>",
+      "trace_id": "<uuid-1>",
+      "parent_run_id": "<uuid-1>",
+      "dotted_order": "<dotted-time><uuid-1>.<dotted-time><uuid-2>",
+      "inputs": {
+        "key": "beta"
+      },
+      "outputs": {
+        "output": "value-for-beta"
+      },
+      "tags": [
+        "m101"
+      ],
+      "metadata": {
+        "manual": "langchain-101",
+        "ls_method": "traceable"
+      },
+      "error": null,
+      "child_runs": []
+    }
+  ]
+}
+
+## an error inside a traced call
+
+raised RuntimeError('tool broke')
+
+{
+  "name": "fails",
+  "error": "RuntimeError('tool broke')"
+}
+
+HTTP requests the client received for the traceable runs:
+{}
+
+## a create_agent run inside a local trace: the LangChain runs are sent to the client
+
+answer: The sum is 5.
+
+HTTP requests the client received, by method and path:
+{
+  "PATCH /runs/<run-id>": 7,
+  "POST /runs": 7
+}
+
+chain agent_turn
+  chain LangGraph
+    chain model
+      llm ScriptedChatModel
+    chain tools
+      tool add
+    chain model
+      llm ScriptedChatModel
+
+langsmith 0.14.17

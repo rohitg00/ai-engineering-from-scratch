@@ -1,0 +1,277 @@
+# Streaming v1: messages mode and several modes at once
+
+## stream_mode='messages': token chunks with metadata
+
+chunk 0:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "",
+    "id": "lc_run--<uuid-1>",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ],
+    "tool_call_chunks": [
+      {
+        "name": "add",
+        "args": "{\"a\": 2, \"b\": 3}",
+        "id": "call_1",
+        "index": null,
+        "type": "tool_call_chunk"
+      }
+    ],
+    "chunk_position": "last"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 1,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "scriptedchatmodel",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 1:
+{
+  "message": {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  "metadata": {
+    "langgraph_node": "tools",
+    "langgraph_step": 2,
+    "langgraph_triggers": [
+      "__pregel_push"
+    ]
+  }
+}
+
+chunk 2:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "The",
+    "id": "lc_run--<uuid-3>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "scriptedchatmodel",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 3:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": " ",
+    "id": "lc_run--<uuid-3>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "scriptedchatmodel",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 4:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "sum",
+    "id": "lc_run--<uuid-3>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "scriptedchatmodel",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 5:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": " ",
+    "id": "lc_run--<uuid-3>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "scriptedchatmodel",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 6:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "is",
+    "id": "lc_run--<uuid-3>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "scriptedchatmodel",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 7:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": " ",
+    "id": "lc_run--<uuid-3>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "scriptedchatmodel",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 8:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "5.",
+    "id": "lc_run--<uuid-3>",
+    "chunk_position": "last"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "scriptedchatmodel",
+    "ls_model_type": "chat"
+  }
+}
+
+## stream_mode=['updates', 'messages'] yields (mode, data) tuples
+
+chunk 0:
+{
+  "mode": "messages",
+  "chunk": "",
+  "node": "model"
+}
+
+chunk 1:
+{
+  "mode": "updates",
+  "nodes": [
+    "model"
+  ]
+}
+
+chunk 2:
+{
+  "mode": "messages",
+  "chunk": "5",
+  "node": "tools"
+}
+
+chunk 3:
+{
+  "mode": "updates",
+  "nodes": [
+    "tools"
+  ]
+}
+
+chunk 4:
+{
+  "mode": "messages",
+  "chunk": "The",
+  "node": "model"
+}
+
+chunk 5:
+{
+  "mode": "messages",
+  "chunk": " ",
+  "node": "model"
+}
+
+chunk 6:
+{
+  "mode": "messages",
+  "chunk": "sum",
+  "node": "model"
+}
+
+chunk 7:
+{
+  "mode": "messages",
+  "chunk": " ",
+  "node": "model"
+}
+
+chunk 8:
+{
+  "mode": "messages",
+  "chunk": "is",
+  "node": "model"
+}
+
+chunk 9:
+{
+  "mode": "messages",
+  "chunk": " ",
+  "node": "model"
+}
+
+chunk 10:
+{
+  "mode": "messages",
+  "chunk": "5.",
+  "node": "model"
+}
+
+chunk 11:
+{
+  "mode": "updates",
+  "nodes": [
+    "model"
+  ]
+}

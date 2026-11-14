@@ -1,0 +1,115 @@
+# init_chat_model and model profiles
+
+## init_chat_model with a provider prefix
+
+openai:gpt-4.1 -> langchain_openai.chat_models.base.ChatOpenAI
+
+openai:gpt-4.1 profile:
+{
+  "name": "GPT-4.1",
+  "release_date": "2025-04-14",
+  "last_updated": "2025-04-14",
+  "open_weights": false,
+  "max_input_tokens": 1047576,
+  "max_output_tokens": 32768,
+  "text_inputs": true,
+  "image_inputs": true,
+  "audio_inputs": false,
+  "pdf_inputs": true,
+  "video_inputs": false,
+  "text_outputs": true,
+  "image_outputs": false,
+  "audio_outputs": false,
+  "video_outputs": false,
+  "reasoning_output": false,
+  "tool_calling": true,
+  "structured_output": true,
+  "attachment": true,
+  "temperature": true,
+  "image_url_inputs": true,
+  "pdf_tool_message": true,
+  "image_tool_message": true,
+  "tool_choice": true,
+  "tool_call_streaming": true,
+  "mid_conversation_system_messages": true,
+  "mid_conversation_tools": false
+}
+
+anthropic:claude-sonnet-4-6 -> langchain_anthropic.chat_models.ChatAnthropic
+
+anthropic:claude-sonnet-4-6 profile:
+{
+  "name": "Claude Sonnet 4.6",
+  "release_date": "2026-02-17",
+  "last_updated": "2026-03-13",
+  "open_weights": false,
+  "max_input_tokens": 1000000,
+  "max_output_tokens": 128000,
+  "text_inputs": true,
+  "image_inputs": true,
+  "audio_inputs": false,
+  "pdf_inputs": true,
+  "video_inputs": false,
+  "text_outputs": true,
+  "image_outputs": false,
+  "audio_outputs": false,
+  "video_outputs": false,
+  "reasoning_output": true,
+  "tool_calling": true,
+  "structured_output": true,
+  "attachment": true,
+  "temperature": true,
+  "image_url_inputs": true,
+  "pdf_tool_message": true,
+  "image_tool_message": true,
+  "tool_call_streaming": true,
+  "reasoning_effort_levels": [
+    "low",
+    "medium",
+    "high",
+    "max"
+  ],
+  "reasoning_effort_default": "high"
+}
+
+ollama:qwen3:4b -> langchain_ollama.chat_models.ChatOllama
+
+ollama:qwen3:4b profile:
+null
+
+## provider inferred from a bare model name
+
+gpt-4.1-mini -> ChatOpenAI, model=gpt-4.1-mini
+
+claude-haiku-4-5 -> ChatAnthropic, model=claude-haiku-4-5
+
+o3 -> ChatOpenAI, model=o3
+
+## a name with no known provider
+
+init_chat_model('qwen3:4b'):
+
+raised builtins.ValueError: Unable to infer model provider for model='qwen3:4b'. Please specify 'model_provider' directly.
+
+Supported providers: anthropic, anthropic_bedrock, azure_ai, azure_openai, baseten, bedrock, bedrock_converse, bedrock_mantle_anthropic, bedrock_mantle_openai, cohere, deepseek, fireworks, google_anthropic_vertex, google_genai, google_vertexai, groq, huggingface, ibm, langsmith, litellm, meta, mistralai, nvidia, ollama, openai, openrouter, perplexity, together, upstage, xai
+
+For help with specific providers, see: https://docs.langchain.com/oss/python/integrations/providers
+
+## a configurable model
+
+type _ConfigurableModel
+
+with_config llm_model=ollama:qwen3:4b -> _ConfigurableModel
+
+## the fake chat model used by this kit
+
+type ScriptedChatModel, _llm_type=scripted-fake-chat-model, profile=None
+
+invoke('hi'):
+[
+  {
+    "type": "AIMessage",
+    "content": "hello",
+    "id": "lc_run--<uuid-1>-0"
+  }
+]

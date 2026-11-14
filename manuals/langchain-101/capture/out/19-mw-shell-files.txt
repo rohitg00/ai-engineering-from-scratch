@@ -1,0 +1,188 @@
+# Shell tool and file search
+
+## FilesystemFileSearchMiddleware(root_path=tmp, use_ripgrep=False)
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "glob_search",
+        "args": {
+          "pattern": "**/*.py"
+        },
+        "id": "call_g",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "/src/app.py",
+    "name": "glob_search",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_g",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-3>-0",
+    "tool_calls": [
+      {
+        "name": "grep_search",
+        "args": {
+          "pattern": "42"
+        },
+        "id": "call_r",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "/notes.md\n/src/app.py",
+    "name": "grep_search",
+    "id": "<uuid-4>",
+    "tool_call_id": "call_r",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Found it.",
+    "id": "lc_run--<uuid-5>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "files",
+    "call": 1,
+    "messages": [
+      "human: Where is 42?"
+    ],
+    "bound": {
+      "tools": [
+        "glob_search",
+        "grep_search"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "files",
+    "call": 2,
+    "messages": [
+      "human: Where is 42?",
+      "ai",
+      "tool: /src/app.py"
+    ],
+    "bound": {
+      "tools": [
+        "glob_search",
+        "grep_search"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "files",
+    "call": 3,
+    "messages": [
+      "human: Where is 42?",
+      "ai",
+      "tool: /src/app.py",
+      "ai",
+      "tool: /notes.md\n/src/app.py"
+    ],
+    "bound": {
+      "tools": [
+        "glob_search",
+        "grep_search"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+## ShellToolMiddleware(workspace_root=tmp, execution_policy=HostExecutionPolicy())
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-6>-0",
+    "tool_calls": [
+      {
+        "name": "shell",
+        "args": {
+          "command": "printf 'hello from %s\\n' shell && ls"
+        },
+        "id": "call_sh",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "hello from shell\nnotes.md\nsrc\n",
+    "name": "shell",
+    "id": "<uuid-7>",
+    "tool_call_id": "call_sh",
+    "status": "success",
+    "artifact": {
+      "timed_out": false,
+      "exit_code": 0,
+      "truncated_by_lines": false,
+      "truncated_by_bytes": false,
+      "total_lines": 3,
+      "total_bytes": 30,
+      "redaction_matches": {}
+    }
+  },
+  {
+    "type": "AIMessage",
+    "content": "Listed.",
+    "id": "lc_run--<uuid-8>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "shell",
+    "call": 1,
+    "messages": [
+      "human: List the files."
+    ],
+    "bound": {
+      "tools": [
+        "shell"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "shell",
+    "call": 2,
+    "messages": [
+      "human: List the files.",
+      "ai",
+      "tool: hello from shell\nnotes.md\nsrc\n"
+    ],
+    "bound": {
+      "tools": [
+        "shell"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]

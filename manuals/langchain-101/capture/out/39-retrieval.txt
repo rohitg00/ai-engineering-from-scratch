@@ -1,0 +1,155 @@
+# Splitter, DeterministicFakeEmbedding, and InMemoryVectorStore
+
+## RecursiveCharacterTextSplitter(chunk_size=80, chunk_overlap=20)
+
+[
+  {
+    "source": "checkpoints.md",
+    "chars": 77,
+    "text": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a"
+  },
+  {
+    "source": "checkpoints.md",
+    "chars": 75,
+    "text": "keeps it in a dict. SqliteSaver writes it to a file, so a thread survives a"
+  },
+  {
+    "source": "checkpoints.md",
+    "chars": 28,
+    "text": "a thread survives a restart."
+  },
+  {
+    "source": "stores.md",
+    "chars": 75,
+    "text": "A store holds long-term memory across threads. Items live under a namespace"
+  },
+  {
+    "source": "stores.md",
+    "chars": 69,
+    "text": "under a namespace tuple and a key. Search matches a namespace prefix."
+  },
+  {
+    "source": "streaming.md",
+    "chars": 80,
+    "text": "stream_mode updates yields one chunk per node. messages yields token chunks with"
+  },
+  {
+    "source": "streaming.md",
+    "chars": 61,
+    "text": "token chunks with metadata. custom yields what a tool writes."
+  }
+]
+
+## DeterministicFakeEmbedding(size=16): the same text gives the same vector
+
+{
+  "dims": 16,
+  "first 4": [
+    0.232256,
+    -0.62581,
+    -0.560658,
+    -0.015838
+  ],
+  "repeat equal": true,
+  "other text equal": false
+}
+
+## InMemoryVectorStore.similarity_search_with_score
+
+ids:
+[
+  "doc-0",
+  "doc-1",
+  "doc-2",
+  "doc-3",
+  "doc-4",
+  "doc-5",
+  "doc-6"
+]
+
+query 'A checkpointer saves graph state after each step. InMemorySaver keeps it in a':
+[
+  {
+    "id": "doc-0",
+    "source": "checkpoints.md",
+    "score": 1.0,
+    "text": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a"
+  },
+  {
+    "id": "doc-3",
+    "source": "stores.md",
+    "score": 0.408441,
+    "text": "A store holds long-term memory across threads. Items live under a namespace"
+  }
+]
+
+query 'Where does long-term memory live?':
+[
+  {
+    "id": "doc-2",
+    "source": "checkpoints.md",
+    "score": 0.317695,
+    "text": "a thread survives a restart."
+  },
+  {
+    "id": "doc-4",
+    "source": "stores.md",
+    "score": -0.023572,
+    "text": "under a namespace tuple and a key. Search matches a namespace prefix."
+  }
+]
+
+The fake embedding hashes the whole text, so only an exact text match scores 1.0. Scores for other queries carry no meaning.
+
+## a metadata filter
+
+[
+  "doc-4",
+  "doc-3"
+]
+
+## as_retriever, wrapped as a tool for an agent
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "search_docs",
+        "args": {
+          "query": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "[checkpoints.md] A checkpointer saves graph state after each step. InMemorySaver keeps it in a",
+    "name": "search_docs",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "A checkpointer saves state after each step.",
+    "id": "lc_run--<uuid-3>-0"
+  }
+]
+
+## delete and get_by_ids
+
+[
+  "doc-1"
+]
+
+## max_marginal_relevance_search
+
+[
+  "doc-5",
+  "doc-4"
+]
