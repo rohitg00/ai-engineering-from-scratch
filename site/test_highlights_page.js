@@ -580,7 +580,7 @@ test('the page is noindex, wired into routes, navigation and cards, and kept out
   assert.ok(header.includes("ensureNavigationLink(nav, 'highlights.html', 'My Highlights', '');"));
   assert.ok(header.indexOf("'skills.html', 'Skills'") < header.indexOf("ensureNavigationLink(nav, 'highlights.html'"));
   assert.ok(header.includes("ensureNavigationLink(footers[j], 'highlights.html', 'My Highlights', '');"));
-  assert.match(header, /\|how-to-learn\|highlights\)'/);
+  assert.match(header, /\|how-to-learn\|highlights(?:\|[a-z-]+)*\)'/);
   assert.ok(JSON.parse(fs.readFileSync(path.join(__dirname, 'ui-strings.json'), 'utf8')).keys.includes('My Highlights'));
 
   const { PAGES } = require('../lib/og-cards');

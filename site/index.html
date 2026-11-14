@@ -27,7 +27,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=VT323&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20261015a">
-  <link rel="stylesheet" href="intelligence-check.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -73,17 +72,9 @@
   </script>
   <style>
     .manual-masthead {
-      padding: 96px 0 24px;
+      padding: 128px 0 40px;
       border-bottom: 1px solid var(--rule-soft);
       position: relative;
-    }
-
-    .masthead-figure {
-      display: none;
-      margin: 0;
-      width: 100%;
-      max-width: 430px;
-      min-width: 0;
     }
 
     @media (min-width: 601px) and (max-width: 1279px) {
@@ -105,12 +96,11 @@
         grid-template-areas:
           "meta meta"
           "title curiosity"
-          "tagline figure"
-          "attribution figure"
-          "actions figure"
-          "install figure"
-          "caption figure"
-          "rule rule";
+          "tagline curiosity"
+          "attribution curiosity"
+          "actions curiosity"
+          "install curiosity"
+          "caption curiosity";
         column-gap: clamp(32px, 4vw, 48px);
         align-items: start;
       }
@@ -119,230 +109,20 @@
       .manual-title {
         grid-area: title;
         min-width: 0;
-        font-size: clamp(min(5rem, 25vw), 6.5vw, 6.5rem);
+        font-size: clamp(3.4rem, 4.6vw, 4.6rem);
       }
       .manual-tagline { grid-area: tagline; }
       .manual-attribution { grid-area: attribution; }
       .masthead-cta { grid-area: actions; min-width: 0; }
       .masthead-install { grid-area: install; width: 100%; min-width: 0; }
       .masthead-install-caption { grid-area: caption; }
-      .masthead-figure {
-        display: block;
-        position: static;
-        grid-area: figure;
-        align-self: center;
-        justify-self: end;
-      }
-      .manual-masthead > .ascii-rule { grid-area: rule; width: 100%; }
+      .masthead-start { margin-top: 0; align-self: center; justify-self: end; max-width: 440px; }
     }
 
     @media (min-width: 1440px) {
       .manual-masthead {
         grid-template-columns: minmax(0, 1fr) minmax(400px, 430px);
       }
-    }
-
-    .fig-plate { position: relative; aspect-ratio: 560 / 380; }
-
-    .fig-panel {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity var(--motion-drawer) var(--ease-out);
-      pointer-events: none;
-    }
-    .fig-panel.is-active {
-      opacity: 1;
-      transition: opacity 300ms var(--ease-out) var(--motion-drawer);
-    }
-    .fig-panel svg { width: 100%; height: 100%; direction: ltr; }
-
-    .fig-panel:not(.is-active) *,
-    .masthead-figure[data-motion-paused="true"] .fig-panel.is-active * {
-      animation-play-state: paused !important;
-    }
-
-    .fig-frame { stroke: var(--rule-soft); }
-    .fig-tick  { stroke: var(--blueprint); stroke-width: 1.4; }
-
-    .fig-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      fill: var(--ink-mute);
-      text-transform: none;
-    }
-    .fig-label--right { text-anchor: end; fill: var(--blueprint); letter-spacing: 0.06em; }
-
-    .fig-axis {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      fill: var(--ink-mute);
-      text-anchor: middle;
-      text-transform: none;
-    }
-
-    /* FIG_001 — edges draw in layer by layer, then pulses travel the net */
-    .fig-edge {
-      stroke: var(--blueprint);
-      stroke-opacity: 0.28;
-      stroke-dasharray: 1;
-      stroke-dashoffset: 1;
-    }
-    .is-active .fig-edge { animation: fig-draw 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-    .is-active .fig-l2 { animation-delay: 0.35s; }
-    .is-active .fig-l3 { animation-delay: 0.7s; }
-    @keyframes fig-draw { to { stroke-dashoffset: 0; } }
-
-    .fig-node { fill: var(--bg); stroke: var(--ink); stroke-width: 1.4; opacity: 0; }
-    .is-active .fig-node { animation: fig-node 0.45s ease-out forwards; }
-    .is-active .fig-n1 { animation-delay: 0.15s; }
-    .is-active .fig-n2 { animation-delay: 0.5s; }
-    .is-active .fig-n3 { animation-delay: 0.85s; }
-    .is-active .fig-n4 { animation-delay: 1.1s; }
-    @keyframes fig-node { to { opacity: 1; } }
-
-    .fig-pulse { fill: var(--blueprint); opacity: 0; offset-rotate: 0deg; }
-    .is-active .fig-pulse { animation: fig-pulse 3.8s linear 1 forwards; }
-    @keyframes fig-pulse {
-      0%   { offset-distance: 0%;   opacity: 0; }
-      10%  { opacity: 1; }
-      82%  { opacity: 1; }
-      96%  { offset-distance: 100%; opacity: 0; }
-      100% { offset-distance: 100%; opacity: 0; }
-    }
-
-    /* FIG_002 — an agent session types itself out */
-    .fig-term { fill: var(--bg-surface); stroke: var(--rule-soft); }
-    .fig-term-bar { stroke: var(--rule-soft); }
-    .fig-term-dot { fill: none; stroke: var(--ink-mute); }
-
-    .fig-line {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      fill: var(--ink);
-      opacity: 0;
-      text-transform: none;
-    }
-    .fig-line--cmd { fill: var(--blueprint); }
-    .fig-line--agent { fill: var(--ink); }
-    .fig-line--you { fill: var(--ink-mute); }
-    .is-active .fig-line { animation: fig-line 0.4s ease-out forwards; }
-    @keyframes fig-line { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* FIG_003 — the two learning curves draw in */
-    .fig-axis-line { stroke: var(--ink-mute); stroke-width: 1; }
-    .fig-curve { stroke-dasharray: 1; stroke-dashoffset: 1; stroke-width: 2; }
-    .fig-curve--flat { stroke: var(--ink-mute); }
-    .fig-curve--steep { stroke: var(--blueprint); }
-    .is-active .fig-curve--flat { animation: fig-draw 1.4s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards; }
-    .is-active .fig-curve--steep { animation: fig-draw 1.4s cubic-bezier(0.23, 1, 0.32, 1) 0.8s forwards; }
-    .fig-curve--flat { stroke-dasharray: 1; }
-
-    .fig-curve-label {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      opacity: 0;
-      text-transform: none;
-    }
-    .fig-curve-label--flat { fill: var(--ink-mute); }
-    .fig-curve-label--steep { fill: var(--blueprint); }
-    .is-active .fig-curve-label { animation: fig-node 0.4s ease-out 1.9s forwards; }
-
-    .fig-caret {
-      fill: var(--blueprint);
-      opacity: 0;
-    }
-    .is-active .fig-caret { animation: fig-caret 1s steps(2, jump-none) 3 forwards; }
-    @keyframes fig-caret { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
-
-    .fig-grid { stroke: var(--rule-soft); stroke-dasharray: 2 5; }
-
-    .fig-area { fill: var(--blueprint); opacity: 0; }
-    .is-active .fig-area { animation: fig-area 0.8s ease-out 1.9s forwards; }
-    @keyframes fig-area { to { opacity: 0.07; } }
-
-    .fig-mile { fill: var(--bg); stroke: var(--blueprint); stroke-width: 1.4; opacity: 0; }
-    .fig-mile-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      fill: var(--ink);
-      opacity: 0;
-      text-transform: none;
-    }
-    .is-active .fig-mile,
-    .is-active .fig-mile-label { animation: fig-node 0.35s ease-out forwards; }
-    .is-active .fig-mile { animation-name: fig-node; }
-
-    /* a learner rides the curve after it draws in */
-    .fig-rider { fill: var(--blueprint); opacity: 0; offset-rotate: 0deg; }
-    .is-active .fig-rider { animation: fig-rider 4.6s linear 2.6s 1 forwards; }
-    @keyframes fig-rider {
-      0%   { offset-distance: 0%;   opacity: 0; }
-      8%   { opacity: 1; }
-      86%  { opacity: 1; }
-      97%  { offset-distance: 100%; opacity: 0; }
-      100% { offset-distance: 100%; opacity: 0; }
-    }
-
-    .fig-meta {
-      display: grid;
-      gap: 8px;
-      margin-top: 12px;
-      text-align: center;
-    }
-
-    .fig-caption {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      color: var(--ink-mute);
-      min-height: 3.2em;
-      padding: 0 16px;
-    }
-
-    .fig-controls {
-      display: grid;
-      grid-template-columns: minmax(90px, auto) 1fr minmax(90px, auto);
-      align-items: center;
-      gap: 8px;
-    }
-
-    .fig-control {
-      min-height: 40px;
-      padding: 7px 10px;
-      border: 1px solid var(--rule-soft);
-      background: var(--bg);
-      color: var(--ink-soft);
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition:
-        transform var(--motion-press) var(--ease-out),
-        color var(--motion-feedback) ease,
-        border-color var(--motion-feedback) ease,
-        background-color var(--motion-feedback) ease;
-    }
-
-    .fig-control:hover,
-    .fig-control:focus-visible {
-      border-color: var(--blueprint);
-      color: var(--blueprint);
-    }
-
-    .fig-control:active:not(:disabled) { transform: scale(0.97); }
-
-    .fig-control:disabled {
-      cursor: default;
-      opacity: 0.38;
-    }
-
-    .fig-control:focus-visible,
-    .fig-dot:focus-visible {
-      outline: 2px solid var(--blueprint);
-      outline-offset: 2px;
     }
 
     .learners-quote {
@@ -363,44 +143,6 @@
       letter-spacing: 0.08em;
       color: var(--ink-mute);
       white-space: nowrap;
-    }
-
-    .fig-dots {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 2px;
-    }
-
-    .fig-dot {
-      position: relative;
-      width: 36px;
-      height: 36px;
-      border: 0;
-      background: transparent;
-      cursor: pointer;
-    }
-
-    .fig-dot::after {
-      content: "";
-      position: absolute;
-      inset: 50% auto auto 50%;
-      width: 7px;
-      height: 7px;
-      border: 1px solid var(--blueprint);
-      background: transparent;
-      transform: translate(-50%, -50%);
-      transition: background-color var(--motion-feedback) ease;
-    }
-
-    .fig-dot.is-active::after { background: var(--blueprint); }
-
-    @media (prefers-reduced-motion: reduce) {
-      .fig-panel { transition: none !important; }
-      .fig-edge, .fig-node, .fig-curve, .fig-curve-label, .fig-line, .fig-area, .fig-mile, .fig-mile-label { animation: none !important; stroke-dashoffset: 0; opacity: 1; transform: none; }
-      .fig-pulse, .fig-rider, .fig-caret { display: none; }
-      .fig-control { transition: color var(--motion-feedback) ease, border-color var(--motion-feedback) ease, background-color var(--motion-feedback) ease; }
-      .fig-control:active:not(:disabled) { transform: none; }
     }
 
     .manual-meta-row {
@@ -424,7 +166,7 @@
     .manual-title {
       display: block;
       font-family: var(--font-display);
-      font-size: clamp(min(3.2rem, 16vw), 11vw, 8rem);
+      font-size: clamp(min(3rem, 15vw), 9vw, 5.6rem);
       line-height: 0.86;
       letter-spacing: 0.02em;
       text-transform: uppercase;
@@ -539,6 +281,97 @@
       .masthead-btn { font-size: 0.78rem; padding: 8px 12px; }
     }
 
+    .masthead-start {
+      grid-area: curiosity;
+      width: 100%;
+      min-width: 0;
+      margin-top: 28px;
+      border: 1px solid var(--ink);
+      background: var(--bg);
+      box-shadow: var(--shadow-hard);
+    }
+
+    .masthead-start-title {
+      margin: 0;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--rule-soft);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .masthead-start-list { margin: 0; padding: 0; list-style: none; }
+
+    .masthead-start-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 2px 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--rule-soft);
+      color: var(--ink);
+      text-decoration: none;
+      transition: background-color var(--motion-feedback) ease;
+    }
+
+    .masthead-start-row:hover { background: var(--blueprint-tint); }
+
+    .masthead-start-row:focus-visible {
+      outline: 2px solid var(--blueprint);
+      outline-offset: -2px;
+    }
+
+    .masthead-start-who {
+      grid-column: 1;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .masthead-start-lesson {
+      grid-column: 1;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      line-height: 1.3;
+    }
+
+    .masthead-start-phase {
+      margin-right: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--blueprint);
+    }
+
+    .masthead-start-time {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      align-self: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--blueprint);
+      white-space: nowrap;
+    }
+
+    .masthead-start-row:hover .masthead-start-lesson { color: var(--blueprint); }
+
+    .masthead-start-more {
+      display: block;
+      padding: 12px 16px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      text-decoration: none;
+    }
+
+    .masthead-start-more:hover,
+    .masthead-start-more:focus-visible { color: var(--blueprint); }
+
+
     .masthead-install {
       margin-top: 26px;
       max-width: none;
@@ -642,6 +475,129 @@
 
     @media (prefers-reduced-motion: reduce) {
       .masthead-install:hover .agent-chip .glyph { transform: none; }
+    }
+
+    .masthead-install-caption a { color: var(--blueprint); white-space: nowrap; }
+
+    .agent-tutor {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+
+    .agent-tutor-eyebrow {
+      margin: 0 0 12px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blueprint);
+    }
+
+    .agent-tutor-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 24px 56px;
+      align-items: end;
+      margin-bottom: 32px;
+    }
+
+    .agent-tutor-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.2vw, 2.9rem);
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .agent-tutor-lede {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .tutor-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tutor-step {
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      padding: 18px;
+      border: 1px solid var(--rule-soft);
+      background: var(--bg);
+    }
+
+    .tutor-step-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--blueprint);
+    }
+
+    .tutor-step-cmd {
+      justify-self: start;
+      max-width: 100%;
+      padding: 4px 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--rule-soft);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--blueprint);
+      overflow-wrap: anywhere;
+    }
+
+    .tutor-step-title {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .tutor-step-text {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      line-height: 1.5;
+      color: var(--ink-soft);
+    }
+
+    .agent-tutor-foot {
+      margin: 20px 0 0;
+      font-family: var(--font-body);
+      font-size: 0.96rem;
+      line-height: 1.6;
+      color: var(--ink-soft);
+    }
+
+    .agent-tutor-foot code {
+      font-family: var(--font-mono);
+      font-size: 0.86em;
+      color: var(--blueprint);
+    }
+
+    .agent-tutor-foot a { color: var(--blueprint); white-space: nowrap; }
+
+    @media (max-width: 1000px) {
+      .agent-tutor-head { grid-template-columns: 1fr; }
+      .tutor-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 600px) {
+      .agent-tutor { padding: 36px 18px; }
+      .tutor-steps { grid-template-columns: 1fr; }
     }
 
     /* Learner organization index */
@@ -983,98 +939,9 @@
       border: 0;
     }
 
-    .course-route-list {
-      border-top: 1px solid var(--rule);
-    }
 
-    .course-route {
-      display: grid;
-      grid-template-columns: minmax(150px, 0.7fr) minmax(260px, 1.6fr) auto;
-      gap: 24px;
-      align-items: center;
-      padding: 18px 16px;
-      border-bottom: 1px solid var(--rule-soft);
-    }
-
-    .course-route.is-recommended {
-      box-shadow: inset 3px 0 0 var(--blueprint);
-      background: var(--blueprint-tint);
-    }
-
-    .course-route-name {
-      display: grid;
-      gap: 3px;
-    }
-
-    .course-route-name strong {
-      color: var(--ink);
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      font-weight: 400;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-
-    .course-route-name span {
-      color: var(--blueprint);
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .course-route p {
-      color: var(--ink-soft);
-      font-size: 0.9rem;
-      line-height: 1.5;
-    }
-
-    .course-route-actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      width: 248px;
-      justify-self: end;
-    }
-
-    .course-route-link {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      padding: 8px 11px;
-      border: 1px solid var(--rule-soft);
-      color: var(--ink-soft);
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.04em;
-      text-align: center;
-      text-decoration: none;
-      transition: color var(--motion-feedback) ease, border-color var(--motion-feedback) ease, background-color var(--motion-feedback) ease, transform var(--motion-press) var(--ease-out);
-    }
-
-    .course-route-link:first-child {
-      border-color: var(--blueprint);
-      color: var(--blueprint);
-    }
-
-    .course-route-link:hover,
-    .course-route-link:focus-visible {
-      border-color: var(--blueprint);
-      background: var(--blueprint);
-      color: var(--bg);
-    }
-
-    .course-route-link:active { transform: scale(0.97); }
-
-    .course-route-link:focus-visible {
-      outline: 2px solid var(--blueprint);
-      outline-offset: 2px;
-    }
 
     @media (max-width: 900px) {
-      .course-route { grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.5fr); }
-      .course-route-actions { grid-column: 1 / -1; justify-self: start; }
     }
 
     @media (max-width: 600px) {
@@ -1154,9 +1021,6 @@
         letter-spacing: 0.025em;
         text-transform: uppercase;
       }
-      .course-route { grid-template-columns: 1fr; gap: 8px; padding: 16px 12px; }
-      .course-route-actions { grid-column: auto; width: 100%; justify-self: stretch; }
-      .course-route-link { white-space: normal; text-align: center; }
     }
 
     .preface-grid {
@@ -1457,79 +1321,6 @@
       border-bottom: 1px solid var(--rule-soft);
     }
 
-    .whats-new {
-      padding: 32px 0 40px;
-      border-bottom: 1px solid var(--rule-soft);
-    }
-
-    .whats-new[hidden] { display: none; }
-
-    .whats-new-title {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--blueprint);
-      margin-bottom: 16px;
-    }
-
-    .whats-new-list {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      border-top: 1px solid var(--rule-soft);
-    }
-
-    .whats-new-item {
-      display: grid;
-      grid-template-columns: 7.5rem minmax(0, 1fr);
-      gap: 4px 20px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--rule-soft);
-    }
-
-    .whats-new-date {
-      font-family: var(--font-mono);
-      font-size: 0.74rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--ink-soft);
-      padding-top: 3px;
-    }
-
-    .whats-new-item a {
-      font-family: var(--font-body);
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--ink);
-    }
-
-    .whats-new-item a:hover { color: var(--blueprint); }
-
-    .whats-new-summary {
-      grid-column: 2;
-      margin: 0;
-      font-size: 0.92rem;
-      line-height: 1.45;
-      color: var(--ink-soft);
-    }
-
-    .whats-new-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px 24px;
-      margin: 16px 0 0;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 600px) {
-      .whats-new-item { grid-template-columns: 1fr; }
-      .whats-new-summary { grid-column: 1; }
-    }
-
     .stat-block-title {
       font-family: var(--font-mono);
       font-size: 0.78rem;
@@ -1537,6 +1328,29 @@
       text-transform: uppercase;
       color: var(--blueprint);
       margin-bottom: 24px;
+    }
+
+    h2.stat-block-title { font-weight: 400; line-height: inherit; }
+    .lesson-loop-intro { margin: 0 0 32px; }
+    .lesson-loop-intro p { margin: 0 0 14px; }
+    .lesson-loop-art { margin: 0; }
+    .lesson-loop-figure { display: block; width: 100%; height: auto; }
+    .lesson-loop-narrow { display: none; max-width: 440px; margin: 0 auto; }
+    .lesson-loop-steps {
+      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .lesson-loop-art figcaption {
+      max-width: 68ch;
+      margin-top: 16px;
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      color: var(--ink-soft);
+    }
+    .lesson-loop-art figcaption a { color: var(--blueprint); }
+    @media (max-width: 720px) {
+      .lesson-loop-wide { display: none; }
+      .lesson-loop-narrow { display: block; }
     }
 
     .stat-rows {
@@ -1683,7 +1497,7 @@
       color: var(--ink-soft);
     }
 
-    .phase-card-top .toc-status { margin: 0; }
+    .phase-card-top .toc-status { display: none; }
 
     .phase-card-name {
       margin: 12px 0 6px;
@@ -2334,10 +2148,6 @@
   <main id="main">
 
     <section class="manual-masthead container">
-      <div class="manual-meta-row">
-        <span>FIG_000 &middot; curriculum v1.0 · 2026</span>
-        <span class="right">open source · MIT</span>
-      </div>
       <h1 class="manual-title">AI Engineering<br>from Scratch</h1>
       <p class="manual-tagline reveal" dir="auto"><span id="mastheadLessonCount">Every published lesson</span>. <span id="mastheadPhaseCount">Every phase</span>. Every algorithm built from raw math before a single framework gets imported.</p>
       <p class="manual-attribution reveal" style="--stagger-delay: 40ms;">Maintained by Rohit Ghumare and contributors. Run on your own machine.</p>
@@ -2358,6 +2168,32 @@
           <span>Follow @rohitg00</span>
         </a>
       </div>
+      <nav class="masthead-start reveal" style="--stagger-delay: 100ms;" aria-labelledby="mastheadStartTitle">
+        <p class="masthead-start-title" id="mastheadStartTitle">Start where you are</p>
+        <ul class="masthead-start-list">
+          <li><a class="masthead-start-row" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment">
+            <span class="masthead-start-who">New to AI</span>
+            <span class="masthead-start-lesson"><span class="masthead-start-phase">Phase 0</span>Set up your dev environment</span>
+            <span class="masthead-start-time">45 min <span aria-hidden="true">→</span></span>
+          </a></li>
+          <li><a class="masthead-start-row" href="lesson?path=phases/01-math-foundations/01-linear-algebra-intuition">
+            <span class="masthead-start-who">I know Python</span>
+            <span class="masthead-start-lesson"><span class="masthead-start-phase">Phase 1</span>Linear algebra intuition</span>
+            <span class="masthead-start-time">60 min <span aria-hidden="true">→</span></span>
+          </a></li>
+          <li><a class="masthead-start-row" href="lesson?path=phases/10-llms-from-scratch/01-tokenizers">
+            <span class="masthead-start-who">Build an LLM from scratch</span>
+            <span class="masthead-start-lesson"><span class="masthead-start-phase">Phase 10</span>Tokenizers, the first step to a GPT</span>
+            <span class="masthead-start-time">90 min <span aria-hidden="true">→</span></span>
+          </a></li>
+          <li><a class="masthead-start-row" href="lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail">
+            <span class="masthead-start-who">Build your own agent harness</span>
+            <span class="masthead-start-lesson"><span class="masthead-start-phase">Phase 14</span>Why capable models still fail</span>
+            <span class="masthead-start-time">45 min <span aria-hidden="true">→</span></span>
+          </a></li>
+        </ul>
+        <a class="masthead-start-more" href="#contents">Browse all 20 phases <span aria-hidden="true">↓</span></a>
+      </nav>
       <div class="masthead-install reveal" style="--stagger-delay: 120ms;">
         <div class="masthead-install-bar">
           <span>Learn in your terminal</span>
@@ -2380,173 +2216,7 @@
           <span class="agent-chip">+ any SKILL.md agent</span>
         </div>
       </div>
-      <p class="masthead-install-caption reveal" style="--stagger-delay: 160ms;">Your agent becomes your tutor: placement quiz, personalized path, lessons taught interactively in your terminal.</p>
-      <aside class="intelligence-check" data-intelligence-check data-state="idle" aria-labelledby="intelligence-question">
-        <div class="intelligence-check-meta"><span>Thought experiment</span><span aria-hidden="true">001 / ?</span></div>
-        <div class="intelligence-check-body">
-          <svg class="intelligence-check-dial" viewBox="0 0 96 96" fill="none" aria-hidden="true">
-            <circle class="intelligence-check-ring" cx="48" cy="48" r="40"/>
-            <circle class="intelligence-check-ring" cx="48" cy="48" r="29" stroke-dasharray="1 5"/>
-            <path class="intelligence-check-guides" d="M48 2v12 M48 82v12 M2 48h12 M82 48h12 M16 16l8 8 M72 72l8 8 M16 80l8-8 M72 24l8-8"/>
-            <g class="intelligence-check-needle">
-              <path d="M48 48V19"/>
-              <circle cx="48" cy="17" r="3"/>
-              <path class="intelligence-check-tail" d="M48 53v9"/>
-            </g>
-            <circle class="intelligence-check-hub" cx="48" cy="48" r="5"/>
-          </svg>
-          <div class="intelligence-check-copy">
-            <p class="intelligence-check-question" id="intelligence-question">Is superintelligence here yet?</p>
-            <button class="intelligence-check-trigger" type="button" data-intelligence-trigger aria-controls="intelligence-answer" disabled>
-              <span data-intelligence-label>Ask the machine</span>
-              <svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden="true"><path d="M3 13 13 3 M4 3h9v9" stroke="currentColor" stroke-width="1.3"/></svg>
-            </button>
-          </div>
-        </div>
-        <div class="intelligence-check-response" id="intelligence-answer" role="status" aria-live="polite" aria-atomic="true">
-          <p class="intelligence-check-answer" data-intelligence-answer>A very unofficial test.</p>
-          <p class="intelligence-check-hint" data-intelligence-hint>Ask a big question. Get a small answer.</p>
-          <a class="intelligence-check-sponsor" data-intelligence-sponsor href="sponsors.html" hidden>Sponsor the course<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden="true"><path d="M3 13 13 3 M4 3h9v9" stroke="currentColor" stroke-width="1.3"></path></svg></a>
-        </div>
-        <noscript><p class="intelligence-check-hint">Define “here”. In the meantime, build something.</p></noscript>
-      </aside>
-      <figure class="masthead-figure" data-masthead-figure aria-label="Three views of how the course teaches AI engineering">
-        <div class="fig-plate">
-        <div class="fig-panel is-active" data-caption="Every layer of this diagram is a lesson you implement by hand." role="group" aria-label="Plate 1 of 3: Forward pass" aria-hidden="false">
-          <svg viewBox="0 0 560 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect class="fig-frame" x="8" y="8" width="544" height="364"/>
-            <path class="fig-tick" d="M8 28 V8 H28 M532 8 H552 V28 M552 352 V372 H532 M28 372 H8 V352"/>
-            <text class="fig-label" x="24" y="34">FIG_001 · FORWARD PASS</text>
-            <text class="fig-label fig-label--right" x="536" y="34">y = σ(Wx + b)</text>
-            <line class="fig-edge fig-l1" x1="90" y1="110" x2="230" y2="100" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="110" x2="230" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="110" x2="230" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="110" x2="230" y2="310" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="175" x2="230" y2="100" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="175" x2="230" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="175" x2="230" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="175" x2="230" y2="310" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="240" x2="230" y2="100" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="240" x2="230" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="240" x2="230" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="240" x2="230" y2="310" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="305" x2="230" y2="100" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="305" x2="230" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="305" x2="230" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l1" x1="90" y1="305" x2="230" y2="310" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="100" x2="370" y2="100" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="100" x2="370" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="100" x2="370" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="100" x2="370" y2="310" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="170" x2="370" y2="100" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="170" x2="370" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="170" x2="370" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="170" x2="370" y2="310" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="240" x2="370" y2="100" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="240" x2="370" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="240" x2="370" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="240" x2="370" y2="310" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="310" x2="370" y2="100" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="310" x2="370" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="310" x2="370" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l2" x1="230" y1="310" x2="370" y2="310" pathLength="1"/>
-            <line class="fig-edge fig-l3" x1="370" y1="100" x2="480" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l3" x1="370" y1="100" x2="480" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l3" x1="370" y1="170" x2="480" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l3" x1="370" y1="170" x2="480" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l3" x1="370" y1="240" x2="480" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l3" x1="370" y1="240" x2="480" y2="240" pathLength="1"/>
-            <line class="fig-edge fig-l3" x1="370" y1="310" x2="480" y2="170" pathLength="1"/>
-            <line class="fig-edge fig-l3" x1="370" y1="310" x2="480" y2="240" pathLength="1"/>
-            <circle class="fig-node fig-n1" cx="90" cy="110" r="7"/>
-            <circle class="fig-node fig-n1" cx="90" cy="175" r="7"/>
-            <circle class="fig-node fig-n1" cx="90" cy="240" r="7"/>
-            <circle class="fig-node fig-n1" cx="90" cy="305" r="7"/>
-            <circle class="fig-node fig-n2" cx="230" cy="100" r="7"/>
-            <circle class="fig-node fig-n2" cx="230" cy="170" r="7"/>
-            <circle class="fig-node fig-n2" cx="230" cy="240" r="7"/>
-            <circle class="fig-node fig-n2" cx="230" cy="310" r="7"/>
-            <circle class="fig-node fig-n3" cx="370" cy="100" r="7"/>
-            <circle class="fig-node fig-n3" cx="370" cy="170" r="7"/>
-            <circle class="fig-node fig-n3" cx="370" cy="240" r="7"/>
-            <circle class="fig-node fig-n3" cx="370" cy="310" r="7"/>
-            <circle class="fig-node fig-n4" cx="480" cy="170" r="7"/>
-            <circle class="fig-node fig-n4" cx="480" cy="240" r="7"/>
-            <circle class="fig-pulse" r="4" style="offset-path: path('M90,110 L230,100 L370,170 L480,170'); animation-delay: 0.9s"/>
-            <circle class="fig-pulse" r="4" style="offset-path: path('M90,240 L230,240 L370,240 L480,240'); animation-delay: 2.2s"/>
-            <circle class="fig-pulse" r="4" style="offset-path: path('M90,175 L230,310 L370,170 L480,240'); animation-delay: 3.5s"/>
-            <text class="fig-axis" x="90" y="345">x</text>
-            <text class="fig-axis" x="230" y="345">h₁</text>
-            <text class="fig-axis" x="370" y="345">h₂</text>
-            <text class="fig-axis" x="480" y="345">ŷ</text>
-          </svg>
-        </div>
-        <div class="fig-panel" data-caption="The first AI-native course: your agent teaches it, quizzes you, and tracks your path." role="group" aria-label="Plate 2 of 3: AI-native lesson" aria-hidden="true">
-          <svg viewBox="0 0 560 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect class="fig-frame" x="8" y="8" width="544" height="364"/>
-            <path class="fig-tick" d="M8 28 V8 H28 M532 8 H552 V28 M552 352 V372 H532 M28 372 H8 V352"/>
-            <text class="fig-label" x="24" y="34">FIG_002 · AI-NATIVE LESSON</text>
-            <text class="fig-label fig-label--right" x="536" y="34">/learn</text>
-            <rect class="fig-term" x="68" y="76" width="424" height="252"/>
-            <line class="fig-term-bar" x1="68" y1="104" x2="492" y2="104"/>
-            <circle class="fig-term-dot" cx="84" cy="90" r="3.5"/>
-            <circle class="fig-term-dot" cx="98" cy="90" r="3.5"/>
-            <circle class="fig-term-dot" cx="112" cy="90" r="3.5"/>
-            <text class="fig-line fig-line--cmd" x="92" y="140" style="animation-delay: 0.35s">/learn</text>
-            <text class="fig-line fig-line--agent" x="92" y="184" style="animation-delay: 1.1s">agent: today, attention. why divide by √d?</text>
-            <text class="fig-line fig-line--you" x="92" y="228" style="animation-delay: 1.85s">you: it keeps softmax gradients alive</text>
-            <text class="fig-line fig-line--agent" x="92" y="272" style="animation-delay: 2.6s">agent: exactly. quiz 3/3, next we build it</text>
-            <rect class="fig-caret" x="92" y="304" width="9" height="15" style="animation-delay: 3.5s"/>
-          </svg>
-        </div>
-        <div class="fig-panel" data-caption="One spine instead of scattered pieces. Skill compounds instead of plateauing." role="group" aria-label="Plate 3 of 3: The learning curve" aria-hidden="true">
-          <svg viewBox="0 0 560 380" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect class="fig-frame" x="8" y="8" width="544" height="364"/>
-            <path class="fig-tick" d="M8 28 V8 H28 M532 8 H552 V28 M552 352 V372 H532 M28 372 H8 V352"/>
-            <text class="fig-label" x="24" y="34">FIG_003 · THE LEARNING CURVE</text>
-            <text class="fig-label fig-label--right" x="536" y="34">skill vs hours</text>
-            <line class="fig-grid" x1="150" y1="80" x2="150" y2="320"/>
-            <line class="fig-grid" x1="220" y1="80" x2="220" y2="320"/>
-            <line class="fig-grid" x1="290" y1="80" x2="290" y2="320"/>
-            <line class="fig-grid" x1="360" y1="80" x2="360" y2="320"/>
-            <line class="fig-grid" x1="430" y1="80" x2="430" y2="320"/>
-            <line class="fig-grid" x1="80" y1="130" x2="500" y2="130"/>
-            <line class="fig-grid" x1="80" y1="190" x2="500" y2="190"/>
-            <line class="fig-grid" x1="80" y1="250" x2="500" y2="250"/>
-            <line class="fig-axis-line" x1="80" y1="320" x2="504" y2="320"/>
-            <line class="fig-axis-line" x1="80" y1="320" x2="80" y2="68"/>
-            <path class="fig-axis-line" d="M498 315 L504 320 L498 325"/>
-            <path class="fig-axis-line" d="M75 74 L80 68 L85 74"/>
-            <text class="fig-axis" x="512" y="342">hours</text>
-            <text class="fig-axis" x="80" y="56">skill</text>
-            <path class="fig-area" d="M80,318 C205,306 255,178 490,92 L490,318 L80,318 Z"/>
-            <path class="fig-curve fig-curve--flat" d="M80,318 C180,297 290,288 490,270" pathLength="1"/>
-            <path class="fig-curve fig-curve--steep" d="M80,318 C205,306 255,178 490,92" pathLength="1"/>
-            <text class="fig-curve-label fig-curve-label--flat" x="368" y="252">tutorial hopping</text>
-            <rect class="fig-mile" x="188.2" y="268.2" width="7" height="7" style="animation-delay: 2.0s"/>
-            <text class="fig-mile-label" x="203.7" y="261.7" style="animation-delay: 2.1s">backprop</text>
-            <rect class="fig-mile" x="284.5" y="196.1" width="7" height="7" style="animation-delay: 2.4s"/>
-            <text class="fig-mile-label" x="300.0" y="189.6" style="animation-delay: 2.5s">transformers</text>
-            <rect class="fig-mile" x="403.7" y="123.8" width="7" height="7" style="animation-delay: 2.8s"/>
-            <text class="fig-mile-label" x="421.2" y="151.3" style="animation-delay: 2.9s">agents</text>
-            <circle class="fig-rider" r="5" style="offset-path: path('M80,318 C205,306 255,178 490,92')"/>
-          </svg>
-        </div>
-        </div>
-        <div class="fig-meta">
-          <figcaption class="fig-caption" aria-live="off" aria-atomic="true">Plate 1 of 3. Every layer of this diagram is a lesson you implement by hand.</figcaption>
-          <div class="fig-controls" aria-label="Course explanation controls">
-            <button class="fig-control fig-previous" type="button" aria-label="Show previous explanation" disabled>Previous</button>
-            <div class="fig-dots" role="group" aria-label="Choose an explanation">
-              <button class="fig-dot is-active" type="button" aria-label="Show plate 1: Forward pass" aria-pressed="true"></button>
-              <button class="fig-dot" type="button" aria-label="Show plate 2: AI-native lesson" aria-pressed="false"></button>
-              <button class="fig-dot" type="button" aria-label="Show plate 3: The learning curve" aria-pressed="false"></button>
-            </div>
-            <button class="fig-control fig-next" type="button" aria-label="Show next explanation">Next</button>
-          </div>
-        </div>
-      </figure>
-      <div class="ascii-rule" style="margin-top:48px;"></div>
+      <p class="masthead-install-caption reveal" style="--stagger-delay: 160ms;">Your agent becomes your tutor: placement quiz, personalized path, lessons taught interactively in your terminal. <a href="skills.html">How it works <span aria-hidden="true">→</span></a></p>
     </section>
 
     <section class="learners-strip" aria-label="Where readers learn and where the course is discussed">
@@ -2576,6 +2246,152 @@
         </div>
       </div>
       <p class="learners-quote">&ldquo;Obsessed with the AI Engineering from Scratch repo.&rdquo; <span class="learners-quote-attr">- AI engineer at Google</span></p>
+    </section>
+
+    <section class="agent-tutor container" id="agent-tutor" aria-labelledby="agentTutorTitle">
+      <div class="agent-tutor-head">
+        <div>
+        <p class="agent-tutor-eyebrow">Your agent is the tutor</p>
+        <h2 class="agent-tutor-title" id="agentTutorTitle">You don't navigate this course. Your agent teaches it.</h2>
+        </div>
+        <p class="agent-tutor-lede">Most courses make you find your own way through them. This one ships its own tutor. Install the course skills into the coding agent you already use, and that agent places you, writes your study plan, and teaches each lesson in your terminal. You do not need to understand the curriculum to start.</p>
+      </div>
+      <ol class="tutor-steps">
+        <li class="tutor-step">
+          <span class="tutor-step-num">01</span>
+          <code class="tutor-step-cmd">npx skills add rohitg00/ai-engineering-from-scratch</code>
+          <h3 class="tutor-step-title">Install the skills</h3>
+          <p class="tutor-step-text">No clone needed. Works in Claude Code, Codex, Cursor, and any agent that reads SKILL.md.</p>
+        </li>
+        <li class="tutor-step">
+          <span class="tutor-step-num">02</span>
+          <code class="tutor-step-cmd">/find-your-level</code>
+          <h3 class="tutor-step-title">Find your level</h3>
+          <p class="tutor-step-text">Ten questions. Your agent maps what you already know to a starting phase, marks what you can skip, and estimates the hours.</p>
+        </li>
+        <li class="tutor-step">
+          <span class="tutor-step-num">03</span>
+          <code class="tutor-step-cmd">/start-learning</code>
+          <h3 class="tutor-step-title">Get your plan</h3>
+          <p class="tutor-step-text">Your agent saves your goal and placement to LEARNING.md, a study plan that lives next to your code.</p>
+        </li>
+        <li class="tutor-step">
+          <span class="tutor-step-num">04</span>
+          <code class="tutor-step-cmd">/learn</code>
+          <h3 class="tutor-step-title">Learn every session</h3>
+          <p class="tutor-step-text">A warm-up on the last lesson, the next lesson taught section by section in your terminal, a quiz, and your progress recorded.</p>
+        </li>
+      </ol>
+      <p class="agent-tutor-foot">Stuck on a topic or a bug? <code>/course-guide</code> points you to the exact lesson. Commands are shown for Claude Code. In Codex, type the skill name. In other agents, ask to use the skill by name. <a href="skills.html">See every skill <span aria-hidden="true">→</span></a></p>
+    </section>
+
+    <section class="toc container" id="contents">
+      <div class="toc-title">Curriculum · <span id="tocPhaseCount">20 phases</span> · <span id="tocLessonCount">542 lessons</span></div>
+      <div class="toc-subtitle" style="--stagger-delay: 80ms;">Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.</div>
+      <div class="toc-list" id="phasesGrid"></div>
+    </section>
+
+    <section class="stat-block lesson-loop container" aria-labelledby="lessonLoopTitle">
+      <h2 class="stat-block-title" id="lessonLoopTitle">How every lesson works</h2>
+      <div class="preface-body lesson-loop-intro">
+        <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.</p>
+        <p>This curriculum is the spine. <span id="prefacePhaseCount">Every phase</span>, <span id="prefaceLessonCount">every published lesson</span>, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.</p>
+      </div>
+      <figure class="lesson-loop-art" style="--stagger-delay: 100ms;">
+<svg class="lesson-loop-figure lesson-loop-wide" xmlns="http://www.w3.org/2000/svg" width="1200" height="290" viewBox="45 24 1200 290" aria-hidden="true" focusable="false">
+<text style="fill:var(--blueprint)" x="50" y="44" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="2.2">FIG_000.B  ·  ONE LESSON, FOUR STEPS</text>
+<text style="fill:var(--ink-soft)" x="1230" y="44" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" letter-spacing="2.2" text-anchor="end">EXAMPLE  ·  PHASE 14 / LESSON 01  ·  THE AGENT LOOP</text>
+<line style="stroke:var(--blueprint)" x1="50" y1="62" x2="1230" y2="62" stroke-width="0.6" stroke-opacity="0.4"/>
+<rect style="fill:var(--blueprint)" x="55" y="97" width="260" height="212" fill-opacity="0.18"/>
+<rect style="fill:var(--bg);stroke:var(--blueprint)" x="50" y="92" width="260" height="212" stroke-width="1.2"/>
+<text style="fill:var(--blueprint)" x="72.0" y="138.0" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40">01</text>
+<text style="fill:var(--ink)" x="72.0" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" letter-spacing="1.5">THE PROBLEM</text>
+<text style="fill:var(--ink-soft)" x="72.0" y="198.0" font-family="'Source Serif 4', Georgia, serif" font-size="16">a concrete failure</text>
+<line style="stroke:var(--blueprint)" x1="72.0" y1="220.0" x2="288.0" y2="220.0" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text style="fill:var(--ink)" x="72.0" y="248.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">An LLM returns text.</text>
+<text style="fill:var(--ink)" x="72.0" y="270.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">It cannot act.</text>
+<line style="stroke:var(--blueprint)" x1="320" y1="198.0" x2="342" y2="198.0" stroke-width="1.4"/>
+<polygon style="fill:var(--blueprint)" points="350,198.0 340,193.0 340,203.0"/>
+<rect style="fill:var(--blueprint)" x="361" y="97" width="260" height="212" fill-opacity="0.18"/>
+<rect style="fill:var(--bg);stroke:var(--blueprint)" x="356" y="92" width="260" height="212" stroke-width="1.2"/>
+<text style="fill:var(--blueprint)" x="378.0" y="138.0" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40">02</text>
+<text style="fill:var(--ink)" x="378.0" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" letter-spacing="1.5">BUILD IT</text>
+<text style="fill:var(--ink-soft)" x="378.0" y="198.0" font-family="'Source Serif 4', Georgia, serif" font-size="16">raw code, no framework</text>
+<line style="stroke:var(--blueprint)" x1="378.0" y1="220.0" x2="594.0" y2="220.0" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text style="fill:var(--ink)" x="378.0" y="248.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">A ReAct loop in</text>
+<text style="fill:var(--ink)" x="378.0" y="270.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">stdlib Python.</text>
+<line style="stroke:var(--blueprint)" x1="626" y1="198.0" x2="648" y2="198.0" stroke-width="1.4"/>
+<polygon style="fill:var(--blueprint)" points="656,198.0 646,193.0 646,203.0"/>
+<rect style="fill:var(--blueprint)" x="667" y="97" width="260" height="212" fill-opacity="0.18"/>
+<rect style="fill:var(--bg);stroke:var(--blueprint)" x="662" y="92" width="260" height="212" stroke-width="1.2"/>
+<text style="fill:var(--blueprint)" x="684.0" y="138.0" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40">03</text>
+<text style="fill:var(--ink)" x="684.0" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" letter-spacing="1.5">USE IT</text>
+<text style="fill:var(--ink-soft)" x="684.0" y="198.0" font-family="'Source Serif 4', Georgia, serif" font-size="16">the production library</text>
+<line style="stroke:var(--blueprint)" x1="684.0" y1="220.0" x2="900.0" y2="220.0" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text style="fill:var(--ink)" x="684.0" y="248.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">The same loop in</text>
+<text style="fill:var(--ink)" x="684.0" y="270.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">an agent SDK.</text>
+<line style="stroke:var(--blueprint)" x1="932" y1="198.0" x2="954" y2="198.0" stroke-width="1.4"/>
+<polygon style="fill:var(--blueprint)" points="962,198.0 952,193.0 952,203.0"/>
+<rect style="fill:var(--blueprint)" x="973" y="97" width="260" height="212" fill-opacity="0.18"/>
+<rect style="fill:var(--bg);stroke:var(--blueprint)" x="968" y="92" width="260" height="212" stroke-width="1.2"/>
+<text style="fill:var(--blueprint)" x="990.0" y="138.0" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40">04</text>
+<text style="fill:var(--ink)" x="990.0" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" font-weight="700" letter-spacing="1.5">SHIP IT</text>
+<text style="fill:var(--ink-soft)" x="990.0" y="198.0" font-family="'Source Serif 4', Georgia, serif" font-size="16">an artifact you keep</text>
+<line style="stroke:var(--blueprint)" x1="990.0" y1="220.0" x2="1206.0" y2="220.0" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text style="fill:var(--ink)" x="990.0" y="248.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">skill-agent-loop.md,</text>
+<text style="fill:var(--ink)" x="990.0" y="270.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14">ready for your agent.</text>
+</svg>
+<svg class="lesson-loop-figure lesson-loop-narrow" xmlns="http://www.w3.org/2000/svg" width="580" height="1200" viewBox="35 30 580 1200" aria-hidden="true" focusable="false">
+<text style="fill:var(--blueprint)" x="40" y="52" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" letter-spacing="1.5">FIG_000.B  ·  ONE LESSON, FOUR STEPS</text>
+<text style="fill:var(--ink-soft)" x="40" y="82" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" letter-spacing="1.5">EXAMPLE  ·  PHASE 14 / LESSON 01</text>
+<line style="stroke:var(--blueprint)" x1="40" y1="102" x2="600" y2="102" stroke-width="0.8" stroke-opacity="0.4"/>
+<rect style="fill:var(--blueprint)" x="45" y="131" width="555" height="236" fill-opacity="0.18"/>
+<rect style="fill:var(--bg);stroke:var(--blueprint)" x="40" y="126" width="555" height="236" stroke-width="1.2"/>
+<text style="fill:var(--blueprint)" x="67.5" y="183.5" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50">01</text>
+<text style="fill:var(--ink)" x="67.5" y="226.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" letter-spacing="1.5">THE PROBLEM</text>
+<text style="fill:var(--ink-soft)" x="67.5" y="258.5" font-family="'Source Serif 4', Georgia, serif" font-size="20">a concrete failure</text>
+<line style="stroke:var(--blueprint)" x1="67.5" y1="286.0" x2="567.5" y2="286.0" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text style="fill:var(--ink)" x="67.5" y="321.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">An LLM returns text.</text>
+<text style="fill:var(--ink)" x="67.5" y="348.5" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">It cannot act.</text>
+<line style="stroke:var(--blueprint)" x1="317.5" y1="372" x2="317.5" y2="396" stroke-width="1.4"/>
+<polygon style="fill:var(--blueprint)" points="317.5,404 312.5,394 322.5,394"/>
+<rect style="fill:var(--blueprint)" x="45" y="413" width="555" height="236" fill-opacity="0.18"/>
+<rect style="fill:var(--bg);stroke:var(--blueprint)" x="40" y="408" width="555" height="236" stroke-width="1.2"/>
+<text style="fill:var(--blueprint)" x="67.5" y="465.5" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50">02</text>
+<text style="fill:var(--ink)" x="67.5" y="508.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" letter-spacing="1.5">BUILD IT</text>
+<text style="fill:var(--ink-soft)" x="67.5" y="540.5" font-family="'Source Serif 4', Georgia, serif" font-size="20">raw code, no framework</text>
+<line style="stroke:var(--blueprint)" x1="67.5" y1="568.0" x2="567.5" y2="568.0" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text style="fill:var(--ink)" x="67.5" y="603.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">A ReAct loop in</text>
+<text style="fill:var(--ink)" x="67.5" y="630.5" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">stdlib Python.</text>
+<line style="stroke:var(--blueprint)" x1="317.5" y1="654" x2="317.5" y2="678" stroke-width="1.4"/>
+<polygon style="fill:var(--blueprint)" points="317.5,686 312.5,676 322.5,676"/>
+<rect style="fill:var(--blueprint)" x="45" y="695" width="555" height="236" fill-opacity="0.18"/>
+<rect style="fill:var(--bg);stroke:var(--blueprint)" x="40" y="690" width="555" height="236" stroke-width="1.2"/>
+<text style="fill:var(--blueprint)" x="67.5" y="747.5" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50">03</text>
+<text style="fill:var(--ink)" x="67.5" y="790.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" letter-spacing="1.5">USE IT</text>
+<text style="fill:var(--ink-soft)" x="67.5" y="822.5" font-family="'Source Serif 4', Georgia, serif" font-size="20">the production library</text>
+<line style="stroke:var(--blueprint)" x1="67.5" y1="850.0" x2="567.5" y2="850.0" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text style="fill:var(--ink)" x="67.5" y="885.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">The same loop in</text>
+<text style="fill:var(--ink)" x="67.5" y="912.5" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">an agent SDK.</text>
+<line style="stroke:var(--blueprint)" x1="317.5" y1="936" x2="317.5" y2="960" stroke-width="1.4"/>
+<polygon style="fill:var(--blueprint)" points="317.5,968 312.5,958 322.5,958"/>
+<rect style="fill:var(--blueprint)" x="45" y="977" width="555" height="236" fill-opacity="0.18"/>
+<rect style="fill:var(--bg);stroke:var(--blueprint)" x="40" y="972" width="555" height="236" stroke-width="1.2"/>
+<text style="fill:var(--blueprint)" x="67.5" y="1029.5" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="50">04</text>
+<text style="fill:var(--ink)" x="67.5" y="1072.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" font-weight="700" letter-spacing="1.5">SHIP IT</text>
+<text style="fill:var(--ink-soft)" x="67.5" y="1104.5" font-family="'Source Serif 4', Georgia, serif" font-size="20">an artifact you keep</text>
+<line style="stroke:var(--blueprint)" x1="67.5" y1="1132.0" x2="567.5" y2="1132.0" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text style="fill:var(--ink)" x="67.5" y="1167.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">skill-agent-loop.md,</text>
+<text style="fill:var(--ink)" x="67.5" y="1194.5" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18">ready for your agent.</text>
+</svg>
+        <ol class="lesson-loop-steps">
+          <li>The problem: a concrete failure. An LLM returns text and cannot act.</li>
+          <li>Build it: raw code, no framework. A ReAct loop in stdlib Python.</li>
+          <li>Use it: the production library. The same loop in an agent SDK.</li>
+          <li>Ship it: an artifact you keep. A skill your coding agent can load.</li>
+        </ol>
+        <figcaption>Write the small version first, then run the production library on the same problem and compare. The example is <a href="/learn/agent-engineering/the-agent-loop">The Agent Loop</a> in Phase 14.</figcaption>
+      </figure>
     </section>
 
     <section class="course-paths container" id="choose-path" aria-labelledby="coursePathsTitle">
@@ -2611,129 +2427,6 @@
           <span class="learning-paths-node-label">Product Judgment and Delivery</span>
         </a>
       </figure>
-      <div class="course-route-list">
-        <article class="course-route is-recommended">
-          <div class="course-route-name"><span>Recommended first</span><strong>New to AI engineering</strong></div>
-          <p>Set up a working environment, run the repository, and learn the lesson workflow before choosing a specialization.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment">Open lesson</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/00-setup-and-tooling/01-dev-environment" target="_blank" rel="noopener">GitHub source</a>
-          </div>
-        </article>
-        <article class="course-route">
-          <div class="course-route-name"><span>Core domain</span><strong>Building and Deploying AI Applications</strong></div>
-          <p>Move from prompts, structured outputs, embeddings, and retrieval through evaluation, serving, observability, and safe release.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="lesson?path=phases/11-llm-engineering/01-prompt-engineering&amp;learningPath=building-and-deploying-ai-applications">Start path</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/building-and-deploying-ai-applications.json" target="_blank" rel="noopener">GitHub path</a>
-          </div>
-        </article>
-        <article class="course-route">
-          <div class="course-route-name"><span>Core domain</span><strong>Software Engineering Fundamentals</strong></div>
-          <p>Build the repository, environment, interface, debugging, verification, security, release, and operational foundations AI systems depend on.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="lesson?path=phases/00-setup-and-tooling/01-dev-environment&amp;learningPath=software-engineering-fundamentals">Start path</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/software-engineering-fundamentals.json" target="_blank" rel="noopener">GitHub path</a>
-          </div>
-        </article>
-        <article class="course-route">
-          <div class="course-route-name"><span>Core domain</span><strong>Agent-Assisted Engineering</strong></div>
-          <p>Frame the task, plan from repository evidence, engineer the loop and harness, isolate delegation, verify the result, and preserve feedback.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&amp;learningPath=using-coding-agents">Start path</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/using-coding-agents.json" target="_blank" rel="noopener">GitHub path</a>
-          </div>
-        </article>
-        <article class="course-route">
-          <div class="course-route-name"><span>Core domain</span><strong>Product Judgment and Delivery</strong></div>
-          <p>Turn observed work into outcomes, assumptions, testable slices, executable specifications, measurement plans, staged releases, and owned feedback.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="lesson?path=phases/14-agent-engineering/47-outcomes-before-output&amp;learningPath=shaping-the-build">Start path</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/learning-paths/shaping-the-build.json" target="_blank" rel="noopener">GitHub path</a>
-          </div>
-        </article>
-        <article class="course-route">
-          <div class="course-route-name"><span>Focused path</span><strong>Model Context Protocol (MCP)</strong></div>
-          <p>Build, secure, verify, and operate stateless MCP systems from wire envelopes through release gates.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&amp;learningPath=model-context-protocol">Start path</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/06-mcp-fundamentals" target="_blank" rel="noopener">GitHub source</a>
-          </div>
-        </article>
-        <article class="course-route">
-          <div class="course-route-name"><span>Focused path</span><strong>Agent Skills</strong></div>
-          <p>Build, invoke, route, secure, evaluate, package, and verify portable skills in real agent hosts.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&amp;learningPath=agent-skills">Start path</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/tree/main/phases/13-tools-and-protocols/22-skills-and-agent-sdks" target="_blank" rel="noopener">GitHub source</a>
-          </div>
-        </article>
-        <article class="course-route">
-          <div class="course-route-name"><span>Practice by evidence</span><strong>Certification preparation</strong></div>
-          <p>Choose a Claude or MCPA certification route, complete practical labs, keep learner-owned artifacts, and use original assessments.</p>
-          <div class="course-route-actions">
-            <a class="course-route-link" href="certifications.html">Explore paths</a>
-            <a class="course-route-link" href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/certifications/README.md" target="_blank" rel="noopener">GitHub tutor</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="preface container">
-      <div class="preface-grid">
-        <div class="preface-eyebrow reveal reveal--left">How this works</div>
-        <div class="preface-body reveal" style="--stagger-delay: 120ms;">
-          <p>Most AI material teaches in scattered pieces. A paper here, a fine-tuning post there, a flashy agent demo somewhere else. The pieces rarely line up. You ship a chatbot but can't explain its loss curve. You hook a function to an agent but can't say what attention does inside the model that's calling it.</p>
-          <p>This curriculum is the spine. <span id="prefacePhaseCount">Every phase</span>, <span id="prefaceLessonCount">every published lesson</span>, four languages: Python, TypeScript, Rust, Julia. Linear algebra at one end, autonomous swarms at the other. Every algorithm gets built from raw math first. Backprop. Tokenizer. Attention. Agent loop. By the time PyTorch shows up, you already know what it's doing under the hood.</p>
-          <p>Each lesson runs the same loop: read the problem, derive the math, write the code, run the test, keep the artifact. No five-minute videos, no copy-paste deploys, no hand-holding. Free, open source, and built to run on your own laptop.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="stat-block container">
-      <div class="stat-block-title reveal reveal--left">Current Progress</div>
-      <div class="stat-rows reveal" style="--stagger-delay: 100ms;" id="statRows">
-        <div class="stat-row">
-          <span class="stat-row-label">Finished Lessons</span>
-          <span class="stat-row-bar" data-bar="complete" style="--bar-scale:0;" aria-hidden="true">bar</span>
-          <span class="stat-row-value" data-stat="complete-frac">0 / 0</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-row-label">Phases</span>
-          <span class="stat-row-bar" data-bar="phases" style="--bar-scale:0;" aria-hidden="true">bar</span>
-          <span class="stat-row-value" data-stat="phases-frac">0 / 0</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-row-label">Languages</span>
-          <span class="stat-row-bar" data-bar="languages" style="--bar-scale:1;" aria-hidden="true">bar</span>
-          <span class="stat-row-value">4</span>
-        </div>
-        <div class="stat-row">
-          <span class="stat-row-label">Glossary Terms</span>
-          <span class="stat-row-bar" data-bar="glossary" style="--bar-scale:1;" aria-hidden="true">bar</span>
-          <span class="stat-row-value" data-stat="glossary-count">···</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="whats-new container" id="whats-new" aria-labelledby="whatsNewTitle" hidden>
-      <div class="whats-new-title" id="whatsNewTitle">What's new · updated every release</div>
-      <ol class="whats-new-list" id="whatsNewList"></ol>
-      <p class="whats-new-links">
-        <a href="https://github.com/rohitg00/ai-engineering-from-scratch/releases" target="_blank" rel="noopener">All releases</a>
-        <a href="https://www.google.com/preferences/source?q=aiengineeringfromscratch.com" target="_blank" rel="noopener">Prefer us on Google</a>
-      </p>
-    </section>
-
-    <section class="toc container" id="contents">
-      <div class="toc-title reveal reveal--left">Curriculum · <span id="tocPhaseCount">20 phases</span> · <span id="tocLessonCount">542 lessons</span></div>
-      <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">Tap a phase to expand its lessons. Each one ships when its math, code, and test are all written.</div>
-      <div class="toc-list" id="phasesGrid"></div>
-      <div class="legend">
-        <span class="legend-item"><span class="toc-status complete"></span> Complete</span>
-        <span class="legend-item"><span class="toc-status in-progress"></span> In progress</span>
-        <span class="legend-item"><span class="toc-status planned"></span> Planned</span>
-      </div>
     </section>
 
     <div class="machine-row container" id="machines">
@@ -2803,14 +2496,14 @@
 
 
     <section class="books container" id="books">
-      <div class="toc-title reveal reveal--left">The book edition · six volumes</div>
-      <div class="toc-subtitle reveal" style="--stagger-delay: 80ms;">The course, compiled. EPUB and PDF built from the same lessons and attached to every GitHub release. The site stays the living edition. Every chapter links back here for the animated figures, quizzes, and code.</div>
+      <div class="toc-title">The book edition · six volumes</div>
+      <div class="toc-subtitle" style="--stagger-delay: 80ms;">The course, compiled. EPUB and PDF built from the same lessons and attached to every GitHub release. The site stays the living edition. Every chapter links back here for the animated figures, quizzes, and code.</div>
       <div class="books-grid" id="booksGrid"></div>
       <div class="books-note">Links resolve to the newest <a href="https://github.com/rohitg00/ai-engineering-from-scratch/releases" target="_blank" rel="noopener">GitHub release</a> · rebuilt by CI from the lessons on every release · <a href="https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/book/README.md" target="_blank" rel="noopener">how it's made</a></div>
     </section>
 
     <section class="certification-spotlight container" id="certifications" aria-labelledby="certification-spotlight-title">
-      <div class="certification-spotlight-grid reveal">
+      <div class="certification-spotlight-grid">
         <figure class="certification-badge-stage" aria-hidden="true">
           <img class="certification-badge-claude"
             src="https://images.credly.com/images/f101c6ac-8a2d-4220-b381-70e3e6c364e3/blob"
@@ -2857,7 +2550,7 @@
         var html = '';
         volumes.forEach(function (v, i) {
           var base = DL_BASE + v.n + '-' + v.slug;
-          html += '<div class="book-card reveal"' + (i > 0 ? ' style="--stagger-delay: ' + (i * 60) + 'ms;"' : '') + '>';
+          html += '<div class="book-card"' + (i > 0 ? ' style="--stagger-delay: ' + (i * 60) + 'ms;"' : '') + '>';
           html += '<span class="vol">VOL_00' + v.n + '</span>';
           html += '<h3>' + v.title + '</h3>';
           html += '<p>' + v.subtitle + ' · phases ' + v.phases + '</p>';
@@ -2873,8 +2566,8 @@
 
     <section class="colophon container">
       <div class="colophon-grid">
-        <div class="colophon-eyebrow reveal reveal--left">Colophon</div>
-        <div class="reveal" style="--stagger-delay: 80ms;">
+        <div class="colophon-eyebrow">Colophon</div>
+        <div style="--stagger-delay: 80ms;">
           <p>The entire curriculum is on GitHub. Clone it, fork it, learn at your own pace. No paywall, no signup. Every lesson has runnable code in Python, TypeScript, Rust, or Julia, depending on what fits the concept best.</p>
           <div class="colophon-cmd">
             <code id="cloneCmd">git clone https://github.com/rohitg00/ai-engineering-from-scratch.git</code>
@@ -3035,10 +2728,9 @@
       if (window.AIFSProgress) window.AIFSProgress.onChange(syncStartLink);
     })();
   </script>
-  <script src="header.js?v=20261103a" defer></script>
+  <script src="header.js?v=20261114a" defer></script>
   <script src="cmdpalette.js?v=20261103a" defer></script>
-  <script src="app.js?v=20261015a"></script>
-  <script src="intelligence-check.js" defer></script>
+  <script src="app.js?v=20261114a"></script>
   <script defer src="https://va.vercel-scripts.com/v1/script.js"></script>
 </body>
 </html>

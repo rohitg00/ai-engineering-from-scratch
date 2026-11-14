@@ -463,9 +463,9 @@ function writeMarkdown(file, { name, description, version }) {
 test('shared site asset families use the expected cache keys on every page', () => {
   const release = '20260822a';
   const styleRelease = '20261015a';
-  const navigationRelease = '20261103a';
+  const navigationRelease = '20261114a';
   const narrationRelease = '20260829a';
-  const homepageRelease = '20261015a';
+  const homepageRelease = '20261114a';
   const pages = [
     'about.html',
     'assessment.html',
@@ -1428,8 +1428,6 @@ test('repository exposes the four core AI engineering learning paths', () => {
     assert.equal(learningPath.title, title);
     assert.equal(learningPath.lessons.length, lessonCount);
     assert.match(homepage, new RegExp(`>${title}<`, 'i'));
-    assert.match(homepage, new RegExp(`learningPath=${id}`));
-    assert.match(homepage, new RegExp(`learning-paths/${id}\\.json`));
   }
 
   const shaping = learningPaths.find(entry => entry.id === 'shaping-the-build');
@@ -1470,8 +1468,7 @@ test('repository exposes the four core AI engineering learning paths', () => {
 test('homepage preserves live GitHub CTAs and the motion-aware learner marquee', () => {
   const homepage = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
   const headerSource = fs.readFileSync(path.join(__dirname, 'header.js'), 'utf8');
-  const mastheadCta = homepage.match(/<div class="masthead-cta[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<div class="masthead-install/);
-  const mastheadFigure = homepage.match(/\.masthead-figure\s*\{([\s\S]*?)\n    \}/);
+  const mastheadCta = homepage.match(/<div class="masthead-cta[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<nav class="masthead-start[\s\S]*?<\/nav>\s*<div class="masthead-install/);
   const wideMasthead = homepage.match(/@media \(min-width: 1280px\) \{([\s\S]*?)\n    \}\n\n    @media \(min-width: 1440px\)/);
   const learnerStrip = homepage.match(/<section class="learners-strip"[\s\S]*?<\/section>/);
   const learnerStyles = homepage.match(/\/\* Learner organization index \*\/([\s\S]*?)\.masthead-install-caption/);
@@ -1493,16 +1490,13 @@ test('homepage preserves live GitHub CTAs and the motion-aware learner marquee',
   assert.match(headerSource, /fetch\('https:\/\/api\.github\.com\/repos\/' \+ REPO/);
   assert.match(headerSource, /var n = data\.stargazers_count;[\s\S]*?paint\(n\)/);
 
-  assert.ok(mastheadFigure, 'contained masthead figure rule is missing');
-  assert.match(mastheadFigure[0], /width: 100%/);
-  assert.match(mastheadFigure[0], /max-width: 430px/);
-  assert.doesNotMatch(mastheadFigure[0], /position:\s*absolute|right:\s*-/);
+  assert.doesNotMatch(homepage, /data-masthead-figure/);
   assert.match(homepage, /@media \(min-width: 601px\) and \(max-width: 1279px\) \{[\s\S]*?\.manual-masthead\.container\s*\{[\s\S]*?padding-left: clamp\(24px, 2\.5vw, 32px\);[\s\S]*?padding-right: clamp\(24px, 2\.5vw, 32px\);/);
   assert.ok(wideMasthead, 'wide-screen masthead layout is missing');
   assert.match(wideMasthead[0], /grid-template-columns: minmax\(0, 1fr\) minmax\(360px, 400px\)/);
   assert.match(wideMasthead[0], /"title curiosity"/);
-  assert.match(wideMasthead[0], /"install figure"/);
-  assert.match(wideMasthead[0], /\.masthead-figure\s*\{[\s\S]*?position: static;[\s\S]*?grid-area: figure/);
+  assert.match(wideMasthead[0], /"install curiosity"/);
+  assert.match(wideMasthead[0], /\.masthead-install\s*\{\s*grid-area: install;/);
   assert.match(homepage, /\.masthead-cta\s*\{\s*display: grid;\s*grid-template-columns: 1fr/);
 
   assert.ok(learnerStrip, 'institution and company learner strip is missing');
@@ -1543,11 +1537,7 @@ test('homepage uses consistent responsive grids for controls, routes, and curric
   );
   assert.match(
     homepage,
-    /\.course-route-actions\s*\{[\s\S]*?grid-template-columns: repeat\(2, minmax\(0, 1fr\)\);[\s\S]*?width: 248px;[\s\S]*?justify-self: end;/
-  );
-  assert.match(
-    homepage,
-    /@media \(max-width: 600px\) \{[\s\S]*?\.course-route-actions\s*\{[\s\S]*?width: 100%;[\s\S]*?justify-self: stretch;[\s\S]*?\.toc-row\s*\{[\s\S]*?grid-template-columns: 3\.5rem minmax\(0, 1fr\) auto;[\s\S]*?\.toc-row \.toc-meta\s*\{[\s\S]*?grid-column: 3;[\s\S]*?grid-row: 1;/
+    /@media \(max-width: 600px\) \{[\s\S]*?\.toc-row\s*\{[\s\S]*?grid-template-columns: 3\.5rem minmax\(0, 1fr\) auto;[\s\S]*?\.toc-row \.toc-meta\s*\{[\s\S]*?grid-column: 3;[\s\S]*?grid-row: 1;/
   );
 });
 
