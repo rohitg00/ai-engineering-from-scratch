@@ -7,10 +7,10 @@ import time
 import urllib.request
 from pathlib import Path
 
-EVID = Path(__file__).resolve().parent.parent
-PY = str(EVID.parent / "lab" / ".venv" / "bin" / "python")
-S = EVID / "_scripts"
-OUT = EVID / "T04"
+HERE = Path(__file__).resolve().parent
+PY = sys.executable
+S = HERE
+OUT = HERE
 ALL = ["plain_openai", "chatopenai_stream", "agent_messages", "agent_messages_updates", "astream_events_v2",
        "stream_events_v3", "stream_events_v3_raw", "astream_events_v3", "astream_events_v3_gather"]
 AGENT_ONLY = ALL[2:]

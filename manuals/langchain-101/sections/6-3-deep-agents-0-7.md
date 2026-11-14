@@ -122,7 +122,9 @@ The empty message costs no tokens. On Qwen3, the request with it and the request
 
 ## The token cost of the harness
 
-**We measured** the prompt tokens of three harnesses on the Mac, Apple M1 Max, 10 cores, 64 GiB. The model was Qwen3 8B on Ollama at temperature 0 and seed 42. Each task ran three times per harness, and all 27 runs answered correctly. The three harnesses were a plain loop on the `ollama` client, `create_agent`, and `create_deep_agent`, each with the same user tools. [Figure](#fig-6-3) shows each model call.
+**We measured** the prompt tokens of three harnesses on the Mac, Apple M1 Max, 10 cores, 64 GiB. The model was Qwen3 8B on Ollama at temperature 0 and seed 42. Each task ran three times per harness, 27 runs in all. The three harnesses were a plain loop on the `ollama` client, `create_agent`, and `create_deep_agent`, each with the same user tools. [Figure](#fig-6-3) shows each model call.
+
+All 27 final answers passed a check on the answer text. That check did not look at files or tool calls, so we read them in the rows. Every run of the tools task called `add` and `multiply`. Every run of the files task called `write_file` and then `read_file`, and `/notes.txt` existed at the end.
 
 ```figure
 id: fig-6-3

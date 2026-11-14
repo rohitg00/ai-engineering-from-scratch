@@ -6,9 +6,8 @@ import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-EV = HERE.parent
-PY = str(EV.parent / "lab" / ".venv" / "bin" / "python")
-OUTDIR = EV / "TRC"
+PY = sys.executable
+OUTDIR = HERE
 TAG = sys.argv[1]
 CONDS = sys.argv[2].split(",")
 N = int(sys.argv[3])

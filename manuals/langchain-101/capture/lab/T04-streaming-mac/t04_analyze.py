@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from common import pct, read_jsonl
 
-OUT = Path(__file__).resolve().parent.parent / "T04"
+OUT = Path(__file__).resolve().parent
 
 
 def tok_times_ids(run, prefix=None):

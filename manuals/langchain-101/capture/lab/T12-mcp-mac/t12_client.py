@@ -12,9 +12,8 @@ from pathlib import Path
 os.environ["LANGSMITH_TRACING"] = "false"
 warnings.filterwarnings("ignore")
 
-EV = Path(__file__).resolve().parent.parent
 SERVER = Path(__file__).resolve().parent / "t12_server.py"
-MARKS = EV / "T12" / "_marks"
+MARKS = Path(__file__).resolve().parent / "_marks"
 PY = sys.executable
 OUT = Path(sys.argv[1])
 HTTP_PORT = 18931

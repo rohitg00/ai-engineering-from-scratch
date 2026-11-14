@@ -11,7 +11,7 @@ import warnings
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-OUT = HERE.parent / "T20"
+OUT = HERE
 PY = sys.executable
 
 

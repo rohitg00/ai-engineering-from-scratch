@@ -23,8 +23,9 @@ WORK.mkdir(exist_ok=True)
 DB = WORK / "Chinook.db"
 shutil.copyfile(SOURCE_DB, DB)
 
-WRITE_WORDS = re.compile(r"\b(INSERT|UPDATE|DELETE|ALTER|DROP|CREATE|REPLACE|TRUNCATE|ATTACH|DETACH|PRAGMA|VACUUM)\b", re.I)
-LIMIT_AT_END = re.compile(r"(?is)\blimit\b\s+\d+(\s*,\s*\d+)?\s*;?\s*$")
+STRING_LITERAL = re.compile(r"'(?:[^']|'')*'")
+WRITE_WORDS = re.compile(r"\b(INSERT|UPDATE|DELETE|ALTER|DROP|CREATE|REPLACE\s+INTO|TRUNCATE|ATTACH|DETACH|PRAGMA|VACUUM)\b", re.I)
+LIMIT_AT_END = re.compile(r"(?is)\blimit\s+\d+(\s*,\s*\d+|\s+offset\s+\d+)?\s*;?\s*$")
 
 
 def read_only():
@@ -40,7 +41,7 @@ def checked_select(sql: str) -> str:
     sql = sql.rstrip(";").strip()
     if not sql.lower().startswith(("select", "with")):
         raise ValueError("Error: run_query takes only SELECT statements. Use propose_write for a change.")
-    if WRITE_WORDS.search(sql):
+    if WRITE_WORDS.search(STRING_LITERAL.sub("''", sql)):
         raise ValueError("Error: the query holds a write keyword. Use propose_write for a change.")
     if not LIMIT_AT_END.search(sql):
         sql += " LIMIT 21"

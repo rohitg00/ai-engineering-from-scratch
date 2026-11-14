@@ -125,7 +125,7 @@ def check():
 
 def pinned_python():
     for candidate in (os.environ.get("LANGCHAIN101_PYTHON"), os.path.join(HERE, ".venv", "bin", "python")):
-        if candidate and os.path.exists(candidate) and os.path.realpath(candidate) != os.path.realpath(sys.executable):
+        if candidate and os.path.exists(candidate) and os.path.abspath(candidate) != os.path.abspath(sys.executable):
             return candidate
     return None
 

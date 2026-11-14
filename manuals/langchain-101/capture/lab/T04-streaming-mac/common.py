@@ -6,10 +6,9 @@ import time
 import urllib.request
 from pathlib import Path
 
-EVIDENCE = Path(__file__).resolve().parent.parent
-LAB = EVIDENCE.parent / "lab"
-PY = str(LAB / ".venv" / "bin" / "python")
-SCRIPTS = EVIDENCE / "_scripts"
+HERE = Path(__file__).resolve().parent
+PY = sys.executable
+SCRIPTS = HERE
 
 os.environ.setdefault("LANGSMITH_TRACING", "false")
 os.environ.setdefault("LANGCHAIN_TRACING_V2", "false")

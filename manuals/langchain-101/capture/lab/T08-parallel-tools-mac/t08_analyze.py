@@ -3,10 +3,10 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "T04-streaming-mac"))
 from common import pct, read_jsonl
 
-OUT = Path(__file__).resolve().parent.parent / "T08"
+OUT = Path(__file__).resolve().parent
 
 
 def main():

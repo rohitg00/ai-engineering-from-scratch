@@ -132,7 +132,7 @@ claim: A plain graph stops at 10007 steps and an agent at 9999, and each agent s
 caption: Read one dot for each run on the Mac, on a log scale. The label beside each dot names the case and the model calls it made. From capture/lab/summary/recursion-mac.json.
 ```
 
-So each turn of an agent is two steps, one in `model` and one in `tools`. An agent that needs `n` tool calls and one answer needs at least `2n + 1` steps.
+So each turn of an agent is two steps, one in `model` and one in `tools`. Parallel tool calls from one model turn run as tasks of the same `tools` step {{code libs/langchain_v1/langchain/agents/factory.py}}. An agent that needs `n` sequential rounds of tool calls and one answer needs at least `2n + 1` steps.
 
 ## RemainingSteps
 
@@ -145,7 +145,7 @@ The kit loop routes to `END` when `remaining_steps` is 2 or less. With `recursio
 - Add an error_handler that routes to a node that reports the failure.
 - Give a slow async node a timeout, and let the retry policy treat it as one failure.
 - Set recursion_limit at the top level of the config for every run.
-- Allow at least 2n plus 1 steps for an agent that needs n tool calls.
+- Allow at least 2n plus 1 steps for n sequential rounds of tool calls.
 - Read RemainingSteps in a loop to stop before the limit raises.
 ```
 

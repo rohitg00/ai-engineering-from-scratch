@@ -1,7 +1,7 @@
 import json, sys
 from collections import Counter
 from pathlib import Path
-T = Path(__file__).resolve().parent.parent / "T18"
+T = Path(__file__).resolve().parent
 for fn in ["01-evaluate-requests.jsonl", "02-evaluate-noflush.jsonl"]:
     print(f"== {fn}")
     by = {}

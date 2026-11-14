@@ -5,8 +5,8 @@ import sys
 import time
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent))
-from common import EVIDENCE, read_jsonl, start_server, stop_server
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "T04-streaming-mac"))
+from common import read_jsonl, start_server, stop_server
 
 os.environ["LANGSMITH_TRACING"] = "false"
 
@@ -16,7 +16,7 @@ from langchain.agents.middleware import ModelRetryMiddleware, ToolRetryMiddlewar
 from langchain.tools import tool
 from langchain_openai import ChatOpenAI
 
-OUT = EVIDENCE / "T05"
+OUT = Path(__file__).resolve().parent
 WIRE = OUT / "wire"
 WIRE.mkdir(parents=True, exist_ok=True)
 

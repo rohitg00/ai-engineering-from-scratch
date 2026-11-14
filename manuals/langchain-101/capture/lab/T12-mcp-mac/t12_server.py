@@ -4,7 +4,7 @@ import sys
 import time
 from pathlib import Path
 
-MARK = Path(os.environ.get("T12_MARK_DIR", Path(__file__).resolve().parent.parent / "T12" / "_marks"))
+MARK = Path(os.environ.get("T12_MARK_DIR", Path(__file__).resolve().parent / "_marks"))
 MARK.mkdir(parents=True, exist_ok=True)
 (MARK / f"LAUNCHED-{os.getpid()}-{time.time_ns()}").write_text(" ".join(sys.argv) + "\n")
 

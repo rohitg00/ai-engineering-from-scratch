@@ -22,7 +22,7 @@ The demo applies these sections:
 
 ## The read path
 
-The read tools open the file with `mode=ro` and turn on `query_only`. A second check refuses a statement that is not a `SELECT`, holds a write keyword, or holds two statements. The check is the one of the lab, written again for `sqlite3`:
+The read tools open the file with `mode=ro` and turn on `query_only`. A second check refuses a statement that is not a `SELECT`, holds a write keyword outside a string literal, or holds two statements. The check is the one of the lab, written again for `sqlite3`:
 
 ```listing
 title: the read-only connection and the SELECT check
@@ -42,7 +42,7 @@ def checked_select(sql: str) -> str:
     sql = sql.rstrip(";").strip()
     if not sql.lower().startswith(("select", "with")):
         raise ValueError("Error: run_query takes only SELECT statements. Use propose_write for a change.")
-    if WRITE_WORDS.search(sql):
+    if WRITE_WORDS.search(STRING_LITERAL.sub("''", sql)):
         raise ValueError("Error: the query holds a write keyword. Use propose_write for a change.")
     if not LIMIT_AT_END.search(sql):
         sql += " LIMIT 21"

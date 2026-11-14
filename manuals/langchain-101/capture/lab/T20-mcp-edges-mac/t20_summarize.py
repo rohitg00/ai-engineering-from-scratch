@@ -1,7 +1,7 @@
 import json
 from collections import Counter, defaultdict
 from pathlib import Path
-T = Path(__file__).resolve().parent.parent / "T20"
+T = Path(__file__).resolve().parent
 groups = defaultdict(list)
 for l in (T / "01-mcp-edges.jsonl").read_text().splitlines():
     r = json.loads(l)

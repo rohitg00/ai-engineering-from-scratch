@@ -42,10 +42,17 @@ def remember(fact: str, runtime: ToolRuntime[Context]) -> str:
     return f"saved memory {key}"
 
 
+def all_memories(store, user):
+    items = []
+    while page := store.search(("users", user, "memories"), limit=100, offset=len(items)):
+        items += page
+    return items
+
+
 @tool
 def recall(runtime: ToolRuntime[Context]) -> str:
     """Return every saved fact about the user."""
-    items = runtime.store.search(("users", runtime.context.user, "memories"))
+    items = all_memories(runtime.store, runtime.context.user)
     return "\n".join(f"- {item.value['text']}" for item in items) or "no saved facts"
 
 
@@ -108,7 +115,7 @@ def report(agent, saver, store, cfg, step, started, rows):
     attempts = conn.execute("SELECT idempotency_key, pid, outcome FROM attempts ORDER BY n").fetchall()
     conn.close()
     checkpoints = len(list(saver.list(cfg)))
-    memories = [item.value["text"] for item in store.search(("users", USER, "memories"))]
+    memories = [item.value["text"] for item in all_memories(store, USER)]
     summary = [m for m in messages if m.type == "human" and m.additional_kwargs.get("lc_source") == "summarization"]
     pending = [{"id": i.id, "tool_call_id": i.value.get("tool_call_id"), "name": i.value.get("name"), "args": i.value.get("args")} for i in snap.interrupts]
     print(f"  state      next {list(snap.next)}, {len(messages)} messages, {checkpoints} checkpoints, {len(pending)} pending interrupts")
