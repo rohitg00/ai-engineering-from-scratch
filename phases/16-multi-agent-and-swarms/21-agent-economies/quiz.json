@@ -1,0 +1,78 @@
+{
+  "lesson": "21-agent-economies",
+  "title": "Agent Economies, Token Incentives, Reputation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Three agents jointly produce a score, but the team wants to allocate credit by each agent's average marginal contribution. Which method fits?",
+      "options": [
+        "A round-robin speaker schedule",
+        "A first-price auction with no submitted bids",
+        "Shapley-value attribution across agent orderings",
+        "A circuit breaker over tool calls"
+      ],
+      "correct": 2,
+      "explanation": "Shapley attribution averages each agent’s marginal contribution over possible orderings of coalition members, reducing dependence on who joined first. A first-price auction allocates a slot from bids; it does not compute contribution to shared output."
+    },
+    {
+      "stage": "check",
+      "question": "With five bids of 0.82, 0.60, 0.95, 0.45, and 0.77 in a second-price auction, who wins and what do they pay?",
+      "options": [
+        "The 0.77 bidder wins and pays 0.60",
+        "The 0.95 bidder wins and pays 0.82",
+        "The 0.95 bidder wins and pays 0.95",
+        "The 0.82 bidder wins and pays 0.95"
+      ],
+      "correct": 1,
+      "explanation": "Sorting the bids gives 0.95 as highest and 0.82 as second-highest, so the 0.95 bidder wins and pays 0.82. Paying 0.95 instead is the first-price rule, where the winner pays its own bid."
+    },
+    {
+      "stage": "check",
+      "question": "What does the 5-layer agent-economy stack use decentralized identifiers for?",
+      "options": [
+        "A portable identity for reputation across platforms",
+        "A guaranteed way to eliminate Sybil attacks",
+        "A faster route for LLM token generation",
+        "A content schema for typed A2A artifacts"
+      ],
+      "correct": 0,
+      "explanation": "A DID supplies a durable identifier that can bind reputation across platforms, rather than tying it to one vendor account. The lesson explicitly says this slows Sybil attacks but cannot guarantee they disappear."
+    },
+    {
+      "stage": "check",
+      "question": "How does the lesson's simple reputation rule update a score after new work?",
+      "options": [
+        "Copy the highest-scoring peer's reputation",
+        "Add every past contribution without any decay",
+        "Replace the score with the agent's requested payment",
+        "Blend old reputation with verified new quality"
+      ],
+      "correct": 3,
+      "explanation": "The update blends the previous reputation with verified new quality using the decay factor: alpha preserves history and (1−alpha) weights the latest contribution. Adding every past contribution without decay would let stale performance dominate indefinitely."
+    },
+    {
+      "stage": "post",
+      "question": "A decentralized marketplace needs contribution rewards but cannot verify output quality. What limitation does the lesson identify?",
+      "options": [
+        "A second-price auction verifies the content of each answer",
+        "Credit attribution becomes unreliable without independent verification",
+        "DIDs make quality checks unnecessary",
+        "Shapley values will automatically reveal every dishonest agent"
+      ],
+      "correct": 1,
+      "explanation": "Credit is only as reliable as the independent check of the contribution; without verification, an agent can claim value it did not produce. A second-price auction chooses a winner and payment from bids, but it does not validate answer content."
+    },
+    {
+      "stage": "post",
+      "question": "When does the lesson say tokenized agent economics is most applicable?",
+      "options": [
+        "Systems where all agents belong to one internal team",
+        "Closed one-shot tasks with no durable identity",
+        "Open, long-horizon networks with verifiable outputs",
+        "Workflows where nobody can check the result"
+      ],
+      "correct": 2,
+      "explanation": "Open networks with heterogeneous operators and verifiable contributions can use identity, credit, and settlement over repeated work. A closed internal team can often assign tasks directly, while one-shot work has little time for reputation to accumulate."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "22-document-diagram-understanding",
+  "title": "Document and Diagram Understanding",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What are the three broad eras of document AI described in the lesson?",
+      "options": [
+        "Language-only parsing, diffusion rendering, and action decoding.",
+        "Patch packing, video retrieval, and speech tokenization.",
+        "OCR pipeline, OCR-free models, VLM-native.",
+        "CNN classification, text generation, and audio transcription."
+      ],
+      "correct": 2,
+      "explanation": "The lesson traces document understanding from staged OCR and layout pipelines, through OCR-free models that map page images to markup, to VLM-native systems that answer from the page image. The diffusion-rendering option names a different task, not one of these document-AI approaches."
+    },
+    {
+      "stage": "check",
+      "question": "Which three input streams does LayoutLMv3 combine?",
+      "options": [
+        "Patch embeddings, reward scores, and decoded waveforms.",
+        "OCR text tokens, per-token bounding boxes, and image patches.",
+        "Text captions, audio frames, and video timestamps.",
+        "VQ image codes, robot actions, and language prompts."
+      ],
+      "correct": 1,
+      "explanation": "LayoutLMv3 combines OCR text tokens, each token's 2D bounding box, and page image patches, then applies masked objectives across those streams. Audio frames and video timestamps in the distractor are not among the three document inputs."
+    },
+    {
+      "stage": "check",
+      "question": "Which task distinction best matches Donut and Nougat?",
+      "options": [
+        "Donut: images to markup; Nougat: papers to LaTeX/markdown.",
+        "Donut requires OCR text input; Nougat requires a bounding-box stream.",
+        "Donut outputs image pixels; Nougat predicts action tokens.",
+        "Donut parses speech audio; Nougat classifies invoice line items only."
+      ],
+      "correct": 0,
+      "explanation": "Donut skips explicit OCR and maps a page image to structured output such as JSON, while Nougat specializes in scientific pages and emits LaTeX or markdown. The OCR-input/bounding-box option swaps in assumptions belonging to OCR-based models."
+    },
+    {
+      "stage": "check",
+      "question": "A company processes 10 million clean printed invoices per day and prioritizes cost per page. Which stack does the lesson recommend?",
+      "options": [
+        "An OCR pipeline with LayoutLMv3 and rules for cost-efficient standardized forms.",
+        "A frontier VLM at maximum resolution for every invoice page.",
+        "A speech recognizer followed by an image-captioning model.",
+        "Nougat, because it is specialized for scientific paper equations."
+      ],
+      "correct": 0,
+      "explanation": "For clean printed invoices at very high volume, the lesson recommends an OCR pipeline with LayoutLMv3 and rules because standardized forms can be processed cost-efficiently. A high-resolution frontier VLM could be capable, but the option ignores the stated cost-per-page priority."
+    },
+    {
+      "stage": "post",
+      "question": "A regulated workflow requires auditable extracted text and a check on possible OCR mistakes. Which design follows the lesson?",
+      "options": [
+        "Use only a VLM and discard all intermediate text and evidence.",
+        "Use Donut with no schema and accept every generated field automatically.",
+        "Use an OCR pipeline as primary output and a VLM as a secondary cross-check.",
+        "Use a VLM to overwrite OCR output without retaining disagreements."
+      ],
+      "correct": 2,
+      "explanation": "Keeping an OCR pipeline as the primary record preserves extractable text and intermediate evidence; a VLM can independently cross-check visual content for likely OCR mistakes. Overwriting OCR without retaining disagreements removes the audit trail the regulated workflow requires."
+    },
+    {
+      "stage": "post",
+      "question": "A document collection mixes handwriting, figures, and complex page layouts. Which approach is the strongest general fit in the lesson?",
+      "options": [
+        "VLM-native high-resolution page understanding, such as PaliGemma 2 or Qwen2.5-VL.",
+        "A text-only OCR dump with no image patches or layout information.",
+        "A fixed invoice regex applied to every page type.",
+        "A single OCR-free specialist trained only on scientific equations."
+      ],
+      "correct": 0,
+      "explanation": "VLM-native high-resolution input can jointly inspect handwriting, figures, and page structure rather than relying on a text dump or a narrow specialist. A text-only OCR dump drops visual and layout signals needed across this mixed collection."
+    }
+  ]
+}

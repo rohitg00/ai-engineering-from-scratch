@@ -1,0 +1,78 @@
+{
+  "lesson": "02-clip-contrastive-pretraining",
+  "title": "CLIP and Contrastive Vision-Language Pretraining",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What does CLIP train its image and text encoders to do with a matched web image-caption pair?",
+      "options": [
+        "Predict the caption's next word from the image with a language-model loss.",
+        "Place the image and caption embeddings near each other in a shared vector space.",
+        "Use separate embedding spaces that cannot compare image and text vectors.",
+        "Assign the image a supervised class label before encoding the caption."
+      ],
+      "correct": 1,
+      "explanation": "CLIP encodes both modalities into unit-normalized vectors in one shared space, then increases similarity for matched image-caption pairs relative to mismatches. Separate spaces would make the cross-modal cosine comparison used for retrieval undefined."
+    },
+    {
+      "stage": "check",
+      "question": "In a batch of N paired examples, which entries are the positives in CLIP's symmetric InfoNCE loss?",
+      "options": [
+        "Every pair in a row, because all captions describe the same image.",
+        "The diagonal image-caption pairs in both row-wise and column-wise cross-entropy.",
+        "The largest off-diagonal similarity in each row and column.",
+        "Only the diagonal entries in the image-to-text direction."
+      ],
+      "correct": 1,
+      "explanation": "For N matched pairs, image i’s positive caption is j=i, the diagonal of S; the symmetric loss applies cross-entropy to rows and columns. Using only image-to-text rows omits the reciprocal text-to-image matching task."
+    },
+    {
+      "stage": "check",
+      "question": "What happens to the softmax distribution when CLIP's temperature tau is lowered while similarities stay fixed?",
+      "options": [
+        "It becomes flatter, so every batch item contributes equally.",
+        "It changes the diagonal labels but leaves the logits unchanged.",
+        "It removes all negative pairs from the similarity matrix.",
+        "It becomes sharper, increasing pressure to separate hard negatives."
+      ],
+      "correct": 3,
+      "explanation": "The logits are similarity divided by τ. Lower τ magnifies their differences before softmax, concentrating probability on higher-similarity pairs and making hard negatives more consequential; raising τ would flatten the distribution."
+    },
+    {
+      "stage": "check",
+      "question": "Why can SigLIP avoid the global embedding all-gather that softmax InfoNCE uses?",
+      "options": [
+        "Each GPU computes a single softmax over every global image and text.",
+        "SigLIP drops all negative pairs and trains only on matched examples.",
+        "Each image-text pair has an independent sigmoid binary-classification loss.",
+        "SigLIP replaces image and text embeddings with class labels."
+      ],
+      "correct": 2,
+      "explanation": "SigLIP treats each matrix pair independently with a sigmoid binary label, so GPUs can compute local pair blocks without one global softmax over gathered embeddings. Dropping negatives would remove the comparisons that teach mismatches to score lower."
+    },
+    {
+      "stage": "post",
+      "question": "A zero-shot classifier must choose among cat, dog, and bird using a frozen CLIP model. What decision rule does the lesson use?",
+      "options": [
+        "Average image pixels by class and select the largest RGB channel.",
+        "Embed a text prompt for each class and choose the highest image-text cosine similarity.",
+        "Train a new classifier on labeled target images before comparing similarities.",
+        "Choose the class whose prompt has the fewest tokens."
+      ],
+      "correct": 1,
+      "explanation": "Zero-shot classification embeds a text template for each candidate class and the image, normalizes vectors, then chooses the class with highest cosine similarity. Training on labeled target images would add a learned classifier and no longer be zero-shot."
+    },
+    {
+      "stage": "post",
+      "question": "One prompt template gives unstable zero-shot scores across classes. Which lesson-supported change can improve the text representation?",
+      "options": [
+        "Use one longer prompt for the winning class after seeing its score.",
+        "Discard the text encoder and classify from image pixels alone.",
+        "Replace cosine similarity with a separate supervised softmax head.",
+        "Embed several templates per class and average their text embeddings."
+      ],
+      "correct": 3,
+      "explanation": "Averaging embeddings from several prompt templates makes each class representation less dependent on one phrasing; the lesson notes CLIP’s 80-template ensemble improved ImageNet accuracy. Apply the same template set to every candidate class, rather than using one longer prompt only for the class that already scored best."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "14-consensus-and-bft",
+  "title": "Consensus and Byzantine Fault Tolerance for Agents",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Five agents vote, but three share a base model and give the same wrong answer. Why may majority voting fail?",
+      "options": [
+        "Majority voting requires all responses to be numeric",
+        "The vote count is too large for a semantic cluster",
+        "The result is invalid unless each agent has a different name",
+        "Their errors are correlated, so the majority is not independent evidence"
+      ],
+      "correct": 3,
+      "explanation": "Majority vote treats each ballot as another piece of evidence, but agents sharing a base model can share the same hallucination. Distinct agent names do not make those errors independent, so a three-agent false cluster can outvote correct dissent."
+    },
+    {
+      "stage": "check",
+      "question": "What fault bound does classical PBFT state for a system with n nodes and f Byzantine nodes?",
+      "options": [
+        "f must be less than n divided by 3",
+        "f must be greater than n divided by 2",
+        "f may equal n if messages are signed",
+        "f is unrelated to the number of nodes"
+      ],
+      "correct": 0,
+      "explanation": "Classical PBFT assumes fewer than one third of nodes are Byzantine: f < n/3, equivalently at least 3f+1 nodes for f faults. A bound above one half is too permissive for the protocol’s stated quorum guarantee."
+    },
+    {
+      "stage": "check",
+      "question": "How does CP-WBFT alter a simple one-vote-per-agent tally?",
+      "options": [
+        "It removes all votes from agents that disagree",
+        "It waits for a leader to produce an unrelated answer",
+        "It weights each answer using an attached confidence probe",
+        "It selects the answer with the longest explanation"
+      ],
+      "correct": 2,
+      "explanation": "CP-WBFT attaches a confidence probe to each answer and sums confidence by semantic answer cluster. Removing every dissenting vote is not weighting; it discards evidence instead of adjusting each cluster’s contribution."
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson describe as the key robust aggregation idea in DecentLLMs?",
+      "options": [
+        "Average every answer string character by character",
+        "Allow the first agent to decide the answer for all others",
+        "Score parallel proposals and use a geometric-median-style aggregation",
+        "Give the highest-confidence agent permanent control"
+      ],
+      "correct": 2,
+      "explanation": "DecentLLMs has workers propose in parallel, evaluators score those proposals, and a geometric-median-style rule aggregates them to resist outliers. Giving one high-confidence agent permanent control is leader-based selection, not the described robust aggregation."
+    },
+    {
+      "stage": "post",
+      "question": "All agents agree on a factual answer, but no independent source or test has checked it. What does consensus establish?",
+      "options": [
+        "That the agents' errors are uncorrelated",
+        "Correctness, if the group has at least three members",
+        "An independent proof of every cited premise",
+        "Agreement among agents, not necessarily correctness"
+      ],
+      "correct": 3,
+      "explanation": "Consensus establishes that agents agree, not that they independently checked a fact or that the fact is true. A minimum group size cannot repair correlated hallucinations; external evidence or an independent verifier is still needed."
+    },
+    {
+      "stage": "post",
+      "question": "A confidence-weighted winning cluster fails the configured acceptance threshold. What should the protocol do?",
+      "options": [
+        "Let the most confident agent rewrite the votes",
+        "Lower the threshold after seeing the preferred answer",
+        "Discard minority clusters and report certainty",
+        "Retry or escalate rather than accept a weak majority"
+      ],
+      "correct": 3,
+      "explanation": "The protocol accepts only when the leading cluster’s weight clears the configured fraction of total confidence; below that it retries or escalates. Lowering the threshold after seeing a favored answer changes the acceptance rule to fit the outcome."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "03-audio-classification",
+  "title": "Audio Classification — From k-NN on MFCCs to AST and BEATs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A classifier receives a short recording and must assign one sound-event label. What task is this?",
+      "options": [
+        "Speaker verification from voice to identity",
+        "Audio captioning from sound to a paragraph",
+        "Audio classification from sound to a class",
+        "Speech synthesis from text to a waveform"
+      ],
+      "correct": 2,
+      "explanation": "Audio classification maps a recording to a label such as dog, siren, or language; it answers “what class is this sound?” Captioning generates a free-form description, while this task assigns a category from a label set."
+    },
+    {
+      "stage": "check",
+      "question": "A 13-coefficient MFCC sequence is summarized by its mean and variance. What is the resulting feature dimension?",
+      "options": [
+        "39 values",
+        "52 values",
+        "26 values",
+        "13 values"
+      ],
+      "correct": 2,
+      "explanation": "The summary concatenates one mean and one variance for each of 13 MFCC coefficients, giving 13 + 13 = 26 values. The 52-value option would need four statistics per coefficient; the summarizer computes only mean and variance."
+    },
+    {
+      "stage": "check",
+      "question": "Which metric best matches a multi-label audio benchmark such as AudioSet?",
+      "options": [
+        "Word error rate over a transcript",
+        "Equal error rate over speaker pairs",
+        "Top-one accuracy on one exclusive label",
+        "Mean average precision across classes"
+      ],
+      "correct": 3,
+      "explanation": "AudioSet can mark several sound classes in one clip, so mAP evaluates class-wise ranking across labels rather than one exclusive choice. “Top-one accuracy on one exclusive label” assumes a single class; WER and EER measure transcripts and speaker trials instead."
+    },
+    {
+      "stage": "check",
+      "question": "An Audio Spectrogram Transformer receives a log-mel spectrogram. What does it do before its transformer blocks?",
+      "options": [
+        "Runs a DCT on each mel frame to produce MFCC features",
+        "Patchifies log-mels, adds position embeddings, then feeds a ViT",
+        "Uses raw waveform samples directly as image patch embeddings",
+        "Pools frame means into one fixed vector before classification"
+      ],
+      "correct": 1,
+      "explanation": "AST treats the log-mel matrix like an image: it creates patches, adds position embeddings, and feeds the sequence to a Vision Transformer. The “pool frame means into one fixed vector” option describes a different MFCC baseline, not AST’s positioned patch sequence."
+    },
+    {
+      "stage": "post",
+      "question": "You have 600 labeled clips and want a transparent first baseline. What does the lesson recommend?",
+      "options": [
+        "Estimate mAP before building a feature bank",
+        "Use a speech decoder to generate class names",
+        "Start with k-NN on pooled MFCC features",
+        "Train a large transformer from random initialization"
+      ],
+      "correct": 2,
+      "explanation": "The lesson recommends k-NN on pooled MFCC features as a transparent baseline for a tiny set; 600 clips is below its 1,000-clip guide. A large model adds training cost before the team has established a simple feature baseline on so little labeled data."
+    },
+    {
+      "stage": "post",
+      "question": "An imbalanced multi-label evaluation set includes rare sound classes. Which practice best avoids optimistic reporting?",
+      "options": [
+        "Use balanced sampling on the evaluation set",
+        "Report macro F1 and recall for each class",
+        "Report only overall accuracy for all clips",
+        "Drop rare labels before computing the score"
+      ],
+      "correct": 1,
+      "explanation": "With imbalanced classes, macro F1 and per-class recall expose performance on each category instead of letting frequent classes dominate. Balanced sampling is a training technique; changing evaluation prevalence would no longer measure the target distribution."
+    }
+  ]
+}

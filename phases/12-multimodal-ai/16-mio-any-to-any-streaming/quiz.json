@@ -1,0 +1,78 @@
+{
+  "lesson": "16-mio-any-to-any-streaming",
+  "title": "MIO and Any-to-Any Streaming Multimodal Models",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What makes an any-to-any model different from a pipeline of separate vision, text, and speech models?",
+      "options": [
+        "Each modality uses a separate model and passes only text to the next.",
+        "A speech model converts every input modality into audio first.",
+        "One causal transformer consumes and emits interleaved modality tokens.",
+        "One image encoder produces captions that are sent to a speech API."
+      ],
+      "correct": 2,
+      "explanation": "An any-to-any model tokenizes modalities into one interleaved sequence and uses one causal transformer to condition and generate across them. A pipeline of separate models needs handoffs and can lose information at each conversion."
+    },
+    {
+      "stage": "check",
+      "question": "Which tokenizer assignment matches the MIO stack described in the lesson?",
+      "options": [
+        "Text uses SEED, images use BPE, speech uses CLIP, and music uses a VQ text tokenizer.",
+        "Speech uses the image encoder, while music uses the text vocabulary.",
+        "Text uses BPE, images use SEED, speech uses residual-VQ, and music uses an Encodec-like tokenizer.",
+        "Every modality uses the same image VQ tokenizer and one shared codebook."
+      ],
+      "correct": 2,
+      "explanation": "MIO uses BPE for text, SEED VQ codes for images, residual-VQ for speech, and an Encodec-family tokenizer for music. One shared image tokenizer would not provide the modality-specific speech and music representations described."
+    },
+    {
+      "stage": "check",
+      "question": "What do the later codebooks in speech residual-VQ add after the first coarse content level?",
+      "options": [
+        "Prosody and speaker-identity detail.",
+        "Image patch positions and bounding-box coordinates.",
+        "Text vocabulary entries and punctuation.",
+        "Video frame timestamps and spatial rows."
+      ],
+      "correct": 0,
+      "explanation": "Residual-VQ layers refine a coarse speech code: the first level carries content, while later levels add prosody and speaker identity. Image patch positions or video timestamps are not the information those audio codebooks encode."
+    },
+    {
+      "stage": "check",
+      "question": "What is the order of MIO's four-stage training curriculum?",
+      "options": [
+        "Alignment, interleaved data, speech-focused training, then instruction tuning.",
+        "Interleaved data, alignment, instruction tuning, then speech enhancement.",
+        "Instruction tuning, speech enhancement, alignment, then interleaved data.",
+        "Alignment, instruction tuning, image generation, then text-only training."
+      ],
+      "correct": 0,
+      "explanation": "The curriculum first aligns modality pairs, then trains on interleaved documents, adds speech-focused data, and finally instruction-tunes across modalities. Each stage addresses a different capability, so swapping instruction tuning to the beginning skips alignment/context learning."
+    },
+    {
+      "stage": "post",
+      "question": "A speech product needs lower latency after the transformer predicts the base speech stream. Which part does MIO parallel-decode?",
+      "options": [
+        "Residual-VQ levels that add prosody and speaker detail.",
+        "The transformer layers that process the incoming audio.",
+        "The text BPE sequence that forms the user's prompt.",
+        "Every image patch in the shared visual vocabulary."
+      ],
+      "correct": 0,
+      "explanation": "The model first predicts the base speech stream; parallel decoding of residual-VQ levels adds prosody and speaker detail without waiting for each level sequentially. Parallel refinement reduces latency while retaining the layered audio representation."
+    },
+    {
+      "stage": "post",
+      "question": "Why should modality token IDs occupy disjoint ranges in the shared vocabulary?",
+      "options": [
+        "So every modality can reuse the same integer for unrelated codes.",
+        "So text tokens can be sorted after image tokens during decoding.",
+        "So each integer ID unambiguously identifies its modality's token.",
+        "So the transformer does not need image or speech separators."
+      ],
+      "correct": 2,
+      "explanation": "Disjoint ID ranges let the shared embedding/output vocabulary identify whether an integer denotes text, image, speech, or music. Reusing one ID for unrelated codes would make token interpretation ambiguous, even with modality separators."
+    }
+  ]
+}

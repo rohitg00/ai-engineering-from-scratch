@@ -1,0 +1,78 @@
+{
+  "lesson": "05-stylegan",
+  "title": "StyleGAN",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A generator must let users change pose without entangling identity and lighting. What representation change does StyleGAN introduce?",
+      "options": [
+        "Feed z directly to every convolution layer",
+        "Map z to w and inject styles across resolutions",
+        "Use one scalar label for the whole output",
+        "Replace the generator with a patch discriminator"
+      ],
+      "correct": 1,
+      "explanation": "StyleGAN first maps z into an intermediate w, then injects styles at synthesis resolutions through AdaIN, helping separate broad attributes such as pose from finer ones such as lighting. Feeding z directly through the generator entangles those controls."
+    },
+    {
+      "stage": "check",
+      "question": "What does the StyleGAN mapping network do?",
+      "options": [
+        "Chooses the discriminator’s real-versus-fake threshold",
+        "Normalizes each feature map and restores its variance",
+        "Transforms a sampled z from Z into an intermediate w",
+        "Adds random noise to each synthesis feature map"
+      ],
+      "correct": 2,
+      "explanation": "The mapping network implements f: Z→W, transforming a sampled Gaussian latent into a data-adapted intermediate style code. AdaIN performs feature-map normalization, and per-layer noise supplies stochastic detail."
+    },
+    {
+      "stage": "check",
+      "question": "What does AdaIN do with the feature map and style code?",
+      "options": [
+        "Clamp each feature map to a fixed zero-to-one interval",
+        "Add random per-pixel noise to every synthesis output",
+        "Normalize features, then apply style-derived scale and shift",
+        "Rotate query and key vectors according to position"
+      ],
+      "correct": 2,
+      "explanation": "AdaIN normalizes each feature map and then applies scale and shift values projected from w, setting the feature statistics for that synthesis layer. Random noise is injected separately to vary details such as pores and hair."
+    },
+    {
+      "stage": "check",
+      "question": "In the truncation trick, what does lowering ψ below 1 do?",
+      "options": [
+        "Moves w closer to its mean, reducing diversity",
+        "Moves w farther from its mean, increasing diversity",
+        "Adds independent noise to each feature map",
+        "Changes the discriminator’s classification threshold"
+      ],
+      "correct": 0,
+      "explanation": "Truncation computes w′=w̄+ψ(w−w̄); when ψ<1, the deviation from mean shrinks and diversity decreases while sample quality can improve. ψ>1 would move farther from the mean and increase variation."
+    },
+    {
+      "stage": "post",
+      "question": "A fixed w should preserve global style while fine image details vary between renders. Which mechanism is intended for that variation?",
+      "options": [
+        "A discriminator patch grid at inference",
+        "Independent per-layer stochastic noise",
+        "A new truncation mean for each feature map",
+        "A different mapping-network depth per render"
+      ],
+      "correct": 1,
+      "explanation": "Per-layer stochastic noise varies fine details while keeping the same w and its broader style. A new mapping-network depth is not a per-render detail source; the learned noise injection is."
+    },
+    {
+      "stage": "post",
+      "question": "A company generates photoreal faces in a narrow domain and needs very low latency. Which model direction fits?",
+      "options": [
+        "A general text-to-image diffusion model",
+        "A recurrent transformer over pixel tokens",
+        "StyleGAN3 for narrow-domain photorealism",
+        "A flow trained for exact density evaluation"
+      ],
+      "correct": 2,
+      "explanation": "StyleGAN3 fits photorealistic face generation in a narrow domain with low latency because it samples in one generator pass. For open-ended text prompts, the lesson recommends diffusion instead of a fixed-domain face model."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "15-propose-then-commit",
+  "title": "Human-in-the-Loop: Propose-Then-Commit",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A $100 transfer may have executed before a timeout, and the workflow retries the same proposal. Assume the endpoint honors idempotency keys. What should the retry reuse?",
+      "options": [
+        "The original approval text copied into a fresh retry prompt",
+        "A timeout flag attached only to the caller’s local log",
+        "The same idempotency key bound to the original transfer proposal",
+        "A new transaction identifier created for every retry attempt"
+      ],
+      "correct": 2,
+      "explanation": "An idempotency key binds retries to the same proposed transfer; when the destination honors it, repeated requests do not execute a second transfer. A fresh identifier makes the retry look new and can transfer the $100 twice."
+    },
+    {
+      "stage": "check",
+      "question": "What information should a reviewer see in a persisted proposal before committing it?",
+      "options": [
+        "A benchmark score and a provider's current model alias",
+        "Intent, data lineage, permissions touched, blast radius, and rollback plan",
+        "The model's hidden reasoning and every prior conversation token",
+        "Only a short approve button and the agent's final summary"
+      ],
+      "correct": 1,
+      "explanation": "A real reviewer needs intent, data lineage, permissions touched, blast radius, and rollback plan to judge the proposal. A short approval button omits the context required for substantive review."
+    },
+    {
+      "stage": "check",
+      "question": "Why store a pending approval in a durable workflow rather than only in process memory?",
+      "options": [
+        "The workflow can resume at the same point after a delayed decision",
+        "The agent can change the proposal while waiting",
+        "Durability makes the underlying action automatically reversible",
+        "A process can reconstruct the user's approval without storage"
+      ],
+      "correct": 0,
+      "explanation": "Persisting the waiting state lets an approval arriving later resume the workflow from the same point after a restart. Durability preserves state but does not itself reverse an external action."
+    },
+    {
+      "stage": "check",
+      "question": "What does challenge-and-response add to a simple approve button?",
+      "options": [
+        "An automatic approval when the action is reversible",
+        "A checklist that requires positive review of scope, blast radius, and rollback",
+        "A longer timeout before the same approve button appears for review",
+        "A second model that approves the first model's proposal"
+      ],
+      "correct": 1,
+      "explanation": "Challenge-and-response requires explicit checks of understanding, blast radius, and rollback readiness before approval. A second model’s vote cannot establish that a human understood the consequences."
+    },
+    {
+      "stage": "post",
+      "question": "An action returns success, but the target system may not have persisted the side effect. What should the workflow do next?",
+      "options": [
+        "Mark the proposal committed based only on the response code",
+        "Read back the target resource and verify the intended state",
+        "Delete the proposal record to avoid a duplicate approval",
+        "Retry the write immediately without checking current state"
+      ],
+      "correct": 1,
+      "explanation": "Re-read the target resource and compare it with the intended change; a success response may not prove persistence after a network or race failure. Blindly retrying can duplicate a side effect."
+    },
+    {
+      "stage": "post",
+      "question": "A proposal is a read-only file inspection with no external state change. What does the lesson say about human approval?",
+      "options": [
+        "Only model-generated reads may bypass approval",
+        "A read requires approval only after an idempotency key is assigned",
+        "Every read must use a challenge checklist before execution",
+        "Reads and inspections generally do not need propose-then-commit"
+      ],
+      "correct": 3,
+      "explanation": "A read-only inspection does not change external state, so it generally does not need the proposal/approval/commit ceremony. A checklist for every read adds friction without the consequential risk this gate addresses."
+    }
+  ]
+}

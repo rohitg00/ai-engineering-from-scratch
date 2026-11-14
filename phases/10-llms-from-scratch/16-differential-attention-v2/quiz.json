@@ -1,0 +1,78 @@
+{
+  "lesson": "16-differential-attention-v2",
+  "title": "Differential Attention (V2)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why can full softmax attention accumulate substantial irrelevant-token contribution at very long context?",
+      "options": [
+        "Softmax assigns every unrelated token an exact weight of zero.",
+        "Each unrelated token keeps a small positive weight, and many such weights add up.",
+        "The query attends only to a fixed number of top tokens at any context length.",
+        "The residual stream adds the same learned position vector to every token."
+      ],
+      "correct": 1,
+      "explanation": "For finite logits softmax gives every position positive mass, including unrelated tokens; with long context, many small O(1/N) contributions can sum to O(1). The exact-zero option describes sparse attention, not ordinary softmax’s noise floor."
+    },
+    {
+      "stage": "check",
+      "question": "For first-branch weight 0.5, second-branch weight 0.2, and lambda 0.5, what is the differential attention weight before multiplying by V?",
+      "options": [
+        "0.6, from 0.5 plus 0.5 times 0.2.",
+        "0.4, from 0.5 minus 0.5 times 0.2.",
+        "0.1, from 0.5 times 0.2.",
+        "0.3, from 0.5 minus 0.2."
+      ],
+      "correct": 1,
+      "explanation": "The differential weight is A1−λA2, so 0.5−0.5×0.2=0.4. Adding the branches gives 0.6, while subtracting 0.2 directly gives 0.3 because that option omits the λ multiplier. Apply the scale to the second map before subtraction."
+    },
+    {
+      "stage": "check",
+      "question": "What key shape change lets DIFF V2 keep baseline decode speed and FlashAttention compatibility?",
+      "options": [
+        "It doubles KV heads while keeping query heads and head dimension the same.",
+        "It doubles query heads while keeping KV heads and head dimension the same.",
+        "It replaces the two attention branches with a custom CUDA-only kernel.",
+        "It halves the head dimension and loads the value cache twice per decode step."
+      ],
+      "correct": 1,
+      "explanation": "V2 doubles Q heads but keeps the baseline KV-head count and head dimension, so the KV cache is still loaded once; the extra output width is projected back down. V1 halved head size and loaded values twice, slowing decode."
+    },
+    {
+      "stage": "check",
+      "question": "At what workload does the lesson say differential attention is most worth considering?",
+      "options": [
+        "A dense model with stable long-context results that is already deployed.",
+        "Any task with a short sequence and no attention computation.",
+        "Short chat under 4k tokens, where the noise floor is already negligible.",
+        "Long-context work around 64k tokens or more, where the noise floor grows."
+      ],
+      "correct": 3,
+      "explanation": "The lesson targets long-context workloads around 64k and above, where the aggregate softmax noise floor can harm retrieval. Below 4k it says the gap is negligible, so an architecture change is less worthwhile."
+    },
+    {
+      "stage": "post",
+      "question": "With lambda=1, branch weights A1=[0.5, 0.3, 0.2] and A2=[0.2, 0.5, 0.3], what are the differential weights?",
+      "options": [
+        "[-0.3, 0.2, 0.1], from subtracting A1 from A2.",
+        "[0.7, 0.8, 0.5], from adding the branch weights elementwise.",
+        "[0.1, 0.15, 0.06], from multiplying the branch weights elementwise.",
+        "[0.3, -0.2, -0.1], from subtracting A2 elementwise from A1."
+      ],
+      "correct": 3,
+      "explanation": "With λ=1, compute A1−A2 elementwise: [0.5−0.2, 0.3−0.5, 0.2−0.3]=[0.3,−0.2,−0.1]. The reversed subtraction flips every sign. The result need not sum to one because the difference is not a normalized probability map."
+    },
+    {
+      "stage": "post",
+      "question": "A DIFF V1 run becomes unstable late in large-scale training. Which V2 change directly addresses the normalization module implicated in the lesson?",
+      "options": [
+        "Normalize the gate weights so they sum to one.",
+        "Replace RoPE with a learned absolute-position table.",
+        "Remove V1's per-head RMSNorm; use simpler initialization.",
+        "Add a second per-head RMSNorm after each subtraction."
+      ],
+      "correct": 2,
+      "explanation": "V1’s per-head RMSNorm was implicated in late-training instability at 70B scale. V2 removes that module and uses simpler initialization; adding another per-head RMSNorm repeats rather than removes the unstable component."
+    }
+  ]
+}

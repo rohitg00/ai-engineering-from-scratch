@@ -1,0 +1,78 @@
+{
+  "lesson": "08-bounded-self-improvement",
+  "title": "Bounded Self-Improvement Designs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A self-editing system needs a condition that must remain true before and after every edit. What is that condition called?",
+      "options": [
+        "A reputation score updated after deployment",
+        "An invariant checked by external code",
+        "A helpfulness preference selected by the model",
+        "A random seed fixed for the current run"
+      ],
+      "correct": 1,
+      "explanation": "An invariant is a property external code checks before and after every edit, such as an approved permission manifest. A model-selected helpfulness preference can change and is not an always-checked safety condition."
+    },
+    {
+      "stage": "check",
+      "question": "Where should an alignment anchor live to resist edits by the self-improvement loop?",
+      "options": [
+        "In a score field that every agent can overwrite",
+        "Inside the candidate source file beside the proposed change",
+        "Outside the loop's edit surface in an immutable location",
+        "In a prompt generated anew by the current candidate"
+      ],
+      "correct": 2,
+      "explanation": "Pin the objective outside the loop’s edit surface and verify it each cycle; the candidate can improve how it pursues the goal but cannot rewrite the anchor. Storing it beside candidate source makes it editable."
+    },
+    {
+      "stage": "check",
+      "question": "A candidate improves performance but lowers the safety score below its minimum. How should a multi-objective gate respond?",
+      "options": [
+        "Ignore safety when the candidate has a larger archive score",
+        "Average safety and performance into one positive number",
+        "Reject it because every hard constraint must pass",
+        "Accept it because performance is the primary scalar score"
+      ],
+      "correct": 2,
+      "explanation": "The multi-objective gate requires every hard axis to pass, so a safety score below its minimum rejects the edit despite better performance. Averaging the axes into one score can hide the failed safety constraint."
+    },
+    {
+      "stage": "check",
+      "question": "With the default tol=0.2, what causes gate_regression to reject a candidate?",
+      "options": [
+        "The candidate’s score plus 0.2 remains below the historical best score.",
+        "The candidate’s absolute score falls below 0.2, regardless of its history.",
+        "The candidate scores any amount below the immediately previous candidate.",
+        "The candidate exceeds the historical best score by at least 0.2."
+      ],
+      "correct": 0,
+      "explanation": "The gate accepts when score+tol reaches the historical best; with tol=0.2 it rejects a candidate more than 0.2 below that best. Treating 0.2 as an absolute score floor changes the rule."
+    },
+    {
+      "stage": "post",
+      "question": "Historical best performance is 1.0. A candidate scores 0.5 with safety 1.0 and unchanged invariant and anchor state. If only regression detection is disabled, what can happen?",
+      "options": [
+        "It can pass because 0.5 clears the 0.25 floor and no gate checks historical drops.",
+        "It fails because the multi-objective gate rejects any score below the historical best.",
+        "It fails because the safety gate requires a score above 1.0, not equal to 1.0.",
+        "It passes only if the objective hash is computed from the benchmark score."
+      ],
+      "correct": 0,
+      "explanation": "Performance 0.5 clears the 0.25 floor and safety 1.0 meets its minimum, so those gates pass. With regression detection off, no remaining check compares 0.5 with the previous best of 1.0."
+    },
+    {
+      "stage": "post",
+      "question": "All four bounded-loop primitives pass for one proposed edit. What claim does the lesson support?",
+      "options": [
+        "The loop has mitigations, but this does not prove it is safe",
+        "The loop no longer needs external evaluation or review",
+        "The loop can now remove its alignment anchor",
+        "The loop has a formal proof that every future edit is safe"
+      ],
+      "correct": 0,
+      "explanation": "Invariants, anchors, multi-objective checks, and regression detection raise the cost of silent failure but cannot prove every successor safe. Passing these gates is mitigation, not a formal guarantee."
+    }
+  ]
+}

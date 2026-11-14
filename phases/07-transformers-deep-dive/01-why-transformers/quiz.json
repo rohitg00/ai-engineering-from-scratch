@@ -1,0 +1,78 @@
+{
+  "lesson": "01-why-transformers",
+  "title": "Why Transformers — The Problems with RNNs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A text model must distinguish “dog bites person” from “person bites dog.” What signal is essential?",
+      "options": [
+        "Token order information in the model",
+        "A fixed-width summary of the sentence",
+        "Only the total number of tokens",
+        "A label attached to the final word"
+      ],
+      "correct": 0,
+      "explanation": "The sentences use the same words but swap who acts on whom, so sequence order changes the event. A token-count summary loses that relation: both sentences have the same number of tokens and the same word multiset."
+    },
+    {
+      "stage": "check",
+      "question": "Why can a recurrent model not compute hidden state hₜ before hₜ₋₁?",
+      "options": [
+        "Each state uses the preceding hidden state",
+        "The input must first be converted to images",
+        "Each token requires a separate output classifier",
+        "Each state attends to all later positions"
+      ],
+      "correct": 0,
+      "explanation": "The recurrence is hₜ = f(hₜ₋₁, xₜ), so state t cannot be evaluated until the prior state exists; sequence length therefore creates serial depth. A separate output classifier per token would not remove this dependency between hidden states."
+    },
+    {
+      "stage": "check",
+      "question": "For token i, what does self-attention’s weighted-value sum compute?",
+      "options": [
+        "A fixed average of the source sentence",
+        "A single score that ignores value vectors",
+        "A weighted sum of values from positions j",
+        "A recurrent state from the previous token only"
+      ],
+      "correct": 2,
+      "explanation": "At position i, attention assigns weights aᵢⱼ to value vectors vⱼ and sums them, letting the query position select information from all positions. A fixed average gives every value equal weight and cannot express that learned relevance."
+    },
+    {
+      "stage": "check",
+      "question": "At N = 1,024, what is the dependency depth of a balanced tree reduction compared with a serial scan?",
+      "options": [
+        "10 levels versus 1,024 serial steps",
+        "32 levels versus 512 serial steps",
+        "One level versus 1,024 serial steps",
+        "1,024 levels versus 10 serial steps"
+      ],
+      "correct": 0,
+      "explanation": "A balanced binary reduction halves the remaining groups at each level, giving log₂(1,024) = 10 dependent combine levels; a serial recurrence waits through 1,024 steps. The one-level option confuses parallel execution with zero dependency depth."
+    },
+    {
+      "stage": "post",
+      "question": "A service must process one token at a time with constant memory on an edge device. Which family fits the lesson’s selection guide?",
+      "options": [
+        "A full sequence encoder-decoder",
+        "An RNN or state-space model",
+        "A global quadratic-attention stack",
+        "A full-attention transformer"
+      ],
+      "correct": 1,
+      "explanation": "The guide reserves token-at-a-time, constant-memory streaming for RNNs or state-space models. Full attention retains interactions across positions, so its memory grows with sequence length; the full sequence encoder-decoder option does not supply the stated constant-memory property."
+    },
+    {
+      "stage": "post",
+      "question": "A workload needs context beyond one million tokens and attention memory is the bottleneck. Which direction does the lesson recommend?",
+      "options": [
+        "Linear attention, Mamba 2, or Hyena",
+        "A higher-resolution positional embedding table",
+        "A larger dense attention matrix",
+        "A fixed-width recurrent encoder summary"
+      ],
+      "correct": 0,
+      "explanation": "The guide points to linear attention, Mamba 2, or Hyena when sequences exceed one million tokens and full-attention memory is the bottleneck. A larger dense attention matrix preserves the same quadratic memory scaling and worsens that constraint."
+    }
+  ]
+}

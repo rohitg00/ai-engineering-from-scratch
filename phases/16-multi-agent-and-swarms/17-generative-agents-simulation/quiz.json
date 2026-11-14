@@ -1,0 +1,78 @@
+{
+  "lesson": "17-generative-agents-simulation",
+  "title": "Generative Agents and Emergent Simulation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "An agent needs to make today's choice using what it observed yesterday. What capability does it need?",
+      "options": [
+        "A verifier that checks the final answer",
+        "A central scheduler that assigns every move",
+        "A wider set of action names for today",
+        "A persistent memory of prior observations"
+      ],
+      "correct": 3,
+      "explanation": "A persistent memory stream lets today’s retrieval include an observation recorded yesterday, which can then shape the current plan. A central scheduler could assign a move, but it does not provide the agent with its own remembered evidence."
+    },
+    {
+      "stage": "check",
+      "question": "What kinds of entries belong in a generative agent's memory stream?",
+      "options": [
+        "Only messages from a human operator",
+        "Observations, actions, reflections, and plans",
+        "Only final simulation scores",
+        "Only the agent's current location and latest timestamp"
+      ],
+      "correct": 1,
+      "explanation": "The memory stream is an append-only record of observations, actions, reflections, and plans; metadata supports later retrieval. Keeping only location and timestamp discards the events and interpretations that help explain an agent’s next choice."
+    },
+    {
+      "stage": "check",
+      "question": "What does reflection contribute to a generative agent?",
+      "options": [
+        "A network connection to other agents' private prompts",
+        "Higher-level beliefs synthesized from recent memories",
+        "A permanent rule that blocks all plan changes",
+        "A deterministic test of the final simulation outcome"
+      ],
+      "correct": 1,
+      "explanation": "Reflection synthesizes recent memories into higher-level beliefs and stores those syntheses back as retrievable entries. A permanent rule that blocks plan changes is the opposite of the architecture, where new observations can revise plans."
+    },
+    {
+      "stage": "check",
+      "question": "What should an agent do when a new observation contradicts part of its current plan?",
+      "options": [
+        "Ask another agent to overwrite its whole memory stream",
+        "Keep the original plan unchanged until the day ends",
+        "Erase every memory associated with the plan",
+        "Revise the affected segment of the plan"
+      ],
+      "correct": 3,
+      "explanation": "When an observation contradicts part of a plan, regenerate that affected segment and keep unrelated plans intact. Erasing every associated memory would remove evidence the agent may still need to understand the change."
+    },
+    {
+      "stage": "post",
+      "question": "A simulation has memory and plans but no reflection. What behavior does the lesson predict?",
+      "options": [
+        "Interactions remain shallow because higher-order beliefs do not form",
+        "Agents cannot observe any new events",
+        "All agents automatically converge on one goal",
+        "Every plan becomes a deterministic execution trace with no revisions"
+      ],
+      "correct": 0,
+      "explanation": "The ablation predicts shallow interactions because without reflection agents do not form higher-order beliefs from recorded events. They can still observe; the missing operation is synthesis, not perception or automatic agreement on one goal."
+    },
+    {
+      "stage": "post",
+      "question": "A long run's memory retrieval cost grows and reflections invent unsupported relationships. Which controls address both risks?",
+      "options": [
+        "Delete all observations and trust the newest reflection",
+        "Increase the number of agents and keep every entry active",
+        "Compact low-value memories and retain source ids for verification",
+        "Disable ranking and retrieve the entire memory stream"
+      ],
+      "correct": 2,
+      "explanation": "Periodic compaction bounds retrieval cost, while storing source-memory IDs lets a system check whether a reflection is supported. Deleting all observations and trusting the newest reflection would remove the evidence needed to detect invented relationships."
+    }
+  ]
+}

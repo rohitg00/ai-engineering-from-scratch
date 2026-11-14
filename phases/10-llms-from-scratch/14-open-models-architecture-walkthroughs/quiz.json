@@ -1,0 +1,78 @@
+{
+  "lesson": "14-open-models-architecture-walkthroughs",
+  "title": "Open Models: Architecture Walkthroughs",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A model config lists 32 query heads and 8 key/value heads. Which attention pattern does this indicate?",
+      "options": [
+        "Multi-query attention, with one key/value head shared by every query.",
+        "Grouped-query attention, with four query heads per key/value head.",
+        "Multi-head latent attention, with a compressed shared latent.",
+        "Full multi-head attention, with one key/value head per query."
+      ],
+      "correct": 1,
+      "explanation": "GQA has 32 query heads sharing 8 KV heads, so each KV head serves 32/8=4 query heads. MQA would use one KV head total; full MHA would keep one KV head for each of the 32 queries."
+    },
+    {
+      "stage": "check",
+      "question": "What does RMSNorm remove from LayerNorm's computation in the lesson's definition?",
+      "options": [
+        "The activation function, while keeping the positional rotation.",
+        "The residual connection, while keeping the same mean and variance steps.",
+        "The normalization scale, while keeping a mean subtraction and learned bias.",
+        "Mean subtraction, while keeping root-mean-square scaling and a learned scale."
+      ],
+      "correct": 3,
+      "explanation": "LayerNorm centers by subtracting the mean before scaling by standard deviation. RMSNorm instead divides by sqrt(mean(x²)+ε) and applies a learned scale γ; it omits centering and the learned bias."
+    },
+    {
+      "stage": "check",
+      "question": "Why can RoPE extend beyond a learned absolute-position table when paired with scaling methods?",
+      "options": [
+        "Position is removed from keys and supplied only by the output vocabulary.",
+        "The attention mask repeats the first position embedding at every later token.",
+        "Every position receives a separate learned embedding with no maximum index.",
+        "Position uses deterministic rotations rather than a finite learned lookup slot."
+      ],
+      "correct": 3,
+      "explanation": "RoPE rotates query/key pairs by a deterministic angle derived from position, rather than looking up one learned vector per position. Scaling can stretch useful context beyond the trained range, though the lesson notes some accuracy loss."
+    },
+    {
+      "stage": "check",
+      "question": "Mixtral 8x7B routes each token to two of eight experts. What does that imply about its expert computation per token?",
+      "options": [
+        "All eight experts run for each token, but only two experts are stored in memory.",
+        "Two experts are active per token, so only those two experts' weights need to be stored.",
+        "Two experts are active per token, while all eight experts contribute to total model capacity.",
+        "One expert is active per token, while two experts share a single KV head."
+      ],
+      "correct": 2,
+      "explanation": "Top-2 routing activates two of eight experts for a token, reducing expert computation while retaining all eight experts in total model capacity. Active parameters describe work per token; they do not mean the other six weights disappear."
+    },
+    {
+      "stage": "post",
+      "question": "A server has limited VRAM and considers a large MoE model whose router uses only a few experts per token. What memory fact must guide the choice?",
+      "options": [
+        "Expert weights can be discarded after each token without a reload cost.",
+        "The router compresses every expert into one shared dense matrix at inference.",
+        "Only active experts' weights exist, so total parameters do not affect serving memory.",
+        "All expert weights still need to reside somewhere, even though only selected experts run per token."
+      ],
+      "correct": 3,
+      "explanation": "MoE inference computes only selected experts for each token, but the model still contains the full expert bank. Those weights must be resident or otherwise available to the serving system, so VRAM planning cannot use active-parameter count alone."
+    },
+    {
+      "stage": "post",
+      "question": "A team wants lower KV-cache use than full MHA while keeping attention close to the dense baseline. Which change best matches the lesson's GQA tradeoff?",
+      "options": [
+        "Share one key/value head across every query head.",
+        "Replace all attention layers with a sliding-window MLP.",
+        "Share each key/value head across a group of query heads.",
+        "Add query heads while keeping every key/value head unique."
+      ],
+      "correct": 2,
+      "explanation": "GQA maps groups of query heads onto shared KV heads; with 32 Q and 8 KV heads the cache is one quarter of full MHA’s KV heads. Sharing a single KV head is MQA, a more aggressive reduction with the noted accuracy tradeoff."
+    }
+  ]
+}

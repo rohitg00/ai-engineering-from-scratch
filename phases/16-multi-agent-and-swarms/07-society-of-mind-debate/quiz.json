@@ -1,0 +1,78 @@
+{
+  "lesson": "07-society-of-mind-debate",
+  "title": "Society of Mind and Multi-Agent Debate",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Several agents independently answer a problem, then compare reasoning and revise. What added operation distinguishes debate from one-shot voting?",
+      "options": [
+        "The system discards every answer before counting votes",
+        "Agents read peers' answers and update across rounds",
+        "A single model samples one completion at temperature zero",
+        "A judge chooses a tool without seeing any answers"
+      ],
+      "correct": 1,
+      "explanation": "Debate adds an exchange step: agents inspect peer answers, critique them, and may revise over rounds before aggregation. Discarding every answer before counting would leave nothing to compare; it removes rather than adds cross-agent information."
+    },
+    {
+      "stage": "check",
+      "question": "What do the lesson's ablations say about the two debate design knobs?",
+      "options": [
+        "Only one agent matters; rounds add no information",
+        "Both agent count and exchange rounds contribute independently",
+        "Neither knob matters once a majority is reached",
+        "Only more rounds matter; agent count makes no difference"
+      ],
+      "correct": 1,
+      "explanation": "The ablations treat agent count and debate rounds as separate contributors: increasing participants and allowing exchange both add signal. “Only more rounds” overlooks the measured benefit of adding agents."
+    },
+    {
+      "stage": "check",
+      "question": "Why can a heterogeneous debate reduce monoculture errors?",
+      "options": [
+        "Different models can share fewer correlated errors",
+        "A weaker model always improves the final consensus",
+        "Different models guarantee every answer is correct",
+        "Model diversity removes the need to verify results"
+      ],
+      "correct": 0,
+      "explanation": "Different base models can have less-correlated failure patterns, making an ensemble less vulnerable to one shared hallucination. Diversity is not a correctness guarantee; the option promising every answer is right overstates what decorrelation provides."
+    },
+    {
+      "stage": "check",
+      "question": "A debate's agents begin repeating the most confident speaker's answer without checking it. Which failure mode is this?",
+      "options": [
+        "Task starvation",
+        "Schema drift",
+        "Sycophancy cascade",
+        "Memory overflow"
+      ],
+      "correct": 2,
+      "explanation": "A sycophancy cascade is social influence: agents copy a confident peer instead of independently checking the claim. Memory overflow is a context-capacity issue and does not describe the observed deference."
+    },
+    {
+      "stage": "post",
+      "question": "All agents agree after several rounds. What conclusion is justified by agreement alone?",
+      "options": [
+        "The group no longer needs a verifier",
+        "The model family has eliminated correlated errors",
+        "The answer is true because every agent converged",
+        "Consensus alone does not establish correctness"
+      ],
+      "correct": 3,
+      "explanation": "Agreement only shows that agents converged on the same response; correlated models or conformity can align them around a false claim. A high agreement rate is therefore not an external proof of the answer."
+    },
+    {
+      "stage": "post",
+      "question": "The original question disappears from a long debate, and agents begin discussing a related issue. What mitigation matches the lesson?",
+      "options": [
+        "Allow additional rounds without a stopping rule",
+        "Hide earlier messages from the final majority vote",
+        "Re-inject the original question in each round",
+        "Increase the agent count until a specialist notices"
+      ],
+      "correct": 2,
+      "explanation": "Re-injecting the original question each round anchors the exchange to the requested task, while a round limit prevents the conversation from drifting indefinitely. Adding rounds without an anchor makes the drift risk worse."
+    }
+  ]
+}

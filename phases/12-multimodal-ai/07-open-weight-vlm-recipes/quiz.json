@@ -1,0 +1,78 @@
+{
+  "lesson": "07-open-weight-vlm-recipes",
+  "title": "Open-Weight VLM Recipes: What Actually Matters",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Which five design axes define the VLM recipe space in the lesson?",
+      "options": [
+        "Image encoder, connector, LLM, training data, and resolution schedule.",
+        "Patch size, reward model, optimizer, tokenizer, and decoding temperature.",
+        "Image labels, caption length, expert count, pooling, and output vocabulary.",
+        "Vision tower, KV cache, attention mask, verifier, and recurrent state."
+      ],
+      "correct": 0,
+      "explanation": "The lesson’s five axes are image encoder, connector, LLM, training-data mix, and resolution schedule. Patch size and pooling influence those choices, but optimizer, KV cache, and verifier are not the listed top-level recipe axes."
+    },
+    {
+      "stage": "check",
+      "question": "In the controlled comparisons described, which first change is most likely to improve MMMU more: CLIP-to-SigLIP encoder swap or MLP-to-Perceiver connector swap?",
+      "options": [
+        "Swap to SigLIP, which added about 3 points versus less than 1 for the connector change.",
+        "Change both at once, because the comparisons did not hold other axes fixed.",
+        "Swap to Perceiver, which added about 3 points versus less than 1 for the encoder change.",
+        "Change only image resolution, because encoder choice has no measured effect."
+      ],
+      "correct": 0,
+      "explanation": "Under the controlled MM1 comparison, swapping CLIP for SigLIP gained 3+ MMMU points, while changing MLP to Perceiver gained less than one. Changing both at once would confound the comparison instead of identifying the larger measured effect."
+    },
+    {
+      "stage": "check",
+      "question": "At a fixed visual-token count, what do the ablations say about MLP, Q-Former, and Perceiver connector quality?",
+      "options": [
+        "Q-Former consistently wins by several points at every token budget.",
+        "They perform similarly, so token count matters more than connector type.",
+        "MLP fails unless the LLM is unfrozen before projector alignment.",
+        "Perceiver removes the need to select a vision encoder."
+      ],
+      "correct": 1,
+      "explanation": "When visual-token count is held fixed, the cited ablations find MLP, Q-Former, and Perceiver close in quality. Connector choice still changes token cost, but the evidence says its architecture alone predicts little of the quality difference."
+    },
+    {
+      "stage": "check",
+      "question": "Why did Molmo's dense human captions outperform GPT-4V distillation in the lesson's evidence?",
+      "options": [
+        "They use fewer words, so every image fits in a smaller context window.",
+        "They carry more grounded information per image and avoid inherited hallucinations.",
+        "They remove the need for an image encoder during training.",
+        "They are generated faster because no annotators describe images."
+      ],
+      "correct": 1,
+      "explanation": "PixMo’s human descriptions are dense and grounded, carrying more image information than short web captions; the lesson contrasts that with hallucinations inherited from GPT-4V-generated data. Faster generation or fewer words is not the reported advantage."
+    },
+    {
+      "stage": "post",
+      "question": "A VLM's main failure is reading small chart labels, and the encoder can process larger inputs. Which recipe change is supported?",
+      "options": [
+        "Replace the connector first because it dominates encoder choice.",
+        "Use fewer visual tokens because OCR needs less spatial detail.",
+        "Raise resolution or use AnyRes image splitting for OCR-heavy inputs.",
+        "Lower resolution and spend the saved tokens on a larger output vocabulary."
+      ],
+      "correct": 2,
+      "explanation": "Small chart labels require spatial detail. The lesson reports that higher resolution and AnyRes splitting improve OCR benchmarks, while lowering resolution discards the fine text; if the encoder supports larger inputs, raise resolution or tile."
+    },
+    {
+      "stage": "post",
+      "question": "A 7B VLM has weak multimodal reasoning despite a strong encoder and a reasonable connector. Which next change most directly raises the capability ceiling?",
+      "options": [
+        "Add more image patches without changing the language model.",
+        "Use a larger LLM, since language-model size sets the reasoning ceiling.",
+        "Replace instruction data with image labels only.",
+        "Add more connector layers, since connector architecture dominates all axes."
+      ],
+      "correct": 1,
+      "explanation": "With encoder and connector already adequate, increasing LLM size directly targets the reasoning ceiling: the lesson reports a 2–4 point MMMU gain from 7B to 13B. More patches cannot supply the language model’s missing reasoning capacity."
+    }
+  ]
+}

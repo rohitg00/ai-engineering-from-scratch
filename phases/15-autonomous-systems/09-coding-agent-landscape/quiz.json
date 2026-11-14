@@ -1,0 +1,78 @@
+{
+  "lesson": "09-coding-agent-landscape",
+  "title": "The Autonomous Coding Agent Landscape (2026)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Two coding agents use the same base model, but one finds files, runs tests, and retries on failures. Why can their outcomes differ?",
+      "options": [
+        "Their scaffolding changes retrieval, verification, and failure containment",
+        "The model weights must have changed during every test run",
+        "A benchmark score depends solely on how long the prompt is",
+        "Only the programming language affects end-to-end reliability"
+      ],
+      "correct": 0,
+      "explanation": "Retrieval, verification, and containment change how the same model finds files, detects mistakes, and limits damage, so scaffolding can change end-to-end outcomes. Model weights need not change for the scaffold to matter."
+    },
+    {
+      "stage": "check",
+      "question": "What does SWE-bench Verified measure in the lesson's description?",
+      "options": [
+        "Whether a model can run Python in any unrestricted shell",
+        "How quickly a model answers general knowledge questions",
+        "An agent's patch on a curated set of real issue tasks",
+        "A ranking of agent frameworks by license and feature count"
+      ],
+      "correct": 2,
+      "explanation": "SWE-bench Verified presents real GitHub issues and checks whether an agent patch passes tests on a curated subset. It measures software-engineering task completion, not unrestricted shell access or general knowledge."
+    },
+    {
+      "stage": "check",
+      "question": "What is the main tradeoff between JSON tool calls and CodeAct in this lesson?",
+      "options": [
+        "JSON actions require a hardened sandbox; CodeAct is safe by default",
+        "JSON actions are easier to audit; CodeAct is more compositional with larger blast radius",
+        "JSON actions can edit many files; CodeAct stays limited to one file per action",
+        "JSON actions are free-form code; CodeAct is a typed function payload"
+      ],
+      "correct": 1,
+      "explanation": "JSON calls are structured actions that can be validated independently; CodeAct composes several file edits into one Python action, increasing blast radius and sandbox requirements. Reversing these trade-offs misstates both execution surfaces."
+    },
+    {
+      "stage": "check",
+      "question": "A team has many easy one- or two-line benchmark tasks but ships larger multi-file changes. What evaluation adjustment is most useful?",
+      "options": [
+        "Use a harder subset that resembles the team's actual changes",
+        "Replace tests with a reviewer rating of code style",
+        "Keep only tasks that can be solved by changing one line",
+        "Choose whichever public leaderboard has the highest score"
+      ],
+      "correct": 0,
+      "explanation": "If production work is multi-file and 10+ lines, evaluate on a comparable harder backlog rather than a benchmark whose easy tail includes many one-line fixes. Keeping only easy tasks increases distribution mismatch."
+    },
+    {
+      "stage": "post",
+      "question": "A model can emit a multi-step Python program that reads, edits, and tests several files in one action. What condition should accompany this CodeAct design?",
+      "options": [
+        "Allow unrestricted network and filesystem access to preserve flexibility",
+        "Skip verification because one action includes all the work",
+        "Treat the action as read-only because it is one message",
+        "Run the program in a hardened sandbox with measured permissions"
+      ],
+      "correct": 3,
+      "explanation": "One CodeAct action can run an arbitrary Python program, so isolate filesystem, network, and process permissions. Treating a single message as read-only ignores the multiple consequential operations inside it."
+    },
+    {
+      "stage": "post",
+      "question": "A production team asks which coding scaffold is best. What comparison does the lesson recommend?",
+      "options": [
+        "Measure end-to-end reliability on a task distribution matching its work",
+        "Choose the framework whose prompt contains the most instructions",
+        "Pick the scaffold with the largest model name in the configuration",
+        "Use only the highest score on the easiest public benchmark"
+      ],
+      "correct": 0,
+      "explanation": "Measure end-to-end reliability on tasks like the team’s actual work and under the scaffold it will deploy. A top score on the easiest public benchmark may not transfer to that distribution."
+    }
+  ]
+}

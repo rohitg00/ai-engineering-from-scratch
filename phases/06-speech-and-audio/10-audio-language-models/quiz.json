@@ -1,0 +1,78 @@
+{
+  "lesson": "10-audio-language-models",
+  "title": "Audio-Language Models — Qwen2.5-Omni, Audio Flamingo, GPT-4o Audio",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A system answers free-form questions about speech, music, and environmental sounds. What family does the lesson call it?",
+      "options": [
+        "A pure speech recognizer",
+        "An audio codec encoder",
+        "An audio-language model",
+        "A speaker verification system"
+      ],
+      "correct": 2,
+      "explanation": "An audio-language model takes speech, music, or environmental sound as input and can answer with free-form natural language. ASR is primarily asked to produce a transcript, not to reason over audio and answer open-ended questions."
+    },
+    {
+      "stage": "check",
+      "question": "What are the three components in the audio-language model template?",
+      "options": [
+        "VAD, streaming ASR, and TTS decoder",
+        "Mel filterbank, classifier, and duration predictor",
+        "Audio encoder, projector, and LLM decoder",
+        "Audio codec, vocoder, and speaker encoder"
+      ],
+      "correct": 2,
+      "explanation": "The encoder turns audio into features, the projector maps them into the LLM’s embedding space, and the decoder uses those features to generate text. The “audio codec, vocoder, and speaker encoder” option describes audio synthesis components, not the audio-to-LLM bridge."
+    },
+    {
+      "stage": "check",
+      "question": "During the lesson’s Stage 1 training, which component is trained while the encoder and LLM are frozen?",
+      "options": [
+        "The full language model with all weights unfrozen",
+        "The projector mapping audio features into LLM space",
+        "The benchmark evaluator and dataset loader",
+        "The speech decoder and audio encoder jointly"
+      ],
+      "correct": 1,
+      "explanation": "Stage 1 freezes the audio encoder and LLM and trains only the projector on ASR or captioning pairs. Full or LoRA instruction tuning belongs to the later stage, after the projector learns to bridge feature spaces."
+    },
+    {
+      "stage": "check",
+      "question": "On a four-option multiple-choice subset, what does a 25% score represent?",
+      "options": [
+        "Random-choice chance accuracy",
+        "A perfect score on the benchmark",
+        "The required error rate for speech",
+        "A target score for sound classification"
+      ],
+      "correct": 0,
+      "explanation": "With four answer choices, random selection succeeds with probability 1/4 = 25%, so a score near 25% is near chance. A perfect score would be 100%; 25% is the expected accuracy of an uninformed four-way guess."
+    },
+    {
+      "stage": "post",
+      "question": "A product must compare which of two audio clips contains an event. What caution applies?",
+      "options": [
+        "Any audio-language model reliably ranks the two clips",
+        "Multi-audio comparison remains near chance for many models",
+        "The projector guarantees correct cross-clip reasoning",
+        "A transcription-only model performs this comparison directly"
+      ],
+      "correct": 1,
+      "explanation": "The lesson reports multi-audio results around 20–26%, near four-choice chance, so a clip-comparison product needs direct testing on that subset. Strong speech or sound QA scores do not establish reliable comparison across separate audio inputs."
+    },
+    {
+      "stage": "post",
+      "question": "You run the lesson’s exact-match loop on MMAU-Pro and want to compare with published scores. What should you do?",
+      "options": [
+        "Use the official evaluator and report categories separately",
+        "Treat the loop result as directly comparable accuracy",
+        "Replace the benchmark with a human MOS panel",
+        "Average all questions and omit category labels"
+      ],
+      "correct": 0,
+      "explanation": "The exact-match loop is only a sanity check; the official scorer uses embedding matching for multiple choice and different grading for open-ended items. A different answer matcher can change scores, and an aggregate also hides category-specific failures."
+    }
+  ]
+}

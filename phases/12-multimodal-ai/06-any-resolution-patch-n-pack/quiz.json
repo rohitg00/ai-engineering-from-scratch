@@ -1,0 +1,78 @@
+{
+  "lesson": "06-any-resolution-patch-n-pack",
+  "title": "Any-Resolution Vision: Patch-n'-Pack and NaFlex",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A batch contains portrait receipts and landscape charts at native resolution. What does patch-n'-pack do before transformer attention?",
+      "options": [
+        "Patch each image at its native size and concatenate variable-length patch sequences.",
+        "Resize every image to one square and pad all sequences to the same length.",
+        "Crop every image to its center square and discard the remaining pixels.",
+        "Encode each image separately and average all image embeddings."
+      ],
+      "correct": 0,
+      "explanation": "Patch-n’-pack converts each image at its native resolution into its own patch sequence, concatenates those variable-length sequences, and uses a block-diagonal mask to keep images separate. Square resizing distorts aspect ratio; padding wastes attention on empty tokens."
+    },
+    {
+      "stage": "check",
+      "question": "Two packed images have patch-sequence lengths 4 and 9. What packed length and block-diagonal mask nonzero count result?",
+      "options": [
+        "18 tokens and 162 allowed cells, from padding two length-9 images.",
+        "9 tokens and 81 allowed cells, from keeping only the longer image.",
+        "13 tokens and 97 allowed cells, from 4+9 and 4^2+9^2.",
+        "13 tokens and 169 allowed cells, from a full 13x13 mask."
+      ],
+      "correct": 2,
+      "explanation": "The packed length is 4+9=13. Only within-image pairs are allowed, so the mask contains 4²+9²=16+81=97 ones; padding both to 9 would create two 9×9 blocks instead. Cross-image entries remain masked."
+    },
+    {
+      "stage": "check",
+      "question": "What position information does Qwen2-VL's M-RoPE attach to each visual patch?",
+      "options": [
+        "A separate text-token position from the user prompt.",
+        "A class label and the patch's RGB channel count.",
+        "Temporal, row, and column coordinates for the patch.",
+        "Only one learned absolute index in a fixed square grid."
+      ],
+      "correct": 2,
+      "explanation": "M-RoPE assigns each patch temporal, row, and column coordinates, then uses those axes in rotary position encoding. A single fixed learned grid index does not represent arbitrary spatial and temporal dimensions."
+    },
+    {
+      "stage": "check",
+      "question": "A frozen vision encoder accepts only 336x336 crops, but the image contains small chart labels. Which high-resolution strategy fits the lesson?",
+      "options": [
+        "Native M-RoPE without changing the frozen encoder's supported input size.",
+        "Drop half the patches before creating any crop or thumbnail.",
+        "Square-resize to one crop and expect the labels to remain equally detailed.",
+        "AnyRes tiling with a global thumbnail, encoding each crop at the supported size."
+      ],
+      "correct": 3,
+      "explanation": "AnyRes preserves detail for a fixed-size encoder by splitting the image into supported 336×336 crops and adding a resized global thumbnail. M-RoPE changes positional encoding but cannot make a frozen encoder accept an unsupported image size."
+    },
+    {
+      "stage": "post",
+      "question": "A mixed batch has image patch lengths 256, 576, 729, and 1024. What packed sequence length and allowed mask-cell count should it have?",
+      "options": [
+        "1,024 tokens and 1,048,576 allowed cells, from keeping only the largest image.",
+        "2,585 tokens and 2,585 allowed cells.",
+        "2,585 tokens and 6,682,225 allowed cells.",
+        "2,585 tokens and 1,977,329 allowed cells."
+      ],
+      "correct": 3,
+      "explanation": "Packed length is 256+576+729+1024=2,585. Allowed cells are the four within-image squares: 65,536+331,776+531,441+1,048,576=1,977,329; each image contributes its own n_i² block, while cross-image cells stay masked. A dense 2,585² mask would mix images."
+    },
+    {
+      "stage": "post",
+      "question": "A product needs variable aspect ratios with a selectable 256-, 729-, or 1024-token budget from one checkpoint. Which approach matches the lesson?",
+      "options": [
+        "M-RoPE, which requires one exact fixed token budget for every image.",
+        "Square-resize, which preserves every native-resolution patch.",
+        "LLaVA-NeXT AnyRes, which always uses a single fixed 336 crop.",
+        "SigLIP 2 NaFlex, which serves several token budgets without retraining."
+      ],
+      "correct": 3,
+      "explanation": "NaFlex lets one SigLIP 2 checkpoint serve multiple sequence lengths, including selectable 256, 729, or 1024-token budgets. AnyRes tiles an image for a fixed encoder and adds a thumbnail rather than selecting a native-flex budget."
+    }
+  ]
+}

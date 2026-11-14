@@ -1,0 +1,78 @@
+{
+  "lesson": "07-gpt-causal-language-modeling",
+  "title": "GPT — Causal Language Modeling",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "During generation, what information is available to predict token t?",
+      "options": [
+        "The full sequence after its labels are revealed",
+        "Only the final token of the completed sequence",
+        "The preceding tokens in the sequence",
+        "The preceding and future tokens together"
+      ],
+      "correct": 2,
+      "explanation": "Autoregressive generation estimates P(x_t | x_<t), so the prompt and previously generated tokens are available when choosing token t. Future tokens are not yet known; including them would leak the answer."
+    },
+    {
+      "stage": "check",
+      "question": "For position i, which entries are allowed by the causal attention mask?",
+      "options": [
+        "Positions j greater than i only",
+        "Every position except i itself",
+        "Positions j less than or equal to i",
+        "Only the immediately preceding position"
+      ],
+      "correct": 2,
+      "explanation": "For row i, the causal mask permits j ≤ i, including the current position and the entire prefix. Positions j > i receive negative infinity before softmax and therefore zero probability; allowing only j=i−1 would discard useful earlier context."
+    },
+    {
+      "stage": "check",
+      "question": "Given tokens [t1, t2, t3, t4], what input-target shift trains next-token prediction?",
+      "options": [
+        "Input [t2,t3,t4], target [t1,t2,t3]",
+        "Input [t1,t2,t3,t4], target [t1,t2,t3,t4]",
+        "Input [t1,t3], target [t2,t4]",
+        "Input [t1,t2,t3], target [t2,t3,t4]"
+      ],
+      "correct": 3,
+      "explanation": "Shift the sequence one place: input [t1,t2,t3] is paired with targets [t2,t3,t4]. Each position learns the next token after its current prefix. Reversing input and target order would train predictions from future tokens toward the past."
+    },
+    {
+      "stage": "check",
+      "question": "Why can GPT train on all sequence positions in one forward pass but generate serially?",
+      "options": [
+        "Training masks future tokens; inference needs each sampled token next",
+        "Training predicts labels without attention; inference adds attention",
+        "Training uses one token; inference uses the full sequence",
+        "Training uses a decoder; inference switches to an encoder"
+      ],
+      "correct": 0,
+      "explanation": "The causal attention mask blocks each training position from using future positions, so one pass can compute predictions for all prefixes without leaking their targets. During generation, a sampled token must be appended before it can condition the next prediction, so decoding proceeds serially."
+    },
+    {
+      "stage": "post",
+      "question": "A code-completion service must return the most likely next token reproducibly. Which decoding method fits?",
+      "options": [
+        "High-temperature sampling over the full vocabulary",
+        "Randomly selecting from the top-k logits",
+        "Greedy argmax at each step",
+        "Top-p sampling with a broad nucleus"
+      ],
+      "correct": 2,
+      "explanation": "Greedy decoding takes the argmax at every step, making the same logits yield the same next token and supporting reproducible code completion. Randomly selecting among top-k choices remains sampling and can produce different outputs."
+    },
+    {
+      "stage": "post",
+      "question": "A chat response is too repetitive and should become more diverse. Which adjustment is consistent with the lesson’s sampling guidance?",
+      "options": [
+        "Increase temperature while sampling",
+        "Replace the causal mask with bidirectional attention",
+        "Shift the training targets by two positions",
+        "Lower temperature toward greedy decoding"
+      ],
+      "correct": 0,
+      "explanation": "Temperature rescales logits before sampling; increasing it flattens their softmax distribution, giving lower-probability tokens more chance and increasing variety. Lowering temperature toward zero concentrates on the argmax and moves in the opposite direction."
+    }
+  ]
+}
