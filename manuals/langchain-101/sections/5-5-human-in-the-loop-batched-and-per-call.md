@@ -201,7 +201,7 @@ id: fig-5-5b
 kind: chart
 title: tool runs in each approval case
 claim: Each case gave the same tool runs in 3 of 3 runs, and only batched cases ran a tool that no approval allowed.
-caption: Read one column for each case. Each dot is one run on the Mac. A dot on the line is a run whose tools matched the decisions, and a rose dot ran a tool that no approval allowed. From capture/lab/summary/approvals-mac.json.
+caption: Read one column for each of the 22 middleware cases. The graph and strict resume cases G1 to G3, S1, and S2 are not drawn. Each dot is one run on the Mac. A dot on the line is a run whose tools matched the decisions, and a rose dot ran a tool that no approval allowed. From capture/lab/summary/approvals-mac.json.
 ```
 
 The cases have short codes. `B` is batched, `P` is per call, `J` adds a middleware that jumps to `tools`, and `G` is a plain graph.

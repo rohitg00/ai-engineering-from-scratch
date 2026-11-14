@@ -62,7 +62,7 @@ You do not create a thread first. The first checkpoint creates it. The checkpoin
 
 ## What a checkpoint holds
 
-**Checkpoint tuple:** what a checkpointer returns for one checkpoint: its `config`, its `metadata`, the `checkpoint` itself, and the config of its parent.
+**Checkpoint tuple:** what a checkpointer returns for one checkpoint: its `config`, its `metadata`, the `checkpoint` itself, the config of its parent, and its pending writes.
 
 ```listing
 title: the latest checkpoint of the thread
@@ -159,7 +159,9 @@ claim: A pool of 20 connections gives about 340 steps per second from 50 threads
 caption: Each dot is one run, two runs per point. Each line joins the medians of one connection setup. The x axis is the number of threads at once, on a log scale. From capture/lab/summary/concurrency-x86.json.
 ```
 
-The limit was the client process. At a pool of 20 and more, the one process used about 110 percent CPU, and the pool was full. We then ran 8 and 16 client processes, with a pool of 10 in each. At 200 threads, their sums were 1,744 and 3,797 steps per second, with 0 errors. At 16 processes, Postgres reached its `max_connections` of 100 and refused our monitor connection. So we do not report the connection count of those runs.
+The limit was the client process. At a pool of 20 and more, the one process used about 110 percent CPU, and the pool was full. We then ran 8 and 16 client processes, with a pool of 10 in each. At a target of 200 threads, their sums were 1,744 and 3,797 steps per second, with 0 errors. Each process ran a whole share, so the 16 processes ran 192 threads. 
+
+At 16 processes, Postgres reached its `max_connections` of 100 and refused our monitor connection. So we do not report the connection count of those runs.
 
 Size the pool to the threads that run at once, and add processes before you add connections. A second run on a thread that is still running is a different problem, double texting, and [section 7.1](#s-agent-server-langgraph-dev-up-and-deploy) covers it on Agent Server.
 

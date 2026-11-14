@@ -161,7 +161,7 @@ checkpoints|t2|9
 
 The two runs gave the same counts in every step. In both, the approval did not survive the crash. The checkpoint count did not change in step 3, and the resume raised the same interrupt again. In both, `send_email` ran twice and the outbox held one email. [Section 4.3](#s-durability-modes-and-a-crash-between-two-steps) ran its agent matrix without a key, and these two runs are a first trial of an agent with one.
 
-The summary step took 10.2 s in the default run, against 1.4 s for step 2. It made one more model call to write the summary. The pending approval, the store, and the summary all lived in the two SQLite files, so each new process found them.
+The summary step took 10.2 s in the default run, against 1.4 s for step 2. `SummarizationMiddleware` writes the summary with a model call of its own, and the run did not time that call apart. The pending approval, the store, and the summary all lived in the two SQLite files, so each new process found them.
 
 Two results come from the model. Qwen3 4B followed the rule to call `recall` before it wrote, and it answered step 6 from the summary. A model that skips `recall` has to guess the address, and the review is the place to stop that.
 

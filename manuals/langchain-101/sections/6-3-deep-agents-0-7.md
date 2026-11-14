@@ -1,6 +1,6 @@
 # Deep Agents 0.7
 
-> `create_deep_agent` is `create_agent` with file tools, a subagent tool, and more middleware, and its tool schemas add about 2,250 prompt tokens to every model call.
+> `create_deep_agent` is `create_agent` with file tools, a subagent tool, and more middleware, and on Qwen3 8B it added 2,075 to 2,251 prompt tokens to every model call.
 
 You read that a deep agent plans with a todo list, and you build one with `deepagents` 0.7.38. The model never calls `write_todos`, because the tool is not there. You also see that a one-word question now costs eighty times the prompt tokens of the same question to a plain agent.
 
@@ -8,11 +8,13 @@ When you finish this section, you can say what `create_deep_agent` adds to `crea
 
 ## What create_deep_agent builds
 
-**Deep agent:** an agent built by `create_deep_agent` from the package `deepagents`. It is a `create_agent` graph with a fixed stack of middleware in front of your own.
+**Deep agent:** an agent built by `create_deep_agent` from the package `deepagents`. It is a `create_agent` graph with a fixed stack of middleware around your own.
 
 `create_deep_agent` takes the same core arguments as `create_agent`: a model, tools, a system prompt, middleware, a checkpointer, and a store. It adds `subagents`, `skills`, `memory`, `permissions`, `backend`, and `interrupt_on` {{code libs/deepagents/deepagents/graph.py}}. It returns the compiled graph of `create_agent`.
 
-The middleware stack comes first, in this order: `FilesystemMiddleware`, `SubAgentMiddleware` with a general-purpose subagent, `_ParentNotifierMiddleware`, summarization, and `PatchToolCallsMiddleware`. Then come middlewares that depend on your arguments, such as skills, memory, and human review, and last `UnsupportedContentMiddleware` and `ModelRefusalMiddleware` {{code libs/deepagents/deepagents/graph.py}}. Two of them add graph nodes. The kit run on the fake model shows them:
+The core group comes first, in this order: `FilesystemMiddleware`, `SubAgentMiddleware` with a general-purpose subagent, `_ParentNotifierMiddleware`, summarization, and `PatchToolCallsMiddleware`. Your own middleware comes right after that group.
+
+Then comes a tail: the middleware of the model profile, skills, prompt caching, memory, and human review. `UnsupportedContentMiddleware` and `ModelRefusalMiddleware` come last {{code libs/deepagents/deepagents/graph.py:921-994}}. A middleware of yours with the name of a built-in one replaces it in place {{code libs/deepagents/deepagents/graph.py:223-262}}. Two of them add graph nodes. The kit run on the fake model shows them:
 
 ```listing
 title: the nodes of a deep agent
@@ -159,7 +161,7 @@ The direction of the claim holds, and the size does not: we measured a drop of 5
 ```takeaways
 - Pass a model to create_deep_agent, because model=None means Claude and is deprecated.
 - Add TodoListMiddleware yourself when your agent needs a todo list.
-- Budget about 2,250 prompt tokens per model call for the default deep agent tools.
+- Budget 2,075 to 2,251 extra prompt tokens per model call for a default deep agent.
 - Use create_agent for short questions, where the fixed tool cost dominates.
 - Update parsers of ls, glob, and read_file output when you move to 0.7.
 ```

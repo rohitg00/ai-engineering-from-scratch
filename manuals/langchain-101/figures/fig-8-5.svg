@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-8-5-title fig-8-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-8-5-title">Seven failures of the drill, before and after each fix</title>
-  <desc id="fig-8-5-desc">A table of seven rows, one per case of the failure drill on the Mac, with the symptom on the left and the result after the fix on the right. Retry layers: 9 requests against 3. A crash after a charge: 2 charges against 1. A middleware that jumps past review: the tool ran before any decision, and per-call mode stopped it. No structured output: None with no exception, and a check that raises. A tracing endpoint that is down: exit 12 s after the run against 0.1 s. The same tool name twice: one tool bound with no error. Endless tool calls: GraphRecursionError at limit 10, and a model call limit that ends the run at limit 25.</desc>
+  <desc id="fig-8-5-desc">A table of seven rows, one per case of the failure drill on the Mac, with the symptom on the left and the result after the fix on the right. Retry layers: 9 requests against 3. A crash after a charge: 2 charges against 1. A middleware that jumps past review: the tool ran before any decision, and per-call mode stopped it. No structured output: None with no exception, and a check that raises. A tracing endpoint that is down: exit 12 s after the run against 0.1 s. The same tool name twice: one tool bound with no error. Endless tool calls: GraphRecursionError at limit 10, and a model call limit of 3 that ends the run after 3 calls, with the recursion limit raised to 25.</desc>
   <text x="176" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE SYMPTOM</text>
   <text x="408" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AFTER THE FIX</text>
   <text x="20" y="59" font-size="11.5" font-weight="700">retry layers</text>
@@ -51,6 +51,6 @@
   <text x="188" y="415.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">recursion_limit 10</text>
   <rect x="408" y="380" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
   <text x="420" y="398.1" font-size="12" font-weight="700">ended at 3 calls</text>
-  <text x="420" y="415.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">call limit, limit 25</text>
+  <text x="420" y="415.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">call limit 3, recursion 25</text>
   <text x="20" y="452" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One run of drill.py, offline, with a scripted fake model and a local stub.</text>
 </svg>

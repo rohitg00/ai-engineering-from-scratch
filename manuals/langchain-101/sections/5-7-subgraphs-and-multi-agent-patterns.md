@@ -167,7 +167,7 @@ note: The third model call of the main agent and the ToolMessage that answered i
     "name": "task",
 ```
 
-The model call of the subagent was the fourth call of the fake. It got its own system prompt and two messages, and its tools had no `task`. The main agent saw one `ToolMessage` with the text `yes`. So a subagent keeps its work out of the context of its caller. Part 6 covers Deep Agents.
+The model call of the subagent was the fourth call of the fake. It got two messages, its own system prompt and one other message, and its tools had no `task`. The main agent saw one `ToolMessage` with the text `yes`. So a subagent keeps its work out of the context of its caller. Part 6 covers Deep Agents.
 
 The kit runs only the subagent pattern. Captures of the other four patterns come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 

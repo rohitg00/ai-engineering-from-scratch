@@ -41,5 +41,5 @@
   <text x="486" y="207.75" font-size="12.5" text-anchor="middle" font-weight="700">InvalidUpdateError</text>
   <text x="486" y="225.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">At key &#39;value&#39;: Can receive</text>
   <text x="486" y="240.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">only one value per step.</text>
-  <text x="20" y="282" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Both runs start from one step with parallel writes. Only the reducer differs.</text>
+  <text x="20" y="282" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Two graphs, each with parallel writes to one key in one step. One key has a reducer.</text>
 </svg>

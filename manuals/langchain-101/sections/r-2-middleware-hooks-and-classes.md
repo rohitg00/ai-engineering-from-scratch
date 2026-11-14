@@ -78,8 +78,8 @@ Each row gives the hooks, the constructor defaults that change behaviour, and th
 | `ModelRefusalMiddleware` | `wrap_model_call` | no parameters | `model_refusal.py:39` |
 | `ToolErrorMiddleware` | `wrap_tool_call` | `on_error=None`, `aon_error=None`, `tools=None`. With neither handler it raises `ValueError` | `tool_error.py:37`, `:84` |
 | `PIIMiddleware` | `before_model`, `after_model` | `pii_type` required, `strategy="redact"`, `apply_to_input=True`, `apply_to_output=False`, `apply_to_tool_results=False` | `pii.py:513`, `:577` |
-| `ModelRouterMiddleware` | `before_agent`, `wrap_model_call` | `choices`, `instructions`, and `classifier` required. Beta, new in 1.5.0 | `model_router.py:72`, `:121` |
-| `AutoModeMiddleware` | `wrap_tool_call` | `tools` and `classifier` required, `criteria=None`. Beta, new in 1.5.0 | `auto_mode.py:64`, `:117` |
+| `ModelRouterMiddleware` | `before_agent`, `wrap_model_call` | `choices`, `instructions`, and `classifier` required. Beta, marked with `@beta`, new in 1.5.0 | `model_router.py:72`, `:121` |
+| `AutoModeMiddleware` | `wrap_tool_call` | `tools` and `classifier` required, `criteria=None`. Beta in its docstring only, with no `@beta` mark and no warning, new in 1.5.0 | `auto_mode.py:64`, `:117` |
 | `TodoListMiddleware` | `wrap_model_call`, `after_model` | a default system prompt and tool description | `todo.py:174`, `:203` |
 | `LLMToolSelectorMiddleware` | `wrap_model_call` | `model=None`, `max_tools=None`, `always_include=None`, `max_retries=1` | `tool_selection.py:121`, `:150` |
 | `LLMToolEmulator` | `wrap_tool_call` | `tools=None`, `model=None` | `tool_emulator.py:27`, `:71` |

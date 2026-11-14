@@ -95,7 +95,7 @@ The check is `_validate_url_target`, which runs before the adapter builds a Fast
 
 The MCP page of the docs warns that a string naming an existing `.py` or `.js` file would start that file as a subprocess {{docs oss/python/langchain/mcp}}. That describes `fastmcp.Client`, and the same paragraph says that `MCPAdapter` refuses such a string. Our run agrees on both points.
 
-On the Mac, we gave `MCPAdapter` three strings for an existing server script: a relative path, an absolute path, and a `file://` URL. Each one raised `ValueError` and launched nothing. `fastmcp.Client` with the same relative path started the script, with a deprecation warning. So the danger is real only when you build a `fastmcp.Client` from a string yourself, and then pass it to the adapter.
+On the Mac, we gave `MCPAdapter` three strings for an existing server script: a relative path, an absolute path, and a `file://` URL. Each one raised `ValueError` and launched nothing. `fastmcp.Client` with the same relative path started the script. The lab script filtered warnings, so the run did not record one. So the danger is real only when you build a `fastmcp.Client` from a string yourself, and then pass it to the adapter.
 
 A target that comes from configuration or from a model is a string. Keep it a string, and the adapter reaches it only over HTTP. To start a local server, write `Path("server.py")` in your own code.
 
@@ -139,7 +139,7 @@ caption: Read each row from the case on the left to the result on the right. Gre
 - **A tool that raises.** `ToolError` and a plain `RuntimeError` inside the tool each became a `ToolMessage` with `status` `error`. Inside `create_agent`, the run went on to the next model call.
 - **A slow tool.** `MCPAdapter` takes only the target, so it has no timeout setting {{code libs/langchain_v1/langchain/mcp/adapter.py}}. A tool that slept 2 s returned after 2.0 s. To set a limit, build `fastmcp.Client(target, timeout=1)` and pass the client to the adapter. A tool that slept 5 s then raised `MCPError: Request 'tools/call' timed out` after 1.0 s, and the next call on the same client worked.
 - **A crash over stdio.** The server called `os._exit(3)` in the middle of a call. The call raised `MCPError: Connection closed` within 0.01 s, and the agent run ended with that exception. The next call started the server again, which took 1.66 s.
-- **A crash over HTTP.** The call raised `RemoteProtocolError`, and the run ended. Every later call raised `Client failed to connect`, because nothing starts an HTTP server again for you.
+- **A crash over HTTP.** The direct call raised `RemoteProtocolError`. The agent run after it, and every later call, raised `RuntimeError: Client failed to connect`, because nothing starts an HTTP server again for you.
 
 A crash ends the whole run, and the model never sees an error message. A local tool that raises ends a run the same way, as [section 2.4](#s-tools-toolruntime-and-tool-errors) shows. Wrap the agent call in your own retry when a server can die, and resume it from its checkpoint.
 
@@ -173,7 +173,7 @@ Each stdio call started a new server, and the median call took 1,887 ms over 50 
 
 **Elicitation:** a request from an MCP server for input from the user during a tool call, such as a form with one field.
 
-`MCPAdapter` arms each client that it builds for elicitation. It leaves a client alone when that client already has its own `elicitation_handler` {{code libs/langchain_v1/langchain/mcp/adapter.py:173-187}}. When a server returns its questions as an `InputRequiredResult`, the adapter asks them with a LangGraph `interrupt()` {{code libs/langchain_v1/langchain/mcp/elicitation.py:311-364}}. So an MCP tool can pause an agent run, like the review of [section 5.4](#s-interrupt-and-resume).
+`MCPAdapter` arms each client that it builds for elicitation. For a client that you pass in, it arms a copy made with `client.new()`. It leaves a client alone when that client already has its own `elicitation_handler` {{code libs/langchain_v1/langchain/mcp/adapter.py:173-187}}. When a server returns its questions as an `InputRequiredResult`, the adapter asks them with a LangGraph `interrupt()` {{code libs/langchain_v1/langchain/mcp/elicitation.py:311-364}}. So an MCP tool can pause an agent run, like the review of [section 5.4](#s-interrupt-and-resume).
 
 **We measured** these cases on the Mac with `langchain` 1.5.0, `fastmcp` 4.2.0, `mcp` 2.3.0, and `langgraph` 1.2.22. Each case ran 3 times, each in a new process, and the 3 runs of every case gave the same result. The server ran in the same process, and five cases ran again over Streamable HTTP. The server tool `ask_name` asked for one form field, `name`. The default adapter negotiated protocol `2026-07-28`.
 

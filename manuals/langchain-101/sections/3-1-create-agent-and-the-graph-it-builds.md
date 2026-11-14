@@ -111,14 +111,16 @@ lang: json
 ]
 ```
 
-The edge function reads the state after each model call, in this order {{code libs/langchain_v1/langchain/agents/factory.py}}:
+The edge function reads the state after each model call, in this order {{code libs/langchain_v1/langchain/agents/factory.py:1991-2042}}:
 
 1. A `jump_to` value set by a middleware wins.
-2. A new `structured_response` ends the run.
-3. An AI message with tool calls sends each call to `tools` as its own `Send`, so parallel calls run as parallel tasks.
-4. An AI message with no tool calls ends the run.
+2. No AI message in the state ends the run.
+3. An AI message with no tool calls ends the run.
+4. Tool calls that have no result yet go to `tools`, each as its own `Send`, so parallel calls run as parallel tasks.
+5. A new `structured_response` ends the run.
+6. Otherwise the run goes back to `model`.
 
-A structured output tool call is not sent to `tools`. The `model` node handles it, as [section 3.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) shows. An agent with no tools and a structured output strategy has a `model` to `model` edge in place of the `tools` node.
+A structured output tool call is not sent to `tools`. The `model` node handles it, as [section 3.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) shows. An agent with no tools and a `ToolStrategy` or `AutoStrategy` has a `model` to `model` edge in place of the `tools` node. That edge checks `jump_to`, then a new `structured_response`, and otherwise loops {{code libs/langchain_v1/langchain/agents/factory.py:2045-2068}}. With no tools and a `ProviderStrategy`, the `model` node goes straight to the end {{code libs/langchain_v1/langchain/agents/factory.py:1790-1803}}.
 
 ## Parallel tool calls and max_concurrency
 
@@ -137,7 +139,7 @@ A structured output tool call is not sent to `tools`. The `model` node handles i
 
 Each cell gives the median wall time and the largest number of calls that ran at one time. Every successful run executed each call once and wrote one `ToolMessage` for it.
 
-`create_agent` applied the cap in every mode, because each call is its own `Send` task. With no cap, sync tools ran in a thread pool of 14 on this machine, so 16 calls took two waves. Async tools under `ainvoke` had no default cap. A tool with only an async body raised `NotImplementedError` under `invoke` in 125 of 125 runs for each harness.
+`create_agent` applied the cap in every mode, because each call is its own `Send` task. With no cap, sync tools ran in a thread pool of 14 on this machine, so 16 calls took two waves. That size is the Python default for 10 cores. The `max_concurrency` key also sets the size of that pool, so a value above 14 makes it larger {{code libs/core/langchain_core/runnables/config.py:659-675}}. Async tools under `ainvoke` had no default cap. A tool with only an async body raised `NotImplementedError` under `invoke` in 125 of 125 runs for each harness.
 
 A plain `ToolNode` under `ainvoke` ignored the cap, for async tools and for sync tools. Issue langgraph#8517 reports the async case {{issue langgraph#8517}}. Our runs reproduce it and show that sync tools on the async path are affected too. Under `invoke`, `ToolNode` applied the cap. Set `max_concurrency` on the run when a tool calls a service with a rate limit, and use `create_agent` when you need the cap under `ainvoke`.
 
@@ -184,9 +186,9 @@ Against the stub, the agent layer added about 1.2 ms for each model call. Agains
 - Read node names such as A.before_model to find the middleware hook that ran.
 - Pass recursion_limit on each run, because the agent default is 9999 steps.
 - Stream with no mode to get updates, the default of every agent.
-- Budget about 1 ms of agent overhead for each model call, far below model time.
+- Budget about 1.2 ms of agent overhead for each model call, far below model time.
 - Set max_concurrency on the run to cap parallel tool calls.
 - Give each tool a sync body when the agent runs under invoke.
 ```
 
-Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/01-concurrency-runs.jsonl, capture/lab/T08-parallel-tools-mac/t08_run.py; issue langgraph#8517; capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.
+Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/01-concurrency-runs.jsonl, capture/lab/T08-parallel-tools-mac/t08_run.py; issue langgraph#8517; capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py, libs/core/langchain_core/runnables/config.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.

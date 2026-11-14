@@ -60,7 +60,7 @@ The kit uses a scripted fake chat model in place of a provider. The fake returns
 
 We recorded on two machines. The Mac is an Apple M1 Max with 10 cores and 64 GiB, with Ollama and PostgreSQL 14. The x86 server guest has 32 vCPU and 48 GiB, with PostgreSQL 16 and Redis 7. The two machines differ, so this manual never sets a number from one beside a number from the other.
 
-The Mac is a shared laptop, and other work ran on it during every timed run. Read each time from the Mac as an upper bound for that machine. The real models in our runs were Qwen3 models of 4B and 8B parameters on Ollama on the Mac. No model time in this manual is the time of a hosted model.
+The Mac is a shared laptop, and other work ran on it during every timed run. Read each time from the Mac as an upper bound for that machine. The real models in our runs were Qwen3 models of 0.6B to 8B parameters on Ollama on the Mac, and `nomic-embed-text` for embeddings. No model time in this manual is the time of a hosted model.
 
 ## Conventions
 

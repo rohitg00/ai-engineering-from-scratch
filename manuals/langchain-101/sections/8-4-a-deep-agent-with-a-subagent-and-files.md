@@ -89,7 +89,7 @@ claim: Every call of the main agent sent more than 3,600 prompt tokens, and the 
 caption: Each dot is one model call of one run on the Mac with Qwen3 8B. Blue dots are the main agent and indigo dots the editor. The label on the axis is the tool the call asked for. From capture/lab/summary/demos-mac.json.
 ```
 
-The first call of the main agent sent 3,651 tokens for a task of about 100 words. Most of that is the harness: the system prompt of Deep Agents and the schemas of 9 tools. [Section 6.3](#s-deep-agents-0-7) measured the tool schemas alone at about 2,250 tokens per call. Each later call adds the messages of the run on top.
+The first call of the main agent sent 3,651 tokens for a task of about 100 words. Most of that is the harness: the system prompt of Deep Agents and the schemas of 9 tools. [Section 6.3](#s-deep-agents-0-7) measured the extra cost of the harness at 2,075 to 2,251 tokens per call on Qwen3 8B. Each later call adds the messages of the run on top.
 
 The editor had 7 tools: the file tools without `task` and `write_todos`. Its messages held its own system prompt and the task description from the main agent. So its calls were about half the size. A subagent is a way to keep a long side task out of the context of the main agent.
 

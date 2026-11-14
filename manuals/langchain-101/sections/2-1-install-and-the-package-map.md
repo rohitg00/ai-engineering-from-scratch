@@ -2,7 +2,7 @@
 
 > Install `langchain` 1.5.0 on Python 3.11 or later from a lockfile, because the stack is many packages with separate versions, and a minor release can change behaviour.
 
-You copy `from langchain.chains import LLMChain` from an older answer, and Python raises `ModuleNotFoundError`. You install `langchain-community` to get a loader, and it warns on import that it is sunset. You run the same `pip install` on Python 3.10 and on 3.12, and you get two different versions of `langchain`.
+You copy `from langchain.chains import LLMChain` from an older answer, and Python raises `ModuleNotFoundError`. You install `langchain-community` to get a loader, and then read that the package is sunset. You run the same `pip install` on Python 3.10 and on 3.12, and you get two different versions of `langchain`.
 
 When you finish this section, you can say which package holds each import and install the stack at the pin. You can also say why it needs a lockfile.
 
@@ -44,7 +44,7 @@ Old imports moved out of `langchain` at 1.0, and three repositories were archive
 
 - **Chains and legacy agents.** `LLMChain`, `AgentExecutor`, the indexing API, and the hub module are in `langchain-classic`, under `langchain_classic` {{code libs/langchain/langchain_classic}}.
 - **Community integrations.** `langchain-community` 0.4.2 is the last release, and its repository is archived. Its README says that the package is sunset {{issue langchain-community README}}. It still installs, and it still depends on `langchain-classic`.
-- **The MCP adapter.** `langchain-mcp-adapters` is archived. Since `langchain` 1.4.0, the extra `langchain[mcp]` installs `langchain.mcp` in its place. Do not install both in one environment, because the old adapter requires `mcp` below 2.
+- **The MCP adapter.** `langchain-mcp-adapters` is archived. The changelog says that `langchain` 1.4.0 added `langchain.mcp` in its place {{docs oss/python/releases/changelog}}. At the pin, the extra `langchain[mcp]` installs it. Do not install both in one environment, because the old adapter requires `mcp` below 2.
 - **The LangSmith SDK repository.** `langsmith-sdk` is archived, and the Python client now lives in `langsmith-python`. The package name `langsmith` did not change.
 
 `create_react_agent` from `langgraph.prebuilt` still imports, and it warns that it moved to `create_agent`. [Section 1.2](#s-one-create-agent-run) shows the agent that replaces it.

@@ -26,5 +26,5 @@ module.exports = figure('fig-5-1', {
   f.box({ x: 352, y: 114, w: 268, h: 44, hue: 'grey', title: 'no reducer', sub: 'LastValue takes one write per step' });
   f.arrow([486, 158], [486, 189], { style: 'fail' });
   f.box({ x: 352, y: 190, w: 268, h: 60, hue: 'rose', title: 'InvalidUpdateError', sub: ["At key 'value': Can receive", 'only one value per step.'] });
-  f.text(20, 282, 'Both runs start from one step with parallel writes. Only the reducer differs.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 282, 'Two graphs, each with parallel writes to one key in one step. One key has a reducer.', { size: 11, serif: true, hue: 'ink-soft' });
 });

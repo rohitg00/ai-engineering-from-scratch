@@ -12,7 +12,7 @@ When you finish this section, you can turn tracing on and off, and read the run 
 
 **Run tree:** the in-memory object of one run, `RunTree` in `langsmith`. The client sends each run tree to the LangSmith API.
 
-The docs turn tracing on for LangChain with two variables: `LANGSMITH_TRACING=true` and `LANGSMITH_API_KEY` {{docs langsmith/observability-quickstart}}. An account outside the US also sets `LANGSMITH_ENDPOINT`. The SDK decides on each call with `tracing_is_enabled()`, in this order {{code src/langsmith/utils.py}}:
+The docs turn tracing on for LangChain with two variables: `LANGSMITH_TRACING=true` and `LANGSMITH_API_KEY` {{docs langsmith/observability-quickstart}}. An account outside the US also sets `LANGSMITH_ENDPOINT`. The SDK decides on each call with `tracing_is_enabled()`, in this order {{code src/langsmith/utils.py}}. It reads each variable once per process and caches it, so set the variables before the first call:
 
 1. The value of the current `tracing_context`, when it is not `None`.
 2. True when a parent run tree is active.
@@ -151,7 +151,9 @@ caption: Each dot is one agent run on the Mac, 177 per condition, and the black 
 
 The median run took 2.59 ms with tracing off and 7.56 ms with tracing on. The first traced run in each process took 89 to 171 ms, because the client starts and asks the endpoint for its settings. Next to a model call of hundreds of milliseconds, 5 ms is small. It is not zero, and the first call of a short-lived process pays more.
 
-A third traced condition set `LANGCHAIN_CALLBACKS_BACKGROUND=false`, and its median was 5.82 ms. The docs say that `false` makes callbacks wait {{docs langsmith/trace-with-langchain}}, but no code in `langchain-core` 1.8.0 or `langsmith` 0.14.17 reads it. Only `langgraph-cli` names it, in the list of reserved variables of its deploy command {{code libs/cli/langgraph_cli/deploy.py:76}}. So that condition ran the same code as tracing on. Its gap of 1.74 ms is not an effect of the variable, and we did not find the cause. The register records the docs and the code as D111.
+A third traced condition set `LANGCHAIN_CALLBACKS_BACKGROUND=false`, and its median was 5.82 ms. The docs say that `false` makes callbacks wait {{docs langsmith/trace-with-langchain}}, but no code in `langchain-core` 1.8.0 or `langsmith` 0.14.17 reads it. Only two packages name it. `langgraph-cli` lists it as reserved in its deploy command {{code libs/cli/langgraph_cli/deploy.py:76}}. `langgraph-api` 0.18.0 sets it to `true` for its JS worker {{code langgraph_api/js/remote.py:119}}. No Python code reads it.
+
+So that condition ran the same code as tracing on. Its gap of 1.74 ms is not an effect of the variable, and we did not find the cause. The register records the docs and the code as D111.
 
 ## When the endpoint fails
 
@@ -177,7 +179,9 @@ At the pin, the exit waited for the traces, so the warning in the docs did not a
 
 ## How runs are batched
 
-The usage page of the docs says that the SDK batches up to 100 runs of one session into one API call {{docs langsmith/usage-and-billing}}. In our runs the client posted to `/runs/multipart`, and each full post held 49 to 51 runs. The first post of a process held one run, and the last held the rest. So a block of 60 agent runs averaged 42 to 47 runs per post. We never saw 100 runs in one post. The kit turns batching off with `auto_batch_tracing=False`, so it shows one `POST /runs` for each run.
+The usage page of the docs says that the SDK batches up to 100 runs of one session into one API call {{docs langsmith/usage-and-billing}}. In our runs the client posted to `/runs/multipart`, and each full post held 49 to 51 runs. In four of the nine processes, the first post held one run. In the other five, it held 50. The last post held the rest, so a latency process averaged 42 to 47 runs per post.
+
+We never saw 100 runs in one post. The kit turns batching off with `auto_batch_tracing=False`, so it shows one `POST /runs` for each run.
 
 The claims that need a LangSmith account are coming in the next edition. They are retention, rate limits, the limit of runs per trace, and the speed of the hosted store. [Section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them.
 
@@ -185,8 +189,8 @@ The claims that need a LangSmith account are coming in the next edition. They ar
 - Wrap LangChain code in tracing_context(enabled=False) when its traces must stay on the machine.
 - Use collect_runs to keep the runs of an agent in memory without a LangSmith endpoint.
 - Call wait_for_all_tracers() before a script or a handler exits.
-- Expect a first traced run of up to 170 ms in each new process.
+- Expect a first traced run of up to 171 ms in each new process.
 - Set a timeout on the job that runs a traced script, because a hanging endpoint blocks the exit.
 ```
 
-Sources: capture/s_integrations.py, capture/out/42-langsmith.txt; capture/lab/summary/tracing-mac.json, capture/lab/TRC-tracing-mac/03-latency-summary.jsonl, capture/lab/TRC-tracing-mac/01-failure-summary.jsonl, capture/lab/TRC-tracing-mac/02-tracing-context-local.jsonl, capture/lab/TRC-tracing-mac/03-latency-load.txt; src/langsmith/utils.py, src/langsmith/run_helpers.py, src/langsmith/run_trees.py, and src/langsmith/client.py at langsmith v0.14.17; libs/core/langchain_core/callbacks/manager.py, libs/core/langchain_core/tracers/context.py, and libs/core/langchain_core/tracers/langchain.py at langchain==1.5.0; libs/cli/langgraph_cli/deploy.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (langsmith/observability-quickstart, langsmith/trace-with-langchain, langsmith/usage-and-billing); the product page www.langchain.com/langsmith/observability, read 2026-11-14.
+Sources: capture/s_integrations.py, capture/out/42-langsmith.txt; capture/lab/summary/tracing-mac.json, capture/lab/TRC-tracing-mac/03-latency-summary.jsonl, capture/lab/TRC-tracing-mac/01-failure-summary.jsonl, capture/lab/TRC-tracing-mac/02-tracing-context-local.jsonl, capture/lab/TRC-tracing-mac/03-latency-load.txt; src/langsmith/utils.py, src/langsmith/run_helpers.py, src/langsmith/run_trees.py, and src/langsmith/client.py at langsmith v0.14.17; libs/core/langchain_core/callbacks/manager.py, libs/core/langchain_core/tracers/context.py, and libs/core/langchain_core/tracers/langchain.py at langchain==1.5.0; libs/cli/langgraph_cli/deploy.py at langgraph 1.2.22; langgraph_api/js/remote.py at langgraph-api 0.18.0; docs.langchain.com at docs commit 04d4d4a (langsmith/observability-quickstart, langsmith/trace-with-langchain, langsmith/usage-and-billing); the product page www.langchain.com/langsmith/observability, read 2026-11-14.

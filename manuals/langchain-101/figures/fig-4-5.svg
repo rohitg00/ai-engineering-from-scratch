@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="fig-4-5-title fig-4-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-4-5-title">Turn time over 2,000 turns, with and without summarization</title>
-  <desc id="fig-4-5-desc">A dot chart of the median turn time of each block of 100 turns, on a log scale from 20 to 1,000 ms, over 2,000 turns on the x86 server guest. Without summarization the median grows from 36.917 ms to 662.9 ms. With a trigger of 60 messages it stays between about 36 and 39 ms, with 20 messages near 32 ms, and with 6,000 tokens it falls from 63.246 ms to about 43 ms.</desc>
+  <desc id="fig-4-5-desc">A dot chart of the median turn time of each block of 100 turns, on a log scale from 20 to 1,000 ms, over 2,000 turns on the x86 server guest. Without summarization the median grows from 36.917 ms to 662.9 ms. With a trigger of 60 messages it stays between 35.5 and 41.4 ms, with 20 messages near 32 ms, and with 6,000 tokens it falls from 63.246 ms to about 43 ms.</desc>
   <line x1="70" y1="290" x2="460" y2="290" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
   <text x="64" y="294" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20</text>
   <line x1="70" y1="231.44" x2="460" y2="231.44" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>

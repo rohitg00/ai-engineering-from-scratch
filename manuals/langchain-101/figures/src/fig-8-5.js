@@ -19,13 +19,13 @@ const rows = [
   ['no structured output', 'None, no exception', 'ToolStrategy and a tool', 'your check raises', 'test for None'],
   ['tracing endpoint down', `exit ${c5.exit_lag_s} s after the run`, 'one run, nothing listens', `exit ${c5.exit_lag_s_after_fix} s after the run`, 'probe, then tracing off'],
   ['same tool name twice', '1 tool bound, no error', 'the second function ran', 'duplicate found', 'check names first'],
-  ['endless tool calls', `raised at ${c7.model_calls} model calls`, 'recursion_limit 10', `ended at ${c7.after_fix[1].model_calls} calls`, 'call limit, limit 25'],
+  ['endless tool calls', `raised at ${c7.model_calls} model calls`, 'recursion_limit 10', `ended at ${c7.after_fix[1].model_calls} calls`, 'call limit 3, recursion 25'],
 ];
 
 module.exports = figure('fig-8-5', {
   height: 470,
   title: 'Seven failures of the drill, before and after each fix',
-  desc: `A table of seven rows, one per case of the failure drill on the Mac, with the symptom on the left and the result after the fix on the right. Retry layers: ${c1.requests} requests against ${c1.requests_after_fix}. A crash after a charge: ${c2.charges} charges against ${c2.charges_after_fix}. A middleware that jumps past review: the tool ran before any decision, and per-call mode stopped it. No structured output: None with no exception, and a check that raises. A tracing endpoint that is down: exit ${c5.exit_lag_s} s after the run against ${c5.exit_lag_s_after_fix} s. The same tool name twice: one tool bound with no error. Endless tool calls: GraphRecursionError at limit 10, and a model call limit that ends the run at limit 25.`,
+  desc: `A table of seven rows, one per case of the failure drill on the Mac, with the symptom on the left and the result after the fix on the right. Retry layers: ${c1.requests} requests against ${c1.requests_after_fix}. A crash after a charge: ${c2.charges} charges against ${c2.charges_after_fix}. A middleware that jumps past review: the tool ran before any decision, and per-call mode stopped it. No structured output: None with no exception, and a check that raises. A tracing endpoint that is down: exit ${c5.exit_lag_s} s after the run against ${c5.exit_lag_s_after_fix} s. The same tool name twice: one tool bound with no error. Endless tool calls: GraphRecursionError at limit 10, and a model call limit of 3 that ends the run after 3 calls, with the recursion limit raised to 25.`,
 }, f => {
   f.kicker(176, 20, 'the symptom');
   f.kicker(408, 20, 'after the fix');

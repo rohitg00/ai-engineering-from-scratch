@@ -126,7 +126,7 @@ The tool did not run. Use this when a person did the work of a tool outside the 
 
 ## The address must be complete
 
-`update_state` needs the full address of a checkpoint. The lab called it with a config that held only `thread_id` and `checkpoint_id`, and it raised `KeyError: 'checkpoint_ns'` in `InMemorySaver.put`. Pass the `config` of an entry from `get_state_history`, or add `"checkpoint_ns": ""` for a graph with no subgraph.
+`update_state` needs the full address of a checkpoint. The lab called it with a config that held only `thread_id` and `checkpoint_id`, and it raised `KeyError: 'checkpoint_ns'`. Pass the `config` of an entry from `get_state_history`, or add `"checkpoint_ns": ""` for a graph with no subgraph.
 
 ## What the lab counted
 

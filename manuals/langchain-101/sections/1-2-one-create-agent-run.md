@@ -182,7 +182,7 @@ A checkpoint whose `next` names a node is a place where the run can stop and res
 
 ## The stream of the same run
 
-`create_agent` sets the default stream mode of its graph to `updates`. So `agent.stream(input)` with no mode yields one chunk for each step, keyed by the node that ran:
+Every compiled `StateGraph` has the default stream mode `updates`, and an agent is one {{code libs/langgraph/langgraph/graph/state.py}}. So `agent.stream(input)` with no mode yields one chunk for each step, keyed by the node that ran:
 
 ```listing
 title: the chunks of a stream with no mode

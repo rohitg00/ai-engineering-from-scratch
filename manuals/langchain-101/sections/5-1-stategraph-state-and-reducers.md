@@ -2,7 +2,7 @@
 
 > A `StateGraph` node returns a partial update, and each state key merges that update with its reducer, or replaces the old value when the key has no reducer.
 
-You write a graph in which three nodes run in the same step, and each one adds a joke to a list. One version of the graph ends with three jokes. Another version raises an error before the step ends. The two graphs differ in one line of the state schema.
+You write a graph in which three nodes run in the same step, and each one adds a joke to a list. One version of the graph ends with three jokes. Another version raises an error before the step ends. What decides it is the reducer of the key that the nodes write.
 
 When you finish this section, you can declare a state schema and choose a reducer for each key. You can also predict what two writes to one key in one step do.
 

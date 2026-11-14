@@ -24,10 +24,11 @@ A checkpoint row names a type, and the loader builds that type. So whoever can w
 
 Two loaders matter. `load` and `loads` in `langchain_core.load` read the LangChain serialization format of `dumps`. `JsonPlusSerializer` in `langgraph-checkpoint` reads checkpoint rows, in its `json`, `msgpack`, and `pickle` forms {{code libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py}}.
 
-**We measured** 26 cases against both loaders on the Mac, one run each. A lab class wrote a marker file when it was built, and a dummy variable stood for a secret. Three advisories were fixed at the pin:
+**We measured** 26 cases against both loaders on the Mac with their defaults, and 10 cases with `LANGGRAPH_STRICT_MSGPACK=true`, one run each. A lab class wrote a marker file when it was built, and a dummy variable stood for a secret. Four advisories were fixed at the pin:
 
 - **GHSA-c67j-w6g6-q2cm.** `dumps` escapes a user dict that has the shape of a secret, so a round trip does not read the variable.
 - **GHSA-pjwx-r37v-7724.** `loads` allows only core classes by default. A payload for `ChatOpenAI`, `os.system`, or the lab class raised `ValueError`, and a Jinja2 template was refused even with `allowed_objects="all"`.
+- **GHSA-6qv9-48xg-fc7f.** A prompt template whose f-string reads an attribute failed validation when `loads` built it.
 - **GHSA-fjqc-hq36-qh5p.** A `json` checkpoint value that names a constructor came back as a plain dict.
 
 ```listing

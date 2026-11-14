@@ -53,7 +53,7 @@ The retry text of `ToolStrategy` is the template `Error: {error}\n Please fix yo
 | `KeyError` | `'__pregel_scratchpad'`, from `interrupt()` outside a graph, such as an MCP tool that asks for input | {{code libs/langgraph/langgraph/types.py:1030}} |
 | `TypeError` | `Tool lookup returned unexpected type: <class 'str'>`, for a tool named `lookup` | {{code libs/prebuilt/langgraph/prebuilt/tool_node.py:1486}} |
 
-The other error classes of `langgraph.errors` are `GraphInterrupt`, `NodeInterrupt`, `ParentCommand`, `EmptyInputError`, `TaskNotFound`, `NodeCancelledError`, and `GraphDrained` {{code libs/langgraph/langgraph/errors.py:56-210}}. `GraphInterrupt` and `ParentCommand` carry control flow, and the loop handles them. You see them only when you call a node outside a graph.
+The other error classes of `langgraph.errors` are `GraphBubbleUp`, `GraphInterrupt`, `NodeInterrupt`, `ParentCommand`, `EmptyInputError`, `TaskNotFound`, `NodeCancelledError`, and `GraphDrained` {{code libs/langgraph/langgraph/errors.py:52-210}}. `GraphBubbleUp` is the base class of `GraphInterrupt`, `ParentCommand`, and `GraphDrained`. These carry control flow, and the loop handles them. You see them only when you call a node outside a graph.
 
 ## The checkpoint and store packages
 
@@ -89,7 +89,7 @@ The other error classes of `langgraph.errors` are `GraphInterrupt`, `NodeInterru
 | `LangGraphDeprecatedSinceV10` | `NodeInterrupt is deprecated. Please use `, then `langgraph.types.interrupt` and `instead.` | {{code libs/langgraph/langgraph/errors.py:113-121}} |
 | `LangGraphDeprecatedSinceV10` | `Importing Send from langgraph.constants is deprecated.` | {{code libs/langgraph/langgraph/constants.py:37}} |
 | `LangGraphDeprecatedSinceV11` | `Accessing GraphOutput via`, then `result[key]` and `is deprecated.` | capture `24-stream-v2.txt` |
-| a logged warning | the name `durability`, then `has no effect when no checkpointer is present.` | {{code libs/langgraph/langgraph/pregel/main.py:2929-2932}} |
+| `UserWarning`, from `warnings.warn` | the name `durability`, then `has no effect when no checkpointer is present.` | {{code libs/langgraph/langgraph/pregel/main.py:2929-2932}} |
 | a logged warning | `Deserializing unregistered type __main__.Color from checkpoint. This will be blocked in a future version.` | {{code libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py:600}} |
 | `LangSmithBetaWarning` | `'upload_results' parameter is in beta.` | {{code src/langsmith/evaluation/_runner.py:402}} |
 | `UserWarning` | `Pydantic serializer warnings:`, then `PydanticSerializationUnexpectedValue` for the field `context` | `pydantic`, for a `context` dict on an agent with no `context_schema` |

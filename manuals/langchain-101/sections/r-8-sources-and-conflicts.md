@@ -1,6 +1,6 @@
 # Sources and conflicts
 
-> The manual ranks the code at the tags above the documentation, uses its own recorded runs for every listing and number, and records 29 conflicts between its sources.
+> The manual ranks the code at the tags above the documentation, uses its own recorded runs for every listing and measured number, and records 30 conflicts between its sources.
 
 The ranks are the same as in [How to read this manual](#s-front). When two sources disagree, the higher one wins, and the section says so. We read every source and checked every fact on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
 
@@ -24,7 +24,7 @@ GitHub issues, pull requests, and security advisories are evidence for a behavio
 | `langchain` | 1.5.0, released 2026-11-11 | `c2f4036e` | every part |
 | `langchain-core` | 1.8.0 | `a4b4a7b9`, the same core tree as `c2f4036e` | every part |
 | `langgraph`, with `langgraph-checkpoint` 4.3.2 and `langgraph-prebuilt` 1.1.2 | 1.2.22 | `08a20169` | Parts 3 to 5, Part 7 |
-| `langgraph-checkpoint-sqlite` | 3.1.3 | `5bd231cb` | Part 4, Part 8 |
+| `langgraph-checkpoint-sqlite` | 3.1.3 | `5bd231cb` by the release record. We read its code at `08a20169`, which holds 3.1.3 | Part 4, Part 8 |
 | `langgraph-checkpoint-postgres` | 3.2.1, from the lab environment | the `langgraph` repository at `08a20169` | Part 4 |
 | `deepagents` | 0.7.38 | `c858b364` | [6.3](#s-deep-agents-0-7), [8.4](#s-a-deep-agent-with-a-subagent-and-files) |
 | `langsmith` | 0.14.17 | `15dd2a78` | [6.4](#s-langsmith-tracing), [6.5](#s-evaluation-with-langsmith) |

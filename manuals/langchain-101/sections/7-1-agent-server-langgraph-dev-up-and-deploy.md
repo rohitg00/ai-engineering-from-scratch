@@ -70,7 +70,7 @@ The sources give two defaults for `langgraph dev`. The `--help` text of the opti
 id: fig-7-1
 kind: chart
 title: runs per second under langgraph dev, by concurrent clients
-claim: With the default of one job per worker, throughput stayed near 8 runs per second, and a setting of 10 raised it to 56 at 100 clients.
+claim: With one job per worker, throughput stayed near 8 runs per second from 10 clients up, and 10 jobs per worker raised it to 56.
 caption: Each dot is one load run on the x86 server guest: 50 runs at 1 and 10 clients, then 5 runs per client. Each run is the agent graph through runs.wait. From capture/lab/summary/agent-server-x86.json.
 ```
 
@@ -193,7 +193,7 @@ This part comes from the docs and the code only. We did not run `langgraph deplo
 `langgraph deploy` builds the image, pushes it to a registry that LangSmith manages, and creates or updates an Agent Server in one step {{docs langsmith/cli}}. Without Docker, it asks LangSmith to build the image from an upload of your source. The docs mark the command as beta.
 
 - **The key.** The command reads `--api-key`, or `LANGGRAPH_HOST_API_KEY`, `LANGSMITH_API_KEY`, or `LANGCHAIN_API_KEY` {{code libs/cli/langgraph_cli/deploy.py}}.
-- **The type.** A new server is `serverless` unless you pass `--agent-server-type dedicated` {{code libs/cli/langgraph_cli/deploy.py}}. The docs say that serverless scales to zero and has cold starts {{docs langsmith/cloud-platform-features}}.
+- **The type.** A new server is `serverless` unless you pass `--agent-server-type dedicated` {{code libs/cli/langgraph_cli/deploy.py:116}}. On a data plane without scale to zero, the default is `dev` {{code libs/cli/langgraph_cli/deploy.py:1568-1570}}. The option also accepts the older names `dev` and `prod`. The docs say that serverless scales to zero and has cold starts {{docs langsmith/cloud-platform-features}}.
 - **Your own registry.** Self-hosted LangSmith needs `--push-to` for a registry you manage, or `--image-uri` with a digest {{docs langsmith/cli}}.
 - **Other commands.** `langgraph deploy list`, `deploy metrics`, and `deploy listeners` read what you deployed {{code libs/cli/langgraph_cli/deploy.py}}.
 

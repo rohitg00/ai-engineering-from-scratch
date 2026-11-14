@@ -1,6 +1,6 @@
 # Cost: the framework against a plain SDK loop
 
-> `create_agent` costs about 1 ms of Python per model call and sends the same tokens as a plain loop, while Deep Agents, plain checkpoints, and tracing cost far more.
+> `create_agent` costs about 1.2 ms of Python per model call and sends the same tokens as a plain loop, while Deep Agents, plain checkpoints, and tracing cost far more.
 
 Your team has a plain loop on the `openai` client that works. Someone asks what LangChain would cost before you move to it. The answer has several parts: time per call, tokens, request bytes, import time, disk, checkpoints, and traces.
 
@@ -73,7 +73,7 @@ lang: text
   "tools": [
 ```
 
-`ChatOpenAI` adds `"stream": false` and writes the temperature as a float. The messages and the tool schemas are the same, byte for byte. The headers differ in two fields. The LangChain programs send `x-stainless-raw-response: true`, because `ChatOpenAI` calls the client through `with_raw_response`, and they send no `x-stainless-read-timeout` {{code libs/partners/openai/langchain_openai/chat_models/base.py}}.
+`ChatOpenAI` adds `"stream": false` and writes the temperature as a float. The messages and the tool schemas are the same, byte for byte. The headers differ in two fields. The LangChain programs send `x-stainless-raw-response: true`, because `ChatOpenAI` calls the client through `with_raw_response` {{code libs/partners/openai/langchain_openai/chat_models/base.py}}. In the recorded requests they also had no `x-stainless-read-timeout`, which the plain loop sent.
 
 The Deep Agents harness is the exception. On Qwen3 8B, `create_deep_agent` sent 2,075 to 2,251 more prompt tokens on every call than a plain loop. That was 81.4 times the tokens of a one-word answer, 10.0 times for two tool calls, and 9.1 times for a file task. [Section 6.3](#s-deep-agents-0-7) and [figure](#fig-6-3) show each call. Pay those tokens only when you use the planning, the files, or the subagents.
 
@@ -105,7 +105,7 @@ Each middleware hook is one more node of the graph or one more wrapper around a 
 | `wrap_model_call` | 2 | 20.5 µs | 1,973.4 µs | 4 |
 | `wrap_tool_call` | 1 | 18.7 µs | 1,524.6 µs | 4 |
 
-**We measured** nine built-in middlewares in the same way on the Mac, one at a time. Each cell had 300 runs and a history of 2 messages. None of them acted: no retry, no limit reached, no summary, no interrupt.
+**We measured** nine setups of built-in middleware in the same way on the Mac. Seven held one middleware, one held five `PIIMiddleware` instances, and one held a stack of five. Each cell had 300 runs and a history of 2 messages. None of them acted: no retry, no limit reached, no summary, no interrupt.
 
 | Middleware, as configured | Added to a run | Graph nodes |
 |---|---|---|
@@ -119,10 +119,10 @@ Each middleware hook is one more node of the graph or one more wrapper around a 
 | five `PIIMiddleware` instances, one per type | 2,243 µs | 14 |
 | a stack of summarization, PII, a model call limit, tool retry, and review | 1,492 µs | 10 |
 
-The cost follows the node count. The retries wrap calls and add under 0.1 ms, and each middleware with a node adds 0.2 to 0.5 ms. A history of 60 messages changed the added time by less than 0.1 ms in each row. Next to the median overhead run on Ollama, 1,450.99 ms for three model calls, even the five PII instances add 0.2%. So choose middleware for what it does, and keep node hooks out of a loop that makes thousands of fast calls.
+The cost follows the node count. The retries wrap calls and add under 0.1 ms, and each middleware with a node adds 0.2 to 0.5 ms. A history of 60 messages changed the added time by less than 0.1 ms in each row. The five PII instances added 2,243 µs to a run of two model calls. Next to the median Ollama run of three calls, 1,450.99 ms, that is about 0.15%. So choose middleware for what it does, and keep node hooks out of a loop that makes thousands of fast calls.
 
 ```takeaways
-- Budget about 1 ms of Python per model call for create_agent, and more with a checkpointer.
+- Budget about 1.2 ms of Python per model call for create_agent, and more with a checkpointer.
 - Expect the same prompt tokens from create_agent as from your plain loop.
 - Choose Deep Agents only when you need its tools, because each call carries over 2,000 more tokens.
 - Use DeltaChannel or summarization when a thread runs to thousands of steps.

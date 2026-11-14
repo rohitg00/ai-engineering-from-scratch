@@ -18,7 +18,7 @@ When you finish this section, you can write a middleware and say where each of i
 |---|---|---|---|
 | `before_agent` | node | once, at the start of each run | a state update or `None` |
 | `before_model` | node | before each model call | a state update or `None` |
-| `wrap_model_call` | wrap | around each model call, inside the `model` node | a `ModelResponse` or an `AIMessage` |
+| `wrap_model_call` | wrap | around each model call, inside the `model` node | a `ModelResponse`, an `AIMessage`, or an `ExtendedModelResponse` |
 | `after_model` | node | after each model call | a state update or `None` |
 | `wrap_tool_call` | wrap | around each tool call, inside the `tools` node | a `ToolMessage` or a `Command` |
 | `after_agent` | node | once, at the end of each run | a state update or `None` |

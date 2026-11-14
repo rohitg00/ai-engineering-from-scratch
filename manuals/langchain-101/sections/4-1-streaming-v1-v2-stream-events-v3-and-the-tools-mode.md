@@ -91,7 +91,7 @@ caption: Each row is one stream of the same agent run. Each mark is one chunk, p
 | `custom` | a value that a node or tool writes with its stream writer | 0, because `add` writes nothing |
 | `tools` | a tool event: started, an output delta, or finished | 4, from the `slow_sum` agent |
 
-The streaming page of LangGraph says that `tasks` mode needs a checkpointer {{docs oss/python/langgraph/streaming}}. The kit ran `tasks` and `debug` with no checkpointer and got six chunks from each. Without a checkpointer, `debug` had only `task` and `task_result` chunks. This manual records the disagreement as conflict D124. The `checkpoints` mode is not in the kit, and it comes in the next edition, as [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
+The streaming page of LangGraph says that `tasks` mode needs a checkpointer {{docs oss/python/langgraph/streaming}}. The kit ran `tasks` and `debug` with no checkpointer and got six chunks from each. Without a checkpointer, the four `debug` chunks that the kit prints were `task` and `task_result` chunks. The kit does not print the last two. This manual records the disagreement as conflict D124. The `checkpoints` mode is not in the kit, and it comes in the next edition, as [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
 
 ## Several modes at once
 
@@ -321,11 +321,11 @@ In a stream without `tools` mode, `emit_output_delta` does nothing. The kit stre
 
 **Delivery delay:** the time from the moment the model server sends a token to the moment your loop sees it, on one clock.
 
-**We measured** delivery delay on the Mac, an Apple M1 Max with 10 cores and 64 GiB, for nine ways to stream one agent. A stub server on 127.0.0.1 sent 40 text tokens about 24 ms apart and stamped each send. Each API ran 50 times for a text reply, and 50 times for a tool call of 202 argument chunks followed by text. Each API also ran 20 times against Qwen3 4B on Ollama, through a proxy that stamped each token. Other work ran on the machine, with a load average of 1.4 to 7.1.
+**We measured** delivery delay on the Mac, an Apple M1 Max with 10 cores and 64 GiB, for nine ways to stream one agent. A stub server on 127.0.0.1 sent 40 text tokens about 24 ms apart and stamped each send. Each API ran 50 times for a text reply, and 50 times for a tool call of 202 argument chunks followed by text. Seven of them also ran 20 times for a sub-agent reply. Each API also ran 20 times against Qwen3 4B on Ollama, through a proxy that stamped each token. Other work ran on the machine, with a load average of 1.4 to 7.1.
 
-Eight of the nine APIs delivered the tokens one at a time, at the gaps that the server used. Against the stub, the median first-token delay was 0.68 to 1.16 ms, and the worst p95 was 4.11 ms. The request reached the stub 2.2 to 3.5 ms after the call. Against Ollama, the median first-token delay was 0.64 to 1.79 ms. A claim on the web says that LangGraph streaming adds 100 to 300 ms to the first token. It does not hold here, and this manual records it as conflict D211.
+Eight of the nine APIs delivered the tokens one at a time, at the gaps that the server used. Against the stub, the median first-token delay of a text reply was 0.68 to 1.16 ms, and the worst p95 was 4.11 ms. The request reached the stub 2.2 to 3.5 ms after the call. Against Ollama, the median first-token delay was 0.64 to 1.79 ms. A claim on the web says that LangGraph streaming adds 100 to 300 ms to the first token. It does not hold here, and this manual records it as conflict D211.
 
-The layers cost CPU time, and they add no delay that you can see. One run of 40 tokens used 24.0 ms of CPU in a plain `openai` loop and 30.4 ms in `ChatOpenAI.stream`. Through the agent it used 35.3 to 49.7 ms. With the 202 argument chunks, the plain loop used 94.8 ms and the agent used 151.8 to 215.1 ms.
+The layers cost CPU time, and they add no delay that you can see. One run of 40 tokens used 24.0 ms of CPU in a plain `openai` loop and 30.4 ms in `ChatOpenAI.stream`. Through the agent it used 35.3 to 51.7 ms. With the 202 argument chunks, the plain loop used 94.8 ms and the agent used 151.8 to 215.1 ms.
 
 A tool call delayed the final text only by the tool round trip. On the second request, the first token reached the loop 0.39 to 1.43 ms after the send. The rose row of [figure](#fig-4-1c) is the exception.
 

@@ -2,21 +2,22 @@
 
 > Most 0.x code moved to `langchain-classic` or changed its name, and old advice survives in tutorials, course notebooks, and some docs pages, so check each import against the pin.
 
-You open a project from 2024. It imports `AgentExecutor` from `langchain.agents`, a loader from `langchain_community`, and `MultiServerMCPClient` from `langchain_mcp_adapters`. On `langchain` 1.5.0 the first import fails, the second warns that its package is sunset, and the third conflicts with `langchain[mcp]`.
+You open a project from 2024. It imports `AgentExecutor` from `langchain.agents`, a loader from `langchain_community`, and `MultiServerMCPClient` from `langchain_mcp_adapters`. On `langchain` 1.5.0 the first import fails, the second comes from a package that is sunset, and the third conflicts with `langchain[mcp]`.
 
 When you finish this section, you can move 0.x code to the 1.x names, and tell a stale page or notebook from a current one.
 
 ## The support window
 
-LangChain 0.3 is in maintenance until December 2026, according to the release policy {{docs oss/python/release-policy}}. The line still gets releases: `langchain` 0.3.30 and `langchain-core` 0.3.86 came on 2026-05-07, with the hardening of `loads` and `dumps` {{code langchain==0.3.30}}. So 0.3 code runs today, and its security fixes stop after 2026.
+LangChain 0.3 is in maintenance until December 2026, according to the release policy {{docs oss/python/release-policy}}. The line still gets releases: `langchain` 0.3.30 and `langchain-core` 0.3.86 came on 2026-05-07. `langchain` 0.3.30 carries the hardening of `loads` and `dumps` {{code langchain==0.3.30}}. `langchain-core` 0.3.86 fixes a path traversal, CVE-2026-34070 {{code langchain-core==0.3.86}}. So 0.3 code runs today, and its security fixes stop after 2026.
 
 The same policy says that a minor upgrade inside 1.x breaks nothing. Two minor releases changed what an upgrader must do. `langchain` 1.5.0 raised the Python floor to 3.11, as [section 2.1](#s-install-and-the-package-map) shows. `langchain-core` 1.7.0 changed streamed tool call arguments from snapshots to slices {{code langchain-core==1.7.0}}. Pin the versions in a lockfile, and read the changelog of each minor before you raise it.
 
 | Package line | Lowest Python |
 |---|---|
 | 0.3 | 3.9 |
-| `langchain` 1.0 to 1.4, `langchain-core` 1.0 to 1.7 | 3.10 |
-| `langchain` 1.5.0, `langchain-core` 1.8.0, and the provider packages at the pin | 3.11 |
+| `langchain` 1.0 to 1.4, `langchain-core` 1.0 to 1.7, by the PyPI metadata {{site pypi.org/project/langchain}} | 3.10 |
+| `langchain` 1.5.0, `langchain-core` 1.8.0, `langchain-openai` 1.8.0, and `deepagents` 0.7.38 | 3.11 |
+| `langchain-anthropic` 1.7.10 and `langchain-ollama` 1.1.0 | 3.10 |
 | `langgraph` 1.2.22, its checkpointers, and `langsmith` 0.14.17 | 3.10 |
 
 ## Imports that moved
@@ -47,7 +48,7 @@ The migration guide of the v1 release lists each argument that changed {{docs os
 | `pre_model_hook`, `post_model_hook` | `before_model` and `after_model` middleware |
 | a Pydantic or dataclass state | a `TypedDict` that extends `AgentState`, through `state_schema` |
 | a model chosen by a callable | `wrap_model_call` middleware with `request.override(model=...)` |
-| a model with `bind_tools` already called | not accepted. Pass the plain model and the tools |
+| a model with `bind_tools` already called | not in the signature, which takes a string or a chat model, and not checked. Pass the plain model and the tools |
 | `ToolNode(handle_tool_errors=...)` | `ToolErrorMiddleware(on_error)`, or `wrap_tool_call` middleware |
 | `response_format` in an extra final node | structured output in the main loop, with `ToolStrategy`, `ProviderStrategy`, or `AutoStrategy` |
 | the node name `agent` in a stream | `model` |
@@ -86,7 +87,7 @@ Three more changes have no warning, and old code reads them wrong:
 
 ## Stale pages in the docs
 
-The docs site serves its main branch, so most pages describe the pin or a newer state. We searched the 184 pages we read for old names, such as `AgentExecutor`, `initialize_agent`, `create_react_agent`, `MultiServerMCPClient`, and `LangGraph Platform`. The first two and the old platform names had no hit. The others appeared only on migration and release pages, which is where they belong.
+The docs site serves its main branch, so most pages describe the pin or a newer state. We searched every docs page that we saved for old names, such as `AgentExecutor`, `initialize_agent`, `create_react_agent`, `MultiServerMCPClient`, and `LangGraph Platform`. The first two and the old platform names had no hit. The others appeared only on migration and release pages, which is where they belong.
 
 These pages still teach an older state at docs commit `04d4d4a`. Each one has an entry in the conflict register of this manual.
 
@@ -112,7 +113,7 @@ LangChain Academy teaches the stack in courses with notebooks in public reposito
 | `from langgraph.prebuilt import create_react_agent`, with `prompt=` | `ambient-agent-101`, the ambient agent notebook | `create_agent` from `langchain.agents`, with `system_prompt=` |
 | `write_todos` as a default tool of a deep agent | `langgraph-101`, the deep agents notebooks, locked to `deepagents` 0.5.3 | `create_deep_agent(..., middleware=[TodoListMiddleware()])` |
 | `MultiServerMCPClient` from `langchain_mcp_adapters` | the MCP lessons of `lca-lc-foundations`, `lca-langchainV1-essentials`, and `lca-deepagents` | `MCPAdapter` from `langchain.mcp` |
-| `WikipediaLoader` from `langchain_community` | `langchain-academy`, module 4, parallelization and the research assistant | the same import works with a sunset warning. Prefer a maintained package |
+| `WikipediaLoader` from `langchain_community` | `langchain-academy`, module 4, parallelization and the research assistant | the same import works, from a sunset package. Prefer a maintained package |
 | `from langchain_community.chat_models import ChatOllama`, as text in sample logs | `langchain-academy`, module 4, the subgraph notebook | `from langchain_ollama import ChatOllama`, or `init_chat_model("ollama:<model>")` |
 | `langchain>=0.3.9`, `langgraph>=0.4.2` as floors | `ambient-agent-101`, its `pyproject.toml` | floors on the 1.x lines, from a lockfile |
 | `deepagents==0.5.9`, and `deepagents>=0.6,<0.7` | `lca-deployment` and `lca-engine` | the pin of this manual, 0.7.38, with the tests run again |
@@ -128,4 +129,4 @@ The import of `ChatOllama` from `langchain_community.chat_models` fails at the p
 - Read the changelog of each minor release before you raise it.
 ```
 
-Sources: capture/out/31-durability.txt, capture/out/24-stream-v2.txt; libs/langchain/langchain_classic/chains/llm.py, libs/langchain/langchain_classic/hub.py, libs/langchain/langchain_classic/agents/initialize.py, and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/errors.py, libs/prebuilt/langgraph/prebuilt/chat_agent_executor.py, and libs/checkpoint/langgraph/checkpoint/memory/__init__.py at langgraph 1.2.22; the GitHub releases langchain==0.3.30, langchain-core==1.7.0, langchain==1.5.0, and deepagents==0.7.0; docs.langchain.com at docs commit 04d4d4a (oss/python/migrate/langchain-v1, oss/python/migrate/langgraph-v1, oss/python/release-policy, oss/python/releases/changelog, and the pages in the stale table); LangChain Academy repositories langchain-academy, ambient-agent-101, langgraph-101, lca-lc-foundations, lca-langchainV1-essentials, lca-deepagents, lca-deployment, and lca-engine, read 2026-11-14.
+Sources: capture/out/31-durability.txt, capture/out/24-stream-v2.txt; libs/langchain/langchain_classic/chains/llm.py, libs/langchain/langchain_classic/hub.py, libs/langchain/langchain_classic/agents/initialize.py, and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/errors.py, libs/prebuilt/langgraph/prebuilt/chat_agent_executor.py, and libs/checkpoint/langgraph/checkpoint/memory/__init__.py at langgraph 1.2.22; the GitHub releases langchain==0.3.30, langchain-core==0.3.86, langchain-core==1.7.0, langchain==1.5.0, and deepagents==0.7.0; docs.langchain.com at docs commit 04d4d4a (oss/python/migrate/langchain-v1, oss/python/migrate/langgraph-v1, oss/python/release-policy, oss/python/releases/changelog, and the pages in the stale table); LangChain Academy repositories langchain-academy, ambient-agent-101, langgraph-101, lca-lc-foundations, lca-langchainV1-essentials, lca-deepagents, lca-deployment, and lca-engine, read 2026-11-14.

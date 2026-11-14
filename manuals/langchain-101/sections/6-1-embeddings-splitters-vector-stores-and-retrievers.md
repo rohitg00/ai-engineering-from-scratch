@@ -2,7 +2,7 @@
 
 > The retrieval interfaces live in `langchain-core`, the splitters in `langchain-text-splitters`, and each store in a partner package, and an agent reaches a retriever through a tool.
 
-You copy a retrieval example from 2024. It imports `RetrievalQA` from `langchain.chains` and a vector store from `langchain_community.vectorstores`. The first import fails at the pin, and the second one warns that its package is sunset.
+You copy a retrieval example from 2024. It imports `RetrievalQA` from `langchain.chains` and a vector store from `langchain_community.vectorstores`. The first import fails at the pin, and the second one comes from a package that is sunset.
 
 When you finish this section, you can say which package holds each piece of a retrieval pipeline at the pin. You can also build the pipeline offline, and give it to an agent as a tool.
 
@@ -18,11 +18,11 @@ The 0.x namespace held loaders, splitters, stores, and chains in one package. At
 | `init_embeddings` | `langchain` 1.5.0 | a model string such as `openai:text-embedding-3-small` to an embeddings object |
 | text splitters | `langchain-text-splitters` 1.1.3 | `RecursiveCharacterTextSplitter`, `CharacterTextSplitter`, and splitters for Markdown, HTML, code, and JSON |
 | a real store or embedding model | a partner package | such as `langchain-chroma`, `langchain-qdrant`, `langchain-openai`, and `langchain-ollama` |
-| `MultiQueryRetriever`, `RetrievalQA`, `CacheBackedEmbeddings` | `langchain-classic` 1.0.8 | the old chains and retrievers, kept for migration |
+| `MultiQueryRetriever`, `RetrievalQA`, `CacheBackedEmbeddings` | `langchain-classic` 1.0.8 {{code libs/langchain/pyproject.toml}} | the old chains and retrievers, kept for migration |
 
 The base classes are in core {{code libs/core/langchain_core/retrievers.py}}. `InMemoryVectorStore` keeps vectors in a dict and scores them with cosine similarity in NumPy {{code libs/core/langchain_core/vectorstores/in_memory.py}}. `langchain.embeddings` exports only `Embeddings` and `init_embeddings`, and its docstring says that the other embeddings modules moved to `langchain-classic` {{code libs/langchain_v1/langchain/embeddings/__init__.py}}. The v1 release notes list the old retrievers among the moves {{docs oss/python/releases/langchain-v1}}.
 
-`langchain-community` 0.4.2 is its last release, and its repository is archived. Most loaders and stores of the 0.x years came from there. The Chroma and Qdrant packages live in the main repository, under `libs/partners`, and each has its own version. For any other store, look for a partner package before you install the community one.
+PyPI lists `langchain-community` 0.4.2 as its last release, and its repository is archived {{site pypi.org/project/langchain-community}}. Most loaders and stores of the 0.x years came from there. The Chroma and Qdrant packages live in the main repository, under `libs/partners`, and each has its own version. For any other store, look for a partner package before you install the community one.
 
 LangChain Academy still teaches retrieval with a community loader. Its retrieval lesson loads a PDF with `PyPDFLoader` from `langchain-community` and stores the chunks in `InMemoryVectorStore` from core {{academy}}. Both work at the pin. Only the loader comes from the sunset package.
 

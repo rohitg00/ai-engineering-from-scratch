@@ -92,13 +92,15 @@ With no `trigger`, the middleware never summarizes. The built-in middleware page
 | `("tokens", 6000)`, keep 1,500 tokens | 60 | 63.2 ms | 42.9 ms | 166 messages | 240.98 MB |
 | `("messages", 20)`, keep 1 | 399 | 32.1 ms | 32.3 ms | 19 messages | 43.83 MB |
 
-[Figure](#fig-4-5) shows the median of each block of 100 turns. Without summarization, the turn time grew in a straight line with the thread. The largest request had about 269,000 tokens by the count of the run. With any trigger, the turn time stayed flat. The tool messages stayed paired in every case: 0 of 13,336 model requests had a `ToolMessage` without its tool call. Issue #38352 reports such orphans after a summary, and they did not happen in our runs.
+[Figure](#fig-4-5) shows the median of each block of 100 turns. Without summarization, the turn time grew in a straight line with the thread. The largest request had about 269,000 tokens by the count of the run. With a trigger, the median turn stayed between 32 and 47 ms after the first 100 turns. The 6,000-token trigger had a median of 63.2 ms in turns 1 to 100, then about 42 ms.
+
+The tool messages stayed paired in every case: 0 of 13,336 model requests had a `ToolMessage` without its tool call. Issue #38352 reports such orphans after a summary, and they did not happen in our runs.
 
 ```figure
 id: fig-4-5
 kind: chart
 title: turn time over 2,000 turns, with and without summarization
-claim: Without summarization the median turn grows from 37 ms to 663 ms, and with any trigger it stays near 40 ms.
+claim: Without summarization the median turn grows from 37 ms to 663 ms, and with a trigger it stays between 32 and 47 ms after turn 100.
 caption: Each dot is the median turn time of 100 turns in one run, one run per variant. The x axis is the turn number. From capture/lab/summary/long-threads-x86.json.
 ```
 
@@ -108,7 +110,7 @@ The thread still grew with a summary. Every old checkpoint stays in Postgres, so
 
 A plain message channel saves the whole list in every checkpoint. A thread of n steps then stores about n squared over two messages.
 
-**DeltaChannel:** a channel type in `langgraph.channels.delta` that saves only the new writes of each step, plus a full snapshot every `snapshot_frequency` steps. It is beta at the pin.
+**DeltaChannel:** a channel type in `langgraph.channels.delta` that saves only the new writes of each step, plus a full snapshot. The snapshot comes after `snapshot_frequency` updates to the channel, 100 by default, or after 5,000 steps, whichever is first {{code libs/langgraph/langgraph/channels/delta.py:50-64}}. It is beta at the pin.
 
 The lab graph declares its message channel in three ways:
 
@@ -133,7 +135,7 @@ lang: python
 
 **We measured** checkpoint cost on the x86 server guest with `durability="sync"`, one 400-character message per step, and one thread per run. We ran 3 runs at 10, 100, and 1,000 steps and 1 run at 5,000, for `InMemorySaver`, `SqliteSaver`, and `PostgresSaver`. On Postgres, a plain thread held 0.05 MB at 10 steps and 3.08 MB at 100. It held 292.58 MB at 1,000 steps and 7,289.37 MB at 5,000.
 
-With `DeltaChannel` and a snapshot every 100 steps, the 5,000-step thread held 81.2 MB. With a snapshot every 1,000, it held 15.7 MB. The plain thread had the same size on the three savers, within 0.1 percent. [Figure](#fig-4-5b) plots every run.
+With `DeltaChannel` and a snapshot every 100 steps, the 5,000-step thread held 81.2 MB. With a snapshot every 1,000, it held 15.7 MB. From 1,000 steps on, the plain thread had the same size on the three savers, within 0.05 percent. [Figure](#fig-4-5b) plots every run.
 
 ```figure
 id: fig-4-5b

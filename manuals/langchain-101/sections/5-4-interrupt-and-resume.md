@@ -156,7 +156,7 @@ returned:
 
 The answer `x` went nowhere, and the caller got no sign of it. Before you resume, call `get_state` and check that `next` names a node and that `tasks` holds an interrupt.
 
-**A stale answer.** An answer to an interrupt that a resume already used is also accepted and ignored. LangGraph can refuse it with a strict resume mode, but at the pin the only switch is the internal config key `__pregel_strict_resume` {{code libs/langgraph/langgraph/_internal/_constants.py}}. The name starts with `__pregel`, so treat it as private and do not depend on it.
+**A stale answer.** An answer to an interrupt that a resume already used is also accepted and ignored. LangGraph can refuse it with a strict resume mode, but at the pin the only switch is the internal config key `__pregel_strict_resume` {{code libs/langgraph/langgraph/_internal/_constants.py}}. Its check for a stale answer applies only to a resume map keyed by interrupt id {{code libs/langgraph/langgraph/pregel/_loop.py:1037-1063}}. The name starts with `__pregel`, so treat it as private and do not depend on it.
 
 **We measured** both modes on the Mac, 3 runs of each case, with `SqliteSaver` and a new process for each step. An agent in `per_call` mode made two calls that needed approval. The first resume approved one call by its interrupt id, and the second resume sent the same answer again. With `__pregel_strict_resume` set, the second resume raised `UnknownInterruptError: Unknown or already-consumed interrupt` in 3 of 3 runs. Without it, the second resume raised nothing and ran nothing in 3 of 3 runs. In every run, `send_email` ran once and the model ran once.
 

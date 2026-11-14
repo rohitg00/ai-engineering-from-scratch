@@ -91,11 +91,11 @@ These need only a new scenario in the capture kit.
 - The timing of inner agent tokens, which the lab saw in raw v3 events but did not measure. [Section 4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode)
 - One tool call argument of 2,000 tokens through `ChatOllama`, and tool call streaming from Ollama, which sends each call whole. [Section 4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode)
 - Parallel tool calls from Qwen3 8B, and the timing of parallel calls in `messages` mode. [Section 3.1](#s-create-agent-and-the-graph-it-builds)
-- A thread pool larger than the default, which the run config cannot set. [Section 3.1](#s-create-agent-and-the-graph-it-builds)
+- A run with a thread pool larger than the default. The code lets `max_concurrency` set the pool size, and our runs used 8 at most. [Section 3.1](#s-create-agent-and-the-graph-it-builds)
 
 ## What holds without these runs
 
-The items above add to the manual. They do not change a recorded result. Every number in Parts 1 to 8 comes from a run on the Mac or the x86 server guest. Every listing comes from the capture kit at the pin. When you depend on one of the open items, run it on your own stack before you rely on the docs.
+The items above add to the manual. They do not change a recorded result. Every measured number in Parts 1 to 8 comes from a run on the Mac or the x86 server guest. Defaults, limits, and versions come from the code or the docs, and the text cites them. Every listing comes from the capture kit at the pin. When you depend on one of the open items, run it on your own stack before you rely on the docs.
 
 ```takeaways
 - Check this list before you rely on a claim that no section measured.

@@ -1,24 +1,24 @@
 # Lab recordings
 
-Each folder holds the raw files of one experiment, copied unchanged from the run, except where this file says so. `labsum.py` in the folder above computes one summary for each data set into `summary/`, and `python3 capture/run.py --check` computes them again and compares. No file here was typed by hand.
+Each folder holds the raw files of one experiment, copied unchanged from the run, except where this file says so. One file sits beside the folders, the machine record of the x86 server guest. `labsum.py` in the folder above computes one summary for each data set into `summary/`, and `python3 capture/run.py --check` computes them again and compares. No file here was typed by hand.
 
 | Folder | Machine | What it recorded |
 |---|---|---|
 | `T01-overhead-mac/` | the Mac | a plain `openai` loop against `create_agent` on a local stub (200 runs each) and on Ollama with Qwen3 4B (24 runs each), the bytes and tokens of each Ollama request, the request body diff, import times (10 runs each), install sizes |
-| `T02-crash-resume-mac/` | the Mac | 450 trials of a SIGKILL at five points, for `sync`, `async`, and `exit` on `SqliteSaver` and `PostgresSaver`, then a resume in a new process |
+| `T02-crash-resume-mac/` | the Mac | 450 trials of a SIGKILL at five points, for `sync`, `async`, and `exit` on `SqliteSaver` and `PostgresSaver`, then a resume in a new process. In 30 trials, `exit` mode never reached the `before_put_writes` kill point |
 | `T05-retries-mac/` | the Mac | `ChatOpenAI` and an HTTP tool against a stub that returns 429, 500, 400, or sleeps past the timeout, 3 runs per cell, with the lab script `t05_retries.py` |
 | `T06-structured-output-mac/` | the Mac | `ToolStrategy`, `ProviderStrategy`, and `AutoStrategy` on four Qwen3 models on Ollama with four schemas (600 runs), and 20 fake and stub cases for the strategy choice, with the lab scripts |
 | `T07-approvals-mac/` | the Mac | `HumanInTheLoopMiddleware` in batched and per-call mode, parallel interrupts in a graph and a subgraph, and strict resume, 27 cases with 3 runs each, every step in a new process on `SqliteSaver` |
 | `T13-serde-mac/` | the Mac | what `load()` and `JsonPlusSerializer` accept by default and with `LANGGRAPH_STRICT_MSGPACK=true`, and a round trip of 29 values through `JsonPlusSerializer` and `SqliteSaver`, one run each |
 | `T14-stores-mac/` | the Mac | namespace isolation of `InMemoryStore`, `SqliteStore`, and `PostgresStore` for eight user ids, semantic search with `nomic-embed-text`, and the vector rows left after a delete, one run per query |
 | `T09-tokens-mac/` | the Mac | prompt tokens of a plain `ollama` loop, `create_agent`, and `create_deep_agent` on Qwen3 8B for three tasks, 3 runs each, and the first request of a default deep agent at `deepagents` 0.6.12 and 0.7.38, counted with two tiktoken tokenizers and with Qwen3 |
-| `T11-middleware-cost-mac/` | the Mac | `create_agent` with 0 to 20 no-op middlewares of five hook types, and nine built-in middlewares one at a time, 300 timed runs per cell, with the lab script `t11_run.py` |
+| `T11-middleware-cost-mac/` | the Mac | `create_agent` with 0 to 20 no-op middlewares of five hook types, and nine setups of built-in middleware: seven single middlewares, five `PIIMiddleware` instances, and a stack of five, 300 timed runs per cell, with the lab script `t11_run.py` |
 | `T04-streaming-mac/` | the Mac | nine stream APIs against a stamping SSE stub (50 runs each for text and for a tool call, 20 for a sub-agent) and against Qwen3 4B on Ollama (20 each), the langchain#38484 isolation runs (5 per pattern), and a reasoning model with two loop orders (3 each), with the lab scripts |
 | `T08-parallel-tools-mac/` | the Mac | 1 to 16 parallel calls of a 200 ms tool under `create_agent` and `ToolNode`, `invoke` and `ainvoke`, five `max_concurrency` values, 5 runs per cell; tool calls with no id, duplicate tool names, and parallel calls on Ollama, with the lab scripts |
 | `T12-mcp-mac/` | the Mac | `langchain.mcp` against a FastMCP server over stdio and Streamable HTTP: string targets, tool errors, a timeout, a server crash, and 50 timed calls per transport; the same server under `langchain-mcp-adapters` 0.3.2 in a separate environment |
 | `TRC-tracing-mac/` | the Mac | tracing against a local recorder: 177 agent runs per condition with tracing off and on, one process of 50 runs for each endpoint state, and what `tracing_context(enabled="local")` sends |
 | `T17-claims-mac/` | the Mac | the default recursion limits of `StateGraph` and `create_agent`, and replay and `update_state` forks of a graph and an agent, one run each |
-| `T18-evaluate-leak-mac/` | the Mac | `evaluate(upload_results=False)` with the default client on an agent target, the same target inside `tracing_context(enabled=False)`, and a plain function, with a local endpoint and with no environment, 5 processes per condition, with the lab scripts |
+| `T18-evaluate-leak-mac/` | the Mac | `evaluate(upload_results=False)` with the default client on an agent target and on the same target inside `tracing_context(enabled=False)`, with a local endpoint and with no environment, and on a plain function with a local endpoint only, five conditions of 5 processes each, with the lab scripts |
 | `T19-pytest-plugin-mac/` | the Mac | the pytest plugin of `langsmith` with pytest 8.4.2, tracking off and on, with a local endpoint and with no environment, `--langsmith-output`, and tracking off with tracing on, 3 processes per condition, with the lab scripts and tests |
 | `T20-mcp-edges-mac/` | the Mac | `langchain.mcp` against a FastMCP server: elicitation with an interrupt, with a checkpointer and without, with your own handler, on both protocol versions; an error result with structured content; progress; 27 cases, 3 runs each, with the lab scripts |
 | `T03-checkpoint-cost-x86/` | the x86 server guest | checkpoint write time and thread storage for three savers and two channel types, up to 5,000 steps |
@@ -31,7 +31,7 @@ Each folder holds the raw files of one experiment, copied unchanged from the run
 | `deep-agent/` | the Mac | the Part 8 deep agent with an editor subagent on Qwen3 8B, one run, with the tokens of each model call |
 | `failure-drill/` | the Mac | the Part 8 failure drill, seven cases with a scripted fake model and a local stub, one run |
 
-The Mac is an Apple M1 Max with 10 cores and 64 GiB, macOS 26.2, Python 3.13.12, Ollama 0.31.1, and PostgreSQL 14.21. Other work ran on it during every timed run. The x86 server guest has 32 vCPU and 48 GiB, Ubuntu 24.04, Python 3.13.18, PostgreSQL 16.15, and Redis 7.0.15. All of its models are fakes with a fixed delay.
+The Mac is an Apple M1 Max with 10 cores and 64 GiB, macOS 26.2, Python 3.13.12, Ollama 0.31.1, and PostgreSQL 14.21. Other work ran on it during every timed run. The x86 server guest is a KVM guest with 32 vCPU and 48 GiB on a shared server with an AMD EPYC 7452. Its disk was in the memory of the server. It ran Ubuntu 24.04, Python 3.13.18, PostgreSQL 16.15, Redis 7.0.15, and Docker 29.1.3. `x86-guest-machine.txt` records these. All of its models are fakes with a fixed delay.
 
 ## Changes from the raw runs
 
@@ -59,4 +59,5 @@ The Mac is an Apple M1 Max with 10 cores and 64 GiB, macOS 26.2, Python 3.13.12,
 - In `T18-evaluate-leak-mac/02-evaluate-noflush.jsonl`, the `noenv:agent` rows show no `POST`, because that post happens at exit, after the child wrote its row. The summary uses 02 only for `GET /info`. `03-counts.txt` is the output of `t18_summarize.py`.
 - In `T19-pytest-plugin-mac/`, the recorder and the guard answered `{}`, so the errors after each request with tracking on are effects of that answer. The summary uses those runs for the request order only. The run names in `03-off-tracing-on-runs.jsonl` come from a rough match on the body, and the summary keeps only whether the `LangGraph` run was posted. The dummy key is `dummy-not-a-key`. The scratch environment of T19 is not kept. `00-scratch-venv-own-packages.txt` lists its packages, and the two freeze files show the lab environment unchanged.
 - `T20-mcp-edges-mac/02-summary-table.txt` is the output of `t20_summarize.py`. `server_calls` is counted only in process. A single probe of `ctx.elicit` on a modern connection is not kept and not used.
+- `x86-guest-machine.txt` is the machine record of the x86 server guest. Its `guest:` line is the note that the recording run wrote, with the name of the host server removed. The other lines are command output, unchanged.
 - No file holds a key, a token, or a personal name. The only host names are `127.0.0.1` and the public hosts that recorded requests and error texts name, such as `api.smith.langchain.com`. No request reached such a host.

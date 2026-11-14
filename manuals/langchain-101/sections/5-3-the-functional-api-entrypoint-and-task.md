@@ -105,7 +105,7 @@ claim: The resume runs workflow from its top, the three double tasks return save
 caption: Read run 1 at the top and run 2 under it. Plum arrows are task bodies that ran, teal arrows are saved results, and the amber row is the interrupt. From capture/out/35-functional-api.txt.
 ```
 
-Code in the entrypoint itself is not a task, so it runs again on every resume. In the kit, the sum runs twice. Put each side effect inside a task, so that a resume does not repeat it.
+Code in the entrypoint itself is not a task, so it runs again on every resume, as the docs say. The sum in the kit is such code, and the kit records only the task runs. Put each side effect inside a task, so that a resume does not repeat it.
 
 The `updates` stream of a new run yields one chunk for each finished task, keyed by the task name. The run with the input `[5]` yielded `{"double": 10}`, then the `__interrupt__` chunk.
 
@@ -147,7 +147,7 @@ The first call got `None` as `previous`. Each later call got the number that the
 
 The graph of the workflow has three nodes: `__start__`, `workflow`, and `__end__`. The tasks are not nodes, so a graph drawing shows none of them. The functional API page says to use the graph API for new agents and workflows. It suggests the functional API for an agent that already exists in other code and must run on Agent Server {{docs oss/python/langgraph/functional-api}}.
 
-A task can also take `retry_policy`, `cache_policy`, and `timeout` {{code libs/langgraph/langgraph/func/__init__.py}}. The kit does not run them on a task yet. Captures of them come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+A task can also take `retry_policy`, `cache_policy`, and `timeout` {{code libs/langgraph/langgraph/func/__init__.py}}. A `timeout` works only on an async task, and on a sync task it raises `ValueError`. The kit does not run them on a task yet. Captures of them come in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Put each side effect in a task, because entrypoint code runs again on every resume.

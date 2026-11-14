@@ -14,7 +14,7 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 | Built-in middleware | A middleware class that `langchain` exports from `langchain.agents.middleware`. There are 19 at the pin. | [3.4](#s-the-built-in-middleware) |
 | Capture kit | The program in `capture/` that drives the stack in one Python process, offline, and writes what it sees to `capture/out/`. | [How to read this manual](#s-front) |
 | Checkpoint | The saved state of one thread after one step, with the step number, the next nodes, and the id of the checkpoint before it. | [1.2](#s-one-create-agent-run) |
-| Checkpoint tuple | What a checkpointer returns for one checkpoint: its `config`, its `metadata`, the checkpoint, and the config of its parent. | [4.2](#s-checkpointers-and-threads) |
+| Checkpoint tuple | What a checkpointer returns for one checkpoint: its `config`, its `metadata`, the checkpoint, the config of its parent, and its pending writes. | [4.2](#s-checkpointers-and-threads) |
 | Checkpointer | An object that saves the graph state after each step and loads the latest checkpoint when the next run starts. | [4.2](#s-checkpointers-and-threads) |
 | Chunk, of a message | A part of a message that a model streams, such as an `AIMessageChunk`. Chunks add with `+` into one message. | [2.3](#s-messages-and-content-blocks) |
 | Chunk, of a stream | One item that `stream` yields. Its shape depends on the stream mode, the number of modes, and the stream version. | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) |
@@ -26,11 +26,11 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 | `create_agent` | The function in `langchain.agents` that turns a model, tools, a prompt, and middleware into a `CompiledStateGraph`. | [3.1](#s-create-agent-and-the-graph-it-builds) |
 | Decision | The answer to one paused tool call, with a `type` of `approve`, `edit`, `reject`, or `respond`. | [5.5](#s-human-in-the-loop-batched-and-per-call) |
 | Decision model | A `BaseDecisionModel` from `langchain_core.decisions`, new in `langchain-core` 1.8.0, that answers typed questions. | [3.6](#s-guardrails-pii-and-the-decision-middleware-beta) |
-| Deep agent | An agent from `create_deep_agent` in `deepagents`. It is a `create_agent` graph with a fixed stack of middleware in front of your own. | [6.3](#s-deep-agents-0-7) |
+| Deep agent | An agent from `create_deep_agent` in `deepagents`. It is a `create_agent` graph with a fixed stack of middleware around your own. | [6.3](#s-deep-agents-0-7) |
 | Deep Agents | The harness project, in the package `deepagents`, that adds file tools, subagents, and summarization to an agent. | [1.1](#s-langchain-langgraph-langsmith-and-deep-agents) |
 | `default_retry_on` | The default `retry_on` of both retry middlewares. It retries every `Exception` except a `ModelError` whose `is_retryable` is false. | [3.5](#s-retries-backup-models-rate-limits-and-caching) |
 | Delivery delay | The time from the moment the model server sends a token to the moment your loop sees it, on one clock. | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) |
-| `DeltaChannel` | A beta channel type in `langgraph.channels.delta` that saves only the new writes of each step, and a full snapshot every `snapshot_frequency` steps. | [4.5](#s-context-engineering-and-summarization) |
+| `DeltaChannel` | A beta channel type in `langgraph.channels.delta` that saves only the new writes of each step. It saves a full snapshot after `snapshot_frequency` updates, 100 by default, or after 5,000 steps. | [4.5](#s-context-engineering-and-summarization) |
 | Distribution | A package as `pip` names it, such as `langchain-core`. Its import name has `_` in place of `-`. | [2.1](#s-install-and-the-package-map) |
 | Double texting | A second run on a thread while a first run on that thread is still running. | [7.1](#s-agent-server-langgraph-dev-up-and-deploy) |
 | Durability mode | The `durability` argument of `invoke` and `stream`: `sync`, `async`, or `exit`. It decides when the checkpoints of a run are written. | [4.3](#s-durability-modes-and-a-crash-between-two-steps) |
@@ -109,7 +109,7 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 | Tool call | An entry in `AIMessage.tool_calls` with a `name`, parsed `args`, and an `id`. | [2.3](#s-messages-and-content-blocks) |
 | Tool call id | The id that the model gives each tool call, which the `ToolMessage` of that call carries back in `tool_call_id`. | [2.4](#s-tools-toolruntime-and-tool-errors) |
 | Tool error | A failure while the agent runs a tool call. Its kind decides if the run raises or goes on. | [2.4](#s-tools-toolruntime-and-tool-errors) |
-| Tool event | A chunk of the `tools` stream mode: `tool-started`, `tool-output-delta`, or `tool-finished`. | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) |
+| Tool event | A chunk of the `tools` stream mode: `tool-started`, `tool-output-delta`, `tool-finished`, or `tool-error`. | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) |
 | `ToolRuntime` | A parameter type that gives a tool the state, the context, the store, the stream writer, and the id of the current tool call. | [2.4](#s-tools-toolruntime-and-tool-errors) |
 | Trace | A tree of runs for one top-level call, each with a name, a run type, inputs, outputs, an error, and its child runs. | [6.4](#s-langsmith-tracing) |
 | `trim_messages` | A function in `langchain_core.messages` that keeps the first or the last messages of a list up to a token budget. | [4.5](#s-context-engineering-and-summarization) |

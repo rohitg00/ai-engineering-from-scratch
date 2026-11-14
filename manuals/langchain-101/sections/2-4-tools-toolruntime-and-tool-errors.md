@@ -103,7 +103,7 @@ updates tools:
     "content": "order A-17: shipped (asked by ada, tool_call_id=call_7)",
 ```
 
-Call `runtime.stream_writer(value)` as a function. The example in the `ToolRuntime` docstring calls `stream_writer.write(...)`, and that method does not exist, because `StreamWriter` is a plain callable {{code libs/langgraph/langgraph/types.py}}. This manual records the disagreement as conflict D3.
+Call `runtime.stream_writer(value)` as a function. The example in the `ToolRuntime` docstring calls `stream_writer.write(...)` {{code libs/prebuilt/langgraph/prebuilt/tool_node.py:1746}}. That method does not exist, because `StreamWriter` is a plain callable {{code libs/langgraph/langgraph/types.py}}. This manual records the disagreement as conflict D3.
 
 A `ToolRuntime` tool cannot run outside an agent. Called with only its arguments, it raises a `ValidationError` because `runtime` is missing:
 

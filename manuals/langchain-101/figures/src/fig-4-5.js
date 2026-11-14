@@ -12,12 +12,13 @@ const variants = [
   { key: 'msgs20_keep1', hue: 'green', name: '20 messages, keep 1' },
 ];
 const v = key => data.variants[key];
+const range = key => { const ms = v(key).windows.map(w => w.latency_p50_ms); return `${Math.min(...ms).toFixed(1)} and ${Math.max(...ms).toFixed(1)}`; };
 const mid = w => { const [a, b] = w.turns.split('-').map(Number); return (a + b) / 2; };
 
 module.exports = figure('fig-4-5', {
   height: 360,
   title: 'Turn time over 2,000 turns, with and without summarization',
-  desc: `A dot chart of the median turn time of each block of 100 turns, on a log scale from 20 to 1,000 ms, over 2,000 turns on the x86 server guest. Without summarization the median grows from ${v('none').windows[0].latency_p50_ms} ms to ${v('none').windows[19].latency_p50_ms} ms. With a trigger of 60 messages it stays between about 36 and 39 ms, with 20 messages near 32 ms, and with 6,000 tokens it falls from ${v('tok6000_keep1500').windows[0].latency_p50_ms} ms to about 43 ms.`,
+  desc: `A dot chart of the median turn time of each block of 100 turns, on a log scale from 20 to 1,000 ms, over 2,000 turns on the x86 server guest. Without summarization the median grows from ${v('none').windows[0].latency_p50_ms} ms to ${v('none').windows[19].latency_p50_ms} ms. With a trigger of 60 messages it stays between ${range('msgs60_keep7')} ms, with 20 messages near 32 ms, and with 6,000 tokens it falls from ${v('tok6000_keep1500').windows[0].latency_p50_ms} ms to about 43 ms.`,
 }, f => {
   const c = chart(f, { x: 70, y: 40, w: 390, h: 250, yScale: 'log10', xDomain: [0, 2000], yDomain: [20, 1000], xTicks: [0, 500, 1000, 1500, 2000], yTicks: [20, 50, 100, 200, 500, 1000], yLabel: 'median turn, ms', xLabel: 'turn number', xFormat: t => t.toLocaleString('en-US') });
   const ends = [];

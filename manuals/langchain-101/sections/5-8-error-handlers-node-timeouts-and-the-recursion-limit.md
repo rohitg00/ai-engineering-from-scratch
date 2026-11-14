@@ -50,7 +50,7 @@ tries:
 
 ## The default retry_on does not retry ValueError
 
-A `RetryPolicy()` with no arguments makes 3 attempts, waits 0.5 s before the second, doubles each wait up to 128 s, and adds jitter {{code libs/langgraph/langgraph/types.py}}. Its `retry_on` is `default_retry_on`. That function retries `ConnectionError` and HTTP status errors from 500 to 599 from `httpx` and `requests`. It does not retry `ValueError`, `TypeError`, `ArithmeticError`, `ImportError`, `LookupError`, `NameError`, `SyntaxError`, `RuntimeError`, `ReferenceError`, `StopIteration`, `StopAsyncIteration`, or another `OSError`. It retries every other exception {{code libs/langgraph/langgraph/_internal/_retry.py}}.
+A `RetryPolicy()` with no arguments makes 3 attempts, waits 0.5 s before the second, doubles each wait up to 128 s, and adds jitter {{code libs/langgraph/langgraph/types.py}}. Its `retry_on` is `default_retry_on`. That function retries `ConnectionError` and HTTP status errors from 500 to 599 from `httpx` and `requests`. A `requests.HTTPError` with no response is retried too. It does not retry `ValueError`, `TypeError`, `ArithmeticError`, `ImportError`, `LookupError`, `NameError`, `SyntaxError`, `RuntimeError`, `ReferenceError`, `StopIteration`, `StopAsyncIteration`, or another `OSError`. It retries every other exception {{code libs/langgraph/langgraph/_internal/_retry.py}}.
 
 The kit gave `flaky` a policy of 2 attempts with the default `retry_on`. The node ran once, and the run raised:
 

@@ -18,7 +18,7 @@ A plain schema, such as a Pydantic class, becomes `AutoStrategy` {{code libs/lan
 
 ## How AutoStrategy chooses
 
-`AutoStrategy` picks `ProviderStrategy` when the model profile says `structured_output` is true. With no profile, it checks the model name against a fixed list of names, such as `gpt-4o`, `gpt-4.1`, and some Claude models. Otherwise it picks `ToolStrategy` {{code libs/langchain_v1/langchain/agents/factory.py}}. [Figure](#fig-3-2) draws the choice.
+`AutoStrategy` picks `ProviderStrategy` when the model profile says `structured_output` is true. A Gemini model before the 3 series is the exception when the agent has tools. In every other case, it checks the model name against a fixed list, such as `gpt-4o`, `gpt-4.1`, and some Claude models. When no name matches, it picks `ToolStrategy` {{code libs/langchain_v1/langchain/agents/factory.py:581-626}}. [Figure](#fig-3-2) draws the choice.
 
 ```figure
 id: fig-3-2
@@ -115,7 +115,7 @@ note: The ToolMessage between the bad call and the good call. The pydantic help 
 
 The `status` of that message is `success`, though it carries an error. Code that counts error `ToolMessage` objects does not count these retries. Two structured tool calls in one AI message also get a retry, with the text `Model incorrectly returned multiple structured responses (Answer, Refusal) when only one is expected.`
 
-**handle_errors:** the `ToolStrategy` parameter that sets the retry. `True`, the default, retries on every parse error. A string replaces the retry text. An exception type or a tuple retries only those errors. `False` raises `StructuredOutputValidationError` on the first bad call {{code libs/langchain_v1/langchain/agents/structured_output.py}}.
+**handle_errors:** the `ToolStrategy` parameter that sets the retry. `True`, the default, retries on every parse error. A string replaces the retry text. An exception type or a tuple retries only those errors. A callable gets the error and returns the retry text. `False` raises `StructuredOutputValidationError` on the first bad call {{code libs/langchain_v1/langchain/agents/structured_output.py}}.
 
 ## ProviderStrategy
 
@@ -129,7 +129,7 @@ lang: text
 raised langchain.agents.structured_output.StructuredOutputValidationError: Failed to parse structured output for tool 'Answer': Native structured output expected valid JSON for Answer, but parsing failed: Expecting value: line 1 column 1 (char 0)..
 ```
 
-A union does not get that far. `ProviderStrategy(Union[Refund, Exchange])` raised `ValueError: Unsupported schema type` inside `create_agent`, before any request, in every run we made.
+A union does not get that far. `ProviderStrategy(Union[Refund, Exchange])` raised `ValueError: Unsupported schema type` when the strategy was built, before `create_agent` ran, in every run we made {{code libs/langchain_v1/langchain/agents/structured_output.py:180-194}}.
 
 ## No change of strategy at run time
 
@@ -150,7 +150,7 @@ One request, one error, and no second request with tools. `AutoStrategy` with th
 
 ## Two runs that end with nothing
 
-`handle_errors=True` has no retry count. With `tools=[]`, the agent graph has a `model` to `model` edge that loops until a structured response exists. Only the recursion limit stops it, and the agent default is 9999 steps. In the kit, a fake that answered in plain text made 12 model calls under `recursion_limit=12`, and raised `GraphRecursionError`.
+`handle_errors=True` has no retry count. With `tools=[]`, the agent graph has a `model` to `model` edge that loops until a structured response exists. Only the recursion limit stops it, and the agent default is 9999 steps. In the lab, a fake that answered in plain text made 12 model calls under `recursion_limit=12`, and raised `GraphRecursionError`.
 
 With at least one tool of your own, the same plain text answer ends the run. The fake case gave `structured_response` of `None`, one model call, and no exception. `ProviderStrategy` ends the same way when the model answers with a tool call. Check `structured_response` for `None` after every run.
 
@@ -164,7 +164,7 @@ With at least one tool of your own, the same plain text answer ends the run. The
 |---|---|---|---|
 | `qwen3:0.6b` | 36 of 80, 45% | 20 of 80, 25% | 0 of 60 |
 | `qwen3:1.7b` | 6 of 40, 15% | 10 of 40, 25% | 0 of 30 |
-| `qwen3:4b-instruct` | 11 of 40, 28% | 13 of 40, 32% | 3 of 30 |
+| `qwen3:4b-instruct` | 11 of 40, 27.5% | 13 of 40, 32.5% | 3 of 30 |
 | `qwen3:8b` | 10 of 40, 25% | 10 of 40, 25% | 0 of 30 |
 
 Every `ProviderStrategy` failure on the 0.6B, 1.7B, and 8B models was the union at build time. Without the union, `ToolStrategy` failed 36 of 60, 6 of 30, 11 of 30, and 10 of 30. [Figure](#fig-3-2b) shows each run.
@@ -179,7 +179,7 @@ caption: Each dot is one run on the Mac. Each row is one schema and strategy, an
 
 The nested schema hit the limit of 10 calls in 10 of 10 `ToolStrategy` runs on the 8B model. It hit it in 19 of 20 on the 0.6B model. The model sent the schema back in place of the data, and each retry repeated it. On the 4B model, three nested runs ended with an Ollama error about truncated tool call JSON. Three enum runs ended with an Ollama 400, because the retries left two AI messages in a row.
 
-The structured output page calls `ProviderStrategy` the most reliable method when it is available {{docs oss/python/langchain/structured-output}}. On these models it gave a valid object more often than `ToolStrategy` for the nested and enum schemas. It cannot take a union, and it never retries.
+The structured output page calls `ProviderStrategy` the most reliable method when it is available {{docs oss/python/langchain/structured-output}}. On the nested schema it gave more valid objects than `ToolStrategy` on three models, and tied on the 1.7B model. On the enum schema it gave more on the 0.6B and 1.7B models, and tied on the 4B and 8B models. It cannot take a union, and it never retries.
 
 ## Valid is not correct
 
@@ -187,7 +187,7 @@ A valid object matches the schema. It can still hold the wrong values. In the en
 
 ```takeaways
 - Choose ToolStrategy or ProviderStrategy explicitly, because AutoStrategy reads only the profile and the model name.
-- Use ToolStrategy for a union, because ProviderStrategy rejects it when you build the agent.
+- Use ToolStrategy for a union, because ProviderStrategy rejects it when you build the strategy.
 - Set recursion_limit on runs with ToolStrategy, because handle_errors=True retries without a count.
 - Check structured_response for None after each run that has tools.
 - Wrap ProviderStrategy runs in your own retry, because it raises on the first bad reply.

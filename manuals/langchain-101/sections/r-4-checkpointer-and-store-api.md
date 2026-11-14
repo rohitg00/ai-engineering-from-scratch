@@ -57,7 +57,7 @@ Each class is a subclass of `BaseCheckpointSaver` {{code checkpoint/langgraph/ch
 | `checkpoint_id` | one checkpoint of the thread, for a replay or a fork |
 | `checkpoint_ns` | the namespace of a subgraph. The empty string is the top graph |
 
-A graph with a checkpointer and none of these keys raises `ValueError` {{code langgraph/langgraph/pregel/main.py:2701-2705}}. The [errors reference](#s-ref-errors) has the text.
+A graph with a checkpointer raises `ValueError` when the run config has no `configurable` entries at all {{code langgraph/langgraph/pregel/main.py:2701-2705}}. A `configurable` with other keys passes that check and fails later, such as with `KeyError: 'checkpoint_ns'`. The [errors reference](#s-ref-errors) has the text.
 
 ## State methods of a compiled graph
 
