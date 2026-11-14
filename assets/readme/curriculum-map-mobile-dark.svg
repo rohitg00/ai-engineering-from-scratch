@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1002" viewBox="0 0 640 1002" role="img" aria-label="The curriculum in six volumes, from foundations at the bottom to production at the top. Each volume lists its phases and what you build in it.">
+<defs>
+<pattern id="paper" width="16" height="16" patternUnits="userSpaceOnUse">
+<circle cx="0" cy="0" r="1" fill="#e8e6dc" fill-opacity="0.08"/>
+</pattern>
+</defs>
+<rect width="640" height="1002" fill="#0d1117"/>
+<rect width="640" height="1002" fill="url(#paper)"/>
+<text x="40" y="52" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#6b8eff" letter-spacing="1.5">FIG_000.C  ·  TWENTY PHASES</text>
+<text x="40" y="82" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#a4a9b5" letter-spacing="1.5">READ BOTTOM TO TOP</text>
+<line x1="40" y1="102" x2="600" y2="102" stroke="#6b8eff" stroke-width="0.8" stroke-opacity="0.4"/>
+<rect x="45" y="125" width="555" height="128" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="40" y="120" width="555" height="128" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<rect x="40" y="120" width="10" height="128" fill="#6b8eff" fill-opacity="0.85"/>
+<text x="68" y="158" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700" letter-spacing="1.5">VOL 6</text>
+<text x="160" y="158" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e8e6dc" font-weight="700">PRODUCTION</text>
+<rect x="68" y="174" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="76" y="197.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">17</text>
+<rect x="111.08" y="174" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="119.08" y="197.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">18</text>
+<rect x="154.16" y="174" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="162.16" y="197.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">19</text>
+<text x="68" y="234" font-family="'Source Serif 4', Georgia, serif" font-size="19" fill="#a4a9b5">Serving, observability, safety, capstones.</text>
+<rect x="45" y="267" width="555" height="128" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="40" y="262" width="555" height="128" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<rect x="40" y="262" width="10" height="128" fill="#6b8eff" fill-opacity="0.75"/>
+<text x="68" y="300" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700" letter-spacing="1.5">VOL 5</text>
+<text x="160" y="300" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e8e6dc" font-weight="700">AGENTS</text>
+<rect x="68" y="316" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="76" y="339.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">12</text>
+<rect x="111.08" y="316" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="119.08" y="339.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">13</text>
+<rect x="154.16" y="316" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="162.16" y="339.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">14</text>
+<rect x="197.24" y="316" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="205.24" y="339.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">15</text>
+<rect x="240.32" y="316" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="248.32" y="339.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">16</text>
+<text x="68" y="376" font-family="'Source Serif 4', Georgia, serif" font-size="19" fill="#a4a9b5">The agent loop, tools, MCP servers, swarms.</text>
+<rect x="45" y="409" width="555" height="128" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="40" y="404" width="555" height="128" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<rect x="40" y="404" width="10" height="128" fill="#6b8eff" fill-opacity="0.65"/>
+<text x="68" y="442" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700" letter-spacing="1.5">VOL 4</text>
+<text x="160" y="442" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e8e6dc" font-weight="700">LARGE LANGUAGE MODELS</text>
+<rect x="68" y="458" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="76" y="481.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">08</text>
+<rect x="111.08" y="458" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="119.08" y="481.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">09</text>
+<rect x="154.16" y="458" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="162.16" y="481.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">10</text>
+<rect x="197.24" y="458" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="205.24" y="481.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">11</text>
+<text x="68" y="518" font-family="'Source Serif 4', Georgia, serif" font-size="19" fill="#a4a9b5">Pre-train a mini GPT, align it, ship RAG.</text>
+<rect x="45" y="551" width="555" height="128" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="40" y="546" width="555" height="128" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<rect x="40" y="546" width="10" height="128" fill="#6b8eff" fill-opacity="0.55"/>
+<text x="68" y="584" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700" letter-spacing="1.5">VOL 3</text>
+<text x="160" y="584" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e8e6dc" font-weight="700">LANGUAGE</text>
+<rect x="68" y="600" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="76" y="623.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">05</text>
+<rect x="111.08" y="600" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="119.08" y="623.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">07</text>
+<text x="68" y="660" font-family="'Source Serif 4', Georgia, serif" font-size="19" fill="#a4a9b5">Attention and the transformer, by hand.</text>
+<rect x="45" y="693" width="555" height="128" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="40" y="688" width="555" height="128" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<rect x="40" y="688" width="10" height="128" fill="#6b8eff" fill-opacity="0.44999999999999996"/>
+<text x="68" y="726" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700" letter-spacing="1.5">VOL 2</text>
+<text x="160" y="726" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e8e6dc" font-weight="700">DEEP LEARNING</text>
+<rect x="68" y="742" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="76" y="765.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">03</text>
+<rect x="111.08" y="742" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="119.08" y="765.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">04</text>
+<rect x="154.16" y="742" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="162.16" y="765.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">06</text>
+<text x="68" y="802" font-family="'Source Serif 4', Georgia, serif" font-size="19" fill="#a4a9b5">From a perceptron to vision and speech.</text>
+<rect x="45" y="835" width="555" height="128" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="40" y="830" width="555" height="128" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<rect x="40" y="830" width="10" height="128" fill="#6b8eff" fill-opacity="0.35"/>
+<text x="68" y="868" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700" letter-spacing="1.5">VOL 1</text>
+<text x="160" y="868" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#e8e6dc" font-weight="700">FOUNDATIONS</text>
+<rect x="68" y="884" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="76" y="907.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">00</text>
+<rect x="111.08" y="884" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="119.08" y="907.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">01</text>
+<rect x="154.16" y="884" width="37.08" height="32" fill="none" stroke="#6b8eff" stroke-width="1"/>
+<text x="162.16" y="907.04" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6b8eff" font-weight="700">02</text>
+<text x="68" y="944" font-family="'Source Serif 4', Georgia, serif" font-size="19" fill="#a4a9b5">Vectors, gradients, classic models.</text>
+</svg>

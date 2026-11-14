@@ -15,11 +15,17 @@
 
 實作模型內部機制、檢索管線和代理執行環境。測試它們，分析故障，並保留程式碼和評估結果。
 
-**[開始學習](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[選擇學習路徑](#learning-routes)** · **[試做實驗](#interactive-lab)** · **[建構專案](#project-challenges)** · **[瀏覽課程目錄](#contents)**
+**[開始學習](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[選擇學習路徑](#learning-routes)** · **[試做實驗](#interactive-lab)** · **[建構專案](#project-challenges)** · **[瀏覽課程目錄](#contents)**
 
 免費、開放原始碼、MIT 授權。你可以在網站學習、使用程式設計代理輔助學習，或在本機執行程式碼。
 
 > 542 堂課. 20 個階段. Python, TypeScript, Rust, Julia, Go.
+
+一個指令，就能把你的程式設計代理變成導師：
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 授權條款"></a>
@@ -48,6 +54,29 @@
   <sub><span>你的支持讓每堂課都能保持免費和開源。</span> <a href="#supporters">查看所有支持者</a> · <a href="../../SPONSORS.md">成為贊助者</a></sub>
 </p>
 
+## 為什麼要從零開始建構
+
+呼叫框架會隱藏最容易出問題的部分。當損失變成 NaN，或代理不斷重複同一個工具呼叫時，親手寫過小版本的人知道該從哪裡查起。每堂課都會先讓你寫出這個小版本並執行它，再用正式環境的函式庫處理同一個問題，比較兩者。
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="一堂課的四個步驟：問題、從零建構、使用正式環境的函式庫、交付一個你能長期保留的成果。範例是第 14 階段的代理迴圈課程。" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>文字版本</summary>
+
+- **01 · 問題**: LLM 回傳文字，卻無法採取行動。
+- **02 · 建構**: 用 stdlib Python 寫一個 ReAct 迴圈。
+- **03 · 使用**: 在代理 SDK 中執行同樣的迴圈。
+- **04 · 交付**: skill-agent-loop.md，供你的代理直接使用。
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | 路線 | 起始課程 |
 |---|---|
-| 模型基礎 | [環境設定與工具](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM 系統 | [提示工程](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| 代理與交付 | [代理迴圈](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| 模型基礎 | [環境設定與工具](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM 系統 | [提示工程](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| 代理與交付 | [代理迴圈](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [比較職涯路徑](https://aiengineeringfromscratch.com/learning-paths.html) · [先備知識與學習時間](#study-guide)
 
@@ -68,7 +97,7 @@
 20 個起點在二次損失函數上執行梯度下降。圖中顯示每次更新後的位置和平均損失。
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[在課程中調整學習率](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [透過程式碼比較 GD、動量和 Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[在課程中調整學習率](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [透過程式碼比較 GD、動量和 Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 只想學習 MCP？使用上表中對應主機的呼叫方式。它會創建 `MCP-LEARNING.md`，帶你沿著 17 堂課的路線學習無狀態請求、傳輸方式、雙向交互、安全、可靠性、註冊表治理和一致性證據。順序與檢查點見 [MCP 路線清單](../../learning-paths/model-context-protocol.json)。
 
-只想學習 Agent Skills？該路線會創建 `AGENT-SKILLS-LEARNING.md`，用五堂課依次學習技能契約、發現、呼叫、沙箱邊界，以及發佈評估和真實主機的可攜性。也可以從網站上的 [Agent Skills 路線](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills)開始。
+只想學習 Agent Skills？該路線會創建 `AGENT-SKILLS-LEARNING.md`，用五堂課依次學習技能契約、發現、呼叫、沙箱邊界，以及發佈評估和真實主機的可攜性。也可以從網站上的 [Agent Skills 路線](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills)開始。
 
 安裝程式會列出它支援的主機，並詢問安裝位置。如果你暫時沒有 Node.js、`npx`、`python3`、受支援的主機或可寫入的安裝目錄，仍可在網站閱讀課程，或手動打開 `docs/en.md`。這能幫助你學習概念；主機發現、技能呼叫、腳本執行和卸載的真實證據，則要等環境就緒後再完成。[訪問課程網站](https://aiengineeringfromscratch.com)。
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | 你的目標 | 在 GitHub 學習 | 在網站學習 |
 |---|---|---|
-| 我剛入門，需要完整的基礎 | [階段 0：環境與工具](../../phases/00-setup-and-tooling/) | [開發環境](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| 我會 Python，想補齊數學與機器學習基礎 | [階段 1：數學基礎](../../phases/01-math-foundations/) | [線性代數的直觀理解](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| 我想建置可用於生產環境的 LLM 應用程式 | [階段 11：LLM 工程](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| 我想建置代理程式 | [階段 14：代理程式工程](../../phases/14-agent-engineering/) | [代理程式迴圈](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| 我想用程式開發代理程式處理真實儲存庫 | [代理程式輔助工程路徑](../../learning-paths/using-coding-agents.json) | [代理程式輔助工程](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| 我想在動手前確定真正該建置甚麼 | [產品判斷與交付路徑](../../learning-paths/shaping-the-build.json) | [產品判斷與交付](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| 我剛入門，需要完整的基礎 | [階段 0：環境與工具](../../phases/00-setup-and-tooling/) | [開發環境](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| 我會 Python，想補齊數學與機器學習基礎 | [階段 1：數學基礎](../../phases/01-math-foundations/) | [線性代數的直觀理解](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| 我想建置可用於生產環境的 LLM 應用程式 | [階段 11：LLM 工程](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| 我想建置代理程式 | [階段 14：代理程式工程](../../phases/14-agent-engineering/) | [代理程式迴圈](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| 我想用程式開發代理程式處理真實儲存庫 | [代理程式輔助工程路徑](../../learning-paths/using-coding-agents.json) | [代理程式輔助工程](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| 我想在動手前確定真正該建置甚麼 | [產品判斷與交付路徑](../../learning-paths/shaping-the-build.json) | [產品判斷與交付](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 不確定從哪裡開始？試試 [`start-learning` 入門測評導師](../../skills/start-learning/SKILL.md)，或查看[網站的先修知識指南](https://aiengineeringfromscratch.com/prereqs.html)。
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | 你的目標 | 在 GitHub 學習 | 在網站學習 |
 |---|---|---|
-| 我想用模型上下文協定（MCP）建置系統 | [MCP 學習路線](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) 學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| 我想編寫並發布 Agent Skills | [Agent Skills 專項路線](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| 我想讀懂編譯後的程式 | [逆向工程專項路線](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [逆向工程學習路徑](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| 我想用模型上下文協定（MCP）建置系統 | [MCP 學習路線](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) 學習路徑](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| 我想編寫並發布 Agent Skills | [Agent Skills 專項路線](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 學習路徑](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| 我想讀懂編譯後的程式 | [逆向工程專項路線](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [逆向工程學習路徑](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 20 個階段層層銜接：數學是地基，代理程式與生產部署是上層。如果你已經掌握前面的基礎，可以直接進入更高階段；遇到困難時，也能沿著課程相依性回到缺失的知識點。
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十個階段分為六卷，底部是基礎，頂部是正式環境，並標示每一卷要建構的內容。" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>階段相依關係圖</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

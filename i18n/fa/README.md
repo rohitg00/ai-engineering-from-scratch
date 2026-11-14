@@ -15,11 +15,17 @@
 
 عملیات داخلی مدل، خط لولهٔ بازیابی و محیط اجرای عامل را پیاده کنید. آن‌ها را بیازمایید، شکست‌ها را بررسی کنید و کد و نتایج ارزیابی را نگه دارید.
 
-**[یادگیری را شروع کنید](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[یک مسیر انتخاب کنید](#learning-routes)** · **[یک آزمایشگاه را امتحان کنید](#interactive-lab)** · **[یک پروژه بسازید](#project-challenges)** · **[برنامهٔ درسی را مرور کنید](#contents)**
+**[یادگیری را شروع کنید](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[یک مسیر انتخاب کنید](#learning-routes)** · **[یک آزمایشگاه را امتحان کنید](#interactive-lab)** · **[یک پروژه بسازید](#project-challenges)** · **[برنامهٔ درسی را مرور کنید](#contents)**
 
 رایگان، متن‌باز و با مجوز MIT. در وب‌سایت، همراه یک عامل کدنویسی یا با اجرای کد محلی یاد بگیرید.
 
 > <span dir="rtl">542 درس. 20 مرحله.</span> <span dir="ltr">Python, TypeScript, Rust, Julia, Go.</span>
+
+با یک دستور، عامل کدنویسی خود را به معلم تبدیل کنید:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="مجوز MIT"></a>
@@ -48,6 +54,29 @@
   <sub><span>حمایت شما کمک می‌کند همهٔ درس‌ها رایگان و متن‌باز بمانند.</span> <a href="#supporters">دیدن همهٔ حامیان</a> · <a href="../../SPONSORS.md">حامی مالی شوید</a></sub>
 </p>
 
+## چرا از صفر بسازیم
+
+فراخوانی یک چارچوب همان بخشی را پنهان می‌کند که اول از همه خراب می‌شود. وقتی زیان به NaN تبدیل می‌شود یا عامل بارها همان فراخوانی ابزار را تکرار می‌کند، کسی که نسخهٔ کوچک را نوشته می‌داند کجا را بررسی کند. در هر درس ابتدا همین نسخهٔ کوچک را می‌نویسید و اجرا می‌کنید، سپس کتابخانهٔ تولیدی را روی همان مسئله اجرا می‌کنید و این دو را مقایسه می‌کنید.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="یک درس در چهار گام: مسئله، ساخت از صفر، استفاده از کتابخانهٔ تولیدی و تحویل یک خروجی ماندگار. مثال، درس حلقهٔ عامل در مرحله 14 است." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>نسخهٔ متنی</summary>
+
+- **01 · مسئله**: LLM متن برمی‌گرداند و نمی‌تواند عمل کند.
+- **02 · بسازید**: یک حلقهٔ ReAct با stdlib Python.
+- **03 · استفاده کنید**: همان حلقه در SDK عامل.
+- **04 · تحویل دهید**: skill-agent-loop.md، آمادهٔ عامل شما.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | مسیر | درس آغازین |
 |---|---|
-| مبانی مدل | [راه‌اندازی و ابزارها](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| سیستم‌های LLM | [مهندسی پرامپت](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| عامل‌ها و تحویل | [حلقهٔ عامل](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| مبانی مدل | [راه‌اندازی و ابزارها](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| سیستم‌های LLM | [مهندسی پرامپت](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| عامل‌ها و تحویل | [حلقهٔ عامل](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [مسیرهای شغلی را مقایسه کنید](https://aiengineeringfromscratch.com/learning-paths.html) · [پیش‌نیازها و زمان مطالعه](#study-guide)
 
@@ -68,7 +97,7 @@
 20 نقطهٔ آغاز روی یک تابع زیان درجه‌دو، گرادیان کاهشی را دنبال می‌کنند. نمودار موقعیت آن‌ها و میانگین زیان را پس از هر به‌روزرسانی نشان می‌دهد.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[نرخ یادگیری را در درس تنظیم کنید](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [GD، مومنتوم و Adam را در کد مقایسه کنید](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[نرخ یادگیری را در درس تنظیم کنید](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [GD، مومنتوم و Adam را در کد مقایسه کنید](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 فقط Model Context Protocol (MCP) می‌خواهید؟ از روش فراخوانی MCP مخصوص میزبان خود استفاده کنید. این مهارت `MCP-LEARNING.md` را می‌سازد و مسیر واحدی با 17 درس را دربارهٔ درخواست بدون حالت، انتقال، کار دوسویه، امنیت، قابلیت اطمینان، حاکمیت رجیستری و شواهد انطباق دنبال می‌کند. ترتیب دقیق و نقاط وارسی در [مانیفست Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) قرار دارند.
 
-فقط Agent Skills می‌خواهید؟ از روش فراخوانی Agent Skills مخصوص میزبان خود استفاده کنید. این مهارت `AGENT-SKILLS-LEARNING.md` را می‌سازد و مسیر منسجم پنج‌درسی را دنبال می‌کند: قرارداد، کشف، فراخوانی، مرز sandbox و سپس ارزیابی انتشار و قابلیت حمل روی میزبان واقعی. در وب از [مسیر Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) شروع کنید.
+فقط Agent Skills می‌خواهید؟ از روش فراخوانی Agent Skills مخصوص میزبان خود استفاده کنید. این مهارت `AGENT-SKILLS-LEARNING.md` را می‌سازد و مسیر منسجم پنج‌درسی را دنبال می‌کند: قرارداد، کشف، فراخوانی، مرز sandbox و سپس ارزیابی انتشار و قابلیت حمل روی میزبان واقعی. در وب از [مسیر Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) شروع کنید.
 
 نصب‌کننده میزبان‌هایی را که می‌تواند پیکربندی کند فهرست می‌کند و محل نصب را می‌پرسد. اگر هنوز Node.js، `npx`، `python3`، میزبان پشتیبانی‌شده یا دامنهٔ قابل‌نوشتن ندارید، از وب‌سایت استفاده کنید یا `docs/en.md` را دستی بخوانید. این مسیر مفاهیم را آموزش می‌دهد، اما شواهد کشف، فراخوانی، اجرای اسکریپت و حذف نصب روی میزبان واقعی تا فراهم‌شدن بررسی اولیه تکمیل نمی‌شوند. درس‌ها را در [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) بخوانید.
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | هدف شما | یادگیری در GitHub | یادگیری در وب‌سایت |
 |---|---|---|
-| تازه‌کارم و می‌خواهم پایه‌ها را کامل یاد بگیرم | [مرحلهٔ 0: راه‌اندازی و ابزارها](../../phases/00-setup-and-tooling/) | [محیط توسعه](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Python بلدم و می‌خواهم مبانی ریاضی و یادگیری ماشین را یاد بگیرم | [مرحلهٔ 1: مبانی ریاضی](../../phases/01-math-foundations/) | [درک شهودی جبر خطی](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| می‌خواهم برنامه‌های مبتنی بر LLM برای استفادهٔ عملی بسازم | [مرحلهٔ 11: مهندسی LLM](../../phases/11-llm-engineering/) | [مهندسی پرامپت](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| می‌خواهم عامل‌های هوش مصنوعی بسازم | [مرحلهٔ 14: مهندسی عامل](../../phases/14-agent-engineering/) | [حلقهٔ عامل](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| می‌خواهم در مخزن‌های واقعی از عامل‌های برنامه‌نویسی استفاده کنم | [مسیر مهندسی با کمک عامل‌ها](../../learning-paths/using-coding-agents.json) | [مهندسی با کمک عامل‌ها](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| می‌خواهم پیش از پیاده‌سازی مشخص کنم چه چیزی باید ساخته شود | [مسیر تصمیم‌گیری و تحویل محصول](../../learning-paths/shaping-the-build.json) | [تصمیم‌گیری و تحویل محصول](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| تازه‌کارم و می‌خواهم پایه‌ها را کامل یاد بگیرم | [مرحلهٔ 0: راه‌اندازی و ابزارها](../../phases/00-setup-and-tooling/) | [محیط توسعه](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Python بلدم و می‌خواهم مبانی ریاضی و یادگیری ماشین را یاد بگیرم | [مرحلهٔ 1: مبانی ریاضی](../../phases/01-math-foundations/) | [درک شهودی جبر خطی](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| می‌خواهم برنامه‌های مبتنی بر LLM برای استفادهٔ عملی بسازم | [مرحلهٔ 11: مهندسی LLM](../../phases/11-llm-engineering/) | [مهندسی پرامپت](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| می‌خواهم عامل‌های هوش مصنوعی بسازم | [مرحلهٔ 14: مهندسی عامل](../../phases/14-agent-engineering/) | [حلقهٔ عامل](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| می‌خواهم در مخزن‌های واقعی از عامل‌های برنامه‌نویسی استفاده کنم | [مسیر مهندسی با کمک عامل‌ها](../../learning-paths/using-coding-agents.json) | [مهندسی با کمک عامل‌ها](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| می‌خواهم پیش از پیاده‌سازی مشخص کنم چه چیزی باید ساخته شود | [مسیر تصمیم‌گیری و تحویل محصول](../../learning-paths/shaping-the-build.json) | [تصمیم‌گیری و تحویل محصول](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 نمی‌دانید از کجا شروع کنید؟ از [مربی تعیین سطح `start-learning`](../../skills/start-learning/SKILL.md) یا [راهنمای پیش‌نیازهای وب‌سایت](https://aiengineeringfromscratch.com/prereqs.html) استفاده کنید.
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | هدف شما | یادگیری در GitHub | یادگیری در وب‌سایت |
 |---|---|---|
-| می‌خواهم با Model Context Protocol (MCP) توسعه بدهم | [مسیر Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [مسیر یادگیری Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| می‌خواهم Agent Skills بنویسم و منتشر کنم | [مسیر متمرکز Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [مسیر یادگیری Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| می‌خواهم برنامه‌های کامپایل‌شده را بخوانم | [مسیر مهندسی معکوس](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [مسیر یادگیری مهندسی معکوس](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| می‌خواهم با Model Context Protocol (MCP) توسعه بدهم | [مسیر Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [مسیر یادگیری Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| می‌خواهم Agent Skills بنویسم و منتشر کنم | [مسیر متمرکز Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [مسیر یادگیری Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| می‌خواهم برنامه‌های کامپایل‌شده را بخوانم | [مسیر مهندسی معکوس](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [مسیر یادگیری مهندسی معکوس](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 بیست مرحله بر یکدیگر بنا می‌شوند. ریاضی پایه است و عامل‌ها و محیط عملیاتی در بالاترین سطح قرار دارند. اگر لایه‌های پایین را می‌دانید جلو بروید، اما آن‌ها را نادیده نگیرید و بعد از خرابی لایه‌های بالا تعجب نکنید.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="بیست مرحله در شش جلد دسته‌بندی شده‌اند، از مبانی در پایین تا تولید در بالا، همراه با آنچه در هر جلد می‌سازید." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>نمودار وابستگی مرحله‌ها</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

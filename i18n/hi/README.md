@@ -15,11 +15,17 @@
 
 मॉडल की आंतरिक गणनाएँ, रिट्रीवल पाइपलाइन और एजेंट रनटाइम लागू करें। उनका परीक्षण करें, विफलताएँ जाँचें और कोड तथा मूल्यांकन के परिणाम सहेजें।
 
-**[सीखना शुरू करें](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[अध्ययन-पथ चुनें](#learning-routes)** · **[प्रयोगशाला आज़माएँ](#interactive-lab)** · **[प्रोजेक्ट बनाएँ](#project-challenges)** · **[पाठ्यक्रम देखें](#contents)**
+**[सीखना शुरू करें](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[अध्ययन-पथ चुनें](#learning-routes)** · **[प्रयोगशाला आज़माएँ](#interactive-lab)** · **[प्रोजेक्ट बनाएँ](#project-challenges)** · **[पाठ्यक्रम देखें](#contents)**
 
 निःशुल्क, ओपन सोर्स, MIT लाइसेंस। वेबसाइट पर, कोडिंग एजेंट के साथ या स्थानीय कोड चलाकर सीखें।
 
 > 542 पाठ. 20 चरण. Python, TypeScript, Rust, Julia, Go.
+
+एक कमांड से अपने कोडिंग एजेंट को ट्यूटर बनाएँ:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="एमआईटी लाइसेंस"></a>
@@ -48,6 +54,29 @@
   <sub><span>आपका सहयोग हर पाठ को मुफ़्त और ओपन सोर्स बनाए रखता है।</span> <a href="#supporters">सभी समर्थक देखें</a> · <a href="../../SPONSORS.md">एक प्रायोजक बनें</a></sub>
 </p>
 
+## शुरू से क्यों बनाएँ
+
+फ़्रेमवर्क का कॉल उसी हिस्से को छिपा देता है जो सबसे पहले टूटता है। जब लॉस NaN बन जाए या एजेंट बार-बार वही टूल कॉल दोहराए, तो जिसने छोटा संस्करण खुद लिखा है, वह जानता है कि कहाँ देखना है। हर पाठ में आप पहले वही छोटा संस्करण लिखते और चलाते हैं, फिर उसी समस्या पर प्रोडक्शन लाइब्रेरी चलाकर दोनों की तुलना करते हैं।
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="एक पाठ चार चरणों में चलता है: समस्या, शुरू से बनाना, प्रोडक्शन लाइब्रेरी का उपयोग, और ऐसा परिणाम तैयार करना जो आपके पास रहे। उदाहरण चरण 14 का एजेंट लूप पाठ है।" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>टेक्स्ट संस्करण</summary>
+
+- **01 · समस्या**: LLM टेक्स्ट लौटाता है, पर कार्रवाई नहीं कर सकता।
+- **02 · बनाएँ**: stdlib Python में एक ReAct लूप।
+- **03 · उपयोग करें**: एजेंट SDK में वही लूप।
+- **04 · भेजें**: skill-agent-loop.md, आपके एजेंट के लिए तैयार।
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | मार्ग | शुरुआती पाठ |
 |---|---|
-| मॉडल की नींव | [सेटअप और टूल](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM सिस्टम | [प्रॉम्प्ट इंजीनियरिंग](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| एजेंट और डिलीवरी | [एजेंट लूप](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| मॉडल की नींव | [सेटअप और टूल](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM सिस्टम | [प्रॉम्प्ट इंजीनियरिंग](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| एजेंट और डिलीवरी | [एजेंट लूप](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [करियर-पथों की तुलना करें](https://aiengineeringfromscratch.com/learning-paths.html) · [पूर्वापेक्षाएं और अध्ययन का समय](#study-guide)
 
@@ -68,7 +97,7 @@
 20 शुरुआती बिंदु द्विघाती लॉस फ़ंक्शन पर ग्रेडिएंट डिसेंट के अनुसार चलते हैं। ग्राफ़ हर अपडेट के बाद उनकी स्थिति और औसत लॉस दिखाता है।
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[पाठ में लर्निंग रेट बदलें](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [कोड में GD, मोमेंटम और Adam की तुलना करें](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[पाठ में लर्निंग रेट बदलें](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [कोड में GD, मोमेंटम और Adam की तुलना करें](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 केवल Model Context Protocol (MCP) सीखना है? अपने होस्ट के लिए MCP शुरू करने वाला कमांड चुनें। इससे `MCP-LEARNING.md` बनती है और 17 पाठों का मार्ग शुरू होता है: अवस्था-रहित अनुरोध, संचार-विधियाँ, द्विदिश कार्य, सुरक्षा, विश्वसनीयता, रजिस्ट्री का प्रशासन और अनुरूपता के प्रमाण। सही क्रम और जाँच के पड़ाव [Model Context Protocol (MCP) की पाठ्यक्रम-सूची](../../learning-paths/model-context-protocol.json) में हैं।
 
-केवल Agent Skills सीखना है? अपने होस्ट के लिए Agent Skills शुरू करने वाला कमांड चुनें। इससे `AGENT-SKILLS-LEARNING.md` बनती है और पाँच जुड़े पाठों का मार्ग मिलता है: अनुबंध, खोज, आह्वान, सैंडबॉक्स की सीमाएँ, फिर प्रकाशन से पहले मूल्यांकन और वास्तविक होस्टों के बीच पोर्टेबिलिटी। शुरुआत [वेबसाइट के Agent Skills पथ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) से भी कर सकते हैं।
+केवल Agent Skills सीखना है? अपने होस्ट के लिए Agent Skills शुरू करने वाला कमांड चुनें। इससे `AGENT-SKILLS-LEARNING.md` बनती है और पाँच जुड़े पाठों का मार्ग मिलता है: अनुबंध, खोज, आह्वान, सैंडबॉक्स की सीमाएँ, फिर प्रकाशन से पहले मूल्यांकन और वास्तविक होस्टों के बीच पोर्टेबिलिटी। शुरुआत [वेबसाइट के Agent Skills पथ](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) से भी कर सकते हैं।
 
 इंस्टॉलर उन होस्ट प्लेटफ़ॉर्मों की सूची दिखाता है जिन्हें वह सेटअप कर सकता है और पूछता है कि स्किल कहाँ स्थापित करनी हैं। Node.js, `npx`, `python3`, समर्थित होस्ट या लिखने योग्य स्थान उपलब्ध न हो तो वेबसाइट देखें या `docs/en.md` पढ़ें। इससे अवधारणाएँ समझ आएँगी; लेकिन वास्तविक होस्ट पर स्किल खोजने, चलाने, स्क्रिप्ट इस्तेमाल करने और हटाने के प्रमाण वातावरण तैयार होने के बाद ही मिलेंगे। पाठ [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com) पर भी पढ़ें।
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | आपका लक्ष्य | GitHub पर सीखें | वेबसाइट पर सीखें |
 |---|---|---|
-| मैं नया हूँ और पूरी बुनियाद चाहता हूँ | [चरण 0: सेटअप और टूलिंग](../../phases/00-setup-and-tooling/) | [विकास वातावरण](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| मुझे Python आता है; गणित और ML की बुनियाद चाहिए | [चरण 1: गणित की बुनियाद](../../phases/01-math-foundations/) | [रैखिक बीजगणित की सहज समझ](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| मैं उत्पादन के लिए LLM ऐप बनाना चाहता हूँ | [चरण 11: LLM इंजीनियरिंग](../../phases/11-llm-engineering/) | [प्रॉम्प्ट इंजीनियरिंग](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| मैं एजेंट बनाना चाहता हूँ | [चरण 14: एजेंट इंजीनियरिंग](../../phases/14-agent-engineering/) | [एजेंट लूप](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| मैं असली रिपॉज़िटरी पर कोडिंग एजेंट इस्तेमाल करना चाहता हूँ | [एजेंट-सहायित इंजीनियरिंग मार्ग](../../learning-paths/using-coding-agents.json) | [एजेंट-सहायित इंजीनियरिंग](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| मैं कार्यान्वयन से पहले सही समाधान तय करना चाहता हूँ | [उत्पाद-निर्णय और सुपुर्दगी मार्ग](../../learning-paths/shaping-the-build.json) | [उत्पाद-निर्णय और सुपुर्दगी](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| मैं नया हूँ और पूरी बुनियाद चाहता हूँ | [चरण 0: सेटअप और टूलिंग](../../phases/00-setup-and-tooling/) | [विकास वातावरण](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| मुझे Python आता है; गणित और ML की बुनियाद चाहिए | [चरण 1: गणित की बुनियाद](../../phases/01-math-foundations/) | [रैखिक बीजगणित की सहज समझ](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| मैं उत्पादन के लिए LLM ऐप बनाना चाहता हूँ | [चरण 11: LLM इंजीनियरिंग](../../phases/11-llm-engineering/) | [प्रॉम्प्ट इंजीनियरिंग](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| मैं एजेंट बनाना चाहता हूँ | [चरण 14: एजेंट इंजीनियरिंग](../../phases/14-agent-engineering/) | [एजेंट लूप](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| मैं असली रिपॉज़िटरी पर कोडिंग एजेंट इस्तेमाल करना चाहता हूँ | [एजेंट-सहायित इंजीनियरिंग मार्ग](../../learning-paths/using-coding-agents.json) | [एजेंट-सहायित इंजीनियरिंग](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| मैं कार्यान्वयन से पहले सही समाधान तय करना चाहता हूँ | [उत्पाद-निर्णय और सुपुर्दगी मार्ग](../../learning-paths/shaping-the-build.json) | [उत्पाद-निर्णय और सुपुर्दगी](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 पता नहीं कहाँ से शुरू करें? [`start-learning` स्तर-जाँच ट्यूटर](../../skills/start-learning/SKILL.md) या [वेबसाइट की पूर्वापेक्षा मार्गदर्शिका](https://aiengineeringfromscratch.com/prereqs.html) देखें।
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | आपका लक्ष्य | GitHub पर सीखें | वेबसाइट पर सीखें |
 |---|---|---|
-| मैं Model Context Protocol (MCP) के साथ बनाना चाहता हूँ | [Model Context Protocol (MCP) मार्ग](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) पथ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| मैं Agent Skills लिखकर जारी करना चाहता हूँ | [Agent Skills का केंद्रित मार्ग](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills पथ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| मैं कंपाइल किए गए प्रोग्राम पढ़ना चाहता हूँ | [रिवर्स इंजीनियरिंग का केंद्रित मार्ग](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [रिवर्स इंजीनियरिंग पथ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| मैं Model Context Protocol (MCP) के साथ बनाना चाहता हूँ | [Model Context Protocol (MCP) मार्ग](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) पथ](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| मैं Agent Skills लिखकर जारी करना चाहता हूँ | [Agent Skills का केंद्रित मार्ग](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills पथ](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| मैं कंपाइल किए गए प्रोग्राम पढ़ना चाहता हूँ | [रिवर्स इंजीनियरिंग का केंद्रित मार्ग](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [रिवर्स इंजीनियरिंग पथ](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 बीस चरण एक-दूसरे पर टिके हैं। गणित बुनियाद है; एजेंट और उत्पादन में तैनाती सबसे ऊपर हैं। नीचे के स्तर पहले से समझते हों तो आगे बढ़ें। लेकिन ज़रूरी आधार छोड़े बिना ही अगले स्तर पर जाएँ, ताकि वहाँ आने वाली समस्या की वजह समझ सकें।
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="बीस चरण छह खंडों में बँटे हैं, नीचे बुनियाद और ऊपर प्रोडक्शन, और हर खंड में जो बनता है वह भी दिखाया गया है।" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>चरणों की निर्भरता का ग्राफ़</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

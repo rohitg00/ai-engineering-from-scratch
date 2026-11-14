@@ -15,11 +15,17 @@
 
 نفّذ العمليات الداخلية للنماذج وخطوط معالجة الاسترجاع وبيئات تشغيل الوكلاء. اختبرها وافحص حالات الفشل واحتفظ بالشيفرة ونتائج التقييم.
 
-**[ابدأ التعلّم](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[اختر مسارًا](#learning-routes)** · **[جرّب مختبرًا](#interactive-lab)** · **[ابنِ مشروعًا](#project-challenges)** · **[تصفّح المنهج](#contents)**
+**[ابدأ التعلّم](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[اختر مسارًا](#learning-routes)** · **[جرّب مختبرًا](#interactive-lab)** · **[ابنِ مشروعًا](#project-challenges)** · **[تصفّح المنهج](#contents)**
 
 مجاني ومفتوح المصدر بترخيص MIT. تعلّم عبر الموقع أو مع وكيل برمجة أو بتشغيل الشيفرة محليًا.
 
 > <span dir="rtl">542 درساً. 20 مرحلة.</span> <span dir="ltr">Python, TypeScript, Rust, Julia, Go.</span>
+
+حوّل وكيل البرمجة لديك إلى معلّم بأمر واحد:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="رخصة MIT"></a>
@@ -48,6 +54,29 @@
   <sub><span>دعمكم يُبقي كل درس مجانيًا ومفتوح المصدر.</span> <a href="#supporters">عرض جميع الداعمين</a> · <a href="../../SPONSORS.md">اصبح راعي</a></sub>
 </p>
 
+## لماذا نبني من الصفر
+
+استدعاء إطار العمل يخفي الجزء الذي ينكسر أولًا. وعندما تتحول الخسارة إلى NaN أو يكرر الوكيل استدعاء الأداة نفسه، يعرف من كتب النسخة الصغيرة أين ينظر. في كل درس تكتب هذه النسخة الصغيرة أولًا وتشغّلها، ثم تشغّل مكتبة الإنتاج على المسألة نفسها وتقارن بينهما.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="درس واحد في أربع خطوات: المشكلة، والبناء من الصفر، واستخدام مكتبة الإنتاج، وتسليم ناتج تحتفظ به. المثال هو درس حلقة الوكيل في المرحلة 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>نسخة نصية</summary>
+
+- **01 · المشكلة**: يعيد LLM نصًا ولا يستطيع التنفيذ.
+- **02 · ابنِه**: حلقة ReAct بشيفرة stdlib Python.
+- **03 · استخدمه**: الحلقة نفسها في SDK للوكلاء.
+- **04 · سلّمه**: skill-agent-loop.md، جاهز لوكيلك.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | المسار | الدرس الأول |
 |---|---|
-| أسس النماذج | [الإعداد والأدوات](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| أنظمة LLM | [هندسة المطالبات](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| الوكلاء والتسليم | [حلقة الوكيل](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| أسس النماذج | [الإعداد والأدوات](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| أنظمة LLM | [هندسة المطالبات](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| الوكلاء والتسليم | [حلقة الوكيل](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [قارن المسارات المهنية](https://aiengineeringfromscratch.com/learning-paths.html) · [المتطلبات السابقة ووقت الدراسة](#study-guide)
 
@@ -68,7 +97,7 @@
 تتحرّك 20 نقطة بداية وفق الانحدار المتدرّج على دالة خسارة تربيعية. يعرض الرسم مواقعها ومتوسط الخسارة بعد كل تحديث.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[عدّل معدل التعلّم في الدرس](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [قارن GD والزخم وAdam في الشيفرة](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[عدّل معدل التعلّم في الدرس](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [قارن GD والزخم وAdam في الشيفرة](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 إذا كنت تريد Model Context Protocol (MCP) فقط، فاستخدم استدعاء MCP الخاص بمضيفك. ينشئ الملف `MCP-LEARNING.md` ويتبع مسارًا من 17 درسًا يغطي الطلبات عديمة الحالة ووسائل النقل والعمل ثنائي الاتجاه والأمن والموثوقية وحوكمة السجل وأدلة المطابقة. يوضح [ملف Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) ترتيب الدروس ونقاط التحقق.
 
-إذا كنت تريد Agent Skills فقط، فاستخدم الاستدعاء المخصص لها في مضيفك. ينشئ الملف `AGENT-SKILLS-LEARNING.md` ويتبع مسارًا مترابطًا من خمسة دروس: العقد والاكتشاف والاستدعاء وحدود العزل، ثم اختبارات التقييم قبل الإصدار وقابلية التشغيل على مضيف حقيقي. ابدأ عبر [مسار Agent Skills على الموقع](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+إذا كنت تريد Agent Skills فقط، فاستخدم الاستدعاء المخصص لها في مضيفك. ينشئ الملف `AGENT-SKILLS-LEARNING.md` ويتبع مسارًا مترابطًا من خمسة دروس: العقد والاكتشاف والاستدعاء وحدود العزل، ثم اختبارات التقييم قبل الإصدار وقابلية التشغيل على مضيف حقيقي. ابدأ عبر [مسار Agent Skills على الموقع](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 يعرض المثبّت المضيفين الذين يستطيع إعدادهم ويسألك عن موضع التثبيت. إذا لم يتوفر لديك Node.js أو `npx` أو `python3` أو مضيف مدعوم أو نطاق قابل للكتابة، فاستخدم الموقع أو اقرأ `docs/en.md` يدويًا. يشرح هذا المسار المفاهيم، لكن أدلة الاكتشاف والاستدعاء والبرامج النصية وإلغاء التثبيت على مضيف حقيقي تظل معلّقة إلى أن يصبح الفحص الأولي متاحًا. اقرأ الدروس على [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | هدفك | تعلّم على GitHub | تعلّم على الموقع |
 |---|---|---|
-| أنا مبتدئ وأريد الأساس كاملًا | [المرحلة 0: الإعداد والأدوات](../../phases/00-setup-and-tooling/) | [بيئة التطوير](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| أعرف Python وأريد أساسيات الرياضيات وML | [المرحلة 1: أسس الرياضيات](../../phases/01-math-foundations/) | [حدس الجبر الخطي](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| أريد بناء تطبيقات LLM جاهزة للإنتاج | [المرحلة 11: هندسة LLM](../../phases/11-llm-engineering/) | [هندسة الموجّهات](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| أريد بناء وكلاء | [المرحلة 14: هندسة الوكلاء](../../phases/14-agent-engineering/) | [حلقة الوكيل](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| أريد استخدام وكلاء البرمجة على مستودعات حقيقية | [مسار الهندسة بمساعدة الوكلاء](../../learning-paths/using-coding-agents.json) | [الهندسة بمساعدة الوكلاء](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| أريد تحديد ما ينبغي بناؤه قبل التنفيذ | [مسار تقدير المنتج وتسليمه](../../learning-paths/shaping-the-build.json) | [تقدير المنتج وتسليمه](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| أنا مبتدئ وأريد الأساس كاملًا | [المرحلة 0: الإعداد والأدوات](../../phases/00-setup-and-tooling/) | [بيئة التطوير](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| أعرف Python وأريد أساسيات الرياضيات وML | [المرحلة 1: أسس الرياضيات](../../phases/01-math-foundations/) | [حدس الجبر الخطي](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| أريد بناء تطبيقات LLM جاهزة للإنتاج | [المرحلة 11: هندسة LLM](../../phases/11-llm-engineering/) | [هندسة الموجّهات](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| أريد بناء وكلاء | [المرحلة 14: هندسة الوكلاء](../../phases/14-agent-engineering/) | [حلقة الوكيل](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| أريد استخدام وكلاء البرمجة على مستودعات حقيقية | [مسار الهندسة بمساعدة الوكلاء](../../learning-paths/using-coding-agents.json) | [الهندسة بمساعدة الوكلاء](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| أريد تحديد ما ينبغي بناؤه قبل التنفيذ | [مسار تقدير المنتج وتسليمه](../../learning-paths/shaping-the-build.json) | [تقدير المنتج وتسليمه](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 لست متأكدًا من نقطة البداية المناسبة؟ استخدم [مدرّب تحديد المستوى `start-learning`](../../skills/start-learning/SKILL.md) أو [دليل المتطلبات السابقة على الموقع](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | هدفك | تعلّم على GitHub | تعلّم على الموقع |
 |---|---|---|
-| أريد البناء باستخدام Model Context Protocol (MCP) | [مسار Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [مسار Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| أريد كتابة Agent Skills وإصدارها | [مسار Agent Skills المركّز](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [مسار Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| أريد قراءة البرامج المترجمة | [مسار الهندسة العكسية المركّز](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [مسار الهندسة العكسية](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| أريد البناء باستخدام Model Context Protocol (MCP) | [مسار Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [مسار Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| أريد كتابة Agent Skills وإصدارها | [مسار Agent Skills المركّز](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [مسار Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| أريد قراءة البرامج المترجمة | [مسار الهندسة العكسية المركّز](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [مسار الهندسة العكسية](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 تتراكم المراحل العشرون فوق بعضها. الرياضيات هي الأساس، والوكلاء وأنظمة الإنتاج في القمة. يمكنك تجاوز الطبقات الأولى إن كنت تعرفها، لكن لا تتجاوزها ثم تتساءل عن سبب تعطل ما في الأعلى.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="عشرون مرحلة مجمّعة في ست مجلدات، من الأسس في الأسفل إلى الإنتاج في الأعلى، مع ما تبنيه في كل مجلد." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>مخطط اعتماد المراحل</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

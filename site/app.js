@@ -16,11 +16,9 @@
     populateCurriculumSummary();
     populateStats();
     renderPhases();
-    renderReleases();
     initStaggerIndex();
     initModal();
     initCopyButton();
-    initMastheadFigure();
     initFadeObserver();
   });
 
@@ -158,7 +156,7 @@
       var finished = total > 0 && done >= total;
       var isNext = !finished && !nextMarked && total > 0;
       if (isNext) nextMarked = true;
-      var action = 'Not started';
+      var action = '';
       if (finished) action = 'Done';
       else if (done > 0) action = 'Continue';
       else if (isNext) action = 'Start here';
@@ -171,8 +169,8 @@
       html += '<div class="phase-card-top"><span class="phase-card-num" dir="ltr">Phase ' + num + '</span><span class="toc-status ' + statusClass + '"></span></div>';
       html += '<h3 class="phase-card-name">' + escapeHtml(p.name) + '</h3>';
       html += '<p class="phase-card-desc">' + escapeHtml(p.desc || '') + '</p>';
-      html += '<div class="phase-card-bar" aria-hidden="true"><span style="width:' + percent + '%"></span></div>';
-      html += '<div class="phase-card-foot"><span class="phase-card-count">' + count + '</span><span class="phase-card-action">' + action + '</span></div>';
+      if (done > 0) html += '<div class="phase-card-bar" aria-hidden="true"><span style="width:' + percent + '%"></span></div>';
+      html += '<div class="phase-card-foot"><span class="phase-card-count">' + count + '</span>' + (action ? '<span class="phase-card-action">' + action + '</span>' : '') + '</div>';
       html += '</div>';
     }
     grid.innerHTML = html;
@@ -194,35 +192,6 @@
         newRows[r].classList.add('in-view', 'visible');
       }
     }
-  }
-
-  function releaseItemHtml(release) {
-    return '<li class="whats-new-item">'
-      + '<time class="whats-new-date" datetime="' + escapeHtml(release.date) + '">' + escapeHtml(release.date) + '</time>'
-      + '<a href="' + escapeHtml(release.url) + '" target="_blank" rel="noopener">' + escapeHtml(release.title) + '</a>'
-      + (release.summary ? '<p class="whats-new-summary">' + escapeHtml(release.summary) + '</p>' : '')
-      + '</li>';
-  }
-
-  function renderReleases() {
-    var section = document.getElementById('whats-new');
-    var list = document.getElementById('whatsNewList');
-    if (!section || !list || !window.fetch) return;
-    fetch('releases.json')
-      .then(function (response) { return response.ok ? response.json() : null; })
-      .then(function (data) {
-        var releases = data && Array.isArray(data.releases) ? data.releases : [];
-        var html = '';
-        for (var i = 0; i < releases.length; i++) {
-          var release = releases[i];
-          if (!release || !/^https:\/\/github\.com\//.test(release.url || '')) continue;
-          html += releaseItemHtml(release);
-        }
-        if (!html) return;
-        list.innerHTML = html;
-        section.hidden = false;
-      })
-      .catch(function () {});
   }
 
   function toRoman(num) {
@@ -570,191 +539,6 @@
         function () { return installBtn.getAttribute('data-cmd'); }
       );
     }
-  }
-
-  function initMastheadFigure() {
-    var figure = document.querySelector('[data-masthead-figure]');
-    if (!figure) return;
-    var panels = Array.prototype.slice.call(figure.querySelectorAll('.fig-panel'));
-    var dots = Array.prototype.slice.call(figure.querySelectorAll('.fig-dot'));
-    var previous = figure.querySelector('.fig-previous');
-    var next = figure.querySelector('.fig-next');
-    var controls = figure.querySelector('.fig-controls');
-    var caption = figure.querySelector('.fig-caption');
-    if (panels.length < 2 || dots.length !== panels.length || !previous || !next || !controls || !caption) return;
-
-    var autoplayDelay = 6500;
-    var current = Math.max(0, panels.findIndex(function (panel) { return panel.classList.contains('is-active'); }));
-    var reducedQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
-    var desktopQuery = window.matchMedia ? window.matchMedia('(min-width: 1280px) and (hover: hover) and (pointer: fine)') : null;
-    var inViewport = !window.IntersectionObserver;
-    var timer = 0;
-    var timerStartedAt = 0;
-    var timerRemaining = autoplayDelay;
-    var autoplayCancelled = !!(reducedQuery && reducedQuery.matches);
-    var autoplayComplete = false;
-    var disposed = false;
-    var cleanups = [];
-
-    function now() {
-      return window.performance && typeof window.performance.now === 'function' ? window.performance.now() : Date.now();
-    }
-
-    function listen(target, type, handler, options) {
-      target.addEventListener(type, handler, options);
-      cleanups.push(function () { target.removeEventListener(type, handler, options); });
-    }
-
-    function listenToQuery(query, handler) {
-      if (!query) return;
-      if (typeof query.addEventListener === 'function') {
-        query.addEventListener('change', handler);
-        cleanups.push(function () { query.removeEventListener('change', handler); });
-      } else if (typeof query.addListener === 'function') {
-        query.addListener(handler);
-        cleanups.push(function () { query.removeListener(handler); });
-      }
-    }
-
-    function isDesktopView() {
-      return desktopQuery ? desktopQuery.matches : figure.getClientRects().length > 0;
-    }
-
-    function isReduced() {
-      return !!(reducedQuery && reducedQuery.matches);
-    }
-
-    function isOnScreen() {
-      var rect = figure.getBoundingClientRect();
-      return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth;
-    }
-
-    function showPlate(index, announce) {
-      current = Math.max(0, Math.min(panels.length - 1, index));
-      panels.forEach(function (panel, panelIndex) {
-        var active = panelIndex === current;
-        panel.classList.toggle('is-active', active);
-        panel.setAttribute('aria-hidden', active ? 'false' : 'true');
-      });
-      dots.forEach(function (dot, dotIndex) {
-        var active = dotIndex === current;
-        dot.classList.toggle('is-active', active);
-        dot.setAttribute('aria-pressed', active ? 'true' : 'false');
-      });
-      caption.setAttribute('aria-live', announce ? 'polite' : 'off');
-      caption.textContent = 'Plate ' + (current + 1) + ' of ' + panels.length + '. ' + panels[current].getAttribute('data-caption');
-      previous.disabled = current === 0;
-      next.disabled = current === panels.length - 1;
-    }
-
-    function clearTimer(preserveRemaining) {
-      if (!timer) return;
-      if (preserveRemaining) {
-        timerRemaining = Math.max(0, timerRemaining - (now() - timerStartedAt));
-      }
-      window.clearTimeout(timer);
-      timer = 0;
-      timerStartedAt = 0;
-    }
-
-    function canAutoplay() {
-      return !autoplayCancelled && !autoplayComplete && !isReduced() && isDesktopView() && inViewport && !document.hidden && figure.getClientRects().length > 0;
-    }
-
-    function scheduleAutoplay() {
-      if (timer || !canAutoplay()) return;
-      if (current >= panels.length - 1) {
-        autoplayComplete = true;
-        figure.removeAttribute('data-autoplay');
-        return;
-      }
-      figure.setAttribute('data-autoplay', 'true');
-      timerStartedAt = now();
-      timer = window.setTimeout(function () {
-        timer = 0;
-        timerStartedAt = 0;
-        showPlate(current + 1, false);
-        timerRemaining = autoplayDelay;
-        if (current >= panels.length - 1) {
-          autoplayComplete = true;
-          figure.removeAttribute('data-autoplay');
-          return;
-        }
-        scheduleAutoplay();
-      }, Math.max(16, timerRemaining));
-    }
-
-    function cancelAutoplay() {
-      clearTimer(false);
-      autoplayCancelled = true;
-      figure.removeAttribute('data-autoplay');
-    }
-
-    function syncRuntime() {
-      if (disposed) return;
-      var paused = isReduced() || !isDesktopView() || !inViewport || document.hidden || figure.getClientRects().length === 0;
-      figure.setAttribute('data-motion-paused', paused ? 'true' : 'false');
-      if (paused) clearTimer(true);
-      else scheduleAutoplay();
-    }
-
-    function choosePlate(index) {
-      cancelAutoplay();
-      showPlate(index, true);
-      syncRuntime();
-    }
-
-    dots.forEach(function (dot, index) {
-      listen(dot, 'click', function () { choosePlate(index); });
-    });
-    listen(previous, 'click', function () { choosePlate(current - 1); });
-    listen(next, 'click', function () { choosePlate(current + 1); });
-    listen(controls, 'pointerdown', cancelAutoplay);
-    listen(controls, 'keydown', cancelAutoplay);
-    listen(controls, 'focusin', cancelAutoplay);
-    listen(document, 'visibilitychange', syncRuntime);
-
-    listenToQuery(reducedQuery, function () {
-      if (isReduced()) cancelAutoplay();
-      syncRuntime();
-    });
-    listenToQuery(desktopQuery, function () {
-      inViewport = isOnScreen();
-      syncRuntime();
-    });
-
-    if (window.IntersectionObserver) {
-      var observer = new IntersectionObserver(function (entries) {
-        if (!entries.length) return;
-        inViewport = entries[0].isIntersecting && entries[0].intersectionRatio > 0;
-        syncRuntime();
-      }, { threshold: 0.12 });
-      observer.observe(figure);
-      cleanups.push(function () { observer.disconnect(); });
-    } else {
-      var checkViewport = function () {
-        inViewport = isOnScreen();
-        syncRuntime();
-      };
-      listen(window, 'scroll', checkViewport, { passive: true });
-      listen(window, 'resize', checkViewport);
-      checkViewport();
-    }
-
-    function cleanup() {
-      if (disposed) return;
-      disposed = true;
-      clearTimer(false);
-      while (cleanups.length) cleanups.pop()();
-      figure.removeAttribute('data-autoplay');
-      figure.setAttribute('data-motion-paused', 'true');
-    }
-
-    listen(window, 'pagehide', function (event) {
-      if (!event.persisted) cleanup();
-    });
-    showPlate(current, false);
-    syncRuntime();
   }
 
   function initFadeObserver() {

@@ -15,11 +15,17 @@
 
 Triển khai cơ chế bên trong mô hình, quy trình truy xuất và môi trường thực thi tác tử. Kiểm thử, phân tích lỗi và lưu lại mã nguồn cùng kết quả đánh giá.
 
-**[Bắt đầu học](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Chọn lộ trình](#learning-routes)** · **[Thử bài thực hành](#interactive-lab)** · **[Xây dựng dự án](#project-challenges)** · **[Xem chương trình học](#contents)**
+**[Bắt đầu học](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Chọn lộ trình](#learning-routes)** · **[Thử bài thực hành](#interactive-lab)** · **[Xây dựng dự án](#project-challenges)** · **[Xem chương trình học](#contents)**
 
 Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng tác tử lập trình hoặc bằng cách chạy mã cục bộ.
 
 > 542 bài học. 20 giai đoạn. Python, TypeScript, Rust, Julia, Go.
+
+Biến tác tử lập trình của bạn thành gia sư chỉ với một lệnh:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Giấy phép MIT"></a>
@@ -48,6 +54,29 @@ Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng t�
   <sub><span>Sự hỗ trợ của bạn giúp mọi bài học luôn miễn phí và mã nguồn mở.</span> <a href="#supporters">Xem tất cả người ủng hộ</a> · <a href="../../SPONSORS.md">Trở thành nhà tài trợ</a></sub>
 </p>
 
+## Vì sao nên xây dựng từ đầu
+
+Một lời gọi khung phần mềm che giấu đúng phần bị hỏng. Khi giá trị mất mát biến thành NaN hoặc một tác tử lặp lại cùng một lời gọi công cụ, người đã viết phiên bản nhỏ biết cần tìm ở đâu. Mỗi bài học yêu cầu bạn viết phiên bản đó trước, chạy nó, rồi chạy thư viện sản xuất trên cùng bài toán để so sánh hai kết quả.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Một bài học gồm bốn bước: vấn đề, xây dựng từ đầu, dùng thư viện sản xuất và bàn giao một sản phẩm bạn giữ lại. Ví dụ là bài học về vòng lặp tác tử ở giai đoạn 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Phiên bản văn bản</summary>
+
+- **01 · VẤN ĐỀ**: LLM trả về văn bản. LLM không thể hành động.
+- **02 · XÂY DỰNG**: Vòng lặp ReAct bằng stdlib Python.
+- **03 · SỬ DỤNG**: Cùng vòng lặp đó trong SDK tác tử.
+- **04 · BÀN GIAO**: skill-agent-loop.md, sẵn sàng cho tác tử của bạn.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng t�
 
 | Lộ trình | Bài học bắt đầu |
 |---|---|
-| Nền tảng mô hình | [Thiết lập và công cụ](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Hệ thống LLM | [Kỹ thuật viết câu lệnh](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Tác tử và bàn giao hệ thống | [Vòng lặp tác tử](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Nền tảng mô hình | [Thiết lập và công cụ](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Hệ thống LLM | [Kỹ thuật viết câu lệnh](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Tác tử và bàn giao hệ thống | [Vòng lặp tác tử](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [So sánh lộ trình nghề nghiệp](https://aiengineeringfromscratch.com/learning-paths.html) · [Kiến thức tiên quyết và thời gian học](#study-guide)
 
@@ -68,7 +97,7 @@ Miễn phí, mã nguồn mở, giấy phép MIT. Học trên trang web, cùng t�
 Hai mươi điểm khởi đầu thực hiện hạ gradient trên hàm mất mát bậc hai. Đồ thị hiển thị vị trí của chúng và giá trị mất mát trung bình sau mỗi lần cập nhật.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Hai mươi điểm khởi đầu thực hiện hạ gradient trên hàm mất m�
   </a>
 </p>
 
-[Điều chỉnh tốc độ học trong bài học](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [So sánh hạ gradient, động lượng và Adam trong mã nguồn](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Điều chỉnh tốc độ học trong bài học](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [So sánh hạ gradient, động lượng và Adam trong mã nguồn](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Bài kiểm tra trình độ gồm mười câu hỏi đối chiếu kiến th�
 
 Chỉ muốn học Model Context Protocol (MCP)? Dùng cách gọi MCP dành cho host của bạn. Skill tạo `MCP-LEARNING.md` và theo một lộ trình gồm 17 bài về yêu cầu không trạng thái, kênh truyền, công việc hai chiều, bảo mật, độ tin cậy, quản trị registry và bằng chứng tuân thủ. Thứ tự chính xác và các điểm kiểm tra nằm trong [bản kê Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json).
 
-Chỉ muốn học Agent Skills? Dùng cách gọi Agent Skills dành cho host của bạn. Skill tạo `AGENT-SKILLS-LEARNING.md` và theo một lộ trình liền mạch gồm năm bài: hợp đồng, khám phá, gọi skill, ranh giới sandbox, rồi đánh giá phát hành và tính di động trên host thực tế. Bắt đầu trên web với [lộ trình Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Chỉ muốn học Agent Skills? Dùng cách gọi Agent Skills dành cho host của bạn. Skill tạo `AGENT-SKILLS-LEARNING.md` và theo một lộ trình liền mạch gồm năm bài: hợp đồng, khám phá, gọi skill, ranh giới sandbox, rồi đánh giá phát hành và tính di động trên host thực tế. Bắt đầu trên web với [lộ trình Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Trình cài đặt liệt kê các host có thể cấu hình và hỏi nơi cài. Nếu chưa có Node.js, `npx`, `python3`, host được hỗ trợ hoặc phạm vi có quyền ghi, hãy dùng trang web hoặc tự đọc `docs/en.md`. Cách đó giúp học khái niệm, nhưng bằng chứng khám phá, gọi, chạy script và gỡ cài đặt trên host thực tế vẫn chưa hoàn tất cho đến khi có thể chạy kiểm tra ban đầu. Đọc bài học tại [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Bạn không cần xem qua cả 542 bài học trước khi bắt đầu. Hãy c
 
 | Mục tiêu của bạn | Học trên GitHub | Học trên trang web |
 |---|---|---|
-| Tôi mới bắt đầu và muốn có nền tảng đầy đủ | [Giai đoạn 0: Thiết lập và công cụ](../../phases/00-setup-and-tooling/) | [Môi trường phát triển](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Tôi biết Python và muốn học nền tảng toán cùng học máy | [Giai đoạn 1: Nền tảng toán học](../../phases/01-math-foundations/) | [Hiểu trực quan đại số tuyến tính](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Tôi muốn xây dựng ứng dụng LLM để triển khai thực tế | [Giai đoạn 11: Kỹ thuật LLM](../../phases/11-llm-engineering/) | [Kỹ thuật prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Tôi muốn xây dựng agent | [Giai đoạn 14: Kỹ thuật agent](../../phases/14-agent-engineering/) | [Vòng lặp agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Tôi muốn dùng agent lập trình trên các kho mã thực tế | [Lộ trình kỹ thuật với sự hỗ trợ của agent](../../learning-paths/using-coding-agents.json) | [Kỹ thuật với sự hỗ trợ của agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Tôi muốn xác định đúng thứ cần xây dựng trước khi triển khai | [Lộ trình quyết định và bàn giao sản phẩm](../../learning-paths/shaping-the-build.json) | [Quyết định và bàn giao sản phẩm](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Tôi mới bắt đầu và muốn có nền tảng đầy đủ | [Giai đoạn 0: Thiết lập và công cụ](../../phases/00-setup-and-tooling/) | [Môi trường phát triển](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Tôi biết Python và muốn học nền tảng toán cùng học máy | [Giai đoạn 1: Nền tảng toán học](../../phases/01-math-foundations/) | [Hiểu trực quan đại số tuyến tính](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Tôi muốn xây dựng ứng dụng LLM để triển khai thực tế | [Giai đoạn 11: Kỹ thuật LLM](../../phases/11-llm-engineering/) | [Kỹ thuật prompt](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Tôi muốn xây dựng agent | [Giai đoạn 14: Kỹ thuật agent](../../phases/14-agent-engineering/) | [Vòng lặp agent](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Tôi muốn dùng agent lập trình trên các kho mã thực tế | [Lộ trình kỹ thuật với sự hỗ trợ của agent](../../learning-paths/using-coding-agents.json) | [Kỹ thuật với sự hỗ trợ của agent](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Tôi muốn xác định đúng thứ cần xây dựng trước khi triển khai | [Lộ trình quyết định và bàn giao sản phẩm](../../learning-paths/shaping-the-build.json) | [Quyết định và bàn giao sản phẩm](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Chưa biết nên bắt đầu ở đâu? Dùng [gia sư đánh giá trình độ `start-learning`](../../skills/start-learning/SKILL.md) hoặc [hướng dẫn kiến thức cần có trên trang web](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ So sánh bốn lĩnh vực cốt lõi và sáu lộ trình nghề nghiệp trong
 
 | Mục tiêu của bạn | Học trên GitHub | Học trên trang web |
 |---|---|---|
-| Tôi muốn xây dựng với Model Context Protocol (MCP) | [Lộ trình Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Lộ trình học Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Tôi muốn viết và phát hành Agent Skills | [Lộ trình chuyên về Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Lộ trình học Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Tôi muốn đọc chương trình đã biên dịch | [Lộ trình Reverse Engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Lộ trình học Reverse Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Tôi muốn xây dựng với Model Context Protocol (MCP) | [Lộ trình Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Lộ trình học Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Tôi muốn viết và phát hành Agent Skills | [Lộ trình chuyên về Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Lộ trình học Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Tôi muốn đọc chương trình đã biên dịch | [Lộ trình Reverse Engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Lộ trình học Reverse Engineering](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ So sánh bốn lĩnh vực cốt lõi và sáu lộ trình nghề nghiệp trong
 
 Hai mươi giai đoạn xây chồng lên nhau. Toán học là nền, tác tử và triển khai thực tế là phần trên cùng. Có thể nhảy cóc nếu bạn đã hiểu các lớp dưới, nhưng đừng bỏ qua rồi thắc mắc vì sao thứ ở trên lại hỏng.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Hai mươi giai đoạn được nhóm thành sáu tập, từ nền tảng ở dưới đến sản xuất ở trên, kèm nội dung bạn xây dựng trong mỗi tập." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Đồ thị phụ thuộc giữa các giai đoạn</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

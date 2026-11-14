@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="330" viewBox="0 0 1280 330" role="img" aria-label="One lesson, four steps: the problem, build it from scratch, use the production library, ship an artifact you keep. Example: Phase 14, Lesson 01, the agent loop.">
+<defs>
+<pattern id="paper" width="16" height="16" patternUnits="userSpaceOnUse">
+<circle cx="0" cy="0" r="1" fill="#e8e6dc" fill-opacity="0.08"/>
+</pattern>
+</defs>
+<rect width="1280" height="330" fill="#0d1117"/>
+<rect width="1280" height="330" fill="url(#paper)"/>
+<text x="50" y="44" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#6b8eff" letter-spacing="2.2">FIG_000.B  ·  ONE LESSON, FOUR STEPS</text>
+<text x="1230" y="44" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11" fill="#a4a9b5" letter-spacing="2.2" text-anchor="end">EXAMPLE  ·  PHASE 14 / LESSON 01  ·  THE AGENT LOOP</text>
+<line x1="50" y1="62" x2="1230" y2="62" stroke="#6b8eff" stroke-width="0.6" stroke-opacity="0.4"/>
+<rect x="55" y="97" width="260" height="212" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="50" y="92" width="260" height="212" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<text x="72.0" y="138.0" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" fill="#6b8eff">01</text>
+<text x="72.0" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#e8e6dc" font-weight="700" letter-spacing="1.5">THE PROBLEM</text>
+<text x="72.0" y="198.0" font-family="'Source Serif 4', Georgia, serif" font-size="16" fill="#a4a9b5">a concrete failure</text>
+<line x1="72.0" y1="220.0" x2="288.0" y2="220.0" stroke="#6b8eff" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text x="72.0" y="248.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e8e6dc">An LLM returns text.</text>
+<text x="72.0" y="270.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e8e6dc">It cannot act.</text>
+<line x1="320" y1="198.0" x2="342" y2="198.0" stroke="#6b8eff" stroke-width="1.4"/>
+<polygon points="350,198.0 340,193.0 340,203.0" fill="#6b8eff"/>
+<rect x="361" y="97" width="260" height="212" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="356" y="92" width="260" height="212" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<text x="378.0" y="138.0" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" fill="#6b8eff">02</text>
+<text x="378.0" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#e8e6dc" font-weight="700" letter-spacing="1.5">BUILD IT</text>
+<text x="378.0" y="198.0" font-family="'Source Serif 4', Georgia, serif" font-size="16" fill="#a4a9b5">raw code, no framework</text>
+<line x1="378.0" y1="220.0" x2="594.0" y2="220.0" stroke="#6b8eff" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text x="378.0" y="248.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e8e6dc">A ReAct loop in</text>
+<text x="378.0" y="270.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e8e6dc">stdlib Python.</text>
+<line x1="626" y1="198.0" x2="648" y2="198.0" stroke="#6b8eff" stroke-width="1.4"/>
+<polygon points="656,198.0 646,193.0 646,203.0" fill="#6b8eff"/>
+<rect x="667" y="97" width="260" height="212" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="662" y="92" width="260" height="212" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<text x="684.0" y="138.0" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" fill="#6b8eff">03</text>
+<text x="684.0" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#e8e6dc" font-weight="700" letter-spacing="1.5">USE IT</text>
+<text x="684.0" y="198.0" font-family="'Source Serif 4', Georgia, serif" font-size="16" fill="#a4a9b5">the production library</text>
+<line x1="684.0" y1="220.0" x2="900.0" y2="220.0" stroke="#6b8eff" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text x="684.0" y="248.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e8e6dc">The same loop in</text>
+<text x="684.0" y="270.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e8e6dc">an agent SDK.</text>
+<line x1="932" y1="198.0" x2="954" y2="198.0" stroke="#6b8eff" stroke-width="1.4"/>
+<polygon points="962,198.0 952,193.0 952,203.0" fill="#6b8eff"/>
+<rect x="973" y="97" width="260" height="212" fill="#6b8eff" fill-opacity="0.18"/>
+<rect x="968" y="92" width="260" height="212" fill="#0d1117" stroke="#6b8eff" stroke-width="1.2"/>
+<text x="990.0" y="138.0" font-family="'VT323', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="40" fill="#6b8eff">04</text>
+<text x="990.0" y="172.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="16" fill="#e8e6dc" font-weight="700" letter-spacing="1.5">SHIP IT</text>
+<text x="990.0" y="198.0" font-family="'Source Serif 4', Georgia, serif" font-size="16" fill="#a4a9b5">an artifact you keep</text>
+<line x1="990.0" y1="220.0" x2="1206.0" y2="220.0" stroke="#6b8eff" stroke-width="0.8" stroke-dasharray="3 3" stroke-opacity="0.6"/>
+<text x="990.0" y="248.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e8e6dc">skill-agent-loop.md,</text>
+<text x="990.0" y="270.0" font-family="'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="14" fill="#e8e6dc">ready for your agent.</text>
+</svg>

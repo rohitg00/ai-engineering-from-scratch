@@ -15,11 +15,17 @@
 
 Реалізуйте внутрішні механізми моделей, пошукові конвеєри та середовища виконання агентів. Тестуйте їх, досліджуйте збої та зберігайте код і результати оцінювання.
 
-**[Почати навчання](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Виберіть шлях](#learning-routes)** · **[Спробуйте лабораторну роботу](#interactive-lab)** · **[Створіть проєкт](#project-challenges)** · **[Переглянути програму](#contents)**
+**[Почати навчання](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Виберіть шлях](#learning-routes)** · **[Спробуйте лабораторну роботу](#interactive-lab)** · **[Створіть проєкт](#project-challenges)** · **[Переглянути програму](#contents)**
 
 Безкоштовно, з відкритим кодом, за ліцензією MIT. Навчайтеся на вебсайті, з агентом програмування або запускаючи код локально.
 
 > 542 уроків. 20 етапів. Python, TypeScript, Rust, Julia, Go.
+
+Перетворіть свого агента для програмування на наставника однією командою:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Ліцензія MIT"></a>
@@ -48,6 +54,29 @@
   <sub><span>Ваша підтримка зберігає кожен урок безкоштовним і з відкритим кодом.</span> <a href="#supporters">Переглянути всіх, хто підтримує проєкт</a> · <a href="../../SPONSORS.md">Стати спонсором</a></sub>
 </p>
 
+## Навіщо створювати з нуля
+
+Виклик фреймворка приховує саме ту частину, що ламається. Коли втрати перетворюються на NaN або агент повторює той самий виклик інструмента, той, хто написав маленьку версію, знає, де шукати причину. У кожному уроці ви спершу пишете таку версію й запускаєте її, а потім запускаєте промислову бібліотеку на тій самій задачі та порівнюєте результати.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Один урок у чотири кроки: проблема, створення з нуля, використання промислової бібліотеки та випуск артефакту, який лишається у вас. Приклад: урок про цикл агента на етапі 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Текстова версія</summary>
+
+- **01 · ПРОБЛЕМА**: LLM повертає текст. Діяти вона не може.
+- **02 · СТВОРІТЬ**: Цикл ReAct на stdlib Python.
+- **03 · ВИКОРИСТАЙТЕ**: Той самий цикл у SDK для агентів.
+- **04 · ВИПУСТІТЬ**: skill-agent-loop.md, готовий для вашого агента.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | Маршрут | Перший урок |
 |---|---|
-| Основи моделей | [Налаштування та інструменти](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Системи на основі LLM | [Інженерія промптів](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Агенти та постачання систем | [Цикл агента](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Основи моделей | [Налаштування та інструменти](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Системи на основі LLM | [Інженерія промптів](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Агенти та постачання систем | [Цикл агента](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Порівняти кар’єрні шляхи](https://aiengineeringfromscratch.com/learning-paths.html) · [Попередні знання та час навчання](#study-guide)
 
@@ -68,7 +97,7 @@
 Двадцять початкових точок рухаються за методом градієнтного спуску на квадратичній функції втрат. Графік показує їхні положення та середні втрати після кожного оновлення.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[Змініть швидкість навчання в уроці](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Порівняйте в коді градієнтний спуск, метод імпульсу та Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Змініть швидкість навчання в уроці](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Порівняйте в коді градієнтний спуск, метод імпульсу та Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 Потрібен лише Model Context Protocol (MCP)? Використайте виклик MCP для свого хоста. Він створює `MCP-LEARNING.md` і веде єдиним маршрутом із 17 уроків: запити без стану, транспорт, двобічна робота, безпека, надійність, керування реєстром і докази відповідності протоколу. Точний порядок і контрольні точки наведено в [маніфесті Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json).
 
-Потрібні лише Agent Skills? Використайте відповідний виклик для свого хоста. Він створює `AGENT-SKILLS-LEARNING.md` і веде послідовним маршрутом із п'яти уроків: контракт, виявлення, виклик, межі пісочниці, а потім оцінювання перед випуском і переносність між реальними хостами. Почніть у вебверсії з [маршруту Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Потрібні лише Agent Skills? Використайте відповідний виклик для свого хоста. Він створює `AGENT-SKILLS-LEARNING.md` і веде послідовним маршрутом із п'яти уроків: контракт, виявлення, виклик, межі пісочниці, а потім оцінювання перед випуском і переносність між реальними хостами. Почніть у вебверсії з [маршруту Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Інсталятор перелічує хости, які може налаштувати, і запитує місце встановлення. Якщо у вас ще немає Node.js, `npx`, `python3`, підтримуваного хоста або доступного для запису каталогу, скористайтеся сайтом чи самостійно прочитайте `docs/en.md`. Так ви вивчите поняття, але докази виявлення, виклику, запуску скриптів і видалення на реальному хості залишаться неперевіреними, доки не стане доступною попередня перевірка. Читайте уроки на [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | Ваша мета | Навчайтеся на GitHub | Навчайтеся на сайті |
 |---|---|---|
-| Я новачок і хочу отримати ґрунтовну базу | [Етап 0: Налаштування та інструменти](../../phases/00-setup-and-tooling/) | [Середовище розробки](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Я знаю Python і хочу опанувати основи математики та машинного навчання | [Етап 1: Математичні основи](../../phases/01-math-foundations/) | [Інтуїтивне розуміння лінійної алгебри](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Я хочу створювати LLM-застосунки для промислової експлуатації | [Етап 11: Інженерія LLM](../../phases/11-llm-engineering/) | [Інженерія промптів](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Я хочу створювати агентів | [Етап 14: Інженерія агентів](../../phases/14-agent-engineering/) | [Цикл роботи агента](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Я хочу використовувати агентів програмування в реальних репозиторіях | [Навчальний шлях інженерії за допомогою агентів](../../learning-paths/using-coding-agents.json) | [Інженерія за допомогою агентів](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Я хочу визначити, що варто створювати, до початку реалізації | [Навчальний шлях продуктових рішень і постачання](../../learning-paths/shaping-the-build.json) | [Продуктові рішення та постачання](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Я новачок і хочу отримати ґрунтовну базу | [Етап 0: Налаштування та інструменти](../../phases/00-setup-and-tooling/) | [Середовище розробки](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Я знаю Python і хочу опанувати основи математики та машинного навчання | [Етап 1: Математичні основи](../../phases/01-math-foundations/) | [Інтуїтивне розуміння лінійної алгебри](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Я хочу створювати LLM-застосунки для промислової експлуатації | [Етап 11: Інженерія LLM](../../phases/11-llm-engineering/) | [Інженерія промптів](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Я хочу створювати агентів | [Етап 14: Інженерія агентів](../../phases/14-agent-engineering/) | [Цикл роботи агента](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Я хочу використовувати агентів програмування в реальних репозиторіях | [Навчальний шлях інженерії за допомогою агентів](../../learning-paths/using-coding-agents.json) | [Інженерія за допомогою агентів](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Я хочу визначити, що варто створювати, до початку реалізації | [Навчальний шлях продуктових рішень і постачання](../../learning-paths/shaping-the-build.json) | [Продуктові рішення та постачання](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Не знаєте, з чого почати? Скористайтеся [тьютором для визначення рівня `start-learning`](../../skills/start-learning/SKILL.md) або [посібником із попередніх знань на сайті](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | Ваша мета | Навчайтеся на GitHub | Навчайтеся на сайті |
 |---|---|---|
-| Я хочу розробляти з Model Context Protocol (MCP) | [Маршрут Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Навчальний шлях Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Я хочу писати й публікувати Agent Skills | [Спеціалізований маршрут Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Навчальний шлях Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Я хочу читати скомпільовані програми | [Маршрут зворотної розробки](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Навчальний шлях зворотної розробки](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Я хочу розробляти з Model Context Protocol (MCP) | [Маршрут Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Навчальний шлях Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Я хочу писати й публікувати Agent Skills | [Спеціалізований маршрут Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Навчальний шлях Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Я хочу читати скомпільовані програми | [Маршрут зворотної розробки](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Навчальний шлях зворотної розробки](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 Двадцять етапів спираються один на одного. Математика є фундаментом, агенти й промислова експлуатація є верхніми рівнями. Переходьте далі, якщо вже знаєте основи, але не пропускайте їх, а потім не дивуйтеся збоям нагорі.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Двадцять етапів, згрупованих у шість томів: від основ унизу до промислової експлуатації вгорі, з описом того, що ви створюєте в кожному томі." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Граф залежностей етапів</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

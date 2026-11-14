@@ -15,11 +15,17 @@
 
 Implementasikan mekanisme internal model, pipeline penelusuran, dan runtime agen. Uji semuanya, periksa kegagalan, serta simpan kode dan hasil evaluasi.
 
-**[Mulai belajar](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Pilih jalur](#learning-routes)** · **[Coba laboratorium](#interactive-lab)** · **[Bangun proyek](#project-challenges)** · **[Lihat kurikulum](#contents)**
+**[Mulai belajar](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Pilih jalur](#learning-routes)** · **[Coba laboratorium](#interactive-lab)** · **[Bangun proyek](#project-challenges)** · **[Lihat kurikulum](#contents)**
 
 Gratis, sumber terbuka, berlisensi MIT. Belajar melalui situs web, bersama agen pemrograman, atau dengan menjalankan kode lokal.
 
 > 542 pelajaran. 20 tahap. Python, TypeScript, Rust, Julia, Go.
+
+Ubah agen pemrogramanmu menjadi tutor hanya dengan satu perintah:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Lisensi MIT"></a>
@@ -48,6 +54,29 @@ Gratis, sumber terbuka, berlisensi MIT. Belajar melalui situs web, bersama agen 
   <sub><span>Dukungan Anda menjaga setiap pelajaran tetap gratis dan bersumber terbuka.</span> <a href="#supporters">Lihat semua pendukung</a> · <a href="../../SPONSORS.md">Jadilah sponsor</a></sub>
 </p>
 
+## Mengapa membangun dari nol
+
+Pemanggilan kerangka kerja menyembunyikan bagian yang rusak. Saat nilai kerugian berubah menjadi NaN atau agen mengulang pemanggilan alat yang sama, orang yang menulis versi kecilnya tahu harus mencari di mana. Setiap pelajaran memintamu menulis versi itu lebih dahulu, menjalankannya, lalu menjalankan pustaka produksi pada masalah yang sama untuk membandingkan keduanya.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Satu pelajaran dalam empat langkah: masalah, bangun dari nol, gunakan pustaka produksi, dan kirimkan artefak yang kamu simpan. Contohnya adalah pelajaran siklus agen di tahap 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Versi teks</summary>
+
+- **01 · MASALAH**: LLM mengembalikan teks. LLM tidak bisa bertindak.
+- **02 · BANGUN**: Siklus ReAct dengan stdlib Python.
+- **03 · GUNAKAN**: Siklus yang sama dalam SDK agen.
+- **04 · KIRIM**: skill-agent-loop.md, siap untuk agenmu.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Gratis, sumber terbuka, berlisensi MIT. Belajar melalui situs web, bersama agen 
 
 | Jalur | Pelajaran awal |
 |---|---|
-| Fondasi model | [Penyiapan dan perangkat](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Sistem LLM | [Rekayasa prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Agen dan penyampaian sistem | [Siklus agen](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Fondasi model | [Penyiapan dan perangkat](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Sistem LLM | [Rekayasa prompt](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Agen dan penyampaian sistem | [Siklus agen](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Bandingkan jalur karier](https://aiengineeringfromscratch.com/learning-paths.html) · [Prasyarat dan waktu belajar](#study-guide)
 
@@ -68,7 +97,7 @@ Gratis, sumber terbuka, berlisensi MIT. Belajar melalui situs web, bersama agen 
 Dua puluh titik awal mengikuti penurunan gradien pada fungsi kerugian kuadratik. Grafik menunjukkan posisi titik-titik tersebut dan rata-rata kerugian setelah setiap pembaruan.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Dua puluh titik awal mengikuti penurunan gradien pada fungsi kerugian kuadratik.
   </a>
 </p>
 
-[Sesuaikan laju pembelajaran dalam pelajaran](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Bandingkan penurunan gradien, momentum, dan Adam dalam kode](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Sesuaikan laju pembelajaran dalam pelajaran](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Bandingkan penurunan gradien, momentum, dan Adam dalam kode](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Kuis penempatan berisi sepuluh pertanyaan memetakan pengetahuan Anda ke tahap aw
 
 Hanya ingin mempelajari Model Context Protocol (MCP)? Gunakan pemanggilan MCP untuk host Anda. Pemanggilan ini membuat `MCP-LEARNING.md` dan mengikuti satu jalur berisi 17 pelajaran tentang permintaan tanpa status, transport, komunikasi dua arah, keamanan, keandalan, tata kelola registri, dan bukti kepatuhan. Urutan tepat serta titik pemeriksaannya tersedia dalam [manifes Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json).
 
-Hanya ingin mempelajari Agent Skills? Gunakan pemanggilan Agent Skills untuk host Anda. Pemanggilan ini membuat `AGENT-SKILLS-LEARNING.md` dan mengikuti satu jalur terpadu berisi lima pelajaran: kontrak, penemuan, pemanggilan, batas sandbox, lalu evaluasi rilis dan portabilitas pada host nyata. Mulai di web melalui [jalur Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Hanya ingin mempelajari Agent Skills? Gunakan pemanggilan Agent Skills untuk host Anda. Pemanggilan ini membuat `AGENT-SKILLS-LEARNING.md` dan mengikuti satu jalur terpadu berisi lima pelajaran: kontrak, penemuan, pemanggilan, batas sandbox, lalu evaluasi rilis dan portabilitas pada host nyata. Mulai di web melalui [jalur Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Pemasang menampilkan host yang dapat dikonfigurasi dan menanyakan lokasi pemasangan. Jika Anda belum memiliki Node.js, `npx`, `python3`, host yang didukung, atau lingkup yang dapat ditulis, gunakan situs web atau baca `docs/en.md` secara manual. Jalur itu mengajarkan konsep, tetapi bukti penemuan, pemanggilan, skrip, dan pencopotan pada host nyata masih harus dilengkapi setelah pemeriksaan awal dapat dijalankan. Baca pelajarannya di [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Anda tidak perlu menelusuri 542 pelajaran sebelum mulai. Pilih satu tujuan. Seti
 
 | Tujuan Anda | Belajar di GitHub | Belajar di situs web |
 |---|---|---|
-| Saya pemula dan ingin membangun dasar yang lengkap | [Tahap 0: Penyiapan dan alat](../../phases/00-setup-and-tooling/) | [Lingkungan pengembangan](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Saya menguasai Python dan ingin mempelajari dasar matematika serta ML | [Tahap 1: Dasar matematika](../../phases/01-math-foundations/) | [Intuisi aljabar linear](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Saya ingin membangun aplikasi LLM untuk penggunaan produksi | [Tahap 11: Rekayasa LLM](../../phases/11-llm-engineering/) | [Rekayasa prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Saya ingin membangun agen | [Tahap 14: Rekayasa agen](../../phases/14-agent-engineering/) | [Perulangan agen](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Saya ingin menggunakan agen pemrograman pada repositori nyata | [Jalur rekayasa berbantuan agen](../../learning-paths/using-coding-agents.json) | [Rekayasa berbantuan agen](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Saya ingin menentukan solusi yang tepat sebelum implementasi | [Jalur penilaian produk dan penyerahan hasil](../../learning-paths/shaping-the-build.json) | [Penilaian produk dan penyerahan hasil](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Saya pemula dan ingin membangun dasar yang lengkap | [Tahap 0: Penyiapan dan alat](../../phases/00-setup-and-tooling/) | [Lingkungan pengembangan](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Saya menguasai Python dan ingin mempelajari dasar matematika serta ML | [Tahap 1: Dasar matematika](../../phases/01-math-foundations/) | [Intuisi aljabar linear](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Saya ingin membangun aplikasi LLM untuk penggunaan produksi | [Tahap 11: Rekayasa LLM](../../phases/11-llm-engineering/) | [Rekayasa prompt](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Saya ingin membangun agen | [Tahap 14: Rekayasa agen](../../phases/14-agent-engineering/) | [Perulangan agen](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Saya ingin menggunakan agen pemrograman pada repositori nyata | [Jalur rekayasa berbantuan agen](../../learning-paths/using-coding-agents.json) | [Rekayasa berbantuan agen](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Saya ingin menentukan solusi yang tepat sebelum implementasi | [Jalur penilaian produk dan penyerahan hasil](../../learning-paths/shaping-the-build.json) | [Penilaian produk dan penyerahan hasil](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Belum tahu harus mulai dari mana? Gunakan [tutor penempatan `start-learning`](../../skills/start-learning/SKILL.md) atau [panduan prasyarat di situs web](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Bandingkan empat bidang inti dan enam jalur karier di [Jalur Pembelajaran Rekaya
 
 | Tujuan Anda | Belajar di GitHub | Belajar di situs web |
 |---|---|---|
-| Saya ingin membangun dengan Model Context Protocol (MCP) | [Rute Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Jalur Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Saya ingin menulis dan merilis Agent Skills | [Rute khusus Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Jalur Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Saya ingin membaca program terkompilasi | [Rute khusus rekayasa balik](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Jalur rekayasa balik](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Saya ingin membangun dengan Model Context Protocol (MCP) | [Rute Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Jalur Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Saya ingin menulis dan merilis Agent Skills | [Rute khusus Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Jalur Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Saya ingin membaca program terkompilasi | [Rute khusus rekayasa balik](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Jalur rekayasa balik](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Bandingkan empat bidang inti dan enam jalur karier di [Jalur Pembelajaran Rekaya
 
 Dua puluh tahap saling bertumpu. Matematika adalah fondasinya. Agen dan produksi berada di puncaknya. Lewati tahap awal jika Anda sudah memahami lapisan bawah, tetapi jangan melewatinya lalu heran ketika sesuatu di lapisan atas bermasalah.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Dua puluh tahap dikelompokkan menjadi enam volume, dari fondasi di bawah hingga produksi di atas, beserta apa yang kamu bangun di setiap volume." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Grafik ketergantungan tahap</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

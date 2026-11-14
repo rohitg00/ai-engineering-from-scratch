@@ -15,11 +15,17 @@
 
 모델 내부 연산, 검색 파이프라인, 에이전트 런타임을 구현하세요. 테스트하고 실패를 분석하며 코드와 평가 결과를 보관하세요.
 
-**[학습 시작](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[학습 경로 선택](#learning-routes)** · **[실습 체험](#interactive-lab)** · **[프로젝트 만들기](#project-challenges)** · **[교육과정 둘러보기](#contents)**
+**[학습 시작](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[학습 경로 선택](#learning-routes)** · **[실습 체험](#interactive-lab)** · **[프로젝트 만들기](#project-challenges)** · **[교육과정 둘러보기](#contents)**
 
 무료이며 오픈 소스이고 MIT 라이선스로 제공됩니다. 웹사이트에서, 코딩 에이전트와 함께, 또는 로컬 코드를 실행하며 배우세요.
 
 > 542 수업. 20단계. Python, TypeScript, Rust, Julia, Go.
+
+명령어 하나로 코딩 에이전트를 튜터로 바꾸세요.
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 라이선스"></a>
@@ -48,6 +54,29 @@
   <sub><span>여러분의 후원으로 모든 레슨을 무료 오픈소스로 유지할 수 있습니다.</span> <a href="#supporters">모든 후원자 보기</a> · <a href="../../SPONSORS.md">후원자가 되세요</a></sub>
 </p>
 
+## 왜 처음부터 구현하는가
+
+프레임워크 호출은 가장 자주 깨지는 부분을 가려 버립니다. 손실이 NaN이 되거나 에이전트가 같은 도구 호출을 반복할 때, 작은 버전을 직접 작성한 사람은 어디를 봐야 하는지 압니다. 각 레슨에서는 먼저 그 작은 버전을 작성해 실행하고, 같은 문제를 프로덕션 라이브러리로 다시 실행해 둘을 비교합니다.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="한 레슨은 네 단계로 진행됩니다. 문제, 처음부터 구현, 프로덕션 라이브러리 사용, 계속 쓸 수 있는 결과물 배포. 예시는 14단계의 에이전트 루프 레슨입니다." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>텍스트 버전</summary>
+
+- **01 · 문제**: LLM은 텍스트를 반환할 뿐 행동하지 못한다.
+- **02 · 구현**: stdlib Python으로 만드는 ReAct 루프.
+- **03 · 활용**: 에이전트 SDK로 실행하는 같은 루프.
+- **04 · 배포**: skill-agent-loop.md, 에이전트가 바로 쓸 수 있는 형태.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | 경로 | 첫 수업 |
 |---|---|
-| 모델의 토대 | [환경 설정과 도구](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM 시스템 | [프롬프트 엔지니어링](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| 에이전트와 전달 | [에이전트 루프](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| 모델의 토대 | [환경 설정과 도구](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM 시스템 | [프롬프트 엔지니어링](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| 에이전트와 전달 | [에이전트 루프](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [커리어 경로 비교](https://aiengineeringfromscratch.com/learning-paths.html) · [선수 지식과 학습 시간](#study-guide)
 
@@ -68,7 +97,7 @@
 20개의 시작점이 이차 손실 함수 위에서 경사 하강법에 따라 이동합니다. 그래프는 각 업데이트 후의 위치와 평균 손실을 보여 줍니다.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[수업에서 학습률 조정](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [코드로 GD, 모멘텀, Adam 비교](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[수업에서 학습률 조정](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [코드로 GD, 모멘텀, Adam 비교](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 Model Context Protocol(MCP)만 배우려면 호스트에 맞는 MCP 호출 방법을 사용하세요. `MCP-LEARNING.md`를 만들고 무상태 요청, 전송 방식, 양방향 작업, 보안, 신뢰성, 레지스트리 거버넌스, 적합성 근거를 다루는 17개 레슨 경로를 따릅니다. 정확한 순서와 체크포인트는 [Model Context Protocol(MCP) 매니페스트](../../learning-paths/model-context-protocol.json)에 있습니다.
 
-Agent Skills만 배우려면 호스트에 맞는 Agent Skills 호출 방법을 사용하세요. `AGENT-SKILLS-LEARNING.md`를 만들고 계약, 탐색, 호출, 샌드박스 경계, 평가를 통한 출시, 실제 호스트 간 이식성을 다루는 일관된 5개 레슨 경로를 따릅니다. 웹에서는 [Agent Skills 경로](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills)에서 시작할 수 있습니다.
+Agent Skills만 배우려면 호스트에 맞는 Agent Skills 호출 방법을 사용하세요. `AGENT-SKILLS-LEARNING.md`를 만들고 계약, 탐색, 호출, 샌드박스 경계, 평가를 통한 출시, 실제 호스트 간 이식성을 다루는 일관된 5개 레슨 경로를 따릅니다. 웹에서는 [Agent Skills 경로](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills)에서 시작할 수 있습니다.
 
 설치 프로그램은 설정할 수 있는 호스트를 나열하고 설치 위치를 묻습니다. Node.js, `npx`, `python3`, 지원되는 호스트 또는 쓰기 가능한 범위가 아직 없다면 웹사이트를 이용하거나 `docs/en.md`를 직접 읽으세요. 이 경로로 개념을 익힐 수 있지만, 실제 호스트 검색, 호출, 스크립트, 제거 근거는 사전 점검을 실행할 수 있을 때까지 보류됩니다. [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)에서 레슨을 읽을 수 있습니다.
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | 목표 | GitHub에서 학습 | 웹사이트에서 학습 |
 |---|---|---|
-| 입문자로서 기초를 모두 다지고 싶습니다 | [0단계: 설정 및 도구](../../phases/00-setup-and-tooling/) | [개발 환경](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Python을 알고 있으며 수학과 머신러닝 기초를 배우고 싶습니다 | [1단계: 수학 기초](../../phases/01-math-foundations/) | [선형대수 직관](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| 프로덕션용 LLM 애플리케이션을 만들고 싶습니다 | [11단계: LLM 엔지니어링](../../phases/11-llm-engineering/) | [프롬프트 엔지니어링](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| 에이전트를 만들고 싶습니다 | [14단계: 에이전트 엔지니어링](../../phases/14-agent-engineering/) | [에이전트 루프](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| 실제 저장소에서 코딩 에이전트를 사용하고 싶습니다 | [에이전트 지원 엔지니어링 학습 경로](../../learning-paths/using-coding-agents.json) | [에이전트 지원 엔지니어링](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| 구현 전에 무엇을 만들지 올바르게 판단하고 싶습니다 | [제품 판단 및 전달 학습 경로](../../learning-paths/shaping-the-build.json) | [제품 판단 및 전달](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| 입문자로서 기초를 모두 다지고 싶습니다 | [0단계: 설정 및 도구](../../phases/00-setup-and-tooling/) | [개발 환경](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Python을 알고 있으며 수학과 머신러닝 기초를 배우고 싶습니다 | [1단계: 수학 기초](../../phases/01-math-foundations/) | [선형대수 직관](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| 프로덕션용 LLM 애플리케이션을 만들고 싶습니다 | [11단계: LLM 엔지니어링](../../phases/11-llm-engineering/) | [프롬프트 엔지니어링](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| 에이전트를 만들고 싶습니다 | [14단계: 에이전트 엔지니어링](../../phases/14-agent-engineering/) | [에이전트 루프](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| 실제 저장소에서 코딩 에이전트를 사용하고 싶습니다 | [에이전트 지원 엔지니어링 학습 경로](../../learning-paths/using-coding-agents.json) | [에이전트 지원 엔지니어링](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| 구현 전에 무엇을 만들지 올바르게 판단하고 싶습니다 | [제품 판단 및 전달 학습 경로](../../learning-paths/shaping-the-build.json) | [제품 판단 및 전달](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 어디서 시작해야 할지 모르겠다면 [`start-learning` 수준 진단 튜터](../../skills/start-learning/SKILL.md) 또는 [웹사이트 사전 요건 안내](https://aiengineeringfromscratch.com/prereqs.html)를 이용하세요.
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | 목표 | GitHub에서 학습 | 웹사이트에서 학습 |
 |---|---|---|
-| Model Context Protocol(MCP)로 구축하고 싶습니다 | [Model Context Protocol(MCP) 학습 경로](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol(MCP) 경로](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Agent Skills를 작성하고 배포하고 싶습니다 | [집중 Agent Skills 학습 경로](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 경로](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| 컴파일된 프로그램을 읽고 싶습니다 | [집중 리버스 엔지니어링 학습 경로](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [리버스 엔지니어링 경로](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Model Context Protocol(MCP)로 구축하고 싶습니다 | [Model Context Protocol(MCP) 학습 경로](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol(MCP) 경로](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Agent Skills를 작성하고 배포하고 싶습니다 | [집중 Agent Skills 학습 경로](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 경로](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| 컴파일된 프로그램을 읽고 싶습니다 | [집중 리버스 엔지니어링 학습 경로](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [리버스 엔지니어링 경로](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 20개 단계가 차곡차곡 쌓입니다. 수학이 기초이고 에이전트와 프로덕션이 꼭대기입니다. 아래 단계를 이미 알고 있다면 앞부분을 건너뛰어도 됩니다. 다만 기초를 건너뛰고 나서 상위 단계가 왜 고장 나는지 고민하지는 마세요.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="스무 단계를 여섯 권으로 묶은 지도. 아래쪽은 기초, 위쪽은 프로덕션이며, 각 권에서 만드는 결과물을 보여 줍니다." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>단계 의존성 그래프</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 
