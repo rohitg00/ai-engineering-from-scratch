@@ -1,11 +1,11 @@
 # LangChain 101 capture kit
 
-Every listing in LangChain 101 is cut from a file in `out/`. The kit drives LangChain, LangGraph, Deep Agents, `langchain.mcp`, and the LangSmith SDK in one Python process. Where a scenario needs a model, the model is real: `ChatOllama` on `qwen3:4b-instruct-2507-q4_K_M`. No scenario uses a fake or scripted chat model.
+Every listing in LangChain 101 is cut from a file in `out/`. The kit drives LangChain, LangGraph, Deep Agents, `langchain.mcp`, and the LangSmith SDK in one Python process. Where a scenario needs a model, the model is real: `ChatOllama` on `qwen3:4b-instruct-2507-q4_K_M`, and `OllamaEmbeddings` on `nomic-embed-text` for embeddings. No scenario uses a fake or scripted chat model, or a fake embedding.
 
 The scenarios come in two kinds.
 
-- **Model-free captures** call no model: versions, messages, tool schemas, graph structure, durability, interrupts on a plain graph, the store, reducers, the functional API, subgraphs, error handlers, the recursion limit, and the splitter. They are deterministic, and `--check` runs them again and compares byte for byte.
-- **Recorded captures** call the model. Each file has a `Recorded on ...` line under its title with the date, the machine, the Ollama version, the models that answered, and the `ChatOllama` settings. A model can answer in a different way on a new run, so `--check` does not run them again. It checks the structure that must hold in each stored file instead, and prints one `skipped:` line.
+- **Model-free captures** call no model: versions, messages, tool schemas, graph structure, durability, interrupts on a plain graph, reducers, the functional API, subgraphs, error handlers, and the recursion limit. They are deterministic, and `--check` runs them again and compares byte for byte.
+- **Recorded captures** call a model: the chat model, the embedding model, or both. Each file has a `Recorded on ...` line under its title with the date, the machine, the Ollama version, the models that answered, and the `ChatOllama` settings when a chat model answered. A file where the embedding model answered says `OllamaEmbeddings settings: none beyond the model name.` A model can answer in a different way on a new run, so `--check` does not run them again. It checks the structure that must hold in each stored file instead, and prints one `skipped:` line.
 
 ```bash
 python3 capture/run.py                # writes every file in capture/out/; needs Ollama
@@ -14,7 +14,7 @@ python3 capture/run.py --check        # model-free: byte for byte; recorded: str
 python3 capture/run.py --check --live # also records the model scenarios again into a temporary folder and checks their structure
 ```
 
-Run them from the manual directory. `--check` prints `ok: N model-free files match`, `ok: M recorded files have their model line and expected structure`, and `skipped: running the M recorded scenarios again needs Ollama with qwen3:4b-instruct-2507-q4_K_M; run.py --check --live does it`. On drift it prints a diff or the missing structure, then `drift: ...`, and exits with status 1.
+Run them from the manual directory. `--check` prints `ok: N model-free files match`, `ok: M recorded files have their model line and expected structure`, and `skipped: running the M recorded scenarios again needs Ollama with qwen3:4b-instruct-2507-q4_K_M and nomic-embed-text; run.py --check --live does it`. On drift it prints a diff or the missing structure, then `drift: ...`, and exits with status 1.
 
 The structure check of a recorded file needs the `Recorded on ...` line, no `SCENARIO FAILED` and no `network attempts blocked`, and every string that `expect.py` lists for that scenario. Those strings are the facts the manual relies on: message types, tool names, error classes, and counts that the model made. They are not the model's wording.
 
@@ -33,7 +33,7 @@ You can also run the kit one scenario at a time: `python3 capture/run.py mw-hitl
 
 ## The model
 
-The recorded captures need Ollama with `qwen3:4b-instruct-2507-q4_K_M` pulled. `LC101_OLLAMA_URL` sets the server, and the default is `http://127.0.0.1:11434`. `LC101_MACHINE` sets the machine name that goes into the `Recorded on ...` line.
+The recorded captures need Ollama with `qwen3:4b-instruct-2507-q4_K_M` and `nomic-embed-text` pulled. `LC101_OLLAMA_URL` sets the server, and the default is `http://127.0.0.1:11434`. `LC101_MACHINE` sets the machine name that goes into the `Recorded on ...` line.
 
 `common.llm()` builds every chat model of the kit:
 
@@ -56,9 +56,9 @@ The failures are real too:
 - A model that fails and then works is `ChatOllama` pointed at `FlakyEndpoint` in `common.py`. It is a TCP relay on `127.0.0.1` that closes the first connections it accepts and forwards the rest to Ollama.
 - A decision model for `ModelRouterMiddleware` and `AutoModeMiddleware` is `OllamaDecisionModel` in `common.py`. LangChain ships decision models for OpenAI and Google only. The kit's model sends each question and the state to `ChatOllama` in JSON mode and turns the JSON reply into the typed answer.
 
-Every scenario that calls a model records what the model received through a callback handler, `common.Recorder`. It lists the messages of each call, cut to 80 characters, and the tools bound to the call.
+Every scenario that calls the chat model records what the model received through a callback handler, `common.Recorder`. It lists the messages of each call, cut to 80 characters, and the tools bound to the call.
 
-The two embedding scenarios use `DeterministicFakeEmbedding` from `langchain_core`, which hashes each text into a vector. It is not a model, and its scores carry no meaning. The Ollama server on the x86 server guest runs without embeddings, and no embedding model was pulled there. `33-store.txt` and `39-retrieval.txt` show the store and the vector store with it, and `47-retrieval-agent.txt` shows a real model calling a retriever that returns a chunk the hash picked.
+`common.embeddings()` builds the embedding model of the kit: `OllamaEmbeddings(model="nomic-embed-text")` from `langchain-ollama`, on the same Ollama server, with no other option set. The tag on the x86 server guest is `nomic-embed-text:latest`, id `0a109f422b47`, the same as on the Mac. A vector has 768 numbers. `33-store.txt` uses it as the index of `InMemoryStore`, `39-retrieval.txt` as the embedding of `InMemoryVectorStore`, and `47-retrieval-agent.txt` behind the retriever that Qwen3 4B calls. These three files are recorded files, because an embedding model is a model: the scores and the order of the hits come from it.
 
 ## The pin
 
@@ -78,7 +78,7 @@ The two embedding scenarios use `DeterministicFakeEmbedding` from `langchain_cor
 | langchain-ollama | 1.1.0 (`ChatOllama`, the model of every recorded capture) |
 | langchain-openai, langchain-anthropic | 1.8.0, 1.7.10 (only to build models offline in `01`) |
 | pydantic | 2.14.3 |
-| numpy | 2.5.4 (needed by `DeterministicFakeEmbedding` and `InMemoryVectorStore`) |
+| numpy | 2.5.4 (needed by `InMemoryVectorStore`, which scores with cosine similarity in NumPy) |
 
 `requirements.txt` also pins the transitive packages whose code shows up in the output: `langchain-protocol` (the v3 event shapes), `langgraph-sdk`, `fastmcp-slim`, `mcp-types`, `openai`, `anthropic`, `ollama`, `aiosqlite`, and `uuid-utils`. `00-versions.txt` records what was installed.
 
@@ -165,13 +165,13 @@ The kit binds one port, the port of `FlakyEndpoint`, and only while `12` runs.
 | `30-state-history-forks.txt` | `get_state_history`, replay from a checkpoint (the tool runs again), an `update_state` fork, `update_state(as_node="tools")` |
 | `31-durability.txt` | `sync`, `async`, `exit` with a checkpointer and the checkpoints each saves; every mode without a checkpointer, and the `sync` crash of issue #9267; `checkpoint_during` deprecated |
 | `32-interrupt-resume.txt` | `interrupt()` and `Command(resume=...)`, the node running again from the top, two interrupts in one node, `response_schema`, an interrupt with no checkpointer, a resume of a finished thread |
-| `33-store.txt` | `InMemoryStore` put, get, `list_namespaces`, prefix search, a filter, delete, an index with `DeterministicFakeEmbedding` |
+| `33-store.txt` | `InMemoryStore` put, get, `list_namespaces`, prefix search, a filter, delete, an index with `nomic-embed-text` and two queries |
 | `34-stategraph-reducers-send-command.txt` | `operator.add` reducers, `Send` fan-out, `Command(goto=...)`, a concurrent write without a reducer, `add_messages`, `MessagesState` |
 | `35-functional-api.txt` | `@entrypoint` and `@task` with an interrupt inside a task, resume, `entrypoint.final` with `previous` |
 | `36-subgraphs.txt` | a compiled subgraph as a node, `xray` Mermaid, `subgraphs=True` namespaces, an interrupt inside the subgraph |
 | `37-error-handler-timeout.txt` | `RetryPolicy` then a node `error_handler`, `set_node_defaults(error_handler=...)`, a node `timeout`, a timeout caught by a handler |
 | `38-recursion-limit.txt` | `recursion_limit=5`, the default limit (10007), `RemainingSteps` |
-| `39-retrieval.txt` | `RecursiveCharacterTextSplitter`, `DeterministicFakeEmbedding`, `InMemoryVectorStore` search, filter, delete, MMR |
+| `39-retrieval.txt` | `RecursiveCharacterTextSplitter`, `OllamaEmbeddings` with `nomic-embed-text`, `InMemoryVectorStore` search for three queries, filter, delete, MMR |
 | `40-mcp.txt` | `langchain.mcp` beta warning, `MCPAdapter.list_tools()` on an in-process FastMCP server, tool results and artifacts, an MCP tool error, a resource read through `adapter.client`, the bare-string target error |
 | `41-deep-agent.txt` | `create_deep_agent` nodes, a run with `add`, `write_file`, `ls` and a `task` subagent, `files` in state, the tools bound on each call, both system prompts |
 | `42-langsmith.txt` | `traceable` with tracing off, `tracing_context(enabled="local")` run trees through `on_end`, an error run, the requests a local trace sends when it wraps a `create_agent` run, `collect_runs` with `enabled=False`, and `evaluate(upload_results=False)` on a function, an agent, and an agent with tracing off |
@@ -179,9 +179,9 @@ The kit binds one port, the port of `FlakyEndpoint`, and only while `12` runs.
 | `44-store-agent.txt` | a tool that reads the store through `ToolRuntime`, for two users |
 | `45-subgraph-agent.txt` | an agent as a subgraph node, with its namespaces |
 | `46-recursion-agent.txt` | a model told to call a tool forever, with `recursion_limit=6` |
-| `47-retrieval-agent.txt` | a retriever wrapped as a tool, called by the model |
+| `47-retrieval-agent.txt` | a retriever on `nomic-embed-text` wrapped as a tool, called by the model |
 
-Files `00` to `03`, `05`, and `31` to `39` are model-free. The others are recorded. `43` to `47` hold the model part of a scenario whose other part stayed model-free, so they come last.
+Files `00` to `03`, `05`, `31`, `32`, and `34` to `38` are model-free. The others are recorded. `33` and `39` call only the embedding model. `43` to `47` hold the model part of a scenario whose other part stayed model-free, so they come last.
 
 ## The lab recordings
 
@@ -193,7 +193,6 @@ Files `00` to `03`, `05`, and `31` to `39` are model-free. The others are record
 - `ProviderToolSearchMiddleware` with a real deferral. It needs an Anthropic or OpenAI model, so on `ChatOllama` it raises `ValueError`.
 - `ModelRefusalMiddleware` raising. It acts on a `refusal` content block, and Ollama never sends one. Qwen3 4B refused in plain text, which passes through.
 - A validation error from a real model. Asked for a decimal in an integer field, a word for a number, or a value outside a range, Qwen3 4B sent valid arguments or refused in text. The bad arguments in the kit come from the shell tool in `19`.
-- Real embeddings. The x86 server guest runs Ollama without embeddings and has no embedding model, so `33`, `39`, and `47` use `DeterministicFakeEmbedding`.
 - LangSmith tracing to a server, datasets, experiments that upload, and the prompt hub. The kit sends traces to a client with a recording HTTP session, runs `evaluate` with `upload_results=False`, and records what a client would have sent.
 - `langchain.mcp` over stdio and HTTP transports, elicitation, and OAuth. The kit uses the in-process transport only.
 - `PostgresSaver` and `PostgresStore`. They need a running Postgres.

@@ -68,27 +68,27 @@ The splitter cuts at a space, so a chunk ends in the middle of a sentence. The f
 
 **Embedding model:** an object with `embed_query` and `embed_documents` that turns text into a vector of numbers.
 
-The kit uses `DeterministicFakeEmbedding` from core. It seeds a random vector with a hash of the whole text, so the same text gives the same vector on every run {{code libs/core/langchain_core/embeddings/fake.py}}. Its docstring says to use it only in tests.
+The kit uses `OllamaEmbeddings(model="nomic-embed-text")` from `langchain-ollama`, on the Ollama server of the x86 server guest. The embedding model is a real model, so the files that use it are recorded files, with the model on the line under the title.
 
 ```listing
-title: the fake embedding is deterministic
+title: one vector from nomic-embed-text
 source: capture/out/39-retrieval.txt
 lang: json
 ---
 {
-  "dims": 16,
+  "dims": 768,
   "first 4": [
-    0.232256,
-    -0.62581,
-    -0.560658,
-    -0.015838
+    0.051004,
+    -0.024986,
+    -0.178736,
+    0.040572
   ],
   "repeat equal": true,
   "other text equal": false
 }
 ```
 
-The fake has no idea of meaning. Two texts that mean the same thing get unrelated vectors. So the kit can show the API and the shapes, and it cannot show search quality.
+Each vector has 768 numbers. The same text gave the same vector twice in the run, and another text gave another vector. `run.py --check` does not compare these numbers, because a model made them. It checks that the file has its model line and the strings that `expect.py` lists.
 
 ### The vector store
 
@@ -109,9 +109,9 @@ query 'A checkpointer saves graph state after each step. InMemorySaver keeps it 
 …
 ```
 
-A query with other words, such as `Where does long-term memory live?`, returned `doc-2` with 0.317695 and `doc-4` with a negative score. With a real embedding model, the hits about the store would rank first. Here the scores carry no meaning, and the kit says so in the file.
+The next hit, `doc-2`, scored 0.556317. It is the last chunk of the same file. A query with other words, `Where does long-term memory live?`, returned `doc-3`, the first chunk of `stores.md`, with 0.683653, and `doc-1` from `checkpoints.md` with 0.455558. The query `What does a checkpointer do?` returned `doc-0` with 0.68785, and `doc-2` with 0.507239.
 
-`InMemoryVectorStore` takes a Python function as its `filter`. The kit kept only the chunks of `stores.md` and got `doc-4` and `doc-3`. A partner store takes its own filter syntax, so a filter does not move from one store to another. `delete(["doc-0"])` removed the first chunk, and `get_by_ids` then returned only `doc-1`. `max_marginal_relevance_search` returned `doc-5` and `doc-4`.
+`InMemoryVectorStore` takes a Python function as its `filter`. The kit kept only the chunks of `stores.md` and got `doc-3` and `doc-4`. A partner store takes its own filter syntax, so a filter does not move from one store to another. `delete(["doc-0"])` removed the first chunk, and `get_by_ids` then returned only `doc-1`. `max_marginal_relevance_search` for `memory` returned `doc-3` and `doc-2`.
 
 ## A retriever as a tool
 
@@ -141,14 +141,14 @@ lang: json
 note: The ToolMessage only. The model call before it and the answer after it are cut.
 ---
     "type": "ToolMessage",
-    "content": "[stores.md] A store holds long-term memory across threads. Items live under a namespace",
+    "content": "[checkpoints.md] A checkpointer saves graph state after each step. InMemorySaver keeps it in a",
     "name": "search_docs",
     "id": "<uuid-3>",
     "tool_call_id": "<uuid-2>",
     "status": "success"
 ```
 
-The hash embedding picked a chunk about stores, which does not answer the question. The model said so: `A checkpointer does not have a defined role in the provided documentation.`. So a test with a fake embedding checks that the tool, the store, and the agent work together. A real embedding model must judge the search.
+The retriever returned chunk 0 of 7, the first chunk of `checkpoints.md`, which answers the question. The model answered from it: `A checkpointer saves the graph state after each step. For example, the InMemorySaver keeps the state in memory.`. With `k=1` the model saw one chunk. The chunk stops at `keeps it in a`, and the words `dict` and `SqliteSaver` are in `doc-1`, which the model did not get. So the answer is right, and it is only as complete as the one chunk.
 
 Put the source into the text of the result. The model sees only the content of the `ToolMessage`, so it can cite a file only when the tool writes the name into that text. Core also has `create_retriever_tool`, which builds the same kind of tool from a retriever, a name, and a description {{code libs/core/langchain_core/tools/retriever.py}}. With `response_format="content_and_artifact"`, it also keeps the documents as the artifact of the message.
 
@@ -158,8 +158,8 @@ Index time and query time do different work. The kit embeds every chunk once, be
 - Import the retrieval base classes from langchain_core and the splitters from langchain_text_splitters.
 - Look for a partner package for your store before you install langchain-community.
 - Give an agent a retriever through a tool, with the source written into the result text.
-- Test a retrieval tool with DeterministicFakeEmbedding, and judge search quality only with a real model.
+- Read which chunk the retriever returned before you judge the answer of the model.
 - Embed the corpus once at index time, outside the agent run.
 ```
 
-Sources: capture/s_integrations.py, capture/out/39-retrieval.txt, capture/out/47-retrieval-agent.txt; libs/core/langchain_core/retrievers.py, libs/core/langchain_core/vectorstores/in_memory.py, libs/core/langchain_core/vectorstores/base.py, libs/core/langchain_core/embeddings/fake.py, libs/core/langchain_core/tools/retriever.py, libs/langchain_v1/langchain/embeddings/__init__.py, and libs/partners at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/langchain-v1, oss/python/deepagents/retrieval, oss/python/langchain/knowledge-base); the archived langchain-community repository, read 2026-11-14.
+Sources: capture/s_integrations.py, capture/out/39-retrieval.txt, capture/out/47-retrieval-agent.txt; libs/core/langchain_core/retrievers.py, libs/core/langchain_core/vectorstores/in_memory.py, libs/core/langchain_core/vectorstores/base.py, libs/core/langchain_core/tools/retriever.py, libs/langchain_v1/langchain/embeddings/__init__.py, and libs/partners at langchain==1.5.0; libs/partners/ollama/langchain_ollama/embeddings.py at langchain-ollama 1.1.0; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/langchain-v1, oss/python/deepagents/retrieval, oss/python/langchain/knowledge-base); the archived langchain-community repository, read 2026-11-14.

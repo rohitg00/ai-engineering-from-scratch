@@ -5,11 +5,10 @@ import requests
 
 from langchain.agents import create_agent
 from langchain.tools import tool
-from langchain_core.embeddings import DeterministicFakeEmbedding
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from common import add, ask, llm, recorder
+from common import add, ask, embeddings, llm, recorder
 
 CORPUS = {
     "checkpoints.md": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a dict. SqliteSaver writes it to a file, so a thread survives a restart.",
@@ -21,7 +20,7 @@ CORPUS = {
 def corpus_store():
     splitter = RecursiveCharacterTextSplitter(chunk_size=80, chunk_overlap=20)
     docs = splitter.create_documents(list(CORPUS.values()), metadatas=[{"source": name} for name in CORPUS])
-    store = InMemoryVectorStore(embedding=DeterministicFakeEmbedding(size=16))
+    store = InMemoryVectorStore(embedding=embeddings())
     store.add_documents(docs, ids=[f"doc-{i}" for i in range(len(docs))])
     return docs, store
 
@@ -31,18 +30,17 @@ def retrieval(cap):
     docs = splitter.create_documents(list(CORPUS.values()), metadatas=[{"source": name} for name in CORPUS])
     cap.section("RecursiveCharacterTextSplitter(chunk_size=80, chunk_overlap=20)")
     cap.json([{"source": d.metadata["source"], "chars": len(d.page_content), "text": d.page_content} for d in docs])
-    emb = DeterministicFakeEmbedding(size=16)
-    cap.section("DeterministicFakeEmbedding(size=16): the same text gives the same vector")
+    emb = embeddings()
+    cap.section("OllamaEmbeddings(model='nomic-embed-text'): one vector per text")
     first = emb.embed_query("checkpointer")
     cap.json({"dims": len(first), "first 4": [round(x, 6) for x in first[:4]], "repeat equal": first == emb.embed_query("checkpointer"), "other text equal": first == emb.embed_query("store")})
     store = InMemoryVectorStore(embedding=emb)
     ids = store.add_documents(docs, ids=[f"doc-{i}" for i in range(len(docs))])
     cap.section("InMemoryVectorStore.similarity_search_with_score")
     cap.json(ids, "ids")
-    for query in (docs[0].page_content, "Where does long-term memory live?"):
+    for query in (docs[0].page_content, "Where does long-term memory live?", "What does a checkpointer do?"):
         hits = store.similarity_search_with_score(query, k=2)
         cap.json([{"id": d.id, "source": d.metadata["source"], "score": round(s, 6), "text": d.page_content} for d, s in hits], f"query {query!r}")
-    cap.text("The fake embedding hashes the whole text, so only an exact text match scores 1.0. Scores for other queries carry no meaning.")
     cap.section("a metadata filter")
     hits = store.similarity_search("memory", k=5, filter=lambda d: d.metadata["source"] == "stores.md")
     cap.json([d.id for d in hits])
@@ -335,7 +333,7 @@ def langsmith_evaluate(cap, client, session):
 
 
 SCENARIOS = [
-    ("retrieval", "Splitter, DeterministicFakeEmbedding, and InMemoryVectorStore", retrieval, False),
+    ("retrieval", "Splitter, OllamaEmbeddings, and InMemoryVectorStore", retrieval, True),
     ("mcp", "langchain.mcp with an in-process FastMCP server", mcp, True),
     ("deep-agent", "A Deep Agents 0.7 run", deep_agent, True),
     ("langsmith", "langsmith traceable with tracing off and local run trees", langsmith_trace, True),

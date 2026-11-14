@@ -1,5 +1,7 @@
 # InMemoryStore: put, search, and namespaces
 
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: nomic-embed-text. OllamaEmbeddings settings: none beyond the model name.
+
 ## put, get, and namespaces
 
 get:
@@ -122,8 +124,9 @@ search(('users',), filter=...):
 get after delete:
 null
 
-## semantic search with an index and DeterministicFakeEmbedding
+## semantic search with an index and OllamaEmbeddings(model='nomic-embed-text')
 
+query 'works in Pune':
 [
   {
     "key": "b",
@@ -133,6 +136,20 @@ null
   {
     "key": "c",
     "text": "likes tea",
-    "score": 0.048932
+    "score": 0.350555
+  }
+]
+
+query "Which city is Ada's office in?":
+[
+  {
+    "key": "b",
+    "text": "works in Pune",
+    "score": 0.484968
+  },
+  {
+    "key": "c",
+    "text": "likes tea",
+    "score": 0.386065
   }
 ]

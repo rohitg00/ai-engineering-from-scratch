@@ -6,7 +6,6 @@ from typing import Annotated, TypedDict
 
 from langchain.agents import create_agent
 from langchain.tools import ToolRuntime, tool
-from langchain_core.embeddings import DeterministicFakeEmbedding
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.graph import END, START, StateGraph
@@ -14,7 +13,7 @@ from langgraph.store.memory import InMemoryStore
 from langgraph.types import Command, interrupt
 from pydantic import BaseModel
 
-from common import add, ask, llm, recorder, thread
+from common import add, ask, embeddings, llm, recorder, thread
 
 
 def transcript(messages):
@@ -278,12 +277,13 @@ def store(cap):
     cap.section("delete")
     st.delete(("users", "ada", "memories"), "m2")
     cap.json(st.get(("users", "ada", "memories"), "m2"), "get after delete")
-    cap.section("semantic search with an index and DeterministicFakeEmbedding")
-    indexed = InMemoryStore(index={"embed": DeterministicFakeEmbedding(size=8), "dims": 8, "fields": ["text"]})
+    cap.section("semantic search with an index and OllamaEmbeddings(model='nomic-embed-text')")
+    indexed = InMemoryStore(index={"embed": embeddings(), "dims": 768, "fields": ["text"]})
     for key, text in (("a", "prefers short answers"), ("b", "works in Pune"), ("c", "likes tea")):
         indexed.put(("ada",), key, {"text": text})
-    hits = indexed.search(("ada",), query="works in Pune", limit=2)
-    cap.json([{"key": h.key, "text": h.value["text"], "score": round(h.score, 6)} for h in hits])
+    for query in ("works in Pune", "Which city is Ada's office in?"):
+        hits = indexed.search(("ada",), query=query, limit=2)
+        cap.json([{"key": h.key, "text": h.value["text"], "score": round(h.score, 6)} for h in hits], f"query {query!r}")
 
 
 def store_agent(cap):
@@ -311,7 +311,7 @@ SCENARIOS = [
     ("state-history-forks", "State history, replay, and update_state forks", history, True),
     ("durability", "Durability modes, and sync without a checkpointer", durability, False),
     ("interrupt-resume", "interrupt() and Command(resume=...)", interrupts, False),
-    ("store", "InMemoryStore: put, search, and namespaces", store, False),
+    ("store", "InMemoryStore: put, search, and namespaces", store, True),
 ]
 
 LATE = [

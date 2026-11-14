@@ -87,10 +87,10 @@ No file holds a key, a token, or the name of a person. The only host names are `
 
 [The capture kit](manuals/langchain-101/capture) drives the stack in one Python process, with no keys. It writes 49 files to `capture/out/`, and every listing in the manual is cut from one of them.
 
-- **14 model-free files.** They call no model. They cover the versions, the messages, the tool schemas, and the graph structure. They also cover durability, interrupts, the store, reducers, the functional API, subgraphs, error handlers, the recursion limit, and retrieval. They give the same bytes on every run.
-- **34 recorded files and one sidecar.** They call `ChatOllama` on `qwen3:4b-instruct-2507-q4_K_M`, with temperature 0, seed 42, `num_ctx` 16384, and `num_predict` 512. We recorded them on the x86 server guest, on CPU, on 2026-11-14. The first line under each title names the model, the settings, the machine, and the date.
+- **12 model-free files.** They call no model. They cover the versions, the messages, the tool schemas, and the graph structure. They also cover durability, interrupts, reducers, the functional API, subgraphs, error handlers, and the recursion limit. They give the same bytes on every run.
+- **36 recorded files and one sidecar.** 34 of them call `ChatOllama` on `qwen3:4b-instruct-2507-q4_K_M`, with temperature 0, seed 42, `num_ctx` 16384, and `num_predict` 512. The store, retrieval, and retrieval agent files call `OllamaEmbeddings` on `nomic-embed-text`, and two of them call no chat model. We recorded them on the x86 server guest, on CPU, on 2026-11-14. The first line under each title names the models, the settings, the machine, and the date.
 
-No scenario uses a fake chat model. A failure comes from a tool that raises, from a port where nothing listens, or from a relay that drops connections. The decision middleware asks Qwen3 4B through a small adapter of the kit. The two embedding scenarios hash the text with `DeterministicFakeEmbedding`, because the guest has no embedding model.
+No scenario uses a fake chat model. A failure comes from a tool that raises, from a port where nothing listens, or from a relay that drops connections. The decision middleware asks Qwen3 4B through a small adapter of the kit. No scenario uses a fake embedding. The store and retrieval scenarios embed with `nomic-embed-text` on the Ollama server of the guest.
 
 ```bash
 cd manuals/langchain-101

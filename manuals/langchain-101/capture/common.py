@@ -8,17 +8,19 @@ from langchain.tools import ToolRuntime, tool
 from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.decisions import BaseDecisionModel, ClassifierResponse
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
-from langchain_ollama import ChatOllama
+from langchain_ollama import ChatOllama, OllamaEmbeddings
 from pydantic import Field
 
 MODEL = "qwen3:4b-instruct-2507-q4_K_M"
 REASONING_MODEL = "qwen3:8b"
+EMBED_MODEL = "nomic-embed-text"
 SEED = 42
 NUM_CTX = 16384
 NUM_PREDICT = 512
 OLLAMA_URL = os.environ.get("LC101_OLLAMA_URL", "http://127.0.0.1:11434")
 DEAD_URL = "http://127.0.0.1:9"
 USED = set()
+EMBEDDED = set()
 
 ASK = {"messages": [{"role": "user", "content": "What is 2 + 3?"}]}
 
@@ -97,6 +99,11 @@ def llm(label="agent", model=MODEL, base_url=None, sink=None, **kwargs):
         client_kwargs={"timeout": 900},
         **kwargs,
     )
+
+
+def embeddings():
+    EMBEDDED.add(EMBED_MODEL)
+    return OllamaEmbeddings(model=EMBED_MODEL, base_url=OLLAMA_URL)
 
 
 def dead(label):

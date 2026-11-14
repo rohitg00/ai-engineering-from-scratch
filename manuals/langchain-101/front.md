@@ -83,7 +83,7 @@ capture/.venv/bin/pip install -r capture/requirements.txt
 python3 capture/run.py --check
 ```
 
-The check runs the 14 model-free scenarios again into a temporary folder and compares each file with `capture/out/`. It checks that each of the 34 recorded files names its model. It also checks the structure that the manual relies on, such as the message types and the tool names. It then rebuilds the lab summaries from the raw recordings and compares them too. It does not call a model, so it prints one `skipped:` line for the recorded scenarios. `python3 capture/run.py --check --live` records them again when Ollama runs on your machine.
+The check runs the 12 model-free scenarios again into a temporary folder and compares each file with `capture/out/`. It checks that each of the 36 recorded files names its model. It also checks the structure that the manual relies on, such as the message types and the tool names. It then rebuilds the lab summaries from the raw recordings and compares them too. It does not call a model, so it prints one `skipped:` line for the recorded scenarios. `python3 capture/run.py --check --live` records them again when Ollama runs on your machine.
 
 This is the scenario behind [section 1.2](#s-one-create-agent-run). It builds an agent with one tool and a system prompt, and it asks one question:
 

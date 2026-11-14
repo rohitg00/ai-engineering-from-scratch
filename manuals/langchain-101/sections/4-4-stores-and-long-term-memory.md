@@ -77,7 +77,9 @@ search(('users', 'ada')):
     "theme",
 ```
 
-The stores page adds that the order of the results depends on the backend {{docs oss/python/langgraph/stores}}. A `filter` matches values inside the prefix, and `delete` removes one item, so `get` returns `null` after it. A store with an `index` adds semantic search over the fields that you name. With `DeterministicFakeEmbedding`, a query for `works in Pune` scored 1.0 on its own item and 0.048932 on the next one. [Figure](#fig-4-4) draws the tree that these calls walk.
+The stores page adds that the order of the results depends on the backend {{docs oss/python/langgraph/stores}}. A `filter` matches values inside the prefix, and `delete` removes one item, so `get` returns `null` after it. [Figure](#fig-4-4) draws the tree that these calls walk.
+
+A store with an `index` adds semantic search over the fields that you name. The kit indexed three items of `ada` with `nomic-embed-text` on Ollama, with `dims` 768. A query for `works in Pune` scored 1.0 on its own item and 0.350555 on `likes tea`. The question `Which city is Ada's office in?` names no item, and it still ranked `works in Pune` first, with 0.484968, and `likes tea` second, with 0.386065.
 
 ```figure
 id: fig-4-4

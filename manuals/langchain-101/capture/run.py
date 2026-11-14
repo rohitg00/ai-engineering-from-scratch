@@ -22,6 +22,7 @@ HERE = os.path.dirname(os.path.realpath(__file__))
 OUT = os.path.join(HERE, "out")
 sys.path.insert(0, HERE)
 MODEL_NAME = "qwen3:4b-instruct-2507-q4_K_M"
+EMBED_NAME = "nomic-embed-text"
 
 
 def pins():
@@ -82,8 +83,13 @@ def recorded_line():
     day = datetime.datetime.now(datetime.timezone.utc).date().isoformat()
 
     def line():
-        models = ", ".join(sorted(common.USED)) or "no model call"
-        return f"Recorded on {day} on {machine} with Ollama {version} on CPU. Models: {models}. ChatOllama settings: temperature 0, seed {common.SEED}, num_ctx {common.NUM_CTX}, num_predict {common.NUM_PREDICT}."
+        models = ", ".join(sorted(common.USED | common.EMBEDDED)) or "no model call"
+        text = f"Recorded on {day} on {machine} with Ollama {version} on CPU. Models: {models}."
+        if common.USED:
+            text += f" ChatOllama settings: temperature 0, seed {common.SEED}, num_ctx {common.NUM_CTX}, num_predict {common.NUM_PREDICT}."
+        if common.EMBEDDED:
+            text += " OllamaEmbeddings settings: none beyond the model name."
+        return text
 
     return line
 
@@ -103,6 +109,7 @@ def capture(out_dir, only=None, with_model=True, without_model=True):
             continue
         cap = Capture(out_dir, stem, title)
         common.USED.clear()
+        common.EMBEDDED.clear()
         started = time.monotonic()
         try:
             with cap.warnings():
@@ -121,7 +128,8 @@ def capture(out_dir, only=None, with_model=True, without_model=True):
     return written, failed
 
 
-RECORDED = re.compile(r"^Recorded on \d{4}-\d{2}-\d{2} on .+ with Ollama \S+ on CPU\. Models: .+\. ChatOllama settings: temperature 0, seed \d+, num_ctx \d+, num_predict \d+\.$", re.M)
+RECORDED = re.compile(r"^Recorded on \d{4}-\d{2}-\d{2} on .+ with Ollama \S+ on CPU\. Models: [^.]+(?:\.[^ .][^.]*)*\.(?: ChatOllama settings: temperature 0, seed \d+, num_ctx \d+, num_predict \d+\.)?(?: OllamaEmbeddings settings: none beyond the model name\.)?$", re.M)
+SETTINGS = ("ChatOllama settings:", "OllamaEmbeddings settings:")
 
 
 def structure(folder, stems):
@@ -134,7 +142,8 @@ def structure(folder, stems):
             continue
         with open(path, encoding="utf-8") as handle:
             body = handle.read()
-        if not RECORDED.search(body):
+        found = RECORDED.search(body)
+        if not found or not any(name in found.group(0) for name in SETTINGS):
             problems.append(f"{stem}.txt: no 'Recorded on ...' line with the model and its settings")
         for bad in ("SCENARIO FAILED", "network attempts blocked"):
             if bad in body:
@@ -183,7 +192,7 @@ def check(live):
     if live:
         print(f"ok: {len(recorded)} recorded scenarios ran again against Ollama and kept that structure")
     else:
-        print(f"skipped: running the {len(recorded)} recorded scenarios again needs Ollama with {MODEL_NAME}; run.py --check --live does it")
+        print(f"skipped: running the {len(recorded)} recorded scenarios again needs Ollama with {MODEL_NAME} and {EMBED_NAME}; run.py --check --live does it")
     return 0
 
 

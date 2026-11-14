@@ -37,5 +37,7 @@ EXPECT = {
     "store-agent": ["user ada: tool returned ['prefers short answers']", "user grace: tool returned ['prefers long answers']"],
     "subgraph-agent": ['"adder:', '"adder"'],
     "recursion-agent": ["9999", "GraphRecursionError: Recursion limit of 6 reached"],
-    "retrieval-agent": ['"name": "search_docs"', "the hit is chunk"],
+    "store": ['"__type__": "Item"', "list_namespaces(max_depth=2):", "search(('users', 'ada')):", "get after delete:\nnull", "semantic search with an index and OllamaEmbeddings(model='nomic-embed-text')", "query 'works in Pune':", '"text": "works in Pune"'],
+    "retrieval": ['"chars": 77', '"dims": 768', '"repeat equal": true', '"other text equal": false', "query 'Where does long-term memory live?':", "query 'What does a checkpointer do?':", "## a metadata filter", "## max_marginal_relevance_search"],
+    "retrieval-agent": ['"name": "search_docs"', '"type": "ToolMessage"', "[checkpoints.md]", "the hit is chunk"],
 }
