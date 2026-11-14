@@ -15,11 +15,17 @@
 
 Υλοποίησε εσωτερικούς μηχανισμούς μοντέλων, ροές ανάκτησης και περιβάλλοντα εκτέλεσης πρακτόρων. Δοκίμασέ τα, εξέτασε αστοχίες και κράτησε τον κώδικα και τα αποτελέσματα αξιολόγησης.
 
-**[Ξεκινήστε τη μάθηση](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Επίλεξε διαδρομή](#learning-routes)** · **[Δοκίμασε ένα εργαστήριο](#interactive-lab)** · **[Υλοποίησε ένα έργο](#project-challenges)** · **[Περιηγηθείτε στο πρόγραμμα](#contents)**
+**[Ξεκινήστε τη μάθηση](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Επίλεξε διαδρομή](#learning-routes)** · **[Δοκίμασε ένα εργαστήριο](#interactive-lab)** · **[Υλοποίησε ένα έργο](#project-challenges)** · **[Περιηγηθείτε στο πρόγραμμα](#contents)**
 
 Δωρεάν, ανοικτού κώδικα, με άδεια MIT. Μάθετε στον ιστότοπο, με έναν πράκτορα προγραμματισμού ή εκτελώντας κώδικα τοπικά.
 
 > 542 μαθήματα. 20 φάσεις. Python, TypeScript, Rust, Julia, Go.
+
+Μετατρέψε τον πράκτορα προγραμματισμού σου σε δάσκαλο με μία εντολή:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Άδεια MIT"></a>
@@ -48,6 +54,29 @@
   <sub><span>Η υποστήριξή σου κρατά κάθε μάθημα δωρεάν και με ανοιχτό κώδικα.</span> <a href="#supporters">Δες όλους τους υποστηρικτές</a> · <a href="../../SPONSORS.md">Γίνε χορηγός</a></sub>
 </p>
 
+## Γιατί να χτίσεις από το μηδέν
+
+Μια κλήση σε πλαίσιο εργασίας κρύβει το σημείο που χαλάει. Όταν η απώλεια γίνεται NaN ή ένας πράκτορας επαναλαμβάνει την ίδια κλήση εργαλείου, όποιος έγραψε τη μικρή έκδοση ξέρει πού να ψάξει. Σε κάθε μάθημα γράφεις πρώτα αυτή την έκδοση, την εκτελείς και έπειτα εκτελείς την παραγωγική βιβλιοθήκη στο ίδιο πρόβλημα για να συγκρίνεις τα δύο.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Ένα μάθημα σε τέσσερα βήματα: το πρόβλημα, χτίσε από το μηδέν, χρησιμοποίησε την παραγωγική βιβλιοθήκη και παράδωσε ένα προϊόν που κρατάς. Το παράδειγμα είναι το μάθημα για τον βρόχο του πράκτορα στη φάση 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Έκδοση κειμένου</summary>
+
+- **01 · ΤΟ ΠΡΟΒΛΗΜΑ**: Ένα LLM επιστρέφει κείμενο. Δεν μπορεί να ενεργήσει.
+- **02 · ΧΤΙΣΕ ΤΟ**: Ένας βρόχος ReAct σε stdlib Python.
+- **03 · ΧΡΗΣΙΜΟΠΟΙΗΣΕ ΤΟ**: Ο ίδιος βρόχος σε ένα SDK πράκτορα.
+- **04 · ΠΑΡΑΔΩΣΕ ΤΟ**: skill-agent-loop.md, έτοιμο για τον πράκτορά σου.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | Διαδρομή | Αρχικό μάθημα |
 |---|---|
-| Θεμέλια μοντέλων | [Ρύθμιση και εργαλεία](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Συστήματα LLM | [Σχεδίαση προτροπών](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Πράκτορες και παράδοση | [Ο βρόχος του πράκτορα](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Θεμέλια μοντέλων | [Ρύθμιση και εργαλεία](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Συστήματα LLM | [Σχεδίαση προτροπών](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Πράκτορες και παράδοση | [Ο βρόχος του πράκτορα](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Σύγκρινε επαγγελματικές διαδρομές](https://aiengineeringfromscratch.com/learning-paths.html) · [Προαπαιτούμενα και χρόνος μελέτης](#study-guide)
 
@@ -68,7 +97,7 @@
 Είκοσι αρχικά σημεία ακολουθούν κάθοδο κλίσης σε τετραγωνική συνάρτηση απώλειας. Το γράφημα δείχνει τις θέσεις τους και τη μέση απώλεια μετά από κάθε ενημέρωση.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[Ρύθμισε τον ρυθμό μάθησης στο μάθημα](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Σύγκρινε GD, momentum και Adam στον κώδικα](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Ρύθμισε τον ρυθμό μάθησης στο μάθημα](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Σύγκρινε GD, momentum και Adam στον κώδικα](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 Θέλεις μόνο Model Context Protocol (MCP); Χρησιμοποίησε την κλήση MCP της εφαρμογής σου. Δημιουργεί `MCP-LEARNING.md` και ακολουθεί διαδρομή 17 μαθημάτων για αιτήματα χωρίς κατάσταση, μεταφορές, αμφίδρομη εργασία, ασφάλεια, αξιοπιστία, διακυβέρνηση μητρώου και αποδείξεις συμμόρφωσης. Η ακριβής σειρά και τα σημεία ελέγχου βρίσκονται στο [δηλωτικό Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json).
 
-Θέλεις μόνο Agent Skills; Χρησιμοποίησε την αντίστοιχη κλήση της εφαρμογής σου. Δημιουργεί `AGENT-SKILLS-LEARNING.md` και ακολουθεί πέντε συνδεδεμένα μαθήματα: συμβόλαιο, ανακάλυψη, κλήση, όρια απομόνωσης και κατόπιν αξιολόγηση έκδοσης και φορητότητα μεταξύ πραγματικών εφαρμογών. Στον ιστό ξεκίνα από τη [διαδρομή Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Θέλεις μόνο Agent Skills; Χρησιμοποίησε την αντίστοιχη κλήση της εφαρμογής σου. Δημιουργεί `AGENT-SKILLS-LEARNING.md` και ακολουθεί πέντε συνδεδεμένα μαθήματα: συμβόλαιο, ανακάλυψη, κλήση, όρια απομόνωσης και κατόπιν αξιολόγηση έκδοσης και φορητότητα μεταξύ πραγματικών εφαρμογών. Στον ιστό ξεκίνα από τη [διαδρομή Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Το πρόγραμμα εγκατάστασης εμφανίζει τις εφαρμογές που μπορεί να ρυθμίσει και ρωτά πού να εγκαταστήσει. Αν δεν έχεις Node.js, `npx`, `python3`, υποστηριζόμενη εφαρμογή ή εγγράψιμο πεδίο, χρησιμοποίησε τον ιστότοπο ή διάβασε το `docs/en.md` μόνος σου. Έτσι μαθαίνεις τις έννοιες, αλλά οι αποδείξεις ανακάλυψης, κλήσης, εκτέλεσης σεναρίων και απεγκατάστασης σε πραγματική εφαρμογή εκκρεμούν ώσπου να είναι διαθέσιμος ο αρχικός έλεγχος. Διάβασε τα μαθήματα στο [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | Ο στόχος σου | Μάθηση στο GitHub | Μάθηση στον ιστότοπο |
 |---|---|---|
-| Ξεκινώ τώρα και θέλω πλήρεις βάσεις | [Στάδιο 0: Εγκατάσταση και εργαλεία](../../phases/00-setup-and-tooling/) | [Περιβάλλον ανάπτυξης](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Γνωρίζω Python και θέλω βάσεις στα μαθηματικά και στο ML | [Στάδιο 1: Μαθηματικά θεμέλια](../../phases/01-math-foundations/) | [Διαισθητική κατανόηση της γραμμικής άλγεβρας](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Θέλω να φτιάξω εφαρμογές LLM για παραγωγική χρήση | [Στάδιο 11: Μηχανική LLM](../../phases/11-llm-engineering/) | [Μηχανική προτροπών](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Θέλω να φτιάξω πράκτορες | [Στάδιο 14: Μηχανική πρακτόρων](../../phases/14-agent-engineering/) | [Ο βρόχος του πράκτορα](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Θέλω να χρησιμοποιώ πράκτορες προγραμματισμού σε πραγματικά αποθετήρια | [Διαδρομή μηχανικής με τη βοήθεια πρακτόρων](../../learning-paths/using-coding-agents.json) | [Μηχανική με τη βοήθεια πρακτόρων](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Θέλω να καθορίσω τι αξίζει να φτιαχτεί πριν από την υλοποίηση | [Διαδρομή αποφάσεων και παράδοσης προϊόντος](../../learning-paths/shaping-the-build.json) | [Αποφάσεις και παράδοση προϊόντος](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Ξεκινώ τώρα και θέλω πλήρεις βάσεις | [Στάδιο 0: Εγκατάσταση και εργαλεία](../../phases/00-setup-and-tooling/) | [Περιβάλλον ανάπτυξης](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Γνωρίζω Python και θέλω βάσεις στα μαθηματικά και στο ML | [Στάδιο 1: Μαθηματικά θεμέλια](../../phases/01-math-foundations/) | [Διαισθητική κατανόηση της γραμμικής άλγεβρας](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Θέλω να φτιάξω εφαρμογές LLM για παραγωγική χρήση | [Στάδιο 11: Μηχανική LLM](../../phases/11-llm-engineering/) | [Μηχανική προτροπών](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Θέλω να φτιάξω πράκτορες | [Στάδιο 14: Μηχανική πρακτόρων](../../phases/14-agent-engineering/) | [Ο βρόχος του πράκτορα](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Θέλω να χρησιμοποιώ πράκτορες προγραμματισμού σε πραγματικά αποθετήρια | [Διαδρομή μηχανικής με τη βοήθεια πρακτόρων](../../learning-paths/using-coding-agents.json) | [Μηχανική με τη βοήθεια πρακτόρων](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Θέλω να καθορίσω τι αξίζει να φτιαχτεί πριν από την υλοποίηση | [Διαδρομή αποφάσεων και παράδοσης προϊόντος](../../learning-paths/shaping-the-build.json) | [Αποφάσεις και παράδοση προϊόντος](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Δεν ξέρεις από πού να ξεκινήσεις; Χρησιμοποίησε τον [εκπαιδευτή αξιολόγησης επιπέδου `start-learning`](../../skills/start-learning/SKILL.md) ή τον [οδηγό προαπαιτούμενων του ιστοτόπου](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | Ο στόχος σου | Μάθηση στο GitHub | Μάθηση στον ιστότοπο |
 |---|---|---|
-| Θέλω να αναπτύξω λύσεις με Model Context Protocol (MCP) | [Διαδρομή Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Μαθησιακή διαδρομή Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Θέλω να γράψω και να διαθέσω Agent Skills | [Εστιασμένη διαδρομή Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Μαθησιακή διαδρομή Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Θέλω να διαβάζω μεταγλωττισμένα προγράμματα | [Διαδρομή αντίστροφης μηχανικής](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Μαθησιακή διαδρομή αντίστροφης μηχανικής](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Θέλω να αναπτύξω λύσεις με Model Context Protocol (MCP) | [Διαδρομή Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Μαθησιακή διαδρομή Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Θέλω να γράψω και να διαθέσω Agent Skills | [Εστιασμένη διαδρομή Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Μαθησιακή διαδρομή Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Θέλω να διαβάζω μεταγλωττισμένα προγράμματα | [Διαδρομή αντίστροφης μηχανικής](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Μαθησιακή διαδρομή αντίστροφης μηχανικής](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 Είκοσι φάσεις στηρίζονται η μία στην άλλη. Τα μαθηματικά είναι τα θεμέλια, οι πράκτορες και η παραγωγή η στέγη. Προχώρα αν γνωρίζεις τα χαμηλότερα επίπεδα, αλλά μην παραλείπεις άγνωστες βάσεις και μετά απορείς γιατί αποτυγχάνει κάτι ψηλότερα.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Οι είκοσι φάσεις ομαδοποιημένες σε έξι τόμους, από τα θεμέλια κάτω ως την παραγωγή πάνω, με ό,τι χτίζεις σε κάθε τόμο." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Γράφημα εξαρτήσεων των φάσεων</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

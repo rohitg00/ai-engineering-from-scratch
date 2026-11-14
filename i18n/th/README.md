@@ -15,11 +15,17 @@
 
 เขียนการทำงานภายในโมเดล ไปป์ไลน์การค้นคืน และรันไทม์ของเอเจนต์ ทดสอบ ตรวจสอบความล้มเหลว และเก็บโค้ดกับผลการประเมินไว้
 
-**[เริ่มเรียน](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[เลือกเส้นทาง](#learning-routes)** · **[ลองห้องทดลอง](#interactive-lab)** · **[สร้างโปรเจกต์](#project-challenges)** · **[ดูหลักสูตร](#contents)**
+**[เริ่มเรียน](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[เลือกเส้นทาง](#learning-routes)** · **[ลองห้องทดลอง](#interactive-lab)** · **[สร้างโปรเจกต์](#project-challenges)** · **[ดูหลักสูตร](#contents)**
 
 ฟรี เปิดเผยซอร์สโค้ด และใช้สัญญาอนุญาต MIT เรียนผ่านเว็บไซต์ กับเอเจนต์เขียนโค้ด หรือด้วยการรันโค้ดบนเครื่องของคุณ
 
 > 542 บทเรียน. 20 ระยะ. Python, TypeScript, Rust, Julia, Go.
+
+เปลี่ยนเอเจนต์เขียนโค้ดของคุณให้เป็นติวเตอร์ด้วยคำสั่งเดียว:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="สัญญาอนุญาต MIT"></a>
@@ -48,6 +54,29 @@
   <sub><span>การสนับสนุนของคุณช่วยให้ทุกบทเรียนยังคงฟรีและเป็นโอเพนซอร์ส</span> <a href="#supporters">ดูผู้สนับสนุนทั้งหมด</a> · <a href="../../SPONSORS.md">ร่วมเป็นผู้สนับสนุน</a></sub>
 </p>
 
+## ทำไมต้องสร้างตั้งแต่ศูนย์
+
+การเรียกใช้เฟรมเวิร์กซ่อนส่วนที่พังได้ง่ายที่สุดไว้ เมื่อค่าความสูญเสียกลายเป็น NaN หรือเอเจนต์เรียกเครื่องมือเดิมซ้ำไปซ้ำมา คนที่เขียนเวอร์ชันเล็กด้วยตัวเองจะรู้ว่าต้องดูตรงไหน ในแต่ละบทเรียนคุณจะเขียนและรันเวอร์ชันเล็กนั้นก่อน แล้วรันไลบรารีระดับโปรดักชันกับโจทย์เดียวกันเพื่อเปรียบเทียบ
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="หนึ่งบทเรียนมีสี่ขั้นตอน: โจทย์ สร้างตั้งแต่ศูนย์ ใช้ไลบรารีระดับโปรดักชัน และส่งมอบผลงานที่เก็บไว้ใช้ได้ ตัวอย่างคือบทเรียนลูปเอเจนต์ในระยะ 14" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>เวอร์ชันข้อความ</summary>
+
+- **01 · โจทย์**: LLM ส่งข้อความกลับมา แต่ลงมือทำไม่ได้
+- **02 · สร้าง**: ลูป ReAct ด้วย stdlib Python
+- **03 · ใช้งาน**: ลูปเดียวกันใน SDK ของเอเจนต์
+- **04 · ส่งมอบ**: skill-agent-loop.md พร้อมใช้กับเอเจนต์ของคุณ
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | เส้นทาง | บทเรียนแรก |
 |---|---|
-| รากฐานของโมเดล | [การตั้งค่าและเครื่องมือ](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| ระบบ LLM | [วิศวกรรมพรอมต์](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| เอเจนต์และการส่งมอบ | [ลูปเอเจนต์](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| รากฐานของโมเดล | [การตั้งค่าและเครื่องมือ](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| ระบบ LLM | [วิศวกรรมพรอมต์](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| เอเจนต์และการส่งมอบ | [ลูปเอเจนต์](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [เปรียบเทียบเส้นทางอาชีพ](https://aiengineeringfromscratch.com/learning-paths.html) · [ความรู้พื้นฐานและเวลาเรียน](#study-guide)
 
@@ -68,7 +97,7 @@
 จุดเริ่มต้น 20 จุดเคลื่อนตามการไล่ระดับลงบนฟังก์ชันความสูญเสียกำลังสอง กราฟแสดงตำแหน่งและค่าความสูญเสียเฉลี่ยหลังการอัปเดตแต่ละครั้ง
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[ปรับอัตราการเรียนรู้ในบทเรียน](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [เปรียบเทียบ GD, โมเมนตัม และ Adam ในโค้ด](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[ปรับอัตราการเรียนรู้ในบทเรียน](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [เปรียบเทียบ GD, โมเมนตัม และ Adam ในโค้ด](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 ต้องการเรียนเฉพาะ Model Context Protocol (MCP)? ใช้คำสั่ง MCP ของโฮสต์คุณ ระบบจะสร้าง `MCP-LEARNING.md` และติดตามเส้นทาง 17 บทเรียน ครอบคลุมคำขอแบบไร้สถานะ การรับส่งข้อมูล งานสองทิศทาง ความปลอดภัย ความน่าเชื่อถือ การกำกับดูแลรีจิสทรี และหลักฐานความสอดคล้องกับโพรโทคอล ลำดับและจุดตรวจที่แน่นอนอยู่ใน[แมนิเฟสต์ Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json)
 
-ต้องการเรียนเฉพาะ Agent Skills? ใช้คำสั่ง Agent Skills ของโฮสต์คุณ ระบบจะสร้าง `AGENT-SKILLS-LEARNING.md` และติดตามห้าบทเรียนต่อเนื่อง: สัญญา การค้นพบ การเรียกใช้ ขอบเขตแซนด์บ็อกซ์ แล้วจึงประเมินก่อนเผยแพร่และทดสอบการย้ายข้ามโฮสต์จริง เริ่มบนเว็บได้ที่[เส้นทาง Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills)
+ต้องการเรียนเฉพาะ Agent Skills? ใช้คำสั่ง Agent Skills ของโฮสต์คุณ ระบบจะสร้าง `AGENT-SKILLS-LEARNING.md` และติดตามห้าบทเรียนต่อเนื่อง: สัญญา การค้นพบ การเรียกใช้ ขอบเขตแซนด์บ็อกซ์ แล้วจึงประเมินก่อนเผยแพร่และทดสอบการย้ายข้ามโฮสต์จริง เริ่มบนเว็บได้ที่[เส้นทาง Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills)
 
 ตัวติดตั้งจะแสดงโฮสต์ที่ตั้งค่าได้และถามตำแหน่งติดตั้ง หากยังไม่มี Node.js, `npx`, `python3`, โฮสต์ที่รองรับ หรือพื้นที่ที่เขียนได้ ให้ใช้เว็บไซต์หรืออ่าน `docs/en.md` เอง วิธีนี้สอนแนวคิดได้ แต่หลักฐานการค้นพบ การเรียกใช้ การรันสคริปต์ และการถอนการติดตั้งบนโฮสต์จริงต้องรอจนตรวจความพร้อมได้ อ่านบทเรียนที่ [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | เป้าหมายของคุณ | เรียนบน GitHub | เรียนบนเว็บไซต์ |
 |---|---|---|
-| ฉันเพิ่งเริ่มและต้องการพื้นฐานที่ครบถ้วน | [ระยะ 0: การตั้งค่าและเครื่องมือ](../../phases/00-setup-and-tooling/) | [สภาพแวดล้อมการพัฒนา](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| ฉันรู้ Python และต้องการพื้นฐานคณิตศาสตร์กับ ML | [ระยะ 1: พื้นฐานคณิตศาสตร์](../../phases/01-math-foundations/) | [ทำความเข้าใจพีชคณิตเชิงเส้น](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| ฉันต้องการสร้างแอปพลิเคชัน LLM สำหรับใช้งานจริง | [ระยะ 11: วิศวกรรม LLM](../../phases/11-llm-engineering/) | [วิศวกรรมพรอมป์ต์](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| ฉันต้องการสร้างเอเจนต์ | [ระยะ 14: วิศวกรรมเอเจนต์](../../phases/14-agent-engineering/) | [วงรอบการทำงานของเอเจนต์](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| ฉันต้องการใช้เอเจนต์เขียนโค้ดกับคลังโค้ดจริง | [เส้นทางวิศวกรรมที่มีเอเจนต์ช่วย](../../learning-paths/using-coding-agents.json) | [วิศวกรรมที่มีเอเจนต์ช่วย](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| ฉันต้องการกำหนดสิ่งที่ควรสร้างก่อนลงมือพัฒนา | [เส้นทางการตัดสินใจด้านผลิตภัณฑ์และการส่งมอบ](../../learning-paths/shaping-the-build.json) | [การตัดสินใจด้านผลิตภัณฑ์และการส่งมอบ](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| ฉันเพิ่งเริ่มและต้องการพื้นฐานที่ครบถ้วน | [ระยะ 0: การตั้งค่าและเครื่องมือ](../../phases/00-setup-and-tooling/) | [สภาพแวดล้อมการพัฒนา](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| ฉันรู้ Python และต้องการพื้นฐานคณิตศาสตร์กับ ML | [ระยะ 1: พื้นฐานคณิตศาสตร์](../../phases/01-math-foundations/) | [ทำความเข้าใจพีชคณิตเชิงเส้น](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| ฉันต้องการสร้างแอปพลิเคชัน LLM สำหรับใช้งานจริง | [ระยะ 11: วิศวกรรม LLM](../../phases/11-llm-engineering/) | [วิศวกรรมพรอมป์ต์](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| ฉันต้องการสร้างเอเจนต์ | [ระยะ 14: วิศวกรรมเอเจนต์](../../phases/14-agent-engineering/) | [วงรอบการทำงานของเอเจนต์](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| ฉันต้องการใช้เอเจนต์เขียนโค้ดกับคลังโค้ดจริง | [เส้นทางวิศวกรรมที่มีเอเจนต์ช่วย](../../learning-paths/using-coding-agents.json) | [วิศวกรรมที่มีเอเจนต์ช่วย](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| ฉันต้องการกำหนดสิ่งที่ควรสร้างก่อนลงมือพัฒนา | [เส้นทางการตัดสินใจด้านผลิตภัณฑ์และการส่งมอบ](../../learning-paths/shaping-the-build.json) | [การตัดสินใจด้านผลิตภัณฑ์และการส่งมอบ](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 ไม่แน่ใจว่าควรเริ่มตรงไหน? ใช้[ติวเตอร์วัดระดับ `start-learning`](../../skills/start-learning/SKILL.md) หรือ[คู่มือความรู้พื้นฐานที่ต้องมีบนเว็บไซต์](https://aiengineeringfromscratch.com/prereqs.html)
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | เป้าหมายของคุณ | เรียนบน GitHub | เรียนบนเว็บไซต์ |
 |---|---|---|
-| ฉันต้องการสร้างด้วย Model Context Protocol (MCP) | [แนวทางเรียน Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [เส้นทาง Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| ฉันต้องการเขียนและเผยแพร่ Agent Skills | [แนวทางเรียน Agent Skills โดยเฉพาะ](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [เส้นทาง Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| ฉันต้องการอ่านโปรแกรมที่คอมไพล์แล้ว | [แนวทางเรียนวิศวกรรมย้อนกลับ](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [เส้นทางวิศวกรรมย้อนกลับ](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| ฉันต้องการสร้างด้วย Model Context Protocol (MCP) | [แนวทางเรียน Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [เส้นทาง Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| ฉันต้องการเขียนและเผยแพร่ Agent Skills | [แนวทางเรียน Agent Skills โดยเฉพาะ](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [เส้นทาง Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| ฉันต้องการอ่านโปรแกรมที่คอมไพล์แล้ว | [แนวทางเรียนวิศวกรรมย้อนกลับ](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [เส้นทางวิศวกรรมย้อนกลับ](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 ทั้งยี่สิบระยะต่อยอดกัน คณิตศาสตร์เป็นฐาน ส่วนเอเจนต์และระบบใช้งานจริงเป็นชั้นบน ข้ามไปได้หากรู้ชั้นพื้นฐานอยู่แล้ว แต่อย่าข้ามแล้วสงสัยว่าทำไมส่วนข้างบนจึงพัง
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="ยี่สิบระยะจัดเป็นหกเล่ม จากพื้นฐานด้านล่างถึงโปรดักชันด้านบน พร้อมสิ่งที่สร้างในแต่ละเล่ม" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>กราฟความสัมพันธ์ของระยะ</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

@@ -15,11 +15,17 @@
 
 Implementér modellernes indre, pipelines til informationssøgning og kørselsmiljøer til agenter. Test dem, undersøg fejl, og gem koden og evalueringsresultaterne.
 
-**[Begynd at lære](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Vælg et læringsforløb](#learning-routes)** · **[Prøv en øvelse](#interactive-lab)** · **[Byg et projekt](#project-challenges)** · **[Gennemse pensum](#contents)**
+**[Begynd at lære](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Vælg et læringsforløb](#learning-routes)** · **[Prøv en øvelse](#interactive-lab)** · **[Byg et projekt](#project-challenges)** · **[Gennemse pensum](#contents)**
 
 Gratis, åben kildekode, MIT-licens. Lær på hjemmesiden, med en kodeagent eller ved at køre kode lokalt.
 
 > 542 lektioner. 20 faser. Python, TypeScript, Rust, Julia, Go.
+
+Gør din kodeagent til en vejleder med én kommando:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licens"></a>
@@ -48,6 +54,29 @@ Gratis, åben kildekode, MIT-licens. Lær på hjemmesiden, med en kodeagent elle
   <sub><span>Din støtte holder hver lektion gratis og open source.</span> <a href="#supporters">Se alle støtter</a> · <a href="../../SPONSORS.md">Bliv sponsor</a></sub>
 </p>
 
+## Hvorfor bygge fra bunden
+
+Et kald til et framework skjuler netop den del, der går i stykker. Når et tab bliver til NaN, eller en agent gentager det samme værktøjskald, ved den, der skrev den lille version, hvor der skal ledes. I hver lektion skriver du først den version, kører den og kører derefter produktionsbiblioteket på det samme problem for at sammenligne de to.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="En lektion i fire trin: problemet, byg fra bunden, brug produktionsbiblioteket og aflever et artefakt, du beholder. Eksemplet er lektionen om agentens løkke i fase 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Tekstversion</summary>
+
+- **01 · PROBLEMET**: En LLM returnerer tekst. Den kan ikke handle.
+- **02 · BYG DET**: En ReAct-løkke i Python med stdlib.
+- **03 · BRUG DET**: Samme løkke i et agent-SDK.
+- **04 · AFLEVER DET**: skill-agent-loop.md, klar til din agent.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Gratis, åben kildekode, MIT-licens. Lær på hjemmesiden, med en kodeagent elle
 
 | Forløb | Første lektion |
 |---|---|
-| Modellernes fundament | [Opsætning og værktøjer](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM-systemer | [Promptudvikling](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Agenter og levering | [Agentens løkke](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Modellernes fundament | [Opsætning og værktøjer](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM-systemer | [Promptudvikling](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Agenter og levering | [Agentens løkke](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Sammenlign karriereforløb](https://aiengineeringfromscratch.com/learning-paths.html) · [Forudsætninger og studietid](#study-guide)
 
@@ -68,7 +97,7 @@ Gratis, åben kildekode, MIT-licens. Lær på hjemmesiden, med en kodeagent elle
 Tyve startpunkter følger gradientnedstigning på en kvadratisk tabsfunktion. Grafen viser deres positioner og gennemsnitlige tab efter hver opdatering.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Tyve startpunkter følger gradientnedstigning på en kvadratisk tabsfunktion. Gr
   </a>
 </p>
 
-[Juster læringsraten i lektionen](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Sammenlign GD, momentum og Adam i koden](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Juster læringsraten i lektionen](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Sammenlign GD, momentum og Adam i koden](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ En niveauprøve med ti spørgsmål kobler din baggrund til en passende startfase
 
 Vil du kun lære Model Context Protocol (MCP)? Brug MCP-kaldet for dit værtsprogram. Det opretter `MCP-LEARNING.md` og følger et sammenhængende forløb med 17 lektioner om tilstandsløse forespørgsler, transporter, tovejsarbejde, sikkerhed, pålidelighed, registerstyring og dokumentation for protokoloverholdelse. Den præcise rækkefølge og kontrolpunkterne findes i [manifestet for Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json).
 
-Vil du kun lære Agent Skills? Brug Agent Skills-kaldet for dit værtsprogram. Det opretter `AGENT-SKILLS-LEARNING.md` og følger fem sammenhængende lektioner: kontrakt, opdagelse, kald, sandkassegrænser og til sidst evaluering før udgivelse samt portabilitet mellem rigtige værtsprogrammer. Start på nettet med [læringsforløbet for Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Vil du kun lære Agent Skills? Brug Agent Skills-kaldet for dit værtsprogram. Det opretter `AGENT-SKILLS-LEARNING.md` og følger fem sammenhængende lektioner: kontrakt, opdagelse, kald, sandkassegrænser og til sidst evaluering før udgivelse samt portabilitet mellem rigtige værtsprogrammer. Start på nettet med [læringsforløbet for Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Installationsprogrammet viser, hvilke værtsprogrammer det kan konfigurere, og spørger, hvor færdighederne skal installeres. Hvis du endnu mangler Node.js, `npx`, `python3`, et kompatibelt værtsprogram eller en mappe med skriveadgang, kan du bruge hjemmesiden eller læse `docs/en.md` manuelt. Så lærer du begreberne, men dokumentation for opdagelse, kald, scriptkørsel og afinstallation i et rigtigt værtsprogram må vente, til forhåndskontrollen kan gennemføres. Læs lektionerne på [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Du behøver ikke gennemgå 542 lektioner, før du går i gang. Vælg et mål. Hv
 
 | Dit mål | Lær på GitHub | Lær på hjemmesiden |
 |---|---|---|
-| Jeg er ny og vil have hele fundamentet på plads | [Fase 0: Opsætning og værktøjer](../../phases/00-setup-and-tooling/) | [Udviklingsmiljø](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Jeg kan Python og vil lære grundlæggende matematik og maskinlæring | [Fase 1: Matematisk grundlag](../../phases/01-math-foundations/) | [Intuition for lineær algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Jeg vil bygge LLM-applikationer til produktion | [Fase 11: LLM-udvikling](../../phases/11-llm-engineering/) | [Promptudvikling](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Jeg vil bygge agenter | [Fase 14: Agentudvikling](../../phases/14-agent-engineering/) | [Agentløkken](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Jeg vil bruge kodeagenter i rigtige kodearkiver | [Læringsforløb i agentassisteret udvikling](../../learning-paths/using-coding-agents.json) | [Agentassisteret udvikling](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Jeg vil fastlægge, hvad der skal bygges, før implementeringen | [Læringsforløb i produktvurdering og levering](../../learning-paths/shaping-the-build.json) | [Produktvurdering og levering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Jeg er ny og vil have hele fundamentet på plads | [Fase 0: Opsætning og værktøjer](../../phases/00-setup-and-tooling/) | [Udviklingsmiljø](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Jeg kan Python og vil lære grundlæggende matematik og maskinlæring | [Fase 1: Matematisk grundlag](../../phases/01-math-foundations/) | [Intuition for lineær algebra](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Jeg vil bygge LLM-applikationer til produktion | [Fase 11: LLM-udvikling](../../phases/11-llm-engineering/) | [Promptudvikling](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Jeg vil bygge agenter | [Fase 14: Agentudvikling](../../phases/14-agent-engineering/) | [Agentløkken](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Jeg vil bruge kodeagenter i rigtige kodearkiver | [Læringsforløb i agentassisteret udvikling](../../learning-paths/using-coding-agents.json) | [Agentassisteret udvikling](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Jeg vil fastlægge, hvad der skal bygges, før implementeringen | [Læringsforløb i produktvurdering og levering](../../learning-paths/shaping-the-build.json) | [Produktvurdering og levering](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Er du usikker på, hvor du skal begynde? Brug [niveauvurderingen med vejlederen `start-learning`](../../skills/start-learning/SKILL.md) eller [hjemmesidens guide til forudsætninger](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Sammenlign fire kerneområder og seks karriereveje i [læringsforløbene for AI-
 
 | Dit mål | Lær på GitHub | Lær på hjemmesiden |
 |---|---|---|
-| Jeg vil bygge med Model Context Protocol (MCP) | [Forløb i Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Læringsforløb i Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Jeg vil skrive og udgive Agent Skills | [Fokuseret forløb i Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Læringsforløb i Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Jeg vil læse kompilerede programmer | [Forløb i reverse engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Læringsforløb i reverse engineering](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Jeg vil bygge med Model Context Protocol (MCP) | [Forløb i Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Læringsforløb i Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Jeg vil skrive og udgive Agent Skills | [Fokuseret forløb i Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Læringsforløb i Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Jeg vil læse kompilerede programmer | [Forløb i reverse engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Læringsforløb i reverse engineering](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Sammenlign fire kerneområder og seks karriereveje i [læringsforløbene for AI-
 
 Tyve faser bygger oven på hinanden. Matematikken er fundamentet. Agenter og produktion er de øverste lag. Spring frem, hvis du allerede kan det grundlæggende, men spring ikke over det og undr dig så over, at noget højere oppe går i stykker.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="De tyve faser grupperet i seks bind, fra fundamentet nederst til produktion øverst, med det, du bygger i hvert bind." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Afhængighedsgraf for faserne</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

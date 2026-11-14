@@ -15,11 +15,17 @@
 
 Valósítsd meg a modellek belső működését, a visszakeresési folyamatokat és az ágens-futtatókörnyezeteket. Teszteld őket, vizsgáld meg a hibákat, és őrizd meg a kódot és az értékelési eredményeket.
 
-**[Kezdj tanulni](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Válassz tanulási útvonalat](#learning-routes)** · **[Próbálj ki egy labort](#interactive-lab)** · **[Építs projektet](#project-challenges)** · **[Böngészd a tananyagot](#contents)**
+**[Kezdj tanulni](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Válassz tanulási útvonalat](#learning-routes)** · **[Próbálj ki egy labort](#interactive-lab)** · **[Építs projektet](#project-challenges)** · **[Böngészd a tananyagot](#contents)**
 
 Ingyenes, nyílt forráskódú, MIT-licenccel. Tanulj a weboldalon, egy kódoló ügynökkel vagy helyben futtatott kóddal.
 
 > 542 lecke. 20 szakasz. Python, TypeScript, Rust, Julia, Go.
+
+Egyetlen paranccsal tedd a programozó ágensedet oktatóvá:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licenc"></a>
@@ -48,6 +54,29 @@ Ingyenes, nyílt forráskódú, MIT-licenccel. Tanulj a weboldalon, egy kódoló
   <sub><span>A támogatásodnak köszönhetően minden lecke ingyenes és nyílt forráskódú marad.</span> <a href="#supporters">Összes támogató megtekintése</a> · <a href="../../SPONSORS.md">Legyél támogató</a></sub>
 </p>
 
+## Miért érdemes az alapoktól építeni
+
+A keretrendszer hívása elrejti azt a részt, amelyik elromlik. Ha a veszteség NaN lesz, vagy egy ágens ugyanazt az eszközhívást ismételgeti, az tudja, hol keresse a hibát, aki megírta a kis változatot. Minden leckében először ezt a változatot írod meg és futtatod, majd ugyanarra a feladatra lefuttatod az éles könyvtárat is, hogy összehasonlítsd a kettőt.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Egy lecke négy lépésben: a probléma, építsd meg az alapoktól, használd az éles könyvtárat, és szállíts egy artefaktumot, amelyet megtartasz. A példa az ágensciklus leckéje a 14. szakaszban." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Szöveges változat</summary>
+
+- **01 · PROBLÉMA**: Az LLM szöveget ad vissza. Cselekedni nem tud.
+- **02 · ÉPÍTSD**: ReAct ciklus stdlib Python kóddal.
+- **03 · HASZNÁLD**: Ugyanez a ciklus egy ágens-SDK-val.
+- **04 · SZÁLLÍTSD**: skill-agent-loop.md, kész az ágensed számára.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Ingyenes, nyílt forráskódú, MIT-licenccel. Tanulj a weboldalon, egy kódoló
 
 | Útvonal | Kezdő lecke |
 |---|---|
-| Modellek alapjai | [Beállítás és eszközök](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM-rendszerek | [Prompttervezés](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Ágensek és szállítás | [Az ágensciklus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Modellek alapjai | [Beállítás és eszközök](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM-rendszerek | [Prompttervezés](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Ágensek és szállítás | [Az ágensciklus](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Hasonlítsd össze a szakmai útvonalakat](https://aiengineeringfromscratch.com/learning-paths.html) · [Előfeltételek és tanulási idő](#study-guide)
 
@@ -68,7 +97,7 @@ Ingyenes, nyílt forráskódú, MIT-licenccel. Tanulj a weboldalon, egy kódoló
 Húsz kezdőpont követi a gradiensmódszert egy négyzetes veszteségfüggvényen. A grafikon minden frissítés után mutatja a helyzetüket és az átlagos veszteséget.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Húsz kezdőpont követi a gradiensmódszert egy négyzetes veszteségfüggvény
   </a>
 </p>
 
-[Módosítsd a tanulási rátát a leckében](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Hasonlítsd össze a GD-t, a momentumot és az Adamet a kódban](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Módosítsd a tanulási rátát a leckében](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Hasonlítsd össze a GD-t, a momentumot és az Adamet a kódban](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Egy tízkérdéses szintfelmérő a tudásodhoz illő kezdőszakaszt választ, �
 
 Csak a Model Context Protocol (MCP) érdekel? Használd a gazdád MCP-meghívását. Ez létrehozza a `MCP-LEARNING.md` fájlt, és egy 17 leckés útvonalat követ az állapotmentes kéréseken, átvitelen, kétirányú munkán, biztonságon, megbízhatóságon, regiszterirányításon és megfelelőségi bizonyítékokon át. A pontos sorrend és az ellenőrzőpontok a [Model Context Protocol (MCP) jegyzékében](../../learning-paths/model-context-protocol.json) találhatók.
 
-Csak az Agent Skills érdekel? Használd a gazdád Agent Skills-meghívását. Ez létrehozza az `AGENT-SKILLS-LEARNING.md` fájlt, és öt összefüggő leckén vezet végig: szerződés, felderítés, meghívás, elszigetelési határok, majd kiadási értékelések és valódi gazdák közötti hordozhatóság. A weben az [Agent Skills útvonallal](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) kezdj.
+Csak az Agent Skills érdekel? Használd a gazdád Agent Skills-meghívását. Ez létrehozza az `AGENT-SKILLS-LEARNING.md` fájlt, és öt összefüggő leckén vezet végig: szerződés, felderítés, meghívás, elszigetelési határok, majd kiadási értékelések és valódi gazdák közötti hordozhatóság. A weben az [Agent Skills útvonallal](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) kezdj.
 
 A telepítő felsorolja a beállítható gazdákat, és megkérdezi a telepítési helyet. Ha még nincs Node.js, `npx`, `python3`, támogatott gazda vagy írható hatókör, használd a weboldalt, vagy olvasd kézzel a `docs/en.md` fájlt. Így megtanulod a fogalmakat, de a valódi gazdán végzett felderítés, meghívás, szkriptfuttatás és eltávolítás bizonyítékai addig hiányoznak, amíg az előzetes ellenőrzés nem végezhető el. A leckék itt olvashatók: [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Nem kell végignézned mind az 542 leckét, mielőtt elkezded. Válassz egy cél
 
 | A célod | Tanulás a GitHub felületén | Tanulás a weboldalon |
 |---|---|---|
-| Kezdő vagyok, és teljes alapozást szeretnék | [0. szakasz: Beállítás és eszközök](../../phases/00-setup-and-tooling/) | [Fejlesztői környezet](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Ismerem a Python nyelvet, és matematikai, illetve ML-alapokat szeretnék | [1. szakasz: Matematikai alapok](../../phases/01-math-foundations/) | [A lineáris algebra szemléletesen](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Éles környezetbe szánt LLM-alkalmazásokat szeretnék építeni | [11. szakasz: LLM-mérnökség](../../phases/11-llm-engineering/) | [Prompttervezés](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Ágenseket szeretnék építeni | [14. szakasz: Ágensmérnökség](../../phases/14-agent-engineering/) | [Az ágensciklus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Programozóágenseket szeretnék használni valódi kódtárakon | [Ágensekkel támogatott fejlesztési útvonal](../../learning-paths/using-coding-agents.json) | [Ágensekkel támogatott fejlesztés](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| A megvalósítás előtt szeretném eldönteni, mit érdemes építeni | [Termékdöntési és megvalósítási útvonal](../../learning-paths/shaping-the-build.json) | [Termékdöntések és megvalósítás](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Kezdő vagyok, és teljes alapozást szeretnék | [0. szakasz: Beállítás és eszközök](../../phases/00-setup-and-tooling/) | [Fejlesztői környezet](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Ismerem a Python nyelvet, és matematikai, illetve ML-alapokat szeretnék | [1. szakasz: Matematikai alapok](../../phases/01-math-foundations/) | [A lineáris algebra szemléletesen](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Éles környezetbe szánt LLM-alkalmazásokat szeretnék építeni | [11. szakasz: LLM-mérnökség](../../phases/11-llm-engineering/) | [Prompttervezés](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Ágenseket szeretnék építeni | [14. szakasz: Ágensmérnökség](../../phases/14-agent-engineering/) | [Az ágensciklus](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Programozóágenseket szeretnék használni valódi kódtárakon | [Ágensekkel támogatott fejlesztési útvonal](../../learning-paths/using-coding-agents.json) | [Ágensekkel támogatott fejlesztés](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| A megvalósítás előtt szeretném eldönteni, mit érdemes építeni | [Termékdöntési és megvalósítási útvonal](../../learning-paths/shaping-the-build.json) | [Termékdöntések és megvalósítás](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Nem tudod, hol kezdd? Használd a [`start-learning` szintfelmérő tutort](../../skills/start-learning/SKILL.md) vagy a [weboldal előismereti útmutatóját](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Hasonlítsd össze a négy fő területet és a hat karrierutat az [AI Engineeri
 
 | A célod | Tanulás a GitHub felületén | Tanulás a weboldalon |
 |---|---|---|
-| A Model Context Protocol (MCP) használatával szeretnék fejleszteni | [Model Context Protocol (MCP) útvonal](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) tanulási útvonal](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Agent Skills csomagokat szeretnék írni és kiadni | [Célzott Agent Skills útvonal](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills tanulási útvonal](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Lefordított programokat szeretnék olvasni | [Visszafejtési útvonal](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Visszafejtési tanulási útvonal](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| A Model Context Protocol (MCP) használatával szeretnék fejleszteni | [Model Context Protocol (MCP) útvonal](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) tanulási útvonal](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Agent Skills csomagokat szeretnék írni és kiadni | [Célzott Agent Skills útvonal](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills tanulási útvonal](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Lefordított programokat szeretnék olvasni | [Visszafejtési útvonal](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Visszafejtési tanulási útvonal](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Hasonlítsd össze a négy fő területet és a hat karrierutat az [AI Engineeri
 
 Húsz szakasz épül egymásra. A matematika az alap, az ágensek és az üzemi működés a tető. Lépj előre, ha már ismered az alsó rétegeket, de ne hagyj ki ismeretlen alapokat, majd csodálkozz a felső rétegek hibáin.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="A húsz szakasz hat kötetbe rendezve, alul az alapoktól felül az éles üzemig, azzal, hogy melyik kötetben mit építesz." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>A szakaszok függőségi gráfja</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

@@ -15,11 +15,17 @@
 
 Implementeer de interne werking van modellen, zoekpijplijnen en uitvoeringsomgevingen voor agents. Test ze, onderzoek fouten en bewaar de code en evaluatieresultaten.
 
-**[Begin met leren](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Kies een pad](#learning-routes)** · **[Probeer een lab](#interactive-lab)** · **[Bouw een project](#project-challenges)** · **[Bekijk het curriculum](#contents)**
+**[Begin met leren](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Kies een pad](#learning-routes)** · **[Probeer een lab](#interactive-lab)** · **[Bouw een project](#project-challenges)** · **[Bekijk het curriculum](#contents)**
 
 Gratis, open source, met MIT-licentie. Leer op de webpagina, met een programmeeragent of door lokaal code uit te voeren.
 
 > 542 lessen. 20 fasen. Python, TypeScript, Rust, Julia, Go.
+
+Maak van je codeeragent met één commando een tutor:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-licentie"></a>
@@ -48,6 +54,29 @@ Gratis, open source, met MIT-licentie. Leer op de webpagina, met een programmeer
   <sub><span>Dankzij jouw steun blijft elke les gratis en open source.</span> <a href="#supporters">Bekijk alle supporters</a> · <a href="../../SPONSORS.md">Word sponsor</a></sub>
 </p>
 
+## Waarom helemaal zelf bouwen
+
+Een aanroep van een framework verbergt precies het deel dat kapotgaat. Wanneer een verlies NaN wordt of een agent dezelfde toolaanroep blijft herhalen, weet wie de kleine versie schreef waar hij moet zoeken. In elke les schrijf je eerst die versie, voer je haar uit en draai je daarna de productiebibliotheek op hetzelfde probleem om de twee te vergelijken.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Een les in vier stappen: het probleem, helemaal zelf bouwen, de productiebibliotheek gebruiken en een artefact opleveren dat je houdt. Het voorbeeld is de les over de agentlus in fase 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Tekstversie</summary>
+
+- **01 · HET PROBLEEM**: Een LLM geeft tekst terug. Handelen kan het niet.
+- **02 · BOUW HET**: Een ReAct-lus in Python met stdlib.
+- **03 · GEBRUIK HET**: Dezelfde lus in een agent-SDK.
+- **04 · LEVER HET OP**: skill-agent-loop.md, klaar voor je agent.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Gratis, open source, met MIT-licentie. Leer op de webpagina, met een programmeer
 
 | Leerroute | Eerste les |
 |---|---|
-| Grondslagen van modellen | [Installatie en hulpmiddelen](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM-systemen | [Promptengineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Agents en systeemoplevering | [De agentlus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Grondslagen van modellen | [Installatie en hulpmiddelen](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM-systemen | [Promptengineering](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Agents en systeemoplevering | [De agentlus](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Vergelijk loopbaanpaden](https://aiengineeringfromscratch.com/learning-paths.html) · [Voorkennis en studietijd](#study-guide)
 
@@ -68,7 +97,7 @@ Gratis, open source, met MIT-licentie. Leer op de webpagina, met een programmeer
 Twintig beginpunten volgen gradiëntafdaling op een kwadratische verliesfunctie. De grafiek toont hun posities en het gemiddelde verlies na elke update.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Twintig beginpunten volgen gradiëntafdaling op een kwadratische verliesfunctie.
   </a>
 </p>
 
-[Pas de leersnelheid aan in de les](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Vergelijk gradiëntafdaling, momentum en Adam in code](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Pas de leersnelheid aan in de les](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Vergelijk gradiëntafdaling, momentum en Adam in code](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Een plaatsingstoets met tien vragen koppelt je bestaande kennis aan een beginfas
 
 Wil je alleen Model Context Protocol (MCP)? Gebruik de MCP-aanroep voor je host. Die maakt `MCP-LEARNING.md` aan en volgt een route van 17 lessen langs toestandsloze verzoeken, transporten, tweerichtingsverkeer, beveiliging, betrouwbaarheid, registerbeheer en conformiteitsbewijs. De precieze volgorde en controlepunten staan in het [Model Context Protocol (MCP)-manifest](../../learning-paths/model-context-protocol.json).
 
-Wil je alleen Agent Skills? Gebruik de Agent Skills-aanroep voor je host. Die maakt `AGENT-SKILLS-LEARNING.md` aan en volgt één samenhangende route van vijf lessen: contract, ontdekking, aanroep, sandboxgrenzen en vervolgens release-evaluaties en overdraagbaarheid tussen echte hosts. Begin op de website met de [Agent Skills-leerroute](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Wil je alleen Agent Skills? Gebruik de Agent Skills-aanroep voor je host. Die maakt `AGENT-SKILLS-LEARNING.md` aan en volgt één samenhangende route van vijf lessen: contract, ontdekking, aanroep, sandboxgrenzen en vervolgens release-evaluaties en overdraagbaarheid tussen echte hosts. Begin op de website met de [Agent Skills-leerroute](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Het installatieprogramma toont de hosts die het kan configureren en vraagt waar het moet installeren. Heb je nog geen Node.js, `npx`, `python3`, ondersteunde host of beschrijfbare installatiemap, gebruik dan de website of lees `docs/en.md` zelf. Daarmee leer je de concepten, maar bewijs van ontdekking, aanroep, scripts en verwijdering op een echte host blijft uitstaan totdat de voorafgaande controle mogelijk is. Lees de lessen op [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Je hoeft niet alle 542 lessen door te nemen voordat je begint. Kies één doel. 
 
 | Jouw doel | Leren op GitHub | Leren op de website |
 |---|---|---|
-| Ik ben een beginner en wil een volledige basis | [Fase 0: Installatie en gereedschap](../../phases/00-setup-and-tooling/) | [Ontwikkelomgeving](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Ik ken Python en wil een basis in wiskunde en ML | [Fase 1: Wiskundige grondslagen](../../phases/01-math-foundations/) | [Intuïtie voor lineaire algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Ik wil LLM-toepassingen voor productie bouwen | [Fase 11: LLM-engineering](../../phases/11-llm-engineering/) | [Promptengineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Ik wil agents bouwen | [Fase 14: Agentengineering](../../phases/14-agent-engineering/) | [De agentlus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Ik wil programmeeragents gebruiken in echte repositories | [Leerroute voor engineering met agents](../../learning-paths/using-coding-agents.json) | [Engineering met agents](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Ik wil vóór de implementatie bepalen wat ik moet bouwen | [Leerroute voor productkeuzes en oplevering](../../learning-paths/shaping-the-build.json) | [Productkeuzes en oplevering](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Ik ben een beginner en wil een volledige basis | [Fase 0: Installatie en gereedschap](../../phases/00-setup-and-tooling/) | [Ontwikkelomgeving](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Ik ken Python en wil een basis in wiskunde en ML | [Fase 1: Wiskundige grondslagen](../../phases/01-math-foundations/) | [Intuïtie voor lineaire algebra](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Ik wil LLM-toepassingen voor productie bouwen | [Fase 11: LLM-engineering](../../phases/11-llm-engineering/) | [Promptengineering](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Ik wil agents bouwen | [Fase 14: Agentengineering](../../phases/14-agent-engineering/) | [De agentlus](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Ik wil programmeeragents gebruiken in echte repositories | [Leerroute voor engineering met agents](../../learning-paths/using-coding-agents.json) | [Engineering met agents](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Ik wil vóór de implementatie bepalen wat ik moet bouwen | [Leerroute voor productkeuzes en oplevering](../../learning-paths/shaping-the-build.json) | [Productkeuzes en oplevering](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Weet je niet waar je moet beginnen? Gebruik de [`start-learning`-tutor voor niveaubepaling](../../skills/start-learning/SKILL.md) of de [gids met voorkennis op de website](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Vergelijk vier kerndomeinen en zes loopbaanroutes in de [AI Engineering Learning
 
 | Jouw doel | Leren op GitHub | Leren op de website |
 |---|---|---|
-| Ik wil bouwen met Model Context Protocol (MCP) | [Model Context Protocol (MCP)-route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP)-leerroute](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Ik wil Agent Skills schrijven en uitbrengen | [Gerichte Agent Skills-route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills-leerroute](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Ik wil gecompileerde programma's lezen | [Gerichte Reverse Engineering-route](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Reverse Engineering-leerroute](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Ik wil bouwen met Model Context Protocol (MCP) | [Model Context Protocol (MCP)-route](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP)-leerroute](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Ik wil Agent Skills schrijven en uitbrengen | [Gerichte Agent Skills-route](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills-leerroute](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Ik wil gecompileerde programma's lezen | [Gerichte Reverse Engineering-route](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Reverse Engineering-leerroute](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Vergelijk vier kerndomeinen en zes loopbaanroutes in de [AI Engineering Learning
 
 Twintig fasen bouwen op elkaar voort. Wiskunde vormt de fundering; agents en productie vormen het dak. Sla gerust een laag over die je al beheerst, maar sla geen onbekende basis over om je later af te vragen waarom de bovenste lagen falen.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="De twintig fasen gegroepeerd in zes delen, van de basis onderaan tot productie bovenaan, met wat je in elk deel bouwt." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Afhankelijkhedengrafiek van de fasen</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

@@ -15,11 +15,17 @@
 
 ממשו את הפעולות הפנימיות של מודלים, צינורות אחזור וסביבות ריצה לסוכנים. בדקו אותם, חקרו כשלים ושמרו את הקוד ואת תוצאות ההערכה.
 
-**[התחילו ללמוד](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[בחרו מסלול](#learning-routes)** · **[נסו מעבדה](#interactive-lab)** · **[בנו פרויקט](#project-challenges)** · **[עיינו בתוכנית הלימודים](#contents)**
+**[התחילו ללמוד](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[בחרו מסלול](#learning-routes)** · **[נסו מעבדה](#interactive-lab)** · **[בנו פרויקט](#project-challenges)** · **[עיינו בתוכנית הלימודים](#contents)**
 
 בחינם, בקוד פתוח וברישיון MIT. למדו באתר, עם סוכן תכנות או באמצעות הרצת קוד מקומי.
 
 > <span dir="rtl">542 שיעורים. 20 שלבים.</span> <span dir="ltr">Python, TypeScript, Rust, Julia, Go.</span>
+
+הפכו את סוכן הקידוד שלכם למורה פרטי בפקודה אחת:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="רישיון MIT"></a>
@@ -48,6 +54,29 @@
   <sub><span>התמיכה שלכם שומרת על כל שיעור חינמי ובקוד פתוח.</span> <a href="#supporters">הצגת כל התומכים</a> · <a href="../../SPONSORS.md">הצטרפו כנותני חסות</a></sub>
 </p>
 
+## למה לבנות מאפס
+
+קריאה למסגרת מסתירה בדיוק את החלק שנשבר. כשההפסד הופך ל-NaN או כשהסוכן חוזר שוב ושוב על אותה קריאה לכלי, מי שכתב את הגרסה הקטנה יודע איפה לחפש. בכל שיעור תכתבו קודם את הגרסה הקטנה ותריצו אותה, ואז תריצו את ספריית הייצור על אותה בעיה ותשוו בין השתיים.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="שיעור אחד בארבעה שלבים: הבעיה, בנייה מאפס, שימוש בספריית הייצור, ומסירת תוצר שנשאר אצלכם. הדוגמה היא שיעור לולאת הסוכן בשלב 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>גרסת טקסט</summary>
+
+- **01 · הבעיה**: LLM מחזיר טקסט. הוא לא יכול לפעול.
+- **02 · בנו**: לולאת ReAct ב-stdlib Python.
+- **03 · השתמשו**: אותה לולאה ב-SDK של סוכנים.
+- **04 · מסרו**: skill-agent-loop.md, מוכן לסוכן שלכם.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | מסלול | שיעור ראשון |
 |---|---|
-| יסודות המודלים | [התקנה וכלים](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| מערכות LLM | [הנדסת פרומפטים](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| סוכנים ומסירה | [לולאת הסוכן](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| יסודות המודלים | [התקנה וכלים](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| מערכות LLM | [הנדסת פרומפטים](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| סוכנים ומסירה | [לולאת הסוכן](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [השוו מסלולי קריירה](https://aiengineeringfromscratch.com/learning-paths.html) · [ידע מוקדם וזמן לימוד](#study-guide)
 
@@ -68,7 +97,7 @@
 20 נקודות התחלה נעות לפי ירידת גרדיאנט על פונקציית הפסד ריבועית. הגרף מציג את מיקומיהן ואת ההפסד הממוצע לאחר כל עדכון.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[כוונו את קצב הלמידה בשיעור](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [השוו בקוד בין GD, מומנטום ו-Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[כוונו את קצב הלמידה בשיעור](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [השוו בקוד בין GD, מומנטום ו-Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 רוצים ללמוד רק Model Context Protocol (MCP)? השתמשו בהפעלת MCP המתאימה ליישום המארח שלכם. היא יוצרת `MCP-LEARNING.md` ועוקבת אחרי מסלול אחד בן 17 שיעורים על בקשות חסרות מצב, תעבורה, עבודה דו-כיוונית, אבטחה, אמינות, ממשל רישום וראיות לתאימות לפרוטוקול. הסדר המדויק ונקודות הבדיקה נמצאים ב[מניפסט Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json).
 
-רוצים ללמוד רק Agent Skills? השתמשו בהפעלה המתאימה ליישום המארח שלכם. היא יוצרת `AGENT-SKILLS-LEARNING.md` ועוקבת אחרי חמישה שיעורים רציפים: חוזה, גילוי, הפעלה, גבולות סביבת בידוד, ולבסוף הערכה לפני הפצה וניידות בין יישומים מארחים אמיתיים. התחילו באתר עם [מסלול Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+רוצים ללמוד רק Agent Skills? השתמשו בהפעלה המתאימה ליישום המארח שלכם. היא יוצרת `AGENT-SKILLS-LEARNING.md` ועוקבת אחרי חמישה שיעורים רציפים: חוזה, גילוי, הפעלה, גבולות סביבת בידוד, ולבסוף הערכה לפני הפצה וניידות בין יישומים מארחים אמיתיים. התחילו באתר עם [מסלול Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 תוכנית ההתקנה מציגה את היישומים המארחים שהיא יכולה להגדיר ושואלת היכן להתקין. אם עדיין חסרים Node.js, `npx`, `python3`, יישום מארח נתמך או מיקום עם הרשאת כתיבה, השתמשו באתר או קראו את `docs/en.md` ידנית. כך תלמדו את המושגים, אך ראיות לגילוי, להפעלה, להרצת סקריפטים ולהסרה ביישום מארח אמיתי יישארו ממתינות עד שאפשר יהיה לבצע את הבדיקה המקדימה. קראו את השיעורים ב-[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | המטרה שלכם | למדו ב-GitHub | למדו באתר |
 |---|---|---|
-| אני מתחיל ורוצה בסיס מלא | [שלב 0: התקנה וכלים](../../phases/00-setup-and-tooling/) | [סביבת פיתוח](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| אני יודע Python ורוצה ללמוד יסודות במתמטיקה ובלמידת מכונה | [שלב 1: יסודות מתמטיים](../../phases/01-math-foundations/) | [הבנה אינטואיטיבית של אלגברה לינארית](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| אני רוצה לבנות יישומי LLM לסביבת ייצור | [שלב 11: הנדסת LLM](../../phases/11-llm-engineering/) | [הנדסת פרומפטים](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| אני רוצה לבנות סוכנים | [שלב 14: הנדסת סוכנים](../../phases/14-agent-engineering/) | [לולאת הסוכן](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| אני רוצה להשתמש בסוכני תכנות במאגרי קוד אמיתיים | [מסלול הנדסה בעזרת סוכנים](../../learning-paths/using-coding-agents.json) | [הנדסה בעזרת סוכנים](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| אני רוצה להגדיר מה נכון לבנות לפני המימוש | [מסלול שיקול דעת במוצר ומסירה](../../learning-paths/shaping-the-build.json) | [שיקול דעת במוצר ומסירה](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| אני מתחיל ורוצה בסיס מלא | [שלב 0: התקנה וכלים](../../phases/00-setup-and-tooling/) | [סביבת פיתוח](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| אני יודע Python ורוצה ללמוד יסודות במתמטיקה ובלמידת מכונה | [שלב 1: יסודות מתמטיים](../../phases/01-math-foundations/) | [הבנה אינטואיטיבית של אלגברה לינארית](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| אני רוצה לבנות יישומי LLM לסביבת ייצור | [שלב 11: הנדסת LLM](../../phases/11-llm-engineering/) | [הנדסת פרומפטים](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| אני רוצה לבנות סוכנים | [שלב 14: הנדסת סוכנים](../../phases/14-agent-engineering/) | [לולאת הסוכן](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| אני רוצה להשתמש בסוכני תכנות במאגרי קוד אמיתיים | [מסלול הנדסה בעזרת סוכנים](../../learning-paths/using-coding-agents.json) | [הנדסה בעזרת סוכנים](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| אני רוצה להגדיר מה נכון לבנות לפני המימוש | [מסלול שיקול דעת במוצר ומסירה](../../learning-paths/shaping-the-build.json) | [שיקול דעת במוצר ומסירה](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 לא בטוחים מאיפה להתחיל? השתמשו [בחונך הערכת הרמה `start-learning`](../../skills/start-learning/SKILL.md) או [במדריך דרישות הקדם באתר](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | המטרה שלכם | למדו ב-GitHub | למדו באתר |
 |---|---|---|
-| אני רוצה לבנות עם Model Context Protocol (MCP) | [מסלול Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [מסלול לימוד Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| אני רוצה לכתוב ולפרסם Agent Skills | [מסלול ממוקד ל-Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [מסלול לימוד Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| אני רוצה לקרוא תוכניות מהודרות | [מסלול הנדסה לאחור](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [מסלול לימוד הנדסה לאחור](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| אני רוצה לבנות עם Model Context Protocol (MCP) | [מסלול Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [מסלול לימוד Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| אני רוצה לכתוב ולפרסם Agent Skills | [מסלול ממוקד ל-Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [מסלול לימוד Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| אני רוצה לקרוא תוכניות מהודרות | [מסלול הנדסה לאחור](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [מסלול לימוד הנדסה לאחור](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 עשרים שלבים נבנים זה על גבי זה. המתמטיקה היא הבסיס; סוכנים ומערכות ייצור הם השכבות העליונות. דלגו קדימה אם אתם כבר שולטים בשכבות התחתונות, אבל אל תדלגו ואז תתפלאו מדוע משהו בשכבה העליונה נשבר.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="עשרים השלבים מקובצים בשישה כרכים, מהיסודות למטה ועד הייצור למעלה, עם מה שבונים בכל כרך." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>גרף תלויות בין השלבים</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

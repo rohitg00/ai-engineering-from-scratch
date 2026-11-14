@@ -15,11 +15,17 @@
 
 Modellerin iç mekanizmalarını, bilgi erişim işlem hatlarını ve ajan çalışma ortamlarını uygulayın. Bunları test edin, hataları inceleyin, kodu ve değerlendirme sonuçlarını saklayın.
 
-**[Öğrenmeye başlayın](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Bir yol seçin](#learning-routes)** · **[Bir laboratuvar deneyin](#interactive-lab)** · **[Bir proje geliştirin](#project-challenges)** · **[Müfredatı inceleyin](#contents)**
+**[Öğrenmeye başlayın](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Bir yol seçin](#learning-routes)** · **[Bir laboratuvar deneyin](#interactive-lab)** · **[Bir proje geliştirin](#project-challenges)** · **[Müfredatı inceleyin](#contents)**
 
 Ücretsiz, açık kaynaklı, MIT lisanslı. Web sitesinde, bir kodlama ajanıyla veya yerel kod çalıştırarak öğrenin.
 
 > 542 ders. 20 aşama. Python, TypeScript, Rust, Julia, Go.
+
+Programlama ajanınızı tek bir komutla bir öğretmene dönüştürün:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT Lisansı"></a>
@@ -48,6 +54,29 @@ Modellerin iç mekanizmalarını, bilgi erişim işlem hatlarını ve ajan çal�
   <sub><span>Desteğiniz, tüm derslerin ücretsiz ve açık kaynaklı kalmasını sağlar.</span> <a href="#supporters">Tüm destekçileri görün</a> · <a href="../../SPONSORS.md">Sponsor olun</a></sub>
 </p>
 
+## Neden sıfırdan inşa etmeli
+
+Bir çerçeve çağrısı, bozulan kısmı gizler. Kayıp NaN olduğunda ya da bir ajan aynı araç çağrısını tekrarladığında, küçük sürümü yazan kişi nereye bakacağını bilir. Her derste önce bu sürümü yazıp çalıştırırsınız, ardından aynı problemde üretim kütüphanesini çalıştırıp ikisini karşılaştırırsınız.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Dört adımda bir ders: problem, sıfırdan inşa etme, üretim kütüphanesini kullanma ve saklayacağınız bir çıktıyı teslim etme. Örnek, 14. aşamadaki ajan döngüsü dersidir." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Metin sürümü</summary>
+
+- **01 · PROBLEM**: Bir LLM metin döndürür. Eylem yapamaz.
+- **02 · İNŞA ET**: stdlib Python ile bir ReAct döngüsü.
+- **03 · KULLAN**: Aynı döngü, bir ajan SDK içinde.
+- **04 · TESLİM ET**: skill-agent-loop.md, ajanınız için hazır.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Modellerin iç mekanizmalarını, bilgi erişim işlem hatlarını ve ajan çal�
 
 | Rota | Başlangıç dersi |
 |---|---|
-| Model temelleri | [Kurulum ve araçlar](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM sistemleri | [İstem mühendisliği](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Ajanlar ve sistem teslimi | [Ajan döngüsü](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Model temelleri | [Kurulum ve araçlar](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM sistemleri | [İstem mühendisliği](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Ajanlar ve sistem teslimi | [Ajan döngüsü](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Kariyer yollarını karşılaştırın](https://aiengineeringfromscratch.com/learning-paths.html) · [Ön koşullar ve çalışma süresi](#study-guide)
 
@@ -68,7 +97,7 @@ Modellerin iç mekanizmalarını, bilgi erişim işlem hatlarını ve ajan çal�
 Yirmi başlangıç noktası, ikinci dereceden bir kayıp fonksiyonu üzerinde gradyan inişini izler. Grafik, her güncellemeden sonra konumlarını ve ortalama kaybı gösterir.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Yirmi başlangıç noktası, ikinci dereceden bir kayıp fonksiyonu üzerinde gr
   </a>
 </p>
 
-[Derste öğrenme oranını ayarlayın](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Gradyan inişi, momentum ve Adam yöntemlerini kodda karşılaştırın](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Derste öğrenme oranını ayarlayın](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Gradyan inişi, momentum ve Adam yöntemlerini kodda karşılaştırın](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ On soruluk seviye belirleme sınavı, bildiklerinizi değerlendirerek uygun baş
 
 Yalnızca Model Context Protocol (MCP) yolunu mu istiyorsunuz? Kullandığınız hosta uygun MCP çağrısını kullanın. Bu çağrı `MCP-LEARNING.md` oluşturur ve durumsuz istekler, aktarım yöntemleri, çift yönlü işler, güvenlik, güvenilirlik, kayıt defteri yönetişimi ve uygunluk kanıtlarını kapsayan 17 derslik bir yol izler. Ders sırası ve kontrol noktaları [MCP yol tanımında](../../learning-paths/model-context-protocol.json) yer alır.
 
-Yalnızca Agent Skills yolunu mu istiyorsunuz? Kullandığınız hosta uygun Agent Skills çağrısını kullanın. `AGENT-SKILLS-LEARNING.md` oluşturulur ve beceri sözleşmesi, keşif, çağırma, korumalı alan sınırları, yayımlama değerlendirmeleri ve gerçek hostlarda taşınabilirlik konularını tutarlı bir beş derslik sırayla işler. Web üzerinden [Agent Skills yoluna](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) başlayabilirsiniz.
+Yalnızca Agent Skills yolunu mu istiyorsunuz? Kullandığınız hosta uygun Agent Skills çağrısını kullanın. `AGENT-SKILLS-LEARNING.md` oluşturulur ve beceri sözleşmesi, keşif, çağırma, korumalı alan sınırları, yayımlama değerlendirmeleri ve gerçek hostlarda taşınabilirlik konularını tutarlı bir beş derslik sırayla işler. Web üzerinden [Agent Skills yoluna](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) başlayabilirsiniz.
 
 Yükleyici, yapılandırabildiği hostları listeler ve yükleme konumunu sorar. Node.js, `npx`, `python3`, desteklenen bir host veya yazılabilir bir kapsam henüz yoksa web sitesini kullanın ya da `docs/en.md` dosyasını elle okuyun. Böylece kavramları öğrenebilirsiniz; gerçek hostta keşif, çağırma, betik çalıştırma ve kaldırma kanıtlarını ise ön denetim tamamlanınca toplayabilirsiniz. [Dersleri aiengineeringfromscratch.com adresinde okuyun](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Başlamadan önce 542 dersin hepsine göz atmanız gerekmez. Bir hedef seçin. H
 
 | Hedefiniz | GitHub'da öğrenin | Web sitesinde öğrenin |
 |---|---|---|
-| Yeni başlıyorum ve temeli eksiksiz kurmak istiyorum | [Aşama 0: Kurulum ve Araçlar](../../phases/00-setup-and-tooling/) | [Geliştirme Ortamı](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Python biliyorum, matematik ve makine öğrenmesi temellerini istiyorum | [Aşama 1: Matematik Temelleri](../../phases/01-math-foundations/) | [Lineer Cebir Sezgisi](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Üretime hazır LLM uygulamaları geliştirmek istiyorum | [Aşama 11: LLM Mühendisliği](../../phases/11-llm-engineering/) | [Prompt Mühendisliği](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Ajan geliştirmek istiyorum | [Aşama 14: Ajan Mühendisliği](../../phases/14-agent-engineering/) | [Ajan Döngüsü](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Kodlama ajanlarını gerçek depolarda kullanmak istiyorum | [Ajan Destekli Mühendislik yolu](../../learning-paths/using-coding-agents.json) | [Ajan Destekli Mühendislik](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Uygulamaya geçmeden önce doğru şeyi tasarlamak istiyorum | [Ürün Muhakemesi ve Teslimat yolu](../../learning-paths/shaping-the-build.json) | [Ürün Muhakemesi ve Teslimat](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Yeni başlıyorum ve temeli eksiksiz kurmak istiyorum | [Aşama 0: Kurulum ve Araçlar](../../phases/00-setup-and-tooling/) | [Geliştirme Ortamı](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Python biliyorum, matematik ve makine öğrenmesi temellerini istiyorum | [Aşama 1: Matematik Temelleri](../../phases/01-math-foundations/) | [Lineer Cebir Sezgisi](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Üretime hazır LLM uygulamaları geliştirmek istiyorum | [Aşama 11: LLM Mühendisliği](../../phases/11-llm-engineering/) | [Prompt Mühendisliği](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Ajan geliştirmek istiyorum | [Aşama 14: Ajan Mühendisliği](../../phases/14-agent-engineering/) | [Ajan Döngüsü](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Kodlama ajanlarını gerçek depolarda kullanmak istiyorum | [Ajan Destekli Mühendislik yolu](../../learning-paths/using-coding-agents.json) | [Ajan Destekli Mühendislik](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Uygulamaya geçmeden önce doğru şeyi tasarlamak istiyorum | [Ürün Muhakemesi ve Teslimat yolu](../../learning-paths/shaping-the-build.json) | [Ürün Muhakemesi ve Teslimat](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Nereden başlayacağınızdan emin değil misiniz? [`start-learning` seviye belirleme rehberini](../../skills/start-learning/SKILL.md) ya da [web sitesindeki ön koşullar kılavuzunu](https://aiengineeringfromscratch.com/prereqs.html) kullanın.
 
@@ -272,9 +301,9 @@ Nereden başlayacağınızdan emin değil misiniz? [`start-learning` seviye beli
 
 | Hedefiniz | GitHub'da öğrenin | Web sitesinde öğrenin |
 |---|---|---|
-| Model Context Protocol (MCP) ile geliştirmek istiyorum | [Model Context Protocol (MCP) rotası](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) yolu](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Agent Skills yazıp yayımlamak istiyorum | [Odaklı Agent Skills rotası](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills yolu](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Derlenmiş programları okumak istiyorum | [Odaklı Tersine Mühendislik rotası](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Tersine Mühendislik yolu](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Model Context Protocol (MCP) ile geliştirmek istiyorum | [Model Context Protocol (MCP) rotası](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) yolu](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Agent Skills yazıp yayımlamak istiyorum | [Odaklı Agent Skills rotası](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills yolu](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Derlenmiş programları okumak istiyorum | [Odaklı Tersine Mühendislik rotası](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Tersine Mühendislik yolu](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Nereden başlayacağınızdan emin değil misiniz? [`start-learning` seviye beli
 
 Yirmi aşama birbiri üzerine kurulur: matematik temeldir; ajanlar ve üretim ortamı en üst katmandır. Alt katmanları biliyorsanız ileri atlayabilirsiniz; ancak temel eksikler, ilerideki konuların neden aksadığını anlamanızı zorlaştırır.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Yirmi aşama altı ciltte gruplanmış; altta temeller, üstte üretim yer alır ve her ciltte neyi inşa ettiğiniz gösterilir." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Aşama bağımlılık grafiği</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

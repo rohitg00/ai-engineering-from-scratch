@@ -15,11 +15,17 @@
 
 Toteuta mallien sisäiset mekanismit, hakuprosessit ja agenttien suoritusympäristöt. Testaa niitä, tutki virheitä ja säilytä koodi sekä arviointitulokset.
 
-**[Aloita oppiminen](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Valitse polku](#learning-routes)** · **[Kokeile harjoitusta](#interactive-lab)** · **[Rakenna projekti](#project-challenges)** · **[Selaa opetussuunnitelmaa](#contents)**
+**[Aloita oppiminen](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Valitse polku](#learning-routes)** · **[Kokeile harjoitusta](#interactive-lab)** · **[Rakenna projekti](#project-challenges)** · **[Selaa opetussuunnitelmaa](#contents)**
 
 Maksuton, avoin lähdekoodi, MIT-lisenssi. Opi verkkosivustolla, koodausagentin kanssa tai suorittamalla koodia paikallisesti.
 
 > 542 oppituntia. 20 vaihetta. Python, TypeScript, Rust, Julia, Go.
+
+Muuta koodausagenttisi opettajaksi yhdellä komennolla:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT-lisenssi"></a>
@@ -48,6 +54,29 @@ Maksuton, avoin lähdekoodi, MIT-lisenssi. Opi verkkosivustolla, koodausagentin 
   <sub><span>Tukesi pitää jokaisen oppitunnin maksuttomana ja avoimena lähdekoodina.</span> <a href="#supporters">Katso kaikki tukijat</a> · <a href="../../SPONSORS.md">Ryhdy sponsoriksi</a></sub>
 </p>
 
+## Miksi rakentaa alusta asti
+
+Kehyskirjaston kutsu piilottaa juuri sen osan, joka hajoaa. Kun tappio muuttuu NaN-arvoksi tai agentti toistaa saman työkalukutsun, pienen version kirjoittanut tietää, mistä etsiä. Jokaisella oppitunnilla kirjoitat ensin sen version, ajat sen ja ajat sitten tuotantokirjaston samaan ongelmaan vertaillaksesi näitä kahta.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Yksi oppitunti neljässä vaiheessa: ongelma, rakenna alusta asti, käytä tuotantokirjastoa ja toimita artefakti, jonka säilytät. Esimerkki on agenttisilmukan oppitunti vaiheessa 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Tekstiversio</summary>
+
+- **01 · ONGELMA**: LLM palauttaa tekstiä. Se ei voi toimia.
+- **02 · RAKENNA**: ReAct-silmukka Python-kielellä stdlib-kirjastolla.
+- **03 · KÄYTÄ**: Sama silmukka agentti-SDK:ssa.
+- **04 · TOIMITA**: skill-agent-loop.md, valmis agentillesi.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Maksuton, avoin lähdekoodi, MIT-lisenssi. Opi verkkosivustolla, koodausagentin 
 
 | Polku | Ensimmäinen oppitunti |
 |---|---|
-| Mallien perusteet | [Asennus ja työkalut](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM-järjestelmät | [Kehotteiden suunnittelu](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Agentit ja järjestelmien toimitus | [Agenttisilmukka](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Mallien perusteet | [Asennus ja työkalut](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM-järjestelmät | [Kehotteiden suunnittelu](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Agentit ja järjestelmien toimitus | [Agenttisilmukka](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Vertaa urapolkuja](https://aiengineeringfromscratch.com/learning-paths.html) · [Esitiedot ja opiskeluaika](#study-guide)
 
@@ -68,7 +97,7 @@ Maksuton, avoin lähdekoodi, MIT-lisenssi. Opi verkkosivustolla, koodausagentin 
 Kaksikymmentä aloituspistettä etenee gradienttilaskeutumisella neliöllisellä häviöfunktiolla. Kuvaaja näyttää niiden sijainnit ja keskimääräisen häviön jokaisen päivityksen jälkeen.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Kaksikymmentä aloituspistettä etenee gradienttilaskeutumisella neliöllisellä
   </a>
 </p>
 
-[Säädä oppimisnopeutta oppitunnilla](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Vertaa gradienttilaskeutumista, momenttia ja Adamia koodissa](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Säädä oppimisnopeutta oppitunnilla](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Vertaa gradienttilaskeutumista, momenttia ja Adamia koodissa](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Kymmenen kysymyksen tasotesti määrittää lähtövaiheen osaamisesi perusteell
 
 Haluatko opiskella vain Model Context Protocolia (MCP)? Käytä isäntäsovelluksesi MCP-kutsua. Se luo tiedoston `MCP-LEARNING.md` ja seuraa 17 oppitunnin polkua, joka käsittelee tilattomia pyyntöjä, siirtotapoja, kaksisuuntaista työtä, turvallisuutta, luotettavuutta, rekisterin hallintaa ja vaatimustenmukaisuuden näyttöä. Tarkka järjestys ja tarkistuspisteet ovat [Model Context Protocolin (MCP) manifestissa](../../learning-paths/model-context-protocol.json).
 
-Haluatko opiskella vain Agent Skillsiä? Käytä isäntäsovelluksesi Agent Skills -kutsua. Se luo tiedoston `AGENT-SKILLS-LEARNING.md` ja seuraa viiden oppitunnin kokonaisuutta: sopimus, löytäminen, kutsuminen, hiekkalaatikon rajat sekä julkaisuarviointi ja siirrettävyys oikeiden isäntäsovellusten välillä. Aloita verkossa [Agent Skills -polulta](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Haluatko opiskella vain Agent Skillsiä? Käytä isäntäsovelluksesi Agent Skills -kutsua. Se luo tiedoston `AGENT-SKILLS-LEARNING.md` ja seuraa viiden oppitunnin kokonaisuutta: sopimus, löytäminen, kutsuminen, hiekkalaatikon rajat sekä julkaisuarviointi ja siirrettävyys oikeiden isäntäsovellusten välillä. Aloita verkossa [Agent Skills -polulta](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Asennusohjelma näyttää tukemansa isäntäsovellukset ja kysyy asennuspaikkaa. Jos Node.js, `npx`, `python3`, tuettu isäntäsovellus tai kirjoitettava hakemisto vielä puuttuu, käytä verkkosivustoa tai lue `docs/en.md` itse. Näin opit käsitteet, mutta todellisen isäntäsovelluksen löytämis-, kutsumis-, skripti- ja poistotestien näyttö odottaa, kunnes esitarkistus on mahdollista tehdä. Lue oppitunnit osoitteessa [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Sinun ei tarvitse käydä läpi 542 oppituntia ennen aloittamista. Valitse yksi 
 
 | Tavoitteesi | Opi GitHubissa | Opi verkkosivustolla |
 |---|---|---|
-| Olen aloittelija ja haluan kattavan perustan | [Vaihe 0: Asennus ja työkalut](../../phases/00-setup-and-tooling/) | [Kehitysympäristö](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Osaan Pythonia ja haluan oppia matematiikan ja koneoppimisen perusteet | [Vaihe 1: Matematiikan perusteet](../../phases/01-math-foundations/) | [Lineaarialgebran intuitio](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Haluan rakentaa LLM-sovelluksia tuotantokäyttöön | [Vaihe 11: LLM-kehitys](../../phases/11-llm-engineering/) | [Kehotteiden suunnittelu](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Haluan rakentaa agentteja | [Vaihe 14: Agenttikehitys](../../phases/14-agent-engineering/) | [Agentin toimintasilmukka](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Haluan käyttää ohjelmointiagentteja oikeissa koodivarastoissa | [Agenttiavusteisen kehityksen oppimispolku](../../learning-paths/using-coding-agents.json) | [Agenttiavusteinen kehitys](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Haluan määritellä oikean toteutuskohteen ennen ohjelmointia | [Tuotepäätösten ja toimituksen oppimispolku](../../learning-paths/shaping-the-build.json) | [Tuotepäätökset ja toimitus](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Olen aloittelija ja haluan kattavan perustan | [Vaihe 0: Asennus ja työkalut](../../phases/00-setup-and-tooling/) | [Kehitysympäristö](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Osaan Pythonia ja haluan oppia matematiikan ja koneoppimisen perusteet | [Vaihe 1: Matematiikan perusteet](../../phases/01-math-foundations/) | [Lineaarialgebran intuitio](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Haluan rakentaa LLM-sovelluksia tuotantokäyttöön | [Vaihe 11: LLM-kehitys](../../phases/11-llm-engineering/) | [Kehotteiden suunnittelu](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Haluan rakentaa agentteja | [Vaihe 14: Agenttikehitys](../../phases/14-agent-engineering/) | [Agentin toimintasilmukka](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Haluan käyttää ohjelmointiagentteja oikeissa koodivarastoissa | [Agenttiavusteisen kehityksen oppimispolku](../../learning-paths/using-coding-agents.json) | [Agenttiavusteinen kehitys](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Haluan määritellä oikean toteutuskohteen ennen ohjelmointia | [Tuotepäätösten ja toimituksen oppimispolku](../../learning-paths/shaping-the-build.json) | [Tuotepäätökset ja toimitus](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Etkö tiedä, mistä aloittaa? Käytä [`start-learning`-tasokartoitustuutoria](../../skills/start-learning/SKILL.md) tai [verkkosivuston esitieto-opasta](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Vertaa neljää ydinaluetta ja kuutta urapolkua [tekoälykehityksen oppimispolui
 
 | Tavoitteesi | Opi GitHubissa | Opi verkkosivustolla |
 |---|---|---|
-| Haluan rakentaa Model Context Protocol (MCP) -protokollalla | [Model Context Protocol (MCP) -polku](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) -oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Haluan kirjoittaa ja julkaista Agent Skills -taitoja | [Agent Skills -täsmäpolku](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills -oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Haluan lukea käännettyjä ohjelmia | [Takaisinmallinnuksen polku](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Takaisinmallinnuksen oppimispolku](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Haluan rakentaa Model Context Protocol (MCP) -protokollalla | [Model Context Protocol (MCP) -polku](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol (MCP) -oppimispolku](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Haluan kirjoittaa ja julkaista Agent Skills -taitoja | [Agent Skills -täsmäpolku](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills -oppimispolku](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Haluan lukea käännettyjä ohjelmia | [Takaisinmallinnuksen polku](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Takaisinmallinnuksen oppimispolku](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Vertaa neljää ydinaluetta ja kuutta urapolkua [tekoälykehityksen oppimispolui
 
 Kaksikymmentä vaihetta rakentuu toistensa päälle. Matematiikka on perusta. Agentit ja tuotanto ovat ylimmät kerrokset. Siirry eteenpäin, jos osaat jo alemmat kerrokset, mutta älä ohita niitä ja sitten ihmettele, miksi jokin ylempänä rikkoutuu.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Kaksikymmentä vaihetta ryhmiteltynä kuuteen osaan, perusteista alhaalla tuotantoon ylhäällä, sekä se, mitä rakennat kussakin osassa." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Vaiheiden riippuvuuskaavio</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

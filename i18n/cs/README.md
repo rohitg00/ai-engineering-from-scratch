@@ -15,11 +15,17 @@
 
 Implementujte vnitřní mechanismy modelů, vyhledávací pipeline a běhová prostředí agentů. Testujte je, zkoumejte chyby a uchovávejte kód i výsledky hodnocení.
 
-**[Začít se učit](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Vyberte si cestu](#learning-routes)** · **[Vyzkoušejte laboratoř](#interactive-lab)** · **[Vytvořte projekt](#project-challenges)** · **[Prohlédnout osnovy](#contents)**
+**[Začít se učit](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Vyberte si cestu](#learning-routes)** · **[Vyzkoušejte laboratoř](#interactive-lab)** · **[Vytvořte projekt](#project-challenges)** · **[Prohlédnout osnovy](#contents)**
 
 Zdarma, s otevřeným zdrojovým kódem, pod licencí MIT. Učte se na webu, s programovacím agentem nebo spouštěním místního kódu.
 
 > 542 lekcí. 20 fází. Python, TypeScript, Rust, Julia, Go.
+
+Proměňte svého programovacího agenta v lektora jediným příkazem:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licence MIT"></a>
@@ -48,6 +54,29 @@ Zdarma, s otevřeným zdrojovým kódem, pod licencí MIT. Učte se na webu, s p
   <sub><span>Díky vaší podpoře zůstává každá lekce zdarma a s otevřeným kódem.</span> <a href="#supporters">Zobrazit všechny podporovatele</a> · <a href="../../SPONSORS.md">Staňte se sponzorem</a></sub>
 </p>
 
+## Proč stavět od základu
+
+Volání frameworku skrývá právě to, co se rozbije. Když se ztráta změní na NaN nebo agent opakuje stejné volání nástroje, ten, kdo napsal malou verzi, ví, kde hledat. V každé lekci nejprve napíšete tuto verzi a spustíte ji, poté spustíte produkční knihovnu na stejném problému a obě řešení porovnáte.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Jedna lekce ve čtyřech krocích: problém, vytvoření od základu, použití produkční knihovny a vydání artefaktu, který si ponecháte. Příkladem je lekce o smyčce agenta ve fázi 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Textová verze</summary>
+
+- **01 · PROBLÉM**: LLM vrací text. Nedokáže jednat.
+- **02 · VYTVOŘTE**: Smyčka ReAct v stdlib Python.
+- **03 · POUŽIJTE**: Stejná smyčka v SDK agenta.
+- **04 · VYDEJTE**: skill-agent-loop.md, připravený pro vašeho agenta.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Zdarma, s otevřeným zdrojovým kódem, pod licencí MIT. Učte se na webu, s p
 
 | Cesta | První lekce |
 |---|---|
-| Základy modelů | [Nastavení a nástroje](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Systémy LLM | [Návrh promptů](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Agenti a dodávání systémů | [Smyčka agenta](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Základy modelů | [Nastavení a nástroje](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Systémy LLM | [Návrh promptů](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Agenti a dodávání systémů | [Smyčka agenta](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Porovnat kariérní cesty](https://aiengineeringfromscratch.com/learning-paths.html) · [Předpoklady a doba studia](#study-guide)
 
@@ -68,7 +97,7 @@ Zdarma, s otevřeným zdrojovým kódem, pod licencí MIT. Učte se na webu, s p
 Dvacet počátečních bodů postupuje gradientním sestupem po kvadratické ztrátové funkci. Graf ukazuje jejich polohy a průměrnou ztrátu po každé aktualizaci.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Dvacet počátečních bodů postupuje gradientním sestupem po kvadratické ztr
   </a>
 </p>
 
-[Upravte rychlost učení v lekci](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Porovnejte v kódu gradientní sestup, hybnost a Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Upravte rychlost učení v lekci](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Porovnejte v kódu gradientní sestup, hybnost a Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Rozřazovací kvíz s deseti otázkami přiřadí vaše znalosti k počáteční
 
 Chcete pouze Model Context Protocol (MCP)? Použijte vyvolání MCP pro svého hostitele. Vytvoří `MCP-LEARNING.md` a provede vás 17 lekcemi o bezstavových požadavcích, transportech, obousměrné práci, bezpečnosti, spolehlivosti, správě registru a důkazech shody. Přesné pořadí a kontrolní body jsou v [manifestu Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json).
 
-Chcete pouze Agent Skills? Použijte vyvolání Agent Skills pro svého hostitele. Vytvoří `AGENT-SKILLS-LEARNING.md` a nabídne souvislou cestu pěti lekcí: kontrakt, objevování, vyvolání, hranice sandboxu a následně hodnocení vydání a přenositelnost mezi skutečnými hostiteli. Na webu začněte [cestou Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Chcete pouze Agent Skills? Použijte vyvolání Agent Skills pro svého hostitele. Vytvoří `AGENT-SKILLS-LEARNING.md` a nabídne souvislou cestu pěti lekcí: kontrakt, objevování, vyvolání, hranice sandboxu a následně hodnocení vydání a přenositelnost mezi skutečnými hostiteli. Na webu začněte [cestou Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Instalátor uvede podporované hostitele a zeptá se na místo instalace. Pokud ještě nemáte Node.js, `npx`, `python3`, podporovaného hostitele nebo zapisovatelný rozsah, použijte web nebo čtěte `docs/en.md` ručně. Tak poznáte koncepty, ale důkazy objevování, vyvolání, skriptů a odinstalace na skutečném hostiteli zůstanou nevyřízené, dokud nebude dostupná vstupní kontrola. Lekce najdete na [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Než začnete, nemusíte procházet všech 542 lekcí. Vyberte si jeden cíl. Ka
 
 | Váš cíl | Učení na GitHub | Učení na webu |
 |---|---|---|
-| Začínám a chci získat úplné základy | [Etapa 0: Nastavení a nástroje](../../phases/00-setup-and-tooling/) | [Vývojové prostředí](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Znám Python a chci základy matematiky a ML | [Etapa 1: Matematické základy](../../phases/01-math-foundations/) | [Intuitivní pochopení lineární algebry](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Chci vytvářet aplikace LLM pro produkční nasazení | [Etapa 11: Inženýrství LLM](../../phases/11-llm-engineering/) | [Návrh promptů](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Chci vytvářet agenty | [Etapa 14: Inženýrství agentů](../../phases/14-agent-engineering/) | [Smyčka agenta](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Chci používat programovací agenty ve skutečných repozitářích | [Studijní cesta vývoje s pomocí agentů](../../learning-paths/using-coding-agents.json) | [Vývoj s pomocí agentů](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Chci před implementací určit, co má smysl vytvořit | [Studijní cesta produktového rozhodování a dodání](../../learning-paths/shaping-the-build.json) | [Produktové rozhodování a dodání](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Začínám a chci získat úplné základy | [Etapa 0: Nastavení a nástroje](../../phases/00-setup-and-tooling/) | [Vývojové prostředí](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Znám Python a chci základy matematiky a ML | [Etapa 1: Matematické základy](../../phases/01-math-foundations/) | [Intuitivní pochopení lineární algebry](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Chci vytvářet aplikace LLM pro produkční nasazení | [Etapa 11: Inženýrství LLM](../../phases/11-llm-engineering/) | [Návrh promptů](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Chci vytvářet agenty | [Etapa 14: Inženýrství agentů](../../phases/14-agent-engineering/) | [Smyčka agenta](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Chci používat programovací agenty ve skutečných repozitářích | [Studijní cesta vývoje s pomocí agentů](../../learning-paths/using-coding-agents.json) | [Vývoj s pomocí agentů](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Chci před implementací určit, co má smysl vytvořit | [Studijní cesta produktového rozhodování a dodání](../../learning-paths/shaping-the-build.json) | [Produktové rozhodování a dodání](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Nevíte, kde začít? Použijte [tutora `start-learning` pro určení úrovně](../../skills/start-learning/SKILL.md) nebo [průvodce vstupními znalostmi na webu](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Porovnejte čtyři hlavní oblasti a šest kariérních cest v [AI Engineering L
 
 | Váš cíl | Učení na GitHub | Učení na webu |
 |---|---|---|
-| Chci vyvíjet s Model Context Protocol (MCP) | [Trasa Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Studijní cesta Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Chci psát a vydávat Agent Skills | [Zaměřená trasa Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Studijní cesta Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Chci číst zkompilované programy | [Trasa reverzního inženýrství](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Studijní cesta reverzního inženýrství](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Chci vyvíjet s Model Context Protocol (MCP) | [Trasa Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Studijní cesta Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Chci psát a vydávat Agent Skills | [Zaměřená trasa Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Studijní cesta Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Chci číst zkompilované programy | [Trasa reverzního inženýrství](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Studijní cesta reverzního inženýrství](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Porovnejte čtyři hlavní oblasti a šest kariérních cest v [AI Engineering L
 
 Dvacet fází na sebe navazuje. Matematika je základem, agenti a produkce střechou. Pokud nižší vrstvy znáte, přeskočte je. Nepřeskakujte však neznámé základy a potom se nedivte, že nahoře něco selhává.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Dvacet fází seskupených do šesti dílů, od základů dole po produkci nahoře, s tím, co v každém dílu vytvoříte." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Graf závislostí fází</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

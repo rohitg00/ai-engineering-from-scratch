@@ -15,11 +15,17 @@
 
 实现模型内部机制、检索流水线和智能体运行时。测试它们，分析故障，并保留代码和评估结果。
 
-**[开始学习](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[选择学习路径](#learning-routes)** · **[试做实验](#interactive-lab)** · **[构建项目](#project-challenges)** · **[浏览课程目录](#contents)**
+**[开始学习](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[选择学习路径](#learning-routes)** · **[试做实验](#interactive-lab)** · **[构建项目](#project-challenges)** · **[浏览课程目录](#contents)**
 
 免费、开源、MIT 许可。你可以在网站学习、使用编程代理辅助学习，或在本地运行代码。
 
 > 542 节课. 20 个阶段. Python, TypeScript, Rust, Julia, Go.
+
+一条命令，把你的编程智能体变成导师：
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MIT 许可证"></a>
@@ -48,6 +54,29 @@
   <sub><span>你的支持让每节课都能保持免费和开源。</span> <a href="#supporters">查看所有支持者</a> · <a href="../../SPONSORS.md">成为赞助方</a></sub>
 </p>
 
+## 为什么要从零开始构建
+
+调用框架会隐藏最容易出问题的部分。当损失变成 NaN，或智能体不断重复同一个工具调用时，亲手写过小版本的人知道该从哪里查起。每节课都会先让你写出这个小版本并运行它，再用生产级库解决同一个问题，对比两者。
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="一节课的四个步骤：问题、从零构建、使用生产级库、交付一个你能长期保留的成果。示例是第 14 阶段的智能体循环课。" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>文字版本</summary>
+
+- **01 · 问题**: LLM 返回文本，却不能行动。
+- **02 · 构建**: 用 stdlib Python 写一个 ReAct 循环。
+- **03 · 使用**: 在智能体 SDK 中运行同样的循环。
+- **04 · 交付**: skill-agent-loop.md，供你的智能体直接使用。
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | 路线 | 起始课程 |
 |---|---|
-| 模型基础 | [环境设置与工具](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM 系统 | [提示工程](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| 智能体与交付 | [智能体循环](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| 模型基础 | [环境设置与工具](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM 系统 | [提示工程](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| 智能体与交付 | [智能体循环](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [比较职业路径](https://aiengineeringfromscratch.com/learning-paths.html) · [先修知识与学习时间](#study-guide)
 
@@ -68,7 +97,7 @@
 20 个起点在二次损失函数上执行梯度下降。图中显示每次更新后的位置和平均损失。
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[在课程中调整学习率](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [通过代码比较 GD、动量和 Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[在课程中调整学习率](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [通过代码比较 GD、动量和 Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 只想学习 MCP？使用上表中对应宿主的调用方式。它会创建 `MCP-LEARNING.md`，带你沿着 17 节课的路线学习无状态请求、传输方式、双向交互、安全、可靠性、注册表治理和一致性证据。顺序与检查点见 [MCP 路线清单](../../learning-paths/model-context-protocol.json)。
 
-只想学习 Agent Skills？该路线会创建 `AGENT-SKILLS-LEARNING.md`，用五节课依次学习技能契约、发现、调用、沙盒边界，以及发布评估和真实宿主的可移植性。也可以从网站上的 [Agent Skills 路线](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills)开始。
+只想学习 Agent Skills？该路线会创建 `AGENT-SKILLS-LEARNING.md`，用五节课依次学习技能契约、发现、调用、沙盒边界，以及发布评估和真实宿主的可移植性。也可以从网站上的 [Agent Skills 路线](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills)开始。
 
 安装器会列出它支持的宿主，并询问安装位置。如果你暂时没有 Node.js、`npx`、`python3`、受支持的宿主或可写入的安装目录，仍可在网站阅读课程，或手动打开 `docs/en.md`。这能帮助你学习概念；宿主发现、技能调用、脚本执行和卸载的真实证据，则要等环境就绪后再完成。[访问课程网站](https://aiengineeringfromscratch.com)。
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | 你的目标 | 在 GitHub 学习 | 在网站学习 |
 |---|---|---|
-| 我刚入门，需要完整的基础 | [阶段 0：环境与工具](../../phases/00-setup-and-tooling/) | [开发环境](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| 我会 Python，想补齐数学与机器学习基础 | [阶段 1：数学基础](../../phases/01-math-foundations/) | [线性代数直觉](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| 我想构建可用于生产环境的 LLM 应用 | [阶段 11：LLM 工程](../../phases/11-llm-engineering/) | [提示词工程](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| 我想构建智能体 | [阶段 14：智能体工程](../../phases/14-agent-engineering/) | [智能体循环](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| 我想用编程智能体处理真实仓库 | [智能体辅助工程路径](../../learning-paths/using-coding-agents.json) | [智能体辅助工程](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| 我想在动手前确定真正该构建什么 | [产品判断与交付路径](../../learning-paths/shaping-the-build.json) | [产品判断与交付](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| 我刚入门，需要完整的基础 | [阶段 0：环境与工具](../../phases/00-setup-and-tooling/) | [开发环境](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| 我会 Python，想补齐数学与机器学习基础 | [阶段 1：数学基础](../../phases/01-math-foundations/) | [线性代数直觉](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| 我想构建可用于生产环境的 LLM 应用 | [阶段 11：LLM 工程](../../phases/11-llm-engineering/) | [提示词工程](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| 我想构建智能体 | [阶段 14：智能体工程](../../phases/14-agent-engineering/) | [智能体循环](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| 我想用编程智能体处理真实仓库 | [智能体辅助工程路径](../../learning-paths/using-coding-agents.json) | [智能体辅助工程](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| 我想在动手前确定真正该构建什么 | [产品判断与交付路径](../../learning-paths/shaping-the-build.json) | [产品判断与交付](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 不确定从哪里开始？试试 [`start-learning` 入门测评导师](../../skills/start-learning/SKILL.md)，或查看[网站的先修知识指南](https://aiengineeringfromscratch.com/prereqs.html)。
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | 你的目标 | 在 GitHub 学习 | 在网站学习 |
 |---|---|---|
-| 我想用模型上下文协议（MCP）构建系统 | [MCP 学习路线](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [MCP 路径](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| 我想编写并发布 Agent Skills | [Agent Skills 专项路线](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 路径](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| 我想读懂编译后的程序 | [逆向工程专项路线](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [逆向工程路径](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| 我想用模型上下文协议（MCP）构建系统 | [MCP 学习路线](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [MCP 路径](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| 我想编写并发布 Agent Skills | [Agent Skills 专项路线](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skills 路径](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| 我想读懂编译后的程序 | [逆向工程专项路线](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [逆向工程路径](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 20 个阶段层层衔接：数学是地基，智能体与生产部署是上层。如果你已经掌握前面的基础，可以直接进入更高阶段；遇到困难时，也能沿着课程依赖回到缺失的知识点。
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十个阶段分为六卷，底部是基础，顶部是生产，并标出每一卷要构建的内容。" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>阶段依赖关系图</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

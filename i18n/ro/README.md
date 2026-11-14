@@ -15,11 +15,17 @@
 
 Implementează mecanismele interne ale modelelor, fluxurile de regăsire a informațiilor și mediile de execuție pentru agenți. Testează-le, analizează erorile și păstrează codul și rezultatele evaluării.
 
-**[Începe să înveți](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Alege un parcurs](#learning-routes)** · **[Încearcă un laborator](#interactive-lab)** · **[Construiește un proiect](#project-challenges)** · **[Consultă programa](#contents)**
+**[Începe să înveți](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Alege un parcurs](#learning-routes)** · **[Încearcă un laborator](#interactive-lab)** · **[Construiește un proiect](#project-challenges)** · **[Consultă programa](#contents)**
 
 Gratuit, cu sursă deschisă, licență MIT. Învață pe site, cu un agent de programare sau rulând cod local.
 
 > 542 de lecții. 20 de etape. Python, TypeScript, Rust, Julia, Go.
+
+Transformă-ți agentul de programare într-un tutore cu o singură comandă:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licență MIT"></a>
@@ -48,6 +54,29 @@ Gratuit, cu sursă deschisă, licență MIT. Învață pe site, cu un agent de p
   <sub><span>Sprijinul tău păstrează fiecare lecție gratuită și cu sursă deschisă.</span> <a href="#supporters">Vezi toți susținătorii</a> · <a href="../../SPONSORS.md">Devino sponsor</a></sub>
 </p>
 
+## De ce să construiești de la zero
+
+Un apel la un framework ascunde exact partea care se strică. Când pierderea devine NaN sau un agent repetă același apel de instrument, cine a scris versiunea mică știe unde să caute. Fiecare lecție îți cere să scrii mai întâi acea versiune, să o rulezi, apoi să rulezi biblioteca de producție pe aceeași problemă ca să compari cele două rezultate.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="O lecție în patru pași: problema, construiește de la zero, folosește biblioteca de producție și livrează un artefact pe care îl păstrezi. Exemplul este lecția despre bucla agentului din etapa 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Versiune text</summary>
+
+- **01 · PROBLEMA**: Un LLM returnează text. Nu poate acționa.
+- **02 · CONSTRUIEȘTE**: O buclă ReAct în stdlib Python.
+- **03 · FOLOSEȘTE**: Aceeași buclă într-un SDK de agent.
+- **04 · LIVREAZĂ**: skill-agent-loop.md, gata pentru agentul tău.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Gratuit, cu sursă deschisă, licență MIT. Învață pe site, cu un agent de p
 
 | Traseu | Prima lecție |
 |---|---|
-| Fundamentele modelelor | [Configurare și instrumente](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Sisteme LLM | [Ingineria prompturilor](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Agenți și livrarea sistemelor | [Bucla agentului](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Fundamentele modelelor | [Configurare și instrumente](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Sisteme LLM | [Ingineria prompturilor](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Agenți și livrarea sistemelor | [Bucla agentului](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Compară traseele profesionale](https://aiengineeringfromscratch.com/learning-paths.html) · [Cerințe preliminare și timp de studiu](#study-guide)
 
@@ -68,7 +97,7 @@ Gratuit, cu sursă deschisă, licență MIT. Învață pe site, cu un agent de p
 Douăzeci de puncte de pornire urmează coborârea pe gradient pe o funcție de pierdere pătratică. Graficul arată pozițiile lor și pierderea medie după fiecare actualizare.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Douăzeci de puncte de pornire urmează coborârea pe gradient pe o funcție de 
   </a>
 </p>
 
-[Ajustează rata de învățare în lecție](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Compară în cod coborârea pe gradient, impulsul și Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Ajustează rata de învățare în lecție](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Compară în cod coborârea pe gradient, impulsul și Adam](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Un test de plasare cu zece întrebări îți mapează cunoștințele la etapa de
 
 Vrei doar Model Context Protocol (MCP)? Folosește invocarea MCP pentru gazda ta. Aceasta creează `MCP-LEARNING.md` și urmează un traseu de 17 lecții despre cereri fără stare, transporturi, lucru bidirecțional, securitate, fiabilitate, guvernanța registrului și dovezi de conformitate. Ordinea exactă și punctele de control se află în [manifestul Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json).
 
-Vrei doar Agent Skills? Folosește invocarea Agent Skills pentru gazda ta. Creează `AGENT-SKILLS-LEARNING.md` și urmează un traseu coerent de cinci lecții: contract, descoperire, invocare, limitele mediului izolat, apoi evaluarea lansării și portabilitatea între gazde reale. Pe web începe cu [traseul Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Vrei doar Agent Skills? Folosește invocarea Agent Skills pentru gazda ta. Creează `AGENT-SKILLS-LEARNING.md` și urmează un traseu coerent de cinci lecții: contract, descoperire, invocare, limitele mediului izolat, apoi evaluarea lansării și portabilitatea între gazde reale. Pe web începe cu [traseul Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Instalatorul enumeră gazdele pe care le poate configura și întreabă unde să instaleze. Dacă nu ai încă Node.js, `npx`, `python3`, o gazdă acceptată sau un domeniu în care poți scrie, folosește site-ul ori citește manual `docs/en.md`. Înveți astfel conceptele, dar dovezile de descoperire, invocare, scripturi și dezinstalare pe o gazdă reală rămân de strâns până când poți trece verificarea inițială. Citește lecțiile pe [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Nu trebuie să parcurgi toate cele 542 de lecții înainte să începi. Alege un
 
 | Obiectivul tău | Învață pe GitHub | Învață pe site |
 |---|---|---|
-| Sunt la început și vreau o bază completă | [Etapa 0: Configurare și instrumente](../../phases/00-setup-and-tooling/) | [Mediul de dezvoltare](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Cunosc Python și vreau bazele matematicii și ale ML | [Etapa 1: Fundamente matematice](../../phases/01-math-foundations/) | [Înțelegerea intuitivă a algebrei liniare](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Vreau să construiesc aplicații LLM pentru producție | [Etapa 11: Ingineria LLM](../../phases/11-llm-engineering/) | [Ingineria prompturilor](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Vreau să construiesc agenți | [Etapa 14: Ingineria agenților](../../phases/14-agent-engineering/) | [Bucla agentului](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Vreau să folosesc agenți de programare în depozite de cod reale | [Traseul de inginerie asistată de agenți](../../learning-paths/using-coding-agents.json) | [Inginerie asistată de agenți](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Vreau să stabilesc ce merită construit înainte de implementare | [Traseul de decizie și livrare a produsului](../../learning-paths/shaping-the-build.json) | [Decizie și livrare a produsului](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Sunt la început și vreau o bază completă | [Etapa 0: Configurare și instrumente](../../phases/00-setup-and-tooling/) | [Mediul de dezvoltare](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Cunosc Python și vreau bazele matematicii și ale ML | [Etapa 1: Fundamente matematice](../../phases/01-math-foundations/) | [Înțelegerea intuitivă a algebrei liniare](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Vreau să construiesc aplicații LLM pentru producție | [Etapa 11: Ingineria LLM](../../phases/11-llm-engineering/) | [Ingineria prompturilor](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Vreau să construiesc agenți | [Etapa 14: Ingineria agenților](../../phases/14-agent-engineering/) | [Bucla agentului](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Vreau să folosesc agenți de programare în depozite de cod reale | [Traseul de inginerie asistată de agenți](../../learning-paths/using-coding-agents.json) | [Inginerie asistată de agenți](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Vreau să stabilesc ce merită construit înainte de implementare | [Traseul de decizie și livrare a produsului](../../learning-paths/shaping-the-build.json) | [Decizie și livrare a produsului](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Nu știi de unde să începi? Folosește [tutorele `start-learning` pentru evaluarea nivelului](../../skills/start-learning/SKILL.md) sau [ghidul de cunoștințe necesare de pe site](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Compară patru domenii de bază și șase trasee profesionale în [AI Engineerin
 
 | Obiectivul tău | Învață pe GitHub | Învață pe site |
 |---|---|---|
-| Vreau să construiesc folosind Model Context Protocol (MCP) | [Ruta Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Traseul Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Vreau să scriu și să public Agent Skills | [Ruta dedicată Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Traseul Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Vreau să citesc programe compilate | [Ruta de inginerie inversă](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Traseul de inginerie inversă](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Vreau să construiesc folosind Model Context Protocol (MCP) | [Ruta Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Traseul Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Vreau să scriu și să public Agent Skills | [Ruta dedicată Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Traseul Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Vreau să citesc programe compilate | [Ruta de inginerie inversă](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Traseul de inginerie inversă](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Compară patru domenii de bază și șase trasee profesionale în [AI Engineerin
 
 Douăzeci de etape se construiesc una peste alta. Matematica este fundația, agenții și producția sunt acoperișul. Sari înainte dacă stăpânești straturile inferioare, dar nu le omite pentru a te mira apoi că ceva de sus nu funcționează.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Cele douăzeci de etape grupate în șase volume, de la fundamente jos până la producție sus, cu ce construiești în fiecare volum." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Graful dependențelor dintre etape</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

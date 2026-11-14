@@ -15,11 +15,17 @@
 
 モデルの内部処理、検索パイプライン、エージェントの実行環境を実装します。テストして失敗を調べ、コードと評価結果を残してください。
 
-**[学習を始める](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[学習パスを選ぶ](#learning-routes)** · **[ラボを試す](#interactive-lab)** · **[プロジェクトを作る](#project-challenges)** · **[カリキュラムを見る](#contents)**
+**[学習を始める](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[学習パスを選ぶ](#learning-routes)** · **[ラボを試す](#interactive-lab)** · **[プロジェクトを作る](#project-challenges)** · **[カリキュラムを見る](#contents)**
 
 無料、オープンソース、MIT ライセンスです。ウェブサイト、コーディングエージェント、ローカルでのコード実行から学び方を選べます。
 
 > 542 授業. 20段階. Python, TypeScript, Rust, Julia, Go.
+
+コマンドひとつで、コーディングエージェントを家庭教師に変えます。
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="MITライセンス"></a>
@@ -48,6 +54,29 @@
   <sub><span>皆さまの支援により、すべてのレッスンを無料かつオープンソースで提供できます。</span> <a href="#supporters">すべての支援者を見る</a> · <a href="../../SPONSORS.md">支援者になる</a></sub>
 </p>
 
+## なぜゼロから作るのか
+
+フレームワークの呼び出しは、壊れやすい部分を隠してしまいます。損失が NaN になったときや、エージェントが同じツール呼び出しを繰り返すときは、小さなバージョンを自分で書いた人なら、どこを調べればよいかが分かります。各レッスンでは、まずその小さなバージョンを書いて実行し、次に同じ問題を本番用ライブラリで実行して両者を比べます。
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="ひとつのレッスンは四つのステップで進みます。問題、ゼロから作る、本番用ライブラリを使う、手元に残る成果物を出荷する。例はフェーズ 14 のエージェントループのレッスンです。" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>テキスト版</summary>
+
+- **01 · 問題**: LLM はテキストを返すだけで、行動はできない。
+- **02 · 制作**: stdlib Python で書く ReAct ループ。
+- **03 · 活用**: エージェント SDK での同じループ。
+- **04 · 出荷**: skill-agent-loop.md、あなたのエージェントですぐ使える形で。
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@
 
 | ルート | 最初のレッスン |
 |---|---|
-| モデルの基礎 | [環境構築とツール](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| LLM システム | [プロンプトエンジニアリング](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| エージェントとデリバリー | [エージェントループ](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| モデルの基礎 | [環境構築とツール](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| LLM システム | [プロンプトエンジニアリング](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| エージェントとデリバリー | [エージェントループ](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [キャリアパスを比較する](https://aiengineeringfromscratch.com/learning-paths.html) · [前提知識と学習時間](#study-guide)
 
@@ -68,7 +97,7 @@
 20 個の開始点が二次損失関数上で勾配降下法に従って移動します。グラフには各更新後の位置と平均損失が表示されます。
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@
   </a>
 </p>
 
-[レッスンで学習率を調整する](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [コードで GD、モメンタム、Adam を比較する](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[レッスンで学習率を調整する](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [コードで GD、モメンタム、Adam を比較する](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ python3 --version
 
 Model Context Protocol（MCP）だけを学ぶ場合は、ホストに対応したMCPの呼び出し方法を使ってください。`MCP-LEARNING.md`を作成し、ステートレスなリクエスト、トランスポート、双方向処理、セキュリティ、信頼性、レジストリガバナンス、適合性の証跡を扱う17レッスンのパスを進みます。正確な順序とチェックポイントは[Model Context Protocol（MCP）マニフェスト](../../learning-paths/model-context-protocol.json)に記載されています。
 
-Agent Skillsだけを学ぶ場合は、ホストに対応したAgent Skillsの呼び出し方法を使ってください。`AGENT-SKILLS-LEARNING.md`を作成し、契約、発見、呼び出し、サンドボックス境界、評価によるリリースと実ホストでの移植性を扱う、一貫した5レッスンのパスを進みます。ウェブでは[Agent Skillsのパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills)から始められます。
+Agent Skillsだけを学ぶ場合は、ホストに対応したAgent Skillsの呼び出し方法を使ってください。`AGENT-SKILLS-LEARNING.md`を作成し、契約、発見、呼び出し、サンドボックス境界、評価によるリリースと実ホストでの移植性を扱う、一貫した5レッスンのパスを進みます。ウェブでは[Agent Skillsのパス](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills)から始められます。
 
 インストーラーは設定可能なホストを一覧表示し、インストール先を尋ねます。Node.js、`npx`、`python3`、対応ホスト、書き込み可能なスコープのいずれかをまだ利用できない場合は、ウェブサイトを使うか、`docs/en.md`を手動で読んでください。そこで概念は学べますが、実ホストでの検出、呼び出し、スクリプト実行、アンインストールの証跡は、事前チェックを実行できるようになるまで取得できません。[aiengineeringfromscratch.com](https://aiengineeringfromscratch.com)でレッスンを読むこともできます。
 
@@ -256,12 +285,12 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | 目標 | GitHubで学ぶ | ウェブサイトで学ぶ |
 |---|---|---|
-| 初心者として、基礎を一通り学びたい | [フェーズ0：セットアップとツール](../../phases/00-setup-and-tooling/) | [開発環境](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Pythonは知っていて、数学と機械学習の基礎を学びたい | [フェーズ1：数学の基礎](../../phases/01-math-foundations/) | [線形代数の直観](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| 本番向けのLLMアプリケーションを構築したい | [フェーズ11：LLMエンジニアリング](../../phases/11-llm-engineering/) | [プロンプトエンジニアリング](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| エージェントを構築したい | [フェーズ14：エージェントエンジニアリング](../../phases/14-agent-engineering/) | [エージェントループ](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| 実際のリポジトリでコーディングエージェントを使いたい | [エージェント支援エンジニアリングの学習パス](../../learning-paths/using-coding-agents.json) | [エージェント支援エンジニアリング](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| 実装に着手する前に、適切なものを作る判断をしたい | [プロダクト判断とデリバリーの学習パス](../../learning-paths/shaping-the-build.json) | [プロダクト判断とデリバリー](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| 初心者として、基礎を一通り学びたい | [フェーズ0：セットアップとツール](../../phases/00-setup-and-tooling/) | [開発環境](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Pythonは知っていて、数学と機械学習の基礎を学びたい | [フェーズ1：数学の基礎](../../phases/01-math-foundations/) | [線形代数の直観](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| 本番向けのLLMアプリケーションを構築したい | [フェーズ11：LLMエンジニアリング](../../phases/11-llm-engineering/) | [プロンプトエンジニアリング](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| エージェントを構築したい | [フェーズ14：エージェントエンジニアリング](../../phases/14-agent-engineering/) | [エージェントループ](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| 実際のリポジトリでコーディングエージェントを使いたい | [エージェント支援エンジニアリングの学習パス](../../learning-paths/using-coding-agents.json) | [エージェント支援エンジニアリング](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| 実装に着手する前に、適切なものを作る判断をしたい | [プロダクト判断とデリバリーの学習パス](../../learning-paths/shaping-the-build.json) | [プロダクト判断とデリバリー](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 自分に合う内容がわからない場合は、[`start-learning`レベル判定チューター](../../skills/start-learning/SKILL.md)または[ウェブサイトの前提条件ガイド](https://aiengineeringfromscratch.com/prereqs.html)を使ってください。
 
@@ -272,9 +301,9 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 | 目標 | GitHubで学ぶ | ウェブサイトで学ぶ |
 |---|---|---|
-| Model Context Protocol（MCP）を使って構築したい | [Model Context Protocol（MCP）の学習パス](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol（MCP）のパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Agent Skillsを書いて公開したい | [Agent Skills集中学習パス](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skillsのパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| コンパイル済みプログラムを読み解きたい | [リバースエンジニアリング学習ルート](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [リバースエンジニアリングのパス](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Model Context Protocol（MCP）を使って構築したい | [Model Context Protocol（MCP）の学習パス](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Model Context Protocol（MCP）のパス](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Agent Skillsを書いて公開したい | [Agent Skills集中学習パス](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Agent Skillsのパス](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| コンパイル済みプログラムを読み解きたい | [リバースエンジニアリング学習ルート](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [リバースエンジニアリングのパス](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
 
 20のフェーズを積み重ねて学びます。土台は数学、最上部はエージェントと本番運用です。下の層をすでに知っていれば先へ進んでもかまいません。ただし、基礎を飛ばしたあとで上の層がうまく動かない理由に悩まないようにしてください。
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十のフェーズを六つの巻にまとめた図。下が基礎、上が本番で、各巻で作るものを示しています。" width="840">
+  </picture>
+</p>
+
+<details>
+<summary>フェーズの依存関係グラフ</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

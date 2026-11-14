@@ -15,11 +15,17 @@
 
 Ipatupad ang mga panloob na bahagi ng modelo, retrieval pipeline, at runtime ng agent. Subukan ang mga ito, suriin ang mga pagkabigo, at panatilihin ang code at resulta ng pagsusuri.
 
-**[Magsimulang matuto](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Pumili ng landas](#learning-routes)** · **[Subukan ang isang lab](#interactive-lab)** · **[Bumuo ng proyekto](#project-challenges)** · **[Tingnan ang kurikulum](#contents)**
+**[Magsimulang matuto](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Pumili ng landas](#learning-routes)** · **[Subukan ang isang lab](#interactive-lab)** · **[Bumuo ng proyekto](#project-challenges)** · **[Tingnan ang kurikulum](#contents)**
 
 Libre, open source, lisensiyang MIT. Matuto sa websayt, kasama ang isang coding agent, o sa pagpapatakbo ng lokal na code.
 
 > 542 aralin. 20 yugto. Python, TypeScript, Rust, Julia, Go.
+
+Gawing tutor ang iyong coding agent sa isang command lang:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Lisensiyang MIT"></a>
@@ -48,6 +54,29 @@ Libre, open source, lisensiyang MIT. Matuto sa websayt, kasama ang isang coding 
   <sub><span>Dahil sa suporta mo, nananatiling libre at open source ang bawat aralin.</span> <a href="#supporters">Tingnan ang lahat ng sumusuporta</a> · <a href="../../SPONSORS.md">Maging sponsor</a></sub>
 </p>
 
+## Bakit buuin mula sa simula
+
+Itinatago ng pagtawag sa framework ang bahaging nasisira. Kapag naging NaN ang loss o inuulit ng isang agent ang parehong tawag sa tool, alam ng sumulat ng maliit na bersyon kung saan titingin. Sa bawat aralin, isusulat at patatakbuhin mo muna ang bersyong iyon, saka mo patatakbuhin ang production library sa parehong problema upang maihambing ang dalawa.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Isang aralin sa apat na hakbang: ang problema, buuin mula sa simula, gamitin ang production library, at ihatid ang artifact na iingatan mo. Ang halimbawa ay ang aralin sa loop ng agent sa Yugto 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Bersyong teksto</summary>
+
+- **01 · PROBLEMA**: Nagbabalik ng teksto ang isang LLM. Hindi ito makakilos.
+- **02 · BUUIN**: Isang ReAct loop sa stdlib Python.
+- **03 · GAMITIN**: Ang parehong loop sa isang agent SDK.
+- **04 · IHATID**: skill-agent-loop.md, handa para sa iyong agent.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Libre, open source, lisensiyang MIT. Matuto sa websayt, kasama ang isang coding 
 
 | Landas | Unang aralin |
 |---|---|
-| Mga pundasyon ng modelo | [Paghahanda at mga tool](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Mga sistemang LLM | [Pagdidisenyo ng prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Mga agent at paghahatid | [Ang loop ng agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Mga pundasyon ng modelo | [Paghahanda at mga tool](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Mga sistemang LLM | [Pagdidisenyo ng prompt](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Mga agent at paghahatid | [Ang loop ng agent](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Ihambing ang mga landas sa karera](https://aiengineeringfromscratch.com/learning-paths.html) · [Mga kinakailangan at oras ng pag-aaral](#study-guide)
 
@@ -68,7 +97,7 @@ Libre, open source, lisensiyang MIT. Matuto sa websayt, kasama ang isang coding 
 Dalawampung panimulang punto ang sumusunod sa gradient descent sa isang quadratic loss. Ipinapakita ng graph ang kanilang mga posisyon at mean loss pagkatapos ng bawat update.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Dalawampung panimulang punto ang sumusunod sa gradient descent sa isang quadrati
   </a>
 </p>
 
-[Ayusin ang learning rate sa aralin](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Ihambing ang GD, momentum, at Adam sa code](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Ayusin ang learning rate sa aralin](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Ihambing ang GD, momentum, at Adam sa code](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Itinutugma ng sampung-tanong na pagsusulit ang alam mo na sa angkop na panimulan
 
 Model Context Protocol (MCP) lang ang gusto mo? Gamitin ang pagtawag sa MCP para sa host mo. Gumagawa ito ng `MCP-LEARNING.md` at sumusunod sa iisang rutang may 17 aralin tungkol sa stateless na request, transport, dalawang-direksiyong trabaho, seguridad, pagiging maaasahan, pamamahala ng registry, at ebidensiya ng pagsunod. Nasa [manifest ng Model Context Protocol (MCP)](../../learning-paths/model-context-protocol.json) ang eksaktong pagkakasunod-sunod at mga checkpoint.
 
-Agent Skills lang ang gusto mo? Gamitin ang pagtawag sa Agent Skills para sa host mo. Gumagawa ito ng `AGENT-SKILLS-LEARNING.md` at sumusunod sa magkakaugnay na limang aralin: kontrata, pagtuklas, pagtawag, hangganan ng sandbox, at pagkatapos ay mga pagsusuri sa paglabas at portability sa tunay na host. Magsimula sa web sa [landas ng Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Agent Skills lang ang gusto mo? Gamitin ang pagtawag sa Agent Skills para sa host mo. Gumagawa ito ng `AGENT-SKILLS-LEARNING.md` at sumusunod sa magkakaugnay na limang aralin: kontrata, pagtuklas, pagtawag, hangganan ng sandbox, at pagkatapos ay mga pagsusuri sa paglabas at portability sa tunay na host. Magsimula sa web sa [landas ng Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 Inililista ng installer ang mga host na kaya nitong i-configure at nagtatanong kung saan mag-i-install. Kung wala ka pang Node.js, `npx`, `python3`, suportadong host, o saklaw na maaaring sulatan, gamitin ang website o manu-manong basahin ang `docs/en.md`. Itinuturo ng paraang iyon ang mga konsepto, ngunit nakabinbin pa ang ebidensiya ng pagtuklas, pagtawag, script, at pag-uninstall sa tunay na host hanggang magawa ang paunang pagsusuri. Basahin ang mga aralin sa [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Hindi mo kailangang tingnan ang lahat ng 542 aralin bago magsimula. Pumili ng is
 
 | Layunin mo | Matuto sa GitHub | Matuto sa website |
 |---|---|---|
-| Baguhan ako at gusto ko ng kumpletong pundasyon | [Yugto 0: Pag-setup at mga tool](../../phases/00-setup-and-tooling/) | [Development environment](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Marunong ako ng Python at gusto ko ng pundasyon sa matematika at ML | [Yugto 1: Pundasyon sa matematika](../../phases/01-math-foundations/) | [Pag-unawa sa linear algebra](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Gusto kong bumuo ng mga LLM application para sa aktuwal na paggamit | [Yugto 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Gusto kong bumuo ng mga agent | [Yugto 14: Agent Engineering](../../phases/14-agent-engineering/) | [Ang agent loop](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Gusto kong gumamit ng mga coding agent sa mga tunay na repository | [Landas sa engineering na may tulong ng agent](../../learning-paths/using-coding-agents.json) | [Engineering na may tulong ng agent](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Gusto kong matukoy ang tamang bubuuin bago magpatupad | [Landas sa pagpapasya at paghahatid ng produkto](../../learning-paths/shaping-the-build.json) | [Pagpapasya at paghahatid ng produkto](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Baguhan ako at gusto ko ng kumpletong pundasyon | [Yugto 0: Pag-setup at mga tool](../../phases/00-setup-and-tooling/) | [Development environment](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Marunong ako ng Python at gusto ko ng pundasyon sa matematika at ML | [Yugto 1: Pundasyon sa matematika](../../phases/01-math-foundations/) | [Pag-unawa sa linear algebra](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Gusto kong bumuo ng mga LLM application para sa aktuwal na paggamit | [Yugto 11: LLM Engineering](../../phases/11-llm-engineering/) | [Prompt Engineering](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Gusto kong bumuo ng mga agent | [Yugto 14: Agent Engineering](../../phases/14-agent-engineering/) | [Ang agent loop](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Gusto kong gumamit ng mga coding agent sa mga tunay na repository | [Landas sa engineering na may tulong ng agent](../../learning-paths/using-coding-agents.json) | [Engineering na may tulong ng agent](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Gusto kong matukoy ang tamang bubuuin bago magpatupad | [Landas sa pagpapasya at paghahatid ng produkto](../../learning-paths/shaping-the-build.json) | [Pagpapasya at paghahatid ng produkto](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Hindi sigurado kung saan ka magsisimula? Gamitin ang [`start-learning` tutor para matukoy ang antas mo](../../skills/start-learning/SKILL.md) o ang [gabay sa mga kinakailangan sa website](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Ihambing ang apat na pangunahing larangan at anim na ruta ng karera sa [Mga Land
 
 | Layunin mo | Matuto sa GitHub | Matuto sa website |
 |---|---|---|
-| Gusto kong bumuo gamit ang Model Context Protocol (MCP) | [Ruta ng Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Landas ng Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Gusto kong magsulat at maglabas ng Agent Skills | [Nakatuong ruta ng Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Landas ng Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Gusto kong basahin ang mga compiled na programa | [Ruta ng reverse engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Landas ng reverse engineering](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Gusto kong bumuo gamit ang Model Context Protocol (MCP) | [Ruta ng Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Landas ng Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Gusto kong magsulat at maglabas ng Agent Skills | [Nakatuong ruta ng Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Landas ng Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Gusto kong basahin ang mga compiled na programa | [Ruta ng reverse engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Landas ng reverse engineering](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Ihambing ang apat na pangunahing larangan at anim na ruta ng karera sa [Mga Land
 
 Magkakapatong ang dalawampung yugto. Matematika ang pundasyon. Mga agent at aktuwal na deployment ang nasa tuktok. Lumaktaw kung alam mo na ang mga nasa ibaba, pero huwag basta lumaktaw at pagkatapos ay magtaka kung bakit may pumapalya sa itaas.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Ang dalawampung yugto na nakapangkat sa anim na tomo, mula sa mga pundasyon sa ibaba hanggang sa production sa itaas, kasama ang binubuo mo sa bawat tomo." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Graph ng dependency ng mga yugto</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 

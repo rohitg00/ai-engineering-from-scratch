@@ -15,11 +15,17 @@
 
 Implementa i componenti interni dei modelli, le pipeline di recupero e gli ambienti di esecuzione degli agenti. Testali, esamina i guasti e conserva il codice e i risultati della valutazione.
 
-**[Inizia a imparare](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment)** · **[Scegli un percorso](#learning-routes)** · **[Prova un laboratorio](#interactive-lab)** · **[Realizza un progetto](#project-challenges)** · **[Consulta il programma](#contents)**
+**[Inizia a imparare](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment)** · **[Scegli un percorso](#learning-routes)** · **[Prova un laboratorio](#interactive-lab)** · **[Realizza un progetto](#project-challenges)** · **[Consulta il programma](#contents)**
 
 Gratuito, open source, con licenza MIT. Impara sul sito, con un agente di programmazione o eseguendo codice locale.
 
 > 542 lezioni. 20 fasi. Python, TypeScript, Rust, Julia, Go.
+
+Trasforma il tuo agente di programmazione in un tutor con un solo comando:
+
+```bash
+npx skills add rohitg00/ai-engineering-from-scratch
+```
 
 <p align="center">
   <a href="../../LICENSE"><img src="https://img.shields.io/badge/license-MIT-1a1a1a?style=flat-square&labelColor=fafaf5" alt="Licenza MIT"></a>
@@ -48,6 +54,29 @@ Gratuito, open source, con licenza MIT. Impara sul sito, con un agente di progra
   <sub><span>Il tuo sostegno mantiene ogni lezione gratuita e open source.</span> <a href="#supporters">Vedi tutti i sostenitori</a> · <a href="../../SPONSORS.md">Diventa uno sponsor</a></sub>
 </p>
 
+## Perché costruirlo da zero
+
+La chiamata a un framework nasconde proprio la parte che si rompe. Quando una perdita diventa NaN o un agente ripete la stessa chiamata a uno strumento, chi ha scritto la versione piccola sa dove guardare. In ogni lezione scrivi prima quella versione, la esegui e poi esegui la libreria di produzione sullo stesso problema per confrontare le due.
+
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Una lezione in quattro passi: il problema, costruirlo da zero, usare la libreria di produzione e rilasciare un artefatto che conservi. L’esempio è la lezione sul ciclo dell’agente nella fase 14." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Versione testuale</summary>
+
+- **01 · IL PROBLEMA**: Un LLM restituisce testo. Non può agire.
+- **02 · COSTRUISCILO**: Un ciclo ReAct in Python con stdlib.
+- **03 · USALO**: Lo stesso ciclo in un SDK per agenti.
+- **04 · RILASCIALO**: skill-agent-loop.md, pronto per il tuo agente.
+
+</details>
+
 <a id="see-what-you-will-build-and-keep"></a>
 <a id="learning-routes"></a>
 
@@ -55,9 +84,9 @@ Gratuito, open source, con licenza MIT. Impara sul sito, con un agente di progra
 
 | Percorso | Lezione iniziale |
 |---|---|
-| Fondamenti dei modelli | [Configurazione e strumenti](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Sistemi LLM | [Ingegneria dei prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Agenti e rilascio | [Il ciclo dell’agente](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
+| Fondamenti dei modelli | [Configurazione e strumenti](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Sistemi LLM | [Ingegneria dei prompt](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Agenti e rilascio | [Il ciclo dell’agente](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
 
 [Confronta i percorsi professionali](https://aiengineeringfromscratch.com/learning-paths.html) · [Prerequisiti e tempo di studio](#study-guide)
 
@@ -68,7 +97,7 @@ Gratuito, open source, con licenza MIT. Impara sul sito, con un agente di progra
 Venti punti iniziali seguono la discesa del gradiente su una funzione di perdita quadratica. Il grafico mostra le loro posizioni e la perdita media dopo ogni aggiornamento.
 
 <p align="center">
-  <a href="https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization">
+  <a href="https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization">
     <picture>
       <source media="(max-width: 600px) and (prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-dark.png">
       <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="../../assets/readme/101-gradient-mobile-light.png">
@@ -82,7 +111,7 @@ Venti punti iniziali seguono la discesa del gradiente su una funzione di perdita
   </a>
 </p>
 
-[Regola il tasso di apprendimento nella lezione](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/08-optimization#loss-landscape-visualization) · [Confronta GD, momentum e Adam nel codice](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
+[Regola il tasso di apprendimento nella lezione](https://aiengineeringfromscratch.com/learn/math-foundations/optimization#loss-landscape-visualization) · [Confronta GD, momentum e Adam nel codice](../../phases/01-math-foundations/08-optimization/code/optimizers.py)
 
 <a id="project-challenges"></a>
 
@@ -199,7 +228,7 @@ Un quiz di orientamento di dieci domande individua la fase da cui partire in bas
 
 Ti interessa solo il Model Context Protocol (MCP)? Usa l’istruzione MCP corrispondente al tuo host. Verrà creato `MCP-LEARNING.md` e seguirai un percorso di 17 lezioni: richieste senza stato, trasporti, operazioni bidirezionali, sicurezza, affidabilità, governance dei registri e prove di conformità. L’ordine e i punti di verifica sono definiti nel [manifesto del percorso MCP](../../learning-paths/model-context-protocol.json).
 
-Ti interessano solo le Agent Skills? Usa l’istruzione corrispondente al tuo host. Verrà creato `AGENT-SKILLS-LEARNING.md` e seguirai un percorso coerente di cinque lezioni: contratto, discovery, invocazione, limiti della sandbox, valutazione prima del rilascio e portabilità tra host reali. Inizia sul web dal [percorso Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills).
+Ti interessano solo le Agent Skills? Usa l’istruzione corrispondente al tuo host. Verrà creato `AGENT-SKILLS-LEARNING.md` e seguirai un percorso coerente di cinque lezioni: contratto, discovery, invocazione, limiti della sandbox, valutazione prima del rilascio e portabilità tra host reali. Inizia sul web dal [percorso Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills).
 
 L’installer elenca gli host che può configurare e ti chiede dove installare le skill. Se non hai ancora Node.js, `npx`, `python3`, un host supportato o un ambito scrivibile, consulta il sito web o leggi `docs/en.md`. Imparerai i concetti, ma dovrai rimandare le prove di discovery, invocazione, esecuzione degli script e disinstallazione sull’host reale finché non saranno disponibili i requisiti preliminari. Consulta [aiengineeringfromscratch.com](https://aiengineeringfromscratch.com).
 
@@ -256,12 +285,12 @@ Non serve scorrere tutte le 542 lezioni prima di cominciare. Scegli un obiettivo
 
 | Il tuo obiettivo | Su GitHub | Sul sito web |
 |---|---|---|
-| Parto da zero e voglio acquisire tutte le basi | [Fase 0: Configurazione e strumenti](../../phases/00-setup-and-tooling/) | [Ambiente di sviluppo](https://aiengineeringfromscratch.com/lesson?path=phases/00-setup-and-tooling/01-dev-environment) |
-| Conosco Python e voglio acquisire le basi matematiche e di apprendimento automatico | [Fase 1: Fondamenti matematici](../../phases/01-math-foundations/) | [Intuizione dell’algebra lineare](https://aiengineeringfromscratch.com/lesson?path=phases/01-math-foundations/01-linear-algebra-intuition) |
-| Voglio creare applicazioni LLM pronte per la produzione | [Fase 11: Ingegneria degli LLM](../../phases/11-llm-engineering/) | [Ingegneria dei prompt](https://aiengineeringfromscratch.com/lesson?path=phases/11-llm-engineering/01-prompt-engineering) |
-| Voglio creare agenti | [Fase 14: Ingegneria degli agenti](../../phases/14-agent-engineering/) | [Il ciclo dell’agente](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/01-the-agent-loop) |
-| Voglio usare agenti di programmazione su repository reali | [Percorso di ingegneria assistita da agenti](../../learning-paths/using-coding-agents.json) | [Ingegneria assistita da agenti](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/31-agent-workbench-why-models-fail&learningPath=using-coding-agents) |
-| Voglio definire la soluzione giusta prima di implementarla | [Percorso di definizione del prodotto e di consegna](../../learning-paths/shaping-the-build.json) | [Definire il prodotto e consegnarlo](https://aiengineeringfromscratch.com/lesson?path=phases/14-agent-engineering/47-outcomes-before-output&learningPath=shaping-the-build) |
+| Parto da zero e voglio acquisire tutte le basi | [Fase 0: Configurazione e strumenti](../../phases/00-setup-and-tooling/) | [Ambiente di sviluppo](https://aiengineeringfromscratch.com/learn/setup-and-tooling/dev-environment) |
+| Conosco Python e voglio acquisire le basi matematiche e di apprendimento automatico | [Fase 1: Fondamenti matematici](../../phases/01-math-foundations/) | [Intuizione dell’algebra lineare](https://aiengineeringfromscratch.com/learn/math-foundations/linear-algebra-intuition) |
+| Voglio creare applicazioni LLM pronte per la produzione | [Fase 11: Ingegneria degli LLM](../../phases/11-llm-engineering/) | [Ingegneria dei prompt](https://aiengineeringfromscratch.com/learn/llm-engineering/prompt-engineering) |
+| Voglio creare agenti | [Fase 14: Ingegneria degli agenti](../../phases/14-agent-engineering/) | [Il ciclo dell’agente](https://aiengineeringfromscratch.com/learn/agent-engineering/the-agent-loop) |
+| Voglio usare agenti di programmazione su repository reali | [Percorso di ingegneria assistita da agenti](../../learning-paths/using-coding-agents.json) | [Ingegneria assistita da agenti](https://aiengineeringfromscratch.com/learn/agent-engineering/agent-workbench-why-models-fail?learningPath=using-coding-agents) |
+| Voglio definire la soluzione giusta prima di implementarla | [Percorso di definizione del prodotto e di consegna](../../learning-paths/shaping-the-build.json) | [Definire il prodotto e consegnarlo](https://aiengineeringfromscratch.com/learn/agent-engineering/outcomes-before-output?learningPath=shaping-the-build) |
 
 Non sai da dove cominciare? Usa il [tutor di orientamento `start-learning`](../../skills/start-learning/SKILL.md) oppure consulta la [guida ai prerequisiti del sito web](https://aiengineeringfromscratch.com/prereqs.html).
 
@@ -272,9 +301,9 @@ Confronta quattro aree fondamentali e sei percorsi professionali nella [guida ai
 
 | Il tuo obiettivo | Su GitHub | Sul sito web |
 |---|---|---|
-| Voglio creare applicazioni con il Model Context Protocol (MCP) | [Percorso Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Percorso Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/06-mcp-fundamentals&learningPath=model-context-protocol) |
-| Voglio scrivere e distribuire Agent Skills | [Percorso mirato di Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Percorso Agent Skills](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/22-skills-and-agent-sdks&learningPath=agent-skills) |
-| Voglio leggere programmi compilati | [Percorso di reverse engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Percorso di reverse engineering](https://aiengineeringfromscratch.com/lesson?path=phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch&learningPath=reverse-engineering) |
+| Voglio creare applicazioni con il Model Context Protocol (MCP) | [Percorso Model Context Protocol (MCP)](../../phases/13-tools-and-protocols/README.md#model-context-protocol-mcp-path) | [Percorso Model Context Protocol (MCP)](https://aiengineeringfromscratch.com/learn/tools-and-protocols/mcp-fundamentals?learningPath=model-context-protocol) |
+| Voglio scrivere e distribuire Agent Skills | [Percorso mirato di Agent Skills](../../phases/13-tools-and-protocols/README.md#agent-skills-fast-path) | [Percorso Agent Skills](https://aiengineeringfromscratch.com/learn/tools-and-protocols/skills-and-agent-sdks?learningPath=agent-skills) |
+| Voglio leggere programmi compilati | [Percorso di reverse engineering](../../phases/13-tools-and-protocols/README.md#reverse-engineering-path) | [Percorso di reverse engineering](https://aiengineeringfromscratch.com/learn/tools-and-protocols/program-anatomy-elf-from-scratch?learningPath=reverse-engineering) |
 
 </details>
 
@@ -305,6 +334,18 @@ Confronta quattro aree fondamentali e sei percorsi professionali nella [guida ai
 
 Le venti fasi si costruiscono l’una sull’altra. La matematica è la base; gli agenti e la messa in produzione sono il livello più alto. Se conosci già i livelli inferiori, puoi andare avanti; se li salti, però, non stupirti se gli argomenti più avanzati ti risultano ostici.
 
+<p align="center">
+  <picture>
+    <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
+    <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Le venti fasi raggruppate in sei volumi, dalle fondamenta in basso alla produzione in alto, con ciò che costruisci in ogni volume." width="840">
+  </picture>
+</p>
+
+<details>
+<summary>Grafo delle dipendenze tra le fasi</summary>
+
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#fafaf5','primaryTextColor':'#1a1a1a','primaryBorderColor':'#3553ff','lineColor':'#3553ff','fontFamily':'JetBrains Mono','fontSize':'12px'}}}%%
 flowchart TB
@@ -332,6 +373,8 @@ flowchart TB
   classDef phase fill:#fafaf5,stroke:#3553ff,color:#1a1a1a
   class P0,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 phase
 ```
+
+</details>
 
 <a id="contents"></a>
 
