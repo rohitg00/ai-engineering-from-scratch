@@ -4,9 +4,9 @@
     "stage": "pre",
     "question": "Why does combining multiple weak classifiers into an ensemble improve accuracy?",
     "options": [
-      "Weak classifiers are always faster than strong classifiers",
-      "Each weak classifier memorizes a different part of the test set",
-      "Ensembles always use more training data than single models",
+      "Weak classifiers are always faster than strong classifiers, so combining them keeps both the speed and the accuracy",
+      "Each weak classifier memorizes a different part of the test set, so their union covers every test example exactly once",
+      "Ensembles always use more training data than single models, which explains the gain",
       "If the classifiers make different errors, majority voting cancels out individual mistakes"
     ],
     "correct": 3,
@@ -17,10 +17,10 @@
     "stage": "pre",
     "question": "What is the main difference between bagging and boosting?",
     "options": [
-      "Bagging requires labeled data; boosting works unsupervised",
+      "Bagging requires labeled data; boosting works unsupervised, which is why boosting is preferred for raw unlabeled text collections",
       "Bagging trains models in parallel on random subsets; boosting trains models sequentially, focusing on previous errors",
-      "Bagging reduces bias; boosting reduces variance",
-      "Bagging uses deep neural networks; boosting uses decision trees"
+      "Bagging reduces bias; boosting reduces variance, which is the accepted trade-off between the two families",
+      "Bagging uses deep neural networks; boosting uses decision trees, so the choice is really about model architecture"
     ],
     "correct": 1,
     "explanation": "Bagging trains models independently on bootstrap samples (parallel, reduces variance). Boosting trains models sequentially, with each new model focusing on the mistakes of the ensemble so far (reduces bias)."
@@ -31,9 +31,9 @@
     "question": "In AdaBoost, what happens to the sample weight of a misclassified training point after each round?",
     "options": [
       "It increases, so the next weak learner focuses more on this hard example",
-      "It decreases, so the next learner ignores it",
-      "It stays the same",
-      "It is removed from the training set"
+      "It decreases, so the next learner ignores it and focuses on the easier, already-correct points",
+      "It stays the same regardless of the outcome in every round of training",
+      "It is removed from the training set so that future learners never see this hard example again"
     ],
     "correct": 0,
     "explanation": "AdaBoost increases the weights of misclassified samples after each round. This forces the next weak learner to pay more attention to the examples the ensemble currently gets wrong."
@@ -44,9 +44,9 @@
     "question": "A random forest with 100 trees has the same test accuracy as 200 trees. Adding more trees to 500 also shows no improvement. Why?",
     "options": [
       "After enough trees, variance reduction plateaus and adding more trees provides diminishing returns without increasing overfitting",
-      "500 trees is the maximum allowed",
-      "The trees are all identical so adding more has no effect",
-      "The random forest is underfitting and needs a different algorithm"
+      "500 trees is the maximum allowed by the scikit-learn implementation's hard tree-count limit",
+      "The trees are all identical so adding more has no effect, because bagging never changes what the trees learn",
+      "The random forest has exhausted the unique split thresholds in the data, so every extra tree is pruned down to a stump that repeats an existing vote"
     ],
     "correct": 0,
     "explanation": "Random forests do not overfit with more trees (unlike boosting). However, variance reduction plateaus once enough diverse trees have been averaged. More trees just add compute cost without improving accuracy."
@@ -56,9 +56,9 @@
     "stage": "post",
     "question": "Gradient boosting fits each new tree to what quantity?",
     "options": [
-      "The predictions of the previous tree",
-      "The original target values",
-      "Random subsets of features",
+      "The predictions of the previous tree taken as raw targets",
+      "The original target values, unchanged from the training labels",
+      "Random subsets of features and rows, exactly like bagging draws its bootstrap samples",
       "The residuals (errors) of the current ensemble's predictions"
     ],
     "correct": 3,
