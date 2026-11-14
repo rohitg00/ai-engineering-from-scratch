@@ -1,0 +1,250 @@
+{
+ "langchain_mcp": {
+  "cases": {
+   "http: call add after the crash": {
+    "new_launches": 0,
+    "result": "RuntimeError: Client failed to connect: All connection attempts failed",
+    "secs": 0.006
+   },
+   "http: call add after the timed-out call": {
+    "launches": 0,
+    "result": "ToolMessage status success",
+    "secs": 0.013
+   },
+   "http: call add(2,3), no open context": {
+    "launches": 0,
+    "result": "ToolMessage status success",
+    "secs": 0.023
+   },
+   "http: call boom (RuntimeError in tool)": {
+    "launches": 0,
+    "result": "ToolMessage status error",
+    "secs": 0.118
+   },
+   "http: call crash (server os._exit mid-call)": {
+    "launches": 0,
+    "result": "RemoteProtocolError: Server disconnected without sending a response.",
+    "secs": 0.011
+   },
+   "http: call fail (ToolError -> isError)": {
+    "launches": 0,
+    "result": "ToolMessage status error",
+    "secs": 0.024
+   },
+   "http: call slow(2), default client timeout": {
+    "launches": 0,
+    "result": "ToolMessage status success",
+    "secs": 2.022
+   },
+   "http: call slow(5) with fastmcp Client(timeout=1)": {
+    "launches": 0,
+    "result": "MCPError: Request 'tools/call' timed out",
+    "secs": 1.018
+   },
+   "http: create_agent + fake model calls crash": {
+    "result": "RuntimeError: Client failed to connect: All connection attempts failed",
+    "secs": 0.01
+   },
+   "http: create_agent + fake model calls fail": {
+    "result": "run finished: HumanMessage, AIMessage, ToolMessage error, AIMessage"
+   },
+   "http: create_agent + fake model calls slow": {
+    "result": "run finished: HumanMessage, AIMessage, ToolMessage success, AIMessage"
+   },
+   "http: list_tools": {
+    "launches": 0,
+    "result": "listed: add, fail, boom, slow, crash",
+    "secs": 0.068
+   },
+   "http: server process after crash": {
+    "result": "return code 3"
+   },
+   "stdio: call add after the crash": {
+    "new_launches": 1,
+    "result": "ToolMessage status success",
+    "secs": 1.659
+   },
+   "stdio: call add after the timed-out call": {
+    "launches": 2,
+    "result": "ToolMessage status success",
+    "secs": 0.008
+   },
+   "stdio: call add(2,3), no open context": {
+    "launches": 1,
+    "result": "ToolMessage status success",
+    "secs": 0.104
+   },
+   "stdio: call boom (RuntimeError in tool)": {
+    "launches": 1,
+    "result": "ToolMessage status error",
+    "secs": 0.117
+   },
+   "stdio: call crash (server os._exit mid-call)": {
+    "launches": 2,
+    "result": "MCPError: Connection closed",
+    "secs": 0.009
+   },
+   "stdio: call fail (ToolError -> isError)": {
+    "launches": 1,
+    "result": "ToolMessage status error",
+    "secs": 0.017
+   },
+   "stdio: call slow(2), default client timeout": {
+    "launches": 1,
+    "result": "ToolMessage status success",
+    "secs": 2.014
+   },
+   "stdio: call slow(5) with fastmcp Client(timeout=1)": {
+    "launches": 2,
+    "result": "MCPError: Request 'tools/call' timed out",
+    "secs": 1.003
+   },
+   "stdio: create_agent + fake model calls crash": {
+    "result": "MCPError: Connection closed",
+    "secs": 0.02
+   },
+   "stdio: create_agent + fake model calls fail": {
+    "result": "run finished: HumanMessage, AIMessage, ToolMessage error, AIMessage"
+   },
+   "stdio: create_agent + fake model calls slow": {
+    "result": "run finished: HumanMessage, AIMessage, ToolMessage success, AIMessage"
+   },
+   "stdio: list_tools": {
+    "launches": 1,
+    "result": "listed: add, fail, boom, slow, crash",
+    "secs": 1.543
+   },
+   "string-target: MCPAdapter(Path('t12_server.py'))": {
+    "launches": 2,
+    "result": "listed: add, fail, boom, slow, crash"
+   },
+   "string-target: MCPAdapter(absolute str path)": {
+    "launches": 0,
+    "result": "ValueError: MCP target '<scripts>/t12_server.py' is not a valid URL."
+   },
+   "string-target: MCPAdapter(relative str 't12_server.py')": {
+    "launches": 0,
+    "result": "ValueError: MCP target 't12_server.py' is not a valid URL."
+   },
+   "string-target: MCPAdapter(str 'file:///...t12_server.py')": {
+    "launches": 0,
+    "result": "ValueError: MCP target 'file://<scripts>/t12_server.py' has scheme 'file', but a string target must be an http or https URL."
+   },
+   "string-target: MCPAdapter(str 'http://127.0.0.1:9/mcp')": {
+    "launches": 0,
+    "result": "constructed"
+   },
+   "string-target: fastmcp.Client('t12_server.py') directly": {
+    "launches": 1,
+    "result": "listed: add, fail, boom, slow, crash"
+   }
+  },
+  "latency": {
+   "http: 50 x add inside `async with adapter`": {
+    "median_ms": 10.7,
+    "n": 50,
+    "p95_ms": 19.59
+   },
+   "http: 50 x add, no open context": {
+    "median_ms": 24.73,
+    "n": 50,
+    "p95_ms": 52.48
+   },
+   "stdio: 50 x add inside `async with adapter`": {
+    "median_ms": 5.86,
+    "n": 50,
+    "p95_ms": 15.03
+   },
+   "stdio: 50 x add, no open context": {
+    "median_ms": 9.53,
+    "n": 50,
+    "p95_ms": 27.26
+   }
+  },
+  "versions": {
+   "fastmcp": "4.2.0",
+   "langchain": "1.5.0",
+   "langchain-core": "1.8.0",
+   "mcp": "2.3.0"
+  }
+ },
+ "langchain_mcp_adapters": {
+  "cases": {
+   "http: call add after crash": {
+    "result": "ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)",
+    "secs": 0.024
+   },
+   "http: call add(2,3)": {
+    "result": "ToolMessage status success",
+    "secs": 0.063
+   },
+   "http: call boom": {
+    "result": "ToolMessage status error",
+    "secs": 0.156
+   },
+   "http: call crash": {
+    "result": "hung: no result after 40s",
+    "secs": 40.008
+   },
+   "http: call fail (isError)": {
+    "result": "ToolMessage status error",
+    "secs": 0.068
+   },
+   "http: get_tools": {
+    "result": "listed: add, fail, boom, slow, crash",
+    "secs": 0.466
+   },
+   "stdio: call add after crash": {
+    "result": "ToolMessage status success",
+    "secs": 1.115
+   },
+   "stdio: call add(2,3)": {
+    "result": "ToolMessage status success",
+    "secs": 1.884
+   },
+   "stdio: call boom": {
+    "result": "ToolMessage status error",
+    "secs": 2.049
+   },
+   "stdio: call crash": {
+    "result": "McpError: Connection closed",
+    "secs": 1.3
+   },
+   "stdio: call fail (isError)": {
+    "result": "ToolMessage status error",
+    "secs": 1.874
+   },
+   "stdio: get_tools": {
+    "result": "listed: add, fail, boom, slow, crash",
+    "secs": 1.724
+   }
+  },
+  "latency": {
+   "http: 50 x add (new session per call)": {
+    "median_ms": 63.61,
+    "n": 50,
+    "p95_ms": 91.79
+   },
+   "stdio: 50 x add (new session per call)": {
+    "median_ms": 1887.21,
+    "n": 50,
+    "p95_ms": 2911.99
+   }
+  },
+  "server_launches": 57,
+  "versions": {
+   "langchain-core": "1.8.0",
+   "langchain-mcp-adapters": "0.3.2",
+   "mcp": "1.30.0"
+  }
+ },
+ "latency_note": "the raw file keeps the median and the p95 of each 50-call block, not each call",
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "runs_per_case": 1,
+ "server": "a FastMCP 4.2.0 server with the tools add, fail, boom, slow, and crash, started over stdio and over Streamable HTTP on 127.0.0.1",
+ "sources": [
+  "capture/lab/T12-mcp-mac/01-langchain-mcp.jsonl",
+  "capture/lab/T12-mcp-mac/02-langchain-mcp-adapters-0.3.2.jsonl",
+  "capture/lab/T12-mcp-mac/03-adapters-launch-count.txt"
+ ]
+}

@@ -1,0 +1,432 @@
+{
+  "id": "langchain-101",
+  "title": "LangChain 101",
+  "subtitle": "Build, run, persist, and debug agents with LangChain 1.5, LangGraph 1.2, and Deep Agents 0.7, with a recorded answer for each decision",
+  "summary": "How the LangChain Python stack turns a model, tools, and a prompt into an agent. The agent streams, pauses for approval, survives a crash, and leaves a trace. Every listing comes from an offline capture of langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Every measured number comes from a recorded run on our own machines.",
+  "audience": "You write Python and you have called a chat model API. You have read some LangChain code, maybe from the 0.x years. You want to know what the 1.x stack does before you build on it.",
+  "edition": "2026.11",
+  "status": "ready",
+  "pin": {
+    "subject": "LangChain (Python): langchain, langchain-core, langgraph, deepagents, langsmith",
+    "version": "1.5.0",
+    "source": "https://github.com/langchain-ai/langchain",
+    "commit": "c2f4036e4c6ca45a8da8a42d8e07a25d2ea48b8f",
+    "date": "2026-11-11",
+    "verified": "2026-11-14"
+  },
+  "outcomes": [
+    "Install the stack from a lockfile on Python 3.11 or later, and say which package each import comes from.",
+    "Build an agent with create_agent, and predict each model call, tool call, and checkpoint of a run.",
+    "Choose a structured output strategy and a set of middleware, and predict the order in which their hooks run.",
+    "Stream a run in the mode you need, and keep a conversation across turns and restarts with a checkpointer.",
+    "Pause a run for human approval, resume it, and say which code runs again on the resume.",
+    "Count the attempts of each retry layer, and make a side effect safe when a crash replays it.",
+    "Connect MCP tools, a retriever, Deep Agents, and LangSmith tracing, and find the cause of a failure from its message."
+  ],
+  "palette": [
+    {
+      "hue": "violet",
+      "meaning": "your code: the caller, its input, and its config"
+    },
+    {
+      "hue": "blue",
+      "meaning": "LangChain: create_agent, middleware, messages, and tools as objects"
+    },
+    {
+      "hue": "indigo",
+      "meaning": "LangGraph: the graph, its nodes, the Pregel loop, and its streams"
+    },
+    {
+      "hue": "plum",
+      "meaning": "the chat model and each model call"
+    },
+    {
+      "hue": "green",
+      "meaning": "tools and the results they return"
+    },
+    {
+      "hue": "olive",
+      "meaning": "services outside the process: providers, LangSmith, Ollama"
+    },
+    {
+      "hue": "amber",
+      "meaning": "lifecycle: steps, next nodes, interrupts, and resumes"
+    },
+    {
+      "hue": "teal",
+      "meaning": "durable state: checkpoints, stores, and their rows"
+    },
+    {
+      "hue": "rose",
+      "meaning": "failure: exceptions, error messages, and repeated side effects"
+    },
+    {
+      "hue": "grey",
+      "meaning": "outside LangChain: Python, packages, the machine, and the operator"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Source code at the release tags",
+      "path": "langchain-ai/langchain at langchain==1.5.0 (c2f4036e), which also holds langchain-core 1.8.0; langchain-ai/langgraph at 1.2.22 (08a20169), with langgraph-checkpoint 4.3.2 and langgraph-prebuilt 1.1.2; langgraph-checkpoint-sqlite 3.1.3 (5bd231cb); langchain-ai/deepagents at deepagents==0.7.38 (c858b364); langchain-ai/langsmith-python at v0.14.17 (15dd2a78); langchain-openai 1.8.0, langchain-anthropic 1.7.10, and langchain-ollama 1.1.0 at their own tags",
+      "usedFor": "every class, function, parameter, default, and error text; cited as code, never quoted"
+    },
+    {
+      "name": "The LangChain documentation",
+      "path": "docs.langchain.com, each page at https://docs.langchain.com/<path> as cited, built from langchain-ai/docs at commit 04d4d4a (2026-11-13), read 2026-11-14",
+      "usedFor": "the documented behaviour and the project's own framing, in our own words and checked against the code and our runs; cited as docs with the page path"
+    },
+    {
+      "name": "The changelog and release notes",
+      "path": "the Python changelog page of the docs at 04d4d4a, and the GitHub releases of each package at its tag",
+      "usedFor": "when each change came, and which package version holds it; cited as docs for the changelog page and as code for a release"
+    },
+    {
+      "name": "The capture kit",
+      "path": "capture/run.py and capture/out/, with a scripted fake chat model, offline, no keys",
+      "usedFor": "every listing in the manual; cited by file"
+    },
+    {
+      "name": "The lab recordings",
+      "path": "capture/lab/, recorded on the Mac (Apple M1 Max, 10 cores, 64 GiB) and on an x86 server guest (32 vCPU, 48 GiB), with the summaries in capture/lab/summary/",
+      "usedFor": "every number marked as measured; cited by file"
+    },
+    {
+      "name": "GitHub issues, pull requests, and advisories",
+      "path": "langchain-ai/langchain, langchain-ai/langgraph, and langchain-ai/deepagents, read 2026-11-14",
+      "usedFor": "known defects at the pin and the history of a behaviour; cited as issue with its number"
+    },
+    {
+      "name": "The LangChain product pages",
+      "path": "www.langchain.com, read 2026-11-14, not under an open license",
+      "usedFor": "the headline claims that section 1.1 sets beside our results; paraphrased and cited as site"
+    }
+  ],
+  "quoteSources": {
+    "docs": null,
+    "code": null,
+    "issue": null,
+    "site": null
+  },
+  "capture": {
+    "run": [
+      "python3",
+      "capture/run.py"
+    ],
+    "check": [
+      "python3",
+      "capture/run.py",
+      "--check"
+    ],
+    "timeoutSeconds": 300
+  },
+  "front": "front.md",
+  "plate": {
+    "figure": "plate-langchain-run",
+    "title": "One invoke, two model calls, one tool call",
+    "caption": "One `invoke` of the kit's agent answers `What is 2 + 3?` with two model calls and one call of the `add` tool. `InMemorySaver` keeps five checkpoints, steps -1 to 3, and the last has no next node. With tracing on, LangSmith gets seven runs. On the Mac, `create_agent` took 7.67 ms per run against 4.10 ms for a plain `openai` loop. From capture/out/00-versions.txt, capture/out/05-agent-graph.txt, capture/out/06-agent-run.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/42-langsmith.txt, and capture/lab/summary/overhead-mac.json."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "LangChain on One Page",
+      "thesis": "Four projects share one name, and one agent run passes through three of them before it returns.",
+      "summary": "What LangChain, LangGraph, LangSmith, and Deep Agents each do, and their claims beside our results. Then one create_agent run from invoke to the last checkpoint.",
+      "accent": "blue",
+      "sections": [
+        {
+          "id": "1.1",
+          "file": "sections/1-1-langchain-langgraph-langsmith-and-deep-agents.md"
+        },
+        {
+          "id": "1.2",
+          "file": "sections/1-2-one-create-agent-run.md"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Start",
+      "thesis": "Install from a lockfile on Python 3.11, then learn the four objects that every agent is made of: the model, the messages, the tools, and the prompt.",
+      "summary": "The package map and the install, init_chat_model and model profiles, messages and content blocks, tools with ToolRuntime and their errors, and the system prompt.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "2.1",
+          "file": "sections/2-1-install-and-the-package-map.md"
+        },
+        {
+          "id": "2.2",
+          "file": "sections/2-2-init-chat-model-and-model-profiles.md"
+        },
+        {
+          "id": "2.3",
+          "file": "sections/2-3-messages-and-content-blocks.md"
+        },
+        {
+          "id": "2.4",
+          "file": "sections/2-4-tools-toolruntime-and-tool-errors.md"
+        },
+        {
+          "id": "2.5",
+          "file": "sections/2-5-the-system-prompt.md"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "Agents",
+      "thesis": "create_agent compiles a graph, and its structured output strategy and its middleware decide what each run sends, retries, and blocks.",
+      "summary": "The graph that create_agent builds, and the three structured output strategies with their failure rates. Then middleware hooks and their order, the 19 built-in classes, retry layers and backup models, PII, and the beta decision middleware.",
+      "accent": "blue",
+      "sections": [
+        {
+          "id": "3.1",
+          "file": "sections/3-1-create-agent-and-the-graph-it-builds.md"
+        },
+        {
+          "id": "3.2",
+          "file": "sections/3-2-structured-output-autostrategy-providerstrategy-toolstrategy.md"
+        },
+        {
+          "id": "3.3",
+          "file": "sections/3-3-middleware-hooks-and-their-order.md"
+        },
+        {
+          "id": "3.4",
+          "file": "sections/3-4-the-built-in-middleware.md"
+        },
+        {
+          "id": "3.5",
+          "file": "sections/3-5-retries-backup-models-rate-limits-and-caching.md"
+        },
+        {
+          "id": "3.6",
+          "file": "sections/3-6-guardrails-pii-and-the-decision-middleware-beta.md"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Streaming and Memory",
+      "thesis": "A run streams its steps as they happen, and a checkpointer and a store keep its state, so you must know what each one yields, saves, repeats, and gives back.",
+      "summary": "Stream modes and stream_events v3, checkpointers and threads, durability and crashes, stores and namespaces, summarization and checkpoint growth, and what serialization gives back.",
+      "accent": "teal",
+      "sections": [
+        {
+          "id": "4.1",
+          "file": "sections/4-1-streaming-v1-v2-stream-events-v3-and-the-tools-mode.md"
+        },
+        {
+          "id": "4.2",
+          "file": "sections/4-2-checkpointers-and-threads.md"
+        },
+        {
+          "id": "4.3",
+          "file": "sections/4-3-durability-modes-and-a-crash-between-two-steps.md"
+        },
+        {
+          "id": "4.4",
+          "file": "sections/4-4-stores-and-long-term-memory.md"
+        },
+        {
+          "id": "4.5",
+          "file": "sections/4-5-context-engineering-and-summarization.md"
+        },
+        {
+          "id": "4.6",
+          "file": "sections/4-6-serialization-of-state-and-what-does-not-round-trip.md"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "LangGraph and Control",
+      "thesis": "A LangGraph run is state, reducers, and steps, and you control it by pausing, resuming, replaying, forking, nesting, and limiting those steps.",
+      "summary": "StateGraph and reducers, Send and Command, and the functional API. Then interrupts, human review, time travel, subgraphs, and the error handlers and limits of a node.",
+      "accent": "indigo",
+      "sections": [
+        {
+          "id": "5.1",
+          "file": "sections/5-1-stategraph-state-and-reducers.md"
+        },
+        {
+          "id": "5.2",
+          "file": "sections/5-2-edges-send-and-command.md"
+        },
+        {
+          "id": "5.3",
+          "file": "sections/5-3-the-functional-api-entrypoint-and-task.md"
+        },
+        {
+          "id": "5.4",
+          "file": "sections/5-4-interrupt-and-resume.md"
+        },
+        {
+          "id": "5.5",
+          "file": "sections/5-5-human-in-the-loop-batched-and-per-call.md"
+        },
+        {
+          "id": "5.6",
+          "file": "sections/5-6-time-travel-replay-update-state-and-forks.md"
+        },
+        {
+          "id": "5.7",
+          "file": "sections/5-7-subgraphs-and-multi-agent-patterns.md"
+        },
+        {
+          "id": "5.8",
+          "file": "sections/5-8-error-handlers-node-timeouts-and-the-recursion-limit.md"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "Integrations",
+      "thesis": "Retrieval, MCP, Deep Agents, and LangSmith each plug into create_agent, and each one adds a cost or a failure that you must know before you rely on it.",
+      "summary": "Retrievers and vector stores, MCP tools through langchain.mcp, Deep Agents 0.7 and its token cost, LangSmith tracing, and evaluation without an account.",
+      "accent": "olive",
+      "sections": [
+        {
+          "id": "6.1",
+          "file": "sections/6-1-embeddings-splitters-vector-stores-and-retrievers.md"
+        },
+        {
+          "id": "6.2",
+          "file": "sections/6-2-mcp-with-langchain-mcp.md"
+        },
+        {
+          "id": "6.3",
+          "file": "sections/6-3-deep-agents-0-7.md"
+        },
+        {
+          "id": "6.4",
+          "file": "sections/6-4-langsmith-tracing.md"
+        },
+        {
+          "id": "6.5",
+          "file": "sections/6-5-evaluation-with-langsmith.md"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "Operate and Debug",
+      "thesis": "Running an agent for other people adds a server, a bill, attackers, old code, and failures at night, and each one has a recorded answer.",
+      "summary": "Agent Server under langgraph dev, up, and deploy, and the cost of each layer against a plain SDK loop. Then security at five boundaries, migration from 0.x, a table of symptoms, and the limits of this edition.",
+      "accent": "grey",
+      "sections": [
+        {
+          "id": "7.1",
+          "file": "sections/7-1-agent-server-langgraph-dev-up-and-deploy.md"
+        },
+        {
+          "id": "7.2",
+          "file": "sections/7-2-cost-the-framework-against-a-plain-sdk-loop.md"
+        },
+        {
+          "id": "7.3",
+          "file": "sections/7-3-security-deserialization-store-isolation-approvals-and-mcp-subprocesses.md"
+        },
+        {
+          "id": "7.4",
+          "file": "sections/7-4-migration-from-0-x-and-stale-advice.md"
+        },
+        {
+          "id": "7.5",
+          "file": "sections/7-5-symptom-cause-fix.md"
+        },
+        {
+          "id": "7.6",
+          "file": "sections/7-6-limits-at-the-pin-and-what-comes-in-the-next-edition.md"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "Build",
+      "thesis": "Four small programs on a local model and one offline drill show what to build around LangChain, and which failures come from the model and which from the code.",
+      "summary": "A SQL agent with approved writes, a retrieval agent with sources, and an assistant that survives a restart. Then a deep agent with a subagent, and a drill for seven failures.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "8.1",
+          "file": "sections/8-1-a-sql-agent-over-a-local-sqlite-database.md"
+        },
+        {
+          "id": "8.2",
+          "file": "sections/8-2-a-retrieval-agent-over-a-local-corpus.md"
+        },
+        {
+          "id": "8.3",
+          "file": "sections/8-3-an-assistant-with-memory-and-approvals-that-survives-a-restart.md"
+        },
+        {
+          "id": "8.4",
+          "file": "sections/8-4-a-deep-agent-with-a-subagent-and-files.md"
+        },
+        {
+          "id": "8.5",
+          "file": "sections/8-5-a-failure-drill.md"
+        }
+      ]
+    }
+  ],
+  "reference": {
+    "title": "Reference",
+    "thesis": "The parameters, hooks, stream events, persistence methods, variables, errors, terms, sources, and figures of this manual, in one place.",
+    "summary": "Lookup tables for create_agent, middleware, streams, persistence, environment variables, and errors. Then a glossary, the sources and conflicts, the figure index, and how the manual was made.",
+    "accent": "teal",
+    "sections": [
+      {
+        "id": "R.1",
+        "file": "sections/r-1-create-agent-parameters.md"
+      },
+      {
+        "id": "R.2",
+        "file": "sections/r-2-middleware-hooks-and-classes.md"
+      },
+      {
+        "id": "R.3",
+        "file": "sections/r-3-stream-modes-and-event-types.md"
+      },
+      {
+        "id": "R.4",
+        "file": "sections/r-4-checkpointer-and-store-api.md"
+      },
+      {
+        "id": "R.5",
+        "file": "sections/r-5-environment-variables.md"
+      },
+      {
+        "id": "R.6",
+        "file": "sections/r-6-errors.md"
+      },
+      {
+        "id": "R.7",
+        "file": "sections/r-7-glossary.md"
+      },
+      {
+        "id": "R.8",
+        "file": "sections/r-8-sources-and-conflicts.md"
+      },
+      {
+        "id": "R.9",
+        "file": "sections/r-9-figure-index.md"
+      },
+      {
+        "id": "R.10",
+        "file": "sections/r-10-how-this-manual-was-made.md"
+      }
+    ]
+  },
+  "related": [
+    "phases/11-llm-engineering/16-langgraph-state-machines",
+    "phases/11-llm-engineering/17-agent-framework-tradeoffs",
+    "phases/14-agent-engineering/13-langgraph-stateful-graphs",
+    "phases/13-tools-and-protocols/01-the-tool-interface",
+    "phases/13-tools-and-protocols/06-mcp-fundamentals",
+    "phases/15-autonomous-systems/12-durable-execution",
+    "phases/15-autonomous-systems/16-checkpoints-rollback"
+  ]
+}

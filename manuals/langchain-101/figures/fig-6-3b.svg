@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-6-3b-title fig-6-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-3b-title">The tools and state that create_deep_agent adds</title>
+  <desc id="fig-6-3b-desc">The capture called create_deep_agent with the fake model, the add tool, and the system prompt You keep notes. The main agent was bound nine tools: ls, read_file, write_file, edit_file, delete, glob, and grep from FilesystemMiddleware, task from SubAgentMiddleware, and add from the caller. Its state gained a files channel that held /notes.md. The task tool started the general-purpose subagent, which was bound the same tools without task, and whose system prompt had 286 characters. The graph gained two middleware nodes, PatchToolCallsMiddleware.before_agent and _ParentNotifierMiddleware.after_agent. There is no write_todos tool and no execute tool.</desc>
+  <defs><marker id="fig-6-3b-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="20" y="14" width="600" height="44" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="320" y="30.95" font-size="11.5" text-anchor="middle" font-weight="700">create_deep_agent(model=fake, tools=[add], system_prompt=&quot;You keep notes.&quot;)</text>
+  <text x="320" y="48.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">your call</text>
+  <text x="20" y="84" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TOOLS BOUND ON EACH MAIN MODEL CALL: 9</text>
+  <rect x="20" y="96" width="300" height="60" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="32" y="113.75" font-size="12.5" font-weight="700">FilesystemMiddleware</text>
+  <text x="32" y="131.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ls, read_file, write_file, edit_file,</text>
+  <text x="32" y="146.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">delete, glob, grep</text>
+  <rect x="336" y="96" width="140" height="60" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="348" y="113.75" font-size="12.5" font-weight="700">SubAgent</text>
+  <text x="348" y="131.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Middleware</text>
+  <text x="348" y="146.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task</text>
+  <rect x="492" y="96" width="128" height="60" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="504" y="121.25" font-size="12.5" font-weight="700">yours</text>
+  <text x="504" y="138.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">add</text>
+  <text x="20" y="186" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">STATE AND GRAPH</text>
+  <rect x="20" y="198" width="300" height="60" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="32" y="215.75" font-size="12.5" font-weight="700">files channel in state</text>
+  <text x="32" y="233.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">/notes.md: content, encoding,</text>
+  <text x="32" y="248.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">created_at, modified_at</text>
+  <rect x="336" y="198" width="284" height="60" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="348" y="215.75" font-size="12.5" font-weight="700">two middleware nodes</text>
+  <text x="348" y="233.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">PatchToolCallsMiddleware.before_agent</text>
+  <text x="348" y="248.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">_ParentNotifierMiddleware.after_agent</text>
+  <rect x="336" y="300" width="284" height="60" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="348" y="317.75" font-size="12.5" font-weight="700">general-purpose subagent</text>
+  <text x="348" y="335.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">8 tools: the same, without task</text>
+  <text x="348" y="350.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">its own prompt, 286 characters</text>
+  <path d="M406 156 V178 H628 V330 H621" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-6-3b-head-ink)"/>
+  <text x="20" y="318" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Not bound at 0.7.38:</text>
+  <text x="20" y="336" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">write_todos, now opt-in, and</text>
+  <text x="20" y="354" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">execute, which the docstring lists.</text>
+  <text x="20" y="390" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">From the kit run on the fake model: call 4 is the subagent.</text>
+</svg>

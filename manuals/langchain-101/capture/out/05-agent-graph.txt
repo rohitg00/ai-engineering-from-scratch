@@ -1,0 +1,62 @@
+# The graph create_agent builds
+
+## nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "__end__"
+]
+
+## edges
+
+[
+  "__start__ -> model",
+  "model -> __end__ (conditional)",
+  "model -> tools (conditional)",
+  "tools -> model (conditional)"
+]
+
+## mermaid
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	model(model)
+	tools(tools<hr/><small><em>__tools = add</em></small>)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> model;
+	model -.-> __end__;
+	model -.-> tools;
+	tools -.-> model;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## config and defaults on the compiled graph
+
+agent.config:
+{
+  "recursion_limit": 9999,
+  "metadata": {
+    "ls_integration": "langchain_create_agent"
+  },
+  "configurable": {}
+}
+
+agent.stream_mode = 'updates'
+type langgraph.graph.state.CompiledStateGraph
+
+## a graph with no tools
+
+[
+  "__start__",
+  "model",
+  "__end__"
+]

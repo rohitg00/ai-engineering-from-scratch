@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="fig-6-5-title fig-6-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-5-title">evaluate with upload_results=False on two targets</title>
+  <desc id="fig-6-5-desc">Two columns, one evaluate call each, both with upload_results set to False and a recording client. On the left the target is a plain function that adds two numbers, over three examples, with the evaluator exact and the summary evaluator accuracy. The rows scored true, false, and true, accuracy was 0.667, and the client got no request. On the right the target is a create_agent run over one example, with the evaluator same_answer. The row scored true, and the client got POST /runs 7 times and PATCH 7 times, because evaluate runs the target inside tracing_context with enabled set to local.</desc>
+  <defs><marker id="fig-6-5-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-5-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A PLAIN FUNCTION TARGET</text>
+  <text x="330" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">A CREATE_AGENT TARGET</text>
+  <rect x="20" y="32" width="290" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="32" y="50.25" font-size="12.5" font-weight="700">3 examples: a + b</text>
+  <text x="32" y="67.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">adder(), one answer wrong on purpose</text>
+  <rect x="20" y="108" width="290" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="32" y="126.25" font-size="12.5" font-weight="700">target in tracing_context</text>
+  <text x="32" y="143.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">enabled=&quot;local&quot;, set by evaluate</text>
+  <rect x="20" y="178" width="200" height="58" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="32" y="194.75" font-size="12.5" font-weight="700">exact, then accuracy</text>
+  <text x="32" y="212.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">true, false, true</text>
+  <text x="32" y="227.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">accuracy 0.667</text>
+  <rect x="20" y="278" width="290" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="32" y="299.25" font-size="12.5" font-weight="700">the client got 0 requests</text>
+  <text x="32" y="316.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">nothing left the process</text>
+  <line x1="60" y1="78" x2="60" y2="107" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <line x1="60" y1="154" x2="60" y2="177" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-5-head-ink)"/>
+  <path d="M270 154 V277" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-6-5-head-ink)"/>
+  <text x="264" y="262" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">requests</text>
+  <rect x="330" y="32" width="290" height="46" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="342" y="50.25" font-size="12.5" font-weight="700">1 example: What is 2 + 3?</text>
+  <text x="342" y="67.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">create_agent with the fake model</text>
+  <rect x="330" y="108" width="290" height="46" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="342" y="126.25" font-size="12.5" font-weight="700">target in tracing_context</text>
+  <text x="342" y="143.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">enabled=&quot;local&quot;, set by evaluate</text>
+  <rect x="330" y="178" width="200" height="58" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="342" y="202.25" font-size="12.5" font-weight="700">same_answer</text>
+  <text x="342" y="219.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">true</text>
+  <rect x="330" y="278" width="290" height="52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="342" y="299.25" font-size="12.5" font-weight="700">POST /runs 7, PATCH 7</text>
+  <text x="342" y="316.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the LangChain runs of the agent</text>
+  <line x1="370" y1="78" x2="370" y2="107" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-5-head-ink)"/>
+  <line x1="370" y1="154" x2="370" y2="177" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-5-head-ink)"/>
+  <path d="M580 154 V277" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-6-5-head-rose)"/>
+  <text x="574" y="262" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">requests</text>
+  <text x="20" y="362" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">From the kit, langsmith 0.14.17, with a client that records each request.</text>
+</svg>

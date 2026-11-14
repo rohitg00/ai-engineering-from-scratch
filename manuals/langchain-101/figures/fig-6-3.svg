@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 414" role="img" aria-labelledby="fig-6-3-title fig-6-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-3-title">Prompt tokens of each model call, three harnesses</title>
+  <desc id="fig-6-3-desc">A dot chart of the prompt tokens of each model call on the Mac with Qwen3 8B, three runs of each task and harness. For the trivial task the plain loop and create_agent sent 28 tokens and Deep Agents sent 2279. For the tools task the calls were 205 and 275 against 2374 and 2444. For the files task they were 214, 262, 297 against 2293, 2337, 2383. create_agent sent the same count as the plain loop on every call.</desc>
+  <line x1="70" y1="306" x2="610" y2="306" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="310" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="257.92" x2="610" y2="257.92" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="261.92" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="70" y1="209.85" x2="610" y2="209.85" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="213.85" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="161.77" x2="610" y2="161.77" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="165.77" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1.5k</text>
+  <line x1="70" y1="113.69" x2="610" y2="113.69" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="117.69" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2k</text>
+  <line x1="70" y1="65.62" x2="610" y2="65.62" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="69.62" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2.5k</text>
+  <line x1="70" y1="306" x2="610" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="56" x2="70" y2="306" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">prompt tokens per model call</text>
+  <text x="160" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TRIVIAL</text>
+  <circle cx="115" cy="303.31" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="115" cy="303.31" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="115" cy="303.31" r="3.6" fill="var(--m-olive-ink, #515f26)"/>
+  <rect class="m-knock" x="105.4" y="283.73" width="19.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="115" y="294.31" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">28</text>
+  <text x="115" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">plain</text>
+  <circle cx="160" cy="303.31" r="2.4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="160" cy="303.31" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="160" cy="303.31" r="3.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="150.4" y="283.73" width="19.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="160" y="294.31" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">28</text>
+  <text x="160" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">agent</text>
+  <circle cx="205" cy="86.87" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="205" cy="86.87" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="205" cy="86.87" r="3.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect class="m-knock" x="188.8" y="67.29" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="205" y="77.87" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">2279</text>
+  <text x="205" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">deep</text>
+  <text x="340" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TOOLS</text>
+  <line x1="250" y1="56" x2="250" y2="306" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <circle cx="290.5" cy="286.29" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="299.5" cy="279.56" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="290.5" cy="286.29" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="299.5" cy="279.56" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="290.5" cy="286.29" r="3.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="299.5" cy="279.56" r="3.6" fill="var(--m-olive-ink, #515f26)"/>
+  <rect class="m-knock" x="282.1" y="259.98" width="25.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="295" y="270.56" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">480</text>
+  <text x="295" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">plain</text>
+  <circle cx="335.5" cy="286.29" r="2.4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="344.5" cy="279.56" r="2.4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="335.5" cy="286.29" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="344.5" cy="279.56" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="335.5" cy="286.29" r="3.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="344.5" cy="279.56" r="3.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="327.1" y="259.98" width="25.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="340" y="270.56" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">480</text>
+  <text x="340" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">agent</text>
+  <circle cx="380.5" cy="77.73" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="389.5" cy="71" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="380.5" cy="77.73" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="389.5" cy="71" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="380.5" cy="77.73" r="3.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="389.5" cy="71" r="3.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect class="m-knock" x="368.8" y="51.42" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="385" y="62" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">4818</text>
+  <text x="385" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">deep</text>
+  <text x="520" y="22" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">FILES</text>
+  <line x1="430" y1="56" x2="430" y2="306" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <circle cx="466" cy="285.42" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="475" cy="280.81" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="484" cy="277.44" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="466" cy="285.42" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="475" cy="280.81" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="484" cy="277.44" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="466" cy="285.42" r="3.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="475" cy="280.81" r="3.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="484" cy="277.44" r="3.6" fill="var(--m-olive-ink, #515f26)"/>
+  <rect class="m-knock" x="462.1" y="257.86" width="25.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="475" y="268.44" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">773</text>
+  <text x="475" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">plain</text>
+  <circle cx="511" cy="285.42" r="2.4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="520" cy="280.81" r="2.4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="529" cy="277.44" r="2.4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="511" cy="285.42" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="520" cy="280.81" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="529" cy="277.44" r="3" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="511" cy="285.42" r="3.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="520" cy="280.81" r="3.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="529" cy="277.44" r="3.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="507.1" y="257.86" width="25.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="520" y="268.44" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">773</text>
+  <text x="520" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">agent</text>
+  <circle cx="556" cy="85.52" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="565" cy="81.29" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="574" cy="76.87" r="2.4" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="556" cy="85.52" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="565" cy="81.29" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="574" cy="76.87" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="556" cy="85.52" r="3.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="565" cy="81.29" r="3.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="574" cy="76.87" r="3.6" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect class="m-knock" x="548.8" y="57.29" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="565" y="67.87" font-size="11" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">7013</text>
+  <text x="565" y="324" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">deep</text>
+  <text x="70" y="350" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one model call. Calls of one run sit side by side.</text>
+  <text x="70" y="368" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The three runs of a cell overlap, because every repeat sent the same count.</text>
+  <text x="70" y="386" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The number over a cell is the prompt total of one run.</text>
+  <text x="70" y="404" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plain: an ollama loop. agent: create_agent. deep: create_deep_agent.</text>
+</svg>

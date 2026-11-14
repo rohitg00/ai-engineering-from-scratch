@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-4-1d-title fig-4-1d-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-1d-title">When each token was sent and seen, in two async v3 consumers</title>
+  <desc id="fig-4-1d-desc">A timeline of one run of each consumer on the Mac, with 40 tokens. In the text loop, each token is seen within about 1 ms of the send, from 58.9 ms to 970.6 ms after the run starts. In the loop that reads reasoning first, the stub sends from 54.1 ms to 971.9 ms, and the consumer sees all 40 tokens at 975.7 to 975.8 ms.</desc>
+  <line x1="214" y1="244" x2="610" y2="244" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="214" y1="44" x2="214" y2="244" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="214" y1="244" x2="214" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="214" y="261" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="293.2" y1="244" x2="293.2" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="293.2" y="261" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="372.4" y1="244" x2="372.4" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="372.4" y="261" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">400</text>
+  <line x1="451.6" y1="244" x2="451.6" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="451.6" y="261" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">600</text>
+  <line x1="530.8" y1="244" x2="530.8" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="530.8" y="261" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">800</text>
+  <line x1="610" y1="244" x2="610" y2="248" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="610" y="261" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1000</text>
+  <text x="412" y="278" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">milliseconds since the run started</text>
+  <text x="20" y="51" font-size="11.5" font-weight="700" fill="var(--m-ink, #1a1a1a)">text loop only</text>
+  <text x="20" y="73" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">stub sends</text>
+  <path d="M236.0 59h2v20h-2zM245.8 59h2v20h-2zM255.0 59h2v20h-2zM264.9 59h2v20h-2zM274.8 59h2v20h-2zM283.2 59h2v20h-2zM291.9 59h2v20h-2zM300.9 59h2v20h-2zM309.7 59h2v20h-2zM317.7 59h2v20h-2zM327.2 59h2v20h-2zM337.1 59h2v20h-2zM347.1 59h2v20h-2zM355.5 59h2v20h-2zM365.3 59h2v20h-2zM373.5 59h2v20h-2zM381.7 59h2v20h-2zM389.9 59h2v20h-2zM399.4 59h2v20h-2zM409.1 59h2v20h-2zM419.0 59h2v20h-2zM428.0 59h2v20h-2zM436.1 59h2v20h-2zM445.1 59h2v20h-2zM455.0 59h2v20h-2zM464.0 59h2v20h-2zM474.0 59h2v20h-2zM483.9 59h2v20h-2zM493.8 59h2v20h-2zM503.7 59h2v20h-2zM513.2 59h2v20h-2zM521.8 59h2v20h-2zM531.7 59h2v20h-2zM541.7 59h2v20h-2zM551.6 59h2v20h-2zM559.7 59h2v20h-2zM568.1 59h2v20h-2zM578.0 59h2v20h-2zM587.7 59h2v20h-2zM596.9 59h2v20h-2z" fill="var(--m-olive-ink, #515f26)"/>
+  <text x="20" y="123" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">consumer sees</text>
+  <path d="M236.3 109h2v20h-2zM246.1 109h2v20h-2zM255.3 109h2v20h-2zM265.2 109h2v20h-2zM275.1 109h2v20h-2zM283.4 109h2v20h-2zM292.1 109h2v20h-2zM301.2 109h2v20h-2zM310.1 109h2v20h-2zM317.9 109h2v20h-2zM327.4 109h2v20h-2zM337.4 109h2v20h-2zM347.4 109h2v20h-2zM355.8 109h2v20h-2zM365.5 109h2v20h-2zM373.8 109h2v20h-2zM382.1 109h2v20h-2zM390.2 109h2v20h-2zM399.7 109h2v20h-2zM409.4 109h2v20h-2zM419.4 109h2v20h-2zM428.3 109h2v20h-2zM436.3 109h2v20h-2zM445.4 109h2v20h-2zM455.4 109h2v20h-2zM464.3 109h2v20h-2zM474.2 109h2v20h-2zM484.2 109h2v20h-2zM494.1 109h2v20h-2zM504.0 109h2v20h-2zM513.4 109h2v20h-2zM522.2 109h2v20h-2zM532.0 109h2v20h-2zM542.0 109h2v20h-2zM551.9 109h2v20h-2zM559.9 109h2v20h-2zM568.3 109h2v20h-2zM578.2 109h2v20h-2zM587.9 109h2v20h-2zM597.4 109h2v20h-2z" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="20" y="151" font-size="11.5" font-weight="700" fill="var(--m-ink, #1a1a1a)">reasoning loop, then text</text>
+  <text x="20" y="173" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">stub sends</text>
+  <path d="M234.4 159h2v20h-2zM243.1 159h2v20h-2zM252.3 159h2v20h-2zM261.8 159h2v20h-2zM271.8 159h2v20h-2zM280.8 159h2v20h-2zM290.5 159h2v20h-2zM300.1 159h2v20h-2zM308.5 159h2v20h-2zM317.5 159h2v20h-2zM326.5 159h2v20h-2zM335.9 159h2v20h-2zM345.7 159h2v20h-2zM355.2 159h2v20h-2zM364.3 159h2v20h-2zM372.7 159h2v20h-2zM381.2 159h2v20h-2zM390.7 159h2v20h-2zM399.1 159h2v20h-2zM409.0 159h2v20h-2zM417.8 159h2v20h-2zM427.2 159h2v20h-2zM437.0 159h2v20h-2zM446.1 159h2v20h-2zM455.9 159h2v20h-2zM465.6 159h2v20h-2zM475.5 159h2v20h-2zM485.5 159h2v20h-2zM495.0 159h2v20h-2zM504.5 159h2v20h-2zM514.9 159h2v20h-2zM524.3 159h2v20h-2zM532.8 159h2v20h-2zM541.2 159h2v20h-2zM550.5 159h2v20h-2zM559.2 159h2v20h-2zM568.4 159h2v20h-2zM578.0 159h2v20h-2zM588.0 159h2v20h-2zM597.9 159h2v20h-2z" fill="var(--m-olive-ink, #515f26)"/>
+  <text x="20" y="223" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">consumer sees</text>
+  <path d="M599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2zM599.4 209h2v20h-2z" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect class="m-knock" x="483.78" y="212.42" width="111.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="592.38" y="223" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">all 40 at 976 ms</text>
+  <text x="20" y="298" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each tick is one of 40 tokens in one run. Olive ticks are sends by the stub.</text>
+  <text x="20" y="314" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The others are the moments the consumer saw a token. The lower loop sees text at the end.</text>
+</svg>

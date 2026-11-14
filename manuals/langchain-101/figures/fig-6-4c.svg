@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" role="img" aria-labelledby="fig-6-4c-title fig-6-4c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-4c-title">What tracing_context(enabled=&quot;local&quot;) keeps and sends</title>
+  <desc id="fig-6-4c-desc">Four lifelines: your code, the traceable wrapper of langsmith, the LangChain callback manager, and the LangSmith client. A traceable function inside tracing_context with enabled set to local builds a run tree and gives it to on_end, and the client gets no request. An agent.invoke inside the same context turns tracing on, because the callback manager treats the string local as true and adds a LangChainTracer, which sends POST /runs 7 times and PATCH 7 times. The same invoke inside tracing_context with enabled set to False and inside collect_runs keeps four top runs in memory and sends nothing.</desc>
+  <defs><marker id="fig-6-4c-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-4c-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-6-4c-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <rect x="22" y="10" width="116" height="30" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="80" y="28.6" font-size="12" text-anchor="middle" font-weight="700">your code</text>
+  <line x1="80" y1="40" x2="80" y2="408" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="174" y="10" width="116" height="30" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="232" y="28.6" font-size="12" text-anchor="middle" font-weight="700">traceable</text>
+  <line x1="232" y1="40" x2="232" y2="408" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="334" y="10" width="116" height="30" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="392" y="28.6" font-size="12" text-anchor="middle" font-weight="700">callbacks</text>
+  <line x1="392" y1="40" x2="392" y2="408" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="498" y="10" width="116" height="30" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="556" y="28.6" font-size="12" text-anchor="middle" font-weight="700">the client</text>
+  <line x1="556" y1="40" x2="556" y2="408" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <circle cx="16" cy="80" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="84" font-size="11" text-anchor="middle">1</text>
+  <line x1="80" y1="80" x2="231" y2="80" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4c-head-ink)"/>
+  <rect class="m-knock" x="80.55" y="63.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="156" y="74" font-size="11.5" text-anchor="middle">pipeline() in &quot;local&quot;</text>
+  <rect class="m-knock" x="93.6" y="84.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="156" y="95" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a traceable function</text>
+  <circle cx="16" cy="128" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="132" font-size="11" text-anchor="middle">2</text>
+  <line x1="232" y1="128" x2="81" y2="128" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-4c-head-ink)"/>
+  <rect class="m-knock" x="94.35" y="111.03" width="123.3" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="156" y="122" font-size="11.5" text-anchor="middle">RunTree to on_end</text>
+  <rect class="m-knock" x="75.78" y="132.42" width="160.44" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="156" y="143" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kept in memory, 0 requests</text>
+  <circle cx="16" cy="176" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="180" font-size="11" text-anchor="middle">3</text>
+  <line x1="80" y1="176" x2="391" y2="176" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4c-head-ink)"/>
+  <rect class="m-knock" x="146.75" y="159.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="236" y="170" font-size="11.5" text-anchor="middle">agent.invoke() in &quot;local&quot;</text>
+  <rect class="m-knock" x="191.42" y="180.42" width="89.16" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="236" y="191" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LangChain code</text>
+  <circle cx="16" cy="224" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="228" font-size="11" text-anchor="middle">4</text>
+  <path d="M392 216 H422 V232 H393" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-6-4c-head-amber)"/>
+  <rect class="m-knock" x="427" y="211.03" width="206.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="430" y="222" font-size="11.5" fill="var(--m-amber-ink, #85590c)">tracing on: &quot;local&quot; is truthy</text>
+  <rect class="m-knock" x="427" y="226.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="430" y="237" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LangChainTracer added</text>
+  <circle cx="16" cy="272" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="276" font-size="11" text-anchor="middle">5</text>
+  <line x1="392" y1="272" x2="555" y2="272" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-4c-head-rose)"/>
+  <rect class="m-knock" x="398.55" y="255.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="474" y="266" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">POST /runs 7, PATCH 7</text>
+  <rect class="m-knock" x="411.6" y="276.42" width="124.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="474" y="287" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sent, although local</text>
+  <circle cx="16" cy="320" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="324" font-size="11" text-anchor="middle">6</text>
+  <line x1="80" y1="320" x2="391" y2="320" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-4c-head-ink)"/>
+  <rect class="m-knock" x="146.75" y="303.03" width="178.5" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="236" y="314" font-size="11.5" text-anchor="middle">invoke() in enabled=False</text>
+  <rect class="m-knock" x="170.63" y="324.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="236" y="335" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">inside collect_runs()</text>
+  <circle cx="16" cy="368" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="16" y="372" font-size="11" text-anchor="middle">7</text>
+  <line x1="392" y1="368" x2="81" y2="368" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-4c-head-ink)"/>
+  <rect class="m-knock" x="160.55" y="351.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="236" y="362" font-size="11.5" text-anchor="middle">4 runs in traced_runs</text>
+  <rect class="m-knock" x="155.78" y="372.42" width="160.44" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="236" y="383" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">kept in memory, 0 requests</text>
+</svg>

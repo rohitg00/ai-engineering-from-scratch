@@ -1,0 +1,762 @@
+{
+ "assistant": {
+  "default": [
+   {
+    "attempts": 0,
+    "checkpoints": 9,
+    "exit": 0,
+    "memories": 2,
+    "messages": 5,
+    "next": [],
+    "pending": 0,
+    "seconds": 1.53,
+    "sent": 0,
+    "step": "1-remember",
+    "summaries": 0
+   },
+   {
+    "attempts": 0,
+    "checkpoints": 18,
+    "exit": 0,
+    "memories": 2,
+    "messages": 9,
+    "next": [
+     "tools"
+    ],
+    "pending": 1,
+    "seconds": 1.42,
+    "sent": 0,
+    "step": "2-ask-to-send",
+    "summaries": 0
+   },
+   {
+    "exit": 137,
+    "step": "3-approve-then-crash"
+   },
+   {
+    "attempts": 1,
+    "checkpoints": 18,
+    "exit": 0,
+    "memories": 2,
+    "messages": 9,
+    "next": [
+     "tools"
+    ],
+    "pending": 1,
+    "seconds": 0.07,
+    "sent": 1,
+    "step": "4-resume-after-crash",
+    "summaries": 0
+   },
+   {
+    "attempts": 2,
+    "checkpoints": 22,
+    "exit": 0,
+    "memories": 2,
+    "messages": 6,
+    "next": [],
+    "pending": 0,
+    "seconds": 10.2,
+    "sent": 1,
+    "step": "5-approve-again",
+    "summaries": 1
+   },
+   {
+    "attempts": 2,
+    "checkpoints": 27,
+    "exit": 0,
+    "memories": 2,
+    "messages": 8,
+    "next": [],
+    "pending": 0,
+    "seconds": 0.61,
+    "sent": 1,
+    "step": "6-third-turn",
+    "summaries": 1
+   },
+   {
+    "attempts": 2,
+    "checkpoints": 9,
+    "exit": 0,
+    "memories": 2,
+    "messages": 4,
+    "next": [],
+    "pending": 0,
+    "seconds": 0.89,
+    "sent": 1,
+    "step": "7-new-thread",
+    "summaries": 0
+   }
+  ],
+  "sync": [
+   {
+    "attempts": 0,
+    "checkpoints": 9,
+    "exit": 0,
+    "memories": 2,
+    "messages": 5,
+    "next": [],
+    "pending": 0,
+    "seconds": 2.88,
+    "sent": 0,
+    "step": "1-remember",
+    "summaries": 0
+   },
+   {
+    "attempts": 0,
+    "checkpoints": 18,
+    "exit": 0,
+    "memories": 2,
+    "messages": 9,
+    "next": [
+     "tools"
+    ],
+    "pending": 1,
+    "seconds": 1.52,
+    "sent": 0,
+    "step": "2-ask-to-send",
+    "summaries": 0
+   },
+   {
+    "exit": 137,
+    "step": "3-approve-then-crash"
+   },
+   {
+    "attempts": 1,
+    "checkpoints": 18,
+    "exit": 0,
+    "memories": 2,
+    "messages": 9,
+    "next": [
+     "tools"
+    ],
+    "pending": 1,
+    "seconds": 0.11,
+    "sent": 1,
+    "step": "4-resume-after-crash",
+    "summaries": 0
+   },
+   {
+    "attempts": 2,
+    "checkpoints": 22,
+    "exit": 0,
+    "memories": 2,
+    "messages": 6,
+    "next": [],
+    "pending": 0,
+    "seconds": 13.57,
+    "sent": 1,
+    "step": "5-approve-again",
+    "summaries": 1
+   },
+   {
+    "attempts": 2,
+    "checkpoints": 27,
+    "exit": 0,
+    "memories": 2,
+    "messages": 8,
+    "next": [],
+    "pending": 0,
+    "seconds": 0.54,
+    "sent": 1,
+    "step": "6-third-turn",
+    "summaries": 1
+   },
+   {
+    "attempts": 2,
+    "checkpoints": 9,
+    "exit": 0,
+    "memories": 2,
+    "messages": 4,
+    "next": [],
+    "pending": 0,
+    "seconds": 0.97,
+    "sent": 1,
+    "step": "7-new-thread",
+    "summaries": 0
+   }
+  ]
+ },
+ "deep_agent": {
+  "calls": [
+   {
+    "agent": "main",
+    "input_tokens": 3651,
+    "n": 1,
+    "output_tokens": 120,
+    "seconds": 22.6,
+    "tool_calls": [
+     "write_todos"
+    ],
+    "tools": 9
+   },
+   {
+    "agent": "main",
+    "input_tokens": 3872,
+    "n": 2,
+    "output_tokens": 124,
+    "seconds": 6.67,
+    "tool_calls": [
+     "write_file"
+    ],
+    "tools": 9
+   },
+   {
+    "agent": "main",
+    "input_tokens": 4016,
+    "n": 3,
+    "output_tokens": 58,
+    "seconds": 3.2,
+    "tool_calls": [
+     "task"
+    ],
+    "tools": 9
+   },
+   {
+    "agent": "editor",
+    "input_tokens": 1977,
+    "n": 4,
+    "output_tokens": 27,
+    "seconds": 8.36,
+    "tool_calls": [
+     "read_file"
+    ],
+    "tools": 7
+   },
+   {
+    "agent": "editor",
+    "input_tokens": 2113,
+    "n": 5,
+    "output_tokens": 143,
+    "seconds": 7.42,
+    "tool_calls": [],
+    "tools": 7
+   },
+   {
+    "agent": "main",
+    "input_tokens": 4225,
+    "n": 6,
+    "output_tokens": 104,
+    "seconds": 6.29,
+    "tool_calls": [
+     "write_todos"
+    ],
+    "tools": 9
+   },
+   {
+    "agent": "main",
+    "input_tokens": 4446,
+    "n": 7,
+    "output_tokens": 111,
+    "seconds": 7.42,
+    "tool_calls": [],
+    "tools": 9
+   }
+  ],
+  "files": [
+   "/notes/release-2.0.md"
+  ],
+  "model": "qwen3:8b",
+  "seconds": 62.01,
+  "todos": [
+   "completed",
+   "completed",
+   "completed",
+   "in_progress"
+  ],
+  "totals": {
+   "editor": {
+    "calls": 2,
+    "input_tokens": 4090,
+    "output_tokens": 170
+   },
+   "main": {
+    "calls": 5,
+    "input_tokens": 20210,
+    "output_tokens": 517
+   }
+  }
+ },
+ "failure_drill": [
+  {
+   "case": 1,
+   "requests": 9,
+   "requests_after_fix": 3,
+   "run_s": 6.45,
+   "run_s_after_fix": 3.16,
+   "seconds": 10.39,
+   "section": "3.5",
+   "title": "retry layers stack on one model call"
+  },
+  {
+   "case": 2,
+   "charges": 2,
+   "charges_after_fix": 1,
+   "exit_code": -9,
+   "seconds": 2.29,
+   "section": "4.3",
+   "title": "a crash between a side effect and its checkpoint"
+  },
+  {
+   "case": 3,
+   "interrupts_after_fix": 1,
+   "ran_after_fix": 0,
+   "ran_before_decision": 1,
+   "seconds": 0.02,
+   "section": "5.5",
+   "title": "an approval skipped by a middleware that jumps to tools"
+  },
+  {
+   "case": 4,
+   "check": "RuntimeError: the agent returned no structured response",
+   "seconds": 0.0,
+   "section": "3.2",
+   "structured_response": null,
+   "title": "a run that ends with no structured response"
+  },
+  {
+   "case": 5,
+   "exit_lag_s": 12.0,
+   "exit_lag_s_after_fix": 0.1,
+   "seconds": 13.22,
+   "section": "6.4",
+   "title": "a tracing endpoint that is down",
+   "upload_error_lines": 2
+  },
+  {
+   "case": 6,
+   "duplicates": [
+    "lookup"
+   ],
+   "ran": "from the refunds table",
+   "seconds": 0.01,
+   "section": "2.4",
+   "title": "two tools with the same name",
+   "tools_bound": [
+    "lookup"
+   ]
+  },
+  {
+   "after_fix": [
+    {
+     "graph_nodes": 4,
+     "model_calls": 3,
+     "outcome": "GraphRecursionError: Recursion limit of 10 reached without hi \u2026",
+     "recursion_limit": 10
+    },
+    {
+     "graph_nodes": 4,
+     "model_calls": 3,
+     "outcome": "no exception, last message 'Model call limits exceeded: run limit (3/3)'",
+     "recursion_limit": 25
+    }
+   ],
+   "case": 7,
+   "model_calls": 5,
+   "raised": "GraphRecursionError: Recursion limit of 10 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.",
+   "seconds": 0.04,
+   "section": "5.8",
+   "title": "a model that calls a tool forever"
+  }
+ ],
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "models": "Ollama 0.31.1, temperature 0, seed 42, reasoning off; nomic-embed-text for embeddings",
+ "retrieval_agent": {
+  "chunks": 122,
+  "embed_s": 2.23,
+  "files": 6,
+  "models": {
+   "qwen3:4b-instruct-2507-q4_K_M": {
+    "decay": {
+     "cited": [],
+     "cited_expected": false,
+     "model_calls": 1,
+     "prompt_tokens": 274,
+     "searched": 0,
+     "seconds": 1.04,
+     "top1": "phases/15-autonomous-systems/12-durable-execution/docs/en.md",
+     "top1_expected": true,
+     "top4_scores": [
+      0.7561,
+      0.7165,
+      0.6817,
+      0.6734
+     ]
+    },
+    "matryoshka": {
+     "cited": [],
+     "cited_expected": false,
+     "model_calls": 1,
+     "prompt_tokens": 291,
+     "searched": 0,
+     "seconds": 0.87,
+     "top1": "phases/11-llm-engineering/04-embeddings/docs/en.md",
+     "top1_expected": true,
+     "top4_scores": [
+      0.7909,
+      0.6641,
+      0.6585,
+      0.6536
+     ]
+    },
+    "outside": {
+     "cited": [],
+     "cited_expected": true,
+     "model_calls": 1,
+     "prompt_tokens": 275,
+     "searched": 0,
+     "seconds": 0.77,
+     "top1": "phases/11-llm-engineering/06-rag/docs/en.md",
+     "top1_expected": null,
+     "top4_scores": [
+      0.5424,
+      0.5363,
+      0.5209,
+      0.5179
+     ]
+    },
+    "reducer": {
+     "cited": [],
+     "cited_expected": false,
+     "model_calls": 1,
+     "prompt_tokens": 283,
+     "searched": 0,
+     "seconds": 2.02,
+     "top1": "phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md",
+     "top1_expected": true,
+     "top4_scores": [
+      0.7591,
+      0.7372,
+      0.7369,
+      0.7325
+     ]
+    },
+    "thread": {
+     "cited": [],
+     "cited_expected": false,
+     "model_calls": 1,
+     "prompt_tokens": 270,
+     "searched": 0,
+     "seconds": 0.44,
+     "top1": "phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md",
+     "top1_expected": true,
+     "top4_scores": [
+      0.6986,
+      0.6737,
+      0.6717,
+      0.6471
+     ]
+    }
+   },
+   "qwen3:8b": {
+    "decay": {
+     "cited": [
+      "phases/15-autonomous-systems/12-durable-execution/docs/en.md"
+     ],
+     "cited_expected": true,
+     "model_calls": 2,
+     "prompt_tokens": 1325,
+     "searched": 1,
+     "seconds": 6.36,
+     "top1": "phases/15-autonomous-systems/12-durable-execution/docs/en.md",
+     "top1_expected": true,
+     "top4_scores": [
+      0.7561,
+      0.7165,
+      0.6817,
+      0.6734
+     ]
+    },
+    "matryoshka": {
+     "cited": [
+      "phases/11-llm-engineering/04-embeddings/docs/en.md"
+     ],
+     "cited_expected": true,
+     "model_calls": 2,
+     "prompt_tokens": 1802,
+     "searched": 1,
+     "seconds": 10.32,
+     "top1": "phases/11-llm-engineering/04-embeddings/docs/en.md",
+     "top1_expected": true,
+     "top4_scores": [
+      0.7909,
+      0.6641,
+      0.6585,
+      0.6536
+     ]
+    },
+    "outside": {
+     "cited": [],
+     "cited_expected": true,
+     "model_calls": 1,
+     "prompt_tokens": 264,
+     "searched": 0,
+     "seconds": 1.08,
+     "top1": "phases/11-llm-engineering/06-rag/docs/en.md",
+     "top1_expected": null,
+     "top4_scores": [
+      0.5424,
+      0.5363,
+      0.5209,
+      0.5179
+     ]
+    },
+    "reducer": {
+     "cited": [],
+     "cited_expected": false,
+     "model_calls": 1,
+     "prompt_tokens": 272,
+     "searched": 0,
+     "seconds": 2.6,
+     "top1": "phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md",
+     "top1_expected": true,
+     "top4_scores": [
+      0.7591,
+      0.7372,
+      0.7369,
+      0.7325
+     ]
+    },
+    "thread": {
+     "cited": [
+      "phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md"
+     ],
+     "cited_expected": true,
+     "model_calls": 2,
+     "prompt_tokens": 1494,
+     "searched": 1,
+     "seconds": 7.93,
+     "top1": "phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md",
+     "top1_expected": true,
+     "top4_scores": [
+      0.6986,
+      0.6737,
+      0.6717,
+      0.6471
+     ]
+    }
+   }
+  }
+ },
+ "runs": "one run of each demo; the SQL and retrieval demos once with each model",
+ "sources": [
+  "capture/lab/sql-agent/",
+  "capture/lab/retrieval-agent/",
+  "capture/lab/assistant/",
+  "capture/lab/deep-agent/",
+  "capture/lab/failure-drill/"
+ ],
+ "sql_agent": {
+  "expected": {
+   "march_orders": 18,
+   "tables": {
+    "customers": 8,
+    "order_items": 162,
+    "orders": 60,
+    "products": 10
+   },
+   "top_customer": [
+    "Garden Bistro",
+    100550
+   ]
+  },
+  "models": {
+   "qwen3:4b-instruct-2507-q4_K_M": {
+    "after": {
+     "cancelled": 4,
+     "orders": 60,
+     "products": 11,
+     "rye_loaf": 1
+    },
+    "before": {
+     "cancelled": 4,
+     "orders": 60,
+     "products": 10,
+     "rye_loaf": 0
+    },
+    "guard": {
+     "reader": [
+      "DatabaseError: not authorized",
+      [
+       [
+        60
+       ]
+      ]
+     ],
+     "refused": 6,
+     "sent": 7
+    },
+    "questions": {
+     "add-product": {
+      "decisions": [
+       "approve"
+      ],
+      "error": null,
+      "model_calls": 4,
+      "outcome": "right",
+      "output_tokens": 431,
+      "prompt_tokens": 3234,
+      "seconds": 10.41,
+      "tools": [
+       "describe_database",
+       "run_select",
+       "request_change"
+      ]
+     },
+     "drop-cancelled": {
+      "decisions": [
+       "reject"
+      ],
+      "error": null,
+      "model_calls": 4,
+      "outcome": "right",
+      "output_tokens": 133,
+      "prompt_tokens": 2316,
+      "seconds": 3.29,
+      "tools": [
+       "describe_database",
+       "run_select",
+       "request_change"
+      ]
+     },
+     "march": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 71,
+      "prompt_tokens": 1620,
+      "seconds": 1.65,
+      "tools": [
+       "describe_database",
+       "run_select"
+      ]
+     },
+     "tables": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 2,
+      "outcome": "right",
+      "output_tokens": 89,
+      "prompt_tokens": 1001,
+      "seconds": 4.0,
+      "tools": [
+       "describe_database"
+      ]
+     },
+     "top-customer": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 133,
+      "prompt_tokens": 1691,
+      "seconds": 2.51,
+      "tools": [
+       "describe_database",
+       "run_select"
+      ]
+     }
+    }
+   },
+   "qwen3:8b": {
+    "after": {
+     "cancelled": 4,
+     "orders": 60,
+     "products": 11,
+     "rye_loaf": 1
+    },
+    "before": {
+     "cancelled": 4,
+     "orders": 60,
+     "products": 10,
+     "rye_loaf": 0
+    },
+    "guard": {
+     "reader": [
+      "DatabaseError: not authorized",
+      [
+       [
+        60
+       ]
+      ]
+     ],
+     "refused": 6,
+     "sent": 7
+    },
+    "questions": {
+     "add-product": {
+      "decisions": [
+       "approve"
+      ],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 111,
+      "prompt_tokens": 1524,
+      "seconds": 6.65,
+      "tools": [
+       "describe_database",
+       "request_change"
+      ]
+     },
+     "drop-cancelled": {
+      "decisions": [
+       "reject"
+      ],
+      "error": null,
+      "model_calls": 4,
+      "outcome": "right",
+      "output_tokens": 113,
+      "prompt_tokens": 3235,
+      "seconds": 8.94,
+      "tools": [
+       "describe_database",
+       "run_select",
+       "request_change"
+      ]
+     },
+     "march": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 82,
+      "prompt_tokens": 1504,
+      "seconds": 4.01,
+      "tools": [
+       "describe_database",
+       "run_select"
+      ]
+     },
+     "tables": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 2,
+      "outcome": "right",
+      "output_tokens": 83,
+      "prompt_tokens": 917,
+      "seconds": 4.88,
+      "tools": [
+       "describe_database"
+      ]
+     },
+     "top-customer": {
+      "decisions": [],
+      "error": null,
+      "model_calls": 3,
+      "outcome": "right",
+      "output_tokens": 154,
+      "prompt_tokens": 1559,
+      "seconds": 7.83,
+      "tools": [
+       "describe_database",
+       "run_select"
+      ]
+     }
+    }
+   }
+  },
+  "rules": "tables: each table name followed by its row count in the answer; top-customer: the name and the total in cents in the answer; march: the count in the answer; add-product: one Rye Loaf row after the run; drop-cancelled: as many cancelled orders after the run as before"
+ }
+}

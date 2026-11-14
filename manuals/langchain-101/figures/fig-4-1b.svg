@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 270" role="img" aria-labelledby="fig-4-1b-title fig-4-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-1b-title">The same tool result in v1, v2, and v3</title>
+  <desc id="fig-4-1b-desc">Three columns, one per stream API, each carrying the ToolMessage 5 of the add tool. v1 with two modes yields a tuple of the mode and the data, and the data is the ToolMessage with its metadata. v2 yields a StreamPart dict with type, ns, and data. v3 yields an event frame with type, method, params, and seq, where method is tools and the data is the tool-finished event with the ToolMessage as output.</desc>
+  <defs><marker id="fig-4-1b-head-indigo" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-indigo-ink, #4b4f9e)"/></marker></defs>
+  <text x="16" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">V1, TWO MODES</text>
+  <rect x="16" y="30" width="196" height="64" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="28" y="49.75" font-size="12.5" font-weight="700">a tuple</text>
+  <text x="28" y="67.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">(mode, data)</text>
+  <text x="28" y="82.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">shape changes with modes</text>
+  <rect x="16" y="128" width="196" height="64" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="28" y="147.75" font-size="12.5" font-weight="700">data</text>
+  <text x="28" y="165.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">(ToolMessage, metadata)</text>
+  <text x="28" y="180.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">langgraph_node: tools</text>
+  <line x1="114" y1="94" x2="114" y2="127" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-4-1b-head-indigo)"/>
+  <text x="16" y="218" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">chunk 1 of messages</text>
+  <text x="222" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">V2, ANY MODES</text>
+  <rect x="222" y="30" width="196" height="64" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="234" y="49.75" font-size="12.5" font-weight="700">a StreamPart dict</text>
+  <text x="234" y="67.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">type, ns, data</text>
+  <text x="234" y="82.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">type: messages</text>
+  <rect x="222" y="128" width="196" height="64" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="234" y="147.75" font-size="12.5" font-weight="700">data</text>
+  <text x="234" y="165.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">message: ToolMessage</text>
+  <text x="234" y="180.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">metadata: node tools</text>
+  <line x1="320" y1="94" x2="320" y2="127" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-4-1b-head-indigo)"/>
+  <text x="222" y="218" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">part 2</text>
+  <text x="428" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">V3 EVENT</text>
+  <rect x="428" y="30" width="196" height="64" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="440" y="49.75" font-size="12.5" font-weight="700">an event frame</text>
+  <text x="440" y="67.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">type, method, params, seq</text>
+  <text x="440" y="82.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">method: tools</text>
+  <rect x="428" y="128" width="196" height="64" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="440" y="147.75" font-size="12.5" font-weight="700">params.data</text>
+  <text x="440" y="165.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">event: tool-finished</text>
+  <text x="440" y="180.05" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">output: ToolMessage</text>
+  <line x1="526" y1="94" x2="526" y2="127" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.2" stroke-dasharray="1.5 3.5" stroke-linecap="round" marker-end="url(#fig-4-1b-head-indigo)"/>
+  <text x="428" y="218" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seq 8</text>
+  <line x1="217" y1="10" x2="217" y2="226" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <line x1="423" y1="10" x2="423" y2="226" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="16" y="254" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">All three carry the same ToolMessage, with content 5 and tool_call_id call_1.</text>
+</svg>

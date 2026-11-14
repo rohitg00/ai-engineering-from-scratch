@@ -1,0 +1,78 @@
+### request 1: a_plain_openai (643 B) vs c_create_agent (660 B)
+--- a_plain_openai
++++ c_create_agent
+@@ -9,3 +9,4 @@
+  "seed": 42,
+- "temperature": 0,
++ "stream": false,
++ "temperature": 0.0,
+  "tools": [
+### request 2: a_plain_openai (851 B) vs c_create_agent (868 B)
+--- a_plain_openai
++++ c_create_agent
+@@ -28,3 +28,4 @@
+  "seed": 42,
+- "temperature": 0,
++ "stream": false,
++ "temperature": 0.0,
+  "tools": [
+### request 3: a_plain_openai (1065 B) vs c_create_agent (1082 B)
+--- a_plain_openai
++++ c_create_agent
+@@ -47,3 +47,4 @@
+  "seed": 42,
+- "temperature": 0,
++ "stream": false,
++ "temperature": 0.0,
+  "tools": [
+### selected headers of request 1 per variant
+{
+ "a_plain_openai": {
+  "user-agent": "OpenAI/Python 3.51.0",
+  "x-stainless-lang": "python",
+  "x-stainless-package-version": "3.51.0",
+  "x-stainless-os": "MacOS",
+  "x-stainless-arch": "arm64",
+  "x-stainless-runtime": "CPython",
+  "x-stainless-runtime-version": "3.13.12",
+  "x-stainless-async": "false",
+  "x-stainless-retry-count": "0",
+  "x-stainless-read-timeout": "600"
+ },
+ "b_bind_tools_loop": {
+  "user-agent": "OpenAI/Python 3.51.0",
+  "x-stainless-lang": "python",
+  "x-stainless-package-version": "3.51.0",
+  "x-stainless-os": "MacOS",
+  "x-stainless-arch": "arm64",
+  "x-stainless-runtime": "CPython",
+  "x-stainless-runtime-version": "3.13.12",
+  "x-stainless-async": "false",
+  "x-stainless-raw-response": "true",
+  "x-stainless-retry-count": "0"
+ },
+ "c_create_agent": {
+  "user-agent": "OpenAI/Python 3.51.0",
+  "x-stainless-lang": "python",
+  "x-stainless-package-version": "3.51.0",
+  "x-stainless-os": "MacOS",
+  "x-stainless-arch": "arm64",
+  "x-stainless-runtime": "CPython",
+  "x-stainless-runtime-version": "3.13.12",
+  "x-stainless-async": "false",
+  "x-stainless-raw-response": "true",
+  "x-stainless-retry-count": "0"
+ },
+ "d_create_agent_saver": {
+  "user-agent": "OpenAI/Python 3.51.0",
+  "x-stainless-lang": "python",
+  "x-stainless-package-version": "3.51.0",
+  "x-stainless-os": "MacOS",
+  "x-stainless-arch": "arm64",
+  "x-stainless-runtime": "CPython",
+  "x-stainless-runtime-version": "3.13.12",
+  "x-stainless-async": "false",
+  "x-stainless-raw-response": "true",
+  "x-stainless-retry-count": "0"
+ }
+}

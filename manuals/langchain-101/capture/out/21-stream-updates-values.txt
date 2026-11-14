@@ -1,0 +1,188 @@
+# Streaming v1: updates, values, and the default mode
+
+## stream_mode='updates'
+
+chunk 0:
+{
+  "model": {
+    "messages": [
+      {
+        "type": "AIMessage",
+        "content": "",
+        "id": "lc_run--<uuid-1>-0",
+        "tool_calls": [
+          {
+            "name": "add",
+            "args": {
+              "a": 2,
+              "b": 3
+            },
+            "id": "call_1",
+            "type": "tool_call"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+chunk 1:
+{
+  "tools": {
+    "messages": [
+      {
+        "type": "ToolMessage",
+        "content": "5",
+        "name": "add",
+        "id": "<uuid-2>",
+        "tool_call_id": "call_1",
+        "status": "success"
+      }
+    ]
+  }
+}
+
+chunk 2:
+{
+  "model": {
+    "messages": [
+      {
+        "type": "AIMessage",
+        "content": "The sum is 5.",
+        "id": "lc_run--<uuid-3>-0"
+      }
+    ]
+  }
+}
+
+## stream_mode='values'
+
+chunk 0:
+{
+  "messages": [
+    {
+      "type": "HumanMessage",
+      "content": "What is 2 + 3?",
+      "id": "<uuid-4>"
+    }
+  ]
+}
+
+chunk 1:
+{
+  "messages": [
+    {
+      "type": "HumanMessage",
+      "content": "What is 2 + 3?",
+      "id": "<uuid-4>"
+    },
+    {
+      "type": "AIMessage",
+      "content": "",
+      "id": "lc_run--<uuid-5>-0",
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "id": "call_1",
+          "type": "tool_call"
+        }
+      ]
+    }
+  ]
+}
+
+chunk 2:
+{
+  "messages": [
+    {
+      "type": "HumanMessage",
+      "content": "What is 2 + 3?",
+      "id": "<uuid-4>"
+    },
+    {
+      "type": "AIMessage",
+      "content": "",
+      "id": "lc_run--<uuid-5>-0",
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "id": "call_1",
+          "type": "tool_call"
+        }
+      ]
+    },
+    {
+      "type": "ToolMessage",
+      "content": "5",
+      "name": "add",
+      "id": "<uuid-6>",
+      "tool_call_id": "call_1",
+      "status": "success"
+    }
+  ]
+}
+
+chunk 3:
+{
+  "messages": [
+    {
+      "type": "HumanMessage",
+      "content": "What is 2 + 3?",
+      "id": "<uuid-4>"
+    },
+    {
+      "type": "AIMessage",
+      "content": "",
+      "id": "lc_run--<uuid-5>-0",
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "id": "call_1",
+          "type": "tool_call"
+        }
+      ]
+    },
+    {
+      "type": "ToolMessage",
+      "content": "5",
+      "name": "add",
+      "id": "<uuid-6>",
+      "tool_call_id": "call_1",
+      "status": "success"
+    },
+    {
+      "type": "AIMessage",
+      "content": "The sum is 5.",
+      "id": "lc_run--<uuid-7>-0"
+    }
+  ]
+}
+
+## stream_mode=None uses the graph default
+
+chunk 0 keys:
+[
+  "model"
+]
+
+chunk 1 keys:
+[
+  "tools"
+]
+
+chunk 2 keys:
+[
+  "model"
+]

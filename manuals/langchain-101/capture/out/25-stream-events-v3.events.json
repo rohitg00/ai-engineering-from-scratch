@@ -1,0 +1,825 @@
+[
+  {
+    "type": "event",
+    "method": "values",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "messages": [
+          {
+            "type": "HumanMessage",
+            "content": "What is 2 + 3?",
+            "id": "<uuid-1>"
+          }
+        ]
+      },
+      "interrupts": []
+    },
+    "seq": 1
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "message-start",
+          "role": "ai",
+          "id": "lc_run--<uuid-2>"
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-5>",
+          "checkpoint_ns": "model:<uuid-5>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-2>"
+        }
+      ]
+    },
+    "seq": 2
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-start",
+          "index": 0,
+          "content": {
+            "type": "tool_call",
+            "id": "call_1",
+            "name": "add",
+            "args": {}
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-5>",
+          "checkpoint_ns": "model:<uuid-5>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-2>"
+        }
+      ]
+    },
+    "seq": 3
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-finish",
+          "index": 0,
+          "content": {
+            "type": "tool_call",
+            "id": "call_1",
+            "name": "add",
+            "args": {
+              "a": 2,
+              "b": 3
+            }
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-5>",
+          "checkpoint_ns": "model:<uuid-5>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-2>"
+        }
+      ]
+    },
+    "seq": 4
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "message-finish"
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-5>",
+          "checkpoint_ns": "model:<uuid-5>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-2>"
+        }
+      ]
+    },
+    "seq": 5
+  },
+  {
+    "type": "event",
+    "method": "values",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "messages": [
+          {
+            "type": "HumanMessage",
+            "content": "What is 2 + 3?",
+            "id": "<uuid-1>"
+          },
+          {
+            "type": "AIMessage",
+            "content": [
+              {
+                "type": "tool_call",
+                "id": "call_1",
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                }
+              }
+            ],
+            "id": "lc_run--<uuid-2>",
+            "tool_calls": [
+              {
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                },
+                "id": "call_1",
+                "type": "tool_call"
+              }
+            ],
+            "response_metadata": {
+              "output_version": "v1"
+            }
+          }
+        ]
+      },
+      "interrupts": []
+    },
+    "seq": 6
+  },
+  {
+    "type": "event",
+    "method": "tools",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "event": "tool-started",
+        "tool_call_id": "call_1",
+        "tool_name": "add",
+        "input": {
+          "a": 2,
+          "b": 3
+        }
+      }
+    },
+    "seq": 7
+  },
+  {
+    "type": "event",
+    "method": "tools",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "event": "tool-finished",
+        "tool_call_id": "call_1",
+        "output": {
+          "type": "ToolMessage",
+          "content": "5",
+          "name": "add",
+          "id": "<uuid-3>",
+          "tool_call_id": "call_1",
+          "status": "success"
+        }
+      }
+    },
+    "seq": 8
+  },
+  {
+    "type": "event",
+    "method": "values",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "messages": [
+          {
+            "type": "HumanMessage",
+            "content": "What is 2 + 3?",
+            "id": "<uuid-1>"
+          },
+          {
+            "type": "AIMessage",
+            "content": [
+              {
+                "type": "tool_call",
+                "id": "call_1",
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                }
+              }
+            ],
+            "id": "lc_run--<uuid-2>",
+            "tool_calls": [
+              {
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                },
+                "id": "call_1",
+                "type": "tool_call"
+              }
+            ],
+            "response_metadata": {
+              "output_version": "v1"
+            }
+          },
+          {
+            "type": "ToolMessage",
+            "content": "5",
+            "name": "add",
+            "id": "<uuid-3>",
+            "tool_call_id": "call_1",
+            "status": "success"
+          }
+        ]
+      },
+      "interrupts": []
+    },
+    "seq": 9
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "message-start",
+          "role": "ai",
+          "id": "lc_run--<uuid-4>"
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 10
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-start",
+          "index": 0,
+          "content": {
+            "type": "text",
+            "text": ""
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 11
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": "The"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 12
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": " "
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 13
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": "sum"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 14
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": " "
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 15
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": "is"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 16
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": " "
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 17
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": "5."
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 18
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-finish",
+          "index": 0,
+          "content": {
+            "type": "text",
+            "text": "The sum is 5."
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 19
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "message-finish"
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "scriptedchatmodel",
+          "ls_model_type": "chat",
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-4>"
+        }
+      ]
+    },
+    "seq": 20
+  },
+  {
+    "type": "event",
+    "method": "values",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "messages": [
+          {
+            "type": "HumanMessage",
+            "content": "What is 2 + 3?",
+            "id": "<uuid-1>"
+          },
+          {
+            "type": "AIMessage",
+            "content": [
+              {
+                "type": "tool_call",
+                "id": "call_1",
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                }
+              }
+            ],
+            "id": "lc_run--<uuid-2>",
+            "tool_calls": [
+              {
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                },
+                "id": "call_1",
+                "type": "tool_call"
+              }
+            ],
+            "response_metadata": {
+              "output_version": "v1"
+            }
+          },
+          {
+            "type": "ToolMessage",
+            "content": "5",
+            "name": "add",
+            "id": "<uuid-3>",
+            "tool_call_id": "call_1",
+            "status": "success"
+          },
+          {
+            "type": "AIMessage",
+            "content": [
+              {
+                "type": "text",
+                "text": "The sum is 5.",
+                "index": 0
+              }
+            ],
+            "id": "lc_run--<uuid-4>",
+            "response_metadata": {
+              "output_version": "v1"
+            }
+          }
+        ]
+      },
+      "interrupts": []
+    },
+    "seq": 21
+  }
+]

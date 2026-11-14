@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-5-6-title fig-5-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-6-title">Three branches of one thread</title>
+  <desc id="fig-5-6-desc">A tree of the 11 checkpoints of one thread. The first run saved steps -1 to 3 with x from none to 3. From the checkpoint at step 1, whose next node is b, a replay added a fork checkpoint at step 2 with x 1 and two loop checkpoints that end with x 3. update_state on the same checkpoint added an update checkpoint at step 2 with x 100, and the run from it ended with x 102. Every old checkpoint stayed.</desc>
+  <defs><marker id="fig-5-6-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <rect x="232" y="12" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="320" y="28.1" font-size="12" text-anchor="middle" font-weight="700">step -1, input</text>
+  <text x="320" y="45.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = none, next __start__</text>
+  <rect x="232" y="72" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="320" y="88.1" font-size="12" text-anchor="middle" font-weight="700">step 0, loop</text>
+  <text x="320" y="105.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 0, next a</text>
+  <line x1="320" y1="54" x2="320" y2="71" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect x="232" y="132" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="320" y="148.1" font-size="12" text-anchor="middle" font-weight="700">step 1, loop</text>
+  <text x="320" y="165.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 1, next b</text>
+  <line x1="320" y1="114" x2="320" y2="131" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-6-head-teal)"/>
+  <path d="M320 174 V178 H112 V199" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect class="m-knock" x="58.9" y="181.42" width="106.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="112" y="192" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE FIRST RUN</text>
+  <rect x="24" y="200" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="112" y="216.1" font-size="12" text-anchor="middle" font-weight="700">step 2, loop</text>
+  <text x="112" y="233.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 2, next c</text>
+  <line x1="112" y1="242" x2="112" y2="259" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect x="24" y="260" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="112" y="276.1" font-size="12" text-anchor="middle" font-weight="700">step 3, loop</text>
+  <text x="112" y="293.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 3, next none</text>
+  <path d="M320 174 V178 H320 V199" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect class="m-knock" x="278.6" y="181.42" width="82.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="320" y="192" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE REPLAY</text>
+  <rect x="232" y="200" width="176" height="42" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="320" y="216.1" font-size="12" text-anchor="middle" font-weight="700">step 2, fork</text>
+  <text x="320" y="233.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 1, next b</text>
+  <line x1="320" y1="242" x2="320" y2="259" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect x="232" y="260" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="320" y="276.1" font-size="12" text-anchor="middle" font-weight="700">step 3, loop</text>
+  <text x="320" y="293.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 2, next c</text>
+  <line x1="320" y1="302" x2="320" y2="319" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect x="232" y="320" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="320" y="336.1" font-size="12" text-anchor="middle" font-weight="700">step 4, loop</text>
+  <text x="320" y="353.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 3, next none</text>
+  <path d="M320 174 V178 H528 V199" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect class="m-knock" x="478.8" y="181.42" width="98.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="528" y="192" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">UPDATE_STATE</text>
+  <rect x="440" y="200" width="176" height="42" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="528" y="216.1" font-size="12" text-anchor="middle" font-weight="700">step 2, update</text>
+  <text x="528" y="233.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 100, next b</text>
+  <line x1="528" y1="242" x2="528" y2="259" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect x="440" y="260" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="528" y="276.1" font-size="12" text-anchor="middle" font-weight="700">step 3, loop</text>
+  <text x="528" y="293.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 101, next c</text>
+  <line x1="528" y1="302" x2="528" y2="319" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-6-head-teal)"/>
+  <rect x="440" y="320" width="176" height="42" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="528" y="336.1" font-size="12" text-anchor="middle" font-weight="700">step 4, loop</text>
+  <text x="528" y="353.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">x = 102, next none</text>
+  <text x="20" y="392" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each box is one checkpoint from one run on the Mac. Old checkpoints are never removed.</text>
+</svg>

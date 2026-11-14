@@ -1,0 +1,6 @@
+21b2da56b70c914026936fce930ef6bf7a3a6319b13c5362a6ffcb7d60affaff  phases/11-llm-engineering/04-embeddings/docs/en.md
+a0d5b356c1ce021f6a9ca0ccfd2693a7cae56802c6b17927fb72f116bd7b2752  phases/11-llm-engineering/06-rag/docs/en.md
+cd449175f7292a9821644d0b829cd0576a68f0da3aedbbc9e3547b45fd7b05cb  phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md
+12430c15a30c3f95a202a23c80838712db3a7b3c477c99ae744f5c54898d30d8  phases/11-llm-engineering/17-agent-framework-tradeoffs/docs/en.md
+eff89296945c389b50c9491488940eebee8dc61756ea274a2b1a094709fb4951  phases/14-agent-engineering/13-langgraph-stateful-graphs/docs/en.md
+ff2372f98d254ef74514801b263dd6487fb1da6a1ae28e48037532ec4979899f  phases/15-autonomous-systems/12-durable-execution/docs/en.md

@@ -1,0 +1,404 @@
+# Structured output: each strategy
+
+## a bare schema on a model with no profile: AutoStrategy picks ToolStrategy
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": 5
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: value=5 unit='none'",
+    "name": "Answer",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "no-profile",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## a bare schema on a model whose profile says structured_output: AutoStrategy picks ProviderStrategy
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "{\"value\": 5, \"unit\": \"none\"}",
+    "id": "lc_run--<uuid-3>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "profiled",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": [
+        "response_format"
+      ]
+    }
+  }
+]
+
+## AutoStrategy written out
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-4>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": 5
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: value=5 unit='none'",
+    "name": "Answer",
+    "id": "<uuid-5>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "auto",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## ProviderStrategy on the fake
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "{\"value\": 5, \"unit\": \"none\"}",
+    "id": "lc_run--<uuid-6>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "provider",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": [
+        "response_format"
+      ]
+    }
+  }
+]
+
+## ToolStrategy with a TypedDict
+
+structured_response:
+{
+  "value": 5
+}
+
+structured_response type: dict
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-7>-0",
+    "tool_calls": [
+      {
+        "name": "AnswerDict",
+        "args": {
+          "value": 5
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: {'value': 5}",
+    "name": "AnswerDict",
+    "id": "<uuid-8>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "typeddict",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "AnswerDict"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## ToolStrategy with a dataclass
+
+structured_response:
+{
+  "value": 5
+}
+
+structured_response type: AnswerData
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-9>-0",
+    "tool_calls": [
+      {
+        "name": "AnswerData",
+        "args": {
+          "value": 5
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: AnswerData(value=5)",
+    "name": "AnswerData",
+    "id": "<uuid-10>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "dataclass",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "AnswerData"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## ToolStrategy with a raw JSON schema dict: returned without validation
+
+structured_response:
+{
+  "value": "not a number"
+}
+
+structured_response type: dict
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-11>-0",
+    "tool_calls": [
+      {
+        "name": "answer_schema",
+        "args": {
+          "value": "not a number"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: {'value': 'not a number'}",
+    "name": "answer_schema",
+    "id": "<uuid-12>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "json-schema",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "answer_schema"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## ToolStrategy with a union: one tool per schema
+
+structured_response:
+{
+  "reason": "no numbers"
+}
+
+structured_response type: Refusal
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-13>-0",
+    "tool_calls": [
+      {
+        "name": "Refusal",
+        "args": {
+          "reason": "no numbers"
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: reason='no numbers'",
+    "name": "Refusal",
+    "id": "<uuid-14>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "union",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer",
+        "Refusal"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]

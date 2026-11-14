@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-2-1-title fig-2-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-1-title">What each package requires at the pin</title>
+  <desc id="fig-2-1-desc">A dependency tree. deepagents 0.7.38 requires langchain 1.5 or later, langchain-anthropic 1.7.10 or later, langchain-google-genai 4.4.3 or later, and langsmith 0.14.17 or later. langchain 1.5.0 requires langchain-core 1.8 or later and langgraph from 1.2.12 to below 1.3, with the extras openai, anthropic, ollama, and mcp drawn dashed. langgraph 1.2.22 requires langchain-core 1.4.7 or later, langgraph-checkpoint 4.3 to below 5, langgraph-prebuilt 1.1 to below 1.2, and langgraph-sdk 0.4.6 to below 0.5. langchain-core 1.8.0 requires langsmith 0.14.9 to below 1, langchain-protocol 0.0.20 or later, and pydantic 2.7.4 to below 3.</desc>
+  <defs><marker id="fig-2-1-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker></defs>
+  <rect x="20" y="14" width="180" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-dasharray="5 4"/>
+  <text x="110" y="31.1" font-size="12" text-anchor="middle" font-weight="700">deepagents 0.7.38</text>
+  <text x="110" y="48.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">optional harness</text>
+  <rect x="240" y="14" width="180" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="330" y="31.1" font-size="12" text-anchor="middle" font-weight="700">langchain 1.5.0</text>
+  <text x="330" y="48.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">create_agent</text>
+  <rect x="460" y="14" width="160" height="44" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)" stroke-dasharray="5 4"/>
+  <text x="540" y="31.1" font-size="12" text-anchor="middle" font-weight="700">extras</text>
+  <text x="540" y="48.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">openai, ollama, mcp</text>
+  <rect x="20" y="120" width="180" height="44" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="110" y="137.1" font-size="12" text-anchor="middle" font-weight="700">two providers</text>
+  <text x="110" y="154.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">anthropic, google-genai</text>
+  <rect x="240" y="120" width="180" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="330" y="137.1" font-size="12" text-anchor="middle" font-weight="700">langgraph 1.2.22</text>
+  <text x="330" y="154.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&gt;=1.2.12,&lt;1.3.0</text>
+  <rect x="240" y="236" width="180" height="44" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="330" y="253.1" font-size="12" text-anchor="middle" font-weight="700">langchain-core 1.8.0</text>
+  <text x="330" y="270.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&gt;=1.8.0,&lt;2</text>
+  <rect x="460" y="120" width="160" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="540" y="137.1" font-size="12" text-anchor="middle" font-weight="700">checkpoint 4.3.2</text>
+  <text x="540" y="154.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&gt;=4.3.0,&lt;5</text>
+  <rect x="460" y="184" width="160" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="540" y="201.1" font-size="12" text-anchor="middle" font-weight="700">prebuilt 1.1.2</text>
+  <text x="540" y="218.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&gt;=1.1.0,&lt;1.2.0</text>
+  <rect x="460" y="248" width="160" height="44" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="540" y="265.1" font-size="12" text-anchor="middle" font-weight="700">sdk 0.4.14</text>
+  <text x="540" y="282.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&gt;=0.4.6,&lt;0.5.0</text>
+  <rect x="20" y="352" width="180" height="44" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="110" y="369.1" font-size="12" text-anchor="middle" font-weight="700">langsmith 0.14.17</text>
+  <text x="110" y="386.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&gt;=0.14.9,&lt;1</text>
+  <rect x="240" y="352" width="180" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="330" y="369.1" font-size="12" text-anchor="middle" font-weight="700">langchain-protocol</text>
+  <text x="330" y="386.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&gt;=0.0.20</text>
+  <rect x="460" y="352" width="160" height="44" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="540" y="369.1" font-size="12" text-anchor="middle" font-weight="700">pydantic 2.14.3</text>
+  <text x="540" y="386.3" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">&gt;=2.7.4,&lt;3</text>
+  <line x1="200" y1="36" x2="239" y2="36" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <line x1="420" y1="36" x2="459" y2="36" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1-head-ink)"/>
+  <line x1="110" y1="58" x2="110" y2="119" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <line x1="330" y1="58" x2="330" y2="119" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <line x1="330" y1="164" x2="330" y2="235" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <line x1="420" y1="142" x2="459" y2="142" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <path d="M420 154 L440 154 L440 206 L459 206" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-2-1-head-ink)"/>
+  <path d="M420 160 L432 160 L432 270 L459 270" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-2-1-head-ink)"/>
+  <path d="M240 270 L110 270 L110 351" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-2-1-head-ink)"/>
+  <line x1="330" y1="280" x2="330" y2="351" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-1-head-ink)"/>
+  <path d="M420 280 L540 330 L540 351" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-2-1-head-ink)"/>
+  <text x="20" y="432" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Arrows read as requires, with the declared range under each name.</text>
+  <text x="20" y="450" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">deepagents also requires langsmith &gt;=0.14.17 and langchain &gt;=1.5.0.</text>
+</svg>

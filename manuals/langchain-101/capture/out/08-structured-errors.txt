@@ -1,0 +1,484 @@
+# Structured output: validation errors and retries
+
+## ToolStrategy validation error, then the retry
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": "five"
+        },
+        "id": "call_a",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Error: Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer\nvalue\n  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='five', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.14/v/int_parsing.\n Please fix your mistakes.",
+    "name": "Answer",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_a",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-3>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": 5
+        },
+        "id": "call_b",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: value=5 unit='none'",
+    "name": "Answer",
+    "id": "<uuid-4>",
+    "tool_call_id": "call_b",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "retry",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  },
+  {
+    "model": "retry",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: Error: Failed to parse structured output for tool 'Answer': Failed to parse data"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## ToolStrategy two structured calls in one message, then the retry
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-5>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": 5
+        },
+        "id": "call_a",
+        "type": "tool_call"
+      },
+      {
+        "name": "Refusal",
+        "args": {
+          "reason": "x"
+        },
+        "id": "call_b",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Error: Model incorrectly returned multiple structured responses (Answer, Refusal) when only one is expected.\n Please fix your mistakes.",
+    "name": "Answer",
+    "id": "<uuid-6>",
+    "tool_call_id": "call_a",
+    "status": "success"
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Error: Model incorrectly returned multiple structured responses (Answer, Refusal) when only one is expected.\n Please fix your mistakes.",
+    "name": "Refusal",
+    "id": "<uuid-7>",
+    "tool_call_id": "call_b",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-8>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": 5
+        },
+        "id": "call_c",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: value=5 unit='none'",
+    "name": "Answer",
+    "id": "<uuid-9>",
+    "tool_call_id": "call_c",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "multiple",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer",
+        "Refusal"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  },
+  {
+    "model": "multiple",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: Error: Model incorrectly returned multiple structured responses (Answer, Refusal",
+      "tool: Error: Model incorrectly returned multiple structured responses (Answer, Refusal"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer",
+        "Refusal"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## ToolStrategy handle_errors with a custom message
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-10>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": "five"
+        },
+        "id": "call_a",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Return value as an integer.",
+    "name": "Answer",
+    "id": "<uuid-11>",
+    "tool_call_id": "call_a",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-12>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": 5
+        },
+        "id": "call_b",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: value=5 unit='none'",
+    "name": "Answer",
+    "id": "<uuid-13>",
+    "tool_call_id": "call_b",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "message",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  },
+  {
+    "model": "message",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: Return value as an integer."
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## ToolStrategy handle_errors=False: the run raises
+
+invoke:
+
+raised langchain.agents.structured_output.StructuredOutputValidationError: Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer
+value
+  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='five', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/int_parsing.
+
+model calls seen by the fake:
+[
+  {
+    "model": "no-retry",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]
+
+## ProviderStrategy with JSON that fails validation
+
+invoke:
+
+raised langchain.agents.structured_output.StructuredOutputValidationError: Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer
+value
+  Input should be a valid integer, unable to parse string as an integer [type=int_parsing, input_value='five', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/int_parsing.
+
+model calls seen by the fake:
+[
+  {
+    "model": "provider-bad",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": [
+        "response_format"
+      ]
+    }
+  }
+]
+
+## ProviderStrategy with text that is not JSON
+
+invoke:
+
+raised langchain.agents.structured_output.StructuredOutputValidationError: Failed to parse structured output for tool 'Answer': Native structured output expected valid JSON for Answer, but parsing failed: Expecting value: line 1 column 1 (char 0)..
+
+model calls seen by the fake:
+[
+  {
+    "model": "provider-text",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": [
+        "response_format"
+      ]
+    }
+  }
+]
+
+## ToolStrategy, the model calls a normal tool first
+
+structured_response:
+{
+  "value": 5,
+  "unit": "none"
+}
+
+structured_response type: Answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-14>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_a",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-15>",
+    "tool_call_id": "call_a",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-16>-0",
+    "tool_calls": [
+      {
+        "name": "Answer",
+        "args": {
+          "value": 5
+        },
+        "id": "call_b",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Returning structured response: value=5 unit='none'",
+    "name": "Answer",
+    "id": "<uuid-17>",
+    "tool_call_id": "call_b",
+    "status": "success"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "tool-first",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  },
+  {
+    "model": "tool-first",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: 5"
+    ],
+    "bound": {
+      "tools": [
+        "add",
+        "Answer"
+      ],
+      "tool_choice": "any",
+      "kwargs": []
+    }
+  }
+]

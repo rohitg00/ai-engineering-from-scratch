@@ -1,0 +1,479 @@
+{
+ "base_prompt": "the first request of a default create_deep_agent() for the message hi, captured offline with no model call; tokens counted with tiktoken o200k_base and cl100k_base, and with qwen3 through Ollama",
+ "base_prompts": {
+  "0.6.12 anthropic:claude-sonnet-4-6": {
+   "system_chars": 8795,
+   "system_plus_schema_tokens": {
+    "cl100k_base": 5903,
+    "o200k_base": 5899
+   },
+   "system_tokens_o200k": 1813,
+   "tool_and_param_description_tokens_o200k": 3417,
+   "tool_description_tokens_o200k": 3099,
+   "tool_schema_tokens_o200k": 4086,
+   "tools": [
+    "write_todos",
+    "ls",
+    "read_file",
+    "write_file",
+    "edit_file",
+    "glob",
+    "grep",
+    "task"
+   ]
+  },
+  "0.7.38 anthropic:claude-sonnet-4-6": {
+   "system_chars": 1455,
+   "system_plus_schema_tokens": {
+    "cl100k_base": 2488,
+    "o200k_base": 2500
+   },
+   "system_tokens_o200k": 275,
+   "tool_and_param_description_tokens_o200k": 1711,
+   "tool_description_tokens_o200k": 1126,
+   "tool_schema_tokens_o200k": 2225,
+   "tools": [
+    "ls",
+    "read_file",
+    "write_file",
+    "edit_file",
+    "delete",
+    "glob",
+    "grep",
+    "task"
+   ]
+  },
+  "0.7.38 ollama:qwen3:8b": {
+   "system_chars": 0,
+   "system_plus_schema_tokens": {
+    "cl100k_base": 2213,
+    "o200k_base": 2225
+   },
+   "system_tokens_o200k": 0,
+   "tool_and_param_description_tokens_o200k": 1711,
+   "tool_description_tokens_o200k": 1126,
+   "tool_schema_tokens_o200k": 2225,
+   "tools": [
+    "ls",
+    "read_file",
+    "write_file",
+    "edit_file",
+    "delete",
+    "glob",
+    "grep",
+    "task"
+   ]
+  }
+ },
+ "cells": {
+  "files create_agent": {
+   "completion_tokens_total": [
+    63,
+    63,
+    63
+   ],
+   "harness": "create_agent",
+   "model_calls": [
+    3,
+    3,
+    3
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     214,
+     262,
+     297
+    ],
+    [
+     214,
+     262,
+     297
+    ],
+    [
+     214,
+     262,
+     297
+    ]
+   ],
+   "prompt_tokens_total": [
+    773,
+    773,
+    773
+   ],
+   "runs": 3,
+   "task": "files"
+  },
+  "files deep_agent": {
+   "completion_tokens_total": [
+    68,
+    68,
+    68
+   ],
+   "harness": "deep_agent",
+   "model_calls": [
+    3,
+    3,
+    3
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     2293,
+     2337,
+     2383
+    ],
+    [
+     2293,
+     2337,
+     2383
+    ],
+    [
+     2293,
+     2337,
+     2383
+    ]
+   ],
+   "prompt_tokens_total": [
+    7013,
+    7013,
+    7013
+   ],
+   "runs": 3,
+   "task": "files"
+  },
+  "files plain": {
+   "completion_tokens_total": [
+    63,
+    63,
+    63
+   ],
+   "harness": "plain",
+   "model_calls": [
+    3,
+    3,
+    3
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     214,
+     262,
+     297
+    ],
+    [
+     214,
+     262,
+     297
+    ],
+    [
+     214,
+     262,
+     297
+    ]
+   ],
+   "prompt_tokens_total": [
+    773,
+    773,
+    773
+   ],
+   "runs": 3,
+   "task": "files"
+  },
+  "tools create_agent": {
+   "completion_tokens_total": [
+    57,
+    57,
+    57
+   ],
+   "harness": "create_agent",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     205,
+     275
+    ],
+    [
+     205,
+     275
+    ],
+    [
+     205,
+     275
+    ]
+   ],
+   "prompt_tokens_total": [
+    480,
+    480,
+    480
+   ],
+   "runs": 3,
+   "task": "tools"
+  },
+  "tools deep_agent": {
+   "completion_tokens_total": [
+    57,
+    57,
+    57
+   ],
+   "harness": "deep_agent",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     2374,
+     2444
+    ],
+    [
+     2374,
+     2444
+    ],
+    [
+     2374,
+     2444
+    ]
+   ],
+   "prompt_tokens_total": [
+    4818,
+    4818,
+    4818
+   ],
+   "runs": 3,
+   "task": "tools"
+  },
+  "tools plain": {
+   "completion_tokens_total": [
+    57,
+    57,
+    57
+   ],
+   "harness": "plain",
+   "model_calls": [
+    2,
+    2,
+    2
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     205,
+     275
+    ],
+    [
+     205,
+     275
+    ],
+    [
+     205,
+     275
+    ]
+   ],
+   "prompt_tokens_total": [
+    480,
+    480,
+    480
+   ],
+   "runs": 3,
+   "task": "tools"
+  },
+  "trivial create_agent": {
+   "completion_tokens_total": [
+    2,
+    2,
+    2
+   ],
+   "harness": "create_agent",
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     28
+    ],
+    [
+     28
+    ],
+    [
+     28
+    ]
+   ],
+   "prompt_tokens_total": [
+    28,
+    28,
+    28
+   ],
+   "runs": 3,
+   "task": "trivial"
+  },
+  "trivial deep_agent": {
+   "completion_tokens_total": [
+    2,
+    2,
+    2
+   ],
+   "harness": "deep_agent",
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     2279
+    ],
+    [
+     2279
+    ],
+    [
+     2279
+    ]
+   ],
+   "prompt_tokens_total": [
+    2279,
+    2279,
+    2279
+   ],
+   "runs": 3,
+   "task": "trivial"
+  },
+  "trivial plain": {
+   "completion_tokens_total": [
+    2,
+    2,
+    2
+   ],
+   "harness": "plain",
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "ok": 3,
+   "prompt_tokens_per_call": [
+    [
+     28
+    ],
+    [
+     28
+    ],
+    [
+     28
+    ]
+   ],
+   "prompt_tokens_total": [
+    28,
+    28,
+    28
+   ],
+   "runs": 3,
+   "task": "trivial"
+  }
+ },
+ "drop_0_6_to_0_7_pct": {
+  "cl100k_base": 57.9,
+  "o200k_base": 57.6,
+  "qwen3_whole_request": 56.3,
+  "tool_and_param_descriptions_o200k": 49.9,
+  "tool_descriptions_o200k": 63.7
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "model": "qwen3:8b on Ollama 0.31.1, temperature 0, seed 42, think off; tokens are prompt_eval_count and eval_count",
+ "qwen3_prompt_eval_count": {
+  "0.6.12 anthropic:claude-sonnet-4-6": {
+   "system+user 'hi'+tools": [
+    5814,
+    5814,
+    5814
+   ],
+   "system+user 'hi', no tools": [
+    1851,
+    1851,
+    1851
+   ],
+   "user 'hi' only": [
+    17,
+    17,
+    17
+   ]
+  },
+  "0.7.38 anthropic:claude-sonnet-4-6": {
+   "system+user 'hi'+tools": [
+    2543,
+    2543,
+    2543
+   ],
+   "system+user 'hi', no tools": [
+    297,
+    297,
+    297
+   ],
+   "user 'hi' only": [
+    17,
+    17,
+    17
+   ]
+  },
+  "0.7.38 ollama:qwen3:8b": {
+   "system+user 'hi'+tools": [
+    2268,
+    2268,
+    2268
+   ],
+   "system+user 'hi', no tools": [
+    17,
+    17,
+    17
+   ],
+   "user 'hi' only": [
+    17,
+    17,
+    17
+   ]
+  }
+ },
+ "ratios": {
+  "files": {
+   "create_agent_equals_plain": true,
+   "deep_over_plain": 9.1,
+   "extra_tokens_per_call": [
+    2079,
+    2075,
+    2086
+   ]
+  },
+  "tools": {
+   "create_agent_equals_plain": true,
+   "deep_over_plain": 10.0,
+   "extra_tokens_per_call": [
+    2169,
+    2169
+   ]
+  },
+  "trivial": {
+   "create_agent_equals_plain": true,
+   "deep_over_plain": 81.4,
+   "extra_tokens_per_call": [
+    2251
+   ]
+  }
+ },
+ "sources": [
+  "capture/lab/T09-tokens-mac/01-baseprompt-0.7.38.jsonl",
+  "capture/lab/T09-tokens-mac/02-baseprompt-0.6.12.jsonl",
+  "capture/lab/T09-tokens-mac/03-qwen3-token-counts.jsonl",
+  "capture/lab/T09-tokens-mac/04-agent-runs.jsonl"
+ ]
+}

@@ -1,0 +1,93 @@
+# Middleware hook order with three middlewares
+
+## middleware=[A, B, C], graph nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "A.before_agent",
+  "A.before_model",
+  "A.after_model",
+  "A.after_agent",
+  "B.before_agent",
+  "B.before_model",
+  "B.after_model",
+  "B.after_agent",
+  "C.before_agent",
+  "C.before_model",
+  "C.after_model",
+  "C.after_agent",
+  "__end__"
+]
+
+## edges
+
+[
+  "A.after_model -> A.before_model",
+  "A.after_model -> C.after_agent",
+  "A.after_model -> tools",
+  "A.before_agent -> B.before_agent",
+  "A.before_model -> B.before_model",
+  "B.after_agent -> A.after_agent",
+  "B.after_model -> A.after_model",
+  "B.before_agent -> C.before_agent",
+  "B.before_model -> C.before_model",
+  "C.after_agent -> B.after_agent",
+  "C.after_model -> B.after_model",
+  "C.before_agent -> A.before_model",
+  "C.before_model -> model",
+  "__start__ -> A.before_agent",
+  "model -> C.after_model",
+  "tools -> A.before_model",
+  "A.after_agent -> __end__"
+]
+
+## hook order for one tool round trip
+
+[
+  "A.before_agent",
+  "B.before_agent",
+  "C.before_agent",
+  "A.before_model",
+  "B.before_model",
+  "C.before_model",
+  "A.wrap_model_call enter",
+  "B.wrap_model_call enter",
+  "C.wrap_model_call enter",
+  "  model called",
+  "C.wrap_model_call exit",
+  "B.wrap_model_call exit",
+  "A.wrap_model_call exit",
+  "C.after_model",
+  "B.after_model",
+  "A.after_model",
+  "A.wrap_tool_call enter add",
+  "B.wrap_tool_call enter add",
+  "C.wrap_tool_call enter add",
+  "C.wrap_tool_call exit",
+  "B.wrap_tool_call exit",
+  "A.wrap_tool_call exit",
+  "A.before_model",
+  "B.before_model",
+  "C.before_model",
+  "A.wrap_model_call enter",
+  "B.wrap_model_call enter",
+  "C.wrap_model_call enter",
+  "  model called",
+  "C.wrap_model_call exit",
+  "B.wrap_model_call exit",
+  "A.wrap_model_call exit",
+  "C.after_model",
+  "B.after_model",
+  "A.after_model",
+  "C.after_agent",
+  "B.after_agent",
+  "A.after_agent"
+]
+
+## two middleware with the same name
+
+create_agent(middleware=[A, A]):
+
+raised builtins.AssertionError: Please remove duplicate middleware instances.

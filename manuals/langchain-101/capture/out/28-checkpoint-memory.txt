@@ -1,0 +1,100 @@
+# InMemorySaver across turns
+
+## InMemorySaver: two turns on one thread
+
+messages after turn 2:
+[
+  "human: What is 2 + 3?",
+  "ai: ",
+  "tool: 5",
+  "ai: The sum is 5.",
+  "human: What did I ask you?",
+  "ai: You asked me to add 2 and 3."
+]
+
+what the model received on turn 2:
+[
+  "human: What is 2 + 3?",
+  "ai",
+  "tool: 5",
+  "ai: The sum is 5.",
+  "human: What did I ask you?"
+]
+
+## get_state
+
+{
+  "step": 6,
+  "source": "loop",
+  "next": [],
+  "checkpoint_id": "<uuid-1>",
+  "parent_checkpoint_id": "<uuid-2>",
+  "messages": [
+    "human: What is 2 + 3?",
+    "ai: ",
+    "tool: 5",
+    "ai: The sum is 5.",
+    "human: What did I ask you?",
+    "ai: You asked me to add 2 and 3."
+  ],
+  "tasks": []
+}
+
+## the raw checkpoint tuple
+
+{
+  "config": {
+    "configurable": {
+      "thread_id": "memory-thread",
+      "checkpoint_ns": "",
+      "checkpoint_id": "<uuid-1>"
+    }
+  },
+  "metadata": {
+    "source": "loop",
+    "step": 6,
+    "parents": {},
+    "ls_integration": "langchain_create_agent"
+  },
+  "checkpoint keys": [
+    "channel_values",
+    "channel_versions",
+    "id",
+    "ts",
+    "updated_channels",
+    "v",
+    "versions_seen"
+  ],
+  "channel_values keys": [
+    "__pregel_tasks",
+    "messages"
+  ],
+  "channel_versions": {
+    "__start__": "00000000000000000000000000000007.<random>",
+    "messages": "00000000000000000000000000000008.<random>",
+    "branch:to:model": "00000000000000000000000000000008.<random>",
+    "__pregel_tasks": "00000000000000000000000000000004.<random>"
+  },
+  "v": 4
+}
+
+## checkpoints on the thread
+
+8 checkpoints
+
+## another thread starts empty
+
+[
+  "human: What did I ask you?",
+  "ai: I have no history."
+]
+
+## delete_thread
+
+after delete: 0 checkpoints
+
+## a thread_id is required once a checkpointer is set
+
+invoke without config:
+
+raised builtins.ValueError: Checkpointer requires one or more of the following 'configurable' keys: thread_id, checkpoint_ns, checkpoint_id

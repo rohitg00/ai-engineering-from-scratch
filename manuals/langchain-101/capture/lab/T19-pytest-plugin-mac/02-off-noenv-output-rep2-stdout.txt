@@ -1,0 +1,24 @@
+$ -m pytest <scripts>/t19_tests/test_ls_plugin.py -p no:cacheprovider -rA --color=no --langsmith-output
+rc=3 wall=1.05s
+--- stdout
+
+--- stderr
+INTERNALERROR> Traceback (most recent call last):
+INTERNALERROR>   File "<scratch-site-packages>/_pytest/main.py", line 285, in wrap_session
+INTERNALERROR>     config._do_configure()
+INTERNALERROR>     ~~~~~~~~~~~~~~~~~~~~^^
+INTERNALERROR>   File "<scratch-site-packages>/_pytest/config/__init__.py", line 1119, in _do_configure
+INTERNALERROR>     self.hook.pytest_configure.call_historic(kwargs=dict(config=self))
+INTERNALERROR>     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "<scratch-site-packages>/pluggy/_caller.py", line 222, in call_historic
+INTERNALERROR>     res = self._hookexec(self.name, self._hookimpls.copy(), kwargs, False)
+INTERNALERROR>   File "<scratch-site-packages>/pluggy/_manager.py", line 183, in _hookexec
+INTERNALERROR>     return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+INTERNALERROR>            ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+INTERNALERROR>   File "<scratch-site-packages>/pluggy/_execution.py", line 195, in _multicall
+INTERNALERROR>     raise exception
+INTERNALERROR>   File "<scratch-site-packages>/pluggy/_execution.py", line 147, in _multicall
+INTERNALERROR>     res = hook_impl.function(*args)
+INTERNALERROR>   File "<site-packages>/langsmith/pytest_plugin.py", line 317, in pytest_configure
+INTERNALERROR>     raise ValueError(msg)
+INTERNALERROR> ValueError: --langsmith-output not supported when env varLANGSMITH_TEST_TRACKING='false'. Please remove the'--langsmith-output' option or enable test tracking.

@@ -1,0 +1,199 @@
+# A Deep Agents 0.7 run on the fake model
+
+## graph nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "_ParentNotifierMiddleware.after_agent",
+  "PatchToolCallsMiddleware.before_agent",
+  "__end__"
+]
+
+## a run: write_file, ls, a general-purpose subagent, then the answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "write_file",
+        "args": {
+          "file_path": "/notes.md",
+          "content": "2 + 3 = 5\n"
+        },
+        "id": "call_w",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Updated file /notes.md",
+    "name": "write_file",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_w",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-3>-0",
+    "tool_calls": [
+      {
+        "name": "ls",
+        "args": {
+          "path": "/"
+        },
+        "id": "call_l",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "['/notes.md']",
+    "name": "ls",
+    "id": "<uuid-4>",
+    "tool_call_id": "call_l",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-5>-0",
+    "tool_calls": [
+      {
+        "name": "task",
+        "args": {
+          "description": "Check that 2 + 3 is 5 and reply yes or no.",
+          "subagent_type": "general-purpose"
+        },
+        "id": "call_t",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "yes",
+    "name": "task",
+    "id": "<uuid-6>",
+    "tool_call_id": "call_t",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "I saved the sum in /notes.md and a subagent confirmed it.",
+    "id": "lc_run--<uuid-7>-0"
+  }
+]
+
+## files in state
+
+{
+  "/notes.md": {
+    "content": "2 + 3 = 5\n",
+    "encoding": "utf-8",
+    "created_at": "<time>",
+    "modified_at": "<time>"
+  }
+}
+
+## tools bound on each model call, and what each call saw
+
+[
+  {
+    "call": 1,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 2
+  },
+  {
+    "call": 2,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 4
+  },
+  {
+    "call": 3,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 6
+  },
+  {
+    "call": 4,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "add"
+    ],
+    "first message": "system: In order to complete the objective that the user asks of you, you have access to",
+    "message count": 2
+  },
+  {
+    "call": 5,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 8
+  }
+]
+
+## main system prompt: 15 characters, the first 600
+
+You keep notes.
+
+## subagent system prompt: 286 characters, the first 600
+
+In order to complete the objective that the user asks of you, you have access to a number of standard tools.
+
+The calling agent only sees your final assistant message, not your intermediate work, tool results, or status tracking. Ensure your final
+response contains the complete answer.

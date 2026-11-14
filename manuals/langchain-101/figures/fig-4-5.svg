@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 368" role="img" aria-labelledby="fig-4-5-title fig-4-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-5-title">Turn time over 2,000 turns, with and without summarization</title>
+  <desc id="fig-4-5-desc">A dot chart of the median turn time of each block of 100 turns, on a log scale from 10 to 1,000 ms, over 2,000 turns on the x86 server guest. Without summarization the median grows from 36.917 ms to 662.9 ms. With a trigger of 60 messages it stays between 35.5 and 41.4 ms, with 20 messages near 32 ms, and with 6,000 tokens it falls from 63.246 ms to about 43 ms. A shaded band behind each line spans the 10th to the 90th percentile of the 100 turns in each block, read from the per-turn log. After turn 100, 90 percent of the turns of every variant with a trigger took at most 83 ms.</desc>
+  <line x1="70" y1="290" x2="460" y2="290" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="294" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="70" y1="252.37" x2="460" y2="252.37" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="256.37" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="70" y1="202.63" x2="460" y2="202.63" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="206.63" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="70" y1="165" x2="460" y2="165" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="169" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="127.37" x2="460" y2="127.37" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="131.37" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="70" y1="77.63" x2="460" y2="77.63" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="81.63" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="70" y1="40" x2="460" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="290" x2="460" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="40" x2="70" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="290" x2="70" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="167.5" y1="290" x2="167.5" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="167.5" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <line x1="265" y1="290" x2="265" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="265" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1,000</text>
+  <line x1="362.5" y1="290" x2="362.5" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="362.5" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1,500</text>
+  <line x1="460" y1="290" x2="460" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="460" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2,000</text>
+  <text x="265" y="324" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">turn number</text>
+  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median turn, ms</text>
+  <path d="M79.8 192.6 L99.3 164.4 L118.8 146.5 L138.3 132.6 L157.8 121.4 L177.3 112.1 L196.8 107.5 L216.3 99.8 L235.8 95.6 L255.3 90.8 L274.8 86.9 L294.3 81.7 L313.8 78.7 L333.3 73.3 L352.8 71.6 L372.3 65.5 L391.8 66.2 L411.3 61.1 L430.8 58.5 L450.3 55.2 L450.3 90.0 L430.8 92.4 L411.3 94.3 L391.8 95.8 L372.3 99.5 L352.8 102.9 L333.3 106.1 L313.8 110.5 L294.3 113.7 L274.8 117.1 L255.3 122.2 L235.8 125.1 L216.3 129.9 L196.8 137.8 L177.3 144.9 L157.8 154.8 L138.3 168.9 L118.8 185.3 L99.3 208.5 L79.8 252.7 Z" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.12" stroke="none"/>
+  <path d="M79.8 174.2 L99.3 175.1 L118.8 198.5 L138.3 198.2 L157.8 200.8 L177.3 200.7 L196.8 199.7 L216.3 199.9 L235.8 200.2 L255.3 200.2 L274.8 200.2 L294.3 202.0 L313.8 202.1 L333.3 202.5 L352.8 202.3 L372.3 201.6 L391.8 202.8 L411.3 202.8 L430.8 202.2 L450.3 201.2 L450.3 247.7 L430.8 248.0 L411.3 249.1 L391.8 248.0 L372.3 248.7 L352.8 249.9 L333.3 249.0 L313.8 247.8 L294.3 247.4 L274.8 246.9 L255.3 247.5 L235.8 247.5 L216.3 247.7 L196.8 247.4 L177.3 246.7 L157.8 247.8 L138.3 248.2 L118.8 246.8 L99.3 245.6 L79.8 247.8 Z" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.12" stroke="none"/>
+  <path d="M79.8 210.1 L99.3 209.8 L118.8 210.4 L138.3 210.9 L157.8 209.8 L177.3 209.5 L196.8 208.4 L216.3 208.1 L235.8 208.9 L255.3 207.8 L274.8 205.7 L294.3 207.2 L313.8 206.0 L333.3 205.1 L352.8 205.5 L372.3 205.3 L391.8 205.0 L411.3 206.3 L430.8 211.2 L450.3 210.9 L450.3 256.2 L430.8 256.7 L411.3 252.2 L391.8 241.8 L372.3 242.9 L352.8 243.7 L333.3 244.2 L313.8 245.3 L294.3 247.1 L274.8 246.5 L255.3 248.0 L235.8 250.5 L216.3 249.9 L196.8 251.1 L177.3 252.4 L157.8 253.0 L138.3 254.8 L118.8 254.4 L99.3 255.1 L79.8 256.0 Z" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.12" stroke="none"/>
+  <path d="M79.8 215.1 L99.3 216.6 L118.8 216.3 L138.3 216.3 L157.8 215.6 L177.3 216.3 L196.8 216.0 L216.3 216.0 L235.8 215.7 L255.3 216.1 L274.8 215.0 L294.3 215.6 L313.8 216.6 L333.3 215.3 L352.8 216.6 L372.3 216.1 L391.8 215.4 L411.3 216.1 L430.8 215.4 L450.3 216.2 L450.3 261.4 L430.8 261.1 L411.3 261.3 L391.8 261.0 L372.3 261.0 L352.8 261.6 L333.3 260.8 L313.8 261.1 L294.3 261.0 L274.8 261.6 L255.3 260.8 L235.8 260.8 L216.3 261.0 L196.8 261.3 L177.3 260.6 L157.8 260.4 L138.3 261.5 L118.8 262.2 L99.3 261.5 L79.8 261.7 Z" fill="var(--m-green-ink, #336b40)" fill-opacity="0.12" stroke="none"/>
+  <path d="M79.8 219.1 L99.3 181.3 L118.8 158.3 L138.3 142.1 L157.8 129.0 L177.3 120.4 L196.8 113.0 L216.3 104.9 L235.8 101.4 L255.3 96.2 L274.8 92.3 L294.3 88.1 L313.8 84.3 L333.3 79.8 L352.8 76.7 L372.3 73.4 L391.8 70.4 L411.3 67.6 L430.8 65.4 L450.3 62.3" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="79.85" cy="219.1" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="99.35" cy="181.33" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="118.85" cy="158.26" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="138.35" cy="142.1" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="157.85" cy="129.04" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="177.35" cy="120.36" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="196.85" cy="112.96" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="216.35" cy="104.92" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="235.85" cy="101.38" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="255.35" cy="96.23" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="274.85" cy="92.27" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="294.35" cy="88.11" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="313.85" cy="84.32" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="333.35" cy="79.81" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="352.85" cy="76.73" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="372.35" cy="73.42" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="391.85" cy="70.37" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="411.35" cy="67.6" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="430.85" cy="65.39" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="450.35" cy="62.32" r="2.6" fill="var(--m-plum-ink, #8a3d72)"/>
+  <path d="M79.8 189.9 L99.3 206.2 L118.8 211.3 L138.3 210.2 L157.8 210.9 L177.3 211.0 L196.8 211.4 L216.3 211.7 L235.8 212.6 L255.3 211.2 L274.8 211.1 L294.3 211.7 L313.8 210.7 L333.3 211.4 L352.8 212.7 L372.3 212.6 L391.8 212.7 L411.3 212.9 L430.8 211.4 L450.3 210.9" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="79.85" cy="189.87" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="99.35" cy="206.18" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="118.85" cy="211.3" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="138.35" cy="210.24" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="157.85" cy="210.85" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="177.35" cy="210.96" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="196.85" cy="211.36" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="216.35" cy="211.73" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="235.85" cy="212.58" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="255.35" cy="211.18" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="274.85" cy="211.06" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="294.35" cy="211.72" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="313.85" cy="210.68" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="333.35" cy="211.37" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="352.85" cy="212.74" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="372.35" cy="212.63" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="391.85" cy="212.72" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="411.35" cy="212.94" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="430.85" cy="211.43" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="450.35" cy="210.91" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M79.8 220.2 L99.3 220.0 L118.8 220.3 L138.3 219.7 L157.8 219.7 L177.3 219.0 L196.8 218.0 L216.3 217.2 L235.8 217.7 L255.3 216.0 L274.8 215.6 L294.3 216.0 L313.8 215.2 L333.3 214.1 L352.8 214.0 L372.3 213.7 L391.8 212.9 L411.3 216.7 L430.8 221.3 L450.3 219.6" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="79.85" cy="220.22" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="99.35" cy="220.04" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="118.85" cy="220.25" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="138.35" cy="219.67" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="157.85" cy="219.7" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="177.35" cy="218.97" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="196.85" cy="218.03" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="216.35" cy="217.24" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="235.85" cy="217.66" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="255.35" cy="216" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="274.85" cy="215.6" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="294.35" cy="215.98" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="313.85" cy="215.17" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="333.35" cy="214.13" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="352.85" cy="213.96" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="372.35" cy="213.66" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="391.85" cy="212.9" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="411.35" cy="216.65" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="430.85" cy="221.28" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="450.35" cy="219.62" r="2.6" fill="var(--m-teal-ink, #18696a)"/>
+  <path d="M79.8 226.6 L99.3 226.1 L118.8 226.5 L138.3 225.9 L157.8 225.9 L177.3 225.6 L196.8 226.3 L216.3 226.7 L235.8 226.2 L255.3 226.1 L274.8 225.9 L294.3 225.9 L313.8 226.3 L333.3 225.4 L352.8 226.3 L372.3 225.3 L391.8 225.6 L411.3 226.1 L430.8 225.5 L450.3 226.3" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="79.85" cy="226.62" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="99.35" cy="226.08" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="118.85" cy="226.48" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="138.35" cy="225.86" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="157.85" cy="225.87" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="177.35" cy="225.64" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="196.85" cy="226.34" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="216.35" cy="226.72" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="235.85" cy="226.23" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="255.35" cy="226.14" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="274.85" cy="225.91" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="294.35" cy="225.94" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="313.85" cy="226.34" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="333.35" cy="225.43" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="352.85" cy="226.29" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="372.35" cy="225.32" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="391.85" cy="225.56" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="411.35" cy="226.14" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="430.85" cy="225.52" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="450.35" cy="226.28" r="2.6" fill="var(--m-green-ink, #336b40)"/>
+  <text x="470" y="66.32" font-size="11" fill="var(--m-plum-ink, #8a3d72)">no summarization</text>
+  <text x="470" y="214.91" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">6,000 tokens, keep 1,500</text>
+  <text x="470" y="228.91" font-size="11" fill="var(--m-teal-ink, #18696a)">60 messages, keep 7</text>
+  <text x="470" y="242.91" font-size="11" fill="var(--m-green-ink, #336b40)">20 messages, keep 1</text>
+  <text x="20" y="340" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One run per variant on PostgresSaver, fake model. Each dot is the median of 100 turns.</text>
+  <text x="20" y="356" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The band spans the 10th to the 90th percentile of the same 100 turns.</text>
+</svg>

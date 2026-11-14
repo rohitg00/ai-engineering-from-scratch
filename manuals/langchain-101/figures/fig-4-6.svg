@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-4-6-title fig-4-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-6-title">What a checkpoint gives back for nine values</title>
+  <desc id="fig-4-6-desc">Nine rows, each from a value put in the state on the left to what get_state on SqliteSaver gave back on the right. A tuple came back as a list. A set and a frozenset of tuples came back as lists of lists. A defaultdict, a Counter, and an OrderedDict came back as a plain dict. A datetime with a ZoneInfo zone came back with a fixed offset, and one with fold 1 lost the fold. An instance of a plain class raised TypeError and was not saved.</desc>
+  <defs><marker id="fig-4-6-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-4-6-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PUT IN THE STATE</text>
+  <text x="372" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT GET_STATE GAVE BACK</text>
+  <rect x="20" y="32" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="46.1" font-size="12" font-weight="700">tuple</text>
+  <text x="30" y="63.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">(1, 2)</text>
+  <rect x="372" y="32" width="248" height="38" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="382" y="46.1" font-size="12" font-weight="700">list</text>
+  <text x="382" y="63.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">[1, 2]</text>
+  <line x1="270" y1="51" x2="371" y2="51" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="20" y="78" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="92.1" font-size="12" font-weight="700">set of tuples</text>
+  <text x="30" y="109.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">{(1, 2), (3, 4)}</text>
+  <rect x="372" y="78" width="248" height="38" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="382" y="92.1" font-size="12" font-weight="700">list of lists</text>
+  <text x="382" y="109.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">[[1, 2], [3, 4]]</text>
+  <line x1="270" y1="97" x2="371" y2="97" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="20" y="124" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="138.1" font-size="12" font-weight="700">frozenset of tuples</text>
+  <text x="30" y="155.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">frozenset({(1, 2)})</text>
+  <rect x="372" y="124" width="248" height="38" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="382" y="138.1" font-size="12" font-weight="700">list of lists</text>
+  <text x="382" y="155.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">[[1, 2]]</text>
+  <line x1="270" y1="143" x2="371" y2="143" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="20" y="170" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="184.1" font-size="12" font-weight="700">defaultdict</text>
+  <text x="30" y="201.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">{&#39;k&#39;: [1]}</text>
+  <rect x="372" y="170" width="248" height="38" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="382" y="184.1" font-size="12" font-weight="700">dict</text>
+  <text x="382" y="201.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no default factory</text>
+  <line x1="270" y1="189" x2="371" y2="189" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="20" y="216" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="230.1" font-size="12" font-weight="700">Counter</text>
+  <text x="30" y="247.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Counter(&#39;abca&#39;)</text>
+  <rect x="372" y="216" width="248" height="38" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="382" y="230.1" font-size="12" font-weight="700">dict</text>
+  <text x="382" y="247.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no Counter methods</text>
+  <line x1="270" y1="235" x2="371" y2="235" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="20" y="262" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="276.1" font-size="12" font-weight="700">OrderedDict</text>
+  <text x="30" y="293.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">two keys</text>
+  <rect x="372" y="262" width="248" height="38" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="382" y="276.1" font-size="12" font-weight="700">dict</text>
+  <text x="382" y="293.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">same keys and order</text>
+  <line x1="270" y1="281" x2="371" y2="281" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="20" y="308" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="322.1" font-size="12" font-weight="700">datetime, ZoneInfo</text>
+  <text x="30" y="339.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Asia/Kolkata</text>
+  <rect x="372" y="308" width="248" height="38" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="382" y="322.1" font-size="12" font-weight="700">datetime, fixed offset</text>
+  <text x="382" y="339.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">+05:30, no zone rules</text>
+  <line x1="270" y1="327" x2="371" y2="327" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="20" y="354" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="368.1" font-size="12" font-weight="700">datetime, fold=1</text>
+  <text x="30" y="385.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">America/New_York</text>
+  <rect x="372" y="354" width="248" height="38" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="382" y="368.1" font-size="12" font-weight="700">datetime, fixed offset</text>
+  <text x="382" y="385.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">fold 0, not equal</text>
+  <line x1="270" y1="373" x2="371" y2="373" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-ink)"/>
+  <rect x="20" y="400" width="250" height="38" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="30" y="414.1" font-size="12" font-weight="700">plain class</text>
+  <text x="30" y="431.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Plain(3)</text>
+  <rect x="372" y="400" width="248" height="38" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="382" y="414.1" font-size="12" font-weight="700">TypeError</text>
+  <text x="382" y="431.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">not msgpack serializable</text>
+  <line x1="270" y1="419" x2="371" y2="419" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-4-6-head-rose)"/>
+  <text x="20" y="460" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Twenty other values came back with the same type and value. The Mac, one run each.</text>
+</svg>

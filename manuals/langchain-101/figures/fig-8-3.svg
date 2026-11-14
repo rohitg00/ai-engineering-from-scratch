@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 418" role="img" aria-labelledby="fig-8-3-title fig-8-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-3-title">Seven processes of the assistant, and what each one left behind</title>
+  <desc id="fig-8-3-desc">A table with one row for each of the seven processes of the assistant run on the Mac, and one column for each count read when the process ended. Process 3 approved the email, sent it, and was killed with exit code 137. Process 4 resumed and found the same approval waiting again. Process 5 approved again, send_email ran a second time, and the key check skipped the send. At the end send_email had run 2 times and the outbox held 1 email. Process 7 on a new thread still found 2 memories in the store.</desc>
+  <text x="252.5" y="22" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">next</text>
+  <text x="252.5" y="37" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">node</text>
+  <text x="333.5" y="22" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">check-</text>
+  <text x="333.5" y="37" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">points</text>
+  <text x="414.5" y="22" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">approvals</text>
+  <text x="414.5" y="37" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">waiting</text>
+  <text x="495.5" y="22" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">send_email</text>
+  <text x="495.5" y="37" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">runs</text>
+  <text x="576.5" y="22" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">emails</text>
+  <text x="576.5" y="37" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">sent</text>
+  <text x="20" y="83" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="40" y="83" font-size="11.5" fill="var(--m-ink, #1a1a1a)">remember</text>
+  <rect x="216" y="62" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="252.5" y="83" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">none</text>
+  <rect x="297" y="62" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="333.5" y="83" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">9</text>
+  <rect x="378" y="62" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="414.5" y="83" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0</text>
+  <rect x="459" y="62" width="73" height="32" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="495.5" y="83" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">0</text>
+  <rect x="540" y="62" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="576.5" y="83" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">0</text>
+  <text x="20" y="123" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">2</text>
+  <text x="40" y="123" font-size="11.5" fill="var(--m-ink, #1a1a1a)">ask to send</text>
+  <rect x="216" y="102" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="252.5" y="123" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">tools</text>
+  <rect x="297" y="102" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="333.5" y="123" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">18</text>
+  <rect x="378" y="102" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="414.5" y="123" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">1</text>
+  <rect x="459" y="102" width="73" height="32" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="495.5" y="123" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">0</text>
+  <rect x="540" y="102" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="576.5" y="123" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">0</text>
+  <text x="20" y="163" font-size="12" font-weight="700" fill="var(--m-rose-ink, #b0344d)">3</text>
+  <text x="40" y="163" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">approve</text>
+  <rect x="216" y="142" width="397" height="32" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="226" y="163" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">SIGKILL, exit 137: email sent, step not saved</text>
+  <text x="20" y="203" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">4</text>
+  <text x="40" y="203" font-size="11.5" fill="var(--m-ink, #1a1a1a)">resume</text>
+  <rect x="216" y="182" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="252.5" y="203" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">tools</text>
+  <rect x="297" y="182" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="333.5" y="203" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">18</text>
+  <rect x="378" y="182" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="414.5" y="203" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">1</text>
+  <rect x="459" y="182" width="73" height="32" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="495.5" y="203" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">1</text>
+  <rect x="540" y="182" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="576.5" y="203" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">1</text>
+  <text x="20" y="243" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">5</text>
+  <text x="40" y="243" font-size="11.5" fill="var(--m-ink, #1a1a1a)">approve again</text>
+  <rect x="216" y="222" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="252.5" y="243" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">none</text>
+  <rect x="297" y="222" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="333.5" y="243" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">22</text>
+  <rect x="378" y="222" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="414.5" y="243" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0</text>
+  <rect x="459" y="222" width="73" height="32" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="495.5" y="243" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">2</text>
+  <rect x="540" y="222" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="576.5" y="243" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">1</text>
+  <text x="20" y="283" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">6</text>
+  <text x="40" y="283" font-size="11.5" fill="var(--m-ink, #1a1a1a)">third turn</text>
+  <rect x="216" y="262" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="252.5" y="283" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">none</text>
+  <rect x="297" y="262" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="333.5" y="283" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">27</text>
+  <rect x="378" y="262" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="414.5" y="283" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0</text>
+  <rect x="459" y="262" width="73" height="32" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="495.5" y="283" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">2</text>
+  <rect x="540" y="262" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="576.5" y="283" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">1</text>
+  <text x="20" y="323" font-size="12" font-weight="700" fill="var(--m-ink, #1a1a1a)">7</text>
+  <text x="40" y="323" font-size="11.5" fill="var(--m-ink, #1a1a1a)">new thread t2</text>
+  <rect x="216" y="302" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="252.5" y="323" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">none</text>
+  <rect x="297" y="302" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="333.5" y="323" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">9</text>
+  <rect x="378" y="302" width="73" height="32" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="414.5" y="323" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">0</text>
+  <rect x="459" y="302" width="73" height="32" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="495.5" y="323" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-green-ink, #336b40)">2</text>
+  <rect x="540" y="302" width="73" height="32" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="576.5" y="323" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">1</text>
+  <text x="20" y="358" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each row is one new Python process, on thread t1 unless named.</text>
+  <text x="20" y="376" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The counts were read when the process ended. send_email ran twice and</text>
+  <text x="20" y="394" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one email was sent, because the second run found its tool_call_id in</text>
+  <text x="20" y="412" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the outbox. Checkpoints count the rows of the thread in that row.</text>
+</svg>

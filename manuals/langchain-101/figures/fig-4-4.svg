@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 388" role="img" aria-labelledby="fig-4-4-title fig-4-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-4-title">The namespaces of the kit store</title>
+  <desc id="fig-4-4-desc">A tree of the namespace labels that list_namespaces returned: users, then ada and grace, then memories under ada, settings under ada, memories under grace. Under each namespace are its items with their key and value: m1 &quot;prefers short answers&quot; in users/ada/memories, m2 &quot;works in Pune&quot; in users/ada/memories, theme &quot;dark&quot; in users/ada/settings, m1 &quot;prefers long answers&quot; in users/grace/memories. A shaded area covers ada and its two namespaces: search with the prefix users, ada returned those 3 items. A dashed line under the second row shows where list_namespaces with max_depth 2 stops, at 2 namespaces. A note says that a partial label such as ali matched nothing in 3 store backends in the lab.</desc>
+  <rect x="12" y="82" width="394" height="252" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-dasharray="5 4"/>
+  <text x="22" y="324" font-size="11.5" font-weight="700" fill="var(--m-teal-ink, #18696a)">search((&#39;users&#39;, &#39;ada&#39;)): 3 items</text>
+  <rect x="260" y="12" width="120" height="30" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="320" y="30.6" font-size="12" text-anchor="middle" font-weight="700">users</text>
+  <rect x="149" y="96" width="120" height="30" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="209" y="114.6" font-size="12" text-anchor="middle" font-weight="700">ada</text>
+  <path d="M320 42 V86 H209 V95" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <rect x="460" y="96" width="120" height="30" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="520" y="114.6" font-size="12" text-anchor="middle" font-weight="700">grace</text>
+  <path d="M320 42 V86 H520 V95" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <line x1="20" y1="140" x2="620" y2="140" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="30" y="153" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">max_depth=2: 2 namespaces</text>
+  <rect x="42" y="168" width="140" height="30" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="112" y="186.6" font-size="12" text-anchor="middle" font-weight="700">memories</text>
+  <path d="M209 126 V158 H112 V167" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <line x1="112" y1="198" x2="112" y2="216" stroke="var(--m-teal-ink, #18696a)" stroke-width="1"/>
+  <rect x="20" y="216" width="184" height="30" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="28" y="229" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">key m1</text>
+  <text x="28" y="242" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">prefers short answers</text>
+  <rect x="20" y="252" width="184" height="30" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="28" y="265" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">key m2</text>
+  <text x="28" y="278" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">works in Pune</text>
+  <rect x="236" y="168" width="140" height="30" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="306" y="186.6" font-size="12" text-anchor="middle" font-weight="700">settings</text>
+  <path d="M209 126 V158 H306 V167" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <line x1="306" y1="198" x2="306" y2="216" stroke="var(--m-teal-ink, #18696a)" stroke-width="1"/>
+  <rect x="214" y="216" width="184" height="30" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="222" y="229" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">key theme</text>
+  <text x="222" y="242" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dark</text>
+  <rect x="450" y="168" width="140" height="30" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="520" y="186.6" font-size="12" text-anchor="middle" font-weight="700">memories</text>
+  <path d="M520 126 V158 H520 V167" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
+  <line x1="520" y1="198" x2="520" y2="216" stroke="var(--m-teal-ink, #18696a)" stroke-width="1"/>
+  <rect x="428" y="216" width="184" height="30" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="436" y="229" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">key m1</text>
+  <text x="436" y="242" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">prefers long answers</text>
+  <text x="20" y="362" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The namespace is a tuple of full labels. A search for (&#39;users&#39;, &#39;ali&#39;) returned nothing</text>
+  <text x="20" y="378" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in each of the 3 backends of the lab, because a label never matches part of another.</text>
+</svg>

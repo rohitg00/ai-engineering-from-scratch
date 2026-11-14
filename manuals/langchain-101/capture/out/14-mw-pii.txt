@@ -1,0 +1,166 @@
+# PIIMiddleware strategies
+
+## PIIMiddleware('email', strategy='redact') on input
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Mail [REDACTED_EMAIL], card 4111 1111 1111 1111, from 192.168.1.20, see https://example.com/x",
+    "id": "<uuid-1>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Noted.",
+    "id": "lc_run--<uuid-2>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "pii-email-redact",
+    "call": 1,
+    "messages": [
+      "human: Mail [REDACTED_EMAIL], card 4111 1111 1111 1111, from 192.168.1.20, see https://"
+    ]
+  }
+]
+
+## PIIMiddleware('credit_card', strategy='mask') on input
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Mail ada@example.com, card **** **** **** 1111, from 192.168.1.20, see https://example.com/x",
+    "id": "<uuid-3>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Noted.",
+    "id": "lc_run--<uuid-4>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "pii-credit_card-mask",
+    "call": 1,
+    "messages": [
+      "human: Mail ada@example.com, card **** **** **** 1111, from 192.168.1.20, see https://e"
+    ]
+  }
+]
+
+## PIIMiddleware('ip', strategy='hash') on input
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Mail ada@example.com, card 4111 1111 1111 1111, from <ip_hash:55235459>, see https://example.com/x",
+    "id": "<uuid-5>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Noted.",
+    "id": "lc_run--<uuid-6>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "pii-ip-hash",
+    "call": 1,
+    "messages": [
+      "human: Mail ada@example.com, card 4111 1111 1111 1111, from <ip_hash:55235459>, see htt"
+    ]
+  }
+]
+
+## PIIMiddleware('url', strategy='redact') on input
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Mail ada@example.com, card 4111 1111 1111 1111, from 192.168.1.20, see [REDACTED_URL]",
+    "id": "<uuid-7>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Noted.",
+    "id": "lc_run--<uuid-8>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "pii-url-redact",
+    "call": 1,
+    "messages": [
+      "human: Mail ada@example.com, card 4111 1111 1111 1111, from 192.168.1.20, see [REDACTED"
+    ]
+  }
+]
+
+## PIIMiddleware('email', strategy='block')
+
+invoke:
+
+raised langchain.agents.middleware._redaction.PIIDetectionError: Detected 1 instance(s) of email in text content
+
+model calls seen by the fake:
+[]
+
+## PIIMiddleware('email', apply_to_output=True) on the model's answer
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Who do I write to?",
+    "id": "<uuid-9>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Write to [REDACTED_EMAIL].",
+    "id": "lc_run--<uuid-10>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "pii-out",
+    "call": 1,
+    "messages": [
+      "human: Who do I write to?"
+    ]
+  }
+]
+
+## a custom detector: PIIMiddleware('api_key', detector=regex)
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "my key is [REDACTED_API_KEY]",
+    "id": "<uuid-11>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "ok",
+    "id": "lc_run--<uuid-12>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "pii-custom",
+    "call": 1,
+    "messages": [
+      "human: my key is [REDACTED_API_KEY]"
+    ]
+  }
+]

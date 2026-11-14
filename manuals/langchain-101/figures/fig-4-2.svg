@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-4-2-title fig-4-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-2-title">Three turns of one thread in the SQLite file</title>
+  <desc id="fig-4-2-desc">11 rows of the checkpoints table of SqliteSaver for the thread sqlite-thread, on one step axis from -1 to 9. Turn 1, &quot;What is 2 + 3?&quot;, has an input checkpoint at step -1 and loop checkpoints at steps 0, 1, 2, 3, and leaves 4 messages in the state. Turn 2, &quot;What did I ask you?&quot;, has an input checkpoint at step 4 and loop checkpoints at steps 5, 6, and leaves 6 messages in the state. Turn 3, &quot;Remind me again.&quot;, has an input checkpoint at step 7 and loop checkpoints at steps 8, 9, and leaves 8 messages in the state. Between turn 2 and turn 3 the connection was closed and a new process opened the same file. The file holds 11 checkpoint rows and 13 rows of pending writes.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THREAD SQLITE-THREAD, ONE ROW PER CHECKPOINT</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <line x1="61" y1="62" x2="267" y2="62" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="61" y1="58" x2="61" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="267" y1="58" x2="267" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="67" y="38" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">turn 1</text>
+  <text x="67" y="52" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">What is 2 + 3?</text>
+  <rect x="61" y="82" width="38" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.3"/>
+  <text x="80" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <line x1="80" y1="116" x2="80" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="103" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="122" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="122" y1="116" x2="122" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="145" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="164" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="164" y1="116" x2="164" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="187" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="206" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="206" y1="116" x2="206" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="229" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="248" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="248" y1="116" x2="248" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="164" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">4 messages</text>
+  <text x="164" y="224" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the state after</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="271" y1="62" x2="393" y2="62" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="271" y1="58" x2="271" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="393" y1="58" x2="393" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="277" y="38" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">turn 2</text>
+  <text x="277" y="52" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">What did I ask you?</text>
+  <rect x="271" y="82" width="38" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.3"/>
+  <text x="290" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <line x1="290" y1="116" x2="290" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="313" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="332" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="332" y1="116" x2="332" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="355" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="374" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="374" y1="116" x2="374" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="332" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">6 messages</text>
+  <text x="332" y="224" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the state after</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <line x1="397" y1="62" x2="519" y2="62" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="397" y1="58" x2="397" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="519" y1="58" x2="519" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="403" y="38" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">turn 3</text>
+  <text x="403" y="52" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">Remind me again.</text>
+  <rect x="397" y="82" width="38" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.3"/>
+  <text x="416" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <line x1="416" y1="116" x2="416" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="439" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="458" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="458" y1="116" x2="458" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="481" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="500" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="500" y1="116" x2="500" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="458" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">8 messages</text>
+  <text x="458" y="224" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the state after</text>
+  </g>
+  <line x1="60" y1="150" x2="520" y2="150" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="80" y1="150" x2="80" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="80" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">-1</text>
+  <line x1="122" y1="150" x2="122" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="122" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="164" y1="150" x2="164" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="164" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="206" y1="150" x2="206" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="206" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="248" y1="150" x2="248" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="248" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="290" y1="150" x2="290" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="290" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="332" y1="150" x2="332" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="332" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="374" y1="150" x2="374" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="374" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="416" y1="150" x2="416" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="416" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">7</text>
+  <line x1="458" y1="150" x2="458" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="458" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="500" y1="150" x2="500" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="500" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">9</text>
+  <text x="60" y="188" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">metadata.step</text>
+  <line x1="395" y1="66" x2="395" y2="236" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="401" y="252" font-size="11" class="m-serif" fill="var(--m-grey-ink, #5e5e59)">connection closed, a new</text>
+  <text x="401" y="266" font-size="11" class="m-serif" fill="var(--m-grey-ink, #5e5e59)">process opens the same file</text>
+  <polygon points="560,80 560,128 561.2,129.9 564.6,131.5 569.9,132.9 576.6,133.7 584,134 591.4,133.7 598.1,132.9 603.4,131.5 606.8,129.9 608,128 608,80" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="560,80 560,128 561.2,129.9 564.6,131.5 569.9,132.9 576.6,133.7 584,134 591.4,133.7 598.1,132.9 603.4,131.5 606.8,129.9 608,128 608,80" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="560,128 561.2,129.9 564.6,131.5 569.9,132.9 576.6,133.7 584,134 591.4,133.7 598.1,132.9 603.4,131.5 606.8,129.9 608,128 608,123 606.8,124.9 603.4,126.5 598.1,127.9 591.4,128.7 584,129 576.6,128.7 569.9,127.9 564.6,126.5 561.2,124.9 560,123" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.3"/>
+  <path d="M560 123L561.2 124.9L564.6 126.5L569.9 127.9L576.6 128.7L584 129L591.4 128.7L598.1 127.9L603.4 126.5L606.8 124.9L608 123" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <path d="M560 118L561.2 119.9L564.6 121.5L569.9 122.9L576.6 123.7L584 124L591.4 123.7L598.1 122.9L603.4 121.5L606.8 119.9L608 118" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <polygon points="608,80 606.8,81.9 603.4,83.5 598.1,84.9 591.4,85.7 584,86 576.6,85.7 569.9,84.9 564.6,83.5 561.2,81.9 560,80 561.2,78.1 564.6,76.5 569.9,75.1 576.6,74.3 584,74 591.4,74.3 598.1,75.1 603.4,76.5 606.8,78.1" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="608,80 606.8,81.9 603.4,83.5 598.1,84.9 591.4,85.7 584,86 576.6,85.7 569.9,84.9 564.6,83.5 561.2,81.9 560,80 561.2,78.1 564.6,76.5 569.9,75.1 576.6,74.3 584,74 591.4,74.3 598.1,75.1 603.4,76.5 606.8,78.1" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <text x="584" y="152" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">checkpoints.db</text>
+  <text x="584" y="168" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">checkpoints 11</text>
+  <text x="584" y="184" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">writes 13</text>
+  <rect x="20" y="240" width="40" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="40" y="252" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <text x="68" y="252" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the new message is in</text>
+  <rect x="20" y="260" width="40" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="40" y="272" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <text x="68" y="272" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">saved after a step</text>
+</svg>

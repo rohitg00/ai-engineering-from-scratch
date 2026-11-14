@@ -1,0 +1,5 @@
+Could not reconstruct builtins.set from checkpoint (TypeError); returning its serialized data instead.
+Could not reconstruct builtins.frozenset from checkpoint (TypeError); returning its serialized data instead.
+Deserializing unregistered type __main__.Color from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('__main__', 'Color')]
+Deserializing unregistered type __main__.Point from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('__main__', 'Point')]
+Deserializing unregistered type __main__.Card from checkpoint. This will be blocked in a future version. Set LANGGRAPH_STRICT_MSGPACK=true to block now, or add to allowed_msgpack_modules to allow explicitly: [('__main__', 'Card')]

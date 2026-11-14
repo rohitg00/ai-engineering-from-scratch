@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="fig-8-4-title fig-8-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-8-4-title">Prompt tokens of each model call of the deep agent</title>
+  <desc id="fig-8-4-desc">A dot chart of the prompt tokens of the 7 model calls of one deep agent run on the Mac with Qwen3 8B. The main agent made 5 calls of 3651, 3872, 4016, 4225, 4446 tokens, 20210 in all, with 9 tools bound. The editor subagent made 2 calls of 1977 and 2113 tokens, 4090 in all, with 7 tools bound.</desc>
+  <line x1="70" y1="276" x2="610" y2="276" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="280" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="232" x2="610" y2="232" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="236" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1k</text>
+  <line x1="70" y1="188" x2="610" y2="188" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="192" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2k</text>
+  <line x1="70" y1="144" x2="610" y2="144" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="148" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3k</text>
+  <line x1="70" y1="100" x2="610" y2="100" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="104" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4k</text>
+  <line x1="70" y1="56" x2="610" y2="56" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="60" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">5k</text>
+  <line x1="70" y1="276" x2="610" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="56" x2="70" y2="276" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="108.57" y1="276" x2="108.57" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="108.57" y="293" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="185.71" y1="276" x2="185.71" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="185.71" y="293" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="262.86" y1="276" x2="262.86" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="262.86" y="293" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="340" y1="276" x2="340" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="340" y="293" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="417.14" y1="276" x2="417.14" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="417.14" y="293" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="494.29" y1="276" x2="494.29" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="494.29" y="293" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="571.43" y1="276" x2="571.43" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="571.43" y="293" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">7</text>
+  <text x="340" y="310" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model call, in the order of the run</text>
+  <text x="70" y="44" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">prompt tokens of the call</text>
+  <circle cx="108.57" cy="115.36" r="4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="92.37" y="94.78" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="108.57" y="105.36" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">3651</text>
+  <rect class="m-knock" x="69.27" y="257.42" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="108.57" y="268" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">write_todos</text>
+  <circle cx="185.71" cy="105.63" r="4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="169.51" y="85.05" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185.71" y="95.63" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">3872</text>
+  <rect class="m-knock" x="149.71" y="257.42" width="72" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="185.71" y="268" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">write_file</text>
+  <circle cx="262.86" cy="99.3" r="4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="246.66" y="78.72" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="262.86" y="89.3" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">4016</text>
+  <rect class="m-knock" x="246.66" y="257.42" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="262.86" y="268" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">task</text>
+  <circle cx="340" cy="189.01" r="4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect class="m-knock" x="323.8" y="168.43" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="340" y="179.01" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">1977</text>
+  <rect class="m-knock" x="307.3" y="257.42" width="65.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="340" y="268" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">read_file</text>
+  <circle cx="417.14" cy="183.03" r="4" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect class="m-knock" x="400.94" y="162.45" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="417.14" y="173.03" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">2113</text>
+  <rect class="m-knock" x="394.34" y="257.42" width="45.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="417.14" y="268" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">answer</text>
+  <circle cx="494.29" cy="90.1" r="4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="478.09" y="69.52" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="494.29" y="80.1" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">4225</text>
+  <rect class="m-knock" x="454.99" y="257.42" width="78.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="494.29" y="268" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">write_todos</text>
+  <circle cx="571.43" cy="80.38" r="4" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect class="m-knock" x="555.23" y="59.8" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="571.43" y="70.38" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">4446</text>
+  <rect class="m-knock" x="548.63" y="257.42" width="45.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="571.43" y="268" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">answer</text>
+  <text x="124" y="69.2" font-size="11.5" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">main agent: 5 calls, 20210 tokens</text>
+  <text x="309.14" y="221" font-size="11.5" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">editor subagent: 2 calls, 4090 tokens</text>
+  <text x="70" y="334" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The label on the axis is the tool that the call asked for.</text>
+  <text x="70" y="352" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Calls 4 and 5 ran inside the task tool, with 7 tools in place of 9.</text>
+</svg>

@@ -1,0 +1,79 @@
+$ -m pytest <scripts>/t19_tests/test_ls_plugin.py -p no:cacheprovider -rA --color=no -o log_cli=true --log-cli-level=INFO
+rc=1 wall=1.89s
+--- stdout
+============================= test session starts ==============================
+platform darwin -- Python 3.13.12, pytest-8.4.2, pluggy-1.7.0
+rootdir: <scripts>/t19_tests
+plugins: platformdirs-4.14.5, langsmith-0.14.17, anyio-4.16.0
+
+----------------------------- live log collection ------------------------------
+INFO     langsmith.testing._internal:_internal.py:365 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping LangSmith test tracking.
+collected 5 items
+
+test_ls_plugin.py::test_marked_pass 
+-------------------------------- live log call ---------------------------------
+INFO     langsmith.testing._internal:_internal.py:365 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping LangSmith test tracking.
+INFO     langsmith.testing._internal:_internal.py:1160 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_inputs.
+INFO     langsmith.testing._internal:_internal.py:1237 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_reference_outputs.
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+INFO     langsmith.testing._internal:_internal.py:1282 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_feedback.
+PASSED                                                                   [ 20%]
+test_ls_plugin.py::test_marked_fail 
+-------------------------------- live log call ---------------------------------
+INFO     langsmith.testing._internal:_internal.py:365 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping LangSmith test tracking.
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+FAILED                                                                   [ 40%]
+test_ls_plugin.py::test_decorator_form 
+-------------------------------- live log call ---------------------------------
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+PASSED                                                                   [ 60%]
+test_ls_plugin.py::test_marked_agent 
+-------------------------------- live log call ---------------------------------
+INFO     langsmith.testing._internal:_internal.py:365 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping LangSmith test tracking.
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+PASSED                                                                   [ 80%]
+test_ls_plugin.py::test_unmarked_log_call 
+-------------------------------- live log call ---------------------------------
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+PASSED                                                                   [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_marked_fail _______________________________
+
+    @pytest.mark.langsmith
+    def test_marked_fail():
+        t.log_outputs({"sum": 9})
+>       assert 4 + 4 == 9
+E       assert (4 + 4) == 9
+
+test_ls_plugin.py:18: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     langsmith.testing._internal:_internal.py:365 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping LangSmith test tracking.
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+==================================== PASSES ====================================
+_______________________________ test_marked_pass _______________________________
+------------------------------ Captured log call -------------------------------
+INFO     langsmith.testing._internal:_internal.py:365 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping LangSmith test tracking.
+INFO     langsmith.testing._internal:_internal.py:1160 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_inputs.
+INFO     langsmith.testing._internal:_internal.py:1237 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_reference_outputs.
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+INFO     langsmith.testing._internal:_internal.py:1282 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_feedback.
+_____________________________ test_decorator_form ______________________________
+------------------------------ Captured log call -------------------------------
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+______________________________ test_marked_agent _______________________________
+------------------------------ Captured log call -------------------------------
+INFO     langsmith.testing._internal:_internal.py:365 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping LangSmith test tracking.
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+____________________________ test_unmarked_log_call ____________________________
+------------------------------ Captured log call -------------------------------
+INFO     langsmith.testing._internal:_internal.py:1198 LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.
+=========================== short test summary info ============================
+PASSED test_ls_plugin.py::test_marked_pass
+PASSED test_ls_plugin.py::test_decorator_form
+PASSED test_ls_plugin.py::test_marked_agent
+PASSED test_ls_plugin.py::test_unmarked_log_call
+FAILED test_ls_plugin.py::test_marked_fail - assert (4 + 4) == 9
+========================= 1 failed, 4 passed in 0.51s ==========================
+
+--- stderr

@@ -1,0 +1,99 @@
+# SummarizationMiddleware with a trigger
+
+## SummarizationMiddleware(trigger=('messages', 6), keep=('messages', 2)) with 7 messages
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Here is a summary of the conversation to date:\n\nThe user asked to add numbers; the tool returned 5 and 9.",
+    "id": "<uuid-1>",
+    "additional_kwargs": {
+      "lc_source": "summarization"
+    }
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 9.",
+    "id": "<uuid-2>"
+  },
+  {
+    "type": "HumanMessage",
+    "content": "Now 1 + 1?",
+    "id": "<uuid-3>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 2.",
+    "id": "lc_run--<uuid-4>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "agent",
+    "call": 1,
+    "messages": [
+      "human: Here is a summary of the conversation to date:\n\nThe user asked to add numbers; t",
+      "ai: The sum is 9.",
+      "human: Now 1 + 1?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "summarizer",
+    "call": 1,
+    "messages": [
+      "human: <role>\nContext Extraction Assistant\n</role>\n\n<primary_objective>\nYour sole objec"
+    ]
+  }
+]
+
+## SummarizationMiddleware with the default trigger=None never summarizes
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Now 1 + 1?",
+    "id": "<uuid-5>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 2.",
+    "id": "lc_run--<uuid-6>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "agent-no-trigger",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: 5",
+      "ai: The sum is 5.",
+      "human: And 4 + 5?",
+      "ai: The sum is 9.",
+      "human: Now 1 + 1?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 318" role="img" aria-labelledby="fig-5-5-title fig-5-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-5-title">Batched mode and per-call mode</title>
+  <desc id="fig-5-5-desc">A table of four rows and two columns, batched mode on the left and per-call mode on the right. The pause: one interrupt with action requests for all calls, against one interrupt per call of type tool_approval with a schema. The resume: a list of decisions in the order of the calls, against a map of interrupt id to decision checked by response_schema. An edit to another tool: in batched case B3 delete_file ran in 3 of 3 runs, and in per-call case P3 a ValidationError meant nothing ran. A middleware that jumps to tools: in batched cases J1 to J3 the tool ran anyway, and in per-call cases J4 and J5 the review held.</desc>
+  <text x="188" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BATCHED</text>
+  <text x="408" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PER CALL</text>
+  <text x="20" y="56" font-size="11.5" font-weight="700">the pause</text>
+  <rect x="188" y="34" width="208" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="200" y="54.1" font-size="12" font-weight="700">one interrupt</text>
+  <text x="200" y="71.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">action_requests for all calls</text>
+  <rect x="408" y="34" width="212" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="420" y="54.1" font-size="12" font-weight="700">one interrupt per call</text>
+  <text x="420" y="71.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">type tool_approval, a schema</text>
+  <text x="20" y="126" font-size="11.5" font-weight="700">the resume</text>
+  <rect x="188" y="104" width="208" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="200" y="124.1" font-size="12" font-weight="700">a list of decisions</text>
+  <text x="200" y="141.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the order of the calls</text>
+  <rect x="408" y="104" width="212" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="420" y="124.1" font-size="12" font-weight="700">a map of id to decision</text>
+  <text x="420" y="141.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">checked by response_schema</text>
+  <text x="20" y="189" font-size="11.5" font-weight="700">an edit to</text>
+  <text x="20" y="204" font-size="11.5" font-weight="700">another tool</text>
+  <rect x="188" y="174" width="208" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="200" y="194.1" font-size="12" font-weight="700">delete_file ran</text>
+  <text x="200" y="211.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">B3, 3 of 3 runs</text>
+  <rect x="408" y="174" width="212" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="420" y="194.1" font-size="12" font-weight="700">ValidationError</text>
+  <text x="420" y="211.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">P3, nothing ran, 3 of 3</text>
+  <text x="20" y="259" font-size="11.5" font-weight="700">a middleware</text>
+  <text x="20" y="274" font-size="11.5" font-weight="700">jumps to tools</text>
+  <rect x="188" y="244" width="208" height="50" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="200" y="264.1" font-size="12" font-weight="700">the tool ran anyway</text>
+  <text x="200" y="281.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">J1, J2, J3, 3 of 3 runs</text>
+  <rect x="408" y="244" width="212" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="420" y="264.1" font-size="12" font-weight="700">the review held</text>
+  <text x="420" y="281.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">J4, J5, nothing ran</text>
+  <text x="20" y="312" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Rows 1 and 2 are from the capture kit. Rows 3 and 4 are lab runs on the Mac.</text>
+</svg>

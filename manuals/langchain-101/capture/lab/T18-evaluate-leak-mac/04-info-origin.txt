@@ -1,0 +1,13 @@
+Run compression is not enabled. Please update to the latest version of LangSmith. Falling back to regular multipart ingestion.
+REQUEST GET https://api.smith.langchain.com/info
+  File "<site-packages>/langsmith/_internal/_background_thread.py", line 553, in tracing_control_thread_func
+    batch_ingest_config = _ensure_ingest_config(client.info)
+  File "<site-packages>/langsmith/client.py", line 1875, in info
+    response = self.request_with_retries(
+  File "<site-packages>/langsmith/client.py", line 2007, in request_with_retries
+    response = self.session.request(
+  File "<site-packages>/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+
+Starting evaluation of experiment: %s roasted-vacation-27
+DONE

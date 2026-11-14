@@ -1,0 +1,149 @@
+# InMemoryStore: put, search, and namespaces
+
+## put, get, and namespaces
+
+get:
+{
+  "__type__": "Item",
+  "namespace": [
+    "users",
+    "ada",
+    "memories"
+  ],
+  "key": "m1",
+  "value": {
+    "text": "prefers short answers"
+  },
+  "created_at": "<time>",
+  "updated_at": "<time>"
+}
+
+list_namespaces():
+[
+  [
+    "users",
+    "ada",
+    "memories"
+  ],
+  [
+    "users",
+    "ada",
+    "settings"
+  ],
+  [
+    "users",
+    "grace",
+    "memories"
+  ]
+]
+
+list_namespaces(prefix=('users', 'ada')):
+[
+  [
+    "users",
+    "ada",
+    "memories"
+  ],
+  [
+    "users",
+    "ada",
+    "settings"
+  ]
+]
+
+list_namespaces(max_depth=2):
+[
+  [
+    "users",
+    "ada"
+  ],
+  [
+    "users",
+    "grace"
+  ]
+]
+
+## search is a prefix match on the namespace
+
+search(('users', 'ada')):
+[
+  [
+    [
+      "users",
+      "ada",
+      "memories"
+    ],
+    "m1",
+    {
+      "text": "prefers short answers"
+    }
+  ],
+  [
+    [
+      "users",
+      "ada",
+      "memories"
+    ],
+    "m2",
+    {
+      "text": "works in Pune"
+    }
+  ],
+  [
+    [
+      "users",
+      "ada",
+      "settings"
+    ],
+    "theme",
+    {
+      "value": "dark"
+    }
+  ]
+]
+
+search(('users',), filter=...):
+[
+  [
+    [
+      "users",
+      "grace",
+      "memories"
+    ],
+    "m1",
+    {
+      "text": "prefers long answers"
+    }
+  ]
+]
+
+## delete
+
+get after delete:
+null
+
+## semantic search with an index and DeterministicFakeEmbedding
+
+[
+  {
+    "key": "b",
+    "text": "works in Pune",
+    "score": 1.0
+  },
+  {
+    "key": "c",
+    "text": "likes tea",
+    "score": 0.048932
+  }
+]
+
+## a tool reads the store through ToolRuntime, scoped by context
+
+user ada: prefers short answers
+
+user grace: prefers long answers
+
+warning UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected `none` - serialized value may not be as expected [field_name='context', input_value={'user': 'ada'}, input_type=dict])
+warning UserWarning: Pydantic serializer warnings:
+  PydanticSerializationUnexpectedValue(Expected `none` - serialized value may not be as expected [field_name='context', input_value={'user': 'grace'}, input_type=dict])

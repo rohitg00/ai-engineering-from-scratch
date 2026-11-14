@@ -1,0 +1,303 @@
+# Model call and tool call limits
+
+## ModelCallLimitMiddleware(run_limit=1), exit_behavior='end'
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Model call limits exceeded: run limit (1/1)",
+    "id": "<uuid-3>"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "limit-end",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+## ModelCallLimitMiddleware(run_limit=1, exit_behavior='error')
+
+invoke:
+
+raised langchain.agents.middleware.model_call_limit.ModelCallLimitExceededError: Model call limits exceeded: run limit (1/1)
+
+model calls seen by the fake:
+[
+  {
+    "model": "limit-error",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+## ModelCallLimitMiddleware(thread_limit=2) across two turns on one thread
+
+turn first: last message:
+[
+  {
+    "type": "AIMessage",
+    "content": "one",
+    "id": "lc_run--<uuid-4>-0"
+  }
+]
+
+turn first: counters in the checkpoint:
+{
+  "thread_model_call_count": 1,
+  "run_model_call_count": null
+}
+
+turn second: last message:
+[
+  {
+    "type": "AIMessage",
+    "content": "two",
+    "id": "lc_run--<uuid-5>-0"
+  }
+]
+
+turn second: counters in the checkpoint:
+{
+  "thread_model_call_count": 2,
+  "run_model_call_count": null
+}
+
+turn third: last message:
+[
+  {
+    "type": "AIMessage",
+    "content": "Model call limits exceeded: thread limit (2/2)",
+    "id": "<uuid-6>"
+  }
+]
+
+turn third: counters in the checkpoint:
+{
+  "thread_model_call_count": 2,
+  "run_model_call_count": null
+}
+
+## ToolCallLimitMiddleware(tool_name='add', run_limit=1), two calls in one message, exit_behavior='continue'
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-7>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 1,
+          "b": 1
+        },
+        "id": "call_a",
+        "type": "tool_call"
+      },
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 2
+        },
+        "id": "call_b",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Tool call limit exceeded. Do not call 'add' again.",
+    "name": "add",
+    "id": "<uuid-8>",
+    "tool_call_id": "call_b",
+    "status": "error"
+  },
+  {
+    "type": "ToolMessage",
+    "content": "2",
+    "name": "add",
+    "id": "<uuid-9>",
+    "tool_call_id": "call_a",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "done",
+    "id": "lc_run--<uuid-10>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "tool-limit",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  },
+  {
+    "model": "tool-limit",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai",
+      "tool: Tool call limit exceeded. Do not call 'add' again.",
+      "tool: 2"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+## ToolCallLimitMiddleware(run_limit=1, exit_behavior='end')
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-11>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 1,
+          "b": 1
+        },
+        "id": "call_a",
+        "type": "tool_call"
+      },
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 2
+        },
+        "id": "call_b",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Tool call limit exceeded. Do not make additional tool calls.",
+    "name": "add",
+    "id": "<uuid-12>",
+    "tool_call_id": "call_b",
+    "status": "error"
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Execution stopped before this tool call could run because another tool call in the same batch exceeded the limit.",
+    "name": "add",
+    "id": "<uuid-13>",
+    "tool_call_id": "call_a",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Tool call limit reached: run limit exceeded (2/1 calls).",
+    "id": "<uuid-14>"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "tool-limit-end",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]
+
+## ToolCallLimitMiddleware(run_limit=1, exit_behavior='error')
+
+invoke:
+
+raised langchain.agents.middleware.tool_call_limit.ToolCallLimitExceededError: Tool call limit reached: run limit exceeded (2/1 calls).
+
+model calls seen by the fake:
+[
+  {
+    "model": "tool-limit-error",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "bound": {
+      "tools": [
+        "add"
+      ],
+      "tool_choice": null,
+      "kwargs": []
+    }
+  }
+]

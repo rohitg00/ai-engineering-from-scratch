@@ -1,0 +1,13 @@
+CREATE TABLE store_vectors (
+    prefix text NOT NULL,
+    key text NOT NULL,
+    field_name text NOT NULL,
+    embedding BLOB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (prefix, key, field_name),
+    FOREIGN KEY (prefix, key) REFERENCES store(prefix, key) ON DELETE CASCADE
+);
+users.alice.memories|k1|$|3072
+users.bob.memories|k1|$|3072
+users.bob.memories|k1

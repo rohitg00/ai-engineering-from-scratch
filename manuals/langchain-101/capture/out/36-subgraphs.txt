@@ -1,0 +1,156 @@
+# Subgraphs, their namespaces, and an interrupt inside one
+
+## graph with xray=True
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	prepare(prepare)
+	finish(finish)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> prepare;
+	inner\3aask_ok --> finish;
+	prepare --> inner\3ashout;
+	finish --> __end__;
+	subgraph inner
+	inner\3ashout(shout)
+	inner\3aask_ok(ask_ok)
+	inner\3ashout --> inner\3aask_ok;
+	end
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## stream(subgraphs=True) yields (namespace, chunk)
+
+{
+  "namespace": [],
+  "chunk": {
+    "prepare": {
+      "text": "hello!",
+      "steps": [
+        "outer.prepare"
+      ]
+    }
+  }
+}
+
+{
+  "namespace": [
+    "inner:<uuid-1>"
+  ],
+  "chunk": {
+    "shout": {
+      "text": "HELLO!",
+      "steps": [
+        "inner.shout"
+      ]
+    }
+  }
+}
+
+{
+  "namespace": [
+    "inner:<uuid-1>"
+  ],
+  "chunk": {
+    "__interrupt__": [
+      {
+        "value": "Is the shout fine?",
+        "id": "<hex-1>",
+        "response_schema": null
+      }
+    ]
+  }
+}
+
+{
+  "namespace": [],
+  "chunk": {
+    "__interrupt__": [
+      {
+        "value": "Is the shout fine?",
+        "id": "<hex-1>",
+        "response_schema": null
+      }
+    ]
+  }
+}
+
+## state while the subgraph waits
+
+{
+  "next": [
+    "inner"
+  ],
+  "task": "inner",
+  "subgraph next": [
+    "ask_ok"
+  ],
+  "subgraph values": {
+    "text": "HELLO!",
+    "steps": [
+      "outer.prepare",
+      "inner.shout"
+    ]
+  }
+}
+
+## resume
+
+{
+  "text": "HELLO!",
+  "steps": [
+    "outer.prepare",
+    "outer.prepare",
+    "inner.shout",
+    "inner.ask_ok=yes",
+    "outer.finish"
+  ]
+}
+
+get_subgraphs():
+[
+  "inner"
+]
+
+## an agent as a subgraph node
+
+{
+  "namespace": [
+    "adder:<uuid-2>"
+  ],
+  "nodes": [
+    "model"
+  ]
+}
+
+{
+  "namespace": [
+    "adder:<uuid-2>"
+  ],
+  "nodes": [
+    "tools"
+  ]
+}
+
+{
+  "namespace": [
+    "adder:<uuid-2>"
+  ],
+  "nodes": [
+    "model"
+  ]
+}
+
+{
+  "namespace": [],
+  "nodes": [
+    "adder"
+  ]
+}

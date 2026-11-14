@@ -1,0 +1,24 @@
+off-ep 1 1 1.66 ========================= 1 failed, 4 passed in 0.36s ========================== recorder 0 guard 0
+off-noenv 1 1 1.62 ========================= 1 failed, 4 passed in 0.43s ========================== recorder 0 guard 0
+off-noenv-logcli 1 1 1.55 ========================= 1 failed, 4 passed in 0.36s ========================== recorder 0 guard 0
+off-noenv-output 1 3 0.81  recorder 0 guard 0
+on-ep 1 1 2.06 ============================== 5 failed in 0.79s =============================== recorder 9 guard 0
+on-ep-output 1 1 3.79 Finishing up... recorder 9 guard 0
+on-noenv-refuse 1 1 6.08 ============================== 5 failed in 2.66s =============================== recorder 0 guard 5
+on-noenv-fake200 1 1 2.63 ============================== 5 failed in 1.01s =============================== recorder 0 guard 9
+off-ep 2 1 1.99 ========================= 1 failed, 4 passed in 0.50s ========================== recorder 0 guard 0
+off-noenv 2 1 1.46 ========================= 1 failed, 4 passed in 0.31s ========================== recorder 0 guard 0
+off-noenv-logcli 2 1 1.89 ========================= 1 failed, 4 passed in 0.51s ========================== recorder 0 guard 0
+off-noenv-output 2 3 1.05  recorder 0 guard 0
+on-ep 2 1 2.18 ============================== 5 failed in 0.84s =============================== recorder 9 guard 0
+on-ep-output 2 1 3.65 Finishing up... recorder 9 guard 0
+on-noenv-refuse 2 1 3.36 ============================== 5 failed in 1.87s =============================== recorder 0 guard 5
+on-noenv-fake200 2 1 3.21 ============================== 5 failed in 1.33s =============================== recorder 0 guard 9
+off-ep 3 1 2.74 ========================= 1 failed, 4 passed in 0.76s ========================== recorder 0 guard 0
+off-noenv 3 1 3.16 ========================= 1 failed, 4 passed in 0.82s ========================== recorder 0 guard 0
+off-noenv-logcli 3 1 3.5 ========================= 1 failed, 4 passed in 0.76s ========================== recorder 0 guard 0
+off-noenv-output 3 3 1.56  recorder 0 guard 0
+on-ep 3 1 3.54 ============================== 5 failed in 1.29s =============================== recorder 9 guard 0
+on-ep-output 3 1 3.82 Finishing up... recorder 9 guard 0
+on-noenv-refuse 3 1 2.73 ============================== 5 failed in 1.28s =============================== recorder 0 guard 5
+on-noenv-fake200 3 1 2.42 ============================== 5 failed in 1.11s =============================== recorder 0 guard 9

@@ -1,0 +1,114 @@
+# Model fallback and refusals
+
+## ModelFallbackMiddleware(backup): the primary raises
+
+[
+  {
+    "type": "AIMessage",
+    "content": "The sum is 5, from the backup.",
+    "id": "lc_run--<uuid-1>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "primary",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "backup",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## every model in the chain raises
+
+invoke:
+
+raised builtins.ConnectionError: third is down
+
+model calls seen by the fake:
+[
+  {
+    "model": "primary-2",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## a refusal block without ModelRefusalMiddleware is a normal answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": [
+      {
+        "type": "refusal",
+        "refusal": "I can't help with that."
+      }
+    ],
+    "id": "lc_run--<uuid-2>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "refuser",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## ModelRefusalMiddleware raises on a refusal
+
+invoke:
+
+raised langchain_core.exceptions.ModelRefusalError: Model refused to produce the requested output: I can't help with that.
+
+model calls seen by the fake:
+[
+  {
+    "model": "refuser-2",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## ModelFallbackMiddleware then ModelRefusalMiddleware: the refusal falls back
+
+[
+  {
+    "type": "AIMessage",
+    "content": "Here is a safe answer.",
+    "id": "lc_run--<uuid-3>-0"
+  }
+]
+
+model calls seen by the fake:
+[
+  {
+    "model": "refuser-3",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]

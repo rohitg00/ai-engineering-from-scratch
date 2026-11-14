@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-labelledby="fig-4-2b-title fig-4-2b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-2b-title">Steps per second on one AsyncPostgresSaver, by threads</title>
+  <desc id="fig-4-2b-desc">A dot chart of steps per second against threads at once, 1 to 500 on a log scale, two runs per point, on the x86 server guest. One connection rises to about 260 at 10 threads and falls to 206.8 and 213.8 at 500. A pool of 20 reaches 339.3 and 331.5 at 50 threads and gives 341.5 and 325.5 at 500. A pool of 90 gives 326.5 and 312.7 at 500.</desc>
+  <line x1="70" y1="290" x2="490" y2="290" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="294" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="227.5" x2="490" y2="227.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="231.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="165" x2="490" y2="165" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="169" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="70" y1="102.5" x2="490" y2="102.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="106.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="70" y1="40" x2="490" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">400</text>
+  <line x1="70" y1="290" x2="490" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="40" x2="70" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="83.83" y1="290" x2="83.83" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="83.83" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="226.59" y1="290" x2="226.59" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="226.59" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="326.38" y1="290" x2="326.38" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="326.38" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="412.33" y1="290" x2="412.33" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="412.33" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="469.14" y1="290" x2="469.14" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="469.14" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">500</text>
+  <text x="280" y="324" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">threads at once</text>
+  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">steps per second</text>
+  <path d="M83.8 263.8 L226.6 125.7 L326.4 138.5 L412.3 148.0 L469.1 158.6" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="80.83" cy="263.81" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="86.83" cy="263.81" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="223.59" cy="122.69" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="229.59" cy="128.75" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="323.38" cy="142.38" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="329.38" cy="134.69" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="409.33" cy="153.56" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="415.33" cy="142.38" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="466.14" cy="160.75" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="472.14" cy="156.38" r="3" fill="var(--m-olive-ink, #515f26)"/>
+  <path d="M83.8 264.7 L226.6 106.0 L326.4 80.4 L412.3 69.8 L469.1 81.6" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="80.83" cy="264.69" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="86.83" cy="264.69" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="223.59" cy="118.56" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="229.59" cy="93.44" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="323.38" cy="77.94" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="329.38" cy="82.81" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="409.33" cy="70.56" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="415.33" cy="69" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="466.14" cy="76.56" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="472.14" cy="86.56" r="3" fill="var(--m-teal-ink, #18696a)"/>
+  <path d="M83.8 264.7 L226.6 109.2 L326.4 80.8 L412.3 86.8 L469.1 90.3" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="80.83" cy="264.69" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="86.83" cy="264.63" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="223.59" cy="109.63" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="229.59" cy="108.81" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="323.38" cy="79.38" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="329.38" cy="82.25" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="409.33" cy="83.19" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="415.33" cy="90.38" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="466.14" cy="85.94" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="472.14" cy="94.56" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="498" y="85.56" font-size="11" fill="var(--m-teal-ink, #18696a)">pool of 20</text>
+  <text x="498" y="99.56" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">pool of 90</text>
+  <text x="498" y="162.56" font-size="11" fill="var(--m-olive-ink, #515f26)">one connection</text>
+  <text x="70" y="346" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one run. 5 steps per run, a 20 ms fake model, 0 errors in all 30 runs.</text>
+</svg>

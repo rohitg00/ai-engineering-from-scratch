@@ -1,0 +1,33 @@
+# Durability modes, and sync without a checkpointer
+
+## each durability mode with InMemorySaver: how many checkpoints are saved
+
+durability=sync: result {'n': 2}, 4 checkpoints, steps [2, 1, 0, -1]
+
+durability=async: result {'n': 2}, 4 checkpoints, steps [2, 1, 0, -1]
+
+durability=exit: result {'n': 2}, 1 checkpoints, steps [2]
+
+## no checkpointer: every mode warns; 'sync' raises (langgraph issue #9267)
+
+durability=async invoke: ok {'n': 2}
+  warning: `durability` has no effect when no checkpointer is present.
+
+durability=async stream: ok [{'inc': {'n': 1}}, {'inc_again': {'n': 2}}]
+  warning: `durability` has no effect when no checkpointer is present.
+
+durability=exit invoke: ok {'n': 2}
+  warning: `durability` has no effect when no checkpointer is present.
+
+durability=exit stream: ok [{'inc': {'n': 1}}, {'inc_again': {'n': 2}}]
+  warning: `durability` has no effect when no checkpointer is present.
+
+durability=sync invoke: raised AttributeError: 'SyncPregelLoop' object has no attribute '_put_checkpoint_fut'
+  warning: `durability` has no effect when no checkpointer is present.
+
+durability=sync stream: raised AttributeError: 'SyncPregelLoop' object has no attribute '_put_checkpoint_fut'
+  warning: `durability` has no effect when no checkpointer is present.
+
+## checkpoint_during is deprecated
+
+warning LangGraphDeprecatedSinceV10: `checkpoint_during` is deprecated and will be removed. Please use `durability` instead. Deprecated in LangGraph V1.0 to be removed in V2.0.

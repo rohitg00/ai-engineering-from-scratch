@@ -1,0 +1,345 @@
+# Why the stock fakes fail under streaming
+
+## the stock GenericFakeChatModel cannot bind tools
+
+invoke:
+
+raised builtins.NotImplementedError: 
+
+## a subclass that only overrides bind_tools works with invoke
+
+message types:
+[
+  "human",
+  "ai",
+  "tool",
+  "ai"
+]
+
+## the same subclass with stream_mode='messages', empty content and a tool call
+
+stream:
+
+raised builtins.ValueError: No generations found in stream.
+
+## the same subclass with stream_mode='messages', text and a tool call: the tool call is lost
+
+[
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "Let",
+      "id": "lc_run--<uuid-1>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "bindonlyfake",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-1>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "bindonlyfake",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "me",
+      "id": "lc_run--<uuid-1>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "bindonlyfake",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-1>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "bindonlyfake",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "add.",
+      "id": "lc_run--<uuid-1>",
+      "chunk_position": "last"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "bindonlyfake",
+      "ls_model_type": "chat"
+    }
+  }
+]
+
+## this kit's ScriptedChatModel with the same script
+
+[
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "Let",
+      "id": "lc_run--<uuid-2>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-2>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "me",
+      "id": "lc_run--<uuid-2>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-2>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "add.",
+      "id": "lc_run--<uuid-2>",
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "id": "call_1",
+          "type": "tool_call"
+        }
+      ],
+      "tool_call_chunks": [
+        {
+          "name": "add",
+          "args": "{\"a\": 2, \"b\": 3}",
+          "id": "call_1",
+          "index": null,
+          "type": "tool_call_chunk"
+        }
+      ],
+      "chunk_position": "last"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "ToolMessage",
+      "content": "5",
+      "name": "add",
+      "id": "<uuid-3>",
+      "tool_call_id": "call_1",
+      "status": "success"
+    },
+    "metadata": {
+      "langgraph_node": "tools",
+      "langgraph_step": 2,
+      "langgraph_triggers": [
+        "__pregel_push"
+      ]
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "The",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "sum",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "is",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "5.",
+      "id": "lc_run--<uuid-4>",
+      "chunk_position": "last"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  }
+]

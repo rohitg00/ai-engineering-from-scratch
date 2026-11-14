@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="fig-2-1b-title fig-2-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-1b-title">Import time of four imports, 10 runs each</title>
+  <desc id="fig-2-1b-desc">A dot chart of import time in seconds on the Mac, 10 runs of each import in a new Python process, with bytecode on disk on the left and without bytecode on the right. Medians with bytecode: pass 0.023 s, import openai 0.329 s, langgraph StateGraph 0.477 s, create_agent with ChatOpenAI 0.831 s. Medians without bytecode: 0.063 s, 1.064 s, 1.85 s, and 2.64 s.</desc>
+  <line x1="70" y1="300" x2="610" y2="300" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="304" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="256.67" x2="610" y2="256.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="260.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
+  <line x1="70" y1="213.33" x2="610" y2="213.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="217.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="70" y1="170" x2="610" y2="170" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="174" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1.5</text>
+  <line x1="70" y1="126.67" x2="610" y2="126.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="130.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="70" y1="83.33" x2="610" y2="83.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="87.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2.5</text>
+  <line x1="70" y1="40" x2="610" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="70" y1="300" x2="610" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="40" x2="70" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds</text>
+  <text x="205" y="30" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BYTECODE ON DISK</text>
+  <text x="475" y="30" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NO BYTECODE</text>
+  <line x1="340" y1="40" x2="340" y2="300" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <circle cx="120.1" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="122.3" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="124.5" cy="298.18" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="126.7" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="128.9" cy="297.92" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="131.1" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="133.3" cy="297.92" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="135.5" cy="297.92" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="137.7" cy="298.09" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="139.9" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <line x1="114" y1="298.01" x2="146" y2="298.01" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2"/>
+  <rect class="m-knock" x="110.5" y="278.43" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="130" y="289.01" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">0.023</text>
+  <text x="130" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">pass</text>
+  <circle cx="180.1" cy="271.57" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="182.3" cy="271.57" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="184.5" cy="272.18" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="186.7" cy="271.31" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="188.9" cy="270.71" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="191.1" cy="269.84" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="193.3" cy="270.71" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="195.5" cy="272.18" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="197.7" cy="272.18" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="199.9" cy="271.49" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <line x1="174" y1="271.49" x2="206" y2="271.49" stroke="var(--m-olive-ink, #515f26)" stroke-width="2"/>
+  <rect class="m-knock" x="170.5" y="251.91" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="190" y="262.49" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">0.329</text>
+  <text x="190" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">openai</text>
+  <circle cx="240.1" cy="258.49" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="242.3" cy="258.31" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="244.5" cy="259.96" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="246.7" cy="259.01" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="248.9" cy="258.83" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="251.1" cy="258.75" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="253.3" cy="258.75" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="255.5" cy="258.49" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="257.7" cy="258.14" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="259.9" cy="257.36" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <line x1="234" y1="258.66" x2="266" y2="258.66" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <rect class="m-knock" x="230.5" y="239.08" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="250" y="249.66" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">0.477</text>
+  <text x="250" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">langgraph</text>
+  <circle cx="300.1" cy="227.55" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="302.3" cy="228.59" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="304.5" cy="227.37" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="306.7" cy="224.17" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="308.9" cy="228.15" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="311.1" cy="227.72" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="313.3" cy="230.15" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="315.5" cy="229.8" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="317.7" cy="228.15" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="319.9" cy="227.03" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <line x1="294" y1="227.98" x2="326" y2="227.98" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect class="m-knock" x="290.5" y="208.4" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="310" y="218.98" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">0.831</text>
+  <text x="310" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">agent</text>
+  <circle cx="390.1" cy="294.28" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="392.3" cy="294.45" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="394.5" cy="294.37" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="396.7" cy="294.71" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="398.9" cy="294.71" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="401.1" cy="294.45" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="403.3" cy="294.54" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="405.5" cy="294.71" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="407.7" cy="294.71" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="409.9" cy="294.54" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
+  <line x1="384" y1="294.54" x2="416" y2="294.54" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2"/>
+  <rect class="m-knock" x="380.5" y="274.96" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="400" y="285.54" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">0.063</text>
+  <text x="400" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">pass</text>
+  <circle cx="450.1" cy="202.33" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="452.3" cy="209.78" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="454.5" cy="208.22" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="456.7" cy="208.74" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="458.9" cy="207.27" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="461.1" cy="208.83" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="463.3" cy="207.01" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="465.5" cy="209.61" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="467.7" cy="207.35" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="469.9" cy="205.27" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
+  <line x1="444" y1="207.79" x2="476" y2="207.79" stroke="var(--m-olive-ink, #515f26)" stroke-width="2"/>
+  <rect class="m-knock" x="440.5" y="188.21" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="460" y="198.79" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">1.064</text>
+  <text x="460" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">openai</text>
+  <circle cx="510.1" cy="133.51" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="512.3" cy="133.43" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="514.5" cy="134.03" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="516.7" cy="129.18" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="518.9" cy="143.65" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="521.1" cy="142.27" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="523.3" cy="139.15" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="525.5" cy="140.19" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="527.7" cy="140.97" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="529.9" cy="140.53" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <line x1="504" y1="139.67" x2="536" y2="139.67" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <rect class="m-knock" x="503.8" y="120.09" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="520" y="130.67" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">1.85</text>
+  <text x="520" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">langgraph</text>
+  <circle cx="570.1" cy="68.86" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="572.3" cy="81.77" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="574.5" cy="76.14" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="576.7" cy="67.47" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="578.9" cy="69.21" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="581.1" cy="70.33" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="583.3" cy="68.51" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="585.5" cy="72.07" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="587.7" cy="81.43" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="589.9" cy="80.3" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <line x1="564" y1="71.2" x2="596" y2="71.2" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect class="m-knock" x="563.8" y="51.62" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="580" y="62.2" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">2.64</text>
+  <text x="580" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">agent</text>
+  <text x="70" y="346" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">pass: an empty program. agent: create_agent with ChatOpenAI.</text>
+  <text x="70" y="364" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one run on the Mac. Each short line is the median of 10.</text>
+</svg>

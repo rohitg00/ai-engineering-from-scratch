@@ -1,0 +1,427 @@
+# Streaming v2: StreamPart dicts and GraphOutput
+
+## version='v2' with stream_mode=['updates', 'messages']
+
+part 0:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "",
+      "id": "lc_run--<uuid-1>",
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "id": "call_1",
+          "type": "tool_call"
+        }
+      ],
+      "tool_call_chunks": [
+        {
+          "name": "add",
+          "args": "{\"a\": 2, \"b\": 3}",
+          "id": "call_1",
+          "index": null,
+          "type": "tool_call_chunk"
+        }
+      ],
+      "chunk_position": "last"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 1:
+{
+  "type": "updates",
+  "ns": [],
+  "data": {
+    "model": {
+      "messages": [
+        {
+          "type": "AIMessage",
+          "content": "",
+          "id": "lc_run--<uuid-1>",
+          "tool_calls": [
+            {
+              "name": "add",
+              "args": {
+                "a": 2,
+                "b": 3
+              },
+              "id": "call_1",
+              "type": "tool_call"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 2:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "ToolMessage",
+      "content": "5",
+      "name": "add",
+      "id": "<uuid-2>",
+      "tool_call_id": "call_1",
+      "status": "success"
+    },
+    "metadata": {
+      "langgraph_node": "tools",
+      "langgraph_step": 2,
+      "langgraph_triggers": [
+        "__pregel_push"
+      ]
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 3:
+{
+  "type": "updates",
+  "ns": [],
+  "data": {
+    "tools": {
+      "messages": [
+        {
+          "type": "ToolMessage",
+          "content": "5",
+          "name": "add",
+          "id": "<uuid-2>",
+          "tool_call_id": "call_1",
+          "status": "success"
+        }
+      ]
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 4:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "The",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 5:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 6:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "sum",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 7:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 8:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "is",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 9:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 10:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "5.",
+      "id": "lc_run--<uuid-3>",
+      "chunk_position": "last"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "scriptedchatmodel",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 11:
+{
+  "type": "updates",
+  "ns": [],
+  "data": {
+    "model": {
+      "messages": [
+        {
+          "type": "AIMessage",
+          "content": "The sum is 5.",
+          "id": "lc_run--<uuid-3>"
+        }
+      ]
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+## version='v2' with a single mode still yields StreamPart dicts
+
+part 0:
+{
+  "type": "updates",
+  "ns": [],
+  "nodes": [
+    "model"
+  ]
+}
+
+part 1:
+{
+  "type": "updates",
+  "ns": [],
+  "nodes": [
+    "tools"
+  ]
+}
+
+part 2:
+{
+  "type": "updates",
+  "ns": [],
+  "nodes": [
+    "model"
+  ]
+}
+
+## invoke(version='v2') returns GraphOutput
+
+type GraphOutput
+interrupts ()
+
+value['messages']:
+[
+  {
+    "type": "HumanMessage",
+    "content": "What is 2 + 3?",
+    "id": "<uuid-4>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-5>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-6>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 5.",
+    "id": "lc_run--<uuid-7>-0"
+  }
+]
+
+## dict access on GraphOutput
+
+result['messages'] has 4 messages
+
+warning LangGraphDeprecatedSinceV11: Accessing GraphOutput via `result[key]` is deprecated. Use `result.value` to access the output value directly, or `result.interrupts` for interrupts. Deprecated in LangGraph V1.1 to be removed in V3.0.

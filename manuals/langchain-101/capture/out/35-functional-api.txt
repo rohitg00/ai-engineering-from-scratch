@@ -1,0 +1,77 @@
+# The functional API: @entrypoint and @task
+
+## first run stops at the interrupt inside a task
+
+{
+  "value": {},
+  "interrupts": [
+    {
+      "value": {
+        "total": 12,
+        "question": "Keep it?"
+      },
+      "id": "<hex-1>",
+      "response_schema": null
+    }
+  ]
+}
+
+task runs:
+[
+  "double(1)",
+  "double(2)",
+  "double(3)"
+]
+
+## resume: finished tasks are not run again
+
+{
+  "total": 12,
+  "answer": "yes"
+}
+
+task runs:
+[
+  "double(1)",
+  "double(2)",
+  "double(3)"
+]
+
+## updates stream of a fresh run
+
+{
+  "double": 10
+}
+
+{
+  "__interrupt__": [
+    {
+      "value": {
+        "total": 10,
+        "question": "Keep it?"
+      },
+      "id": "<hex-2>",
+      "response_schema": null
+    }
+  ]
+}
+
+## entrypoint.final returns one value and saves another
+
+three calls:
+[
+  "added 3 to None, saved 3",
+  "added 4 to 3, saved 7",
+  "added 5 to 7, saved 12"
+]
+
+saved value:
+"added 5 to 7, saved 12"
+
+## graph of an entrypoint
+
+[
+  "workflow",
+  "__start__",
+  "__end__"
+]

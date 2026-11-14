@@ -1,0 +1,927 @@
+{
+ "agent": {
+  "cells": {
+   "postgres async after_tool": {
+    "empty_next_unfinished": 2,
+    "history_len_at_crash": [
+     2,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres async before_put": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres async before_put_writes": {
+    "empty_next_unfinished": 2,
+    "history_len_at_crash": [
+     1,
+     2,
+     2,
+     1,
+     1
+    ]
+   },
+   "postgres async before_tool": {
+    "empty_next_unfinished": 3,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     2,
+     1
+    ]
+   },
+   "postgres async inside_tool": {
+    "empty_next_unfinished": 3,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres exit after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit before_put": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres exit before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres sync after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "postgres sync before_put": {
+    "empty_next_unfinished": 2,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite async after_tool": {
+    "empty_next_unfinished": 4,
+    "history_len_at_crash": [
+     3,
+     3,
+     2,
+     1,
+     3
+    ]
+   },
+   "sqlite async before_put": {
+    "empty_next_unfinished": 4,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite async before_put_writes": {
+    "empty_next_unfinished": 1,
+    "history_len_at_crash": [
+     3,
+     2,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite async before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     2,
+     2,
+     2,
+     3,
+     2
+    ]
+   },
+   "sqlite async inside_tool": {
+    "empty_next_unfinished": 1,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     1,
+     3
+    ]
+   },
+   "sqlite exit after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit before_put": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "sqlite exit before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite sync after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "sqlite sync before_put": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite sync before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite sync before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite sync inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   }
+  },
+  "empty_next_unfinished": 32,
+  "killed": 140
+ },
+ "graph": {
+  "cells": {
+   "postgres async after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres async before_put": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres async before_put_writes": {
+    "empty_next_unfinished": 1,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres async before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres async inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres exit after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit before_put": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres exit before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres sync after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "postgres sync before_put": {
+    "empty_next_unfinished": 1,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite async after_tool": {
+    "empty_next_unfinished": 4,
+    "history_len_at_crash": [
+     2,
+     2,
+     2,
+     1,
+     1
+    ]
+   },
+   "sqlite async before_put": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite async before_put_writes": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     1,
+     2,
+     1,
+     1,
+     1
+    ]
+   },
+   "sqlite async before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "sqlite async inside_tool": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "sqlite exit after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit before_put": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "sqlite exit before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite sync after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "sqlite sync before_put": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite sync before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     4,
+     3,
+     4,
+     4,
+     4
+    ]
+   },
+   "sqlite sync before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite sync inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   }
+  },
+  "empty_next_unfinished": 31,
+  "killed": 140
+ },
+ "graph_idempotent": {
+  "cells": {
+   "postgres async after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres async before_put": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres async before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres async before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres async inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres exit after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit before_put": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "postgres exit before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres exit inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "postgres sync after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "postgres sync before_put": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "postgres sync inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite async after_tool": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     2,
+     2,
+     1,
+     2,
+     1
+    ]
+   },
+   "sqlite async before_put": {
+    "empty_next_unfinished": 4,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite async before_put_writes": {
+    "empty_next_unfinished": 4,
+    "history_len_at_crash": [
+     1,
+     3,
+     1,
+     2,
+     1
+    ]
+   },
+   "sqlite async before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "sqlite async inside_tool": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     2,
+     1,
+     2,
+     1,
+     1
+    ]
+   },
+   "sqlite exit after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit before_put": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     1,
+     1,
+     1,
+     1,
+     1
+    ]
+   },
+   "sqlite exit before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite exit inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   },
+   "sqlite sync after_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     4,
+     4,
+     4,
+     4,
+     4
+    ]
+   },
+   "sqlite sync before_put": {
+    "empty_next_unfinished": 5,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite sync before_put_writes": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     4,
+     3,
+     3
+    ]
+   },
+   "sqlite sync before_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   },
+   "sqlite sync inside_tool": {
+    "empty_next_unfinished": 0,
+    "history_len_at_crash": [
+     3,
+     3,
+     3,
+     3,
+     3
+    ]
+   }
+  },
+  "empty_next_unfinished": 28,
+  "killed": 140
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "sources": [
+  "capture/lab/T02-crash-resume-mac/01-graph-matrix.jsonl",
+  "capture/lab/T02-crash-resume-mac/02-agent-matrix.jsonl",
+  "capture/lab/T02-crash-resume-mac/03-graph-idempotent.jsonl"
+ ],
+ "trials_per_cell": 5
+}

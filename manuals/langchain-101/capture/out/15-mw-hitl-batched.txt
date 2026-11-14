@@ -1,0 +1,143 @@
+# Human in the loop, batched
+
+## batched: two gated calls, one interrupt
+
+interrupts:
+[
+  {
+    "value": {
+      "action_requests": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "description": "Tool execution requires approval\n\nTool: add\nArgs: {'a': 2, 'b': 3}"
+        },
+        {
+          "name": "lookup_order",
+          "args": {
+            "order_id": "A-17"
+          },
+          "description": "Tool execution requires approval\n\nTool: lookup_order\nArgs: {'order_id': 'A-17'}"
+        }
+      ],
+      "review_configs": [
+        {
+          "action_name": "add",
+          "allowed_decisions": [
+            "approve",
+            "edit",
+            "reject",
+            "respond"
+          ]
+        },
+        {
+          "action_name": "lookup_order",
+          "allowed_decisions": [
+            "approve",
+            "reject"
+          ]
+        }
+      ]
+    },
+    "id": "<hex-1>",
+    "response_schema": null
+  }
+]
+
+state.next:
+[
+  "HumanInTheLoopMiddleware.after_model"
+]
+
+## resume with one decision per call, in order: edit the first, reject the second
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_a",
+        "type": "tool_call"
+      },
+      {
+        "name": "lookup_order",
+        "args": {
+          "order_id": "A-17"
+        },
+        "id": "call_b",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "User rejected the tool call for `lookup_order` with reason: Do not look up orders.",
+    "name": "lookup_order",
+    "id": "<uuid-2>",
+    "tool_call_id": "call_b",
+    "status": "error"
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Note: a human reviewer replaced this tool call before it ran. The call recorded in your message is the one you produced, not the one that executed. This was intentional and authorized. Do not re-issue your original call. Executed instead: add with arguments {\"a\": 20, \"b\": 30}.\n\nTool response:\n50",
+    "name": "add",
+    "id": "<uuid-3>",
+    "tool_call_id": "call_a",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Done.",
+    "id": "lc_run--<uuid-4>-0"
+  }
+]
+
+## a wrong number of decisions
+
+resume with 1 decision for 2 calls:
+
+raised builtins.ValueError: Number of human decisions (1) does not match number of hanging tool calls (2).
+
+## respond: the human answers in place of the tool
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-5>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "It is 5, I checked.",
+    "name": "add",
+    "id": "<uuid-6>",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Thanks.",
+    "id": "lc_run--<uuid-7>-0"
+  }
+]

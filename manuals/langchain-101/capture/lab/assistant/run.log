@@ -1,0 +1,73 @@
+model qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42; every step is a new Python process
+
+== 1-remember: process 87988, thread t1, durability default, say: Please remember two facts: I prefer short replies, and my manager's email address is lead@example.org.
+  call       remember({"fact": "I prefer short replies"})
+  call       remember({"fact": "my manager's email address is lead@example.org"})
+  result     saved memory 87f4b4ebeb9a
+  result     saved memory c0eac167bdfe
+  answer     Got it. I'll keep your preferences in mind.
+  state      next [], 5 messages, 9 checkpoints, 0 pending interrupts
+  store      2 memories for reader-1
+  outbox     0 sent, 0 attempts of send_email
+  exit       0
+
+== 2-ask-to-send: process 88002, thread t1, durability default, say: Email my manager that the quarterly report is ready.
+  call       recall({})
+  result     - my manager's email address is lead@example.org - I prefer short replies
+  call       send_email({"to": "lead@example.org", "subject": "Quarterly Report Ready", "body": "The quarterly report is ready for review."})
+  interrupt  send_email({"to": "lead@example.org", "subject": "Quarterly Report Ready", "body": "The quarterly report is ready for review."}), tool_call_id 3c72b9ba-6b66-47cc-af7a-d11e3338822c
+  state      next ['tools'], 9 messages, 18 checkpoints, 1 pending interrupts
+  store      2 memories for reader-1
+  outbox     0 sent, 0 attempts of send_email
+  exit       0
+
+== 3-approve-then-crash: process 88024, thread t1, durability default, approve
+  reviewer   approve send_email({"to": "lead@example.org", "subject": "Quarterly Report Ready", "body": "The quarterly report is ready for review."})
+  tool       send_email ran in this process: sent (key 3c72b9ba-6b66-47cc-af7a-d11e3338822c)
+  crash      SIGKILL after the email and before the checkpoint of the tools step
+  exit       137
+
+== 4-resume-after-crash: process 88029, thread t1, durability default, resume
+  resume     invoke(None) on the thread, next was ['tools']
+  interrupt  send_email({"to": "lead@example.org", "subject": "Quarterly Report Ready", "body": "The quarterly report is ready for review."}), tool_call_id 3c72b9ba-6b66-47cc-af7a-d11e3338822c
+  state      next ['tools'], 9 messages, 18 checkpoints, 1 pending interrupts
+  store      2 memories for reader-1
+  outbox     1 sent, 1 attempts of send_email
+  exit       0
+
+== 5-approve-again: process 88037, thread t1, durability default, approve
+  reviewer   approve send_email({"to": "lead@example.org", "subject": "Quarterly Report Ready", "body": "The quarterly report is ready for review."})
+  tool       send_email ran in this process: skipped, key already sent (key 3c72b9ba-6b66-47cc-af7a-d11e3338822c)
+  result     email skipped, key already sent: to lead@example.org, subject 'Quarterly Report Ready'
+  answer     The email was already sent. Let me know if you'd like to take any further action.
+  state      next [], 6 messages, 22 checkpoints, 0 pending interrupts
+  summary    Here is a summary of the conversation to date: ## SESSION INTENT Send an email to the manager to notify them that the quarterly report is ready. ## SUMMARY - The user’s primary request is to email their manager about the readiness of the quarterly report. - The user has specified a preference for  …
+  store      2 memories for reader-1
+  outbox     1 sent, 2 attempts of send_email
+  exit       0
+
+== 6-third-turn: process 93059, thread t1, durability default, say: Thanks. What is my manager's email address?
+  answer     Your manager's email address is lead@example.org.
+  state      next [], 8 messages, 27 checkpoints, 0 pending interrupts
+  summary    Here is a summary of the conversation to date: ## SESSION INTENT Send an email to the manager to notify them that the quarterly report is ready. ## SUMMARY - The user’s primary request is to email their manager about the readiness of the quarterly report. - The user has specified a preference for  …
+  store      2 memories for reader-1
+  outbox     1 sent, 2 attempts of send_email
+  exit       0
+
+== 7-new-thread: process 93070, thread t2, durability default, say: What do you remember about how I like replies?
+  call       recall({})
+  result     - my manager's email address is lead@example.org - I prefer short replies
+  answer     I remember that you prefer short replies.
+  state      next [], 4 messages, 9 checkpoints, 0 pending interrupts
+  store      2 memories for reader-1
+  outbox     1 sent, 2 attempts of send_email
+  exit       0
+
+== files after the run
+sent|3c72b9ba-6b66-47cc-af7a-d11e3338822c|lead@example.org|Quarterly Report Ready
+attempt|1|3c72b9ba-6b66-47cc-af7a-d11e3338822c|sent
+attempt|2|3c72b9ba-6b66-47cc-af7a-d11e3338822c|skipped, key already sent
+checkpoints|t1|27
+checkpoints|t2|9
+store|users.reader-1.memories|c0eac167bdfe|{"text":"my manager's email address is lead@example.org"}
+store|users.reader-1.memories|87f4b4ebeb9a|{"text":"I prefer short replies"}
