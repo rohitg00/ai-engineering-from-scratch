@@ -5,7 +5,7 @@
   "summary": "How the LangChain Python stack turns a model, tools, and a prompt into an agent. The agent streams, pauses for approval, survives a crash, and leaves a trace. Every listing comes from an offline capture of langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Every measured number comes from a recorded run on our own machines.",
   "audience": "You write Python and you have called a chat model API. You have read some LangChain code, maybe from the 0.x years. You want to know what the 1.x stack does before you build on it.",
   "edition": "2026.11",
-  "status": "draft",
+  "status": "ready",
   "pin": {
     "subject": "LangChain (Python): langchain, langchain-core, langgraph, deepagents, langsmith",
     "version": "1.5.0",
