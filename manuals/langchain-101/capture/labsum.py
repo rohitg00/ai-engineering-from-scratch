@@ -517,6 +517,117 @@ def tracing():
     }
 
 
+def evaluate_leak():
+    folder = "T18-evaluate-leak-mac"
+
+    def requests_of(row):
+        return [(h["method"], h["path"], h["names"]) for h in row["recorder"]] + [(p["method"], p["url"], p["names"]) for p in row.get("patched_requests", [])]
+
+    conditions = {}
+    mismatched = agent_processes = 0
+    for row in rows(f"{folder}/01-evaluate-requests.jsonl"):
+        sent = requests_of(row)
+        names = [name for _, _, batch in sent for name in batch]
+        cell = conditions.setdefault(row["case"], {"processes": 0, "return_codes": [], "requests": [], "runs_sent": [], "top_run_with_parent": [], "reference_example_set": [], "scores": [], "blocked": []})
+        cell["processes"] += 1
+        cell["return_codes"].append(row["rc"])
+        cell["requests"].append([f"{method} {path}" for method, path, _ in sent])
+        counts = {}
+        for name in names:
+            key = ":".join(name.split(":")[:3])
+            counts[key] = counts.get(key, 0) + 1
+        cell["runs_sent"].append(dict(sorted(counts.items())))
+        cell["top_run_with_parent"].append(sum(1 for name in names if name.startswith("post:chain:LangGraph:parent=y")))
+        cell["reference_example_set"].append(sum(1 for name in names if name.endswith("ref_example=y")))
+        cell["scores"].append([score for result in row["rows"] for score in result["score"]])
+        cell["blocked"].append(len(row["guard_blocked"]))
+        if names:
+            agent_processes += 1
+            printed = row["stdout_other"][0].rsplit(" ", 1)[1]
+            projects = {name.split("project=")[1].split(":")[0] for name in names}
+            mismatched += 1 if projects != {printed} else 0
+    noflush = {}
+    for row in rows(f"{folder}/02-evaluate-noflush.jsonl"):
+        noflush.setdefault(row["case"], []).append([f"{method} {path}" for method, path, _ in requests_of(row) if path.endswith("/info")])
+    origin = [line.strip() for line in read(f"{folder}/04-info-origin.txt").splitlines() if line.strip().startswith(("REQUEST", "File"))]
+    return {
+        "machine": MAC,
+        "versions": "langsmith 0.14.17, langchain 1.5.0, langchain-core 1.8.0",
+        "run": "evaluate(upload_results=False) on one example, with no client argument, so the default client; every process new",
+        "target": "create_agent with a fake model and one tool add, 2 model calls and 1 tool call, 7 LangChain runs; quiet wraps it in tracing_context(enabled=False); plain is a function",
+        "conditions_note": "ep: LANGSMITH_ENDPOINT set to a local recorder and a dummy key, LANGSMITH_TRACING unset; noenv: no LANGSMITH_ or LANGCHAIN_ variable, the HTTP layer replaced with a recorder that answers 200",
+        "processes_per_condition": 5,
+        "not_used": "00-smoke-n1.jsonl is not kept; in 02 the noenv:agent rows miss the POST that happens at exit, so 02 is used only for GET /info",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-evaluate-requests.jsonl", "02-evaluate-noflush.jsonl", "04-info-origin.txt", "t18_evaluate.py", "t18_info_origin.py")],
+        "conditions": conditions,
+        "info_without_flush": noflush,
+        "agent_processes": agent_processes,
+        "project_differs_from_printed_name": mismatched,
+        "info_origin": origin,
+    }
+
+
+PYTEST_LINE = re.compile(r"^(?:INTERNALERROR> |E\s+)(?:\S+\.)?(ValueError: .*|LangSmithConnectionError: .*)$")
+
+
+def pytest_plugin():
+    folder = "T19-pytest-plugin-mac"
+    conditions = {}
+    for rel in ("01-pytest-runs.jsonl", "03-off-tracing-on-runs.jsonl"):
+        for row in rows(f"{folder}/{rel}"):
+            cell = conditions.setdefault(row["cond"], {"processes": 0, "return_codes": [], "results": [], "requests": [], "agent_run_posted": [], "messages": [], "skipping_lines": [], "header": None, "suite": None})
+            cell["processes"] += 1
+            cell["return_codes"].append(row["rc"])
+            cell["results"].append(re.sub(r" in [0-9.]+s", "", row["summary"]).strip("= "))
+            cell["requests"].append([f"{h['method']} {h['path']}" for h in row["recorder"]] + [f"{g['method']} {g['url']}" for g in row["guard"] if g.get("kind") == "requests-send"])
+            cell["agent_run_posted"].append(any("LangGraph" in h["names"] for h in row["recorder"] if h["method"] == "POST"))
+            text = read(f"{folder}/02-{row['cond']}-rep{row['rep']}-stdout.txt")
+            found = []
+            for line in text.splitlines():
+                match = PYTEST_LINE.match(line)
+                if match and match.group(1) not in found:
+                    found.append(match.group(1))
+                if line.startswith("plugins:"):
+                    cell["header"] = line
+                if line.startswith("Test Suite:"):
+                    cell["suite"] = line.strip()
+            cell["messages"].append(found)
+            cell["skipping_lines"].append(sum(1 for line in text.splitlines() if "Skipping" in line and line.startswith("INFO")))
+    return {
+        "machine": MAC,
+        "versions": "langsmith 0.14.17 with its pytest11 plugin, pytest 8.4.2 in a scratch environment, rich 15.0.0, no vcrpy",
+        "tests": "five tests: a marked test that logs inputs, outputs, reference outputs, and feedback; a marked test that fails on purpose; a test with @langsmith.test; a marked test that runs create_agent with a fake model; an unmarked test that calls log_outputs",
+        "conditions_note": "off: LANGSMITH_TEST_TRACKING=false; on: the variable unset, the default; ep: LANGSMITH_ENDPOINT set to a local recorder and a dummy key; noenv: no LANGSMITH_ variable, with the HTTP layer replaced by a guard that refuses or answers 200; output: --langsmith-output; logcli: log_cli at INFO; tracing: LANGSMITH_TRACING=true",
+        "processes_per_condition": 3,
+        "not_used": "00-smoke-n1-runs.jsonl is not kept; with tracking on, the errors after each request come from the empty answers of the recorder and the guard, so only the request order is used; the run names in 03 come from a rough match on the body, so the summary keeps only whether the LangGraph run of the agent was posted",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-pytest-runs.jsonl", "03-off-tracing-on-runs.jsonl", "t19_driver.py", "t19_tests/conftest.py", "t19_tests/test_ls_plugin.py")] + [f"capture/lab/{folder}/02-<condition>-rep<n>-stdout.txt"],
+        "conditions": conditions,
+    }
+
+
+def mcp_edges():
+    folder = "T20-mcp-edges-mac"
+    cases = {}
+    for row in rows(f"{folder}/01-mcp-edges.jsonl"):
+        shape = {"protocol": row["protocol"], "events": row["events"], "handler_calls": len(row["handler_calls"]), "progress": [call[:3] for call in row["progress_calls"]], "server_calls": row.get("server_calls"), "return_code": row["rc"]}
+        cell = cases.setdefault(f"{row['transport']}: {row['case']}", {"processes": 0, "shapes": []})
+        cell["processes"] += 1
+        if shape not in cell["shapes"]:
+            cell["shapes"].append(shape)
+    for cell in cases.values():
+        cell["same_in_every_process"] = len(cell["shapes"]) == 1
+    return {
+        "machine": MAC,
+        "versions": "langchain 1.5.0, fastmcp 4.2.0, mcp 2.3.0, langgraph 1.2.22",
+        "server": "a FastMCP server with ask_name, which returns an InputRequiredResult, ask_legacy, which calls ctx.elicit, fail_structured and ok_structured, which return structured content with and without is_error, and long_task, which reports progress",
+        "clients_note": "modern: MCPAdapter(server), protocol 2026-07-28; legacy: MCPAdapter(fastmcp.Client(server, mode='legacy')), protocol 2025-11-25; handler: a fastmcp.Client with an elicitation_handler; phandler: a fastmcp.Client with a progress_handler; noarm: a fastmcp.Client with no handler, given to as_langchain_tool; agent: create_agent with a fake model and InMemorySaver, astream with updates and custom",
+        "processes_per_case": 3,
+        "not_used": "00-smoke-n1.jsonl and the server stderr file, which is empty, are not kept; server_calls is counted in-process only",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-mcp-edges.jsonl", "t20_mcp.py", "t20_server.py")],
+        "cases": cases,
+    }
+
+
 HOOK_CALLS = {"before_model": 2, "after_model": 2, "before_agent": 1, "wrap_model_call": 2, "wrap_tool_call": 1}
 
 
@@ -794,6 +905,9 @@ SUMMARIES = {
     "tokens-mac.json": tokens,
     "mcp-mac.json": mcp,
     "tracing-mac.json": tracing,
+    "evaluate-mac.json": evaluate_leak,
+    "pytest-plugin-mac.json": pytest_plugin,
+    "mcp-edges-mac.json": mcp_edges,
 }
 
 

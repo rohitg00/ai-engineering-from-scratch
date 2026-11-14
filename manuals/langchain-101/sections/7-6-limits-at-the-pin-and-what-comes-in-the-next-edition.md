@@ -34,7 +34,20 @@ These need `langgraph up` with a key, or a deployment.
 - An experiment with `upload_results=True`, and its retention. [Section 6.5](#s-evaluation-with-langsmith)
 - A comparison of two experiments. [Section 6.5](#s-evaluation-with-langsmith)
 - Online evaluators on production traces, and annotation queues. [Section 6.5](#s-evaluation-with-langsmith)
-- The pytest plugin with tracking on, and its `--langsmith-output` table. [Section 6.5](#s-evaluation-with-langsmith)
+- The pytest plugin with tracking on against a real account, and its `--langsmith-output` table with real results. [Section 6.5](#s-evaluation-with-langsmith)
+
+## LangSmith without an account
+
+These need no account, only a new lab run.
+
+- `evaluate` with a client that you pass, to see if the agent runs follow that client or the default one. [Section 6.5](#s-evaluation-with-langsmith)
+- `aevaluate`, and an evaluator built on LangChain, such as a model that judges. [Section 6.5](#s-evaluation-with-langsmith)
+- The pytest plugin with `LANGSMITH_TEST_CACHE` and `vcrpy`, with pytest 7 and 9, with `pytest-xdist`, and with async tests. [Section 6.5](#s-evaluation-with-langsmith)
+
+## MCP
+
+- OAuth, URL-mode elicitation, and several input requests in one round. [Section 6.2](#s-mcp-with-langchain-mcp)
+- The two elicitation cases that raise `MCPError`, inside an agent run, and the elicitation cases over stdio. [Section 6.2](#s-mcp-with-langchain-mcp)
 
 ## Hosted providers and real models
 
@@ -90,4 +103,4 @@ The items above add to the manual. They do not change a recorded result. Every n
 - Treat the Agent Server claims on exactly once and outages as untested until you test them.
 ```
 
-Sources: sections 1.1, 3.1, 3.4, 3.5, 3.6, 4.1, 4.3, 4.4, 4.5, 4.6, 5.1 to 5.8, 6.4, 6.5, 7.1, 7.2, and 7.3 of this manual; capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt; capture/lab/README.md.
+Sources: sections 1.1, 3.1, 3.4, 3.5, 3.6, 4.1, 4.3, 4.4, 4.5, 4.6, 5.1 to 5.8, 6.2, 6.4, 6.5, 7.1, 7.2, and 7.3 of this manual; capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt; capture/lab/README.md.

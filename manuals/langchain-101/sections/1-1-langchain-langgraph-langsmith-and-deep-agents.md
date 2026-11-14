@@ -51,7 +51,7 @@ note: Cut to the node list and the type line. The edges, the Mermaid text, and t
 type langgraph.graph.state.CompiledStateGraph
 ```
 
-`langsmith` is a dependency of `langchain-core`, so it is installed with every agent {{code libs/core/pyproject.toml}}. It sends nothing until an environment variable turns tracing on {{code langsmith/utils.py}}. The capture kit sets `LANGSMITH_TRACING=false`, and a LangSmith run tree is built only in memory.
+`langsmith` is a dependency of `langchain-core`, so it is installed with every agent {{code libs/core/pyproject.toml}}. An agent sends nothing until an environment variable turns tracing on {{code langsmith/utils.py}}. Two parts of `langsmith` send without that variable: `evaluate` and the pytest plugin, as [section 6.5](#s-evaluation-with-langsmith) shows. The capture kit sets `LANGSMITH_TRACING=false`, and a LangSmith run tree is built only in memory.
 
 ## What the stack standardizes
 

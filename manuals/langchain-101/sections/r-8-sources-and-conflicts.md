@@ -59,7 +59,7 @@ We read four MIT repositories of the courses: `lca-lc-foundations`, `lca-langcha
 
 ## Ranks 5 and 6: the kit and the lab
 
-The capture kit writes 44 files, and the lab holds 23 experiment folders and 24 summary files. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
+The capture kit writes 44 files, and the lab holds 26 experiment folders and 27 summary files. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
 
 ## Issues and advisories
 
@@ -78,6 +78,7 @@ The capture kit writes 44 files, and the lab holds 23 experiment folders and 24 
 | langchain #40531, langgraph #7988 | tool calls with no id, and two tools with one name | [2.4](#s-tools-toolruntime-and-tool-errors) |
 | langchain #40688 | a tool retry runs a tool that is not idempotent again | [3.5](#s-retries-backup-models-rate-limits-and-caching) |
 | langgraph #8517 | `ToolNode` under `ainvoke` ignores `max_concurrency` | [3.1](#s-create-agent-and-the-graph-it-builds) |
+| langchain #40471 | an MCP error result loses its `structuredContent` | [6.2](#s-mcp-with-langchain-mcp) |
 
 [Section 7.3](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) gives the table of security advisories, with the range of each one and our result at the pin.
 
@@ -100,6 +101,7 @@ Each row is one disagreement between two sources. The choice is what this manual
 | D107 | Both v1 release pages link `create_react_agent` to the function of the same name in `langchain-classic`. | the code: two functions share the name | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D108 | A LangSmith FAQ table calls checkpointers community code and streaming basic. | the current pages and the code | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D109 | The Deep Agents overview names planning as a default. The 0.7.0 changelog makes it opt in. | the changelog and the capture: add `TodoListMiddleware` | [6.3](#s-deep-agents-0-7), [7.4](#s-migration-from-0-x-and-stale-advice) | open |
+| D111 | The product page says that tracing never affects your application. The tracing docs say that `LANGCHAIN_CALLBACKS_BACKGROUND=false` makes callbacks wait. No code at the pin reads that variable. | the lab and the code: about 5 ms per agent run, and no effect from the variable at the pin | [6.4](#s-langsmith-tracing) | open at docs `04d4d4a` |
 | D113 | The prompt hub page teaches the hub through `langchain_classic`. | the LangSmith client methods that the same page recommends | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D114 | A tracing page leads with an LCEL chain. | trace a `create_agent` agent | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D116 | The local server page prints the old name LangGraph Studio. | the current names: LangSmith Studio and Agent Server | [7.4](#s-migration-from-0-x-and-stale-advice) | open |

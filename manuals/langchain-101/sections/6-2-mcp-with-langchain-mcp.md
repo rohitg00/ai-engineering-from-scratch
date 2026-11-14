@@ -4,7 +4,7 @@
 
 You find an MCP server for your issue tracker and want its tools in your agent. Every example you find imports `MultiServerMCPClient` from `langchain_mcp_adapters`. You install that package next to `langchain[mcp]`, and pip downgrades `mcp` under the new adapter.
 
-When you finish this section, you can load MCP tools into an agent with `langchain.mcp`. You can also predict what a tool error, a slow tool, and a server crash do to a run. And you can set the timeout that the adapter lacks.
+When you finish this section, you can load MCP tools into an agent with `langchain.mcp`. You can also predict what a tool error, a slow tool, and a server crash do to a run. And you can set the timeout that the adapter lacks, and answer a server that asks for input.
 
 ## The package and its beta warning
 
@@ -47,7 +47,7 @@ note: The first tool. divide and stats are cut.
   },
 ```
 
-Each tool has `response_format` set to `content_and_artifact`. The model sees the content, a list of text blocks. The structured result of the server stays in the artifact, where your code can read it and the model cannot:
+Each tool has `response_format` set to `content_and_artifact`. The model sees the content, a list of text blocks. On a successful call, the structured result of the server stays in the artifact, where your code can read it and the model cannot:
 
 ```listing
 title: the ToolMessage of multiply
@@ -169,15 +169,98 @@ So langchain-mcp-adapters 0.3.2 starts one stdio subprocess per tool call (Multi
 
 Each stdio call started a new server, and the median call took 1,887 ms over 50 calls. Over HTTP, a server crash in the middle of a call never returned, and our script cut it after 40 s. Code from Academy lessons or older answers carries both behaviours. Move it to `langchain.mcp`.
 
-This edition did not record elicitation, OAuth, or a server that sends `structuredContent` with an error.
+## Elicitation, structured errors, and progress
+
+**Elicitation:** a request from an MCP server for input from the user during a tool call, such as a form with one field.
+
+`MCPAdapter` arms each client that it builds for elicitation. It leaves a client alone when that client already has its own `elicitation_handler` {{code libs/langchain_v1/langchain/mcp/adapter.py:173-187}}. When a server returns its questions as an `InputRequiredResult`, the adapter asks them with a LangGraph `interrupt()` {{code libs/langchain_v1/langchain/mcp/elicitation.py:311-364}}. So an MCP tool can pause an agent run, like the review of [section 5.4](#s-interrupt-and-resume).
+
+**We measured** these cases on the Mac with `langchain` 1.5.0, `fastmcp` 4.2.0, `mcp` 2.3.0, and `langgraph` 1.2.22. Each case ran 3 times, each in a new process, and the 3 runs of every case gave the same result. The server ran in the same process, and five cases ran again over Streamable HTTP. The server tool `ask_name` asked for one form field, `name`. The default adapter negotiated protocol `2026-07-28`.
+
+Inside `create_agent` with an `InMemorySaver`, the run stopped with `__interrupt__`, and the state had `next` set to `tools`. The interrupt value names the tool and each request:
+
+```listing
+title: the interrupt value of an MCP elicitation
+source: capture/lab/summary/mcp-edges-mac.json
+lang: json
+note: The schema of the field is cut.
+---
+       "value": {
+        "requests": [
+         {
+          "key": "name",
+          "message": "What is your name?",
+          "mode": "form",
+          "requested_schema": {
+…
+        "tool_name": "ask_name",
+        "type": "mcp_elicitation"
+       }
+```
+
+You resume with a `Command` whose `responses` map the key of each request to an answer:
+
+```listing
+title: three answers to the request, and the resume
+source: capture/lab/T20-mcp-edges-mac/t20_mcp.py
+lang: python
+---
+                    action = {"accept": {"action": "accept", "content": {"name": "Ada"}}, "decline": {"action": "decline"}, "cancel": {"action": "cancel"}}
+…
+                    out = await agent.ainvoke(Command(resume={"responses": {"name": action[which]}}), cfg)
+```
+
+- **Accept.** The tool returned a success `ToolMessage` with the greeting, and the run ended normally, in process and over HTTP.
+- **Decline and cancel.** The server received the action and chose its own answer, `no name (decline)` or `no name (cancel)`. The adapter did not end the call on a cancel.
+- **The cost of a resume.** The server ran `ask_name` 3 times for one answered question. On a resume, the adapter calls the tool again from the first round {{code libs/langchain_v1/langchain/mcp/elicitation.py:318-320}}. Make a tool that asks for input ask before it does any work.
+- **No checkpointer.** The stream yielded `__interrupt__`, and the run ended with no exception and nothing to resume.
+- **Outside a graph.** A direct `ainvoke` of the tool raised `KeyError: '__pregel_scratchpad'`, because `interrupt()` reads the config of a running graph {{code libs/langgraph/langgraph/types.py:1030}}. That is not a `ToolException`, so it is not an error `ToolMessage`.
+- **Your own handler.** A `fastmcp.Client` with an `elicitation_handler`, passed to `MCPAdapter`, answered the question itself. The handler ran once, the tool returned success, and no interrupt happened, on both protocol versions and over HTTP.
+- **A legacy server.** On protocol `2025-11-25`, a server that called `ctx.elicit` got no answer from the default adapter. The tool returned an error `ToolMessage`, and the agent went on to its next model call. [Errors](#s-ref-errors) gives the text.
+
+Two more cases raised `MCPError` out of the tool instead of returning an error `ToolMessage`. A `fastmcp.Client` with no handler, given to `as_langchain_tool` on protocol `2026-07-28`, raised `Elicitation not supported`. A legacy client with no handler, asked through `ctx.elicit`, returned an error `ToolMessage` with that text. A legacy connection to a tool that returns an `InputRequiredResult` raised too, because that result exists only at `2026-07-28`. We ran both raising cases outside an agent only. An exception that is not a `ToolException` ends an agent run, as the crash cases above show.
+
+**Structured content on an error.** Issue langchain#40471 reports that an error result loses its `structuredContent` {{issue langchain#40471}}. Our server tool returned `is_error` with the text `quota exceeded, retry in 30 s` and a structured payload. The raw `fastmcp` result kept both. The `ToolMessage` of the adapter kept only the text:
+
+```listing
+title: one error result, through the adapter and through fastmcp
+source: capture/lab/summary/mcp-edges-mac.json
+lang: json
+note: The first event is the ToolMessage, and the second is the raw result of fastmcp.Client.call_tool.
+---
+      {
+       "artifact": null,
+       "status": "error",
+       "step": "direct",
+       "text": [
+        "quota exceeded, retry in 30 s"
+       ],
+       "type": "ToolMessage"
+      },
+      {
+       "is_error": true,
+       "step": "raw-fastmcp",
+       "structured_content": {
+        "code": 429,
+        "retry_after": 30
+       },
+```
+
+The cause is in `_convert_call_tool_result`, which raises on an error result before it builds the artifact {{code libs/langchain_v1/langchain/mcp/tools.py:168-179}}. The error handler then returns only the content blocks {{code libs/langchain_v1/langchain/mcp/tools.py:104-117}}. The same result without `is_error` kept its artifact. The loss was the same on both protocol versions and over HTTP. So a server that puts `retry_after` only in its structured content gives your code nothing to read. Ask the server to repeat it in the text.
+
+**Progress.** A server tool reported progress three times. With the default adapter, nothing about progress reached the caller. Inside an agent, `stream_mode="custom"` yielded 0 chunks, so progress does not become a stream event. A `fastmcp.Client(target, progress_handler=...)` passed to the adapter got all 3 reports, in process, over HTTP, and inside an agent. Progress, like the timeout, needs a client that you build.
+
+This edition did not record OAuth, URL-mode elicitation, or several input requests in one round. [Section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them.
 
 ```takeaways
 - Install langchain[mcp] and remove langchain-mcp-adapters from the same environment.
 - Pass a URL string for a remote server and a Path for a local script.
 - Pass a fastmcp.Client with a timeout, because MCPAdapter has none.
 - Expect a server crash to raise out of the run, and retry the run in your own code.
-- Read structured MCP results from the artifact of the ToolMessage, not from its content.
+- Read structured MCP results from the artifact of a successful ToolMessage, because an error result drops them.
+- Give an agent with MCP tools a checkpointer, so a server that asks for input can resume.
+- Pass a fastmcp.Client with a progress_handler when you need the progress of a server.
 - Keep the adapter open with async with for the whole agent run.
 ```
 
-Sources: capture/s_integrations.py, capture/out/40-mcp.txt; capture/lab/summary/mcp-mac.json, capture/lab/T12-mcp-mac/01-langchain-mcp.jsonl, capture/lab/T12-mcp-mac/02-langchain-mcp-adapters-0.3.2.jsonl, capture/lab/T12-mcp-mac/03-adapters-launch-count.txt, capture/lab/T12-mcp-mac/00-venv-adapters-freeze.txt; libs/langchain_v1/langchain/mcp/adapter.py, libs/langchain_v1/langchain/mcp/tools.py, and libs/langchain_v1/pyproject.toml at langchain==1.5.0; pyproject.toml of langchain-mcp-adapters 0.3.2 (cc0f2843); docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/langchain/mcp, oss/python/langchain/mcp/tools, oss/python/migrate/langchain-mcp-adapters); the MCP lessons of LangChain Academy, read 2026-11-14.
+Sources: capture/s_integrations.py, capture/out/40-mcp.txt; capture/lab/summary/mcp-mac.json, capture/lab/T12-mcp-mac/01-langchain-mcp.jsonl, capture/lab/T12-mcp-mac/02-langchain-mcp-adapters-0.3.2.jsonl, capture/lab/T12-mcp-mac/03-adapters-launch-count.txt, capture/lab/T12-mcp-mac/00-venv-adapters-freeze.txt; capture/lab/summary/mcp-edges-mac.json, capture/lab/T20-mcp-edges-mac/01-mcp-edges.jsonl, capture/lab/T20-mcp-edges-mac/t20_mcp.py, capture/lab/T20-mcp-edges-mac/t20_server.py; libs/langchain_v1/langchain/mcp/adapter.py, libs/langchain_v1/langchain/mcp/elicitation.py, libs/langchain_v1/langchain/mcp/tools.py, and libs/langchain_v1/pyproject.toml at langchain==1.5.0; libs/langgraph/langgraph/types.py at langgraph 1.2.22; issue langchain#40471; pyproject.toml of langchain-mcp-adapters 0.3.2 (cc0f2843); docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/langchain/mcp, oss/python/langchain/mcp/tools, oss/python/migrate/langchain-mcp-adapters); the MCP lessons of LangChain Academy, read 2026-11-14.

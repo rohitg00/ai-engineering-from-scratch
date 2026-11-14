@@ -1,0 +1,544 @@
+{
+ "agent_processes": 10,
+ "conditions": {
+  "ep:agent": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET /info",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    },
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    },
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    },
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    },
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    }
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "ep:plain": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {},
+    {},
+    {},
+    {},
+    {}
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "ep:quiet": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {},
+    {},
+    {},
+    {},
+    {}
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "noenv:agent": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    },
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    },
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    },
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    },
+    {
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ToolFake": 2,
+     "post:tool:add": 1
+    }
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "noenv:quiet": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET https://api.smith.langchain.com/info"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {},
+    {},
+    {},
+    {},
+    {}
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ },
+ "conditions_note": "ep: LANGSMITH_ENDPOINT set to a local recorder and a dummy key, LANGSMITH_TRACING unset; noenv: no LANGSMITH_ or LANGCHAIN_ variable, the HTTP layer replaced with a recorder that answers 200",
+ "info_origin": [
+  "REQUEST GET https://api.smith.langchain.com/info",
+  "File \"<site-packages>/langsmith/_internal/_background_thread.py\", line 553, in tracing_control_thread_func",
+  "File \"<site-packages>/langsmith/client.py\", line 1875, in info",
+  "File \"<site-packages>/langsmith/client.py\", line 2007, in request_with_retries",
+  "File \"<site-packages>/requests/sessions.py\", line 651, in request"
+ ],
+ "info_without_flush": {
+  "ep:agent": [
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ]
+  ],
+  "ep:plain": [
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ]
+  ],
+  "ep:quiet": [
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ]
+  ],
+  "noenv:agent": [
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ]
+  ],
+  "noenv:quiet": [
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ]
+  ]
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "not_used": "00-smoke-n1.jsonl is not kept; in 02 the noenv:agent rows miss the POST that happens at exit, so 02 is used only for GET /info",
+ "processes_per_condition": 5,
+ "project_differs_from_printed_name": 10,
+ "run": "evaluate(upload_results=False) on one example, with no client argument, so the default client; every process new",
+ "sources": [
+  "capture/lab/T18-evaluate-leak-mac/01-evaluate-requests.jsonl",
+  "capture/lab/T18-evaluate-leak-mac/02-evaluate-noflush.jsonl",
+  "capture/lab/T18-evaluate-leak-mac/04-info-origin.txt",
+  "capture/lab/T18-evaluate-leak-mac/t18_evaluate.py",
+  "capture/lab/T18-evaluate-leak-mac/t18_info_origin.py"
+ ],
+ "target": "create_agent with a fake model and one tool add, 2 model calls and 1 tool call, 7 LangChain runs; quiet wraps it in tracing_context(enabled=False); plain is a function",
+ "versions": "langsmith 0.14.17, langchain 1.5.0, langchain-core 1.8.0"
+}

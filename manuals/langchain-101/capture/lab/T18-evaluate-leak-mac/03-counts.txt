@@ -1,0 +1,22 @@
+== 01-evaluate-requests.jsonl
+ep:agent n= 5
+   x 5 rc 0 requests {'GET /info': 1, 'POST /runs/multipart': 1} runs {'post:chain:LangGraph': 1, 'post:chain:model': 2, 'post:chain:tools': 1, 'post:llm:ToolFake': 2, 'post:tool:add': 1} LangGraph-with-unsent-parent 1 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+ep:quiet n= 5
+   x 5 rc 0 requests {'GET /info': 1} runs {} LangGraph-with-unsent-parent 0 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+ep:plain n= 5
+   x 5 rc 0 requests {'GET /info': 1} runs {} LangGraph-with-unsent-parent 0 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+noenv:agent n= 5
+   x 5 rc 0 requests {'GET https://api.smith.langchain.com/info': 1, 'POST https://api.smith.langchain.com/runs/multipart': 1} runs {'post:chain:LangGraph': 1, 'post:chain:model': 2, 'post:chain:tools': 1, 'post:llm:ToolFake': 2, 'post:tool:add': 1} LangGraph-with-unsent-parent 1 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+noenv:quiet n= 5
+   x 5 rc 0 requests {'GET https://api.smith.langchain.com/info': 1} runs {} LangGraph-with-unsent-parent 0 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+== 02-evaluate-noflush.jsonl
+ep:agent n= 5
+   x 5 rc 0 requests {'GET /info': 1, 'POST /runs/multipart': 1} runs {'post:chain:LangGraph': 1, 'post:chain:model': 2, 'post:chain:tools': 1, 'post:llm:ToolFake': 2, 'post:tool:add': 1} LangGraph-with-unsent-parent 1 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+ep:quiet n= 5
+   x 5 rc 0 requests {'GET /info': 1} runs {} LangGraph-with-unsent-parent 0 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+ep:plain n= 5
+   x 5 rc 0 requests {'GET /info': 1} runs {} LangGraph-with-unsent-parent 0 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+noenv:agent n= 5
+   x 5 rc 0 requests {'GET https://api.smith.langchain.com/info': 1} runs {} LangGraph-with-unsent-parent 0 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]
+noenv:quiet n= 5
+   x 5 rc 0 requests {'GET https://api.smith.langchain.com/info': 1} runs {} LangGraph-with-unsent-parent 0 guard [] rows [{'answer': {'answer': 'The sum is 5.'}, 'score': [True]}]

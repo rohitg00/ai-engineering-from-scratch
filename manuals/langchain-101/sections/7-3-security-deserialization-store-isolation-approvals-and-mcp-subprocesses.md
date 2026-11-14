@@ -100,7 +100,7 @@ The risk comes back in two places. A `fastmcp.Client` built from the same string
 
 A trace holds the inputs and outputs of every model call and tool call, so it holds what your users typed. [Section 6.4](#s-langsmith-tracing) shows that `tracing_context(enabled="local")` keeps `traceable` runs local and sends LangChain runs. On the Mac, with no `LANGSMITH_*` variable at all, an agent inside `"local"` tried to send its runs to `api.smith.langchain.com`. [Section 6.5](#s-evaluation-with-langsmith) shows the same for an agent target of `evaluate` with `upload_results=False`.
 
-`tracing_context(enabled=False)` around LangChain code sent nothing, and `collect_runs` kept the runs in memory. Advisory GHSA-f4xh-w4cj-qxq8 was a file read through the tracing middleware of `langsmith` before 0.8.18. The pin is 0.14.17.
+`tracing_context(enabled=False)` around LangChain code sent nothing, and `collect_runs` kept the runs in memory. Under `evaluate` with the default client, the same wrap stopped the runs, but one `GET /info` still went to the default host. The pytest plugin, with tracking on by default, also contacted that host with no variable set. Advisory GHSA-f4xh-w4cj-qxq8 was a file read through the tracing middleware of `langsmith` before 0.8.18. The pin is 0.14.17.
 
 ## The advisories at the pin
 
@@ -135,7 +135,7 @@ The pattern repeats across three repositories. The loaders of checkpoints and of
 6. Set `interrupt_mode="per_call"` on every agent with review, and add no middleware that jumps to `tools`.
 7. Run the shell tool with `DockerExecutionPolicy`, never `HostExecutionPolicy`, when input comes from someone else.
 8. Build MCP servers from `Path` objects in your config, and never from a string a model or a user gave.
-9. Wrap LangChain code in `tracing_context(enabled=False)` when its data must not leave the machine.
+9. Wrap LangChain code in `tracing_context(enabled=False)` when its data must not leave the machine. Pass your own client to `evaluate`, and set `LANGSMITH_TEST_TRACKING=false` for tests.
 10. Install from a lockfile, and check the advisories of each package before you raise a version.
 
 ```takeaways
@@ -146,4 +146,4 @@ The pattern repeats across three repositories. The loaders of checkpoints and of
 - Start MCP servers only from Path objects in your own config.
 ```
 
-Sources: capture/lab/summary/serde-mac.json, capture/lab/T13-serde-mac/01-serde-default.jsonl, capture/lab/T13-serde-mac/02-serde-strict-msgpack.jsonl; capture/lab/summary/stores-mac.json, capture/lab/T14-stores-mac/01-memory-sqlite.jsonl, capture/lab/T14-stores-mac/03-postgres.jsonl, capture/lab/T14-stores-mac/05-orphan-vectors.txt; capture/lab/summary/approvals-mac.json; capture/lab/summary/mcp-mac.json, capture/out/40-mcp.txt; capture/lab/summary/tracing-mac.json; libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py at langgraph 1.2.22; libs/core/langchain_core/load/load.py and libs/langchain_v1/langchain/agents/middleware/shell_tool.py at langchain==1.5.0; GitHub issues langchain-ai/langgraph#8757 and langchain-ai/langchain#40492; the GitHub advisories GHSA-c67j-w6g6-q2cm, GHSA-pjwx-r37v-7724, GHSA-6qv9-48xg-fc7f, GHSA-fjqc-hq36-qh5p, GHSA-g48c-2wqr-h844, GHSA-47pj-3jcm-6whg, GHSA-6hmw-9432-67qq, GHSA-gr75-jv2w-4656, GHSA-47w2-rfrr-wvq8, GHSA-459r-276m-w72x, GHSA-f4xh-w4cj-qxq8, GHSA-3fx2-cqw9-xr3c, GHSA-fvww-7h3r-vfhp, GHSA-4hm6-w6qq-w73v, and GHSA-8prr-f582-jqq3.
+Sources: capture/lab/summary/serde-mac.json, capture/lab/T13-serde-mac/01-serde-default.jsonl, capture/lab/T13-serde-mac/02-serde-strict-msgpack.jsonl; capture/lab/summary/stores-mac.json, capture/lab/T14-stores-mac/01-memory-sqlite.jsonl, capture/lab/T14-stores-mac/03-postgres.jsonl, capture/lab/T14-stores-mac/05-orphan-vectors.txt; capture/lab/summary/approvals-mac.json; capture/lab/summary/mcp-mac.json, capture/out/40-mcp.txt; capture/lab/summary/tracing-mac.json, capture/lab/summary/evaluate-mac.json, capture/lab/summary/pytest-plugin-mac.json; libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py at langgraph 1.2.22; libs/core/langchain_core/load/load.py and libs/langchain_v1/langchain/agents/middleware/shell_tool.py at langchain==1.5.0; GitHub issues langchain-ai/langgraph#8757 and langchain-ai/langchain#40492; the GitHub advisories GHSA-c67j-w6g6-q2cm, GHSA-pjwx-r37v-7724, GHSA-6qv9-48xg-fc7f, GHSA-fjqc-hq36-qh5p, GHSA-g48c-2wqr-h844, GHSA-47pj-3jcm-6whg, GHSA-6hmw-9432-67qq, GHSA-gr75-jv2w-4656, GHSA-47w2-rfrr-wvq8, GHSA-459r-276m-w72x, GHSA-f4xh-w4cj-qxq8, GHSA-3fx2-cqw9-xr3c, GHSA-fvww-7h3r-vfhp, GHSA-4hm6-w6qq-w73v, and GHSA-8prr-f582-jqq3.

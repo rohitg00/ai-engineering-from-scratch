@@ -61,13 +61,16 @@ The two machines differ, so no section sets a number from one beside a number fr
 | T16 | the x86 server guest | How many threads can one `AsyncPostgresSaver` serve? | 2 runs per cell, 1 to 500 threads | one connection gave 207 and 214 steps per second at 500 threads | [4.2](#s-checkpointers-and-threads) |
 | T17 | the Mac | Do the recursion limits and the replays work as the docs say? | 1 run per case | a graph stopped at 10007 steps and an agent at 9999 | [1.2](#s-one-create-agent-run), [5.6](#s-time-travel-replay-update-state-and-forks), [5.8](#s-error-handlers-node-timeouts-and-the-recursion-limit) |
 | TRC | the Mac | What does tracing cost, and what happens when the endpoint fails? | 177 runs per condition, 50 runs per endpoint state | 7.56 ms at the median with tracing on, against 2.59 ms off | [6.4](#s-langsmith-tracing) |
+| T18 | the Mac | What does `evaluate(upload_results=False)` send with the default client? | 5 processes per condition, five conditions | one `GET /info` in every process, and the 7 runs of an agent target in one multipart post | [6.5](#s-evaluation-with-langsmith) |
+| T19 | the Mac | What does the pytest plugin of `langsmith` send? | 3 processes per condition, nine conditions | with tracking on by default, each run contacted the default host, and with tracking off nothing left | [6.5](#s-evaluation-with-langsmith) |
+| T20 | the Mac | What do elicitation, an error with structured content, and progress do through `langchain.mcp`? | 3 runs per case, 27 cases | one answered question ran the tool 3 times, and an error result lost its structured content | [6.2](#s-mcp-with-langchain-mcp) |
 | `sql-agent` | the Mac | Does a SQL agent answer and write only with approval? | 5 questions, 1 run on Qwen3 4B and 1 on Qwen3 8B | [Section 8.1](#s-a-sql-agent-over-a-local-sqlite-database) gives each answer | [8.1](#s-a-sql-agent-over-a-local-sqlite-database) |
 | `retrieval-agent` | the Mac | Does a retrieval agent cite its sources? | 5 questions, 1 run per model | [Section 8.2](#s-a-retrieval-agent-over-a-local-corpus) gives each answer | [8.2](#s-a-retrieval-agent-over-a-local-corpus) |
 | `assistant` | the Mac | Does an assistant survive a crash after an approved email? | 2 runs of seven steps, one per durability mode | the reviewer approved twice, and the key kept the outbox at one email | [8.3](#s-an-assistant-with-memory-and-approvals-that-survives-a-restart) |
 | `deep-agent` | the Mac | What does a deep agent with a subagent send? | 1 run on Qwen3 8B | 24,300 prompt tokens in 7 model calls | [8.4](#s-a-deep-agent-with-a-subagent-and-files) |
 | `failure-drill` | the Mac | What does each documented failure look like? | 1 run of seven cases | the seven cases took 26.0 s in all | [8.5](#s-a-failure-drill) |
 
-The names follow the plan of the research, with no gap. T01 to T17 are the planned tests, and TRC is the tracing test. The last five folders are the demos of Part 8.
+The names follow the plan of the research, with no gap. T01 to T17 are the planned tests, and TRC is the tracing test. T18 to T20 are later runs for sections 6.2 and 6.5. The last five folders are the demos of Part 8.
 
 ## What is in the lab folder
 
@@ -75,10 +78,10 @@ The names follow the plan of the research, with no gap. T01 to T17 are the plann
 
 - **Raw recordings.** Each experiment folder keeps the files of its run, unchanged, as JSON lines, logs, and text. A long log is kept as an excerpt whose lines are exact.
 - **Scripts.** Many folders keep the lab scripts that made them, and the lab README names them. The demo folders hold the output of `run.sh` in `capture/demos/`.
-- **Summaries.** `capture/run.py` computes one summary for each data set into `summary/`. Each chart reads one of the 24 summary files, and each measured number comes from one.
+- **Summaries.** `capture/run.py` computes one summary for each data set into `summary/`. Each chart reads one of the 27 summary files, and each measured number comes from one.
 - **A list of changes.** The README of the lab folder names every file that we cut, left out, or changed, with the reason.
 
-No file holds a key, a token, a host name other than `127.0.0.1`, or the name of a person. The addresses and names in the test inputs are made up.
+No file holds a key, a token, or the name of a person. The only host names are `127.0.0.1` and the public hosts that recorded requests and error texts name, such as `api.smith.langchain.com`. The addresses and names in the test inputs are made up.
 
 ## The capture kit
 
@@ -101,4 +104,4 @@ The first command writes the captures and the lab summaries. The second captures
 
 Your times will differ from ours. The messages, the error texts, the checkpoints, and the order of events must not. If one of them differs at the pin, a claim of this manual depends on our machines.
 
-Sources: manual.json (pin, sources); capture/README.md, capture/run.py, capture/requirements.txt, capture/lab/README.md; capture/lab/summary/overhead-mac.json, capture/lab/summary/crash-resume-mac.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/streaming-mac.json, capture/lab/summary/retries-mac.json, capture/lab/summary/structured-output-mac.json, capture/lab/summary/approvals-mac.json, capture/lab/summary/parallel-tools-mac.json, capture/lab/summary/tokens-mac.json, capture/lab/summary/long-threads-x86.json, capture/lab/summary/middleware-mac.json, capture/lab/summary/mcp-mac.json, capture/lab/summary/serde-mac.json, capture/lab/summary/stores-mac.json, capture/lab/summary/agent-server-x86.json, capture/lab/summary/concurrency-x86.json, capture/lab/summary/recursion-mac.json, capture/lab/summary/tracing-mac.json, capture/lab/summary/demos-mac.json; the measured paragraphs of the sections linked in each row.
+Sources: manual.json (pin, sources); capture/README.md, capture/run.py, capture/requirements.txt, capture/lab/README.md; capture/lab/summary/overhead-mac.json, capture/lab/summary/crash-resume-mac.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/streaming-mac.json, capture/lab/summary/retries-mac.json, capture/lab/summary/structured-output-mac.json, capture/lab/summary/approvals-mac.json, capture/lab/summary/parallel-tools-mac.json, capture/lab/summary/tokens-mac.json, capture/lab/summary/long-threads-x86.json, capture/lab/summary/middleware-mac.json, capture/lab/summary/mcp-mac.json, capture/lab/summary/serde-mac.json, capture/lab/summary/stores-mac.json, capture/lab/summary/agent-server-x86.json, capture/lab/summary/concurrency-x86.json, capture/lab/summary/recursion-mac.json, capture/lab/summary/tracing-mac.json, capture/lab/summary/evaluate-mac.json, capture/lab/summary/pytest-plugin-mac.json, capture/lab/summary/mcp-edges-mac.json, capture/lab/summary/demos-mac.json; the measured paragraphs of the sections linked in each row.
