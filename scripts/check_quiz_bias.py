@@ -60,6 +60,9 @@ def scan():
     offenders = []
     errors = []
     for path in sorted(glob.glob(QUIZ_GLOB)):
+        # glob joins with the platform separator, so a Windows run yields
+        # `phases\01-...` and a POSIX-only split leaves nothing to index.
+        path = path.replace("\\", "/")
         phase = path.split("/")[1]
         try:
             data = json.load(open(path, encoding="utf-8"))
