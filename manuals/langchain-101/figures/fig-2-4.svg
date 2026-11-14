@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-2-4-title fig-2-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-4-title">What each kind of tool failure does to a run</title>
+  <desc id="fig-2-4-desc">Four rows, each from a failure on the left to its result on the right. Bad arguments such as a equal to two become a ToolMessage with status error and the model tries again. An unknown tool name such as subtract becomes a ToolMessage with status error. An exception with ToolErrorMiddleware becomes a ToolMessage with status error that holds the text from on_error. An exception with no middleware, RuntimeError disk on fire, raises out of invoke and ends the run.</desc>
+  <defs><marker id="fig-2-4-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-2-4-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE FAILURE</text>
+  <text x="380" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE RUN GETS</text>
+  <rect x="20" y="34" width="250" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="32" y="55.25" font-size="12.5" font-weight="700">bad arguments</text>
+  <text x="32" y="72.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">{&#39;a&#39;: &#39;two&#39;}</text>
+  <rect x="380" y="34" width="240" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="392" y="55.25" font-size="12.5" font-weight="700">ToolMessage, status error</text>
+  <text x="392" y="72.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the model tries again</text>
+  <line x1="270" y1="60" x2="379" y2="60" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-4-head-ink)"/>
+  <rect x="20" y="104" width="250" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="32" y="125.25" font-size="12.5" font-weight="700">unknown tool name</text>
+  <text x="32" y="142.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">subtract</text>
+  <rect x="380" y="104" width="240" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="392" y="125.25" font-size="12.5" font-weight="700">ToolMessage, status error</text>
+  <text x="392" y="142.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the model tries again</text>
+  <line x1="270" y1="130" x2="379" y2="130" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-4-head-ink)"/>
+  <rect x="20" y="174" width="250" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="32" y="195.25" font-size="12.5" font-weight="700">exception, middleware</text>
+  <text x="32" y="212.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ToolErrorMiddleware</text>
+  <rect x="380" y="174" width="240" height="52" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="392" y="195.25" font-size="12.5" font-weight="700">ToolMessage, status error</text>
+  <text x="392" y="212.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">text from on_error</text>
+  <line x1="270" y1="200" x2="379" y2="200" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-4-head-ink)"/>
+  <rect x="20" y="244" width="250" height="52" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="32" y="265.25" font-size="12.5" font-weight="700">exception, no middleware</text>
+  <text x="32" y="282.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">RuntimeError</text>
+  <rect x="380" y="244" width="240" height="52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="392" y="265.25" font-size="12.5" font-weight="700">invoke raises</text>
+  <text x="392" y="282.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">disk on fire</text>
+  <line x1="270" y1="270" x2="379" y2="270" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-4-head-rose)"/>
+  <text x="20" y="322" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The first three go on to the next model call. The last one ends the run.</text>
+</svg>

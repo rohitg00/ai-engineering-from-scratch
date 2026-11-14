@@ -1,0 +1,61 @@
+{
+ "cases": {
+  "constants": {
+   "core.ensure_config()['recursion_limit']": 25,
+   "env LANGGRAPH_DEFAULT_RECURSION_LIMIT": null,
+   "langchain_core.DEFAULT_RECURSION_LIMIT": 25,
+   "langgraph._internal._config.DEFAULT_RECURSION_LIMIT": 10007,
+   "langgraph.ensure_config()['recursion_limit']": 10007
+  },
+  "create_agent_bound_config": {
+   "recursion_limit": 9999
+  },
+  "create_agent_forever_no_config": {
+   "limit_reached": 9999,
+   "loop_steps": 0,
+   "model_calls": 5000,
+   "tool_calls": 4999,
+   "wall_s": 35.8
+  },
+  "create_agent_forever_recursion_limit_25": {
+   "limit_reached": 25,
+   "loop_steps": 0,
+   "model_calls": 13,
+   "tool_calls": 12,
+   "wall_s": 0.01
+  },
+  "create_agent_forever_with_checkpointer_no_config": {
+   "limit_reached": 9999,
+   "loop_steps": 0,
+   "model_calls": 5000,
+   "tool_calls": 4999,
+   "wall_s": 150.17
+  },
+  "stategraph_loop_env_25": {
+   "limit_reached": 25,
+   "loop_steps": 25,
+   "model_calls": 0,
+   "tool_calls": 0,
+   "wall_s": 0.0
+  },
+  "stategraph_loop_no_config": {
+   "limit_reached": 10007,
+   "loop_steps": 10007,
+   "model_calls": 0,
+   "tool_calls": 0,
+   "wall_s": 0.94
+  },
+  "stategraph_loop_recursion_limit_25": {
+   "limit_reached": 25,
+   "loop_steps": 25,
+   "model_calls": 0,
+   "tool_calls": 0,
+   "wall_s": 0.0
+  }
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "runs_per_case": 1,
+ "sources": [
+  "capture/lab/T17-claims-mac/01-recursion-limit.jsonl"
+ ]
+}

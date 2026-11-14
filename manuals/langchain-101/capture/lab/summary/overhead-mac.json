@@ -1,0 +1,43 @@
+{
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "ollama": {
+  "a_plain_openai": {
+   "median_ms": 1450.99,
+   "n": 24,
+   "ok": 24
+  },
+  "c_create_agent": {
+   "median_ms": 1550.32,
+   "n": 24,
+   "ok": 24
+  }
+ },
+ "sources": [
+  "capture/lab/T01-overhead-mac/02-stub-runs.jsonl",
+  "capture/lab/T01-overhead-mac/04-ollama-runs.jsonl",
+  "capture/lab/T01-overhead-mac/09-request-body-diff.txt"
+ ],
+ "stub": {
+  "a_plain_openai": {
+   "median_ms": 4.1,
+   "n": 200,
+   "ok": 200
+  },
+  "b_bind_tools_loop": {
+   "median_ms": 4.46,
+   "n": 200,
+   "ok": 200
+  },
+  "c_create_agent": {
+   "median_ms": 7.67,
+   "n": 200,
+   "ok": 200
+  },
+  "d_create_agent_saver": {
+   "median_ms": 8.94,
+   "n": 200,
+   "ok": 200
+  }
+ },
+ "unit": "milliseconds of wall time for one run of three model calls"
+}

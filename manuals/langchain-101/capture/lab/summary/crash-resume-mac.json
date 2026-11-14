@@ -1,0 +1,477 @@
+{
+ "agent": {
+  "cells": {
+   "postgres async after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres async before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres async before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres async before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres async inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres exit after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres exit before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres exit before_put_writes": {
+    "killed": 0,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres sync after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 3
+   },
+   "postgres sync before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres sync before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite async after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 3
+   },
+   "sqlite async before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 1
+   },
+   "sqlite async before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite async before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite async inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite exit after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite exit before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite exit before_put_writes": {
+    "killed": 0,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite sync after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite sync before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   }
+  },
+  "trials": 150,
+  "twice": 82
+ },
+ "graph": {
+  "cells": {
+   "postgres async after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres async before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres async before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres async before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres async inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres exit after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres exit before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres exit before_put_writes": {
+    "killed": 0,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres sync after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 4
+   },
+   "postgres sync before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "postgres sync before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite async after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite async before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite async before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite async before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite async inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite exit after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite exit before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite exit before_put_writes": {
+    "killed": 0,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   },
+   "sqlite sync after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 1
+   },
+   "sqlite sync before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 5
+   }
+  },
+  "trials": 150,
+  "twice": 80
+ },
+ "graph_idempotent": {
+  "cells": {
+   "postgres async after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres async before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres async before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres async before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres async inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit before_put_writes": {
+    "killed": 0,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres exit inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "postgres sync inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite async after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite async before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite async before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite async before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite async inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit before_put_writes": {
+    "killed": 0,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite exit inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync after_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync before_put": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync before_put_writes": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync before_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   },
+   "sqlite sync inside_tool": {
+    "killed": 5,
+    "trials": 5,
+    "twice": 0
+   }
+  },
+  "trials": 150,
+  "twice": 0
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "sources": [
+  "capture/lab/T02-crash-resume-mac/01-graph-matrix.jsonl",
+  "capture/lab/T02-crash-resume-mac/02-agent-matrix.jsonl",
+  "capture/lab/T02-crash-resume-mac/03-graph-idempotent.jsonl"
+ ],
+ "trials_per_cell": 5
+}

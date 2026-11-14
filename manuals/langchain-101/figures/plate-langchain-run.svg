@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 524" role="img" aria-labelledby="plate-langchain-run-title plate-langchain-run-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="plate-langchain-run-title">One invoke, two model calls, one tool call</title>
+  <desc id="plate-langchain-run-desc">An isometric drawing of one agent run inside one Python process, drawn as a grey slab. Your code, a violet terminal, calls invoke with What is 2 + 3? on the agent graph from create_agent, an indigo unit. The graph calls the chat model, a plum tower, twice, and runs the add tool, a small green unit, once, which returns 5. After the input and after each of the four steps, the graph writes a checkpoint to InMemorySaver, a teal cylinder, five checkpoints in all, steps -1 to 3. Off the slab, LangSmith is a dashed olive tower that gets runs only when tracing is on. The reply is The sum is 5.</desc>
+  <defs><marker id="plate-langchain-run-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="plate-langchain-run-head-plum" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-plum-ink, #8a3d72)"/></marker><marker id="plate-langchain-run-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE AGENT RUN · LANGCHAIN 1.5.0 · LANGGRAPH 1.2.22</text>
+  <polygon points="100.8,285 386.6,120 393.6,122 610.1,247 324.3,412 317.3,410" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="386.6,110 603.1,235 603.1,245 317.3,410 100.8,285 100.8,275" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="386.6,110 603.1,235 603.1,245 317.3,410 100.8,285 100.8,275" fill="var(--m-grey-fill, #ecebe3)"/>
+  <polygon points="386.6,110 603.1,235 317.3,400 100.8,275" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="603.1,245 317.3,410 317.3,400 603.1,235" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <path d="M603.1 235L317.3 400L100.8 275L317.3 400L317.3 410" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="0.7" stroke-linejoin="round"/>
+  <polygon points="386.6,110 603.1,235 603.1,245 317.3,410 100.8,285 100.8,275" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.4" stroke-linejoin="round"/>
+  <polygon points="546,118 577.1,100 602.8,107.2 634,125.2 602.8,143.2 577.1,136" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="577.1,56 608.3,74 608.3,118 577.1,136 546,118 546,74" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="577.1,56 608.3,74 608.3,118 577.1,136 546,118 546,74" fill="var(--m-olive-fill, #eef0dc)"/>
+  <polygon points="577.1,56 608.3,74 577.1,92 546,74" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="608.3,118 577.1,136 577.1,92 608.3,74" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <path d="M608.3 74L577.1 92L546 74L577.1 92L577.1 136" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.7" stroke-linejoin="round"/>
+  <polygon points="577.1,56 608.3,74 608.3,118 577.1,136 546,118 546,74" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M546 103.3L577.1 121.3L608.3 103.3" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-linejoin="round"/>
+  <path d="M546 88.7L577.1 106.7L608.3 88.7" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="549.4,115 552.9,117 552.9,113 549.4,111" fill="var(--m-olive-ink, #515f26)" fill-opacity="0.85"/>
+  <polygon points="549.4,100.5 552.9,102.5 552.9,98.5 549.4,96.5" fill="var(--m-olive-ink, #515f26)" fill-opacity="0.85"/>
+  <polygon points="549.4,86 552.9,88 552.9,84 549.4,82" fill="var(--m-olive-ink, #515f26)" fill-opacity="0.85"/>
+  <polygon points="417.8,192 455.9,170 481.6,177.2 519.7,199.2 481.6,221.2 455.9,214" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="455.9,108 494,130 494,192 455.9,214 417.8,192 417.8,130" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="455.9,108 494,130 494,192 455.9,214 417.8,192 417.8,130" fill="var(--m-plum-fill, #f4e6ef)"/>
+  <polygon points="455.9,108 494,130 455.9,152 417.8,130" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="494,192 455.9,214 455.9,152 494,130" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <path d="M494 130L455.9 152L417.8 130L455.9 152L455.9 214" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.7" stroke-linejoin="round"/>
+  <polygon points="455.9,108 494,130 494,192 455.9,214 417.8,192 417.8,130" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M417.8 171.3L455.9 193.3L494 171.3" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-linejoin="round"/>
+  <path d="M417.8 150.7L455.9 172.7L494 150.7" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="421.2,189 424.7,191 424.7,187 421.2,185" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.85"/>
+  <polygon points="421.2,165.5 424.7,167.5 424.7,163.5 421.2,161.5" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.85"/>
+  <polygon points="421.2,142 424.7,144 424.7,140 421.2,138" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.85"/>
+  <polygon points="239.4,245 300,210 325.7,217.2 386.3,252.2 325.7,287.2 300,280" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="300,170 360.6,205 360.6,245 300,280 239.4,245 239.4,205" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="300,170 360.6,205 360.6,245 300,280 239.4,245 239.4,205" fill="var(--m-indigo-fill, #e9e9f6)"/>
+  <polygon points="300,170 360.6,205 300,240 239.4,205" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="360.6,245 300,280 300,240 360.6,205" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <path d="M360.6 205L300 240L239.4 205L300 240L300 280" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.7" stroke-linejoin="round"/>
+  <polygon points="300,170 360.6,205 360.6,245 300,280 239.4,245 239.4,205" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.4" stroke-linejoin="round"/>
+  <polygon points="243.7,215.5 250.6,219.5 250.6,215.5 243.7,211.5" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.8"/>
+  <path d="M243.7 223.5L295.7 253.5" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="412.6,315 438.6,300 454,304.3 480,319.3 454,334.3 438.6,330" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="438.6,278 464.5,293 464.5,315 438.6,330 412.6,315 412.6,293" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="438.6,278 464.5,293 464.5,315 438.6,330 412.6,315 412.6,293" fill="var(--m-green-fill, #e5f0e4)"/>
+  <polygon points="438.6,278 464.5,293 438.6,308 412.6,293" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="464.5,315 438.6,330 438.6,308 464.5,293" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <path d="M464.5 293L438.6 308L412.6 293L438.6 308L438.6 330" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.7" stroke-linejoin="round"/>
+  <polygon points="438.6,278 464.5,293 464.5,315 438.6,330 412.6,315 412.6,293" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.4" stroke-linejoin="round"/>
+  <polygon points="416.9,303.5 423.8,307.5 423.8,303.5 416.9,299.5" fill="var(--m-green-ink, #336b40)" fill-opacity="0.8"/>
+  <path d="M416.9 311.5L434.2 321.5" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="156.2,263 161.4,260 186.7,267 224.8,289 219.6,292 194.3,285" fill="var(--m-accent, #3553ff)" fill-opacity="0.12"/>
+  <polygon points="161.4,224 199.5,246 199.5,282 194.3,285 156.2,263 156.2,227" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="161.4,224 199.5,246 199.5,282 194.3,285 156.2,263 156.2,227" fill="var(--m-violet-fill, #ebe8f5)"/>
+  <polygon points="161.4,224 199.5,246 194.3,249 156.2,227" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <polygon points="199.5,282 194.3,285 194.3,249 199.5,246" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.16"/>
+  <path d="M199.5 246L194.3 249L156.2 227L194.3 249L194.3 285" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.7" stroke-linejoin="round"/>
+  <polygon points="161.4,224 199.5,246 199.5,282 194.3,285 156.2,263 156.2,227" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.4" stroke-linejoin="round"/>
+  <polygon points="156.2,234 194.3,256 194.3,249 156.2,227" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.8"/>
+  <path d="M160.6 242.5L164 247L160.6 247.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2" stroke-linejoin="round"/>
+  <polygon points="167.5,250 187.4,261.5 187.4,259 167.5,247.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.75"/>
+  <polygon points="160.6,256.5 178.8,267 178.8,264.5 160.6,254" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.4"/>
+  <polygon points="151.9,269.5 183.1,287.5 171,294.5 139.8,276.5" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.1" stroke-linejoin="round"/>
+  <polygon points="264.4,345 265.3,349 268,352.8 272.2,356 277.8,358.5 284.3,360 291.3,360.6 298.3,360 304.8,358.5 310.4,356 314.6,352.8 317.3,349 318.2,345 318.2,301 317.3,297 314.6,293.2 310.4,290 304.8,287.5 298.3,286 291.3,285.4 284.3,286 277.8,287.5 272.2,290 268,293.2 265.3,297 264.4,301" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="264.36,301 264.36,345 264.87,348.03 266.41,350.95 268.9,353.64 272.25,356 276.33,357.93 280.99,359.37 286.04,360.26 291.3,360.56 296.56,360.26 301.61,359.37 306.27,357.93 310.35,356 313.7,353.64 316.19,350.95 317.73,348.03 318.24,345 318.24,301" fill="var(--m-teal-fill, #e1efee)"/>
+  <polygon points="264.36,301 264.36,345 264.87,348.03 266.41,350.95 268.9,353.64 272.25,356 276.33,357.93 280.99,359.37 286.04,360.26 291.3,360.56 296.56,360.26 301.61,359.37 306.27,357.93 310.35,356 313.7,353.64 316.19,350.95 317.73,348.03 318.24,345 318.24,301" fill="var(--m-shade, #1a1a1a)" fill-opacity="0.08"/>
+  <polygon points="264.36,301 264.36,345 264.87,348.03 266.41,350.95 268.9,353.64 272.25,356 276.33,357.93 280.99,359.37 286.04,360.26 291.3,360.56 296.56,360.26 301.61,359.37 306.27,357.93 310.35,356 313.7,353.64 316.19,350.95 317.73,348.03 318.24,345 318.24,301" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4" stroke-linejoin="round"/>
+  <ellipse cx="291.3" cy="301" rx="26.94" ry="15.56" fill="var(--m-teal-fill, #e1efee)"/>
+  <ellipse cx="291.3" cy="301" rx="26.94" ry="15.56" fill="var(--m-shine, #ffffff)" fill-opacity="0.45" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.4"/>
+  <polygon points="264.4,339 265.3,343 268,346.8 272.2,350 277.8,352.5 284.3,354 291.3,354.6 298.3,354 304.8,352.5 310.4,350 314.6,346.8 317.3,343 318.2,339 318.2,332 317.3,336 314.6,339.8 310.4,343 304.8,345.5 298.3,347 291.3,347.6 284.3,347 277.8,345.5 272.2,343 268,339.8 265.3,336 264.4,332" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.3"/>
+  <path d="M264.4 339L265.3 343L268 346.8L272.2 350L277.8 352.5L284.3 354L291.3 354.6L298.3 354L304.8 352.5L310.4 350L314.6 346.8L317.3 343L318.2 339" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <path d="M264.4 332L265.3 336L268 339.8L272.2 343L277.8 345.5L284.3 347L291.3 347.6L298.3 347L304.8 345.5L310.4 343L314.6 339.8L317.3 336L318.2 332" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <path d="M264.4 325L265.3 329L268 332.8L272.2 336L277.8 338.5L284.3 340L291.3 340.6L298.3 340L304.8 338.5L310.4 336L314.6 332.8L317.3 329L318.2 325" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <path d="M192.6 262 L241.1 234" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-langchain-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M192.6 262 L241.1 234" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <path d="M358.9 212 L429.9 171" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-langchain-run-head-plum)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-plum-ink, #8a3d72)" opacity="0"><animateMotion path="M358.9 212 L429.9 171" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <path d="M340.7 252.5 L423.8 300.5" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-langchain-run-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M340.7 252.5 L423.8 300.5" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <path d="M289.6 272 L287.9 319" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-langchain-run-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M289.6 272 L287.9 319" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <text x="20" y="196" font-size="12" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">your code</text>
+  <text x="20" y="211" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">agent.invoke</text>
+  <polyline points="112,207 173.6,243" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="173.6" cy="243" r="2" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="20" y="120" font-size="12" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">agent graph</text>
+  <text x="20" y="135" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">create_agent, four steps</text>
+  <polyline points="172,131 300,180" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="300" cy="180" r="2" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="20" y="56" font-size="12" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">chat model</text>
+  <text x="20" y="71" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">2 model calls</text>
+  <polyline points="110,64 447.2,113" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="447.2" cy="113" r="2" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="620" y="30" font-size="12" text-anchor="end" font-weight="700" fill="var(--m-olive-ink, #515f26)">LangSmith</text>
+  <text x="620" y="45" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">runs only with tracing on</text>
+  <text x="620" y="300" font-size="12" text-anchor="end" font-weight="700" fill="var(--m-green-ink, #336b40)">tool add</text>
+  <text x="620" y="315" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">1 call, returns 5</text>
+  <polyline points="540,308 447.2,303" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="447.2" cy="303" r="2" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="430" font-size="12" text-anchor="end" font-weight="700" fill="var(--m-teal-ink, #18696a)">InMemorySaver</text>
+  <text x="620" y="445" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5 checkpoints, steps -1 to 3</text>
+  <polyline points="470,426 318.2,323" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8" stroke-dasharray="2 3"/>
+  <circle cx="318.2" cy="323" r="2" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="20" y="440" font-size="12" font-weight="700" fill="var(--m-grey-ink, #5e5e59)">one Python process</text>
+  <text x="20" y="455" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Python 3.13 in the kit</text>
+  <text x="20" y="490" font-size="13" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">reply: The sum is 5.</text>
+  <text x="20" y="512" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">two model calls, one tool call, five checkpoints, seven trace runs</text>
+  </g>
+</svg>

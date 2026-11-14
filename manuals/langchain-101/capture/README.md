@@ -149,6 +149,10 @@ The kit binds no ports.
 | `41-deep-agent.txt` | `create_deep_agent` nodes, a run with `write_file`, `ls` and a `task` subagent, `files` in state, the tools bound on each call, both system prompts |
 | `42-langsmith.txt` | `traceable` with tracing off, `tracing_context(enabled="local")` run trees through `on_end`, an error run, and the requests a local trace sends when it wraps a `create_agent` run |
 
+## The lab recordings
+
+`capture/lab/` holds raw recordings from runs with a real model or a real database, on the Mac and on an x86 server guest. `labsum.py` computes a summary of each data set into `capture/lab/summary/`, and the charts and the measured numbers of the manual read those summaries. A plain `run.py` writes them, and `run.py --check` computes them again and compares, then prints one `skipped:` line, because recording the runs again needs Ollama and Postgres. `capture/lab/README.md` lists each folder.
+
 ## What the kit cannot capture offline
 
 - A real provider call: request bytes, provider usage numbers, provider streaming chunks, and provider tool call streaming. The lab recordings with Ollama cover these.

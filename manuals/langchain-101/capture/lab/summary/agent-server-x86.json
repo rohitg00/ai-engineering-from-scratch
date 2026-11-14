@@ -1,0 +1,47 @@
+{
+ "langgraph_up": "ValueError: License verification failed. Please ensure proper configuration:",
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "recursion": [
+  {
+   "config": null,
+   "status": "error",
+   "steps_in_state": 10007
+  },
+  {
+   "config": {
+    "recursion_limit": 50
+   },
+   "status": "error",
+   "steps_in_state": 50
+  }
+ ],
+ "server": "langgraph dev, langgraph-cli 0.4.43, langgraph-api 0.18.0, in-memory runtime",
+ "sources": [
+  "capture/lab/T15-agent-server-x86/02-recursion.jsonl",
+  "capture/lab/T15-agent-server-x86/03-workers.jsonl",
+  "capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt"
+ ],
+ "workers": [
+  {
+   "background_runs": 20,
+   "max_inflight": 1,
+   "seconds_per_run": 2.0,
+   "server": "dev-default",
+   "wall_s": 41.0
+  },
+  {
+   "background_runs": 20,
+   "max_inflight": 10,
+   "seconds_per_run": 2.0,
+   "server": "dev-njobs10",
+   "wall_s": 5.1
+  },
+  {
+   "background_runs": 20,
+   "max_inflight": 20,
+   "seconds_per_run": 2.0,
+   "server": "dev-njobs100",
+   "wall_s": 3.5
+  }
+ ]
+}

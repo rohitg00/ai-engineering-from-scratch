@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-1-1-title fig-1-1-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-1-1-title">The four projects and their packages at the pin</title>
+  <desc id="fig-1-1-desc">Six horizontal bands stacked from top to bottom: Deep Agents in deepagents 0.7.38 drawn dashed because it is optional, LangChain in langchain 1.5.0 with create_agent and middleware, LangGraph in langgraph 1.2.22 with checkpoints and interrupts, the provider packages such as langchain-openai 1.8.0, LangChain core in langchain-core 1.8.0 with messages and tools, and Python 3.11 or later. A tall box on the right is LangSmith, the langsmith 0.14.17 client and the hosted platform with Agent Server, joined to langchain-core by a dashed line because core imports the client, with tracing off by default.</desc>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">READ DOWN: EACH LAYER BUILDS ON THOSE BELOW</text>
+  <rect x="20" y="34" width="420" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)" stroke-dasharray="5 4"/>
+  <text x="34" y="56" font-size="13" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">Deep Agents</text>
+  <text x="426" y="56" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">deepagents 0.7.38</text>
+  <text x="34" y="78" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">create_deep_agent, file tools, subagents</text>
+  <rect x="20" y="102" width="420" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="34" y="124" font-size="13" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">LangChain</text>
+  <text x="426" y="124" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">langchain 1.5.0</text>
+  <text x="34" y="146" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">create_agent, middleware, init_chat_model</text>
+  <rect x="20" y="170" width="420" height="58" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="34" y="192" font-size="13" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">LangGraph</text>
+  <text x="426" y="192" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">langgraph 1.2.22, checkpoint 4.3.2</text>
+  <text x="34" y="214" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">StateGraph, Pregel loop, checkpoints, interrupts</text>
+  <rect x="20" y="238" width="420" height="58" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="34" y="260" font-size="13" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">provider packages</text>
+  <text x="426" y="260" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">langchain-openai 1.8.0, -ollama 1.1.0</text>
+  <text x="34" y="282" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ChatOpenAI, ChatAnthropic, ChatOllama</text>
+  <rect x="20" y="306" width="420" height="58" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="34" y="328" font-size="13" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">LangChain core</text>
+  <text x="426" y="328" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">langchain-core 1.8.0</text>
+  <text x="34" y="350" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">messages, tools, BaseChatModel</text>
+  <rect x="20" y="374" width="420" height="58" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="34" y="396" font-size="13" font-weight="700" fill="var(--m-grey-ink, #5e5e59)">Python 3.11 or later</text>
+  <text x="426" y="396" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">the kit uses 3.13</text>
+  <text x="34" y="418" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">pydantic 2.14.3, httpx, ormsgpack</text>
+  <text x="426" y="78" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-blue-ink, #2f5d9a)">optional</text>
+  <rect x="476" y="102" width="144" height="248" fill="var(--m-olive-fill, #eef0dc)" stroke="var(--m-olive-ink, #515f26)"/>
+  <text x="548" y="126" font-size="13" text-anchor="middle" font-weight="700" fill="var(--m-olive-ink, #515f26)">LangSmith</text>
+  <text x="548" y="146" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">langsmith 0.14.17</text>
+  <text x="488" y="174" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">client: traceable,</text>
+  <text x="488" y="191" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">evaluate, run trees</text>
+  <text x="488" y="225" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">platform: traces,</text>
+  <text x="488" y="242" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">datasets, prompts,</text>
+  <text x="488" y="259" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Agent Server</text>
+  <line x1="476" y1="335" x2="441" y2="335" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.2" stroke-dasharray="5 4"/>
+  <text x="548" y="374" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-olive-ink, #515f26)">tracing off until</text>
+  <text x="548" y="390" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">LANGSMITH_TRACING</text>
+  <text x="548" y="406" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-olive-ink, #515f26)">is true</text>
+  <text x="548" y="428" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">core imports</text>
+  <text x="548" y="444" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">the client</text>
+  <text x="20" y="462" font-size="11" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">create_agent returns a langgraph CompiledStateGraph</text>
+</svg>

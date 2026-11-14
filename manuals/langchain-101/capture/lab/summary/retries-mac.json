@@ -1,0 +1,1116 @@
+{
+ "cells": {
+  "m400_always client_default": {
+   "config": "client_default",
+   "fault": "m400_always",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m400_always init_chat_model_default": {
+   "config": "init_chat_model_default",
+   "fault": "m400_always",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m400_always model_retry_mw_only": {
+   "config": "model_retry_mw_only",
+   "fault": "m400_always",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m400_always stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "m400_always",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m429_always client_default": {
+   "config": "client_default",
+   "fault": "m429_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m429_always init_chat_model_default": {
+   "config": "init_chat_model_default",
+   "fault": "m429_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m429_always model_retry_mw_only": {
+   "config": "model_retry_mw_only",
+   "fault": "m429_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m429_always stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "m429_always",
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m429_once client_default": {
+   "config": "client_default",
+   "fault": "m429_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m429_once init_chat_model_default": {
+   "config": "init_chat_model_default",
+   "fault": "m429_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m429_once model_retry_mw_only": {
+   "config": "model_retry_mw_only",
+   "fault": "m429_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m429_once stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "m429_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m429_once+t500_once both_mw": {
+   "config": "both_mw",
+   "fault": "m429_once+t500_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    2,
+    2,
+    2
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ]
+  },
+  "m429_once+t500_once client_default": {
+   "config": "client_default",
+   "fault": "m429_once+t500_once",
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m429_once+t500_once stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "m429_once+t500_once",
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m429_once+t500_once tool_retry_mw": {
+   "config": "tool_retry_mw",
+   "fault": "m429_once+t500_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    2,
+    2,
+    2
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ]
+  },
+  "m500_always client_default": {
+   "config": "client_default",
+   "fault": "m500_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m500_always init_chat_model_default": {
+   "config": "init_chat_model_default",
+   "fault": "m500_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m500_always model_retry_mw_only": {
+   "config": "model_retry_mw_only",
+   "fault": "m500_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m500_always stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "m500_always",
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m500_always+t500_always both_mw": {
+   "config": "both_mw",
+   "fault": "m500_always+t500_always",
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m500_always+t500_always client_default": {
+   "config": "client_default",
+   "fault": "m500_always+t500_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m500_always+t500_always stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "m500_always+t500_always",
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m500_always+t500_always tool_retry_mw": {
+   "config": "tool_retry_mw",
+   "fault": "m500_always+t500_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "m500_once client_default": {
+   "config": "client_default",
+   "fault": "m500_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m500_once init_chat_model_default": {
+   "config": "init_chat_model_default",
+   "fault": "m500_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m500_once model_retry_mw_only": {
+   "config": "model_retry_mw_only",
+   "fault": "m500_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "m500_once stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "m500_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "mtimeout_always client_default": {
+   "config": "client_default",
+   "fault": "mtimeout_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "mtimeout_always init_chat_model_default": {
+   "config": "init_chat_model_default",
+   "fault": "mtimeout_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "mtimeout_always model_retry_mw_only": {
+   "config": "model_retry_mw_only",
+   "fault": "mtimeout_always",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "mtimeout_always stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "mtimeout_always",
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    0,
+    0,
+    0
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ]
+  },
+  "mtimeout_once client_default": {
+   "config": "client_default",
+   "fault": "mtimeout_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "mtimeout_once init_chat_model_default": {
+   "config": "init_chat_model_default",
+   "fault": "mtimeout_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "mtimeout_once model_retry_mw_only": {
+   "config": "model_retry_mw_only",
+   "fault": "mtimeout_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "mtimeout_once stacked_client_plus_model_mw": {
+   "config": "stacked_client_plus_model_mw",
+   "fault": "mtimeout_once",
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "t400_always client_default": {
+   "config": "client_default",
+   "fault": "t400_always",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "t400_always tool_retry_mw": {
+   "config": "tool_retry_mw",
+   "fault": "t400_always",
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    3,
+    3,
+    3
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ]
+  },
+  "t429_once client_default": {
+   "config": "client_default",
+   "fault": "t429_once",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "t429_once tool_retry_mw": {
+   "config": "tool_retry_mw",
+   "fault": "t429_once",
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    2,
+    2,
+    2
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ]
+  },
+  "t500_always client_default": {
+   "config": "client_default",
+   "fault": "t500_always",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "t500_always tool_retry_mw": {
+   "config": "tool_retry_mw",
+   "fault": "t500_always",
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    3,
+    3,
+    3
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ]
+  },
+  "ttimeout_always client_default": {
+   "config": "client_default",
+   "fault": "ttimeout_always",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "ttimeout_always tool_retry_mw": {
+   "config": "tool_retry_mw",
+   "fault": "ttimeout_always",
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    3,
+    3,
+    3
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ]
+  },
+  "ttimeout_once client_default": {
+   "config": "client_default",
+   "fault": "ttimeout_once",
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "tool_attempts": [
+    1,
+    1,
+    1
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ]
+  },
+  "ttimeout_once tool_retry_mw": {
+   "config": "tool_retry_mw",
+   "fault": "ttimeout_once",
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "tool_attempts": [
+    2,
+    2,
+    2
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ]
+  }
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "note": "timeout cells come from 04, which counts arrivals at the stub",
+ "sources": [
+  "capture/lab/T05-retries-mac/01-model-faults.jsonl",
+  "capture/lab/T05-retries-mac/02-tool-faults.jsonl",
+  "capture/lab/T05-retries-mac/03-both-faults.jsonl",
+  "capture/lab/T05-retries-mac/04-timeouts-arrival-count.jsonl"
+ ]
+}

@@ -138,13 +138,24 @@ def main():
         if other:
             os.environ["LANGCHAIN101_REEXEC"] = "1"
             os.execv(other, [other, os.path.realpath(__file__), *args])
+    only = [a for a in args if not a.startswith("-")]
+    import labsum
+    if "--check" in args:
+        drift = labsum.check()
+        if drift:
+            print("\n".join(drift))
+            print(f"drift: {len(drift)} lab summaries differ from capture/lab/")
+            return 1
+        print(f"ok: {len(labsum.SUMMARIES)} lab summaries match capture/lab/")
+        print("skipped: recording the lab runs again, which needs Ollama on the Mac and Postgres on an x86 server guest")
+    elif not only:
+        labsum.write(labsum.SUMMARY)
     if wrong:
         shown = wrong[:3] + ([f"and {len(wrong) - 3} more"] if len(wrong) > 3 else [])
         print("skipped: the installed packages do not match capture/requirements.txt (" + "; ".join(shown) + "). Create capture/.venv from requirements.txt with Python 3.13, or set LANGCHAIN101_PYTHON.")
         return 0 if "--check" in args else 1
     if "--check" in args:
         return check()
-    only = [a for a in args if not a.startswith("-")]
     if not only:
         shutil.rmtree(OUT, ignore_errors=True)
     written, failed = capture(OUT, only)

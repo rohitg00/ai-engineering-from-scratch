@@ -1,0 +1,192 @@
+{
+  "id": "langchain-101",
+  "title": "LangChain 101",
+  "subtitle": "Build, run, persist, and debug agents with LangChain 1.5, LangGraph 1.2, and Deep Agents 0.7, with a recorded answer for each decision",
+  "summary": "How the LangChain Python stack turns a model, tools, and a prompt into an agent. The agent streams, pauses for approval, survives a crash, and leaves a trace. Every listing comes from an offline capture of langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Every measured number comes from a recorded run on our own machines.",
+  "audience": "You write Python and you have called a chat model API. You have read some LangChain code, maybe from the 0.x years. You want to know what the 1.x stack does before you build on it.",
+  "edition": "2026.11",
+  "status": "draft",
+  "pin": {
+    "subject": "LangChain (Python): langchain, langchain-core, langgraph, deepagents, langsmith",
+    "version": "1.5.0",
+    "source": "https://github.com/langchain-ai/langchain",
+    "commit": "c2f4036e4c6ca45a8da8a42d8e07a25d2ea48b8f",
+    "date": "2026-11-11",
+    "verified": "2026-11-14"
+  },
+  "outcomes": [
+    "Install the stack from a lockfile on Python 3.11 or later, and say which package each import comes from.",
+    "Build an agent with create_agent, and predict each model call, tool call, and checkpoint of a run.",
+    "Choose a structured output strategy and a set of middleware, and predict the order in which their hooks run.",
+    "Stream a run in the mode you need, and keep a conversation across turns and restarts with a checkpointer.",
+    "Pause a run for human approval, resume it, and say which code runs again on the resume.",
+    "Count the attempts of each retry layer, and make a side effect safe when a crash replays it.",
+    "Connect MCP tools, a retriever, Deep Agents, and LangSmith tracing, and find the cause of a failure from its message."
+  ],
+  "palette": [
+    {
+      "hue": "violet",
+      "meaning": "your code: the caller, its input, and its config"
+    },
+    {
+      "hue": "blue",
+      "meaning": "LangChain: create_agent, middleware, messages, and tools as objects"
+    },
+    {
+      "hue": "indigo",
+      "meaning": "LangGraph: the graph, its nodes, the Pregel loop, and its streams"
+    },
+    {
+      "hue": "plum",
+      "meaning": "the chat model and each model call"
+    },
+    {
+      "hue": "green",
+      "meaning": "tools and the results they return"
+    },
+    {
+      "hue": "olive",
+      "meaning": "services outside the process: providers, LangSmith, Ollama"
+    },
+    {
+      "hue": "amber",
+      "meaning": "lifecycle: steps, next nodes, interrupts, and resumes"
+    },
+    {
+      "hue": "teal",
+      "meaning": "durable state: checkpoints, stores, and their rows"
+    },
+    {
+      "hue": "rose",
+      "meaning": "failure: exceptions, error messages, and repeated side effects"
+    },
+    {
+      "hue": "grey",
+      "meaning": "outside LangChain: Python, packages, the machine, and the operator"
+    }
+  ],
+  "sources": [
+    {
+      "name": "Source code at the release tags",
+      "path": "langchain-ai/langchain at langchain==1.5.0 (c2f4036e), which also holds langchain-core 1.8.0; langchain-ai/langgraph at 1.2.22 (08a20169), with langgraph-checkpoint 4.3.2 and langgraph-prebuilt 1.1.2; langgraph-checkpoint-sqlite 3.1.3 (5bd231cb); langchain-ai/deepagents at deepagents==0.7.38 (c858b364); langchain-ai/langsmith-python at v0.14.17 (15dd2a78); langchain-openai 1.8.0, langchain-anthropic 1.7.10, and langchain-ollama 1.1.0 at their own tags",
+      "usedFor": "every class, function, parameter, default, and error text; cited as code, never quoted"
+    },
+    {
+      "name": "The LangChain documentation",
+      "path": "docs.langchain.com, each page at https://docs.langchain.com/<path> as cited, built from langchain-ai/docs at commit 04d4d4a (2026-11-13), read 2026-11-14",
+      "usedFor": "the documented behaviour and the project's own framing, in our own words and checked against the code and our runs; cited as docs with the page path"
+    },
+    {
+      "name": "The changelog and release notes",
+      "path": "the Python changelog page of the docs at 04d4d4a, and the GitHub releases of each package at its tag",
+      "usedFor": "when each change came, and which package version holds it; cited as docs for the changelog page and as code for a release"
+    },
+    {
+      "name": "LangChain Academy",
+      "path": "LangChain's own courses and their MIT repositories: lca-lc-foundations, lca-langchainV1-essentials, lca-langgraph-essentials, and langchain-academy, read 2026-11-14",
+      "usedFor": "the order in which LangChain teaches the stack, and the starting points of the build part; cited as academy"
+    },
+    {
+      "name": "The capture kit",
+      "path": "capture/run.py and capture/out/, with a scripted fake chat model, offline, no keys",
+      "usedFor": "every listing in the manual; cited by file"
+    },
+    {
+      "name": "The lab recordings",
+      "path": "capture/lab/, recorded on the Mac (Apple M1 Max, 10 cores, 64 GiB) and on an x86 server guest (32 vCPU, 48 GiB), with the summaries in capture/lab/summary/",
+      "usedFor": "every number marked as measured; cited by file"
+    },
+    {
+      "name": "GitHub issues, pull requests, and advisories",
+      "path": "langchain-ai/langchain, langchain-ai/langgraph, and langchain-ai/deepagents, read 2026-11-14",
+      "usedFor": "known defects at the pin and the history of a behaviour; cited as issue with its number"
+    },
+    {
+      "name": "The LangChain product pages",
+      "path": "www.langchain.com, read 2026-11-14, not under an open license",
+      "usedFor": "the headline claims that section 1.1 sets beside our results; paraphrased and cited as site"
+    }
+  ],
+  "quoteSources": {
+    "docs": null,
+    "code": null,
+    "issue": null,
+    "site": null,
+    "academy": null
+  },
+  "capture": {
+    "run": [
+      "python3",
+      "capture/run.py"
+    ],
+    "check": [
+      "python3",
+      "capture/run.py",
+      "--check"
+    ],
+    "timeoutSeconds": 300
+  },
+  "front": "front.md",
+  "plate": {
+    "figure": "plate-langchain-run",
+    "title": "One invoke, two model calls, one tool call",
+    "caption": "The agent from the capture kit answers `What is 2 + 3?` with two model calls and one tool call. The checkpointer saves five checkpoints on the thread. From capture/out/06-agent-run.txt, capture/out/28-checkpoint-memory.txt, and capture/out/30-state-history-forks.txt."
+  },
+  "parts": [
+    {
+      "number": 1,
+      "title": "LangChain on One Page",
+      "thesis": "Four projects share one name, and one agent run passes through three of them before it returns.",
+      "summary": "What LangChain, LangGraph, LangSmith, and Deep Agents each do, and their claims beside our results. Then one create_agent run from invoke to the last checkpoint.",
+      "accent": "blue",
+      "sections": [
+        {
+          "id": "1.1",
+          "file": "sections/1-1-langchain-langgraph-langsmith-and-deep-agents.md"
+        },
+        {
+          "id": "1.2",
+          "file": "sections/1-2-one-create-agent-run.md"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "Start",
+      "thesis": "Install from a lockfile on Python 3.11, then learn the four objects that every agent is made of: the model, the messages, the tools, and the prompt.",
+      "summary": "The package map and the install, init_chat_model and model profiles, messages and content blocks, tools with ToolRuntime and their errors, and the system prompt.",
+      "accent": "green",
+      "sections": [
+        {
+          "id": "2.1",
+          "file": "sections/2-1-install-and-the-package-map.md"
+        },
+        {
+          "id": "2.2",
+          "file": "sections/2-2-init-chat-model-and-model-profiles.md"
+        },
+        {
+          "id": "2.3",
+          "file": "sections/2-3-messages-and-content-blocks.md"
+        },
+        {
+          "id": "2.4",
+          "file": "sections/2-4-tools-toolruntime-and-tool-errors.md"
+        },
+        {
+          "id": "2.5",
+          "file": "sections/2-5-the-system-prompt.md"
+        }
+      ]
+    }
+  ],
+  "related": [
+    "phases/11-llm-engineering/16-langgraph-state-machines",
+    "phases/11-llm-engineering/17-agent-framework-tradeoffs",
+    "phases/14-agent-engineering/13-langgraph-stateful-graphs",
+    "phases/13-tools-and-protocols/01-the-tool-interface",
+    "phases/13-tools-and-protocols/06-mcp-fundamentals",
+    "phases/15-autonomous-systems/12-durable-execution",
+    "phases/15-autonomous-systems/16-checkpoints-rollback"
+  ]
+}
