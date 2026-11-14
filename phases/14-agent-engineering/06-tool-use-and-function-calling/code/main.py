@@ -136,7 +136,16 @@ class ToolRegistry:
                               f"execution error: {type(e).__name__}: {e}")
 
     def dispatch_many(self, calls: list[ToolCall]) -> list[ToolResult]:
-        return [self.dispatch(c) for c in calls]
+        from concurrent.futures import ThreadPoolExecutor
+
+        if not calls:
+            return []
+
+        with ThreadPoolExecutor(max_workers=min(len(calls), 10)) as executor:
+            futures = [executor.submit(self.dispatch, call) for call in calls]
+            return [future.result() for future in futures]
+
+
 
 
 def add(a: int, b: int) -> str:
