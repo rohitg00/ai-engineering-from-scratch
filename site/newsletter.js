@@ -154,7 +154,7 @@
     enableDialog();
     const readers = document.querySelector('.learners-strip');
     if (readers) {
-      readers.before(signupSection('home'));
+      (document.querySelector('.colophon') || readers).before(signupSection('home'));
       const colophon = document.querySelector('.colophon p');
       if (colophon) colophon.textContent = colophon.textContent.replace('No paywall, no signup.', 'No paywall, no account required.');
     } else {

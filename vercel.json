@@ -116,6 +116,10 @@
       "destination": "/how-to-learn.html"
     },
     {
+      "source": "/whats-new",
+      "destination": "/whats-new.html"
+    },
+    {
       "source": "/highlights",
       "destination": "/highlights.html"
     },
@@ -820,7 +824,7 @@
       "permanent": true
     },
     {
-      "source": "/:page(about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights).html",
+      "source": "/:page(about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|assessment|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights|whats-new).html",
       "destination": "/:page",
       "permanent": true
     },

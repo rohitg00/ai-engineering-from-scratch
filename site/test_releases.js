@@ -74,11 +74,12 @@ test('release collection sends the token only when present and fails on a bad st
   await assert.rejects(collectReleases({ fetchImpl: async () => ({ ok: false, status: 403 }), token: '' }), /HTTP 403/);
 });
 
-test('the home page ships a hidden release list that the build step can fill', () => {
-  const homepage = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-  const app = fs.readFileSync(path.join(__dirname, 'app.js'), 'utf8');
+test('the release page renders the list that the build step fills', () => {
+  const homepage = fs.readFileSync(path.join(__dirname, 'whats-new.html'), 'utf8');
+  const app = homepage;
   const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'vercel.json'), 'utf8'));
-  assert.match(homepage, /<section class="whats-new container" id="whats-new" aria-labelledby="whatsNewTitle" hidden>/);
+  assert.match(homepage, /<ol class="whats-new-list" id="whatsNewList"><\/ol>/);
+  assert.doesNotMatch(fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8'), /id="whats-new"/);
   assert.match(homepage, /href="https:\/\/www\.google\.com\/preferences\/source\?q=aiengineeringfromscratch\.com"/);
   assert.match(app, /fetch\('releases\.json'\)/);
   const prebuild = fs.readFileSync(path.join(__dirname, 'prebuild.js'), 'utf8');

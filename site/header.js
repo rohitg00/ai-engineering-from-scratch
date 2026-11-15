@@ -16,6 +16,12 @@
   var COMPACT_HEADER_QUERY = '(max-width: 1180px)';
   var PRIORITY_LABELS = ['catalog', 'learning paths', 'projects', 'practice', 'interviews'];
   var COMPACT_PRIORITY_COUNT = 3;
+  var NAV_ORDER = [
+    'how-to-learn.html', 'skills.html', 'catalog.html', 'learning-paths.html', 'index.html#contents',
+    'roadmap.html', 'projects.html', 'practice.html', 'interviews.html', 'manuals.html',
+    'cheatsheets.html', 'highlights.html', 'glossary.html', 'index.html#books', 'certifications.html',
+    'blogs.html', 'whats-new.html', 'about.html', 'sponsors.html'
+  ];
   var TAB_ITEMS = [
     { href: 'catalog.html', label: 'Learn', icon: 'M3 4h7v16H3zM14 4h7v16h-7z' },
     { href: 'learning-paths.html', label: 'Paths', icon: 'M5 19V9M5 9a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM19 5v10M19 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 19h8a6 6 0 0 0 6-6' },
@@ -66,7 +72,7 @@
     var boundary = href.search(/[?#]/);
     var pathname = boundary < 0 ? href : href.slice(0, boundary);
     var suffix = boundary < 0 ? '' : href.slice(boundary);
-    var pages = '(index|about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|certification|assessment|lesson|blogs|manuals|manual-[a-z0-9-]+|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights)';
+    var pages = '(index|about|catalog|glossary|roadmap|developer|contact|privacy|sponsors|projects|project|learning-paths|certifications|certification|assessment|lesson|blogs|manuals|manual-[a-z0-9-]+|inside-an-ai-agent|inside-a-decompiler|inside-an-llm-serving-gpu|skills|how-to-learn|highlights|whats-new)';
     if (isStaticPreview(locationValue)) {
       return pathname.replace(new RegExp('(^|/)' + pages + '$'), '$1$2.html') + suffix;
     }
@@ -233,7 +239,7 @@
     stylesheet.href = 'newsletter.css?v=20260926b';
     document.head.appendChild(stylesheet);
     var script = document.createElement('script');
-    script.src = 'newsletter.js?v=20261015a';
+    script.src = 'newsletter.js?v=20261114a';
     script.async = true;
     script.setAttribute('data-aifs-newsletter', 'true');
     document.head.appendChild(script);
@@ -319,8 +325,38 @@
     ensureNavigationLink(nav, 'skills.html', 'Skills', '');
     ensureNavigationLink(nav, 'highlights.html', 'My Highlights', '');
     ensureNavigationLink(nav, '/blogs', 'Blogs & Guides', '');
+    ensureNavigationLink(nav, '/whats-new', "What's New", '');
     ensureNavigationLink(nav, 'certifications.html', 'Certifications', 'header-mobile-only');
     ensureNavigationLink(nav, 'sponsors.html', 'Sponsor us', 'header-mobile-only');
+  }
+
+  function navigationKey(href) {
+    var file = pageFile(href);
+    if (file !== 'index.html') return file;
+    try {
+      return file + new URL(href, location.href).hash;
+    } catch (_) {
+      return file;
+    }
+  }
+
+  function orderNavigationLinks(nav) {
+    var links = Array.prototype.filter.call(nav.children, function (child) {
+      return child.tagName === 'A' && !child.classList.contains('header-github');
+    });
+    var rank = function (link) {
+      var index = NAV_ORDER.indexOf(navigationKey(link.href));
+      return index < 0 ? NAV_ORDER.length : index;
+    };
+    var ordered = links.map(function (link, index) {
+      return { link: link, rank: rank(link), index: index };
+    }).sort(function (a, b) {
+      return a.rank - b.rank || a.index - b.index;
+    });
+    var anchor = nav.querySelector('.header-github');
+    ordered.forEach(function (entry) {
+      nav.insertBefore(entry.link, anchor || null);
+    });
   }
 
   function setupNavigation(header) {
@@ -330,6 +366,7 @@
     if (!inner || !nav || !logo || inner.querySelector('.header-menu-toggle')) return;
 
     addNavigationLinks(nav);
+    orderNavigationLinks(nav);
     syncCurrentPage(header);
 
     navId += 1;

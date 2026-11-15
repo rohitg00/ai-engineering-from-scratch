@@ -98,6 +98,52 @@
       transition: transform var(--motion-press) var(--ease-out);
     }
 
+    .sidebar-toggle-hide { display: none; }
+
+    @media (min-width: 901px) {
+      :root { --lesson-sidebar-w: 240px; }
+      .lesson-main { transition: margin-left var(--motion-drawer) var(--ease-drawer); }
+      .lesson-sidebar-toggle {
+        display: flex;
+        top: calc(var(--header-offset, 64px) + 20px);
+        left: calc(var(--lesson-sidebar-w) - 14px);
+        width: 28px;
+        height: 28px;
+        background: var(--bg);
+        transition:
+          left var(--motion-drawer) var(--ease-drawer),
+          transform var(--motion-press) var(--ease-out),
+          border-color var(--motion-feedback) var(--ease-out),
+          color var(--motion-feedback) var(--ease-out);
+      }
+      .lesson-sidebar-toggle .sidebar-toggle-menu,
+      .lesson-sidebar-toggle .sidebar-toggle-label { display: none; }
+      .lesson-sidebar-toggle .sidebar-toggle-hide { display: inline; line-height: 1; }
+      body.sidebar-collapsed .lesson-sidebar { transform: translateX(-100%); }
+      body.sidebar-collapsed .lesson-main { margin-left: 0; }
+      body.sidebar-collapsed .lesson-sidebar-toggle {
+        left: 16px;
+        width: auto;
+        padding: 0 12px;
+        gap: 8px;
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      body.sidebar-collapsed .lesson-sidebar-toggle .sidebar-toggle-menu,
+      body.sidebar-collapsed .lesson-sidebar-toggle .sidebar-toggle-label { display: inline; }
+      body.sidebar-collapsed .lesson-sidebar-toggle .sidebar-toggle-hide { display: none; }
+    }
+
+    @media (min-width: 1440px) {
+      :root { --lesson-sidebar-w: 280px; }
+    }
+
+    @media (min-width: 901px) and (prefers-reduced-motion: reduce) {
+      .lesson-main,
+      .lesson-sidebar-toggle { transition: none; }
+    }
+
     .lesson-sidebar::-webkit-scrollbar { width: 4px; }
     .lesson-sidebar::-webkit-scrollbar-thumb { background: var(--rule-soft); }
 
@@ -745,6 +791,31 @@
     .lesson-action-panel.is-collapsed .lesson-action-status { flex: 1; }
 
     .lesson-action-details[hidden] { display: none; }
+
+    .lesson-action-google {
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
+      gap: 6px;
+      min-height: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--rule-soft);
+      color: var(--ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: border-color var(--motion-feedback) ease, color var(--motion-feedback) ease;
+    }
+
+    .lesson-action-google:hover,
+    .lesson-action-google:focus-visible {
+      border-color: var(--blueprint);
+      color: var(--ink);
+    }
+
+    .lesson-action-google:focus-visible { outline: 2px solid var(--blueprint); outline-offset: 2px; }
 
     .lesson-action-toggle {
       flex-shrink: 0;
@@ -2724,8 +2795,9 @@
   </header>
 
   <button class="lesson-sidebar-toggle" id="sidebarToggle" aria-label="Toggle lesson menu" aria-controls="lessonSidebar" aria-expanded="false" type="button">
-    <span aria-hidden="true">&#9776;</span>
-    <span>Lessons</span>
+    <span class="sidebar-toggle-menu" aria-hidden="true">&#9776;</span>
+    <span class="sidebar-toggle-hide" aria-hidden="true">&#8249;</span>
+    <span class="sidebar-toggle-label">Lessons</span>
   </button>
 
   <div class="mermaid-modal-overlay" id="mermaidModalOverlay" aria-hidden="true">
@@ -2887,7 +2959,7 @@
       root.AIFSLearningPathProgress = createStore(root.localStorage);
     }(window));
   </script>
-  <script src="header.js?v=20261103a" defer></script>
+  <script src="header.js?v=20261114a" defer></script>
   <script src="code-copy.js?v=20261103a" defer></script>
   <script src="cmdpalette.js?v=20261103a" defer></script>
   <script src="lesson-figures.js?v=3acd4ab62b2f"></script>
@@ -3631,14 +3703,41 @@
         var sidebar = document.getElementById('lessonSidebar');
         if (!toggle || !sidebar) return;
 
+        var desktop = window.matchMedia('(min-width: 901px)');
+        var collapsedKey = 'aifs:lesson-sidebar-collapsed';
+        var collapsed = false;
+        try { collapsed = localStorage.getItem(collapsedKey) === '1'; } catch (e) {}
+
         function setOpen(open) {
           sidebar.classList.toggle('open', open);
           toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         }
 
+        function syncDesktop() {
+          var hidden = desktop.matches && collapsed;
+          document.body.classList.toggle('sidebar-collapsed', hidden);
+          sidebar.inert = hidden;
+          if (desktop.matches) {
+            toggle.setAttribute('aria-expanded', hidden ? 'false' : 'true');
+            toggle.setAttribute('aria-label', hidden ? 'Show lesson menu' : 'Hide lesson menu');
+          } else {
+            toggle.setAttribute('aria-expanded', sidebar.classList.contains('open') ? 'true' : 'false');
+            toggle.setAttribute('aria-label', 'Toggle lesson menu');
+          }
+        }
+
         toggle.addEventListener('click', function () {
+          if (desktop.matches) {
+            collapsed = !collapsed;
+            try { localStorage.setItem(collapsedKey, collapsed ? '1' : '0'); } catch (e) {}
+            syncDesktop();
+            return;
+          }
           setOpen(!sidebar.classList.contains('open'));
         });
+
+        if (desktop.addEventListener) desktop.addEventListener('change', syncDesktop);
+        syncDesktop();
 
         document.addEventListener('click', function (e) {
           if (window.innerWidth <= 900 && sidebar.classList.contains('open')) {
@@ -4156,6 +4255,7 @@
           '<div class="lesson-action-head"><div><h2 class="lesson-action-title" id="lessonActionTitle">Act on this lesson</h2>' +
           '<p class="lesson-action-intro">Use this loop to turn reading into evidence. Each checkpoint is yours to mark and stays separate from quiz correctness.</p></div>' +
           '<div class="lesson-action-status" role="status" aria-live="polite">0 of 5 checkpoints</div>' +
+          '<a class="lesson-action-google" href="https://www.google.com/preferences/source?q=aiengineeringfromscratch.com" target="_blank" rel="noopener" title="Show this course first in Google results"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.76h3.56c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.56-2.76c-.98.66-2.23 1.06-3.72 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.84 14.11a6.6 6.6 0 0 1 0-4.22V7.05H2.18a11 11 0 0 0 0 9.9l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1A11 11 0 0 0 2.18 7.05l3.66 2.84C6.71 7.31 9.14 5.38 12 5.38z"/></svg><span>Prefer us on Google</span></a>' +
           '<button class="lesson-action-toggle" type="button" aria-expanded="false" aria-controls="lessonActionDetails">Show checklist</button></div>' +
           '<div class="lesson-action-details" id="lessonActionDetails" hidden>' +
           '<div class="lesson-action-loop" aria-label="Lesson workflow checkpoints">' +
