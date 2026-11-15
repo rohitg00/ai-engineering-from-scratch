@@ -10,7 +10,7 @@
     {
       "stage": "check",
       "question": "How is the identity matrix defined?",
-      "options": ["A square matrix that leaves a compatible matrix unchanged when multiplied", "A square matrix whose entries are all equal to one", "A transposed matrix whose rows and columns are exchanged", "A square matrix whose diagonal entries are all distinct"],
+      "options": ["A square matrix that leaves a compatible matrix unchanged when multiplied", "A square matrix whose entries are all equal to one", "A transposed matrix whose rows and columns are exchanged, which undoes any square matrix", "A square matrix whose diagonal entries are all distinct"],
       "correct": 0,
       "explanation": "The identity matrix I has ones on the diagonal and zeros everywhere else. Multiplying any matrix by I returns the original matrix unchanged, like multiplying a number by 1."
     },
