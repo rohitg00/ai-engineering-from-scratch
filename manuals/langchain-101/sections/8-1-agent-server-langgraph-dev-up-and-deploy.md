@@ -1,8 +1,8 @@
 # Agent Server: langgraph dev, up, and deploy
 
-> Under `langgraph dev`, the server runs one job at a time and takes about a second per run, and `langgraph up` will not start without a key.
+> Under `langgraph dev`, the server runs one job at a time and adds 0.6 to 1 s to each run, and `langgraph up` will not start without a key.
 
-You move an agent from a script to `langgraph dev`, and you send it 100 requests at once. Each one waits about 13 seconds. The docs say that a worker runs 10 jobs at a time, and the `--help` text of the command says the same. The server ran one.
+You move an agent from a script to `langgraph dev`, and you send it 16 requests at once. The median run takes 71 s, and 66 s of it is waiting before the model starts. The docs say that a worker runs 10 jobs at a time, and the `--help` text says the same. The server ran one. With a model on CPU, ten at a time is not faster.
 
 When you finish this section, you can start `langgraph dev`, set its jobs per worker, and predict its recursion limit and time per run. You can also choose a double texting strategy from its recorded effect, and say what `langgraph up` and `langgraph deploy` need.
 
@@ -37,9 +37,9 @@ lang: json
 }
 ```
 
-`agent` is a `create_agent` agent with a fake model that waits 50 ms per call. `slow` is two nodes that each sleep for half of the `seconds` in the input. `loop` is one node with an edge back to itself.
+`slow` is two nodes that each sleep for half of the `seconds` in the input. `loop` is one node with an edge back to itself. Neither calls a model. The `agent` of this app had a model stand-in, and this section uses none of its numbers.
 
-This test used a model stand-in to time the stack alone, with no model time in the numbers. A run of the same test on a real model is in progress on the x86 server guest, and its rows will replace these. [Section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
+The model runs used a second app, `t15rapp/`, with two graphs. Its `agent` is a `create_agent` agent with Qwen3 4B on Ollama and an `add` tool (`t15rapp/graphs.py`). Its `loopagent` is an agent whose tool always says to call it again. Ollama ran on CPU and served one model call at a time.
 
 On Agent Server, you do not pass a checkpointer. The agents page says that LangSmith provisions one when you deploy, and that locally you pass one yourself {{docs oss/python/langchain/agents}}. So persistence that a script needed a `SqliteSaver` for comes with the server.
 
@@ -60,6 +60,8 @@ note: The first row, cut to the error text and the step count.
 
 The run stopped at 10007 steps after 7.3 s, with the status `error`. With `{"recursion_limit": 50}` in the config, it stopped at 50. So the limit you pass wins, and the default you get under `langgraph dev` is the library default. We did not trace why the server value did not apply. This manual records the three numbers as conflict D105. Pass `recursion_limit` on every run, and you need neither default.
 
+**We measured** `loopagent` with Qwen3 4B under `langgraph dev` with `{"recursion_limit": 25}`, three runs. Each run ended with the status `error` and `GraphRecursionError` after 13 model calls and 12 tool calls, in 24 s. Without a config, a run was still going after 120 s and 58 model calls, and we cancelled it.
+
 ## Jobs per worker
 
 **Jobs per worker:** the number of runs that one queue worker of Agent Server executes at the same time. The setting is `N_JOBS_PER_WORKER`, or `--n-jobs-per-worker` for `langgraph dev`.
@@ -68,36 +70,37 @@ The sources give two defaults for `langgraph dev`. The `--help` text of the opti
 
 **We measured** 20 background runs of the `slow` graph, 2 s each, on the x86 server guest, one run of each setting. With no setting, one run executed at a time, and the 20 runs took 41.0 s. With `--n-jobs-per-worker 10`, ten ran at once, and they took 5.1 s. With 100, all 20 ran at once, in 3.5 s.
 
+With the Qwen3 4B agent, 10 background runs took 47.1 s at one job per worker and 44.4 s at 10. All 10 started at once with the setting, and Ollama then answered their model calls one at a time.
+
 ```figure
 id: fig-8-1
 kind: chart
-title: runs per second under langgraph dev, by concurrent clients
-claim: With one job per worker, throughput stayed near 8 runs per second from 10 clients up, and 10 jobs per worker raised it to 56.
-caption: Each dot is one load run on the x86 server guest: 50 runs at 1 and 10 clients, then 5 runs per client. Each run is the agent graph through runs.wait. From capture/lab/summary/agent-server-x86.json.
+title: runs per second under langgraph dev with Qwen3 4B, by concurrent clients
+claim: With Qwen3 4B on CPU, throughput stayed at 0.22 runs per second from 4 clients up, with 1 or 10 jobs per worker.
+caption: Each dot is one load run on the x86 server guest, with 10 runs at 1 and 4 clients and 32 runs at 16. Each run is the Qwen3 4B agent through runs.wait on a new thread. From capture/lab/summary/agent-server-x86-real.json.
 ```
 
-**We measured** a load on the `agent` graph on the same guest. Each request created a thread and waited for one run. Each level ran once, with 50 runs or 5 per client, whichever was more. [Figure](#fig-8-1) shows the throughput. All 2,550 runs returned the right answer and no error.
+**We measured** a load on the Qwen3 4B `agent` graph on the same guest. Each request created a thread and waited for one run. Each level ran once. [Figure](#fig-8-1) shows the throughput. All 104 runs (10, 10, and 32 per setting) returned the right answer and no error.
 
-| Jobs per worker | 1 client | 10 clients | 50 clients | 100 clients |
-|---|---|---|---|---|
-| default, 1 | 0.9 runs/s, p50 1,117 ms | 7.1 runs/s | 8.0 runs/s | 7.7 runs/s, p50 12,799 ms, p99 13,364 ms |
-| 10 | 1.0 runs/s, p50 1,001 ms | 8.8 runs/s | 50.6 runs/s | 56.3 runs/s, p50 1,529 ms, p99 2,642 ms |
-| 100 | 1.0 runs/s, p50 1,001 ms | 9.8 runs/s | 41.7 runs/s | 52.8 runs/s, p50 1,854 ms, p99 2,229 ms |
+| Jobs per worker | 1 client | 4 clients | 16 clients |
+|---|---|---|---|
+| default, 1 | 0.185 runs/s, p50 5,420 ms | 0.222 runs/s, p50 17,635 ms | 0.223 runs/s, p50 70,680 ms |
+| 10 | 0.191 runs/s, p50 5,129 ms | 0.224 runs/s, p50 17,188 ms | 0.226 runs/s, p50 56,033 ms |
 
-With one job per worker, 100 clients wait in one queue, and the median run takes 12.8 s. Set `--n-jobs-per-worker` to 10 or more for any test with more than one client. A setting of 100 was not faster than 10 at 100 clients.
+With one job per worker, the queue is in the server. At 16 clients, a run waited 66 s before its first model call. With 10, the queue moved into Ollama, and the model time of a run grew from 4.4 s to 43.8 s. The model sets the throughput, about 0.45 model calls per second at 16 clients, and the setting does not change it. Set it to 10 anyway when the model can serve calls in parallel.
 
-## About one second for each run
+## About one second added to each run
 
-At one client, every run took about one second, although the fake model waited only 100 ms in all. **We measured** four ways to start a run on the x86 server guest, 10 runs each, one at a time, with 10 jobs per worker:
+At one client, a run took 5.1 to 5.5 s, and the two model calls took 4.4 s of it. **We measured** two ways to start a run of the Qwen3 4B agent on the x86 server guest. Each ran 10 times, one at a time, with each jobs setting. The last column is the client time minus the time inside the model calls:
 
-| How the run started | Client time, p50 | Server time from created to updated, p50 |
-|---|---|---|
-| `runs.wait` on a thread | 994 ms | 990 ms |
-| `runs.stream` in `values` mode | 995 ms | 989 ms |
-| `runs.create`, then `runs.join` | 994 ms | 990 ms |
-| `runs.wait` with no thread | 997 ms | not recorded |
+| How the run started | Client time, p50 | Model time, p50 | Added by the server, p50 |
+|---|---|---|---|
+| `runs.wait`, default jobs | 5,486 ms | 4,473 ms | 1,014 ms |
+| `runs.create`, then `runs.join`, default jobs | 5,443 ms | 4,429 ms | 1,015 ms |
+| `runs.wait`, 10 jobs | 5,139 ms | 4,443 ms | 661 ms |
+| `runs.create`, then `runs.join`, 10 jobs | 5,087 ms | 4,385 ms | 651 ms |
 
-The time was spent in the server, whose own record from created to updated was about 990 ms. Part of it is the queue of the in-memory runtime, which sleeps 0.5 s on each poll when it finds no run {{code langgraph_runtime_inmem/ops.py}}. We did not trace the rest. Read this floor as a property of `langgraph dev` at the pin. A floor for `langgraph up` with Postgres and Redis comes in the next edition.
+Almost all of the added time came before the first model call. That wait was about 1,003 ms with the default, and 641 to 651 ms with 10 jobs. Part of it is the queue of the in-memory runtime, which sleeps 0.5 s on each poll when it finds no run {{code langgraph_runtime_inmem/ops.py}}. We did not trace the rest. Read this floor as a property of `langgraph dev` at the pin. A floor for `langgraph up` with Postgres and Redis comes in the next edition.
 
 ## Double texting
 
@@ -234,13 +237,13 @@ Advisory GHSA-8prr-f582-jqq3 says that `langgraph deploy --verbose` printed the 
 Without a license, you can serve the same agent from your own FastAPI app. [Section 9.1](#s-the-run-endpoint-and-its-stream) builds that service, and [section 9.7](#s-workers-the-advisory-lock-and-cost) runs it with several workers and one Postgres lock per thread.
 
 ```takeaways
-- Start langgraph dev with --n-jobs-per-worker 10 before any test with more than one client.
+- Start langgraph dev with --n-jobs-per-worker 10, and expect no gain when the model serves one call at a time.
 - Pass recursion_limit on every run, because the server default is 10007 under langgraph dev.
-- Expect about one second per run under langgraph dev, whatever the graph does.
+- Expect langgraph dev to add 0.6 to 1 s to each run, before the first model call.
 - Use enqueue for chat threads, and reject when a second message must wait.
 - Write nodes that can lose an unfinished write before you choose interrupt or rollback.
 - Set LANGSMITH_API_KEY or LANGGRAPH_CLOUD_LICENSE_KEY before you run langgraph up.
 - Search for the graph id, not LangGraph, to find the traces of a server run.
 ```
 
-Sources: capture/lab/summary/langsmith-account-mac.json, capture/lab/T21-langsmith-account-mac/07-e5-dev-inspect.json, capture/lab/T21-langsmith-account-mac/07-e5-dev-netlog.jsonl, capture/lab/T21-langsmith-account-mac/07-e5-dev-runs.jsonl, capture/lab/T21-langsmith-account-mac/07-e5-up.txt, capture/lab/T21-langsmith-account-mac/07-e5-server-venv-freeze.txt, capture/lab/T21-langsmith-account-mac/01-account-probe.json, capture/lab/T21-langsmith-account-mac/_scripts/t21_e5_client.py, capture/lab/T21-langsmith-account-mac/_scripts/t21_e5_inspect.py; langgraph_api/server.py and langgraph_license/validation.py at langgraph-api 0.18.0; capture/lab/summary/agent-server-x86.json, capture/lab/T15-agent-server-x86/02-recursion.jsonl, capture/lab/T15-agent-server-x86/03-workers.jsonl, capture/lab/T15-agent-server-x86/04-double-texting.jsonl, capture/lab/T15-agent-server-x86/05-load.jsonl, capture/lab/T15-agent-server-x86/08-up-start-excerpt.txt, capture/lab/T15-agent-server-x86/09-up-containers.txt, capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt, capture/lab/T15-agent-server-x86/12-latency-floor.jsonl, capture/lab/T15-agent-server-x86/t15_drive.py, capture/lab/T15-agent-server-x86/t15app/graphs.py, capture/lab/T15-agent-server-x86/t15app/langgraph.json; libs/cli/langgraph_cli/cli.py and libs/cli/langgraph_cli/deploy.py at langgraph-cli 0.4.43; langgraph_api/utils/config.py and langgraph_api/cli.py at langgraph-api 0.18.0; langgraph_runtime_inmem/ops.py at langgraph-runtime-inmem 0.38.0; docs.langchain.com at docs commit 04d4d4a (langsmith/cli, langsmith/env-var-cloud, langsmith/agent-server-scale, langsmith/double-texting, langsmith/cloud-platform-features, oss/python/langchain/agents); advisory GHSA-8prr-f582-jqq3.
+Sources: capture/lab/summary/langsmith-account-mac.json, capture/lab/T21-langsmith-account-mac/07-e5-dev-inspect.json, capture/lab/T21-langsmith-account-mac/07-e5-dev-netlog.jsonl, capture/lab/T21-langsmith-account-mac/07-e5-dev-runs.jsonl, capture/lab/T21-langsmith-account-mac/07-e5-up.txt, capture/lab/T21-langsmith-account-mac/07-e5-server-venv-freeze.txt, capture/lab/T21-langsmith-account-mac/01-account-probe.json, capture/lab/T21-langsmith-account-mac/_scripts/t21_e5_client.py, capture/lab/T21-langsmith-account-mac/_scripts/t21_e5_inspect.py; langgraph_api/server.py and langgraph_license/validation.py at langgraph-api 0.18.0; capture/lab/summary/agent-server-x86-real.json, capture/lab/T15-agent-server-x86-real/01-recursion.jsonl, capture/lab/T15-agent-server-x86-real/02-load.jsonl, capture/lab/T15-agent-server-x86-real/03-floor.jsonl, capture/lab/T15-agent-server-x86-real/04-workers.jsonl, capture/lab/T15-agent-server-x86-real/t15r_drive.py, capture/lab/T15-agent-server-x86-real/t15rapp/graphs.py, capture/lab/summary/agent-server-x86.json, capture/lab/T15-agent-server-x86/02-recursion.jsonl, capture/lab/T15-agent-server-x86/03-workers.jsonl, capture/lab/T15-agent-server-x86/04-double-texting.jsonl, capture/lab/T15-agent-server-x86/08-up-start-excerpt.txt, capture/lab/T15-agent-server-x86/09-up-containers.txt, capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt, capture/lab/T15-agent-server-x86/t15_drive.py, capture/lab/T15-agent-server-x86/t15app/graphs.py, capture/lab/T15-agent-server-x86/t15app/langgraph.json; libs/cli/langgraph_cli/cli.py and libs/cli/langgraph_cli/deploy.py at langgraph-cli 0.4.43; langgraph_api/utils/config.py and langgraph_api/cli.py at langgraph-api 0.18.0; langgraph_runtime_inmem/ops.py at langgraph-runtime-inmem 0.38.0; docs.langchain.com at docs commit 04d4d4a (langsmith/cli, langsmith/env-var-cloud, langsmith/agent-server-scale, langsmith/double-texting, langsmith/cloud-platform-features, oss/python/langchain/agents); advisory GHSA-8prr-f582-jqq3.

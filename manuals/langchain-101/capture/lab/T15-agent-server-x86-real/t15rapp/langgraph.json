@@ -1,0 +1,9 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "agent": "./graphs.py:agent",
+    "loopagent": "./graphs.py:loopagent"
+  },
+  "python_version": "3.13",
+  "env": {}
+}

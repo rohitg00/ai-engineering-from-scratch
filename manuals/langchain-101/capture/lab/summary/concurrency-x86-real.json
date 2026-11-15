@@ -1,0 +1,497 @@
+{
+ "cells": {
+  "pool20 1": {
+   "config": "pool20",
+   "reps": [
+    {
+     "aget_tuple_p50_ms": 2.0,
+     "aget_tuple_p99_ms": 2.8,
+     "aput_p50_ms": 3.1,
+     "aput_p99_ms": 7.0,
+     "aput_writes_p50_ms": 3.7,
+     "aput_writes_p99_ms": 6.8,
+     "checkpoint_ms_total": 76.0,
+     "client_cpu_s": 0.1,
+     "errors": 0,
+     "model_call_p50_s": 2.215,
+     "model_calls_open_max": 1,
+     "model_calls_per_s": 0.452,
+     "pg_conns_active_max": 1,
+     "pg_conns_max": 3,
+     "rep": 0,
+     "rows": {
+      "blobs": 14,
+      "checkpoints": 10,
+      "writes": 14
+     },
+     "run_p50_ms": 4420,
+     "runs": 2,
+     "runs_per_s": 0.226,
+     "runs_right": 2,
+     "wall_s": 8.8
+    },
+    {
+     "aget_tuple_p50_ms": 3.2,
+     "aget_tuple_p99_ms": 3.5,
+     "aput_p50_ms": 3.3,
+     "aput_p99_ms": 6.5,
+     "aput_writes_p50_ms": 4.6,
+     "aput_writes_p99_ms": 5.4,
+     "checkpoint_ms_total": 75.0,
+     "client_cpu_s": 0.1,
+     "errors": 0,
+     "model_call_p50_s": 2.114,
+     "model_calls_open_max": 1,
+     "model_calls_per_s": 0.467,
+     "pg_conns_active_max": 0,
+     "pg_conns_max": 3,
+     "rep": 1,
+     "rows": {
+      "blobs": 14,
+      "checkpoints": 10,
+      "writes": 14
+     },
+     "run_p50_ms": 4283,
+     "runs": 2,
+     "runs_per_s": 0.234,
+     "runs_right": 2,
+     "wall_s": 8.6
+    }
+   ],
+   "threads": 1
+  },
+  "pool20 16": {
+   "config": "pool20",
+   "reps": [
+    {
+     "aget_tuple_p50_ms": 4.8,
+     "aget_tuple_p99_ms": 41.1,
+     "aput_p50_ms": 3.9,
+     "aput_p99_ms": 47.2,
+     "aput_writes_p50_ms": 4.8,
+     "aput_writes_p99_ms": 45.9,
+     "checkpoint_ms_total": 3291.0,
+     "client_cpu_s": 1.68,
+     "errors": 0,
+     "model_call_p50_s": 34.959,
+     "model_calls_open_max": 16,
+     "model_calls_per_s": 0.434,
+     "pg_conns_active_max": 1,
+     "pg_conns_max": 13,
+     "rep": 0,
+     "rows": {
+      "blobs": 224,
+      "checkpoints": 160,
+      "writes": 224
+     },
+     "run_p50_ms": 71627,
+     "runs": 32,
+     "runs_per_s": 0.217,
+     "runs_right": 32,
+     "wall_s": 147.4
+    },
+    {
+     "aget_tuple_p50_ms": 4.1,
+     "aget_tuple_p99_ms": 40.3,
+     "aput_p50_ms": 3.9,
+     "aput_p99_ms": 44.6,
+     "aput_writes_p50_ms": 4.8,
+     "aput_writes_p99_ms": 45.8,
+     "checkpoint_ms_total": 2990.0,
+     "client_cpu_s": 1.66,
+     "errors": 0,
+     "model_call_p50_s": 34.674,
+     "model_calls_open_max": 16,
+     "model_calls_per_s": 0.436,
+     "pg_conns_active_max": 0,
+     "pg_conns_max": 12,
+     "rep": 1,
+     "rows": {
+      "blobs": 224,
+      "checkpoints": 160,
+      "writes": 224
+     },
+     "run_p50_ms": 71163,
+     "runs": 32,
+     "runs_per_s": 0.218,
+     "runs_right": 32,
+     "wall_s": 146.7
+    }
+   ],
+   "threads": 16
+  },
+  "pool20 4": {
+   "config": "pool20",
+   "reps": [
+    {
+     "aget_tuple_p50_ms": 3.0,
+     "aget_tuple_p99_ms": 9.3,
+     "aput_p50_ms": 4.0,
+     "aput_p99_ms": 13.4,
+     "aput_writes_p50_ms": 4.6,
+     "aput_writes_p99_ms": 12.8,
+     "checkpoint_ms_total": 405.0,
+     "client_cpu_s": 0.4,
+     "errors": 0,
+     "model_call_p50_s": 8.83,
+     "model_calls_open_max": 4,
+     "model_calls_per_s": 0.421,
+     "pg_conns_active_max": 1,
+     "pg_conns_max": 6,
+     "rep": 0,
+     "rows": {
+      "blobs": 56,
+      "checkpoints": 40,
+      "writes": 56
+     },
+     "run_p50_ms": 18619,
+     "runs": 8,
+     "runs_per_s": 0.211,
+     "runs_right": 8,
+     "wall_s": 38.0
+    },
+    {
+     "aget_tuple_p50_ms": 2.1,
+     "aget_tuple_p99_ms": 8.6,
+     "aput_p50_ms": 3.4,
+     "aput_p99_ms": 15.0,
+     "aput_writes_p50_ms": 4.7,
+     "aput_writes_p99_ms": 14.1,
+     "checkpoint_ms_total": 404.0,
+     "client_cpu_s": 0.4,
+     "errors": 0,
+     "model_call_p50_s": 8.889,
+     "model_calls_open_max": 4,
+     "model_calls_per_s": 0.427,
+     "pg_conns_active_max": 0,
+     "pg_conns_max": 6,
+     "rep": 1,
+     "rows": {
+      "blobs": 56,
+      "checkpoints": 40,
+      "writes": 56
+     },
+     "run_p50_ms": 18313,
+     "runs": 8,
+     "runs_per_s": 0.214,
+     "runs_right": 8,
+     "wall_s": 37.4
+    }
+   ],
+   "threads": 4
+  },
+  "pool20 64": {
+   "config": "pool20",
+   "reps": [
+    {
+     "aget_tuple_p50_ms": 8.5,
+     "aget_tuple_p99_ms": 198.1,
+     "aput_p50_ms": 4.5,
+     "aput_p99_ms": 273.1,
+     "aput_writes_p50_ms": 4.9,
+     "aput_writes_p99_ms": 272.9,
+     "checkpoint_ms_total": 46668.0,
+     "client_cpu_s": 6.77,
+     "errors": 0,
+     "model_call_p50_s": 139.168,
+     "model_calls_open_max": 64,
+     "model_calls_per_s": 0.435,
+     "pg_conns_active_max": 2,
+     "pg_conns_max": 20,
+     "rep": 0,
+     "rows": {
+      "blobs": 896,
+      "checkpoints": 640,
+      "writes": 896
+     },
+     "run_p50_ms": 287069,
+     "runs": 128,
+     "runs_per_s": 0.217,
+     "runs_right": 128,
+     "wall_s": 588.8
+    },
+    {
+     "aget_tuple_p50_ms": 8.3,
+     "aget_tuple_p99_ms": 208.0,
+     "aput_p50_ms": 4.1,
+     "aput_p99_ms": 253.8,
+     "aput_writes_p50_ms": 4.8,
+     "aput_writes_p99_ms": 255.0,
+     "checkpoint_ms_total": 47225.0,
+     "client_cpu_s": 7.04,
+     "errors": 0,
+     "model_call_p50_s": 138.529,
+     "model_calls_open_max": 64,
+     "model_calls_per_s": 0.436,
+     "pg_conns_active_max": 3,
+     "pg_conns_max": 21,
+     "rep": 1,
+     "rows": {
+      "blobs": 896,
+      "checkpoints": 640,
+      "writes": 896
+     },
+     "run_p50_ms": 284827,
+     "runs": 128,
+     "runs_per_s": 0.218,
+     "runs_right": 128,
+     "wall_s": 587.7
+    }
+   ],
+   "threads": 64
+  },
+  "single 1": {
+   "config": "single",
+   "reps": [
+    {
+     "aget_tuple_p50_ms": 2.3,
+     "aget_tuple_p99_ms": 3.3,
+     "aput_p50_ms": 3.3,
+     "aput_p99_ms": 6.6,
+     "aput_writes_p50_ms": 5.3,
+     "aput_writes_p99_ms": 25.5,
+     "checkpoint_ms_total": 110.0,
+     "client_cpu_s": 0.14,
+     "errors": 0,
+     "model_call_p50_s": 2.334,
+     "model_calls_open_max": 1,
+     "model_calls_per_s": 0.37,
+     "pg_conns_active_max": 0,
+     "pg_conns_max": 1,
+     "rep": 0,
+     "rows": {
+      "blobs": 14,
+      "checkpoints": 10,
+      "writes": 14
+     },
+     "run_p50_ms": 5399,
+     "runs": 2,
+     "runs_per_s": 0.185,
+     "runs_right": 2,
+     "wall_s": 10.8
+    },
+    {
+     "aget_tuple_p50_ms": 2.4,
+     "aget_tuple_p99_ms": 3.5,
+     "aput_p50_ms": 2.8,
+     "aput_p99_ms": 6.2,
+     "aput_writes_p50_ms": 5.1,
+     "aput_writes_p99_ms": 8.1,
+     "checkpoint_ms_total": 82.0,
+     "client_cpu_s": 0.1,
+     "errors": 0,
+     "model_call_p50_s": 2.181,
+     "model_calls_open_max": 1,
+     "model_calls_per_s": 0.437,
+     "pg_conns_active_max": 0,
+     "pg_conns_max": 1,
+     "rep": 1,
+     "rows": {
+      "blobs": 14,
+      "checkpoints": 10,
+      "writes": 14
+     },
+     "run_p50_ms": 4573,
+     "runs": 2,
+     "runs_per_s": 0.219,
+     "runs_right": 2,
+     "wall_s": 9.1
+    }
+   ],
+   "threads": 1
+  },
+  "single 16": {
+   "config": "single",
+   "reps": [
+    {
+     "aget_tuple_p50_ms": 2.2,
+     "aget_tuple_p99_ms": 47.8,
+     "aput_p50_ms": 3.3,
+     "aput_p99_ms": 62.5,
+     "aput_writes_p50_ms": 5.5,
+     "aput_writes_p99_ms": 63.6,
+     "checkpoint_ms_total": 4058.0,
+     "client_cpu_s": 1.63,
+     "errors": 0,
+     "model_call_p50_s": 35.111,
+     "model_calls_open_max": 16,
+     "model_calls_per_s": 0.433,
+     "pg_conns_active_max": 1,
+     "pg_conns_max": 1,
+     "rep": 0,
+     "rows": {
+      "blobs": 224,
+      "checkpoints": 160,
+      "writes": 224
+     },
+     "run_p50_ms": 72302,
+     "runs": 32,
+     "runs_per_s": 0.216,
+     "runs_right": 32,
+     "wall_s": 147.9
+    },
+    {
+     "aget_tuple_p50_ms": 2.3,
+     "aget_tuple_p99_ms": 45.2,
+     "aput_p50_ms": 3.6,
+     "aput_p99_ms": 50.5,
+     "aput_writes_p50_ms": 5.3,
+     "aput_writes_p99_ms": 51.4,
+     "checkpoint_ms_total": 3490.0,
+     "client_cpu_s": 1.61,
+     "errors": 0,
+     "model_call_p50_s": 34.783,
+     "model_calls_open_max": 16,
+     "model_calls_per_s": 0.434,
+     "pg_conns_active_max": 1,
+     "pg_conns_max": 2,
+     "rep": 1,
+     "rows": {
+      "blobs": 224,
+      "checkpoints": 160,
+      "writes": 224
+     },
+     "run_p50_ms": 71767,
+     "runs": 32,
+     "runs_per_s": 0.217,
+     "runs_right": 32,
+     "wall_s": 147.4
+    }
+   ],
+   "threads": 16
+  },
+  "single 4": {
+   "config": "single",
+   "reps": [
+    {
+     "aget_tuple_p50_ms": 1.7,
+     "aget_tuple_p99_ms": 9.8,
+     "aput_p50_ms": 4.0,
+     "aput_p99_ms": 13.9,
+     "aput_writes_p50_ms": 5.5,
+     "aput_writes_p99_ms": 14.9,
+     "checkpoint_ms_total": 440.0,
+     "client_cpu_s": 0.4,
+     "errors": 0,
+     "model_call_p50_s": 8.867,
+     "model_calls_open_max": 4,
+     "model_calls_per_s": 0.42,
+     "pg_conns_active_max": 1,
+     "pg_conns_max": 1,
+     "rep": 0,
+     "rows": {
+      "blobs": 56,
+      "checkpoints": 40,
+      "writes": 56
+     },
+     "run_p50_ms": 18506,
+     "runs": 8,
+     "runs_per_s": 0.21,
+     "runs_right": 8,
+     "wall_s": 38.0
+    },
+    {
+     "aget_tuple_p50_ms": 2.0,
+     "aget_tuple_p99_ms": 11.3,
+     "aput_p50_ms": 3.6,
+     "aput_p99_ms": 14.4,
+     "aput_writes_p50_ms": 5.3,
+     "aput_writes_p99_ms": 15.3,
+     "checkpoint_ms_total": 423.0,
+     "client_cpu_s": 0.4,
+     "errors": 0,
+     "model_call_p50_s": 8.794,
+     "model_calls_open_max": 4,
+     "model_calls_per_s": 0.431,
+     "pg_conns_active_max": 0,
+     "pg_conns_max": 1,
+     "rep": 1,
+     "rows": {
+      "blobs": 56,
+      "checkpoints": 40,
+      "writes": 56
+     },
+     "run_p50_ms": 18090,
+     "runs": 8,
+     "runs_per_s": 0.216,
+     "runs_right": 8,
+     "wall_s": 37.1
+    }
+   ],
+   "threads": 4
+  },
+  "single 64": {
+   "config": "single",
+   "reps": [
+    {
+     "aget_tuple_p50_ms": 6.4,
+     "aget_tuple_p99_ms": 426.9,
+     "aput_p50_ms": 3.7,
+     "aput_p99_ms": 450.4,
+     "aput_writes_p50_ms": 5.7,
+     "aput_writes_p99_ms": 451.3,
+     "checkpoint_ms_total": 65870.0,
+     "client_cpu_s": 6.8,
+     "errors": 0,
+     "model_call_p50_s": 138.714,
+     "model_calls_open_max": 64,
+     "model_calls_per_s": 0.436,
+     "pg_conns_active_max": 1,
+     "pg_conns_max": 2,
+     "rep": 0,
+     "rows": {
+      "blobs": 896,
+      "checkpoints": 640,
+      "writes": 896
+     },
+     "run_p50_ms": 285073,
+     "runs": 128,
+     "runs_per_s": 0.218,
+     "runs_right": 128,
+     "wall_s": 587.4
+    },
+    {
+     "aget_tuple_p50_ms": 5.6,
+     "aget_tuple_p99_ms": 310.0,
+     "aput_p50_ms": 3.9,
+     "aput_p99_ms": 317.9,
+     "aput_writes_p50_ms": 5.8,
+     "aput_writes_p99_ms": 319.5,
+     "checkpoint_ms_total": 57450.0,
+     "client_cpu_s": 6.92,
+     "errors": 0,
+     "model_call_p50_s": 138.79,
+     "model_calls_open_max": 64,
+     "model_calls_per_s": 0.436,
+     "pg_conns_active_max": 1,
+     "pg_conns_max": 2,
+     "rep": 1,
+     "rows": {
+      "blobs": 896,
+      "checkpoints": 640,
+      "writes": 896
+     },
+     "run_p50_ms": 285233,
+     "runs": 128,
+     "runs_per_s": 0.218,
+     "runs_right": 128,
+     "wall_s": 587.5
+    }
+   ],
+   "threads": 64
+  }
+ },
+ "errors_total": 0,
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "model": "qwen3:4b-instruct-2507-q4_K_M via ChatOllama 1.1.0, temperature 0, seed 42, num_ctx 8192 set by the script, Ollama 0.31.1 on CPU, one request at a time; num_predict 128",
+ "not_used": "the p99 of checkpoint calls at 16 and 64 threads as database time, because the client timings hold event loop wait",
+ "reps_per_cell": 2,
+ "run": "one asyncio process; each thread ran 2 agent runs of 2 model calls and 1 add call; one connection (single) and AsyncConnectionPool of 20 (pool20)",
+ "runs_right_total": 680,
+ "runs_total": 680,
+ "saver": "AsyncPostgresSaver (langgraph-checkpoint-postgres 3.2.1) on PostgreSQL 16.15, max_connections 100, default durability",
+ "sources": [
+  "capture/lab/T16-concurrency-x86-real/01-levels.jsonl",
+  "capture/lab/T16-concurrency-x86-real/t16r_conc.py"
+ ]
+}

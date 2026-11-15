@@ -6,7 +6,7 @@ You read a section and find that a case you care about was not run. This section
 
 When you finish this section, you can tell which claims of this manual rest on a recorded run. You can also plan your own test of an open case.
 
-One item has one trial in a worked example, and its line says so. Three tests ran with a model stand-in and are being recorded again on a real model, and the list below names them. Until the next edition, this manual gives no measured result for the other items.
+One item has one trial in a worked example, and its line says so. Until the next edition, this manual gives no measured result for the other items.
 
 ## Why these runs are missing
 
@@ -15,14 +15,6 @@ Three limits decided what this edition could run. The full Agent Server with Pos
 Our LangSmith account was a new one on the free plan. It ran tracing, `evaluate`, the pytest plugin, and the prompt hub, and the lists below hold what it left out. Our local models were Qwen3 0.6B to 30B-A3B and gpt-oss 20B on Ollama. Claude Haiku 5.5 and Claude Sonnet 5.5 ran the task suite of [section 1.2](#s-do-you-need-langchain), under a fixed budget. Claude Haiku 5.5 also ran the 20 evals of [section 9.6](#s-evals-that-check-state). The other hosted cases below have no run yet.
 
 Each list below names the case and the section where the text stops. Most of the graph cases need no account and only a new scenario in the capture kit.
-
-## Runs being recorded again on a real model
-
-These three tests timed the stack with a model stand-in. Their rows stay in this edition, marked in their sections, until the real-model runs on the x86 server guest replace them.
-
-- Long threads of 2,000 turns on `PostgresSaver`, and the time of each turn. [Section 5.5](#s-context-engineering-and-summarization)
-- `AsyncPostgresSaver` with 1 to 500 threads at once, and the pool size. [Section 5.2](#s-checkpointers-and-threads)
-- The time floor of one run and the jobs per worker under `langgraph dev`. [Section 8.1](#s-agent-server-langgraph-dev-up-and-deploy)
 
 ## The production service
 
@@ -73,7 +65,6 @@ These need no account, only a new lab run.
 - `ProviderToolSearchMiddleware` with a real deferral on Anthropic or OpenAI. [Section 4.6](#s-the-built-in-middleware)
 - `ModelFallbackMiddleware` on a 400 from a bad request. [Section 4.7](#s-retries-backup-models-rate-limits-and-caching)
 - `set_llm_cache`, the node cache of `create_agent`, and the rate limiter against a model. [Section 4.7](#s-retries-backup-models-rate-limits-and-caching)
-- `SummarizationMiddleware` with a real model over a long thread. [Section 5.7](#s-an-assistant-with-memory-and-approvals-that-survives-a-restart) has one real summary from Qwen3 4B at 10 messages. [Section 5.5](#s-context-engineering-and-summarization)
 
 ## Middleware
 

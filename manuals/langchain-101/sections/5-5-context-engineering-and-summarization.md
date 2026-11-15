@@ -2,7 +2,7 @@
 
 > A thread grows on every turn, so each model call gets longer and each checkpoint larger, until you trim or summarize the messages and store them as deltas.
 
-Your assistant feels quick in the first hour. After a few hundred turns on one thread, every answer takes longer, the provider bill grows, and the database grows faster than the bill. Nothing failed. The agent sends the whole thread to the model on every call, and the checkpointer saves the whole thread on every step.
+Your assistant feels quick in the first hour. After a few dozen turns on one thread, every answer takes longer, the provider bill grows, and the database grows faster than the bill. Nothing failed. The agent sends the whole thread to the model on every call, and the checkpointer saves the whole thread on every step.
 
 When you finish this section, you can choose what the model receives, set a summarization trigger, and predict how a long thread grows.
 
@@ -83,32 +83,38 @@ The summary is a model output, so it can be wrong. The summarizer saw only the f
 
 With no `trigger`, the middleware never summarizes. The built-in middleware page says the same {{docs oss/python/langchain/middleware/built-in}}. In the kit, the model got all seven messages. Set the trigger. The default `keep` is `("messages", 20)`. Part 4 covers `ContextEditingMiddleware`, which clears old tool results in place of a summary.
 
-## A thread of 2,000 turns
+## A long thread on a real model
 
-**We measured** long threads on the x86 server guest, 32 vCPU and 48 GiB, with `create_agent`, `PostgresSaver` on PostgreSQL 16.15, and default durability. The model was a fake with no delay, so each time is the time of LangChain, LangGraph, and Postgres. Each variant was one run of 2,000 turns on one thread, 3,334 model calls. The turns cycled through a plain answer, one tool call, and two parallel tool calls.
+**We measured** long threads on the x86 server guest, 32 vCPU and 48 GiB, with `create_agent`, `PostgresSaver` on PostgreSQL 16.15, and default durability. The model was Qwen3 4B on Ollama on CPU, temperature 0, seed 42, with a context of 8192 tokens. The summary model was the same model.
 
-This test used a model stand-in to time the stack alone, with no model time in the numbers. A run of the same test on a real model is in progress on the x86 server guest, and its rows will replace these. [Section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
+Each variant was one run of 200 turns on one thread. Turns 1 to 5 gave five facts, and the rest cycled through a plain answer, one add call, and two parallel add calls. Every 25 turns, five recall questions about the facts ran on a fork of the thread, so they never entered it. The script gave each variant about 70 minutes.
 
-| Variant | Summaries | Turn p50, turns 1 to 100 | Turn p50, turns 1,901 to 2,000 | Largest request | Thread at turn 2,000 |
-|---|---|---|---|---|---|
-| no summarization | 0 | 36.9 ms | 662.9 ms | 7,334 messages | 7,957.86 MB |
-| `("messages", 60)`, keep 7 | 140 | 36.2 ms | 36.6 ms | 59 messages | 92.55 MB |
-| `("tokens", 6000)`, keep 1,500 tokens | 60 | 63.2 ms | 42.9 ms | 166 messages | 240.98 MB |
-| `("messages", 20)`, keep 1 | 399 | 32.1 ms | 32.3 ms | 19 messages | 43.83 MB |
+| Variant | Summaries | Turn p50 without / with a summary call | Largest prompt | Add turns right | Recall of the 5 facts | Thread size |
+|---|---|---|---|---|---|---|
+| no summarization | 0 | 7.4 s, and 308 to 621 s from turn 88 | 8,191 tokens, the full context | 59 of 59 | 5 of 5 to turn 75, then 0 of 4 after turn 94, and the fifth got HTTP 400 | 20.52 MB at turn 90 |
+| `("messages", 60)`, keep 7 | 13 | 5.5 s / 55.2 s | 2,146 tokens | 126 of 130 | 5 of 5 at all 8 probes | 12.42 MB at turn 200 |
+| `("tokens", 6000)`, keep 1,500 tokens | 4 | 7.5 s / 108.4 s | 5,985 tokens | 130 of 130 | 5 of 5 to turn 50, 0 of 5 from turn 75 | 38.00 MB at turn 200 |
+| `("messages", 20)`, keep 1 | 39 | 5.4 s / 57.3 s | 1,219 tokens | 103 of 130: the sums were right in 129, and the tool was skipped in 26 | 5 of 5 to turn 75, then 4 of 5 without the code word | 6.40 MB at turn 200 |
 
-[Figure](#fig-5-5) shows the median of each block of 100 turns. Without summarization, the turn time grew in a straight line with the thread. The largest request had about 269,000 tokens by the count of the run. With a trigger, the median turn stayed between 32 and 47 ms after the first 100 turns. The 6,000-token trigger had a median of 63.2 ms in turns 1 to 100, then about 42 ms.
+[Figure](#fig-5-5) shows the median of each block of 25 turns. Without summarization, the median turn grew from 4.7 s in turns 1 to 25 to 11.2 s in turns 51 to 75. At turn 88 the prompt reached the context of 8,192 tokens. From then on, each model call took about 300 s on this CPU, nearly all of it to read the prompt. The turns took 308 to 621 s, and the run stopped at its time limit after turn 94.
 
-The tool messages stayed paired in every case: 0 of 13,336 model requests had a `ToolMessage` without its tool call. Issue #38352 reports such orphans after a summary, and they did not happen in our runs.
+Ollama cut the oldest part of the prompt without an error. The answers stayed right. But four recall questions on the last checkpoint all said that the model did not know. The fifth failed with HTTP 400, `request (8192 tokens) exceeds the available context size (8192 tokens)`.
+
+With a trigger, the median turn stayed between 5.4 and 7.5 s. The median turn with a summary call took 55 to 108 s, because the summary is one more model call over the old messages. The summary call alone took 44 to 85 s at the median. LangChain, LangGraph, and Postgres took 18.9 to 24.7 ms of a turn at the median.
+
+A summary can lose facts. The 6,000-token trigger summarized first at turn 65. From turn 75 on, the model knew none of the five facts, in 6 of 6 probes. The 20-message trigger lost the code word from turn 100 on. The 60-message trigger kept all five in all 8 probes. Check what your summary keeps before you trust a trigger.
+
+The tool messages stayed paired in every case. 0 of 1,143 model requests had a `ToolMessage` without its tool call (Qwen3 4B, x86 server guest). Issue #38352 reports such orphans after a summary, and they did not happen in our runs.
 
 ```figure
 id: fig-5-5
 kind: chart
-title: turn time over 2,000 turns, with and without summarization
-claim: Without summarization the median turn grows from 37 ms to 663 ms, and with a trigger it stays between 32 and 47 ms after turn 100.
-caption: Each dot is the median turn time of 100 turns in one run, one run per variant. The shaded band spans the 10th to the 90th percentile of the same 100 turns, from the per-turn logs. The x axis is the turn number. From capture/lab/summary/long-threads-x86.json.
+title: turn time over 200 turns on Qwen3 4B, with and without summarization
+claim: Without summarization a turn takes 5 to 10 minutes once the context fills at turn 88, and with a trigger block medians stay at 4.4 to 9.2 s.
+caption: Each dot is the median turn time of 25 turns in one run, one run per variant. Each open ring is one turn of the run without summarization after its prompt filled the context. The shaded band spans the 10th to the 90th percentile of the same 25 turns. The y axis is on a log scale. From capture/lab/summary/long-threads-x86-real.json.
 ```
 
-The thread still grew with a summary. Every old checkpoint stays in Postgres, so storage grew in a straight line. With the 60-message trigger, it grew from 4.49 MB at turn 100 to 92.55 MB at turn 2,000. A summary limits what the model gets. It does not limit what the checkpointer keeps.
+The thread still grew with a summary. Every old checkpoint stays in Postgres, so storage grew in a straight line. With the 60-message trigger, it grew from 5.98 MB at turn 100 to 12.42 MB at turn 200. With the 6,000-token trigger, it grew from 17.58 MB to 38.00 MB. A summary limits what the model gets. It does not limit what the checkpointer keeps.
 
 ## Checkpoint growth, and DeltaChannel
 
@@ -159,8 +165,10 @@ The pregel page lists two rules for `DeltaChannel` {{docs oss/python/langgraph/p
 - Set a trigger on SummarizationMiddleware, because the default never summarizes.
 - Trim on whole turns, and check that no ToolMessage starts the list.
 - Expect turn time to grow with the thread when nothing limits the context.
+- Size the trigger below the context of the model, because a full context is cut silently and then refused.
+- Test what a summary keeps with recall questions, because a summary can drop facts.
 - Use DeltaChannel for a long message channel, and keep its type for the life of the thread.
 - Delete old checkpoints yourself, because a summary does not shrink the checkpointer.
 ```
 
-Sources: capture/s_start.py, capture/s_middleware.py, capture/out/02-messages.txt, capture/out/10-mw-summarization.txt; capture/lab/summary/long-threads-x86.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/checkpoint-reads-x86.json, capture/lab/T10-long-threads-x86/01-turns-none.jsonl, capture/lab/T10-long-threads-x86/01-turns-msgs60_keep7.jsonl, capture/lab/T10-long-threads-x86/01-turns-tok6000_keep1500.jsonl, capture/lab/T10-long-threads-x86/01-turns-msgs20_keep1.jsonl, capture/lab/T03-checkpoint-cost-x86/01-steps.jsonl, capture/lab/T03-checkpoint-cost-x86/02-steps-5000.jsonl, capture/lab/T03-checkpoint-cost-x86/t03_ckpt.py; libs/langchain_v1/langchain/agents/middleware/summarization.py and libs/core/langchain_core/messages/utils.py at langchain==1.5.0; libs/langgraph/langgraph/channels/delta.py and libs/langgraph/langgraph/graph/message.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/short-term-memory, oss/python/langchain/middleware/built-in, oss/python/langgraph/pregel); GitHub issues langchain-ai/langchain#38352 and langchain-ai/langgraph#7714.
+Sources: capture/s_start.py, capture/s_middleware.py, capture/out/02-messages.txt, capture/out/10-mw-summarization.txt; capture/lab/summary/long-threads-x86-real.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/checkpoint-reads-x86.json, capture/lab/T10-long-threads-x86-real/01-turns-none.jsonl, capture/lab/T10-long-threads-x86-real/01-turns-msgs60_keep7.jsonl, capture/lab/T10-long-threads-x86-real/01-turns-tok6000_keep1500.jsonl, capture/lab/T10-long-threads-x86-real/01-turns-msgs20_keep1.jsonl, capture/lab/T10-long-threads-x86-real/02-none-probe-after-deadline.log, capture/lab/T10-long-threads-x86-real/t10r_long.py, capture/lab/T03-checkpoint-cost-x86/01-steps.jsonl, capture/lab/T03-checkpoint-cost-x86/02-steps-5000.jsonl, capture/lab/T03-checkpoint-cost-x86/t03_ckpt.py; libs/langchain_v1/langchain/agents/middleware/summarization.py and libs/core/langchain_core/messages/utils.py at langchain==1.5.0; libs/langgraph/langgraph/channels/delta.py and libs/langgraph/langgraph/graph/message.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/short-term-memory, oss/python/langchain/middleware/built-in, oss/python/langgraph/pregel); GitHub issues langchain-ai/langchain#38352 and langchain-ai/langgraph#7714.

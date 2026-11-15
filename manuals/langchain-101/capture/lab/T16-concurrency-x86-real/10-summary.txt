@@ -1,0 +1,16 @@
+T16 concurrency on one AsyncPostgresSaver with a real model. The x86 server guest, 2026-11-15.
+Model qwen3:4b-instruct-2507-q4_K_M via ChatOllama 1.1.0, temperature 0, seed 42, num_ctx 8192 (explicit), num_predict 128. Ollama 0.31.1 on CPU serves one request at a time.
+Stack: create_agent (langchain 1.5.0, langgraph 1.2.22), AsyncPostgresSaver (langgraph-checkpoint-postgres 3.2.1) on PostgreSQL 16.15 (max_connections 100), default durability. One asyncio process. Script t16r_conc.py; t16r_summarize.py writes 09-summary-table.txt.
+Each thread ran 2 runs of "Use the add tool to add a and b." (2 model calls + 1 tool call each, 5 checkpoints per run). Levels 1, 4, 16, 64 threads at once; configs: one connection (from_conn_string) and AsyncConnectionPool max 20; 2 reps per cell (16 cells, 650 runs, 1300 model calls).
+Checkpoint timings wrap aput, aput_writes and aget_tuple in the client (so they include event loop wait). Connections sampled from pg_stat_activity every 0.25 s.
+
+Results
+- All 650 runs finished with the right sum. Errors 0 in every cell.
+- The model is the bottleneck: 0.37 to 0.47 model calls per second and 8.2 to 10.4 output tokens per second in every cell, whatever the thread count or pool. 64 threads x 2 runs took 587 to 589 s (0.22 runs/s); at 1 thread a run took 4.3 to 5.4 s. Client-side up to 64 model calls were open at once, and Ollama answered them one at a time: the median model call grew from 2.1-2.3 s at 1 thread to 8.8 s at 4, 35 s at 16 and 139 s at 64.
+- Checkpoint writes stayed small at the median: aput p50 2.8 to 4.5 ms, aput_writes p50 3.7 to 5.8 ms in every cell. The tails grew with the number of coroutines: aput p99 at 64 threads 318 and 450 ms with one connection, 254 and 273 ms with the pool; at 16 threads 50-62 ms vs 45-47 ms. Summed checkpoint time at 64 threads was 57-66 s (one connection) and 47 s (pool) against 588 s wall, and these calls overlap.
+- Rows: 5 checkpoints, 7 writes and 7 blobs per run in every cell (640/896/896 at 64 threads).
+- Connections: one connection held 1-2 backends (the second is short-lived setup); the pool opened 3 at 1 thread, 6 at 4, 12-13 at 16 and 20-21 at 64, with at most 3 active at a sample.
+- Client CPU: 6.8 to 7.0 s for the 64-thread cells (about 1% of one core over 588 s).
+
+Changes against the fake run (fake model 20 ms, 1 to 500 threads): with a real CPU model the checkpointer is not the limit at any level we ran. The pool of 20 gave no throughput gain over one connection (0.436 calls/s in both at 64 threads); it only cut the p99 of checkpoint calls by about 20 to 40%. The fake-model numbers (207-341 steps per second) measure the saver; with Qwen3 4B on CPU the whole system ran 0.22 runs per second.
+Rows not to use: none. Do not read ckpt p99 as database time; at 64 threads it is mostly event loop wait in the client.

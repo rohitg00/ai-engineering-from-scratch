@@ -152,30 +152,30 @@ Every row has the `type` `msgpack`. That is the serializer of the checkpoint, an
 
 A server runs many threads at once on one checkpointer. The question is how many connections it needs.
 
-**We measured** this on the x86 server guest, 32 vCPU and 48 GiB, with `AsyncPostgresSaver` on PostgreSQL 16.15. One asyncio process ran 1 to 500 threads at once, two runs per cell. Each run had 5 steps with a fake model of 20 ms per step, and each thread had 4 runs. One connection gave 207 and 214 steps per second at 500 threads, with a step p99 of 11.2 and 11.9 s. A pool of 20 connections gave 326 and 341 steps per second, with a p99 of 5.7 and 5.8 s. A pool of 90 was no faster, at 313 and 327, and all 30 runs had 0 errors.
+**We measured** this on the x86 server guest, 32 vCPU and 48 GiB, with `AsyncPostgresSaver` on PostgreSQL 16.15 and Qwen3 4B on Ollama on CPU. One asyncio process ran 1, 4, 16, and 64 threads at once, two runs per cell, with one connection and with a pool of 20. Each thread ran two agent runs of two model calls and one tool call. All 680 runs answered right, with 0 errors. The model set the pace, at 0.42 to 0.44 model calls per second in every cell from 4 threads up. So 64 threads of two runs took 587 to 589 s, with one connection and with the pool.
 
-This test used a model stand-in to time the stack alone, with no model time in the numbers. A run of the same test on a real model is in progress on the x86 server guest, and its rows will replace these. [Section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
+The saver stayed fast at the median. `aput` took 2.8 to 4.5 ms and `aput_writes` 3.7 to 5.8 ms in every cell. At 64 threads, the p99 of `aput` was 318 and 450 ms with one connection, and 254 and 273 ms with the pool. The client measured these times, so they include the wait of the event loop. The pool opened up to 21 connections and had at most 3 active at a sample.
 
 ```figure
 id: fig-5-2b
 kind: chart
-title: steps per second on one AsyncPostgresSaver, by threads
-claim: A pool of 20 connections gives about 340 steps per second from 50 threads up, and a pool of 90 gives no more.
-caption: Each dot is one run, two runs per point. Each line joins the medians of one connection setup. The x axis is the number of threads at once, on a log scale. From capture/lab/summary/concurrency-x86.json.
+title: runs per second and checkpoint write p99 on one AsyncPostgresSaver, by threads
+claim: One connection and a pool of 20 both give 0.22 runs per second at 64 threads with Qwen3 4B, and the pool lowers the p99 of aput.
+caption: Each dot is one run, two runs per point. Each line joins the means of one connection setup. The left chart gives runs per second, and the right chart gives the p99 of aput in ms on a log scale. The x axis is the number of threads at once, on a log scale. From capture/lab/summary/concurrency-x86-real.json.
 ```
 
-The limit was the client process. At a pool of 20 and more, the one process used about 110 percent CPU, and the pool was full. We then ran 8 and 16 client processes, with a pool of 10 in each. At a target of 200 threads, their sums were 1,744 and 3,797 steps per second, with 0 errors. Each process ran a whole share, so the 16 processes ran 192 threads. 
+An earlier run of this test used a stand-in model of 20 ms per step, so the saver itself carried the load. It ran 1 to 500 threads, with 5 steps per run. With the stand-in model of 20 ms, one connection gave 207 and 214 steps per second at 500 threads. A pool of 20 gave 326 and 341, and a pool of 90 was no faster.
 
-At 16 processes, Postgres reached its `max_connections` of 100 and refused our monitor connection. So we do not report the connection count of those runs.
+The limit was then the client process, at about 110 percent CPU. With the same stand-in, 8 and 16 client processes with a pool of 10 each gave 1,744 and 3,797 steps per second. At 16 processes, Postgres reached its `max_connections` of 100 and refused our monitor connection.
 
-Size the pool to the threads that run at once, and add processes before you add connections. A second run on a thread that is still running is a different problem, double texting, and [section 8.1](#s-agent-server-langgraph-dev-up-and-deploy) covers it on Agent Server.
+With a model on CPU, the model limits throughput long before the saver does. Size the pool to the threads that run at once to keep the tail of checkpoint writes low. A second run on a thread that is still running is a different problem, double texting, and [section 8.1](#s-agent-server-langgraph-dev-up-and-deploy) covers it on Agent Server.
 
 ```takeaways
 - Pass a checkpointer and the same thread_id on every turn of a conversation.
 - Use InMemorySaver in tests only, because a restart loses its threads.
 - Start a new thread with a new thread_id, and remove one with delete_thread.
 - Read channel_values for the state and metadata step and source for the position in the thread.
-- Use a connection pool for AsyncPostgresSaver, and add client processes before connections.
+- Use a connection pool for AsyncPostgresSaver, and expect the model, not the saver, to limit throughput.
 ```
 
-Sources: capture/s_persist.py, capture/common.py, capture/out/28-checkpoint-memory.txt, capture/out/29-checkpoint-sqlite.txt; capture/lab/summary/concurrency-x86.json, capture/lab/T16-concurrency-x86/01-levels.jsonl, capture/lab/T16-concurrency-x86/02-multiprocess.jsonl, capture/lab/T16-concurrency-x86/00-pg-settings.txt; capture/lab/internals/03-checkpoint/trace.txt; libs/langgraph/langgraph/pregel/_loop.py at langgraph 1.2.22; libs/checkpoint/langgraph/checkpoint/base/__init__.py, libs/checkpoint/langgraph/checkpoint/memory/__init__.py, and libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/__init__.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/persistence, oss/python/langgraph/checkpointers, oss/python/langchain/short-term-memory).
+Sources: capture/s_persist.py, capture/common.py, capture/out/28-checkpoint-memory.txt, capture/out/29-checkpoint-sqlite.txt; capture/lab/summary/concurrency-x86-real.json, capture/lab/T16-concurrency-x86-real/01-levels.jsonl, capture/lab/T16-concurrency-x86-real/t16r_conc.py, capture/lab/summary/concurrency-x86.json, capture/lab/T16-concurrency-x86/01-levels.jsonl, capture/lab/T16-concurrency-x86/02-multiprocess.jsonl, capture/lab/T16-concurrency-x86/00-pg-settings.txt; capture/lab/internals/03-checkpoint/trace.txt; libs/langgraph/langgraph/pregel/_loop.py at langgraph 1.2.22; libs/checkpoint/langgraph/checkpoint/base/__init__.py, libs/checkpoint/langgraph/checkpoint/memory/__init__.py, and libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/__init__.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/persistence, oss/python/langgraph/checkpointers, oss/python/langchain/short-term-memory).

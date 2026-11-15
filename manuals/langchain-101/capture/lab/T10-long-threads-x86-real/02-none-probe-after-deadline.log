@@ -1,0 +1,110 @@
+{'fact': 'code word', 'answer': "I don't have access to any code words you may have given. Please provide more context or clarify your question.", 'correct': False, 'ms': 309475.1, 'calls': [{'ms': 309430.7, 'req_msgs': 336, 'approx_tok': 8298, 'in_tok': 8176, 'out_tok': 24, 'prompt_eval_ms': 297763.1, 'eval_ms': 2885.9, 'orphans': 0, 'n_tool_calls': 0}]}
+{'fact': 'order number', 'answer': "I don't know your order number.", 'correct': False, 'ms': 314897.7, 'calls': [{'ms': 314853.8, 'req_msgs': 336, 'approx_tok': 8295, 'in_tok': 8173, 'out_tok': 9, 'prompt_eval_ms': 304478.4, 'eval_ms': 1092.6, 'orphans': 0, 'n_tool_calls': 0}]}
+{'fact': 'cat name', 'answer': "I don't know your cat's name.", 'correct': False, 'ms': 11833.5, 'calls': [{'ms': 11798.3, 'req_msgs': 336, 'approx_tok': 8295, 'in_tok': 8174, 'out_tok': 10, 'prompt_eval_ms': 1848.2, 'eval_ms': 1206.2, 'orphans': 0, 'n_tool_calls': 0}]}
+{'fact': 'city', 'answer': "I don't know your favorite city.", 'correct': False, 'ms': 11285.4, 'calls': [{'ms': 11254.9, 'req_msgs': 336, 'approx_tok': 8296, 'in_tok': 8173, 'out_tok': 9, 'prompt_eval_ms': 1787.4, 'eval_ms': 1050.3, 'orphans': 0, 'n_tool_calls': 0}]}
+Traceback (most recent call last):
+  File "<lab>/t10r_probe_after.py", line 37, in <module>
+    main()
+    ~~~~^^
+  File "<lab>/t10r_probe_after.py", line 28, in main
+    po = agent.invoke({"messages": [{"role": "user", "content": q}]}, {"configurable": {"thread_id": tid, "checkpoint_id": ck}})
+  File "<site-packages>/langgraph/pregel/main.py", line 4025, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<11 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "<site-packages>/langgraph/pregel/main.py", line 3084, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "<site-packages>/langgraph/pregel/_runner.py", line 210, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "<site-packages>/langgraph/pregel/_retry.py", line 637, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "<site-packages>/langgraph/_internal/_runnable.py", line 794, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "<site-packages>/langgraph/_internal/_runnable.py", line 479, in invoke
+    ret = self.func(*args, **kwargs)
+  File "<site-packages>/langchain/agents/factory.py", line 1546, in model_node
+    result = wrap_model_call_handler(request, _execute_model_sync)
+  File "<site-packages>/langchain/agents/factory.py", line 330, in normalized_single
+    return _to_composed_result(single_handler(request, handler))
+                               ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "<lab>/t10r_long.py", line 73, in wrap_model_call
+    resp = handler(request)
+  File "<site-packages>/langchain/agents/factory.py", line 1509, in _execute_model_sync
+    output = model_.invoke(messages)
+  File "<site-packages>/langchain_core/runnables/base.py", line 6001, in invoke
+    return self.bound.invoke(
+           ~~~~~~~~~~~~~~~~~^
+        input,
+        ^^^^^^
+        self._merge_configs(config),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        **{**self.kwargs, **kwargs},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "<site-packages>/langchain_core/language_models/chat_models.py", line 529, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "<site-packages>/langchain_core/language_models/chat_models.py", line 1920, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<site-packages>/langchain_core/language_models/chat_models.py", line 1727, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "<site-packages>/langchain_core/language_models/chat_models.py", line 2065, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "<site-packages>/langchain_ollama/chat_models.py", line 1200, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "<site-packages>/langchain_ollama/chat_models.py", line 1135, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<site-packages>/langchain_ollama/chat_models.py", line 1224, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<site-packages>/langchain_ollama/chat_models.py", line 1122, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "<site-packages>/ollama/_client.py", line 193, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: {"error":{"code":400,"message":"request (8192 tokens) exceeds the available context size (8192 tokens), try increasing it","type":"exceed_context_size_error","n_prompt_tokens":8192,"n_ctx":8192}} (status code: 400)
+During task with name 'model' and id 'c5c9d797-8053-d167-cb5a-f25e3aba9237'

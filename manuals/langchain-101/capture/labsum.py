@@ -1994,7 +1994,214 @@ def prodapp_outputs():
     }
 
 
+def quant(values, q, digits=1):
+    data = sorted(values)
+    k = (len(data) - 1) * q
+    low = int(k)
+    high = min(low + 1, len(data) - 1)
+    return r(data[low] + (data[high] - data[low]) * (k - low), digits)
+
+
+REAL_X86_MODEL = "qwen3:4b-instruct-2507-q4_K_M via ChatOllama 1.1.0, temperature 0, seed 42, num_ctx 8192 set by the script, Ollama 0.31.1 on CPU, one request at a time"
+
+
+def long_threads_x86_real():
+    import ast
+
+    folder = "T10-long-threads-x86-real"
+    names = ["none", "msgs60_keep7", "tok6000_keep1500", "msgs20_keep1"]
+
+    def largest(row):
+        return max(call["in_tok"] or 0 for call in row["calls"])
+
+    def sums_in_answer(row):
+        text = row["answer"].replace(",", "")
+        return all(re.search(rf"(?<!\d){n}(?!\d)", text) for n in row["expect"])
+
+    variants = {}
+    for name in names:
+        data = rows(f"{folder}/01-turns-{name}.jsonl")
+        head = data[0]
+        turns = [row for row in data if row.get("exp") == "T10r"]
+        calls = [call for row in turns for call in row["calls"]]
+        summaries = [entry for row in turns for entry in row["summ"]]
+        adds = [row for row in turns if row["expect"]]
+        plain = [row["latency_ms"] for row in turns if row["summary_calls"] == 0]
+        summed = [row["latency_ms"] for row in turns if row["summary_calls"] > 0]
+        blocks = []
+        for start in range(1, turns[-1]["turn"] + 1, 25):
+            part = [row for row in turns if start <= row["turn"] < start + 25]
+            times = [row["latency_ms"] for row in part]
+            sized = [row for row in part if "bytes" in row]
+            part_adds = [row for row in part if row["expect"]]
+            blocks.append({
+                "turns": f"{part[0]['turn']}-{part[-1]['turn']}",
+                "turn_p10_ms": quant(times, 0.1),
+                "turn_p50_ms": quant(times, 0.5),
+                "turn_p90_ms": quant(times, 0.9),
+                "prompt_tokens_max": max(largest(row) for row in part),
+                "summary_turns": [row["turn"] for row in part if row["summary_calls"]],
+                "add_turns_right": f"{sum(1 for row in part_adds if row['correct'])}/{len(part_adds)}",
+                "thread_mb": r(sized[-1]["bytes"]["main_total"] / 1e6, 2) if sized else None,
+            })
+        full = next((row["turn"] for row in turns if largest(row) >= head["num_ctx"] - 1), None)
+        last = [row for row in turns if "bytes" in row][-1]
+        variants[name] = {
+            "summarization": head["summarization"],
+            "turns": len(turns),
+            "model_calls": len(calls),
+            "summary_calls": sum(row["summary_calls"] for row in turns),
+            "errors": sum(1 for row in turns if row["error"]),
+            "orphan_tool_messages": sum(call["orphans"] for call in calls),
+            "add_turns_right": f"{sum(1 for row in adds if row['correct'])}/{len(adds)}",
+            "add_turns_sums_in_answer": f"{sum(1 for row in adds if sums_in_answer(row))}/{len(adds)}",
+            "add_turns_tool_ran": f"{sum(1 for row in adds if row['tool_msgs_this_turn'] >= len(row['expect']))}/{len(adds)}",
+            "turn_p50_ms_without_summary": quant(plain, 0.5),
+            "turn_p50_ms_with_summary": quant(summed, 0.5) if summed else None,
+            "summary_call_p50_ms": quant([entry["ms"] for entry in summaries], 0.5) if summaries else None,
+            "summary_call_max_ms": r(max(entry["ms"] for entry in summaries), 1) if summaries else None,
+            "framework_p50_ms": quant([row["framework_ms"] for row in turns], 0.5),
+            "prompt_tokens_max": max(largest(row) for row in turns),
+            "context_full_from_turn": full,
+            "full_context_turns": [{"turn": row["turn"], "turn_s": r(row["latency_ms"] / 1000, 1), "prompt_tokens_max": largest(row)} for row in turns if full and row["turn"] >= full],
+            "thread": {"turn": last["turn"], "mb": r(last["bytes"]["main_total"] / 1e6, 2)},
+            "blocks": blocks,
+            "recall": [{"turn": row["turn"], "right": row["recall"], "missed": [probe["fact"] for probe in row["probes"] if not probe["correct"]]} for row in turns if "probes" in row],
+        }
+    log = read(f"{folder}/02-none-probe-after-deadline.log")
+    answered = [ast.literal_eval(line) for line in log.splitlines() if line.startswith("{'fact'")]
+    refusal = re.search(r'"message":"([^"]+)"', log)
+    return {
+        "machine": X86,
+        "model": REAL_X86_MODEL + "; num_predict 160, and 512 for the summary model",
+        "saver": "PostgresSaver on PostgreSQL 16.15, default durability",
+        "run": "create_agent, 200 turns in one thread per variant; turns 1 to 5 give five facts, then a plain answer, one add call, and two parallel add calls in turn; five recall questions every 25 turns on a fork of the thread",
+        "runs_per_variant": 1,
+        "deadline": "about 70 minutes per variant; the run without summarization stopped after turn 94",
+        "thread_mb": "bytes.main_total, the thread without the bytes of the recall forks",
+        "sources": [f"capture/lab/{folder}/01-turns-{name}.jsonl" for name in names] + [f"capture/lab/{folder}/02-none-probe-after-deadline.log"],
+        "model_calls_total": sum(entry["model_calls"] for entry in variants.values()),
+        "orphan_tool_messages_total": sum(entry["orphan_tool_messages"] for entry in variants.values()),
+        "variants": variants,
+        "none_after_deadline": {
+            "answered": [{"fact": probe["fact"], "right": probe["correct"], "answer": probe["answer"], "messages": probe["calls"][0]["req_msgs"], "prompt_tokens": probe["calls"][0]["in_tok"]} for probe in answered],
+            "fifth": refusal.group(1) if refusal else None,
+        },
+    }
+
+
+def concurrency_x86_real():
+    folder = "T16-concurrency-x86-real"
+    data = [row for row in rows(f"{folder}/01-levels.jsonl") if row.get("exp") == "T16r"]
+    cells = {}
+    for row in sorted(data, key=lambda row: (row["config"], row["level"], row["rep"])):
+        cell = cells.setdefault(f"{row['config']} {row['level']}", {"config": row["config"], "threads": row["level"], "reps": []})
+        cell["reps"].append({
+            "rep": row["rep"],
+            "wall_s": r(row["wall_s"], 1),
+            "runs": row["runs_expected"],
+            "runs_right": row["runs_correct"],
+            "errors": row["errors"],
+            "runs_per_s": r(row["runs_ok"] / row["wall_s"], 3),
+            "model_calls_per_s": row["model_calls_per_s"],
+            "model_calls_open_max": row["model_client_overlap_max"],
+            "model_call_p50_s": row["model_call_s"]["p50"],
+            "run_p50_ms": round(row["run_ms"]["p50"]),
+            "aput_p50_ms": r(row["ckpt_put_ms"]["p50"], 1),
+            "aput_p99_ms": r(row["ckpt_put_ms"]["p99"], 1),
+            "aput_writes_p50_ms": r(row["ckpt_put_writes_ms"]["p50"], 1),
+            "aput_writes_p99_ms": r(row["ckpt_put_writes_ms"]["p99"], 1),
+            "aget_tuple_p50_ms": r(row["ckpt_get_tuple_ms"]["p50"], 1),
+            "aget_tuple_p99_ms": r(row["ckpt_get_tuple_ms"]["p99"], 1),
+            "checkpoint_ms_total": r(row["ckpt_ms_total"], 0),
+            "rows": row["rows"],
+            "pg_conns_max": row["pg_conns"]["max"],
+            "pg_conns_active_max": row["pg_conns"]["max_active"],
+            "client_cpu_s": row["client_cpu_s"],
+        })
+    return {
+        "machine": X86,
+        "model": REAL_X86_MODEL + "; num_predict 128",
+        "saver": "AsyncPostgresSaver (langgraph-checkpoint-postgres 3.2.1) on PostgreSQL 16.15, max_connections 100, default durability",
+        "run": "one asyncio process; each thread ran 2 agent runs of 2 model calls and 1 add call; one connection (single) and AsyncConnectionPool of 20 (pool20)",
+        "reps_per_cell": 2,
+        "runs_total": sum(rep["runs"] for cell in cells.values() for rep in cell["reps"]),
+        "runs_right_total": sum(rep["runs_right"] for cell in cells.values() for rep in cell["reps"]),
+        "errors_total": sum(rep["errors"] for cell in cells.values() for rep in cell["reps"]),
+        "not_used": "the p99 of checkpoint calls at 16 and 64 threads as database time, because the client timings hold event loop wait",
+        "sources": [f"capture/lab/{folder}/01-levels.jsonl", f"capture/lab/{folder}/t16r_conc.py"],
+        "cells": dict(sorted(cells.items(), key=lambda item: (item[1]["config"], item[1]["threads"]))),
+    }
+
+
+def agent_server_x86_real():
+    folder = "T15-agent-server-x86-real"
+
+    def stat(entry):
+        return {key: r(entry[key], 1) for key in ("p50", "p99", "min", "max")}
+
+    load = [{
+        "server": row["server"],
+        "clients": row["concurrency"],
+        "runs": row["runs"],
+        "ok": row["ok"],
+        "errors": row["errors"],
+        "wall_s": r(row["wall_s"], 1),
+        "runs_per_s": r(row["runs_per_s"], 3),
+        "model_calls_per_s": r(row["model_calls_per_s"], 3),
+        "model_calls_open_max": row["model_overlap_max"],
+        "client_ms": stat(row["client_ms"]),
+        "model_ms_per_run": stat(row["model_ms_per_run"]),
+        "server_added_ms": stat(row["server_added_ms"]),
+        "wait_before_first_model_ms": stat(row["wait_before_first_model_ms"]),
+    } for row in rows(f"{folder}/02-load.jsonl")]
+    floor = [{
+        "server": row["server"],
+        "how": row["how"],
+        "n": row["n"],
+        "ok": row["ok"],
+        "client_ms": stat(row["client_ms"]),
+        "model_ms": stat(row["model_ms"]),
+        "server_added_ms": stat(row["server_added_ms"]),
+        "wait_before_first_model_ms": stat(row["wait_before_first_model_ms"]),
+    } for row in rows(f"{folder}/03-floor.jsonl")]
+    workers = [{
+        "server": row["server"],
+        "background_runs": row["background_runs"],
+        "wall_s": r(row["wall_s"], 1),
+        "statuses": row["final_statuses"],
+        "runs_in_flight_max": row["max_runs_in_flight"],
+        "model_calls_open_max": row["max_model_calls_in_flight_client_side"],
+        "run_start_offsets_s": row["run_start_offsets_s"],
+    } for row in rows(f"{folder}/04-workers.jsonl")]
+    recursion = [{
+        "config": row["config"],
+        "status": row["run_status"],
+        "error": "GraphRecursionError" if "GraphRecursionError" in (row.get("result") or "") else None,
+        "wall_s": r(row["wall_s"], 1),
+        "model_calls": row["model_calls"],
+        "tool_calls": row["tool_calls_ping"],
+        "status_at_cap": row.get("status_at_cap"),
+    } for row in rows(f"{folder}/01-recursion.jsonl")]
+    return {
+        "machine": X86,
+        "model": REAL_X86_MODEL + "; num_predict 128",
+        "server": "langgraph dev --no-browser --no-reload, langgraph-cli 0.4.43, langgraph-api 0.18.0, langgraph-runtime-inmem 0.38.0; dev-default has no jobs setting, dev-njobs10 has --n-jobs-per-worker 10",
+        "graphs": "agent: create_agent with an add tool; loopagent: create_agent with a ping tool that always asks to be called again",
+        "server_added": "client time of a run minus the time inside its model calls",
+        "not_used": "ollama_busy_s of 02-load.jsonl where model_overlap_max is above 1, because Ollama's total_duration includes its own queue",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-recursion.jsonl", "02-load.jsonl", "03-floor.jsonl", "04-workers.jsonl", "t15r_drive.py", "t15rapp/graphs.py")],
+        "recursion": recursion,
+        "floor": floor,
+        "workers": workers,
+        "load": load,
+    }
+
+
 SUMMARIES = {
+    "long-threads-x86-real.json": long_threads_x86_real,
+    "concurrency-x86-real.json": concurrency_x86_real,
+    "agent-server-x86-real.json": agent_server_x86_real,
     "langsmith-account-mac.json": langsmith_account,
     "overhead-mac-real.json": overhead_mac_real,
     "streaming-mac-real.json": streaming_mac_real,

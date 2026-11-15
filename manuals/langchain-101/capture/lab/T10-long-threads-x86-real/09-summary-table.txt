@@ -1,0 +1,76 @@
+== msgs20_keep1 (01-turns-msgs20_keep1.jsonl) turns=200 summarization={'trigger': ['messages', 20], 'keep': ['messages', 1]}
+  model calls 330, summary calls 39, errors 0, orphans 0
+  tool turns correct (answer has every sum and tool ran for each) 103/130; answer has every sum 129/130; tool ran for each addition 104/130
+  turn p50 without a summary call 5372 ms (n=161); with one 57341 ms (n=39); summary turns [8, 13, 18, 23, 28, 33, 38, 43, 48, 53, 58, 63, 68, 73, 78, 83, 88, 93, 98, 103, 108, 113, 118, 123, 128, 133, 138, 143, 148, 153, 158, 163, 168, 173, 178, 183, 188, 193, 198]
+  sum of turn latency 3132 s; framework ms p50 18.9
+  block      lat_p50  lat_p90  model_p50  frame_p50  max_in_tok  max_req_msgs  summaries  tool_ok   MB_main
+     1-50       5549    57200      5433      18.2       1202           19         9  23/30       1.54
+    51-100      5821    60065      5505      18.6       1210           19        10  26/33       3.22
+   101-150      5788    57448      5538      19.5       1219           19        10  26/33       4.80
+   151-200      5550    52604      5095      19.2       1208           19        10  28/34       6.40
+  recall probes (turn: correct/5, facts missed):
+    t25: 5/5 [] in_tok=[967]
+    t50: 5/5 [] in_tok=[1020]
+    t75: 5/5 [] in_tok=[1005]
+    t100: 4/5 ['code word'] in_tok=[995]
+    t125: 4/5 ['code word'] in_tok=[1018]
+    t150: 4/5 ['code word'] in_tok=[1007]
+    t175: 4/5 ['code word'] in_tok=[983]
+    t200: 4/5 ['code word'] in_tok=[1023]
+  summary call ms p50 50975 max 57595; in_tok p50 1721.0
+  bytes at turn 200: {'ckpt_json': 1401804, 'blobs': 5227558, 'writes': 443971, 'total': 7073333, 'rows': 1330, 'probe_bytes_cum': 674164, 'main_total': 6399169}
+== msgs60_keep7 (01-turns-msgs60_keep7.jsonl) turns=200 summarization={'trigger': ['messages', 60], 'keep': ['messages', 7]}
+  model calls 330, summary calls 13, errors 0, orphans 0
+  tool turns correct (answer has every sum and tool ran for each) 126/130; answer has every sum 126/130; tool ran for each addition 130/130
+  turn p50 without a summary call 5498 ms (n=187); with one 55247 ms (n=13); summary turns [20, 34, 48, 62, 77, 91, 105, 119, 134, 148, 162, 176, 191]
+  sum of turn latency 1792 s; framework ms p50 19.5
+  block      lat_p50  lat_p90  model_p50  frame_p50  max_in_tok  max_req_msgs  summaries  tool_ok   MB_main
+     1-50       5393     9725      5374      19.2       2136           59         3  29/30       2.80
+    51-100      5565     9688      5545      19.6       2146           59         3  32/33       5.98
+   101-150      5643     9714      5623      19.4       2144           59         4  33/33       9.23
+   151-200      5565     9587      5545      20.2       2133           59         3  32/34      12.42
+  recall probes (turn: correct/5, facts missed):
+    t25: 5/5 [] in_tok=[1270]
+    t50: 5/5 [] in_tok=[1015]
+    t75: 5/5 [] in_tok=[2037]
+    t100: 5/5 [] in_tok=[1728]
+    t125: 5/5 [] in_tok=[1356]
+    t150: 5/5 [] in_tok=[1003]
+    t175: 5/5 [] in_tok=[2068]
+    t200: 5/5 [] in_tok=[1803]
+  summary call ms p50 43598 max 48666; in_tok p50 2871.0
+  bytes at turn 200: {'ckpt_json': 1401488, 'blobs': 12028378, 'writes': 395964, 'total': 13825830, 'rows': 1330, 'probe_bytes_cum': 1408696, 'main_total': 12417134}
+== tok6000_keep1500 (01-turns-tok6000_keep1500.jsonl) turns=200 summarization={'trigger': ['tokens', 6000], 'keep': ['tokens', 1500]}
+  model calls 330, summary calls 4, errors 0, orphans 0
+  tool turns correct (answer has every sum and tool ran for each) 130/130; answer has every sum 130/130; tool ran for each addition 130/130
+  turn p50 without a summary call 7452 ms (n=196); with one 108427 ms (n=4); summary turns [65, 105, 144, 184]
+  sum of turn latency 1997 s; framework ms p50 24.7
+  block      lat_p50  lat_p90  model_p50  frame_p50  max_in_tok  max_req_msgs  summaries  tool_ok   MB_main
+     1-50       5524     9619      5503      20.5       4648          174         0  30/30       6.35
+    51-100      8892    14202      8866      25.4       5970          224         1  33/33      17.58
+   101-150      8971    15044      8944      25.6       5985          206         2  33/33      27.87
+   151-200      8488    13138      8464      25.6       5964          204         1  34/34      38.00
+  recall probes (turn: correct/5, facts missed):
+    t25: 5/5 [] in_tok=[2201]
+    t50: 5/5 [] in_tok=[4686]
+    t75: 0/5 ['code word', 'order number', 'cat name', 'city', 'budget'] in_tok=[3131]
+    t100: 0/5 ['code word', 'order number', 'cat name', 'city', 'budget'] in_tok=[5586]
+    t125: 0/5 ['code word', 'order number', 'cat name', 'city', 'budget'] in_tok=[4249]
+    t150: 0/5 ['code word', 'order number', 'cat name', 'city', 'budget'] in_tok=[2806]
+    t175: 0/5 ['code word', 'order number', 'cat name', 'city', 'budget'] in_tok=[5249]
+    t200: 0/5 ['code word', 'order number', 'cat name', 'city', 'budget'] in_tok=[3981]
+  summary call ms p50 84828 max 88850; in_tok p50 5185.5
+  bytes at turn 200: {'ckpt_json': 1401291, 'blobs': 40534088, 'writes': 443888, 'total': 42379267, 'rows': 1330, 'probe_bytes_cum': 4383669, 'main_total': 37995598}
+== none (01-turns-none.jsonl) turns=94 summarization=None
+  model calls 153, summary calls 0, errors 0, orphans 0
+  tool turns correct (answer has every sum and tool ran for each) 59/59; answer has every sum 59/59; tool ran for each addition 59/59
+  turn p50 without a summary call 7398 ms (n=94); with one nan ms (n=0); summary turns []
+  sum of turn latency 4442 s; framework ms p50 23.9
+  block      lat_p50  lat_p90  model_p50  frame_p50  max_in_tok  max_req_msgs  summaries  tool_ok   MB_main
+     1-50       5819    10294      5800      18.7       4648          174         0  30/30       6.21
+    51-94      12850   524046     12819      30.0       8191          334         0  29/29      20.52
+  recall probes (turn: correct/5, facts missed):
+    t25: 5/5 [] in_tok=[2201]
+    t50: 5/5 [] in_tok=[4686]
+    t75: 5/5 [] in_tok=[7064]
+  bytes at turn 90: {'ckpt_json': 332046, 'blobs': 22348747, 'writes': 144007, 'total': 22824800, 'rows': 427, 'probe_bytes_cum': 2308241, 'main_total': 20516559}

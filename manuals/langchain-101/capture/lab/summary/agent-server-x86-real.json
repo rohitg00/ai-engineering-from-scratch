@@ -1,0 +1,440 @@
+{
+ "floor": [
+  {
+   "client_ms": {
+    "max": 5847.3,
+    "min": 5397.8,
+    "p50": 5486.4,
+    "p99": 5843.6
+   },
+   "how": "wait",
+   "model_ms": {
+    "max": 4807.9,
+    "min": 4382.1,
+    "p50": 4472.7,
+    "p99": 4806.5
+   },
+   "n": 10,
+   "ok": 10,
+   "server": "dev-default",
+   "server_added_ms": {
+    "max": 1039.4,
+    "min": 1012.8,
+    "p50": 1014.3,
+    "p99": 1037.3
+   },
+   "wait_before_first_model_ms": {
+    "max": 1027.9,
+    "min": 1002.4,
+    "p50": 1003.5,
+    "p99": 1025.8
+   }
+  },
+  {
+   "client_ms": {
+    "max": 5903.0,
+    "min": 5345.1,
+    "p50": 5443.2,
+    "p99": 5877.5
+   },
+   "how": "create_join",
+   "model_ms": {
+    "max": 4887.7,
+    "min": 4335.0,
+    "p50": 4429.4,
+    "p99": 4862.4
+   },
+   "n": 10,
+   "ok": 10,
+   "server": "dev-default",
+   "server_added_ms": {
+    "max": 1016.4,
+    "min": 1010.1,
+    "p50": 1014.6,
+    "p99": 1016.3
+   },
+   "wait_before_first_model_ms": {
+    "max": 1005.9,
+    "min": 999.7,
+    "p50": 1002.8,
+    "p99": 1005.8
+   }
+  },
+  {
+   "client_ms": {
+    "max": 5687.0,
+    "min": 4816.4,
+    "p50": 5138.6,
+    "p99": 5667.7
+   },
+   "how": "wait",
+   "model_ms": {
+    "max": 4711.7,
+    "min": 4286.5,
+    "p50": 4442.6,
+    "p99": 4695.8
+   },
+   "n": 10,
+   "ok": 10,
+   "server": "dev-njobs10",
+   "server_added_ms": {
+    "max": 1007.0,
+    "min": 529.9,
+    "p50": 661.2,
+    "p99": 1004.1
+   },
+   "wait_before_first_model_ms": {
+    "max": 996.5,
+    "min": 519.3,
+    "p50": 651.0,
+    "p99": 993.7
+   }
+  },
+  {
+   "client_ms": {
+    "max": 5344.9,
+    "min": 4844.1,
+    "p50": 5087.2,
+    "p99": 5340.7
+   },
+   "how": "create_join",
+   "model_ms": {
+    "max": 4663.4,
+    "min": 4273.7,
+    "p50": 4384.6,
+    "p99": 4653.9
+   },
+   "n": 10,
+   "ok": 10,
+   "server": "dev-njobs10",
+   "server_added_ms": {
+    "max": 945.5,
+    "min": 568.0,
+    "p50": 651.1,
+    "p99": 935.9
+   },
+   "wait_before_first_model_ms": {
+    "max": 935.3,
+    "min": 558.4,
+    "p50": 641.0,
+    "p99": 925.7
+   }
+  }
+ ],
+ "graphs": "agent: create_agent with an add tool; loopagent: create_agent with a ping tool that always asks to be called again",
+ "load": [
+  {
+   "client_ms": {
+    "max": 5566.9,
+    "min": 5062.1,
+    "p50": 5419.5,
+    "p99": 5561.5
+   },
+   "clients": 1,
+   "errors": 0,
+   "model_calls_open_max": 1,
+   "model_calls_per_s": 0.37,
+   "model_ms_per_run": {
+    "max": 4552.8,
+    "min": 4348.8,
+    "p50": 4420.2,
+    "p99": 4547.6
+   },
+   "ok": 10,
+   "runs": 10,
+   "runs_per_s": 0.185,
+   "server": "dev-default",
+   "server_added_ms": {
+    "max": 1014.1,
+    "min": 640.1,
+    "p50": 1012.6,
+    "p99": 1014.1
+   },
+   "wait_before_first_model_ms": {
+    "max": 1003.9,
+    "min": 629.3,
+    "p50": 1002.4,
+    "p99": 1003.9
+   },
+   "wall_s": 54.1
+  },
+  {
+   "client_ms": {
+    "max": 18613.5,
+    "min": 5443.3,
+    "p50": 17635.2,
+    "p99": 18537.4
+   },
+   "clients": 4,
+   "errors": 0,
+   "model_calls_open_max": 1,
+   "model_calls_per_s": 0.443,
+   "model_ms_per_run": {
+    "max": 4563.2,
+    "min": 4310.9,
+    "p50": 4385.5,
+    "p99": 4552.2
+   },
+   "ok": 10,
+   "runs": 10,
+   "runs_per_s": 0.222,
+   "server": "dev-default",
+   "server_added_ms": {
+    "max": 14178.0,
+    "min": 1002.6,
+    "p50": 13189.3,
+    "p99": 14108.4
+   },
+   "wait_before_first_model_ms": {
+    "max": 14168.6,
+    "min": 992.1,
+    "p50": 13179.7,
+    "p99": 14098.9
+   },
+   "wall_s": 45.1
+  },
+  {
+   "client_ms": {
+    "max": 72220.0,
+    "min": 5427.8,
+    "p50": 70679.5,
+    "p99": 72071.8
+   },
+   "clients": 16,
+   "errors": 0,
+   "model_calls_open_max": 1,
+   "model_calls_per_s": 0.445,
+   "model_ms_per_run": {
+    "max": 4914.4,
+    "min": 4223.2,
+    "p50": 4408.8,
+    "p99": 4891.4
+   },
+   "ok": 32,
+   "runs": 32,
+   "runs_per_s": 0.223,
+   "server": "dev-default",
+   "server_added_ms": {
+    "max": 67740.1,
+    "min": 1007.3,
+    "p50": 66168.4,
+    "p99": 67628.5
+   },
+   "wait_before_first_model_ms": {
+    "max": 67729.1,
+    "min": 996.4,
+    "p50": 66157.8,
+    "p99": 67617.7
+   },
+   "wall_s": 143.7
+  },
+  {
+   "client_ms": {
+    "max": 5752.7,
+    "min": 4936.3,
+    "p50": 5128.7,
+    "p99": 5729.2
+   },
+   "clients": 1,
+   "errors": 0,
+   "model_calls_open_max": 1,
+   "model_calls_per_s": 0.382,
+   "model_ms_per_run": {
+    "max": 4817.3,
+    "min": 4331.8,
+    "p50": 4479.1,
+    "p99": 4806.2
+   },
+   "ok": 10,
+   "runs": 10,
+   "runs_per_s": 0.191,
+   "server": "dev-njobs10",
+   "server_added_ms": {
+    "max": 1019.7,
+    "min": 533.6,
+    "p50": 637.9,
+    "p99": 1018.3
+   },
+   "wait_before_first_model_ms": {
+    "max": 1008.8,
+    "min": 523.0,
+    "p50": 627.0,
+    "p99": 1007.4
+   },
+   "wall_s": 52.4
+  },
+  {
+   "client_ms": {
+    "max": 18806.8,
+    "min": 11723.6,
+    "p50": 17187.9,
+    "p99": 18727.2
+   },
+   "clients": 4,
+   "errors": 0,
+   "model_calls_open_max": 4,
+   "model_calls_per_s": 0.448,
+   "model_ms_per_run": {
+    "max": 17988.9,
+    "min": 10745.5,
+    "p50": 16479.2,
+    "p99": 17917.4
+   },
+   "ok": 10,
+   "runs": 10,
+   "runs_per_s": 0.224,
+   "server": "dev-njobs10",
+   "server_added_ms": {
+    "max": 980.8,
+    "min": 526.0,
+    "p50": 825.9,
+    "p99": 980.6
+   },
+   "wait_before_first_model_ms": {
+    "max": 970.1,
+    "min": 515.1,
+    "p50": 814.8,
+    "p99": 969.8
+   },
+   "wall_s": 44.6
+  },
+  {
+   "client_ms": {
+    "max": 82921.2,
+    "min": 28682.9,
+    "p50": 56032.6,
+    "p99": 82594.0
+   },
+   "clients": 16,
+   "errors": 0,
+   "model_calls_open_max": 10,
+   "model_calls_per_s": 0.452,
+   "model_ms_per_run": {
+    "max": 45191.4,
+    "min": 21496.3,
+    "p50": 43820.9,
+    "p99": 45158.2
+   },
+   "ok": 32,
+   "runs": 32,
+   "runs_per_s": 0.226,
+   "server": "dev-njobs10",
+   "server_added_ms": {
+    "max": 38210.2,
+    "min": 781.2,
+    "p50": 11589.9,
+    "p99": 37963.6
+   },
+   "wait_before_first_model_ms": {
+    "max": 38199.5,
+    "min": 769.4,
+    "p50": 11578.6,
+    "p99": 37952.8
+   },
+   "wall_s": 141.6
+  }
+ ],
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "model": "qwen3:4b-instruct-2507-q4_K_M via ChatOllama 1.1.0, temperature 0, seed 42, num_ctx 8192 set by the script, Ollama 0.31.1 on CPU, one request at a time; num_predict 128",
+ "not_used": "ollama_busy_s of 02-load.jsonl where model_overlap_max is above 1, because Ollama's total_duration includes its own queue",
+ "recursion": [
+  {
+   "config": {
+    "recursion_limit": 25
+   },
+   "error": "GraphRecursionError",
+   "model_calls": 13,
+   "status": "error",
+   "status_at_cap": null,
+   "tool_calls": 12,
+   "wall_s": 24.2
+  },
+  {
+   "config": {
+    "recursion_limit": 25
+   },
+   "error": "GraphRecursionError",
+   "model_calls": 13,
+   "status": "error",
+   "status_at_cap": null,
+   "tool_calls": 12,
+   "wall_s": 23.9
+  },
+  {
+   "config": {
+    "recursion_limit": 25
+   },
+   "error": "GraphRecursionError",
+   "model_calls": 13,
+   "status": "error",
+   "status_at_cap": null,
+   "tool_calls": 12,
+   "wall_s": 23.8
+  },
+  {
+   "config": null,
+   "error": null,
+   "model_calls": 58,
+   "status": "interrupted",
+   "status_at_cap": "running",
+   "tool_calls": 58,
+   "wall_s": 120.1
+  }
+ ],
+ "server": "langgraph dev --no-browser --no-reload, langgraph-cli 0.4.43, langgraph-api 0.18.0, langgraph-runtime-inmem 0.38.0; dev-default has no jobs setting, dev-njobs10 has --n-jobs-per-worker 10",
+ "server_added": "client time of a run minus the time inside its model calls",
+ "sources": [
+  "capture/lab/T15-agent-server-x86-real/01-recursion.jsonl",
+  "capture/lab/T15-agent-server-x86-real/02-load.jsonl",
+  "capture/lab/T15-agent-server-x86-real/03-floor.jsonl",
+  "capture/lab/T15-agent-server-x86-real/04-workers.jsonl",
+  "capture/lab/T15-agent-server-x86-real/t15r_drive.py",
+  "capture/lab/T15-agent-server-x86-real/t15rapp/graphs.py"
+ ],
+ "workers": [
+  {
+   "background_runs": 10,
+   "model_calls_open_max": 1,
+   "run_start_offsets_s": [
+    1.01,
+    5.67,
+    10.14,
+    14.7,
+    19.2,
+    23.69,
+    28.17,
+    32.74,
+    37.79,
+    42.2
+   ],
+   "runs_in_flight_max": 1,
+   "server": "dev-default",
+   "statuses": {
+    "success": 10
+   },
+   "wall_s": 47.1
+  },
+  {
+   "background_runs": 10,
+   "model_calls_open_max": 10,
+   "run_start_offsets_s": [
+    0.63,
+    0.64,
+    0.64,
+    0.64,
+    0.64,
+    0.64,
+    0.64,
+    0.65,
+    0.65,
+    0.66
+   ],
+   "runs_in_flight_max": 10,
+   "server": "dev-njobs10",
+   "statuses": {
+    "success": 10
+   },
+   "wall_s": 44.4
+  }
+ ]
+}
