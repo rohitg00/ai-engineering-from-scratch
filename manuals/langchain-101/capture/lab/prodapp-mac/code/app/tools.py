@@ -7,7 +7,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+import psycopg
 from langchain.tools import ToolRuntime, tool
+from psycopg.rows import dict_row
 
 FAQ = json.loads((Path(__file__).parent.parent / "data" / "faq.json").read_text())
 WORD = re.compile(r"[a-z]+")
@@ -50,13 +52,16 @@ async def refund_order(order_id: str, amount_cents: int, reason: str, runtime: T
         order = await cur.fetchone()
         if order is None:
             return json.dumps({"error": f"no order {order_id} on this account"})
+        remaining = order["total_cents"] - order["refunded_cents"]
+        if amount_cents <= 0:
+            return json.dumps({"error": f"amount_cents must be positive; {remaining} cents can be refunded"})
         cur = await conn.execute(
             "select refund_id, order_id, amount_cents from refunds where idempotency_key = %s", (key,)
         )
         if existing := await cur.fetchone():
             return json.dumps({**existing, "replayed": True})
-        if order["refunded_cents"] + amount_cents > order["total_cents"]:
-            return json.dumps({"error": "refund would exceed the order total"})
+        if amount_cents > remaining:
+            return json.dumps({"error": f"refund exceeds the {remaining} cents that can still be refunded"})
         cur = await conn.execute(
             "insert into refunds (idempotency_key, order_id, amount_cents, reason) values (%s, %s, %s, %s)"
             " returning refund_id, order_id, amount_cents",
@@ -104,6 +109,21 @@ async def recall_notes(runtime: ToolRuntime[Ctx]) -> str:
     """List the facts and preferences saved about this customer."""
     items = await runtime.store.asearch(("memories", runtime.context.user_id), limit=20)
     return json.dumps([item.value["text"] for item in items])
+
+
+def refund_description(tool_call, state, runtime):
+    args = tool_call["args"]
+    with psycopg.connect(runtime.context.pool.conninfo, row_factory=dict_row) as conn:
+        order = conn.execute(
+            "select item, total_cents, refunded_cents from orders where id = %s and user_id = %s",
+            (args.get("order_id"), runtime.context.user_id),
+        ).fetchone()
+    if order is None:
+        return f"Refund {args.get('amount_cents')} cents on {args.get('order_id')}: no such order on this account."
+    remaining = order["total_cents"] - order["refunded_cents"]
+    return (f"Refund {args.get('amount_cents')} cents on {args.get('order_id')} ({order['item']}). "
+            f"Order total {order['total_cents']} cents, refunded so far {order['refunded_cents']}, "
+            f"refundable now {remaining}. Reason: {args.get('reason')}")
 
 
 TOOLS = [read_order, refund_order, search_faq, create_ticket, save_note, recall_notes]

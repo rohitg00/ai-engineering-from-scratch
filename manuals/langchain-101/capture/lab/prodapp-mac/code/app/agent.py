@@ -9,7 +9,7 @@ from langchain.agents.middleware import (
 )
 
 from .middleware import Tracing, ToolTimeout, tool_error_message
-from .tools import IDEMPOTENT, TOOLS, Ctx
+from .tools import IDEMPOTENT, TOOLS, Ctx, refund_description
 
 SYSTEM = (
     "You are the support assistant for an outdoor gear shop. "
@@ -31,7 +31,8 @@ def build_agent(model, backup, checkpointer, store, settings, extra=()):
             ModelCallLimitMiddleware(run_limit=settings.model_calls_per_run, exit_behavior="end"),
             ModelFallbackMiddleware(backup),
             HumanInTheLoopMiddleware(
-                {"refund_order": {"allowed_decisions": ["approve", "reject"]}}, interrupt_mode="per_call"
+                {"refund_order": {"allowed_decisions": ["approve", "reject"], "description": refund_description}},
+                interrupt_mode="per_call",
             ),
             ToolErrorMiddleware(tool_error_message),
             ToolRetryMiddleware(tools=IDEMPOTENT, max_retries=2, initial_delay=0.1, on_failure="error"),

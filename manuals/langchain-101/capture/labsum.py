@@ -1884,6 +1884,98 @@ def prodapp_load():
     return {"cells": cells, **extra}
 
 
+FIX_CASES = ["refund_approved_once", "refund_rejected_has_no_side_effect", "refund_asked_twice",
+             "refund_tool_replay_is_idempotent", "new_message_while_waiting_for_approval", "status_then_refund_in_one_thread"]
+FIX_CRASH = "test_kill_mid_refund_then_resume_refunds_once"
+
+
+def fix_junit(path):
+    out = {}
+    for attrs, failure, _ in junit_cases(str(path)):
+        out[attrs["name"].replace("test_eval[", "").rstrip("]")] = "failed" if failure is not None else "passed"
+    return out
+
+
+def fix_run(root, model):
+    from pathlib import Path
+
+    reps = []
+    for rep in sorted((Path(root) / model).glob("rep-*")):
+        if not (rep / "junit.xml").exists():
+            continue
+        outcomes = fix_junit(rep / "junit.xml")
+        rows, proposals = {}, []
+        for case in FIX_CASES:
+            hits = list((rep / "cases").glob(f"*-{case}.json"))
+            if not hits:
+                continue
+            record = json.loads(hits[0].read_text(encoding="utf-8"))
+            rows[case] = record["refunds"]
+            for entry in record["log"]:
+                if isinstance(entry["result"], list):
+                    for kind, data in entry["result"]:
+                        if kind == "interrupt":
+                            proposals.append({"case": case, "amount_cents": data["args"].get("amount_cents"),
+                                              "description": data.get("description")})
+                        if kind == "tool_result" and data["name"] == "refund_order":
+                            proposals.append({"case": case, "result": data["content"]})
+        reps.append({"rep": rep.name, "outcomes": {k: v for k, v in outcomes.items() if k in FIX_CASES + [FIX_CRASH]},
+                     "refund_rows": rows, "approvals_and_results": proposals,
+                     "block": (rep / "block.txt").read_text(encoding="utf-8").splitlines()})
+    return reps
+
+
+def prodapp_fix():
+    from collections import Counter
+    from pathlib import Path
+
+    runs, fix = Path(PRODAPP_RUNS), Path(PRODAPP_RUNS) / "fix"
+    result = {"after": {}, "before": {}, "crash_after": {}, "crash_suite_after": {}, "load": {},
+              "note": "crash test results inside fix/suite were recorded with a broken parser and are replaced by fix/suite-crash"}
+    for model in ("qwen3-4b", "qwen3-14b"):
+        result["after"][model] = fix_run(fix / "suite", model)
+        for rep in result["after"][model]:
+            rep["outcomes"].pop(FIX_CRASH, None)
+        suite_crash = []
+        for rep in sorted((fix / "suite-crash" / model).glob("rep-*")):
+            if (rep / "junit.xml").exists():
+                report = rep / "crash-test.json"
+                data = json.loads(report.read_text(encoding="utf-8")) if report.exists() else {}
+                suite_crash.append({"rep": rep.name, "outcome": fix_junit(rep / "junit.xml").get(FIX_CRASH),
+                                    "first_run_last_event": data.get("first_run_last_event"),
+                                    "refund_rows": len(data.get("refund_rows") or []),
+                                    "after_restart_next": data.get("after_restart_next")})
+        result["crash_suite_after"][model] = suite_crash
+        result["before"][model] = [{"rep": r["rep"], "outcomes": r["outcomes"], "refund_rows": r["refund_rows"]}
+                                   for r in fix_run(runs / "suite", model)]
+        crash = fix / f"crash-{model}" / "crash-trials.json"
+        if crash.exists():
+            result["crash_after"][model] = [{k: t.get(k) for k in ("trial", "outcome", "approval_re_asked", "after_restart_next",
+                                                                   "replayed_flags", "refunded_cents")}
+                                            | {"refund_rows": len(t.get("refund_rows") or []),
+                                               "first_interrupt_description": (t.get("first_interrupts") or [{}])[0].get("description")}
+                                            for t in json.loads(crash.read_text(encoding="utf-8"))]
+    for label, folder in (("after", fix / "load"), ("before", runs / "load")):
+        summary = folder / "load-summary.json"
+        if not summary.exists():
+            continue
+        for cell in json.loads(summary.read_text(encoding="utf-8")):
+            if cell["workers"] == 1 and cell["users"] == 50:
+                rows = json.loads((folder / "load-1w-50u-0ms.rows.json").read_text(encoding="utf-8"))
+                ends = Counter()
+                for log in folder.glob("load-1w-50u-0ms-w*.log.jsonl"):
+                    for line in log.read_text(encoding="utf-8").splitlines():
+                        e = json.loads(line)
+                        if e["event"] == "run.end":
+                            ends[e["status"]] += 1
+                cell["client_errors"] = dict(Counter(r.get("error") for r in rows if r["kind"] == "error"))
+                cell["server_run_end"] = dict(ends)
+                cell["runs_per_s_exact"] = round(cell["ok"] / cell["wall_s"], 3)
+                cell["run_seconds"] = sorted(round(r["seconds"], 3) for r in rows if r.get("seconds") is not None)
+                result["load"][label] = cell
+    return result
+
+
 def prodapp_outputs():
     suite, cost = prodapp_suite(), json.dumps(prodapp_cost(), indent=1)
     return {
@@ -1897,6 +1989,7 @@ def prodapp_outputs():
         "summary/disconnect-mac.json": json.dumps(prod_json("disconnect", "disconnect-trials.json"), indent=1),
         "summary/service-mac.json": json.dumps(prod_json("service", "service-properties.json"), indent=1),
         "summary/load-mac.json": json.dumps(prodapp_load(), indent=1),
+        "summary/fix-mac.json": json.dumps(prodapp_fix(), indent=1, default=str),
         "summary/cost-mac.json": cost,
     }
 

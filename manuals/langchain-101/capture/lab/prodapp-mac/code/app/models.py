@@ -3,7 +3,7 @@ from pathlib import Path
 
 from .policy import SupportPolicyModel
 
-ANTHROPIC_KEY = Path(os.environ.get("ANTHROPIC_KEY_FILE", "anthropic.key"))
+ANTHROPIC_KEY = Path("~/.config/aiefs/anthropic.key").expanduser()
 
 
 def usage_callbacks(spec):

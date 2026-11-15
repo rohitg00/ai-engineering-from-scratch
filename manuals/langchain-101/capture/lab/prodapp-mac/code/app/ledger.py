@@ -5,7 +5,7 @@ from pathlib import Path
 
 from langchain_core.callbacks import BaseCallbackHandler
 
-LEDGER = Path(__file__).resolve().parents[2] / "runs" / "cost-ledger.jsonl"
+LEDGER = Path("~/.cache/aiefs-manuals-wip/langchain-research/bench/cost-ledger.jsonl").expanduser()
 PRICES = json.loads((Path(__file__).parent.parent / "cost" / "prices.json").read_text())
 BUDGET_USD = 40.0
 SUITE_CAP_USD = float(os.environ.get("ANTHROPIC_SUITE_CAP", "1.0"))

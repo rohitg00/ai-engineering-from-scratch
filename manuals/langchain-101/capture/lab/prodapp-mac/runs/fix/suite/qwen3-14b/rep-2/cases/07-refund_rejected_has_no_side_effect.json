@@ -1,0 +1,308 @@
+{
+ "case": "refund_rejected_has_no_side_effect",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "0c124b60-f807-4990-860d-c63bbcbf398b",
+   "text": "Please refund ORD-e07-1",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "061a53db-868e-4637-a50e-95dd272ba66f",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e07-1",
+       "amount_cents": 10000,
+       "reason": "Customer requested a refund"
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "4be2152e69af670ee67ebd283a5cd2ca",
+      "type": "tool_approval",
+      "tool_call_id": "061a53db-868e-4637-a50e-95dd272ba66f",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e07-1",
+       "amount_cents": 10000,
+       "reason": "Customer requested a refund"
+      },
+      "description": "Refund 10000 cents on ORD-e07-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 4.548
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "0c124b60-f807-4990-860d-c63bbcbf398b",
+   "decision": "reject",
+   "result": [
+    [
+     "tool_result",
+     {
+      "name": "refund_order",
+      "status": "error",
+      "content": "User rejected the tool call for `refund_order` with id 061a53db-868e-4637-a50e-95dd272ba66f. The tool was not executed. Do not retry this tool call unless the user explicitly requests it."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'m"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " sorry"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " but"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " process"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " automatically"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " check"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " our"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " team"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " see"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " how"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " we"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assist"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " further"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.8778
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "0c124b60-f807-4990-860d-c63bbcbf398b",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Please refund ORD-e07-1",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e07-1",
+        "amount_cents": 10000,
+        "reason": "Customer requested a refund"
+       },
+       "id": "061a53db-868e-4637-a50e-95dd272ba66f",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 452,
+      "output_tokens": 47,
+      "total_tokens": 499
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "User rejected the tool call for `refund_order` with id 061a53db-868e-4637-a50e-95dd272ba66f. The tool was not executed. Do not retry this tool call unless the user explicitly requests it.",
+     "tool_calls": [],
+     "name": "refund_order",
+     "status": "error",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I'm sorry, but I can't process the refund automatically. Let me check with our team to see how we can assist you further.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 571,
+      "output_tokens": 29,
+      "total_tokens": 600
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

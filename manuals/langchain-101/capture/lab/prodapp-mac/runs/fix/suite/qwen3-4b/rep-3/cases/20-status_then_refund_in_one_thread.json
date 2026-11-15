@@ -1,0 +1,784 @@
+{
+ "case": "status_then_refund_in_one_thread",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "failed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "bfa1cde3-9cc1-412d-bec3-d2cd45a4ef38",
+   "text": "Where is my order ORD-e20-3?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "c2dcc372-39c4-4d03-9b68-759bb4691b26",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e20-3"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e20-3\", \"item\": \"Water bottle\", \"status\": \"processing\", \"total_cents\": 2400, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-e"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Water"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " bottle"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " currently"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " \""
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "processing"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "\""
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " status"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " The"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " total"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "4"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " no"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " has"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " been"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " applied"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " yet"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.1748
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "bfa1cde3-9cc1-412d-bec3-d2cd45a4ef38",
+   "text": "Refund ORD-e20-3",
+   "result": [
+    [
+     "token",
+     {
+      "text": "Ref"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "unding"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " orders"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " requires"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " approval"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'ll"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " need"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " open"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ticket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " support"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " agent"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " review"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " approve"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " this"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " request"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "  \n\n"
+     }
+    ],
+    [
+     "tool_call",
+     {
+      "id": "670aac79-cda9-4dd7-90af-cfc52a288d09",
+      "name": "create_ticket",
+      "args": {
+       "subject": "Refund Request for Order ORD-e20-3",
+       "body": "Customer requests a refund for order ORD-e20-3. Order status is processing. Total amount: $24.00. No refund has been applied yet."
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "create_ticket",
+      "status": "success",
+      "content": "{\"ticket_id\": 1}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "A"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " request"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-e"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " has"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " been"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " submitted"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Ticket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ID"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ":"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " It"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " will"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " be"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " reviewed"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " by"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " support"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " agent"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 3.2084
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "bfa1cde3-9cc1-412d-bec3-d2cd45a4ef38",
+   "decision": "approve",
+   "result": 409
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "bfa1cde3-9cc1-412d-bec3-d2cd45a4ef38",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e20-3?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e20-3"
+       },
+       "id": "c2dcc372-39c4-4d03-9b68-759bb4691b26",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 558,
+      "output_tokens": 26,
+      "total_tokens": 584
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e20-3\", \"item\": \"Water bottle\", \"status\": \"processing\", \"total_cents\": 2400, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your order ORD-e20-3 for a Water bottle is currently in \"processing\" status. The total amount is $24.00, and no refund has been applied yet.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 640,
+      "output_tokens": 40,
+      "total_tokens": 680
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Refund ORD-e20-3",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Refunding orders requires human approval. I'll need to open a ticket for a support agent to review and approve this request.  \n\n",
+     "tool_calls": [
+      {
+       "name": "create_ticket",
+       "args": {
+        "subject": "Refund Request for Order ORD-e20-3",
+        "body": "Customer requests a refund for order ORD-e20-3. Order status is processing. Total amount: $24.00. No refund has been applied yet."
+       },
+       "id": "670aac79-cda9-4dd7-90af-cfc52a288d09",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 697,
+      "output_tokens": 96,
+      "total_tokens": 793
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"ticket_id\": 1}",
+     "tool_calls": [],
+     "name": "create_ticket",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "A refund request for order ORD-e20-3 has been submitted. Ticket ID: 1. It will be reviewed by a human support agent.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 812,
+      "output_tokens": 32,
+      "total_tokens": 844
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": [
+  {
+   "subject": "Refund Request for Order ORD-e20-3"
+  }
+ ]
+}

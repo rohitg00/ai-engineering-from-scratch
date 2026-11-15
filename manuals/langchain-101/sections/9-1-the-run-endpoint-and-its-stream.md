@@ -122,12 +122,55 @@ claim: The client read each tool call when its model call ended, and the approva
 caption: Each panel is one HTTP request, in milliseconds after it was sent. The upper row is the run task, with model and tool spans. The lower row is the client, with each SSE event at the time it arrived. From capture/lab/prodapp-mac/summary/stream-mac.json.
 ```
 
+## A heartbeat while a run waits
+
+A run can wait a long time before its first event, for example behind other runs at the model server. Until then the stream sends no byte, and an HTTP client counts that as a dead connection. The service writes an SSE comment line when no event has come for 15 s. A client must ignore lines that start with a colon, so the comment carries no data.
+
+```listing
+title: the stream reader, with a comment line every 15 s of silence
+source: capture/lab/prodapp-mac/code/app/server.py
+lang: python
+---
+HEARTBEAT = float(os.environ.get("HEARTBEAT_SECONDS", "15"))
+
+
+async def sse(queue):
+    while True:
+        try:
+            item = await asyncio.wait_for(queue.get(), HEARTBEAT) if HEARTBEAT > 0 else await queue.get()
+        except TimeoutError:
+            yield ": waiting\n\n"
+            continue
+        if item is None:
+            return
+        name, data = item
+        yield f"event: {name}\ndata: {json.dumps(data, default=str)}\n\n"
+```
+
+**We measured** the 50-user load cell of [section 9.7](#s-workers-the-advisory-lock-and-cost) again, with one worker and Qwen3 4B on the Mac, one run. The clients kept their read timeout of 120 s.
+
+| | Requests | Client read timeouts | Runs the clients saw end | Runs the server ended | Median and max s per run |
+|---|---|---|---|---|---|
+| without a heartbeat | 157 | 48 | 107 | 155, of which 19 `cancelled` at shutdown | 164.7 and 193.8 |
+| with a heartbeat | 200 | 0 | 192 | 192, none cancelled | 194.8 and 286.7 |
+
+With the heartbeat every session sent all four requests, and the slowest run took 286.7 s with no timeout. The other 8 requests were approves that got 409, because the model had proposed no refund. The runs took longer because more of them reached the model, and the server still finished 0.231 runs each second. The heartbeat keeps a client attached. It does not make the model faster.
+
+```figure
+id: fig-9-1c
+kind: comparison
+title: what 50 clients saw, without and with a heartbeat on the stream
+claim: With a comment line every 15 s, 0 of 200 requests timed out, against 48 sessions lost to read timeouts without it.
+caption: Each bar is one run of the load cell with 50 users and one worker. The parts are the requests that ended done, interrupted for approval, rejected with 409, and lost to a client read timeout. From capture/lab/prodapp-mac/summary/fix-mac.json.
+```
+
 ```takeaways
 - Run each agent run in its own asyncio task, and stream from a queue that the task fills.
 - Keep a registry of active run tasks, so shutdown can wait for them.
 - Release the thread lock before you send the done event.
 - Send tool events from the model and tools nodes only, so summaries do not repeat them.
 - Answer 409 while a thread has a pending approval or an active run.
+- Send an SSE comment line when a run has been silent for 15 s.
 ```
 
-Sources: capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/app/agent.py, capture/out/54-draw-service-agent.txt, capture/s_draw.py, capture/lab/prodapp-mac/code/scripts/capture_stream.py, capture/lab/prodapp-mac/code/scripts/disconnect_real.py, capture/lab/prodapp-mac/summary/stream-mac.json, capture/lab/prodapp-mac/summary/disconnect-mac.json, capture/lab/prodapp-mac/runs/stream/stream-events.jsonl, capture/lab/prodapp-mac/runs/stream/stream.spans.jsonl, capture/lab/prodapp-mac/runs/disconnect/disconnect-trials.json; libs/langgraph/langgraph/pregel/main.py at langgraph 1.2.22; starlette/responses.py at starlette 1.10.0.
+Sources: capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/app/agent.py, capture/out/54-draw-service-agent.txt, capture/s_draw.py, capture/lab/prodapp-mac/code/scripts/capture_stream.py, capture/lab/prodapp-mac/code/scripts/disconnect_real.py, capture/lab/prodapp-mac/summary/stream-mac.json, capture/lab/prodapp-mac/summary/disconnect-mac.json, capture/lab/prodapp-mac/runs/stream/stream-events.jsonl, capture/lab/prodapp-mac/runs/stream/stream.spans.jsonl, capture/lab/prodapp-mac/runs/disconnect/disconnect-trials.json, capture/lab/prodapp-mac/summary/fix-mac.json, capture/lab/prodapp-mac/runs/fix/load/load-summary.json, capture/lab/prodapp-mac/runs/load/load-summary.json; libs/langgraph/langgraph/pregel/main.py at langgraph 1.2.22; starlette/responses.py at starlette 1.10.0.

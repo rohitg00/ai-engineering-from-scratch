@@ -1,0 +1,7 @@
+# block fix qwen3-14b rep 2
+# model ollama:qwen3:14b backup ollama:qwen3:4b-instruct-2507-q4_K_M
+# start 2026-11-15T12:09:27Z
+# uptime 17:39  up 89 days,  3:36, 12 users, load averages: 3.09 4.12 5.28
+# end 2026-11-15T12:10:28Z
+# uptime 17:40  up 89 days,  3:37, 12 users, load averages: 3.55 4.10 5.20
+# exit 1

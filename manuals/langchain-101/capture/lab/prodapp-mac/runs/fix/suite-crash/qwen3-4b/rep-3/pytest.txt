@@ -1,0 +1,63 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.12, pytest-9.2.0, pluggy-1.7.0 -- prodapp/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: prodapp
+configfile: pytest.ini
+plugins: platformdirs-4.14.5, langsmith-0.14.17, anyio-4.16.0, asyncio-1.5.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=session
+collecting ... collected 1 item
+
+tests/test_durability.py::test_kill_mid_refund_then_resume_refunds_once FAILED [100%]
+
+=================================== FAILURES ===================================
+________________ test_kill_mid_refund_then_resume_refunds_once _________________
+
+    async def test_kill_mid_refund_then_resume_refunds_once():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        env = {"AUTH_TOKENS": "tok-crash=crash", "REFUND_CONFIRM_DELAY": 3}
+        server = Server(RUN_DIR, "crash-1", **env)
+        reset_user("crash")
+        client = Http(server.url, "tok-crash")
+        thread = await client.thread()
+        first = await client.say(thread, "Please refund ORD-crash-2")
+        approving = asyncio.create_task(client.approve(thread))
+        committed = await wait_for(lambda: refunds("ORD-crash-2"))
+        killed_at = time.time()
+        exit_code = server.kill()
+        approve_error = None
+        try:
+            await approving
+        except Exception as exc:
+            approve_error = type(exc).__name__
+        server.log.close()
+    
+        server = Server(RUN_DIR, "crash-2", AUTH_TOKENS="tok-crash=crash")
+        client = Http(server.url, "tok-crash")
+        after_restart = await client.state(thread)
+>       resumed = await client.approve(thread)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_durability.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/procs.py:88: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:82: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+>           lines = dict(line.split(": ", 1) for line in block.splitlines() if not line.startswith(":"))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:67: ValueError
+- generated xml file: prodapp/runs/2026-11-15-real/fix/suite-crash/qwen3-4b/rep-3/junit.xml -
+=========================== short test summary info ============================
+FAILED tests/test_durability.py::test_kill_mid_refund_then_resume_refunds_once
+============================== 1 failed in 30.67s ==============================

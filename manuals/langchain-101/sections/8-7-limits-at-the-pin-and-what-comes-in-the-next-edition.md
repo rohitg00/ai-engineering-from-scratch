@@ -28,9 +28,8 @@ These three tests timed the stack with a model stand-in. Their rows stay in this
 
 These need one more run of the service of [Part 9](#p-9), on the Mac.
 
-- A refund tool that refuses an amount of 0 cents or less, with the order total in the approval request. Both models proposed 0 cents, and the test approved it. [Section 9.3](#s-approvals-and-the-idempotency-key)
+- The explicit crash trials with Qwen3 14B: three kills of a worker with an amount and a reason in the request. Ollama did not load that model for 9.5 minutes while another job held the memory, so we stopped them. [Section 9.3](#s-approvals-and-the-idempotency-key)
 - Whether a decision sent in the plain resume form survives a crash in `checkpoint_writes`, and a resume with no new decision. [Section 9.3](#s-approvals-and-the-idempotency-key)
-- A heartbeat event on the stream, so that a client stays attached while its run waits for the model server. [Section 9.7](#s-workers-the-advisory-lock-and-cost) and [section 9.1](#s-the-run-endpoint-and-its-stream)
 - The cause of the drop in Ollama output with 4 or 8 requests at once. [Section 9.7](#s-workers-the-advisory-lock-and-cost)
 - The CI workflow of the service on GitHub Actions, with a real model. [Section 9.6](#s-evals-that-check-state)
 

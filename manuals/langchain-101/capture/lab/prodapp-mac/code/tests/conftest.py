@@ -62,7 +62,9 @@ class Chaos(AgentMiddleware):
 def parse_sse(text):
     events = []
     for block in text.strip().split("\n\n"):
-        lines = dict(line.split(": ", 1) for line in block.splitlines())
+        lines = dict(line.split(": ", 1) for line in block.splitlines() if not line.startswith(":"))
+        if not lines:
+            continue
         events.append((lines["event"], json.loads(lines["data"])))
     return events
 

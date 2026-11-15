@@ -64,8 +64,8 @@ class Server:
 def parse_sse(text):
     events = []
     for block in text.strip().split("\n\n"):
-        if block:
-            lines = dict(line.split(": ", 1) for line in block.splitlines())
+        lines = dict(line.split(": ", 1) for line in block.splitlines() if not line.startswith(":"))
+        if lines:
             events.append((lines["event"], json.loads(lines["data"])))
     return events
 

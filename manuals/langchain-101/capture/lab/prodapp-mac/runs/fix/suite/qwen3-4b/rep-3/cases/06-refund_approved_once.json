@@ -1,0 +1,230 @@
+{
+ "case": "refund_approved_once",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "error",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "dcc7728e-a08a-4a0a-bff2-59912e026c9b",
+   "text": "Please refund ORD-e06-1",
+   "result": [
+    [
+     "token",
+     {
+      "text": "To"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " process"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " need"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " more"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " such"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " as"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " cents"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " reason"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Could"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " provide"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " that"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " information"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "?"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 0.6449
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "dcc7728e-a08a-4a0a-bff2-59912e026c9b",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Please refund ORD-e06-1",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "To process a refund, I need more details such as the amount in cents and the reason for the refund. Could you please provide that information?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 555,
+      "output_tokens": 30,
+      "total_tokens": 585
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 236" role="img" aria-labelledby="fig-9-1c-title fig-9-1c-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-1c-title">What 50 clients saw, without and with a heartbeat on the stream</title>
+  <desc id="fig-9-1c-desc">without a heartbeat: 102 done, 5 interrupted, 2 409 on approve, 48 ReadTimeout, 0.208 runs each second. with a heartbeat every 15 s: 150 done, 42 interrupted, 8 409 on approve, 0 ReadTimeout, 0.231 runs each second. One worker, Qwen3 4B on the Mac, read timeout 120 s.</desc>
+  <text x="16" y="32" font-size="11.5" font-weight="700">without a heartbeat</text>
+  <text x="16" y="48" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.208 runs each second, median 165 s per run</text>
+  <rect x="16" y="58" width="306" height="26" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="169" y="75" font-size="11" text-anchor="middle">102</text>
+  <rect x="322" y="58" width="15" height="26" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="337" y="58" width="6" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect x="343" y="58" width="144" height="26" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="415" y="75" font-size="11" text-anchor="middle">48</text>
+  <text x="16" y="118" font-size="11.5" font-weight="700">with a heartbeat every 15 s</text>
+  <text x="16" y="134" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.231 runs each second, median 195 s per run</text>
+  <rect x="16" y="144" width="450" height="26" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="241" y="161" font-size="11" text-anchor="middle">150</text>
+  <rect x="466" y="144" width="126" height="26" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="529" y="161" font-size="11" text-anchor="middle">42</text>
+  <rect x="592" y="144" width="24" height="26" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect x="16" y="206" width="12" height="12" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="34" y="216" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">done</text>
+  <rect x="156" y="206" width="12" height="12" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="174" y="216" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">interrupted</text>
+  <rect x="296" y="206" width="12" height="12" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="314" y="216" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">409 on approve</text>
+  <rect x="436" y="206" width="12" height="12" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="454" y="216" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">ReadTimeout</text>
+</svg>

@@ -113,8 +113,18 @@ class Service:
         event("shutdown.done", cancelled=len(pending))
 
 
+HEARTBEAT = float(os.environ.get("HEARTBEAT_SECONDS", "15"))
+
+
 async def sse(queue):
-    while (item := await queue.get()) is not None:
+    while True:
+        try:
+            item = await asyncio.wait_for(queue.get(), HEARTBEAT) if HEARTBEAT > 0 else await queue.get()
+        except TimeoutError:
+            yield ": waiting\n\n"
+            continue
+        if item is None:
+            return
         name, data = item
         yield f"event: {name}\ndata: {json.dumps(data, default=str)}\n\n"
 

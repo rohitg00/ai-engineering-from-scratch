@@ -5,7 +5,7 @@ from collections import defaultdict
 from pathlib import Path
 
 PRICES = json.loads(Path("cost/prices.json").read_text())
-LEDGER = Path(__file__).resolve().parents[2] / "runs" / "cost-ledger.jsonl"
+LEDGER = Path("~/.cache/aiefs-manuals-wip/langchain-research/bench/cost-ledger.jsonl").expanduser()
 
 
 def spans_of(path):

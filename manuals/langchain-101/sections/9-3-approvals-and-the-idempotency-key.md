@@ -70,15 +70,17 @@ claim: After the kill the approval was pending again, and the key at the tool tu
 caption: The top panel is one trial, in seconds after the first approve. The bottom panel is every trial. A teal square has one refund row of 8900 cents, and an amber frame means the approval was pending again. From capture/lab/prodapp-mac/summary/crash-mac.json.
 ```
 
+After the amount checks of the next subsections went in, we ran the crash again with Qwen3 4B, three trials. The result did not change. In 3 of 3 trials the approval was pending after the restart, the second approve replayed the key, and one 8900-cent row remained. The same trials with Qwen3 14B did not run. Ollama did not load that model for 9.5 minutes while another job held the memory, so we stopped them.
+
 ## The key at the tool
 
 The refund is safe because `refund_order` checks a key before it writes.
 
 ```listing
-title: the idempotency key in refund_order
+title: the idempotency key and the amount checks in refund_order
 source: capture/lab/prodapp-mac/code/app/tools.py
 lang: python
-note: The insert and the update after the check are cut.
+note: The insert and the update after the checks are cut.
 ---
     key = f"{ctx.thread_id}:{order_id}:{amount_cents}"
     async with ctx.pool.connection() as conn, conn.transaction():
@@ -89,13 +91,16 @@ note: The insert and the update after the check are cut.
         order = await cur.fetchone()
         if order is None:
             return json.dumps({"error": f"no order {order_id} on this account"})
+        remaining = order["total_cents"] - order["refunded_cents"]
+        if amount_cents <= 0:
+            return json.dumps({"error": f"amount_cents must be positive; {remaining} cents can be refunded"})
         cur = await conn.execute(
             "select refund_id, order_id, amount_cents from refunds where idempotency_key = %s", (key,)
         )
         if existing := await cur.fetchone():
             return json.dumps({**existing, "replayed": True})
-        if order["refunded_cents"] + amount_cents > order["total_cents"]:
-            return json.dumps({"error": "refund would exceed the order total"})
+        if amount_cents > remaining:
+            return json.dumps({"error": f"refund exceeds the {remaining} cents that can still be refunded"})
 …
 ```
 
@@ -105,16 +110,56 @@ The key holds because the replay sends the same arguments. After the restart, th
 
 ## The approver approves what you show
 
-An idempotency key stops a second refund. It does not stop a wrong first one. In the eval suite, Qwen3 4B and Qwen3 14B each proposed `amount_cents` 0 for `Refund ORD-e19-3`, and the test approved it. The tool wrote a refund row of 0 cents, and the model told the customer that the refund was processed. Qwen3 14B also proposed 10000 cents on orders of 12900 and 8900 cents without reading either order.
+An idempotency key stops a second refund. It does not stop a wrong first one. In the first eval runs, Qwen3 4B and Qwen3 14B each proposed `amount_cents` 0 for `Refund ORD-e19-3`, and the test approved it. The tool wrote a refund row of 0 cents in 3 of 3 runs on each model. The model then told the customer that the refund was processed. Qwen3 14B also proposed 10000 cents on orders of 12900 and 8900 cents without reading either order.
 
-Two changes close that gap, and we did not run either one. Make the tool refuse an amount of 0 or less, as it refuses an amount over the total. Put the order total and the amount refunded so far into the approval request, next to the proposed amount.
+So the service now does two more things. The tool reads the order and refuses an amount of 0 or less, or more than the amount still refundable, as the listing above shows. Its error text gives the refundable amount, so the model can correct itself. And the approval request carries a description that the middleware builds from the order.
+
+```listing
+title: the approval description, built from the order
+source: capture/lab/prodapp-mac/code/app/tools.py
+lang: python
+---
+def refund_description(tool_call, state, runtime):
+    args = tool_call["args"]
+    with psycopg.connect(runtime.context.pool.conninfo, row_factory=dict_row) as conn:
+        order = conn.execute(
+            "select item, total_cents, refunded_cents from orders where id = %s and user_id = %s",
+            (args.get("order_id"), runtime.context.user_id),
+        ).fetchone()
+…
+    remaining = order["total_cents"] - order["refunded_cents"]
+    return (f"Refund {args.get('amount_cents')} cents on {args.get('order_id')} ({order['item']}). "
+            f"Order total {order['total_cents']} cents, refunded so far {order['refunded_cents']}, "
+            f"refundable now {remaining}. Reason: {args.get('reason')}")
+```
+
+`HumanInTheLoopMiddleware` takes a `description` for each tool, as a string or as a callable that gets the tool call, the state, and the runtime {{code libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py:613-620}}. The callable is synchronous, so it opens a short synchronous connection for one query.
+
+**We measured** the six refund evals again on the Mac, three runs on each model, with the same prompts and seeds. [Figure 9.3b](#fig-9-3b) shows the zero-cent case.
+
+| Model | Refund evals passed, before and after | Runs with a 0-cent row, before and after | What the approver read for the 0-cent proposal |
+|---|---|---|---|
+| Qwen3 4B | 1 of 6 in 3 of 3 runs, both times | 3 of 3, then 0 of 3 | `Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400.` |
+| Qwen3 14B | 3 of 6 in 3 of 3 runs, both times | 3 of 3, then 0 of 3 | the same text |
+
+```figure
+id: fig-9-3b
+kind: comparison
+title: the zero-cent refund before and after the tool checks the amount
+claim: The approved 0-cent proposal wrote a refund row in 6 of 6 runs before the checks and in 0 of 6 after them.
+caption: Each box is one run of the eval that approves whatever refund the model proposes for ORD-e19-3. Rose wrote a 0-cent row, and teal wrote none. The text below is the approval request after the fix. From capture/lab/prodapp-mac/summary/fix-mac.json.
+```
+
+The pass counts did not change, because the failures were the model's choices. After the refusal, Qwen3 14B offered the full 2400 cents and asked the customer to confirm, in 3 of 3 runs. That reply is correct, and the eval still fails because it expects the refund at once. On the 8900-cent order, the tool refused 10000 cents with `refund exceeds the 8900 cents that can still be refunded`. On the next message from the customer, Qwen3 14B read the order and asked to confirm the full amount, in 3 of 3 runs.
+
+One mistake stays. On the 12900-cent order, Qwen3 14B proposed 10000 cents, and the approver read `Refund 10000 cents on ORD-e06-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900`. The amount is valid, so the tool would accept it. Only a person who reads the numbers stops a partial refund that nobody asked for.
 
 ```takeaways
 - Expect a pending approval to return after a crash, and design the second approve to be safe.
 - Give every tool that moves money an idempotency key built from what the checkpoint saved.
 - Lock the row you check with SELECT FOR UPDATE, and back the key with a unique index.
-- Validate tool arguments in the tool, and refuse a zero or negative amount.
+- Validate amounts in the tool against the order, and put the refundable amount in the error text.
 - Show the approver the order total next to the proposed amount.
 ```
 
-Sources: capture/lab/prodapp-mac/summary/crash-mac.json, capture/lab/prodapp-mac/runs/crash-map/crash-trials.json, capture/lab/prodapp-mac/runs/crash-plain/crash-trials.json, capture/lab/prodapp-mac/runs/crash-map/t01-before-kill.log.jsonl, capture/lab/prodapp-mac/runs/crash-map/t01-after-restart.log.jsonl, capture/lab/prodapp-mac/code/scripts/crash_real.py, capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/app/tools.py, capture/lab/prodapp-mac/code/app/db.py, capture/lab/prodapp-mac/runs/suite/qwen3-14b/rep-1/cases/19-new_message_while_waiting_for_approval.json, capture/lab/prodapp-mac/summary/evals-mac.json; libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py at langchain==1.5.0; libs/langgraph/langgraph/pregel/_loop.py at langgraph 1.2.22.
+Sources: capture/lab/prodapp-mac/summary/crash-mac.json, capture/lab/prodapp-mac/runs/crash-map/crash-trials.json, capture/lab/prodapp-mac/runs/crash-plain/crash-trials.json, capture/lab/prodapp-mac/runs/crash-map/t01-before-kill.log.jsonl, capture/lab/prodapp-mac/runs/crash-map/t01-after-restart.log.jsonl, capture/lab/prodapp-mac/code/scripts/crash_real.py, capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/app/tools.py, capture/lab/prodapp-mac/code/app/db.py, capture/lab/prodapp-mac/runs/suite/qwen3-14b/rep-1/cases/19-new_message_while_waiting_for_approval.json, capture/lab/prodapp-mac/summary/evals-mac.json, capture/lab/prodapp-mac/summary/fix-mac.json, capture/lab/prodapp-mac/runs/fix/crash-qwen3-4b/crash-trials.json, capture/lab/prodapp-mac/runs/fix/INVALID.txt, capture/lab/prodapp-mac/runs/fix/suite/qwen3-4b/rep-1/cases/19-new_message_while_waiting_for_approval.json, capture/lab/prodapp-mac/runs/fix/suite/qwen3-14b/rep-1/cases/06-refund_approved_once.json, capture/lab/prodapp-mac/code/app/agent.py; libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py at langchain==1.5.0; libs/langgraph/langgraph/pregel/_loop.py at langgraph 1.2.22.

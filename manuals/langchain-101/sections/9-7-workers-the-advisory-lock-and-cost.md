@@ -73,7 +73,7 @@ Postgres was far from its limit. The busiest cell had 48 connections, with 4 wor
 
 Fifty users broke the clients first. In each 50-user cell, 46 to 49 of the 50 sessions ended with `ReadTimeout`. The stream sent no byte for 120 s while the run waited for the model.
 
-The runs did not stop with them. In the 1-worker cell the server ended 107 runs as `done`, 29 as `interrupted`, and 19 as `cancelled` at shutdown. The clients saw 102 `done` and 5 `interrupted`. A heartbeat event on the stream would keep those clients attached, and we did not test it.
+The runs did not stop with them. In the 1-worker cell the server ended 107 runs as `done`, 29 as `interrupted`, and 19 as `cancelled` at shutdown. The clients saw 102 `done` and 5 `interrupted`. With an SSE comment line every 15 s, the same 1-worker cell lost no session. It had 0 read timeouts in 200 requests, at 0.231 runs each second. [Section 9.1](#s-the-run-endpoint-and-its-stream) has that run and its code.
 
 **Our position:** on one model server, extra uvicorn workers buy you availability and nothing else. Measure the model server alone before you size the service, and add model capacity for throughput. The 409 column is the model again: in each cell 1 to 4 users got no refund proposal, so their approve had nothing to resume.
 
@@ -109,8 +109,9 @@ For the local models the price is the machine. Qwen3 14B spent a median of 12.97
 - Take the thread lock with pg_try_advisory_lock on one dedicated connection per worker.
 - Add workers for availability, and measure the model server before you add more.
 - Size the Postgres pool and max_connections for one lock connection plus the pool, per worker.
+- Send a heartbeat on the stream, so queued clients do not hit their read timeout.
 - Count tokens from the provider usage of every call, including summarizer calls.
 - Price conversations from measured counts, and treat a price per run on another tokenizer as an estimate.
 ```
 
-Sources: capture/lab/prodapp-mac/code/app/locks.py, capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/load/loadtest.py, capture/lab/prodapp-mac/code/scripts/ollama_parallel.py, capture/lab/prodapp-mac/code/scripts/cost_real.py, capture/lab/prodapp-mac/code/cost/prices.json, capture/lab/prodapp-mac/code/tests/test_workers.py, capture/lab/prodapp-mac/summary/load-mac.json, capture/lab/prodapp-mac/summary/cost-mac.json, capture/lab/prodapp-mac/summary/evals-mac.json, capture/lab/prodapp-mac/runs/load/load-summary.json, capture/lab/prodapp-mac/runs/load/ollama-parallel.json; the Anthropic pricing page, fetched 2026-11-14.
+Sources: capture/lab/prodapp-mac/code/app/locks.py, capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/load/loadtest.py, capture/lab/prodapp-mac/code/scripts/ollama_parallel.py, capture/lab/prodapp-mac/code/scripts/cost_real.py, capture/lab/prodapp-mac/code/cost/prices.json, capture/lab/prodapp-mac/code/tests/test_workers.py, capture/lab/prodapp-mac/summary/load-mac.json, capture/lab/prodapp-mac/summary/cost-mac.json, capture/lab/prodapp-mac/summary/evals-mac.json, capture/lab/prodapp-mac/runs/load/load-summary.json, capture/lab/prodapp-mac/runs/load/ollama-parallel.json, capture/lab/prodapp-mac/summary/fix-mac.json, capture/lab/prodapp-mac/runs/fix/load/load-summary.json; the Anthropic pricing page, fetched 2026-11-14.

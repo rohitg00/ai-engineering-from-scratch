@@ -1,0 +1,326 @@
+{
+ "case": "new_message_while_waiting_for_approval",
+ "model": "ollama:qwen3:14b",
+ "outcome": "failed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "4aed88f8-de8b-4416-939b-175a1fb27962",
+   "text": "Refund ORD-e19-3",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "6b320638-9a01-4381-b89a-e410b4c7356b",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0,
+       "reason": "Customer requested a refund."
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "22d97b285ce96da51fec344c130730a6",
+      "type": "tool_approval",
+      "tool_call_id": "6b320638-9a01-4381-b89a-e410b4c7356b",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0,
+       "reason": "Customer requested a refund."
+      },
+      "description": "Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer requested a refund."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 3.3267
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "4aed88f8-de8b-4416-939b-175a1fb27962",
+   "text": "Hello?",
+   "result": 409
+  },
+  {
+   "op": "approve",
+   "thread_id": "4aed88f8-de8b-4416-939b-175a1fb27962",
+   "decision": "approve",
+   "result": [
+    [
+     "tool_result",
+     {
+      "name": "refund_order",
+      "status": "success",
+      "content": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " up"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "4"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " cents"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ("
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "\u20ac"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "4"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ")"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " of"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Would"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " proceed"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " that"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "?"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 3.7527
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "4aed88f8-de8b-4416-939b-175a1fb27962",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Refund ORD-e19-3",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e19-3",
+        "amount_cents": 0,
+        "reason": "Customer requested a refund."
+       },
+       "id": "6b320638-9a01-4381-b89a-e410b4c7356b",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 452,
+      "output_tokens": 44,
+      "total_tokens": 496
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}",
+     "tool_calls": [],
+     "name": "refund_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I can refund up to 2400 cents (\u20ac24) of your order. Would you like me to proceed with that amount?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 524,
+      "output_tokens": 31,
+      "total_tokens": 555
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

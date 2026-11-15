@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="6" skipped="0" tests="7" time="22.434" timestamp="2026-11-15T17:38:01.327089+05:30" hostname="the-mac"><testcase classname="tests.test_evals" name="test_eval[refund_approved_once]" time="0.841"><failure message="ValueError: not enough values to unpack (expected 1, got 0)">number = 6, check = &lt;function refund_approved_once at 0x109e56200&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10a1b8360&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10a1b85e0&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10a1b8720&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10a05dd30&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10a05e510&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10a15a900&gt;
+t = 'dcc7728e-a08a-4a0a-bff2-59912e026c9b'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10a1b85e0&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10a1b8720&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10a05dd30&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10a158830&gt;)
+
+    @case
+    async def refund_approved_once(c, t, x):
+        order = f"ORD-{c.user}-1"
+        events = await c.say(t, f"Please refund {order}")
+&gt;       [pending] = interrupts(events)
+        ^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+tests/test_evals.py:98: ValueError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[refund_rejected_has_no_side_effect]" time="0.658"><failure message="TypeError: 'int' object is not iterable">number = 7, check = &lt;function refund_rejected_has_no_side_effect at 0x109e562a0&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10a1bba60&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10a24b420&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10a24b100&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10a05dd30&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10a05e510&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_evals.py:111: in refund_rejected_has_no_side_effect
+    assert [r["status"] for r in results(events, "refund_order")] == ["error"]
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+events = 409, name = 'refund_order'
+
+    def results(events, name):
+&gt;       return [d for e, d in events if e == "tool_result" and d["name"] == name]
+                              ^^^^^^
+E       TypeError: 'int' object is not iterable
+
+tests/test_evals.py:26: TypeError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[refund_asked_twice]" time="1.056"><failure message="AssertionError: assert [] == [{'amount_cents': 8900}]&#10;  &#10;  Right contains one more item: {'amount_cents': 8900}&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  + []&#10;  - [&#10;  -     {...&#10;  &#10;  ...Full output truncated, use '-vv' to show">number = 8, check = &lt;function refund_asked_twice at 0x109e56340&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10a24b740&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10a24b240&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10a24bce0&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10a05dd30&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10a05e510&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10a1e5310&gt;
+t = '2804fabc-38e1-40bc-87d8-65831e78c77c'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10a24b240&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10a24bce0&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10a05dd30&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10a158830&gt;)
+
+    @case
+    async def refund_asked_twice(c, t, x):
+        order = f"ORD-{c.user}-2"
+        await c.say(t, f"Refund {order} please")
+        await c.approve(t)
+        events = await c.say(t, f"Refund {order} again")
+        if interrupts(events):
+            await c.approve(t)
+&gt;       assert await refunds(x.sql, order) == [{"amount_cents": 8900}]
+E       AssertionError: assert [] == [{'amount_cents': 8900}]
+E         
+E         Right contains one more item: {'amount_cents': 8900}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_evals.py:124: AssertionError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[refund_tool_replay_is_idempotent]" time="0.014" /><testcase classname="tests.test_evals" name="test_eval[new_message_while_waiting_for_approval]" time="1.947"><failure message="AssertionError: assert [] == [{'amount_cents': 2400}]&#10;  &#10;  Right contains one more item: {'amount_cents': 2400}&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  + []&#10;  - [&#10;  -     {...&#10;  &#10;  ...Full output truncated, use '-vv' to show">number = 19
+check = &lt;function new_message_while_waiting_for_approval at 0x109e56a20&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10a1b8720&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10a1bbe20&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10a24bec0&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10a05dd30&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10a05e510&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10a1b1e00&gt;
+t = '3edf204d-bf29-4be3-a6d5-e17e0329f1e6'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10a1bbe20&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10a24bec0&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10a05dd30&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10a158830&gt;)
+
+    @case
+    async def new_message_while_waiting_for_approval(c, t, x):
+        order = f"ORD-{c.user}-3"
+        events = await c.say(t, f"Refund {order}")
+        assert [i["name"] for i in interrupts(events)] == ["refund_order"]
+        assert await c.say(t, "Hello?") == 409
+        await c.approve(t)
+&gt;       assert await refunds(x.sql, order) == [{"amount_cents": 2400}]
+E       AssertionError: assert [] == [{'amount_cents': 2400}]
+E         
+E         Right contains one more item: {'amount_cents': 2400}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_evals.py:233: AssertionError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[status_then_refund_in_one_thread]" time="5.421"><failure message="AssertionError: assert [] == ['ORD-e20-3']&#10;  &#10;  Right contains one more item: 'ORD-e20-3'&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  + []&#10;  - [&#10;  -     'ORD-e20-3',&#10;  - ]">number = 20, check = &lt;function status_then_refund_in_one_thread at 0x109e56ac0&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10a24b6a0&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x109e558a0&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10a141a80&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10a05dd30&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10a05e510&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10a1bf650&gt;
+t = 'bfa1cde3-9cc1-412d-bec3-d2cd45a4ef38'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x109e558a0&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10a141a80&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10a05dd30&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10a158830&gt;)
+
+    @case
+    async def status_then_refund_in_one_thread(c, t, x):
+        order = f"ORD-{c.user}-3"
+        first = await c.say(t, f"Where is my order {order}?")
+        second = await c.say(t, f"Refund {order}")
+        await c.approve(t)
+        assert calls(first, "read_order") == [{"order_id": order}]
+&gt;       assert [i["args"]["order_id"] for i in interrupts(second)] == [order]
+E       AssertionError: assert [] == ['ORD-e20-3']
+E         
+E         Right contains one more item: 'ORD-e20-3'
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     'ORD-e20-3',
+E         - ]
+
+tests/test_evals.py:243: AssertionError</failure></testcase><testcase classname="tests.test_durability" name="test_kill_mid_refund_then_resume_refunds_once" time="12.373"><failure message="ValueError: dictionary update sequence element #0 has length 1; 2 is required">async def test_kill_mid_refund_then_resume_refunds_once():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        env = {"AUTH_TOKENS": "tok-crash=crash", "REFUND_CONFIRM_DELAY": 3}
+        server = Server(RUN_DIR, "crash-1", **env)
+        reset_user("crash")
+        client = Http(server.url, "tok-crash")
+        thread = await client.thread()
+        first = await client.say(thread, "Please refund ORD-crash-2")
+        approving = asyncio.create_task(client.approve(thread))
+        committed = await wait_for(lambda: refunds("ORD-crash-2"))
+        killed_at = time.time()
+        exit_code = server.kill()
+        approve_error = None
+        try:
+            await approving
+        except Exception as exc:
+            approve_error = type(exc).__name__
+        server.log.close()
+    
+        server = Server(RUN_DIR, "crash-2", AUTH_TOKENS="tok-crash=crash")
+        client = Http(server.url, "tok-crash")
+        after_restart = await client.state(thread)
+&gt;       resumed = await client.approve(thread)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_durability.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/procs.py:90: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:84: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+            if block:
+&gt;               lines = dict(line.split(": ", 1) for line in block.splitlines() if not line.startswith(":"))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:68: ValueError</failure></testcase></testsuite></testsuites>

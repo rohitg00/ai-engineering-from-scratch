@@ -1,0 +1,109 @@
+{
+ "case": "refund_approved_once",
+ "model": "ollama:qwen3:14b",
+ "outcome": "failed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "10474913-d35d-49bb-bfc7-94e56fa4e71c",
+   "text": "Please refund ORD-e06-1",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "66f97b5d-7b40-4bdb-9f6b-0fb3015065d7",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e06-1",
+       "amount_cents": 10000,
+       "reason": "Customer requested a refund"
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "60e57d8d35900447b3b8bec56920fe8c",
+      "type": "tool_approval",
+      "tool_call_id": "66f97b5d-7b40-4bdb-9f6b-0fb3015065d7",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e06-1",
+       "amount_cents": 10000,
+       "reason": "Customer requested a refund"
+      },
+      "description": "Refund 10000 cents on ORD-e06-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 2.6597
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "10474913-d35d-49bb-bfc7-94e56fa4e71c",
+   "next": [
+    "tools"
+   ],
+   "interrupts": [
+    {
+     "id": "60e57d8d35900447b3b8bec56920fe8c",
+     "type": "tool_approval",
+     "tool_call_id": "66f97b5d-7b40-4bdb-9f6b-0fb3015065d7",
+     "name": "refund_order",
+     "args": {
+      "order_id": "ORD-e06-1",
+      "amount_cents": 10000,
+      "reason": "Customer requested a refund"
+     },
+     "description": "Refund 10000 cents on ORD-e06-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+    }
+   ],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Please refund ORD-e06-1",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e06-1",
+        "amount_cents": 10000,
+        "reason": "Customer requested a refund"
+       },
+       "id": "66f97b5d-7b40-4bdb-9f6b-0fb3015065d7",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 452,
+      "output_tokens": 47,
+      "total_tokens": 499
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

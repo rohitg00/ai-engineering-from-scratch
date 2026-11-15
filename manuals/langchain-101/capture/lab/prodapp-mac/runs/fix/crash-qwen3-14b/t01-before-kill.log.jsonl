@@ -1,0 +1,3 @@
+{"ts": 1794745960.494, "level": "INFO", "event": "startup", "model": "ollama:qwen3:14b", "backup": "ollama:qwen3:4b-instruct-2507-q4_K_M", "pool_max": 20}
+{"ts": 1794745960.608, "level": "INFO", "event": "run.start", "thread_id": "722eb12e-a396-4106-a4b4-36ec9215371c", "user_id": "crash", "trace_id": "9cef5ea84a7ef907712c15fa17a0afa9", "span_id": "ca8235c9fec3bca7"}
+{"ts": 1794746538.835, "level": "INFO", "event": "shutdown.drain", "runs": 1}

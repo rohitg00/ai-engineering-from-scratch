@@ -73,7 +73,7 @@ The model failures are the results that the suite exists to find. Qwen3 4B would
 
 Claude Haiku 5.5 read the order before it proposed a refund, in 5 of 5 refund cases. It read it in the same turn three times and in an earlier turn of the thread twice. It proposed the order total each time.
 
-The zero refund is the case to remember. Both Qwen models proposed `amount_cents` 0 for `Refund ORD-e19-3`. The test approved it, as a careless human would, and the tool wrote a refund row of 0 cents. [Section 9.3](#s-approvals-and-the-idempotency-key) has the record and the two fixes.
+The zero refund is the case to remember. Both Qwen models proposed `amount_cents` 0 for `Refund ORD-e19-3`. The test approved it, as a careless human would, and the tool wrote a refund row of 0 cents. [Section 9.3](#s-approvals-and-the-idempotency-key) has the record and the two fixes. With them, the 0-cent row was gone in 6 of 6 reruns, and the refund evals passed no more often than before.
 
 State checks have a blind spot, and Claude Haiku 5.5 found it. After an approved refund was written, it told the customer `It's pending human approval, so it isn't final yet.` The row existed, the test passed, and the reply was wrong. Read a sample of replies by hand, or add a check for the claims that matter to you.
 
@@ -106,4 +106,4 @@ The workflow in the repository runs the suite on each push with a Postgres servi
 - Vary the seed when you repeat a greedy local model, or the repeats measure nothing.
 ```
 
-Sources: capture/lab/prodapp-mac/summary/evals-mac.json, capture/lab/prodapp-mac/runs/summary/suite-mac.json, capture/lab/prodapp-mac/runs/suite/qwen3-4b/rep-1/pytest.txt, capture/lab/prodapp-mac/runs/suite/qwen3-14b/rep-1/pytest.txt, capture/lab/prodapp-mac/runs/suite/haiku/rep-1/pytest.txt, capture/lab/prodapp-mac/runs/suite/qwen3-14b/rep-1/cases/19-new_message_while_waiting_for_approval.json, capture/lab/prodapp-mac/code/tests/test_evals.py, capture/lab/prodapp-mac/code/tests/conftest.py, capture/lab/prodapp-mac/code/tests/procs.py, capture/lab/prodapp-mac/code/tests/test_durability.py, capture/lab/prodapp-mac/code/deploy/ci.yml, capture/lab/prodapp-mac/code/scripts/causes.json.
+Sources: capture/lab/prodapp-mac/summary/evals-mac.json, capture/lab/prodapp-mac/runs/summary/suite-mac.json, capture/lab/prodapp-mac/runs/suite/qwen3-4b/rep-1/pytest.txt, capture/lab/prodapp-mac/runs/suite/qwen3-14b/rep-1/pytest.txt, capture/lab/prodapp-mac/runs/suite/haiku/rep-1/pytest.txt, capture/lab/prodapp-mac/runs/suite/qwen3-14b/rep-1/cases/19-new_message_while_waiting_for_approval.json, capture/lab/prodapp-mac/code/tests/test_evals.py, capture/lab/prodapp-mac/code/tests/conftest.py, capture/lab/prodapp-mac/code/tests/procs.py, capture/lab/prodapp-mac/code/tests/test_durability.py, capture/lab/prodapp-mac/code/deploy/ci.yml, capture/lab/prodapp-mac/code/scripts/causes.json, capture/lab/prodapp-mac/summary/fix-mac.json.

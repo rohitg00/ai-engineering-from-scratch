@@ -18,7 +18,8 @@ lang: python
             ModelCallLimitMiddleware(run_limit=settings.model_calls_per_run, exit_behavior="end"),
             ModelFallbackMiddleware(backup),
             HumanInTheLoopMiddleware(
-                {"refund_order": {"allowed_decisions": ["approve", "reject"]}}, interrupt_mode="per_call"
+                {"refund_order": {"allowed_decisions": ["approve", "reject"], "description": refund_description}},
+                interrupt_mode="per_call",
             ),
             ToolErrorMiddleware(tool_error_message),
             ToolRetryMiddleware(tools=IDEMPOTENT, max_retries=2, initial_delay=0.1, on_failure="error"),

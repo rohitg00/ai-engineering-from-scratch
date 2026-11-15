@@ -1,0 +1,47 @@
+[
+ {
+  "trial": 1,
+  "resume_form": "map",
+  "model": "ollama:qwen3:14b",
+  "uptime_before": "17:41  up 89 days,  3:38, 12 users, load averages: 3.30 3.85 4.99",
+  "marks": {
+   "start": 1794744715.310246,
+   "server_up": 1794744716.2017212,
+   "interrupt_received": 1794744727.611551
+  },
+  "first_interrupts": [],
+  "first_tool_calls": [],
+  "outcome": "no refund proposed",
+  "first_reply": ""
+ },
+ {
+  "trial": 2,
+  "resume_form": "map",
+  "model": "ollama:qwen3:14b",
+  "uptime_before": "17:42  up 89 days,  3:39, 12 users, load averages: 2.93 3.74 4.93",
+  "marks": {
+   "start": 1794744727.839874,
+   "server_up": 1794744729.0783842,
+   "interrupt_received": 1794744734.306155
+  },
+  "first_interrupts": [],
+  "first_tool_calls": [],
+  "outcome": "no refund proposed",
+  "first_reply": ""
+ },
+ {
+  "trial": 3,
+  "resume_form": "map",
+  "model": "ollama:qwen3:14b",
+  "uptime_before": "17:42  up 89 days,  3:39, 12 users, load averages: 7.34 4.64 5.24",
+  "marks": {
+   "start": 1794744734.515981,
+   "server_up": 1794744735.4004931,
+   "interrupt_received": 1794744740.7289028
+  },
+  "first_interrupts": [],
+  "first_tool_calls": [],
+  "outcome": "no refund proposed",
+  "first_reply": ""
+ }
+]
