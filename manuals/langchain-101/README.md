@@ -19,8 +19,8 @@ The LangChain Python stack, from the decision to use it at all to an agent that 
 | `front.md`, `sections/` | the text, one file per section |
 | `figures/src/` | the figure sources, built to `figures/*.svg` |
 | `capture/run.py`, `capture/s_*.py` | the capture kit: it uses no keys and no fake chat model, calls Qwen3 4B on a local Ollama where a scenario needs a model, and writes the files in `capture/out/` that the listings come from |
-| `capture/lab/` | 43 experiment folders: `T01-overhead-mac` to `T20-mcp-edges-mac` and `TRC-tracing-mac`, the real-model runs again in the folders that end in `-x86` and `-mac-real`, the runtime traces in `internals/`, the task-suite bench in `bench/`, `last-two-mac/`, and the recorded runs of the five demos. Each folder holds its scripts and raw output, and `capture/lab/README.md` names the rows not to use |
-| `capture/lab/summary/` | 41 summary files that the tables and charts read, rebuilt by `capture/labsum.py`. The bench writes its own summary, `capture/lab/bench/summary-mac.json`, with `capture/lab/bench/summarize.py` |
+| `capture/lab/` | 44 experiment folders: `T01-overhead-mac` to `T20-mcp-edges-mac`, `TRC-tracing-mac`, and `T21-langsmith-account-mac`, the real-model runs again in the folders that end in `-x86` and `-mac-real`, the runtime traces in `internals/`, the task-suite bench in `bench/`, `last-two-mac/`, and the recorded runs of the five demos. Each folder holds its scripts and raw output, and `capture/lab/README.md` names the rows not to use |
+| `capture/lab/summary/` | 42 summary files that the tables and charts read, rebuilt by `capture/labsum.py`. The bench writes its own summary, `capture/lab/bench/summary-mac.json`, with `capture/lab/bench/summarize.py` |
 | `capture/demos/` | five demos with a README and a `run.sh` each: a SQL agent, a retrieval agent, an assistant with memory, a deep agent, and a failure drill |
 
 ## The pin
@@ -43,10 +43,10 @@ The LangChain Python stack, from the decision to use it at all to an agent that 
 
 | Name in the manual | Machine |
 |---|---|
-| the Mac | an Apple M1 Max laptop with 10 cores and 64 GiB, running Ollama for the local models, and the client of the Anthropic API in the bench |
+| the Mac | an Apple M1 Max laptop with 10 cores and 64 GiB, running Ollama for the local models, the client of the Anthropic API in the bench, and the client of the hosted LangSmith API in T21 |
 | the x86 server guest | a KVM guest with 32 vCPU and 48 GiB, running PostgreSQL 16 and the Agent Server |
 
-The local models are Qwen3 0.6B, 1.7B, 4B, 8B, 14B, and 30B-A3B, and gpt-oss 20B, with `nomic-embed-text` for embeddings, all on Ollama. Claude Haiku 5.5 and Claude Sonnet 5.5 ran only in the task-suite bench, through the Anthropic API, for $0.93 in all. No LangSmith account was used. `capture/lab/README.md` maps each experiment to its machine. Do not compare a number from one machine with a number from another.
+The local models are Qwen3 0.6B, 1.7B, 4B, 8B, 14B, and 30B-A3B, and gpt-oss 20B, with `nomic-embed-text` for embeddings, all on Ollama. Claude Haiku 5.5 and Claude Sonnet 5.5 ran only in the task-suite bench, through the Anthropic API, for $0.93 in all. One run used a new LangSmith account on the free plan, from the Mac, with its ids replaced in the kept files. `capture/lab/README.md` maps each experiment to its machine. Do not compare a number from one machine with a number from another.
 
 ## How to read it
 

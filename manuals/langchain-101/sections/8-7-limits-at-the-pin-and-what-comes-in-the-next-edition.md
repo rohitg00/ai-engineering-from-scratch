@@ -1,6 +1,6 @@
 # Limits at the pin, and what comes in the next edition
 
-> This edition tested the stack offline and on two machines, without a LangSmith account or a license, so the items below have no recorded run yet.
+> This edition tested the stack offline, on two machines, and on one free LangSmith account, without an Agent Server license, so the items below have no recorded run yet.
 
 You read a section and find that a case you care about was not run. This section collects every such case in one place, grouped by what each one needs, with a link back to the section that raised it.
 
@@ -10,7 +10,9 @@ One item has one trial in a worked example, and its line says so. Three tests ra
 
 ## Why these runs are missing
 
-Three limits decided what this edition could run. The full Agent Server with Postgres and Redis does not start without a LangSmith API key or a license key, as [section 8.1](#s-agent-server-langgraph-dev-up-and-deploy) shows. We used no LangSmith account, so nothing that stores data in LangSmith ran. Our local models were Qwen3 0.6B to 30B-A3B and gpt-oss 20B on Ollama. Claude Haiku 5.5 and Claude Sonnet 5.5 ran only the task suite of [section 1.2](#s-do-you-need-langchain), under a fixed budget. The other hosted cases below have no run yet.
+Three limits decided what this edition could run. The full Agent Server with Postgres and Redis does not start without a LangSmith API key or a license key, as [section 8.1](#s-agent-server-langgraph-dev-up-and-deploy) shows.
+
+Our LangSmith account was a new one on the free plan. It ran tracing, `evaluate`, the pytest plugin, and the prompt hub, and the lists below hold what it left out. Our local models were Qwen3 0.6B to 30B-A3B and gpt-oss 20B on Ollama. Claude Haiku 5.5 and Claude Sonnet 5.5 ran only the task suite of [section 1.2](#s-do-you-need-langchain), under a fixed budget. The other hosted cases below have no run yet.
 
 Each list below names the case and the section where the text stops. Most of the graph cases need no account and only a new scenario in the capture kit.
 
@@ -34,22 +36,21 @@ These need `langgraph up` with a key, or a deployment.
 - The time floor of one run, jobs per worker, and the recursion limit under `langgraph up`. [Section 8.1](#s-agent-server-langgraph-dev-up-and-deploy)
 - The store permissions of custom auth, and cross-user reads through the server. [Section 5.4](#s-stores-and-long-term-memory) and [section 8.3](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses)
 - `langgraph deploy`, its serverless and dedicated types, and a cold start. [Section 8.1](#s-agent-server-langgraph-dev-up-and-deploy)
+- `langgraph up` with the key of a free account, and the license check inside the server image, which Docker must run. [Section 8.1](#s-agent-server-langgraph-dev-up-and-deploy)
 
 ## LangSmith with an account
 
-- Trace retention, rate limits, the limit of runs per trace, and the speed of the hosted store. [Section 7.6](#s-langsmith-tracing)
-- A dataset given to `evaluate` by name, with its versions and splits. [Section 7.7](#s-evaluation-with-langsmith)
-- An experiment with `upload_results=True`, and its retention. [Section 7.7](#s-evaluation-with-langsmith)
+- Versions and splits of a dataset, given to `evaluate` by name. [Section 7.7](#s-evaluation-with-langsmith)
 - A comparison of two experiments. [Section 7.7](#s-evaluation-with-langsmith)
 - Online evaluators on production traces, and annotation queues. [Section 7.7](#s-evaluation-with-langsmith)
-- The pytest plugin with tracking on against a real account, and its `--langsmith-output` table with real results. [Section 7.7](#s-evaluation-with-langsmith)
+- A judge evaluator on wrong answers, because every answer in our run was right. [Section 7.7](#s-evaluation-with-langsmith)
+- Traffic that reaches the limits the account reports: 100 runs per post, 1,000 runs per trace, and the retention tiers. [Section 7.6](#s-langsmith-tracing)
 
 ## LangSmith without an account
 
 These need no account, only a new lab run.
 
 - `evaluate` with a client that you pass, to see if the agent runs follow that client or the default one. [Section 7.7](#s-evaluation-with-langsmith)
-- `aevaluate`, and an evaluator built on LangChain, such as a model that judges. [Section 7.7](#s-evaluation-with-langsmith)
 - The pytest plugin with `LANGSMITH_TEST_CACHE` and `vcrpy`, with pytest 7 and 9, with `pytest-xdist`, and with async tests. [Section 7.7](#s-evaluation-with-langsmith)
 
 ## MCP
@@ -111,4 +112,4 @@ The items above add to the manual. They do not change a recorded result. Every m
 - Treat the Agent Server claims on exactly once and outages as untested until you test them.
 ```
 
-Sources: sections 1.1, 3.1, 3.4, 3.5, 3.6, 4.1, 4.3, 4.4, 4.5, 4.6, 5.1 to 5.8, 6.2, 6.4, 6.5, 7.1, 7.2, and 7.3 of this manual; capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt; capture/lab/README.md.
+Sources: sections 1.1, 3.1, 3.4, 3.5, 3.6, 4.1, 4.3, 4.4, 4.5, 4.6, 5.1 to 5.8, 6.2, 6.4, 6.5, 7.1, 7.2, 7.3, 7.6, 7.7, and 8.1 of this manual; capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt; capture/lab/T21-langsmith-account-mac/07-e5-up.txt; capture/lab/README.md.

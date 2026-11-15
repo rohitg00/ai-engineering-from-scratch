@@ -149,6 +149,30 @@ note: The first row, cut to the second run.
 
 The docs say that `interrupt` keeps the progress of the first run up to the point of the interrupt {{docs langsmith/double-texting}}. In our case, run A was inside its first node, so it had no finished step to keep. Its node never wrote, and the thread held only run B. A tool call that had started in that node would have no result, which the docs also warn about. Choose `enqueue` for a chat thread, and `reject` when a second message must wait for the user to retry.
 
+## What langgraph dev sends to LangSmith
+
+`langgraph dev` traces each run when the environment of the app turns tracing on. **We measured** it on the Mac with a key of a LangSmith account on the free plan, in a scratch environment. The versions were `langgraph-cli` 0.4.43, `langgraph-api` 0.18.0, and `langgraph-runtime-inmem` 0.38.0. Five runs of a Qwen3 4B agent through the server all answered right.
+
+- **The runs.** The account stored 35 runs, 7 for each server run. The root of each trace is named `agent`, the graph id, and not `LangGraph`. Its id is the run id of the server.
+- **The metadata of the root.** It holds `thread_id`, `assistant_id`, `graph_id`, and `run_attempt`. It also holds `langgraph_api_version` 0.18.0, `langgraph_host` with the value `self-hosted`, and `langgraph_plan` with the value `enterprise`. `LANGSMITH_LANGGRAPH_API_VARIANT` is `local_dev`.
+- **The requests.** The process contacted one host, `api.smith.langchain.com`. It sent 2 `GET /info` and 15 `POST /runs/multipart`, and no request to check a license.
+
+```listing
+title: the requests of langgraph dev for five traced runs
+source: capture/lab/summary/langsmith-account-mac.json
+lang: json
+---
+  "hosts": [
+   "https://api.smith.langchain.com"
+  ],
+  "requests": {
+   "GET /info 200": 2,
+   "POST /runs/multipart 202": 15
+  },
+```
+
+`langgraph-api` puts `truststore` into the SSL layer at import, so the server checks certificates with the trust store of the operating system {{code langgraph_api/server.py:11-17}}. In a sandbox that blocks that store, no trace reaches the API. `DISABLE_TRUSTSTORE=true` turns the injection off, and our recorded run used it.
+
 ## langgraph up needs a key
 
 `langgraph up` builds the image of your app from `langchain/langgraph-api` and starts it with Postgres and Redis. Before it builds, it prints what it needs:
@@ -186,11 +210,17 @@ ValueError: License verification failed. Please ensure proper configuration:
 Review your configuration settings and try again. If issues persist, contact support for assistance.
 ```
 
-So the server with Postgres and Redis does not start without an account or a license, even on your own machine. This edition does not use either. The tests of the full server stack come in the next edition, and [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them. They are a worker crash, a Redis or Postgres outage, exactly once in the task queue, and what Redis holds.
+So the server with Postgres and Redis does not start without an account or a license, even on your own machine.
+
+Later we had a key of a LangSmith account on the free plan. Docker was not running on the Mac, so `langgraph up` stopped with `Error: Docker not installed or not running` and exit code 2. It stopped before any check of the key.
+
+The package `langgraph_license` from PyPI, which `langgraph-api` 0.18.0 installs, returns true from every check {{code langgraph_license/validation.py}}. The check that failed above runs only inside the server image. So we still do not know if a key of a free account passes it. The organization reported `can_use_langgraph_cloud` as false and 0 free deployments. That is a hint from the API, not a test.
+
+The tests of the full server stack come in the next edition, and [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them. They are a worker crash, a Redis or Postgres outage, exactly once in the task queue, and what Redis holds.
 
 ## langgraph deploy
 
-This part comes from the docs and the code only. We did not run `langgraph deploy`, because it needs a LangSmith account.
+This part comes from the docs and the code only. We did not run `langgraph deploy`. The free plan of our account reported no free deployments.
 
 `langgraph deploy` builds the image, pushes it to a registry that LangSmith manages, and creates or updates an Agent Server in one step {{docs langsmith/cli}}. Without Docker, it asks LangSmith to build the image from an upload of your source. The docs mark the command as beta.
 
@@ -208,6 +238,7 @@ Advisory GHSA-8prr-f582-jqq3 says that `langgraph deploy --verbose` printed the 
 - Use enqueue for chat threads, and reject when a second message must wait.
 - Write nodes that can lose an unfinished write before you choose interrupt or rollback.
 - Set LANGSMITH_API_KEY or LANGGRAPH_CLOUD_LICENSE_KEY before you run langgraph up.
+- Search for the graph id, not LangGraph, to find the traces of a server run.
 ```
 
-Sources: capture/lab/summary/agent-server-x86.json, capture/lab/T15-agent-server-x86/02-recursion.jsonl, capture/lab/T15-agent-server-x86/03-workers.jsonl, capture/lab/T15-agent-server-x86/04-double-texting.jsonl, capture/lab/T15-agent-server-x86/05-load.jsonl, capture/lab/T15-agent-server-x86/08-up-start-excerpt.txt, capture/lab/T15-agent-server-x86/09-up-containers.txt, capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt, capture/lab/T15-agent-server-x86/12-latency-floor.jsonl, capture/lab/T15-agent-server-x86/t15_drive.py, capture/lab/T15-agent-server-x86/t15app/graphs.py, capture/lab/T15-agent-server-x86/t15app/langgraph.json; libs/cli/langgraph_cli/cli.py and libs/cli/langgraph_cli/deploy.py at langgraph-cli 0.4.43; langgraph_api/utils/config.py and langgraph_api/cli.py at langgraph-api 0.18.0; langgraph_runtime_inmem/ops.py at langgraph-runtime-inmem 0.38.0; docs.langchain.com at docs commit 04d4d4a (langsmith/cli, langsmith/env-var-cloud, langsmith/agent-server-scale, langsmith/double-texting, langsmith/cloud-platform-features, oss/python/langchain/agents); advisory GHSA-8prr-f582-jqq3.
+Sources: capture/lab/summary/langsmith-account-mac.json, capture/lab/T21-langsmith-account-mac/07-e5-dev-inspect.json, capture/lab/T21-langsmith-account-mac/07-e5-dev-netlog.jsonl, capture/lab/T21-langsmith-account-mac/07-e5-dev-runs.jsonl, capture/lab/T21-langsmith-account-mac/07-e5-up.txt, capture/lab/T21-langsmith-account-mac/07-e5-server-venv-freeze.txt, capture/lab/T21-langsmith-account-mac/01-account-probe.json, capture/lab/T21-langsmith-account-mac/_scripts/t21_e5_client.py, capture/lab/T21-langsmith-account-mac/_scripts/t21_e5_inspect.py; langgraph_api/server.py and langgraph_license/validation.py at langgraph-api 0.18.0; capture/lab/summary/agent-server-x86.json, capture/lab/T15-agent-server-x86/02-recursion.jsonl, capture/lab/T15-agent-server-x86/03-workers.jsonl, capture/lab/T15-agent-server-x86/04-double-texting.jsonl, capture/lab/T15-agent-server-x86/05-load.jsonl, capture/lab/T15-agent-server-x86/08-up-start-excerpt.txt, capture/lab/T15-agent-server-x86/09-up-containers.txt, capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt, capture/lab/T15-agent-server-x86/12-latency-floor.jsonl, capture/lab/T15-agent-server-x86/t15_drive.py, capture/lab/T15-agent-server-x86/t15app/graphs.py, capture/lab/T15-agent-server-x86/t15app/langgraph.json; libs/cli/langgraph_cli/cli.py and libs/cli/langgraph_cli/deploy.py at langgraph-cli 0.4.43; langgraph_api/utils/config.py and langgraph_api/cli.py at langgraph-api 0.18.0; langgraph_runtime_inmem/ops.py at langgraph-runtime-inmem 0.38.0; docs.langchain.com at docs commit 04d4d4a (langsmith/cli, langsmith/env-var-cloud, langsmith/agent-server-scale, langsmith/double-texting, langsmith/cloud-platform-features, oss/python/langchain/agents); advisory GHSA-8prr-f582-jqq3.

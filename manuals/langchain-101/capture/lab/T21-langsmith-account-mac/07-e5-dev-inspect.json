@@ -1,0 +1,72 @@
+{
+ "n_runs": 35,
+ "by_type": {
+  "llm:ChatOllama:child": 10,
+  "chain:model:child": 10,
+  "tool:add:child": 5,
+  "chain:tools:child": 5,
+  "chain:agent:root": 5
+ },
+ "root_metadata_keys": [
+  "LANGSMITH_LANGGRAPH_API_VARIANT",
+  "LANGSMITH_PROJECT",
+  "LANGSMITH_TRACING",
+  "assistant_id",
+  "created_by",
+  "graph_id",
+  "langgraph_api_url",
+  "langgraph_api_version",
+  "langgraph_auth_user_id",
+  "langgraph_host",
+  "langgraph_plan",
+  "langgraph_request_id",
+  "langgraph_version",
+  "ls_integration",
+  "ls_run_depth",
+  "run_attempt",
+  "run_id",
+  "thread_id",
+  "user_id"
+ ],
+ "root_metadata_sample": {
+  "LANGSMITH_LANGGRAPH_API_VARIANT": "local_dev",
+  "LANGSMITH_PROJECT": "aiefs-lc101-dev",
+  "LANGSMITH_TRACING": "true",
+  "assistant_id": "<id-131>",
+  "created_by": "system",
+  "graph_id": "agent",
+  "langgraph_api_url": "http://127.0.0.1:2025",
+  "langgraph_api_version": "0.18.0",
+  "langgraph_auth_user_id": "",
+  "langgraph_host": "self-hosted",
+  "langgraph_plan": "enterprise",
+  "langgraph_request_id": "<id-132>",
+  "langgraph_version": "1.2.22",
+  "ls_integration": "langchain_create_agent",
+  "ls_run_depth": 0,
+  "run_attempt": 1,
+  "run_id": "<id-133>",
+  "thread_id": "<id-134>",
+  "user_id": ""
+ },
+ "root_tags": [
+  [],
+  [],
+  []
+ ],
+ "root_ids": [
+  "<id-133>",
+  "<id-135>",
+  "<id-136>",
+  "<id-137>",
+  "<id-138>"
+ ],
+ "root_tokens": [
+  580,
+  576,
+  584,
+  574,
+  578
+ ],
+ "server_run_ids_match_root_ids": true
+}

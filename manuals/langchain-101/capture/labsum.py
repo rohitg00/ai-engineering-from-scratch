@@ -1416,7 +1416,174 @@ def tracing_mac_real():
     }
 
 
+def p90(values, digits=3):
+    data = sorted(values)
+    k = (len(data) - 1) * 0.9
+    low = int(k)
+    high = min(low + 1, len(data) - 1)
+    return r(data[low] + (data[high] - data[low]) * (k - low), digits)
+
+
+def request_counts(entries, key="url"):
+    counts = {}
+    for entry in entries:
+        path = re.sub(r"https://api\.smith\.langchain\.com", "", entry.get(key) or entry.get("path") or "")
+        path = re.sub(r"<(id|project-id|dataset-id)-\d+>", "<id>", path)
+        name = f"{entry['method']} {path} {entry['status']}"
+        counts[name] = counts.get(name, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def langsmith_account():
+    import random
+
+    folder = "T21-langsmith-account-mac"
+    timing = rows(f"{folder}/02-e1-timing.jsonl")
+    runs = [row for row in timing if row.get("cond") in ("on", "off")]
+    first_on = min(row["i"] for row in runs if row["cond"] == "on")
+    off = [row["overhead_s"] * 1000 for row in runs if row["cond"] == "off"]
+    on = [row["overhead_s"] * 1000 for row in runs if row["cond"] == "on" and row["i"] != first_on]
+    rng = random.Random(0)
+    boot = sorted(statistics.median(rng.choices(on, k=len(on))) - statistics.median(rng.choices(off, k=len(off))) for _ in range(10000))
+    visible = [row["visible"] for row in runs if row.get("visible")]
+    requests = rows(f"{folder}/02-e1-timing-requests.jsonl")
+    posts = [row for row in requests if row["method"] == "POST"]
+    tracing = {
+        "runs": {cond: {"n": sum(1 for row in runs if row["cond"] == cond), "correct": sum(1 for row in runs if row["cond"] == cond and row["correct"])} for cond in ("off", "on")},
+        "overhead_note": "overhead is the wall time of a run minus the total_duration that Ollama reported for its two model calls",
+        "off_overhead_ms_median": median(off, 1),
+        "on_overhead_ms_median_without_first": median(on, 1),
+        "first_traced_run_overhead_ms": r(next(row["overhead_s"] for row in runs if row["i"] == first_on) * 1000, 1),
+        "difference_of_medians_ms": r(statistics.median(on) - statistics.median(off), 1),
+        "difference_bootstrap_95_ms": [r(boot[249], 1), r(boot[9749], 1)],
+        "bootstrap": "10,000 resamples of each condition with random.Random(0), first traced run left out",
+        "wall_s_median": {cond: median([row["wall_s"] for row in runs if row["cond"] == cond], 2) for cond in ("off", "on")},
+        "visible_n": len(visible),
+        "visible_timeouts": sum(1 for v in visible if v.get("timeout")),
+        "first_readable_s": {"median": median([v["first_readable_s"] for v in visible], 2), "p90": p90([v["first_readable_s"] for v in visible], 2), "max": max(v["first_readable_s"] for v in visible)},
+        "complete_s": {"median": median([v["complete_s"] for v in visible], 2), "p90": p90([v["complete_s"] for v in visible], 2), "max": max(v["complete_s"] for v in visible)},
+        "visible_note": "polls of read_run after invoke returned, 0.25 s apart plus the time of each read",
+        "requests": {name: n for name, n in request_counts(requests).items() if not name.startswith("GET /runs/")},
+        "post_header_names": sorted({h for row in posts for h in row["req_header_names"]}),
+        "responses_with_rate_limit_headers": sum(1 for row in requests if row["resp_limit_headers"]),
+    }
+    tree_rows = rows(f"{folder}/03-e1-tree.jsonl")
+    names = {row["id"]: row["name"] for row in tree_rows}
+    root = next(row for row in tree_rows if row["parent_run_id"] is None)
+    tree = {
+        "runs": [{"name": row["name"], "run_type": row["run_type"], "parent": names.get(row["parent_run_id"]), "tags": row["tags"], "total_tokens": row["total_tokens"], "first_token_time": row["first_token_time"] is not None} for row in tree_rows],
+        "root_tokens": [root["prompt_tokens"], root["completion_tokens"], root["total_tokens"]],
+        "total_cost": sorted({str(row["total_cost"]) for row in tree_rows}),
+        "llm_metadata_keys": sorted(next(row for row in tree_rows if row["run_type"] == "llm")["extra"]["metadata"]),
+        "root_metadata_keys": sorted(root["extra"]["metadata"]),
+        "runtime_keys": sorted(root["extra"]["runtime"]),
+    }
+    local_data = json.loads(read(f"{folder}/03b-e1-local.json"))
+    listed = {}
+    for row in local_data["listed_runs"]:
+        key = f"{row['run_type']} {row['name']}"
+        listed[key] = listed.get(key, 0) + 1
+    local = {"env": local_data["env_vars"], "agent_runs": len(local_data["ids"]), "project_created": local_data["project_info"]["exists"], "project": local_data["project_info"]["name"], "stored_runs": dict(sorted(listed.items())), "traceable_name": "t21_local_traceable", "traceable_stored": sum(1 for row in local_data["listed_runs"] if row["name"] == "t21_local_traceable"), "multipart_posts": sum(1 for row in local_data["requests"] if row["method"] == "POST" and row["url"].endswith("/runs/multipart"))}
+    evaluate = {}
+    for mode in ("true", "false", "async"):
+        data = json.loads(read(f"{folder}/06-e2-{mode}.json"))
+        inspect = data["inspect"]
+        entry = {"rows": len(data["rows"]), "target": sorted({row["target_run_name"] for row in data["rows"]}), "exact": sum(row["scores"]["exact"] for row in data["rows"]), "judge": sum(row["scores"]["judge"] for row in data["rows"]), "experiment_name": inspect["experiment_name"], "new_projects_with_prefix": sorted(p for p in data["new_projects"] if not p.startswith("aiefs-lc101-pytest")), "requests": {name: n for name, n in request_counts(data["requests"], "path").items() if "/runs/query" not in name and not name.startswith("GET /feedback") and not name.startswith("GET /runs/")}}
+        if "project" in inspect:
+            entry.update({"stored_runs": inspect["n_runs"], "runs_by_type": inspect["runs_by_type"], "feedback": inspect["feedback"]["n"], "feedback_keys": inspect["feedback"]["keys"], "feedback_source_types": inspect["feedback"]["source_types"], "roots_with_reference_example": inspect["roots_reference_example"], "target_runs_readable": sum(1 for c in inspect["target_run_check"] if c["target_run_readable"])})
+        else:
+            entry.update({"project_error": inspect["project_error"], "target_runs_readable": sum(1 for c in inspect["target_run_check"] if c["target_run_readable"]), "target_runs_checked": len(inspect["target_run_check"])})
+        evaluate[mode] = entry
+    printed = read(f"{folder}/06-e2-false-stdout.txt").splitlines()[0]
+    where = json.loads(read(f"{folder}/06b-e2-false-where.json"))
+    projects = {p["name"]: p for p in where["projects"]}
+    landed = next(name for name, p in projects.items() if p["n_children_of_unsent_target"])
+    evaluate["false_names"] = {"printed": printed, "experiment_name_returned": evaluate["false"]["experiment_name"], "project_with_the_runs": landed}
+    evaluate["false_orphans"] = {"project_runs": projects[landed]["n_runs"], "runs_by_type": projects[landed]["runs_by_type"], "langgraph_runs_with_unsent_parent": projects[landed]["n_children_of_unsent_target"], "trace_root_read": where["trace_root_readable"], "is_root_count": where["is_root_filter_count"], "trace_runs_checked": len(where["orphan_trace_runs"]), "trace_runs_that_are_roots": sum(1 for row in where["orphan_trace_runs"] if row["is_trace_root"])}
+    evaluate["evaluators_project"] = projects["evaluators"]["runs_by_type"]
+    pytest_rows = [row for row in rows(f"{folder}/04-e3-pytest-runs.jsonl") if row.get("cond")]
+    conditions = {}
+    for row in pytest_rows:
+        cell = conditions.setdefault(row["cond"], {"processes": 0, "return_codes": [], "results": [], "requests": []})
+        cell["processes"] += 1
+        cell["return_codes"].append(row["rc"])
+        cell["results"].append(re.sub(r" in [0-9.]+s", "", row["summary_line"]).strip("= "))
+        cell["requests"].append(row["requests_summary"])
+    errors = []
+    for rep in (1, 2, 3):
+        for line in read(f"{folder}/04-e3-on-rep{rep}-stdout.txt").splitlines():
+            match = re.match(r"^E\s+(ValueError: .*)$", line)
+            if match and match.group(1) not in errors:
+                errors.append(match.group(1))
+    table = [line for line in read(f"{folder}/04-e3-on-output-rep1-stdout.txt").splitlines() if line.startswith("│")]
+    suite = json.loads(read(f"{folder}/04-e3-inspect.json"))
+    pytest = {
+        "env": "LANGSMITH_TEST_SUITE=aiefs-lc101-pytest and LANGSMITH_EXPERIMENT=aiefs-lc101-pytest-exp, with a key; on-tracing also sets LANGSMITH_TRACING=true and LANGSMITH_PROJECT=aiefs-lc101-pytest-tracing",
+        "conditions": conditions,
+        "errors_with_tracing_unset": errors,
+        "output_table_rep1": table,
+        "dataset": {"name": suite["dataset"]["name"], "examples": suite["dataset"]["example_count"], "description": suite["dataset"]["description"], "runner": suite["dataset"]["metadata"]["__ls_runner"]},
+        "experiments": [{"stored_runs": e["n_runs"], "roots": len(e["roots"]), "feedback": sorted(f"{f['key']}={f['score']}" for f in e["feedback"])} for e in suite["experiments"]],
+        "tracing_project": suite["tracing_project"],
+    }
+    hub_data = json.loads(read(f"{folder}/05-e4-hub.json"))
+    full = json.loads(read(f"{folder}/05b-e4-hub-fullhash.json"))
+    hub = {"steps": [{"step": row["step"], "ok": row["ok"], "error": row["error"].split(". HTTPError")[0] if "error" in row else None} for row in hub_data["log"]], "full_hash_pulls": [{"step": row["step"], "http_requests": row["http_requests"]} for row in full["log"]], "requests": {re.sub(r"https://api\.smith\.langchain\.com", "", k): v for k, v in hub_data["requests_summary"].items()}}
+    dev = json.loads(read(f"{folder}/07-e5-dev-inspect.json"))
+    net = rows(f"{folder}/07-e5-dev-netlog.jsonl")
+    hosts = sorted({re.match(r"https?://[^/]+", row["url"]).group(0) for row in net})
+    meta = dev["root_metadata_sample"]
+    server = {
+        "versions": "langgraph-cli 0.4.43, langgraph-api 0.18.0, langgraph-runtime-inmem 0.38.0",
+        "runs": len(rows(f"{folder}/07-e5-dev-runs.jsonl")),
+        "correct": sum(1 for row in rows(f"{folder}/07-e5-dev-runs.jsonl") if row["correct"]),
+        "stored_runs": dev["n_runs"],
+        "by_type": dev["by_type"],
+        "root_metadata": {k: meta[k] for k in ("LANGSMITH_LANGGRAPH_API_VARIANT", "graph_id", "langgraph_api_version", "langgraph_host", "langgraph_plan", "run_attempt")},
+        "root_metadata_keys": dev["root_metadata_keys"],
+        "server_run_ids_match_root_ids": dev["server_run_ids_match_root_ids"],
+        "hosts": hosts,
+        "requests": request_counts(net),
+        "up": [line for line in read(f"{folder}/07-e5-up.txt").splitlines() if line.startswith(("Error:", "rc="))],
+    }
+    probe = json.loads(read(f"{folder}/01-account-probe.json"))
+    by_path = {row["path"]: row for row in probe["rows"]}
+    flags = by_path["/info"]["body"]["instance_flags"]
+    config = by_path["/orgs/current"]["body"]["config"]
+    ttl = by_path["/ttl-settings"]["body"][0]
+    limits = {
+        "batch_ingest_config": by_path["/info"]["body"]["batch_ingest_config"],
+        "instance_flags": {k: flags[k] for k in ("trace_tree_max_runs", "trace_tier_duration_days", "max_longlived_ttl_days", "allowed_longlived_ttl_days", "per_project_retention_enabled", "zstd_compression_enabled", "free_tier")},
+        "ttl_settings": {k: ttl[k] for k in ("default_trace_tier", "longlived_ttl_days", "configured_by")},
+        "org_config": {k: config.get(k) for k in ("plan_tier", "max_workspaces", "max_identities", "can_use_langgraph_cloud", "max_free_langgraph_cloud_deployments", "lsu_per_trace", "lsu_per_trace_retention_upgrade", "message_view_batch_rate_limit_per_sec", "message_view_batch_rate_limit_burst")},
+        "usage_limits": by_path["/usage-limits"]["body"],
+        "sessions_headers": {k: v for k, v in by_path["/sessions?limit=3"]["resp_headers"].items() if k.lower() in ("deprecation", "sunset", "link")},
+        "sdk_max_python": by_path["/info"]["body"]["sdk_versions"]["max_python_sdk_version"],
+    }
+    inventory = json.loads(read(f"{folder}/99-account-inventory.json"))
+    return {
+        "machine": MAC,
+        "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on the GPU of the Mac, ChatOllama with temperature 0, seed 42, reasoning off, num_ctx 16384; another agent used the same Ollama model during the whole batch",
+        "account": "a new LangSmith workspace on the free plan, on the US API host api.smith.langchain.com",
+        "versions": "langsmith 0.14.17, langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, langchain-ollama 1.1.0; pytest 8.4.2 in a scratch environment",
+        "agent": "create_agent with ChatOllama and one tool add, 2 model calls and 1 tool call, 7 traced runs per agent run",
+        "not_used": "eval_s of 06 and client_s of 07 as times, because Ollama was shared; the multipart_runs field of the request logs, which is 0 because the bodies are compressed; the not-to-use and 00-smoke rows of the run, which are not kept",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("02-e1-timing.jsonl", "02-e1-timing-requests.jsonl", "03-e1-tree.jsonl", "03b-e1-local.json", "06-e2-true.json", "06-e2-false.json", "06-e2-async.json", "06b-e2-false-where.json", "04-e3-pytest-runs.jsonl", "04-e3-inspect.json", "05-e4-hub.json", "05b-e4-hub-fullhash.json", "07-e5-dev-inspect.json", "07-e5-dev-netlog.jsonl", "07-e5-up.txt", "01-account-probe.json", "99-account-inventory.json")],
+        "tracing": tracing,
+        "tree": tree,
+        "local": local,
+        "evaluate": evaluate,
+        "pytest": pytest,
+        "hub": hub,
+        "dev_server": server,
+        "limits": limits,
+        "stored_runs_total": inventory["total_runs_stored"],
+        "projects": sorted(p["name"] for p in inventory["projects"]),
+    }
+
+
 SUMMARIES = {
+    "langsmith-account-mac.json": langsmith_account,
     "overhead-mac-real.json": overhead_mac_real,
     "streaming-mac-real.json": streaming_mac_real,
     "structured-output-mac-real.json": structured_output_mac_real,

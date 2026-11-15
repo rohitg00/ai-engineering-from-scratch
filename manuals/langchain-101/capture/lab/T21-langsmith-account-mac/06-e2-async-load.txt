@@ -1,0 +1,2 @@
+19:47  13 users, load averages: 5.89 5.71 5.44
+19:49  13 users, load averages: 4.75 5.37 5.34

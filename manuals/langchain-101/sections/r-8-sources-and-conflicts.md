@@ -12,7 +12,7 @@ The ranks are the same as in [How to read this manual](#s-front). When two sourc
 | 2 | the LangChain documentation, built from one commit of its repository | the documented behaviour, in our own words, checked against the code and our runs |
 | 3 | the changelog and the release notes of each package | when a change came, and which package version holds it |
 | 4 | the capture kit, with Qwen3 4B on Ollama where a scenario needs a model | every listing |
-| 5 | the lab recordings on two machines, and the task-suite bench, whose Claude rows ran through the Anthropic API | every number in a paragraph that starts with "We measured" |
+| 5 | the lab recordings on two machines, the account run against the hosted LangSmith API, and the task-suite bench, whose Claude rows ran through the Anthropic API | every number in a paragraph that starts with "We measured" |
 
 GitHub issues, pull requests, and security advisories are evidence for a behaviour at the pin. The text names each one by its number, and it never presents an issue as our result. The product pages of the project have no open license. [Section 1.1](#s-langchain-langgraph-langsmith-and-deep-agents) states their claims in our words and sets each one beside a run.
 
@@ -56,7 +56,7 @@ The LangChain, LangGraph, and Python marks in the figures belong to their owners
 
 ## Ranks 4 and 5: the kit and the lab
 
-The capture kit writes 49 files. The lab holds 43 experiment folders, 41 summary files, and the bench with its own summary. The bench priced each Claude call at the list prices of the Anthropic pricing page, read on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
+The capture kit writes 49 files. The lab holds 44 experiment folders, 42 summary files, and the bench with its own summary. The bench priced each Claude call at the list prices of the Anthropic pricing page, read on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
 
 ## Issues and advisories
 
@@ -77,6 +77,9 @@ The capture kit writes 49 files. The lab holds 43 experiment folders, 41 summary
 | langchain #40688 | a tool retry runs a tool that is not idempotent again | [4.7](#s-retries-backup-models-rate-limits-and-caching) |
 | langgraph #8517 | `ToolNode` under `ainvoke` ignores `max_concurrency` | [4.1](#s-create-agent-and-the-graph-it-builds) |
 | langchain #40471 | an MCP error result loses its `structuredContent` | [7.3](#s-mcp-with-langchain-mcp) |
+| langchain #41870 | `tracing_context(enabled="local")` sends the runs of LangChain code, which we reported | [7.6](#s-langsmith-tracing), [7.7](#s-evaluation-with-langsmith) |
+| langsmith-python #106 | `evaluate(upload_results=False)` prints `%s` and gives three names to one call, which we reported | [7.7](#s-evaluation-with-langsmith) |
+| langsmith-python #107 | with tracking on, every `log_*` call of the pytest plugin raises unless `LANGSMITH_TRACING=true`, which we reported | [7.7](#s-evaluation-with-langsmith) |
 
 [Section 8.3](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) gives the table of security advisories, with the range of each one and our result at the pin.
 
@@ -99,8 +102,8 @@ Each row is one disagreement between two sources. The choice is what this manual
 | D107 | Both v1 release pages link `create_react_agent` to the function of the same name in `langchain-classic`. | the code: two functions share the name | [8.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D108 | A LangSmith FAQ table calls checkpointers community code and streaming basic. | the current pages and the code | [8.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D109 | The Deep Agents overview names planning as a default. The 0.7.0 changelog makes it opt in. | the changelog and the capture: add `TodoListMiddleware` | [7.4](#s-deep-agents-0-7), [8.4](#s-migration-from-0-x-and-stale-advice) | open |
-| D111 | The product page says that tracing never affects your application. The tracing docs say that `LANGCHAIN_CALLBACKS_BACKGROUND=false` makes callbacks wait. No code at the pin reads that variable. | the lab and the code: about 7 ms per agent run on Qwen3 4B, and no effect from the variable at the pin | [7.6](#s-langsmith-tracing) | open at docs `04d4d4a` |
-| D113 | The prompt hub page teaches the hub through `langchain_classic`. | the LangSmith client methods that the same page recommends | [8.4](#s-migration-from-0-x-and-stale-advice) | open |
+| D111 | The product page says that tracing never affects your application. The tracing docs say that `LANGCHAIN_CALLBACKS_BACKGROUND=false` makes callbacks wait. No code at the pin reads that variable. | the lab and the code: about 6 ms per agent run on Qwen3 4B against the hosted API, and no effect from the variable at the pin | [7.6](#s-langsmith-tracing) | open at docs `04d4d4a` |
+| D113 | The prompt hub page teaches the hub through `langchain_classic`. | the LangSmith client methods that the same page recommends | [7.7](#s-evaluation-with-langsmith), [8.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D114 | A tracing page leads with an LCEL chain. | trace a `create_agent` agent | [8.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D116 | The local server page prints the old name LangGraph Studio. | the current names: LangSmith Studio and Agent Server | [8.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D117 | The v1 release page has a frozen list of providers with content blocks, and no `langchain.mcp`. | the changelog and the current pages | [8.4](#s-migration-from-0-x-and-stale-advice) | open |

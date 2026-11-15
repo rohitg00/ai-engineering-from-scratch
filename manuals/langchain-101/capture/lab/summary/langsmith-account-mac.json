@@ -1,0 +1,785 @@
+{
+ "account": "a new LangSmith workspace on the free plan, on the US API host api.smith.langchain.com",
+ "agent": "create_agent with ChatOllama and one tool add, 2 model calls and 1 tool call, 7 traced runs per agent run",
+ "dev_server": {
+  "by_type": {
+   "chain:agent:root": 5,
+   "chain:model:child": 10,
+   "chain:tools:child": 5,
+   "llm:ChatOllama:child": 10,
+   "tool:add:child": 5
+  },
+  "correct": 5,
+  "hosts": [
+   "https://api.smith.langchain.com"
+  ],
+  "requests": {
+   "GET /info 200": 2,
+   "POST /runs/multipart 202": 15
+  },
+  "root_metadata": {
+   "LANGSMITH_LANGGRAPH_API_VARIANT": "local_dev",
+   "graph_id": "agent",
+   "langgraph_api_version": "0.18.0",
+   "langgraph_host": "self-hosted",
+   "langgraph_plan": "enterprise",
+   "run_attempt": 1
+  },
+  "root_metadata_keys": [
+   "LANGSMITH_LANGGRAPH_API_VARIANT",
+   "LANGSMITH_PROJECT",
+   "LANGSMITH_TRACING",
+   "assistant_id",
+   "created_by",
+   "graph_id",
+   "langgraph_api_url",
+   "langgraph_api_version",
+   "langgraph_auth_user_id",
+   "langgraph_host",
+   "langgraph_plan",
+   "langgraph_request_id",
+   "langgraph_version",
+   "ls_integration",
+   "ls_run_depth",
+   "run_attempt",
+   "run_id",
+   "thread_id",
+   "user_id"
+  ],
+  "runs": 5,
+  "server_run_ids_match_root_ids": true,
+  "stored_runs": 35,
+  "up": [
+   "Error: Docker not installed or not running",
+   "rc=2"
+  ],
+  "versions": "langgraph-cli 0.4.43, langgraph-api 0.18.0, langgraph-runtime-inmem 0.38.0"
+ },
+ "evaluate": {
+  "async": {
+   "exact": 10,
+   "experiment_name": "aiefs-lc101-aeval-feb41559",
+   "feedback": 20,
+   "feedback_keys": [
+    "exact",
+    "judge"
+   ],
+   "feedback_source_types": [
+    "model"
+   ],
+   "judge": 10,
+   "new_projects_with_prefix": [
+    "aiefs-lc101-aeval-feb41559"
+   ],
+   "requests": {
+    "GET /datasets 200": 2,
+    "GET /examples 200": 1,
+    "GET /info 200": 2,
+    "GET /sessions 200": 5,
+    "PATCH /sessions/<id> 200": 1,
+    "POST /runs/multipart 202": 26,
+    "POST /sessions 200": 1
+   },
+   "roots_with_reference_example": 10,
+   "rows": 10,
+   "runs_by_type": {
+    "chain:AsyncTarget:root": 10,
+    "chain:LangGraph:child": 10,
+    "chain:model:child": 20,
+    "chain:tools:child": 10,
+    "llm:ChatOllama:child": 20,
+    "tool:add:child": 10
+   },
+   "stored_runs": 80,
+   "target": [
+    "AsyncTarget"
+   ],
+   "target_runs_readable": 3
+  },
+  "evaluators_project": {
+   "chain:RunnableSequence:child": 30,
+   "chain:exact:root": 20,
+   "chain:judge:root": 20,
+   "llm:ChatOllama:child": 30,
+   "parser:StrOutputParser:child": 30,
+   "prompt:ChatPromptTemplate:child": 30
+  },
+  "false": {
+   "exact": 10,
+   "experiment_name": "healthy-coast-30",
+   "judge": 10,
+   "new_projects_with_prefix": [],
+   "project_error": "LangSmithNotFoundError: Project healthy-coast-30 not found",
+   "requests": {
+    "GET /datasets 200": 2,
+    "GET /examples 200": 1,
+    "GET /info 200": 2,
+    "GET /sessions 200": 5,
+    "POST /runs/multipart 202": 31
+   },
+   "rows": 10,
+   "target": [
+    "Target"
+   ],
+   "target_runs_checked": 3,
+   "target_runs_readable": 0
+  },
+  "false_names": {
+   "experiment_name_returned": "healthy-coast-30",
+   "printed": "Starting evaluation of experiment: %s aiefs-lc101-eval-false-3afa8db2",
+   "project_with_the_runs": "abandoned-drink-3"
+  },
+  "false_orphans": {
+   "is_root_count": 0,
+   "langgraph_runs_with_unsent_parent": 10,
+   "project_runs": 70,
+   "runs_by_type": {
+    "chain:LangGraph:child": 10,
+    "chain:model:child": 20,
+    "chain:tools:child": 10,
+    "llm:ChatOllama:child": 20,
+    "tool:add:child": 10
+   },
+   "trace_root_read": "LangSmithNotFoundError",
+   "trace_runs_checked": 7,
+   "trace_runs_that_are_roots": 0
+  },
+  "true": {
+   "exact": 10,
+   "experiment_name": "aiefs-lc101-eval-true-28d43a7b",
+   "feedback": 20,
+   "feedback_keys": [
+    "exact",
+    "judge"
+   ],
+   "feedback_source_types": [
+    "model"
+   ],
+   "judge": 10,
+   "new_projects_with_prefix": [
+    "aiefs-lc101-eval-true-28d43a7b"
+   ],
+   "requests": {
+    "GET /datasets 200": 2,
+    "GET /examples 200": 1,
+    "GET /info 200": 2,
+    "GET /sessions 200": 5,
+    "PATCH /sessions/<id> 200": 1,
+    "POST /runs/multipart 202": 31,
+    "POST /sessions 200": 1
+   },
+   "roots_with_reference_example": 10,
+   "rows": 10,
+   "runs_by_type": {
+    "chain:LangGraph:child": 10,
+    "chain:Target:root": 10,
+    "chain:model:child": 20,
+    "chain:tools:child": 10,
+    "llm:ChatOllama:child": 20,
+    "tool:add:child": 10
+   },
+   "stored_runs": 80,
+   "target": [
+    "Target"
+   ],
+   "target_runs_readable": 3
+  }
+ },
+ "hub": {
+  "full_hash_pulls": [
+   {
+    "http_requests": 1,
+    "step": "full_hash_v1"
+   },
+   {
+    "http_requests": 0,
+    "step": "full_hash_v1_again"
+   },
+   {
+    "http_requests": 2,
+    "step": "tag_v1_again"
+   }
+  ],
+  "requests": {
+   "GET /commits/-/aiefs-lc101-calc-prompt 200": 4,
+   "GET /commits/-/aiefs-lc101-calc-prompt/b67a5536 200": 2,
+   "GET /commits/-/aiefs-lc101-calc-prompt/latest 200": 1,
+   "GET /commits/-/aiefs-lc101-calc-prompt/no-such-tag 404": 1,
+   "GET /commits/-/aiefs-lc101-calc-prompt/v1 200": 1,
+   "GET /commits/-/aiefs-lc101-calc-prompt/v2 200": 1,
+   "GET /info 200": 1,
+   "GET /repos/-/aiefs-lc101-calc-prompt 200": 6,
+   "GET /repos/-/aiefs-lc101-calc-prompt 404": 2,
+   "GET /settings 200": 1,
+   "POST /commits/-/aiefs-lc101-calc-prompt 200": 2,
+   "POST /commits/-/aiefs-lc101-calc-prompt 409": 1,
+   "POST /repos 200": 1,
+   "POST /repos/-/aiefs-lc101-calc-prompt/tags 200": 2
+  },
+  "steps": [
+   {
+    "error": null,
+    "ok": true,
+    "step": "exists_before"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "push_v1_tag_v1"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "push_v2_tag_v2"
+   },
+   {
+    "error": "LangSmithConflictError: Conflict for /commits/-/aiefs-lc101-calc-prompt",
+    "ok": false,
+    "step": "push_v2_again_unchanged"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "list_commits"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "commit_hash_from_url_v1"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "pull_latest"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "pull_by_hash_v1"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "pull_by_short_hash_v1"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "pull_by_tag_v1"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "pull_by_tag_v2"
+   },
+   {
+    "error": "LangSmithNotFoundError: Resource not found for /commits/-/aiefs-lc101-calc-prompt/no-such-tag",
+    "ok": false,
+    "step": "pull_by_missing_tag"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "pull_prompt_commit_v1_meta"
+   },
+   {
+    "error": null,
+    "ok": true,
+    "step": "get_prompt"
+   }
+  ]
+ },
+ "limits": {
+  "batch_ingest_config": {
+   "scale_down_nempty_trigger": 4,
+   "scale_up_nthreads_limit": 16,
+   "scale_up_qsize_trigger": 1000,
+   "size_limit": 100,
+   "size_limit_bytes": 20971520,
+   "use_multipart_endpoint": true
+  },
+  "instance_flags": {
+   "allowed_longlived_ttl_days": [
+    30,
+    60,
+    90,
+    120,
+    150,
+    180,
+    240,
+    300,
+    365,
+    400
+   ],
+   "free_tier": "free_10_2026",
+   "max_longlived_ttl_days": 180,
+   "per_project_retention_enabled": false,
+   "trace_tier_duration_days": {
+    "longlived": 400,
+    "shortlived": 14
+   },
+   "trace_tree_max_runs": 1000,
+   "zstd_compression_enabled": true
+  },
+  "org_config": {
+   "can_use_langgraph_cloud": false,
+   "lsu_per_trace": 0.005,
+   "lsu_per_trace_retention_upgrade": 0.0025,
+   "max_free_langgraph_cloud_deployments": 0,
+   "max_identities": 1,
+   "max_workspaces": 1,
+   "message_view_batch_rate_limit_burst": null,
+   "message_view_batch_rate_limit_per_sec": null,
+   "plan_tier": "free_10_2026"
+  },
+  "sdk_max_python": "0.14.17",
+  "sessions_headers": {
+   "deprecation": "true",
+   "link": "</api/v2/sessions>; rel=\"successor-version\"",
+   "sunset": "Thu, 01 Jul 2027 00:00:00 GMT"
+  },
+  "ttl_settings": {
+   "configured_by": "system",
+   "default_trace_tier": "shortlived",
+   "longlived_ttl_days": null
+  },
+  "usage_limits": []
+ },
+ "local": {
+  "agent_runs": 3,
+  "env": [
+   "LANGSMITH_API_KEY",
+   "LANGSMITH_PROJECT"
+  ],
+  "multipart_posts": 7,
+  "project": "aiefs-lc101-local",
+  "project_created": true,
+  "stored_runs": {
+   "chain LangGraph": 3,
+   "chain model": 6,
+   "chain tools": 3,
+   "llm ChatOllama": 6,
+   "tool add": 3
+  },
+  "traceable_name": "t21_local_traceable",
+  "traceable_stored": 0
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on the GPU of the Mac, ChatOllama with temperature 0, seed 42, reasoning off, num_ctx 16384; another agent used the same Ollama model during the whole batch",
+ "not_used": "eval_s of 06 and client_s of 07 as times, because Ollama was shared; the multipart_runs field of the request logs, which is 0 because the bodies are compressed; the not-to-use and 00-smoke rows of the run, which are not kept",
+ "projects": [
+  "abandoned-drink-3",
+  "aiefs-lc101-aeval-feb41559",
+  "aiefs-lc101-dev",
+  "aiefs-lc101-eval-true-28d43a7b",
+  "aiefs-lc101-local",
+  "aiefs-lc101-pytest-exp:07f0b9f1",
+  "aiefs-lc101-pytest-exp:0cca6e2a",
+  "aiefs-lc101-pytest-exp:24c37696",
+  "aiefs-lc101-pytest-exp:750e4701",
+  "aiefs-lc101-pytest-exp:764d4dea",
+  "aiefs-lc101-pytest-exp:9baa8787",
+  "aiefs-lc101-pytest-exp:dd0a98b4",
+  "aiefs-lc101-pytest-exp:e16e34cd",
+  "aiefs-lc101-smoke",
+  "aiefs-lc101-trace",
+  "evaluators"
+ ],
+ "pytest": {
+  "conditions": {
+   "on": {
+    "processes": 3,
+    "requests": [
+     {
+      "GET /datasets 200": 1,
+      "GET /examples/<id> 200": 4,
+      "GET /examples/<id> 404": 2,
+      "GET /info 200": 1,
+      "GET /sessions 200": 1,
+      "PATCH /sessions/<id> 200": 1,
+      "POST /datasets 200": 1,
+      "POST /runs/multipart 202": 3,
+      "POST /sessions 200": 1,
+      "POST /v1/platform/datasets/<id>/examples 201": 1,
+      "POST /v1/platform/datasets/<id>/examples 409": 1
+     },
+     {
+      "GET /datasets 200": 2,
+      "GET /examples/<id> 200": 4,
+      "GET /info 200": 1,
+      "GET /sessions 200": 1,
+      "PATCH /sessions/<id> 200": 1,
+      "POST /runs/multipart 202": 2,
+      "POST /sessions 200": 1
+     },
+     {
+      "GET /datasets 200": 2,
+      "GET /examples/<id> 200": 4,
+      "GET /info 200": 1,
+      "GET /sessions 200": 1,
+      "PATCH /sessions/<id> 200": 1,
+      "POST /runs/multipart 202": 2,
+      "POST /sessions 200": 1
+     }
+    ],
+    "results": [
+     "5 failed",
+     "5 failed",
+     "5 failed"
+    ],
+    "return_codes": [
+     1,
+     1,
+     1
+    ]
+   },
+   "on-output": {
+    "processes": 3,
+    "requests": [
+     {
+      "GET /datasets 200": 2,
+      "GET /examples/<id> 200": 4,
+      "GET /info 200": 1,
+      "GET /sessions 200": 1,
+      "PATCH /sessions/<id> 200": 1,
+      "POST /runs/multipart 202": 1,
+      "POST /sessions 200": 1
+     },
+     {
+      "GET /datasets 200": 2,
+      "GET /examples/<id> 200": 4,
+      "GET /info 200": 1,
+      "GET /sessions 200": 1,
+      "PATCH /sessions/<id> 200": 1,
+      "POST /runs/multipart 202": 1,
+      "POST /sessions 200": 1
+     },
+     {
+      "GET /datasets 200": 2,
+      "GET /examples/<id> 200": 4,
+      "GET /info 200": 1,
+      "GET /sessions 200": 1,
+      "PATCH /sessions/<id> 200": 1,
+      "POST /runs/multipart 202": 1,
+      "POST /sessions 200": 1
+     }
+    ],
+    "results": [
+     "Finishing up...",
+     "Finishing up...",
+     "Finishing up..."
+    ],
+    "return_codes": [
+     1,
+     1,
+     1
+    ]
+   },
+   "on-tracing": {
+    "processes": 2,
+    "requests": [
+     {
+      "GET /datasets 200": 2,
+      "GET /examples/<id> 200": 4,
+      "GET /examples/<id> 404": 2,
+      "GET /info 200": 1,
+      "GET /sessions 200": 1,
+      "PATCH /sessions/<id> 200": 1,
+      "POST /runs/multipart 202": 4,
+      "POST /sessions 200": 1,
+      "POST /v1/platform/datasets/<id>/examples 201": 2
+     },
+     {
+      "GET /datasets 200": 2,
+      "GET /examples/<id> 200": 4,
+      "GET /info 200": 1,
+      "GET /sessions 200": 1,
+      "PATCH /sessions/<id> 200": 1,
+      "POST /runs/multipart 202": 3,
+      "POST /sessions 200": 1
+     }
+    ],
+    "results": [
+     "2 failed, 3 passed",
+     "2 failed, 3 passed"
+    ],
+    "return_codes": [
+     1,
+     1
+    ]
+   }
+  },
+  "dataset": {
+   "description": "Test suite",
+   "examples": 3,
+   "name": "aiefs-lc101-pytest",
+   "runner": "pytest"
+  },
+  "env": "LANGSMITH_TEST_SUITE=aiefs-lc101-pytest and LANGSMITH_EXPERIMENT=aiefs-lc101-pytest-exp, with a key; on-tracing also sets LANGSMITH_TRACING=true and LANGSMITH_PROJECT=aiefs-lc101-pytest-tracing",
+  "errors_with_tracing_unset": [
+   "ValueError: log_inputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true').",
+   "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+  ],
+  "experiments": [
+   {
+    "feedback": [
+     "exact=1.0",
+     "exact=1.0",
+     "pass=0",
+     "pass=1.0",
+     "pass=1.0",
+     "pass=1.0"
+    ],
+    "roots": 4,
+    "stored_runs": 11
+   },
+   {
+    "feedback": [
+     "exact=1.0",
+     "exact=1.0",
+     "pass=0",
+     "pass=1.0",
+     "pass=1.0",
+     "pass=1.0"
+    ],
+    "roots": 4,
+    "stored_runs": 11
+   },
+   {
+    "feedback": [],
+    "roots": 0,
+    "stored_runs": 0
+   },
+   {
+    "feedback": [],
+    "roots": 0,
+    "stored_runs": 0
+   },
+   {
+    "feedback": [],
+    "roots": 0,
+    "stored_runs": 0
+   },
+   {
+    "feedback": [],
+    "roots": 0,
+    "stored_runs": 0
+   },
+   {
+    "feedback": [],
+    "roots": 0,
+    "stored_runs": 0
+   },
+   {
+    "feedback": [],
+    "roots": 0,
+    "stored_runs": 0
+   }
+  ],
+  "output_table_rep1": [
+   "\u2502 ...arked_pa\u2026 \u2502 {}     \u2502 {}          \u2502 {}      \u2502 failed \u2502          \u2502 0.00s    \u2502",
+   "\u2502 ...arked_fa\u2026 \u2502 {}     \u2502 {}          \u2502 {}      \u2502 failed \u2502          \u2502 0.00s    \u2502",
+   "\u2502 ...rked_age\u2026 \u2502 {}     \u2502 {}          \u2502 {}      \u2502 failed \u2502          \u2502 0.61s    \u2502",
+   "\u2502              \u2502        \u2502             \u2502         \u2502        \u2502          \u2502          \u2502",
+   "\u2502 Averages     \u2502        \u2502             \u2502         \u2502 0%     \u2502 --       \u2502 0.21s    \u2502"
+  ],
+  "tracing_project": {
+   "error": "LangSmithNotFoundError"
+  }
+ },
+ "sources": [
+  "capture/lab/T21-langsmith-account-mac/02-e1-timing.jsonl",
+  "capture/lab/T21-langsmith-account-mac/02-e1-timing-requests.jsonl",
+  "capture/lab/T21-langsmith-account-mac/03-e1-tree.jsonl",
+  "capture/lab/T21-langsmith-account-mac/03b-e1-local.json",
+  "capture/lab/T21-langsmith-account-mac/06-e2-true.json",
+  "capture/lab/T21-langsmith-account-mac/06-e2-false.json",
+  "capture/lab/T21-langsmith-account-mac/06-e2-async.json",
+  "capture/lab/T21-langsmith-account-mac/06b-e2-false-where.json",
+  "capture/lab/T21-langsmith-account-mac/04-e3-pytest-runs.jsonl",
+  "capture/lab/T21-langsmith-account-mac/04-e3-inspect.json",
+  "capture/lab/T21-langsmith-account-mac/05-e4-hub.json",
+  "capture/lab/T21-langsmith-account-mac/05b-e4-hub-fullhash.json",
+  "capture/lab/T21-langsmith-account-mac/07-e5-dev-inspect.json",
+  "capture/lab/T21-langsmith-account-mac/07-e5-dev-netlog.jsonl",
+  "capture/lab/T21-langsmith-account-mac/07-e5-up.txt",
+  "capture/lab/T21-langsmith-account-mac/01-account-probe.json",
+  "capture/lab/T21-langsmith-account-mac/99-account-inventory.json"
+ ],
+ "stored_runs_total": 685,
+ "tracing": {
+  "bootstrap": "10,000 resamples of each condition with random.Random(0), first traced run left out",
+  "complete_s": {
+   "max": 10.488,
+   "median": 5.63,
+   "p90": 7.78
+  },
+  "difference_bootstrap_95_ms": [
+   3.5,
+   8.6
+  ],
+  "difference_of_medians_ms": 5.9,
+  "first_readable_s": {
+   "max": 3.57,
+   "median": 1.46,
+   "p90": 2.06
+  },
+  "first_traced_run_overhead_ms": 121.0,
+  "off_overhead_ms_median": 10.9,
+  "on_overhead_ms_median_without_first": 16.9,
+  "overhead_note": "overhead is the wall time of a run minus the total_duration that Ollama reported for its two model calls",
+  "post_header_names": [
+   "Accept",
+   "Accept-Encoding",
+   "Connection",
+   "Content-Encoding",
+   "Content-Length",
+   "Content-Type",
+   "User-Agent",
+   "X-Post-Compressed-Size",
+   "X-Pre-Compressed-Size",
+   "x-api-key"
+  ],
+  "requests": {
+   "GET /info 200": 2,
+   "POST /runs/multipart 202": 90
+  },
+  "responses_with_rate_limit_headers": 0,
+  "runs": {
+   "off": {
+    "correct": 30,
+    "n": 30
+   },
+   "on": {
+    "correct": 30,
+    "n": 30
+   }
+  },
+  "visible_n": 30,
+  "visible_note": "polls of read_run after invoke returned, 0.25 s apart plus the time of each read",
+  "visible_timeouts": 0,
+  "wall_s_median": {
+   "off": 11.66,
+   "on": 11.78
+  }
+ },
+ "tree": {
+  "llm_metadata_keys": [
+   "LANGSMITH_PROJECT",
+   "LANGSMITH_TRACING",
+   "_type",
+   "checkpoint_ns",
+   "langgraph_checkpoint_ns",
+   "langgraph_node",
+   "langgraph_path",
+   "langgraph_step",
+   "langgraph_triggers",
+   "lc_versions",
+   "ls_integration",
+   "ls_model_name",
+   "ls_model_type",
+   "ls_provider",
+   "ls_run_depth",
+   "ls_temperature",
+   "stop",
+   "usage_metadata"
+  ],
+  "root_metadata_keys": [
+   "LANGSMITH_PROJECT",
+   "LANGSMITH_TRACING",
+   "ls_integration",
+   "ls_run_depth"
+  ],
+  "root_tokens": [
+   545,
+   29,
+   574
+  ],
+  "runs": [
+   {
+    "first_token_time": true,
+    "name": "LangGraph",
+    "parent": null,
+    "run_type": "chain",
+    "tags": [],
+    "total_tokens": 574
+   },
+   {
+    "first_token_time": true,
+    "name": "model",
+    "parent": "LangGraph",
+    "run_type": "chain",
+    "tags": [
+     "graph:step:1"
+    ],
+    "total_tokens": 278
+   },
+   {
+    "first_token_time": true,
+    "name": "ChatOllama",
+    "parent": "model",
+    "run_type": "llm",
+    "tags": [
+     "seq:step:1"
+    ],
+    "total_tokens": 278
+   },
+   {
+    "first_token_time": false,
+    "name": "tools",
+    "parent": "LangGraph",
+    "run_type": "chain",
+    "tags": [
+     "graph:step:2"
+    ],
+    "total_tokens": 0
+   },
+   {
+    "first_token_time": false,
+    "name": "add",
+    "parent": "tools",
+    "run_type": "tool",
+    "tags": [
+     "seq:step:1"
+    ],
+    "total_tokens": 0
+   },
+   {
+    "first_token_time": true,
+    "name": "model",
+    "parent": "LangGraph",
+    "run_type": "chain",
+    "tags": [
+     "graph:step:3"
+    ],
+    "total_tokens": 296
+   },
+   {
+    "first_token_time": true,
+    "name": "ChatOllama",
+    "parent": "model",
+    "run_type": "llm",
+    "tags": [
+     "seq:step:1"
+    ],
+    "total_tokens": 296
+   }
+  ],
+  "runtime_keys": [
+   "langchain_core_version",
+   "langchain_version",
+   "library",
+   "library_version",
+   "platform",
+   "py_implementation",
+   "runtime",
+   "runtime_version",
+   "sdk",
+   "sdk_version"
+  ],
+  "total_cost": [
+   "None"
+  ]
+ },
+ "versions": "langsmith 0.14.17, langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, langchain-ollama 1.1.0; pytest 8.4.2 in a scratch environment"
+}
