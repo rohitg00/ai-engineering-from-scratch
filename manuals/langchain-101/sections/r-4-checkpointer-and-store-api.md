@@ -2,7 +2,7 @@
 
 > A checkpointer saves one thread step by step under `thread_id`, a store saves JSON items by namespace across threads, and each has three backends at the pin.
 
-The classes are in `langgraph-checkpoint` 4.3.2, `langgraph-checkpoint-sqlite` 3.1.3, and `langgraph-checkpoint-postgres` 3.2.1, from the `langgraph` repository at 1.2.22. A path below starts at `libs/` of that repository. [Section 4.2](#s-checkpointers-and-threads) runs the checkpointers, and [section 4.4](#s-stores-and-long-term-memory) runs the stores.
+The classes are in `langgraph-checkpoint` 4.3.2, `langgraph-checkpoint-sqlite` 3.1.3, and `langgraph-checkpoint-postgres` 3.2.1, from the `langgraph` repository at 1.2.22. A path below starts at `libs/` of that repository. [Section 5.2](#s-checkpointers-and-threads) runs the checkpointers, and [section 5.4](#s-stores-and-long-term-memory) runs the stores.
 
 ## The checkpointers
 
@@ -47,7 +47,7 @@ Each class is a subclass of `BaseCheckpointSaver` {{code checkpoint/langgraph/ch
 
 {{code checkpoint/langgraph/checkpoint/base/__init__.py:39-150}} {{code langgraph/langgraph/types.py:721-746}}
 
-`source` is `input`, `loop`, `update`, or `fork`. `step` is `-1` for the input checkpoint and `0` for the first checkpoint of the loop. Capture `30-state-history-forks.txt` shows `input`, `loop`, and `update`, and the lab replay of [section 5.6](#s-time-travel-replay-update-state-and-forks) shows `fork`.
+`source` is `input`, `loop`, `update`, or `fork`. `step` is `-1` for the input checkpoint and `0` for the first checkpoint of the loop. Capture `30-state-history-forks.txt` shows `input`, `loop`, and `update`, and the lab replay of [section 6.6](#s-time-travel-replay-update-state-and-forks) shows `fork`.
 
 ## Config keys of a thread
 
@@ -72,11 +72,11 @@ A graph with a checkpointer raises `ValueError` when the run config has no `conf
 
 ## Durability
 
-`Durability` is `sync`, `async`, or `exit` {{code langgraph/langgraph/types.py:99}}. The default is `async` {{code langgraph/langgraph/pregel/main.py:2715}}. The old argument `checkpoint_during` still works with a warning: `True` maps to `async` and `False` to `exit` {{code langgraph/langgraph/pregel/main.py:2837-2847}}. [Section 4.3](#s-durability-modes-and-a-crash-between-two-steps) gives what each mode saves before a crash.
+`Durability` is `sync`, `async`, or `exit` {{code langgraph/langgraph/types.py:99}}. The default is `async` {{code langgraph/langgraph/pregel/main.py:2715}}. The old argument `checkpoint_during` still works with a warning: `True` maps to `async` and `False` to `exit` {{code langgraph/langgraph/pregel/main.py:2837-2847}}. [Section 5.3](#s-durability-modes-and-a-crash-between-two-steps) gives what each mode saves before a crash.
 
 ## Checkpointers of a subgraph
 
-The `checkpointer` argument of `compile` takes `None`, `True`, `False`, or a saver {{code langgraph/langgraph/types.py:110}}. `None` inherits the saver of the parent, `True` keeps the state of the subgraph across calls, and `False` turns checkpoints off. [Section 5.7](#s-subgraphs-and-multi-agent-patterns) describes the three.
+The `checkpointer` argument of `compile` takes `None`, `True`, `False`, or a saver {{code langgraph/langgraph/types.py:110}}. `None` inherits the saver of the parent, `True` keeps the state of the subgraph across calls, and `False` turns checkpoints off. [Section 6.7](#s-subgraphs-and-multi-agent-patterns) describes the three.
 
 ## The stores
 
@@ -114,6 +114,6 @@ A label of a namespace cannot be empty, and it cannot hold a period or a NUL byt
 
 ## The serializer
 
-Both savers use `JsonPlusSerializer` by default {{code checkpoint/langgraph/checkpoint/serde/jsonplus.py:104}}. `EncryptedSerializer` wraps it with AES and reads its key from `LANGGRAPH_AES_KEY` {{code checkpoint/langgraph/checkpoint/serde/encrypted.py:54-59}}. [Section 4.6](#s-serialization-of-state-and-what-does-not-round-trip) shows which values come back changed.
+Both savers use `JsonPlusSerializer` by default {{code checkpoint/langgraph/checkpoint/serde/jsonplus.py:104}}. `EncryptedSerializer` wraps it with AES and reads its key from `LANGGRAPH_AES_KEY` {{code checkpoint/langgraph/checkpoint/serde/encrypted.py:54-59}}. [Section 5.6](#s-serialization-of-state-and-what-does-not-round-trip) shows which values come back changed.
 
 Sources: libs/checkpoint/langgraph/checkpoint/base/__init__.py, libs/checkpoint/langgraph/checkpoint/memory/__init__.py, libs/checkpoint/langgraph/store/base/__init__.py, libs/checkpoint/langgraph/store/memory/__init__.py, libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py, libs/checkpoint/langgraph/checkpoint/serde/encrypted.py, libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/__init__.py, libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/aio.py, libs/checkpoint-sqlite/langgraph/store/sqlite/base.py, libs/checkpoint-postgres/langgraph/checkpoint/postgres/__init__.py, libs/checkpoint-postgres/langgraph/checkpoint/postgres/aio.py, libs/checkpoint-postgres/langgraph/checkpoint/postgres/base.py, libs/checkpoint-postgres/langgraph/store/postgres/base.py, libs/langgraph/langgraph/types.py, and libs/langgraph/langgraph/pregel/main.py at langgraph 1.2.22; capture/out/28-checkpoint-memory.txt, capture/out/29-checkpoint-sqlite.txt, capture/out/30-state-history-forks.txt, capture/out/33-store.txt.

@@ -1,59 +1,47 @@
 'use strict';
 
-const fs = require('fs');
 const path = require('path');
-const { figure } = require('../../../_shared/figkit.js');
+const { figure, color } = require('../../../_shared/figkit.js');
+const { load } = require('../../../_shared/chart.js');
 
-const text = fs.readFileSync(path.join(__dirname, '../../capture/out/36-subgraphs.txt'), 'utf8');
-const objectAfter = heading => {
-  const at = text.indexOf('{', text.indexOf(heading));
-  return JSON.parse(text.slice(at, text.indexOf('\n}', at) + 2));
-};
-const prepared = objectAfter("## stream(subgraphs=True)").chunk.prepare.steps;
-const waiting = objectAfter('## state while the subgraph waits')['subgraph values'].steps;
-const final = objectAfter('## resume').steps;
-const parent = final.slice(0, prepared.length);
-const returned = final.slice(prepared.length, final.length - 1);
-if (JSON.stringify(parent) !== JSON.stringify(prepared) || JSON.stringify(returned.slice(0, waiting.length)) !== JSON.stringify(waiting)) {
-  throw new Error('fig-5-7: the final steps list is not the parent list plus the subgraph list');
-}
-const mark = list => list.map((step, i) => (i === 0 && step === parent[0] ? `${step}*` : step));
-const rows = [
-  ['prepare', 'outer', prepared],
-  ['shout', 'inner', waiting],
-  ['ask_ok', 'inner', returned],
-  ['operator.add', 'parent update', [...parent, '+', ...mark(returned)]],
-  ['finish', 'outer', [...parent, ...mark(returned), final[final.length - 1]]],
+const data = load(path.join(__dirname, '../../capture/lab/summary/demos-mac.json'));
+const steps = data.assistant.default;
+const names = ['remember', 'ask to send', 'approve', 'resume', 'approve again', 'third turn', 'new thread t2'];
+const X0 = 216;
+const COL = 81;
+const ROW = 40;
+const Y0 = 62;
+const cols = [
+  [['next', 'node'], s => (s.next.length ? s.next[0] : 'none'), 'amber'],
+  [['check-', 'points'], s => String(s.checkpoints), 'teal'],
+  [['approvals', 'waiting'], s => String(s.pending), 'amber'],
+  [['send_email', 'runs'], s => String(s.attempts), 'green'],
+  [['emails', 'sent'], s => String(s.sent), 'teal'],
 ];
 
 module.exports = figure('fig-5-7', {
-  height: 380,
-  title: 'The steps list through a subgraph',
-  desc: 'Five rows from top to bottom, each a node and the steps list after it. prepare writes outer.prepare. Inside the namespace of the subgraph inner, shout adds inner.shout and ask_ok adds inner.ask_ok=yes, so the subgraph returns three entries. The parent applies that output with operator.add to its list that already holds outer.prepare, so outer.prepare appears twice. finish adds outer.finish, and the final list has five entries.',
+  height: 418,
+  title: 'Seven processes of the assistant, and what each one left behind',
+  desc: `A table with one row for each of the seven processes of the assistant run on the Mac, and one column for each count read when the process ended. Process 3 approved the email, sent it, and was killed with exit code ${steps[2].exit}. Process 4 resumed and found the same approval waiting again. Process 5 approved again, send_email ran a second time, and the key check skipped the send. At the end send_email had run ${steps[6].attempts} times and the outbox held ${steps[6].sent} email. Process 7 on a new thread still found ${steps[6].memories} memories in the store.`,
 }, f => {
-  f.kicker(20, 18, 'node');
-  f.kicker(128, 18, 'steps after the node');
-  f.rect(10, 92, 620, 126, { hue: 'indigo', dash: 'dashed', fill: 'none' });
-  f.text(620, 210, 'namespace inner:<uuid-1>', { size: 11, anchor: 'end', hue: 'indigo', serif: true });
-  rows.forEach(([node, where, items], i) => {
-    const y = 32 + i * 66;
-    const hue = where === 'parent update' ? 'grey' : 'indigo';
-    f.box({ x: 16, y, w: 100, h: 42, hue, title: node, sub: where, titleSize: 11.5, pad: 4 });
-    if (i < rows.length - 1) f.arrow([66, y + 42], [66, y + 65], { style: 'call' });
-    let x = 128;
-    items.forEach(item => {
-      if (item === '+') {
-        f.text(x + 3, y + 26, '+', { size: 13, weight: 700, hue: 'ink-soft' });
-        x += 16;
-        return;
-      }
-      const copy = item.endsWith('*');
-      const text = copy ? item.slice(0, -1) : item;
-      const w = Math.ceil(text.length * 11 * 0.6) + 8;
-      f.rect(x, y + 10, w, 24, { hue: copy ? 'rose' : 'teal' });
-      f.text(x + 4, y + 26, text, { size: 11, hue: copy ? 'rose' : undefined });
-      x += w + 6;
+  cols.forEach(([head], c) => head.forEach((line, k) => f.text(X0 + c * COL + (COL - 8) / 2, 22 + k * 15, line, { size: 11, anchor: 'middle', hue: 'ink-soft', weight: 700 })));
+  steps.forEach((s, i) => {
+    const y = Y0 + i * ROW;
+    f.text(20, y + 21, `${i + 1}`, { size: 12, weight: 700, hue: s.exit ? 'rose' : 'ink' });
+    f.text(40, y + 21, names[i], { size: 11.5, hue: s.exit ? 'rose' : 'ink' });
+    if (s.exit !== 0) {
+      f.rect(X0, y, 5 * COL - 8, ROW - 8, { fill: color('rose-fill'), stroke: color('rose-ink'), dash: 'dashed' });
+      f.text(X0 + 10, y + 21, `SIGKILL, exit ${s.exit}: email sent, step not saved`, { size: 11.5, hue: 'rose', weight: 700 });
+      return;
+    }
+    cols.forEach(([, value, hue], c) => {
+      const x = X0 + c * COL;
+      f.rect(x, y, COL - 8, ROW - 8, { fill: color(`${hue}-fill`), stroke: color(`${hue}-ink`) });
+      f.text(x + (COL - 8) / 2, y + 21, value(s), { size: 12, anchor: 'middle', hue, weight: 700 });
     });
   });
-  f.text(20, 372, 'The rose entry is the copy that operator.add in the parent added to its own list.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, Y0 + 7 * ROW + 16, 'Each row is one new Python process, on thread t1 unless named.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, Y0 + 7 * ROW + 34, 'The counts were read when the process ended. send_email ran twice and', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, Y0 + 7 * ROW + 52, 'one email was sent, because the second run found its tool_call_id in', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, Y0 + 7 * ROW + 70, 'the outbox. Checkpoints count the rows of the thread in that row.', { size: 11, serif: true, hue: 'ink-soft' });
 });

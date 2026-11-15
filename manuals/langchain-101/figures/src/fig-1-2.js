@@ -1,110 +1,115 @@
 'use strict';
 
-const fs = require('fs');
 const path = require('path');
 const { figure, color } = require('../../../_shared/figkit.js');
-const { flat } = require('../../../_shared/forms.js');
+const { load } = require('../../../_shared/chart.js');
 
-const out = name => fs.readFileSync(path.join(__dirname, '../../capture/out', name), 'utf8');
-const block = (text, heading, skip = 0) => {
-  let body = text.slice(text.indexOf(heading) + heading.length);
-  for (let i = 0; i < skip; i += 1) body = body.slice(body.indexOf('\n]') + 2);
-  return JSON.parse(body.slice(body.indexOf('['), body.indexOf('\n]') + 2));
+const S = load(path.join(__dirname, '../../capture/lab/bench/summary-mac.json'));
+const M = S.main;
+const FAM = ['chain', 'sql', 'retrieval', 'files', 'multiturn'];
+const NAME = {
+  'claude-haiku-5-5': 'Haiku 5.5',
+  'claude-sonnet-5-5': 'Sonnet 5.5',
+  'gpt-oss:20b': 'gpt-oss 20B',
+  'qwen3:14b': 'Qwen3 14B',
+  'qwen3:8b': 'Qwen3 8B',
+  'qwen3:4b-instruct-2507-q4_K_M': 'Qwen3 4B',
+  'qwen3:30b-a3b': 'Qwen3 30B-A3B',
 };
-const run = out('06-agent-run.txt');
-const final = block(run, '## final state', 1);
-const calls = block(run, 'model calls, as the model received them:');
-const history = out('30-state-history-forks.txt').split('## get_state_history, newest first')[1].split('\n## ')[0];
-const checkpoints = history.split(/\n(?=\{)/).filter(chunk => chunk.trim().startsWith('{')).map(chunk => JSON.parse(chunk.slice(0, chunk.lastIndexOf('}') + 1))).reverse();
-const call = final[1].tool_calls[0];
-const answer = final[3].content;
-const system = calls[0].messages[0].split(': ')[1];
-
-const kindOf = message => ({ HumanMessage: ['H', 'violet'], AIMessage: ['AI', 'plum'], ToolMessage: ['T', 'green'] })[message.type];
-const nextOf = cp => (cp.next.length ? cp.next.join(', ') : 'none');
-const cpRow = i => ({ write: checkpoints[i], label: `put, step ${checkpoints[i].step}`, note: `next: ${nextOf(checkpoints[i])}` });
-
-const lanes = [
-  { title: 'your code', sub: 'agent.invoke', hue: 'violet', draw: (f, x) => flat.terminal(f, x, 18, 'violet', { w: 40, h: 34 }) },
-  { title: 'model node', sub: 'model', hue: 'indigo', draw: (f, x) => flat.unit(f, x, 22, 'indigo', { w: 34, h: 30 }) },
-  { title: 'chat model', sub: calls[0].model, hue: 'plum', draw: (f, x) => flat.tower(f, x, 18, 'plum', { w: 34, h: 34 }) },
-  { title: 'tools node', sub: call.name, hue: 'green', draw: (f, x) => flat.unit(f, x, 22, 'green', { w: 34, h: 30 }) },
-  { title: 'checkpointer', sub: 'InMemorySaver', hue: 'teal', draw: (f, x) => flat.cylinder(f, x, 14, 'teal', { w: 34, h: 40 }) },
+const GROUPS = [
+  ['claude-haiku-5-5', ['plain', 'deep_agent']],
+  ['claude-sonnet-5-5', ['plain', 'deep_agent']],
+  ['gpt-oss:20b', ['plain', 'deep_agent']],
+  ['qwen3:14b', ['plain', 'deep_agent']],
+  ['qwen3:8b', ['plain', 'create_agent', 'langgraph', 'deep_agent']],
+  ['qwen3:4b-instruct-2507-q4_K_M', ['plain', 'create_agent', 'langgraph', 'deep_agent']],
+  ['qwen3:30b-a3b', ['plain', 'deep_agent']],
 ];
-const cx = index => 46 + index * 90;
-const STATE = 470;
+const HUE = { plain: 'violet', create_agent: 'blue', langgraph: 'indigo', deep_agent: 'blue' };
+const LABEL = { plain: 'plain loop', create_agent: 'create_agent', langgraph: 'StateGraph', deep_agent: 'deep agent' };
 
-const groups = [
-  [[0, 4, 'write', cpRow(0)]],
-  [[0, 4, 'write', cpRow(1)]],
-  [
-    [1, 2, 'model', { label: `call 1: ${calls[0].messages.length} messages` }],
-    [2, 1, 'reply', { label: `tool_calls: ${call.name}(${Object.values(call.args).join(', ')})` }],
-    [1, 4, 'write', cpRow(2)],
-  ],
-  [
-    [1, 3, 'call', { label: `Send: ${call.name}, ${call.id}` }],
-    [3, 4, 'write', { ...cpRow(3), label: `put, step ${checkpoints[3].step}: ${final[2].type} ${final[2].content}` }],
-  ],
-  [
-    [1, 2, 'model', { label: `call 2: ${calls[1].messages.length} messages` }],
-    [2, 1, 'reply', { label: answer }],
-  ],
-  [
-    [1, 4, 'write', cpRow(4)],
-    [1, 0, 'reply', { label: `${final.length} messages` }],
-  ],
-];
+const order = M.order;
+const X0 = 212;
+const CW = 3.4;
+const GAP = 6;
+const colX = {};
+let x = X0;
+const famStart = {};
+order.forEach((t, i) => {
+  const fam = M.family[t];
+  if (i && M.family[order[i - 1]] !== fam) x += GAP;
+  if (!(fam in famStart)) famStart[fam] = x;
+  colX[t] = x;
+  x += CW;
+});
+const XEND = x;
+const famEnd = {};
+order.forEach(t => { famEnd[M.family[t]] = colX[t] + CW; });
+
+const cell = (model, harness) => {
+  const c = M.cells[`${model}|${harness}|0`];
+  if (!c) throw new Error(`fig-1-2: no cell ${model} ${harness}`);
+  return c;
+};
+const haiku = [cell('claude-haiku-5-5', 'plain'), cell('claude-haiku-5-5', 'deep_agent')];
+const q4 = [cell('qwen3:4b-instruct-2507-q4_K_M', 'plain'), cell('qwen3:4b-instruct-2507-q4_K_M', 'deep_agent')];
+const q8 = [cell('qwen3:8b', 'plain'), cell('qwen3:8b', 'deep_agent')];
+const rowsTotal = GROUPS.reduce((a, [, hs]) => a + hs.length, 0);
+const RH = 15;
+const Y0 = 74;
+const SEP = 7;
+const height = Y0 + rowsTotal * RH + (GROUPS.length - 1) * SEP + 92;
 
 module.exports = figure('fig-1-2', {
-  height: 610,
-  title: 'One create_agent run, step by step',
-  desc: `Five lifelines under small drawings: your code as a terminal, the model node, the chat model, the tools node, and the checkpointer as a cylinder. A sixth column shows the messages in each checkpoint as chips. Six numbered steps, which match the list in the text: 1, the input checkpoint at step ${checkpoints[0].step} with no messages and next __start__. 2, the checkpoint at step ${checkpoints[1].step} with the human message and next model. 3, the model node calls the chat model with the system prompt "${system}" and the human message, gets a tool call ${call.name} with ${Object.values(call.args).join(' and ')}, and saves step ${checkpoints[2].step} with next tools. 4, the model node sends the tool call to the tools node, which saves step ${checkpoints[3].step} with the ToolMessage for ${call.id} and next model. 5, the second model call gets ${calls[1].messages.length} messages and answers "${answer}". 6, the checkpoint at step ${checkpoints[4].step} has ${final.length} messages and no next node, and invoke returns them.`,
+  height,
+  title: 'The outcome of every task, for each model and harness',
+  desc: `A grid with one row per model and harness and one column per task of the 99-task suite, grouped by family. A filled square is a pass, a rose square is a fail, and a blank column is a task outside the 30-task subset of that row. Claude Haiku 5.5 passed ${haiku[0].pass} of 99 with the plain loop and ${haiku[1].pass} of 99 as a deep agent. Qwen3 4B passed ${q4[0].pass} plain and ${q4[1].pass} deep, and Qwen3 8B ${q8[0].pass} and ${q8[1].pass}. On the Qwen3 models the plain loop, create_agent and the hand-built StateGraph rows are the same on every task they share.`,
 }, f => {
-  lanes.forEach((lane, index) => {
-    lane.draw(f, cx(index));
-    f.text(cx(index), 70, lane.title, { size: 11, weight: 700, hue: lane.hue, anchor: 'middle' });
-    f.text(cx(index), 84, lane.sub, { size: 11, serif: true, hue: 'ink-soft', anchor: 'middle' });
-    f.lifeline(cx(index), 92, 572);
-  });
-  f.kicker(STATE, 70, 'state.messages');
-  f.text(STATE, 84, 'in each checkpoint', { size: 11, serif: true, hue: 'ink-soft' });
-  f.rule(STATE - 14, 60, STATE - 14, 572, { hue: 'ink-mute', opacity: 0.4 });
-
-  let y = 116;
-  let saved = 0;
-  groups.forEach((rows, g) => {
-    const top = y;
+  f.kicker(20, 24, 'model');
+  f.kicker(124, 24, 'harness');
+  f.kicker(620, 24, 'pass', { anchor: 'end' });
+  for (const fam of FAM) {
+    const cx = (famStart[fam] + famEnd[fam]) / 2;
+    f.text(cx, 46, fam, { size: 11, anchor: 'middle', hue: 'ink-soft' });
+    f.rule(famStart[fam], 54, famEnd[fam], 54, { hue: 'ink-mute' });
+  }
+  let y = Y0;
+  GROUPS.forEach(([model, harnesses], g) => {
+    if (g) y += SEP;
     f.beat(g + 1);
-    rows.forEach(([from, to, style, row]) => {
-      const x1 = cx(from);
-      const x2 = cx(to);
-      f.arrow([x1, y], [x2 + (x2 > x1 ? -1 : 1), y], { style, label: row.label, labelX: style === 'write' ? x2 - 76 : undefined });
-      if (row.note) f.text(x2 - 76, y + 16, row.note, { size: 11, anchor: 'middle', hue: 'amber', knock: true });
-      if (row.write) {
-        const count = row.write.messages.length;
-        if (!count) f.text(STATE, y + 4, 'empty', { size: 11, serif: true, hue: 'ink-mute' });
-        final.slice(0, count).forEach((message, k) => {
-          const [mark, hue] = kindOf(message);
-          const fresh = k >= saved;
-          f.rect(STATE + k * 34, y - 8, 30, 16, { fill: color(fresh ? `${hue}-fill` : 'paper'), stroke: color(`${hue}-ink`), strokeWidth: fresh ? 1.4 : 0.8 });
-          f.text(STATE + k * 34 + 15, y + 4, mark, { size: 11, anchor: 'middle', hue, weight: fresh ? 700 : undefined });
-        });
-        saved = count;
-      }
-      y += 40;
+    f.text(20, y + 10, NAME[model], { size: 11, weight: 700, hue: 'plum' });
+    harnesses.forEach(h => {
+      const c = cell(model, h);
+      f.text(124, y + 10, LABEL[h], { size: 11, hue: HUE[h] });
+      const paths = { pass: '', fail: '' };
+      let run = null;
+      const flush = () => {
+        if (run) paths[run.kind] += `M${run.x0.toFixed(1)} ${y + 1}h${(run.x1 - run.x0).toFixed(1)}v${RH - 4}h-${(run.x1 - run.x0).toFixed(1)}z`;
+        run = null;
+      };
+      order.forEach((t, i) => {
+        const r = c.tasks[t];
+        if (!r) { flush(); return; }
+        const kind = r.p ? 'pass' : 'fail';
+        const joined = run && run.kind === kind && i > 0 && c.tasks[order[i - 1]] && M.family[order[i - 1]] === M.family[t];
+        if (!joined) { flush(); run = { kind, x0: colX[t], x1: colX[t] + CW }; } else run.x1 = colX[t] + CW;
+      });
+      flush();
+      if (paths.pass) f.mark(paths.pass, { hue: HUE[h] });
+      if (paths.fail) f.mark(paths.fail, { hue: 'rose' });
+      f.text(620, y + 10, `${c.pass}/${c.n}`, { size: 11, hue: 'ink', anchor: 'end', weight: 700 });
+      y += RH;
     });
-    f.step(16, top, g + 1, { hue: rows.every(row => row[2] === 'write') ? 'teal' : 'ink' });
-    if (rows.length > 1) f.rule(16, top + 10, 16, y - 46, { hue: 'ink-mute' });
-    y += 8;
   });
   f.beat(0);
-  const legend = [['H', 'violet', 'human'], ['AI', 'plum', 'AIMessage'], ['T', 'green', 'ToolMessage']];
-  legend.forEach(([mark, hue, name], i) => {
-    const x = 20 + i * 150;
-    f.rect(x, 584, 30, 16, { fill: color(`${hue}-fill`), stroke: color(`${hue}-ink`), strokeWidth: 1.4 });
-    f.text(x + 15, 596, mark, { size: 11, anchor: 'middle', hue, weight: 700 });
-    f.text(x + 38, 596, name, { size: 11, serif: true, hue: 'ink-soft' });
-  });
-  f.text(STATE, 596, 'bold: new in that step', { size: 11, serif: true, hue: 'ink-soft' });
+  f.path(order.map(t => `M${(colX[t] + CW - 0.4).toFixed(1)} ${Y0}V${y}`).join(''), { hue: 'paper', head: false, width: 0.8, packet: false });
+  const ly = y + 26;
+  f.rect(20, ly - 10, 10, 11, { fill: color('violet-ink'), stroke: 'none' });
+  f.rect(32, ly - 10, 10, 11, { fill: color('blue-ink'), stroke: 'none' });
+  f.rect(44, ly - 10, 10, 11, { fill: color('indigo-ink'), stroke: 'none' });
+  f.text(60, ly, 'pass, in the colour of the harness layer', { size: 11, serif: true, hue: 'ink-soft' });
+  f.rect(330, ly - 10, 10, 11, { fill: color('rose-ink'), stroke: 'none' });
+  f.text(346, ly, 'fail: wrong state, wrong tool, or no answer', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, ly + 22, 'Rows with 30 tasks ran the stratified subset, six tasks of each family. Blank columns did not run.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, ly + 40, 'Qwen3 rows: greedy decoding on the Mac. Claude rows: the API, default sampling, one run per task.', { size: 11, serif: true, hue: 'ink-soft' });
 });

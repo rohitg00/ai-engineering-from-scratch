@@ -1,0 +1,12136 @@
+{
+"none/async": [
+{
+"wall_s": 25.86723165500007,
+"model_provider_s": 25.82827722299953,
+"tool_fn_s": 0.00019459400209598243,
+"framework_s": 0.03875983799844107,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026133669998671394,
+24
+],
+"apply_writes": [
+0.0008427319990005344,
+23
+],
+"loop._put_checkpoint": [
+0.0009825199977058219,
+23
+],
+"tick": [
+0.0029636200015374925,
+23
+],
+"node:__start__": [
+6.040199878043495e-05,
+1
+],
+"loop.put_writes": [
+0.001031283996780985,
+22
+],
+"after_tick": [
+0.003478338998320396,
+22
+],
+"node:model": [
+25.838914042000397,
+11
+],
+"node:tools": [
+0.01892114399925049,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.257147398999223,
+"model_provider_s": 26.219486320000215,
+"tool_fn_s": 0.0001855650007200893,
+"framework_s": 0.03747551399828808,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027363609970052494,
+24
+],
+"apply_writes": [
+0.0008317390020238236,
+23
+],
+"loop._put_checkpoint": [
+0.0009473879999859491,
+23
+],
+"tick": [
+0.0030738870045752265,
+23
+],
+"node:__start__": [
+5.405199954111595e-05,
+1
+],
+"loop.put_writes": [
+0.0010310419966117479,
+22
+],
+"after_tick": [
+0.003384230998562998,
+22
+],
+"node:model": [
+26.23016151199772,
+11
+],
+"node:tools": [
+0.01761021300262655,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.076441010000053,
+"model_provider_s": 26.039041946003636,
+"tool_fn_s": 0.00019233399871154688,
+"framework_s": 0.037206729997706134,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027299769990349887,
+24
+],
+"apply_writes": [
+0.0008063310015131719,
+23
+],
+"loop._put_checkpoint": [
+0.0009579800080246059,
+23
+],
+"tick": [
+0.0030816029939160217,
+23
+],
+"node:__start__": [
+5.4881000323803164e-05,
+1
+],
+"loop.put_writes": [
+0.001001329001155682,
+22
+],
+"after_tick": [
+0.0033586789922992466,
+22
+],
+"node:model": [
+26.049733945001208,
+11
+],
+"node:tools": [
+0.01734806800232036,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.881832951999968,
+"model_provider_s": 25.843450430000303,
+"tool_fn_s": 0.00020196799960103817,
+"framework_s": 0.03818055400006415,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026806539954122854,
+24
+],
+"apply_writes": [
+0.0008225100064009894,
+23
+],
+"loop._put_checkpoint": [
+0.0010037829997600056,
+23
+],
+"tick": [
+0.003039534998606541,
+23
+],
+"node:__start__": [
+4.2142999518546276e-05,
+1
+],
+"loop.put_writes": [
+0.0010388009995949687,
+22
+],
+"after_tick": [
+0.0034260680022271117,
+22
+],
+"node:model": [
+25.85424377900017,
+11
+],
+"node:tools": [
+0.01820530700024392,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.79609468200033,
+"model_provider_s": 25.75896654999997,
+"tool_fn_s": 0.0001817539960029535,
+"framework_s": 0.03694637800435885,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002637380001033307,
+24
+],
+"apply_writes": [
+0.0007934450022730744,
+23
+],
+"loop._put_checkpoint": [
+0.0009524200013402151,
+23
+],
+"tick": [
+0.002980438997838064,
+23
+],
+"node:__start__": [
+4.465200072445441e-05,
+1
+],
+"loop.put_writes": [
+0.000957499998548883,
+22
+],
+"after_tick": [
+0.00333753999802866,
+22
+],
+"node:model": [
+25.769638762001705,
+11
+],
+"node:tools": [
+0.017384709000907606,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.16862003800088,
+"model_provider_s": 26.130589292995865,
+"tool_fn_s": 0.00018689500029722694,
+"framework_s": 0.03784385000471957,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027273360046820017,
+24
+],
+"apply_writes": [
+0.0008060409963945858,
+23
+],
+"loop._put_checkpoint": [
+0.0009611559999029851,
+23
+],
+"tick": [
+0.003092408995144069,
+23
+],
+"node:__start__": [
+4.323100074543618e-05,
+1
+],
+"loop.put_writes": [
+0.0010212150009465404,
+22
+],
+"after_tick": [
+0.00340853199850244,
+22
+],
+"node:model": [
+26.141387328998462,
+11
+],
+"node:tools": [
+0.017860919004306197,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.65189302700128,
+"model_provider_s": 25.615396629002134,
+"tool_fn_s": 0.0002481990013620816,
+"framework_s": 0.03624819899778231,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002558590000262484,
+24
+],
+"apply_writes": [
+0.0008439830053248443,
+23
+],
+"loop._put_checkpoint": [
+0.0009892230045807082,
+23
+],
+"tick": [
+0.002900217999922461,
+23
+],
+"node:__start__": [
+4.4081998566980474e-05,
+1
+],
+"loop.put_writes": [
+0.0010407159988972126,
+22
+],
+"after_tick": [
+0.003447682001933572,
+22
+],
+"node:model": [
+25.625764452997828,
+11
+],
+"node:tools": [
+0.016948130001765094,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.814842807998502,
+"model_provider_s": 25.777153882001585,
+"tool_fn_s": 0.00019837699619529303,
+"framework_s": 0.03749054900072224,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002595401994767599,
+24
+],
+"apply_writes": [
+0.0007933940014481777,
+23
+],
+"loop._put_checkpoint": [
+0.000951765996433096,
+23
+],
+"tick": [
+0.002926262008259073,
+23
+],
+"node:__start__": [
+5.6240998674184084e-05,
+1
+],
+"loop.put_writes": [
+0.0009725680029077921,
+22
+],
+"after_tick": [
+0.003308340994408354,
+22
+],
+"node:model": [
+25.787781081999128,
+11
+],
+"node:tools": [
+0.017983092004214996,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.278658027000347,
+"model_provider_s": 26.24092613100038,
+"tool_fn_s": 0.00019492499814077746,
+"framework_s": 0.037536971001827624,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026471150067663984,
+24
+],
+"apply_writes": [
+0.0008052919947658665,
+23
+],
+"loop._put_checkpoint": [
+0.0009551829916745191,
+23
+],
+"tick": [
+0.002980832003231626,
+23
+],
+"node:__start__": [
+4.349200025899336e-05,
+1
+],
+"loop.put_writes": [
+0.0010048960011772579,
+22
+],
+"after_tick": [
+0.0033463049949205015,
+22
+],
+"node:model": [
+26.25146366499939,
+11
+],
+"node:tools": [
+0.01804619900576654,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.11094024399972,
+"model_provider_s": 26.076230346998273,
+"tool_fn_s": 0.00019464300021354575,
+"framework_s": 0.03451525400123501,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0022983640010352246,
+24
+],
+"apply_writes": [
+0.0007271549984579906,
+23
+],
+"loop._put_checkpoint": [
+0.0008684619970154017,
+23
+],
+"tick": [
+0.002588147999631474,
+23
+],
+"node:__start__": [
+4.502199954004027e-05,
+1
+],
+"loop.put_writes": [
+0.0008522010048181983,
+22
+],
+"after_tick": [
+0.003078124003877747,
+22
+],
+"node:model": [
+26.085339881996333,
+11
+],
+"node:tools": [
+0.017394323002008605,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.231808201000604,
+"model_provider_s": 26.195475015994816,
+"tool_fn_s": 0.00020125199807807803,
+"framework_s": 0.03613193300770945,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002395213996351231,
+24
+],
+"apply_writes": [
+0.000800831994638429,
+23
+],
+"loop._put_checkpoint": [
+0.0009082159958779812,
+23
+],
+"tick": [
+0.0026868689983530203,
+23
+],
+"node:__start__": [
+4.2100000428035855e-05,
+1
+],
+"loop.put_writes": [
+0.0008923679979488952,
+22
+],
+"after_tick": [
+0.0033265190068050288,
+22
+],
+"node:model": [
+26.205003091001345,
+11
+],
+"node:tools": [
+0.01815287100180285,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.471374675000334,
+"model_provider_s": 25.437431027999992,
+"tool_fn_s": 0.00018357599765295163,
+"framework_s": 0.033760071002689074,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002290563003043644,
+24
+],
+"apply_writes": [
+0.0007286299969564425,
+23
+],
+"loop._put_checkpoint": [
+0.000837253999634413,
+23
+],
+"tick": [
+0.0025780740015761694,
+23
+],
+"node:__start__": [
+4.522099879977759e-05,
+1
+],
+"loop.put_writes": [
+0.0008558660010749009,
+22
+],
+"after_tick": [
+0.0031125010063988157,
+22
+],
+"node:model": [
+25.446527326999785,
+11
+],
+"node:tools": [
+0.0166701660000399,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.950687859000027,
+"model_provider_s": 25.914618714004973,
+"tool_fn_s": 0.00019074899864790495,
+"framework_s": 0.03587839599640574,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0024002090067369863,
+24
+],
+"apply_writes": [
+0.0007700540027144598,
+23
+],
+"loop._put_checkpoint": [
+0.0009405229920957936,
+23
+],
+"tick": [
+0.002724230995227117,
+23
+],
+"node:__start__": [
+3.958100023737643e-05,
+1
+],
+"loop.put_writes": [
+0.0009510950003459584,
+22
+],
+"after_tick": [
+0.0032174109928746475,
+22
+],
+"node:model": [
+25.924343898001098,
+11
+],
+"node:tools": [
+0.01774125500014634,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.568395755000893,
+"model_provider_s": 25.53183660600007,
+"tool_fn_s": 0.0002003959998546634,
+"framework_s": 0.036358753000968136,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0024604539958090754,
+24
+],
+"apply_writes": [
+0.0007752799974696245,
+23
+],
+"loop._put_checkpoint": [
+0.000917163995836745,
+23
+],
+"tick": [
+0.002774908005449106,
+23
+],
+"node:__start__": [
+4.532100138021633e-05,
+1
+],
+"loop.put_writes": [
+0.0009233910004695645,
+22
+],
+"after_tick": [
+0.0032485549982084194,
+22
+],
+"node:model": [
+25.541917554002794,
+11
+],
+"node:tools": [
+0.017787382997994428,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.37092950099941,
+"model_provider_s": 25.336439975002577,
+"tool_fn_s": 0.00018507499953557272,
+"framework_s": 0.034304450997296954,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0023505399949499406,
+24
+],
+"apply_writes": [
+0.0007500759929826017,
+23
+],
+"loop._put_checkpoint": [
+0.000939703004405601,
+23
+],
+"tick": [
+0.0027080900017608656,
+23
+],
+"node:__start__": [
+4.180999894742854e-05,
+1
+],
+"loop.put_writes": [
+0.0009011779966385802,
+22
+],
+"after_tick": [
+0.0032086530027299887,
+22
+],
+"node:model": [
+25.345741776998693,
+11
+],
+"node:tools": [
+0.01672416699693713,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.354896163000376,
+"model_provider_s": 26.320650343001034,
+"tool_fn_s": 0.00019056600103795063,
+"framework_s": 0.03405525399830367,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.00222393000331067,
+24
+],
+"apply_writes": [
+0.0007435810057359049,
+23
+],
+"loop._put_checkpoint": [
+0.0008477749943267554,
+23
+],
+"tick": [
+0.0025623149904276943,
+23
+],
+"node:__start__": [
+4.144100057601463e-05,
+1
+],
+"loop.put_writes": [
+0.0008754380050959298,
+22
+],
+"after_tick": [
+0.0030217449984775158,
+22
+],
+"node:model": [
+26.329639761996077,
+11
+],
+"node:tools": [
+0.01719154999773309,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.841559074000543,
+"model_provider_s": 25.805116705001637,
+"tool_fn_s": 0.00019404399790801108,
+"framework_s": 0.036248325000997283,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.00241210500280431,
+24
+],
+"apply_writes": [
+0.0007763410048937658,
+23
+],
+"loop._put_checkpoint": [
+0.00095349999719474,
+23
+],
+"tick": [
+0.002712476001761388,
+23
+],
+"node:__start__": [
+4.034100129501894e-05,
+1
+],
+"loop.put_writes": [
+0.0009043030058819568,
+22
+],
+"after_tick": [
+0.003250588995797443,
+22
+],
+"node:model": [
+25.815102718999697,
+11
+],
+"node:tools": [
+0.01795229500021378,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.97615385499921,
+"model_provider_s": 25.937670244999026,
+"tool_fn_s": 0.00021700500292354263,
+"framework_s": 0.03826660499726131,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026213940072921105,
+24
+],
+"apply_writes": [
+0.0008547950001229765,
+23
+],
+"loop._put_checkpoint": [
+0.0009671549978520488,
+23
+],
+"tick": [
+0.002969344999655732,
+23
+],
+"node:__start__": [
+4.513999920163769e-05,
+1
+],
+"loop.put_writes": [
+0.0009922719946189318,
+22
+],
+"after_tick": [
+0.0034364160001132404,
+22
+],
+"node:model": [
+25.94842462500128,
+11
+],
+"node:tools": [
+0.018438435998177738,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.393146736001654,
+"model_provider_s": 25.35366345100374,
+"tool_fn_s": 0.0002075769971270347,
+"framework_s": 0.039275708000786835,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002655457001310424,
+24
+],
+"apply_writes": [
+0.0008277720007754397,
+23
+],
+"loop._put_checkpoint": [
+0.0010136090004380094,
+23
+],
+"tick": [
+0.0030735539985471405,
+23
+],
+"node:__start__": [
+4.3971998820779845e-05,
+1
+],
+"loop.put_writes": [
+0.0010175009938393487,
+22
+],
+"after_tick": [
+0.003485538001768873,
+22
+],
+"node:model": [
+25.364385324000978,
+11
+],
+"node:tools": [
+0.01931148000221583,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.470964758000264,
+"model_provider_s": 26.43101993200071,
+"tool_fn_s": 0.0002758209975581849,
+"framework_s": 0.03966900500199699,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002683153001271421,
+24
+],
+"apply_writes": [
+0.0008046249986364273,
+23
+],
+"loop._put_checkpoint": [
+0.0010641729950293666,
+23
+],
+"tick": [
+0.0030253360037022503,
+23
+],
+"node:__start__": [
+4.2670999391702935e-05,
+1
+],
+"loop.put_writes": [
+0.0009752930018294137,
+22
+],
+"after_tick": [
+0.0034876750032708514,
+22
+],
+"node:model": [
+26.44221215000107,
+11
+],
+"node:tools": [
+0.019330252998770447,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.8161762790005,
+"model_provider_s": 25.77770153900019,
+"tool_fn_s": 0.00019494700245559216,
+"framework_s": 0.03827979299785511,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002580046002549352,
+24
+],
+"apply_writes": [
+0.0008918670027924236,
+23
+],
+"loop._put_checkpoint": [
+0.000993919997199555,
+23
+],
+"tick": [
+0.0029348229963943595,
+23
+],
+"node:__start__": [
+4.382199949759524e-05,
+1
+],
+"loop.put_writes": [
+0.000983483001618879,
+22
+],
+"after_tick": [
+0.0035613699910754804,
+22
+],
+"node:model": [
+25.788550621002287,
+11
+],
+"node:tools": [
+0.018223731998659787,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.83472978499958,
+"model_provider_s": 25.7956204649945,
+"tool_fn_s": 0.0001909159982460551,
+"framework_s": 0.03891840400683577,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002720294003665913,
+24
+],
+"apply_writes": [
+0.0008185949991457164,
+23
+],
+"loop._put_checkpoint": [
+0.0010546359935688088,
+23
+],
+"tick": [
+0.0031068380012584385,
+23
+],
+"node:__start__": [
+4.934000025968999e-05,
+1
+],
+"loop.put_writes": [
+0.0010373570021329215,
+22
+],
+"after_tick": [
+0.0034911989969259594,
+22
+],
+"node:model": [
+25.806543193000834,
+11
+],
+"node:tools": [
+0.018509728999561048,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.139166770000884,
+"model_provider_s": 26.100992719000715,
+"tool_fn_s": 0.000209325004107086,
+"framework_s": 0.03796472599606204,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026340339973103255,
+24
+],
+"apply_writes": [
+0.0007921629912743811,
+23
+],
+"loop._put_checkpoint": [
+0.0009727060005388921,
+23
+],
+"tick": [
+0.0029755219984508585,
+23
+],
+"node:__start__": [
+4.292999983590562e-05,
+1
+],
+"loop.put_writes": [
+0.0010238460035907337,
+22
+],
+"after_tick": [
+0.003325764002511278,
+22
+],
+"node:model": [
+26.11168556099983,
+11
+],
+"node:tools": [
+0.01831029899949499,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.733486690000063,
+"model_provider_s": 25.696262767996814,
+"tool_fn_s": 0.0001876659989648033,
+"framework_s": 0.03703625600428495,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002645337001013104,
+24
+],
+"apply_writes": [
+0.0008026530013012234,
+23
+],
+"loop._put_checkpoint": [
+0.00097936100064544,
+23
+],
+"tick": [
+0.0029962730022816686,
+23
+],
+"node:__start__": [
+4.268100019544363e-05,
+1
+],
+"loop.put_writes": [
+0.0010070389980683103,
+22
+],
+"after_tick": [
+0.0033712300046317978,
+22
+],
+"node:model": [
+25.706733543000155,
+11
+],
+"node:tools": [
+0.017557738998220884,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.85451094599921,
+"model_provider_s": 25.816281118006373,
+"tool_fn_s": 0.00018896599794970825,
+"framework_s": 0.038040861994886654,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002581445995019749,
+24
+],
+"apply_writes": [
+0.0008126959965011338,
+23
+],
+"loop._put_checkpoint": [
+0.0009699469974293606,
+23
+],
+"tick": [
+0.002920925997386803,
+23
+],
+"node:__start__": [
+5.152099947736133e-05,
+1
+],
+"loop.put_writes": [
+0.0009792320015549194,
+22
+],
+"after_tick": [
+0.0034243480004079174,
+22
+],
+"node:model": [
+25.826989495000817,
+11
+],
+"node:tools": [
+0.018368438997640624,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.88975307600049,
+"model_provider_s": 25.852785541999765,
+"tool_fn_s": 0.00020356599998194724,
+"framework_s": 0.03676396800074144,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0025689430040074512,
+24
+],
+"apply_writes": [
+0.0008003070106497034,
+23
+],
+"loop._put_checkpoint": [
+0.0009134910033026244,
+23
+],
+"tick": [
+0.002930639997430262,
+23
+],
+"node:__start__": [
+5.071099985798355e-05,
+1
+],
+"loop.put_writes": [
+0.0009336359998997068,
+22
+],
+"after_tick": [
+0.003259204993810272,
+22
+],
+"node:model": [
+25.863297074000002,
+11
+],
+"node:tools": [
+0.017509071998574655,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.38255306300016,
+"model_provider_s": 26.345778441998846,
+"tool_fn_s": 0.00019973199960077181,
+"framework_s": 0.03657488900171302,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.00264246199549234,
+24
+],
+"apply_writes": [
+0.0008266730092145735,
+23
+],
+"loop._put_checkpoint": [
+0.0009445099949516589,
+23
+],
+"tick": [
+0.003016886998011614,
+23
+],
+"node:__start__": [
+4.411100053403061e-05,
+1
+],
+"loop.put_writes": [
+0.001031862995660049,
+22
+],
+"after_tick": [
+0.003372391001903452,
+22
+],
+"node:model": [
+26.356276604001323,
+11
+],
+"node:tools": [
+0.017020717003106256,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.763429650000035,
+"model_provider_s": 25.725073203000647,
+"tool_fn_s": 0.00020041699826833792,
+"framework_s": 0.03815603000111878,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002688805994694121,
+24
+],
+"apply_writes": [
+0.0007853250008338364,
+23
+],
+"loop._put_checkpoint": [
+0.000989315998594975,
+23
+],
+"tick": [
+0.003072294006415177,
+23
+],
+"node:__start__": [
+4.316100057621952e-05,
+1
+],
+"loop.put_writes": [
+0.0009824750050029252,
+22
+],
+"after_tick": [
+0.003378760000487091,
+22
+],
+"node:model": [
+25.735770359004164,
+11
+],
+"node:tools": [
+0.018376110998360673,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.437152663000234,
+"model_provider_s": 25.39893482200023,
+"tool_fn_s": 0.0001996870014409069,
+"framework_s": 0.03801815399856423,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002615330995467957,
+24
+],
+"apply_writes": [
+0.0008091530071396846,
+23
+],
+"loop._put_checkpoint": [
+0.0009539520015096059,
+23
+],
+"tick": [
+0.0029474860020854976,
+23
+],
+"node:__start__": [
+4.843100032303482e-05,
+1
+],
+"loop.put_writes": [
+0.0010126460019819206,
+22
+],
+"after_tick": [
+0.0034039800011669286,
+22
+],
+"node:model": [
+25.409632343995327,
+11
+],
+"node:tools": [
+0.01827713899911032,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.162745988000097,
+"model_provider_s": 26.123705400998006,
+"tool_fn_s": 0.0001943320003192639,
+"framework_s": 0.03884625500177208,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026714930008893134,
+24
+],
+"apply_writes": [
+0.000818304000858916,
+23
+],
+"loop._put_checkpoint": [
+0.0009972820043913089,
+23
+],
+"tick": [
+0.0030406910009332933,
+23
+],
+"node:__start__": [
+4.601000000548083e-05,
+1
+],
+"loop.put_writes": [
+0.0010589559969957918,
+22
+],
+"after_tick": [
+0.0034528630058048293,
+22
+],
+"node:model": [
+26.13451769599851,
+11
+],
+"node:tools": [
+0.01882831000148144,
+10
+]
+},
+"clean": true
+}
+],
+"memory/async": [
+{
+"wall_s": 25.59961581099924,
+"model_provider_s": 25.54809960199964,
+"tool_fn_s": 0.00019328400048834737,
+"framework_s": 0.05132292499911273,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002923154999734834,
+24
+],
+"apply_writes": [
+0.001091289001124096,
+23
+],
+"saver.put": [
+0.005644262997520855,
+23
+],
+"loop._put_checkpoint": [
+0.00291666399789392,
+23
+],
+"tick": [
+0.003359116997671663,
+23
+],
+"node:__start__": [
+4.805200114788022e-05,
+1
+],
+"loop.put_writes": [
+0.002397664002273814,
+22
+],
+"saver.put_writes": [
+0.0022222570078156423,
+22
+],
+"after_tick": [
+0.005231107003055513,
+22
+],
+"node:model": [
+25.559107352000865,
+11
+],
+"node:tools": [
+0.02583339099874138,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.70908326100107,
+"model_provider_s": 25.656387224000355,
+"tool_fn_s": 0.0001958839966391679,
+"framework_s": 0.0525001530040754,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0029162820010242285,
+24
+],
+"apply_writes": [
+0.0010944080004264833,
+23
+],
+"saver.put": [
+0.005462305005494272,
+23
+],
+"loop._put_checkpoint": [
+0.0031146579913183814,
+23
+],
+"tick": [
+0.003345868999531376,
+23
+],
+"node:__start__": [
+4.946199987898581e-05,
+1
+],
+"loop.put_writes": [
+0.002420822998828953,
+22
+],
+"saver.put_writes": [
+0.002479398001014488,
+22
+],
+"after_tick": [
+0.005242588998953579,
+22
+],
+"node:model": [
+25.667691412994827,
+11
+],
+"node:tools": [
+0.0265780010013259,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.731021757001145,
+"model_provider_s": 25.676542024999435,
+"tool_fn_s": 0.00020194999706291128,
+"framework_s": 0.054277782004646724,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0033640969995758496,
+24
+],
+"apply_writes": [
+0.001250084002094809,
+23
+],
+"saver.put": [
+0.0055386520052707056,
+23
+],
+"loop._put_checkpoint": [
+0.0032254720008495497,
+23
+],
+"tick": [
+0.003850919001706643,
+23
+],
+"node:__start__": [
+4.93909992655972e-05,
+1
+],
+"loop.put_writes": [
+0.002822779997586622,
+22
+],
+"saver.put_writes": [
+0.0024770780000835657,
+22
+],
+"after_tick": [
+0.005911598003876861,
+22
+],
+"node:model": [
+25.68863375699766,
+11
+],
+"node:tools": [
+0.025724866000018665,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.402691634000803,
+"model_provider_s": 25.35110768300001,
+"tool_fn_s": 0.00020900999879813753,
+"framework_s": 0.05137494100199547,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027663820019370178,
+24
+],
+"apply_writes": [
+0.0010712850034906296,
+23
+],
+"saver.put": [
+0.005412848002379178,
+23
+],
+"loop._put_checkpoint": [
+0.0029319199984456645,
+23
+],
+"tick": [
+0.0031934480011841515,
+23
+],
+"node:__start__": [
+6.154299990157597e-05,
+1
+],
+"loop.put_writes": [
+0.0023467590035579633,
+22
+],
+"saver.put_writes": [
+0.0025819840066105826,
+22
+],
+"after_tick": [
+0.005104467998535256,
+22
+],
+"node:model": [
+25.362162981999063,
+11
+],
+"node:tools": [
+0.026256027002091287,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.49446277500101,
+"model_provider_s": 25.444063109003764,
+"tool_fn_s": 0.00018530300258134957,
+"framework_s": 0.05021436299466586,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002929676011262927,
+24
+],
+"apply_writes": [
+0.001130628999817418,
+23
+],
+"saver.put": [
+0.005464300003950484,
+23
+],
+"loop._put_checkpoint": [
+0.0030833639993943507,
+23
+],
+"tick": [
+0.0033832159988378407,
+23
+],
+"node:__start__": [
+5.9342999520595185e-05,
+1
+],
+"loop.put_writes": [
+0.0024871769983292324,
+22
+],
+"saver.put_writes": [
+0.002428735004286864,
+22
+],
+"after_tick": [
+0.005409612998846569,
+22
+],
+"node:model": [
+25.455009084003905,
+11
+],
+"node:tools": [
+0.024376154999117716,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.697656423999433,
+"model_provider_s": 25.646606342002997,
+"tool_fn_s": 0.00023213400345412083,
+"framework_s": 0.050817947992982226,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002673264998520608,
+24
+],
+"apply_writes": [
+0.001067937999323476,
+23
+],
+"saver.put": [
+0.004901128999335924,
+23
+],
+"loop._put_checkpoint": [
+0.0029778679945593467,
+23
+],
+"tick": [
+0.0030808409937890247,
+23
+],
+"node:__start__": [
+4.479100061871577e-05,
+1
+],
+"loop.put_writes": [
+0.0023078279991750605,
+22
+],
+"saver.put_writes": [
+0.0024850479985616403,
+22
+],
+"after_tick": [
+0.005006587998650502,
+22
+],
+"node:model": [
+25.657640282999637,
+11
+],
+"node:tools": [
+0.026034907998109702,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.184261946000333,
+"model_provider_s": 26.132610575999934,
+"tool_fn_s": 0.0001800110057956772,
+"framework_s": 0.05147135899460409,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.00294785000369302,
+24
+],
+"apply_writes": [
+0.0011271089988440508,
+23
+],
+"saver.put": [
+0.005450692999147577,
+23
+],
+"loop._put_checkpoint": [
+0.0030552150019502733,
+23
+],
+"tick": [
+0.0033836790007626405,
+23
+],
+"node:__start__": [
+4.527099918050226e-05,
+1
+],
+"loop.put_writes": [
+0.0024242669987870613,
+22
+],
+"saver.put_writes": [
+0.0028140750000602566,
+22
+],
+"after_tick": [
+0.005370464003135567,
+22
+],
+"node:model": [
+26.14369611300208,
+11
+],
+"node:tools": [
+0.025540894997902797,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.020117039999604,
+"model_provider_s": 25.969450725999195,
+"tool_fn_s": 0.00018333700063521974,
+"framework_s": 0.05048297699977411,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002721163995374809,
+24
+],
+"apply_writes": [
+0.0010768480024125893,
+23
+],
+"saver.put": [
+0.00556304000383534,
+23
+],
+"loop._put_checkpoint": [
+0.0029303980045369826,
+23
+],
+"tick": [
+0.003142744002616382,
+23
+],
+"node:__start__": [
+4.217100104142446e-05,
+1
+],
+"loop.put_writes": [
+0.0022475190035038395,
+22
+],
+"saver.put_writes": [
+0.0027660750038194237,
+22
+],
+"after_tick": [
+0.005132792002768838,
+22
+],
+"node:model": [
+25.979984366998906,
+11
+],
+"node:tools": [
+0.025995651996709057,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.00556945400058,
+"model_provider_s": 25.95658973900572,
+"tool_fn_s": 0.0002096980042551877,
+"framework_s": 0.048770016990602016,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0024472439999954076,
+24
+],
+"apply_writes": [
+0.0010178649990848498,
+23
+],
+"saver.put": [
+0.005569984999965527,
+23
+],
+"loop._put_checkpoint": [
+0.0028648699953919277,
+23
+],
+"tick": [
+0.0028047599971614545,
+23
+],
+"node:__start__": [
+5.051100015407428e-05,
+1
+],
+"loop.put_writes": [
+0.0020830619996559108,
+22
+],
+"saver.put_writes": [
+0.0026842319985007634,
+22
+],
+"after_tick": [
+0.004753166005684761,
+22
+],
+"node:model": [
+25.966477891000977,
+11
+],
+"node:tools": [
+0.025844113008133718,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.505107302999022,
+"model_provider_s": 26.455108683998333,
+"tool_fn_s": 0.0001851149991125567,
+"framework_s": 0.0498135040015768,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002807525996104232,
+24
+],
+"apply_writes": [
+0.0010856200024136342,
+23
+],
+"saver.put": [
+0.005004886999813607,
+23
+],
+"loop._put_checkpoint": [
+0.002834375993188587,
+23
+],
+"tick": [
+0.003251904996432131,
+23
+],
+"node:__start__": [
+4.3821000872412696e-05,
+1
+],
+"loop.put_writes": [
+0.002357291998123401,
+22
+],
+"saver.put_writes": [
+0.002389654002399766,
+22
+],
+"after_tick": [
+0.005145738996361615,
+22
+],
+"node:model": [
+26.465955841000323,
+11
+],
+"node:tools": [
+0.02486690500518307,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.70712163799908,
+"model_provider_s": 25.65539928399994,
+"tool_fn_s": 0.00019419499767536763,
+"framework_s": 0.05152815900146379,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003044685001441394,
+24
+],
+"apply_writes": [
+0.0011855279990413692,
+23
+],
+"saver.put": [
+0.005286501002046862,
+23
+],
+"loop._put_checkpoint": [
+0.003052714000659762,
+23
+],
+"tick": [
+0.0034994190027646255,
+23
+],
+"node:__start__": [
+5.42819998372579e-05,
+1
+],
+"loop.put_writes": [
+0.00254079600017576,
+22
+],
+"saver.put_writes": [
+0.002704730002733413,
+22
+],
+"after_tick": [
+0.005425091005236027,
+22
+],
+"node:model": [
+25.666468108000117,
+11
+],
+"node:tools": [
+0.025167350997435278,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.85530985600053,
+"model_provider_s": 25.8034190840026,
+"tool_fn_s": 0.00018301299678569194,
+"framework_s": 0.05170775900114677,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002809373996569775,
+24
+],
+"apply_writes": [
+0.0011088550036220113,
+23
+],
+"saver.put": [
+0.0051466470013110666,
+23
+],
+"loop._put_checkpoint": [
+0.002938166002422804,
+23
+],
+"tick": [
+0.0032303429979947396,
+23
+],
+"node:__start__": [
+4.470200110517908e-05,
+1
+],
+"loop.put_writes": [
+0.0024043069988692878,
+22
+],
+"saver.put_writes": [
+0.0023639829978492344,
+22
+],
+"after_tick": [
+0.005192126000110875,
+22
+],
+"node:model": [
+25.814840526998523,
+11
+],
+"node:tools": [
+0.025927444998160354,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.063232074000553,
+"model_provider_s": 26.009741380001287,
+"tool_fn_s": 0.00017548200230521616,
+"framework_s": 0.05331521199695999,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003248364004321047,
+24
+],
+"apply_writes": [
+0.001152635004473268,
+23
+],
+"saver.put": [
+0.005625510995741934,
+23
+],
+"loop._put_checkpoint": [
+0.0033120509979198687,
+23
+],
+"tick": [
+0.0037270579996402375,
+23
+],
+"node:__start__": [
+4.728099884232506e-05,
+1
+],
+"loop.put_writes": [
+0.0027272400020592613,
+22
+],
+"saver.put_writes": [
+0.002357199004109134,
+22
+],
+"after_tick": [
+0.005679694004356861,
+22
+],
+"node:model": [
+26.02131639700201,
+11
+],
+"node:tools": [
+0.025710290001370595,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.865582767999513,
+"model_provider_s": 25.81323545899795,
+"tool_fn_s": 0.00018470100258127786,
+"framework_s": 0.05216260799898009,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003003180005180184,
+24
+],
+"apply_writes": [
+0.0011870199959957972,
+23
+],
+"saver.put": [
+0.005458942003315315,
+23
+],
+"loop._put_checkpoint": [
+0.0029200269946159096,
+23
+],
+"tick": [
+0.003471666996119893,
+23
+],
+"node:__start__": [
+6.337199920380954e-05,
+1
+],
+"loop.put_writes": [
+0.0025877879998006392,
+22
+],
+"saver.put_writes": [
+0.002603137001642608,
+22
+],
+"after_tick": [
+0.005486551004651119,
+22
+],
+"node:model": [
+25.824742733002495,
+11
+],
+"node:tools": [
+0.025575905998266535,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.68635130400071,
+"model_provider_s": 25.636222641998756,
+"tool_fn_s": 0.00018744199587672483,
+"framework_s": 0.04994122000607604,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027206630002183374,
+24
+],
+"apply_writes": [
+0.0010666430007404415,
+23
+],
+"saver.put": [
+0.005040489000748494,
+23
+],
+"loop._put_checkpoint": [
+0.0028955279958609026,
+23
+],
+"tick": [
+0.0031369190000987146,
+23
+],
+"node:__start__": [
+4.6613000449724495e-05,
+1
+],
+"loop.put_writes": [
+0.002236886997707188,
+22
+],
+"saver.put_writes": [
+0.0024811139974190155,
+22
+],
+"after_tick": [
+0.00500743300835893,
+22
+],
+"node:model": [
+25.647037862001525,
+11
+],
+"node:tools": [
+0.025281116000769543,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.657863012000234,
+"model_provider_s": 25.60545335399911,
+"tool_fn_s": 0.00018181600353273097,
+"framework_s": 0.052227841997591895,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003064624002945493,
+24
+],
+"apply_writes": [
+0.0011210339962417493,
+23
+],
+"saver.put": [
+0.005441012002847856,
+23
+],
+"loop._put_checkpoint": [
+0.0030175289957696805,
+23
+],
+"tick": [
+0.003532028003974119,
+23
+],
+"node:__start__": [
+4.4611999328481033e-05,
+1
+],
+"loop.put_writes": [
+0.0025077160080400063,
+22
+],
+"saver.put_writes": [
+0.0025772139943001093,
+22
+],
+"after_tick": [
+0.00539261799713131,
+22
+],
+"node:model": [
+25.61678658200435,
+11
+],
+"node:tools": [
+0.025754621001397027,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.97299064100116,
+"model_provider_s": 25.921752224998272,
+"tool_fn_s": 0.00020004199905088171,
+"framework_s": 0.051038374003837816,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002896603004046483,
+24
+],
+"apply_writes": [
+0.0011243730059504742,
+23
+],
+"saver.put": [
+0.005487869997523376,
+23
+],
+"loop._put_checkpoint": [
+0.002959798999654595,
+23
+],
+"tick": [
+0.0033650590012257453,
+23
+],
+"node:__start__": [
+5.858100121258758e-05,
+1
+],
+"loop.put_writes": [
+0.0024126860007527284,
+22
+],
+"saver.put_writes": [
+0.002458412995110848,
+22
+],
+"after_tick": [
+0.005253794995951466,
+22
+],
+"node:model": [
+25.932946461996835,
+11
+],
+"node:tools": [
+0.025212213997292565,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.82634155500091,
+"model_provider_s": 25.77432031999524,
+"tool_fn_s": 0.0001800739992177114,
+"framework_s": 0.05184116100645042,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028829410057369387,
+24
+],
+"apply_writes": [
+0.0011279269947408466,
+23
+],
+"saver.put": [
+0.005496411997228279,
+23
+],
+"loop._put_checkpoint": [
+0.003062490997763234,
+23
+],
+"tick": [
+0.003314860998216318,
+23
+],
+"node:__start__": [
+4.7210998673108406e-05,
+1
+],
+"loop.put_writes": [
+0.002519742000004044,
+22
+],
+"saver.put_writes": [
+0.002477617004842614,
+22
+],
+"after_tick": [
+0.005337794998922618,
+22
+],
+"node:model": [
+25.785579258003054,
+11
+],
+"node:tools": [
+0.025864493003609823,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.41438534700137,
+"model_provider_s": 26.36297931899753,
+"tool_fn_s": 0.00020329400103946682,
+"framework_s": 0.05120273400279984,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028460390003601788,
+24
+],
+"apply_writes": [
+0.0011341689987602876,
+23
+],
+"saver.put": [
+0.005161865998161375,
+23
+],
+"loop._put_checkpoint": [
+0.0030065900027693715,
+23
+],
+"tick": [
+0.003322793996630935,
+23
+],
+"node:__start__": [
+4.987200009054504e-05,
+1
+],
+"loop.put_writes": [
+0.0024576310061092954,
+22
+],
+"saver.put_writes": [
+0.0024334099944098853,
+22
+],
+"after_tick": [
+0.005289674001687672,
+22
+],
+"node:model": [
+26.37429065500146,
+11
+],
+"node:tools": [
+0.025436811998588382,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.910002479000468,
+"model_provider_s": 25.857407649997185,
+"tool_fn_s": 0.00023657599922444206,
+"framework_s": 0.0523582530040585,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030066559938859427,
+24
+],
+"apply_writes": [
+0.0012142840023443568,
+23
+],
+"saver.put": [
+0.005374669999582693,
+23
+],
+"loop._put_checkpoint": [
+0.003064878001168836,
+23
+],
+"tick": [
+0.003479312003037194,
+23
+],
+"node:__start__": [
+4.93909992655972e-05,
+1
+],
+"loop.put_writes": [
+0.002614958999402006,
+22
+],
+"saver.put_writes": [
+0.0025728660002641845,
+22
+],
+"after_tick": [
+0.005485063002197421,
+22
+],
+"node:model": [
+25.869017782997616,
+11
+],
+"node:tools": [
+0.025537029001498013,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.128666242999316,
+"model_provider_s": 26.07658911099861,
+"tool_fn_s": 0.00017864600158645771,
+"framework_s": 0.05189848599911784,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002952984001240111,
+24
+],
+"apply_writes": [
+0.0012010580085188849,
+23
+],
+"saver.put": [
+0.006046731003152672,
+23
+],
+"loop._put_checkpoint": [
+0.003015116993992706,
+23
+],
+"tick": [
+0.0033850940035335952,
+23
+],
+"node:__start__": [
+4.5961000068928115e-05,
+1
+],
+"loop.put_writes": [
+0.002538849004849908,
+22
+],
+"saver.put_writes": [
+0.0028841959956480423,
+22
+],
+"after_tick": [
+0.0053860379975958494,
+22
+],
+"node:model": [
+26.087746830999095,
+11
+],
+"node:tools": [
+0.025734771001225454,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.816011588000038,
+"model_provider_s": 25.766102115005197,
+"tool_fn_s": 0.00019855000027746428,
+"framework_s": 0.04971092299456359,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026353579978604103,
+24
+],
+"apply_writes": [
+0.0010162420021515572,
+23
+],
+"saver.put": [
+0.00563287700060755,
+23
+],
+"loop._put_checkpoint": [
+0.002774501002932084,
+23
+],
+"tick": [
+0.0030621770001744153,
+23
+],
+"node:__start__": [
+4.453200017451309e-05,
+1
+],
+"loop.put_writes": [
+0.002236628999526147,
+22
+],
+"saver.put_writes": [
+0.002531089996409719,
+22
+],
+"after_tick": [
+0.004837653999857139,
+22
+],
+"node:model": [
+25.776538148002146,
+11
+],
+"node:tools": [
+0.025720162000652635,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.370101972001066,
+"model_provider_s": 25.32024401999297,
+"tool_fn_s": 0.00018670300050871447,
+"framework_s": 0.0496712490075879,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028460260000429116,
+24
+],
+"apply_writes": [
+0.0010650570038706064,
+23
+],
+"saver.put": [
+0.005491201003678725,
+23
+],
+"loop._put_checkpoint": [
+0.0030147699999361066,
+23
+],
+"tick": [
+0.003262422003899701,
+23
+],
+"node:__start__": [
+4.7311999878729694e-05,
+1
+],
+"loop.put_writes": [
+0.0023886319977464154,
+22
+],
+"saver.put_writes": [
+0.002580228006991092,
+22
+],
+"after_tick": [
+0.00518897399524576,
+22
+],
+"node:model": [
+25.330991391996577,
+11
+],
+"node:tools": [
+0.02442815899667039,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.032596335000562,
+"model_provider_s": 25.981609273007052,
+"tool_fn_s": 0.0003451899974606931,
+"framework_s": 0.050641871996049304,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028096420064684935,
+24
+],
+"apply_writes": [
+0.0010715580065152608,
+23
+],
+"saver.put": [
+0.004950327998813009,
+23
+],
+"loop._put_checkpoint": [
+0.002965707015391672,
+23
+],
+"tick": [
+0.003218582998670172,
+23
+],
+"node:__start__": [
+4.836100197280757e-05,
+1
+],
+"loop.put_writes": [
+0.0023434529939549975,
+22
+],
+"saver.put_writes": [
+0.0024572219990659505,
+22
+],
+"after_tick": [
+0.005101670998556074,
+22
+],
+"node:model": [
+25.992843551997794,
+11
+],
+"node:tools": [
+0.02541291200031992,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.807314883997606,
+"model_provider_s": 25.753320467003505,
+"tool_fn_s": 0.00017256499631912448,
+"framework_s": 0.05382185199778178,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0032276909951178823,
+24
+],
+"apply_writes": [
+0.0011777469953813124,
+23
+],
+"saver.put": [
+0.005329962004907429,
+23
+],
+"loop._put_checkpoint": [
+0.0032039050056482665,
+23
+],
+"tick": [
+0.003752689004613785,
+23
+],
+"node:__start__": [
+4.756099951919168e-05,
+1
+],
+"loop.put_writes": [
+0.0027913380035897717,
+22
+],
+"saver.put_writes": [
+0.0024051190048339777,
+22
+],
+"after_tick": [
+0.005759359006333398,
+22
+],
+"node:model": [
+25.76520886900471,
+11
+],
+"node:tools": [
+0.02581221300351899,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.964967095002066,
+"model_provider_s": 25.91404730800059,
+"tool_fn_s": 0.00018644700321601704,
+"framework_s": 0.05073333999825991,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002902807987993583,
+24
+],
+"apply_writes": [
+0.0011138000008941162,
+23
+],
+"saver.put": [
+0.005500520011992194,
+23
+],
+"loop._put_checkpoint": [
+0.0030114199944364373,
+23
+],
+"tick": [
+0.003342927997437073,
+23
+],
+"node:__start__": [
+5.061100091552362e-05,
+1
+],
+"loop.put_writes": [
+0.0023334700090344995,
+22
+],
+"saver.put_writes": [
+0.0020685069903265685,
+22
+],
+"after_tick": [
+0.005223790994932642,
+22
+],
+"node:model": [
+25.925181103000796,
+11
+],
+"node:tools": [
+0.025145471994619584,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.634635318998335,
+"model_provider_s": 25.58126431099663,
+"tool_fn_s": 0.00017930300236912444,
+"framework_s": 0.05319170499933534,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0034347840010013897,
+24
+],
+"apply_writes": [
+0.0012538669870991725,
+23
+],
+"saver.put": [
+0.00540286099203513,
+23
+],
+"loop._put_checkpoint": [
+0.00330862700502621,
+23
+],
+"tick": [
+0.0039302850018430036,
+23
+],
+"node:__start__": [
+4.792000254383311e-05,
+1
+],
+"loop.put_writes": [
+0.0028586800035554916,
+22
+],
+"saver.put_writes": [
+0.0019536829968274105,
+22
+],
+"after_tick": [
+0.005979005993140163,
+22
+],
+"node:model": [
+25.593398074001016,
+11
+],
+"node:tools": [
+0.024377794998144964,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.68127093200019,
+"model_provider_s": 25.63157023900203,
+"tool_fn_s": 0.0001900650022435002,
+"framework_s": 0.04951062799591455,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026700669986894354,
+24
+],
+"apply_writes": [
+0.0010713879892136902,
+23
+],
+"saver.put": [
+0.00486355598695809,
+23
+],
+"loop._put_checkpoint": [
+0.002843867987394333,
+23
+],
+"tick": [
+0.0030621020086982753,
+23
+],
+"node:__start__": [
+5.0650996854528785e-05,
+1
+],
+"loop.put_writes": [
+0.002236335010820767,
+22
+],
+"saver.put_writes": [
+0.003026370995939942,
+22
+],
+"after_tick": [
+0.005025735998060554,
+22
+],
+"node:model": [
+25.642267520997848,
+11
+],
+"node:tools": [
+0.025157677988318028,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.123893809999572,
+"model_provider_s": 26.074081846996705,
+"tool_fn_s": 0.00018063199240714312,
+"framework_s": 0.04963133101045969,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002793547995679546,
+24
+],
+"apply_writes": [
+0.0010644669964676723,
+23
+],
+"saver.put": [
+0.005128149001393467,
+23
+],
+"loop._put_checkpoint": [
+0.0028668790037045255,
+23
+],
+"tick": [
+0.0031941070046741515,
+23
+],
+"node:__start__": [
+4.905099922325462e-05,
+1
+],
+"loop.put_writes": [
+0.002287070001329994,
+22
+],
+"saver.put_writes": [
+0.0029949939998914488,
+22
+],
+"after_tick": [
+0.005018001000280492,
+22
+],
+"node:model": [
+26.08474863700394,
+11
+],
+"node:tools": [
+0.024943461994553218,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.761988659000053,
+"model_provider_s": 25.7127144530059,
+"tool_fn_s": 0.0001989230077015236,
+"framework_s": 0.049075282986450475,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026764659960463177,
+24
+],
+"apply_writes": [
+0.0010943149973172694,
+23
+],
+"saver.put": [
+0.004775821988005191,
+23
+],
+"loop._put_checkpoint": [
+0.002833855996868806,
+23
+],
+"tick": [
+0.0030810649950581137,
+23
+],
+"node:__start__": [
+4.7390996769536287e-05,
+1
+],
+"loop.put_writes": [
+0.002198578014940722,
+22
+],
+"saver.put_writes": [
+0.0022644280034000985,
+22
+],
+"after_tick": [
+0.0050135399906139355,
+22
+],
+"node:model": [
+25.723341028002324,
+11
+],
+"node:tools": [
+0.024892506993637653,
+10
+]
+},
+"clean": true
+}
+],
+"memory/sync": [
+{
+"wall_s": 26.19161652099865,
+"model_provider_s": 26.135924651003734,
+"tool_fn_s": 0.00021047599511803128,
+"framework_s": 0.055481393999798456,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030973780012573116,
+24
+],
+"apply_writes": [
+0.0010551460036367644,
+23
+],
+"saver.put": [
+0.005704319002688862,
+23
+],
+"loop._put_checkpoint": [
+0.002823646009346703,
+23
+],
+"tick": [
+0.003613854005379835,
+23
+],
+"node:__start__": [
+5.2010000217705965e-05,
+1
+],
+"loop.put_writes": [
+0.002236936994449934,
+22
+],
+"saver.put_writes": [
+0.002469702998496359,
+22
+],
+"after_tick": [
+0.004912550994049525,
+22
+],
+"node:model": [
+26.147057004996896,
+11
+],
+"node:tools": [
+0.017991904001974035,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.363040353000542,
+"model_provider_s": 25.308282911002607,
+"tool_fn_s": 0.00020875300106126815,
+"framework_s": 0.05454868899687426,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030164339950715657,
+24
+],
+"apply_writes": [
+0.0010438820099807344,
+23
+],
+"saver.put": [
+0.005517552996025188,
+23
+],
+"loop._put_checkpoint": [
+0.0028321330064500216,
+23
+],
+"tick": [
+0.0035595139961515088,
+23
+],
+"node:__start__": [
+4.966999767930247e-05,
+1
+],
+"loop.put_writes": [
+0.002224495001428295,
+22
+],
+"saver.put_writes": [
+0.0025555450010870118,
+22
+],
+"after_tick": [
+0.004834562991163693,
+22
+],
+"node:model": [
+25.319147091995546,
+11
+],
+"node:tools": [
+0.017646830001467606,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.487275933999626,
+"model_provider_s": 25.432327559999976,
+"tool_fn_s": 0.00019253199570812285,
+"framework_s": 0.054755842003942234,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031573409905831795,
+24
+],
+"apply_writes": [
+0.001033510998240672,
+23
+],
+"saver.put": [
+0.005497428988746833,
+23
+],
+"loop._put_checkpoint": [
+0.002603851997264428,
+23
+],
+"tick": [
+0.0037538969991146587,
+23
+],
+"node:__start__": [
+4.759100193041377e-05,
+1
+],
+"loop.put_writes": [
+0.0022918070062587503,
+22
+],
+"saver.put_writes": [
+0.002438249000988435,
+22
+],
+"after_tick": [
+0.004893971985438839,
+22
+],
+"node:model": [
+25.443159240006935,
+11
+],
+"node:tools": [
+0.01777462999962154,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.162173190998146,
+"model_provider_s": 26.107201712005917,
+"tool_fn_s": 0.00019002500630449504,
+"framework_s": 0.0547814539859246,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030740190122742206,
+24
+],
+"apply_writes": [
+0.0011168809978698846,
+23
+],
+"saver.put": [
+0.0058800940023502335,
+23
+],
+"loop._put_checkpoint": [
+0.002933065996330697,
+23
+],
+"tick": [
+0.0036032530006195884,
+23
+],
+"node:__start__": [
+4.969099973095581e-05,
+1
+],
+"loop.put_writes": [
+0.002173305991163943,
+22
+],
+"saver.put_writes": [
+0.0024459139895043336,
+22
+],
+"after_tick": [
+0.00500557499617571,
+22
+],
+"node:model": [
+26.118139968999458,
+11
+],
+"node:tools": [
+0.017495267995400354,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.6753694120016,
+"model_provider_s": 25.62087086100655,
+"tool_fn_s": 0.00019526300093275495,
+"framework_s": 0.054303287994116545,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0029496059978555422,
+24
+],
+"apply_writes": [
+0.0010940470019704662,
+23
+],
+"saver.put": [
+0.005290236993459985,
+23
+],
+"loop._put_checkpoint": [
+0.0027448239998193458,
+23
+],
+"tick": [
+0.0034837089879147243,
+23
+],
+"node:__start__": [
+4.6021999878576025e-05,
+1
+],
+"loop.put_writes": [
+0.0021968169930914883,
+22
+],
+"saver.put_writes": [
+0.0021023199951741844,
+22
+],
+"after_tick": [
+0.004996289004338905,
+22
+],
+"node:model": [
+25.631844609997643,
+11
+],
+"node:tools": [
+0.018376579002506332,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.198221456001193,
+"model_provider_s": 26.142983665002248,
+"tool_fn_s": 0.00021815399668412283,
+"framework_s": 0.055019637002260424,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030680809977639,
+24
+],
+"apply_writes": [
+0.0010545120057940949,
+23
+],
+"saver.put": [
+0.005694457006029552,
+23
+],
+"loop._put_checkpoint": [
+0.0027975829871138558,
+23
+],
+"tick": [
+0.003588464001950342,
+23
+],
+"node:__start__": [
+4.659999831346795e-05,
+1
+],
+"loop.put_writes": [
+0.0021491410188900772,
+22
+],
+"saver.put_writes": [
+0.0024586900108261034,
+22
+],
+"after_tick": [
+0.004958111010637367,
+22
+],
+"node:model": [
+26.153792702003557,
+11
+],
+"node:tools": [
+0.018031843999779085,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.533742354000424,
+"model_provider_s": 25.47782498700326,
+"tool_fn_s": 0.0002152739980374463,
+"framework_s": 0.05570209299912676,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030292280061985366,
+24
+],
+"apply_writes": [
+0.0010432309973111842,
+23
+],
+"saver.put": [
+0.005624093002552399,
+23
+],
+"loop._put_checkpoint": [
+0.002838484004314523,
+23
+],
+"tick": [
+0.0035446320071059745,
+23
+],
+"node:__start__": [
+4.8121000872924924e-05,
+1
+],
+"loop.put_writes": [
+0.002218693000031635,
+22
+],
+"saver.put_writes": [
+0.002569497999502346,
+22
+],
+"after_tick": [
+0.004898150011285907,
+22
+],
+"node:model": [
+25.48890560899963,
+11
+],
+"node:tools": [
+0.0182953119983722,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.169864220002637,
+"model_provider_s": 26.119615357994917,
+"tool_fn_s": 0.00019346400586073287,
+"framework_s": 0.05005539800185943,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0029668599854630884,
+24
+],
+"apply_writes": [
+0.0010233430039079394,
+23
+],
+"saver.put": [
+0.004091327999049099,
+23
+],
+"loop._put_checkpoint": [
+0.002660405996721238,
+23
+],
+"tick": [
+0.0035351099977560807,
+23
+],
+"node:__start__": [
+4.434099901118316e-05,
+1
+],
+"loop.put_writes": [
+0.0022084689917392097,
+22
+],
+"saver.put_writes": [
+0.0018552619985712226,
+22
+],
+"after_tick": [
+0.00477639898963389,
+22
+],
+"node:model": [
+26.13041227800204,
+11
+],
+"node:tools": [
+0.01696374799212208,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.427172839001287,
+"model_provider_s": 25.37118535999616,
+"tool_fn_s": 0.00019988600251963362,
+"framework_s": 0.05578759300260572,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003062290994421346,
+24
+],
+"apply_writes": [
+0.0010534050015849061,
+23
+],
+"saver.put": [
+0.005675839991454268,
+23
+],
+"loop._put_checkpoint": [
+0.002847747007763246,
+23
+],
+"tick": [
+0.0036183140000503045,
+23
+],
+"node:__start__": [
+4.820100002689287e-05,
+1
+],
+"loop.put_writes": [
+0.0021982030157232657,
+22
+],
+"saver.put_writes": [
+0.0024824999964039307,
+22
+],
+"after_tick": [
+0.004946275996189797,
+22
+],
+"node:model": [
+25.382324643003813,
+11
+],
+"node:tools": [
+0.01859248799883062,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.537544153001363,
+"model_provider_s": 25.4813180780111,
+"tool_fn_s": 0.0001931060032802634,
+"framework_s": 0.05603296898698318,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003262242000346305,
+24
+],
+"apply_writes": [
+0.0010489239975868259,
+23
+],
+"saver.put": [
+0.005837797009007772,
+23
+],
+"loop._put_checkpoint": [
+0.0028075890040781815,
+23
+],
+"tick": [
+0.003823132996330969,
+23
+],
+"node:__start__": [
+5.953300205874257e-05,
+1
+],
+"loop.put_writes": [
+0.0022295350063359365,
+22
+],
+"saver.put_writes": [
+0.002599884996016044,
+22
+],
+"after_tick": [
+0.004965440995874815,
+22
+],
+"node:model": [
+25.49262569801067,
+11
+],
+"node:tools": [
+0.017975049999222392,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.073652111001138,
+"model_provider_s": 26.018232999995234,
+"tool_fn_s": 0.0001897449983516708,
+"framework_s": 0.055229366007552017,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031000329945527483,
+24
+],
+"apply_writes": [
+0.001027111997245811,
+23
+],
+"saver.put": [
+0.005506944002263481,
+23
+],
+"loop._put_checkpoint": [
+0.0027921350083488505,
+23
+],
+"tick": [
+0.0036615710050682537,
+23
+],
+"node:__start__": [
+4.872100180364214e-05,
+1
+],
+"loop.put_writes": [
+0.002162886998121394,
+22
+],
+"saver.put_writes": [
+0.002525524003431201,
+22
+],
+"after_tick": [
+0.004835531002754578,
+22
+],
+"node:model": [
+26.029203484999016,
+11
+],
+"node:tools": [
+0.018249569002364296,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.866543650001404,
+"model_provider_s": 25.81132285199783,
+"tool_fn_s": 0.00027732599119190127,
+"framework_s": 0.0549434720123827,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030634960094175767,
+24
+],
+"apply_writes": [
+0.0010508279920031782,
+23
+],
+"saver.put": [
+0.005664191012328956,
+23
+],
+"loop._put_checkpoint": [
+0.002899940991483163,
+23
+],
+"tick": [
+0.0036248639880795963,
+23
+],
+"node:__start__": [
+4.775100023834966e-05,
+1
+],
+"loop.put_writes": [
+0.002245636009320151,
+22
+],
+"saver.put_writes": [
+0.0024605300022813026,
+22
+],
+"after_tick": [
+0.004988641994714271,
+22
+],
+"node:model": [
+25.822221105998324,
+11
+],
+"node:tools": [
+0.017926961998455226,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.915156475002732,
+"model_provider_s": 25.86013755899694,
+"tool_fn_s": 0.00018989999807672575,
+"framework_s": 0.054829016007715836,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003172024997184053,
+24
+],
+"apply_writes": [
+0.0010284880190738477,
+23
+],
+"saver.put": [
+0.005549379002331989,
+23
+],
+"loop._put_checkpoint": [
+0.002776264002022799,
+23
+],
+"tick": [
+0.003710640001372667,
+23
+],
+"node:__start__": [
+4.957000055583194e-05,
+1
+],
+"loop.put_writes": [
+0.0021903649976593442,
+22
+],
+"saver.put_writes": [
+0.002438070998323383,
+22
+],
+"after_tick": [
+0.004965244996128604,
+22
+],
+"node:model": [
+25.87122048499441,
+11
+],
+"node:tools": [
+0.017529816999740433,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.8987743209982,
+"model_provider_s": 25.843841521997092,
+"tool_fn_s": 0.0001871270033007022,
+"framework_s": 0.05474567199780722,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003191546002199175,
+24
+],
+"apply_writes": [
+0.0010685940105759073,
+23
+],
+"saver.put": [
+0.005607691000477644,
+23
+],
+"loop._put_checkpoint": [
+0.0028472080048231874,
+23
+],
+"tick": [
+0.003773984011786524,
+23
+],
+"node:__start__": [
+4.874099977314472e-05,
+1
+],
+"loop.put_writes": [
+0.0022509599875775166,
+22
+],
+"saver.put_writes": [
+0.0026216430014756043,
+22
+],
+"after_tick": [
+0.005065498007752467,
+22
+],
+"node:model": [
+25.854734478005412,
+11
+],
+"node:tools": [
+0.01697461800358724,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.735030199000903,
+"model_provider_s": 25.678978137006197,
+"tool_fn_s": 0.0001918720045068767,
+"framework_s": 0.055860189990198705,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031039499954204075,
+24
+],
+"apply_writes": [
+0.00102020299891592,
+23
+],
+"saver.put": [
+0.0060701830152538605,
+23
+],
+"loop._put_checkpoint": [
+0.002832873007719172,
+23
+],
+"tick": [
+0.00364817399167805,
+23
+],
+"node:__start__": [
+4.7171000915113837e-05,
+1
+],
+"loop.put_writes": [
+0.002258887001516996,
+22
+],
+"saver.put_writes": [
+0.002435312002489809,
+22
+],
+"after_tick": [
+0.004850417015404673,
+22
+],
+"node:model": [
+25.689986847999535,
+11
+],
+"node:tools": [
+0.018083154998748796,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.774430594003206,
+"model_provider_s": 25.717982967002172,
+"tool_fn_s": 0.00018926199845736846,
+"framework_s": 0.05625836500257719,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031651589924877044,
+24
+],
+"apply_writes": [
+0.0010244470104225911,
+23
+],
+"saver.put": [
+0.005905744001211133,
+23
+],
+"loop._put_checkpoint": [
+0.0029004079951846506,
+23
+],
+"tick": [
+0.0036978570024075452,
+23
+],
+"node:__start__": [
+4.532100138021633e-05,
+1
+],
+"loop.put_writes": [
+0.002256705003674142,
+22
+],
+"saver.put_writes": [
+0.002536495008826023,
+22
+],
+"after_tick": [
+0.005010129982110811,
+22
+],
+"node:model": [
+25.729075920997275,
+11
+],
+"node:tools": [
+0.018523907001508633,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.457148823999887,
+"model_provider_s": 25.40385220900862,
+"tool_fn_s": 0.00017891200332087465,
+"framework_s": 0.05311770298794727,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003055995002796408,
+24
+],
+"apply_writes": [
+0.0010720279933593702,
+23
+],
+"saver.put": [
+0.005603884008451132,
+23
+],
+"loop._put_checkpoint": [
+0.0028082099997845944,
+23
+],
+"tick": [
+0.0036221229966031387,
+23
+],
+"node:__start__": [
+4.747099956148304e-05,
+1
+],
+"loop.put_writes": [
+0.002268932992592454,
+22
+],
+"saver.put_writes": [
+0.002446313988912152,
+22
+],
+"after_tick": [
+0.00495374600723153,
+22
+],
+"node:model": [
+25.414351750994683,
+11
+],
+"node:tools": [
+0.016527296993444907,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.359465163001005,
+"model_provider_s": 26.30817658399974,
+"tool_fn_s": 0.0002485569966665935,
+"framework_s": 0.05104002200459945,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028082669887226075,
+24
+],
+"apply_writes": [
+0.0011020929923688527,
+23
+],
+"saver.put": [
+0.004487920996325556,
+23
+],
+"loop._put_checkpoint": [
+0.0028021470025123563,
+23
+],
+"tick": [
+0.0033392229888704605,
+23
+],
+"node:__start__": [
+6.116200165706687e-05,
+1
+],
+"loop.put_writes": [
+0.002223996001703199,
+22
+],
+"saver.put_writes": [
+0.001677318006841233,
+22
+],
+"after_tick": [
+0.004963356997905066,
+22
+],
+"node:model": [
+26.31918293199851,
+11
+],
+"node:tools": [
+0.017800223002268467,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.929839412001456,
+"model_provider_s": 25.87351340598616,
+"tool_fn_s": 0.00021846200252184644,
+"framework_s": 0.05610754401277518,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003238217002945021,
+24
+],
+"apply_writes": [
+0.0010624839997035451,
+23
+],
+"saver.put": [
+0.006006977997458307,
+23
+],
+"loop._put_checkpoint": [
+0.0030143989824864548,
+23
+],
+"tick": [
+0.0038329410053847823,
+23
+],
+"node:__start__": [
+4.497099871514365e-05,
+1
+],
+"loop.put_writes": [
+0.002211744005762739,
+22
+],
+"saver.put_writes": [
+0.002544927006965736,
+22
+],
+"after_tick": [
+0.004978888009645743,
+22
+],
+"node:model": [
+25.884469996006374,
+11
+],
+"node:tools": [
+0.017811958994570887,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.304032567997638,
+"model_provider_s": 26.247125770998537,
+"tool_fn_s": 0.00021815199579577893,
+"framework_s": 0.05668864500330528,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030495299979520496,
+24
+],
+"apply_writes": [
+0.0010430269976495765,
+23
+],
+"saver.put": [
+0.005930028000875609,
+23
+],
+"loop._put_checkpoint": [
+0.0031040160029078834,
+23
+],
+"tick": [
+0.003597149010602152,
+23
+],
+"node:__start__": [
+4.695099778473377e-05,
+1
+],
+"loop.put_writes": [
+0.0022574590111617,
+22
+],
+"saver.put_writes": [
+0.002771897994534811,
+22
+],
+"after_tick": [
+0.005004104001272935,
+22
+],
+"node:model": [
+26.258237645994086,
+11
+],
+"node:tools": [
+0.018356220996793127,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.768207244000223,
+"model_provider_s": 25.711620893005602,
+"tool_fn_s": 0.00018987399744219147,
+"framework_s": 0.05639647699717898,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030911779977031983,
+24
+],
+"apply_writes": [
+0.0010609180098981597,
+23
+],
+"saver.put": [
+0.0060114680127298925,
+23
+],
+"loop._put_checkpoint": [
+0.0028425190066627692,
+23
+],
+"tick": [
+0.00365712300845189,
+23
+],
+"node:__start__": [
+6.623099761782214e-05,
+1
+],
+"loop.put_writes": [
+0.002253441994980676,
+22
+],
+"saver.put_writes": [
+0.002458761002344545,
+22
+],
+"after_tick": [
+0.004964194999047322,
+22
+],
+"node:model": [
+25.7229345030064,
+11
+],
+"node:tools": [
+0.018110858000000007,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.075489709997782,
+"model_provider_s": 26.019805440999335,
+"tool_fn_s": 0.00018954399638460018,
+"framework_s": 0.055494725002063205,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031236860049830284,
+24
+],
+"apply_writes": [
+0.0010335419974580873,
+23
+],
+"saver.put": [
+0.0057586599978094455,
+23
+],
+"loop._put_checkpoint": [
+0.002846367009624373,
+23
+],
+"tick": [
+0.003716720992088085,
+23
+],
+"node:__start__": [
+4.781099778483622e-05,
+1
+],
+"loop.put_writes": [
+0.0022025870021025185,
+22
+],
+"saver.put_writes": [
+0.002369454003201099,
+22
+],
+"after_tick": [
+0.00491220499316114,
+22
+],
+"node:model": [
+26.03086653400169,
+11
+],
+"node:tools": [
+0.017962866000743816,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.864484472000186,
+"model_provider_s": 25.80921442599356,
+"tool_fn_s": 0.00018871300198952667,
+"framework_s": 0.05508133300463669,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031253310007741675,
+24
+],
+"apply_writes": [
+0.0010374130033596884,
+23
+],
+"saver.put": [
+0.005761822994827526,
+23
+],
+"loop._put_checkpoint": [
+0.0029683149950869847,
+23
+],
+"tick": [
+0.0036533300080918707,
+23
+],
+"node:__start__": [
+4.9819998821476474e-05,
+1
+],
+"loop.put_writes": [
+0.002239139001176227,
+22
+],
+"saver.put_writes": [
+0.002694607013836503,
+22
+],
+"after_tick": [
+0.005018382998969173,
+22
+],
+"node:model": [
+25.82018214099662,
+11
+],
+"node:tools": [
+0.017483690000517527,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.63043170599849,
+"model_provider_s": 25.576006155002688,
+"tool_fn_s": 0.00019994600006612018,
+"framework_s": 0.05422560499573592,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030568700058211107,
+24
+],
+"apply_writes": [
+0.0010341480119677726,
+23
+],
+"saver.put": [
+0.00518848699357477,
+23
+],
+"loop._put_checkpoint": [
+0.003044709999812767,
+23
+],
+"tick": [
+0.0036503940136753954,
+23
+],
+"node:__start__": [
+4.8231002438114956e-05,
+1
+],
+"loop.put_writes": [
+0.002177642018068582,
+22
+],
+"saver.put_writes": [
+0.002540753997891443,
+22
+],
+"after_tick": [
+0.005110757989314152,
+22
+],
+"node:model": [
+25.587003946999175,
+11
+],
+"node:tools": [
+0.01735500500217313,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.391412744000263,
+"model_provider_s": 26.337035469998227,
+"tool_fn_s": 0.00018345300122746266,
+"framework_s": 0.054193821000808384,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030288660200312734,
+24
+],
+"apply_writes": [
+0.001021480988129042,
+23
+],
+"saver.put": [
+0.005843356997502269,
+23
+],
+"loop._put_checkpoint": [
+0.0027831919978780206,
+23
+],
+"tick": [
+0.0035482479906931985,
+23
+],
+"node:__start__": [
+5.983099981676787e-05,
+1
+],
+"loop.put_writes": [
+0.0022578799980692565,
+22
+],
+"saver.put_writes": [
+0.0024816570003167726,
+22
+],
+"after_tick": [
+0.004808074991160538,
+22
+],
+"node:model": [
+26.348020044002624,
+11
+],
+"node:tools": [
+0.016915806005272316,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.898535863998404,
+"model_provider_s": 25.8427157729966,
+"tool_fn_s": 0.00019012700067833066,
+"framework_s": 0.05562996400112752,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031797660049051046,
+24
+],
+"apply_writes": [
+0.0010905279959843028,
+23
+],
+"saver.put": [
+0.005433244008600013,
+23
+],
+"loop._put_checkpoint": [
+0.002910838997195242,
+23
+],
+"tick": [
+0.0037406939918582793,
+23
+],
+"node:__start__": [
+5.030100146541372e-05,
+1
+],
+"loop.put_writes": [
+0.002306125999893993,
+22
+],
+"saver.put_writes": [
+0.0024739159962337,
+22
+],
+"after_tick": [
+0.005114402996696299,
+22
+],
+"node:model": [
+25.85395744899506,
+11
+],
+"node:tools": [
+0.017997246995946625,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.279032894999546,
+"model_provider_s": 26.22308255000098,
+"tool_fn_s": 0.00019295099991722964,
+"framework_s": 0.055757393998646876,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031772250003996305,
+24
+],
+"apply_writes": [
+0.0010917269974015653,
+23
+],
+"saver.put": [
+0.005556725005590124,
+23
+],
+"loop._put_checkpoint": [
+0.002874765996239148,
+23
+],
+"tick": [
+0.0038073009927757084,
+23
+],
+"node:__start__": [
+4.8449997848365456e-05,
+1
+],
+"loop.put_writes": [
+0.002273040994623443,
+22
+],
+"saver.put_writes": [
+0.0024865029990905896,
+22
+],
+"after_tick": [
+0.00508030900527956,
+22
+],
+"node:model": [
+26.234020966006938,
+11
+],
+"node:tools": [
+0.01808752299984917,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.73369786799958,
+"model_provider_s": 25.677993360000983,
+"tool_fn_s": 0.00018767199071589857,
+"framework_s": 0.055516836007882375,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003144743986922549,
+24
+],
+"apply_writes": [
+0.0010394119999546092,
+23
+],
+"saver.put": [
+0.005609496001852676,
+23
+],
+"loop._put_checkpoint": [
+0.0027162710030097514,
+23
+],
+"tick": [
+0.0037084880023030564,
+23
+],
+"node:__start__": [
+4.7060999349923804e-05,
+1
+],
+"loop.put_writes": [
+0.002326497993635712,
+22
+],
+"saver.put_writes": [
+0.0025599789987609256,
+22
+],
+"after_tick": [
+0.004808456003956962,
+22
+],
+"node:model": [
+25.68894839499626,
+11
+],
+"node:tools": [
+0.017987628001719713,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.94967509200069,
+"model_provider_s": 25.89410411600329,
+"tool_fn_s": 0.00019055400480283424,
+"framework_s": 0.055380421992595075,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003091995993599994,
+24
+],
+"apply_writes": [
+0.001081827995221829,
+23
+],
+"saver.put": [
+0.005526753000594908,
+23
+],
+"loop._put_checkpoint": [
+0.002899221010011388,
+23
+],
+"tick": [
+0.003663916992081795,
+23
+],
+"node:__start__": [
+4.882199937128462e-05,
+1
+],
+"loop.put_writes": [
+0.002278108000609791,
+22
+],
+"saver.put_writes": [
+0.002235813004517695,
+22
+],
+"after_tick": [
+0.005092643001262331,
+22
+],
+"node:model": [
+25.90524329198888,
+11
+],
+"node:tools": [
+0.018343716001254506,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.81145573699905,
+"model_provider_s": 25.75553661000231,
+"tool_fn_s": 0.00018080299923894927,
+"framework_s": 0.05573832399750245,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003078133988310583,
+24
+],
+"apply_writes": [
+0.0010884479961532634,
+23
+],
+"saver.put": [
+0.005537072007427923,
+23
+],
+"loop._put_checkpoint": [
+0.0029032180027570575,
+23
+],
+"tick": [
+0.0036427349950827193,
+23
+],
+"node:__start__": [
+5.309200059855357e-05,
+1
+],
+"loop.put_writes": [
+0.002338266986043891,
+22
+],
+"saver.put_writes": [
+0.0024456110040773638,
+22
+],
+"after_tick": [
+0.005176363996724831,
+22
+],
+"node:model": [
+25.766730044004362,
+11
+],
+"node:tools": [
+0.01808623100441764,
+10
+]
+},
+"clean": true
+}
+],
+"memory/exit": [
+{
+"wall_s": 25.56220043200301,
+"model_provider_s": 25.523010974997305,
+"tool_fn_s": 0.00019345800683367997,
+"framework_s": 0.03899599899887107,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026818340047611855,
+24
+],
+"apply_writes": [
+0.0010477850009920076,
+23
+],
+"loop._put_checkpoint": [
+0.0018301520067325328,
+24
+],
+"tick": [
+0.0031186729938781355,
+23
+],
+"node:__start__": [
+4.7910998546285555e-05,
+1
+],
+"loop.put_writes": [
+0.000969221000559628,
+22
+],
+"after_tick": [
+0.0036225959884177428,
+22
+],
+"node:model": [
+25.533526054001413,
+11
+],
+"node:tools": [
+0.018065307991491864,
+10
+],
+"saver.put": [
+0.0003887290004058741,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.67345205899983,
+"model_provider_s": 25.634589113997208,
+"tool_fn_s": 0.00018582499615149572,
+"framework_s": 0.03867712000646861,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027654529876599554,
+24
+],
+"apply_writes": [
+0.0010316749940102454,
+23
+],
+"loop._put_checkpoint": [
+0.001602819003892364,
+24
+],
+"tick": [
+0.003204472002835246,
+23
+],
+"node:__start__": [
+4.549299774225801e-05,
+1
+],
+"loop.put_writes": [
+0.000975614006165415,
+22
+],
+"after_tick": [
+0.0036569640069501474,
+22
+],
+"node:model": [
+25.645162854001683,
+11
+],
+"node:tools": [
+0.01783395599704818,
+10
+],
+"saver.put": [
+0.00026806599998963065,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.05660131699915,
+"model_provider_s": 26.015835458005313,
+"tool_fn_s": 0.00028443900009733625,
+"framework_s": 0.04048141999373911,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002834053011611104,
+24
+],
+"apply_writes": [
+0.0011061839941248763,
+23
+],
+"loop._put_checkpoint": [
+0.0018841229975805618,
+24
+],
+"tick": [
+0.0032757349945313763,
+23
+],
+"node:__start__": [
+5.101200076751411e-05,
+1
+],
+"loop.put_writes": [
+0.0010426069929962978,
+22
+],
+"after_tick": [
+0.003755206009373069,
+22
+],
+"node:model": [
+26.0268371830025,
+11
+],
+"node:tools": [
+0.018683725997107103,
+10
+],
+"saver.put": [
+0.0003857789997709915,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.680412814999727,
+"model_provider_s": 25.639927803003957,
+"tool_fn_s": 0.00019152500317431986,
+"framework_s": 0.04029348699259572,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002758311999059515,
+24
+],
+"apply_writes": [
+0.001095578005333664,
+23
+],
+"loop._put_checkpoint": [
+0.001883580000139773,
+24
+],
+"tick": [
+0.0032033800016506575,
+23
+],
+"node:__start__": [
+4.863099820795469e-05,
+1
+],
+"loop.put_writes": [
+0.0010589460034680087,
+22
+],
+"after_tick": [
+0.0037950050027575344,
+22
+],
+"node:model": [
+25.650947969999834,
+11
+],
+"node:tools": [
+0.018437274000461912,
+10
+],
+"saver.put": [
+0.0003925179989892058,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.310002992999216,
+"model_provider_s": 26.26982152700657,
+"tool_fn_s": 0.00019223799972678535,
+"framework_s": 0.03998922799291904,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027637889979814645,
+24
+],
+"apply_writes": [
+0.0010615740029606968,
+23
+],
+"loop._put_checkpoint": [
+0.001920548005728051,
+24
+],
+"tick": [
+0.003211680999811506,
+23
+],
+"node:__start__": [
+4.567200085148215e-05,
+1
+],
+"loop.put_writes": [
+0.0010233279899694026,
+22
+],
+"after_tick": [
+0.0037153320081415586,
+22
+],
+"node:model": [
+26.28069442400738,
+11
+],
+"node:tools": [
+0.01838280399897485,
+10
+],
+"saver.put": [
+0.00039157900027930737,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.741970095001307,
+"model_provider_s": 25.701768795002863,
+"tool_fn_s": 0.0001837089985201601,
+"framework_s": 0.040017590999923414,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002700182987609878,
+24
+],
+"apply_writes": [
+0.0010826139987329952,
+23
+],
+"loop._put_checkpoint": [
+0.0019326610090502072,
+24
+],
+"tick": [
+0.003131334982754197,
+23
+],
+"node:__start__": [
+5.051100015407428e-05,
+1
+],
+"loop.put_writes": [
+0.001042057996528456,
+22
+],
+"after_tick": [
+0.003783735999604687,
+22
+],
+"node:model": [
+25.71267286500006,
+11
+],
+"node:tools": [
+0.018181988009018824,
+10
+],
+"saver.put": [
+0.00040323900248040445,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.084928267999203,
+"model_provider_s": 26.044970879003813,
+"tool_fn_s": 0.0001908429949253332,
+"framework_s": 0.03976654600046459,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027184140199096873,
+24
+],
+"apply_writes": [
+0.001102985996112693,
+23
+],
+"loop._put_checkpoint": [
+0.0018335900094825774,
+24
+],
+"tick": [
+0.0031398940009239595,
+23
+],
+"node:__start__": [
+5.2911000238964334e-05,
+1
+],
+"loop.put_writes": [
+0.0010395619938208256,
+22
+],
+"after_tick": [
+0.00376841199977207,
+22
+],
+"node:model": [
+26.05581843500113,
+11
+],
+"node:tools": [
+0.018198879988631234,
+10
+],
+"saver.put": [
+0.00037290799809852615,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.553759923001053,
+"model_provider_s": 25.513463266001054,
+"tool_fn_s": 0.00020034599947393872,
+"framework_s": 0.04009631100052502,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002747920992987929,
+24
+],
+"apply_writes": [
+0.0011160759968333878,
+23
+],
+"loop._put_checkpoint": [
+0.001873239983979147,
+24
+],
+"tick": [
+0.0031748880028317217,
+23
+],
+"node:__start__": [
+4.98629997309763e-05,
+1
+],
+"loop.put_writes": [
+0.0010087549999298062,
+22
+],
+"after_tick": [
+0.003744203000678681,
+22
+],
+"node:model": [
+25.524668375004694,
+11
+],
+"node:tools": [
+0.018199332003860036,
+10
+],
+"saver.put": [
+0.0003808700021181721,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.949368818997755,
+"model_provider_s": 25.909906286000478,
+"tool_fn_s": 0.00019293299919809215,
+"framework_s": 0.039269599998078775,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0025813369938987307,
+24
+],
+"apply_writes": [
+0.0010320899928046856,
+23
+],
+"loop._put_checkpoint": [
+0.001833989008446224,
+24
+],
+"tick": [
+0.003007200015417766,
+23
+],
+"node:__start__": [
+4.456999886315316e-05,
+1
+],
+"loop.put_writes": [
+0.0009872240043478087,
+22
+],
+"after_tick": [
+0.0035897210000257473,
+22
+],
+"node:model": [
+25.92080805700607,
+11
+],
+"node:tools": [
+0.018074501000228338,
+10
+],
+"saver.put": [
+0.00040457800059812143,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.619194023998716,
+"model_provider_s": 25.578900428005,
+"tool_fn_s": 0.0002131120018020738,
+"framework_s": 0.04008048399191466,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027197169983992353,
+24
+],
+"apply_writes": [
+0.0010359570042055566,
+23
+],
+"loop._put_checkpoint": [
+0.0018644130068423692,
+24
+],
+"tick": [
+0.003168194005411351,
+23
+],
+"node:__start__": [
+5.726100062020123e-05,
+1
+],
+"loop.put_writes": [
+0.0010444930012454279,
+22
+],
+"after_tick": [
+0.0036911280039930716,
+22
+],
+"node:model": [
+25.589816312003677,
+11
+],
+"node:tools": [
+0.018566727005236316,
+10
+],
+"saver.put": [
+0.00039887900129542686,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.65861088300153,
+"model_provider_s": 25.620069083008275,
+"tool_fn_s": 0.000202236002223799,
+"framework_s": 0.038339563991030445,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0025853119987004902,
+24
+],
+"apply_writes": [
+0.0010169410015805624,
+23
+],
+"loop._put_checkpoint": [
+0.0017340189915557858,
+24
+],
+"tick": [
+0.002987711992318509,
+23
+],
+"node:__start__": [
+4.8521000280743465e-05,
+1
+],
+"loop.put_writes": [
+0.0009754239981702995,
+22
+],
+"after_tick": [
+0.0035653649974847212,
+22
+],
+"node:model": [
+25.63063577000139,
+11
+],
+"node:tools": [
+0.017662516998825595,
+10
+],
+"saver.put": [
+0.000353418003214756,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.88497668399941,
+"model_provider_s": 25.846984597999835,
+"tool_fn_s": 0.0001886080062831752,
+"framework_s": 0.0378034779932932,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002491444000042975,
+24
+],
+"apply_writes": [
+0.0010141729944734834,
+23
+],
+"loop._put_checkpoint": [
+0.001826843017624924,
+24
+],
+"tick": [
+0.00288411799192545,
+23
+],
+"node:__start__": [
+4.461100252228789e-05,
+1
+],
+"loop.put_writes": [
+0.0009315889983554371,
+22
+],
+"after_tick": [
+0.003557517997251125,
+22
+],
+"node:model": [
+25.857041479001055,
+11
+],
+"node:tools": [
+0.017679591004707618,
+10
+],
+"saver.put": [
+0.00038707899875589646,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.67875997199735,
+"model_provider_s": 25.643456937006704,
+"tool_fn_s": 0.00021134500275366008,
+"framework_s": 0.035091689987893915,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.00234294600886642,
+24
+],
+"apply_writes": [
+0.0009540789942548145,
+23
+],
+"loop._put_checkpoint": [
+0.0016226360130531248,
+24
+],
+"tick": [
+0.002728161995037226,
+23
+],
+"node:__start__": [
+5.9469999541761354e-05,
+1
+],
+"loop.put_writes": [
+0.0008819039976515342,
+22
+],
+"after_tick": [
+0.0034136420144932345,
+22
+],
+"node:model": [
+25.65289484799723,
+11
+],
+"node:tools": [
+0.016250027001660783,
+10
+],
+"saver.put": [
+0.00033940799767151475,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.644323751999764,
+"model_provider_s": 25.606811473997368,
+"tool_fn_s": 0.0001894999986689072,
+"framework_s": 0.03732277800372685,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0023518220041296445,
+24
+],
+"apply_writes": [
+0.001000374999421183,
+23
+],
+"loop._put_checkpoint": [
+0.0017505380055808928,
+24
+],
+"tick": [
+0.002759525006695185,
+23
+],
+"node:__start__": [
+4.197200178168714e-05,
+1
+],
+"loop.put_writes": [
+0.0008856599961291067,
+22
+],
+"after_tick": [
+0.003405108003789792,
+22
+],
+"node:model": [
+25.61650601099609,
+11
+],
+"node:tools": [
+0.01809794400105602,
+10
+],
+"saver.put": [
+0.00037983900256222114,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.63332462299877,
+"model_provider_s": 25.59276645499631,
+"tool_fn_s": 0.00020585300444508903,
+"framework_s": 0.04035231499801739,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002819801989971893,
+24
+],
+"apply_writes": [
+0.0010511839973332826,
+23
+],
+"loop._put_checkpoint": [
+0.0019316629950481001,
+24
+],
+"tick": [
+0.003249210993089946,
+23
+],
+"node:__start__": [
+5.554100061999634e-05,
+1
+],
+"loop.put_writes": [
+0.0010536539957684,
+22
+],
+"after_tick": [
+0.0037546479907177854,
+22
+],
+"node:model": [
+25.603816345996165,
+11
+],
+"node:tools": [
+0.01843471999745816,
+10
+],
+"saver.put": [
+0.00039911000203574076,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.787704514001234,
+"model_provider_s": 25.750480299993797,
+"tool_fn_s": 0.00019204100317438133,
+"framework_s": 0.037032173004263313,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0023490680068789516,
+24
+],
+"apply_writes": [
+0.0009983379968616646,
+23
+],
+"loop._put_checkpoint": [
+0.0016806470084702596,
+24
+],
+"tick": [
+0.0027258140107733198,
+23
+],
+"node:__start__": [
+4.596100188791752e-05,
+1
+],
+"loop.put_writes": [
+0.0009155450061371084,
+22
+],
+"after_tick": [
+0.0034833680183510296,
+22
+],
+"node:model": [
+25.760137126006157,
+11
+],
+"node:tools": [
+0.017800396992242895,
+10
+],
+"saver.put": [
+0.00035006700272788294,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.772937343001104,
+"model_provider_s": 25.73340082499999,
+"tool_fn_s": 0.00021709800421376713,
+"framework_s": 0.03931941999690025,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026459529872226994,
+24
+],
+"apply_writes": [
+0.0010240700030408334,
+23
+],
+"loop._put_checkpoint": [
+0.0019874720092047937,
+24
+],
+"tick": [
+0.0030619069984823,
+23
+],
+"node:__start__": [
+4.096100019523874e-05,
+1
+],
+"loop.put_writes": [
+0.0009918699943227693,
+22
+],
+"after_tick": [
+0.003634123000665568,
+22
+],
+"node:model": [
+25.74403735199303,
+11
+],
+"node:tools": [
+0.018235106996144168,
+10
+],
+"saver.put": [
+0.0004255399981047958,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.680333075000817,
+"model_provider_s": 25.641043399999035,
+"tool_fn_s": 0.0002109139932144899,
+"framework_s": 0.03907876100856811,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0025521510033286177,
+24
+],
+"apply_writes": [
+0.0010106370064022485,
+23
+],
+"loop._put_checkpoint": [
+0.00178494099600357,
+24
+],
+"tick": [
+0.0029781150005874224,
+23
+],
+"node:__start__": [
+4.565199924400076e-05,
+1
+],
+"loop.put_writes": [
+0.0009373910070280544,
+22
+],
+"after_tick": [
+0.0035528919943317305,
+22
+],
+"node:model": [
+25.651203554007225,
+11
+],
+"node:tools": [
+0.01883253199775936,
+10
+],
+"saver.put": [
+0.00033854700086521916,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.4880972869978,
+"model_provider_s": 26.447828298005334,
+"tool_fn_s": 0.0002658480007085018,
+"framework_s": 0.04000314099175739,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0025834530024440028,
+24
+],
+"apply_writes": [
+0.001082122002117103,
+23
+],
+"loop._put_checkpoint": [
+0.0020336939851404168,
+24
+],
+"tick": [
+0.0029821079988323618,
+23
+],
+"node:__start__": [
+4.073099989909679e-05,
+1
+],
+"loop.put_writes": [
+0.0009818710022955202,
+22
+],
+"after_tick": [
+0.0037229970112093724,
+22
+],
+"node:model": [
+26.45843971000795,
+11
+],
+"node:tools": [
+0.0190162689978024,
+10
+],
+"saver.put": [
+0.0004249300000083167,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.649718798998947,
+"model_provider_s": 25.611750922009378,
+"tool_fn_s": 0.00019835600687656552,
+"framework_s": 0.037769520982692484,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0024312760106113274,
+24
+],
+"apply_writes": [
+0.0010414860007585958,
+23
+],
+"loop._put_checkpoint": [
+0.0018929799953184556,
+24
+],
+"tick": [
+0.0028052150046278257,
+23
+],
+"node:__start__": [
+4.561099922284484e-05,
+1
+],
+"loop.put_writes": [
+0.0009461310000915546,
+22
+],
+"after_tick": [
+0.003462558008322958,
+22
+],
+"node:model": [
+25.62146093199408,
+11
+],
+"node:tools": [
+0.018150286003219662,
+10
+],
+"saver.put": [
+0.0004547120006463956,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.089498397999705,
+"model_provider_s": 26.05262658200445,
+"tool_fn_s": 0.00019993100431747735,
+"framework_s": 0.03667188499093754,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002346055996895302,
+24
+],
+"apply_writes": [
+0.0009367280072183348,
+23
+],
+"loop._put_checkpoint": [
+0.0018671129982976709,
+24
+],
+"tick": [
+0.002712440997129306,
+23
+],
+"node:__start__": [
+4.0499999158782884e-05,
+1
+],
+"loop.put_writes": [
+0.0009347209997940809,
+22
+],
+"after_tick": [
+0.0033635429936111905,
+22
+],
+"node:model": [
+26.0621616669996,
+11
+],
+"node:tools": [
+0.017488823996245628,
+10
+],
+"saver.put": [
+0.00045096000030753203,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.17722624200178,
+"model_provider_s": 25.137454614003218,
+"tool_fn_s": 0.00020319599934737198,
+"framework_s": 0.039568431999214226,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026660530056688003,
+24
+],
+"apply_writes": [
+0.0010538339956838172,
+23
+],
+"loop._put_checkpoint": [
+0.001910164992295904,
+24
+],
+"tick": [
+0.0030854299948259722,
+23
+],
+"node:__start__": [
+4.859199907514267e-05,
+1
+],
+"loop.put_writes": [
+0.0010204930185864214,
+22
+],
+"after_tick": [
+0.0037101340021763463,
+22
+],
+"node:model": [
+25.148279811000975,
+11
+],
+"node:tools": [
+0.018129570009477902,
+10
+],
+"saver.put": [
+0.0004142799989494961,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.349447452997993,
+"model_provider_s": 25.309761050000816,
+"tool_fn_s": 0.00019816299391095527,
+"framework_s": 0.03948824000326567,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002643095995153999,
+24
+],
+"apply_writes": [
+0.0010452349961269647,
+23
+],
+"loop._put_checkpoint": [
+0.0018925230033346452,
+24
+],
+"tick": [
+0.003074759999435628,
+23
+],
+"node:__start__": [
+5.887199949938804e-05,
+1
+],
+"loop.put_writes": [
+0.0010119869948539417,
+22
+],
+"after_tick": [
+0.003642880001279991,
+22
+],
+"node:model": [
+25.320499149998795,
+11
+],
+"node:tools": [
+0.018142369994166074,
+10
+],
+"saver.put": [
+0.00041520900049363263,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.242071903998294,
+"model_provider_s": 26.203670768001757,
+"tool_fn_s": 0.00018514299881644547,
+"framework_s": 0.038215992997720605,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0025824389995250385,
+24
+],
+"apply_writes": [
+0.0010333829959563445,
+23
+],
+"loop._put_checkpoint": [
+0.0019093569935648702,
+24
+],
+"tick": [
+0.0030028910041437484,
+23
+],
+"node:__start__": [
+4.733199966722168e-05,
+1
+],
+"loop.put_writes": [
+0.000986910999927204,
+22
+],
+"after_tick": [
+0.003668306006147759,
+22
+],
+"node:model": [
+26.214218777000497,
+11
+],
+"node:tools": [
+0.017181059996801196,
+10
+],
+"saver.put": [
+0.0004188800012343563,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.567734787000518,
+"model_provider_s": 25.527940309999394,
+"tool_fn_s": 0.00019699100084835663,
+"framework_s": 0.03959748600027524,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026741489964479115,
+24
+],
+"apply_writes": [
+0.001007507999020163,
+23
+],
+"loop._put_checkpoint": [
+0.0017642270140640903,
+24
+],
+"tick": [
+0.003111554997303756,
+23
+],
+"node:__start__": [
+4.752099994220771e-05,
+1
+],
+"loop.put_writes": [
+0.001029170995025197,
+22
+],
+"after_tick": [
+0.0036074429990549106,
+22
+],
+"node:model": [
+25.538718839990906,
+11
+],
+"node:tools": [
+0.01849810699786758,
+10
+],
+"saver.put": [
+0.00034114799927920103,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.7367548910006,
+"model_provider_s": 25.6967052570144,
+"tool_fn_s": 0.00019244700160925277,
+"framework_s": 0.03985718698459095,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026352710046921857,
+24
+],
+"apply_writes": [
+0.001025993020448368,
+23
+],
+"loop._put_checkpoint": [
+0.0018860570125980303,
+24
+],
+"tick": [
+0.0030536069971276447,
+23
+],
+"node:__start__": [
+4.66009987576399e-05,
+1
+],
+"loop.put_writes": [
+0.0009720380076032598,
+22
+],
+"after_tick": [
+0.003662329003418563,
+22
+],
+"node:model": [
+25.707868419998704,
+11
+],
+"node:tools": [
+0.018255734001286328,
+10
+],
+"saver.put": [
+0.00040527899909648113,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.353069849999883,
+"model_provider_s": 25.314030088993604,
+"tool_fn_s": 0.00018624000222189352,
+"framework_s": 0.038853521004057257,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026713519837358035,
+24
+],
+"apply_writes": [
+0.0010543210009927861,
+23
+],
+"loop._put_checkpoint": [
+0.0019832710022456013,
+24
+],
+"tick": [
+0.0031115550009417348,
+23
+],
+"node:__start__": [
+4.917199839837849e-05,
+1
+],
+"loop.put_writes": [
+0.000983125006314367,
+22
+],
+"after_tick": [
+0.003677325996250147,
+22
+],
+"node:model": [
+25.324755680005183,
+11
+],
+"node:tools": [
+0.017432843003916787,
+10
+],
+"saver.put": [
+0.0004542210008366965,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.98219061099735,
+"model_provider_s": 25.943279277998954,
+"tool_fn_s": 0.00020467400463530794,
+"framework_s": 0.03870665899376036,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026580979902064428,
+24
+],
+"apply_writes": [
+0.0010289929996361025,
+23
+],
+"loop._put_checkpoint": [
+0.001845189995947294,
+24
+],
+"tick": [
+0.0031071350022102706,
+23
+],
+"node:__start__": [
+4.591100150719285e-05,
+1
+],
+"loop.put_writes": [
+0.001019682011246914,
+22
+],
+"after_tick": [
+0.003632349005783908,
+22
+],
+"node:model": [
+25.954002862014022,
+11
+],
+"node:tools": [
+0.01753979599743616,
+10
+],
+"saver.put": [
+0.00037984899972798303,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.5169705790031,
+"model_provider_s": 25.47695534300874,
+"tool_fn_s": 0.00019495499873301014,
+"framework_s": 0.0398202809956274,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026954020031553227,
+24
+],
+"apply_writes": [
+0.001069511996320216,
+23
+],
+"loop._put_checkpoint": [
+0.0017956819938262925,
+24
+],
+"tick": [
+0.003162135006277822,
+23
+],
+"node:__start__": [
+4.7342000470962375e-05,
+1
+],
+"loop.put_writes": [
+0.000995296002656687,
+22
+],
+"after_tick": [
+0.0037280699943949003,
+22
+],
+"node:model": [
+25.487791827003093,
+11
+],
+"node:tools": [
+0.01839837800071109,
+10
+],
+"saver.put": [
+0.00034636800046428107,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.586677905001125,
+"model_provider_s": 25.54683116099477,
+"tool_fn_s": 0.00022422698748414405,
+"framework_s": 0.039622517018869985,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.00276629599466105,
+24
+],
+"apply_writes": [
+0.0011073570021835621,
+23
+],
+"loop._put_checkpoint": [
+0.001898057005746523,
+24
+],
+"tick": [
+0.0032037749988376163,
+23
+],
+"node:__start__": [
+4.3261999962851405e-05,
+1
+],
+"loop.put_writes": [
+0.0010507529987080488,
+22
+],
+"after_tick": [
+0.003821431007963838,
+22
+],
+"node:model": [
+25.557544853003492,
+11
+],
+"node:tools": [
+0.018147992006561253,
+10
+],
+"saver.put": [
+0.00039643900163355283,
+1
+]
+},
+"clean": true
+}
+],
+"sqlite/async": [
+{
+"wall_s": 26.1512469219997,
+"model_provider_s": 26.088791479993233,
+"tool_fn_s": 0.0001899619965115562,
+"framework_s": 0.062265480009955354,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002660506001120666,
+24
+],
+"apply_writes": [
+0.0011231889984628651,
+23
+],
+"loop._put_checkpoint": [
+0.0030581810060539283,
+23
+],
+"tick": [
+0.0030871720009599812,
+23
+],
+"node:__start__": [
+4.796099892701022e-05,
+1
+],
+"loop.put_writes": [
+0.0026671220002754126,
+22
+],
+"after_tick": [
+0.0052904140029568225,
+22
+],
+"saver.put": [
+0.08861631700347061,
+23
+],
+"saver.put_writes": [
+0.0882173889913247,
+22
+],
+"node:model": [
+26.099490025000705,
+11
+],
+"node:tools": [
+0.026402906005387194,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.390746560999105,
+"model_provider_s": 25.324967061998905,
+"tool_fn_s": 0.00019925599917769432,
+"framework_s": 0.06558024300102261,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002756234989647055,
+24
+],
+"apply_writes": [
+0.001112988011300331,
+23
+],
+"loop._put_checkpoint": [
+0.0029341549998207483,
+23
+],
+"tick": [
+0.0031905030009511393,
+23
+],
+"node:__start__": [
+4.855100269196555e-05,
+1
+],
+"loop.put_writes": [
+0.0027450600064184982,
+22
+],
+"after_tick": [
+0.005207818012422649,
+22
+],
+"saver.put": [
+0.09952746999624651,
+23
+],
+"saver.put_writes": [
+0.10583614000643138,
+22
+],
+"node:model": [
+25.33607205300359,
+11
+],
+"node:tools": [
+0.02680783799587516,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.652753512000345,
+"model_provider_s": 25.5887037430075,
+"tool_fn_s": 0.00019250400146120228,
+"framework_s": 0.063857264991384,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002758328009804245,
+24
+],
+"apply_writes": [
+0.0010839850001502782,
+23
+],
+"loop._put_checkpoint": [
+0.002947838005638914,
+23
+],
+"tick": [
+0.003152664015942719,
+23
+],
+"node:__start__": [
+4.719099888461642e-05,
+1
+],
+"loop.put_writes": [
+0.00256637701386353,
+22
+],
+"after_tick": [
+0.005095455988339381,
+22
+],
+"saver.put": [
+0.08820097099305713,
+23
+],
+"saver.put_writes": [
+0.08914837200427428,
+22
+],
+"node:model": [
+25.599461652000173,
+11
+],
+"node:tools": [
+0.025414984997041756,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.715438392002397,
+"model_provider_s": 25.65055403099541,
+"tool_fn_s": 0.00019237400192650966,
+"framework_s": 0.0646919870050624,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002837168001860846,
+24
+],
+"apply_writes": [
+0.001092538997909287,
+23
+],
+"loop._put_checkpoint": [
+0.0029397949838312343,
+23
+],
+"tick": [
+0.0032568049973633606,
+23
+],
+"node:__start__": [
+6.85419981891755e-05,
+1
+],
+"loop.put_writes": [
+0.0026799590123118833,
+22
+],
+"after_tick": [
+0.005152912002813537,
+22
+],
+"saver.put": [
+0.09042359100931208,
+23
+],
+"saver.put_writes": [
+0.09402099798899144,
+22
+],
+"node:model": [
+25.661735538007633,
+11
+],
+"node:tools": [
+0.026725983996584546,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.508587428001192,
+"model_provider_s": 25.445250117001706,
+"tool_fn_s": 0.0002002139990509022,
+"framework_s": 0.06313709700043546,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028133990126661956,
+24
+],
+"apply_writes": [
+0.001083578998077428,
+23
+],
+"loop._put_checkpoint": [
+0.002890642012062017,
+23
+],
+"tick": [
+0.003221463008230785,
+23
+],
+"node:__start__": [
+5.18810011271853e-05,
+1
+],
+"loop.put_writes": [
+0.002674758005014155,
+22
+],
+"after_tick": [
+0.005298339001456043,
+22
+],
+"saver.put": [
+0.0857938080043823,
+23
+],
+"saver.put_writes": [
+0.08687367699167226,
+22
+],
+"node:model": [
+25.456214571997407,
+11
+],
+"node:tools": [
+0.024981045007734792,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.391721086998587,
+"model_provider_s": 26.325859652013605,
+"tool_fn_s": 0.0001883670011011418,
+"framework_s": 0.06567306798388017,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028200359956827015,
+24
+],
+"apply_writes": [
+0.0011367150000296533,
+23
+],
+"loop._put_checkpoint": [
+0.0031345870011136867,
+23
+],
+"tick": [
+0.0032617309952911455,
+23
+],
+"node:__start__": [
+4.643200009013526e-05,
+1
+],
+"loop.put_writes": [
+0.0027588950033532456,
+22
+],
+"after_tick": [
+0.005326880000211531,
+22
+],
+"saver.put": [
+0.09624929601341137,
+23
+],
+"saver.put_writes": [
+0.10150200300631695,
+22
+],
+"node:model": [
+26.337296234996757,
+11
+],
+"node:tools": [
+0.025505906000034884,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.623768587000086,
+"model_provider_s": 25.561792773009074,
+"tool_fn_s": 0.0001847689964051824,
+"framework_s": 0.061791044994606636,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002798173991322983,
+24
+],
+"apply_writes": [
+0.0010847710036614444,
+23
+],
+"loop._put_checkpoint": [
+0.0029974049830343574,
+23
+],
+"tick": [
+0.0032183170042117126,
+23
+],
+"node:__start__": [
+5.3001000196672976e-05,
+1
+],
+"loop.put_writes": [
+0.0026894280090346,
+22
+],
+"after_tick": [
+0.005199209994316334,
+22
+],
+"saver.put": [
+0.08482490001551923,
+23
+],
+"saver.put_writes": [
+0.08568060899051488,
+22
+],
+"node:model": [
+25.572710260999884,
+11
+],
+"node:tools": [
+0.02346372800457175,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.040961385999253,
+"model_provider_s": 25.974594884002727,
+"tool_fn_s": 0.00022075200104154646,
+"framework_s": 0.06614574999548495,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0029292980070749763,
+24
+],
+"apply_writes": [
+0.0011624379912973382,
+23
+],
+"loop._put_checkpoint": [
+0.0030074849892116617,
+23
+],
+"tick": [
+0.003382045997568639,
+23
+],
+"node:__start__": [
+4.7180998080875725e-05,
+1
+],
+"loop.put_writes": [
+0.00276966298406478,
+22
+],
+"after_tick": [
+0.005500280007254332,
+22
+],
+"saver.put": [
+0.08853980900312308,
+23
+],
+"saver.put_writes": [
+0.09319228599269991,
+22
+],
+"node:model": [
+25.985881849002908,
+11
+],
+"node:tools": [
+0.025778990999242524,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.85273827799756,
+"model_provider_s": 25.78809183899648,
+"tool_fn_s": 0.00020706699797301553,
+"framework_s": 0.06443937200310756,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002991549001308158,
+24
+],
+"apply_writes": [
+0.0011036190007871483,
+23
+],
+"loop._put_checkpoint": [
+0.003126585012068972,
+23
+],
+"tick": [
+0.003395966996322386,
+23
+],
+"node:__start__": [
+5.423099719337188e-05,
+1
+],
+"loop.put_writes": [
+0.002647163000801811,
+22
+],
+"after_tick": [
+0.005264785999315791,
+22
+],
+"saver.put": [
+0.08964212700811913,
+23
+],
+"saver.put_writes": [
+0.09286531699763145,
+22
+],
+"node:model": [
+25.799297811008728,
+11
+],
+"node:tools": [
+0.025417252007173374,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.91818229799901,
+"model_provider_s": 25.854497431002528,
+"tool_fn_s": 0.000184701999387471,
+"framework_s": 0.06350016499709454,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027653080032905564,
+24
+],
+"apply_writes": [
+0.0010493310037418269,
+23
+],
+"loop._put_checkpoint": [
+0.0029970709911140148,
+23
+],
+"tick": [
+0.003180681000230834,
+23
+],
+"node:__start__": [
+4.7851000999799e-05,
+1
+],
+"loop.put_writes": [
+0.002598441013105912,
+22
+],
+"after_tick": [
+0.005117934000736568,
+22
+],
+"saver.put": [
+0.0904681569954846,
+23
+],
+"saver.put_writes": [
+0.0919426919936086,
+22
+],
+"node:model": [
+25.86534664500141,
+11
+],
+"node:tools": [
+0.02505311299682944,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.20169605100091,
+"model_provider_s": 26.136873856004968,
+"tool_fn_s": 0.00019145800251862966,
+"framework_s": 0.06463073699342203,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027915020000364166,
+24
+],
+"apply_writes": [
+0.0011002820028807037,
+23
+],
+"loop._put_checkpoint": [
+0.003123753998806933,
+23
+],
+"tick": [
+0.0032594069925835356,
+23
+],
+"node:__start__": [
+4.726000042865053e-05,
+1
+],
+"loop.put_writes": [
+0.002558949989179382,
+22
+],
+"after_tick": [
+0.00524297099764226,
+22
+],
+"saver.put": [
+0.0919801440104493,
+23
+],
+"saver.put_writes": [
+0.0959661140004755,
+22
+],
+"node:model": [
+26.148018268999294,
+11
+],
+"node:tools": [
+0.02566916399882757,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.379209945000184,
+"model_provider_s": 25.314327944997785,
+"tool_fn_s": 0.00019257000167272054,
+"framework_s": 0.06468943000072613,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028719549991365056,
+24
+],
+"apply_writes": [
+0.0011515429978317115,
+23
+],
+"loop._put_checkpoint": [
+0.0029931329845567234,
+23
+],
+"tick": [
+0.0032825099951878656,
+23
+],
+"node:__start__": [
+4.91600003442727e-05,
+1
+],
+"loop.put_writes": [
+0.002772534000541782,
+22
+],
+"after_tick": [
+0.005279354994854657,
+22
+],
+"saver.put": [
+0.09413471900552395,
+23
+],
+"saver.put_writes": [
+0.09849973499876796,
+22
+],
+"node:model": [
+25.325322933993448,
+11
+],
+"node:tools": [
+0.02583337699979893,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.098877334999997,
+"model_provider_s": 26.034374047998426,
+"tool_fn_s": 0.00019638199228211306,
+"framework_s": 0.06430690500928904,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027880640009243507,
+24
+],
+"apply_writes": [
+0.001109497003199067,
+23
+],
+"loop._put_checkpoint": [
+0.002797370994812809,
+23
+],
+"tick": [
+0.0032784009927127045,
+23
+],
+"node:__start__": [
+4.6919998567318544e-05,
+1
+],
+"loop.put_writes": [
+0.0027035519924538676,
+22
+],
+"after_tick": [
+0.005261237005470321,
+22
+],
+"saver.put": [
+0.08919489697655081,
+23
+],
+"saver.put_writes": [
+0.08663316700403811,
+22
+],
+"node:model": [
+26.045647721999558,
+11
+],
+"node:tools": [
+0.02468801699433243,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.581800191001093,
+"model_provider_s": 25.515040516002045,
+"tool_fn_s": 0.0001928810052049812,
+"framework_s": 0.06656679399384302,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002971524005261017,
+24
+],
+"apply_writes": [
+0.0011615839866863098,
+23
+],
+"loop._put_checkpoint": [
+0.0032139609975274652,
+23
+],
+"tick": [
+0.0034131130159948952,
+23
+],
+"node:__start__": [
+5.103099829284474e-05,
+1
+],
+"loop.put_writes": [
+0.0028068580104445573,
+22
+],
+"after_tick": [
+0.005610577994957566,
+22
+],
+"saver.put": [
+0.09742144999836455,
+23
+],
+"saver.put_writes": [
+0.10031435499331565,
+22
+],
+"node:model": [
+25.526045618989883,
+11
+],
+"node:tools": [
+0.026828770009160507,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.15671763100181,
+"model_provider_s": 26.093015373007802,
+"tool_fn_s": 0.00019265800438006409,
+"framework_s": 0.06350959998962935,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002639130994793959,
+24
+],
+"apply_writes": [
+0.0010754379909485579,
+23
+],
+"loop._put_checkpoint": [
+0.0031426100140379276,
+23
+],
+"tick": [
+0.0030182540067471564,
+23
+],
+"node:__start__": [
+4.608000017469749e-05,
+1
+],
+"loop.put_writes": [
+0.002513215000362834,
+22
+],
+"after_tick": [
+0.00529182399623096,
+22
+],
+"saver.put": [
+0.08930616698489757,
+23
+],
+"saver.put_writes": [
+0.09055763200012734,
+22
+],
+"node:model": [
+26.103074596001534,
+11
+],
+"node:tools": [
+0.025506154004688142,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.715925781001715,
+"model_provider_s": 25.6543588750028,
+"tool_fn_s": 0.00018949700097437017,
+"framework_s": 0.06137740899794153,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0024299719952978194,
+24
+],
+"apply_writes": [
+0.000987133003945928,
+23
+],
+"loop._put_checkpoint": [
+0.002951680009573465,
+23
+],
+"tick": [
+0.0027874600164068397,
+23
+],
+"node:__start__": [
+4.544999683275819e-05,
+1
+],
+"loop.put_writes": [
+0.0023338999890256673,
+22
+],
+"after_tick": [
+0.004881699995166855,
+22
+],
+"saver.put": [
+0.0927895959939633,
+23
+],
+"saver.put_writes": [
+0.09441238500949112,
+22
+],
+"node:model": [
+25.66396536600223,
+11
+],
+"node:tools": [
+0.025305900988314534,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.366654516998096,
+"model_provider_s": 25.30561293500068,
+"tool_fn_s": 0.00020801199934794568,
+"framework_s": 0.060833569998067105,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002262388999952236,
+24
+],
+"apply_writes": [
+0.0009776379920367617,
+23
+],
+"loop._put_checkpoint": [
+0.0027894810009456705,
+23
+],
+"tick": [
+0.00257666901597986,
+23
+],
+"node:__start__": [
+4.4411000999389216e-05,
+1
+],
+"loop.put_writes": [
+0.0023347809983533807,
+22
+],
+"after_tick": [
+0.004756827991514001,
+22
+],
+"saver.put": [
+0.0852394759967865,
+23
+],
+"saver.put_writes": [
+0.0900750440050615,
+22
+],
+"node:model": [
+25.315117579993967,
+11
+],
+"node:tools": [
+0.02610422900033882,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.03880637399925,
+"model_provider_s": 25.97465194999677,
+"tool_fn_s": 0.0001922029950947035,
+"framework_s": 0.06396222100738669,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027120149934489746,
+24
+],
+"apply_writes": [
+0.001041440002154559,
+23
+],
+"loop._put_checkpoint": [
+0.002953261988295708,
+23
+],
+"tick": [
+0.00310065201119869,
+23
+],
+"node:__start__": [
+4.4410000555217266e-05,
+1
+],
+"loop.put_writes": [
+0.002624193992232904,
+22
+],
+"after_tick": [
+0.005142661000718363,
+22
+],
+"saver.put": [
+0.09081415999753517,
+23
+],
+"saver.put_writes": [
+0.09796751498288359,
+22
+],
+"node:model": [
+25.985583238008985,
+11
+],
+"node:tools": [
+0.026164609003899386,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.992671251999127,
+"model_provider_s": 25.926697292001336,
+"tool_fn_s": 0.0002158819988835603,
+"framework_s": 0.06575807799890754,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027013549879484344,
+24
+],
+"apply_writes": [
+0.0010754619979707059,
+23
+],
+"loop._put_checkpoint": [
+0.003258750988607062,
+23
+],
+"tick": [
+0.0031141599974944256,
+23
+],
+"node:__start__": [
+4.961000013281591e-05,
+1
+],
+"loop.put_writes": [
+0.0024969680125650484,
+22
+],
+"after_tick": [
+0.005295111008308595,
+22
+],
+"saver.put": [
+0.09047712100436911,
+23
+],
+"saver.put_writes": [
+0.09516002999953344,
+22
+],
+"node:model": [
+25.937666285994055,
+11
+],
+"node:tools": [
+0.026663475997338537,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.08423175400094,
+"model_provider_s": 26.022209713002667,
+"tool_fn_s": 0.00018952899699797854,
+"framework_s": 0.061832512001274154,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002627393987495452,
+24
+],
+"apply_writes": [
+0.0010210320069745649,
+23
+],
+"loop._put_checkpoint": [
+0.0028963389922864735,
+23
+],
+"tick": [
+0.0030180509966157842,
+23
+],
+"node:__start__": [
+4.931099829263985e-05,
+1
+],
+"loop.put_writes": [
+0.0026320780052628834,
+22
+],
+"after_tick": [
+0.004953280000336235,
+22
+],
+"saver.put": [
+0.0900279390043579,
+23
+],
+"saver.put_writes": [
+0.08911407900086488,
+22
+],
+"node:model": [
+26.0331535180012,
+11
+],
+"node:tools": [
+0.02502424999329378,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.369624700000713,
+"model_provider_s": 25.309245126994938,
+"tool_fn_s": 0.0002042440028162673,
+"framework_s": 0.06017532900295919,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002610733004985377,
+24
+],
+"apply_writes": [
+0.0010704060041462071,
+23
+],
+"loop._put_checkpoint": [
+0.0029328900018299464,
+23
+],
+"tick": [
+0.002969293011119589,
+23
+],
+"node:__start__": [
+4.698100019595586e-05,
+1
+],
+"loop.put_writes": [
+0.0024432060090475716,
+22
+],
+"after_tick": [
+0.005006182993383845,
+22
+],
+"saver.put": [
+0.08209731199531234,
+23
+],
+"saver.put_writes": [
+0.08812146199124982,
+22
+],
+"node:model": [
+25.319249076001142,
+11
+],
+"node:tools": [
+0.02533886599849211,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.228212892998272,
+"model_provider_s": 26.16368761999911,
+"tool_fn_s": 0.00019913899814127944,
+"framework_s": 0.06432613400102127,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027167620028194506,
+24
+],
+"apply_writes": [
+0.0010707720066420734,
+23
+],
+"loop._put_checkpoint": [
+0.0031513770009041764,
+23
+],
+"tick": [
+0.003128841992293019,
+23
+],
+"node:__start__": [
+4.931099829263985e-05,
+1
+],
+"loop.put_writes": [
+0.00255886000013561,
+22
+],
+"after_tick": [
+0.005291231002047425,
+22
+],
+"saver.put": [
+0.09438719599347678,
+23
+],
+"saver.put_writes": [
+0.0939765949951834,
+22
+],
+"node:model": [
+26.17461520299912,
+11
+],
+"node:tools": [
+0.02623759200287168,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.717444789999718,
+"model_provider_s": 25.657326717995602,
+"tool_fn_s": 0.00021222100986051373,
+"framework_s": 0.05990585099425516,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002359548001550138,
+24
+],
+"apply_writes": [
+0.000969718999840552,
+23
+],
+"loop._put_checkpoint": [
+0.0028133050036558416,
+23
+],
+"tick": [
+0.002692914000363089,
+23
+],
+"node:__start__": [
+5.1539998821681365e-05,
+1
+],
+"loop.put_writes": [
+0.0023309240059461445,
+22
+],
+"after_tick": [
+0.004746326005260926,
+22
+],
+"saver.put": [
+0.08586274300250807,
+23
+],
+"saver.put_writes": [
+0.09013771899117273,
+22
+],
+"node:model": [
+25.666787675996602,
+11
+],
+"node:tools": [
+0.024431880003248807,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.749792246999277,
+"model_provider_s": 25.690766526000516,
+"tool_fn_s": 0.00019278099716757424,
+"framework_s": 0.05883294000159367,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0021821570007887203,
+24
+],
+"apply_writes": [
+0.0009497280079813208,
+23
+],
+"loop._put_checkpoint": [
+0.002757853999355575,
+23
+],
+"tick": [
+0.00248331200418761,
+23
+],
+"node:__start__": [
+4.3850999645655975e-05,
+1
+],
+"loop.put_writes": [
+0.0021814059909956995,
+22
+],
+"after_tick": [
+0.004685098003392341,
+22
+],
+"saver.put": [
+0.0840248800086556,
+23
+],
+"saver.put_writes": [
+0.0911095840165217,
+22
+],
+"node:model": [
+25.699774357002752,
+11
+],
+"node:tools": [
+0.024595926006441005,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.655718013997102,
+"model_provider_s": 25.593296613005805,
+"tool_fn_s": 0.00021134399867150933,
+"framework_s": 0.06221005699262605,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002457386999594746,
+24
+],
+"apply_writes": [
+0.0009812510033953004,
+23
+],
+"loop._put_checkpoint": [
+0.002899694001825992,
+23
+],
+"tick": [
+0.0028440289897844195,
+23
+],
+"node:__start__": [
+4.594100028043613e-05,
+1
+],
+"loop.put_writes": [
+0.0025178410069202073,
+22
+],
+"after_tick": [
+0.004967884993675398,
+22
+],
+"saver.put": [
+0.08645187399815768,
+23
+],
+"saver.put_writes": [
+0.08841886602385784,
+22
+],
+"node:model": [
+25.603547505997994,
+11
+],
+"node:tools": [
+0.0256095309923694,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.822827358999348,
+"model_provider_s": 25.762231927001267,
+"tool_fn_s": 0.00019406200226512738,
+"framework_s": 0.06040136999581591,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.00237804199787206,
+24
+],
+"apply_writes": [
+0.0009610679917386733,
+23
+],
+"loop._put_checkpoint": [
+0.0031379089996335097,
+23
+],
+"tick": [
+0.0027294059909763746,
+23
+],
+"node:__start__": [
+4.583999907481484e-05,
+1
+],
+"loop.put_writes": [
+0.002235664003819693,
+22
+],
+"after_tick": [
+0.004980687015631702,
+22
+],
+"saver.put": [
+0.09330676699391915,
+23
+],
+"saver.put_writes": [
+0.09537527500287979,
+22
+],
+"node:model": [
+25.771573978996457,
+11
+],
+"node:tools": [
+0.02520392400037963,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.31717338800081,
+"model_provider_s": 26.25437210900418,
+"tool_fn_s": 0.0001954729996214155,
+"framework_s": 0.06260580599700916,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002503625986719271,
+24
+],
+"apply_writes": [
+0.000987231993349269,
+23
+],
+"loop._put_checkpoint": [
+0.0030933519992686342,
+23
+],
+"tick": [
+0.00284619699959876,
+23
+],
+"node:__start__": [
+4.603100023814477e-05,
+1
+],
+"loop.put_writes": [
+0.0025236690053134225,
+22
+],
+"after_tick": [
+0.005045672005508095,
+22
+],
+"saver.put": [
+0.09119340300458134,
+23
+],
+"saver.put_writes": [
+0.10097096999015776,
+22
+],
+"node:model": [
+26.264553389002685,
+11
+],
+"node:tools": [
+0.02567305800403119,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.62233993499831,
+"model_provider_s": 25.55601295298402,
+"tool_fn_s": 0.0002839829867298249,
+"framework_s": 0.06604299902755884,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002543817987316288,
+24
+],
+"apply_writes": [
+0.0010820350034919102,
+23
+],
+"loop._put_checkpoint": [
+0.0031081139895832166,
+23
+],
+"tick": [
+0.002903958004026208,
+23
+],
+"node:__start__": [
+4.561900277622044e-05,
+1
+],
+"loop.put_writes": [
+0.0025550359969201963,
+22
+],
+"after_tick": [
+0.005333726010576356,
+22
+],
+"saver.put": [
+0.09950883399869781,
+23
+],
+"saver.put_writes": [
+0.10232990699296352,
+22
+],
+"node:model": [
+25.566562651998538,
+11
+],
+"node:tools": [
+0.028149113004474202,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.402907646999665,
+"model_provider_s": 26.342276860010315,
+"tool_fn_s": 0.0001862820026872214,
+"framework_s": 0.06044450498666265,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002443350986141013,
+24
+],
+"apply_writes": [
+0.0009848499976214953,
+23
+],
+"loop._put_checkpoint": [
+0.0026682190255087335,
+23
+],
+"tick": [
+0.002808489003655268,
+23
+],
+"node:__start__": [
+7.012099740677513e-05,
+1
+],
+"loop.put_writes": [
+0.002431083998089889,
+22
+],
+"after_tick": [
+0.0048339990025851876,
+22
+],
+"saver.put": [
+0.08365413499632268,
+23
+],
+"saver.put_writes": [
+0.08643242999823997,
+22
+],
+"node:model": [
+26.351992478998,
+11
+],
+"node:tools": [
+0.025244305001251632,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.50715713599857,
+"model_provider_s": 25.445621818998916,
+"tool_fn_s": 0.00027765399499912746,
+"framework_s": 0.061257663004653296,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0024002150057640392,
+24
+],
+"apply_writes": [
+0.0009680669973022304,
+23
+],
+"loop._put_checkpoint": [
+0.002692807996936608,
+23
+],
+"tick": [
+0.002752921991486801,
+23
+],
+"node:__start__": [
+4.293000165489502e-05,
+1
+],
+"loop.put_writes": [
+0.002431657001579879,
+22
+],
+"after_tick": [
+0.004826059011975303,
+22
+],
+"saver.put": [
+0.09020097599568544,
+23
+],
+"saver.put_writes": [
+0.09325756700127386,
+22
+],
+"node:model": [
+25.4553179320028,
+11
+],
+"node:tools": [
+0.025804153992794454,
+10
+]
+},
+"clean": true
+}
+],
+"sqlite/sync": [
+{
+"wall_s": 25.644457502003206,
+"model_provider_s": 25.530472472000838,
+"tool_fn_s": 0.0001924719981616363,
+"framework_s": 0.11379255800420651,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0029872550039726775,
+24
+],
+"apply_writes": [
+0.0010268450059811585,
+23
+],
+"loop._put_checkpoint": [
+0.002649934984219726,
+23
+],
+"tick": [
+0.0035082919930573553,
+23
+],
+"node:__start__": [
+4.4771000830223784e-05,
+1
+],
+"loop.put_writes": [
+0.0025422870057809632,
+22
+],
+"after_tick": [
+0.004577218995109433,
+22
+],
+"saver.put": [
+0.058694941995781846,
+23
+],
+"saver.put_writes": [
+0.11275444098646403,
+22
+],
+"node:model": [
+25.54120690799391,
+11
+],
+"node:tools": [
+0.01777025999763282,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.33051715900001,
+"model_provider_s": 26.218840295008704,
+"tool_fn_s": 0.0001852229943324346,
+"framework_s": 0.11149164099697373,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003004143993166508,
+24
+],
+"apply_writes": [
+0.0010476439965714235,
+23
+],
+"loop._put_checkpoint": [
+0.0026111659899470396,
+23
+],
+"tick": [
+0.0035577610033215024,
+23
+],
+"node:__start__": [
+6.841000140411779e-05,
+1
+],
+"loop.put_writes": [
+0.0023822649964131415,
+22
+],
+"after_tick": [
+0.004665066004235996,
+22
+],
+"saver.put": [
+0.05521039600716904,
+23
+],
+"saver.put_writes": [
+0.10658240400152863,
+22
+],
+"node:model": [
+26.229285820998484,
+11
+],
+"node:tools": [
+0.017861913995147916,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.517822698999225,
+"model_provider_s": 25.409375804014417,
+"tool_fn_s": 0.00022769300267100334,
+"framework_s": 0.10821920198213775,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003093476996582467,
+24
+],
+"apply_writes": [
+0.001035565001075156,
+23
+],
+"loop._put_checkpoint": [
+0.0024841599915816914,
+23
+],
+"tick": [
+0.003593040990381269,
+23
+],
+"node:__start__": [
+4.5140001020627096e-05,
+1
+],
+"loop.put_writes": [
+0.0026185299939243123,
+22
+],
+"after_tick": [
+0.004733937010314548,
+22
+],
+"saver.put": [
+0.053467561996512813,
+23
+],
+"saver.put_writes": [
+0.10714613299933262,
+22
+],
+"node:model": [
+25.420345954997174,
+11
+],
+"node:tools": [
+0.01858127399464138,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.13768846899984,
+"model_provider_s": 26.01825385200209,
+"tool_fn_s": 0.00018990600801771507,
+"framework_s": 0.119244710989733,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0029924920017947443,
+24
+],
+"apply_writes": [
+0.0010538560018176213,
+23
+],
+"loop._put_checkpoint": [
+0.0027407529996708035,
+23
+],
+"tick": [
+0.003509569007292157,
+23
+],
+"node:__start__": [
+6.261099770199507e-05,
+1
+],
+"loop.put_writes": [
+0.0026276200042048004,
+22
+],
+"after_tick": [
+0.0047609369867132045,
+22
+],
+"saver.put": [
+0.061950401999638416,
+23
+],
+"saver.put_writes": [
+0.11762424901462509,
+22
+],
+"node:model": [
+26.029710462993535,
+11
+],
+"node:tools": [
+0.018157139009417733,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.8396231480001,
+"model_provider_s": 25.725748965000093,
+"tool_fn_s": 0.00019044300279347226,
+"framework_s": 0.1136837399972137,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0030518599960487336,
+24
+],
+"apply_writes": [
+0.0010215049915132113,
+23
+],
+"loop._put_checkpoint": [
+0.002655705000506714,
+23
+],
+"tick": [
+0.003569793996575754,
+23
+],
+"node:__start__": [
+4.596000144374557e-05,
+1
+],
+"loop.put_writes": [
+0.0024263320010504685,
+22
+],
+"after_tick": [
+0.004838765991735272,
+22
+],
+"saver.put": [
+0.05757057400478516,
+23
+],
+"saver.put_writes": [
+0.10321540799850482,
+22
+],
+"node:model": [
+25.736561479003285,
+11
+],
+"node:tools": [
+0.01827822699851822,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.65638053300063,
+"model_provider_s": 25.546734403997107,
+"tool_fn_s": 0.0001940360052685719,
+"framework_s": 0.10945209299825365,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003082922994508408,
+24
+],
+"apply_writes": [
+0.001081546004570555,
+23
+],
+"loop._put_checkpoint": [
+0.002666234995558625,
+23
+],
+"tick": [
+0.0035992279881611466,
+23
+],
+"node:__start__": [
+4.639100006897934e-05,
+1
+],
+"loop.put_writes": [
+0.0025396429919055663,
+22
+],
+"after_tick": [
+0.0049209239914489444,
+22
+],
+"saver.put": [
+0.05339867899965611,
+23
+],
+"saver.put_writes": [
+0.1104387539999152,
+22
+],
+"node:model": [
+25.558001181998407,
+11
+],
+"node:tools": [
+0.01837788100237958,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.419558210000105,
+"model_provider_s": 26.296298656005092,
+"tool_fn_s": 0.00019873500787070952,
+"framework_s": 0.12306081898714183,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003155886002787156,
+24
+],
+"apply_writes": [
+0.0010713789852161426,
+23
+],
+"loop._put_checkpoint": [
+0.0028293129944358952,
+23
+],
+"tick": [
+0.003680683013953967,
+23
+],
+"node:__start__": [
+4.8470999900018796e-05,
+1
+],
+"loop.put_writes": [
+0.0025729639928613324,
+22
+],
+"after_tick": [
+0.004956118998961756,
+22
+],
+"saver.put": [
+0.06462075199669925,
+23
+],
+"saver.put_writes": [
+0.1010894009959884,
+22
+],
+"node:model": [
+26.30730676500025,
+11
+],
+"node:tools": [
+0.017808967000746634,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.589809853001498,
+"model_provider_s": 25.46608109599765,
+"tool_fn_s": 0.00021556899810093455,
+"framework_s": 0.12351318800574518,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003013565012224717,
+24
+],
+"apply_writes": [
+0.0011043599952245131,
+23
+],
+"loop._put_checkpoint": [
+0.0026756590050354134,
+23
+],
+"tick": [
+0.003544452007190557,
+23
+],
+"node:__start__": [
+4.8830999730853364e-05,
+1
+],
+"loop.put_writes": [
+0.0024847349886840675,
+22
+],
+"after_tick": [
+0.00482032201034599,
+22
+],
+"saver.put": [
+0.06511535700337845,
+23
+],
+"saver.put_writes": [
+0.09762038499320624,
+22
+],
+"node:model": [
+25.4770882360026,
+11
+],
+"node:tools": [
+0.018556701004854403,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.94981081700098,
+"model_provider_s": 25.834127234000334,
+"tool_fn_s": 0.00019278299441793934,
+"framework_s": 0.1154908000062278,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0033094559985329397,
+24
+],
+"apply_writes": [
+0.00110205298915389,
+23
+],
+"loop._put_checkpoint": [
+0.0026691650054999627,
+23
+],
+"tick": [
+0.003876080001646187,
+23
+],
+"node:__start__": [
+4.928099951939657e-05,
+1
+],
+"loop.put_writes": [
+0.0025897569867083803,
+22
+],
+"after_tick": [
+0.004872264005825855,
+22
+],
+"saver.put": [
+0.0578606670096633,
+23
+],
+"saver.put_writes": [
+0.08901652500935597,
+22
+],
+"node:model": [
+25.84549955401235,
+11
+],
+"node:tools": [
+0.01854454099520808,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.611408349002886,
+"model_provider_s": 25.49320946199805,
+"tool_fn_s": 0.00019206199795007706,
+"framework_s": 0.11800682500688708,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003174853998643812,
+24
+],
+"apply_writes": [
+0.0011274209937255364,
+23
+],
+"loop._put_checkpoint": [
+0.002716483999392949,
+23
+],
+"tick": [
+0.00369674099056283,
+23
+],
+"node:__start__": [
+4.732100205728784e-05,
+1
+],
+"loop.put_writes": [
+0.002556398991146125,
+22
+],
+"after_tick": [
+0.004877950006630272,
+22
+],
+"saver.put": [
+0.0625789159857959,
+23
+],
+"saver.put_writes": [
+0.10922088700681343,
+22
+],
+"node:model": [
+25.504192407002847,
+11
+],
+"node:tools": [
+0.01774208100323449,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.275008227999933,
+"model_provider_s": 26.158514359001856,
+"tool_fn_s": 0.00018581499534775503,
+"framework_s": 0.11630805400272948,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031669909913034644,
+24
+],
+"apply_writes": [
+0.0010409589885966852,
+23
+],
+"loop._put_checkpoint": [
+0.0025432489928789437,
+23
+],
+"tick": [
+0.0037201130071480293,
+23
+],
+"node:__start__": [
+4.709099812316708e-05,
+1
+],
+"loop.put_writes": [
+0.0024821729966788553,
+22
+],
+"after_tick": [
+0.004723145997559186,
+22
+],
+"saver.put": [
+0.059796014000312425,
+23
+],
+"saver.put_writes": [
+0.08214733499698923,
+22
+],
+"node:model": [
+26.169327065003017,
+11
+],
+"node:tools": [
+0.017552842997247353,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.91802847999861,
+"model_provider_s": 25.801654058999702,
+"tool_fn_s": 0.00019058500402024947,
+"framework_s": 0.1161838359948888,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003176105998136336,
+24
+],
+"apply_writes": [
+0.0010471399982634466,
+23
+],
+"loop._put_checkpoint": [
+0.0028053699934389442,
+23
+],
+"tick": [
+0.0037212010065559298,
+23
+],
+"node:__start__": [
+5.036999937146902e-05,
+1
+],
+"loop.put_writes": [
+0.002661713006091304,
+22
+],
+"after_tick": [
+0.0048015440079325344,
+22
+],
+"saver.put": [
+0.05714999599149451,
+23
+],
+"saver.put_writes": [
+0.11347258499881718,
+22
+],
+"node:model": [
+25.812744518992986,
+11
+],
+"node:tools": [
+0.01841148400126258,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.699405199000466,
+"model_provider_s": 25.58015610000075,
+"tool_fn_s": 0.0002106970059685409,
+"framework_s": 0.11903840199374827,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003334122015075991,
+24
+],
+"apply_writes": [
+0.0011055719987780321,
+23
+],
+"loop._put_checkpoint": [
+0.0028154709871159866,
+23
+],
+"tick": [
+0.003894765999575611,
+23
+],
+"node:__start__": [
+7.2109996835934e-05,
+1
+],
+"loop.put_writes": [
+0.002629131995490752,
+22
+],
+"after_tick": [
+0.0049890020018210635,
+22
+],
+"saver.put": [
+0.06120113500219304,
+23
+],
+"saver.put_writes": [
+0.08132957899579196,
+22
+],
+"node:model": [
+25.591673601007642,
+11
+],
+"node:tools": [
+0.019286275008198572,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.245328454999253,
+"model_provider_s": 26.121488942004362,
+"tool_fn_s": 0.00019003600027645007,
+"framework_s": 0.12364947699461482,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003343431988469092,
+24
+],
+"apply_writes": [
+0.0010609740020299796,
+23
+],
+"loop._put_checkpoint": [
+0.0027218139948672615,
+23
+],
+"tick": [
+0.003926051005691988,
+23
+],
+"node:__start__": [
+7.098200148902833e-05,
+1
+],
+"loop.put_writes": [
+0.00266036000175518,
+22
+],
+"after_tick": [
+0.00487838199842372,
+22
+],
+"saver.put": [
+0.06421452999711619,
+23
+],
+"saver.put_writes": [
+0.10808659399845055,
+22
+],
+"node:model": [
+26.13286574400263,
+11
+],
+"node:tools": [
+0.018314532997464994,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.449876345999655,
+"model_provider_s": 25.32607892300075,
+"tool_fn_s": 0.00018530200031818822,
+"framework_s": 0.12361212099858676,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003285663009592099,
+24
+],
+"apply_writes": [
+0.0010675300072762184,
+23
+],
+"loop._put_checkpoint": [
+0.002677190990652889,
+23
+],
+"tick": [
+0.00388201800888055,
+23
+],
+"node:__start__": [
+4.746100239572115e-05,
+1
+],
+"loop.put_writes": [
+0.002726211998378858,
+22
+],
+"after_tick": [
+0.004884181991656078,
+22
+],
+"saver.put": [
+0.0647326959988277,
+23
+],
+"saver.put_writes": [
+0.10303302100874134,
+22
+],
+"node:model": [
+25.337312645002385,
+11
+],
+"node:tools": [
+0.01816437100569601,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.21805560899884,
+"model_provider_s": 26.10179429600612,
+"tool_fn_s": 0.000192098999832524,
+"framework_s": 0.11606921399288694,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003101740003330633,
+24
+],
+"apply_writes": [
+0.0010654759898898192,
+23
+],
+"loop._put_checkpoint": [
+0.002426284998364281,
+23
+],
+"tick": [
+0.0036021040068590082,
+23
+],
+"node:__start__": [
+4.560100205708295e-05,
+1
+],
+"loop.put_writes": [
+0.0025306510033260565,
+22
+],
+"after_tick": [
+0.004784392996953102,
+22
+],
+"saver.put": [
+0.057208675003494136,
+23
+],
+"saver.put_writes": [
+0.08310393399369786,
+22
+],
+"node:model": [
+26.113345325004047,
+11
+],
+"node:tools": [
+0.018377696003881283,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.50246623500061,
+"model_provider_s": 25.387551134990645,
+"tool_fn_s": 0.00020660299560404383,
+"framework_s": 0.11470849701436237,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0032960899916361086,
+24
+],
+"apply_writes": [
+0.0010785119884531014,
+23
+],
+"loop._put_checkpoint": [
+0.002548845990531845,
+23
+],
+"tick": [
+0.003857283001707401,
+23
+],
+"node:__start__": [
+5.0311002269154415e-05,
+1
+],
+"loop.put_writes": [
+0.0026424299976497423,
+22
+],
+"after_tick": [
+0.00489245199423749,
+22
+],
+"saver.put": [
+0.0562400900053035,
+23
+],
+"saver.put_writes": [
+0.11099949298295542,
+22
+],
+"node:model": [
+25.398724968996248,
+11
+],
+"node:tools": [
+0.01846295199720771,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.50729393799702,
+"model_provider_s": 26.38547275500241,
+"tool_fn_s": 0.00020274399867048487,
+"framework_s": 0.12161843899593805,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003129545999399852,
+24
+],
+"apply_writes": [
+0.0010619400018185843,
+23
+],
+"loop._put_checkpoint": [
+0.0025870200006465893,
+23
+],
+"tick": [
+0.0036547719973896164,
+23
+],
+"node:__start__": [
+4.540100053418428e-05,
+1
+],
+"loop.put_writes": [
+0.002585021014965605,
+22
+],
+"after_tick": [
+0.0048653990124876145,
+22
+],
+"saver.put": [
+0.06489891499222722,
+23
+],
+"saver.put_writes": [
+0.10217167000155314,
+22
+],
+"node:model": [
+26.396397410993814,
+11
+],
+"node:tools": [
+0.01723497000421048,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.764261067997722,
+"model_provider_s": 25.64169433200368,
+"tool_fn_s": 0.00018684300084714778,
+"framework_s": 0.12237989299319452,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031704329994681757,
+24
+],
+"apply_writes": [
+0.0010427819943288341,
+23
+],
+"loop._put_checkpoint": [
+0.0023611270044057164,
+23
+],
+"tick": [
+0.003736657996341819,
+23
+],
+"node:__start__": [
+5.046099977334961e-05,
+1
+],
+"loop.put_writes": [
+0.002574157992057735,
+22
+],
+"after_tick": [
+0.004521637998550432,
+22
+],
+"saver.put": [
+0.06420504300695029,
+23
+],
+"saver.put_writes": [
+0.09894044699467486,
+22
+],
+"node:model": [
+25.65290148999702,
+11
+],
+"node:tools": [
+0.0186324770002102,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.537597860999085,
+"model_provider_s": 25.41839950400754,
+"tool_fn_s": 0.00019587699716794305,
+"framework_s": 0.11900247999437852,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003360935988894198,
+24
+],
+"apply_writes": [
+0.0010600929890642874,
+23
+],
+"loop._put_checkpoint": [
+0.002700130000448553,
+23
+],
+"tick": [
+0.004045656998641789,
+23
+],
+"node:__start__": [
+5.38120002602227e-05,
+1
+],
+"loop.put_writes": [
+0.0026450579971424304,
+22
+],
+"after_tick": [
+0.004744537003716687,
+22
+],
+"saver.put": [
+0.06055979000302614,
+23
+],
+"saver.put_writes": [
+0.08934309500909876,
+22
+],
+"node:model": [
+25.4300614550084,
+11
+],
+"node:tools": [
+0.0179894159991818,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.239998748998914,
+"model_provider_s": 26.124088951000886,
+"tool_fn_s": 0.00020415999460965395,
+"framework_s": 0.11570563800341915,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0032729550039221067,
+24
+],
+"apply_writes": [
+0.0011403669959690887,
+23
+],
+"loop._put_checkpoint": [
+0.0028376139925967436,
+23
+],
+"tick": [
+0.003913923988875467,
+23
+],
+"node:__start__": [
+6.369099719449878e-05,
+1
+],
+"loop.put_writes": [
+0.0028517450045910664,
+22
+],
+"after_tick": [
+0.005168621009943308,
+22
+],
+"saver.put": [
+0.058361763003631495,
+23
+],
+"saver.put_writes": [
+0.1067331899976125,
+22
+],
+"node:model": [
+26.1356841620036,
+11
+],
+"node:tools": [
+0.018450717001542216,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.654384805002337,
+"model_provider_s": 25.53387550199477,
+"tool_fn_s": 0.0002143460042134393,
+"framework_s": 0.12029495700335247,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003305732006992912,
+24
+],
+"apply_writes": [
+0.0011056660077883862,
+23
+],
+"loop._put_checkpoint": [
+0.0028471930054365657,
+23
+],
+"tick": [
+0.0038738279945391696,
+23
+],
+"node:__start__": [
+6.476099952124059e-05,
+1
+],
+"loop.put_writes": [
+0.002694786002393812,
+22
+],
+"after_tick": [
+0.005011867997382069,
+22
+],
+"saver.put": [
+0.061854487994423835,
+23
+],
+"saver.put_writes": [
+0.10903117901398218,
+22
+],
+"node:model": [
+25.545464328995877,
+11
+],
+"node:tools": [
+0.018666223004402127,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.23260899500019,
+"model_provider_s": 26.111533169998438,
+"tool_fn_s": 0.0002209759950346779,
+"framework_s": 0.12085484900671872,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0031525100021099206,
+24
+],
+"apply_writes": [
+0.0010918850057350937,
+23
+],
+"loop._put_checkpoint": [
+0.002713524994760519,
+23
+],
+"tick": [
+0.003710543995111948,
+23
+],
+"node:__start__": [
+5.288099782774225e-05,
+1
+],
+"loop.put_writes": [
+0.002691361998586217,
+22
+],
+"after_tick": [
+0.00497375499617192,
+22
+],
+"saver.put": [
+0.062242833995696856,
+23
+],
+"saver.put_writes": [
+0.08961951699166093,
+22
+],
+"node:model": [
+26.122990423999,
+11
+],
+"node:tools": [
+0.018683869995584246,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.971958563000953,
+"model_provider_s": 25.85558115900494,
+"tool_fn_s": 0.00019166199854225852,
+"framework_s": 0.11618574199746945,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002908364993345458,
+24
+],
+"apply_writes": [
+0.0010353579964430537,
+23
+],
+"loop._put_checkpoint": [
+0.0027584490017034113,
+23
+],
+"tick": [
+0.003409106004255591,
+23
+],
+"node:__start__": [
+4.6801000280538574e-05,
+1
+],
+"loop.put_writes": [
+0.0023433320020558313,
+22
+],
+"after_tick": [
+0.0048102830041898414,
+22
+],
+"saver.put": [
+0.06310266498985584,
+23
+],
+"saver.put_writes": [
+0.08274491299744113,
+22
+],
+"node:model": [
+25.866540533999796,
+11
+],
+"node:tools": [
+0.018059912999888184,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.454937980000977,
+"model_provider_s": 26.331252488002065,
+"tool_fn_s": 0.0001870950000011362,
+"framework_s": 0.12349839699891163,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0032097479997901246,
+24
+],
+"apply_writes": [
+0.0010541730080149136,
+23
+],
+"loop._put_checkpoint": [
+0.002525486001104582,
+23
+],
+"tick": [
+0.0037362960101745557,
+23
+],
+"node:__start__": [
+4.8261001211358234e-05,
+1
+],
+"loop.put_writes": [
+0.002581030985311372,
+22
+],
+"after_tick": [
+0.0045159729961596895,
+22
+],
+"saver.put": [
+0.06795466499897884,
+23
+],
+"saver.put_writes": [
+0.07986735700978898,
+22
+],
+"node:model": [
+26.342297629002132,
+11
+],
+"node:tools": [
+0.017794802006392274,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.1401365970014,
+"model_provider_s": 26.028816732999985,
+"tool_fn_s": 0.00019524000526871532,
+"framework_s": 0.11112462399614742,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0034028150075755548,
+24
+],
+"apply_writes": [
+0.00120376399718225,
+23
+],
+"loop._put_checkpoint": [
+0.0028072569984942675,
+23
+],
+"tick": [
+0.0039924399825395085,
+23
+],
+"node:__start__": [
+5.2769999456359074e-05,
+1
+],
+"loop.put_writes": [
+0.0027078909988631494,
+22
+],
+"after_tick": [
+0.00514968699644669,
+22
+],
+"saver.put": [
+0.05360539600951597,
+23
+],
+"saver.put_writes": [
+0.08659473699663067,
+22
+],
+"node:model": [
+26.04034690500339,
+11
+],
+"node:tools": [
+0.01898868998978287,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.531053847000294,
+"model_provider_s": 25.41121864100569,
+"tool_fn_s": 0.00018700399959925562,
+"framework_s": 0.11964820199500537,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003255873001762666,
+24
+],
+"apply_writes": [
+0.0011161430011270568,
+23
+],
+"loop._put_checkpoint": [
+0.002628504003951093,
+23
+],
+"tick": [
+0.003852451001876034,
+23
+],
+"node:__start__": [
+5.422200047178194e-05,
+1
+],
+"loop.put_writes": [
+0.002685861003556056,
+22
+],
+"after_tick": [
+0.004849904005823191,
+22
+],
+"saver.put": [
+0.06021628599410178,
+23
+],
+"saver.put_writes": [
+0.10226483799488051,
+22
+],
+"node:model": [
+25.422808979004913,
+11
+],
+"node:tools": [
+0.01863234199481667,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.30888466199758,
+"model_provider_s": 26.191292436004005,
+"tool_fn_s": 0.0001865050071501173,
+"framework_s": 0.11740572098642588,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.003341706997161964,
+24
+],
+"apply_writes": [
+0.0011029340166714974,
+23
+],
+"loop._put_checkpoint": [
+0.0026951459985866677,
+23
+],
+"tick": [
+0.0038865840033395216,
+23
+],
+"node:__start__": [
+5.2932002290617675e-05,
+1
+],
+"loop.put_writes": [
+0.002694504011742538,
+22
+],
+"after_tick": [
+0.004850287008594023,
+22
+],
+"saver.put": [
+0.0585014619937283,
+23
+],
+"saver.put_writes": [
+0.09651377499903901,
+22
+],
+"node:model": [
+26.20270935300141,
+11
+],
+"node:tools": [
+0.018861918004404288,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.459874374999345,
+"model_provider_s": 25.345440472992777,
+"tool_fn_s": 0.00020163199224043638,
+"framework_s": 0.11423227001432679,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002976492000016151,
+24
+],
+"apply_writes": [
+0.0010783700126921758,
+23
+],
+"loop._put_checkpoint": [
+0.002602089003630681,
+23
+],
+"tick": [
+0.003490552004222991,
+23
+],
+"node:__start__": [
+5.346100078895688e-05,
+1
+],
+"loop.put_writes": [
+0.002595434994873358,
+22
+],
+"after_tick": [
+0.004741377997561358,
+22
+],
+"saver.put": [
+0.058011111002997495,
+23
+],
+"saver.put_writes": [
+0.076433452009951,
+22
+],
+"node:model": [
+25.356285132995254,
+11
+],
+"node:tools": [
+0.01793025100050727,
+10
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.912479816000996,
+"model_provider_s": 25.798918791006145,
+"tool_fn_s": 0.00018920299771707505,
+"framework_s": 0.11337182199713425,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0029998579993844032,
+24
+],
+"apply_writes": [
+0.001039377002598485,
+23
+],
+"loop._put_checkpoint": [
+0.0023794200060365256,
+23
+],
+"tick": [
+0.003521378010191256,
+23
+],
+"node:__start__": [
+5.919199975323863e-05,
+1
+],
+"loop.put_writes": [
+0.0025254309985029977,
+22
+],
+"after_tick": [
+0.004744438007037388,
+22
+],
+"saver.put": [
+0.05657857299229363,
+23
+],
+"saver.put_writes": [
+0.10810652199870674,
+22
+],
+"node:model": [
+25.810043343997677,
+11
+],
+"node:tools": [
+0.01784503700400819,
+10
+]
+},
+"clean": true
+}
+],
+"sqlite/exit": [
+{
+"wall_s": 25.86958745299853,
+"model_provider_s": 25.825507714995183,
+"tool_fn_s": 0.00020405599934747443,
+"framework_s": 0.04387568200399983,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0021930060029262677,
+24
+],
+"apply_writes": [
+0.0009317970034317113,
+23
+],
+"loop._put_checkpoint": [
+0.0013996280067658518,
+24
+],
+"tick": [
+0.002536844003770966,
+23
+],
+"node:__start__": [
+4.807099685422145e-05,
+1
+],
+"loop.put_writes": [
+0.0008338060106325429,
+22
+],
+"after_tick": [
+0.0033266799873672426,
+22
+],
+"node:model": [
+25.83481185099663,
+11
+],
+"node:tools": [
+0.016909373003727524,
+10
+],
+"saver.put": [
+0.0022013740017428063,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.297013183000672,
+"model_provider_s": 25.249765120006487,
+"tool_fn_s": 0.00019899099424947053,
+"framework_s": 0.04704907199993613,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0025967050023609772,
+24
+],
+"apply_writes": [
+0.0010345209993829485,
+23
+],
+"loop._put_checkpoint": [
+0.001554000009491574,
+24
+],
+"tick": [
+0.0030186010189936496,
+23
+],
+"node:__start__": [
+4.502099909586832e-05,
+1
+],
+"loop.put_writes": [
+0.0009664920034992974,
+22
+],
+"after_tick": [
+0.0037348230034695007,
+22
+],
+"node:model": [
+25.260284353993484,
+11
+],
+"node:tools": [
+0.017108368996559875,
+10
+],
+"saver.put": [
+0.0029328010023164097,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.639254775000154,
+"model_provider_s": 25.5901022309954,
+"tool_fn_s": 0.0001918420020956546,
+"framework_s": 0.04896070200265967,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026616830000421032,
+24
+],
+"apply_writes": [
+0.0010654519901436288,
+23
+],
+"loop._put_checkpoint": [
+0.0018240400167996995,
+24
+],
+"tick": [
+0.003079250996961491,
+23
+],
+"node:__start__": [
+4.831000114791095e-05,
+1
+],
+"loop.put_writes": [
+0.0010565750126261264,
+22
+],
+"after_tick": [
+0.0037172659976931754,
+22
+],
+"node:model": [
+25.60071248699387,
+11
+],
+"node:tools": [
+0.01834603599854745,
+10
+],
+"saver.put": [
+0.003009321997524239,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.690665628000716,
+"model_provider_s": 25.640191750997474,
+"tool_fn_s": 0.00018943200120702386,
+"framework_s": 0.05028444500203477,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028830179835495073,
+24
+],
+"apply_writes": [
+0.0011811169861175586,
+23
+],
+"loop._put_checkpoint": [
+0.0018615220033098012,
+24
+],
+"tick": [
+0.0032978199851640966,
+23
+],
+"node:__start__": [
+7.041099888738245e-05,
+1
+],
+"loop.put_writes": [
+0.0010586429925751872,
+22
+],
+"after_tick": [
+0.0038514660009241197,
+22
+],
+"node:model": [
+25.651379350001662,
+11
+],
+"node:tools": [
+0.017987580002227332,
+10
+],
+"saver.put": [
+0.0030117819987935945,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.95888907999688,
+"model_provider_s": 25.91067073899103,
+"tool_fn_s": 0.00017612200826988555,
+"framework_s": 0.048042218997579766,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002762681011517998,
+24
+],
+"apply_writes": [
+0.0010588389850454405,
+23
+],
+"loop._put_checkpoint": [
+0.0019540460016287398,
+24
+],
+"tick": [
+0.003183770993928192,
+23
+],
+"node:__start__": [
+4.682099825004116e-05,
+1
+],
+"loop.put_writes": [
+0.001026649999403162,
+22
+],
+"after_tick": [
+0.003733621990249958,
+22
+],
+"node:model": [
+25.921422459003225,
+11
+],
+"node:tools": [
+0.017226154999661958,
+10
+],
+"saver.put": [
+0.0025623929977882653,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.89626383400173,
+"model_provider_s": 25.8466376789911,
+"tool_fn_s": 0.0001912869956868235,
+"framework_s": 0.04943486801494146,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002796185995975975,
+24
+],
+"apply_writes": [
+0.0010944630048470572,
+23
+],
+"loop._put_checkpoint": [
+0.0019660900070448406,
+24
+],
+"tick": [
+0.003238475004764041,
+23
+],
+"node:__start__": [
+4.69109982077498e-05,
+1
+],
+"loop.put_writes": [
+0.001073052000720054,
+22
+],
+"after_tick": [
+0.0037913879968982656,
+22
+],
+"node:model": [
+25.85783209999863,
+11
+],
+"node:tools": [
+0.01890389200343634,
+10
+],
+"saver.put": [
+0.0034179009999206755,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.95061510099913,
+"model_provider_s": 25.8980890779967,
+"tool_fn_s": 0.00027398600286687724,
+"framework_s": 0.052252036999561824,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028195499908179045,
+24
+],
+"apply_writes": [
+0.0011487939882499631,
+23
+],
+"loop._put_checkpoint": [
+0.002152074004698079,
+24
+],
+"tick": [
+0.0033925209972949233,
+23
+],
+"node:__start__": [
+5.4349999118130654e-05,
+1
+],
+"loop.put_writes": [
+0.0011766909883590415,
+22
+],
+"after_tick": [
+0.0041322009928990155,
+22
+],
+"node:model": [
+25.909660706998693,
+11
+],
+"node:tools": [
+0.01916119300221908,
+10
+],
+"saver.put": [
+0.0028784099995391443,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.544300245997874,
+"model_provider_s": 26.493499280000833,
+"tool_fn_s": 0.00020300500545999967,
+"framework_s": 0.0505979609915812,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027743070022552274,
+24
+],
+"apply_writes": [
+0.0010833150008693337,
+23
+],
+"loop._put_checkpoint": [
+0.0021290630102157593,
+24
+],
+"tick": [
+0.0033428050046495628,
+23
+],
+"node:__start__": [
+6.345099973259494e-05,
+1
+],
+"loop.put_writes": [
+0.0011612530033744406,
+22
+],
+"after_tick": [
+0.003988519001723034,
+22
+],
+"node:model": [
+26.504795017001015,
+11
+],
+"node:tools": [
+0.01933366099910927,
+10
+],
+"saver.put": [
+0.003488573001959594,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.669463801001257,
+"model_provider_s": 25.61826203899909,
+"tool_fn_s": 0.00023772299755364656,
+"framework_s": 0.05096403900461155,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027295879954181146,
+24
+],
+"apply_writes": [
+0.0010677659993234556,
+23
+],
+"loop._put_checkpoint": [
+0.001979821998247644,
+24
+],
+"tick": [
+0.0032921189958869945,
+23
+],
+"node:__start__": [
+5.135099854669534e-05,
+1
+],
+"loop.put_writes": [
+0.0011697919944708701,
+22
+],
+"after_tick": [
+0.0039114530009101145,
+22
+],
+"node:model": [
+25.629408397995576,
+11
+],
+"node:tools": [
+0.01828042800843832,
+10
+],
+"saver.put": [
+0.0032353690003219526,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.03471307500149,
+"model_provider_s": 25.98510129400165,
+"tool_fn_s": 0.00019668399909278378,
+"framework_s": 0.049415097000746755,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026916600036202,
+24
+],
+"apply_writes": [
+0.0010999579935742076,
+23
+],
+"loop._put_checkpoint": [
+0.0019815199993900023,
+24
+],
+"tick": [
+0.0032784920040285215,
+23
+],
+"node:__start__": [
+5.062000127509236e-05,
+1
+],
+"loop.put_writes": [
+0.0011341669924149755,
+22
+],
+"after_tick": [
+0.0038961069876677357,
+22
+],
+"node:model": [
+25.995951138003875,
+11
+],
+"node:tools": [
+0.017941630008863285,
+10
+],
+"saver.put": [
+0.002668705998075893,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.535783531999186,
+"model_provider_s": 25.486173308003345,
+"tool_fn_s": 0.00019006400179932825,
+"framework_s": 0.04942015999404248,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002708637995965546,
+24
+],
+"apply_writes": [
+0.0010542880081629846,
+23
+],
+"loop._put_checkpoint": [
+0.0019196320172341075,
+24
+],
+"tick": [
+0.0032697779970476404,
+23
+],
+"node:__start__": [
+4.802100011147559e-05,
+1
+],
+"loop.put_writes": [
+0.0010853930034500081,
+22
+],
+"after_tick": [
+0.003839995013549924,
+22
+],
+"node:model": [
+25.496973582005012,
+11
+],
+"node:tools": [
+0.01810515699617099,
+10
+],
+"saver.put": [
+0.0024254600029962603,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.202934968998306,
+"model_provider_s": 26.155110494997643,
+"tool_fn_s": 0.00018596100562717766,
+"framework_s": 0.04763851299503585,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002853950016287854,
+24
+],
+"apply_writes": [
+0.0010785649974422995,
+23
+],
+"loop._put_checkpoint": [
+0.001946729993505869,
+24
+],
+"tick": [
+0.003418529999180464,
+23
+],
+"node:__start__": [
+6.869100252515636e-05,
+1
+],
+"loop.put_writes": [
+0.0011736910055333283,
+22
+],
+"after_tick": [
+0.003884156991261989,
+22
+],
+"node:model": [
+26.166267493994383,
+11
+],
+"node:tools": [
+0.01830737900309032,
+10
+],
+"saver.put": [
+0.0025759929994819686,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.670940212999994,
+"model_provider_s": 25.62227478600107,
+"tool_fn_s": 0.0001889440100057982,
+"framework_s": 0.04847648298891727,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027933399796893355,
+24
+],
+"apply_writes": [
+0.0011043790000258014,
+23
+],
+"loop._put_checkpoint": [
+0.002138265008397866,
+24
+],
+"tick": [
+0.0033757640048861504,
+23
+],
+"node:__start__": [
+5.189999865251593e-05,
+1
+],
+"loop.put_writes": [
+0.0011826730042230338,
+22
+],
+"after_tick": [
+0.003977544987719739,
+22
+],
+"node:model": [
+25.633522150008503,
+11
+],
+"node:tools": [
+0.01847213300061412,
+10
+],
+"saver.put": [
+0.0028296000018599443,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.706451344001835,
+"model_provider_s": 25.65801040099541,
+"tool_fn_s": 0.00018344500131206587,
+"framework_s": 0.04825749800511403,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027410490074544214,
+24
+],
+"apply_writes": [
+0.0010922539950115606,
+23
+],
+"loop._put_checkpoint": [
+0.0019346849985595327,
+24
+],
+"tick": [
+0.0033336549859086517,
+23
+],
+"node:__start__": [
+4.596099824993871e-05,
+1
+],
+"loop.put_writes": [
+0.0011728840036084875,
+22
+],
+"after_tick": [
+0.0039432670128007885,
+22
+],
+"node:model": [
+25.669193503003044,
+11
+],
+"node:tools": [
+0.0182254649917013,
+10
+],
+"saver.put": [
+0.0029600420020869933,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.977604592000716,
+"model_provider_s": 25.92732515199532,
+"tool_fn_s": 0.00020855200273217633,
+"framework_s": 0.050070888002665015,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002742324009886943,
+24
+],
+"apply_writes": [
+0.0010508609957469162,
+23
+],
+"loop._put_checkpoint": [
+0.0016787950007710606,
+24
+],
+"tick": [
+0.003278229993156856,
+23
+],
+"node:__start__": [
+6.704199768137187e-05,
+1
+],
+"loop.put_writes": [
+0.0011627060048340354,
+22
+],
+"after_tick": [
+0.003870957010803977,
+22
+],
+"node:model": [
+25.938437441000133,
+11
+],
+"node:tools": [
+0.01814904000275419,
+10
+],
+"saver.put": [
+0.003162686996802222,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.564798240000528,
+"model_provider_s": 25.516881835003005,
+"tool_fn_s": 0.0001758250036800746,
+"framework_s": 0.0477405799938424,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002705166996747721,
+24
+],
+"apply_writes": [
+0.0010950620089715812,
+23
+],
+"loop._put_checkpoint": [
+0.0019596339989220724,
+24
+],
+"tick": [
+0.0032739739908720367,
+23
+],
+"node:__start__": [
+5.0010999984806404e-05,
+1
+],
+"loop.put_writes": [
+0.001125992992456304,
+22
+],
+"after_tick": [
+0.0038968540029600263,
+22
+],
+"node:model": [
+25.527733694001654,
+11
+],
+"node:tools": [
+0.01636307499575196,
+10
+],
+"saver.put": [
+0.0029102309999871068,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.169230641000468,
+"model_provider_s": 26.12033680899549,
+"tool_fn_s": 0.0001915440006996505,
+"framework_s": 0.04870228800427867,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027390970135456882,
+24
+],
+"apply_writes": [
+0.0010485839993634727,
+23
+],
+"loop._put_checkpoint": [
+0.002007728999160463,
+24
+],
+"tick": [
+0.0032900469886953942,
+23
+],
+"node:__start__": [
+4.721100049209781e-05,
+1
+],
+"loop.put_writes": [
+0.0011023539991583675,
+22
+],
+"after_tick": [
+0.0038523170042026322,
+22
+],
+"node:model": [
+26.131367046000378,
+11
+],
+"node:tools": [
+0.01735871599885286,
+10
+],
+"saver.put": [
+0.002693457001441857,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.540918050999608,
+"model_provider_s": 25.48941758599176,
+"tool_fn_s": 0.00021903000015299767,
+"framework_s": 0.05128143500769511,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.00274392500432441,
+24
+],
+"apply_writes": [
+0.001065639007720165,
+23
+],
+"loop._put_checkpoint": [
+0.001888799000880681,
+24
+],
+"tick": [
+0.003296021001006011,
+23
+],
+"node:__start__": [
+5.0331000238657e-05,
+1
+],
+"loop.put_writes": [
+0.0011505420079629403,
+22
+],
+"after_tick": [
+0.00391793100425275,
+22
+],
+"node:model": [
+25.50061397999525,
+11
+],
+"node:tools": [
+0.01876275700124097,
+10
+],
+"saver.put": [
+0.0029427729969029315,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.120674493999104,
+"model_provider_s": 26.07315539499541,
+"tool_fn_s": 0.00017845500042312779,
+"framework_s": 0.04734064400327043,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0028450489990063943,
+24
+],
+"apply_writes": [
+0.0011109339975519106,
+23
+],
+"loop._put_checkpoint": [
+0.001699455995549215,
+24
+],
+"tick": [
+0.0033996819947788026,
+23
+],
+"node:__start__": [
+5.520100239664316e-05,
+1
+],
+"loop.put_writes": [
+0.0011665579986583907,
+22
+],
+"after_tick": [
+0.0038802349918114487,
+22
+],
+"node:model": [
+26.083848166999815,
+11
+],
+"node:tools": [
+0.016301829997246386,
+10
+],
+"saver.put": [
+0.0028429099984350614,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.55862983899715,
+"model_provider_s": 25.51097400299841,
+"tool_fn_s": 0.0001854659967648331,
+"framework_s": 0.047470370001974516,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027435199881438166,
+24
+],
+"apply_writes": [
+0.0011528199938766193,
+23
+],
+"loop._put_checkpoint": [
+0.0016865690085978713,
+24
+],
+"tick": [
+0.0032878420024644583,
+23
+],
+"node:__start__": [
+4.460099808056839e-05,
+1
+],
+"loop.put_writes": [
+0.0011470730023575015,
+22
+],
+"after_tick": [
+0.003968535995227285,
+22
+],
+"node:model": [
+25.521729948995926,
+11
+],
+"node:tools": [
+0.01689532000091276,
+10
+],
+"saver.put": [
+0.0026318959971831646,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.833877069002483,
+"model_provider_s": 25.78297738499532,
+"tool_fn_s": 0.00018825699953595176,
+"framework_s": 0.05071142700762721,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002746876016317401,
+24
+],
+"apply_writes": [
+0.0011199789951206185,
+23
+],
+"loop._put_checkpoint": [
+0.0019509989979269449,
+24
+],
+"tick": [
+0.0033074079983634874,
+23
+],
+"node:__start__": [
+5.501200212165713e-05,
+1
+],
+"loop.put_writes": [
+0.0011221070017199963,
+22
+],
+"after_tick": [
+0.003916020010365173,
+22
+],
+"node:model": [
+25.794078061004257,
+11
+],
+"node:tools": [
+0.01842134800972417,
+10
+],
+"saver.put": [
+0.0031123759981710464,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.184651046998624,
+"model_provider_s": 26.135656020996976,
+"tool_fn_s": 0.00019119500211672857,
+"framework_s": 0.04880383099953178,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027037779982492793,
+24
+],
+"apply_writes": [
+0.0010769149994303007,
+23
+],
+"loop._put_checkpoint": [
+0.0019707740066223778,
+24
+],
+"tick": [
+0.0032141889969352633,
+23
+],
+"node:__start__": [
+4.421099947649054e-05,
+1
+],
+"loop.put_writes": [
+0.0011735580046661198,
+22
+],
+"after_tick": [
+0.003916323003068101,
+22
+],
+"node:model": [
+26.146547152002313,
+11
+],
+"node:tools": [
+0.017991980999795487,
+10
+],
+"saver.put": [
+0.002361659997404786,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.264295663000667,
+"model_provider_s": 25.212885345998075,
+"tool_fn_s": 0.00021579200620180927,
+"framework_s": 0.0511945249963901,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027823460040963255,
+24
+],
+"apply_writes": [
+0.001109737997467164,
+23
+],
+"loop._put_checkpoint": [
+0.001959589008038165,
+24
+],
+"tick": [
+0.0033649819961283356,
+23
+],
+"node:__start__": [
+5.0550999731058255e-05,
+1
+],
+"loop.put_writes": [
+0.001133767993451329,
+22
+],
+"after_tick": [
+0.003955375985242426,
+22
+],
+"node:model": [
+25.224154704003013,
+11
+],
+"node:tools": [
+0.01874304999728338,
+10
+],
+"saver.put": [
+0.0029008310011704452,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.388654223999765,
+"model_provider_s": 26.338190237998788,
+"tool_fn_s": 0.00019137300114380196,
+"framework_s": 0.050272612999833655,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027189640059077647,
+24
+],
+"apply_writes": [
+0.0011314069961372297,
+23
+],
+"loop._put_checkpoint": [
+0.0020288390005589463,
+24
+],
+"tick": [
+0.003262289996200707,
+23
+],
+"node:__start__": [
+6.110100002842955e-05,
+1
+],
+"loop.put_writes": [
+0.0011482919981062878,
+22
+],
+"after_tick": [
+0.004006414994364604,
+22
+],
+"node:model": [
+26.34949118199438,
+11
+],
+"node:tools": [
+0.018541391000326257,
+10
+],
+"saver.put": [
+0.0021595059988612775,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.86521655800243,
+"model_provider_s": 25.815587828998105,
+"tool_fn_s": 0.00019166000129189342,
+"framework_s": 0.049437069003033685,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0027096099984191824,
+24
+],
+"apply_writes": [
+0.0010922159999608994,
+23
+],
+"loop._put_checkpoint": [
+0.001986598002986284,
+24
+],
+"tick": [
+0.0032534509991819505,
+23
+],
+"node:__start__": [
+7.306399857043289e-05,
+1
+],
+"loop.put_writes": [
+0.0011352709989296272,
+22
+],
+"after_tick": [
+0.0038892320008017123,
+22
+],
+"node:model": [
+25.82666041500852,
+11
+],
+"node:tools": [
+0.018690838001930388,
+10
+],
+"saver.put": [
+0.0032809099975565914,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.111934046002716,
+"model_provider_s": 26.061267970999324,
+"tool_fn_s": 0.00019365999833098613,
+"framework_s": 0.05047241500506061,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026044840014947113,
+24
+],
+"apply_writes": [
+0.0010515120011405088,
+23
+],
+"loop._put_checkpoint": [
+0.0019106200015812647,
+24
+],
+"tick": [
+0.003117104002740234,
+23
+],
+"node:__start__": [
+5.62129971513059e-05,
+1
+],
+"loop.put_writes": [
+0.001126775998272933,
+22
+],
+"after_tick": [
+0.003805436001130147,
+22
+],
+"node:model": [
+26.072217233006086,
+11
+],
+"node:tools": [
+0.0189457819906238,
+10
+],
+"saver.put": [
+0.0029369590010901447,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.41894648699963,
+"model_provider_s": 25.367183261008904,
+"tool_fn_s": 0.00020855199909419753,
+"framework_s": 0.051554673991631716,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.002887721984734526,
+24
+],
+"apply_writes": [
+0.0011037120020773727,
+23
+],
+"loop._put_checkpoint": [
+0.0019693330068548676,
+24
+],
+"tick": [
+0.003459325002040714,
+23
+],
+"node:__start__": [
+7.436400119331665e-05,
+1
+],
+"loop.put_writes": [
+0.0011825700057670474,
+22
+],
+"after_tick": [
+0.004070602994033834,
+22
+],
+"node:model": [
+25.37861330799933,
+11
+],
+"node:tools": [
+0.018697253995924257,
+10
+],
+"saver.put": [
+0.003051181000046199,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.045705041000474,
+"model_provider_s": 25.996637620006368,
+"tool_fn_s": 0.0001777380020939745,
+"framework_s": 0.04888968299201224,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0026479210137040354,
+24
+],
+"apply_writes": [
+0.0010283199953846633,
+23
+],
+"loop._put_checkpoint": [
+0.0018779519996314775,
+24
+],
+"tick": [
+0.0031903480012260843,
+23
+],
+"node:__start__": [
+4.554200131678954e-05,
+1
+],
+"loop.put_writes": [
+0.001134749996708706,
+22
+],
+"after_tick": [
+0.0037497859993891325,
+22
+],
+"node:model": [
+26.007185998998466,
+11
+],
+"node:tools": [
+0.0171064629976172,
+10
+],
+"saver.put": [
+0.0031771930007380433,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 26.17278807200273,
+"model_provider_s": 26.12725964299534,
+"tool_fn_s": 0.000193240000953665,
+"framework_s": 0.04533518900643685,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0022750630087102763,
+24
+],
+"apply_writes": [
+0.0010003200040955562,
+23
+],
+"loop._put_checkpoint": [
+0.0018252229965582956,
+24
+],
+"tick": [
+0.0027157570111739915,
+23
+],
+"node:__start__": [
+4.879200059804134e-05,
+1
+],
+"loop.put_writes": [
+0.0009556399963912554,
+22
+],
+"after_tick": [
+0.003517566994560184,
+22
+],
+"node:model": [
+26.136690251005348,
+11
+],
+"node:tools": [
+0.017351865993987303,
+10
+],
+"saver.put": [
+0.002639954000187572,
+1
+]
+},
+"clean": true
+},
+{
+"wall_s": 25.61771615899852,
+"model_provider_s": 25.572412171000906,
+"tool_fn_s": 0.00020553099602693692,
+"framework_s": 0.04509845700158621,
+"model_calls": 11,
+"tool_round_trips": 10,
+"bad_cursor": 0,
+"multi_tool_calls": 0,
+"supersteps": 22,
+"eval_tokens": 249,
+"prompt_tokens": 6041,
+"timings": {
+"prepare_next_tasks": [
+0.0024189399991882965,
+24
+],
+"apply_writes": [
+0.0010044739974546246,
+23
+],
+"loop._put_checkpoint": [
+0.0017594270066183526,
+24
+],
+"tick": [
+0.002885424008127302,
+23
+],
+"node:__start__": [
+4.696199903264642e-05,
+1
+],
+"loop.put_writes": [
+0.0009987839912355412,
+22
+],
+"after_tick": [
+0.0035045440090470947,
+22
+],
+"node:model": [
+25.58219885699509,
+11
+],
+"node:tools": [
+0.017591995998373022,
+10
+],
+"saver.put": [
+0.0031522050012426917,
+1
+]
+},
+"clean": true
+}
+]
+}

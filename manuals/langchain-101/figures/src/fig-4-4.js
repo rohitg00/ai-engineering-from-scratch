@@ -1,62 +1,78 @@
 'use strict';
 
-const fs = require('fs');
 const path = require('path');
 const { figure, color } = require('../../../_shared/figkit.js');
+const { load } = require('../../../_shared/chart.js');
 
-const text = fs.readFileSync(path.join(__dirname, '../../capture/out/33-store.txt'), 'utf8');
-const after = (heading, from = 0) => {
-  const at = text.indexOf('\n[', text.indexOf(heading, from)) + 1;
-  return JSON.parse(text.slice(at, text.indexOf('\n]', at) + 2));
-};
-const namespaces = after('list_namespaces():');
-const shallow = after('list_namespaces(max_depth=2):');
-const found = after("search(('users', 'ada')):");
-const filtered = after("search(('users',), filter=...):");
-const items = [...found, ...filtered].map(([ns, key, value]) => ({ ns: ns.join('/'), key, value: value.text || value.value }));
-const lab = JSON.parse(fs.readFileSync(path.join(__dirname, '../../capture/lab/summary/stores-mac.json'), 'utf8'));
-const partial = Object.entries(lab.backends).filter(([, b]) => b.cases && "search(('users','ali')) partial label" in b.cases);
-if (!partial.length || partial.some(([, b]) => b.cases["search(('users','ali')) partial label"].length)) throw new Error('fig-4-4: a partial label matched in the lab');
+const S = load(path.join(__dirname, '../../capture/lab/bench/summary-mac.json'));
+const T = S.toolscale.cells;
+const Q4 = 'qwen3:4b-instruct-2507-q4_K_M';
+const SIZES = [5, 20, 50, 100];
+const BLOCKS = [
+  ['claude-haiku-5-5', 'Haiku 5.5', ['off', 'on']],
+  [Q4, 'Qwen3 4B', ['off', 'on', 'on_desc']],
+  ['qwen3:8b', 'Qwen3 8B', ['off', 'on', 'on_desc']],
+];
+const SEL = { off: 'no selector', on: 'selector', on_desc: 'selector + list' };
+const SELHUE = { off: 'blue', on: 'plum', on_desc: 'plum' };
+const get = (m, n, s) => T[`${m}|${n}|${s}`];
 
-const users = [...new Set(namespaces.map(ns => ns[1]))];
-const leaves = namespaces.map(ns => ({ user: ns[1], name: ns[2], path: ns.join('/') }));
-const CX = { 'users/ada/memories': 112, 'users/ada/settings': 306, 'users/grace/memories': 520 };
-const userX = user => {
-  const xs = leaves.filter(l => l.user === user).map(l => CX[l.path]);
-  return (Math.min(...xs) + Math.max(...xs)) / 2;
-};
+const X0 = 154;
+const SQ = 8;
+const GW = 10 * SQ + 34;
+const GG = 6;
+const gx = i => X0 + i * (GW + GG);
+const RH = 17;
+const Y0 = 46;
+const SEP = 12;
+const nRows = BLOCKS.reduce((a, [, , s]) => a + s.length, 0);
+const height = Y0 + nRows * RH + BLOCKS.length * 18 + (BLOCKS.length - 1) * SEP + 96;
+const pass = (m, n, s) => (get(m, n, s) ? get(m, n, s).pass : null);
 
 module.exports = figure('fig-4-4', {
-  height: 388,
-  title: 'The namespaces of the kit store',
-  desc: `A tree of the namespace labels that list_namespaces returned: users, then ${users.join(' and ')}, then ${leaves.map(l => `${l.name} under ${l.user}`).join(', ')}. Under each namespace are its items with their key and value: ${items.map(i => `${i.key} "${i.value}" in ${i.ns}`).join(', ')}. A shaded area covers ada and its two namespaces: search with the prefix users, ada returned those ${found.length} items. A dashed line under the second row shows where list_namespaces with max_depth 2 stops, at ${shallow.length} namespaces. A note says that a partial label such as ali matched nothing in ${partial.length} store backends in the lab.`,
+  height,
+  title: 'Ten chain tasks at four tool counts, with and without LLMToolSelectorMiddleware',
+  desc: `A grid of the ten chain tasks for each model, tool count and selector setting, create_agent on the Mac and Claude Haiku 5.5 through the API. A blue or plum square is a pass, a solid rose square a call to a distractor or no call to the needed lookup, a light rose square another failure, and a black square a run that raised. Without the selector Haiku passed 10 of 10 at 5, 20, 50 and 100 tools, and with it ${[5, 20, 50, 100].map(n => pass('claude-haiku-5-5', n, 'on')).join(', ')}. Qwen3 4B passed ${SIZES.map(n => pass(Q4, n, 'off')).join(', ')} without it and ${SIZES.map(n => pass(Q4, n, 'on')).join(', ')} with it. Qwen3 8B ran 5 and 50 tools only.`,
 }, f => {
-  const adaLeaves = leaves.filter(l => l.user === 'ada');
-  const left = Math.min(...adaLeaves.map(l => CX[l.path])) - 100;
-  const right = Math.max(...adaLeaves.map(l => CX[l.path])) + 100;
-  f.rect(left, 82, right - left, 252, { fill: color('teal-fill'), stroke: color('teal-ink'), dash: 'dashed' });
-  f.text(left + 10, 324, `search(('users', 'ada')): ${found.length} items`, { size: 11.5, hue: 'teal', weight: 700 });
-
-  const root = f.box({ x: 320, y: 12, w: 120, h: 30, hue: 'grey', title: 'users', anchor: 'middle', titleSize: 12 });
-  const join = (from, to) => f.path(`M${from.cx} ${from.y + from.h} V${to.y - 10} H${to.cx} V${to.y - 1}`, { style: 'call', head: false });
-  const userBox = {};
-  users.forEach(user => {
-    userBox[user] = f.box({ x: userX(user), y: 96, w: 120, h: 30, hue: 'violet', title: user, anchor: 'middle', titleSize: 12 });
-    join(root, userBox[user]);
+  f.kicker(20, 22, 'model, setting');
+  SIZES.forEach((n, i) => {
+    f.text(gx(i) + 5 * SQ, 22, `${n} tools`, { size: 11, hue: 'ink', anchor: 'middle', weight: 700 });
+    f.rule(gx(i), 30, gx(i) + 10 * SQ, 30, { hue: 'ink-mute' });
   });
-  f.rule(20, 140, 620, 140, { hue: 'ink-mute', dash: 'dashed' });
-  f.text(30, 153, `max_depth=2: ${shallow.length} namespaces`, { size: 11, hue: 'ink-soft' });
-  leaves.forEach(leaf => {
-    const box = f.box({ x: CX[leaf.path], y: 168, w: 140, h: 30, hue: 'teal', title: leaf.name, anchor: 'middle', titleSize: 12 });
-    join(userBox[leaf.user], box);
-    items.filter(item => item.ns === leaf.path).forEach((item, k) => {
-      const y = 216 + k * 36;
-      if (!k) f.rule(CX[leaf.path], 198, CX[leaf.path], y, { hue: 'teal' });
-      f.rect(CX[leaf.path] - 92, y, 184, 30, { fill: color('paper'), stroke: color('teal-ink') });
-      f.text(CX[leaf.path] - 84, y + 13, `key ${item.key}`, { size: 11, weight: 700, hue: 'teal' });
-      f.text(CX[leaf.path] - 84, y + 26, item.value, { size: 11, serif: true, hue: 'ink-soft' });
+  let y = Y0;
+  BLOCKS.forEach(([m, name, sels], b) => {
+    if (b) y += SEP;
+    f.beat(b + 1);
+    f.text(20, y + 11, name, { size: 11, weight: 700, hue: 'plum' });
+    y += 18;
+    sels.forEach(s => {
+      f.text(20, y + 11, SEL[s], { size: 11, hue: SELHUE[s] });
+      SIZES.forEach((n, i) => {
+        const c = get(m, n, s);
+        if (!c) return;
+        c.runs.forEach((r, k) => {
+          const bx = gx(i) + k * SQ;
+          if (r.p) f.rect(bx, y + 1, SQ - 2, RH - 5, { fill: color(`${SELHUE[s]}-ink`), stroke: 'none' });
+          else if (r.c === 'harness_error') f.rect(bx, y + 1, SQ - 2, RH - 5, { fill: color('ink'), stroke: 'none' });
+          else if (r.c === 'wrong_tool') f.rect(bx, y + 1, SQ - 2, RH - 5, { fill: color('rose-ink'), stroke: 'none' });
+          else f.rect(bx + 0.5, y + 1.5, SQ - 3, RH - 6, { fill: color('rose-fill'), stroke: color('rose-ink') });
+        });
+        f.text(gx(i) + 10 * SQ + 4, y + 11, String(c.pass), { size: 11, hue: 'ink', weight: 700 });
+      });
+      y += RH;
     });
   });
-  f.text(20, 362, `The namespace is a tuple of full labels. A search for ('users', 'ali') returned nothing`, { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, 378, `in each of the ${partial.length} backends of the lab, because a label never matches part of another.`, { size: 11, serif: true, hue: 'ink-soft' });
+  f.beat(0);
+  const ly = y + 22;
+  f.rect(20, ly - 10, 6, 12, { fill: color('blue-ink'), stroke: 'none' });
+  f.rect(28, ly - 10, 6, 12, { fill: color('plum-ink'), stroke: 'none' });
+  f.text(40, ly, 'pass', { size: 11, serif: true, hue: 'ink-soft' });
+  f.rect(86, ly - 10, 6, 12, { fill: color('rose-ink'), stroke: 'none' });
+  f.text(98, ly, 'wrong tool: a distractor, or no item lookup', { size: 11, serif: true, hue: 'ink-soft' });
+  f.rect(390.5, ly - 9.5, 5, 11, { fill: color('rose-fill'), stroke: color('rose-ink') });
+  f.text(402, ly, 'other failure', { size: 11, serif: true, hue: 'ink-soft' });
+  f.rect(510, ly - 10, 6, 12, { fill: color('ink'), stroke: 'none' });
+  f.text(522, ly, 'raised', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, ly + 22, 'The number after each group counts the passes of 10. Tools: 5 lookups, distractors, and submit_answer.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, ly + 40, 'selector + list: our own system prompt that adds each tool name and description.', { size: 11, serif: true, hue: 'ink-soft' });
 });

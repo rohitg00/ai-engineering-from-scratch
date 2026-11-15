@@ -1140,6 +1140,42 @@ def replay_fork_x86():
     }
 
 
+def crash_resume_x86():
+    folder = "T02-crash-resume-x86"
+    files = ("01-agent-matrix.jsonl", "02-agent-matrix-rep5-19.jsonl")
+    trials = [row for name in files for row in rows(f"{folder}/{name}") if row.get("exp") == "T02r"]
+    keys = {}
+    model_calls = {}
+    first_reply = {}
+    for row in trials:
+        group = keys.setdefault(row["key"], {"trials": 0, "killed": 0, "twice": 0, "next_empty_unfinished": 0, "cells": {}})
+        cell = group["cells"].setdefault(f"{row['saver']} {row['durability']} {row['kill_point']}", {"trials": 0, "killed": 0, "twice": 0, "next_empty_unfinished": 0})
+        report = row["resume_report"] or {}
+        empty = 1 if row["killed"] and report.get("resume_action") == "invoke_none_with_empty_next" else 0
+        for target in (group, cell):
+            target["trials"] += 1
+            target["killed"] += 1 if row["killed"] else 0
+            target["twice"] += 1 if row["effects_total"] > 1 else 0
+            target["next_empty_unfinished"] += empty
+        calls = model_calls.setdefault(row["durability"], {})
+        calls[str(row["n_model_calls"])] = calls.get(str(row["n_model_calls"]), 0) + 1
+        first = next((len(json.loads(call[3])) for call in row["model_calls"] if call[0] == "run"), None)
+        first_reply[str(first)] = first_reply.get(str(first), 0) + 1
+    for group in keys.values():
+        group["cells"] = dict(sorted(group["cells"].items()))
+    return {
+        "machine": X86,
+        "model": "qwen3:4b-instruct-2507-q4_K_M via ChatOllama 1.1.0, temperature 0, seed 42, num_predict 256, Ollama 0.31.1 on CPU",
+        "savers": "SqliteSaver (langgraph-checkpoint-sqlite 3.1.3) and PostgresSaver (langgraph-checkpoint-postgres 3.2.1) on PostgreSQL 16.15",
+        "trials_per_cell": "20 for the keys none and call_id, 5 for the key order; exit before_put_writes 5 per key, never reached",
+        "twice": "the ledger held more than one charge for the one requested charge",
+        "sources": [f"capture/lab/{folder}/{name}" for name in files],
+        "keys": dict(sorted(keys.items())),
+        "model_calls_by_mode": dict(sorted(model_calls.items())),
+        "first_reply_tool_calls": first_reply,
+    }
+
+
 def failure_drill_x86():
     folder = "failure-drill-x86"
     runs = sorted(name[:-6] for name in os.listdir(os.path.join(LAB, folder)) if name.startswith("drill-run") and name.endswith(".jsonl"))
@@ -1394,6 +1430,7 @@ SUMMARIES = {
     "evaluate-x86.json": lambda: evaluate_leak("T18-evaluate-leak-x86"),
     "pytest-plugin-x86.json": lambda: pytest_plugin("T19-pytest-plugin-x86"),
     "failure-drill-x86.json": failure_drill_x86,
+    "crash-resume-x86.json": crash_resume_x86,
     "demos-mac.json": demos,
     "streaming-mac.json": streaming,
     "parallel-tools-mac.json": parallel_tools,

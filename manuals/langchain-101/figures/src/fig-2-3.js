@@ -2,43 +2,107 @@
 
 const fs = require('fs');
 const path = require('path');
-const { figure } = require('../../../_shared/figkit.js');
+const { figure, color } = require('../../../_shared/figkit.js');
 
-const out = name => fs.readFileSync(path.join(__dirname, '../../capture/out', name), 'utf8');
-const run = out('06-agent-run.txt');
-const start = run.indexOf('\n[\n', run.indexOf('"messages"\n]')) + 1;
-const final = JSON.parse(run.slice(start, run.indexOf('\n]\n', start) + 2));
-const [, ask, answer, reply] = final;
-const call = ask.tool_calls[0];
-const usage = JSON.parse(/"usage_metadata": (\{[\s\S]*?\})/.exec(out('02-messages.txt'))[1]);
-const show = value => (typeof value === 'string' ? JSON.stringify(value) : JSON.stringify(value).replace(/"/g, '').replace(/,/g, ', ').replace(/:/g, ': '));
+const events = fs.readFileSync(path.join(__dirname, '../../capture/lab/internals/03-checkpoint/a_sync.trace.jsonl'), 'utf8')
+  .trim().split('\n').map(line => JSON.parse(line));
+
+const done = events.filter(e => e.event === 'loop.put_writes');
+const puts = events.filter(e => e.event === 'saver.put');
+const writes = events.filter(e => e.event === 'saver.put_writes');
+const ticks = events.filter(e => e.event === 'tick');
+const steps = [...new Set(done.map(d => d.step))];
+const panels = steps.map(step => {
+  const tasks = done.filter(d => d.step === step).map(d => {
+    const w = writes.find(x => x.task_id === d.task_id);
+    if (!w) throw new Error(`fig-2-3: no put_writes for ${d.task_id}`);
+    return { name: d.task, id: d.task_id, back: d.t_ms, durable: w.t_ms, start: w.t_ms - w.dt_us / 1000 };
+  });
+  const t0 = Math.min(...tasks.map(t => t.back));
+  const put = puts.find(p => p.step === step);
+  const extra = step === 0 ? puts.find(p => p.step === -1) : null;
+  const next = ticks.find(t => t.step === step + 1);
+  return { step, tasks, t0, put, extra, next };
+});
+const waits = panels.flatMap(p => p.tasks.map(t => t.durable - t.back));
+const lo = Math.min(...waits);
+const hi = Math.max(...waits);
+const late = panels.find(p => p.tasks.some(t => t.durable > p.put.t_ms));
+const gapS = i => (panels[i + 1].t0 - panels[i].t0) / 1000;
+
+const PW = 126;
+const PG = 16;
+const PX0 = 62;
+const SPAN = 7;
+const LOOP_Y = 96;
+const SAVER_Y = 160;
+const fmt = v => v.toFixed(1);
 
 module.exports = figure('fig-2-3', {
   height: 400,
-  title: 'The fields of an AIMessage and its ToolMessage',
-  desc: `Three cards read from one agent run. The first is the AIMessage that asks for a tool: content ${show(ask.content)}, id ${ask.id}, and tool_calls with name ${call.name}, args ${show(call.args)}, and id ${call.id}. The second is the ToolMessage that answers it: content ${show(answer.content)}, name ${answer.name}, tool_call_id ${answer.tool_call_id}, and status ${answer.status}. A dashed line joins the id ${call.id} in the tool call to tool_call_id ${answer.tool_call_id}. The third, below, is the final AIMessage with content ${show(reply.content)} and no tool_calls, which ends the loop. A reply from a real provider also carries usage_metadata, such as ${usage.input_tokens} input and ${usage.output_tokens} output tokens in the messages capture.`,
+  title: 'How long each finished task waits for its put_writes, in one sync run',
+  desc: `Four panels, one per superstep of one create_agent run with Qwen3 4B, durability sync, on SqliteSaver on the x86 server guest. Each panel spans ${SPAN} ms after the first task of the step returned. The upper lane is the loop: a dot for each task that returned and an amber line where the next superstep starts. The lower lane is the background saver: filled blocks are put calls that store a checkpoint, and outlined blocks are put_writes calls that store the writes of one task. A rose band runs from each task's return to the end of its put_writes. Those spans were ${fmt(lo)} to ${fmt(hi)} ms. In step ${late.step}, the checkpoint put ended before the put_writes of the task ${late.tasks[0].id}. Between the panels the model ran for seconds.`,
 }, f => {
-  const card = (x, y, w, h, hue, title, rows) => {
-    f.rect(x, y, w, h, { hue });
-    f.text(x + 14, y + 22, title, { size: 13, weight: 700, hue });
-    return rows.map(([k, v, strong], i) => {
-      const ry = y + 50 + i * 24;
-      f.text(x + 14, ry, k, { size: 11.5, hue: 'ink-soft' });
-      f.text(x + 128, ry, v, { size: 11.5, weight: strong ? 700 : undefined, hue: strong ? hue : undefined, max: w - 140 });
-      return ry;
+  f.text(20, LOOP_Y + 4, 'loop', { size: 12, weight: 700, hue: 'indigo' });
+  f.text(20, SAVER_Y + 4, 'saver', { size: 12, weight: 700, hue: 'teal' });
+  panels.forEach((p, i) => {
+    const x0 = PX0 + i * (PW + PG);
+    const X = t => x0 + ((t - p.t0) / SPAN) * PW;
+    f.beat(i + 1);
+    f.rect(x0, 50, PW, 168, { fill: color('code-bg'), stroke: 'none' });
+    f.text(x0 + PW / 2, 42, `step ${p.step}`, { size: 11.5, anchor: 'middle', hue: 'amber', weight: 700 });
+    f.rule(x0, LOOP_Y, x0 + PW, LOOP_Y, { hue: 'indigo', opacity: 0.5 });
+    f.rule(x0, SAVER_Y, x0 + PW, SAVER_Y, { hue: 'teal', opacity: 0.5 });
+    p.tasks.forEach((t, k) => {
+      f.dot(X(t.back), LOOP_Y, { hue: 'indigo', r: 3.5 });
+      const y = SAVER_Y + 8 + k * 16;
+      f.rect(Math.max(x0, X(t.start)), y, X(t.durable) - Math.max(x0, X(t.start)), 10, { fill: color('paper'), stroke: color('teal-ink') });
+      f.rect(X(t.back), y + 12, X(t.durable) - X(t.back), 3, { fill: color('rose-ink'), stroke: 'none' });
     });
-  };
-  f.beat(1);
-  const left = card(20, 14, 280, 200, 'plum', 'AIMessage', [['content', show(ask.content)], ['id', ask.id], ['tool_calls', ''], ['  .name', call.name], ['  .args', show(call.args)], ['  .id', call.id, true]]);
-  f.beat(2);
-  const right = card(340, 14, 280, 200, 'green', answer.type, [['content', show(answer.content)], ['name', answer.name], ['id', answer.id], ['tool_call_id', answer.tool_call_id, true], ['status', answer.status]]);
-  f.path(`M${128 + 20 + call.id.length * 6.9 + 6} ${left[5] - 4} L318 ${left[5] - 4} L318 ${right[3] - 4} L339 ${right[3] - 4}`, { style: 'reply' });
-  f.text(318, left[5] + 14, 'same id', { size: 11, serif: true, anchor: 'middle', hue: 'ink-soft', knock: true });
-  f.beat(3);
-  f.arrow([400, 214], [400, 241], { style: 'model' });
-  f.text(410, 232, 'the next model call reads both', { size: 11, serif: true, hue: 'plum' });
-  card(20, 242, 600, 112, 'plum', `${reply.type}, the final answer`, [['content', show(reply.content)], ['tool_calls', 'none, so the agent stops'], ['usage', `${usage.input_tokens} in, ${usage.output_tokens} out, when the provider reports it`]]);
+    for (const q of [p.put, p.extra].filter(Boolean)) {
+      const a = Math.max(x0, X(q.t_ms - q.dt_us / 1000));
+      if (X(q.t_ms) <= x0 + PW) f.rect(a, SAVER_Y - 18, X(q.t_ms) - a, 12, { hue: 'teal' });
+    }
+    if (p.next && X(p.next.t_ms) <= x0 + PW) f.rule(X(p.next.t_ms), 74, X(p.next.t_ms), 214, { hue: 'amber', width: 1.6 });
+    for (let t = 0; t <= SPAN; t += 2) {
+      f.rule(X(p.t0 + t), 218, X(p.t0 + t), 222, { hue: 'ink' });
+      f.text(X(p.t0 + t), 236, String(t), { size: 11, anchor: 'middle', hue: 'ink-soft' });
+    }
+    f.text(x0 + PW / 2, 66, p.tasks.map(t => t.name.replace(/^__start__$/, 'start')).join(', '), { size: 11, anchor: 'middle', hue: 'ink-soft' });
+    if (i < panels.length - 1) {
+      const nxt = panels[i + 1].tasks[0].name;
+      f.text(x0 + PW + PG / 2, 264, `${nxt} ${gapS(i).toFixed(2)} s`, { size: 11, anchor: 'middle', hue: nxt === 'model' ? 'plum' : 'green' });
+    }
+  });
+  f.text(20, 236, 'ms', { size: 11, hue: 'ink-soft' });
+
+  f.beat(5);
+  const li = panels.indexOf(late);
+  const lx0 = PX0 + li * (PW + PG);
+  const LX = t => lx0 + ((t - late.t0) / SPAN) * PW;
+  f.step(LX(late.put.t_ms) - 14, SAVER_Y - 32, 1);
+  f.step(LX(late.tasks[0].durable) + 12, SAVER_Y + 34, 2, { hue: 'rose' });
+
   f.beat(0);
-  f.text(20, 376, 'The request for a tool is in tool_calls, already parsed, and its content is empty.', { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, 392, 'The ToolMessage repeats the id of the call it answers.', { size: 11, serif: true, hue: 'ink-soft' });
+  const notes = [
+    [1, 'ink', `step ${late.step}: the checkpoint put ends, sync stops waiting, and step ${late.step + 1} starts`],
+    [2, 'rose', `the put_writes of ${late.tasks[0].id} ends ${fmt(late.tasks[0].durable - late.put.t_ms)} ms later`],
+  ];
+  notes.forEach(([n, hue, text], k) => {
+    const y = 300 + k * 22;
+    f.step(30, y, n, { hue });
+    f.text(46, y + 4, text, { size: 11, serif: true, hue: 'ink-soft' });
+  });
+  const ky = 360;
+  f.dot(26, ky - 4, { hue: 'indigo', r: 3.5 });
+  f.text(36, ky, 'task returned', { size: 11, serif: true, hue: 'ink-soft' });
+  f.rect(150, ky - 11, 12, 12, { hue: 'teal' });
+  f.text(168, ky, 'put', { size: 11, serif: true, hue: 'ink-soft' });
+  f.rect(214, ky - 11, 12, 12, { fill: color('paper'), stroke: color('teal-ink') });
+  f.text(232, ky, 'put_writes', { size: 11, serif: true, hue: 'ink-soft' });
+  f.rect(320, ky - 6, 16, 3, { fill: color('rose-ink'), stroke: 'none' });
+  f.text(342, ky, `not durable, ${fmt(lo)} to ${fmt(hi)} ms`, { size: 11, serif: true, hue: 'ink-soft' });
+  f.rule(26, ky + 10, 26, ky + 24, { hue: 'amber', width: 1.6 });
+  f.text(36, ky + 22, 'next superstep starts', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(232, ky + 22, 'between panels: the next task and its seconds', { size: 11, serif: true, hue: 'ink-soft' });
 });

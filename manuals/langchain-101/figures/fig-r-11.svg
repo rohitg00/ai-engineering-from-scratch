@@ -1,0 +1,319 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-r-11-title fig-r-11-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-r-11-title">Three greedy runs repeat each other, three sampled runs do not</title>
+  <desc id="fig-r-11-desc">A grid of the 30 subset tasks for Qwen3 4B on the Mac. The plain loop and the deep agent each ran three times at temperature 0 and seed 42, and every run gave the same outcome on every task, with the same tokens and tool calls: 23 and 13 of 30. The plain loop at temperature 0.7 with seeds 1, 2 and 3 passed 24, 23, 23 of 30, and 5 tasks changed outcome between seeds: chain07, chain13, chain16, sql16, files07.</desc>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">QWEN3 4B, 30 SUBSET TASKS</text>
+  <text x="620" y="22" font-size="11" text-anchor="end" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PASS</text>
+  <text x="198" y="44" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">chain</text>
+  <line x1="160" y1="50" x2="236" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="282" y="44" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">sql</text>
+  <line x1="244" y1="50" x2="320" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="366" y="44" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">retrieval</text>
+  <line x1="328" y1="50" x2="404" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="450" y="44" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">files</text>
+  <line x1="412" y1="50" x2="488" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="534" y="44" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">multiturn</text>
+  <line x1="496" y1="50" x2="572" y2="50" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="76" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">plain loop, temperature 0, seed 42</text>
+  <text x="28" y="94" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">greedy, run 1</text>
+  <rect x="160" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="173" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="186" y="84" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="199" y="84" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="225" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="244" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="257" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="270" y="84" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="283" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="296" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="309" y="84" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="328" y="84" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="341" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="354" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="367" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="380" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="393" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="412" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="425" y="84" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="84" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="451" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="464" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="477" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="496" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="509" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="522" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="535" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="548" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="561" y="84" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="94" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">23/30</text>
+  <text x="28" y="112" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">greedy, run 2</text>
+  <rect x="160" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="173" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="186" y="102" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="199" y="102" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="225" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="244" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="257" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="270" y="102" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="283" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="296" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="309" y="102" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="328" y="102" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="341" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="354" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="367" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="380" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="393" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="412" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="425" y="102" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="102" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="451" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="464" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="477" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="496" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="509" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="522" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="535" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="548" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="561" y="102" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="112" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">23/30</text>
+  <text x="28" y="130" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">greedy, run 3</text>
+  <rect x="160" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="173" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="186" y="120" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="199" y="120" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="225" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="244" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="257" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="270" y="120" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="283" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="296" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="309" y="120" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="328" y="120" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="341" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="354" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="367" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="380" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="393" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="412" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="425" y="120" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="120" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="451" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="464" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="477" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="496" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="509" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="522" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="535" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="548" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="561" y="120" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="130" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">23/30</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="152" font-size="11" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">deep agent, temperature 0, seed 42</text>
+  <text x="28" y="170" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">greedy, run 1</text>
+  <rect x="160" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="173" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="186" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="199" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="212" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="225" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="244" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="257" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="270" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="283" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="296" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="309" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="328" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="341" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="354" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="367" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="380" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="393" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="412" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="425" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="451" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="464" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="477" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="496" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="509" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="522" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="535" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="548" y="160" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="561" y="160" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="620" y="170" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">13/30</text>
+  <text x="28" y="188" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">greedy, run 2</text>
+  <rect x="160" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="173" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="186" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="199" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="212" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="225" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="244" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="257" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="270" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="283" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="296" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="309" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="328" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="341" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="354" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="367" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="380" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="393" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="412" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="425" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="451" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="464" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="477" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="496" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="509" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="522" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="535" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="548" y="178" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="561" y="178" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="620" y="188" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">13/30</text>
+  <text x="28" y="206" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">greedy, run 3</text>
+  <rect x="160" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="173" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="186" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="199" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="212" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="225" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="244" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="257" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="270" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="283" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="296" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="309" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="328" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="341" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="354" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="367" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="380" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="393" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="412" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="425" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="451" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="464" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="477" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="496" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="509" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="522" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="535" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="548" y="196" width="10" height="13" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <rect x="561" y="196" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="620" y="206" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">13/30</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="228" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">plain loop, temperature 0.7</text>
+  <text x="28" y="246" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">seed 1</text>
+  <rect x="160" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="173" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="186" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="199" y="236" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="236" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="225" y="236" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="244" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="257" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="270" y="236" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="283" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="296" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="309" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="328" y="236" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="341" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="354" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="367" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="380" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="393" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="412" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="425" y="236" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="451" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="464" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="477" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="496" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="509" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="522" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="535" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="548" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="561" y="236" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="246" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">24/30</text>
+  <text x="28" y="264" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">seed 2</text>
+  <rect x="160" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="173" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="186" y="254" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="199" y="254" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="225" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="244" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="257" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="270" y="254" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="283" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="296" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="309" y="254" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="328" y="254" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="341" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="354" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="367" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="380" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="393" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="412" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="425" y="254" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="254" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="451" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="464" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="477" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="496" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="509" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="522" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="535" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="548" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="561" y="254" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="264" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">23/30</text>
+  <text x="28" y="282" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">seed 3</text>
+  <rect x="160" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="173" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="186" y="272" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="199" y="272" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="225" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="244" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="257" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="270" y="272" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="283" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="296" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="309" y="272" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="328" y="272" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="341" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="354" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="367" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="380" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="393" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="412" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="425" y="272" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="438" y="272" width="10" height="13" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="451" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="464" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="477" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="496" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="509" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="522" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="535" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="548" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="561" y="272" width="10" height="13" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="282" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">23/30</text>
+  </g>
+  <path d="M191 300 L187 307 L195 307 Z" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M217 300 L213 307 L221 307 Z" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M230 300 L226 307 L234 307 Z" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M314 300 L310 307 L318 307 Z" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4" stroke-linejoin="round"/>
+  <path d="M443 300 L439 307 L447 307 Z" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.4" stroke-linejoin="round"/>
+  <text x="20" y="324" font-size="11" class="m-serif" fill="var(--m-amber-ink, #85590c)">amber marks: the 5 tasks whose outcome changed between seeds</text>
+</svg>

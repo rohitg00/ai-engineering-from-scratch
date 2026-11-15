@@ -1,138 +1,134 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="fig-2-1b-title fig-2-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
-  <title id="fig-2-1b-title">Import time of four imports, 10 runs each</title>
-  <desc id="fig-2-1b-desc">A dot chart of import time in seconds on the Mac, 10 runs of each import in a new Python process, with bytecode on disk on the left and without bytecode on the right. Medians with bytecode: pass 0.023 s, import openai 0.329 s, langgraph StateGraph 0.477 s, create_agent with ChatOpenAI 0.831 s. Medians without bytecode: 0.063 s, 1.064 s, 1.85 s, and 2.64 s.</desc>
-  <line x1="70" y1="300" x2="610" y2="300" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
-  <text x="64" y="304" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
-  <line x1="70" y1="256.67" x2="610" y2="256.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
-  <text x="64" y="260.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.5</text>
-  <line x1="70" y1="213.33" x2="610" y2="213.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
-  <text x="64" y="217.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
-  <line x1="70" y1="170" x2="610" y2="170" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
-  <text x="64" y="174" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1.5</text>
-  <line x1="70" y1="126.67" x2="610" y2="126.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
-  <text x="64" y="130.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2</text>
-  <line x1="70" y1="83.33" x2="610" y2="83.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
-  <text x="64" y="87.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">2.5</text>
-  <line x1="70" y1="40" x2="610" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
-  <text x="64" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3</text>
-  <line x1="70" y1="300" x2="610" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <line x1="70" y1="40" x2="70" y2="300" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
-  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds</text>
-  <text x="205" y="30" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BYTECODE ON DISK</text>
-  <text x="475" y="30" font-size="11" text-anchor="middle" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">NO BYTECODE</text>
-  <line x1="340" y1="40" x2="340" y2="300" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
-  <circle cx="120.1" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="122.3" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="124.5" cy="298.18" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="126.7" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="128.9" cy="297.92" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="131.1" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="133.3" cy="297.92" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="135.5" cy="297.92" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="137.7" cy="298.09" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="139.9" cy="298.01" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <line x1="114" y1="298.01" x2="146" y2="298.01" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2"/>
-  <rect class="m-knock" x="110.5" y="278.43" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="130" y="289.01" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">0.023</text>
-  <text x="130" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">pass</text>
-  <circle cx="180.1" cy="271.57" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="182.3" cy="271.57" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="184.5" cy="272.18" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="186.7" cy="271.31" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="188.9" cy="270.71" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="191.1" cy="269.84" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="193.3" cy="270.71" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="195.5" cy="272.18" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="197.7" cy="272.18" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="199.9" cy="271.49" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <line x1="174" y1="271.49" x2="206" y2="271.49" stroke="var(--m-olive-ink, #515f26)" stroke-width="2"/>
-  <rect class="m-knock" x="170.5" y="251.91" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="190" y="262.49" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">0.329</text>
-  <text x="190" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">openai</text>
-  <circle cx="240.1" cy="258.49" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="242.3" cy="258.31" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="244.5" cy="259.96" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="246.7" cy="259.01" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="248.9" cy="258.83" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="251.1" cy="258.75" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="253.3" cy="258.75" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="255.5" cy="258.49" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="257.7" cy="258.14" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="259.9" cy="257.36" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <line x1="234" y1="258.66" x2="266" y2="258.66" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
-  <rect class="m-knock" x="230.5" y="239.08" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="250" y="249.66" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">0.477</text>
-  <text x="250" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">langgraph</text>
-  <circle cx="300.1" cy="227.55" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="302.3" cy="228.59" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="304.5" cy="227.37" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="306.7" cy="224.17" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="308.9" cy="228.15" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="311.1" cy="227.72" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="313.3" cy="230.15" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="315.5" cy="229.8" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="317.7" cy="228.15" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="319.9" cy="227.03" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <line x1="294" y1="227.98" x2="326" y2="227.98" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
-  <rect class="m-knock" x="290.5" y="208.4" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="310" y="218.98" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">0.831</text>
-  <text x="310" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">agent</text>
-  <circle cx="390.1" cy="294.28" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="392.3" cy="294.45" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="394.5" cy="294.37" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="396.7" cy="294.71" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="398.9" cy="294.71" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="401.1" cy="294.45" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="403.3" cy="294.54" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="405.5" cy="294.71" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="407.7" cy="294.71" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <circle cx="409.9" cy="294.54" r="2.6" fill="var(--m-grey-ink, #5e5e59)"/>
-  <line x1="384" y1="294.54" x2="416" y2="294.54" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="2"/>
-  <rect class="m-knock" x="380.5" y="274.96" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="400" y="285.54" font-size="11" text-anchor="middle" fill="var(--m-grey-ink, #5e5e59)">0.063</text>
-  <text x="400" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">pass</text>
-  <circle cx="450.1" cy="202.33" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="452.3" cy="209.78" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="454.5" cy="208.22" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="456.7" cy="208.74" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="458.9" cy="207.27" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="461.1" cy="208.83" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="463.3" cy="207.01" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="465.5" cy="209.61" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="467.7" cy="207.35" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <circle cx="469.9" cy="205.27" r="2.6" fill="var(--m-olive-ink, #515f26)"/>
-  <line x1="444" y1="207.79" x2="476" y2="207.79" stroke="var(--m-olive-ink, #515f26)" stroke-width="2"/>
-  <rect class="m-knock" x="440.5" y="188.21" width="39" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="460" y="198.79" font-size="11" text-anchor="middle" fill="var(--m-olive-ink, #515f26)">1.064</text>
-  <text x="460" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">openai</text>
-  <circle cx="510.1" cy="133.51" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="512.3" cy="133.43" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="514.5" cy="134.03" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="516.7" cy="129.18" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="518.9" cy="143.65" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="521.1" cy="142.27" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="523.3" cy="139.15" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="525.5" cy="140.19" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="527.7" cy="140.97" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <circle cx="529.9" cy="140.53" r="2.6" fill="var(--m-indigo-ink, #4b4f9e)"/>
-  <line x1="504" y1="139.67" x2="536" y2="139.67" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
-  <rect class="m-knock" x="503.8" y="120.09" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="520" y="130.67" font-size="11" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">1.85</text>
-  <text x="520" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">langgraph</text>
-  <circle cx="570.1" cy="68.86" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="572.3" cy="81.77" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="574.5" cy="76.14" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="576.7" cy="67.47" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="578.9" cy="69.21" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="581.1" cy="70.33" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="583.3" cy="68.51" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="585.5" cy="72.07" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="587.7" cy="81.43" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <circle cx="589.9" cy="80.3" r="2.6" fill="var(--m-blue-ink, #2f5d9a)"/>
-  <line x1="564" y1="71.2" x2="596" y2="71.2" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
-  <rect class="m-knock" x="563.8" y="51.62" width="32.4" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="580" y="62.2" font-size="11" text-anchor="middle" fill="var(--m-blue-ink, #2f5d9a)">2.64</text>
-  <text x="580" y="318" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">agent</text>
-  <text x="70" y="346" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">pass: an empty program. agent: create_agent with ChatOpenAI.</text>
-  <text x="70" y="364" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one run on the Mac. Each short line is the median of 10.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-labelledby="fig-2-1b-title fig-2-1b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-1b-title">The order tasks finish against the order their writes apply</title>
+  <desc id="fig-2-1b-desc">Seven supersteps with two parallel tasks each, recorded with Qwen3 4B on the x86 server guest. On the left, the tasks in the order they returned, with the seconds of their model call. On the right, the order in which apply_writes applied their writes. In six runs, nodes a and b each ask the model for an answer and append to one list with operator.add. b returned first in 5 of 6 runs, and the list was a, b in 6 of 6. In the last superstep, node b was started by Command(goto) as a PULL task and node c by a Send as a PUSH task. c finished first, and b still applied first, because PULL paths sort before PUSH paths.</desc>
+  <defs><marker id="fig-2-1b-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="210" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ORDER THEY RETURNED</text>
+  <text x="452" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ORDER APPLIED</text>
+  <text x="210" y="40" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model seconds under each</text>
+  <text x="452" y="40" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">sorted by task path</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="76" font-size="11.5" fill="var(--m-ink, #1a1a1a)">a asked for 60 words</text>
+  <rect x="210" y="60" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="242" y="75.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="242" y="97" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.58 s</text>
+  <rect x="286" y="60" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="318" y="75.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="318" y="97" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.75 s</text>
+  <rect x="452" y="60" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="484" y="75.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="484" y="97" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 1</text>
+  <rect x="528" y="60" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="560" y="75.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="560" y="97" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 2</text>
+  <line x1="358" y1="72" x2="444" y2="72" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1b-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M358 72 L444 72" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="356.6" y="55.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="401" y="66" font-size="11.5" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">apply_writes</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="122" font-size="11.5" fill="var(--m-ink, #1a1a1a)">a asked for 60 words</text>
+  <rect x="210" y="106" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="242" y="121.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="242" y="143" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.60 s</text>
+  <rect x="286" y="106" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="318" y="121.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="318" y="143" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.93 s</text>
+  <rect x="452" y="106" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="484" y="121.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="484" y="143" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 1</text>
+  <rect x="528" y="106" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="560" y="121.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="560" y="143" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 2</text>
+  <line x1="358" y1="118" x2="444" y2="118" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1b-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M358 118 L444 118" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="168" font-size="11.5" fill="var(--m-ink, #1a1a1a)">a asked for 60 words</text>
+  <rect x="210" y="152" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="242" y="167.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="242" y="189" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0.60 s</text>
+  <rect x="286" y="152" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="318" y="167.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="318" y="189" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.85 s</text>
+  <rect x="452" y="152" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="484" y="167.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="484" y="189" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 1</text>
+  <rect x="528" y="152" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="560" y="167.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="560" y="189" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 2</text>
+  <line x1="358" y1="164" x2="444" y2="164" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1b-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M358 164 L444 164" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="214" font-size="11.5" fill="var(--m-ink, #1a1a1a)">b asked for 60 words</text>
+  <rect x="210" y="198" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="242" y="213.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="242" y="235" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.48 s</text>
+  <rect x="286" y="198" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="318" y="213.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="318" y="235" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.62 s</text>
+  <rect x="452" y="198" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="484" y="213.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="484" y="235" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 1</text>
+  <rect x="528" y="198" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="560" y="213.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="560" y="235" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 2</text>
+  <line x1="358" y1="210" x2="444" y2="210" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1b-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M358 210 L444 210" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="260" font-size="11.5" fill="var(--m-ink, #1a1a1a)">b asked for 60 words</text>
+  <rect x="210" y="244" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="242" y="259.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="242" y="281" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.70 s</text>
+  <rect x="286" y="244" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="318" y="259.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="318" y="281" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.83 s</text>
+  <rect x="452" y="244" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="484" y="259.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="484" y="281" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 1</text>
+  <rect x="528" y="244" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="560" y="259.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="560" y="281" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 2</text>
+  <line x1="358" y1="256" x2="444" y2="256" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1b-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M358 256 L444 256" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="306" font-size="11.5" fill="var(--m-ink, #1a1a1a)">b asked for 60 words</text>
+  <rect x="210" y="290" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="242" y="305.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="242" y="327" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.67 s</text>
+  <rect x="286" y="290" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="318" y="305.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="318" y="327" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.80 s</text>
+  <rect x="452" y="290" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="484" y="305.6" font-size="12" text-anchor="middle" font-weight="700">a</text>
+  <text x="484" y="327" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 1</text>
+  <rect x="528" y="290" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="560" y="305.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="560" y="327" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">item 2</text>
+  <line x1="358" y1="302" x2="444" y2="302" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1b-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M358 302 L444 302" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="368" font-size="11.5" fill="var(--m-ink, #1a1a1a)">Command and Send</text>
+  <rect x="210" y="352" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="242" y="367.6" font-size="12" text-anchor="middle" font-weight="700">c</text>
+  <text x="242" y="389" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">PUSH</text>
+  <rect x="286" y="352" width="64" height="24" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="318" y="367.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="318" y="389" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">PULL</text>
+  <rect x="452" y="352" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="484" y="367.6" font-size="12" text-anchor="middle" font-weight="700">b</text>
+  <text x="484" y="389" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">PULL</text>
+  <rect x="528" y="352" width="64" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-dasharray="5 4"/>
+  <text x="560" y="367.6" font-size="12" text-anchor="middle" font-weight="700">c</text>
+  <text x="560" y="389" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">PUSH</text>
+  <line x1="358" y1="364" x2="444" y2="364" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-1b-head-amber)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-amber-ink, #85590c)" opacity="0"><animateMotion path="M358 364 L444 364" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  </g>
+  <line x1="16" y1="340" x2="624" y2="340" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.4"/>
+  <rect x="20" y="418" width="22" height="14" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-dasharray="5 4"/>
+  <text x="48" y="429" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">a PUSH task from a Send</text>
+  <text x="300" y="429" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">b back first in 5 of 6, merged a, b in 6 of 6</text>
 </svg>

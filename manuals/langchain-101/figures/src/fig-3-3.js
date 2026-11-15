@@ -2,106 +2,43 @@
 
 const fs = require('fs');
 const path = require('path');
-const { figure, color } = require('../../../_shared/figkit.js');
+const { figure } = require('../../../_shared/figkit.js');
 
-const text = fs.readFileSync(path.join(__dirname, '../../capture/out/09-middleware-order.txt'), 'utf8');
-const list = heading => {
-  const at = text.indexOf('[', text.indexOf(heading));
-  return JSON.parse(text.slice(at, text.indexOf('\n]', at) + 2));
-};
-const events = list('## hook order for one tool round trip').map((raw, index) => {
-  const line = raw.trim();
-  if (line === 'model called') return { index, lane: 3, kind: 'model', name: line };
-  const [, who, hook, edge, tool] = /^([A-Z])\.(\w+)(?: (enter|exit))?(?: (\w+))?$/.exec(line);
-  return { index, lane: 'ABC'.indexOf(who), who, hook, edge, tool, name: line };
-});
-const edges = list('## edges');
-const after = from => edges.map(e => e.split(' -> ')).filter(([a]) => a === from).map(([, b]) => b);
-const chain = ['C.before_model'];
-for (;;) {
-  const next = after(chain[chain.length - 1]).find(name => name === 'model' || name.endsWith('after_model'));
-  if (!next) break;
-  chain.push(next);
-}
-
-const phases = [];
-for (const event of events) {
-  const kind = event.kind === 'model' ? 'wrap_model_call' : event.hook;
-  const last = phases[phases.length - 1];
-  if (last && last.kind === kind) last.end = event.index;
-  else phases.push({ kind, start: event.index, end: event.index });
-}
-
-const X0 = 104;
-const PITCH = (618 - X0) / events.length;
-const px = i => X0 + (i + 0.5) * PITCH;
-const LANES = [92, 128, 164, 200];
-const LANE_NAMES = ['A', 'B', 'C', 'model, tool'];
+const out = name => fs.readFileSync(path.join(__dirname, '../../capture/out', name), 'utf8');
+const run = out('06-agent-run.txt');
+const start = run.indexOf('\n[\n', run.indexOf('"messages"\n]')) + 1;
+const final = JSON.parse(run.slice(start, run.indexOf('\n]\n', start) + 2));
+const [, ask, answer, reply] = final;
+const call = ask.tool_calls[0];
+const usage = JSON.parse(/"usage_metadata": (\{[\s\S]*?\})/.exec(out('02-messages.txt'))[1]);
+const show = value => (typeof value === 'string' ? JSON.stringify(value) : JSON.stringify(value).replace(/"/g, '').replace(/,/g, ', ').replace(/:/g, ': '));
 
 module.exports = figure('fig-3-3', {
-  height: 452,
-  title: 'The order of hooks from three middlewares',
-  desc: `A trace of the ${events.length} hook calls that middleware=[A, B, C] logged in one tool round trip, read from left to right. Three lanes, A, B and C, and a fourth lane for the model and the tool. Each dot is one node hook. Each bar is one wrap hook, from its enter to its exit. ${phases.length} numbered phases run along the top: before_agent A B C, before_model A B C, wrap_model_call entered A B C with the model inside and left C B A, after_model C B A, wrap_tool_call entered A B C around the add tool and left C B A, the same model pass again, and after_agent C B A. The bars of A are the longest, so A is the outer layer. Under the trace, the graph edges read from the compiled agent: ${chain.join(' to ')}.`,
+  height: 400,
+  title: 'The fields of an AIMessage and its ToolMessage',
+  desc: `Three cards read from one agent run. The first is the AIMessage that asks for a tool: content ${show(ask.content)}, id ${ask.id}, and tool_calls with name ${call.name}, args ${show(call.args)}, and id ${call.id}. The second is the ToolMessage that answers it: content ${show(answer.content)}, name ${answer.name}, tool_call_id ${answer.tool_call_id}, and status ${answer.status}. A dashed line joins the id ${call.id} in the tool call to tool_call_id ${answer.tool_call_id}. The third, below, is the final AIMessage with content ${show(reply.content)} and no tool_calls, which ends the loop. A reply from a real provider also carries usage_metadata, such as ${usage.input_tokens} input and ${usage.output_tokens} output tokens in the messages capture.`,
 }, f => {
-  f.kicker(20, 18, `${events.length} hook calls in the order they ran`);
-  phases.forEach((phase, n) => {
-    const x1 = px(phase.start) - PITCH * 0.4;
-    const x2 = px(phase.end) + PITCH * 0.4;
-    f.rule(x1, 52, x2, 52, { hue: 'ink-mute' });
-    f.rule(x1, 48, x1, 56, { hue: 'ink-mute' });
-    f.rule(x2, 48, x2, 56, { hue: 'ink-mute' });
-    f.step((x1 + x2) / 2, 36, n + 1, { hue: phase.kind.startsWith('wrap') ? 'blue' : 'indigo' });
-  });
-  LANES.forEach((y, lane) => {
-    f.text(20, y + 4, LANE_NAMES[lane], { size: 11.5, weight: 700, hue: lane < 3 ? 'blue' : 'plum' });
-    f.rule(X0, y, 618, y, { opacity: 0.3 });
-  });
-
-  const open = {};
-  events.forEach(event => {
-    const x = px(event.index);
-    if (event.kind === 'model') {
-      f.dot(x, LANES[3], { hue: 'plum', r: 4.5 });
-      return;
-    }
-    const y = LANES[event.lane];
-    if (event.edge === 'enter') {
-      open[event.who] = event;
-      if (event.tool && events[event.index + 1].edge === 'exit') f.dot(x + PITCH / 2, LANES[3], { hue: 'green', r: 4.5 });
-      return;
-    }
-    if (event.edge === 'exit') {
-      const start = px(open[event.who].index);
-      const tool = open[event.who].hook === 'wrap_tool_call';
-      f.rect(start - 3, y - 6, x - start + 6, 12, { fill: color(tool ? 'green-fill' : 'blue-fill'), stroke: color(tool ? 'green-ink' : 'blue-ink') });
-      return;
-    }
-    const before = event.hook.startsWith('before');
-    f.emit(`<circle cx="${x.toFixed(1)}" cy="${y}" r="4" fill="${before ? color('indigo-ink') : color('panel')}" stroke="${color('indigo-ink')}" stroke-width="1.4"/>`);
-  });
-
-  const key = phases.map((phase, n) => {
-    const names = events.slice(phase.start, phase.end + 1).filter(e => e.who && e.edge !== 'exit').map(e => e.who).join(' ');
-    return `${n + 1} ${phase.kind}${names ? `: ${names}` : ''}`;
-  });
-  f.kicker(20, 238, 'phases');
-  key.forEach((line, i) => f.text(20 + (i % 3) * 206, 258 + Math.floor(i / 3) * 18, line, { size: 11, hue: 'ink-soft' }));
-
-  const legendY = 330;
-  f.emit(`<circle cx="26" cy="${legendY - 4}" r="4" fill="${color('indigo-ink')}" stroke="${color('indigo-ink')}" stroke-width="1.4"/>`);
-  f.text(36, legendY, 'before_ node hook', { size: 11, serif: true, hue: 'ink-soft' });
-  f.emit(`<circle cx="176" cy="${legendY - 4}" r="4" fill="${color('panel')}" stroke="${color('indigo-ink')}" stroke-width="1.4"/>`);
-  f.text(186, legendY, 'after_ node hook', { size: 11, serif: true, hue: 'ink-soft' });
-  f.rect(316, legendY - 10, 22, 12, { hue: 'blue' });
-  f.text(344, legendY, 'wrap_model_call', { size: 11, serif: true, hue: 'ink-soft' });
-  f.rect(470, legendY - 10, 22, 12, { hue: 'green' });
-  f.text(498, legendY, 'wrap_tool_call', { size: 11, serif: true, hue: 'ink-soft' });
-
-  f.kicker(20, 372, 'graph edges around the model node');
-  chain.forEach((node, i) => {
-    const x = 20 + i * 122;
-    f.box({ x, y: 386, w: 100, h: 26, hue: node === 'model' ? 'indigo' : 'blue', title: node, titleSize: 11, pad: 2 });
-    if (i < chain.length - 1) f.arrow([x + 100, 399], [x + 121, 399], { style: 'call' });
-  });
-  f.text(20, 436, 'Each after_model hook is its own node, and the edges run in the reverse of the list order.', { size: 11, serif: true, hue: 'ink-soft' });
+  const card = (x, y, w, h, hue, title, rows) => {
+    f.rect(x, y, w, h, { hue });
+    f.text(x + 14, y + 22, title, { size: 13, weight: 700, hue });
+    return rows.map(([k, v, strong], i) => {
+      const ry = y + 50 + i * 24;
+      f.text(x + 14, ry, k, { size: 11.5, hue: 'ink-soft' });
+      f.text(x + 128, ry, v, { size: 11.5, weight: strong ? 700 : undefined, hue: strong ? hue : undefined, max: w - 140 });
+      return ry;
+    });
+  };
+  f.beat(1);
+  const left = card(20, 14, 280, 200, 'plum', 'AIMessage', [['content', show(ask.content)], ['id', ask.id], ['tool_calls', ''], ['  .name', call.name], ['  .args', show(call.args)], ['  .id', call.id, true]]);
+  f.beat(2);
+  const right = card(340, 14, 280, 200, 'green', answer.type, [['content', show(answer.content)], ['name', answer.name], ['id', answer.id], ['tool_call_id', answer.tool_call_id, true], ['status', answer.status]]);
+  f.path(`M${128 + 20 + call.id.length * 6.9 + 6} ${left[5] - 4} L318 ${left[5] - 4} L318 ${right[3] - 4} L339 ${right[3] - 4}`, { style: 'reply' });
+  f.text(318, left[5] + 14, 'same id', { size: 11, serif: true, anchor: 'middle', hue: 'ink-soft', knock: true });
+  f.beat(3);
+  f.arrow([400, 214], [400, 241], { style: 'model' });
+  f.text(410, 232, 'the next model call reads both', { size: 11, serif: true, hue: 'plum' });
+  card(20, 242, 600, 112, 'plum', `${reply.type}, the final answer`, [['content', show(reply.content)], ['tool_calls', 'none, so the agent stops'], ['usage', `${usage.input_tokens} in, ${usage.output_tokens} out, when the provider reports it`]]);
+  f.beat(0);
+  f.text(20, 376, 'The request for a tool is in tool_calls, already parsed, and its content is empty.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 392, 'The ToolMessage repeats the id of the call it answers.', { size: 11, serif: true, hue: 'ink-soft' });
 });

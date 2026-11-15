@@ -1,89 +1,58 @@
 'use strict';
 
-const fs = require('fs');
 const path = require('path');
 const { figure, color } = require('../../../_shared/figkit.js');
+const { load } = require('../../../_shared/chart.js');
 
-const text = fs.readFileSync(path.join(__dirname, '../../capture/out/35-functional-api.txt'), 'utf8');
-const json = (heading, open = '[', from = 0) => {
-  const at = text.indexOf(open, text.indexOf(heading, from));
-  return JSON.parse(text.slice(at, text.indexOf(`\n${open === '[' ? ']' : '}'}`, at) + 2));
+const mac = load(path.join(__dirname, '../../capture/lab/summary/crash-resume-mac.json'));
+const x86 = load(path.join(__dirname, '../../capture/lab/summary/crash-resume-x86.json'));
+const rowsOf = [['sqlite', 'sync'], ['sqlite', 'async'], ['sqlite', 'exit'], ['postgres', 'sync'], ['postgres', 'async'], ['postgres', 'exit']];
+const points = ['before_tool', 'inside_tool', 'before_put_writes', 'before_put', 'after_tool'];
+const colW = 48;
+const none = x86.keys.none;
+const order = x86.keys.order;
+
+const hollow = (f, x, y, r) => f.emit(`<circle cx="${x}" cy="${y}" r="${r}" fill="${color('paper')}" stroke="${color('ink-mute')}" stroke-width="1"/>`);
+const trial = (f, x, y, t, cell, r) => {
+  if (t < cell.twice) f.dot(x, y, { hue: 'rose', r });
+  else if (t < cell.killed) f.dot(x, y, { hue: 'teal', r });
+  else hollow(f, x, y, r - 0.4);
 };
-const first = json('## first run stops at the interrupt inside a task', '{');
-const pause = first.interrupts[0].value;
-const runsAfterFirst = json('task runs:', '[', text.indexOf('## first run'));
-const resumeAt = text.indexOf('## resume: finished tasks are not run again');
-const final = json('## resume', '{', resumeAt);
-const runsAfterResume = json('task runs:', '[', resumeAt);
-const results = runsAfterFirst.map(call => 2 * Number(/\((\d+)\)/.exec(call)[1]));
-if (results.reduce((a, b) => a + b, 0) !== pause.total) throw new Error('fig-5-3: the doubled inputs do not add up to the interrupt total');
-const fresh = runsAfterResume.length - runsAfterFirst.length;
-const inputs = runsAfterFirst.map(call => /\((\d+)\)/.exec(call)[1]);
-
-const lanes = [
-  { title: 'your code', sub: 'invoke', hue: 'violet' },
-  { title: 'workflow', sub: '@entrypoint', hue: 'indigo' },
-  { title: 'double', sub: '@task', hue: 'indigo' },
-  { title: 'ask_human', sub: '@task', hue: 'indigo' },
-  { title: 'checkpointer', sub: 'InMemorySaver', hue: 'teal' },
-];
-const cx = index => 46 + index * 86;
-const LOG = 446;
-
-const rows = [
-  [0, 1, 'call', `invoke([${inputs.join(', ')}])`],
-  [1, 2, 'call', `double(${inputs.join('), (')})`, 'runs'],
-  [2, 4, 'write', `results ${results.join(', ')}`],
-  [1, 3, 'call', `ask_human(${pause.total})`],
-  [3, 0, 'state', `interrupt: ${pause.question}`],
-  null,
-  [0, 1, 'call', `Command(resume='${final.answer}')`],
-  [1, 2, 'call', `double(${inputs.join('), (')})`, 'none'],
-  [4, 2, 'reply', `saved ${results.join(', ')}`],
-  [2, 1, 'reply', `${results.join(', ')}, no body runs`],
-  [1, 3, 'call', `ask_human(${pause.total})`],
-  [3, 1, 'reply', `'${final.answer}'`],
-  [1, 0, 'reply', `total ${final.total}, answer ${final.answer}`],
-];
 
 module.exports = figure('fig-5-3', {
-  height: 650,
-  title: 'Two runs of one entrypoint',
-  desc: `Five lifelines: your code, the workflow entrypoint, the double task, the ask_human task, and the checkpointer. A sixth column is the log of task bodies that ran, read from the capture. Run 1: invoke with ${inputs.join(', ')} runs the bodies ${runsAfterFirst.join(', ')}, saves the results ${results.join(', ')}, calls ask_human with ${pause.total}, and stops with the interrupt "${pause.question}". Run 2: Command resume ${final.answer} runs workflow again from its top. The double calls return the saved results and the log gets ${fresh} new entries. ask_human gets ${final.answer}, and workflow returns total ${final.total} and answer ${final.answer}.`,
+  height: 340,
+  title: 'Crash trials that charged the order twice',
+  desc: `A grid of dots, one dot per trial, for six rows of saver and durability mode and five kill points, in two panels. The left panel is the graph on the Mac with no model, five trials per cell: ${mac.graph.twice} of ${mac.graph.trials} ran the effect twice. The right panel is the Qwen3 4B agent on the x86 server guest with no key, one bar of twenty trials per cell with the count that charged twice: ${none.twice} of ${none.killed} killed trials charged twice. Every kill inside the tool charged twice, and sync with a kill after the step charged once.`,
 }, f => {
-  lanes.forEach((lane, index) => {
-    f.box({ x: cx(index), y: 8, w: 84, h: 40, hue: lane.hue, title: lane.title, sub: lane.sub, titleSize: 11, anchor: 'middle', pad: 2 });
-    f.lifeline(cx(index), 48, 640);
+  const panels = [{ x: 140, title: 'graph, the Mac, no model' }, { x: 390, title: 'agent, x86, Qwen3 4B' }];
+  panels.forEach(panel => {
+    f.kicker(panel.x, 20, panel.title);
+    points.forEach((_, k) => f.text(panel.x + k * colW + colW / 2, 42, String(k + 1), { size: 11, anchor: 'middle', weight: 700 }));
   });
-  f.kicker(LOG, 22, 'task bodies run');
-  f.text(LOG, 38, 'the log, in order', { size: 11, serif: true, hue: 'ink-soft' });
-  f.rule(LOG - 12, 8, LOG - 12, 640, { hue: 'ink-mute', opacity: 0.4 });
-  f.text(20, 70, 'RUN 1', { size: 11, spacing: 1.2, hue: 'ink-mute', knock: true });
-  let n = 0;
-  rows.forEach((row, index) => {
-    const y = 92 + index * 42;
-    if (!row) {
-      f.rule(20, y - 4, LOG - 20, y - 4, { hue: 'ink-mute', dash: 'dashed' });
-      f.text(20, y + 12, 'RUN 2, THE RESUME', { size: 11, spacing: 1.2, hue: 'ink-mute', knock: true });
-      return;
-    }
-    const [from, to, style, label, log] = row;
-    n += 1;
-    f.beat(n);
-    f.step(16, y, n, { hue: style === 'write' ? 'teal' : style === 'state' ? 'amber' : undefined });
-    const x1 = cx(from);
-    const x2 = cx(to);
-    f.arrow([x1, y], [x2 + (x2 > x1 ? -1 : 1), y], { style, label, labelX: /^(Command|total)/.test(label) ? 128 : undefined });
-    if (log === 'runs') runsAfterFirst.forEach((call, k) => {
-      f.rect(LOG + k * 64, y - 10, 64, 20, { fill: color('indigo-fill'), stroke: color('indigo-ink') });
-      f.text(LOG + k * 64 + 32, y + 4, call, { size: 11, anchor: 'middle', hue: 'indigo' });
+  rowsOf.forEach(([saver, mode], r) => {
+    const y = 66 + r * 30;
+    points.forEach((point, k) => {
+      const key = `${saver} ${mode} ${point}`;
+      const left = mac.graph.cells[key];
+      for (let t = 0; t < left.trials; t += 1) trial(f, 140 + k * colW + 8 + t * 8, y, t, left, 3.2);
+      const right = none.cells[key];
+      const x0 = 390 + k * colW + 4;
+      const unit = 26 / right.trials;
+      f.emit(`<rect x="${x0}" y="${y - 5}" width="26" height="10" fill="${color('paper')}" stroke="${color('ink-mute')}" stroke-width="1"/>`);
+      if (right.twice) f.emit(`<rect x="${x0}" y="${y - 5}" width="${(right.twice * unit).toFixed(1)}" height="10" fill="${color('rose-ink')}"/>`);
+      if (right.killed > right.twice) f.emit(`<rect x="${(x0 + right.twice * unit).toFixed(1)}" y="${y - 5}" width="${((right.killed - right.twice) * unit).toFixed(1)}" height="10" fill="${color('teal-ink')}"/>`);
+      f.text(x0 + 29, y + 4, String(right.twice), { size: 11, hue: right.twice ? 'rose' : 'ink-soft' });
     });
-    if (log === 'none') {
-      f.rect(LOG, y - 10, 182, 20, { fill: color('paper'), stroke: color('teal-ink'), dash: 'dashed' });
-      f.text(LOG + 8, y + 4, `${fresh} new entries`, { size: 11, hue: 'teal', weight: 700 });
-    }
+    f.text(20, 70 + r * 30, `${saver} ${mode}`, { size: 11.5, hue: mode === 'sync' ? 'teal' : 'ink' });
   });
-  f.beat(0);
-  f.text(LOG, 610, `${runsAfterResume.length} entries after both runs:`, { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(LOG, 626, 'each double body ran once', { size: 11, serif: true, hue: 'teal', weight: 700 });
+  f.rule(20, 141, 620, 141, { hue: 'ink-mute', dash: 'dashed' });
+  f.text(20, 264, '1 before_tool   2 inside_tool   3 before_put_writes   4 before_put   5 after_tool', { size: 11, hue: 'ink-soft' });
+  f.dot(26, 290, { hue: 'rose', r: 3.2 });
+  f.text(36, 294, 'charged twice', { size: 11, serif: true, hue: 'rose' });
+  f.dot(140, 290, { hue: 'teal', r: 3.2 });
+  f.text(150, 294, 'charged once', { size: 11, serif: true, hue: 'teal' });
+  hollow(f, 250, 290, 2.8);
+  f.text(260, 294, 'not killed, exit mode never reached it', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 318, `Totals: graph ${mac.graph.twice} of ${mac.graph.trials}, agent ${none.twice} of ${none.killed} killed with no key.`, { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 334, `Keyed on the thread and order id: graph ${mac.graph_idempotent.twice} of ${mac.graph_idempotent.trials}, agent ${order.twice} of ${order.killed} killed.`, { size: 11, serif: true, hue: 'ink-soft' });
 });

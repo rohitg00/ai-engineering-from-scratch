@@ -6,7 +6,7 @@
 
 You write Python and you have called a chat model API. You have seen LangChain code, maybe from the 0.x years, with chains, `AgentExecutor`, and `langchain_community` imports. Today `pip install langchain` on Python 3.11 gives you version 1.5.0, and most of that code no longer imports.
 
-This manual is for the engineer who must decide if the 1.x stack fits, and then build on it. It starts with one agent run and the packages it needs. It ends with a part that builds four small programs and a drill for each documented failure.
+This manual is for the engineer who must decide if the 1.x stack fits, and then build on it. It starts with that decision, measured on a task suite with local and Claude models. Each part then opens with a position that our runs support, and most parts end with a small program that applies it.
 
 Four projects share the LangChain name: LangChain, LangGraph, LangSmith, and Deep Agents. Their packages have their own version numbers. So this manual names the package with each version, such as `langchain` 1.5.0 and `langchain-core` 1.8.0. [Section 1.1](#s-langchain-langgraph-langsmith-and-deep-agents) says what each project does.
 
@@ -61,7 +61,9 @@ The other captures call no model, such as the versions, the messages, the graph 
 
 We recorded on two machines. The Mac is an Apple M1 Max with 10 cores and 64 GiB, with Ollama and PostgreSQL 14. The x86 server guest has 32 vCPU and 48 GiB, with PostgreSQL 16, Redis 7, and Ollama 0.31.1 on CPU. The two machines differ, so this manual never sets a number from one beside a number from the other.
 
-The Mac is a shared laptop, and other work ran on it during every timed run. Read each time from the Mac as an upper bound for that machine. The real models of the lab were Qwen3 models of 0.6B to 8B parameters on Ollama, and `nomic-embed-text` for embeddings. The capture kit used Qwen3 4B Instruct on the x86 server guest. So did the Part 8 drill and the lab runs T05, T07, T08, T11, T17, T18, and T19. No model time in this manual is the time of a hosted model.
+The Mac is a shared laptop, and other work ran on it during every timed run. Read each time from the Mac as an upper bound for that machine. The local models of the lab were Qwen3 0.6B, 1.7B, 4B, 8B, 14B, and 30B-A3B, and gpt-oss 20B, on Ollama, with `nomic-embed-text` for embeddings. The capture kit used Qwen3 4B Instruct on the x86 server guest. So did the failure drill of [section 8.6](#s-a-failure-drill) and the crash matrix of [section 5.3](#s-durability-modes-and-a-crash-between-two-steps). So did the lab runs T05, T07, T08, T11, T17, T18, and T19.
+
+**Task-suite bench:** the 99 tasks of [section 1.2](#s-do-you-need-langchain), each checked by the state that its tools leave. It is the only place where a hosted model ran. Claude Haiku 5.5 (`claude-haiku-5-5`) and Claude Sonnet 5.5 (`claude-sonnet-5-5`) ran through the Anthropic API from the Mac. The budget had a cap, and every call is in a cost ledger. [The bench method](#s-ref-the-bench-method) gives the tasks, the settings, and the rows not to use. Every other model time in this manual is the time of a local model.
 
 ## Conventions
 
@@ -85,7 +87,7 @@ python3 capture/run.py --check
 
 The check runs the 12 model-free scenarios again into a temporary folder and compares each file with `capture/out/`. It checks that each of the 36 recorded files names its model. It also checks the structure that the manual relies on, such as the message types and the tool names. It then rebuilds the lab summaries from the raw recordings and compares them too. It does not call a model, so it prints one `skipped:` line for the recorded scenarios. `python3 capture/run.py --check --live` records them again when Ollama runs on your machine.
 
-This is the scenario behind [section 1.2](#s-one-create-agent-run). It builds an agent with one tool and a system prompt, and it asks one question:
+This is the scenario behind [section 1.3](#s-one-create-agent-run). It builds an agent with one tool and a system prompt, and it asks one question:
 
 ```listing
 title: the agent of the first run
@@ -120,15 +122,15 @@ note: Each message is cut to its type and content. The ids and the tool call are
     "content": "2 + 3 = 5.",
 ```
 
-To use another model, pass a model string such as `"openai:gpt-4.1"` in place of `m`, and install the provider package. [Section 2.2](#s-init-chat-model-and-model-profiles) shows how the string resolves.
+To use another model, pass a model string such as `"openai:gpt-4.1"` in place of `m`, and install the provider package. [Section 3.2](#s-init-chat-model-and-model-profiles) shows how the string resolves.
 
 ## How the parts are ordered
 
-Part 1 is LangChain on one page: each project, its claims beside our results, and one agent run from `invoke` to the last checkpoint. Part 2 installs the stack and explains the four objects of every agent: the model, the messages, the tools, and the prompt.
+Part 1 is the decision. It sets each project and its claims beside our results, compares harnesses on the task suite, and follows one agent run to the last checkpoint. Part 2 goes inside the runtime: supersteps, channels, the checkpoint write path, interrupts, streams, and checkpoint growth, from traces of real runs. Part 3 installs the stack and explains the model, the messages, the tools, and the prompt.
 
-Part 3 is the agent that `create_agent` builds: its graph, structured output, and middleware. Part 4 is streaming and memory: stream modes, checkpointers, durability, stores, and summarization. Part 5 is LangGraph itself: state and reducers, `Send` and `Command`, the functional API, interrupts, approvals, time travel, subgraphs, and error handlers.
+Part 4 is the agent that `create_agent` builds: its graph, structured output on each provider, many tools, and middleware. Part 5 is state, memory, and durability: streams, checkpointers, crashes, stores, long threads, and serialization. Part 6 is LangGraph control flow: state and reducers, `Send` and `Command`, the functional API, interrupts, approvals, time travel, subgraphs, and error handlers.
 
-Part 6 connects retrieval, MCP, Deep Agents, and LangSmith. Part 7 operates and debugs: Agent Server, cost, security, migration from 0.x, symptoms, and the limits at the pin. Part 8 builds four programs and a failure drill. This edition is a draft, and the table below lists the parts that are written so far:
+Part 7 connects retrieval, MCP, Deep Agents, and LangSmith. Part 8 operates and debugs: Agent Server, cost, security, migration from 0.x, symptoms, a failure drill, and the limits at the pin. A production service built end to end is being written, and it will join Part 8. This edition is a draft, and the table below lists the parts that are written so far:
 
 ```parts
 ```
@@ -154,4 +156,4 @@ claim: Each arrow style marks one kind of exchange, and every label is a real na
 caption: Read each numbered row from the tail of the arrow to its head. The note under each label names the style. From capture/out/06-agent-run.txt, capture/out/03-tools.txt, capture/out/04-tool-errors.txt, capture/out/30-state-history-forks.txt, and capture/out/42-langsmith.txt.
 ```
 
-Sources: manual.json; capture/README.md, capture/run.py, capture/s_start.py, capture/common.py, capture/out/06-agent-run.txt, capture/out/03-tools.txt, capture/out/04-tool-errors.txt, capture/out/30-state-history-forks.txt, capture/out/42-langsmith.txt; capture/lab/; docs.langchain.com at docs commit 04d4d4a.
+Sources: manual.json; capture/README.md, capture/run.py, capture/s_start.py, capture/common.py, capture/out/06-agent-run.txt, capture/out/03-tools.txt, capture/out/04-tool-errors.txt, capture/out/30-state-history-forks.txt, capture/out/42-langsmith.txt; capture/lab/, capture/lab/bench/summary-mac.json, capture/lab/bench/runs/cost-ledger.jsonl; docs.langchain.com at docs commit 04d4d4a.

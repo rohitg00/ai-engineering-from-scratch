@@ -1,0 +1,766 @@
+{
+ "pin": {
+  "langgraph": "1.2.22 (tag 08a20169)",
+  "langchain": "1.5.0",
+  "langchain-core": "1.8.0",
+  "langgraph-checkpoint": "4.3.2",
+  "langgraph-checkpoint-sqlite": "3.1.3"
+ },
+ "machine": {
+  "name": "the x86 server guest",
+  "cpu": "AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.13.18",
+  "loadavg_1_5_15": [
+   "26.01",
+   "24.51",
+   "24.56"
+  ],
+  "ollama_ps": [
+   {
+    "name": "qwen3:4b-instruct-2507-q4_K_M",
+    "size_vram": 0,
+    "context_length": 8192
+   }
+  ]
+ },
+ "settings": {
+  "provider": "ollama 0.31.1 (CPU)",
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
+  "temperature": 0,
+  "seed": 42,
+  "think/reasoning": false,
+  "num_ctx": 8192
+ },
+ "k": 10,
+ "n": 30,
+ "rows": {
+  "none/async": {
+   "n": 30,
+   "clean_runs": 30,
+   "load_before": {
+    "loadavg": [
+     "29.23",
+     "29.15",
+     "24.98"
+    ],
+    "ollama_ps": [
+     {
+      "name": "qwen3:4b-instruct-2507-q4_K_M",
+      "size_vram": 0,
+      "context_length": 16384
+     },
+     {
+      "name": "qwen3:8b",
+      "size_vram": 0,
+      "context_length": 8192
+     }
+    ],
+    "other_python": [
+     "   1244  0.0 unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal"
+    ]
+   },
+   "loadavg_after": [
+    "23.79",
+    "25.13",
+    "25.09"
+   ],
+   "supersteps_median": 22.0,
+   "wall_s": {
+    "median": 25.8745,
+    "p10": 25.4714,
+    "p90": 26.3549
+   },
+   "model_provider_s": {
+    "median": 25.8359,
+    "p10": 25.4374,
+    "p90": 26.3207
+   },
+   "tool_fn_s": {
+    "median": 0.0002,
+    "p10": 0.0002,
+    "p90": 0.0002
+   },
+   "framework_s": {
+    "median": 0.0375,
+    "p10": 0.0345,
+    "p90": 0.0389
+   },
+   "framework_share_pct_median": 0.144,
+   "framework_ms_per_superstep_median": 1.704,
+   "node:__start__": {
+    "calls": 1.0,
+    "total_ms": 0.044,
+    "per_call_us": 44.1
+   },
+   "node:model": {
+    "calls": 11.0,
+    "total_ms": 25846.579,
+    "per_call_us": 2349689.0
+   },
+   "node:tools": {
+    "calls": 10.0,
+    "total_ms": 17.968,
+    "per_call_us": 1796.8
+   },
+   "prepare_next_tasks": {
+    "calls": 24.0,
+    "total_ms": 2.618,
+    "per_call_us": 109.1
+   },
+   "apply_writes": {
+    "calls": 23.0,
+    "total_ms": 0.805,
+    "per_call_us": 35.0
+   },
+   "tick": {
+    "calls": 23.0,
+    "total_ms": 2.966,
+    "per_call_us": 129.0
+   },
+   "after_tick": {
+    "calls": 22.0,
+    "total_ms": 3.372,
+    "per_call_us": 153.3
+   },
+   "loop.put_writes": {
+    "calls": 22.0,
+    "total_ms": 0.988,
+    "per_call_us": 44.9
+   },
+   "loop._put_checkpoint": {
+    "calls": 23.0,
+    "total_ms": 0.957,
+    "per_call_us": 41.6
+   },
+   "model_node_wrapper_us_per_call": 968.6,
+   "tools_node_wrapper_us_per_call": 1777.1
+  },
+  "memory/async": {
+   "n": 30,
+   "clean_runs": 30,
+   "load_before": {
+    "loadavg": [
+     "23.79",
+     "25.13",
+     "25.09"
+    ],
+    "ollama_ps": [
+     {
+      "name": "qwen3:4b-instruct-2507-q4_K_M",
+      "size_vram": 0,
+      "context_length": 8192
+     }
+    ],
+    "other_python": [
+     "   1244  0.0 unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal"
+    ]
+   },
+   "loadavg_after": [
+    "21.38",
+    "23.51",
+    "24.06"
+   ],
+   "supersteps_median": 22.0,
+   "wall_s": {
+    "median": 25.8212,
+    "p10": 25.5996,
+    "p90": 26.1843
+   },
+   "model_provider_s": {
+    "median": 25.7702,
+    "p10": 25.5481,
+    "p90": 26.1326
+   },
+   "tool_fn_s": {
+    "median": 0.0002,
+    "p10": 0.0002,
+    "p90": 0.0002
+   },
+   "framework_s": {
+    "median": 0.0513,
+    "p10": 0.0496,
+    "p90": 0.0533
+   },
+   "framework_share_pct_median": 0.197,
+   "framework_ms_per_superstep_median": 2.33,
+   "node:__start__": {
+    "calls": 1.0,
+    "total_ms": 0.048,
+    "per_call_us": 48.0
+   },
+   "node:model": {
+    "calls": 11.0,
+    "total_ms": 25781.059,
+    "per_call_us": 2343732.6
+   },
+   "node:tools": {
+    "calls": 10.0,
+    "total_ms": 25.558,
+    "per_call_us": 2555.8
+   },
+   "prepare_next_tasks": {
+    "calls": 24.0,
+    "total_ms": 2.89,
+    "per_call_us": 120.4
+   },
+   "apply_writes": {
+    "calls": 23.0,
+    "total_ms": 1.111,
+    "per_call_us": 48.3
+   },
+   "tick": {
+    "calls": 23.0,
+    "total_ms": 3.333,
+    "per_call_us": 144.9
+   },
+   "after_tick": {
+    "calls": 22.0,
+    "total_ms": 5.237,
+    "per_call_us": 238.0
+   },
+   "loop.put_writes": {
+    "calls": 22.0,
+    "total_ms": 2.408,
+    "per_call_us": 109.5
+   },
+   "loop._put_checkpoint": {
+    "calls": 23.0,
+    "total_ms": 2.992,
+    "per_call_us": 130.1
+   },
+   "saver.put": {
+    "calls": 23.0,
+    "total_ms": 5.446,
+    "per_call_us": 236.8
+   },
+   "saver.put_writes": {
+    "calls": 22.0,
+    "total_ms": 2.48,
+    "per_call_us": 112.7
+   },
+   "model_node_wrapper_us_per_call": 1010.0,
+   "tools_node_wrapper_us_per_call": 2537.6
+  },
+  "memory/sync": {
+   "n": 30,
+   "clean_runs": 30,
+   "load_before": {
+    "loadavg": [
+     "21.38",
+     "23.51",
+     "24.06"
+    ],
+    "ollama_ps": [
+     {
+      "name": "qwen3:4b-instruct-2507-q4_K_M",
+      "size_vram": 0,
+      "context_length": 8192
+     }
+    ],
+    "other_python": [
+     "   1244  0.0 unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal"
+    ]
+   },
+   "loadavg_after": [
+    "29.07",
+    "27.06",
+    "25.61"
+   ],
+   "supersteps_median": 22.0,
+   "wall_s": {
+    "median": 25.8825,
+    "p10": 25.4873,
+    "p90": 26.304
+   },
+   "model_provider_s": {
+    "median": 25.827,
+    "p10": 25.4323,
+    "p90": 26.2471
+   },
+   "tool_fn_s": {
+    "median": 0.0002,
+    "p10": 0.0002,
+    "p90": 0.0002
+   },
+   "framework_s": {
+    "median": 0.0553,
+    "p10": 0.0542,
+    "p90": 0.0563
+   },
+   "framework_share_pct_median": 0.213,
+   "framework_ms_per_superstep_median": 2.514,
+   "node:__start__": {
+    "calls": 1.0,
+    "total_ms": 0.048,
+    "per_call_us": 48.3
+   },
+   "node:model": {
+    "calls": 11.0,
+    "total_ms": 25838.089,
+    "per_call_us": 2348917.2
+   },
+   "node:tools": {
+    "calls": 10.0,
+    "total_ms": 17.981,
+    "per_call_us": 1798.1
+   },
+   "prepare_next_tasks": {
+    "calls": 24.0,
+    "total_ms": 3.092,
+    "per_call_us": 128.8
+   },
+   "apply_writes": {
+    "calls": 23.0,
+    "total_ms": 1.05,
+    "per_call_us": 45.6
+   },
+   "tick": {
+    "calls": 23.0,
+    "total_ms": 3.649,
+    "per_call_us": 158.7
+   },
+   "after_tick": {
+    "calls": 22.0,
+    "total_ms": 4.965,
+    "per_call_us": 225.7
+   },
+   "loop.put_writes": {
+    "calls": 22.0,
+    "total_ms": 2.238,
+    "per_call_us": 101.7
+   },
+   "loop._put_checkpoint": {
+    "calls": 23.0,
+    "total_ms": 2.841,
+    "per_call_us": 123.5
+   },
+   "saver.put": {
+    "calls": 23.0,
+    "total_ms": 5.617,
+    "per_call_us": 244.2
+   },
+   "saver.put_writes": {
+    "calls": 22.0,
+    "total_ms": 2.472,
+    "per_call_us": 112.4
+   },
+   "model_node_wrapper_us_per_call": 999.2,
+   "tools_node_wrapper_us_per_call": 1778.2
+  },
+  "memory/exit": {
+   "n": 30,
+   "clean_runs": 30,
+   "load_before": {
+    "loadavg": [
+     "29.07",
+     "27.06",
+     "25.61"
+    ],
+    "ollama_ps": [
+     {
+      "name": "qwen3:4b-instruct-2507-q4_K_M",
+      "size_vram": 0,
+      "context_length": 8192
+     }
+    ],
+    "other_python": [
+     "   1244  0.0 unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal"
+    ]
+   },
+   "loadavg_after": [
+    "27.36",
+    "25.79",
+    "25.51"
+   ],
+   "supersteps_median": 22.0,
+   "wall_s": {
+    "median": 25.6795,
+    "p10": 25.517,
+    "p90": 26.2421
+   },
+   "model_provider_s": {
+    "median": 25.6405,
+    "p10": 25.477,
+    "p90": 26.2037
+   },
+   "tool_fn_s": {
+    "median": 0.0002,
+    "p10": 0.0002,
+    "p90": 0.0002
+   },
+   "framework_s": {
+    "median": 0.0394,
+    "p10": 0.0373,
+    "p90": 0.0403
+   },
+   "framework_share_pct_median": 0.153,
+   "framework_ms_per_superstep_median": 1.791,
+   "node:__start__": {
+    "calls": 1.0,
+    "total_ms": 0.047,
+    "per_call_us": 47.3
+   },
+   "node:model": {
+    "calls": 11.0,
+    "total_ms": 25651.076,
+    "per_call_us": 2331916.0
+   },
+   "node:tools": {
+    "calls": 10.0,
+    "total_ms": 18.149,
+    "per_call_us": 1814.9
+   },
+   "prepare_next_tasks": {
+    "calls": 24.0,
+    "total_ms": 2.662,
+    "per_call_us": 110.9
+   },
+   "apply_writes": {
+    "calls": 23.0,
+    "total_ms": 1.039,
+    "per_call_us": 45.2
+   },
+   "tick": {
+    "calls": 23.0,
+    "total_ms": 3.096,
+    "per_call_us": 134.6
+   },
+   "after_tick": {
+    "calls": 22.0,
+    "total_ms": 3.66,
+    "per_call_us": 166.3
+   },
+   "loop.put_writes": {
+    "calls": 22.0,
+    "total_ms": 0.99,
+    "per_call_us": 45.0
+   },
+   "loop._put_checkpoint": {
+    "calls": 24.0,
+    "total_ms": 1.87,
+    "per_call_us": 77.9
+   },
+   "saver.put": {
+    "calls": 1.0,
+    "total_ms": 0.392,
+    "per_call_us": 392.0
+   },
+   "model_node_wrapper_us_per_call": 975.0,
+   "tools_node_wrapper_us_per_call": 1794.8
+  },
+  "sqlite/async": {
+   "n": 30,
+   "clean_runs": 30,
+   "load_before": {
+    "loadavg": [
+     "27.36",
+     "25.79",
+     "25.51"
+    ],
+    "ollama_ps": [
+     {
+      "name": "qwen3:4b-instruct-2507-q4_K_M",
+      "size_vram": 0,
+      "context_length": 8192
+     }
+    ],
+    "other_python": [
+     "   1244  0.0 unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal"
+    ]
+   },
+   "loadavg_after": [
+    "25.67",
+    "25.22",
+    "25.43"
+   ],
+   "supersteps_median": 22.0,
+   "wall_s": {
+    "median": 25.7863,
+    "p10": 25.3907,
+    "p90": 26.3172
+   },
+   "model_provider_s": {
+    "median": 25.7265,
+    "p10": 25.325,
+    "p90": 26.2544
+   },
+   "tool_fn_s": {
+    "median": 0.0002,
+    "p10": 0.0002,
+    "p90": 0.0002
+   },
+   "framework_s": {
+    "median": 0.0635,
+    "p10": 0.0604,
+    "p90": 0.066
+   },
+   "framework_share_pct_median": 0.245,
+   "framework_ms_per_superstep_median": 2.887,
+   "node:__start__": {
+    "calls": 1.0,
+    "total_ms": 0.047,
+    "per_call_us": 47.2
+   },
+   "node:model": {
+    "calls": 11.0,
+    "total_ms": 25735.674,
+    "per_call_us": 2339606.7
+   },
+   "node:tools": {
+    "calls": 10.0,
+    "total_ms": 25.558,
+    "per_call_us": 2555.8
+   },
+   "prepare_next_tasks": {
+    "calls": 24.0,
+    "total_ms": 2.707,
+    "per_call_us": 112.8
+   },
+   "apply_writes": {
+    "calls": 23.0,
+    "total_ms": 1.075,
+    "per_call_us": 46.8
+   },
+   "tick": {
+    "calls": 23.0,
+    "total_ms": 3.107,
+    "per_call_us": 135.1
+   },
+   "after_tick": {
+    "calls": 22.0,
+    "total_ms": 5.176,
+    "per_call_us": 235.3
+   },
+   "loop.put_writes": {
+    "calls": 22.0,
+    "total_ms": 2.563,
+    "per_call_us": 116.5
+   },
+   "loop._put_checkpoint": {
+    "calls": 23.0,
+    "total_ms": 2.973,
+    "per_call_us": 129.3
+   },
+   "saver.put": {
+    "calls": 23.0,
+    "total_ms": 90.114,
+    "per_call_us": 3918.0
+   },
+   "saver.put_writes": {
+    "calls": 22.0,
+    "total_ms": 93.029,
+    "per_call_us": 4228.6
+   },
+   "model_node_wrapper_us_per_call": 989.4,
+   "tools_node_wrapper_us_per_call": 2535.8
+  },
+  "sqlite/sync": {
+   "n": 30,
+   "clean_runs": 30,
+   "load_before": {
+    "loadavg": [
+     "25.67",
+     "25.22",
+     "25.43"
+    ],
+    "ollama_ps": [
+     {
+      "name": "qwen3:4b-instruct-2507-q4_K_M",
+      "size_vram": 0,
+      "context_length": 8192
+     }
+    ],
+    "other_python": [
+     "   1244  0.0 unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal"
+    ]
+   },
+   "loadavg_after": [
+    "22.94",
+    "23.89",
+    "24.40"
+   ],
+   "supersteps_median": 22.0,
+   "wall_s": {
+    "median": 25.9153,
+    "p10": 25.5178,
+    "p90": 26.4196
+   },
+   "model_provider_s": {
+    "median": 25.8003,
+    "p10": 25.4094,
+    "p90": 26.2963
+   },
+   "tool_fn_s": {
+    "median": 0.0002,
+    "p10": 0.0002,
+    "p90": 0.0002
+   },
+   "framework_s": {
+    "median": 0.1169,
+    "p10": 0.1115,
+    "p90": 0.1235
+   },
+   "framework_share_pct_median": 0.449,
+   "framework_ms_per_superstep_median": 5.312,
+   "node:__start__": {
+    "calls": 1.0,
+    "total_ms": 0.05,
+    "per_call_us": 50.3
+   },
+   "node:model": {
+    "calls": 11.0,
+    "total_ms": 25811.394,
+    "per_call_us": 2346490.4
+   },
+   "node:tools": {
+    "calls": 10.0,
+    "total_ms": 18.346,
+    "per_call_us": 1834.6
+   },
+   "prepare_next_tasks": {
+    "calls": 24.0,
+    "total_ms": 3.169,
+    "per_call_us": 132.0
+   },
+   "apply_writes": {
+    "calls": 23.0,
+    "total_ms": 1.067,
+    "per_call_us": 46.4
+   },
+   "tick": {
+    "calls": 23.0,
+    "total_ms": 3.715,
+    "per_call_us": 161.5
+   },
+   "after_tick": {
+    "calls": 22.0,
+    "total_ms": 4.844,
+    "per_call_us": 220.2
+   },
+   "loop.put_writes": {
+    "calls": 22.0,
+    "total_ms": 2.593,
+    "per_call_us": 117.8
+   },
+   "loop._put_checkpoint": {
+    "calls": 23.0,
+    "total_ms": 2.672,
+    "per_call_us": 116.2
+   },
+   "saver.put": {
+    "calls": 23.0,
+    "total_ms": 60.006,
+    "per_call_us": 2609.0
+   },
+   "saver.put_writes": {
+    "calls": 22.0,
+    "total_ms": 102.218,
+    "per_call_us": 4646.3
+   },
+   "model_node_wrapper_us_per_call": 1017.3,
+   "tools_node_wrapper_us_per_call": 1815.4
+  },
+  "sqlite/exit": {
+   "n": 30,
+   "clean_runs": 30,
+   "load_before": {
+    "loadavg": [
+     "22.94",
+     "23.89",
+     "24.40"
+    ],
+    "ollama_ps": [
+     {
+      "name": "qwen3:4b-instruct-2507-q4_K_M",
+      "size_vram": 0,
+      "context_length": 8192
+     }
+    ],
+    "other_python": [
+     "   1244  0.0 unattended-upgr /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal"
+    ]
+   },
+   "loadavg_after": [
+    "26.01",
+    "24.51",
+    "24.56"
+   ],
+   "supersteps_median": 22.0,
+   "wall_s": {
+    "median": 25.8674,
+    "p10": 25.5358,
+    "p90": 26.2029
+   },
+   "model_provider_s": {
+    "median": 25.8205,
+    "p10": 25.4862,
+    "p90": 26.1551
+   },
+   "tool_fn_s": {
+    "median": 0.0002,
+    "p10": 0.0002,
+    "p90": 0.0002
+   },
+   "framework_s": {
+    "median": 0.0492,
+    "p10": 0.047,
+    "p90": 0.0513
+   },
+   "framework_share_pct_median": 0.19,
+   "framework_ms_per_superstep_median": 2.236,
+   "node:__start__": {
+    "calls": 1.0,
+    "total_ms": 0.05,
+    "per_call_us": 50.4
+   },
+   "node:model": {
+    "calls": 11.0,
+    "total_ms": 25830.736,
+    "per_call_us": 2348248.7
+   },
+   "node:tools": {
+    "calls": 10.0,
+    "total_ms": 18.187,
+    "per_call_us": 1818.7
+   },
+   "prepare_next_tasks": {
+    "calls": 24.0,
+    "total_ms": 2.74,
+    "per_call_us": 114.2
+   },
+   "apply_writes": {
+    "calls": 23.0,
+    "total_ms": 1.081,
+    "per_call_us": 47.0
+   },
+   "tick": {
+    "calls": 23.0,
+    "total_ms": 3.278,
+    "per_call_us": 142.5
+   },
+   "after_tick": {
+    "calls": 22.0,
+    "total_ms": 3.887,
+    "per_call_us": 176.7
+   },
+   "loop.put_writes": {
+    "calls": 22.0,
+    "total_ms": 1.134,
+    "per_call_us": 51.6
+   },
+   "loop._put_checkpoint": {
+    "calls": 24.0,
+    "total_ms": 1.949,
+    "per_call_us": 81.2
+   },
+   "saver.put": {
+    "calls": 1.0,
+    "total_ms": 2.922,
+    "per_call_us": 2921.5
+   },
+   "model_node_wrapper_us_per_call": 1004.7,
+   "tools_node_wrapper_us_per_call": 1799.1
+  }
+ }
+}

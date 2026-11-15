@@ -206,4 +206,4 @@ Files `00` to `03`, `05`, `31`, `32`, and `34` to `38` are model-free. The other
 - `ChatOllama.bind_tools` drops `tool_choice`, so the `tool_choice="any"` of `ToolStrategy` has no effect on Ollama.
 - The LangSmith client in `42` uses a recording HTTP session. A real client sends the same requests to `api.smith.langchain.com`.
 - The shell tool runs with `PATH=/usr/bin:/bin` and `LC_ALL=C`.
-- `ChatOllama` puts each tool call whole, with its id, on one chunk, and then sends an empty chunk with `chunk_position="last"`. So the v3 run in `25` has one `tool-call-delta` for the call. The v3 bridge drops a piece of a tool call that rides on a chunk marked last (lab T08, section 2.4). No recorded run lost one: the tool of `25` ran with `{"a": 2, "b": 3}`.
+- `ChatOllama` puts each tool call whole, with its id, on one chunk, and then sends an empty chunk with `chunk_position="last"`. So the v3 run in `25` has one `tool-call-delta` for the call. The v3 bridge drops a piece of a tool call that rides on a chunk marked last (lab T08, section 3.4). No recorded run lost one: the tool of `25` ran with `{"a": 2, "b": 3}`.

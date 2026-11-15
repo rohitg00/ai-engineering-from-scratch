@@ -3,27 +3,27 @@
 const { figure } = require('../../../_shared/figkit.js');
 
 const rows = [
-  ['a checkpoint row names a class', ['an edited SqliteSaver row,', 'read with get_state'], 'default: get_state built the lab class', 'LANGGRAPH_STRICT_MSGPACK=true: raw fields'],
-  ['a user id of *', ['a store prefix built', 'from that id'], 'list_namespaces listed every user', 'search on the same prefix: one user only'],
-  ['an edit switches the tool', ['send_email edited into', 'a call of delete_file'], 'batched: delete_file ran in 3 of 3 runs', 'per_call: ValidationError, nothing ran'],
-  ['an agent inside a local trace', ['tracing_context with', 'enabled="local"'], 'requests to api.smith.langchain.com', 'enabled=False: no request at all'],
+  ["MCPAdapter('server.py')", 'a string that is not a URL', 'ValueError, no launch', 'refused at construction', 'rose'],
+  ['tool reports isError', 'ToolError in the server', 'ToolMessage, status error', 'the run goes on', 'green'],
+  ['exception in the tool', 'RuntimeError in the server', 'ToolMessage, status error', 'the run goes on', 'green'],
+  ['slow tool, default client', 'slow(2) waits 2.0 s', 'ToolMessage, status success', 'the adapter has no timeout', 'grey'],
+  ['slow tool, Client(timeout=1)', 'slow(5) over stdio or HTTP', 'MCPError: timed out', 'raised after 1.0 s', 'rose'],
+  ['server crash, stdio', 'os._exit(3) mid-call', 'MCPError: Connection closed', 'run aborts, next call relaunches', 'rose'],
+  ['server crash, HTTP', 'os._exit(3) mid-call', 'RemoteProtocolError', 'then runs fail to connect', 'rose'],
 ];
 
 module.exports = figure('fig-7-3', {
-  height: 452,
-  title: 'Where input crosses into code, by default and with the setting',
-  desc: 'Four rows, each from an input on the left to two results on the right: the default result in rose and the result with a setting in violet. An edited SqliteSaver checkpoint row that names a class makes get_state build the class, and LANGGRAPH_STRICT_MSGPACK=true gives back the raw fields. A user id of star makes list_namespaces list every user, while search on the same prefix returns one user. A batched review lets an edit of send_email into delete_file run delete_file, and per-call review raises ValidationError. An agent inside tracing_context with enabled local sends requests to api.smith.langchain.com, and enabled False sends nothing.',
+  height: 470,
+  title: 'What each MCP failure does to a run',
+  desc: 'Seven rows, each from a case on the left to its result on the right. A string target that is not an http or https URL raises ValueError and launches nothing. A tool that reports isError and a tool that raises a Python exception both become a ToolMessage with status error, and the run goes on. A slow tool with the default client returns after 2.0 seconds, because the adapter has no timeout. A FastMCP Client with timeout 1 raises MCPError timed out after 1.0 seconds. A server crash over stdio raises MCPError Connection closed and aborts the run, and the next call starts the server again. A server crash over HTTP raises RemoteProtocolError on the call, and the agent run and later calls then fail to connect, because nothing starts the server again.',
 }, f => {
-  f.kicker(20, 22, 'the input');
-  f.kicker(300, 22, 'the default, then the change');
-  rows.forEach(([title, sub, bad, good], i) => {
-    const y = 34 + i * 96;
-    const input = f.box({ x: 20, y, w: 252, h: 76, hue: 'grey', title, sub, align: 'left' });
-    const worse = f.box({ x: 300, y, w: 320, h: 34, hue: 'rose', title: bad, align: 'left', titleSize: 11.5 });
-    const better = f.box({ x: 300, y: y + 42, w: 320, h: 34, hue: 'violet', title: good, align: 'left', titleSize: 11.5 });
-    f.path(`M${input.x + input.w} ${worse.cy} H${worse.x - 1}`, { style: 'fail' });
-    f.path(`M${input.x + input.w} ${better.cy} H${better.x - 1}`, { style: 'call' });
+  f.kicker(20, 20, 'the case');
+  f.kicker(360, 20, 'what the run gets');
+  rows.forEach(([kind, detail, result, after, hue], i) => {
+    const y = 32 + i * 60;
+    const left = f.box({ x: 20, y, w: 270, h: 48, hue: 'grey', title: kind, sub: detail, align: 'left' });
+    const right = f.box({ x: 360, y, w: 260, h: 48, hue, title: result, sub: after, align: 'left' });
+    f.arrow(left.right(), [right.x - 1, left.cy], { style: hue === 'rose' ? 'fail' : 'reply' });
   });
-  f.text(20, 428, 'Rose: the result with the default. Violet: the result after the change.', { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, 444, 'Each result is a recorded run on the Mac or the x86 server guest, or a capture of the kit.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 462, 'From the Mac, one run of each case, langchain 1.5.0 with fastmcp 4.2.0.', { size: 11, serif: true, hue: 'ink-soft' });
 });

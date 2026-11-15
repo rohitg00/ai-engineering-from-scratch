@@ -2,24 +2,25 @@
 
 const { figure } = require('../../../_shared/figkit.js');
 
+const rows = [
+  [['the pause'], ['one interrupt', 'action_requests for all calls', 'blue'], ['one interrupt per call', 'type tool_approval, a schema', 'blue']],
+  [['the resume'], ['a list of decisions', 'in the order of the calls', 'blue'], ['a map of id to decision', 'checked by response_schema', 'blue']],
+  [['an edit to', 'another tool'], ['delete_file ran', 'B3, 3 of 3 runs', 'rose'], ['ValidationError', 'P3, nothing ran, 3 of 3', 'blue']],
+  [['a middleware', 'jumps to tools'], ['the tool ran anyway', 'J1, J2, J3, 3 of 3 runs', 'rose'], ['the review held', 'J4, J5, nothing ran', 'blue']],
+];
+
 module.exports = figure('fig-6-5', {
-  height: 380,
-  title: 'evaluate with upload_results=False on two targets',
-  desc: 'Two columns, one evaluate call each, both with upload_results set to False and a recording client. On the left the target is a plain function that adds two numbers, over three examples, with the evaluator exact and the summary evaluator accuracy. The rows scored true, false, and true, accuracy was 0.667, and the client got no request. On the right the target is a create_agent run on Qwen3 4B over one example, with the evaluator same_answer. The answer 2 + 3 = 5. did not match the reference The sum is 5., so the row scored false, and the client got POST /runs 7 times and PATCH 7 times, because evaluate runs the target inside tracing_context with enabled set to local.',
+  height: 318,
+  title: 'Batched mode and per-call mode',
+  desc: 'A table of four rows and two columns, batched mode on the left and per-call mode on the right. The pause: one interrupt with action requests for all calls, against one interrupt per call of type tool_approval with a schema. The resume: a list of decisions in the order of the calls, against a map of interrupt id to decision checked by response_schema. An edit to another tool: in batched case B3 delete_file ran in 3 of 3 runs, and in per-call case P3 a ValidationError meant nothing ran. A middleware that jumps to tools: in batched cases J1 to J3 the tool ran anyway, and in per-call cases J4 and J5 the review held.',
 }, f => {
-  f.kicker(20, 20, 'a plain function target');
-  f.kicker(330, 20, 'a create_agent target');
-  const col = (x, title, sub, ev, rows, out) => {
-    const data = f.box({ x, y: 32, w: 290, h: 46, hue: 'violet', title, sub, align: 'left' });
-    const target = f.box({ x, y: 108, w: 290, h: 46, hue: 'grey', title: 'target in tracing_context', sub: 'enabled="local", set by evaluate', align: 'left' });
-    const evals = f.box({ x, y: 178, w: 200, h: 58, hue: 'green', title: ev, sub: rows, align: 'left' });
-    const sent = f.box({ x, y: 278, w: 290, h: 52, hue: out[0], title: out[1], sub: out[2], align: 'left' });
-    f.arrow([x + 40, data.y + data.h], [x + 40, target.y - 1], { style: 'call' });
-    f.arrow([x + 40, target.y + target.h], [x + 40, evals.y - 1], { style: 'reply' });
-    f.path(`M${x + 250} ${target.y + target.h} V${sent.y - 1}`, { style: out[0] === 'rose' ? 'fail' : 'reply' });
-    f.text(x + 244, 262, 'requests', { size: 11, serif: true, hue: 'ink-soft', anchor: 'end' });
-  };
-  col(20, '3 examples: a + b', 'adder(), one answer wrong on purpose', 'exact, then accuracy', ['true, false, true', 'accuracy 0.667'], ['grey', 'the client got 0 requests', 'nothing left the process']);
-  col(330, '1 example: What is 2 + 3?', 'create_agent on Qwen3 4B', 'same_answer', 'false: 2 + 3 = 5.', ['rose', 'POST /runs 7, PATCH 7', 'the LangChain runs of the agent']);
-  f.text(20, 362, 'From the kit, langsmith 0.14.17, with a client that records each request.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.kicker(188, 20, 'batched');
+  f.kicker(408, 20, 'per call');
+  rows.forEach(([label, left, right], i) => {
+    const y = 34 + i * 70;
+    label.forEach((line, k) => f.text(20, y + 22 + k * 15 - (label.length - 1) * 7, line, { size: 11.5, weight: 700, max: 160 }));
+    f.box({ x: 188, y, w: 208, h: 50, hue: left[2], title: left[0], sub: left[1], align: 'left', titleSize: 12 });
+    f.box({ x: 408, y, w: 212, h: 50, hue: right[2], title: right[0], sub: right[1], align: 'left', titleSize: 12 });
+  });
+  f.text(20, 312, 'Rows 1 and 2 are from the capture kit. Rows 3 and 4 are lab runs on the x86 server guest.', { size: 11, serif: true, hue: 'ink-soft' });
 });

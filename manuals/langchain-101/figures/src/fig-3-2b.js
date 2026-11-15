@@ -2,48 +2,32 @@
 
 const path = require('path');
 const { figure } = require('../../../_shared/figkit.js');
-const { load } = require('../../../_shared/chart.js');
+const { chart, load } = require('../../../_shared/chart.js');
 
-const data = load(path.join(__dirname, '../../capture/lab/summary/structured-output-mac.json'));
-const models = [['qwen3:0.6b', '0.6B, n=20'], ['qwen3:1.7b', '1.7B, n=10'], ['qwen3:4b-instruct-2507-q4_K_M', '4B, n=10'], ['qwen3:8b', '8B, n=10']];
-const schemas = ['flat', 'nested', 'union', 'enum'];
-const strategies = [['tool', 'ToolStrategy'], ['provider', 'ProviderStrategy']];
-const hueOf = { valid: 'blue', retried_valid: 'amber', raised: 'rose', missing: 'rose' };
-const count = (key, outcome) => data.cells[key].outcomes.filter(o => o === outcome).length;
+const data = load(path.join(__dirname, '../../capture/lab/summary/retries-x86.json'));
+const faults = [['m_drop_always', 'dropped every call'], ['m_refused_always', 'refused every call'], ['m_timeout_always', 'timeout every call']];
+const configs = [['openai_client_default', 'client default', 'plum'], ['openai_mw_only', 'middleware only', 'blue'], ['openai_stacked', 'both layers', 'rose']];
+const cell = (fault, config) => data.cells[`${fault} ${config}`].model_attempts;
 
 module.exports = figure('fig-3-2b', {
-  height: 400,
-  title: 'The outcome of each structured output run',
-  desc: `A dot matrix of ${data.runs} runs on the Mac with four Qwen3 models on Ollama. Rows are the flat, nested, union, and enum schemas under ToolStrategy and ProviderStrategy, and columns are the 0.6B, 1.7B, 4B, and 8B models. Blue dots are valid on the first call, amber dots are valid after a retry, and rose dots raised. ProviderStrategy raised on every union run at build time and on ${count('qwen3:4b-instruct-2507-q4_K_M enum provider', 'raised')} enum runs on the 4B model, and was valid otherwise. ToolStrategy raised on ${count('qwen3:0.6b nested tool', 'raised')} of 20 nested runs on 0.6B and ${count('qwen3:8b nested tool', 'raised')} of 10 on 8B.`,
+  height: 360,
+  title: 'Model attempts at the relay for one failing model call',
+  desc: `A dot chart of model attempts at a relay in front of Ollama with Qwen3 4B on the x86 server guest, 3 runs for each cell. Three groups for a dropped connection, a refused port, and a timeout on every call. In each group the client default of ChatOpenAI made ${cell('m_drop_always', 'openai_client_default')[0]} attempts, ModelRetryMiddleware with client retries off made ${cell('m_drop_always', 'openai_mw_only')[0]}, and both layers together made ${cell('m_drop_always', 'openai_stacked')[0]}. All three runs of every cell gave the same count.`,
 }, f => {
-  const x0 = 170;
-  const colW = 112;
-  models.forEach(([, label], c) => f.text(x0 + c * colW + 48, 26, label, { size: 11, anchor: 'middle', hue: 'ink-soft' }));
-  let y = 42;
-  strategies.forEach(([strategy, strategyLabel], s) => {
-    f.kicker(20, y + 12, strategyLabel, { hue: 'ink-soft' });
-    y += 20;
-    schemas.forEach(schema => {
-      f.text(30, y + 14, schema, { size: 11.5 });
-      f.rule(x0 - 8, y + 30, 620, y + 30, { hue: 'ink-mute', opacity: 0.25 });
-      models.forEach(([model], c) => {
-        const outcomes = data.cells[`${model} ${schema} ${strategy}`].outcomes;
-        outcomes.forEach((outcome, i) => {
-          const dx = (i % 10) * 10;
-          const dy = outcomes.length > 10 ? (i < 10 ? 5 : 17) : 11;
-          f.dot(x0 + c * colW + dx, y + dy, { hue: hueOf[outcome], r: 3.4 });
-        });
-      });
-      y += 32;
+  const c = chart(f, { x: 70, y: 40, w: 540, h: 230, xDomain: [0, 12], yDomain: [0, 10], yTicks: [0, 1, 3, 6, 9], yLabel: 'model attempts at the relay' });
+  f.rule(c.px(0), c.py(6), c.px(12), c.py(6), { hue: 'ink-mute', dash: 'dashed' });
+  f.text(c.px(12) - 4, c.py(6) - 6, 'the documented 6 retries', { size: 11, serif: true, anchor: 'end', hue: 'ink-mute', knock: true });
+  faults.forEach(([fault, label], g) => {
+    configs.forEach(([config, , hue], i) => {
+      const slot = 1 + g * 4 + i;
+      cell(fault, config).forEach((v, j) => f.dot(c.px(slot) + (j - 1) * 7, c.py(v), { hue, r: 3 }));
     });
-    y += 4;
+    f.text(c.px(2 + g * 4), 290, label, { size: 11, anchor: 'middle', hue: 'ink-soft' });
   });
-  const legend = [['valid on the first call', 'blue'], ['valid after a retry', 'amber'], ['raised', 'rose']];
-  let lx = 20;
-  legend.forEach(([label, hue]) => {
-    f.dot(lx + 4, y + 16, { hue, r: 3.8 });
-    const box = f.text(lx + 14, y + 20, label, { size: 11.5, hue });
-    lx = box.right + 24;
+  configs.forEach(([, label, hue], i) => {
+    const x = 70 + i * 180;
+    f.dot(x + 4, 322, { hue, r: 3.5 });
+    f.text(x + 14, 326, label, { size: 11.5, hue });
   });
-  f.text(20, y + 42, 'Each dot is one run on the Mac. Every ProviderStrategy union run raised in create_agent.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(70, 350, 'Each dot is one run on the x86 server guest. The real 404 made 1 attempt in each.', { size: 11, serif: true, hue: 'ink-soft' });
 });

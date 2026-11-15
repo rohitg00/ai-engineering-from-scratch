@@ -1,85 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="fig-5-2-title fig-5-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
-  <title id="fig-5-2-title">The joke graph and one run</title>
-  <desc id="fig-5-2-desc">The top is the graph from the capture: __start__ to plan, then three Send arrows from plan to three write_joke tasks for cats, dogs, owls in one step, then plain edges to pick. pick returns a Command with best set to &quot;a joke about cats&quot; and goto publish, so publish runs and then __end__. The retry node, the other target of pick, did not run. The bottom is a table of what each node wrote to the state in each of the 4 steps, read from the updates stream: plan wrote subjects, each write_joke wrote one joke, operator.add joined the three into a list of 3, and pick wrote best. The log key ends with 6 entries.</desc>
-  <defs><marker id="fig-5-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-5-2-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker><marker id="fig-5-2-head-grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-grey-ink, #5e5e59)"/></marker><marker id="fig-5-2-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
-  <rect x="12" y="76" width="74" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <text x="49" y="99.45" font-size="11.5" text-anchor="middle" font-weight="700">__start__</text>
-  <rect x="104" y="76" width="66" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="137" y="91.25" font-size="12.5" text-anchor="middle" font-weight="700">plan</text>
-  <text x="137" y="108.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step 1</text>
-  <line x1="86" y1="96" x2="103" y2="96" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-5-2-head-ink)"/>
-  <rect x="206" y="24" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="257" y="38.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
-  <text x="257" y="56.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">cats</text>
-  <path d="M170 96 H186 V44 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
-  <path d="M308 44 H324 V96 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
-  <rect x="206" y="76" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="257" y="90.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
-  <text x="257" y="108.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dogs</text>
-  <path d="M170 96 H186 V96 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
-  <path d="M308 96 H324 V96 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-ink)"/>
-  <rect x="206" y="128" width="102" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="257" y="142.95" font-size="11.5" text-anchor="middle" font-weight="700">write_joke</text>
-  <text x="257" y="160.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">owls</text>
-  <path d="M170 96 H186 V148 H205" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
-  <path d="M308 148 H324 V96 H343" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round"/>
-  <text x="178" y="16" font-size="11" fill="var(--m-amber-ink, #85590c)">Send x 3</text>
-  <rect x="344" y="76" width="66" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="377" y="91.25" font-size="12.5" text-anchor="middle" font-weight="700">pick</text>
-  <text x="377" y="108.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Command</text>
-  <rect x="452" y="36" width="82" height="40" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
-  <text x="493" y="51.25" font-size="12.5" text-anchor="middle" font-weight="700">publish</text>
-  <text x="493" y="68.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">ran</text>
-  <rect x="452" y="124" width="82" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)" stroke-dasharray="5 4"/>
-  <text x="493" y="139.25" font-size="12.5" text-anchor="middle" font-weight="700">retry</text>
-  <text x="493" y="156.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">did not run</text>
-  <path d="M410 90 H428 V56 H451" fill="none" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-amber)"/>
-  <path d="M410 102 H428 V144 H451" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-5-2-head-grey)"/>
-  <text x="431" y="28" font-size="11" fill="var(--m-amber-ink, #85590c)">goto publish</text>
-  <rect x="560" y="76" width="68" height="40" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
-  <text x="594" y="99.45" font-size="11.5" text-anchor="middle" font-weight="700">__end__</text>
-  <path d="M534 56 H546 V90 H559" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-ink)"/>
-  <path d="M534 144 H546 V102 H559" fill="none" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-5-2-head-grey)"/>
-  <text x="20" y="186" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT EACH STEP WROTE TO THE STATE</text>
-  <text x="137" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 1</text>
-  <line x1="77" y1="216" x2="77" y2="418" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
-  <text x="257" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 2</text>
-  <line x1="197" y1="216" x2="197" y2="418" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
-  <text x="377" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 3</text>
-  <line x1="317" y1="216" x2="317" y2="418" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
-  <text x="493" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 4</text>
-  <line x1="433" y1="216" x2="433" y2="418" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
-  <text x="20" y="240" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">subjects</text>
-  <rect x="78" y="227" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="137" y="240" font-size="11" text-anchor="middle">cats, dogs, owls</text>
-  <text x="20" y="274" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">jokes</text>
-  <rect x="198" y="261" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="257" y="274" font-size="11" text-anchor="middle">a joke about cats</text>
-  <rect x="198" y="281" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="257" y="294" font-size="11" text-anchor="middle">a joke about dogs</text>
-  <rect x="198" y="301" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="257" y="314" font-size="11" text-anchor="middle">a joke about owls</text>
-  <line x1="317" y1="290" x2="347" y2="290" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-5-2-head-teal)"/>
-  <rect class="m-knock" x="350" y="275.42" width="144.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="353" y="286" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">operator.add: 3 items</text>
-  <rect class="m-knock" x="350" y="289.42" width="130.74" height="15" fill="var(--m-panel, #f3f1e8)"/>
-  <text x="353" y="300" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one list in the state</text>
-  <text x="20" y="348" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">best</text>
-  <rect x="318" y="335" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="377" y="348" font-size="11" text-anchor="middle">a joke about cats</text>
-  <text x="20" y="382" font-size="11" font-weight="700" fill="var(--m-teal-ink, #18696a)">log</text>
-  <rect x="78" y="369" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="137" y="382" font-size="11" text-anchor="middle">plan</text>
-  <rect x="198" y="369" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="257" y="382" font-size="11" text-anchor="middle">write_joke(cats)</text>
-  <rect x="198" y="389" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="257" y="402" font-size="11" text-anchor="middle">write_joke(dogs)</text>
-  <rect x="198" y="409" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="257" y="422" font-size="11" text-anchor="middle">write_joke(owls)</text>
-  <rect x="318" y="369" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="377" y="382" font-size="11" text-anchor="middle">pick -&gt; publish</text>
-  <rect x="434" y="369" width="118" height="18" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.8"/>
-  <text x="493" y="382" font-size="11" text-anchor="middle">publish</text>
-  <text x="20" y="450" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Three writes to jokes in one step joined into one list. The log key ends with 6 entries.</text>
-  <text x="20" y="468" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each teal cell is one value a node returned, read from the updates stream.</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" role="img" aria-labelledby="fig-5-2-title fig-5-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-2-title">Three turns of one thread in the SQLite file</title>
+  <desc id="fig-5-2-desc">11 rows of the checkpoints table of SqliteSaver for the thread sqlite-thread, on one step axis from -1 to 9. Turn 1, &quot;What is 2 + 3?&quot;, has an input checkpoint at step -1 and loop checkpoints at steps 0, 1, 2, 3, and leaves 4 messages in the state. Turn 2, &quot;What did I ask you?&quot;, has an input checkpoint at step 4 and loop checkpoints at steps 5, 6, and leaves 6 messages in the state. Turn 3, &quot;Remind me what my first question was.&quot;, has an input checkpoint at step 7 and loop checkpoints at steps 8, 9, and leaves 8 messages in the state. Between turn 2 and turn 3 the connection was closed and a new process opened the same file. The file holds 11 checkpoint rows and 13 rows of pending writes.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THREAD SQLITE-THREAD, ONE ROW PER CHECKPOINT</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <line x1="61" y1="62" x2="267" y2="62" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="61" y1="58" x2="61" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="267" y1="58" x2="267" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="67" y="38" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">turn 1</text>
+  <text x="67" y="52" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">What is 2 + 3?</text>
+  <rect x="61" y="82" width="38" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.3"/>
+  <text x="80" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <line x1="80" y1="116" x2="80" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="103" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="122" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="122" y1="116" x2="122" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="145" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="164" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="164" y1="116" x2="164" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="187" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="206" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="206" y1="116" x2="206" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="229" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="248" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="248" y1="116" x2="248" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="164" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">4 messages</text>
+  <text x="164" y="224" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the state after</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <line x1="271" y1="62" x2="393" y2="62" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="271" y1="58" x2="271" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="393" y1="58" x2="393" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="277" y="38" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">turn 2</text>
+  <text x="277" y="52" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">What did I ask you?</text>
+  <rect x="271" y="82" width="38" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.3"/>
+  <text x="290" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <line x1="290" y1="116" x2="290" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="313" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="332" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="332" y1="116" x2="332" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="355" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="374" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="374" y1="116" x2="374" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="332" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">6 messages</text>
+  <text x="332" y="224" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the state after</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <line x1="397" y1="62" x2="519" y2="62" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="397" y1="58" x2="397" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <line x1="519" y1="58" x2="519" y2="66" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1"/>
+  <text x="403" y="38" font-size="11" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">turn 3</text>
+  <text x="403" y="52" font-size="11" class="m-serif" fill="var(--m-violet-ink, #5b4fa3)">Remind me what my first question was.</text>
+  <rect x="397" y="82" width="38" height="34" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.3"/>
+  <text x="416" y="104" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <line x1="416" y1="116" x2="416" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="439" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="458" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="458" y1="116" x2="458" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <rect x="481" y="82" width="38" height="34" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3"/>
+  <text x="500" y="104" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <line x1="500" y1="116" x2="500" y2="150" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="458" y="210" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">8 messages</text>
+  <text x="458" y="224" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">in the state after</text>
+  </g>
+  <line x1="60" y1="150" x2="520" y2="150" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="80" y1="150" x2="80" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="80" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">-1</text>
+  <line x1="122" y1="150" x2="122" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="122" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="164" y1="150" x2="164" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="164" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="206" y1="150" x2="206" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="206" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="248" y1="150" x2="248" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="248" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="290" y1="150" x2="290" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="290" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="332" y1="150" x2="332" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="332" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  <line x1="374" y1="150" x2="374" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="374" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <line x1="416" y1="150" x2="416" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="416" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">7</text>
+  <line x1="458" y1="150" x2="458" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="458" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="500" y1="150" x2="500" y2="155" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="500" y="170" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">9</text>
+  <text x="60" y="188" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">metadata.step</text>
+  <line x1="395" y1="66" x2="395" y2="236" stroke="var(--m-grey-ink, #5e5e59)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="401" y="252" font-size="11" class="m-serif" fill="var(--m-grey-ink, #5e5e59)">connection closed, a new</text>
+  <text x="401" y="266" font-size="11" class="m-serif" fill="var(--m-grey-ink, #5e5e59)">process opens the same file</text>
+  <polygon points="560,80 560,128 561.2,129.9 564.6,131.5 569.9,132.9 576.6,133.7 584,134 591.4,133.7 598.1,132.9 603.4,131.5 606.8,129.9 608,128 608,80" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="560,80 560,128 561.2,129.9 564.6,131.5 569.9,132.9 576.6,133.7 584,134 591.4,133.7 598.1,132.9 603.4,131.5 606.8,129.9 608,128 608,80" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="560,128 561.2,129.9 564.6,131.5 569.9,132.9 576.6,133.7 584,134 591.4,133.7 598.1,132.9 603.4,131.5 606.8,129.9 608,128 608,123 606.8,124.9 603.4,126.5 598.1,127.9 591.4,128.7 584,129 576.6,128.7 569.9,127.9 564.6,126.5 561.2,124.9 560,123" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.3"/>
+  <path d="M560 123L561.2 124.9L564.6 126.5L569.9 127.9L576.6 128.7L584 129L591.4 128.7L598.1 127.9L603.4 126.5L606.8 124.9L608 123" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <path d="M560 118L561.2 119.9L564.6 121.5L569.9 122.9L576.6 123.7L584 124L591.4 123.7L598.1 122.9L603.4 121.5L606.8 119.9L608 118" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <polygon points="608,80 606.8,81.9 603.4,83.5 598.1,84.9 591.4,85.7 584,86 576.6,85.7 569.9,84.9 564.6,83.5 561.2,81.9 560,80 561.2,78.1 564.6,76.5 569.9,75.1 576.6,74.3 584,74 591.4,74.3 598.1,75.1 603.4,76.5 606.8,78.1" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="608,80 606.8,81.9 603.4,83.5 598.1,84.9 591.4,85.7 584,86 576.6,85.7 569.9,84.9 564.6,83.5 561.2,81.9 560,80 561.2,78.1 564.6,76.5 569.9,75.1 576.6,74.3 584,74 591.4,74.3 598.1,75.1 603.4,76.5 606.8,78.1" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <text x="584" y="152" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-teal-ink, #18696a)">checkpoints.db</text>
+  <text x="584" y="168" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">checkpoints 11</text>
+  <text x="584" y="184" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">writes 13</text>
+  <rect x="20" y="240" width="40" height="16" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="40" y="252" font-size="11" text-anchor="middle" fill="var(--m-amber-ink, #85590c)">input</text>
+  <text x="68" y="252" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the new message is in</text>
+  <rect x="20" y="260" width="40" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="40" y="272" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">loop</text>
+  <text x="68" y="272" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">saved after a step</text>
 </svg>

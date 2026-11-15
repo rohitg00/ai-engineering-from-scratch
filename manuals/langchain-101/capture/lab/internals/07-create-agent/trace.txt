@@ -1,0 +1,101 @@
+# create_agent compiled graph, real model. pin {'langgraph': '1.2.22 (tag 08a20169)', 'langchain': '1.5.0', 'langchain-core': '1.8.0', 'langgraph-checkpoint': '4.3.2', 'langgraph-checkpoint-sqlite': '3.1.3'}. {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['12.48', '5.22', '6.50'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]}
+# model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}
+
+# A. Compiled topology per configuration
+## no tools, no middleware
+  nodes: ['__start__', 'model']
+  edge __start__ -> model
+  edge model -> __end__
+  channels: {'messages': 'BinaryOperatorAggregate', 'jump_to': 'EphemeralValue', 'structured_response': 'LastValue', '__start__': 'EphemeralValue', '__pregel_tasks': 'Topic', 'branch:to:model': 'EphemeralValue'}
+  trigger_to_nodes: {'__start__': ['__start__'], 'branch:to:model': ['model']}
+  config: recursion_limit=9999 metadata={'ls_integration': 'langchain_create_agent'}
+
+## tools, no middleware
+  nodes: ['__start__', 'model', 'tools']
+  edge __start__ -> model
+  edge model -> __end__  (conditional)
+  edge model -> tools  (conditional)
+  edge tools -> model  (conditional)
+  branch on tools: fn=tools_to_model ends=['model']
+  branch on model: fn=model_to_tools ends=['__end__', 'tools']
+  channels: {'messages': 'BinaryOperatorAggregate', 'jump_to': 'EphemeralValue', 'structured_response': 'LastValue', '__start__': 'EphemeralValue', '__pregel_tasks': 'Topic', 'branch:to:model': 'EphemeralValue', 'branch:to:tools': 'EphemeralValue'}
+  trigger_to_nodes: {'__start__': ['__start__'], 'branch:to:model': ['model'], 'branch:to:tools': ['tools']}
+  config: recursion_limit=9999 metadata={'ls_integration': 'langchain_create_agent'}
+
+## tools incl. return_direct
+  nodes: ['__start__', 'model', 'tools']
+  edge __start__ -> model
+  edge model -> __end__  (conditional)
+  edge model -> tools  (conditional)
+  edge tools -> __end__  (conditional)
+  edge tools -> model  (conditional)
+  branch on tools: fn=tools_to_model ends=['__end__', 'model']
+  branch on model: fn=model_to_tools ends=['__end__', 'tools']
+  channels: {'messages': 'BinaryOperatorAggregate', 'jump_to': 'EphemeralValue', 'structured_response': 'LastValue', '__start__': 'EphemeralValue', '__pregel_tasks': 'Topic', 'branch:to:model': 'EphemeralValue', 'branch:to:tools': 'EphemeralValue'}
+  trigger_to_nodes: {'__start__': ['__start__'], 'branch:to:model': ['model'], 'branch:to:tools': ['tools']}
+  config: recursion_limit=9999 metadata={'ls_integration': 'langchain_create_agent'}
+
+## tools + Audit(before/after_agent) + Guard(before/after_model, wrap_model_call)
+  nodes: ['__start__', 'model', 'tools', 'Audit.before_agent', 'Audit.after_agent', 'Guard.before_model', 'Guard.after_model']
+  edge Audit.before_agent -> Guard.before_model
+  edge Guard.after_model -> Audit.after_agent  (conditional)
+  edge Guard.after_model -> Guard.before_model  (conditional)
+  edge Guard.after_model -> tools  (conditional)
+  edge Guard.before_model -> Audit.after_agent  (conditional)
+  edge Guard.before_model -> model  (conditional)
+  edge __start__ -> Audit.before_agent
+  edge model -> Guard.after_model
+  edge tools -> Guard.before_model  (conditional)
+  edge Audit.after_agent -> __end__
+  branch on tools: fn=tools_to_model ends=['Guard.before_model']
+  branch on Guard.after_model: fn=model_to_tools ends=['Audit.after_agent', 'Guard.before_model', 'tools']
+  branch on Guard.before_model: fn=jump_edge ends=['Audit.after_agent', 'model']
+  channels: {'messages': 'BinaryOperatorAggregate', 'jump_to': 'EphemeralValue', 'structured_response': 'LastValue', '__start__': 'EphemeralValue', '__pregel_tasks': 'Topic', 'branch:to:model': 'EphemeralValue', 'branch:to:tools': 'EphemeralValue', 'branch:to:Audit.before_agent': 'EphemeralValue', 'branch:to:Audit.after_agent': 'EphemeralValue', 'branch:to:Guard.before_model': 'EphemeralValue', 'branch:to:Guard.after_model': 'EphemeralValue'}
+  trigger_to_nodes: {'__start__': ['__start__'], 'branch:to:model': ['model'], 'branch:to:tools': ['tools'], 'branch:to:Audit.before_agent': ['Audit.before_agent'], 'branch:to:Audit.after_agent': ['Audit.after_agent'], 'branch:to:Guard.before_model': ['Guard.before_model'], 'branch:to:Guard.after_model': ['Guard.after_model']}
+  config: recursion_limit=9999 metadata={'ls_integration': 'langchain_create_agent'}
+
+## structured output (ToolStrategy via response_format), no tools
+  nodes: ['__start__', 'model']
+  edge __start__ -> model
+  edge model -> __end__  (conditional)
+  edge model -> model  (conditional)
+  branch on model: fn=model_to_model ends=['__end__', 'model']
+  channels: {'messages': 'BinaryOperatorAggregate', 'jump_to': 'EphemeralValue', 'structured_response': 'LastValue', '__start__': 'EphemeralValue', '__pregel_tasks': 'Topic', 'branch:to:model': 'EphemeralValue'}
+  trigger_to_nodes: {'__start__': ['__start__'], 'branch:to:model': ['model']}
+  config: recursion_limit=9999 metadata={'ls_integration': 'langchain_create_agent'}
+
+# B. jump_to: Guard.before_model returns {'jump_to': 'end'} on its 2nd call
+  step=0 run=['__start__']
+      __start__ wrote ['messages', 'branch:to:Guard.before_model']
+  step=1 run=['Guard.before_model']
+      Guard.before_model wrote ['branch:to:model']
+  step=2 run=['model']
+      model wrote ['messages', 'branch:to:Guard.after_model']
+  step=3 run=['Guard.after_model']
+      Guard.after_model wrote ['__pregel_tasks']
+  step=4 run=['tools']
+      tools wrote ['messages', 'branch:to:Guard.before_model']
+  step=5 run=['Guard.before_model']
+      Guard.before_model wrote ['jump_to']  jump_to=end
+      jump_to version [None, 7]; available after update: True
+  model calls made: 1 (tool calls per call [1]); last message: tool: 'Rome: sunny'
+  final checkpoint channel_values has jump_to='end'; state.next=()
+  next turn on the same thread: [(7, ['__start__']), (8, ['Guard.before_model']), (9, ['model']), (10, ['Guard.after_model']), (11, ['tools']), (12, ['Guard.before_model']), (13, ['model']), (14, ['Guard.after_model'])]; model calls 2; last=ai: 'The weather in Rome is currently sunny.'
+
+# C. Recursion limit counting (model always calls a tool; count supersteps that ran)
+  limit | supersteps run (incl. hidden __start__) | step numbers | model calls | error
+      1 |   2 | 0..1 |   1 | Recursion limit of 1 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key. | tool calls per model call [1]
+      2 |   3 | 0..2 |   1 | Recursion limit of 2 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key. | tool calls per model call [1]
+      3 |   4 | 0..3 |   2 | Recursion limit of 3 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key. | tool calls per model call [1, 1]
+      4 |   5 | 0..4 |   2 | Recursion limit of 4 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key. | tool calls per model call [1, 1]
+      5 |   6 | 0..5 |   3 | Recursion limit of 5 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key. | tool calls per model call [1, 1, 1]
+     10 |  11 | 0..10 |   5 | Recursion limit of 10 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key. | tool calls per model call [1, 1, 1, 1, 1]
+     25 |  26 | 0..25 |  13 | Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key. | tool calls per model call [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+  resumed thread: interrupt at a tool, then invoke(None) with recursion_limit=4
+  first invoke: interrupted=True; tool calls so far ['gate']
+  resume with limit 4: supersteps run=6 steps=[2, 3, 4, 5, 6, 7] error=Recursion limit of 4 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+  new input on same thread with limit 4: supersteps run=3 steps=[9, 10, 11] error=None
+
+  (the Mac run also ran without a limit until its script ran out; not repeated here, because a real model would run toward 9,999 supersteps)
+

@@ -1,0 +1,13 @@
+{
+  "source": "https://platform.claude.com/docs/en/about-claude/pricing (fetched 2026-11-14 via Firecrawl, live, maxAge=0)",
+  "units": "USD per million tokens",
+  "cache_write_multiplier": 1.25,
+  "cache_read_multiplier": 0.1,
+  "notes": "5-minute cache write = 1.25x base input, cache hit = 0.1x base input. Haiku 5.5 prices apply to prompts up to 100,000 tokens; higher tier ($0.50 in / $2.50 out) above that, never reached here.",
+  "models": {
+    "claude-haiku-5-5": {"input": 0.10, "output": 0.50},
+    "claude-haiku-4-5": {"input": 1.00, "output": 5.00},
+    "claude-sonnet-5-5": {"input": 2.00, "output": 10.00},
+    "claude-sonnet-4-6": {"input": 3.00, "output": 15.00}
+  }
+}

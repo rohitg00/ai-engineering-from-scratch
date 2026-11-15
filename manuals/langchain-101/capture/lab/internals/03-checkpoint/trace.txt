@@ -1,0 +1,134 @@
+# Checkpoint write path, real model. pin {'langgraph': '1.2.22 (tag 08a20169)', 'langchain': '1.5.0', 'langchain-core': '1.8.0', 'langgraph-checkpoint': '4.3.2', 'langgraph-checkpoint-sqlite': '3.1.3'}. {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['0.33', '2.04', '5.58'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]}
+# model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}; prompt {'messages': [{'role': 'user', 'content': 'Weather in Paris and Oslo?'}]}
+
+# A. When put / put_writes run, per durability mode (create_agent, 2 parallel tool calls, SqliteSaver)
+## durability=sync
+  [  2]   loop._put_checkpoint source=input exiting=False
+  [  4] tick step=0 run=['__start__']
+  [  5]   task done  __start__  -> loop.put_writes ['messages', 'branch:to:model']
+  [  7]   loop._put_checkpoint source=loop exiting=False
+  [  9]     SAVER.put id=..c84bd324616f parent=..None step=-1 source=input
+  [ 10]     SAVER.put_writes ckpt=..c84bd324616f task=5d7deef8 channels=['messages', 'branch:to:model']
+  [ 11]     SAVER.put id=..227d410ea45d parent=..c84bd324616f step=0 source=loop
+  [ 13] tick step=1 run=['model']
+  [ 14]   task done  model      -> loop.put_writes ['messages', '__pregel_tasks', '__pregel_tasks']
+  [ 16]   loop._put_checkpoint source=loop exiting=False
+  [ 18]     SAVER.put_writes ckpt=..227d410ea45d task=f52093ba channels=['messages', '__pregel_tasks', '__pregel_tasks']
+  [ 19]     SAVER.put id=..3a2745cf3dd2 parent=..227d410ea45d step=1 source=loop
+  [ 21] tick step=2 run=['tools', 'tools']
+  [ 22]   task done  tools      -> loop.put_writes ['messages', 'branch:to:model']
+  [ 23]   task done  tools      -> loop.put_writes ['messages', 'branch:to:model']
+  [ 25]   loop._put_checkpoint source=loop exiting=False
+  [ 27]     SAVER.put_writes ckpt=..3a2745cf3dd2 task=9360c94c channels=['messages', 'branch:to:model']
+  [ 28]     SAVER.put_writes ckpt=..3a2745cf3dd2 task=b0bb9318 channels=['messages', 'branch:to:model']
+  [ 29]     SAVER.put id=..0f5fddfed5a3 parent=..3a2745cf3dd2 step=2 source=loop
+  [ 31] tick step=3 run=['model']
+  [ 32]   task done  model      -> loop.put_writes ['messages']
+  [ 34]   loop._put_checkpoint source=loop exiting=False
+  [ 36]     SAVER.put id=..930ea1dbdfc0 parent=..0f5fddfed5a3 step=3 source=loop
+  [ 39]     SAVER.put_writes ckpt=..0f5fddfed5a3 task=7f67758b channels=['messages']
+  totals: {'saver.put': 5, 'saver.put_writes': 5, 'checkpoint rows': 5, 'writes rows': 10, 'model calls': [{'s': 3.54, 'tool_calls': 2}, {'s': 1.53, 'tool_calls': 0}]}
+## durability=async
+  [  2]   loop._put_checkpoint source=input exiting=False
+  [  4] tick step=0 run=['__start__']
+  [  5]   task done  __start__  -> loop.put_writes ['messages', 'branch:to:model']
+  [  7]   loop._put_checkpoint source=loop exiting=False
+  [ 10] tick step=1 run=['model']
+  [ 11]     SAVER.put id=..c6538aab4897 parent=..None step=-1 source=input
+  [ 12]     SAVER.put_writes ckpt=..c6538aab4897 task=c6b69e54 channels=['messages', 'branch:to:model']
+  [ 13]     SAVER.put id=..7e68149d0c07 parent=..c6538aab4897 step=0 source=loop
+  [ 14]   task done  model      -> loop.put_writes ['messages', '__pregel_tasks', '__pregel_tasks']
+  [ 16]   loop._put_checkpoint source=loop exiting=False
+  [ 19] tick step=2 run=['tools', 'tools']
+  [ 20]   task done  tools      -> loop.put_writes ['messages', 'branch:to:model']
+  [ 21]     SAVER.put id=..82eee1948eff parent=..7e68149d0c07 step=1 source=loop
+  [ 22]   task done  tools      -> loop.put_writes ['messages', 'branch:to:model']
+  [ 24]   loop._put_checkpoint source=loop exiting=False
+  [ 27] tick step=3 run=['model']
+  [ 28]     SAVER.put_writes ckpt=..7e68149d0c07 task=53e5b29f channels=['messages', '__pregel_tasks', '__pregel_tasks']
+  [ 29]     SAVER.put_writes ckpt=..82eee1948eff task=23f78561 channels=['messages', 'branch:to:model']
+  [ 30]     SAVER.put_writes ckpt=..82eee1948eff task=5d5da4cd channels=['messages', 'branch:to:model']
+  [ 31]     SAVER.put id=..1f6eb4cdc155 parent=..82eee1948eff step=2 source=loop
+  [ 32]   task done  model      -> loop.put_writes ['messages']
+  [ 34]   loop._put_checkpoint source=loop exiting=False
+  [ 38]     SAVER.put_writes ckpt=..1f6eb4cdc155 task=19d422c5 channels=['messages']
+  [ 39]     SAVER.put id=..8f5d4a6ef6b0 parent=..1f6eb4cdc155 step=3 source=loop
+  totals: {'saver.put': 5, 'saver.put_writes': 5, 'checkpoint rows': 5, 'writes rows': 10, 'model calls': [{'s': 3.48, 'tool_calls': 2}, {'s': 1.74, 'tool_calls': 0}]}
+## durability=exit
+  [  2]   loop._put_checkpoint source=input exiting=False
+  [  4] tick step=0 run=['__start__']
+  [  5]   task done  __start__  -> loop.put_writes ['messages', 'branch:to:model']
+  [  7]   loop._put_checkpoint source=loop exiting=False
+  [ 10] tick step=1 run=['model']
+  [ 11]   task done  model      -> loop.put_writes ['messages', '__pregel_tasks', '__pregel_tasks']
+  [ 13]   loop._put_checkpoint source=loop exiting=False
+  [ 16] tick step=2 run=['tools', 'tools']
+  [ 17]   task done  tools      -> loop.put_writes ['messages', 'branch:to:model']
+  [ 18]   task done  tools      -> loop.put_writes ['messages', 'branch:to:model']
+  [ 20]   loop._put_checkpoint source=loop exiting=False
+  [ 23] tick step=3 run=['model']
+  [ 24]   task done  model      -> loop.put_writes ['messages']
+  [ 26]   loop._put_checkpoint source=loop exiting=False
+  [ 30]   loop._put_checkpoint source=loop exiting=True
+  [ 31]     SAVER.put id=..61c95a9e547b parent=..None step=3 source=loop
+  totals: {'saver.put': 1, 'saver.put_writes': 0, 'checkpoint rows': 1, 'writes rows': 0, 'model calls': [{'s': 3.37, 'tool_calls': 2}, {'s': 1.5, 'tool_calls': 0}]}
+
+summary: {"sync": {"saver.put": 5, "saver.put_writes": 5, "checkpoint rows": 5, "writes rows": 10, "model calls": [{"s": 3.54, "tool_calls": 2}, {"s": 1.53, "tool_calls": 0}]}, "async": {"saver.put": 5, "saver.put_writes": 5, "checkpoint rows": 5, "writes rows": 10, "model calls": [{"s": 3.48, "tool_calls": 2}, {"s": 1.74, "tool_calls": 0}]}, "exit": {"saver.put": 1, "saver.put_writes": 0, "checkpoint rows": 1, "writes rows": 0, "model calls": [{"s": 3.37, "tool_calls": 2}, {"s": 1.5, "tool_calls": 0}]}}
+
+# B. Row dump, durability=async SqliteSaver (a_async.sqlite)
+## checkpoints table
+- id=..c6538aab4897 parent=.. step=-1 source=input bytes=300 type=msgpack
+    channel_values: {"__start__": {"messages": [{"role": "user", "content": "Weather in Paris and Oslo?"}]}}
+    channel_versions: {'__start__': 1}
+    versions_seen: {'__input__': {}}
+    updated_channels: ['__start__']  v=4
+- id=..7e68149d0c07 parent=..c6538aab4897 step=0 source=loop bytes=679 type=msgpack
+    channel_values: {"messages": ["HumanMessage(id=41d60287-1df, text='Weather in Paris and Oslo?')"], "branch:to:model": null}
+    channel_versions: {'__start__': 2, 'branch:to:model': 2, 'messages': 2}
+    versions_seen: {'__input__': {}, '__start__': {'__start__': 1}}
+    updated_channels: ['branch:to:model', 'messages']  v=4
+- id=..82eee1948eff parent=..7e68149d0c07 step=1 source=loop bytes=1801 type=msgpack
+    channel_values: {"messages": ["HumanMessage(id=41d60287-1df, text='Weather in Paris and Oslo?')", "AIMessage(id=lc_run--01a1, tool_calls=['get_weather:527ec394-c6ba-4e71-85b5-426bb7077e9b', 'get_weather:d1165ba8-04fd-479f-9f11-94c3256e3be6'])"], "__pregel_tasks": ["Send(node='tools', arg=['{4 keys}'])", "Send(node='tools', arg=['{4 keys}'])"]}
+    channel_versions: {'__pregel_tasks': 3, '__start__': 2, 'branch:to:model': 3, 'messages': 3}
+    versions_seen: {'__input__': {}, '__start__': {'__start__': 1}, 'model': {'branch:to:model': 2}}
+    updated_channels: ['__pregel_tasks', 'messages']  v=4
+- id=..1f6eb4cdc155 parent=..82eee1948eff step=2 source=loop bytes=2124 type=msgpack
+    channel_values: {"messages": ["HumanMessage(id=41d60287-1df, text='Weather in Paris and Oslo?')", "AIMessage(id=lc_run--01a1, tool_calls=['get_weather:527ec394-c6ba-4e71-85b5-426bb7077e9b', 'get_weather:d1165ba8-04fd-479f-9f11-94c3256e3be6'])", "ToolMessage(id=d66693df-1be, tool_call_id=527ec394-c6ba-4e71-85b5-426bb7077e9b, text='Paris: sunny')", "ToolMessage(id=c46b506e-782, tool_call_id=d1165ba8-04fd-479f-9f11-
+    channel_versions: {'__pregel_tasks': 4, '__start__': 2, 'branch:to:model': 4, 'messages': 4}
+    versions_seen: {'__input__': {}, '__start__': {'__start__': 1}, 'model': {'branch:to:model': 2}, 'tools': {}}
+    updated_channels: ['branch:to:model', 'messages']  v=4
+- id=..8f5d4a6ef6b0 parent=..1f6eb4cdc155 step=3 source=loop bytes=2695 type=msgpack
+    channel_values: {"messages": ["HumanMessage(id=41d60287-1df, text='Weather in Paris and Oslo?')", "AIMessage(id=lc_run--01a1, tool_calls=['get_weather:527ec394-c6ba-4e71-85b5-426bb7077e9b', 'get_weather:d1165ba8-04fd-479f-9f11-94c3256e3be6'])", "ToolMessage(id=d66693df-1be, tool_call_id=527ec394-c6ba-4e71-85b5-426bb7077e9b, text='Paris: sunny')", "ToolMessage(id=c46b506e-782, tool_call_id=d1165ba8-04fd-479f-9f11-
+    channel_versions: {'__pregel_tasks': 4, '__start__': 2, 'branch:to:model': 5, 'messages': 5}
+    versions_seen: {'__input__': {}, '__start__': {'__start__': 1}, 'model': {'branch:to:model': 4}, 'tools': {}}
+    updated_channels: ['messages']  v=4
+## writes table (pending writes, keyed to the checkpoint the superstep STARTED from)
+- ckpt=..c6538aab4897 task=c6b69e54 path='~__pregel_pull, __start__' idx=0 channel=messages value=[{'role': 'user', 'content': 'Weather in Paris and Oslo?'}]
+- ckpt=..c6538aab4897 task=c6b69e54 path='~__pregel_pull, __start__' idx=1 channel=branch:to:model value=None
+- ckpt=..7e68149d0c07 task=53e5b29f path='~__pregel_pull, model' idx=0 channel=messages value=["AIMessage(id=lc_run--01a1, tool_calls=['get_weather:527ec394-c6ba-4e71-85b5-426bb7077e9b', 'get_weather:d1165ba8-04fd-479f-9f11-94c3256e3be6'])"]
+- ckpt=..7e68149d0c07 task=53e5b29f path='~__pregel_pull, model' idx=1 channel=__pregel_tasks value=Send(node='tools', arg=[{'name': 'get_weather', 'args': '{1 keys}', 'id': '527ec394-c6ba-4e71-85b5-426bb7077e9b', 'type': 'tool_call'}])
+- ckpt=..7e68149d0c07 task=53e5b29f path='~__pregel_pull, model' idx=2 channel=__pregel_tasks value=Send(node='tools', arg=[{'name': 'get_weather', 'args': '{1 keys}', 'id': 'd1165ba8-04fd-479f-9f11-94c3256e3be6', 'type': 'tool_call'}])
+- ckpt=..82eee1948eff task=23f78561 path='~__pregel_push, 0000000000, 0000000000' idx=0 channel=messages value=["ToolMessage(id=d66693df-1be, tool_call_id=527ec394-c6ba-4e71-85b5-426bb7077e9b, text='Paris: sunny')"]
+- ckpt=..82eee1948eff task=23f78561 path='~__pregel_push, 0000000000, 0000000000' idx=1 channel=branch:to:model value=None
+- ckpt=..82eee1948eff task=5d5da4cd path='~__pregel_push, 0000000001, 0000000000' idx=0 channel=messages value=["ToolMessage(id=c46b506e-782, tool_call_id=d1165ba8-04fd-479f-9f11-94c3256e3be6, text='Oslo: sunny')"]
+- ckpt=..82eee1948eff task=5d5da4cd path='~__pregel_push, 0000000001, 0000000000' idx=1 channel=branch:to:model value=None
+- ckpt=..1f6eb4cdc155 task=19d422c5 path='~__pregel_pull, model' idx=0 channel=messages value=["AIMessage(id=lc_run--01a1, text='Both Paris and Oslo are currently sunny!')"]
+
+# C. InMemorySaver layout: storage / writes / blobs
+storage: 5 checkpoints; each value = (serialized checkpoint WITHOUT channel_values, metadata, parent_id)
+blobs: 12 entries keyed (thread, ns, channel, version):
+   __pregel_tasks     v= 3 type=msgpack  bytes=248
+   __pregel_tasks     v= 4 type=msgpack  bytes=1
+   __start__          v= 1 type=msgpack  bytes=57
+   __start__          v= 2 type=empty    bytes=0
+   branch:to:model    v= 2 type=null     bytes=0
+   branch:to:model    v= 3 type=empty    bytes=0
+   branch:to:model    v= 4 type=null     bytes=0
+   branch:to:model    v= 5 type=empty    bytes=0
+   messages           v= 2 type=msgpack  bytes=200
+   messages           v= 3 type=msgpack  bytes=938
+   messages           v= 4 type=msgpack  bytes=1477
+   messages           v= 5 type=msgpack  bytes=2081
+writes: 10 entries in 4 (thread, ns, checkpoint_id) buckets
+SqliteSaver.put serializes the whole checkpoint dict, channel_values included, per row (checkpoint-sqlite/.../sqlite/__init__.py:428-449); it ignores new_versions. InMemorySaver.put stores only channels in new_versions as blobs (checkpoint/.../memory/__init__.py:430-470).
+

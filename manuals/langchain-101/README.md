@@ -1,15 +1,15 @@
 # LangChain 101
 
-The LangChain Python stack, from the first `create_agent` call to an agent that streams, pauses for approval, survives a crash, and leaves a trace. It covers langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Each decision has a recorded answer. The documentation tells you what each class and parameter does. This manual tells you what happened when we ran it, broke it, and measured it. The web edition is at [aiengineeringfromscratch.com/manual-langchain-101.html](https://aiengineeringfromscratch.com/manual-langchain-101.html), and each release of the course attaches the PDF as `aiefs-manual-langchain-101.pdf`.
+The LangChain Python stack, from the decision to use it at all to an agent that streams, pauses for approval, survives a crash, and leaves a trace. It covers langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Each decision has a recorded answer. The documentation tells you what each class and parameter does. This manual tells you what happened when we ran it, broke it, and measured it. The web edition is at [aiengineeringfromscratch.com/manual-langchain-101.html](https://aiengineeringfromscratch.com/manual-langchain-101.html), and each release of the course attaches the PDF as `aiefs-manual-langchain-101.pdf`.
 
 ## What is in it
 
-- 43 sections in 8 parts, then ten reference sections. Part 1 puts one agent run on one page. Part 2 covers the install, models, messages, and tools. Part 3 covers `create_agent`, structured output, middleware, retries, and guardrails. Part 4 covers streaming, checkpointers, durability, stores, and long threads. Part 5 covers LangGraph itself: state, Send and Command, the functional API, interrupts, time travel, subgraphs, and recursion limits. Part 6 covers retrieval, MCP, Deep Agents, and LangSmith. Part 7 covers cost, the Agent Server, security, upgrades, and errors. Part 8 builds five agents that you can run.
-- Each measured number names its machine and the number of runs. Pages that this edition does not measure yet say so, and section 7.6 lists the runs that come in the next edition.
-- 56 figures and a cover plate, drawn with the figure kit. The charts read the summary files.
-- 205 listings. Each one is cut from an offline capture or from the source at the pinned tag, and the audit checks it line for line.
+- 52 sections in 8 parts, then eleven reference sections. Each part opens with a position that our runs support. Part 1 is the decision: the claims beside our runs, a harness shoot-out on a 99-task suite with state checkers, and one agent run. Part 2 goes inside the runtime with traces of real runs. Part 3 covers the install, models, messages, and tools. Part 4 covers `create_agent`, structured output by provider, many tools, middleware, retries, and guardrails. Part 5 covers streaming, checkpointers, durability, stores, and long threads. Part 6 covers LangGraph control flow. Part 7 covers retrieval, MCP, Deep Agents, and LangSmith. Part 8 covers the Agent Server, cost, security, upgrades, errors, and a failure drill. Five worked agents sit in the parts they apply.
+- Each measured number names its machine and the number of runs. Pages that this edition does not measure yet say so, and section 8.7 lists the runs that come in the next edition.
+- 74 figures and a cover plate, drawn with the figure kit. The charts read the summary files.
+- 247 listings. Each one is cut from an offline capture or from the source at the pinned tag, and the audit checks it line for line.
 - Section 1.1 sets each headline claim of the project site beside the result that we measured.
-- The reference part holds the `create_agent` parameters, the middleware hooks and classes, the stream modes, the checkpointer and store API, the environment variables, the error strings, a glossary, and the register of 30 places where the sources disagree.
+- The reference part holds the `create_agent` parameters, the middleware hooks and classes, the stream modes, the checkpointer and store API, the environment variables, the error strings, a glossary, the register of 26 places where the sources disagree, and the method of the task-suite bench.
 
 ## Files
 
@@ -19,8 +19,8 @@ The LangChain Python stack, from the first `create_agent` call to an agent that 
 | `front.md`, `sections/` | the text, one file per section |
 | `figures/src/` | the figure sources, built to `figures/*.svg` |
 | `capture/run.py`, `capture/s_*.py` | the capture kit: it uses no keys and no fake chat model, calls Qwen3 4B on a local Ollama where a scenario needs a model, and writes the files in `capture/out/` that the listings come from |
-| `capture/lab/` | 21 recorded experiments, `T01-overhead-mac` to `T20-mcp-edges-mac` and `TRC-tracing-mac`, eight real-model runs again on the x86 server guest in the folders that end in `-x86`, and the recorded runs of the five demos. Each folder holds its scripts and raw output, and `capture/lab/README.md` names the rows not to use |
-| `capture/lab/summary/` | 36 summary files that the tables and charts read, rebuilt by `capture/labsum.py` |
+| `capture/lab/` | 43 experiment folders: `T01-overhead-mac` to `T20-mcp-edges-mac` and `TRC-tracing-mac`, the real-model runs again in the folders that end in `-x86` and `-mac-real`, the runtime traces in `internals/`, the task-suite bench in `bench/`, `last-two-mac/`, and the recorded runs of the five demos. Each folder holds its scripts and raw output, and `capture/lab/README.md` names the rows not to use |
+| `capture/lab/summary/` | 41 summary files that the tables and charts read, rebuilt by `capture/labsum.py`. The bench writes its own summary, `capture/lab/bench/summary-mac.json`, with `capture/lab/bench/summarize.py` |
 | `capture/demos/` | five demos with a README and a `run.sh` each: a SQL agent, a retrieval agent, an assistant with memory, a deep agent, and a failure drill |
 
 ## The pin
@@ -43,14 +43,14 @@ The LangChain Python stack, from the first `create_agent` call to an agent that 
 
 | Name in the manual | Machine |
 |---|---|
-| the Mac | an Apple M1 Max laptop with 10 cores and 64 GiB, running Ollama for the real models |
+| the Mac | an Apple M1 Max laptop with 10 cores and 64 GiB, running Ollama for the local models, and the client of the Anthropic API in the bench |
 | the x86 server guest | a KVM guest with 32 vCPU and 48 GiB, running PostgreSQL 16 and the Agent Server |
 
-The real models are Qwen3, from 0.6B to 8B, and `nomic-embed-text` for embeddings, all on Ollama. No cloud model, no API key, and no LangSmith account was used. `capture/lab/README.md` maps each experiment to its machine. Do not compare a number from one machine with a number from another.
+The local models are Qwen3 0.6B, 1.7B, 4B, 8B, 14B, and 30B-A3B, and gpt-oss 20B, with `nomic-embed-text` for embeddings, all on Ollama. Claude Haiku 5.5 and Claude Sonnet 5.5 ran only in the task-suite bench, through the Anthropic API, for $0.93 in all. No LangSmith account was used. `capture/lab/README.md` maps each experiment to its machine. Do not compare a number from one machine with a number from another.
 
 ## How to read it
 
-Start with the front matter, "How to read this manual". It installs the stack from `capture/requirements.txt` and runs the capture kit once. Read Part 1 once and completely. After that, go to the page that answers your question. When something breaks, start at section 7.5 and the error table in R.6.
+Start with the front matter, "How to read this manual". It installs the stack from `capture/requirements.txt` and runs the capture kit once. Read Part 1 once and completely. After that, go to the page that answers your question. When something breaks, start at section 8.5 and the error table in R.6.
 
 ## Run the recordings again
 

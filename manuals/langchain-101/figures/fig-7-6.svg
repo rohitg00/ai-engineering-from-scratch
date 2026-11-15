@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 366" role="img" aria-labelledby="fig-7-6-title fig-7-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-6-title">Time outside the model of one agent run with tracing off and on</title>
+  <desc id="fig-7-6-desc">Milliseconds outside the model per agent run of Qwen3 4B on the Mac, 60 runs per condition, interleaved in one process. Medians: off 17.7 ms, on 26.33 ms, 7.42 ms more in pairs of runs. The median run took 1624.6 ms with tracing on.</desc>
+  <line x1="70" y1="290" x2="610" y2="290" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="294" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="70" y1="248.33" x2="610" y2="248.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="252.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="70" y1="206.67" x2="610" y2="206.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="210.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="70" y1="165" x2="610" y2="165" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="169" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="70" y1="123.33" x2="610" y2="123.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="127.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <line x1="70" y1="81.67" x2="610" y2="81.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="85.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="70" y1="40" x2="610" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">60</text>
+  <line x1="70" y1="290" x2="610" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="40" x2="70" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">milliseconds outside the model</text>
+  <circle cx="127" cy="90" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="223" cy="183" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="161" cy="222" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="257" cy="251" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="195" cy="225" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="132" cy="209" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="228" cy="157" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="166" cy="259" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="262" cy="238" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="200" cy="187" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="137" cy="235" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="234" cy="254" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="171" cy="234" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="267" cy="234" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="205" cy="190" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="143" cy="208" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="239" cy="241" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="176" cy="203" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="273" cy="194" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="210" cy="186" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="148" cy="253" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="244" cy="239" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="182" cy="218" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="278" cy="243" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="215" cy="192" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="153" cy="180" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="249" cy="211" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="187" cy="186" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="283" cy="203" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="221" cy="230" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="158" cy="221" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="254" cy="223" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="192" cy="170" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="130" cy="205" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="226" cy="239" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="163" cy="200" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="260" cy="199" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="197" cy="183" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="135" cy="219" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="231" cy="257" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="169" cy="190" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="265" cy="174" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="202" cy="182" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="140" cy="243" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="236" cy="266" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="174" cy="200" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="270" cy="171" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="208" cy="231" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="145" cy="251" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="241" cy="229" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="179" cy="259" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="275" cy="217" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="213" cy="203" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="150" cy="248" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="247" cy="204" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="184" cy="245" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="280" cy="195" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="218" cy="216" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="156" cy="225" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <circle cx="252" cy="190" r="2" fill="var(--m-grey-ink, #5e5e59)"/>
+  <line x1="113" y1="216.25" x2="297" y2="216.25" stroke="var(--m-ink, #1a1a1a)" stroke-width="2"/>
+  <rect class="m-knock" x="298" y="209.67" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="301" y="220.25" font-size="11" fill="var(--m-ink, #1a1a1a)">17.7 ms</text>
+  <text x="205" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">tracing off</text>
+  <circle cx="397" cy="176" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="493" cy="177" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="431" cy="167" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="527" cy="213" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="465" cy="195" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="402" cy="197" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="498" cy="129" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="436" cy="117" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="532" cy="152" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="470" cy="166" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="407" cy="191" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="504" cy="196" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="441" cy="188" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="537" cy="250" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="475" cy="222" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="413" cy="171" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="509" cy="77" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="446" cy="143" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="543" cy="166" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="480" cy="116" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="418" cy="186" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="514" cy="253" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="452" cy="248" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="548" cy="238" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="485" cy="179" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="423" cy="227" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="519" cy="183" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="457" cy="129" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="553" cy="133" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="491" cy="213" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="428" cy="189" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="524" cy="208" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="462" cy="197" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="400" cy="177" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="496" cy="173" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="433" cy="165" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="530" cy="133" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="467" cy="181" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="405" cy="155" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="501" cy="150" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="439" cy="216" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="535" cy="182" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="472" cy="147" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="410" cy="190" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="506" cy="177" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="444" cy="157" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="540" cy="235" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="478" cy="227" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="415" cy="224" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="511" cy="218" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="449" cy="169" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="545" cy="158" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="483" cy="254" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="420" cy="171" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="517" cy="102" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="454" cy="140" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="550" cy="183" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="488" cy="204" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="426" cy="160" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="522" cy="197" r="2" fill="var(--m-olive-ink, #515f26)"/>
+  <line x1="383" y1="180.29" x2="567" y2="180.29" stroke="var(--m-ink, #1a1a1a)" stroke-width="2"/>
+  <rect class="m-knock" x="568" y="173.71" width="58.8" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="571" y="184.29" font-size="11" fill="var(--m-ink, #1a1a1a)">26.33 ms</text>
+  <text x="475" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">tracing on</text>
+  <text x="70" y="336" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one agent run of 7 traced runs, 60 per group. The line is the median.</text>
+  <text x="70" y="354" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Not drawn: the first two runs. The first spent 82.6 ms outside the model.</text>
+</svg>

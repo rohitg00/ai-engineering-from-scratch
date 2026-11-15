@@ -2,7 +2,7 @@
 
 > A LangGraph run streams in eight modes, in two chunk versions, and through one beta event protocol, and each one has a fixed shape at `langgraph` 1.2.22.
 
-Every row of this page comes from the code of `langgraph` 1.2.22 or from a capture of the same agent run. That run makes two model calls and one tool call. [Section 4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) explains when to use each mode.
+Every row of this page comes from the code of `langgraph` 1.2.22 or from a capture of the same agent run. That run makes two model calls and one tool call. [Section 5.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) explains when to use each mode.
 
 ## The modes of stream
 

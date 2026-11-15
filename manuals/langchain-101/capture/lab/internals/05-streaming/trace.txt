@@ -1,0 +1,101 @@
+# Streaming production, real models. pin {'langgraph': '1.2.22 (tag 08a20169)', 'langchain': '1.5.0', 'langchain-core': '1.8.0', 'langgraph-checkpoint': '4.3.2', 'langgraph-checkpoint-sqlite': '3.1.3'}. {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['12.67', '15.35', '13.24'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]}
+
+# A. One create_agent run, all stream modes at once, version='v2' (StreamPart dicts). model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}
+        2.7 ms  checkpoints step=-1 next=['__start__']
+        2.7 ms  debug       type=checkpoint step=-1
+        5.0 ms  values      1 messages
+        5.0 ms  checkpoints step=0 next=['model']
+        5.0 ms  debug       type=checkpoint step=0
+        5.0 ms  tasks       start model
+        5.0 ms  debug       type=task step=1
+     1894.5 ms  messages    AIMessageChunk chunk text='' node=model step=1
+     1894.6 ms  messages    AIMessageChunk chunk text='' node=model step=1
+     1894.6 ms  updates     keys=['model']
+     1894.6 ms  tasks       result model
+     1894.6 ms  debug       type=task_result step=1
+     1895.5 ms  values      2 messages
+     1895.5 ms  checkpoints step=1 next=['tools']
+     1895.5 ms  debug       type=checkpoint step=1
+     1895.5 ms  tasks       start tools
+     1895.5 ms  debug       type=task step=2
+     1899.6 ms  custom      {'progress': 'looking up Paris'}
+     1899.6 ms  messages    ToolMessage chunk text='Paris: sunny' node=tools step=2
+     1899.6 ms  updates     keys=['tools']
+     1899.6 ms  tasks       result tools
+     1899.6 ms  debug       type=task_result step=2
+     1900.0 ms  values      3 messages
+     1900.0 ms  checkpoints step=2 next=['model']
+     1900.0 ms  debug       type=checkpoint step=2
+     1900.0 ms  tasks       start model
+     1900.0 ms  debug       type=task step=3
+     2658.7 ms  messages    AIMessageChunk chunk text='The' node=model step=3
+     2726.1 ms  messages    AIMessageChunk chunk text=' weather' node=model step=3
+     2793.4 ms  messages    AIMessageChunk chunk text=' in' node=model step=3
+     2860.9 ms  messages    AIMessageChunk chunk text=' Paris' node=model step=3
+     2928.0 ms  messages    AIMessageChunk chunk text=' is' node=model step=3
+     2994.8 ms  messages    AIMessageChunk chunk text=' sunny' node=model step=3
+     3062.0 ms  messages    AIMessageChunk chunk text='!' node=model step=3
+     3265.1 ms  messages    AIMessageChunk chunk text=' 🌞' node=model step=3
+     3334.2 ms  messages    AIMessageChunk chunk text='' node=model step=3
+     3334.2 ms  messages    AIMessageChunk chunk text='' node=model step=3
+     3334.3 ms  updates     keys=['model']
+     3334.3 ms  tasks       result model
+     3334.3 ms  debug       type=task_result step=3
+     3335.9 ms  values      4 messages
+     3335.9 ms  checkpoints step=3 next=[]
+     3335.9 ms  debug       type=checkpoint step=3
+  keys of one StreamPart: ['data', 'ns', 'type']
+
+# C. Producer of each mode (call stack at the moment the item is put on the stream queue)
+## checkpoints
+   langgraph/pregel/main.py:3081 stream
+   langgraph/pregel/_loop.py:672 tick
+   langgraph/pregel/_loop.py:808 _prepare_tasks_and_emit_checkpoint
+   langgraph/pregel/_loop.py:1613 _emit
+## values
+   langgraph/pregel/main.py:3101 stream
+   langgraph/pregel/_loop.py:745 after_tick
+   langgraph/pregel/_loop.py:1613 _emit
+## tasks
+   langgraph/pregel/main.py:3081 stream
+   langgraph/pregel/_loop.py:699 tick
+   langgraph/pregel/_loop.py:1613 _emit
+## messages
+   langchain_core/callbacks/manager.py:712 on_llm_new_token
+   langchain_core/callbacks/manager.py:314 handle_event
+   langgraph/pregel/_messages.py:188 on_llm_new_token
+   langgraph/pregel/_messages.py:130 _emit
+## updates
+   langgraph/pregel/_loop.py:1829 put_writes
+   langgraph/pregel/_loop.py:565 put_writes
+   langgraph/pregel/_loop.py:1672 output_writes
+   langgraph/pregel/_loop.py:1613 _emit
+## custom
+   langchain_core/tools/base.py:765 invoke
+   langchain_core/tools/base.py:1099 run
+   langchain_core/tools/structured.py:152 _run
+   langgraph/pregel/main.py:2957 stream_writer
+
+# B. stream_events(version='v3'): reading message.reasoning before message.text (langchain#38484), real reasoning model
+model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:8b', 'temperature': 0, 'seed': 42, 'think/reasoning': True, 'num_ctx': 8192, 'num_predict': 1024}; through create_agent (no tools); prompt 'What is 17 times 3? Reply with two short sentences: the answer, then how you checked it.'; n=5 runs per consumer pattern, patterns interleaved
+emit time = when the Ollama HTTP stream yielded the part (ChatOllama._create_chat_stream); receive time = when the consumer loop got the delta; both ms from the start of stream_events
+  run 0 reasoning_then_text  emitted r/t=211/60 received r/t=211/60 text emit [31688.1, 40330.7] spread 8642.6 ms; text receive [40474.7, 40474.8] spread 0.1 ms; text lag median/max [4635.1, 8786.6]; reasoning lag median/max [0.7, 7.0]
+  run 0 text_only            emitted r/t=211/60 received r/t=0/60 text emit [32307.5, 41001.4] spread 8693.9 ms; text receive [32308.2, 41002.2] spread 8694.0 ms; text lag median/max [0.7, 4.6]; reasoning lag median/max None
+  run 0 raw_events           emitted r/t=211/60 received r/t=211/60 text emit [32819.0, 42027.1] spread 9208.1 ms; text receive [32819.8, 42027.8] spread 9208.0 ms; text lag median/max [0.7, 0.9]; reasoning lag median/max [0.7, 4.0]
+  run 1 reasoning_then_text  emitted r/t=211/60 received r/t=211/60 text emit [32098.9, 40752.6] spread 8653.7 ms; text receive [40896.2, 40896.3] spread 0.1 ms; text lag median/max [4547.5, 8797.3]; reasoning lag median/max [0.7, 6.5]
+  run 1 text_only            emitted r/t=211/60 received r/t=0/60 text emit [31654.8, 40111.8] spread 8457.0 ms; text receive [31655.6, 40112.4] spread 8456.8 ms; text lag median/max [0.7, 0.8]; reasoning lag median/max None
+  run 1 raw_events           emitted r/t=211/60 received r/t=211/60 text emit [31893.4, 40914.6] spread 9021.2 ms; text receive [31894.2, 40915.2] spread 9021.0 ms; text lag median/max [0.7, 0.9]; reasoning lag median/max [0.7, 7.5]
+  run 2 reasoning_then_text  emitted r/t=211/60 received r/t=211/60 text emit [31782.2, 40670.1] spread 8887.9 ms; text receive [40814.6, 40814.7] spread 0.1 ms; text lag median/max [4761.0, 9032.4]; reasoning lag median/max [0.7, 4.5]
+  run 2 text_only            emitted r/t=211/60 received r/t=0/60 text emit [31981.6, 40686.6] spread 8705.0 ms; text receive [31982.3, 40687.2] spread 8704.9 ms; text lag median/max [0.7, 0.9]; reasoning lag median/max None
+  run 2 raw_events           emitted r/t=211/60 received r/t=211/60 text emit [31856.4, 40791.4] spread 8935.0 ms; text receive [31857.2, 40792.1] spread 8934.9 ms; text lag median/max [0.7, 0.9]; reasoning lag median/max [0.7, 7.9]
+  run 3 reasoning_then_text  emitted r/t=211/60 received r/t=211/60 text emit [31218.4, 40111.3] spread 8892.9 ms; text receive [40254.5, 40254.6] spread 0.1 ms; text lag median/max [4634.8, 9036.1]; reasoning lag median/max [0.7, 4.1]
+  run 3 text_only            emitted r/t=211/60 received r/t=0/60 text emit [31799.8, 40151.6] spread 8351.8 ms; text receive [31800.6, 40152.3] spread 8351.7 ms; text lag median/max [0.7, 4.9]; reasoning lag median/max None
+  run 3 raw_events           emitted r/t=211/60 received r/t=211/60 text emit [31763.8, 40250.8] spread 8487.0 ms; text receive [31764.6, 40251.5] spread 8486.9 ms; text lag median/max [0.7, 0.9]; reasoning lag median/max [0.7, 18.3]
+  run 4 reasoning_then_text  emitted r/t=211/60 received r/t=211/60 text emit [31909.0, 40563.6] spread 8654.6 ms; text receive [40706.1, 40706.2] spread 0.1 ms; text lag median/max [4443.0, 8797.1]; reasoning lag median/max [0.7, 6.4]
+  run 4 text_only            emitted r/t=211/60 received r/t=0/60 text emit [31959.7, 40425.8] spread 8466.1 ms; text receive [31960.4, 40426.4] spread 8466.0 ms; text lag median/max [0.7, 0.9]; reasoning lag median/max None
+  run 4 raw_events           emitted r/t=211/60 received r/t=211/60 text emit [31794.7, 40211.0] spread 8416.3 ms; text receive [31795.4, 40211.7] spread 8416.3 ms; text lag median/max [0.7, 0.8]; reasoning lag median/max [0.7, 9.7]
+
+## reasoning_then_text: {"n_runs": 5, "text deltas received / emitted": [300, 300], "text lag ms median, p90, max (all deltas)": [4547.5, 8063.0, 9036.1], "first text delta lag ms per run": [8786.6, 8797.3, 9032.4, 9036.1, 8797.1], "text receive spread ms per run": [0.1, 0.1, 0.1, 0.1, 0.1], "text emit spread ms per run": [8642.6, 8653.7, 8887.9, 8892.9, 8654.6], "reasoning lag ms median, max": [0.7, 7.0]}
+## text_only: {"n_runs": 5, "text deltas received / emitted": [300, 300], "text lag ms median, p90, max (all deltas)": [0.7, 0.8, 4.9], "first text delta lag ms per run": [0.7, 0.8, 0.7, 0.8, 0.7], "text receive spread ms per run": [8694.0, 8456.8, 8704.9, 8351.7, 8466.0], "text emit spread ms per run": [8693.9, 8457.0, 8705.0, 8351.8, 8466.1], "reasoning lag ms median, max": null}
+## raw_events: {"n_runs": 5, "text deltas received / emitted": [300, 300], "text lag ms median, p90, max (all deltas)": [0.7, 0.8, 0.9], "first text delta lag ms per run": [0.8, 0.8, 0.8, 0.8, 0.7], "text receive spread ms per run": [9208.0, 9021.0, 8934.9, 8486.9, 8416.3], "text emit spread ms per run": [9208.1, 9021.2, 8935.0, 8487.0, 8416.3], "reasoning lag ms median, max": [0.7, 18.3]}
+

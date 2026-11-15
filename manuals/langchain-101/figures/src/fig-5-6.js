@@ -1,42 +1,31 @@
 'use strict';
 
-const path = require('path');
 const { figure } = require('../../../_shared/figkit.js');
-const { load } = require('../../../_shared/chart.js');
 
-const data = load(path.join(__dirname, '../../capture/lab/summary/replay-fork-mac.json'));
-const byId = Object.fromEntries(data.tree.map(node => [node.id, node]));
-const children = id => data.tree.filter(node => node.parent === id);
-const label = node => `step ${node.step}, ${node.source}`;
-const sub = node => `x = ${node.x === null ? 'none' : node.x}, next ${node.next.length ? node.next.join(', ') : 'none'}`;
+const rows = [
+  ['tuple', '(1, 2)', 'list', '[1, 2]', 'amber'],
+  ['set of tuples', '{(1, 2), (3, 4)}', 'list of lists', '[[1, 2], [3, 4]]', 'amber'],
+  ['frozenset of tuples', 'frozenset({(1, 2)})', 'list of lists', '[[1, 2]]', 'amber'],
+  ['defaultdict', "{'k': [1]}", 'dict', 'no default factory', 'amber'],
+  ['Counter', "Counter('abca')", 'dict', 'no Counter methods', 'amber'],
+  ['OrderedDict', 'two keys', 'dict', 'same keys and order', 'amber'],
+  ['datetime, ZoneInfo', 'Asia/Kolkata', 'datetime, fixed offset', '+05:30, no zone rules', 'amber'],
+  ['datetime, fold=1', 'America/New_York', 'datetime, fixed offset', 'fold 0, not equal', 'amber'],
+  ['plain class', 'Plain(3)', 'TypeError', 'not msgpack serializable', 'rose'],
+];
 
 module.exports = figure('fig-5-6', {
-  height: 400,
-  title: 'Three branches of one thread',
-  desc: `A tree of the ${data.tree.length} checkpoints of one thread. The first run saved steps -1 to 3 with x from none to 3. From the checkpoint at step 1, whose next node is b, a replay added a fork checkpoint at step 2 with x 1 and two loop checkpoints that end with x 3. update_state on the same checkpoint added an update checkpoint at step 2 with x 100, and the run from it ended with x 102. Every old checkpoint stayed.`,
+  height: 470,
+  title: 'What a checkpoint gives back for nine values',
+  desc: 'Nine rows, each from a value put in the state on the left to what get_state on SqliteSaver gave back on the right. A tuple came back as a list. A set and a frozenset of tuples came back as lists of lists. A defaultdict, a Counter, and an OrderedDict came back as a plain dict. A datetime with a ZoneInfo zone came back with a fixed offset, and one with fold 1 lost the fold. An instance of a plain class raised TypeError and was not saved.',
 }, f => {
-  const box = (node, cx, y, hue) => f.box({ x: cx, y, w: 176, h: 42, hue, title: label(node), sub: sub(node), anchor: 'middle', titleSize: 12 });
-  const trunk = ['c0', 'c1', 'c2'];
-  trunk.forEach((id, i) => {
-    box(byId[id], 320, 12 + i * 60, 'teal');
-    if (i) f.line(320, 12 + i * 60 - 18, 320, 12 + i * 60 - 1, { style: 'write' });
+  f.kicker(20, 20, 'put in the state');
+  f.kicker(372, 20, 'what get_state gave back');
+  rows.forEach(([kind, example, result, after, hue], i) => {
+    const y = 32 + i * 46;
+    const left = f.box({ x: 20, y, w: 250, h: 38, hue: 'violet', title: kind, sub: example, align: 'left', titleSize: 12, pad: 10 });
+    const right = f.box({ x: 372, y, w: 248, h: 38, hue, title: result, sub: after, align: 'left', titleSize: 12, pad: 10 });
+    f.arrow(left.right(), [right.x - 1, left.cy], { style: hue === 'rose' ? 'fail' : 'reply' });
   });
-  const branches = children('c2').sort((a, b) => ['loop', 'fork', 'update'].indexOf(a.source) - ['loop', 'fork', 'update'].indexOf(b.source));
-  const xs = [112, 320, 528];
-  const names = ['the first run', 'the replay', 'update_state'];
-  branches.forEach((head, i) => {
-    f.path(`M320 ${12 + 2 * 60 + 42} V178 H${xs[i]} V${200 - 1}`, { style: 'write' });
-    f.text(xs[i], 192, names[i].toUpperCase(), { size: 11, spacing: 1.2, hue: 'ink-mute', anchor: 'middle', knock: true });
-    let node = head;
-    let y = 200;
-    while (node) {
-      const hue = node.source === 'fork' ? 'amber' : node.source === 'update' ? 'violet' : 'teal';
-      box(node, xs[i], y, hue);
-      const next = children(node.id)[0];
-      if (next) f.line(xs[i], y + 42, xs[i], y + 59, { style: 'write' });
-      node = next;
-      y += 60;
-    }
-  });
-  f.text(20, 392, 'Each box is one checkpoint from one run on the Mac. Old checkpoints are never removed.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 460, 'Twenty other values came back with the same type and value. The Mac, one run each.', { size: 11, serif: true, hue: 'ink-soft' });
 });

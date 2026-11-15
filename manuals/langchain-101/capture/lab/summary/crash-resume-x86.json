@@ -1,0 +1,594 @@
+{
+ "first_reply_tool_calls": {
+  "1": 1290
+ },
+ "keys": {
+  "call_id": {
+   "cells": {
+    "postgres async after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 4,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres async before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 10,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres async before_put_writes": {
+     "killed": 20,
+     "next_empty_unfinished": 5,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres async before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 7,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres async inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 6,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres exit after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "postgres exit before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "postgres exit before_put_writes": {
+     "killed": 0,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres exit before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres exit inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "postgres sync after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres sync before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 6,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres sync before_put_writes": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres sync before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres sync inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite async after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 5,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite async before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 15,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite async before_put_writes": {
+     "killed": 20,
+     "next_empty_unfinished": 8,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite async before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 2,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite async inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 11,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite exit after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "sqlite exit before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "sqlite exit before_put_writes": {
+     "killed": 0,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite exit before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite exit inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "sqlite sync after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite sync before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 10,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite sync before_put_writes": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite sync before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite sync inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    }
+   },
+   "killed": 560,
+   "next_empty_unfinished": 89,
+   "trials": 570,
+   "twice": 120
+  },
+  "none": {
+   "cells": {
+    "postgres async after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 6,
+     "trials": 20,
+     "twice": 19
+    },
+    "postgres async before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 15,
+     "trials": 20,
+     "twice": 5
+    },
+    "postgres async before_put_writes": {
+     "killed": 20,
+     "next_empty_unfinished": 5,
+     "trials": 20,
+     "twice": 20
+    },
+    "postgres async before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 3,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres async inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 10,
+     "trials": 20,
+     "twice": 20
+    },
+    "postgres exit after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "postgres exit before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "postgres exit before_put_writes": {
+     "killed": 0,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres exit before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres exit inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "postgres sync after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres sync before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 12,
+     "trials": 20,
+     "twice": 8
+    },
+    "postgres sync before_put_writes": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 16
+    },
+    "postgres sync before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "postgres sync inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "sqlite async after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 8,
+     "trials": 20,
+     "twice": 19
+    },
+    "sqlite async before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 14,
+     "trials": 20,
+     "twice": 6
+    },
+    "sqlite async before_put_writes": {
+     "killed": 20,
+     "next_empty_unfinished": 11,
+     "trials": 20,
+     "twice": 18
+    },
+    "sqlite async before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite async inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 15,
+     "trials": 20,
+     "twice": 20
+    },
+    "sqlite exit after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "sqlite exit before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "sqlite exit before_put_writes": {
+     "killed": 0,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite exit before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite exit inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    },
+    "sqlite sync after_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite sync before_put": {
+     "killed": 20,
+     "next_empty_unfinished": 8,
+     "trials": 20,
+     "twice": 12
+    },
+    "sqlite sync before_put_writes": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 8
+    },
+    "sqlite sync before_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 0
+    },
+    "sqlite sync inside_tool": {
+     "killed": 20,
+     "next_empty_unfinished": 0,
+     "trials": 20,
+     "twice": 20
+    }
+   },
+   "killed": 560,
+   "next_empty_unfinished": 107,
+   "trials": 570,
+   "twice": 331
+  },
+  "order": {
+   "cells": {
+    "postgres async after_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres async before_put": {
+     "killed": 5,
+     "next_empty_unfinished": 2,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres async before_put_writes": {
+     "killed": 5,
+     "next_empty_unfinished": 1,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres async before_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres async inside_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 1,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres exit after_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres exit before_put": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres exit before_put_writes": {
+     "killed": 0,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres exit before_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres exit inside_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres sync after_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres sync before_put": {
+     "killed": 5,
+     "next_empty_unfinished": 2,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres sync before_put_writes": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres sync before_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "postgres sync inside_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite async after_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 2,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite async before_put": {
+     "killed": 5,
+     "next_empty_unfinished": 4,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite async before_put_writes": {
+     "killed": 5,
+     "next_empty_unfinished": 3,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite async before_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 1,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite async inside_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 3,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite exit after_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite exit before_put": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite exit before_put_writes": {
+     "killed": 0,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite exit before_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite exit inside_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite sync after_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite sync before_put": {
+     "killed": 5,
+     "next_empty_unfinished": 2,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite sync before_put_writes": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite sync before_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    },
+    "sqlite sync inside_tool": {
+     "killed": 5,
+     "next_empty_unfinished": 0,
+     "trials": 5,
+     "twice": 0
+    }
+   },
+   "killed": 140,
+   "next_empty_unfinished": 21,
+   "trials": 150,
+   "twice": 0
+  }
+ },
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "model": "qwen3:4b-instruct-2507-q4_K_M via ChatOllama 1.1.0, temperature 0, seed 42, num_predict 256, Ollama 0.31.1 on CPU",
+ "model_calls_by_mode": {
+  "async": {
+   "2": 373,
+   "3": 77
+  },
+  "exit": {
+   "2": 30,
+   "3": 270,
+   "4": 90
+  },
+  "sync": {
+   "2": 450
+  }
+ },
+ "savers": "SqliteSaver (langgraph-checkpoint-sqlite 3.1.3) and PostgresSaver (langgraph-checkpoint-postgres 3.2.1) on PostgreSQL 16.15",
+ "sources": [
+  "capture/lab/T02-crash-resume-x86/01-agent-matrix.jsonl",
+  "capture/lab/T02-crash-resume-x86/02-agent-matrix-rep5-19.jsonl"
+ ],
+ "trials_per_cell": "20 for the keys none and call_id, 5 for the key order; exit before_put_writes 5 per key, never reached",
+ "twice": "the ledger held more than one charge for the one requested charge"
+}

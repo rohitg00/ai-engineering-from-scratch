@@ -1,47 +1,29 @@
 'use strict';
 
-const path = require('path');
-const { figure, color } = require('../../../_shared/figkit.js');
-const { load } = require('../../../_shared/chart.js');
+const { figure } = require('../../../_shared/figkit.js');
 
-const data = load(path.join(__dirname, '../../capture/lab/summary/demos-mac.json'));
-const steps = data.assistant.default;
-const names = ['remember', 'ask to send', 'approve', 'resume', 'approve again', 'third turn', 'new thread t2'];
-const X0 = 216;
-const COL = 81;
-const ROW = 40;
-const Y0 = 62;
-const cols = [
-  [['next', 'node'], s => (s.next.length ? s.next[0] : 'none'), 'amber'],
-  [['check-', 'points'], s => String(s.checkpoints), 'teal'],
-  [['approvals', 'waiting'], s => String(s.pending), 'amber'],
-  [['send_email', 'runs'], s => String(s.attempts), 'green'],
-  [['emails', 'sent'], s => String(s.sent), 'teal'],
+const rows = [
+  ['a checkpoint row names a class', ['an edited SqliteSaver row,', 'read with get_state'], 'default: get_state built the lab class', 'LANGGRAPH_STRICT_MSGPACK=true: raw fields'],
+  ['a user id of *', ['a store prefix built', 'from that id'], 'list_namespaces listed every user', 'search on the same prefix: one user only'],
+  ['an edit switches the tool', ['send_email edited into', 'a call of delete_file'], 'batched: delete_file ran in 3 of 3 runs', 'per_call: ValidationError, nothing ran'],
+  ['an agent inside a local trace', ['tracing_context with', 'enabled="local"'], 'requests to api.smith.langchain.com', 'enabled=False: no request at all'],
 ];
 
 module.exports = figure('fig-8-3', {
-  height: 418,
-  title: 'Seven processes of the assistant, and what each one left behind',
-  desc: `A table with one row for each of the seven processes of the assistant run on the Mac, and one column for each count read when the process ended. Process 3 approved the email, sent it, and was killed with exit code ${steps[2].exit}. Process 4 resumed and found the same approval waiting again. Process 5 approved again, send_email ran a second time, and the key check skipped the send. At the end send_email had run ${steps[6].attempts} times and the outbox held ${steps[6].sent} email. Process 7 on a new thread still found ${steps[6].memories} memories in the store.`,
+  height: 452,
+  title: 'Where input crosses into code, by default and with the setting',
+  desc: 'Four rows, each from an input on the left to two results on the right: the default result in rose and the result with a setting in violet. An edited SqliteSaver checkpoint row that names a class makes get_state build the class, and LANGGRAPH_STRICT_MSGPACK=true gives back the raw fields. A user id of star makes list_namespaces list every user, while search on the same prefix returns one user. A batched review lets an edit of send_email into delete_file run delete_file, and per-call review raises ValidationError. An agent inside tracing_context with enabled local sends requests to api.smith.langchain.com, and enabled False sends nothing.',
 }, f => {
-  cols.forEach(([head], c) => head.forEach((line, k) => f.text(X0 + c * COL + (COL - 8) / 2, 22 + k * 15, line, { size: 11, anchor: 'middle', hue: 'ink-soft', weight: 700 })));
-  steps.forEach((s, i) => {
-    const y = Y0 + i * ROW;
-    f.text(20, y + 21, `${i + 1}`, { size: 12, weight: 700, hue: s.exit ? 'rose' : 'ink' });
-    f.text(40, y + 21, names[i], { size: 11.5, hue: s.exit ? 'rose' : 'ink' });
-    if (s.exit !== 0) {
-      f.rect(X0, y, 5 * COL - 8, ROW - 8, { fill: color('rose-fill'), stroke: color('rose-ink'), dash: 'dashed' });
-      f.text(X0 + 10, y + 21, `SIGKILL, exit ${s.exit}: email sent, step not saved`, { size: 11.5, hue: 'rose', weight: 700 });
-      return;
-    }
-    cols.forEach(([, value, hue], c) => {
-      const x = X0 + c * COL;
-      f.rect(x, y, COL - 8, ROW - 8, { fill: color(`${hue}-fill`), stroke: color(`${hue}-ink`) });
-      f.text(x + (COL - 8) / 2, y + 21, value(s), { size: 12, anchor: 'middle', hue, weight: 700 });
-    });
+  f.kicker(20, 22, 'the input');
+  f.kicker(300, 22, 'the default, then the change');
+  rows.forEach(([title, sub, bad, good], i) => {
+    const y = 34 + i * 96;
+    const input = f.box({ x: 20, y, w: 252, h: 76, hue: 'grey', title, sub, align: 'left' });
+    const worse = f.box({ x: 300, y, w: 320, h: 34, hue: 'rose', title: bad, align: 'left', titleSize: 11.5 });
+    const better = f.box({ x: 300, y: y + 42, w: 320, h: 34, hue: 'violet', title: good, align: 'left', titleSize: 11.5 });
+    f.path(`M${input.x + input.w} ${worse.cy} H${worse.x - 1}`, { style: 'fail' });
+    f.path(`M${input.x + input.w} ${better.cy} H${better.x - 1}`, { style: 'call' });
   });
-  f.text(20, Y0 + 7 * ROW + 16, 'Each row is one new Python process, on thread t1 unless named.', { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, Y0 + 7 * ROW + 34, 'The counts were read when the process ended. send_email ran twice and', { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, Y0 + 7 * ROW + 52, 'one email was sent, because the second run found its tool_call_id in', { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, Y0 + 7 * ROW + 70, 'the outbox. Checkpoints count the rows of the thread in that row.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 428, 'Rose: the result with the default. Violet: the result after the change.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 444, 'Each result is a recorded run on the Mac or the x86 server guest, or a capture of the kit.', { size: 11, serif: true, hue: 'ink-soft' });
 });

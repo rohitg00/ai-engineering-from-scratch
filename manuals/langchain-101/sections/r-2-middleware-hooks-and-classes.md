@@ -2,7 +2,7 @@
 
 > `AgentMiddleware` has six hooks with a sync and an async form each, and `langchain` 1.5.0 builds 19 middleware classes on them.
 
-Every middleware is a subclass of `AgentMiddleware` in `langchain.agents.middleware`. The module exports 50 names {{code libs/langchain_v1/langchain/agents/middleware/__init__.py}}. A path in this page is relative to `libs/langchain_v1/langchain/agents/middleware/` at `langchain==1.5.0`, unless it names another package. [Section 3.3](#s-middleware-hooks-and-their-order) gives the order of the hooks, and [section 3.4](#s-the-built-in-middleware) tells you when to use each class.
+Every middleware is a subclass of `AgentMiddleware` in `langchain.agents.middleware`. The module exports 50 names {{code libs/langchain_v1/langchain/agents/middleware/__init__.py}}. A path in this page is relative to `libs/langchain_v1/langchain/agents/middleware/` at `langchain==1.5.0`, unless it names another package. [Section 4.5](#s-middleware-hooks-and-their-order) gives the order of the hooks, and [section 4.6](#s-the-built-in-middleware) tells you when to use each class.
 
 ## The six hooks
 
@@ -89,7 +89,7 @@ Each row gives the hooks, the constructor defaults that change behaviour, and th
 
 {{code libs/langchain_v1/langchain/agents/middleware/model_retry.py:116-125}} {{code libs/langchain_v1/langchain/agents/middleware/tool_call_limit.py:202-208}} {{code libs/langchain_v1/langchain/agents/middleware/model_call_limit.py:126-131}} {{code libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py:491-498}} {{code libs/langchain_v1/langchain/agents/middleware/summarization.py:282-292}} {{code libs/langchain_v1/langchain/agents/middleware/pii.py:577-586}} {{code libs/langchain_v1/langchain/agents/middleware/file_search.py:133-138}} {{code libs/langchain_v1/langchain/agents/middleware/auto_mode.py:117-124}} {{code libs/langchain_v1/langchain/agents/middleware/model_router.py:121-127}}
 
-A `max_retries` of 2 means 3 attempts in all. `retry_on` defaults to `default_retry_on` in both retry classes, as [section 3.5](#s-retries-backup-models-rate-limits-and-caching) explains. With the default `trigger=None`, `SummarizationMiddleware` never summarizes {{code libs/langchain_v1/langchain/agents/middleware/summarization.py:698-701}}.
+A `max_retries` of 2 means 3 attempts in all. `retry_on` defaults to `default_retry_on` in both retry classes, as [section 4.7](#s-retries-backup-models-rate-limits-and-caching) explains. With the default `trigger=None`, `SummarizationMiddleware` never summarizes {{code libs/langchain_v1/langchain/agents/middleware/summarization.py:698-701}}.
 
 ## Types of human review
 
@@ -101,6 +101,6 @@ A `max_retries` of 2 means 3 attempts in all. `retry_on` defaults to `default_re
 | `HITLResponse` | `decisions` | 289 |
 | `InterruptOnConfig` | `allowed_decisions`, `description`, `args_schema`, `when` | 306 |
 
-`True` in `interrupt_on` allows all four decisions {{code libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py:586}}. [Section 5.5](#s-human-in-the-loop-batched-and-per-call) runs both modes.
+`True` in `interrupt_on` allows all four decisions {{code libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py:586}}. [Section 6.5](#s-human-in-the-loop-batched-and-per-call) runs both modes.
 
 Sources: libs/langchain_v1/langchain/agents/middleware/__init__.py, types.py, summarization.py, context_editing.py, human_in_the_loop.py, model_call_limit.py, tool_call_limit.py, tool_retry.py, model_retry.py, model_fallback.py, model_refusal.py, tool_error.py, pii.py, model_router.py, auto_mode.py, todo.py, tool_selection.py, tool_emulator.py, provider_tool_search.py, shell_tool.py, file_search.py, and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; libs/prebuilt/langgraph/prebuilt/tool_node.py at langgraph 1.2.22; capture/out/09-middleware-order.txt.

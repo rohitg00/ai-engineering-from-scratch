@@ -1,0 +1,34 @@
+T02 crash-resume, agent matrix, on a real model. The x86 server guest, 2026-11-15.
+Model qwen3:4b-instruct-2507-q4_K_M via ChatOllama 1.1.0 (lr_common.chat), temperature 0, seed 42, num_predict 256, Ollama 0.31.1 on CPU.
+num_ctx not set by the script. `ollama ps` showed the runner loaded with CONTEXT 4096 during this run (lr_common's settings string says "server default 8192"; that string is wrong for this run). Every prompt here was under 400 tokens, so the context size does not touch these results.
+Stack: langchain 1.5.0, langgraph 1.2.22, langgraph-checkpoint-sqlite 3.1.3, langgraph-checkpoint-postgres 3.2.1 on PostgreSQL 16.15. Scripts: t02r_drive.py (driver), t02r_child.py (one process per phase), t02r_summarize.py (09-summary-table.txt).
+
+Design. create_agent with ChatOllama and one tool, charge(order_id, amount_usd). Prompt "Charge order <4100+rep> for <25+rep> dollars." System prompt in t02r_child.py.
+The side effect is an INSERT into the PostgreSQL table t02r_ledger (autocommit) inside the tool. Every execution of the tool also goes into t02r_attempts. Every model call goes into t02r_model_calls.
+Kill points are the same five as the Mac T02, with the tool in place of the node: before_tool, inside_tool (after the INSERT committed), before_put_writes, before_put (wrapped saver), after_tool (in a wrap_model_call middleware, before the second model request is sent).
+The run process prints REACHED at the point and sleeps; the driver sends SIGKILL. A new process resumes: invoke(None) if a checkpoint exists, else it starts again from the input.
+Keys: none (plain INSERT); call_id (key thread:tool_call_id, INSERT ... ON CONFLICT DO NOTHING on a unique column); order (key thread:order_id, same mechanism).
+3 trials ran at once (3 driver threads, Ollama serves one request at a time), cells shuffled per round. Trial wall 9.0 to 116 s, median 18.2 s. Median model call 7.8 s with queueing.
+
+n per cell: keys none and call_id, 20 per cell (reps 0-19) in 28 cells per key; exit/before_put_writes 5 per key (reps 0-4; never reached, see below). Key order: 5 per cell (reps 0-4), 30 cells.
+Files: 01-agent-matrix.jsonl = reps 0-4, all three keys, 90 cells (450 trials). The driver was stopped after round 4 on purpose (01-stopped-after-rep4.txt).
+02-agent-matrix-rep5-19.jsonl = reps 5-19, keys none and call_id, 56 cells, exit/before_put_writes skipped (840 trials). Total 1290 trials, 1260 killed.
+
+Results (counts are trials where the ledger held more than one charge for one requested charge):
+- The model asked for exactly one charge call in its first reply in 1290/1290 trials. The final state ended with an AI message and empty next in 1290/1290.
+- No key: 331 of 560 killed trials charged twice.
+  inside_tool: sync 40/40, async 40/40, exit 40/40.
+  after_tool: sync 0/40, async 38/40, exit 40/40.
+  before_put: sync 20/40 (SQLite 12/20, Postgres 8/20), async 11/40 (SQLite 6/20, Postgres 5/20), exit 40/40.
+  before_put_writes: sync 24/40 (SQLite 8/20, Postgres 16/20), async 38/40 (SQLite 18/20, Postgres 20/20).
+  before_tool: 0/120 in every mode.
+  exit/before_put_writes: never reached in 10/10 runs (exit mode writes no pending writes during the run), so they ran once.
+- tool_call_id key: 120 of 560 killed trials charged twice, all in exit mode: inside_tool 40/40, before_put 40/40, after_tool 40/40. In sync and async: 0/400.
+  Cause: exit mode has no checkpoint at the crash, so the resume starts again from the input, the model is called again, and ChatOllama gives the new tool call a new id (2 distinct call ids in those 120 trials). The key cannot match.
+- order key (thread + order id): 0 of 140 killed trials charged twice (n=5 per cell).
+- next was empty after the kill although the run had not finished in 217 of 1260 killed trials (no key 107/560, call_id 89/560, order 21/140): async 177, sync 40 (sync only at before_put). invoke(None) finished each of them correctly.
+- History at a before_tool kill: sync 3 checkpoints in 90/90, async 2 in 90/90, exit 0 in 90/90 (rerun from input).
+- Extra model calls (2 needed): sync 2 calls in 450/450. async 3 calls in 77/450 (the first model call ran again after a before_tool kill). exit 3 calls in 270/390 and 4 in 90/390.
+
+Changes against the Mac fake agent matrix (5 per cell, 150 trials, 82 twice): the real-model rows agree in shape (inside_tool always repeats; sync after_tool never; exit repeats after the tool). New with the real model and n=20: before_put under sync repeats on SQLite too (12/20; Mac 0/5); before_put_writes under sync 8/20 on SQLite (Mac 1/5); and the tool_call_id key fails in exit mode in 120/120 because the real model returns a new id. The Mac graph matrix and the graph idempotency rows have no model and stay valid.
+Rows not to use: none. Note that reps 0-4 used three keys in a shuffled round of 90 trials and reps 5-19 used two keys in rounds of 56 trials, so the load around a trial differed between the two files.
