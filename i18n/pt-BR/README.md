@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Por que construir do zero
 
-Uma chamada a um framework esconde justamente a parte que quebra. Quando uma perda vira NaN ou um agente repete a mesma chamada de ferramenta, quem escreveu a versão pequena sabe onde olhar. Em cada lição você escreve primeiro essa versão, executa e depois roda a biblioteca de produção sobre o mesmo problema para comparar as duas.
+Uma chamada a um framework esconde justamente a parte que quebra. Quando uma perda vira NaN ou um agente repete a mesma chamada de ferramenta, quem escreveu a versão pequena sabe onde olhar. Na maioria das lições você escreve primeiro essa versão pequena e a executa, e depois a lição mostra onde as ferramentas de produção fazem o mesmo trabalho.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Uma lição em quatro passos: o problema, construir do zero, usar a biblioteca de produção e entregar um artefato que você guarda. O exemplo é a lição do ciclo do agente na fase 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Uma lição em quatro passos: o problema, construir do zero, ver onde as ferramentas de produção fazem o mesmo trabalho e entregar um artefato que você guarda. O exemplo é a lição do ciclo do agente na fase 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Uma chamada a um framework esconde justamente a parte que quebra. Quando uma per
 
 - **01 · O PROBLEMA**: Um LLM devolve texto. Ele não consegue agir.
 - **02 · CONSTRUA**: Um ciclo ReAct em Python com stdlib.
-- **03 · USE**: O mesmo ciclo em um SDK de agentes.
+- **03 · USE**: Onde os SDKs de agentes executam o mesmo ciclo.
 - **04 · ENTREGUE**: skill-agent-loop.md, pronto para o seu agente.
 
 </details>
@@ -339,7 +339,7 @@ As vinte fases se constroem umas sobre as outras. A matemática é a base; agent
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="As vinte fases agrupadas em seis volumes, dos fundamentos na base à produção no topo, com o que você constrói em cada volume." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="As vinte fases em seis volumes, dos fundamentos na base à produção no topo. Volume 1, Fundamentos, fases 0 a 2: vetores, gradientes, modelos clássicos. Volume 2, Aprendizado profundo, fases 3, 4 e 6: de um perceptron à visão e à fala. Volume 3, Linguagem, fases 5 e 7: a atenção e o transformer, à mão. Volume 4, Modelos de linguagem grandes, fases 8 a 11: pré-treinar um mini GPT, alinhá-lo, entregar RAG. Volume 5, Agentes, fases 12 a 16: o ciclo do agente, ferramentas, servidores MCP, enxames. Volume 6, Produção, fases 17 a 19: serviço, observabilidade, segurança, projetos finais." width="840">
   </picture>
 </p>
 

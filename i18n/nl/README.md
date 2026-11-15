@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Waarom helemaal zelf bouwen
 
-Een aanroep van een framework verbergt precies het deel dat kapotgaat. Wanneer een verlies NaN wordt of een agent dezelfde toolaanroep blijft herhalen, weet wie de kleine versie schreef waar hij moet zoeken. In elke les schrijf je eerst die versie, voer je haar uit en draai je daarna de productiebibliotheek op hetzelfde probleem om de twee te vergelijken.
+Een aanroep van een framework verbergt precies het deel dat kapotgaat. Wanneer een verlies NaN wordt of een agent dezelfde toolaanroep blijft herhalen, weet wie de kleine versie schreef waar hij moet zoeken. In de meeste lessen schrijf je eerst die kleine versie en voer je haar uit, daarna laat de les zien waar productietools hetzelfde werk doen.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Een les in vier stappen: het probleem, helemaal zelf bouwen, de productiebibliotheek gebruiken en een artefact opleveren dat je houdt. Het voorbeeld is de les over de agentlus in fase 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Een les in vier stappen: het probleem, helemaal zelf bouwen, zien waar productietools hetzelfde werk doen en een artefact opleveren dat je houdt. Het voorbeeld is de les over de agentlus in fase 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Een aanroep van een framework verbergt precies het deel dat kapotgaat. Wanneer e
 
 - **01 · HET PROBLEEM**: Een LLM geeft tekst terug. Handelen kan het niet.
 - **02 · BOUW HET**: Een ReAct-lus in Python met stdlib.
-- **03 · GEBRUIK HET**: Dezelfde lus in een agent-SDK.
+- **03 · GEBRUIK HET**: Waar agent-SDK’s dezelfde lus uitvoeren.
 - **04 · LEVER HET OP**: skill-agent-loop.md, klaar voor je agent.
 
 </details>
@@ -339,7 +339,7 @@ Twintig fasen bouwen op elkaar voort. Wiskunde vormt de fundering; agents en pro
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="De twintig fasen gegroepeerd in zes delen, van de basis onderaan tot productie bovenaan, met wat je in elk deel bouwt." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="De twintig fasen gegroepeerd in zes delen, van de basis onderaan tot productie bovenaan. Deel 1, Basis, fasen 0 tot 2: vectoren, gradiënten, klassieke modellen. Deel 2, Deep learning, fasen 3, 4 en 6: van een perceptron tot beeld en spraak. Deel 3, Taal, fasen 5 en 7: attention en de transformer, met de hand. Deel 4, Grote taalmodellen, fasen 8 tot 11: een mini-GPT voortrainen, uitlijnen, RAG opleveren. Deel 5, Agents, fasen 12 tot 16: de agentlus, tools, MCP-servers, zwermen. Deel 6, Productie, fasen 17 tot 19: serving, observability, veiligheid, eindprojecten." width="840">
   </picture>
 </p>
 

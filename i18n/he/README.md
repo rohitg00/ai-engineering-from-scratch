@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## למה לבנות מאפס
 
-קריאה למסגרת מסתירה בדיוק את החלק שנשבר. כשההפסד הופך ל-NaN או כשהסוכן חוזר שוב ושוב על אותה קריאה לכלי, מי שכתב את הגרסה הקטנה יודע איפה לחפש. בכל שיעור תכתבו קודם את הגרסה הקטנה ותריצו אותה, ואז תריצו את ספריית הייצור על אותה בעיה ותשוו בין השתיים.
+קריאה למסגרת מסתירה את החלק שנשבר. כשההפסד הופך ל-NaN או כשהסוכן חוזר שוב ושוב על אותה קריאה לכלי, מי שכתב את הגרסה הקטנה יודע איפה לחפש. ברוב השיעורים תכתבו קודם את הגרסה הקטנה ותריצו אותה, ואז תראו איפה כלי ייצור עושים את אותה עבודה.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="שיעור אחד בארבעה שלבים: הבעיה, בנייה מאפס, שימוש בספריית הייצור, ומסירת תוצר שנשאר אצלכם. הדוגמה היא שיעור לולאת הסוכן בשלב 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="שיעור אחד בארבעה שלבים: הבעיה, בנייה מאפס, איתור המקום שבו כלי ייצור עושים את אותה עבודה, ומסירת תוצר שנשאר אצלכם. הדוגמה היא שיעור לולאת הסוכן בשלב 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · הבעיה**: LLM מחזיר טקסט. הוא לא יכול לפעול.
 - **02 · בנו**: לולאת ReAct ב-stdlib Python.
-- **03 · השתמשו**: אותה לולאה ב-SDK של סוכנים.
+- **03 · השתמשו**: המקום שבו SDKs של סוכנים מריצים את אותה לולאה.
 - **04 · מסרו**: skill-agent-loop.md, מוכן לסוכן שלכם.
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="עשרים השלבים מקובצים בשישה כרכים, מהיסודות למטה ועד הייצור למעלה, עם מה שבונים בכל כרך." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="עשרים השלבים בשישה כרכים, מהיסודות בתחתית ועד הייצור בראש. כרך 1, יסודות, שלבים 0 עד 2: וקטורים, גרדיאנטים, מודלים קלאסיים. כרך 2, למידה עמוקה, שלבים 3, 4 ו-6: מפרספטרון ועד ראייה ודיבור. כרך 3, שפה, שלבים 5 ו-7: קשב וה-Transformer, בכתיבה ידנית. כרך 4, מודלי שפה גדולים, שלבים 8 עד 11: אימון מקדים של GPT קטן, יישור שלו ופריסת RAG. כרך 5, סוכנים, שלבים 12 עד 16: לולאת הסוכן, כלים, שרתי MCP, נחילים. כרך 6, ייצור, שלבים 17 עד 19: הגשה, יכולת תצפית, בטיחות, פרויקטים מסכמים." width="840">
   </picture>
 </p>
 

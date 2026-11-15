@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Pourquoi tout construire à partir de zéro
 
-Un appel à un framework cache justement la partie qui casse. Quand une perte devient NaN ou qu’un agent répète le même appel d’outil, celui qui a écrit la petite version sait où chercher. Chaque leçon vous fait écrire d’abord cette version, l’exécuter, puis lancer la bibliothèque de production sur le même problème pour comparer les deux.
+Un appel à un framework cache justement la partie qui casse. Quand une perte devient NaN ou qu’un agent répète le même appel d’outil, celui qui a écrit la petite version sait où chercher. Dans la plupart des leçons, vous écrivez d’abord cette petite version et vous l’exécutez, puis la leçon montre où les outils de production font le même travail.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Une leçon en quatre étapes : le problème, la construire de zéro, utiliser la bibliothèque de production et livrer un artefact que vous gardez. L’exemple est la leçon sur la boucle de l’agent de la phase 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Une leçon en quatre étapes : le problème, la construire de zéro, voir où les outils de production font le même travail et livrer un artefact que vous gardez. L’exemple est la leçon sur la boucle de l’agent de la phase 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Un appel à un framework cache justement la partie qui casse. Quand une perte de
 
 - **01 · LE PROBLÈME**: Un LLM renvoie du texte. Il ne peut pas agir.
 - **02 · CONSTRUISEZ**: Une boucle ReAct en Python avec stdlib.
-- **03 · UTILISEZ**: La même boucle dans un SDK d’agent.
+- **03 · UTILISEZ**: Là où les SDK d’agent exécutent la même boucle.
 - **04 · LIVREZ**: skill-agent-loop.md, prêt pour votre agent.
 
 </details>
@@ -339,7 +339,7 @@ Les vingt phases s’appuient les unes sur les autres. Les mathématiques en for
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Les vingt phases regroupées en six volumes, des fondations en bas à la production en haut, avec ce que vous construisez dans chaque volume." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Les vingt phases en six volumes, des fondations en bas à la production en haut. Volume 1, Fondations, phases 0 à 2 : vecteurs, gradients, modèles classiques. Volume 2, Apprentissage profond, phases 3, 4 et 6 : du perceptron à la vision et à la parole. Volume 3, Langage, phases 5 et 7 : l’attention et le transformer, à la main. Volume 4, Grands modèles de langage, phases 8 à 11 : préentraîner un mini GPT, l’aligner, livrer du RAG. Volume 5, Agents, phases 12 à 16 : la boucle de l’agent, les outils, les serveurs MCP, les essaims. Volume 6, Production, phases 17 à 19 : service, observabilité, sécurité, projets de synthèse." width="840">
   </picture>
 </p>
 

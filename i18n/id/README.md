@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Mengapa membangun dari nol
 
-Pemanggilan kerangka kerja menyembunyikan bagian yang rusak. Saat nilai kerugian berubah menjadi NaN atau agen mengulang pemanggilan alat yang sama, orang yang menulis versi kecilnya tahu harus mencari di mana. Setiap pelajaran memintamu menulis versi itu lebih dahulu, menjalankannya, lalu menjalankan pustaka produksi pada masalah yang sama untuk membandingkan keduanya.
+Pemanggilan kerangka kerja menyembunyikan bagian yang rusak. Saat nilai kerugian berubah menjadi NaN atau agen mengulang pemanggilan alat yang sama, orang yang menulis versi kecilnya tahu harus mencari di mana. Sebagian besar pelajaran memintamu menulis versi itu lebih dahulu dan menjalankannya, lalu menunjukkan di mana alat produksi mengerjakan hal yang sama.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Satu pelajaran dalam empat langkah: masalah, bangun dari nol, gunakan pustaka produksi, dan kirimkan artefak yang kamu simpan. Contohnya adalah pelajaran siklus agen di tahap 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Satu pelajaran dalam empat langkah: masalah, bangun dari nol, lihat di mana alat produksi mengerjakan hal yang sama, dan kirimkan artefak yang kamu simpan. Contohnya adalah pelajaran siklus agen di tahap 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Pemanggilan kerangka kerja menyembunyikan bagian yang rusak. Saat nilai kerugian
 
 - **01 · MASALAH**: LLM mengembalikan teks. LLM tidak bisa bertindak.
 - **02 · BANGUN**: Siklus ReAct dengan stdlib Python.
-- **03 · GUNAKAN**: Siklus yang sama dalam SDK agen.
+- **03 · GUNAKAN**: Tempat SDKs agen menjalankan siklus yang sama.
 - **04 · KIRIM**: skill-agent-loop.md, siap untuk agenmu.
 
 </details>
@@ -339,7 +339,7 @@ Dua puluh tahap saling bertumpu. Matematika adalah fondasinya. Agen dan produksi
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Dua puluh tahap dikelompokkan menjadi enam volume, dari fondasi di bawah hingga produksi di atas, beserta apa yang kamu bangun di setiap volume." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Dua puluh tahap dalam enam jilid, dari fondasi di bawah sampai produksi di atas. Jilid 1, Fondasi, tahap 0 sampai 2: vektor, gradien, model klasik. Jilid 2, Deep Learning, tahap 3, 4 dan 6: dari perceptron sampai penglihatan dan ujaran. Jilid 3, Bahasa, tahap 5 dan 7: atensi dan transformer, ditulis dengan tangan. Jilid 4, Model Bahasa Besar, tahap 8 sampai 11: prapelatihan mini GPT, penyelarasannya, peluncuran RAG. Jilid 5, Agen, tahap 12 sampai 16: siklus agen, alat, server MCP, kawanan. Jilid 6, Produksi, tahap 17 sampai 19: penyajian, observabilitas, keselamatan, proyek akhir." width="840">
   </picture>
 </p>
 

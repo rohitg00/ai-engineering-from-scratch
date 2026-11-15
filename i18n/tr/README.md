@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Neden sıfırdan inşa etmeli
 
-Bir çerçeve çağrısı, bozulan kısmı gizler. Kayıp NaN olduğunda ya da bir ajan aynı araç çağrısını tekrarladığında, küçük sürümü yazan kişi nereye bakacağını bilir. Her derste önce bu sürümü yazıp çalıştırırsınız, ardından aynı problemde üretim kütüphanesini çalıştırıp ikisini karşılaştırırsınız.
+Bir çerçeve çağrısı, bozulan kısmı gizler. Kayıp NaN olduğunda ya da bir ajan aynı araç çağrısını tekrarladığında, küçük sürümü yazan kişi nereye bakacağını bilir. Çoğu derste önce bu sürümü yazıp çalıştırırsınız, ardından üretim araçlarının aynı işi nerede yaptığını gösteririz.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Dört adımda bir ders: problem, sıfırdan inşa etme, üretim kütüphanesini kullanma ve saklayacağınız bir çıktıyı teslim etme. Örnek, 14. aşamadaki ajan döngüsü dersidir." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Dört adımda bir ders: problem, sıfırdan inşa etme, üretim araçlarının aynı işi nerede yaptığını görme ve saklayacağınız bir çıktıyı teslim etme. Örnek, 14. aşamadaki ajan döngüsü dersidir." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Bir çerçeve çağrısı, bozulan kısmı gizler. Kayıp NaN olduğunda ya da b
 
 - **01 · PROBLEM**: Bir LLM metin döndürür. Eylem yapamaz.
 - **02 · İNŞA ET**: stdlib Python ile bir ReAct döngüsü.
-- **03 · KULLAN**: Aynı döngü, bir ajan SDK içinde.
+- **03 · KULLAN**: Ajan SDKs araçlarının aynı döngüyü çalıştırdığı yer.
 - **04 · TESLİM ET**: skill-agent-loop.md, ajanınız için hazır.
 
 </details>
@@ -339,7 +339,7 @@ Yirmi aşama birbiri üzerine kurulur: matematik temeldir; ajanlar ve üretim or
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Yirmi aşama altı ciltte gruplanmış; altta temeller, üstte üretim yer alır ve her ciltte neyi inşa ettiğiniz gösterilir." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Altı ciltte yirmi aşama, altta temellerden üstte üretime kadar. Cilt 1, Temeller, aşama 0 ile 2 arası: vektörler, gradyanlar, klasik modeller. Cilt 2, Derin Öğrenme, aşama 3, 4 ve 6: algılayıcıdan görüntüye ve konuşmaya. Cilt 3, Dil, aşama 5 ve 7: dikkat ve transformer, elle yazılmış. Cilt 4, Büyük Dil Modelleri, aşama 8 ile 11 arası: bir mini GPT modelini ön eğitme, hizalama, RAG yayınlama. Cilt 5, Ajanlar, aşama 12 ile 16 arası: ajan döngüsü, araçlar, MCP sunucuları, sürüler. Cilt 6, Üretim Ortamı, aşama 17 ile 19 arası: sunum, gözlemlenebilirlik, güvenlik, bitirme projeleri." width="840">
   </picture>
 </p>
 

@@ -87,14 +87,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Why build it from scratch
 
-A framework call hides the part that breaks. When a loss turns into NaN or an agent repeats the same tool call, the person who wrote the small version knows where to look. Each lesson has you write that version first, run it, and then run the production library on the same problem to compare the two.
+A framework call hides the part that breaks. When a loss turns into NaN or an agent repeats the same tool call, the person who wrote the small version knows where to look. Most lessons have you write that small version first and run it, then show where production tools do the same work.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/readme/lesson-loop-dark.svg">
-    <img src="assets/readme/lesson-loop-light.svg" alt="One lesson in four steps: the problem, build it from scratch, use the production library, and ship an artifact you keep. The example is the agent loop lesson in Phase 14." width="840">
+    <img src="assets/readme/lesson-loop-light.svg" alt="One lesson in four steps: the problem, build it from scratch, see where production tools do the same work, and ship an artifact you keep. The example is the agent loop lesson in Phase 14." width="840">
   </picture>
 </p>
 
@@ -103,7 +103,7 @@ A framework call hides the part that breaks. When a loss turns into NaN or an ag
 
 - **01 · THE PROBLEM**: An LLM returns text. It cannot act.
 - **02 · BUILD IT**: A ReAct loop in stdlib Python.
-- **03 · USE IT**: The same loop in an agent SDK.
+- **03 · USE IT**: Where agent SDKs run the same loop.
 - **04 · SHIP IT**: skill-agent-loop.md, ready for your agent.
 
 </details>
@@ -402,7 +402,7 @@ the top is breaking.
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="assets/readme/curriculum-map-dark.svg">
-    <img src="assets/readme/curriculum-map-light.svg" alt="The twenty phases grouped into six volumes, from foundations at the bottom to production at the top, with what you build in each volume." width="840">
+    <img src="assets/readme/curriculum-map-light.svg" alt="The twenty phases in six volumes, from foundations at the bottom to production at the top. Volume 1, Foundations, phases 0 to 2: vectors, gradients, classic models. Volume 2, Deep Learning, phases 3, 4 and 6: from a perceptron to vision and speech. Volume 3, Language, phases 5 and 7: attention and the transformer, by hand. Volume 4, Large Language Models, phases 8 to 11: pre-train a mini GPT, align it, ship RAG. Volume 5, Agents, phases 12 to 16: the agent loop, tools, MCP servers, swarms. Volume 6, Production, phases 17 to 19: serving, observability, safety, capstones." width="840">
   </picture>
 </p>
 

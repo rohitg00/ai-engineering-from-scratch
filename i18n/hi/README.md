@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## शुरू से क्यों बनाएँ
 
-फ़्रेमवर्क का कॉल उसी हिस्से को छिपा देता है जो सबसे पहले टूटता है। जब लॉस NaN बन जाए या एजेंट बार-बार वही टूल कॉल दोहराए, तो जिसने छोटा संस्करण खुद लिखा है, वह जानता है कि कहाँ देखना है। हर पाठ में आप पहले वही छोटा संस्करण लिखते और चलाते हैं, फिर उसी समस्या पर प्रोडक्शन लाइब्रेरी चलाकर दोनों की तुलना करते हैं।
+फ़्रेमवर्क का कॉल उसी हिस्से को छिपा देता है जो टूटता है। जब लॉस NaN बन जाए या एजेंट बार-बार वही टूल कॉल दोहराए, तो जिसने छोटा संस्करण खुद लिखा है, वह जानता है कि कहाँ देखना है। ज़्यादातर पाठों में आप पहले वही छोटा संस्करण लिखकर चलाते हैं, फिर देखते हैं कि प्रोडक्शन टूल वही काम कहाँ करते हैं।
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="एक पाठ चार चरणों में चलता है: समस्या, शुरू से बनाना, प्रोडक्शन लाइब्रेरी का उपयोग, और ऐसा परिणाम तैयार करना जो आपके पास रहे। उदाहरण चरण 14 का एजेंट लूप पाठ है।" width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="एक पाठ चार चरणों में चलता है: समस्या, शुरू से बनाना, यह देखना कि प्रोडक्शन टूल वही काम कहाँ करते हैं, और ऐसा परिणाम तैयार करना जो आपके पास रहे। उदाहरण चरण 14 का एजेंट लूप पाठ है।" width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · समस्या**: LLM टेक्स्ट लौटाता है, पर कार्रवाई नहीं कर सकता।
 - **02 · बनाएँ**: stdlib Python में एक ReAct लूप।
-- **03 · उपयोग करें**: एजेंट SDK में वही लूप।
+- **03 · उपयोग करें**: वह जगह जहाँ एजेंट SDKs वही लूप चलाते हैं।
 - **04 · भेजें**: skill-agent-loop.md, आपके एजेंट के लिए तैयार।
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="बीस चरण छह खंडों में बँटे हैं, नीचे बुनियाद और ऊपर प्रोडक्शन, और हर खंड में जो बनता है वह भी दिखाया गया है।" width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="बीस चरण छह खंडों में बँटे हैं, नीचे बुनियाद और ऊपर उत्पादन। खंड 1, बुनियाद, चरण 0 से 2: वेक्टर, ग्रेडिएंट, शास्त्रीय मॉडल। खंड 2, डीप लर्निंग, चरण 3, 4 और 6: परसेप्ट्रॉन से कंप्यूटर दृष्टि और वाक् तक। खंड 3, भाषा, चरण 5 और 7: अटेंशन और Transformer, हाथ से बनाकर। खंड 4, बड़े भाषा मॉडल, चरण 8 से 11: मिनी GPT का प्रीट्रेनिंग, उसका संरेखण, RAG की तैनाती। खंड 5, एजेंट, चरण 12 से 16: एजेंट लूप, टूल, MCP सर्वर, एजेंट समूह। खंड 6, उत्पादन, चरण 17 से 19: सर्विंग, ऑब्ज़र्वेबिलिटी, सुरक्षा, समापन परियोजनाएँ।" width="840">
   </picture>
 </p>
 

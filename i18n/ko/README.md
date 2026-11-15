@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## 왜 처음부터 구현하는가
 
-프레임워크 호출은 가장 자주 깨지는 부분을 가려 버립니다. 손실이 NaN이 되거나 에이전트가 같은 도구 호출을 반복할 때, 작은 버전을 직접 작성한 사람은 어디를 봐야 하는지 압니다. 각 레슨에서는 먼저 그 작은 버전을 작성해 실행하고, 같은 문제를 프로덕션 라이브러리로 다시 실행해 둘을 비교합니다.
+프레임워크 호출은 깨지는 부분을 가려 버립니다. 손실이 NaN이 되거나 에이전트가 같은 도구 호출을 반복할 때, 작은 버전을 직접 작성한 사람은 어디를 봐야 하는지 압니다. 대부분의 레슨에서는 먼저 그 작은 버전을 작성해 실행하고, 이어서 프로덕션 도구가 같은 일을 하는 곳을 보여 줍니다.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="한 레슨은 네 단계로 진행됩니다. 문제, 처음부터 구현, 프로덕션 라이브러리 사용, 계속 쓸 수 있는 결과물 배포. 예시는 14단계의 에이전트 루프 레슨입니다." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="한 레슨은 네 단계로 진행됩니다. 문제, 처음부터 구현, 프로덕션 도구가 같은 일을 하는 곳 확인, 계속 쓸 수 있는 결과물 배포. 예시는 14단계의 에이전트 루프 레슨입니다." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · 문제**: LLM은 텍스트를 반환할 뿐 행동하지 못한다.
 - **02 · 구현**: stdlib Python으로 만드는 ReAct 루프.
-- **03 · 활용**: 에이전트 SDK로 실행하는 같은 루프.
+- **03 · 활용**: 에이전트 SDKs가 같은 루프를 실행하는 곳.
 - **04 · 배포**: skill-agent-loop.md, 에이전트가 바로 쓸 수 있는 형태.
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="스무 단계를 여섯 권으로 묶은 지도. 아래쪽은 기초, 위쪽은 프로덕션이며, 각 권에서 만드는 결과물을 보여 줍니다." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="스무 단계가 여섯 권으로 나뉘며, 아래쪽은 기초, 위쪽은 프로덕션입니다. 1권 기초, 0단계에서 2단계: 벡터, 경사, 고전 모델. 2권 딥러닝, 3, 4, 6단계: 퍼셉트론에서 비전과 음성까지. 3권 언어, 5단계와 7단계: 어텐션과 트랜스포머를 직접 구현. 4권 대규모 언어 모델, 8단계에서 11단계: 미니 GPT 사전 학습, 정렬, RAG 배포. 5권 에이전트, 12단계에서 16단계: 에이전트 루프, 도구, MCP 서버, 스웜. 6권 프로덕션, 17단계에서 19단계: 서빙, 관측 가능성, 안전성, 캡스톤." width="840">
   </picture>
 </p>
 

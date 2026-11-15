@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Miksi rakentaa alusta asti
 
-Kehyskirjaston kutsu piilottaa juuri sen osan, joka hajoaa. Kun tappio muuttuu NaN-arvoksi tai agentti toistaa saman työkalukutsun, pienen version kirjoittanut tietää, mistä etsiä. Jokaisella oppitunnilla kirjoitat ensin sen version, ajat sen ja ajat sitten tuotantokirjaston samaan ongelmaan vertaillaksesi näitä kahta.
+Kehyskirjaston kutsu piilottaa juuri sen osan, joka hajoaa. Kun tappio muuttuu NaN-arvoksi tai agentti toistaa saman työkalukutsun, pienen version kirjoittanut tietää, mistä etsiä. Useimmilla oppitunneilla kirjoitat ensin sen pienen version ja ajat sen, minkä jälkeen oppitunti näyttää, missä tuotantotyökalut tekevät saman työn.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Yksi oppitunti neljässä vaiheessa: ongelma, rakenna alusta asti, käytä tuotantokirjastoa ja toimita artefakti, jonka säilytät. Esimerkki on agenttisilmukan oppitunti vaiheessa 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Yksi oppitunti neljässä vaiheessa: ongelma, rakenna alusta asti, katso missä tuotantotyökalut tekevät saman työn ja toimita artefakti, jonka säilytät. Esimerkki on agenttisilmukan oppitunti vaiheessa 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Kehyskirjaston kutsu piilottaa juuri sen osan, joka hajoaa. Kun tappio muuttuu N
 
 - **01 · ONGELMA**: LLM palauttaa tekstiä. Se ei voi toimia.
 - **02 · RAKENNA**: ReAct-silmukka Python-kielellä stdlib-kirjastolla.
-- **03 · KÄYTÄ**: Sama silmukka agentti-SDK:ssa.
+- **03 · KÄYTÄ**: Missä agentti-SDK:t ajavat saman silmukan.
 - **04 · TOIMITA**: skill-agent-loop.md, valmis agentillesi.
 
 </details>
@@ -339,7 +339,7 @@ Kaksikymmentä vaihetta rakentuu toistensa päälle. Matematiikka on perusta. Ag
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Kaksikymmentä vaihetta ryhmiteltynä kuuteen osaan, perusteista alhaalla tuotantoon ylhäällä, sekä se, mitä rakennat kussakin osassa." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Kaksikymmentä vaihetta kuudessa osassa, perusteista alhaalla tuotantoon ylhäällä. Osa 1, Perusteet, vaiheet 0 - 2: vektorit, gradientit, klassiset mallit. Osa 2, Syväoppiminen, vaiheet 3, 4 ja 6: perceptronista näköön ja puheeseen. Osa 3, Kieli, vaiheet 5 ja 7: huomiomekanismi ja transformer käsin. Osa 4, Suuret kielimallit, vaiheet 8 - 11: esikouluta mini-GPT, kohdista se, toimita RAG. Osa 5, Agentit, vaiheet 12 - 16: agenttisilmukka, työkalut, MCP-palvelimet, parvet. Osa 6, Tuotanto, vaiheet 17 - 19: palvelu, havaittavuus, turvallisuus, päättöprojektit." width="840">
   </picture>
 </p>
 

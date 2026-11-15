@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Proč stavět od základu
 
-Volání frameworku skrývá právě to, co se rozbije. Když se ztráta změní na NaN nebo agent opakuje stejné volání nástroje, ten, kdo napsal malou verzi, ví, kde hledat. V každé lekci nejprve napíšete tuto verzi a spustíte ji, poté spustíte produkční knihovnu na stejném problému a obě řešení porovnáte.
+Volání frameworku skrývá právě to, co se rozbije. Když se ztráta změní na NaN nebo agent opakuje stejné volání nástroje, ten, kdo napsal malou verzi, ví, kde hledat. Ve většině lekcí nejprve napíšete tuto verzi a spustíte ji, potom ukážeme, kde produkční nástroje dělají stejnou práci.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Jedna lekce ve čtyřech krocích: problém, vytvoření od základu, použití produkční knihovny a vydání artefaktu, který si ponecháte. Příkladem je lekce o smyčce agenta ve fázi 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Jedna lekce ve čtyřech krocích: problém, vytvoření od základu, pohled na to, kde produkční nástroje dělají stejnou práci, a vydání artefaktu, který si ponecháte. Příkladem je lekce o smyčce agenta ve fázi 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Volání frameworku skrývá právě to, co se rozbije. Když se ztráta změní
 
 - **01 · PROBLÉM**: LLM vrací text. Nedokáže jednat.
 - **02 · VYTVOŘTE**: Smyčka ReAct v stdlib Python.
-- **03 · POUŽIJTE**: Stejná smyčka v SDK agenta.
+- **03 · POUŽIJTE**: Kde SDKs agentů spouštějí stejnou smyčku.
 - **04 · VYDEJTE**: skill-agent-loop.md, připravený pro vašeho agenta.
 
 </details>
@@ -339,7 +339,7 @@ Dvacet fází na sebe navazuje. Matematika je základem, agenti a produkce stře
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Dvacet fází seskupených do šesti dílů, od základů dole po produkci nahoře, s tím, co v každém dílu vytvoříte." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Dvacet fází v šesti svazcích, od základů dole po produkci nahoře. Svazek 1, Základy, fáze 0 až 2: vektory, gradienty, klasické modely. Svazek 2, Hluboké učení, fáze 3, 4 a 6: od perceptronu po vidění a řeč. Svazek 3, Jazyk, fáze 5 a 7: pozornost a transformer, napsané ručně. Svazek 4, Velké jazykové modely, fáze 8 až 11: předtrénování mini GPT, jeho zarovnání, nasazení RAG. Svazek 5, Agenti, fáze 12 až 16: smyčka agenta, nástroje, servery MCP, roje. Svazek 6, Produkce, fáze 17 až 19: provoz modelů, pozorovatelnost, bezpečnost, závěrečné projekty." width="840">
   </picture>
 </p>
 

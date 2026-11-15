@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## 为什么要从零开始构建
 
-调用框架会隐藏最容易出问题的部分。当损失变成 NaN，或智能体不断重复同一个工具调用时，亲手写过小版本的人知道该从哪里查起。每节课都会先让你写出这个小版本并运行它，再用生产级库解决同一个问题，对比两者。
+调用框架会隐藏最容易出问题的部分。当损失变成 NaN，或智能体不断重复同一个工具调用时，亲手写过小版本的人知道该从哪里查起。大多数课程会先让你写出这个小版本并运行它，再展示生产级工具在哪里完成同样的工作。
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="一节课的四个步骤：问题、从零构建、使用生产级库、交付一个你能长期保留的成果。示例是第 14 阶段的智能体循环课。" width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="一节课的四个步骤：问题、从零构建、看生产级工具在哪里完成同样的工作、交付一个你能长期保留的成果。示例是第 14 阶段的智能体循环课。" width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · 问题**: LLM 返回文本，却不能行动。
 - **02 · 构建**: 用 stdlib Python 写一个 ReAct 循环。
-- **03 · 使用**: 在智能体 SDK 中运行同样的循环。
+- **03 · 使用**: 智能体 SDKs 运行同样循环的位置。
 - **04 · 交付**: skill-agent-loop.md，供你的智能体直接使用。
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十个阶段分为六卷，底部是基础，顶部是生产，并标出每一卷要构建的内容。" width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十个阶段分为六卷，底部是基础，顶部是生产。第 1 卷，基础，阶段 0 至 2：向量、梯度、经典模型。第 2 卷，深度学习，阶段 3、4 和 6：从感知机到视觉和语音。第 3 卷，语言，阶段 5 和 7：亲手实现注意力机制和 Transformer。第 4 卷，大语言模型，阶段 8 至 11：预训练一个迷你 GPT，对齐它，交付 RAG。第 5 卷，智能体，阶段 12 至 16：智能体循环、工具、MCP 服务器、群体协作。第 6 卷，生产，阶段 17 至 19：服务部署、可观测性、安全、综合项目。" width="840">
   </picture>
 </p>
 

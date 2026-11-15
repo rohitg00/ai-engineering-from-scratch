@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## لماذا نبني من الصفر
 
-استدعاء إطار العمل يخفي الجزء الذي ينكسر أولًا. وعندما تتحول الخسارة إلى NaN أو يكرر الوكيل استدعاء الأداة نفسه، يعرف من كتب النسخة الصغيرة أين ينظر. في كل درس تكتب هذه النسخة الصغيرة أولًا وتشغّلها، ثم تشغّل مكتبة الإنتاج على المسألة نفسها وتقارن بينهما.
+استدعاء إطار العمل يخفي الجزء الذي ينكسر. وعندما تتحول الخسارة إلى NaN أو يكرر الوكيل استدعاء الأداة نفسه، يعرف من كتب النسخة الصغيرة أين ينظر. في معظم الدروس تكتب هذه النسخة الصغيرة أولًا وتشغّلها، ثم ترى أين تؤدي أدوات الإنتاج العمل نفسه.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="درس واحد في أربع خطوات: المشكلة، والبناء من الصفر، واستخدام مكتبة الإنتاج، وتسليم ناتج تحتفظ به. المثال هو درس حلقة الوكيل في المرحلة 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="درس واحد في أربع خطوات: المشكلة، والبناء من الصفر، ومعرفة أين تؤدي أدوات الإنتاج العمل نفسه، وتسليم ناتج تحتفظ به. المثال هو درس حلقة الوكيل في المرحلة 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · المشكلة**: يعيد LLM نصًا ولا يستطيع التنفيذ.
 - **02 · ابنِه**: حلقة ReAct بشيفرة stdlib Python.
-- **03 · استخدمه**: الحلقة نفسها في SDK للوكلاء.
+- **03 · استخدمه**: المكان الذي تشغّل فيه SDKs الخاصة بالوكلاء الحلقة نفسها.
 - **04 · سلّمه**: skill-agent-loop.md، جاهز لوكيلك.
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="عشرون مرحلة مجمّعة في ست مجلدات، من الأسس في الأسفل إلى الإنتاج في الأعلى، مع ما تبنيه في كل مجلد." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="المراحل العشرون موزعة على ستة مجلدات، من الأسس في الأسفل إلى الإنتاج في الأعلى. المجلد 1، الأسس، المراحل 0 إلى 2: المتجهات والتدرجات والنماذج التقليدية. المجلد 2، التعلّم العميق، المراحل 3 و4 و6: من البرسبترون إلى الرؤية والكلام. المجلد 3، اللغة، المرحلتان 5 و7: الانتباه وTransformer يدويًا. المجلد 4، النماذج اللغوية الكبيرة، المراحل 8 إلى 11: تدريب GPT صغير مسبقًا ومواءمته وتسليم RAG. المجلد 5، الوكلاء، المراحل 12 إلى 16: حلقة الوكيل والأدوات وخوادم MCP والأسراب. المجلد 6، الإنتاج، المراحل 17 إلى 19: التشغيل والمراقبة والسلامة والمشاريع الختامية." width="840">
   </picture>
 </p>
 

@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## ทำไมต้องสร้างตั้งแต่ศูนย์
 
-การเรียกใช้เฟรมเวิร์กซ่อนส่วนที่พังได้ง่ายที่สุดไว้ เมื่อค่าความสูญเสียกลายเป็น NaN หรือเอเจนต์เรียกเครื่องมือเดิมซ้ำไปซ้ำมา คนที่เขียนเวอร์ชันเล็กด้วยตัวเองจะรู้ว่าต้องดูตรงไหน ในแต่ละบทเรียนคุณจะเขียนและรันเวอร์ชันเล็กนั้นก่อน แล้วรันไลบรารีระดับโปรดักชันกับโจทย์เดียวกันเพื่อเปรียบเทียบ
+การเรียกใช้เฟรมเวิร์กซ่อนส่วนที่พังไว้ เมื่อค่าความสูญเสียกลายเป็น NaN หรือเอเจนต์เรียกเครื่องมือเดิมซ้ำไปซ้ำมา คนที่เขียนเวอร์ชันเล็กด้วยตัวเองจะรู้ว่าต้องดูตรงไหน บทเรียนส่วนใหญ่ให้คุณเขียนและรันเวอร์ชันเล็กนั้นก่อน แล้วจึงดูว่าเครื่องมือระดับโปรดักชันทำงานเดียวกันนี้ที่ตรงไหน
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="หนึ่งบทเรียนมีสี่ขั้นตอน: โจทย์ สร้างตั้งแต่ศูนย์ ใช้ไลบรารีระดับโปรดักชัน และส่งมอบผลงานที่เก็บไว้ใช้ได้ ตัวอย่างคือบทเรียนลูปเอเจนต์ในระยะ 14" width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="หนึ่งบทเรียนมีสี่ขั้นตอน: โจทย์ สร้างตั้งแต่ศูนย์ ดูว่าเครื่องมือระดับโปรดักชันทำงานเดียวกันที่ตรงไหน และส่งมอบผลงานที่เก็บไว้ใช้ได้ ตัวอย่างคือบทเรียนลูปเอเจนต์ในระยะ 14" width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · โจทย์**: LLM ส่งข้อความกลับมา แต่ลงมือทำไม่ได้
 - **02 · สร้าง**: ลูป ReAct ด้วย stdlib Python
-- **03 · ใช้งาน**: ลูปเดียวกันใน SDK ของเอเจนต์
+- **03 · ใช้งาน**: ที่ที่ SDKs ของเอเจนต์รันลูปเดียวกัน
 - **04 · ส่งมอบ**: skill-agent-loop.md พร้อมใช้กับเอเจนต์ของคุณ
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="ยี่สิบระยะจัดเป็นหกเล่ม จากพื้นฐานด้านล่างถึงโปรดักชันด้านบน พร้อมสิ่งที่สร้างในแต่ละเล่ม" width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="ยี่สิบระยะแบ่งเป็นหกเล่ม จากพื้นฐานที่ด้านล่างไปจนถึงโปรดักชันที่ด้านบน เล่ม 1 พื้นฐาน ระยะ 0 ถึง 2: เวกเตอร์ เกรเดียนต์ โมเดลแบบดั้งเดิม เล่ม 2 ดีปเลิร์นนิง ระยะ 3, 4 และ 6: จากเพอร์เซปตรอนไปจนถึงการมองเห็นและเสียงพูด เล่ม 3 ภาษา ระยะ 5 และ 7: แอตเทนชันและ Transformer ที่เขียนด้วยมือ เล่ม 4 โมเดลภาษาขนาดใหญ่ ระยะ 8 ถึง 11: พรีเทรน GPT ขนาดเล็ก จัดแนวให้สอดคล้อง และส่งมอบ RAG เล่ม 5 เอเจนต์ ระยะ 12 ถึง 16: ลูปเอเจนต์ เครื่องมือ เซิร์ฟเวอร์ MCP ฝูงเอเจนต์ เล่ม 6 งานจริง ระยะ 17 ถึง 19: การให้บริการ การสังเกตการณ์ ความปลอดภัย โครงงานสรุป" width="840">
   </picture>
 </p>
 

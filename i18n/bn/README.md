@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## কেন শুরু থেকে তৈরি করবেন
 
-ফ্রেমওয়ার্কের কল সেই অংশটাই লুকিয়ে রাখে যা সবচেয়ে আগে ভাঙে। লস যখন NaN হয়ে যায় বা এজেন্ট একই টুল কল বারবার করে, তখন যিনি ছোট সংস্করণটি নিজে লিখেছেন তিনি জানেন কোথায় দেখতে হবে। প্রতিটি পাঠে আপনি আগে সেই ছোট সংস্করণ লিখে চালান, তারপর একই সমস্যায় প্রোডাকশন লাইব্রেরি চালিয়ে দুটির তুলনা করেন।
+ফ্রেমওয়ার্কের কল সেই অংশটাই লুকিয়ে রাখে যা ভাঙে। লস যখন NaN হয়ে যায় বা এজেন্ট একই টুল কল বারবার করে, তখন যিনি ছোট সংস্করণটি নিজে লিখেছেন তিনি জানেন কোথায় দেখতে হবে। বেশির ভাগ পাঠে আপনি আগে সেই ছোট সংস্করণ লিখে চালান, তারপর দেখেন প্রোডাকশন টুল একই কাজ কোথায় করে।
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="একটি পাঠ চার ধাপে চলে: সমস্যা, শুরু থেকে তৈরি, প্রোডাকশন লাইব্রেরির ব্যবহার, এবং নিজের কাছে রাখার মতো একটি ফলাফল প্রকাশ। উদাহরণ হলো ধাপ 14-এর এজেন্ট লুপ পাঠ।" width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="একটি পাঠ চার ধাপে চলে: সমস্যা, শুরু থেকে তৈরি, প্রোডাকশন টুল একই কাজ কোথায় করে তা দেখা, এবং নিজের কাছে রাখার মতো একটি ফলাফল প্রকাশ। উদাহরণ হলো ধাপ 14-এর এজেন্ট লুপ পাঠ।" width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · সমস্যা**: LLM টেক্সট ফেরত দেয়, কিন্তু কাজ করতে পারে না।
 - **02 · তৈরি করুন**: stdlib Python-এ একটি ReAct লুপ।
-- **03 · ব্যবহার করুন**: এজেন্ট SDK-তে একই লুপ।
+- **03 · ব্যবহার করুন**: যেখানে এজেন্ট SDKs একই লুপ চালায়।
 - **04 · প্রকাশ করুন**: skill-agent-loop.md, আপনার এজেন্টের জন্য প্রস্তুত।
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="কুড়িটি ধাপ ছয়টি খণ্ডে সাজানো, নিচে ভিত আর ওপরে প্রোডাকশন, সঙ্গে প্রতিটি খণ্ডে যা তৈরি হয়।" width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="বিশটি ধাপ ছয় খণ্ডে সাজানো, নিচে ভিত্তি থেকে ওপরে বাস্তব ব্যবহার পর্যন্ত। খণ্ড 1, ভিত্তি, ধাপ 0 থেকে 2: ভেক্টর, গ্রেডিয়েন্ট, প্রচলিত মডেল। খণ্ড 2, ডিপ লার্নিং, ধাপ 3, 4 ও 6: পারসেপট্রন থেকে ভিশন ও বাক্‌ পর্যন্ত। খণ্ড 3, ভাষা, ধাপ 5 ও 7: অ্যাটেনশন ও ট্রান্সফর্মার, হাতে তৈরি। খণ্ড 4, বড় ভাষা মডেল, ধাপ 8 থেকে 11: ছোট GPT প্রাক্‌প্রশিক্ষণ, তাকে সারিবদ্ধ করা, RAG প্রকাশ। খণ্ড 5, এজেন্ট, ধাপ 12 থেকে 16: এজেন্ট লুপ, টুল, MCP সার্ভার, ঝাঁক। খণ্ড 6, বাস্তব ব্যবহার, ধাপ 17 থেকে 19: সার্ভিং, পর্যবেক্ষণযোগ্যতা, নিরাপত্তা, চূড়ান্ত প্রকল্প।" width="840">
   </picture>
 </p>
 

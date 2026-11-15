@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="576" viewBox="0 0 1280 576" role="img" aria-label="The curriculum in six volumes, from foundations at the bottom to production at the top. Each volume lists its phases and what you build in it.">
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="576" viewBox="0 0 1280 576" role="img" aria-label="The twenty phases in six volumes, from foundations at the bottom to production at the top. Volume 1, Foundations, phases 0 to 2: vectors, gradients, classic models. Volume 2, Deep Learning, phases 3, 4 and 6: from a perceptron to vision and speech. Volume 3, Language, phases 5 and 7: attention and the transformer, by hand. Volume 4, Large Language Models, phases 8 to 11: pre-train a mini GPT, align it, ship RAG. Volume 5, Agents, phases 12 to 16: the agent loop, tools, MCP servers, swarms. Volume 6, Production, phases 17 to 19: serving, observability, safety, capstones.">
 <defs>
 <pattern id="paper" width="16" height="16" patternUnits="userSpaceOnUse">
 <circle cx="0" cy="0" r="1" fill="#e8e6dc" fill-opacity="0.08"/>

@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Miért érdemes az alapoktól építeni
 
-A keretrendszer hívása elrejti azt a részt, amelyik elromlik. Ha a veszteség NaN lesz, vagy egy ágens ugyanazt az eszközhívást ismételgeti, az tudja, hol keresse a hibát, aki megírta a kis változatot. Minden leckében először ezt a változatot írod meg és futtatod, majd ugyanarra a feladatra lefuttatod az éles könyvtárat is, hogy összehasonlítsd a kettőt.
+A keretrendszer hívása elrejti azt a részt, amelyik elromlik. Ha a veszteség NaN lesz, vagy egy ágens ugyanazt az eszközhívást ismételgeti, az tudja, hol keresse a hibát, aki megírta a kis változatot. A legtöbb leckében először ezt a változatot írod meg és futtatod, utána megmutatjuk, hol végzik az éles eszközök ugyanezt a munkát.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Egy lecke négy lépésben: a probléma, építsd meg az alapoktól, használd az éles könyvtárat, és szállíts egy artefaktumot, amelyet megtartasz. A példa az ágensciklus leckéje a 14. szakaszban." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Egy lecke négy lépésben: a probléma, építsd meg az alapoktól, nézd meg, hol végzik az éles eszközök ugyanezt a munkát, és szállíts egy artefaktumot, amelyet megtartasz. A példa az ágensciklus leckéje a 14. szakaszban." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ A keretrendszer hívása elrejti azt a részt, amelyik elromlik. Ha a veszteség
 
 - **01 · PROBLÉMA**: Az LLM szöveget ad vissza. Cselekedni nem tud.
 - **02 · ÉPÍTSD**: ReAct ciklus stdlib Python kóddal.
-- **03 · HASZNÁLD**: Ugyanez a ciklus egy ágens-SDK-val.
+- **03 · HASZNÁLD**: Hol futtatják az ágensek SDKs csomagjai ugyanezt a ciklust.
 - **04 · SZÁLLÍTSD**: skill-agent-loop.md, kész az ágensed számára.
 
 </details>
@@ -339,7 +339,7 @@ Húsz szakasz épül egymásra. A matematika az alap, az ágensek és az üzemi 
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="A húsz szakasz hat kötetbe rendezve, alul az alapoktól felül az éles üzemig, azzal, hogy melyik kötetben mit építesz." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="A húsz szakasz hat kötetben, az alapoktól lent az éles üzemig fent. 1. kötet, Alapok, 0 és 2 közötti szakaszok: vektorok, gradiensek, klasszikus modellek. 2. kötet, Mélytanulás, a 3, 4 és 6. szakasz: a perceptrontól a látásig és a beszédig. 3. kötet, Nyelv, az 5 és 7. szakasz: a figyelem és a transzformer, kézzel megírva. 4. kötet, Nagy nyelvi modellek, 8 és 11 közötti szakaszok: egy mini GPT előtanítása, hangolása, RAG üzembe állítása. 5. kötet, Ágensek, 12 és 16 közötti szakaszok: az ágensciklus, eszközök, MCP-kiszolgálók, rajok. 6. kötet, Üzemi működés, 17 és 19 közötti szakaszok: kiszolgálás, megfigyelhetőség, biztonság, záróprojektek." width="840">
   </picture>
 </p>
 

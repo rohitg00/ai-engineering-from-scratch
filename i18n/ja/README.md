@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## なぜゼロから作るのか
 
-フレームワークの呼び出しは、壊れやすい部分を隠してしまいます。損失が NaN になったときや、エージェントが同じツール呼び出しを繰り返すときは、小さなバージョンを自分で書いた人なら、どこを調べればよいかが分かります。各レッスンでは、まずその小さなバージョンを書いて実行し、次に同じ問題を本番用ライブラリで実行して両者を比べます。
+フレームワークの呼び出しは、壊れる部分を隠してしまいます。損失が NaN になったときや、エージェントが同じツール呼び出しを繰り返すときは、小さなバージョンを自分で書いた人なら、どこを調べればよいかが分かります。ほとんどのレッスンでは、まずその小さなバージョンを書いて実行し、次に本番用ツールが同じ作業をどこで行っているかを示します。
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="ひとつのレッスンは四つのステップで進みます。問題、ゼロから作る、本番用ライブラリを使う、手元に残る成果物を出荷する。例はフェーズ 14 のエージェントループのレッスンです。" width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="ひとつのレッスンは四つのステップで進みます。問題、ゼロから作る、本番用ツールが同じ作業をする場所を見る、手元に残る成果物を出荷する。例はフェーズ 14 のエージェントループのレッスンです。" width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · 問題**: LLM はテキストを返すだけで、行動はできない。
 - **02 · 制作**: stdlib Python で書く ReAct ループ。
-- **03 · 活用**: エージェント SDK での同じループ。
+- **03 · 活用**: エージェント SDKs が同じループを実行する場所。
 - **04 · 出荷**: skill-agent-loop.md、あなたのエージェントですぐ使える形で。
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十のフェーズを六つの巻にまとめた図。下が基礎、上が本番で、各巻で作るものを示しています。" width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十のフェーズを六つの巻にまとめた図です。下が基礎、上が本番運用です。第 1 巻 基礎、フェーズ 0 から 2：ベクトル、勾配、古典的なモデル。第 2 巻 ディープラーニング、フェーズ 3、4、6：パーセプトロンからビジョンと音声まで。第 3 巻 言語、フェーズ 5 と 7：アテンションとトランスフォーマーを手作業で。第 4 巻 大規模言語モデル、フェーズ 8 から 11：ミニ GPT を事前学習し、アライメントし、RAG を出荷する。第 5 巻 エージェント、フェーズ 12 から 16：エージェントループ、ツール、MCP サーバー、スウォーム。第 6 巻 本番運用、フェーズ 17 から 19：サービング、可観測性、安全性、総合プロジェクト。" width="840">
   </picture>
 </p>
 

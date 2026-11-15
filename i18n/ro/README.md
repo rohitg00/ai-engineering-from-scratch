@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## De ce să construiești de la zero
 
-Un apel la un framework ascunde exact partea care se strică. Când pierderea devine NaN sau un agent repetă același apel de instrument, cine a scris versiunea mică știe unde să caute. Fiecare lecție îți cere să scrii mai întâi acea versiune, să o rulezi, apoi să rulezi biblioteca de producție pe aceeași problemă ca să compari cele două rezultate.
+Un apel la un framework ascunde exact partea care se strică. Când pierderea devine NaN sau un agent repetă același apel de instrument, cine a scris versiunea mică știe unde să caute. În majoritatea lecțiilor scrii mai întâi acea versiune și o rulezi, apoi îți arătăm unde instrumentele de producție fac aceeași muncă.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="O lecție în patru pași: problema, construiește de la zero, folosește biblioteca de producție și livrează un artefact pe care îl păstrezi. Exemplul este lecția despre bucla agentului din etapa 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="O lecție în patru pași: problema, construiește de la zero, vezi unde instrumentele de producție fac aceeași muncă și livrează un artefact pe care îl păstrezi. Exemplul este lecția despre bucla agentului din etapa 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Un apel la un framework ascunde exact partea care se strică. Când pierderea de
 
 - **01 · PROBLEMA**: Un LLM returnează text. Nu poate acționa.
 - **02 · CONSTRUIEȘTE**: O buclă ReAct în stdlib Python.
-- **03 · FOLOSEȘTE**: Aceeași buclă într-un SDK de agent.
+- **03 · FOLOSEȘTE**: Unde SDKs pentru agenți rulează aceeași buclă.
 - **04 · LIVREAZĂ**: skill-agent-loop.md, gata pentru agentul tău.
 
 </details>
@@ -339,7 +339,7 @@ Douăzeci de etape se construiesc una peste alta. Matematica este fundația, age
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Cele douăzeci de etape grupate în șase volume, de la fundamente jos până la producție sus, cu ce construiești în fiecare volum." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Cele douăzeci de etape în șase volume, de la fundamente jos până la producție sus. Volumul 1, Fundamente, etapele 0 până la 2: vectori, gradienți, modele clasice. Volumul 2, Învățare profundă, etapele 3, 4 și 6: de la un perceptron la viziune și vorbire. Volumul 3, Limbaj, etapele 5 și 7: atenția și transformatorul, scrise de mână. Volumul 4, Modele lingvistice mari, etapele 8 până la 11: preantrenează un mini GPT, aliniază-l, livrează RAG. Volumul 5, Agenți, etapele 12 până la 16: bucla agentului, instrumente, servere MCP, roiuri. Volumul 6, Producție, etapele 17 până la 19: servire, observabilitate, siguranță, proiecte finale." width="840">
   </picture>
 </p>
 

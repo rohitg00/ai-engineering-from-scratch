@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Bakit buuin mula sa simula
 
-Itinatago ng pagtawag sa framework ang bahaging nasisira. Kapag naging NaN ang loss o inuulit ng isang agent ang parehong tawag sa tool, alam ng sumulat ng maliit na bersyon kung saan titingin. Sa bawat aralin, isusulat at patatakbuhin mo muna ang bersyong iyon, saka mo patatakbuhin ang production library sa parehong problema upang maihambing ang dalawa.
+Itinatago ng pagtawag sa framework ang bahaging nasisira. Kapag naging NaN ang loss o inuulit ng isang agent ang parehong tawag sa tool, alam ng sumulat ng maliit na bersyon kung saan titingin. Sa karamihan ng mga aralin, isusulat at patatakbuhin mo muna ang bersyong iyon, saka namin ipapakita kung saan ginagawa ng mga production tool ang parehong trabaho.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Isang aralin sa apat na hakbang: ang problema, buuin mula sa simula, gamitin ang production library, at ihatid ang artifact na iingatan mo. Ang halimbawa ay ang aralin sa loop ng agent sa Yugto 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Isang aralin sa apat na hakbang: ang problema, buuin mula sa simula, tingnan kung saan ginagawa ng mga production tool ang parehong trabaho, at ihatid ang artifact na iingatan mo. Ang halimbawa ay ang aralin sa loop ng agent sa Yugto 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Itinatago ng pagtawag sa framework ang bahaging nasisira. Kapag naging NaN ang l
 
 - **01 · PROBLEMA**: Nagbabalik ng teksto ang isang LLM. Hindi ito makakilos.
 - **02 · BUUIN**: Isang ReAct loop sa stdlib Python.
-- **03 · GAMITIN**: Ang parehong loop sa isang agent SDK.
+- **03 · GAMITIN**: Kung saan pinatatakbo ng mga SDKs ng agent ang parehong loop.
 - **04 · IHATID**: skill-agent-loop.md, handa para sa iyong agent.
 
 </details>
@@ -339,7 +339,7 @@ Magkakapatong ang dalawampung yugto. Matematika ang pundasyon. Mga agent at aktu
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Ang dalawampung yugto na nakapangkat sa anim na tomo, mula sa mga pundasyon sa ibaba hanggang sa production sa itaas, kasama ang binubuo mo sa bawat tomo." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Ang dalawampung yugto sa anim na tomo, mula sa mga pundasyon sa ibaba hanggang sa aktuwal na paggamit sa itaas. Tomo 1, Pundasyon, mga yugto 0 hanggang 2: mga vector, gradient, klasikal na modelo. Tomo 2, Deep Learning, mga yugto 3, 4 at 6: mula sa perceptron hanggang sa vision at pagsasalita. Tomo 3, Wika, mga yugto 5 at 7: attention at ang transformer, isinulat nang mano-mano. Tomo 4, Malalaking Language Model, mga yugto 8 hanggang 11: i-pre-train ang isang mini GPT, i-align ito, ilabas ang RAG. Tomo 5, Mga Agent, mga yugto 12 hanggang 16: ang loop ng agent, mga tool, mga MCP server, swarm. Tomo 6, Aktuwal na Paggamit, mga yugto 17 hanggang 19: serving, observability, kaligtasan, pangwakas na proyekto." width="840">
   </picture>
 </p>
 

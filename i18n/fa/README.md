@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## چرا از صفر بسازیم
 
-فراخوانی یک چارچوب همان بخشی را پنهان می‌کند که اول از همه خراب می‌شود. وقتی زیان به NaN تبدیل می‌شود یا عامل بارها همان فراخوانی ابزار را تکرار می‌کند، کسی که نسخهٔ کوچک را نوشته می‌داند کجا را بررسی کند. در هر درس ابتدا همین نسخهٔ کوچک را می‌نویسید و اجرا می‌کنید، سپس کتابخانهٔ تولیدی را روی همان مسئله اجرا می‌کنید و این دو را مقایسه می‌کنید.
+فراخوانی یک چارچوب همان بخشی را پنهان می‌کند که خراب می‌شود. وقتی زیان به NaN تبدیل می‌شود یا عامل بارها همان فراخوانی ابزار را تکرار می‌کند، کسی که نسخهٔ کوچک را نوشته می‌داند کجا را بررسی کند. در بیشتر درس‌ها ابتدا همین نسخهٔ کوچک را می‌نویسید و اجرا می‌کنید، سپس می‌بینید ابزارهای تولیدی همین کار را کجا انجام می‌دهند.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="یک درس در چهار گام: مسئله، ساخت از صفر، استفاده از کتابخانهٔ تولیدی و تحویل یک خروجی ماندگار. مثال، درس حلقهٔ عامل در مرحله 14 است." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="یک درس در چهار گام: مسئله، ساخت از صفر، دیدن جایی که ابزارهای تولیدی همین کار را انجام می‌دهند و تحویل یک خروجی ماندگار. مثال، درس حلقهٔ عامل در مرحله 14 است." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · مسئله**: LLM متن برمی‌گرداند و نمی‌تواند عمل کند.
 - **02 · بسازید**: یک حلقهٔ ReAct با stdlib Python.
-- **03 · استفاده کنید**: همان حلقه در SDK عامل.
+- **03 · استفاده کنید**: جایی که SDKs عامل همان حلقه را اجرا می‌کنند.
 - **04 · تحویل دهید**: skill-agent-loop.md، آمادهٔ عامل شما.
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="بیست مرحله در شش جلد دسته‌بندی شده‌اند، از مبانی در پایین تا تولید در بالا، همراه با آنچه در هر جلد می‌سازید." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="بیست مرحله در شش جلد، از مبانی در پایین تا محیط عملیاتی در بالا. جلد 1، مبانی، مرحله‌های 0 تا 2: بردارها، گرادیان‌ها، مدل‌های کلاسیک. جلد 2، یادگیری عمیق، مرحله‌های 3، 4 و 6: از پرسپترون تا بینایی و گفتار. جلد 3، زبان، مرحله‌های 5 و 7: توجه و ترنسفورمر، با دست. جلد 4، مدل‌های زبانی بزرگ، مرحله‌های 8 تا 11: پیش‌آموزش یک GPT کوچک، همسوسازی آن و تحویل RAG. جلد 5، عامل‌ها، مرحله‌های 12 تا 16: حلقهٔ عامل، ابزارها، سرورهای MCP، گروه‌های ازدحامی. جلد 6، محیط عملیاتی، مرحله‌های 17 تا 19: سرویس‌دهی، مشاهده‌پذیری، ایمنی، پروژه‌های پایانی." width="840">
   </picture>
 </p>
 

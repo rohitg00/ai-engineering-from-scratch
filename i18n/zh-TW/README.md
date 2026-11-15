@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## 為什麼要從零開始建構
 
-呼叫框架會隱藏最容易出問題的部分。當損失變成 NaN，或代理不斷重複同一個工具呼叫時，親手寫過小版本的人知道該從哪裡查起。每堂課都會先讓你寫出這個小版本並執行它，再用正式環境的函式庫處理同一個問題，比較兩者。
+呼叫框架會隱藏最容易出問題的部分。當損失變成 NaN，或代理不斷重複同一個工具呼叫時，親手寫過小版本的人知道該從哪裡查起。大多數課程會先讓你寫出這個小版本並執行它，再展示正式環境的工具在哪裡完成同樣的工作。
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="一堂課的四個步驟：問題、從零建構、使用正式環境的函式庫、交付一個你能長期保留的成果。範例是第 14 階段的代理迴圈課程。" width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="一堂課的四個步驟：問題、從零建構、看正式環境的工具在哪裡完成同樣的工作、交付一個你能長期保留的成果。範例是第 14 階段的代理迴圈課程。" width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · 問題**: LLM 回傳文字，卻無法採取行動。
 - **02 · 建構**: 用 stdlib Python 寫一個 ReAct 迴圈。
-- **03 · 使用**: 在代理 SDK 中執行同樣的迴圈。
+- **03 · 使用**: 代理 SDKs 執行同樣迴圈的位置。
 - **04 · 交付**: skill-agent-loop.md，供你的代理直接使用。
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十個階段分為六卷，底部是基礎，頂部是正式環境，並標示每一卷要建構的內容。" width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="二十個階段分為六卷，底部是基礎，頂部是生產。第 1 卷，基礎，階段 0 至 2：向量、梯度、經典模型。第 2 卷，深度學習，階段 3、4 和 6：從感知機到視覺和語音。第 3 卷，語言，階段 5 和 7：親手實作注意力機制和 Transformer。第 4 卷，大語言模型，階段 8 至 11：預訓練一個迷你 GPT，對齊它，交付 RAG。第 5 卷，代理程式，階段 12 至 16：代理迴圈、工具、MCP 伺服器、群體協作。第 6 卷，生產，階段 17 至 19：服務部署、可觀測性、安全、綜合專案。" width="840">
   </picture>
 </p>
 

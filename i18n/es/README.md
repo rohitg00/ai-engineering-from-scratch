@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Por qué construirlo desde cero
 
-Una llamada a un framework oculta justo la parte que falla. Cuando una pérdida se convierte en NaN o un agente repite la misma llamada a una herramienta, quien escribió la versión pequeña sabe dónde mirar. En cada lección escribes primero esa versión, la ejecutas y después ejecutas la biblioteca de producción sobre el mismo problema para comparar ambas.
+Una llamada a un framework oculta justo la parte que falla. Cuando una pérdida se convierte en NaN o un agente repite la misma llamada a una herramienta, quien escribió la versión pequeña sabe dónde mirar. En la mayoría de las lecciones escribes primero esa versión pequeña y la ejecutas, y después se muestra dónde las herramientas de producción hacen el mismo trabajo.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Una lección en cuatro pasos: el problema, construirlo desde cero, usar la biblioteca de producción y entregar un artefacto que conservas. El ejemplo es la lección del bucle del agente de la fase 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Una lección en cuatro pasos: el problema, construirlo desde cero, ver dónde las herramientas de producción hacen el mismo trabajo y entregar un artefacto que conservas. El ejemplo es la lección del bucle del agente de la fase 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Una llamada a un framework oculta justo la parte que falla. Cuando una pérdida 
 
 - **01 · EL PROBLEMA**: Un LLM devuelve texto. No puede actuar.
 - **02 · CONSTRÚYELO**: Un bucle ReAct en Python con stdlib.
-- **03 · ÚSALO**: El mismo bucle en un SDK de agentes.
+- **03 · ÚSALO**: Donde los SDK de agentes ejecutan el mismo bucle.
 - **04 · ENTRÉGALO**: skill-agent-loop.md, listo para tu agente.
 
 </details>
@@ -339,7 +339,7 @@ Las veinte fases se construyen unas sobre otras. Las matemáticas son los cimien
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Las veinte fases agrupadas en seis volúmenes, desde los fundamentos abajo hasta la producción arriba, con lo que construyes en cada volumen." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Las veinte fases en seis volúmenes, desde los fundamentos abajo hasta la producción arriba. Volumen 1, Fundamentos, fases 0 a 2: vectores, gradientes, modelos clásicos. Volumen 2, Aprendizaje profundo, fases 3, 4 y 6: de un perceptrón a la visión y el habla. Volumen 3, Lenguaje, fases 5 y 7: la atención y el transformer, a mano. Volumen 4, Modelos de lenguaje grandes, fases 8 a 11: preentrena un mini GPT, alinéalo, despliega RAG. Volumen 5, Agentes, fases 12 a 16: el bucle del agente, herramientas, servidores MCP, enjambres. Volumen 6, Producción, fases 17 a 19: servicio, observabilidad, seguridad, proyectos finales." width="840">
   </picture>
 </p>
 

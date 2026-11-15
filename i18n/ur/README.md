@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## شروع سے کیوں بنائیں
 
-فریم ورک کی کال وہی حصہ چھپا دیتی ہے جو سب سے پہلے ٹوٹتا ہے۔ جب لاس NaN بن جائے یا ایجنٹ بار بار وہی ٹول کال دہرائے، تو جس نے چھوٹا ورژن خود لکھا ہو وہ جانتا ہے کہ کہاں دیکھنا ہے۔ ہر سبق میں آپ پہلے وہی چھوٹا ورژن لکھ کر چلاتے ہیں، پھر اسی مسئلے پر پروڈکشن لائبریری چلا کر دونوں کا موازنہ کرتے ہیں۔
+فریم ورک کی کال وہی حصہ چھپا دیتی ہے جو ٹوٹتا ہے۔ جب لاس NaN بن جائے یا ایجنٹ بار بار وہی ٹول کال دہرائے، تو جس نے چھوٹا ورژن خود لکھا ہو وہ جانتا ہے کہ کہاں دیکھنا ہے۔ زیادہ تر اسباق میں آپ پہلے وہی چھوٹا ورژن لکھ کر چلاتے ہیں، پھر دیکھتے ہیں کہ پروڈکشن ٹولز وہی کام کہاں کرتے ہیں۔
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="ایک سبق چار مراحل میں چلتا ہے: مسئلہ، شروع سے تعمیر، پروڈکشن لائبریری کا استعمال، اور ایسا نتیجہ جاری کرنا جو آپ کے پاس رہے۔ مثال مرحلہ 14 کا ایجنٹ لوپ سبق ہے۔" width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="ایک سبق چار مراحل میں چلتا ہے: مسئلہ، شروع سے تعمیر، یہ دیکھنا کہ پروڈکشن ٹولز وہی کام کہاں کرتے ہیں، اور ایسا نتیجہ جاری کرنا جو آپ کے پاس رہے۔ مثال مرحلہ 14 کا ایجنٹ لوپ سبق ہے۔" width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 - **01 · مسئلہ**: LLM متن لوٹاتا ہے، مگر عمل نہیں کر سکتا۔
 - **02 · بنائیں**: stdlib Python میں ایک ReAct لوپ۔
-- **03 · استعمال کریں**: ایجنٹ SDK میں وہی لوپ۔
+- **03 · استعمال کریں**: وہ جگہ جہاں ایجنٹ SDKs وہی لوپ چلاتے ہیں۔
 - **04 · جاری کریں**: skill-agent-loop.md، آپ کے ایجنٹ کے لیے تیار۔
 
 </details>
@@ -339,7 +339,7 @@ python3 phases/01-math-foundations/01-linear-algebra-intuition/code/vectors.py
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="بیس مراحل چھ جلدوں میں بٹے ہیں، نیچے بنیادیں اور اوپر پروڈکشن، ساتھ ہر جلد میں جو بنتا ہے وہ بھی دکھایا گیا ہے۔" width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="بیس مراحل چھ جلدوں میں ہیں، نیچے بنیادیں اور اوپر عملی استعمال۔ جلد 1، بنیادیں، مراحل 0 سے 2: ویکٹر، گریڈینٹ، روایتی ماڈل۔ جلد 2، ڈیپ لرننگ، مراحل 3، 4 اور 6: پرسیپٹران سے بصارت اور تقریر تک۔ جلد 3، زبان، مراحل 5 اور 7: توجہ اور ٹرانسفارمر، ہاتھ سے۔ جلد 4، بڑے زبان ماڈل، مراحل 8 سے 11: چھوٹے GPT کی پیشگی تربیت، اس کی ہم آہنگی، RAG کی ترسیل۔ جلد 5، ایجنٹ، مراحل 12 سے 16: ایجنٹ لوپ، ٹولز، MCP سرور، جھنڈ۔ جلد 6، عملی استعمال، مراحل 17 سے 19: سروِنگ، مشاہدہ پذیری، سلامتی، آخری منصوبے۔" width="840">
   </picture>
 </p>
 

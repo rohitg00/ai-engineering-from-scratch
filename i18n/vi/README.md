@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Vì sao nên xây dựng từ đầu
 
-Một lời gọi khung phần mềm che giấu đúng phần bị hỏng. Khi giá trị mất mát biến thành NaN hoặc một tác tử lặp lại cùng một lời gọi công cụ, người đã viết phiên bản nhỏ biết cần tìm ở đâu. Mỗi bài học yêu cầu bạn viết phiên bản đó trước, chạy nó, rồi chạy thư viện sản xuất trên cùng bài toán để so sánh hai kết quả.
+Một lời gọi khung phần mềm che giấu đúng phần bị hỏng. Khi giá trị mất mát biến thành NaN hoặc một tác tử lặp lại cùng một lời gọi công cụ, người đã viết phiên bản nhỏ biết cần tìm ở đâu. Trong phần lớn các bài học, bạn viết phiên bản đó trước và chạy nó, rồi chúng tôi chỉ ra nơi các công cụ sản xuất làm cùng một việc.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Một bài học gồm bốn bước: vấn đề, xây dựng từ đầu, dùng thư viện sản xuất và bàn giao một sản phẩm bạn giữ lại. Ví dụ là bài học về vòng lặp tác tử ở giai đoạn 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Một bài học gồm bốn bước: vấn đề, xây dựng từ đầu, xem nơi các công cụ sản xuất làm cùng một việc và bàn giao một sản phẩm bạn giữ lại. Ví dụ là bài học về vòng lặp tác tử ở giai đoạn 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Một lời gọi khung phần mềm che giấu đúng phần bị hỏng. Khi g
 
 - **01 · VẤN ĐỀ**: LLM trả về văn bản. LLM không thể hành động.
 - **02 · XÂY DỰNG**: Vòng lặp ReAct bằng stdlib Python.
-- **03 · SỬ DỤNG**: Cùng vòng lặp đó trong SDK tác tử.
+- **03 · SỬ DỤNG**: Nơi các SDKs của tác tử chạy cùng một vòng lặp.
 - **04 · BÀN GIAO**: skill-agent-loop.md, sẵn sàng cho tác tử của bạn.
 
 </details>
@@ -339,7 +339,7 @@ Hai mươi giai đoạn xây chồng lên nhau. Toán học là nền, tác tử
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Hai mươi giai đoạn được nhóm thành sáu tập, từ nền tảng ở dưới đến sản xuất ở trên, kèm nội dung bạn xây dựng trong mỗi tập." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Hai mươi giai đoạn trong sáu tập, từ nền tảng ở dưới đến triển khai thực tế ở trên. Tập 1, Nền tảng, giai đoạn 0 đến 2: vector, gradient, mô hình cổ điển. Tập 2, Học sâu, giai đoạn 3, 4 và 6: từ perceptron đến thị giác và tiếng nói. Tập 3, Ngôn ngữ, giai đoạn 5 và 7: cơ chế chú ý và transformer, viết bằng tay. Tập 4, Mô hình ngôn ngữ lớn, giai đoạn 8 đến 11: tiền huấn luyện một mini GPT, căn chỉnh nó, đưa RAG vào sử dụng. Tập 5, Tác tử, giai đoạn 12 đến 16: vòng lặp tác tử, công cụ, máy chủ MCP, bầy đàn. Tập 6, Triển khai thực tế, giai đoạn 17 đến 19: phục vụ mô hình, khả năng quan sát, an toàn, đồ án." width="840">
   </picture>
 </p>
 

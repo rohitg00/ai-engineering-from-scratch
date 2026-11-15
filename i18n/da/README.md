@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Hvorfor bygge fra bunden
 
-Et kald til et framework skjuler netop den del, der går i stykker. Når et tab bliver til NaN, eller en agent gentager det samme værktøjskald, ved den, der skrev den lille version, hvor der skal ledes. I hver lektion skriver du først den version, kører den og kører derefter produktionsbiblioteket på det samme problem for at sammenligne de to.
+Et kald til et framework skjuler netop den del, der går i stykker. Når et tab bliver til NaN, eller en agent gentager det samme værktøjskald, ved den, der skrev den lille version, hvor der skal ledes. I de fleste lektioner skriver du først den lille version og kører den, derefter viser lektionen, hvor produktionsværktøjer udfører det samme arbejde.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="En lektion i fire trin: problemet, byg fra bunden, brug produktionsbiblioteket og aflever et artefakt, du beholder. Eksemplet er lektionen om agentens løkke i fase 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="En lektion i fire trin: problemet, byg fra bunden, se hvor produktionsværktøjer udfører det samme arbejde og aflever et artefakt, du beholder. Eksemplet er lektionen om agentens løkke i fase 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Et kald til et framework skjuler netop den del, der går i stykker. Når et tab 
 
 - **01 · PROBLEMET**: En LLM returnerer tekst. Den kan ikke handle.
 - **02 · BYG DET**: En ReAct-løkke i Python med stdlib.
-- **03 · BRUG DET**: Samme løkke i et agent-SDK.
+- **03 · BRUG DET**: Hvor agent-SDK’er kører den samme løkke.
 - **04 · AFLEVER DET**: skill-agent-loop.md, klar til din agent.
 
 </details>
@@ -339,7 +339,7 @@ Tyve faser bygger oven på hinanden. Matematikken er fundamentet. Agenter og pro
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="De tyve faser grupperet i seks bind, fra fundamentet nederst til produktion øverst, med det, du bygger i hvert bind." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="De tyve faser i seks bind, fra fundamentet nederst til produktion øverst. Bind 1, Grundlag, fase 0 til 2: vektorer, gradienter, klassiske modeller. Bind 2, Deep learning, fase 3, 4 og 6: fra en perceptron til syn og tale. Bind 3, Sprog, fase 5 og 7: opmærksomhed og transformeren, i hånden. Bind 4, Store sprogmodeller, fase 8 til 11: fortræn en mini-GPT, justér den, aflever RAG. Bind 5, Agenter, fase 12 til 16: agentens løkke, værktøjer, MCP-servere, sværme. Bind 6, Produktion, fase 17 til 19: drift, observerbarhed, sikkerhed, afsluttende projekter." width="840">
   </picture>
 </p>
 

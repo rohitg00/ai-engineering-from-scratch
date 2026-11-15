@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Varför bygga från grunden
 
-Ett anrop till ett ramverk döljer just den del som går sönder. När en förlust blir NaN eller en agent upprepar samma verktygsanrop vet den som skrev den lilla versionen var den ska leta. I varje lektion skriver du först den versionen, kör den och kör sedan produktionsbiblioteket på samma problem för att jämföra de två.
+Ett anrop till ett ramverk döljer just den del som går sönder. När en förlust blir NaN eller en agent upprepar samma verktygsanrop vet den som skrev den lilla versionen var den ska leta. I de flesta lektioner skriver du först den lilla versionen och kör den, därefter visar lektionen var produktionsverktyg gör samma arbete.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="En lektion i fyra steg: problemet, bygg från grunden, använd produktionsbiblioteket och leverera en artefakt som du behåller. Exemplet är lektionen om agentloopen i fas 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="En lektion i fyra steg: problemet, bygg från grunden, se var produktionsverktyg gör samma arbete och leverera en artefakt som du behåller. Exemplet är lektionen om agentloopen i fas 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Ett anrop till ett ramverk döljer just den del som går sönder. När en förlu
 
 - **01 · PROBLEMET**: En LLM returnerar text. Den kan inte agera.
 - **02 · BYGG DET**: En ReAct-loop i Python med stdlib.
-- **03 · ANVÄND DET**: Samma loop i ett agent-SDK.
+- **03 · ANVÄND DET**: Där agent-SDK:er kör samma loop.
 - **04 · LEVERERA DET**: skill-agent-loop.md, redo för din agent.
 
 </details>
@@ -339,7 +339,7 @@ Tjugo faser bygger på varandra. Matematiken är grunden. Agenter och produktion
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="De tjugo faserna grupperade i sex volymer, från grunderna längst ned till produktion högst upp, med det du bygger i varje volym." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="De tjugo faserna i sex volymer, från grunderna längst ned till produktion högst upp. Volym 1, Grunder, faserna 0 till 2: vektorer, gradienter, klassiska modeller. Volym 2, Djupinlärning, faserna 3, 4 och 6: från en perceptron till bild och tal. Volym 3, Språk, faserna 5 och 7: uppmärksamhet och transformern, för hand. Volym 4, Stora språkmodeller, faserna 8 till 11: förträna en mini-GPT, justera den, leverera RAG. Volym 5, Agenter, faserna 12 till 16: agentloopen, verktyg, MCP-servrar, svärmar. Volym 6, Produktion, faserna 17 till 19: drift, observerbarhet, säkerhet, slutprojekt." width="840">
   </picture>
 </p>
 

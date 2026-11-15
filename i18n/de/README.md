@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Warum von Grund auf bauen
 
-Ein Framework-Aufruf versteckt genau den Teil, der kaputtgeht. Wenn ein Loss zu NaN wird oder ein Agent denselben Werkzeugaufruf wiederholt, weiß wer die kleine Version geschrieben hat, wo er suchen muss. In jeder Lektion schreibst du zuerst diese Version, führst sie aus und lässt dann die Produktionsbibliothek am selben Problem laufen, um beide zu vergleichen.
+Ein Framework-Aufruf versteckt genau den Teil, der kaputtgeht. Wenn ein Loss zu NaN wird oder ein Agent denselben Werkzeugaufruf wiederholt, weiß wer die kleine Version geschrieben hat, wo er suchen muss. In den meisten Lektionen schreibst du zuerst diese kleine Version und führst sie aus, danach zeigt die Lektion, wo Produktionswerkzeuge dieselbe Arbeit erledigen.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Eine Lektion in vier Schritten: das Problem, von Grund auf bauen, die Produktionsbibliothek nutzen und ein Artefakt ausliefern, das du behältst. Das Beispiel ist die Lektion zur Agentenschleife in Phase 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Eine Lektion in vier Schritten: das Problem, von Grund auf bauen, sehen, wo Produktionswerkzeuge dieselbe Arbeit erledigen, und ein Artefakt ausliefern, das du behältst. Das Beispiel ist die Lektion zur Agentenschleife in Phase 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Ein Framework-Aufruf versteckt genau den Teil, der kaputtgeht. Wenn ein Loss zu 
 
 - **01 · DAS PROBLEM**: Ein LLM liefert Text. Handeln kann es nicht.
 - **02 · BAUEN**: Eine ReAct-Schleife in Python mit stdlib.
-- **03 · NUTZEN**: Dieselbe Schleife in einem Agenten-SDK.
+- **03 · NUTZEN**: Wo Agenten-SDKs dieselbe Schleife ausführen.
 - **04 · AUSLIEFERN**: skill-agent-loop.md, bereit für deinen Agenten.
 
 </details>
@@ -339,7 +339,7 @@ Die 20 Phasen bauen aufeinander auf. Mathematik bildet das Fundament, Agenten un
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Die zwanzig Phasen, gruppiert in sechs Bände, von den Grundlagen unten bis zur Produktion oben, mit dem, was du in jedem Band baust." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Die zwanzig Phasen in sechs Bänden, von den Grundlagen unten bis zur Produktion oben. Band 1, Grundlagen, Phasen 0 bis 2: Vektoren, Gradienten, klassische Modelle. Band 2, Deep Learning, Phasen 3, 4 und 6: vom Perzeptron zu Bild und Sprache. Band 3, Sprache, Phasen 5 und 7: Attention und der Transformer, von Hand. Band 4, Große Sprachmodelle, Phasen 8 bis 11: ein Mini-GPT vortrainieren, ausrichten, RAG ausliefern. Band 5, Agenten, Phasen 12 bis 16: die Agentenschleife, Werkzeuge, MCP-Server, Schwärme. Band 6, Produktion, Phasen 17 bis 19: Betrieb, Observability, Sicherheit, Abschlussprojekte." width="840">
   </picture>
 </p>
 

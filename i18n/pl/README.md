@@ -56,14 +56,14 @@ npx skills add rohitg00/ai-engineering-from-scratch
 
 ## Dlaczego warto budować od zera
 
-Wywołanie frameworka ukrywa to, co się psuje. Gdy strata zamienia się w NaN albo agent powtarza to samo wywołanie narzędzia, ten, kto napisał małą wersję, wie, gdzie szukać. W każdej lekcji najpierw piszesz taką wersję i uruchamiasz ją, a potem uruchamiasz bibliotekę produkcyjną na tym samym problemie, aby porównać oba wyniki.
+Wywołanie frameworka ukrywa to, co się psuje. Gdy strata zamienia się w NaN albo agent powtarza to samo wywołanie narzędzia, ten, kto napisał małą wersję, wie, gdzie szukać. W większości lekcji najpierw piszesz taką wersję i uruchamiasz ją, a potem pokazujemy, gdzie narzędzia produkcyjne wykonują tę samą pracę.
 
 <p align="center">
   <picture>
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/lesson-loop-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/lesson-loop-dark.svg">
-    <img src="../../assets/readme/lesson-loop-light.svg" alt="Jedna lekcja w czterech krokach: problem, zbuduj od zera, użyj biblioteki produkcyjnej i wydaj artefakt, który zachowasz. Przykładem jest lekcja o pętli agenta w etapie 14." width="840">
+    <img src="../../assets/readme/lesson-loop-light.svg" alt="Jedna lekcja w czterech krokach: problem, zbudowanie od zera, sprawdzenie, gdzie narzędzia produkcyjne wykonują tę samą pracę, i wydanie artefaktu, który zachowasz. Przykładem jest lekcja o pętli agenta w etapie 14." width="840">
   </picture>
 </p>
 
@@ -72,7 +72,7 @@ Wywołanie frameworka ukrywa to, co się psuje. Gdy strata zamienia się w NaN a
 
 - **01 · PROBLEM**: LLM zwraca tekst. Nie potrafi działać.
 - **02 · ZBUDUJ**: Pętla ReAct w stdlib Python.
-- **03 · UŻYJ**: Ta sama pętla w SDK agenta.
+- **03 · UŻYJ**: Gdzie SDKs agentów uruchamiają tę samą pętlę.
 - **04 · WYDAJ**: skill-agent-loop.md, gotowy dla Twojego agenta.
 
 </details>
@@ -339,7 +339,7 @@ Dwadzieścia etapów opiera się na poprzednich. Matematyka jest fundamentem, a 
     <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-mobile-dark.svg">
     <source media="(max-width: 600px)" srcset="../../assets/readme/curriculum-map-mobile-light.svg">
     <source media="(prefers-color-scheme: dark)" srcset="../../assets/readme/curriculum-map-dark.svg">
-    <img src="../../assets/readme/curriculum-map-light.svg" alt="Dwadzieścia etapów pogrupowanych w sześć tomów, od podstaw na dole do produkcji na górze, wraz z tym, co budujesz w każdym tomie." width="840">
+    <img src="../../assets/readme/curriculum-map-light.svg" alt="Dwadzieścia etapów w sześciu tomach, od podstaw na dole do produkcji na górze. Tom 1, Podstawy, etapy 0 do 2: wektory, gradienty, klasyczne modele. Tom 2, Głębokie uczenie, etapy 3, 4 i 6: od perceptronu do widzenia i mowy. Tom 3, Język, etapy 5 i 7: uwaga i transformer, napisane ręcznie. Tom 4, Duże modele językowe, etapy 8 do 11: wstępne trenowanie mini GPT, jego dostrojenie, wdrożenie RAG. Tom 5, Agenci, etapy 12 do 16: pętla agenta, narzędzia, serwery MCP, roje. Tom 6, Produkcja, etapy 17 do 19: serwowanie, obserwowalność, bezpieczeństwo, projekty końcowe." width="840">
   </picture>
 </p>
 
