@@ -23,7 +23,7 @@ class Fanout(TypedDict):
     best: str
 
 
-def reducers_send_command(cap):
+def joke_graph():
     def plan(state):
         return {"subjects": ["cats", "dogs", "owls"], "log": ["plan"]}
 
@@ -56,6 +56,11 @@ def reducers_send_command(cap):
     graph.add_edge("publish", END)
     graph.add_edge("retry", END)
     app = graph.compile()
+    return app
+
+
+def reducers_send_command(cap):
+    app = joke_graph()
     cap.section("graph")
     cap.text(app.get_graph().draw_mermaid())
     cap.section("updates, one chunk per node run")
@@ -87,9 +92,7 @@ def reducers_send_command(cap):
     cap.messages(g.compile().invoke({"messages": [{"role": "user", "content": "hi"}]})["messages"])
 
 
-def functional(cap):
-    runs = []
-
+def functional_workflow(runs):
     @task
     def double(x: int) -> int:
         runs.append(f"double({x})")
@@ -106,6 +109,12 @@ def functional(cap):
         answer = ask_human(total).result()
         return {"total": total, "answer": answer}
 
+    return workflow
+
+
+def functional(cap):
+    runs = []
+    workflow = functional_workflow(runs)
     cfg = thread("functional")
     cap.section("first run stops at the interrupt inside a task")
     result = workflow.invoke([1, 2, 3], cfg, version="v2")
@@ -132,7 +141,7 @@ def functional(cap):
     cap.json(list(workflow.get_graph().nodes))
 
 
-def subgraphs(cap):
+def subgraph_app():
     class Inner(TypedDict):
         text: str
         steps: Annotated[list[str], operator.add]
@@ -159,6 +168,11 @@ def subgraphs(cap):
     outer.add_edge("prepare", "inner")
     outer.add_edge("inner", "finish")
     app = outer.compile(checkpointer=InMemorySaver())
+    return app
+
+
+def subgraphs(cap):
+    app = subgraph_app()
     cfg = thread("subgraph")
     cap.section("graph with xray=True")
     cap.text(app.get_graph(xray=True).draw_mermaid())

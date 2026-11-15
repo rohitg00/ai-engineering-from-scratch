@@ -122,6 +122,122 @@ The edge function reads the state after each model call, in this order {{code li
 
 A structured output tool call is not sent to `tools`. The `model` node handles it, as [section 4.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) shows. An agent with no tools and a `ToolStrategy` or `AutoStrategy` has a `model` to `model` edge in place of the `tools` node. That edge checks `jump_to`, then a new `structured_response`, and otherwise loops {{code libs/langchain_v1/langchain/agents/factory.py:2045-2068}}. With no tools and a `ProviderStrategy`, the `model` node goes straight to the end {{code libs/langchain_v1/langchain/agents/factory.py:1790-1803}}.
 
+## Draw your graph
+
+You built an agent and want to see its graph before you run it. The compiled graph can describe itself, with no model call and no run.
+
+**get_graph():** the method of a compiled graph that returns a `Graph` object from `langchain_core`, with its nodes and its edges {{code libs/langgraph/langgraph/pregel/main.py}}.
+
+```listing
+title: the nodes that get_graph() returns
+source: capture/out/48-draw-agent.txt
+lang: json
+note: Cut to the tools node. The other nodes have no metadata.
+---
+graph.nodes:
+{
+…
+  "tools": {
+    "name": "tools",
+    "data": "ToolNode",
+    "metadata": {
+      "__tools": [
+        "add"
+      ]
+    }
+  },
+…
+}
+```
+
+Each node holds the object that runs it, such as the `ToolNode` of `tools`. Each edge has a `conditional` flag. The `tools` node keeps the names of its tools as metadata.
+
+**draw_mermaid():** the method of `Graph` that returns the graph as Mermaid flowchart text. It needs no extra package and no network {{code libs/core/langchain_core/runnables/graph_mermaid.py}}.
+
+```listing
+title: draw_mermaid() of the agent with one tool
+source: capture/out/48-draw-agent.txt
+lang: text
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	model(model)
+	tools(tools<hr/><small><em>__tools = add</em></small>)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> model;
+	model -.-> __end__;
+	model -.-> tools;
+	tools -.-> model;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+```
+
+A node line gives an id and a label. `:::first` marks `__start__`, and `:::last` marks `__end__`. An edge line with `-->` is a plain edge, and one with `-.->` is a conditional edge. [Figure](#fig-4-1b) matches each line to the drawing. Every graph figure in this manual is drawn from such a text, captured from the compiled graph.
+
+```figure
+id: fig-4-1b
+kind: structure
+title: from draw_mermaid lines to a drawing
+claim: Each node line of draw_mermaid becomes one node, and each edge line becomes one arrow, solid for --> and dashed for -.->.
+caption: Match the numbered node lines on the left to the numbered nodes on the right. Each edge line shows the arrow style it becomes. From capture/out/48-draw-agent.txt.
+```
+
+**xray:** the argument of `get_graph` that opens each subgraph node and draws its nodes inside a box. `True` opens every level, and an integer opens that many levels {{code libs/langgraph/langgraph/pregel/main.py}}.
+
+A parent graph with one subgraph shows the difference. `get_graph()` gives the subgraph as one node, `inner`. `get_graph(xray=True)` gives its two nodes in its place:
+
+```listing
+title: the nodes of a parent graph with xray=True
+source: capture/out/52-draw-subgraph.txt
+lang: json
+---
+[
+  "__start__",
+  "prepare",
+  "finish",
+  "__end__",
+  "inner:shout",
+  "inner:ask_ok"
+]
+```
+
+[Section 6.7](#s-subgraphs-and-multi-agent-patterns) draws the parent graph both ways. An agent from `create_agent` has no subgraph node, so `xray` changes nothing in its graph.
+
+**draw_ascii():** the method of `Graph` that draws the graph as text. It needs the `grandalf` package, and `langchain-core` does not install it {{code libs/core/langchain_core/runnables/graph_ascii.py:205}}. The kit pin leaves it out, so the call raises:
+
+```listing
+title: draw_ascii() at the pin
+source: capture/out/48-draw-agent.txt
+lang: text
+---
+draw_ascii():
+
+raised builtins.ImportError: Install grandalf to draw graphs: `pip install grandalf`.
+```
+
+Install `grandalf` in your own environment when you want a drawing in the terminal.
+
+**draw_mermaid_png():** the method of `Graph` that turns the Mermaid text into a PNG image. Its default draw method is the API method:
+
+```listing
+title: the defaults of draw_mermaid_png() at the pin
+source: capture/out/48-draw-agent.txt
+lang: json
+---
+keyword defaults:
+{
+  "draw_method": "api",
+  "base_url": null,
+  "max_retries": 1,
+  "output_file_path": null
+}
+```
+
+The API method encodes the whole Mermaid text in base64. It puts the result in the URL of a GET request to a public rendering service {{code libs/core/langchain_core/runnables/graph_mermaid.py:463-501}}. So your node names, tool names, and node metadata leave your machine in that URL. Do not call the default on a graph whose names are private.
+
+`base_url` sends the same request to a Mermaid server that you run {{code libs/core/langchain_core/runnables/graph_mermaid.py:463}}. The `PYPPETEER` method renders in a local headless browser, with the `pyppeteer` package. That page still loads the Mermaid script from a public content delivery network, so it needs the network too {{code libs/core/langchain_core/runnables/graph_mermaid.py:389-393}}. The kit calls neither method. It captures the Mermaid text, and the figures of this manual draw that text offline.
+
 ## Parallel tool calls and max_concurrency
 
 **max_concurrency:** the key of the run config that caps how many tasks of one step run at the same time.
@@ -195,6 +311,7 @@ The agent layer added about 5 ms for each model call. With `create_agent`, 2.2% 
 - Budget about 5 ms of agent overhead for each model call, far below model time.
 - Set max_concurrency on the run to cap parallel tool calls.
 - Give each tool a sync body when the agent runs under invoke.
+- Draw a graph from draw_mermaid, because draw_mermaid_png sends the graph text to a public service.
 ```
 
-Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/parallel-tools-x86.json, capture/lab/T08-parallel-tools-x86/01-counts.jsonl, capture/lab/T08-parallel-tools-x86/04-toolnode.jsonl, capture/lab/T08-parallel-tools-x86/05-agent.jsonl, capture/lab/T08-parallel-tools-x86/t08_real.py; issue langgraph#8517; capture/lab/summary/overhead-mac-real.json, capture/lab/T01-overhead-mac-real/01-runs.jsonl, capture/lab/T01-overhead-mac-real/t01_real.py; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py, libs/core/langchain_core/runnables/config.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.
+Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt, capture/out/48-draw-agent.txt, capture/out/52-draw-subgraph.txt, capture/s_draw.py; capture/lab/summary/parallel-tools-x86.json, capture/lab/T08-parallel-tools-x86/01-counts.jsonl, capture/lab/T08-parallel-tools-x86/04-toolnode.jsonl, capture/lab/T08-parallel-tools-x86/05-agent.jsonl, capture/lab/T08-parallel-tools-x86/t08_real.py; issue langgraph#8517; capture/lab/summary/overhead-mac-real.json, capture/lab/T01-overhead-mac-real/01-runs.jsonl, capture/lab/T01-overhead-mac-real/t01_real.py; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py, libs/core/langchain_core/runnables/config.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py and libs/langgraph/langgraph/pregel/main.py at langgraph 1.2.22; libs/core/langchain_core/runnables/graph.py, libs/core/langchain_core/runnables/graph_mermaid.py, and libs/core/langchain_core/runnables/graph_ascii.py at langchain-core 1.8.0.

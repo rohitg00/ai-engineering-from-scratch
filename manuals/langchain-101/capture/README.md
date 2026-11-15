@@ -180,8 +180,15 @@ The kit binds one port, the port of `FlakyEndpoint`, and only while `12` runs.
 | `45-subgraph-agent.txt` | an agent as a subgraph node, with its namespaces |
 | `46-recursion-agent.txt` | a model told to call a tool forever, with `recursion_limit=6` |
 | `47-retrieval-agent.txt` | a retriever on `nomic-embed-text` wrapped as a tool, called by the model |
+| `48-draw-agent.txt` | `get_graph()` of the `create_agent` graph with its node data and metadata, `draw_mermaid()`, `draw_ascii()` (ImportError: no `grandalf` at the pin), and the defaults of `draw_mermaid_png()`, which is not called |
+| `49-draw-middleware.txt` | nodes, edges, Mermaid, and `draw_ascii()` of the agent with `middleware=[A, B, C]` |
+| `50-draw-fanout.txt` | the same for the joke graph of `Send` and `Command` |
+| `51-draw-functional.txt` | the same for an `@entrypoint` |
+| `52-draw-subgraph.txt` | the same for the parent graph of `36`, with `get_graph()` and `get_graph(xray=True)` |
+| `53-draw-deep-agent.txt` | the same for `create_deep_agent`, and its nodes with `xray=True` |
+| `54-draw-service-agent.txt` | the same for `build_agent` of the production service in `lab/prodapp-mac/code`, with a stand-in for its OpenTelemetry module |
 
-Files `00` to `03`, `05`, `31`, `32`, and `34` to `38` are model-free. The others are recorded. `33` and `39` call only the embedding model. `43` to `47` hold the model part of a scenario whose other part stayed model-free, so they come last.
+Files `00` to `03`, `05`, `31`, `32`, `34` to `38`, and `48` to `54` are model-free. The others are recorded. `33` and `39` call only the embedding model. `43` to `47` hold the model part of a scenario whose other part stayed model-free, so they come after the main list. `48` to `54` build each graph of the manual and write its Mermaid text, and they come last. They build models but call none, and they never call `draw_mermaid_png()`, which reaches the network.
 
 ## The lab recordings
 

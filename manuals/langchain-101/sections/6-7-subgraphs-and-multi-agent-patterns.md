@@ -37,6 +37,16 @@ note: The schema and the node functions of the inner graph are cut.
 
 The inner graph has no checkpointer of its own. Only the outer graph gets `InMemorySaver`. `get_graph(xray=True)` draws the inner nodes inside a box named `inner`, with ids such as `inner:shout`.
 
+[Figure](#fig-6-7b) draws the parent graph both ways, from the Mermaid text of each call.
+
+```figure
+id: fig-6-7b
+kind: comparison
+title: one parent graph, with and without xray
+claim: get_graph() shows the subgraph as one node named inner, and get_graph(xray=True) opens it into shout and ask_ok inside a box.
+caption: Read each column from the top. The dashed box on the right is the subgraph. The parent edges reach its first node and leave its last node. From capture/out/52-draw-subgraph.txt.
+```
+
 ## Namespaces
 
 **Namespace:** the path of a subgraph run inside its parent, such as `inner:<task id>`. Stream chunks, checkpoints, and state carry it.
@@ -179,4 +189,4 @@ The kit runs only the subagent pattern. Captures of the other four patterns come
 - Start with one agent, and add a subagent when a task needs its own context.
 ```
 
-Sources: capture/s_graph.py, capture/out/36-subgraphs.txt, capture/out/45-subgraph-agent.txt, capture/out/41-deep-agent.txt; capture/lab/summary/approvals-x86.json; libs/langgraph/langgraph/pregel/main.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-subgraphs, oss/python/langchain/multi-agent/index, oss/python/langchain/multi-agent/subagents).
+Sources: capture/s_graph.py, capture/out/36-subgraphs.txt, capture/out/52-draw-subgraph.txt, capture/out/45-subgraph-agent.txt, capture/out/41-deep-agent.txt; capture/lab/summary/approvals-x86.json; libs/langgraph/langgraph/pregel/main.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-subgraphs, oss/python/langchain/multi-agent/index, oss/python/langchain/multi-agent/subagents).

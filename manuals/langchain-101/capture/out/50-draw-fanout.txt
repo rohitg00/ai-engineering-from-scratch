@@ -1,0 +1,58 @@
+# Drawing the joke graph of Send and Command
+
+## get_graph(): nodes
+
+[
+  "__start__",
+  "plan",
+  "write_joke",
+  "pick",
+  "publish",
+  "retry",
+  "__end__"
+]
+
+## get_graph(): edges
+
+[
+  "__start__ -> plan",
+  "pick -> publish (conditional)",
+  "pick -> retry (conditional)",
+  "plan -> write_joke (conditional)",
+  "write_joke -> pick",
+  "publish -> __end__",
+  "retry -> __end__"
+]
+
+## get_graph().draw_mermaid()
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	plan(plan)
+	write_joke(write_joke)
+	pick(pick)
+	publish(publish)
+	retry(retry)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> plan;
+	pick -.-> publish;
+	pick -.-> retry;
+	plan -.-> write_joke;
+	write_joke --> pick;
+	publish --> __end__;
+	retry --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## get_graph().draw_ascii()
+
+draw_ascii():
+
+raised builtins.ImportError: Install grandalf to draw graphs: `pip install grandalf`.

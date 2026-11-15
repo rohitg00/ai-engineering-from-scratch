@@ -85,6 +85,16 @@ note: Cut to the after_model edges.
 
 `A.after_model` is the last node hook after the model. Its three edges go to `tools`, to the end through `C.after_agent`, or back to `A.before_model` for a jump. After `tools`, the loop goes back to `A.before_model`, so `before_agent` hooks run once for each run.
 
+[Figure](#fig-4-5b) draws the same graph from its Mermaid text. The before hooks run down to `model`, and the after hooks run down to the end in reverse order.
+
+```figure
+id: fig-4-5b
+kind: structure
+title: the graph of middleware A, B, and C
+claim: The before hooks chain in list order into model, the after_model hooks chain in reverse, and A.after_model chooses between tools, the end, and A.before_model.
+caption: Read from __start__ at the top. Blue boxes are hook nodes. The dashed amber lanes at the sides go back up to A.before_model. From capture/out/49-draw-middleware.txt.
+```
+
 ## The order of one tool round trip
 
 The kit ran one question with one tool call and recorded every hook:
@@ -183,4 +193,4 @@ lang: python
 - Write the async twin of every wrap hook when the agent runs under ainvoke.
 ```
 
-Sources: capture/s_agents.py, capture/out/09-middleware-order.txt; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/middleware/custom, oss/python/langchain/human-in-the-loop); issue langchain#40492; libs/langchain_v1/langchain/agents/middleware/types.py and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0.
+Sources: capture/s_agents.py, capture/out/09-middleware-order.txt, capture/out/49-draw-middleware.txt; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/middleware/custom, oss/python/langchain/human-in-the-loop); issue langchain#40492; libs/langchain_v1/langchain/agents/middleware/types.py and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0.

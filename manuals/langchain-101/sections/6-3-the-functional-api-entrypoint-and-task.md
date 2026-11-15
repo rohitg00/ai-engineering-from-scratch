@@ -147,6 +147,16 @@ The first call got `None` as `previous`. Each later call got the number that the
 
 The graph of the workflow has three nodes: `__start__`, `workflow`, and `__end__`. The tasks are not nodes, so a graph drawing shows none of them. The functional API page says to use the graph API for new agents and workflows. It suggests the functional API for an agent that already exists in other code and must run on Agent Server {{docs oss/python/langgraph/functional-api}}.
 
+[Figure](#fig-6-3b) draws the graph from its Mermaid text.
+
+```figure
+id: fig-6-3b
+kind: structure
+title: the graph of an entrypoint
+claim: An entrypoint compiles to one node between __start__ and __end__, and its tasks run inside that node with no node of their own.
+caption: Read from the top. The workflow node runs the whole function, and each task call runs inside it. From capture/out/51-draw-functional.txt.
+```
+
 A task can also take `retry_policy`, `cache_policy`, and `timeout` {{code libs/langgraph/langgraph/func/__init__.py}}. A `timeout` works only on an async task, and on a sync task it raises `ValueError`. The kit does not run them on a task yet. Captures of them come in the next edition, with the other open items of [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
@@ -157,4 +167,4 @@ A task can also take `retry_policy`, `cache_policy`, and `timeout` {{code libs/l
 - Choose the graph API for a new agent, and the functional API to wrap existing code.
 ```
 
-Sources: capture/s_graph.py, capture/out/35-functional-api.txt; libs/langgraph/langgraph/func/__init__.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/functional-api).
+Sources: capture/s_graph.py, capture/out/35-functional-api.txt, capture/out/51-draw-functional.txt; libs/langgraph/langgraph/func/__init__.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/functional-api).

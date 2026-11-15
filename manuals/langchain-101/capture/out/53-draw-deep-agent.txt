@@ -1,0 +1,67 @@
+# Drawing a Deep Agents 0.7 graph
+
+## get_graph(): nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "_ParentNotifierMiddleware.after_agent",
+  "PatchToolCallsMiddleware.before_agent",
+  "__end__"
+]
+
+## get_graph(): edges
+
+[
+  "PatchToolCallsMiddleware.before_agent -> model",
+  "__start__ -> PatchToolCallsMiddleware.before_agent",
+  "model -> _ParentNotifierMiddleware.after_agent (conditional)",
+  "model -> model (conditional)",
+  "model -> tools (conditional)",
+  "tools -> model (conditional)",
+  "_ParentNotifierMiddleware.after_agent -> __end__"
+]
+
+## get_graph().draw_mermaid()
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	model(model)
+	tools(tools<hr/><small><em>__tools = ls, read_file, write_file, edit_file, delete, glob, grep, execute, task, add</em></small>)
+	_ParentNotifierMiddleware\2eafter_agent(_ParentNotifierMiddleware.after_agent)
+	PatchToolCallsMiddleware\2ebefore_agent(PatchToolCallsMiddleware.before_agent)
+	__end__([<p>__end__</p>]):::last
+	PatchToolCallsMiddleware\2ebefore_agent --> model;
+	__start__ --> PatchToolCallsMiddleware\2ebefore_agent;
+	model -.-> _ParentNotifierMiddleware\2eafter_agent;
+	model -.-> tools;
+	tools -.-> model;
+	_ParentNotifierMiddleware\2eafter_agent --> __end__;
+	model -.-> model;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## get_graph().draw_ascii()
+
+draw_ascii():
+
+raised builtins.ImportError: Install grandalf to draw graphs: `pip install grandalf`.
+
+## get_graph(xray=True): nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "_ParentNotifierMiddleware.after_agent",
+  "PatchToolCallsMiddleware.before_agent",
+  "__end__"
+]

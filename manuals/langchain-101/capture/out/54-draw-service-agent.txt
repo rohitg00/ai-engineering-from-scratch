@@ -1,0 +1,71 @@
+# Drawing the agent of the production service
+
+build_agent from capture/lab/prodapp-mac/code/app/agent.py, with the default Settings,
+ChatOllama models that are never called, no checkpointer, and no store.
+app.telemetry is replaced by a stand-in, because the kit pin has no OpenTelemetry SDK.
+Tracing and ToolTimeout have only wrap hooks, so the stand-in changes no node.
+
+## get_graph(): nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "SummarizationMiddleware.before_model",
+  "ModelCallLimitMiddleware.before_model",
+  "ModelCallLimitMiddleware.after_model",
+  "HumanInTheLoopMiddleware.after_model",
+  "__end__"
+]
+
+## get_graph(): edges
+
+[
+  "HumanInTheLoopMiddleware.after_model -> ModelCallLimitMiddleware.after_model",
+  "ModelCallLimitMiddleware.after_model -> SummarizationMiddleware.before_model (conditional)",
+  "ModelCallLimitMiddleware.after_model -> __end__ (conditional)",
+  "ModelCallLimitMiddleware.after_model -> tools (conditional)",
+  "ModelCallLimitMiddleware.before_model -> __end__ (conditional)",
+  "ModelCallLimitMiddleware.before_model -> model (conditional)",
+  "SummarizationMiddleware.before_model -> ModelCallLimitMiddleware.before_model",
+  "__start__ -> SummarizationMiddleware.before_model",
+  "model -> HumanInTheLoopMiddleware.after_model",
+  "tools -> SummarizationMiddleware.before_model (conditional)"
+]
+
+## get_graph().draw_mermaid()
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	model(model)
+	tools(tools<hr/><small><em>__tools = read_order, refund_order, search_faq, create_ticket, save_note, recall_notes</em></small>)
+	SummarizationMiddleware\2ebefore_model(SummarizationMiddleware.before_model)
+	ModelCallLimitMiddleware\2ebefore_model(ModelCallLimitMiddleware.before_model)
+	ModelCallLimitMiddleware\2eafter_model(ModelCallLimitMiddleware.after_model)
+	HumanInTheLoopMiddleware\2eafter_model(HumanInTheLoopMiddleware.after_model)
+	__end__([<p>__end__</p>]):::last
+	HumanInTheLoopMiddleware\2eafter_model --> ModelCallLimitMiddleware\2eafter_model;
+	ModelCallLimitMiddleware\2eafter_model -.-> SummarizationMiddleware\2ebefore_model;
+	ModelCallLimitMiddleware\2eafter_model -.-> __end__;
+	ModelCallLimitMiddleware\2eafter_model -.-> tools;
+	ModelCallLimitMiddleware\2ebefore_model -.-> __end__;
+	ModelCallLimitMiddleware\2ebefore_model -.-> model;
+	SummarizationMiddleware\2ebefore_model --> ModelCallLimitMiddleware\2ebefore_model;
+	__start__ --> SummarizationMiddleware\2ebefore_model;
+	model --> HumanInTheLoopMiddleware\2eafter_model;
+	tools -.-> SummarizationMiddleware\2ebefore_model;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## get_graph().draw_ascii()
+
+draw_ascii():
+
+raised builtins.ImportError: Install grandalf to draw graphs: `pip install grandalf`.

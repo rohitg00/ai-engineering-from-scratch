@@ -64,6 +64,7 @@ def guard_network():
 
 def scenarios():
     import s_agents
+    import s_draw
     import s_graph
     import s_integrations
     import s_middleware
@@ -71,7 +72,7 @@ def scenarios():
     import s_start
     import s_stream
     listed = [*s_start.SCENARIOS, *s_agents.SCENARIOS, *s_middleware.SCENARIOS, *s_stream.SCENARIOS, *s_persist.SCENARIOS, *s_graph.SCENARIOS, *s_integrations.SCENARIOS,
-              *s_start.LATE, *s_persist.LATE, *s_graph.LATE, *s_integrations.LATE]
+              *s_start.LATE, *s_persist.LATE, *s_graph.LATE, *s_integrations.LATE, *s_draw.LATE]
     return [(f"{index:02d}-{slug}", title, fn, needs_model) for index, (slug, title, fn, needs_model) in enumerate(listed)]
 
 

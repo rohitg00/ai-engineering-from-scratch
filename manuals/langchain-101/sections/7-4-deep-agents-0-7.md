@@ -40,6 +40,16 @@ lang: json
 
 The model and tools nodes are the loop of [section 1.3](#s-one-create-agent-run). The rest of the stack runs inside those two nodes, as hooks around the model call and the tool calls.
 
+[Figure](#fig-7-4e) draws the compiled graph from its Mermaid text. `model` also has a conditional edge back to itself. `create_agent` adds that edge when any middleware has a `wrap_model_call` hook, and the deep agent stack has several {{code libs/langchain_v1/langchain/agents/factory.py:1772-1776}}. `get_graph(xray=True)` gives the same six nodes, because the subagent runs inside the `task` tool and is not a node of this graph.
+
+```figure
+id: fig-7-4e
+kind: structure
+title: the graph of a deep agent
+claim: A deep agent adds two hook nodes around the usual loop, and its tools node holds nine built-in tools beside add.
+caption: Read from __start__ at the top. Blue boxes are hook nodes. The small loop on model is its conditional edge back to itself. From capture/out/53-draw-deep-agent.txt.
+```
+
 ## The tools of a deep agent at 0.7.38
 
 The kit called `create_deep_agent` with Qwen3 4B on Ollama, the `add` tool, and the system prompt `You keep notes.`. The model got nine tools on each call of the main agent:
@@ -263,4 +273,4 @@ The direction of the claim holds, and the size does not: we measured a drop of 5
 - Update parsers of ls, glob, and read_file output when you move to 0.7.
 ```
 
-Sources: capture/s_integrations.py, capture/out/41-deep-agent.txt; capture/lab/bench/summary-mac.json, capture/lab/bench/summarize.py, capture/lab/bench/runs/main.jsonl, capture/lab/bench/runs/cost-ledger.jsonl, capture/lab/bench/kit/harnesses.py, capture/lab/bench/kit/env.py, capture/lab/bench/kit/checks.py, capture/lab/bench/data/tasks.jsonl, capture/lab/bench/data/anthropic-prices.json; capture/lab/summary/tokens-mac.json, capture/lab/T09-tokens-mac/04-agent-runs.jsonl, capture/lab/T09-tokens-mac/04-agent-runs.log, capture/lab/T09-tokens-mac/05-analysis.txt, capture/lab/T09-tokens-mac/01-baseprompt-0.7.38.jsonl, capture/lab/T09-tokens-mac/02-baseprompt-0.6.12.jsonl, capture/lab/T09-tokens-mac/03-qwen3-token-counts.jsonl, capture/lab/T09-tokens-mac/00-venv-da06-freeze.txt; libs/deepagents/deepagents/graph.py, libs/deepagents/deepagents/backends/filesystem.py, libs/deepagents/deepagents/middleware/_prompt_caching.py, and libs/deepagents/deepagents/middleware/filesystem.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/deepagents/overview).
+Sources: capture/s_integrations.py, capture/out/41-deep-agent.txt, capture/out/53-draw-deep-agent.txt, capture/s_draw.py; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; capture/lab/bench/summary-mac.json, capture/lab/bench/summarize.py, capture/lab/bench/runs/main.jsonl, capture/lab/bench/runs/cost-ledger.jsonl, capture/lab/bench/kit/harnesses.py, capture/lab/bench/kit/env.py, capture/lab/bench/kit/checks.py, capture/lab/bench/data/tasks.jsonl, capture/lab/bench/data/anthropic-prices.json; capture/lab/summary/tokens-mac.json, capture/lab/T09-tokens-mac/04-agent-runs.jsonl, capture/lab/T09-tokens-mac/04-agent-runs.log, capture/lab/T09-tokens-mac/05-analysis.txt, capture/lab/T09-tokens-mac/01-baseprompt-0.7.38.jsonl, capture/lab/T09-tokens-mac/02-baseprompt-0.6.12.jsonl, capture/lab/T09-tokens-mac/03-qwen3-token-counts.jsonl, capture/lab/T09-tokens-mac/00-venv-da06-freeze.txt; libs/deepagents/deepagents/graph.py, libs/deepagents/deepagents/backends/filesystem.py, libs/deepagents/deepagents/middleware/_prompt_caching.py, and libs/deepagents/deepagents/middleware/filesystem.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/deepagents/overview).

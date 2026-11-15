@@ -1,0 +1,96 @@
+# Drawing an agent with middleware=[A, B, C]
+
+## get_graph(): nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "A.before_agent",
+  "A.before_model",
+  "A.after_model",
+  "A.after_agent",
+  "B.before_agent",
+  "B.before_model",
+  "B.after_model",
+  "B.after_agent",
+  "C.before_agent",
+  "C.before_model",
+  "C.after_model",
+  "C.after_agent",
+  "__end__"
+]
+
+## get_graph(): edges
+
+[
+  "A.after_model -> A.before_model (conditional)",
+  "A.after_model -> C.after_agent (conditional)",
+  "A.after_model -> tools (conditional)",
+  "A.before_agent -> B.before_agent",
+  "A.before_model -> B.before_model",
+  "B.after_agent -> A.after_agent",
+  "B.after_model -> A.after_model",
+  "B.before_agent -> C.before_agent",
+  "B.before_model -> C.before_model",
+  "C.after_agent -> B.after_agent",
+  "C.after_model -> B.after_model",
+  "C.before_agent -> A.before_model",
+  "C.before_model -> model",
+  "__start__ -> A.before_agent",
+  "model -> C.after_model",
+  "tools -> A.before_model (conditional)",
+  "A.after_agent -> __end__"
+]
+
+## get_graph().draw_mermaid()
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	model(model)
+	tools(tools<hr/><small><em>__tools = add</em></small>)
+	A\2ebefore_agent(A.before_agent)
+	A\2ebefore_model(A.before_model)
+	A\2eafter_model(A.after_model)
+	A\2eafter_agent(A.after_agent)
+	B\2ebefore_agent(B.before_agent)
+	B\2ebefore_model(B.before_model)
+	B\2eafter_model(B.after_model)
+	B\2eafter_agent(B.after_agent)
+	C\2ebefore_agent(C.before_agent)
+	C\2ebefore_model(C.before_model)
+	C\2eafter_model(C.after_model)
+	C\2eafter_agent(C.after_agent)
+	__end__([<p>__end__</p>]):::last
+	A\2eafter_model -.-> A\2ebefore_model;
+	A\2eafter_model -.-> C\2eafter_agent;
+	A\2eafter_model -.-> tools;
+	A\2ebefore_agent --> B\2ebefore_agent;
+	A\2ebefore_model --> B\2ebefore_model;
+	B\2eafter_agent --> A\2eafter_agent;
+	B\2eafter_model --> A\2eafter_model;
+	B\2ebefore_agent --> C\2ebefore_agent;
+	B\2ebefore_model --> C\2ebefore_model;
+	C\2eafter_agent --> B\2eafter_agent;
+	C\2eafter_model --> B\2eafter_model;
+	C\2ebefore_agent --> A\2ebefore_model;
+	C\2ebefore_model --> model;
+	__start__ --> A\2ebefore_agent;
+	model --> C\2eafter_model;
+	tools -.-> A\2ebefore_model;
+	A\2eafter_agent --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## get_graph().draw_ascii()
+
+draw_ascii():
+
+raised builtins.ImportError: Install grandalf to draw graphs: `pip install grandalf`.

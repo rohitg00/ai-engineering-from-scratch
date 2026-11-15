@@ -1,0 +1,40 @@
+# Drawing an entrypoint of the functional API
+
+## get_graph(): nodes
+
+[
+  "workflow",
+  "__start__",
+  "__end__"
+]
+
+## get_graph(): edges
+
+[
+  "__start__ -> workflow",
+  "workflow -> __end__ (conditional)"
+]
+
+## get_graph().draw_mermaid()
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	workflow(workflow)
+	__start__([<p>__start__</p>]):::first
+	__end__([<p>__end__</p>]):::last
+	__start__ --> workflow;
+	workflow -.-> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## get_graph().draw_ascii()
+
+draw_ascii():
+
+raised builtins.ImportError: Install grandalf to draw graphs: `pip install grandalf`.

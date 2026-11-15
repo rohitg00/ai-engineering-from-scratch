@@ -119,6 +119,16 @@ lang: json
 
 A graph with no tools has no `tools` node. It is `__start__`, `model`, and `__end__`, and it runs one model call.
 
+[Figure](#fig-1-3c) draws the graph of this agent from the Mermaid text that the compiled graph returns. [Section 4.1](#s-create-agent-and-the-graph-it-builds) shows how to draw your own.
+
+```figure
+id: fig-1-3c
+kind: structure
+title: the graph of the agent in this run
+claim: One plain edge leads into model, and three conditional edges leave model and tools, so the run picks its path at run time.
+caption: Read from __start__ at the top. Solid arrows are plain edges, and dashed amber arrows are conditional edges. The tools node lists its one tool. From capture/out/48-draw-agent.txt.
+```
+
 ## The checkpoints
 
 **Checkpoint:** the saved state of one thread after one step, with the step number, the next nodes, and the id of the checkpoint before it.
@@ -271,4 +281,4 @@ A model that never stops asking for a tool runs until the limit. The kit told Qw
 - Set recursion_limit for each run, because the agent default allows 5000 model calls.
 ```
 
-Sources: capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/21-stream-updates-values.txt, capture/out/46-recursion-agent.txt, capture/out/42-langsmith.txt; capture/lab/summary/recursion-x86.json, capture/lab/T17-claims-x86/01-claims.jsonl, capture/lab/T17-claims-x86/02-nolimit.jsonl, capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0, libs/langgraph/langgraph/graph/state.py and libs/langgraph/langgraph/_internal/_config.py at langgraph 1.2.22.
+Sources: capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, capture/out/48-draw-agent.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/21-stream-updates-values.txt, capture/out/46-recursion-agent.txt, capture/out/42-langsmith.txt; capture/lab/summary/recursion-x86.json, capture/lab/T17-claims-x86/01-claims.jsonl, capture/lab/T17-claims-x86/02-nolimit.jsonl, capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0, libs/langgraph/langgraph/graph/state.py and libs/langgraph/langgraph/_internal/_config.py at langgraph 1.2.22.

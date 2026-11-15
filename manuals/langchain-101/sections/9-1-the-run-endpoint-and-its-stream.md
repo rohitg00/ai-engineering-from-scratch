@@ -21,6 +21,16 @@ The reference service is one FastAPI app with one `create_agent` and one Postgre
 
 The agent has six tools, a middleware stack that [section 9.5](#s-timeouts-retries-backup-model-and-shutdown) explains, and the Postgres checkpointer and store of [section 9.2](#s-postgres-checkpointer-store-and-owner-check). The model is a setting: `ollama:<name>` or `anthropic:<name>`.
 
+The stack has eight middleware, and three of them add nodes. [Figure](#fig-9-1b) draws the compiled graph of `build_agent` from its Mermaid text. The kit builds it with models that are never called, and with a stand-in for the OpenTelemetry module. `Tracing` and `ToolTimeout` have only wrap hooks, so the stand-in changes no node.
+
+```figure
+id: fig-9-1b
+kind: structure
+title: the graph of the service agent
+claim: Four hook nodes from three middleware sit around model, and ModelCallLimitMiddleware can end the run before or after the model call.
+caption: Read from __start__ at the top. Blue boxes are hook nodes. The other five middleware wrap the model call or the tool calls and add no node. From capture/out/54-draw-service-agent.txt.
+```
+
 ## A task owns the run
 
 **Run task:** the `asyncio` task that iterates `agent.astream` for one run and puts each event on a queue. The route starts it and returns at once. The response reads the queue.
@@ -120,4 +130,4 @@ caption: Each panel is one HTTP request, in milliseconds after it was sent. The 
 - Answer 409 while a thread has a pending approval or an active run.
 ```
 
-Sources: capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/app/agent.py, capture/lab/prodapp-mac/code/scripts/capture_stream.py, capture/lab/prodapp-mac/code/scripts/disconnect_real.py, capture/lab/prodapp-mac/summary/stream-mac.json, capture/lab/prodapp-mac/summary/disconnect-mac.json, capture/lab/prodapp-mac/runs/stream/stream-events.jsonl, capture/lab/prodapp-mac/runs/stream/stream.spans.jsonl, capture/lab/prodapp-mac/runs/disconnect/disconnect-trials.json; libs/langgraph/langgraph/pregel/main.py at langgraph 1.2.22; starlette/responses.py at starlette 1.10.0.
+Sources: capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/app/agent.py, capture/out/54-draw-service-agent.txt, capture/s_draw.py, capture/lab/prodapp-mac/code/scripts/capture_stream.py, capture/lab/prodapp-mac/code/scripts/disconnect_real.py, capture/lab/prodapp-mac/summary/stream-mac.json, capture/lab/prodapp-mac/summary/disconnect-mac.json, capture/lab/prodapp-mac/runs/stream/stream-events.jsonl, capture/lab/prodapp-mac/runs/stream/stream.spans.jsonl, capture/lab/prodapp-mac/runs/disconnect/disconnect-trials.json; libs/langgraph/langgraph/pregel/main.py at langgraph 1.2.22; starlette/responses.py at starlette 1.10.0.

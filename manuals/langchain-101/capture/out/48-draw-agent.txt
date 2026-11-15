@@ -1,0 +1,124 @@
+# Drawing the create_agent graph
+
+## get_graph() returns
+
+langchain_core.runnables.graph.Graph
+
+graph.nodes:
+{
+  "__start__": {
+    "name": "__start__",
+    "data": "RunnableCallable",
+    "metadata": null
+  },
+  "model": {
+    "name": "model",
+    "data": "RunnableCallable",
+    "metadata": null
+  },
+  "tools": {
+    "name": "tools",
+    "data": "ToolNode",
+    "metadata": {
+      "__tools": [
+        "add"
+      ]
+    }
+  },
+  "__end__": {
+    "name": "__end__",
+    "data": "NoneType",
+    "metadata": null
+  }
+}
+
+graph.edges:
+[
+  {
+    "source": "__start__",
+    "target": "model",
+    "data": null,
+    "conditional": false
+  },
+  {
+    "source": "model",
+    "target": "__end__",
+    "data": null,
+    "conditional": true
+  },
+  {
+    "source": "model",
+    "target": "tools",
+    "data": null,
+    "conditional": true
+  },
+  {
+    "source": "tools",
+    "target": "model",
+    "data": null,
+    "conditional": true
+  }
+]
+
+## get_graph(): nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "__end__"
+]
+
+## get_graph(): edges
+
+[
+  "__start__ -> model",
+  "model -> __end__ (conditional)",
+  "model -> tools (conditional)",
+  "tools -> model (conditional)"
+]
+
+## get_graph().draw_mermaid()
+
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	model(model)
+	tools(tools<hr/><small><em>__tools = add</em></small>)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> model;
+	model -.-> __end__;
+	model -.-> tools;
+	tools -.-> model;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+
+## get_graph().draw_ascii()
+
+draw_ascii():
+
+raised builtins.ImportError: Install grandalf to draw graphs: `pip install grandalf`.
+
+## draw_mermaid_png() defaults at the pin
+
+keyword defaults:
+{
+  "draw_method": "api",
+  "base_url": null,
+  "max_retries": 1,
+  "output_file_path": null
+}
+
+MermaidDrawMethod members:
+[
+  "PYPPETEER",
+  "API"
+]
+
+draw_mermaid_png() is not called here: both of its draw methods reach the network.

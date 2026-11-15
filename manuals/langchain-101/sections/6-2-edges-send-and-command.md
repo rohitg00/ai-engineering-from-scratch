@@ -48,6 +48,16 @@ note: The edge lines of the Mermaid text. The node lines and the styles are cut.
 
 No `add_edge` call leaves `pick`, but the graph has two edges out of it. They come from the return type of `pick`, as the next part shows.
 
+[Figure](#fig-6-2b) draws the full Mermaid text from top to bottom.
+
+```figure
+id: fig-6-2b
+kind: structure
+title: the joke graph as LangGraph draws it
+claim: The Mermaid text has three conditional edges, from plan and from pick, and no add_edge call made any of them.
+caption: Read from __start__ at the top. Solid arrows are add_edge calls. Dashed amber arrows come from Send and from the Command return type. From capture/out/50-draw-fanout.txt.
+```
+
 [Figure](#fig-6-2) draws the graph and one run through it.
 
 ```figure
@@ -166,4 +176,4 @@ Use a conditional edge when the route depends only on the state. Use `Command` w
 - Import Send and Command from langgraph.types.
 ```
 
-Sources: capture/s_graph.py, capture/out/34-stategraph-reducers-send-command.txt; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/constants.py, and libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/graph-api, oss/python/langgraph/graph-api-send-command).
+Sources: capture/s_graph.py, capture/out/34-stategraph-reducers-send-command.txt, capture/out/50-draw-fanout.txt; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/constants.py, and libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/graph-api, oss/python/langgraph/graph-api-send-command).
