@@ -1,0 +1,151 @@
+{
+ "case": "faq_shipping_time",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "b925dcdd-ab67-4b22-a3b6-ce6ba7080d8f",
+   "text": "How long does shipping take?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01TnjdnrtFhoGEQxte1ZTk5N",
+      "name": "search_faq",
+      "args": {
+       "query": "how long does shipping take"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}, {\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Standard shipping takes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " 3 to 6 business"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days. Express shipping tak"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "es 1 to 2 "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "business days."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.1496
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "b925dcdd-ab67-4b22-a3b6-ce6ba7080d8f",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "How long does shipping take?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "how long does shipping take"
+       },
+       "id": "toolu_01TnjdnrtFhoGEQxte1ZTk5N",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 910,
+      "output_tokens": 54,
+      "total_tokens": 964,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}, {\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1067,
+      "output_tokens": 37,
+      "total_tokens": 1104,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

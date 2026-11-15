@@ -1,0 +1,219 @@
+{
+ "case": "memory_of_other_user_is_invisible",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "6aa4e66b-73ab-4ccc-beb1-3199596ad61c",
+   "text": "What do you remember about me?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_0137EaDWCds15zB7AbG5CGRG",
+      "name": "recall_notes",
+      "args": {}
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "recall_notes",
+      "status": "success",
+      "content": "[]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I don"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t have any saved notes about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you yet,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " so there"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'s nothing st"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ored from"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " previ"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ous conversations. If you t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ell me something you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d like me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to remember,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " such as a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " prefer"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "red shipping address"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or sizing info"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ", I can save it for future ch"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ats."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.866
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "6aa4e66b-73ab-4ccc-beb1-3199596ad61c",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "What do you remember about me?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "recall_notes",
+       "args": {},
+       "id": "toolu_0137EaDWCds15zB7AbG5CGRG",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 910,
+      "output_tokens": 28,
+      "total_tokens": 938,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[]",
+     "tool_calls": [],
+     "name": "recall_notes",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I don't have any saved notes about you yet, so there's nothing stored from previous conversations. If you tell me something you'd like me to remember, such as a preferred shipping address or sizing info, I can save it for future chats.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 945,
+      "output_tokens": 71,
+      "total_tokens": 1016,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

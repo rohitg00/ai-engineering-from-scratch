@@ -1,0 +1,277 @@
+[
+ {
+  "mode": "finish",
+  "trial": 1,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 21.347,
+  "client_tail": [
+   "client_error",
+   "RemoteProtocolError"
+  ],
+  "shutdown_events": [
+   "shutdown.drain",
+   "shutdown.done0"
+  ],
+  "next_after_restart": [],
+  "messages_after_restart": [
+   "human",
+   "ai",
+   "tool",
+   "ai"
+  ],
+  "answered_before_restart": true,
+  "uptime": "16:47  up 89 days,  2:44, 12 users, load averages: 23.09 17.43 16.42"
+ },
+ {
+  "mode": "finish",
+  "trial": 2,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 8.928,
+  "client_tail": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 9.1573
+   }
+  ],
+  "shutdown_events": [],
+  "next_after_restart": [],
+  "messages_after_restart": [
+   "human",
+   "ai",
+   "tool",
+   "ai"
+  ],
+  "answered_before_restart": true,
+  "uptime": "16:48  up 89 days,  2:44, 12 users, load averages: 28.03 18.73 16.89"
+ },
+ {
+  "mode": "finish",
+  "trial": 3,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 8.71,
+  "client_tail": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 8.8628
+   }
+  ],
+  "shutdown_events": [],
+  "next_after_restart": [],
+  "messages_after_restart": [
+   "human",
+   "ai",
+   "tool",
+   "ai"
+  ],
+  "answered_before_restart": true,
+  "uptime": "16:48  up 89 days,  2:45, 12 users, load averages: 23.38 18.16 16.72"
+ },
+ {
+  "mode": "finish",
+  "trial": 4,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 8.016,
+  "client_tail": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 8.278
+   }
+  ],
+  "shutdown_events": [],
+  "next_after_restart": [],
+  "messages_after_restart": [
+   "human",
+   "ai",
+   "tool",
+   "ai"
+  ],
+  "answered_before_restart": true,
+  "uptime": "16:48  up 89 days,  2:45, 12 users, load averages: 21.04 17.82 16.62"
+ },
+ {
+  "mode": "finish",
+  "trial": 5,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 8.587,
+  "client_tail": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 8.7934
+   }
+  ],
+  "shutdown_events": [],
+  "next_after_restart": [],
+  "messages_after_restart": [
+   "human",
+   "ai",
+   "tool",
+   "ai"
+  ],
+  "answered_before_restart": true,
+  "uptime": "16:48  up 89 days,  2:45, 12 users, load averages: 27.19 19.31 17.16"
+ },
+ {
+  "mode": "cancel",
+  "trial": 1,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 2.476,
+  "client_tail": [
+   "client_error",
+   "RemoteProtocolError"
+  ],
+  "shutdown_events": [
+   "shutdown.drain",
+   "shutdown.done1"
+  ],
+  "next_after_restart": [
+   "model"
+  ],
+  "messages_after_restart": [
+   "human"
+  ],
+  "answered_before_restart": false,
+  "resumed_last_event": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 9.0956
+   }
+  ],
+  "answered_after_resume": true,
+  "uptime": "16:48  up 89 days,  2:45, 12 users, load averages: 28.67 20.03 17.46"
+ },
+ {
+  "mode": "cancel",
+  "trial": 2,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 1.216,
+  "client_tail": [
+   "client_error",
+   "RemoteProtocolError"
+  ],
+  "shutdown_events": [
+   "shutdown.drain",
+   "shutdown.done1"
+  ],
+  "next_after_restart": [
+   "model"
+  ],
+  "messages_after_restart": [
+   "human"
+  ],
+  "answered_before_restart": false,
+  "resumed_last_event": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 8.4879
+   }
+  ],
+  "answered_after_resume": true,
+  "uptime": "16:49  up 89 days,  2:45, 12 users, load averages: 24.47 19.52 17.32"
+ },
+ {
+  "mode": "cancel",
+  "trial": 3,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 2.049,
+  "client_tail": [
+   "client_error",
+   "RemoteProtocolError"
+  ],
+  "shutdown_events": [
+   "shutdown.drain",
+   "shutdown.done1"
+  ],
+  "next_after_restart": [
+   "model"
+  ],
+  "messages_after_restart": [
+   "human"
+  ],
+  "answered_before_restart": false,
+  "resumed_last_event": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 7.274
+   }
+  ],
+  "answered_after_resume": true,
+  "uptime": "16:49  up 89 days,  2:46, 12 users, load averages: 21.31 19.01 17.16"
+ },
+ {
+  "mode": "cancel",
+  "trial": 4,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 1.234,
+  "client_tail": [
+   "client_error",
+   "RemoteProtocolError"
+  ],
+  "shutdown_events": [
+   "shutdown.drain",
+   "shutdown.done1"
+  ],
+  "next_after_restart": [
+   "model"
+  ],
+  "messages_after_restart": [
+   "human"
+  ],
+  "answered_before_restart": false,
+  "resumed_last_event": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 7.2892
+   }
+  ],
+  "answered_after_resume": true,
+  "uptime": "16:49  up 89 days,  2:46, 12 users, load averages: 18.49 18.48 17.00"
+ },
+ {
+  "mode": "cancel",
+  "trial": 5,
+  "sigterm_after_s": 0.3,
+  "exit_code": -15,
+  "shutdown_s": 1.226,
+  "client_tail": [
+   "client_error",
+   "RemoteProtocolError"
+  ],
+  "shutdown_events": [
+   "shutdown.drain",
+   "shutdown.done1"
+  ],
+  "next_after_restart": [
+   "model"
+  ],
+  "messages_after_restart": [
+   "human"
+  ],
+  "answered_before_restart": false,
+  "resumed_last_event": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 8.4191
+   }
+  ],
+  "answered_after_resume": true,
+  "uptime": "16:49  up 89 days,  2:46, 12 users, load averages: 15.58 17.84 16.79"
+ }
+]

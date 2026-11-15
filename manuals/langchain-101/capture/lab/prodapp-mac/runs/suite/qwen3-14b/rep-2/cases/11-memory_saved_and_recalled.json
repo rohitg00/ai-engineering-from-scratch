@@ -1,0 +1,523 @@
+{
+ "case": "memory_saved_and_recalled",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "77586dd7-a9df-49ab-a394-10f99acb7812",
+   "text": "Remember that I prefer email updates",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "57a4a2ce-af28-4daf-8628-da2d7682240e",
+      "name": "save_note",
+      "args": {
+       "text": "Customer prefers email updates."
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "save_note",
+      "status": "success",
+      "content": "{\"saved\": true}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Got"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "!"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " We"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'ll"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " send"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " email"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " updates"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " us"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " there"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'s"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " anything"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " else"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " we"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assist"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 13.0238
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "7a93dec9-fdd1-4575-8c55-8be64f1a7b54",
+   "text": "What do you remember about me?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "cd9f1897-3a89-4fe9-beb6-cd59bdac24ef",
+      "name": "recall_notes",
+      "args": {}
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "recall_notes",
+      "status": "success",
+      "content": "[\"Customer prefers email updates.\"]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " remember"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " that"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " prefer"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " receive"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " email"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " updates"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " there"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'s"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " anything"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " else"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " remember"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " share"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " more"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " preferences"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "!"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 13.2641
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "77586dd7-a9df-49ab-a394-10f99acb7812",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Remember that I prefer email updates",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "save_note",
+       "args": {
+        "text": "Customer prefers email updates."
+       },
+       "id": "57a4a2ce-af28-4daf-8628-da2d7682240e",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 450,
+      "output_tokens": 24,
+      "total_tokens": 474
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"saved\": true}",
+     "tool_calls": [],
+     "name": "save_note",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Got it! We'll send you email updates. Let us know if there's anything else we can assist with.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 490,
+      "output_tokens": 24,
+      "total_tokens": 514
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  },
+  {
+   "thread_id": "7a93dec9-fdd1-4575-8c55-8be64f1a7b54",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "What do you remember about me?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "recall_notes",
+       "args": {},
+       "id": "cd9f1897-3a89-4fe9-beb6-cd59bdac24ef",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 451,
+      "output_tokens": 16,
+      "total_tokens": 467
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[\"Customer prefers email updates.\"]",
+     "tool_calls": [],
+     "name": "recall_notes",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I remember that you prefer to receive email updates. Let me know if there's anything else I can remember or if you'd like to share more preferences!",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 485,
+      "output_tokens": 32,
+      "total_tokens": 517
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

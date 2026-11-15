@@ -87,6 +87,9 @@ The last table lists failures that raise no error. Their symptom is a wrong resu
 | a deep agent never plans with `write_todos` | Deep Agents 0.7 leaves out `TodoListMiddleware` | pass `TodoListMiddleware()` in `middleware` | [7.4](#s-deep-agents-0-7) |
 | a script with tracing on waits at exit, or never exits | the LangSmith endpoint is down or fails, and the exit waits for the traces | call `wait_for_all_tracers()`, and put a timeout on the job | [7.6](#s-langsmith-tracing) |
 | agent runs reached LangSmith inside `tracing_context(enabled="local")` | LangChain code treats `"local"` as on | use `tracing_context(enabled=False)` around LangChain code | [7.6](#s-langsmith-tracing) |
+| the same approval was pending again after a worker crashed, and the refund row existed | a resume map stays in the run config, so a crash inside the `tools` task loses the decision | key the tool on what the checkpoint saved, so that the second approve is a replay | [9.3](#s-approvals-and-the-idempotency-key) |
+| the model told the customer that an order did not exist after the lookup timed out | the model did not follow the error text of the tool | test the reply to each fault in your evals, and choose a model that passes | [9.5](#s-timeouts-retries-backup-model-and-shutdown) |
+| clients of a busy service got `ReadTimeout`, and their runs went on | the stream sent no byte while the run waited for the model server | read the thread state after a dropped stream, and add model capacity | [9.7](#s-workers-the-advisory-lock-and-cost) |
 | 100 clients on `langgraph dev` each wait about 13 s | one job per worker, the default of `langgraph dev` | start it with `--n-jobs-per-worker 10` | [8.1](#s-agent-server-langgraph-dev-up-and-deploy) |
 
 ```takeaways

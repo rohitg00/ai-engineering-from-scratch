@@ -1,0 +1,59 @@
+INFO:     Started server process [56303]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:50555 (Press CTRL+C to quit)
+INFO:     127.0.0.1:50598 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50603 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50606 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50602 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50601 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50607 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50604 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50608 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50605 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50609 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50610 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50607 - "POST /threads/37275b5d-6c28-4203-8fa0-c36c2e79ab63/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50606 - "POST /threads/ec8dfd03-ecd8-4002-a735-b1f38e52fb19/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50604 - "POST /threads/3610f006-56e6-4086-8c53-0ac88ed615d9/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50609 - "POST /threads/eb303814-72c4-4d8d-b2ab-bae4ca754c12/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50605 - "POST /threads/7db4ee62-42fc-495a-a253-332520c37fea/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50602 - "POST /threads/13bac008-89b8-4a93-a052-c45169218125/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50601 - "POST /threads/9deb74c4-d474-45d2-bbd0-c5dcc03da95f/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50603 - "POST /threads/cc2e949b-179e-4e5f-b4d9-da6371d7fbbb/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50610 - "POST /threads/075cd3f3-360d-468a-bea5-e41afe7427db/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50608 - "POST /threads/f5336a8e-7535-457a-98f2-fe6afc30e732/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50610 - "POST /threads/075cd3f3-360d-468a-bea5-e41afe7427db/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50602 - "POST /threads/13bac008-89b8-4a93-a052-c45169218125/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50609 - "POST /threads/eb303814-72c4-4d8d-b2ab-bae4ca754c12/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50601 - "POST /threads/9deb74c4-d474-45d2-bbd0-c5dcc03da95f/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50605 - "POST /threads/7db4ee62-42fc-495a-a253-332520c37fea/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50607 - "POST /threads/37275b5d-6c28-4203-8fa0-c36c2e79ab63/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50606 - "POST /threads/ec8dfd03-ecd8-4002-a735-b1f38e52fb19/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50603 - "POST /threads/cc2e949b-179e-4e5f-b4d9-da6371d7fbbb/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50608 - "POST /threads/f5336a8e-7535-457a-98f2-fe6afc30e732/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50604 - "POST /threads/3610f006-56e6-4086-8c53-0ac88ed615d9/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50610 - "POST /threads/075cd3f3-360d-468a-bea5-e41afe7427db/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50602 - "POST /threads/13bac008-89b8-4a93-a052-c45169218125/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50609 - "POST /threads/eb303814-72c4-4d8d-b2ab-bae4ca754c12/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50601 - "POST /threads/9deb74c4-d474-45d2-bbd0-c5dcc03da95f/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50605 - "POST /threads/7db4ee62-42fc-495a-a253-332520c37fea/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50607 - "POST /threads/37275b5d-6c28-4203-8fa0-c36c2e79ab63/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50606 - "POST /threads/ec8dfd03-ecd8-4002-a735-b1f38e52fb19/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50603 - "POST /threads/cc2e949b-179e-4e5f-b4d9-da6371d7fbbb/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50608 - "POST /threads/f5336a8e-7535-457a-98f2-fe6afc30e732/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50604 - "POST /threads/3610f006-56e6-4086-8c53-0ac88ed615d9/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50610 - "POST /threads/075cd3f3-360d-468a-bea5-e41afe7427db/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50602 - "POST /threads/13bac008-89b8-4a93-a052-c45169218125/approve HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50609 - "POST /threads/eb303814-72c4-4d8d-b2ab-bae4ca754c12/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50601 - "POST /threads/9deb74c4-d474-45d2-bbd0-c5dcc03da95f/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50605 - "POST /threads/7db4ee62-42fc-495a-a253-332520c37fea/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50607 - "POST /threads/37275b5d-6c28-4203-8fa0-c36c2e79ab63/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50606 - "POST /threads/ec8dfd03-ecd8-4002-a735-b1f38e52fb19/approve HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:50603 - "POST /threads/cc2e949b-179e-4e5f-b4d9-da6371d7fbbb/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50608 - "POST /threads/f5336a8e-7535-457a-98f2-fe6afc30e732/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50604 - "POST /threads/3610f006-56e6-4086-8c53-0ac88ed615d9/approve HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [56303]

@@ -1,0 +1,31 @@
+name: support-assistant-evals
+on: [push, pull_request]
+jobs:
+  evals:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:14.21
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: lc_prod
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 2s --health-retries 30
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/lc_prod
+      TEST_RUN_DIR: runs/ci
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13.12"
+      - run: pip install -r requirements-runtime.txt -r requirements-test.txt -c requirements.lock
+      - run: python -m pytest -v
+      - run: python cost/cost_model.py runs/ci/test-spans.jsonl
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-runs
+          path: runs/ci

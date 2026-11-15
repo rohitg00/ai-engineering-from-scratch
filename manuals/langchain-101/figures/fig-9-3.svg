@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-9-3-title fig-9-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-3-title">A worker killed after the refund row, and the restart</title>
+  <desc id="fig-9-3-desc">Top: one trial on the Mac with Qwen3 4B. The approve was sent at 0 s, the refund row was in Postgres at 0.2 s, and SIGKILL came at 0.3 s. A new process read the thread at 3.1 s and found next [&quot;tools&quot;] with the approval asked again. Bottom: map resume value, 10 of 10 trials with one refund row, approval asked again in 10. plain resume value, 10 of 10 trials with one refund row, approval asked again in 10.</desc>
+  <defs><marker id="fig-9-3-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker></defs>
+  <line x1="150" y1="190" x2="610" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="150" y1="40" x2="150" y2="190" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="215.71" y1="190" x2="215.71" y2="194" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="215.71" y="207" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="347.14" y1="190" x2="347.14" y2="194" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="347.14" y="207" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="478.57" y1="190" x2="478.57" y2="194" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="478.57" y="207" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="610" y1="190" x2="610" y2="194" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="610" y="207" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <text x="380" y="224" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds after the first approve was sent</text>
+  <text x="16" y="69" font-size="11.5" font-weight="700">worker 1</text>
+  <text x="16" y="119" font-size="11.5" font-weight="700">worker 2</text>
+  <text x="16" y="133" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">after restart</text>
+  <text x="16" y="169" font-size="11.5" font-weight="700">Postgres</text>
+  <text x="16" y="183" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refunds table</text>
+  <rect x="150" y="58" width="82.76" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="238.76" y="69" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">SIGKILL</text>
+  <rect x="418.16" y="108" width="80.99" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <line x1="231.37" y1="73" x2="231.37" y2="159" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-9-3-head-teal)"/>
+  <circle cx="231.37" cy="165" r="4" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="239.37" y="169" font-size="11" fill="var(--m-teal-ink, #18696a)">one row, 8900 cents</text>
+  <line x1="497.15" y1="123" x2="497.15" y2="159" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-9-3-head-teal)"/>
+  <text x="493.15" y="183" font-size="11" text-anchor="end" fill="var(--m-teal-ink, #18696a)">same key, replayed true</text>
+  <line x1="420.38" y1="103" x2="420.38" y2="127" stroke="var(--m-amber-ink, #85590c)" stroke-width="2"/>
+  <text x="416.38" y="99" font-size="11" text-anchor="end" fill="var(--m-amber-ink, #85590c)">approval asked again</text>
+  <circle cx="215.71" cy="65" r="3" fill="var(--m-ink, #1a1a1a)"/>
+  <text x="221.71" y="53" font-size="11">approve</text>
+  <text x="16" y="262" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">EVERY TRIAL</text>
+  <text x="16" y="293" font-size="11.5" font-weight="700">map resume value</text>
+  <rect x="186" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="184" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="208" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="206" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="230" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="228" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="252" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="250" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="274" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="272" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="296" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="294" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="318" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="316" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="340" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="338" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="362" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="360" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="384" y="280" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="382" y="278" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="186" y="312" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10 of 10 one refund row, approval asked again in 10</text>
+  <text x="16" y="339" font-size="11.5" font-weight="700">plain resume value</text>
+  <rect x="186" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="184" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="208" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="206" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="230" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="228" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="252" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="250" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="274" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="272" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="296" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="294" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="318" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="316" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="340" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="338" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="362" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="360" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="384" y="326" width="16" height="16" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="382" y="324" width="20" height="20" fill="none" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="186" y="358" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10 of 10 one refund row, approval asked again in 10</text>
+</svg>

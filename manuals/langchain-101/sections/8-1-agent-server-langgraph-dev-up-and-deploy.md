@@ -231,6 +231,8 @@ This part comes from the docs and the code only. We did not run `langgraph deplo
 
 Advisory GHSA-8prr-f582-jqq3 says that `langgraph deploy --verbose` printed the push token of the registry in `langgraph-cli` 0.4.15 to 0.4.31. The pin, 0.4.43, is outside that range. Keep `--verbose` out of CI logs anyway, because it prints the Docker build and push output.
 
+Without a license, you can serve the same agent from your own FastAPI app. [Section 9.1](#s-the-run-endpoint-and-its-stream) builds that service, and [section 9.7](#s-workers-the-advisory-lock-and-cost) runs it with several workers and one Postgres lock per thread.
+
 ```takeaways
 - Start langgraph dev with --n-jobs-per-worker 10 before any test with more than one client.
 - Pass recursion_limit on every run, because the server default is 10007 under langgraph dev.

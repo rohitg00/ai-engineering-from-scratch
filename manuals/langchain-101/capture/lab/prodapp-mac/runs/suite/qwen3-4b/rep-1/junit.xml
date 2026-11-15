@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="11" skipped="0" tests="27" time="134.652" timestamp="2026-11-15T15:48:35.325102+05:30" hostname="the-mac"><testcase classname="tests.test_durability" name="test_kill_mid_refund_then_resume_refunds_once" time="12.709"><failure message="ValueError: dictionary update sequence element #0 has length 1; 2 is required">async def test_kill_mid_refund_then_resume_refunds_once():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        env = {"AUTH_TOKENS": "tok-crash=crash", "REFUND_CONFIRM_DELAY": 3}
+        server = Server(RUN_DIR, "crash-1", **env)
+        reset_user("crash")
+        client = Http(server.url, "tok-crash")
+        thread = await client.thread()
+        first = await client.say(thread, "Please refund ORD-crash-2")
+        approving = asyncio.create_task(client.approve(thread))
+        committed = await wait_for(lambda: refunds("ORD-crash-2"))
+        killed_at = time.time()
+        exit_code = server.kill()
+        approve_error = None
+        try:
+            await approving
+        except Exception as exc:
+            approve_error = type(exc).__name__
+        server.log.close()
+    
+        server = Server(RUN_DIR, "crash-2", AUTH_TOKENS="tok-crash=crash")
+        client = Http(server.url, "tok-crash")
+        after_restart = await client.state(thread)
+&gt;       resumed = await client.approve(thread)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_durability.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/procs.py:88: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:82: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+            if block:
+&gt;               lines = dict(line.split(": ", 1) for line in block.splitlines())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:68: ValueError</failure></testcase><testcase classname="tests.test_durability" name="test_sigterm_lets_in_flight_run_finish" time="3.531" /><testcase classname="tests.test_durability" name="test_sigterm_past_deadline_checkpoints_and_resumes" time="5.441"><failure message="ValueError: dictionary update sequence element #0 has length 1; 2 is required">async def test_sigterm_past_deadline_checkpoints_and_resumes():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        env = {"AUTH_TOKENS": "tok-drain2=drain2", "MODEL_LATENCY": 3.0, "DRAIN_SECONDS": 0.2}
+        name = "drain-cancel"
+        server = Server(RUN_DIR, name, graceful=1, **env)
+        client = Http(server.url, "tok-drain2")
+        thread = await client.thread()
+        running = asyncio.create_task(client.say(thread, "How long does shipping take?"))
+        await asyncio.sleep(3.5)
+        exit_code = await asyncio.to_thread(server.term)
+        try:
+            events = await running
+        except Exception as exc:
+            events = [("client_error", type(exc).__name__)]
+        server.log.close()
+        server = Server(RUN_DIR, "drain-cancel-resume", AUTH_TOKENS="tok-drain2=drain2")
+        client = Http(server.url, "tok-drain2")
+        before = await client.state(thread)
+&gt;       resumed = await client.approve(thread)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_durability.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/procs.py:88: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:82: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+            if block:
+&gt;               lines = dict(line.split(": ", 1) for line in block.splitlines())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:68: ValueError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[faq_return_window]" time="1.484" /><testcase classname="tests.test_evals" name="test_eval[faq_shipping_time]" time="1.615" /><testcase classname="tests.test_evals" name="test_eval[order_status]" time="1.362" /><testcase classname="tests.test_evals" name="test_eval[order_unknown]" time="1.474" /><testcase classname="tests.test_evals" name="test_eval[order_of_other_customer_is_hidden]" time="1.151" /><testcase classname="tests.test_evals" name="test_eval[refund_approved_once]" time="0.662"><failure message="ValueError: not enough values to unpack (expected 1, got 0)">number = 6, check = &lt;function refund_approved_once at 0x10c25b6a0&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10c65b420&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10c65a3e0&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10c65b1a0&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10c5701a0&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10c5702f0&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10c2be330&gt;
+t = '4dfcbc32-39c7-4635-b6ca-25b1e0889f85'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10c65a3e0&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10c65b1a0&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10c5701a0&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c5723c0&gt;)
+
+    @case
+    async def refund_approved_once(c, t, x):
+        order = f"ORD-{c.user}-1"
+        events = await c.say(t, f"Please refund {order}")
+&gt;       [pending] = interrupts(events)
+        ^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+tests/test_evals.py:98: ValueError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[refund_rejected_has_no_side_effect]" time="0.702"><failure message="TypeError: 'int' object is not iterable">number = 7, check = &lt;function refund_rejected_has_no_side_effect at 0x10c25b740&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10c6a7920&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10c6a56c0&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10c6a6520&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10c5701a0&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10c5702f0&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_evals.py:111: in refund_rejected_has_no_side_effect
+    assert [r["status"] for r in results(events, "refund_order")] == ["error"]
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+events = 409, name = 'refund_order'
+
+    def results(events, name):
+&gt;       return [d for e, d in events if e == "tool_result" and d["name"] == name]
+                              ^^^^^^
+E       TypeError: 'int' object is not iterable
+
+tests/test_evals.py:26: TypeError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[refund_asked_twice]" time="1.142"><failure message="AssertionError: assert [] == [{'amount_cents': 8900}]&#10;  &#10;  Right contains one more item: {'amount_cents': 8900}&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  + []&#10;  - [&#10;  -     {...&#10;  &#10;  ...Full output truncated, use '-vv' to show">number = 8, check = &lt;function refund_asked_twice at 0x10c25b7e0&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10c6a6480&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10c6a6f20&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10c6a4900&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10c5701a0&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10c5702f0&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10c5a7ce0&gt;
+t = 'c85fa736-12b8-4907-88a8-1514bc73aebb'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10c6a6f20&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10c6a4900&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10c5701a0&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c5723c0&gt;)
+
+    @case
+    async def refund_asked_twice(c, t, x):
+        order = f"ORD-{c.user}-2"
+        await c.say(t, f"Refund {order} please")
+        await c.approve(t)
+        events = await c.say(t, f"Refund {order} again")
+        if interrupts(events):
+            await c.approve(t)
+&gt;       assert await refunds(x.sql, order) == [{"amount_cents": 8900}]
+E       AssertionError: assert [] == [{'amount_cents': 8900}]
+E         
+E         Right contains one more item: {'amount_cents': 8900}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_evals.py:124: AssertionError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[refund_tool_replay_is_idempotent]" time="0.014" /><testcase classname="tests.test_evals" name="test_eval[ticket_for_a_human]" time="1.473" /><testcase classname="tests.test_evals" name="test_eval[memory_saved_and_recalled]" time="0.660"><failure message="IndexError: list index out of range">number = 11, check = &lt;function memory_saved_and_recalled at 0x10c25b9c0&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10c6a4f40&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10c6a5080&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10c6a6ca0&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10c5701a0&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10c5702f0&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10c393200&gt;
+t = 'dfdd5e00-9591-47b5-a607-90996d81c689'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10c6a5080&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10c6a6ca0&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10c5701a0&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c5723c0&gt;)
+
+    @case
+    async def memory_saved_and_recalled(c, t, x):
+        events = await c.say(t, "Remember that I prefer email updates")
+&gt;       assert "email" in calls(events, "save_note")[0]["text"]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests/test_evals.py:149: IndexError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[memory_of_other_user_is_invisible]" time="1.109" /><testcase classname="tests.test_evals" name="test_eval[flaky_faq_is_retried]" time="0.632"><failure message="assert 0 == 2">number = 13, check = &lt;function flaky_faq_is_retried at 0x10c25bb00&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10c6a77e0&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10c6a6160&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10c6a5bc0&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10c5701a0&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10c5702f0&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10c669550&gt;
+t = 'aa99ef0e-e728-4a9d-8e78-79862d9e624b'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10c6a6160&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10c6a5bc0&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10c5701a0&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c5723c0&gt;)
+
+    @case
+    async def flaky_faq_is_retried(c, t, x):
+        x.chaos.rules = {"search_faq": "fail_once"}
+        events = await c.say(t, "How much does shipping cost?")
+&gt;       assert x.chaos.attempts["search_faq"] == 2
+E       assert 0 == 2
+
+tests/test_evals.py:166: AssertionError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[hung_tool_times_out]" time="3.039" /><testcase classname="tests.test_evals" name="test_eval[failed_ticket_is_not_retried]" time="1.305" /><testcase classname="tests.test_evals" name="test_eval[primary_outage_uses_backup]" time="7.631" /><testcase classname="tests.test_evals" name="test_eval[runaway_loop_hits_call_limit]" time="29.680" /><testcase classname="tests.test_evals" name="test_eval[long_thread_is_summarized]" time="20.617" /><testcase classname="tests.test_evals" name="test_eval[new_message_while_waiting_for_approval]" time="2.321"><failure message="AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]&#10;  &#10;  At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;    [&#10;        {&#10;  -         'amount_cents': 2400,...&#10;  &#10;  ...Full output truncated, use '-vv' to show">number = 19
+check = &lt;function new_message_while_waiting_for_approval at 0x10c25bec0&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10c7242c0&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10c726520&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10c727240&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10c5701a0&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10c5702f0&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10c7394f0&gt;
+t = 'fc44290c-fcaa-4c1d-8921-460b503393ea'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10c726520&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10c727240&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10c5701a0&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c5723c0&gt;)
+
+    @case
+    async def new_message_while_waiting_for_approval(c, t, x):
+        order = f"ORD-{c.user}-3"
+        events = await c.say(t, f"Refund {order}")
+        assert [i["name"] for i in interrupts(events)] == ["refund_order"]
+        assert await c.say(t, "Hello?") == 409
+        await c.approve(t)
+&gt;       assert await refunds(x.sql, order) == [{"amount_cents": 2400}]
+E       AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]
+E         
+E         At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               {
+E         -         'amount_cents': 2400,...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_evals.py:233: AssertionError</failure></testcase><testcase classname="tests.test_evals" name="test_eval[status_then_refund_in_one_thread]" time="8.686"><failure message="AssertionError: assert [] == ['ORD-e20-3']&#10;  &#10;  Right contains one more item: 'ORD-e20-3'&#10;  &#10;  Full diff: (-: missing in left side, +: extra in left side)&#10;  + []&#10;  - [&#10;  -     'ORD-e20-3',&#10;  - ]">number = 20, check = &lt;function status_then_refund_in_one_thread at 0x10c25bf60&gt;
+client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10c7251c0&gt;
+sql = &lt;function sql.&lt;locals&gt;.run at 0x10c726e80&gt;
+spans = &lt;function spans.&lt;locals&gt;.read at 0x10c727060&gt;
+chaos = &lt;tests.conftest.Chaos object at 0x10c5701a0&gt;
+app = &lt;fastapi.applications.FastAPI object at 0x10c5702f0&gt;
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+&gt;           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = &lt;tests.conftest.Client object at 0x10c727ed0&gt;
+t = '7f24aa1c-4b3d-435d-bcb0-d20d78e0eda4'
+x = namespace(sql=&lt;function sql.&lt;locals&gt;.run at 0x10c726e80&gt;, spans=&lt;function spans.&lt;locals&gt;.read at 0x10c727060&gt;, chaos=&lt;tests.conftest.Chaos object at 0x10c5701a0&gt;, pool=&lt;psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c5723c0&gt;)
+
+    @case
+    async def status_then_refund_in_one_thread(c, t, x):
+        order = f"ORD-{c.user}-3"
+        first = await c.say(t, f"Where is my order {order}?")
+        second = await c.say(t, f"Refund {order}")
+        await c.approve(t)
+        assert calls(first, "read_order") == [{"order_id": order}]
+&gt;       assert [i["args"]["order_id"] for i in interrupts(second)] == [order]
+E       AssertionError: assert [] == ['ORD-e20-3']
+E         
+E         Right contains one more item: 'ORD-e20-3'
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     'ORD-e20-3',
+E         - ]
+
+tests/test_evals.py:243: AssertionError</failure></testcase><testcase classname="tests.test_isolation" name="test_one_user_cannot_read_another_users_thread_or_memory" time="6.328"><failure message="assert '4471' in &quot;{'user_id': 'alice', 'memories': []}&quot;&#10; +  where &quot;{'user_id': 'alice', 'memories': []}&quot; = str({'user_id': 'alice', 'memories': []})&#10; +    where {'user_id': 'alice', 'memories': []} = json()&#10; +      where json = &lt;Response [200 OK]&gt;.json">client = &lt;function client.&lt;locals&gt;.&lt;lambda&gt; at 0x10c726020&gt;
+
+    async def test_one_user_cannot_read_another_users_thread_or_memory(client):
+        alice, bob = client("alice"), client("bob")
+        thread = await alice.thread()
+        await alice.say(thread, "Remember that my door code is 4471")
+        await alice.say(thread, "Where is my order ORD-alice-1?")
+    
+        assert (await bob.http.get(f"/threads/{thread}/state")).status_code == 404
+        assert (await bob.http.post(f"/threads/{thread}/runs", json={"message": "hi"})).status_code == 404
+        assert (await bob.http.post(f"/threads/{thread}/approve", json={"decision": "approve"})).status_code == 404
+    
+        assert (await bob.http.get("/memories")).json()["memories"] == []
+        bob_thread = await bob.thread()
+        await bob.say(bob_thread, "What do you remember about me?")
+        assert "4471" not in str(await bob.state(bob_thread))
+    
+&gt;       assert "4471" in str((await alice.http.get("/memories")).json())
+E       assert '4471' in "{'user_id': 'alice', 'memories': []}"
+E        +  where "{'user_id': 'alice', 'memories': []}" = str({'user_id': 'alice', 'memories': []})
+E        +    where {'user_id': 'alice', 'memories': []} = json()
+E        +      where json = &lt;Response [200 OK]&gt;.json
+
+tests/test_isolation.py:16: AssertionError</failure></testcase><testcase classname="tests.test_isolation" name="test_missing_or_wrong_token_is_rejected" time="0.004" /><testcase classname="tests.test_smith_off" name="test_langsmith_receives_nothing_unless_enabled" time="6.653"><failure message="ValueError: dictionary update sequence element #0 has length 1; 2 is required">async def test_langsmith_receives_nothing_unless_enabled():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        port = free_port()
+        recorder = ThreadingHTTPServer(("127.0.0.1", port), Recorder)
+        threading.Thread(target=recorder.serve_forever, daemon=True).start()
+        endpoint = f"http://127.0.0.1:{port}"
+        base = {"LANGSMITH_ENDPOINT": endpoint, "LANGCHAIN_ENDPOINT": endpoint, "LANGSMITH_API_KEY": "lsv2_pt_fake"}
+        counts = {}
+        try:
+            for label, flag in [("enabled_control", "true"), ("disabled", "false"), ("unset", None)]:
+                before = len(Recorder.seen)
+&gt;               await conversation({**base, "LANGSMITH_TRACING": flag, "LANGCHAIN_TRACING_V2": flag}, f"smith-{label}")
+
+tests/test_smith_off.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_smith_off.py:33: in conversation
+    await client.approve(thread, "reject")
+tests/procs.py:88: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:82: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+            if block:
+&gt;               lines = dict(line.split(": ", 1) for line in block.splitlines())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:68: ValueError</failure></testcase><testcase classname="tests.test_workers" name="test_two_workers_racing_on_one_thread_give_one_run_and_one_409" time="13.032" /></testsuite></testsuites>

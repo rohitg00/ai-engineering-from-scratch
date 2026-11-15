@@ -1,0 +1,21 @@
+INFO:     Started server process [54537]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:49497 (Press CTRL+C to quit)
+INFO:     127.0.0.1:49536 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49537 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49537 - "POST /threads/5eb91ff8-b738-4dd3-a5bd-00beed47c491/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49550 - "GET /threads/5eb91ff8-b738-4dd3-a5bd-00beed47c491/state HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49550 - "POST /threads/5eb91ff8-b738-4dd3-a5bd-00beed47c491/runs HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49550 - "POST /threads/5eb91ff8-b738-4dd3-a5bd-00beed47c491/approve HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49550 - "GET /memories HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49537 - "GET /memories HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49550 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49550 - "POST /threads/ef86c0ca-1618-44fc-855b-00d062c12f70/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49537 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49537 - "POST /threads/224d71d5-fb61-4438-b5eb-d701ad8968d1/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49550 - "GET /threads/ef86c0ca-1618-44fc-855b-00d062c12f70/state HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [54537]

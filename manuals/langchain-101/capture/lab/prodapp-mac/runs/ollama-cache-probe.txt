@@ -1,0 +1,6 @@
+# uptime 16:43  up 89 days,  2:40, 12 users, load averages: 9.07 12.70 15.01
+# three identical /api/chat calls to qwen3:4b-instruct-2507-q4_K_M
+call prompt_eval_count eval_count prompt_eval_ms total_ms
+1 65 7 1401.9 2076.1
+2 65 7 68.6 683.4
+3 65 7 28.7 523.1

@@ -1,0 +1,213 @@
+{
+ "case": "failed_ticket_is_not_retried",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "c9aab759-0994-4587-b4d6-24687c4322b2",
+   "text": "Open a ticket, I need a human",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_019K3P3qozVWwQbNaRYMPPyL",
+      "name": "create_ticket",
+      "args": {
+       "subject": "Customer requests human support agent",
+       "body": "The customer asked to speak with a human support agent. No further details were provided in the chat. Please reach out to the customer to assist them."
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "create_ticket",
+      "status": "error",
+      "content": "create_ticket failed with ConnectionError. Tell the customer and do not guess."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " cou"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ldn't open a ticket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " because of a connection error on"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " our"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " end"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ". Would you like me to try"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " again? If"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ke"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "eps failing, please try"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " contacting us"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " again"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a few minutes."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 4.0441
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "c9aab759-0994-4587-b4d6-24687c4322b2",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Open a ticket, I need a human",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "create_ticket",
+       "args": {
+        "subject": "Customer requests human support agent",
+        "body": "The customer asked to speak with a human support agent. No further details were provided in the chat. Please reach out to the customer to assist them."
+       },
+       "id": "toolu_019K3P3qozVWwQbNaRYMPPyL",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 913,
+      "output_tokens": 118,
+      "total_tokens": 1031,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "create_ticket failed with ConnectionError. Tell the customer and do not guess.",
+     "tool_calls": [],
+     "name": "create_ticket",
+     "status": "error",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I couldn't open a ticket because of a connection error on our end. Would you like me to try again? If it keeps failing, please try contacting us again in a few minutes.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1069,
+      "output_tokens": 132,
+      "total_tokens": 1201,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 79
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

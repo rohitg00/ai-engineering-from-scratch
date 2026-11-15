@@ -12,7 +12,7 @@ One item has one trial in a worked example, and its line says so. Three tests ra
 
 Three limits decided what this edition could run. The full Agent Server with Postgres and Redis does not start without a LangSmith API key or a license key, as [section 8.1](#s-agent-server-langgraph-dev-up-and-deploy) shows.
 
-Our LangSmith account was a new one on the free plan. It ran tracing, `evaluate`, the pytest plugin, and the prompt hub, and the lists below hold what it left out. Our local models were Qwen3 0.6B to 30B-A3B and gpt-oss 20B on Ollama. Claude Haiku 5.5 and Claude Sonnet 5.5 ran only the task suite of [section 1.2](#s-do-you-need-langchain), under a fixed budget. The other hosted cases below have no run yet.
+Our LangSmith account was a new one on the free plan. It ran tracing, `evaluate`, the pytest plugin, and the prompt hub, and the lists below hold what it left out. Our local models were Qwen3 0.6B to 30B-A3B and gpt-oss 20B on Ollama. Claude Haiku 5.5 and Claude Sonnet 5.5 ran the task suite of [section 1.2](#s-do-you-need-langchain), under a fixed budget. Claude Haiku 5.5 also ran the 20 evals of [section 9.6](#s-evals-that-check-state). The other hosted cases below have no run yet.
 
 Each list below names the case and the section where the text stops. Most of the graph cases need no account and only a new scenario in the capture kit.
 
@@ -23,6 +23,16 @@ These three tests timed the stack with a model stand-in. Their rows stay in this
 - Long threads of 2,000 turns on `PostgresSaver`, and the time of each turn. [Section 5.5](#s-context-engineering-and-summarization)
 - `AsyncPostgresSaver` with 1 to 500 threads at once, and the pool size. [Section 5.2](#s-checkpointers-and-threads)
 - The time floor of one run and the jobs per worker under `langgraph dev`. [Section 8.1](#s-agent-server-langgraph-dev-up-and-deploy)
+
+## The production service
+
+These need one more run of the service of [Part 9](#p-9), on the Mac.
+
+- A refund tool that refuses an amount of 0 cents or less, with the order total in the approval request. Both models proposed 0 cents, and the test approved it. [Section 9.3](#s-approvals-and-the-idempotency-key)
+- Whether a decision sent in the plain resume form survives a crash in `checkpoint_writes`, and a resume with no new decision. [Section 9.3](#s-approvals-and-the-idempotency-key)
+- A heartbeat event on the stream, so that a client stays attached while its run waits for the model server. [Section 9.7](#s-workers-the-advisory-lock-and-cost) and [section 9.1](#s-the-run-endpoint-and-its-stream)
+- The cause of the drop in Ollama output with 4 or 8 requests at once. [Section 9.7](#s-workers-the-advisory-lock-and-cost)
+- The CI workflow of the service on GitHub Actions, with a real model. [Section 9.6](#s-evals-that-check-state)
 
 ## Agent Server with Postgres and Redis
 
@@ -71,13 +81,13 @@ These need no account, only a new lab run.
 - `PIIMiddleware` on a stream with `apply_to_output=True`, and its hold-back of 128 characters. [Section 4.8](#s-guardrails-pii-and-the-decision-middleware-beta)
 - The cost of async hooks, of `after_agent` and `dynamic_prompt`, and of built-ins when they act, such as a retry or a summary. [Section 8.2](#s-cost-the-framework-against-a-plain-sdk-loop)
 - One invalid answer among several approvals sent together, which the docs warn can run a tool twice. [Section 6.5](#s-human-in-the-loop-batched-and-per-call)
-- Approvals on `PostgresSaver` across a restart. [Section 6.5](#s-human-in-the-loop-batched-and-per-call)
 
 ## Persistence
 
-- `AsyncSqliteSaver` and `AsyncPostgresSaver` under a crash, and the write cost of `AsyncSqliteSaver`. [Section 5.3](#s-durability-modes-and-a-crash-between-two-steps)
+- `AsyncSqliteSaver` under a crash, and its write cost. [Section 5.3](#s-durability-modes-and-a-crash-between-two-steps)
+- `AsyncPostgresSaver` under a crash at the kill points of the library matrix. [Section 9.3](#s-approvals-and-the-idempotency-key) killed a worker at one point only.
 - The `checkpoints` stream mode. [Section 5.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode)
-- `PostgresStore` with an index on pgvector, and `AsyncPostgresStore`. [Section 5.4](#s-stores-and-long-term-memory)
+- `PostgresStore` and `AsyncPostgresStore` with an index on pgvector. [Section 5.4](#s-stores-and-long-term-memory) and [section 9.2](#s-postgres-checkpointer-store-and-owner-check) ran them without an index.
 - The serializer through `PostgresSaver`, `EncryptedSerializer`, and the plaintext rows of issue #8938. [Section 5.6](#s-serialization-of-state-and-what-does-not-round-trip)
 
 ## Graph features with no capture yet
@@ -104,7 +114,7 @@ These need only a new scenario in the capture kit.
 
 ## What holds without these runs
 
-The items above add to the manual. They do not change a recorded result. Every measured number in Parts 1 to 8 comes from a run on the Mac or the x86 server guest. Defaults, limits, and versions come from the code or the docs, and the text cites them. Every listing comes from the capture kit at the pin. When you depend on one of the open items, run it on your own stack before you rely on the docs.
+The items above add to the manual. They do not change a recorded result. Every measured number in Parts 1 to 9 comes from a run on the Mac or the x86 server guest. Defaults, limits, and versions come from the code or the docs, and the text cites them. Every listing comes from the capture kit at the pin. When you depend on one of the open items, run it on your own stack before you rely on the docs.
 
 ```takeaways
 - Check this list before you rely on a claim that no section measured.
@@ -112,4 +122,4 @@ The items above add to the manual. They do not change a recorded result. Every m
 - Treat the Agent Server claims on exactly once and outages as untested until you test them.
 ```
 
-Sources: sections 1.1, 3.1, 3.4, 3.5, 3.6, 4.1, 4.3, 4.4, 4.5, 4.6, 5.1 to 5.8, 6.2, 6.4, 6.5, 7.1, 7.2, 7.3, 7.6, 7.7, and 8.1 of this manual; capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt; capture/lab/T21-langsmith-account-mac/07-e5-up.txt; capture/lab/README.md.
+Sources: sections 1.1, 3.1, 3.4, 3.5, 3.6, 4.1, 4.3, 4.4, 4.5, 4.6, 5.1 to 5.8, 6.2, 6.4, 6.5, 7.1, 7.2, 7.3, 7.6, 7.7, 8.1, and 9.1 to 9.7 of this manual; capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt; capture/lab/T21-langsmith-account-mac/07-e5-up.txt; capture/lab/README.md.

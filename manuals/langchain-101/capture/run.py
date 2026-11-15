@@ -219,10 +219,11 @@ def main():
             print("\n".join(drift))
             print(f"drift: {len(drift)} lab summaries differ from capture/lab/")
             return 1
-        print(f"ok: {len(labsum.SUMMARIES)} lab summaries match capture/lab/")
+        print(f"ok: {len(labsum.SUMMARIES)} lab summaries and {len(labsum.prodapp_outputs())} production app summaries match capture/lab/")
         print("skipped: recording the lab runs again, which needs Ollama and Postgres on the Mac and on an x86 server guest")
     elif not only:
         labsum.write(labsum.SUMMARY)
+        labsum.write_prodapp()
     if wrong:
         shown = wrong[:3] + ([f"and {len(wrong) - 3} more"] if len(wrong) > 3 else [])
         print("skipped: the installed packages do not match capture/requirements.txt (" + "; ".join(shown) + "). Create capture/.venv from requirements.txt with Python 3.13, or set LANGCHAIN101_PYTHON.")

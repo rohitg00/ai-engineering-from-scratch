@@ -1,0 +1,576 @@
+{
+ "case": "status_then_refund_in_one_thread",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "58a2639b-8782-4f01-adcd-61b560a17e49",
+   "text": "Where is my order ORD-e20-3?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "aebfcd2c-c34c-4cb4-a58a-a5331446b7ee",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e20-3"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e20-3\", \"item\": \"Water bottle\", \"status\": \"processing\", \"total_cents\": 2400, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-e"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " processing"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " You"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ordered"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " water"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " bottle"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "4"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " no"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " has"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " been"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " issued"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " yet"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 17.0693
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "58a2639b-8782-4f01-adcd-61b560a17e49",
+   "text": "Refund ORD-e20-3",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "51c17bc6-2e15-4dc5-9b6d-826edf2ceca9",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400,
+       "reason": "Customer requested refund"
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "ac036067dffdaa1ed4b9e4e8ca3f01eb",
+      "type": "tool_approval",
+      "tool_call_id": "51c17bc6-2e15-4dc5-9b6d-826edf2ceca9",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400,
+       "reason": "Customer requested refund"
+      },
+      "description": "Tool execution requires approval\n\nTool: refund_order\nArgs: {'order_id': 'ORD-e20-3', 'amount_cents': 2400, 'reason': 'Customer requested refund'}"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 12.5434
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "58a2639b-8782-4f01-adcd-61b560a17e49",
+   "decision": "approve",
+   "result": [
+    [
+     "tool_result",
+     {
+      "name": "refund_order",
+      "status": "success",
+      "content": "{\"refund_id\": 3, \"order_id\": \"ORD-e20-3\", \"amount_cents\": 2400, \"replayed\": false}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-e"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " being"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " processed"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " It"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " may"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " take"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " few"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " appear"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " on"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " statement"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 9.1494
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "58a2639b-8782-4f01-adcd-61b560a17e49",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e20-3?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e20-3"
+       },
+       "id": "aebfcd2c-c34c-4cb4-a58a-a5331446b7ee",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 455,
+      "output_tokens": 26,
+      "total_tokens": 481
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e20-3\", \"item\": \"Water bottle\", \"status\": \"processing\", \"total_cents\": 2400, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your order ORD-e20-3 is processing. You ordered a water bottle for $24.00, and no refund has been issued yet.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 536,
+      "output_tokens": 33,
+      "total_tokens": 569
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Refund ORD-e20-3",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e20-3",
+        "amount_cents": 2400,
+        "reason": "Customer requested refund"
+       },
+       "id": "51c17bc6-2e15-4dc5-9b6d-826edf2ceca9",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 586,
+      "output_tokens": 42,
+      "total_tokens": 628
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"refund_id\": 3, \"order_id\": \"ORD-e20-3\", \"amount_cents\": 2400, \"replayed\": false}",
+     "tool_calls": [],
+     "name": "refund_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your refund for ORD-e20-3 is being processed. It may take a few days to appear on your statement.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 674,
+      "output_tokens": 26,
+      "total_tokens": 700
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [
+  {
+   "order_id": "ORD-e20-3",
+   "amount_cents": 2400
+  }
+ ],
+ "tickets": []
+}

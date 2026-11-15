@@ -1,0 +1,181 @@
+{
+ "case": "faq_return_window",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "9fc77978-e873-46ef-874d-65ba8cc17375",
+   "text": "How long do I have to return an item?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01Vpx8bDnxTCY2BsxQDK31Nm",
+      "name": "search_faq",
+      "args": {
+       "query": "return window how long to return an item"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}, {\"id\": \"returns-label\", \"answer\": \"Open the order in your account and choose Start a return. We email a prepaid label within one hour.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "You"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " return most items within 30 days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " of delivery. They"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " must be unused and in the original"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " box."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " To"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " start a return, open your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order in your account and choose \""
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Start a return.\""
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.5334
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "9fc77978-e873-46ef-874d-65ba8cc17375",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "How long do I have to return an item?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "return window how long to return an item"
+       },
+       "id": "toolu_01Vpx8bDnxTCY2BsxQDK31Nm",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 912,
+      "output_tokens": 55,
+      "total_tokens": 967,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}, {\"id\": \"returns-label\", \"answer\": \"Open the order in your account and choose Start a return. We email a prepaid label within one hour.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "You can return most items within 30 days of delivery. They must be unused and in the original box. To start a return, open your order in your account and choose \"Start a return.\"",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1062,
+      "output_tokens": 48,
+      "total_tokens": 1110,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

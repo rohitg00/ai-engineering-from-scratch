@@ -1,0 +1,62 @@
+{
+ "uptime_before": "16:50  up 89 days,  2:47, 12 users, load averages: 11.68 16.40 16.32",
+ "smith": {
+  "enabled_control": {
+   "requests": 10,
+   "paths": [
+    "/info",
+    "/runs/multipart"
+   ],
+   "bytes": 337363,
+   "refund_proposed": true,
+   "tool_calls": [
+    "search_faq",
+    "refund_order"
+   ]
+  },
+  "disabled": {
+   "requests": 0,
+   "paths": [],
+   "bytes": 0,
+   "refund_proposed": true,
+   "tool_calls": [
+    "search_faq",
+    "refund_order"
+   ]
+  },
+  "unset": {
+   "requests": 0,
+   "paths": [],
+   "bytes": 0,
+   "refund_proposed": true,
+   "tool_calls": [
+    "search_faq",
+    "refund_order"
+   ]
+  }
+ },
+ "isolation": {
+  "bob_state": 404,
+  "bob_run": 404,
+  "bob_approve": 404,
+  "bob_memories": [],
+  "alice_memories": [
+   "door code is 4471"
+  ],
+  "bob_tool_calls": [
+   "recall_notes"
+  ],
+  "bob_recall_results": [
+   "[]"
+  ],
+  "bob_sees_4471": false,
+  "alice_tool_calls": [
+   "recall_notes"
+  ],
+  "alice_recall_results": [
+   "[\"door code is 4471\"]"
+  ],
+  "alice_reply": "I remember that your door code is 4471."
+ },
+ "uptime_after": "16:51  up 89 days,  2:48, 12 users, load averages: 7.34 14.40 15.58"
+}

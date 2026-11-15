@@ -70,6 +70,8 @@ The same runs found the places where isolation depends on your code:
 - After a `delete` in `SqliteStore`, the vector row of the item stayed, which is issue #8757 {{issue 8757}}. A deleted memory keeps its embedding in the file.
 - `SqliteStore` reads the index key `text_fields`, and the other stores read `fields`. With `fields`, `SqliteStore` embedded the whole item, including fields you meant to leave out of the index.
 
+[Section 9.2](#s-postgres-checkpointer-store-and-owner-check) adds the owner check that the savers do not have, and reads the user id in each tool from the run context.
+
 The store permissions of Agent Server had advisory GHSA-4hm6-w6qq-w73v, for JS custom auth in `langgraph-api` before 0.15.0. The pin is 0.18.0. We did not test them, and they come in the next edition.
 
 ## Approvals
@@ -78,6 +80,8 @@ The store permissions of Agent Server had advisory GHSA-4hm6-w6qq-w73v, for JS c
 
 - An edit of `send_email` into a call of `delete_file` ran `delete_file`. Per-call mode refused the same edit with a `ValidationError`.
 - A middleware that returns `jump_to="tools"` from `after_model` skipped the review, or ran a call after the reviewer rejected it. This is issue #40492 {{issue langchain#40492}}. Per-call mode kept the review in both orders.
+
+An approval also comes back after a crash. In [section 9.3](#s-approvals-and-the-idempotency-key), a worker died after the refund row, and the approval was pending again in 20 of 20 trials. Only the key at the tool stopped a second refund.
 
 Deep Agents had two approval advisories in the window. GHSA-47w2-rfrr-wvq8 let file rules and approvals be bypassed through other paths, in `deepagents` before 0.7.25, and the pin is 0.7.38. GHSA-459r-276m-w72x is in `deepagents-acp`, which the pin does not install.
 
@@ -101,7 +105,7 @@ The risk comes back in two places. A `fastmcp.Client` built from the same string
 
 A trace holds the inputs and outputs of every model call and tool call, so it holds what your users typed. [Section 7.6](#s-langsmith-tracing) shows that `tracing_context(enabled="local")` keeps `traceable` runs local and sends LangChain runs. On the Mac, with no endpoint and no key, an agent on Qwen3 4B inside `"local"` tried to send its runs to `api.smith.langchain.com`. [Section 7.7](#s-evaluation-with-langsmith) shows the same for an agent target of `evaluate` with `upload_results=False`.
 
-`tracing_context(enabled=False)` around LangChain code sent nothing, and `collect_runs` kept the runs in memory. Under `evaluate` with the default client, the same wrap stopped the runs, but one `GET /info` still went to the default host. The pytest plugin, with tracking on by default, also contacted that host with no variable set. Advisory GHSA-f4xh-w4cj-qxq8 was a file read through the tracing middleware of `langsmith` before 0.8.18. The pin is 0.14.17.
+`tracing_context(enabled=False)` around LangChain code sent nothing, and `collect_runs` kept the runs in memory. Under `evaluate` with the default client, the same wrap stopped the runs, but one `GET /info` still went to the default host. The pytest plugin, with tracking on by default, also contacted that host with no variable set. Advisory GHSA-f4xh-w4cj-qxq8 was a file read through the tracing middleware of `langsmith` before 0.8.18. The pin is 0.14.17. [Section 9.4](#s-opentelemetry-spans-with-langsmith-off) tests a service with a key in the environment: a recorder got no request while `LANGSMITH_TRACING` was false or unset.
 
 ## The advisories at the pin
 

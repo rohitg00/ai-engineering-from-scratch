@@ -1,0 +1,257 @@
+{
+ "case": "faq_return_window",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "83444dfd-5b55-45cb-91b8-719114b29300",
+   "text": "How long do I have to return an item?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "e2ef266f-0870-4427-b321-ed910bb17254",
+      "name": "search_faq",
+      "args": {
+       "query": "return policy duration"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}, {\"id\": \"returns-label\", \"answer\": \"Open the order in your account and choose Start a return. We email a prepaid label within one hour.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "You"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " from"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " delivery"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " return"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " most"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " items"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " as"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " long"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " as"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " they"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " are"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " unused"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " original"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " box"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 1.4193
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "83444dfd-5b55-45cb-91b8-719114b29300",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "How long do I have to return an item?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "return policy duration"
+       },
+       "id": "e2ef266f-0870-4427-b321-ed910bb17254",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 557,
+      "output_tokens": 23,
+      "total_tokens": 580
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}, {\"id\": \"returns-label\", \"answer\": \"Open the order in your account and choose Start a return. We email a prepaid label within one hour.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "You have 30 days from delivery to return most items, as long as they are unused and in the original box.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 661,
+      "output_tokens": 26,
+      "total_tokens": 687
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

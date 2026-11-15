@@ -1,0 +1,296 @@
+{
+ "case": "refund_rejected_has_no_side_effect",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "3ac4f69e-8c18-4409-bced-140a7169219e",
+   "text": "Please refund ORD-e07-1",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "e88d395e-c8b2-4dd5-a6dd-ead274bba004",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e07-1",
+       "amount_cents": 10000,
+       "reason": "Customer requested a refund"
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "629b9bff83d37c856c82ad62fa947b2a",
+      "type": "tool_approval",
+      "tool_call_id": "e88d395e-c8b2-4dd5-a6dd-ead274bba004",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e07-1",
+       "amount_cents": 10000,
+       "reason": "Customer requested a refund"
+      },
+      "description": "Tool execution requires approval\n\nTool: refund_order\nArgs: {'order_id': 'ORD-e07-1', 'amount_cents': 10000, 'reason': 'Customer requested a refund'}"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 13.0463
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "3ac4f69e-8c18-4409-bced-140a7169219e",
+   "decision": "reject",
+   "result": [
+    [
+     "tool_result",
+     {
+      "name": "refund_order",
+      "status": "error",
+      "content": "User rejected the tool call for `refund_order` with id e88d395e-c8b2-4dd5-a6dd-ead274bba004. The tool was not executed. Do not retry this tool call unless the user explicitly requests it."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'m"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " sorry"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " but"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " process"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " automatically"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " escalate"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " this"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " support"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " agent"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " further"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assistance"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 8.1421
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "3ac4f69e-8c18-4409-bced-140a7169219e",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Please refund ORD-e07-1",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e07-1",
+        "amount_cents": 10000,
+        "reason": "Customer requested a refund"
+       },
+       "id": "e88d395e-c8b2-4dd5-a6dd-ead274bba004",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 452,
+      "output_tokens": 47,
+      "total_tokens": 499
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "User rejected the tool call for `refund_order` with id e88d395e-c8b2-4dd5-a6dd-ead274bba004. The tool was not executed. Do not retry this tool call unless the user explicitly requests it.",
+     "tool_calls": [],
+     "name": "refund_order",
+     "status": "error",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I'm sorry, but I can't process the refund automatically. Let me escalate this to a human support agent for further assistance.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 567,
+      "output_tokens": 27,
+      "total_tokens": 594
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

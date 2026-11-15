@@ -1,0 +1,644 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.12, pytest-9.2.0, pluggy-1.7.0 -- prodapp/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: prodapp
+configfile: pytest.ini
+testpaths: tests
+plugins: platformdirs-4.14.5, langsmith-0.14.17, anyio-4.16.0, asyncio-1.5.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=session
+collecting ... collected 27 items
+
+tests/test_durability.py::test_kill_mid_refund_then_resume_refunds_once FAILED [  3%]
+tests/test_durability.py::test_sigterm_lets_in_flight_run_finish PASSED  [  7%]
+tests/test_durability.py::test_sigterm_past_deadline_checkpoints_and_resumes FAILED [ 11%]
+tests/test_evals.py::test_eval[faq_return_window] PASSED                 [ 14%]
+tests/test_evals.py::test_eval[faq_shipping_time] PASSED                 [ 18%]
+tests/test_evals.py::test_eval[order_status] PASSED                      [ 22%]
+tests/test_evals.py::test_eval[order_unknown] PASSED                     [ 25%]
+tests/test_evals.py::test_eval[order_of_other_customer_is_hidden] PASSED [ 29%]
+tests/test_evals.py::test_eval[refund_approved_once] FAILED              [ 33%]
+tests/test_evals.py::test_eval[refund_rejected_has_no_side_effect] FAILED [ 37%]
+tests/test_evals.py::test_eval[refund_asked_twice] FAILED                [ 40%]
+tests/test_evals.py::test_eval[refund_tool_replay_is_idempotent] PASSED  [ 44%]
+tests/test_evals.py::test_eval[ticket_for_a_human] PASSED                [ 48%]
+tests/test_evals.py::test_eval[memory_saved_and_recalled] FAILED         [ 51%]
+tests/test_evals.py::test_eval[memory_of_other_user_is_invisible] PASSED [ 55%]
+tests/test_evals.py::test_eval[flaky_faq_is_retried] FAILED              [ 59%]
+tests/test_evals.py::test_eval[hung_tool_times_out] PASSED               [ 62%]
+tests/test_evals.py::test_eval[failed_ticket_is_not_retried] PASSED      [ 66%]
+tests/test_evals.py::test_eval[primary_outage_uses_backup] PASSED        [ 70%]
+tests/test_evals.py::test_eval[runaway_loop_hits_call_limit] PASSED      [ 74%]
+tests/test_evals.py::test_eval[long_thread_is_summarized] PASSED         [ 77%]
+tests/test_evals.py::test_eval[new_message_while_waiting_for_approval] FAILED [ 81%]
+tests/test_evals.py::test_eval[status_then_refund_in_one_thread] FAILED  [ 85%]
+tests/test_isolation.py::test_one_user_cannot_read_another_users_thread_or_memory FAILED [ 88%]
+tests/test_isolation.py::test_missing_or_wrong_token_is_rejected PASSED  [ 92%]
+tests/test_smith_off.py::test_langsmith_receives_nothing_unless_enabled FAILED [ 96%]
+tests/test_workers.py::test_two_workers_racing_on_one_thread_give_one_run_and_one_409 PASSED [100%]
+
+=================================== FAILURES ===================================
+________________ test_kill_mid_refund_then_resume_refunds_once _________________
+
+    async def test_kill_mid_refund_then_resume_refunds_once():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        env = {"AUTH_TOKENS": "tok-crash=crash", "REFUND_CONFIRM_DELAY": 3}
+        server = Server(RUN_DIR, "crash-1", **env)
+        reset_user("crash")
+        client = Http(server.url, "tok-crash")
+        thread = await client.thread()
+        first = await client.say(thread, "Please refund ORD-crash-2")
+        approving = asyncio.create_task(client.approve(thread))
+        committed = await wait_for(lambda: refunds("ORD-crash-2"))
+        killed_at = time.time()
+        exit_code = server.kill()
+        approve_error = None
+        try:
+            await approving
+        except Exception as exc:
+            approve_error = type(exc).__name__
+        server.log.close()
+    
+        server = Server(RUN_DIR, "crash-2", AUTH_TOKENS="tok-crash=crash")
+        client = Http(server.url, "tok-crash")
+        after_restart = await client.state(thread)
+>       resumed = await client.approve(thread)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_durability.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/procs.py:88: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:82: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+            if block:
+>               lines = dict(line.split(": ", 1) for line in block.splitlines())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:68: ValueError
+______________ test_sigterm_past_deadline_checkpoints_and_resumes ______________
+
+    async def test_sigterm_past_deadline_checkpoints_and_resumes():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        env = {"AUTH_TOKENS": "tok-drain2=drain2", "MODEL_LATENCY": 3.0, "DRAIN_SECONDS": 0.2}
+        name = "drain-cancel"
+        server = Server(RUN_DIR, name, graceful=1, **env)
+        client = Http(server.url, "tok-drain2")
+        thread = await client.thread()
+        running = asyncio.create_task(client.say(thread, "How long does shipping take?"))
+        await asyncio.sleep(3.5)
+        exit_code = await asyncio.to_thread(server.term)
+        try:
+            events = await running
+        except Exception as exc:
+            events = [("client_error", type(exc).__name__)]
+        server.log.close()
+        server = Server(RUN_DIR, "drain-cancel-resume", AUTH_TOKENS="tok-drain2=drain2")
+        client = Http(server.url, "tok-drain2")
+        before = await client.state(thread)
+>       resumed = await client.approve(thread)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_durability.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/procs.py:88: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:82: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+            if block:
+>               lines = dict(line.split(": ", 1) for line in block.splitlines())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:68: ValueError
+_______________________ test_eval[refund_approved_once] ________________________
+
+number = 6, check = <function refund_approved_once at 0x10e43b600>
+client = <function client.<locals>.<lambda> at 0x10e839c60>
+sql = <function sql.<locals>.run at 0x10e83a2a0>
+spans = <function spans.<locals>.read at 0x10e83a200>
+chaos = <tests.conftest.Chaos object at 0x10e7501a0>
+app = <fastapi.applications.FastAPI object at 0x10e7502f0>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10e49e330>
+t = '0d7450ba-a87b-4c57-8dbc-03b18aa6804c'
+x = namespace(sql=<function sql.<locals>.run at 0x10e83a2a0>, spans=<function spans.<locals>.read at 0x10e83a200>, chaos=<tests.conftest.Chaos object at 0x10e7501a0>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10e7523c0>)
+
+    @case
+    async def refund_approved_once(c, t, x):
+        order = f"ORD-{c.user}-1"
+        events = await c.say(t, f"Please refund {order}")
+>       [pending] = interrupts(events)
+        ^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+tests/test_evals.py:98: ValueError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+________________ test_eval[refund_rejected_has_no_side_effect] _________________
+
+number = 7, check = <function refund_rejected_has_no_side_effect at 0x10e43b6a0>
+client = <function client.<locals>.<lambda> at 0x10e886520>
+sql = <function sql.<locals>.run at 0x10e886020>
+spans = <function spans.<locals>.read at 0x10e885300>
+chaos = <tests.conftest.Chaos object at 0x10e7501a0>
+app = <fastapi.applications.FastAPI object at 0x10e7502f0>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_evals.py:111: in refund_rejected_has_no_side_effect
+    assert [r["status"] for r in results(events, "refund_order")] == ["error"]
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+events = 409, name = 'refund_order'
+
+    def results(events, name):
+>       return [d for e, d in events if e == "tool_result" and d["name"] == name]
+                              ^^^^^^
+E       TypeError: 'int' object is not iterable
+
+tests/test_evals.py:26: TypeError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+________________________ test_eval[refund_asked_twice] _________________________
+
+number = 8, check = <function refund_asked_twice at 0x10e43b740>
+client = <function client.<locals>.<lambda> at 0x10e887240>
+sql = <function sql.<locals>.run at 0x10e884720>
+spans = <function spans.<locals>.read at 0x10e885f80>
+chaos = <tests.conftest.Chaos object at 0x10e7501a0>
+app = <fastapi.applications.FastAPI object at 0x10e7502f0>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10e60dae0>
+t = 'dfe569c5-aa07-475c-a9d4-e31c9eb372f7'
+x = namespace(sql=<function sql.<locals>.run at 0x10e884720>, spans=<function spans.<locals>.read at 0x10e885f80>, chaos=<tests.conftest.Chaos object at 0x10e7501a0>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10e7523c0>)
+
+    @case
+    async def refund_asked_twice(c, t, x):
+        order = f"ORD-{c.user}-2"
+        await c.say(t, f"Refund {order} please")
+        await c.approve(t)
+        events = await c.say(t, f"Refund {order} again")
+        if interrupts(events):
+            await c.approve(t)
+>       assert await refunds(x.sql, order) == [{"amount_cents": 8900}]
+E       AssertionError: assert [] == [{'amount_cents': 8900}]
+E         
+E         Right contains one more item: {'amount_cents': 8900}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_evals.py:124: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+_____________________ test_eval[memory_saved_and_recalled] _____________________
+
+number = 11, check = <function memory_saved_and_recalled at 0x10e43b920>
+client = <function client.<locals>.<lambda> at 0x10e8872e0>
+sql = <function sql.<locals>.run at 0x10e887b00>
+spans = <function spans.<locals>.read at 0x10e886c00>
+chaos = <tests.conftest.Chaos object at 0x10e7501a0>
+app = <fastapi.applications.FastAPI object at 0x10e7502f0>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10e5725d0>
+t = 'e0c2ca9a-d503-4d0f-9bde-c8757bd49bf4'
+x = namespace(sql=<function sql.<locals>.run at 0x10e887b00>, spans=<function spans.<locals>.read at 0x10e886c00>, chaos=<tests.conftest.Chaos object at 0x10e7501a0>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10e7523c0>)
+
+    @case
+    async def memory_saved_and_recalled(c, t, x):
+        events = await c.say(t, "Remember that I prefer email updates")
+>       assert "email" in calls(events, "save_note")[0]["text"]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       IndexError: list index out of range
+
+tests/test_evals.py:149: IndexError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+_______________________ test_eval[flaky_faq_is_retried] ________________________
+
+number = 13, check = <function flaky_faq_is_retried at 0x10e43ba60>
+client = <function client.<locals>.<lambda> at 0x10e887740>
+sql = <function sql.<locals>.run at 0x10e8868e0>
+spans = <function spans.<locals>.read at 0x10e886fc0>
+chaos = <tests.conftest.Chaos object at 0x10e7501a0>
+app = <fastapi.applications.FastAPI object at 0x10e7502f0>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10e8ab4d0>
+t = '0a2ff5e9-e7ec-405a-af6e-05ffb98de766'
+x = namespace(sql=<function sql.<locals>.run at 0x10e8868e0>, spans=<function spans.<locals>.read at 0x10e886fc0>, chaos=<tests.conftest.Chaos object at 0x10e7501a0>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10e7523c0>)
+
+    @case
+    async def flaky_faq_is_retried(c, t, x):
+        x.chaos.rules = {"search_faq": "fail_once"}
+        events = await c.say(t, "How much does shipping cost?")
+>       assert x.chaos.attempts["search_faq"] == 2
+E       assert 0 == 2
+
+tests/test_evals.py:166: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+______________ test_eval[new_message_while_waiting_for_approval] _______________
+
+number = 19
+check = <function new_message_while_waiting_for_approval at 0x10e43be20>
+client = <function client.<locals>.<lambda> at 0x10e884720>
+sql = <function sql.<locals>.run at 0x10e8868e0>
+spans = <function spans.<locals>.read at 0x10e886d40>
+chaos = <tests.conftest.Chaos object at 0x10e7501a0>
+app = <fastapi.applications.FastAPI object at 0x10e7502f0>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10e73f330>
+t = '2586c3ce-e1a7-45cf-a502-3eee2a3a2c09'
+x = namespace(sql=<function sql.<locals>.run at 0x10e8868e0>, spans=<function spans.<locals>.read at 0x10e886d40>, chaos=<tests.conftest.Chaos object at 0x10e7501a0>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10e7523c0>)
+
+    @case
+    async def new_message_while_waiting_for_approval(c, t, x):
+        order = f"ORD-{c.user}-3"
+        events = await c.say(t, f"Refund {order}")
+        assert [i["name"] for i in interrupts(events)] == ["refund_order"]
+        assert await c.say(t, "Hello?") == 409
+        await c.approve(t)
+>       assert await refunds(x.sql, order) == [{"amount_cents": 2400}]
+E       AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]
+E         
+E         At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E           [
+E               {
+E         -         'amount_cents': 2400,...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_evals.py:233: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________ test_eval[status_then_refund_in_one_thread] __________________
+
+number = 20, check = <function status_then_refund_in_one_thread at 0x10e43bec0>
+client = <function client.<locals>.<lambda> at 0x10e8872e0>
+sql = <function sql.<locals>.run at 0x10e901d00>
+spans = <function spans.<locals>.read at 0x10e9031a0>
+chaos = <tests.conftest.Chaos object at 0x10e7501a0>
+app = <fastapi.applications.FastAPI object at 0x10e7502f0>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10e9018b0>
+t = '20e6031f-95ca-4075-ae60-bbda9b93a005'
+x = namespace(sql=<function sql.<locals>.run at 0x10e901d00>, spans=<function spans.<locals>.read at 0x10e9031a0>, chaos=<tests.conftest.Chaos object at 0x10e7501a0>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10e7523c0>)
+
+    @case
+    async def status_then_refund_in_one_thread(c, t, x):
+        order = f"ORD-{c.user}-3"
+        first = await c.say(t, f"Where is my order {order}?")
+        second = await c.say(t, f"Refund {order}")
+        await c.approve(t)
+        assert calls(first, "read_order") == [{"order_id": order}]
+>       assert [i["args"]["order_id"] for i in interrupts(second)] == [order]
+E       AssertionError: assert [] == ['ORD-e20-3']
+E         
+E         Right contains one more item: 'ORD-e20-3'
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     'ORD-e20-3',
+E         - ]
+
+tests/test_evals.py:243: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+___________ test_one_user_cannot_read_another_users_thread_or_memory ___________
+
+client = <function client.<locals>.<lambda> at 0x10e902d40>
+
+    async def test_one_user_cannot_read_another_users_thread_or_memory(client):
+        alice, bob = client("alice"), client("bob")
+        thread = await alice.thread()
+        await alice.say(thread, "Remember that my door code is 4471")
+        await alice.say(thread, "Where is my order ORD-alice-1?")
+    
+        assert (await bob.http.get(f"/threads/{thread}/state")).status_code == 404
+        assert (await bob.http.post(f"/threads/{thread}/runs", json={"message": "hi"})).status_code == 404
+        assert (await bob.http.post(f"/threads/{thread}/approve", json={"decision": "approve"})).status_code == 404
+    
+        assert (await bob.http.get("/memories")).json()["memories"] == []
+        bob_thread = await bob.thread()
+        await bob.say(bob_thread, "What do you remember about me?")
+        assert "4471" not in str(await bob.state(bob_thread))
+    
+>       assert "4471" in str((await alice.http.get("/memories")).json())
+E       assert '4471' in "{'user_id': 'alice', 'memories': []}"
+E        +  where "{'user_id': 'alice', 'memories': []}" = str({'user_id': 'alice', 'memories': []})
+E        +    where {'user_id': 'alice', 'memories': []} = json()
+E        +      where json = <Response [200 OK]>.json
+
+tests/test_isolation.py:16: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+________________ test_langsmith_receives_nothing_unless_enabled ________________
+
+    async def test_langsmith_receives_nothing_unless_enabled():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        port = free_port()
+        recorder = ThreadingHTTPServer(("127.0.0.1", port), Recorder)
+        threading.Thread(target=recorder.serve_forever, daemon=True).start()
+        endpoint = f"http://127.0.0.1:{port}"
+        base = {"LANGSMITH_ENDPOINT": endpoint, "LANGCHAIN_ENDPOINT": endpoint, "LANGSMITH_API_KEY": "lsv2_pt_fake"}
+        counts = {}
+        try:
+            for label, flag in [("enabled_control", "true"), ("disabled", "false"), ("unset", None)]:
+                before = len(Recorder.seen)
+>               await conversation({**base, "LANGSMITH_TRACING": flag, "LANGCHAIN_TRACING_V2": flag}, f"smith-{label}")
+
+tests/test_smith_off.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_smith_off.py:33: in conversation
+    await client.approve(thread, "reject")
+tests/procs.py:88: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:82: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+            if block:
+>               lines = dict(line.split(": ", 1) for line in block.splitlines())
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:68: ValueError
+==================================== PASSES ====================================
+_________________________ test_eval[faq_return_window] _________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________________ test_eval[faq_shipping_time] _________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+___________________________ test_eval[order_status] ____________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+___________________________ test_eval[order_unknown] ___________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________ test_eval[order_of_other_customer_is_hidden] _________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+________________________ test_eval[ticket_for_a_human] _________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________ test_eval[memory_of_other_user_is_invisible] _________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+________________________ test_eval[hung_tool_times_out] ________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.error
+INFO     support:telemetry.py:48 run.end
+___________________ test_eval[failed_ticket_is_not_retried] ____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.error
+INFO     support:telemetry.py:48 run.end
+____________________ test_eval[primary_outage_uses_backup] _____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+___________________ test_eval[runaway_loop_hits_call_limit] ____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_____________________ test_eval[long_thread_is_summarized] _____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+- generated xml file: prodapp/runs/2026-11-15-real/suite/qwen3-4b/rep-2/junit.xml -
+============================== slowest durations ===============================
+53.47s call     tests/test_evals.py::test_eval[runaway_loop_hits_call_limit]
+33.77s call     tests/test_evals.py::test_eval[long_thread_is_summarized]
+15.82s call     tests/test_evals.py::test_eval[primary_outage_uses_backup]
+15.44s call     tests/test_workers.py::test_two_workers_racing_on_one_thread_give_one_run_and_one_409
+12.79s call     tests/test_durability.py::test_kill_mid_refund_then_resume_refunds_once
+9.12s call     tests/test_evals.py::test_eval[status_then_refund_in_one_thread]
+8.42s call     tests/test_smith_off.py::test_langsmith_receives_nothing_unless_enabled
+6.75s call     tests/test_isolation.py::test_one_user_cannot_read_another_users_thread_or_memory
+5.32s call     tests/test_durability.py::test_sigterm_lets_in_flight_run_finish
+5.29s call     tests/test_durability.py::test_sigterm_past_deadline_checkpoints_and_resumes
+5.01s call     tests/test_evals.py::test_eval[hung_tool_times_out]
+3.75s call     tests/test_evals.py::test_eval[failed_ticket_is_not_retried]
+3.52s call     tests/test_evals.py::test_eval[new_message_while_waiting_for_approval]
+3.45s call     tests/test_evals.py::test_eval[order_unknown]
+3.31s call     tests/test_evals.py::test_eval[ticket_for_a_human]
+3.13s call     tests/test_evals.py::test_eval[faq_shipping_time]
+2.88s call     tests/test_evals.py::test_eval[memory_of_other_user_is_invisible]
+2.82s call     tests/test_evals.py::test_eval[order_status]
+2.63s call     tests/test_evals.py::test_eval[order_of_other_customer_is_hidden]
+1.79s call     tests/test_evals.py::test_eval[refund_asked_twice]
+1.71s call     tests/test_evals.py::test_eval[memory_saved_and_recalled]
+1.69s call     tests/test_evals.py::test_eval[flaky_faq_is_retried]
+1.34s call     tests/test_evals.py::test_eval[faq_return_window]
+1.25s call     tests/test_evals.py::test_eval[refund_approved_once]
+1.12s call     tests/test_evals.py::test_eval[refund_rejected_has_no_side_effect]
+0.13s setup    tests/test_evals.py::test_eval[faq_return_window]
+0.02s call     tests/test_evals.py::test_eval[refund_tool_replay_is_idempotent]
+0.01s teardown tests/test_workers.py::test_two_workers_racing_on_one_thread_give_one_run_and_one_409
+0.01s call     tests/test_isolation.py::test_missing_or_wrong_token_is_rejected
+
+(52 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+PASSED tests/test_durability.py::test_sigterm_lets_in_flight_run_finish
+PASSED tests/test_evals.py::test_eval[faq_return_window]
+PASSED tests/test_evals.py::test_eval[faq_shipping_time]
+PASSED tests/test_evals.py::test_eval[order_status]
+PASSED tests/test_evals.py::test_eval[order_unknown]
+PASSED tests/test_evals.py::test_eval[order_of_other_customer_is_hidden]
+PASSED tests/test_evals.py::test_eval[refund_tool_replay_is_idempotent]
+PASSED tests/test_evals.py::test_eval[ticket_for_a_human]
+PASSED tests/test_evals.py::test_eval[memory_of_other_user_is_invisible]
+PASSED tests/test_evals.py::test_eval[hung_tool_times_out]
+PASSED tests/test_evals.py::test_eval[failed_ticket_is_not_retried]
+PASSED tests/test_evals.py::test_eval[primary_outage_uses_backup]
+PASSED tests/test_evals.py::test_eval[runaway_loop_hits_call_limit]
+PASSED tests/test_evals.py::test_eval[long_thread_is_summarized]
+PASSED tests/test_isolation.py::test_missing_or_wrong_token_is_rejected
+PASSED tests/test_workers.py::test_two_workers_racing_on_one_thread_give_one_run_and_one_409
+FAILED tests/test_durability.py::test_kill_mid_refund_then_resume_refunds_once
+FAILED tests/test_durability.py::test_sigterm_past_deadline_checkpoints_and_resumes
+FAILED tests/test_evals.py::test_eval[refund_approved_once] - ValueError: not...
+FAILED tests/test_evals.py::test_eval[refund_rejected_has_no_side_effect] - T...
+FAILED tests/test_evals.py::test_eval[refund_asked_twice] - AssertionError: a...
+FAILED tests/test_evals.py::test_eval[memory_saved_and_recalled] - IndexError...
+FAILED tests/test_evals.py::test_eval[flaky_faq_is_retried] - assert 0 == 2
+FAILED tests/test_evals.py::test_eval[new_message_while_waiting_for_approval]
+FAILED tests/test_evals.py::test_eval[status_then_refund_in_one_thread] - Ass...
+FAILED tests/test_isolation.py::test_one_user_cannot_read_another_users_thread_or_memory
+FAILED tests/test_smith_off.py::test_langsmith_receives_nothing_unless_enabled
+================== 11 failed, 16 passed in 206.07s (0:03:26) ===================

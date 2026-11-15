@@ -1,0 +1,604 @@
+{
+ "qwen3-4b": {
+  "flaky_faq_is_retried": {
+   "outcome": "failed",
+   "tools": [],
+   "model_calls": [
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    }
+   ],
+   "reply": "I can't provide shipping costs as it's not available in the system. Please check the website or contact customer support for details.",
+   "run_seconds": [
+    0.62
+   ]
+  },
+  "hung_tool_times_out": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 514.6
+    },
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 503.0
+    },
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 502.6
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    }
+   ],
+   "reply": "I couldn't find your order. Please check the order ID and try again, or contact support for assistance.",
+   "run_seconds": [
+    3.02
+   ]
+  },
+  "failed_ticket_is_not_retried": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.create_ticket",
+     "error": true,
+     "ms": 1.1
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    }
+   ],
+   "reply": "I'm unable to open a ticket at this time. Please try again later or contact our support team directly.",
+   "run_seconds": [
+    1.29
+   ]
+  },
+  "primary_outage_uses_backup": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.read_order",
+     "error": false,
+     "ms": 4.6
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": true
+    },
+    {
+     "model": "qwen3:8b",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": true
+    },
+    {
+     "model": "qwen3:8b",
+     "error": false
+    }
+   ],
+   "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount is $129.00, and no refunds have been processed.",
+   "run_seconds": [
+    7.6
+   ]
+  },
+  "runaway_loop_hits_call_limit": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 20.2
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 2.7
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 5.6
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 0.9
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 4.4
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 4.1
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 2.2
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 2.3
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    }
+   ],
+   "reply": "I can help with that. Let me search the help center for information on shipping options. \n\nStandard shipping takes 3 to 6 business days and is free on orders over $50 (costs $5.95 otherwise). Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50 (costs $5.95 otherwise). Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50 (costs $5.95 otherwise). Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50 (costs $5.95 otherwise). Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50 (costs $5.95 otherwise). Express shipping takes 1 to 2 business days and costs $14.95.Here are the shipping options:\n\n- **Standard Shipping**:  \n  - Delivery: 3 to 6 business days  \n  - Cost: Free on orders over $50; $5.95 otherwise  \n\n- **Express Shipping**:  \n  - Delivery: 1 to 2 business days  \n  - Cost: $14.95  \n\nLet me know if you need help with anything else!Here are the shipping options:\n\n- **Standard Shipping**:  \n  - Delivery: 3 to 6 business days  \n  - Cost: Free on orders over $50; $5.95 otherwise  \n\n- **Express Shipping**:  \n  - Delivery: 1 to 2 business days  \n  - Cost: $14.95  \n\nLet me know if you need help with anything else!",
+   "run_seconds": [
+    29.61
+   ]
+  }
+ },
+ "qwen3-14b": {
+  "flaky_faq_is_retried": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.search_faq",
+     "error": true,
+     "ms": 6.6
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 4.2
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    }
+   ],
+   "reply": "Standard shipping is free on orders over $50. Below that, it costs $5.95. Express shipping costs $14.95.",
+   "run_seconds": [
+    11.66
+   ]
+  },
+  "hung_tool_times_out": {
+   "outcome": "failed",
+   "tools": [
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 504.5
+    },
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 503.3
+    },
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 505.7
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    }
+   ],
+   "reply": "I'm unable to look up your order right now. Please check back later or contact us directly for assistance.",
+   "run_seconds": [
+    11.04
+   ]
+  },
+  "failed_ticket_is_not_retried": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.create_ticket",
+     "error": true,
+     "ms": 6.7
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    }
+   ],
+   "reply": "I'm unable to open a support ticket right now. Please try again later or let me know how else I can assist you.",
+   "run_seconds": [
+    14.76
+   ]
+  },
+  "primary_outage_uses_backup": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.read_order",
+     "error": false,
+     "ms": 12.1
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:14b",
+     "error": true
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": true
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    }
+   ],
+   "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount was $129.00, and no refund has been processed yet.",
+   "run_seconds": [
+    13.55
+   ]
+  },
+  "runaway_loop_hits_call_limit": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 60.7
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 5.7
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 6.7
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 3.7
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 6.3
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 6.7
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 8.1
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 7.0
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    },
+    {
+     "model": "qwen3:14b",
+     "error": false
+    }
+   ],
+   "reply": "Sure, let me check the shipping options for you.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 business days and costs $14.95. Let me know if you need further assistance!Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 business days and costs $14.95. Let me know if you need further assistance!Standard shipping takes 3 to 6 business days and is free on orders over $50. Below that, it costs $5.95. Express shipping takes 1 to 2 business days and costs $14.95. Let me know if you need further assistance!Here are the shipping options:\n\n- **Standard Shipping**: Takes 3 to 6 business days. Free on orders over $50; $5.95 for orders below $50.\n- **Express Shipping**: Takes 1 to 2 business days. Costs $14.95 regardless of order size.Here are the shipping options available:\n\n- **Standard Shipping**: Takes 3 to 6 business days. Free on orders over $50; $5.95 for orders below $50.\n- **Express Shipping**: Takes 1 to 2 business days. Costs $14.95 regardless of order amount. \n\nLet me know if you need further assistance!",
+   "run_seconds": [
+    151.34
+   ]
+  }
+ },
+ "haiku": {
+  "flaky_faq_is_retried": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.search_faq",
+     "error": true,
+     "ms": 5.1
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 2.8
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    }
+   ],
+   "reply": "Standard shipping is free on orders over $50. Orders under $50 pay $5.95. Express shipping is $14.95.",
+   "run_seconds": [
+    2.31
+   ]
+  },
+  "hung_tool_times_out": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 503.2
+    },
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 504.5
+    },
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 515.1
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    }
+   ],
+   "reply": "I couldn't retrieve order ORD-e14-1 because our order system timed out. I don't have its status or shipping details, and I don't want to guess. Please try again in a few minutes. If it still fails, I can open a ticket for a human agent to check it.",
+   "run_seconds": [
+    4.47
+   ]
+  },
+  "failed_ticket_is_not_retried": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.create_ticket",
+     "error": true,
+     "ms": 1.0
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    }
+   ],
+   "reply": "I couldn't open a ticket because of a connection error on our end. Would you like me to try again? If it keeps failing, please try contacting us again in a few minutes.",
+   "run_seconds": [
+    4.04
+   ]
+  },
+  "primary_outage_uses_backup": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.read_order",
+     "error": true,
+     "ms": 704.4
+    },
+    {
+     "name": "tool.read_order",
+     "error": false,
+     "ms": 59.1
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "claude-haiku-5-5",
+     "error": true
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": true
+    },
+    {
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "error": false
+    }
+   ],
+   "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount was $129.00, and no refund has been processed yet.",
+   "run_seconds": [
+    16.96
+   ]
+  },
+  "runaway_loop_hits_call_limit": {
+   "outcome": "passed",
+   "tools": [
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 3.1
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 5.8
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 3.2
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 3.2
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 6.0
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 2.1
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 4.5
+    },
+    {
+     "name": "tool.search_faq",
+     "error": false,
+     "ms": 6.3
+    }
+   ],
+   "model_calls": [
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    },
+    {
+     "model": "claude-haiku-5-5",
+     "error": false
+    }
+   ],
+   "reply": "Here are our shipping options:\n\n- **Standard:** 3 to 6 business days. Free on orders over $50; otherwise $5.95.\n- **Express:** 1 to 2 business days. $14.95.\n\nDo you have a specific order you'd like me to check?Here are our shipping options:\n\n- **Standard:** 3 to 6 business days. Free on orders over $50; otherwise $5.95.\n- **Express:** 1 to 2 business days. $14.95.\n\nIf you share an order number, I can check the status of that order.Here are our shipping options:\n\n- **Standard:** 3 to 6 business days. Free on orders over $50; otherwise $5.95.\n- **Express:** 1 to 2 business days. $14.95.\n\nDo you want help with a specific order?Here are our shipping options:\n\n- **Standard:** 3 to 6 business days. Free on orders over $50; otherwise $5.95.\n- **Express:** 1 to 2 business days. $14.95.\n\nI searched the help center several times by mistake, but the results were the same each time. Do you want help with a specific order?Here are our shipping options:\n\n- **Standard:** 3 to 6 business days. Free on orders over $50, otherwise $5.95.\n- **Express:** 1 to 2 business days. $14.95.\n\nI searched the same help-center query several times by mistake. The results were the same each time, so the information above is complete.Here are our shipping options:\n\n- **Standard shipping:** 3 to 6 business days. Free on orders over $50; otherwise $5.95.\n- **Express shipping:** 1 to 2 business days. $14.95.Here are our shipping options:\n\n- **Standard shipping:** 3 to 6 business days. Free on orders over $50; otherwise $5.95.\n- **Express shipping:** 1 to 2 business days. $14.95.\n\nI also ran the same shipping search several extra times when I should have stopped after the first result. That didn't change the answer.",
+   "run_seconds": [
+    20.89
+   ]
+  }
+ }
+}

@@ -1,0 +1,299 @@
+{
+ "case": "order_unknown",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "38d1225a-1232-4e14-8127-1d01d0bc66dc",
+   "text": "Where is my order ORD-nobody-1?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "08a1f8be-22a4-4fff-8cdb-0aaada3c0aaa",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-nobody-1"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"error\": \"no order ORD-nobody-1 on this account\"}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "We"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " couldn"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " find"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " an"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ID"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " \""
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-n"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "obody"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "\""
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " on"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " account"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Could"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " double"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-check"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ID"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " provide"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " more"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "?"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 8.9538
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "38d1225a-1232-4e14-8127-1d01d0bc66dc",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-nobody-1?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-nobody-1"
+       },
+       "id": "08a1f8be-22a4-4fff-8cdb-0aaada3c0aaa",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 454,
+      "output_tokens": 25,
+      "total_tokens": 479
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"error\": \"no order ORD-nobody-1 on this account\"}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "We couldn't find an order with the ID \"ORD-nobody-1\" on your account. Could you double-check the order ID or provide more details?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 505,
+      "output_tokens": 33,
+      "total_tokens": 538
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

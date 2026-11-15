@@ -143,7 +143,7 @@ On a local model those tokens cost time. On Qwen3 4B the median task took 22.6 s
 
 Prompt caching closes most of the token gap. The deep agent cost 1.16 times the plain loop on Haiku and 1.24 times on Sonnet. At list price with no cache, it would cost 3.10 and 3.14 times. [Section 7.4](#s-deep-agents-0-7) shows each task.
 
-The whole bench, with every Claude row in this manual, cost $0.93 for 2,589 API calls.
+The whole bench cost $0.93 for 2,589 API calls. The evals of [section 9.6](#s-evals-that-check-state) added 64 Claude calls for $0.011.
 
 ## Which one to use
 
@@ -157,13 +157,13 @@ The whole bench, with every Claude row in this manual, cost $0.93 for 2,589 API 
 | A local model on Ollama | a plain loop or `create_agent`, never the default deep agent | 15 and 16 fewer of 99 on Qwen3 4B and 8B, 2 to 4 fewer of 30 on 14B and 20B |
 | You want a better score | a better model | 15 to 30 of 30 across models, and 0 across the three plain harnesses |
 
-Part 2 shows what `create_agent` gives you for those milliseconds: the superstep loop, the checkpoints, and the streams.
+Part 2 shows what `create_agent` gives you for those milliseconds: the superstep loop, the checkpoints, and the streams. [Part 9](#p-9) puts `create_agent` in a service with approvals, a Postgres checkpointer, and spans, on three real models.
 
 ## What this suite cannot tell you
 
 The Claude rows are at the ceiling. A suite that both Claude models pass in full cannot rank them, and it cannot show a harness effect of a few percent on them. A harder suite would. We did not run one, to keep the API spend small.
 
-Each Claude task ran once, with the default sampling of the API. Each local task ran once too, and [the method note](#s-ref-the-bench-method) shows why one greedy run is enough there. The suite tests short tasks of 2 to 10 model calls. It says nothing about threads of hundreds of turns, which [section 5.5](#s-context-engineering-and-summarization) covers.
+Each Claude task ran once, with the default sampling of the API. Each local task ran once too, and [the method note](#s-ref-the-bench-method) shows why one greedy run is enough there. The suite tests short tasks of 2 to 10 model calls. It says nothing about threads of hundreds of turns, which [section 5.5](#s-context-engineering-and-summarization) covers. It also says nothing about a service under load, which [section 9.7](#s-workers-the-advisory-lock-and-cost) measures.
 
 ```takeaways
 - Pick the harness for persistence, streaming, approvals, or files, never for answer quality.

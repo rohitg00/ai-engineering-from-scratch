@@ -2,7 +2,7 @@
   "id": "langchain-101",
   "title": "LangChain 101",
   "subtitle": "Build, run, persist, and debug agents with LangChain 1.5, LangGraph 1.2, and Deep Agents 0.7, with a recorded answer for each decision",
-  "summary": "How the LangChain Python stack turns a model, tools, and a prompt into an agent, and when you need it at all. A task suite with state checkers sets the plain loop, create_agent, LangGraph, and Deep Agents side by side on local and Claude models. Traces of real runs show the runtime inside. Every listing comes from a capture of a real run with langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Every measured number comes from a recorded run on a real model.",
+  "summary": "How the LangChain Python stack turns a model, tools, and a prompt into an agent, and when you need it at all. A task suite with state checkers sets the plain loop, create_agent, LangGraph, and Deep Agents side by side on local and Claude models. Traces of real runs show the runtime inside, and a FastAPI service with Postgres and approvals runs it in production. Every listing comes from a capture of a real run with langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, and deepagents 0.7.38. Every measured number comes from a recorded run on a real model.",
   "audience": "You write Python and you have called a chat model API. You have read some LangChain code, maybe from the 0.x years. You want to know what the 1.x stack does before you build on it.",
   "edition": "2026.11",
   "status": "ready",
@@ -22,7 +22,8 @@
     "Stream a run in the mode you need, and keep a conversation across turns and restarts with a checkpointer.",
     "Pause a run for human approval, resume it, and say which code runs again on the resume.",
     "Count the attempts of each retry layer, and make a side effect safe when a crash replays it.",
-    "Connect MCP tools, a retriever, Deep Agents, and LangSmith tracing, and find the cause of a failure from its message."
+    "Connect MCP tools, a retriever, Deep Agents, and LangSmith tracing, and find the cause of a failure from its message.",
+    "Serve an agent from FastAPI with Postgres, approvals, spans, and evals, and size it from the model server."
   ],
   "palette": [
     {
@@ -89,7 +90,7 @@
     },
     {
       "name": "The lab recordings",
-      "path": "capture/lab/, recorded on the Mac (Apple M1 Max, 10 cores, 64 GiB) and on an x86 server guest (32 vCPU, 48 GiB), with Qwen3 0.6B to 30B-A3B and gpt-oss 20B on Ollama, and Claude Haiku 5.5 and Claude Sonnet 5.5 through the Anthropic API in the bench only, with the summaries in capture/lab/summary/ and capture/lab/bench/summary-mac.json",
+      "path": "capture/lab/, recorded on the Mac (Apple M1 Max, 10 cores, 64 GiB) and on an x86 server guest (32 vCPU, 48 GiB), with Qwen3 0.6B to 30B-A3B and gpt-oss 20B on Ollama, and Claude Haiku 5.5 and Claude Sonnet 5.5 through the Anthropic API in the bench, with Claude Haiku 5.5 also in the production service of Part 9, with the summaries in capture/lab/summary/, capture/lab/bench/summary-mac.json, and capture/lab/prodapp-mac/summary/",
       "usedFor": "every number marked as measured; cited by file"
     },
     {
@@ -405,6 +406,43 @@
         {
           "id": "8.7",
           "file": "sections/8-7-limits-at-the-pin-and-what-comes-in-the-next-edition.md"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "Production",
+      "thesis": "The measured ceiling was the model server, real models failed in ways a scripted model hid, and only a key at the tool stopped a second refund after a crash.",
+      "summary": "One FastAPI service with create_agent, Postgres, and approvals, run on Qwen3 4B, Qwen3 14B, and Claude Haiku 5.5. The run endpoint and its stream, the owner check, and approvals with an idempotency key. Then OpenTelemetry spans with LangSmith off, faults and shutdown, evals that check state, and workers and cost.",
+      "accent": "violet",
+      "sections": [
+        {
+          "id": "9.1",
+          "file": "sections/9-1-the-run-endpoint-and-its-stream.md"
+        },
+        {
+          "id": "9.2",
+          "file": "sections/9-2-postgres-checkpointer-store-and-owner-check.md"
+        },
+        {
+          "id": "9.3",
+          "file": "sections/9-3-approvals-and-the-idempotency-key.md"
+        },
+        {
+          "id": "9.4",
+          "file": "sections/9-4-opentelemetry-spans-with-langsmith-off.md"
+        },
+        {
+          "id": "9.5",
+          "file": "sections/9-5-timeouts-retries-backup-model-and-shutdown.md"
+        },
+        {
+          "id": "9.6",
+          "file": "sections/9-6-evals-that-check-state.md"
+        },
+        {
+          "id": "9.7",
+          "file": "sections/9-7-workers-the-advisory-lock-and-cost.md"
         }
       ]
     }

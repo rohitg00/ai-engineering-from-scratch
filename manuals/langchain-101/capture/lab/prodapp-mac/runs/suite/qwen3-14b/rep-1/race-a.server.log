@@ -1,0 +1,14 @@
+INFO:     Started server process [2424]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:57280 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57290 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57303 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57304 - "POST /threads/2fa5f7ea-0e96-4470-96b9-27b97d88b536/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57325 - "GET /threads/2fa5f7ea-0e96-4470-96b9-27b97d88b536/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57326 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57328 - "POST /threads/ab4bea96-8cec-4e22-b5f1-58bbee877a58/runs HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:57327 - "POST /threads/ab4bea96-8cec-4e22-b5f1-58bbee877a58/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57349 - "GET /threads/ab4bea96-8cec-4e22-b5f1-58bbee877a58/state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57350 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57351 - "POST /threads/a46fb041-7551-4610-b240-dd94be2a903a/runs HTTP/1.1" 200 OK

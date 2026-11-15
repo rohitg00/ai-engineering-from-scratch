@@ -1,0 +1,20 @@
+{
+  "cross_worker": {
+    "codes": [
+      200,
+      409
+    ],
+    "human_messages": 1
+  },
+  "same_worker": {
+    "codes": [
+      200,
+      409
+    ],
+    "human_messages": 1
+  },
+  "killed_holder_exit": -9,
+  "holder_client_error": "RemoteProtocolError",
+  "after_holder_killed": 200,
+  "while_held": 409
+}

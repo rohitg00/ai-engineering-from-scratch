@@ -12,7 +12,7 @@ The ranks are the same as in [How to read this manual](#s-front). When two sourc
 | 2 | the LangChain documentation, built from one commit of its repository | the documented behaviour, in our own words, checked against the code and our runs |
 | 3 | the changelog and the release notes of each package | when a change came, and which package version holds it |
 | 4 | the capture kit, with Qwen3 4B on Ollama where a scenario needs a model | every listing |
-| 5 | the lab recordings on two machines, the account run against the hosted LangSmith API, and the task-suite bench, whose Claude rows ran through the Anthropic API | every number in a paragraph that starts with "We measured" |
+| 5 | the lab recordings on two machines, the account run against the hosted LangSmith API, the task-suite bench, and the production service of Part 9. Their Claude rows ran through the Anthropic API | every number in a paragraph that starts with "We measured" |
 
 GitHub issues, pull requests, and security advisories are evidence for a behaviour at the pin. The text names each one by its number, and it never presents an issue as our result. The product pages of the project have no open license. [Section 1.1](#s-langchain-langgraph-langsmith-and-deep-agents) states their claims in our words and sets each one beside a run.
 
@@ -24,12 +24,13 @@ GitHub issues, pull requests, and security advisories are evidence for a behavio
 | `langchain-core` | 1.8.0 | `a4b4a7b9`, the same core tree as `c2f4036e` | every part |
 | `langgraph`, with `langgraph-checkpoint` 4.3.2 and `langgraph-prebuilt` 1.1.2 | 1.2.22 | `08a20169` | Part 2, Parts 4 to 6, Part 8 |
 | `langgraph-checkpoint-sqlite` | 3.1.3 | `5bd231cb` by the release record. We read its code at `08a20169`, which holds 3.1.3 | Part 2, Part 5 |
-| `langgraph-checkpoint-postgres` | 3.2.1, from the lab environment | the `langgraph` repository at `08a20169` | Part 5 |
+| `langgraph-checkpoint-postgres` | 3.2.1, from the lab environment | the `langgraph` repository at `08a20169` | Part 5, Part 9 |
 | `deepagents` | 0.7.38 | `c858b364` | [7.4](#s-deep-agents-0-7), [7.5](#s-a-deep-agent-with-a-subagent-and-files) |
 | `langsmith` | 0.14.17 | `15dd2a78` | [7.6](#s-langsmith-tracing), [7.7](#s-evaluation-with-langsmith) |
 | `langgraph-api`, `langgraph-cli` | 0.18.0, 0.4.43 | the published packages | [8.1](#s-agent-server-langgraph-dev-up-and-deploy) |
 | `langchain-openai`, `langchain-anthropic`, `langchain-ollama` | 1.8.0, 1.7.10, 1.1.0 | their own tags | Part 3, [1.2](#s-do-you-need-langchain), [4.3](#s-structured-output-which-strategy-on-which-provider) |
 | `fastmcp`, `mcp` | 4.2.0, 2.3.0 | the published packages | [7.3](#s-mcp-with-langchain-mcp) |
+| `fastapi`, `starlette`, `uvicorn`, `psycopg`, `opentelemetry-sdk` | 0.162.7, 1.10.0, 0.54.0, 3.3.9, 1.45.2 | the published packages, from the lockfile of the service | Part 9 |
 | `langchain-mcp-adapters` | 0.3.2, archived | its last tag | [7.3](#s-mcp-with-langchain-mcp), [8.4](#s-migration-from-0-x-and-stale-advice) |
 
 ## Rank 2: the documentation
@@ -56,7 +57,7 @@ The LangChain, LangGraph, and Python marks in the figures belong to their owners
 
 ## Ranks 4 and 5: the kit and the lab
 
-The capture kit writes 49 files. The lab holds 44 experiment folders, 42 summary files, and the bench with its own summary. The bench priced each Claude call at the list prices of the Anthropic pricing page, read on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
+The capture kit writes 49 files. The lab holds 45 experiment folders, 42 summary files, and the bench with its own summary. The production service of Part 9 keeps its code, its raw runs, and nine summaries in one folder. The bench and the service priced each Claude call at the list prices of the Anthropic pricing page, read on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
 
 ## Issues and advisories
 

@@ -1,0 +1,241 @@
+{
+ "case": "failed_ticket_is_not_retried",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "a8e694dc-a354-4fe3-b9de-b59e0bc11af9",
+   "text": "Open a ticket, I need a human",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "4a709c47-c690-4ae9-b33a-da1ec3017659",
+      "name": "create_ticket",
+      "args": {
+       "subject": "Need Human Support",
+       "body": "Customer needs to speak with a human support agent."
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "create_ticket",
+      "status": "error",
+      "content": "create_ticket failed with ConnectionError. Tell the customer and do not guess."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'m"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " unable"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " open"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ticket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " at"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " this"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " time"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " try"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " again"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " later"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " contact"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " our"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " support"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " team"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " directly"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 1.2909
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "a8e694dc-a354-4fe3-b9de-b59e0bc11af9",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Open a ticket, I need a human",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "create_ticket",
+       "args": {
+        "subject": "Need Human Support",
+        "body": "Customer needs to speak with a human support agent."
+       },
+       "id": "4a709c47-c690-4ae9-b33a-da1ec3017659",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 555,
+      "output_tokens": 37,
+      "total_tokens": 592
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "create_ticket failed with ConnectionError. Tell the customer and do not guess.",
+     "tool_calls": [],
+     "name": "create_ticket",
+     "status": "error",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I'm unable to open a ticket at this time. Please try again later or contact our support team directly.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 619,
+      "output_tokens": 23,
+      "total_tokens": 642
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

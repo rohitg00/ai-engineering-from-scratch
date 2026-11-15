@@ -1,0 +1,9 @@
+{"ts": 1794741581.92, "level": "INFO", "event": "startup", "model": "ollama:qwen3:4b-instruct-2507-q4_K_M", "backup": "ollama:qwen3:14b", "pool_max": 20}
+{"ts": 1794741582.044, "level": "INFO", "event": "run.start", "thread_id": "690df2a4-c748-43e8-a910-f1bce79d6182", "user_id": "cap", "trace_id": "50a20fdc997e827c4acc810c1e95e0fe", "span_id": "571f69d505fe6ead"}
+{"ts": 1794741596.616, "level": "INFO", "event": "tool.done", "tool": "read_order", "status": "success", "trace_id": "50a20fdc997e827c4acc810c1e95e0fe", "span_id": "1bfab87c125c1b27"}
+{"ts": 1794741597.464, "level": "INFO", "event": "run.end", "thread_id": "690df2a4-c748-43e8-a910-f1bce79d6182", "status": "done", "seconds": 15.4201, "trace_id": "50a20fdc997e827c4acc810c1e95e0fe", "span_id": "44683104e8eaf8e6"}
+{"ts": 1794741597.519, "level": "INFO", "event": "run.start", "thread_id": "690df2a4-c748-43e8-a910-f1bce79d6182", "user_id": "cap", "trace_id": "aed051edfe22b28c41dfe1860fcd6158", "span_id": "c5c53af697082beb"}
+{"ts": 1794741600.056, "level": "INFO", "event": "run.end", "thread_id": "690df2a4-c748-43e8-a910-f1bce79d6182", "status": "interrupted", "seconds": 2.5371, "trace_id": "aed051edfe22b28c41dfe1860fcd6158", "span_id": "1d236aa0a0941386"}
+{"ts": 1794741600.164, "level": "INFO", "event": "run.start", "thread_id": "690df2a4-c748-43e8-a910-f1bce79d6182", "user_id": "cap", "trace_id": "2984edb7d6dea5279be01fe0a65e0f67", "span_id": "24d7a4f33889a2ce"}
+{"ts": 1794741600.488, "level": "INFO", "event": "tool.done", "tool": "refund_order", "status": "success", "trace_id": "2984edb7d6dea5279be01fe0a65e0f67", "span_id": "c2f868c8a14c3027"}
+{"ts": 1794741602.474, "level": "INFO", "event": "run.end", "thread_id": "690df2a4-c748-43e8-a910-f1bce79d6182", "status": "done", "seconds": 2.3111, "trace_id": "2984edb7d6dea5279be01fe0a65e0f67", "span_id": "3e93effafd95e204"}

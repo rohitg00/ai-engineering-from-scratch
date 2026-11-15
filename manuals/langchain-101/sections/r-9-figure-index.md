@@ -2,7 +2,7 @@
 
 > Every figure of this manual, in order, by the one claim that its caption makes.
 
-Each row links to its figure, and the claim is the `claim:` field of the figure block. The build numbers the figures of each part in the order they appear, so a figure number is its place in its part. A measured number in a figure comes from [our recorded runs](manuals/langchain-101/capture/lab), and each chart reads one file of [the summary folder](manuals/langchain-101/capture/lab/summary). The colours follow the palette of the front matter:
+Each row links to its figure, and the claim is the `claim:` field of the figure block. The build numbers the figures of each part in the order they appear, so a figure number is its place in its part. A measured number in a figure comes from [our recorded runs](manuals/langchain-101/capture/lab), and each chart reads one file of [the summary folder](manuals/langchain-101/capture/lab/summary). The charts of Part 9 read [the summaries of the production service](manuals/langchain-101/capture/lab/prodapp-mac/summary). The colours follow the palette of the front matter:
 
 - violet is your code: the caller, its input, and its config
 - blue is LangChain: `create_agent`, middleware, messages, and tools as objects

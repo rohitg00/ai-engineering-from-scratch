@@ -1,0 +1,299 @@
+{
+ "case": "flaky_faq_is_retried",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "01d20bd0-19ad-4e50-8c7a-53c15098be49",
+   "text": "How much does shipping cost?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "80bc9458-32fc-49fd-8ef8-4e2881f71fea",
+      "name": "search_faq",
+      "args": {
+       "query": "shipping cost"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"shipping-cost\", \"answer\": \"Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.\"}, {\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Standard"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " free"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " on"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " orders"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " over"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Below"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " that"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " costs"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "9"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Express"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " costs"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "4"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "9"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 16.3556
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "01d20bd0-19ad-4e50-8c7a-53c15098be49",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "How much does shipping cost?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "shipping cost"
+       },
+       "id": "80bc9458-32fc-49fd-8ef8-4e2881f71fea",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 450,
+      "output_tokens": 22,
+      "total_tokens": 472
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"shipping-cost\", \"answer\": \"Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.\"}, {\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Standard shipping is free on orders over $50. Below that, it costs $5.95. Express shipping costs $14.95.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 560,
+      "output_tokens": 33,
+      "total_tokens": 593
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

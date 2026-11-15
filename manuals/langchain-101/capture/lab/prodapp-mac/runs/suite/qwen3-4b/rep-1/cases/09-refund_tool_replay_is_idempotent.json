@@ -1,0 +1,21 @@
+{
+ "case": "refund_tool_replay_is_idempotent",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "passed",
+ "log": [],
+ "states": [
+  {
+   "thread_id": "094e2ad5-0727-4390-9e0b-36f622f6e501",
+   "next": [],
+   "interrupts": [],
+   "messages": []
+  }
+ ],
+ "refunds": [
+  {
+   "order_id": "ORD-e09-3",
+   "amount_cents": 2400
+  }
+ ],
+ "tickets": []
+}

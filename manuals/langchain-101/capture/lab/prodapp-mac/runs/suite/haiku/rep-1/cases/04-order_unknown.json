@@ -1,0 +1,211 @@
+{
+ "case": "order_unknown",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "e25ee7d8-75d9-46b7-96f3-9e671e035b98",
+   "text": "Where is my order ORD-nobody-1?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01LvUs6WKxJwrwQhT1qX4MdU",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-nobody-1"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"error\": \"no order ORD-nobody-1 on this account\"}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I couldn't find order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD-nobody-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1 on your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " account. Please check"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the order number,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " which should"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " look"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like ORD-y"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ourname-1. If you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a different"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " number, send"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it over"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and I'll look"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it up."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.5484
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "e25ee7d8-75d9-46b7-96f3-9e671e035b98",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-nobody-1?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-nobody-1"
+       },
+       "id": "toolu_01LvUs6WKxJwrwQhT1qX4MdU",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 917,
+      "output_tokens": 57,
+      "total_tokens": 974,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"error\": \"no order ORD-nobody-1 on this account\"}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I couldn't find order ORD-nobody-1 on your account. Please check the order number, which should look like ORD-yourname-1. If you have a different number, send it over and I'll look it up.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1001,
+      "output_tokens": 62,
+      "total_tokens": 1063,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

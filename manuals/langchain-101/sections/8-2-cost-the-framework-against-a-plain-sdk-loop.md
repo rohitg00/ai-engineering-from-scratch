@@ -22,7 +22,7 @@ When you finish this section, you can say what each layer of the stack adds to a
 | time outside the model of one Qwen3 4B agent run with tracing on, against a local recorder | none | 26.3 ms against 17.7 ms with tracing off, 0.5% of the run | the Mac, 60 interleaved runs each | [7.6](#s-langsmith-tracing) |
 | one middleware hook, each time it runs | none | 183 to 190 µs node hook, 45 to 50 µs wrap hook, 0.2 to 0.5% of a real Qwen3 4B run | the x86 server guest under load 14 to 25, 20 runs per cell | this section |
 
-The rest of this section gives the recordings behind the first three rows and the last row, which no other section shows in full.
+The rest of this section gives the recordings behind the first three rows and the last row, which no other section shows in full. [Section 9.7](#s-workers-the-advisory-lock-and-cost) prices a whole support conversation from measured tokens: $0.61 for 1,000 conversations on Claude Haiku 5.5.
 
 ## Time per run
 
@@ -113,6 +113,8 @@ One thread of 5,000 steps held 7,289 MB. With `DeltaChannel`, the write stayed n
 ## Tracing
 
 Tracing adds a cost to each run and a cost at exit. [Section 7.6](#s-langsmith-tracing) gives both with [figure](#fig-7-6). Against a local recorder that answered at once, tracing added 7.4 ms to a 1.6 s agent run on Qwen3 4B. In six of seven processes, the first traced run spent 83 to 243 ms outside the model. A failing endpoint held the exit for 10 to 17 s, and a hanging endpoint kept the process alive.
+
+[Section 9.4](#s-opentelemetry-spans-with-langsmith-off) traces a service with its own OpenTelemetry spans. With `LANGSMITH_TRACING` false or unset, a recorder got no request.
 
 ## Middleware hooks
 

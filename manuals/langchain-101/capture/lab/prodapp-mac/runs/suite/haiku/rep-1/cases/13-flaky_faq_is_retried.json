@@ -1,0 +1,163 @@
+{
+ "case": "flaky_faq_is_retried",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "faeb0362-44a2-4598-baac-798be73a2665",
+   "text": "How much does shipping cost?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01CcFtjg79GCrgp77EmmCnrz",
+      "name": "search_faq",
+      "args": {
+       "query": "shipping cost rates"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"shipping-cost\", \"answer\": \"Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.\"}, {\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Standard shipping is free"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " on orders over $50."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Orders under $50 p"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ay $5.95."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Express sh"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ipping is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $14.95."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.3055
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "faeb0362-44a2-4598-baac-798be73a2665",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "How much does shipping cost?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "shipping cost rates"
+       },
+       "id": "toolu_01CcFtjg79GCrgp77EmmCnrz",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 911,
+      "output_tokens": 54,
+      "total_tokens": 965,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"shipping-cost\", \"answer\": \"Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.\"}, {\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Standard shipping is free on orders over $50. Orders under $50 pay $5.95. Express shipping is $14.95.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1078,
+      "output_tokens": 42,
+      "total_tokens": 1120,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

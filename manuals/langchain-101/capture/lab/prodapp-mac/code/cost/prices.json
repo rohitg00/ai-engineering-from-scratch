@@ -1,0 +1,14 @@
+{
+  "source": "https://platform.claude.com/docs/en/about-claude/pricing.md",
+  "fetched": "2026-11-14",
+  "snapshot": "cost/sources/anthropic-pricing-2026-11-14.md",
+  "unit": "USD per million tokens, standard tier, global routing, no caching",
+  "models": {
+    "claude-haiku-4-5": {"input": 1.00, "output": 5.00},
+    "claude-haiku-5-5": {"input": 0.10, "output": 0.50},
+    "claude-sonnet-4-6": {"input": 3.00, "output": 15.00},
+    "claude-sonnet-5-5": {"input": 2.00, "output": 10.00},
+    "claude-opus-5-5": {"input": 4.00, "output": 20.00},
+    "ollama:qwen3:8b (local)": {"input": 0.0, "output": 0.0}
+  }
+}

@@ -1,0 +1,227 @@
+{
+ "case": "ticket_for_a_human",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "9dc293b0-298b-4499-bb69-5a6eac770c65",
+   "text": "I want to talk to a human about a damaged item",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "839f8b90-fee0-4526-872f-c8fabec4257c",
+      "name": "create_ticket",
+      "args": {
+       "subject": "Damaged Item",
+       "body": "Customer wants to talk to a human about a damaged item."
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "create_ticket",
+      "status": "success",
+      "content": "{\"ticket_id\": 1}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "A"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " support"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ticket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " has"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " been"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " created"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ID"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " A"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " agent"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " will"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " contact"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shortly"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 3.2927
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "9dc293b0-298b-4499-bb69-5a6eac770c65",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "I want to talk to a human about a damaged item",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "create_ticket",
+       "args": {
+        "subject": "Damaged Item",
+        "body": "Customer wants to talk to a human about a damaged item."
+       },
+       "id": "839f8b90-fee0-4526-872f-c8fabec4257c",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 558,
+      "output_tokens": 39,
+      "total_tokens": 597
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"ticket_id\": 1}",
+     "tool_calls": [],
+     "name": "create_ticket",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "A support ticket has been created with ID 1. A human agent will contact you shortly.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 616,
+      "output_tokens": 20,
+      "total_tokens": 636
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": [
+  {
+   "subject": "Damaged Item"
+  }
+ ]
+}

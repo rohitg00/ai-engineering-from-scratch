@@ -1,0 +1,133 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: support-assistant
+type: Opaque
+stringData:
+  DATABASE_URL: postgresql://support:change-me@postgres:5432/lc_prod
+  AUTH_TOKENS: tok-alice=alice,tok-bob=bob
+  POSTGRES_PASSWORD: change-me
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: support-assistant
+  labels:
+    app: support-assistant
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: support-assistant
+  template:
+    metadata:
+      labels:
+        app: support-assistant
+    spec:
+      terminationGracePeriodSeconds: 45
+      containers:
+        - name: app
+          image: support-assistant:0.1.0
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: support-assistant
+          env:
+            - name: MODEL
+              value: fake:primary
+            - name: BACKUP_MODEL
+              value: fake:backup
+            - name: POOL_MAX
+              value: "20"
+            - name: DRAIN_SECONDS
+              value: "20"
+            - name: LANGSMITH_TRACING
+              value: "false"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: support-assistant
+spec:
+  selector:
+    app: support-assistant
+  ports:
+    - port: 80
+      targetPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  clusterIP: None
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14.21
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: support
+            - name: POSTGRES_DB
+              value: lc_prod
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: support-assistant
+                  key: POSTGRES_PASSWORD
+          readinessProbe:
+            exec:
+              command: ["pg_isready", "-U", "support", "-d", "lc_prod"]
+            periodSeconds: 5
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi

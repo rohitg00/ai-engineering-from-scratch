@@ -1,0 +1,413 @@
+{
+ "case": "faq_return_window",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "2efa6b4e-dc37-4f64-aef7-8dc766e876b1",
+   "text": "How long do I have to return an item?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "75de64bc-8946-4c72-b296-903a87a7dbda",
+      "name": "search_faq",
+      "args": {
+       "query": "return period"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}, {\"id\": \"returns-label\", \"answer\": \"Open the order in your account and choose Start a return. We email a prepaid label within one hour.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "You"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " return"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " most"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " items"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " within"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " of"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " delivery"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Items"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " must"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " be"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " unused"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " original"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " box"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " To"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " start"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " return"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " open"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " account"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " choose"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " \""
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Start"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " return"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ".\""
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " We"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'ll"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " email"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " prepaid"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " label"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " within"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " one"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " hour"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 18.5247
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "2efa6b4e-dc37-4f64-aef7-8dc766e876b1",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "How long do I have to return an item?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "return period"
+       },
+       "id": "75de64bc-8946-4c72-b296-903a87a7dbda",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 454,
+      "output_tokens": 22,
+      "total_tokens": 476
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}, {\"id\": \"returns-label\", \"answer\": \"Open the order in your account and choose Start a return. We email a prepaid label within one hour.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "You can return most items within 30 days of delivery. Items must be unused and in the original box. To start a return, open the order in your account and choose \"Start a return.\" We'll email a prepaid label within one hour.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 556,
+      "output_tokens": 52,
+      "total_tokens": 608
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

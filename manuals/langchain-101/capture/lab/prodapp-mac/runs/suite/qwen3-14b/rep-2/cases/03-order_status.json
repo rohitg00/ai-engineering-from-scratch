@@ -1,0 +1,305 @@
+{
+ "case": "order_status",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "b1acfb92-474c-486c-8f8d-87678c0214ad",
+   "text": "Where is my order ORD-e03-2?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "ac295cdd-e890-4a12-80c1-838e8b55dc0f",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e03-2"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e03-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-e"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Rain"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " jacket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipped"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " The"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " total"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " was"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "8"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "9"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " there"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " been"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " no"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refunds"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 18.2055
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "b1acfb92-474c-486c-8f8d-87678c0214ad",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e03-2?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e03-2"
+       },
+       "id": "ac295cdd-e890-4a12-80c1-838e8b55dc0f",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 455,
+      "output_tokens": 26,
+      "total_tokens": 481
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e03-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your order ORD-e03-2 for the Rain jacket is shipped. The total amount was $89.00, and there have been no refunds.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 537,
+      "output_tokens": 34,
+      "total_tokens": 571
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

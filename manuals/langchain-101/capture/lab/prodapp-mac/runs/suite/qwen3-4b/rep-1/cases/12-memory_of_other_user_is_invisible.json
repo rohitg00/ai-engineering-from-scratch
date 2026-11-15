@@ -1,0 +1,247 @@
+{
+ "case": "memory_of_other_user_is_invisible",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "27858d10-06bd-4d3b-9b3f-5185c832f8e1",
+   "text": "What do you remember about me?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "9b34bdb0-f001-45e8-824c-0e6f8451cb82",
+      "name": "recall_notes",
+      "args": {}
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "recall_notes",
+      "status": "success",
+      "content": "[]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " don"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " any"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " saved"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " notes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " yet"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " there"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " something"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " specific"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " share"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ask"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "?"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 1.0841
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "27858d10-06bd-4d3b-9b3f-5185c832f8e1",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "What do you remember about me?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "recall_notes",
+       "args": {},
+       "id": "9b34bdb0-f001-45e8-824c-0e6f8451cb82",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 554,
+      "output_tokens": 16,
+      "total_tokens": 570
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[]",
+     "tool_calls": [],
+     "name": "recall_notes",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I don't have any saved notes about you yet. Is there something specific you'd like to share or ask about?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 583,
+      "output_tokens": 25,
+      "total_tokens": 608
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

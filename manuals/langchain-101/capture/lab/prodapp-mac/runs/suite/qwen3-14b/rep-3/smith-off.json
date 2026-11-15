@@ -1,0 +1,17 @@
+{
+  "enabled_control": {
+    "requests": 6,
+    "paths": [
+      "/info",
+      "/runs/multipart"
+    ]
+  },
+  "disabled": {
+    "requests": 0,
+    "paths": []
+  },
+  "unset": {
+    "requests": 0,
+    "paths": []
+  }
+}

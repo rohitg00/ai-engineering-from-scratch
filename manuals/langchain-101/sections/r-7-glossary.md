@@ -6,6 +6,7 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 
 | Term | Meaning in this manual | Explained in |
 |---|---|---|
+| Advisory lock | A Postgres lock on a number that your code chooses, held by a session and freed when the session ends. | [9.7](#s-workers-the-advisory-lock-and-cost) |
 | `add_messages` | The reducer for a list of messages. It appends a message with a new id, replaces a message with the same id, and deletes the message that a `RemoveMessage` names. | [6.1](#s-stategraph-state-and-reducers) |
 | Agent Server | The LangSmith server that runs a compiled graph behind an HTTP API of assistants, threads, and runs. Its package is `langgraph-api`. | [8.1](#s-agent-server-langgraph-dev-up-and-deploy) |
 | `AgentState` | The state type of every agent, with the keys `messages`, `jump_to`, and `structured_response`. | [4.1](#s-create-agent-and-the-graph-it-builds) |
@@ -41,6 +42,7 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 | Entrypoint | A function decorated with `@entrypoint`, which LangGraph runs as a graph with one node. | [6.3](#s-the-functional-api-entrypoint-and-task) |
 | `entrypoint.final` | A return value of an entrypoint that splits what the caller gets from what the thread saves. | [6.3](#s-the-functional-api-entrypoint-and-task) |
 | Error handler | A function that runs after the last failed attempt of a node. It gets the state and a `NodeError`, and returns an update or a `Command`. | [6.8](#s-error-handlers-node-timeouts-and-the-recursion-limit) |
+| Eval | One scripted conversation against the running service, followed by assertions on the tool calls, the rows, and the thread state. | [9.6](#s-evals-that-check-state) |
 | Evaluator | A function that scores one row of an experiment and returns a dict with a `key` and a `score`. | [7.7](#s-evaluation-with-langsmith) |
 | Example | One input with its reference output, as a `langsmith.schemas.Example`. | [7.7](#s-evaluation-with-langsmith) |
 | Experiment | One call of `evaluate` over a set of examples. | [7.7](#s-evaluation-with-langsmith) |
@@ -55,6 +57,7 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 | `handle_errors` | The `ToolStrategy` parameter that sets the retry after a parse error. `True`, the default, retries on every parse error. | [4.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) |
 | `HumanInTheLoopMiddleware` | The middleware that pauses an agent when the model asks for a tool in its `interrupt_on` map, and waits for a decision. | [6.5](#s-human-in-the-loop-batched-and-per-call) |
 | Idempotency key | A value that names one side effect, so that the effect can check if it already happened and skip itself. | [5.3](#s-durability-modes-and-a-crash-between-two-steps) |
+| Idempotent tool | A tool that gives the same result and the same side effects when you call it twice with the same arguments. | [9.5](#s-timeouts-retries-backup-model-and-shutdown) |
 | Interrupt | A call of `interrupt(value)` inside a node. It stops the run, saves a checkpoint, and gives `value` to the caller. | [6.4](#s-interrupt-and-resume) |
 | Item | One value in a store, with its namespace, its key, and the times it was created and updated. | [5.4](#s-stores-and-long-term-memory) |
 | Jobs per worker | The number of runs that one queue worker of Agent Server executes at the same time. | [8.1](#s-agent-server-langgraph-dev-up-and-deploy) |
@@ -88,10 +91,12 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 | Resume | An `invoke` or `stream` call with `Command(resume=value)` on the thread of the pause. The `interrupt` call then returns `value`. | [6.4](#s-interrupt-and-resume) |
 | Resume list | The list of answers that one task has received so far, saved as a write on the channel `__resume__`. | [2.4](#s-interrupt-and-resume-in-the-code) |
 | Retriever | An object with `invoke(query)` that returns a list of `Document` objects, with the base class `BaseRetriever`. | [7.1](#s-embeddings-splitters-vector-stores-and-retrievers) |
+| Resume map | A `Command(resume=...)` whose value is a dict keyed by interrupt ids. At the pin it goes into the run config only. | [9.3](#s-approvals-and-the-idempotency-key) |
 | Retry layer | One piece of code that calls the model or the tool again after a failure, such as the client of a provider package or `ModelRetryMiddleware`. | [3.2](#s-init-chat-model-and-model-profiles), [4.7](#s-retries-backup-models-rate-limits-and-caching) |
 | `RetryPolicy` | The settings for running a failed node again: `max_attempts`, the wait between attempts, and `retry_on`. | [6.8](#s-error-handlers-node-timeouts-and-the-recursion-limit) |
 | Round trip | A value written into a checkpoint and read back. It round-trips when it comes back with the same type and an equal value. | [5.6](#s-serialization-of-state-and-what-does-not-round-trip) |
 | Run | One call of `invoke` or `stream`. | [How to read this manual](#s-front) |
+| Run task | The `asyncio` task that iterates `agent.astream` for one run and puts each event on a queue that the response reads. | [9.1](#s-the-run-endpoint-and-its-stream) |
 | Run tree | The in-memory object of one traced run, `RunTree` in `langsmith`. | [7.6](#s-langsmith-tracing) |
 | `Send` | A value that names a node and the input of one run of it. A list of them from a routing function starts one task for each. | [6.2](#s-edges-send-and-command) |
 | Serializer | The object that turns state values into bytes for a checkpointer and back. The default is `JsonPlusSerializer`. | [5.6](#s-serialization-of-state-and-what-does-not-round-trip) |
@@ -99,6 +104,7 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 | State | The shared data of one graph run, declared as a schema whose keys the nodes read and write. | [6.1](#s-stategraph-state-and-reducers) |
 | State history | The list of checkpoints of one thread, newest first, from `get_state_history(config)`. | [6.6](#s-time-travel-replay-update-state-and-forks) |
 | Step | One superstep of the LangGraph loop, in which every node that is ready runs once. | [How to read this manual](#s-front) |
+| Span | One timed operation of OpenTelemetry, with a name, attributes, a status, and a parent. | [9.4](#s-opentelemetry-spans-with-langsmith-off) |
 | Superstep | One turn of the LangGraph loop. It plans the tasks that are ready, runs them, and then applies all of their writes at once. | [2.1](#s-the-superstep-loop-plan-execute-update) |
 | Store | An object that saves JSON items by namespace and key, shared by all threads of a graph. | [5.4](#s-stores-and-long-term-memory) |
 | Stratified subset | The 30 bench tasks numbered 01, 04, 07, 10, 13, and 16 in each family, which the models that did not run the full suite ran. | [The bench method](#s-ref-the-bench-method) |

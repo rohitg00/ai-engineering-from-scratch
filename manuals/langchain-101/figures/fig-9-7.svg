@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-9-7-title fig-9-7-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-7-title">Workers against the model server, Qwen3 4B on the Mac</title>
+  <desc id="fig-9-7-desc">Three panels. Left: completed runs each second for 1 worker and 10 users 0.259, 1 worker and 50 users 0.208, 2 workers and 10 users 0.242, 2 workers and 50 users 0.216, 4 workers and 10 users 0.258, 4 workers and 50 users 0.22. Middle: median and 95th percentile seconds per run in each cell, against a median of 3.01 s for one user alone, who finished 0.269 runs each second. Right: output tokens each second from Ollama with 1 to 8 requests at one time, 49, 22, 18, 19.</desc>
+  <path d="M16 18 H40" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2" stroke-linejoin="round"/>
+  <text x="46" y="22" font-size="11" fill="var(--m-violet-ink, #5b4fa3)">10 users at once</text>
+  <path d="M176 18 H200" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <text x="206" y="22" font-size="11" fill="var(--m-indigo-ink, #4b4f9e)">50 users at once</text>
+  <line x1="350" y1="18" x2="374" y2="18" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.5" stroke-dasharray="1.5 3.5"/>
+  <text x="380" y="22" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">one user alone</text>
+  <line x1="44" y1="280" x2="194" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="38" y="284" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="44" y1="227.5" x2="194" y2="227.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="38" y="231.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.1</text>
+  <line x1="44" y1="175" x2="194" y2="175" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="38" y="179" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.2</text>
+  <line x1="44" y1="122.5" x2="194" y2="122.5" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="38" y="126.5" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.3</text>
+  <line x1="44" y1="70" x2="194" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="38" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0.4</text>
+  <line x1="44" y1="280" x2="194" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="44" y1="70" x2="44" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="62.75" y1="280" x2="62.75" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="62.75" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="100.25" y1="280" x2="100.25" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="100.25" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="175.25" y1="280" x2="175.25" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="175.25" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <text x="44" y="58" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">runs finished each second</text>
+  <line x1="44" y1="138.91" x2="194" y2="138.91" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.5" stroke-dasharray="1.5 3.5"/>
+  <path d="M62.8 144.0 L100.3 152.9 L175.3 144.5" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="62.75" cy="144.03" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="100.25" cy="152.95" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <circle cx="175.25" cy="144.55" r="2.8" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <path d="M62.8 170.8 L100.3 166.6 L175.3 164.5" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round"/>
+  <circle cx="62.75" cy="170.8" r="2.8" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="100.25" cy="166.6" r="2.8" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <circle cx="175.25" cy="164.5" r="2.8" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="119" y="318" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">uvicorn workers</text>
+  <line x1="250" y1="280" x2="410" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="244" y="284" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="250" y1="238" x2="410" y2="238" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="244" y="242" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="250" y1="196" x2="410" y2="196" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="244" y="200" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="250" y1="154" x2="410" y2="154" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="244" y="158" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">150</text>
+  <line x1="250" y1="112" x2="410" y2="112" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="244" y="116" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <line x1="250" y1="70" x2="410" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="244" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">250</text>
+  <line x1="250" y1="280" x2="410" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="250" y1="70" x2="250" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="270" y1="280" x2="270" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="270" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="310" y1="280" x2="310" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="310" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="390" y1="280" x2="390" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="390" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <text x="250" y="58" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">seconds per run</text>
+  <line x1="250" y1="277.47" x2="410" y2="277.47" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="1.5" stroke-dasharray="1.5 3.5"/>
+  <line x1="264" y1="249.77" x2="264" y2="237.04" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.6"/>
+  <circle cx="264" cy="249.77" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="304" y1="247.84" x2="304" y2="239.17" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.6"/>
+  <circle cx="304" cy="247.84" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="384" y1="250.12" x2="384" y2="240.78" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.6"/>
+  <circle cx="384" cy="250.12" r="3" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <line x1="276" y1="141.62" x2="276" y2="118.28" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <circle cx="276" cy="141.62" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <line x1="316" y1="151.88" x2="316" y2="121.53" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <circle cx="316" cy="151.88" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <line x1="396" y1="157.72" x2="396" y2="127.61" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.6" stroke-dasharray="5 4"/>
+  <circle cx="396" cy="157.72" r="3" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="330" y="318" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">dot median, bar to p95</text>
+  <line x1="462" y1="280" x2="612" y2="280" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="456" y="284" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="462" y1="210" x2="612" y2="210" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="456" y="214" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">20</text>
+  <line x1="462" y1="140" x2="612" y2="140" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="456" y="144" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">40</text>
+  <line x1="462" y1="70" x2="612" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="456" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">60</text>
+  <line x1="462" y1="280" x2="612" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="462" y1="70" x2="462" y2="280" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="475.25" y1="280" x2="475.25" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="475.25" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="516.42" y1="280" x2="516.42" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="516.42" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="557.58" y1="280" x2="557.58" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="557.58" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="598.75" y1="280" x2="598.75" y2="284" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="598.75" y="297" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <text x="462" y="58" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Ollama tokens each second</text>
+  <circle cx="475.25" cy="123.55" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="475.25" cy="104.3" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="475.25" cy="107.45" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="516.42" cy="106.75" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="516.42" cy="236.95" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="516.42" cy="204.75" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="557.58" cy="221.9" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="557.58" cy="215.6" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="557.58" cy="208.95" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="598.75" cy="214.9" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="598.75" cy="213.85" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <circle cx="598.75" cy="211.05" r="2.4" fill="var(--m-olive-ink, #515f26)"/>
+  <path d="M475.3 107.4 L516.4 204.8 L557.6 215.6 L598.7 213.8" fill="none" stroke="var(--m-olive-ink, #515f26)" stroke-width="1.8" stroke-linejoin="round"/>
+  <text x="541" y="318" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">requests at one time</text>
+</svg>

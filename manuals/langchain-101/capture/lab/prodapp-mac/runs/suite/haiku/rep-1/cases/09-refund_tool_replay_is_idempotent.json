@@ -1,0 +1,21 @@
+{
+ "case": "refund_tool_replay_is_idempotent",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [],
+ "states": [
+  {
+   "thread_id": "81f8999a-4234-4ad2-9670-4b19359dee75",
+   "next": [],
+   "interrupts": [],
+   "messages": []
+  }
+ ],
+ "refunds": [
+  {
+   "order_id": "ORD-e09-3",
+   "amount_cents": 2400
+  }
+ ],
+ "tickets": []
+}

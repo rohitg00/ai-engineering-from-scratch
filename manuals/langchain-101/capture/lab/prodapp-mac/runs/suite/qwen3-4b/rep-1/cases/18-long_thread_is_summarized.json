@@ -1,0 +1,1515 @@
+{
+ "case": "long_thread_is_summarized",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "9140e505-858f-49b7-8954-5e590cb3d6b1",
+   "text": "How long does shipping take?",
+   "result": [
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " look"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " up"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " information"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " times"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " search"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " help"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " center"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " that"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " \n\n"
+     }
+    ],
+    [
+     "tool_call",
+     {
+      "id": "262806f7-beae-4aaa-8961-ccfc38e21c77",
+      "name": "search_faq",
+      "args": {
+       "query": "how long does shipping take"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}, {\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Standard"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " takes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "6"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " business"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Express"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " takes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " business"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.1662
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9140e505-858f-49b7-8954-5e590cb3d6b1",
+   "text": "How much does shipping cost?",
+   "result": [
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " don"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " specific"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " information"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " costs"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " my"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " current"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " data"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " look"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " up"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " more"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assist"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " something"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " else"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 0.968
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9140e505-858f-49b7-8954-5e590cb3d6b1",
+   "text": "Do you ship internationally?",
+   "result": [
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " don"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " specific"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " information"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " international"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " my"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " current"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " data"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " look"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " up"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " more"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assist"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " something"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " else"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 0.9982
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9140e505-858f-49b7-8954-5e590cb3d6b1",
+   "text": "How do I pick the right size?",
+   "result": [
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " don"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " specific"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " information"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " sizing"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " guides"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " my"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " current"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " data"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " look"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " up"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " more"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assist"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " something"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " else"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 1.0523
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9140e505-858f-49b7-8954-5e590cb3d6b1",
+   "text": "Do your products have a warranty?",
+   "result": [
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " don"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " specific"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " information"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " product"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " warranties"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " my"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " current"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " data"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " look"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " up"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " more"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assist"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " something"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " else"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 1.0704
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9140e505-858f-49b7-8954-5e590cb3d6b1",
+   "text": "Where is my order ORD-e18-2?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "5cd43524-1127-4b9f-991f-c462a2acd868",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e18-2"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e18-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-e"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "8"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Rain"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " jacket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipped"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " The"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " total"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " was"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "8"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "9"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " no"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " has"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " been"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " processed"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 14.2604
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "9140e505-858f-49b7-8954-5e590cb3d6b1",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Here is a summary of the conversation to date:\n\n## SESSION INTENT  \nDetermine shipping information, including duration, cost, and international availability, to address the user\u2019s shipping-related inquiries.\n\n## SUMMARY  \n- Shipping duration: Standard shipping takes 3 to 6 business days; express shipping takes 1 to 2 business days. This information was derived from a search of the help center.  \n- Shipping cost: No specific cost data is available in current knowledge; the user was informed that further details would require additional lookup.  \n- International shipping: The user asked whether international shipping is available, but no direct answer was provided in the response. This remains an unanswered question.  \nKey decision: Focused on delivering accurate shipping duration data, as cost and international availability were either unavailable or not confirmed. The lack of cost and international shipping details was acknowledged and noted as a limitation.  \n\n## ARTIFACTS  \n- File: \"shipping-times\" (from help center search)  \n  - Content: \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"  \n- File: \"returns-window\" (from help center search)  \n  - Content: \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"  \n  - Note: This was retrieved but not directly relevant to the user\u2019s shipping duration, cost, or international shipping questions.  \n\n## NEXT STEPS  \n1. Look up shipping cost details to provide a specific price range or pricing model.  \n2. Verify whether international shipping is available and retrieve the relevant policy or options.  \n3. Present a consolidated response to the user that includes all available shipping details (duration, cost, international availability) with clear disclaimers where data is missing.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": "summarization"
+    },
+    {
+     "type": "ai",
+     "content": "I don't have specific information about international shipping in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 767,
+      "output_tokens": 34,
+      "total_tokens": 801
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "How do I pick the right size?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I don't have specific information about sizing guides in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 818,
+      "output_tokens": 34,
+      "total_tokens": 852
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Do your products have a warranty?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I don't have specific information about product warranties in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 868,
+      "output_tokens": 34,
+      "total_tokens": 902
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e18-2?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e18-2"
+       },
+       "id": "5cd43524-1127-4b9f-991f-c462a2acd868",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1070,
+      "output_tokens": 26,
+      "total_tokens": 1096
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e18-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your order ORD-e18-2 for a Rain jacket is shipped. The total amount was $89.00, and no refund has been processed.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1153,
+      "output_tokens": 34,
+      "total_tokens": 1187
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

@@ -1,0 +1,34 @@
+services:
+  postgres:
+    image: postgres:14.21
+    environment:
+      POSTGRES_USER: support
+      POSTGRES_PASSWORD: support
+      POSTGRES_DB: lc_prod
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U support -d lc_prod"]
+      interval: 2s
+      retries: 30
+
+  app:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://support:support@postgres:5432/lc_prod
+      AUTH_TOKENS: tok-alice=alice,tok-bob=bob
+      MODEL: fake:primary
+      BACKUP_MODEL: fake:backup
+      POOL_MAX: "20"
+      DRAIN_SECONDS: "20"
+    ports:
+      - "8000:8000"
+    stop_grace_period: 45s
+
+volumes:
+  pgdata:

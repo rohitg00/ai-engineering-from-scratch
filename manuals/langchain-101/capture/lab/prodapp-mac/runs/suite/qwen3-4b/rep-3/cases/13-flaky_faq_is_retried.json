@@ -1,0 +1,212 @@
+{
+ "case": "flaky_faq_is_retried",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "failed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "d0c2e8bf-9859-43b7-a9b9-943b25eaec07",
+   "text": "How much does shipping cost?",
+   "result": [
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " provide"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " costs"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " as"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'s"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " not"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " available"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " system"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " check"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " website"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " contact"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " customer"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " support"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 1.5752
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "d0c2e8bf-9859-43b7-a9b9-943b25eaec07",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "How much does shipping cost?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I can't provide shipping costs as it's not available in the system. Please check the website or contact customer support for details.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 553,
+      "output_tokens": 27,
+      "total_tokens": 580
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

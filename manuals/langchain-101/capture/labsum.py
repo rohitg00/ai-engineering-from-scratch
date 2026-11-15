@@ -1582,6 +1582,325 @@ def langsmith_account():
     }
 
 
+PRODAPP = os.path.join(LAB, "prodapp-mac")
+PRODAPP_RUNS = os.path.join(PRODAPP, "runs")
+PRODAPP_LABELS = {"qwen3-4b": "Qwen3 4B", "qwen3-14b": "Qwen3 14B", "haiku": "Claude Haiku 5.5"}
+PRODAPP_FAULTS = {13: "flaky_faq_is_retried", 14: "hung_tool_times_out", 15: "failed_ticket_is_not_retried",
+                  16: "primary_outage_uses_backup", 17: "runaway_loop_hits_call_limit"}
+JUNIT_CASE = re.compile(r"<testcase\b([^>]*?)(/>|>(.*?)</testcase>)", re.S)
+JUNIT_ATTR = re.compile(r'(\w+)="([^"]*)"')
+JUNIT_FAIL = re.compile(r"^\s*<(failure|error)\b([^>]*?)/?>", re.S)
+
+
+def prod_path(*parts):
+    return os.path.join(PRODAPP_RUNS, *parts)
+
+
+def prod_json(*parts):
+    with open(prod_path(*parts), encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def prod_lines(*parts):
+    with open(prod_path(*parts), encoding="utf-8") as handle:
+        return [json.loads(line) for line in handle.read().splitlines() if line]
+
+
+def prod_ts(text):
+    from datetime import datetime
+
+    return datetime.fromisoformat(text.replace("Z", "+00:00")).timestamp()
+
+
+def junit_attrs(text):
+    import html
+
+    return {k: html.unescape(re.sub(r"[\t\n\r]", " ", v)) for k, v in JUNIT_ATTR.findall(text)}
+
+
+def junit_cases(path):
+    with open(path, encoding="utf-8") as handle:
+        text = handle.read()
+    for head, _, body in JUNIT_CASE.findall(text):
+        attrs = junit_attrs(head)
+        failure = JUNIT_FAIL.match(body or "")
+        skipped = re.match(r"^\s*<skipped\b", body or "")
+        yield attrs, (junit_attrs(failure.group(2)) if failure else None), bool(skipped)
+
+
+def prod_transcript(record):
+    out = []
+    for entry in record["log"]:
+        result = entry["result"]
+        if isinstance(result, int):
+            out.append({"op": entry["op"], "http": result})
+            continue
+        text = "".join(d["text"] for e, d in result if e == "token")
+        tools = [(d["name"], d["args"]) for e, d in result if e == "tool_call"]
+        statuses = [(d["name"], d["status"]) for e, d in result if e == "tool_result"]
+        stops = [d.get("name") for e, d in result if e == "interrupt"]
+        done = [d for e, d in result if e == "done"]
+        out.append({"op": entry["op"], "say": entry.get("text") or entry.get("decision"), "tool_calls": tools,
+                    "tool_results": statuses, "interrupts": stops, "reply": text[:300],
+                    "done": done[0] if done else None})
+    return out
+
+
+def prodapp_suite():
+    summary = {}
+    root = prod_path("suite")
+    for model in sorted(n for n in os.listdir(root) if os.path.isdir(os.path.join(root, n))):
+        reps = []
+        for rep in sorted(n for n in os.listdir(os.path.join(root, model)) if n.startswith("rep-")):
+            folder = os.path.join(root, model, rep)
+            junit = os.path.join(folder, "junit.xml")
+            if not os.path.exists(junit):
+                continue
+            cases = {}
+            for attrs, failure, skipped in junit_cases(junit):
+                cases[attrs["name"]] = {"outcome": "failed" if failure is not None else ("skipped" if skipped else "passed"),
+                                        "seconds": float(attrs["time"]),
+                                        "message": (failure.get("message") or "")[:400] if failure is not None else None}
+            details = {}
+            folder_cases = os.path.join(folder, "cases")
+            for name in sorted(os.listdir(folder_cases)) if os.path.isdir(folder_cases) else []:
+                if not name.endswith(".json"):
+                    continue
+                with open(os.path.join(folder_cases, name), encoding="utf-8") as handle:
+                    record = json.load(handle)
+                details[record["case"]] = {"refunds": record["refunds"], "tickets": record["tickets"],
+                                           "transcript": prod_transcript(record)}
+            with open(os.path.join(folder, "block.txt"), encoding="utf-8") as handle:
+                block = handle.read().splitlines()
+            reps.append({"rep": rep, "block": block, "cases": cases, "details": details,
+                         "passed": sum(c["outcome"] == "passed" for c in cases.values()), "total": len(cases)})
+        summary[model] = reps
+    return summary
+
+
+def prod_stats(values):
+    return {"n": len(values), "median": statistics.median(values), "mean": round(statistics.mean(values), 1),
+            "max": max(values), "min": min(values)}
+
+
+def prod_conversations(rep):
+    from collections import defaultdict
+
+    spans = prod_lines("suite", *rep, "test-spans.jsonl")
+    owner = {s["context"]["trace_id"]: s["attributes"]["user.id"] for s in spans if s["name"] == "agent.run"}
+    convs = defaultdict(lambda: {"calls": 0, "input": 0, "output": 0, "model_s": 0.0, "summarizer_calls": 0,
+                                 "summarizer_input": 0, "summarizer_output": 0, "by_model": defaultdict(int)})
+    for span in spans:
+        user = owner.get(span["context"]["trace_id"])
+        if span["name"] != "model.call" or not user or not user.startswith("e"):
+            continue
+        if span["status"]["status_code"] == "ERROR":
+            continue
+        a = span["attributes"]
+        c = convs[user]
+        c["calls"] += 1
+        c["input"] += a.get("gen_ai.usage.input_tokens", 0)
+        c["output"] += a.get("gen_ai.usage.output_tokens", 0)
+        c["by_model"][a.get("gen_ai.request.model")] += 1
+        c["model_s"] += prod_ts(span["end_time"]) - prod_ts(span["start_time"])
+    with open(prod_path("suite", *rep, "block.txt"), encoding="utf-8") as handle:
+        primary = next(l.split()[2] for l in handle.read().splitlines() if l.startswith("# model "))
+    if os.path.exists(prod_path("suite", *rep, "usage.jsonl")):
+        for row in prod_lines("suite", *rep, "usage.jsonl"):
+            user = owner.get("0x" + str(row.get("trace_id")))
+            if row["model"] != primary:
+                continue
+            if user and user.startswith("e"):
+                c = convs[user]
+                c["billed_calls"] = c.get("billed_calls", 0) + 1
+                c["billed_input"] = c.get("billed_input", 0) + row["input_tokens"]
+                c["billed_output"] = c.get("billed_output", 0) + row["output_tokens"]
+                c["billed_by_model"] = {**c.get("billed_by_model", {}), row["model"]: c.get("billed_by_model", {}).get(row["model"], 0) + 1}
+            if row.get("span") != "model.call" and user and user.startswith("e"):
+                c = convs[user]
+                c["summarizer_calls"] += 1
+                c["summarizer_input"] += row["input_tokens"]
+                c["summarizer_output"] += row["output_tokens"]
+    return {u: {**v, "by_model": dict(v["by_model"]), "model_s": round(v["model_s"], 3)} for u, v in sorted(convs.items())}
+
+
+def prodapp_cost():
+    with open(os.path.join(PRODAPP, "code", "cost", "prices.json"), encoding="utf-8") as handle:
+        prices = json.load(handle)
+    result = {"prices": {k: prices[k] for k in ("source", "fetched", "unit")}, "models": {}}
+    root = prod_path("suite")
+    for model in sorted(n for n in os.listdir(root) if os.path.isdir(os.path.join(root, n))):
+        if not os.path.exists(prod_path("suite", model, "rep-1", "test-spans.jsonl")):
+            continue
+        convs = prod_conversations((model, "rep-1"))
+        entry = {"conversations": convs,
+                 "calls": prod_stats([c["calls"] for c in convs.values()]),
+                 "input": prod_stats([c["input"] for c in convs.values()]),
+                 "output": prod_stats([c["output"] for c in convs.values()]),
+                 "summarizer_input_total": sum(c["summarizer_input"] for c in convs.values()),
+                 "agent_input_total": sum(c["input"] for c in convs.values()),
+                 "model_seconds": prod_stats([c["model_s"] for c in convs.values()]),
+                 "billed_input": prod_stats([c.get("billed_input", 0) for c in convs.values()]),
+                 "billed_output": prod_stats([c.get("billed_output", 0) for c in convs.values()]),
+                 "billed_calls": prod_stats([c.get("billed_calls", 0) for c in convs.values()])}
+        if "haiku" in model:
+            mine = [r for r in prod_lines("cost-ledger.jsonl") if str(r.get("cell", "")).startswith(f"prodapp|evals|{model}")]
+            entry["ledger"] = {"calls": len(mine), "input_tokens": sum(r["input_tokens"] for r in mine),
+                               "output_tokens": sum(r["output_tokens"] for r in mine),
+                               "cost_usd": round(sum(r["cost_usd"] for r in mine), 6)}
+            priced = {}
+            for name, p in prices["models"].items():
+                if p["input"] == 0:
+                    continue
+                cost = [(c.get("billed_input", c["input"]) * p["input"] + c.get("billed_output", c["output"]) * p["output"]) / 1e6
+                        for c in convs.values()]
+                priced[name] = {"in_per_mtok": p["input"], "out_per_mtok": p["output"], "per_conv_mean": round(statistics.mean(cost), 6),
+                                "per_1000_conv": round(1000 * statistics.mean(cost), 3), "max_conv": round(max(cost), 6)}
+            entry["priced"] = priced
+        result["models"][model] = entry
+    return result
+
+
+def prodapp_evals(suite):
+    with open(os.path.join(PRODAPP, "code", "scripts", "causes.json"), encoding="utf-8") as handle:
+        causes = json.load(handle)
+    models = []
+    for key in ("qwen3-4b", "qwen3-14b", "haiku"):
+        models.append({"key": key, "label": PRODAPP_LABELS[key],
+                       "reps": [{"rep": r["rep"], "passed": r["passed"], "total": r["total"],
+                                 "uptime": [l for l in r["block"] if l.startswith("# uptime")],
+                                 "cases": {n: c["outcome"] for n, c in r["cases"].items()},
+                                 "seconds": {n: c["seconds"] for n, c in r["cases"].items()}} for r in suite.get(key, [])]})
+    return {"models": models, "causes": causes}
+
+
+def prodapp_faults():
+    result = {}
+    for key in ("qwen3-4b", "qwen3-14b", "haiku"):
+        if not os.path.exists(prod_path("suite", key, "rep-1", "test-spans.jsonl")):
+            continue
+        spans = prod_lines("suite", key, "rep-1", "test-spans.jsonl")
+        owner = {s["context"]["trace_id"]: s["attributes"]["user.id"] for s in spans if s["name"] == "agent.run"}
+        found = {}
+        for n, case in PRODAPP_FAULTS.items():
+            mine = [s for s in spans if owner.get(s["context"]["trace_id"]) == f"e{n:02d}"]
+            ordered = sorted(mine, key=lambda s: s["start_time"])
+            tools = [{"name": s["name"], "error": s["status"]["status_code"] == "ERROR",
+                      "ms": round((prod_ts(s["end_time"]) - prod_ts(s["start_time"])) * 1000, 1)}
+                     for s in ordered if s["name"].startswith("tool.")]
+            models = [{"model": s["attributes"].get("gen_ai.request.model"), "error": s["status"]["status_code"] == "ERROR"}
+                      for s in ordered if s["name"] == "model.call"]
+            record = prod_json("suite", key, "rep-1", "cases", f"{n:02d}-{case}.json")
+            reply = ""
+            for entry in record["log"]:
+                if isinstance(entry["result"], list):
+                    reply = "".join(d["text"] for e, d in entry["result"] if e == "token")
+            found[case] = {"outcome": record["outcome"], "tools": tools, "model_calls": models, "reply": reply,
+                           "run_seconds": [round(prod_ts(s["end_time"]) - prod_ts(s["start_time"]), 2) for s in mine if s["name"] == "agent.run"]}
+        result[key] = found
+    return result
+
+
+def prodapp_crash():
+    keep = ("trial", "outcome", "refund_committed_before_kill", "kill_exit_code", "approve_client_error", "rows_after_kill",
+            "after_restart_next", "approval_re_asked", "replayed_flags", "refunded_cents", "final_next", "marks", "uptime_before")
+    result = {}
+    for form in ("map", "plain"):
+        if os.path.exists(prod_path(f"crash-{form}", "crash-trials.json")):
+            result[form] = [{k: r.get(k) for k in keep} | {"refund_rows": len(r.get("refund_rows") or []),
+                                                           "first_tool_calls": [c["name"] for c in r.get("first_tool_calls", [])],
+                                                           "resumed_tool_calls": [c["name"] for c in r.get("resumed_tool_calls", [])]}
+                            for r in prod_json(f"crash-{form}", "crash-trials.json")]
+    timeline = []
+    for name in ("t01-before-kill", "t01-after-restart"):
+        if os.path.exists(prod_path("crash-map", f"{name}.log.jsonl")):
+            for e in prod_lines("crash-map", f"{name}.log.jsonl"):
+                timeline.append({"file": name, "ts": e["ts"], "event": e["event"],
+                                 **{k: e[k] for k in ("status", "tool", "seconds") if k in e}})
+        if os.path.exists(prod_path("crash-map", f"{name}.spans.jsonl")):
+            for s in prod_lines("crash-map", f"{name}.spans.jsonl"):
+                timeline.append({"file": name, "span": s["name"], "start": prod_ts(s["start_time"]), "end": prod_ts(s["end_time"]),
+                                 "status": s["status"]["status_code"]})
+    result["trial1_timeline"] = timeline
+    return result
+
+
+def prodapp_stream():
+    base = "stream-warm" if os.path.exists(prod_path("stream-warm", "stream-events.jsonl")) else "stream"
+    lines = prod_lines(base, "stream-events.jsonl")
+    spans = [{"name": s["name"], "start": prod_ts(s["start_time"]), "end": prod_ts(s["end_time"]),
+              "attributes": {k: v for k, v in s["attributes"].items() if k.startswith(("gen_ai", "tool", "run"))},
+              "status": s["status"]["status_code"], "trace_id": s["context"]["trace_id"]} for s in prod_lines(base, "stream.spans.jsonl")]
+    turns = {}
+    for l in lines:
+        if "turn" in l and l.get("kind") == "token":
+            t = turns.setdefault(l["turn"], {"tokens": 0, "first_ms": l["t_ms"], "last_ms": l["t_ms"]})
+            t["tokens"] += 1
+            t["last_ms"] = l["t_ms"]
+    cold = [l for l in prod_lines("stream", "stream-events.jsonl") if l.get("kind") not in ("token",)]
+    return {"source": base, "events": [l for l in lines if l.get("kind") != "token"], "token_runs": turns,
+            "spans": spans, "cold_capture": cold}
+
+
+def prodapp_load_cell(folder, cell):
+    from collections import Counter
+
+    name = f"load-{cell['workers']}w-{cell['users']}u-{int(cell['model_latency_s'] * 1000)}ms"
+    ends = Counter()
+    for log in sorted(n for n in os.listdir(prod_path(folder)) if n.startswith(f"{name}-w") and n.endswith(".log.jsonl")):
+        for e in prod_lines(folder, log):
+            if e["event"] == "run.end":
+                ends[e["status"]] += 1
+    found = prod_json(folder, f"{name}.rows.json")
+    cell["server_run_end"] = dict(ends)
+    cell["runs_per_s_exact"] = round(cell["ok"] / cell["wall_s"], 3)
+    cell["client_errors"] = dict(Counter(r.get("error") for r in found if r["kind"] == "error"))
+    cell["run_seconds"] = sorted(round(r["seconds"], 3) for r in found if r.get("seconds") is not None)
+
+
+def prodapp_load():
+    cells = prod_json("load", "load-summary.json")
+    for cell in cells:
+        prodapp_load_cell("load", cell)
+    extra = {"baseline": []}
+    for folder in sorted(n for n in os.listdir(PRODAPP_RUNS) if n.startswith("load-baseline-")):
+        for cell in prod_json(folder, "load-summary.json"):
+            found = prod_json(folder, "load-1w-1u-0ms.rows.json")
+            cell["run_seconds"] = [round(r["seconds"], 3) for r in found if r.get("seconds") is not None]
+            cell["run_kinds"] = [r["kind"] for r in found]
+            extra["baseline"].append(cell)
+    if os.path.exists(prod_path("load", "ollama-parallel.json")):
+        extra["ollama_parallel"] = prod_json("load", "ollama-parallel.json")
+    if os.path.exists(prod_path("load-rerun", "load-summary.json")):
+        for cell in prod_json("load-rerun", "load-summary.json"):
+            prodapp_load_cell("load-rerun", cell)
+            cell["note"] = "rerun: the first 1-worker 10-user cell ran while 12 leaked test servers held Postgres connections"
+            i = next(i for i, c in enumerate(cells) if c["workers"] == cell["workers"] and c["users"] == cell["users"])
+            extra["replaced_cell"] = cells[i]
+            cells[i] = cell
+    if os.path.exists(prod_path("load-notes.txt")):
+        with open(prod_path("load-notes.txt"), encoding="utf-8") as handle:
+            extra["notes"] = handle.read().splitlines()
+    return {"cells": cells, **extra}
+
+
+def prodapp_outputs():
+    suite, cost = prodapp_suite(), json.dumps(prodapp_cost(), indent=1)
+    return {
+        "runs/summary/suite-mac.json": json.dumps(suite, indent=1, default=str),
+        "runs/summary/cost-real.json": cost,
+        "summary/evals-mac.json": json.dumps(prodapp_evals(suite), indent=1),
+        "summary/faults-mac.json": json.dumps(prodapp_faults(), indent=1),
+        "summary/crash-mac.json": json.dumps(prodapp_crash(), indent=1),
+        "summary/drain-mac.json": json.dumps(prod_json("drain", "drain-trials.json"), indent=1),
+        "summary/stream-mac.json": json.dumps(prodapp_stream(), indent=1),
+        "summary/disconnect-mac.json": json.dumps(prod_json("disconnect", "disconnect-trials.json"), indent=1),
+        "summary/service-mac.json": json.dumps(prod_json("service", "service-properties.json"), indent=1),
+        "summary/load-mac.json": json.dumps(prodapp_load(), indent=1),
+        "summary/cost-mac.json": cost,
+    }
+
+
 SUMMARIES = {
     "langsmith-account-mac.json": langsmith_account,
     "overhead-mac-real.json": overhead_mac_real,
@@ -1637,6 +1956,16 @@ def write(out_dir):
     return sorted(SUMMARIES)
 
 
+def write_prodapp(root=PRODAPP):
+    outputs = prodapp_outputs()
+    for rel, text in outputs.items():
+        target = os.path.join(root, rel)
+        os.makedirs(os.path.dirname(target), exist_ok=True)
+        with open(target, "w", encoding="utf-8") as handle:
+            handle.write(text)
+    return sorted(outputs)
+
+
 def check():
     drift = []
     with tempfile.TemporaryDirectory(prefix="lc101-lab-") as fresh:
@@ -1648,4 +1977,12 @@ def check():
             with open(old, encoding="utf-8") as a, open(os.path.join(fresh, name), encoding="utf-8") as b:
                 if a.read() != b.read():
                     drift.append(f"lab/summary/{name}: differs from the recordings")
+    for rel, text in prodapp_outputs().items():
+        old = os.path.join(PRODAPP, rel)
+        if not os.path.exists(old):
+            drift.append(f"lab/prodapp-mac/{rel}: missing")
+            continue
+        with open(old, encoding="utf-8") as handle:
+            if handle.read() != text:
+                drift.append(f"lab/prodapp-mac/{rel}: differs from the recordings")
     return drift

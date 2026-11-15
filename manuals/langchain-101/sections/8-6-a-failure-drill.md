@@ -183,7 +183,7 @@ The tracing numbers come from processes of different sizes, 350 traced runs agai
 
 - The saved AI message keeps its call ids, so the key matches on resume. A real model can still ask for the same charge twice in one reply.
 - The retry case uses `ChatOpenAI` through a relay that drops connections. Other provider packages have their own client retries. `ChatOllama` makes 1 attempt.
-- The drill covers the failures that need only Ollama. The MCP, Postgres, and Agent Server failures of Parts 7 and 8 need their services.
+- The drill covers the failures that need only Ollama. The MCP, Postgres, and Agent Server failures of Parts 7 and 8 need their services. [Part 9](#p-9) runs the Postgres failures in a service: a crash after a refund, a SIGTERM, and a hung tool.
 - Three runs show that the cases repeat, not how often they fail on other models.
 
 ```takeaways

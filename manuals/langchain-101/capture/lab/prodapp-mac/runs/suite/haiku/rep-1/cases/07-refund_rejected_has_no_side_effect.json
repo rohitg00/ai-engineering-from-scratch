@@ -1,0 +1,332 @@
+{
+ "case": "refund_rejected_has_no_side_effect",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "a29532c6-2027-4e44-945f-eac4d8164c46",
+   "text": "Please refund ORD-e07-1",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_016GsUQDvHDFmV138dRLPnzD",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e07-1"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e07-1\", \"item\": \"Trail running shoes\", \"status\": \"delivered\", \"total_cents\": 12900, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "tool_call",
+     {
+      "id": "toolu_01U6NFKnp9vnVM2jUwkgXxh1",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e07-1",
+       "amount_cents": 12900,
+       "reason": "Customer requested full refund for ORD-e07-1 (trail running shoes, delivered, $129.00)."
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "7d808ff501cc04f0992c3561beeeac2d",
+      "type": "tool_approval",
+      "tool_call_id": "toolu_01U6NFKnp9vnVM2jUwkgXxh1",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e07-1",
+       "amount_cents": 12900,
+       "reason": "Customer requested full refund for ORD-e07-1 (trail running shoes, delivered, $129.00)."
+      },
+      "description": "Tool execution requires approval\n\nTool: refund_order\nArgs: {'order_id': 'ORD-e07-1', 'amount_cents': 12900, 'reason': 'Customer requested full refund for ORD-e07-1 (trail running shoes, delivered, $129.00).'}"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 3.2645
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "a29532c6-2027-4e44-945f-eac4d8164c46",
+   "decision": "reject",
+   "result": [
+    [
+     "tool_result",
+     {
+      "name": "refund_order",
+      "status": "error",
+      "content": "User rejected the tool call for `refund_order` with id toolu_01U6NFKnp9vnVM2jUwkgXxh1. The tool was not executed. Do not retry this tool call unless the user explicitly requests it."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "The"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD-e07-1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " (trail running shoes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ", $129.00) was not"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " submitted,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " so no"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " money has mo"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ved. Did you m"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ean to cancel it, or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " would you like a different amount or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a f"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "resh request"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "? If you want to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " proceed with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the full $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "129.00,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " just"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " conf"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "irm."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.1481
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "a29532c6-2027-4e44-945f-eac4d8164c46",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Please refund ORD-e07-1",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e07-1"
+       },
+       "id": "toolu_016GsUQDvHDFmV138dRLPnzD",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 914,
+      "output_tokens": 56,
+      "total_tokens": 970,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e07-1\", \"item\": \"Trail running shoes\", \"status\": \"delivered\", \"total_cents\": 12900, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e07-1",
+        "amount_cents": 12900,
+        "reason": "Customer requested full refund for ORD-e07-1 (trail running shoes, delivered, $129.00)."
+       },
+       "id": "toolu_01U6NFKnp9vnVM2jUwkgXxh1",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1030,
+      "output_tokens": 315,
+      "total_tokens": 1345,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 175
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "User rejected the tool call for `refund_order` with id toolu_01U6NFKnp9vnVM2jUwkgXxh1. The tool was not executed. Do not retry this tool call unless the user explicitly requests it.",
+     "tool_calls": [],
+     "name": "refund_order",
+     "status": "error",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "The refund for ORD-e07-1 (trail running shoes, $129.00) was not submitted, so no money has moved. Did you mean to cancel it, or would you like a different amount or a fresh request? If you want to proceed with the full $129.00, just confirm.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1430,
+      "output_tokens": 235,
+      "total_tokens": 1665,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 148
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}
