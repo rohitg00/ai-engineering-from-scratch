@@ -1,0 +1,17 @@
+T01 real, the Mac, 320 timed runs (336 with warm-up), load1 2.67..5.21
+d_create_agent_saver     v1     n=40 ok=40 calls={3: 40} wall=1775.48 model=1724.33 fw=37.64 (p95 63.92) share=1.789% vs_plain=12.17 cpu=30.74
+    shapes: [{'calls': [[696, 261, 25], [948, 300, 25], [1206, 340, 3]], 'runs': 40}]
+e_stategraph             v1     n=40 ok=40 calls={3: 40} wall=1791.63 model=1752.2 fw=36.71 (p95 61.37) share=1.857% vs_plain=11.54 cpu=30.31
+    shapes: [{'calls': [[696, 261, 25], [948, 300, 25], [1206, 340, 3]], 'runs': 40}]
+g_create_agent_ollama    native n=40 ok=40 calls={3: 40} wall=1731.13 model=1693.26 fw=28.97 (p95 45.63) share=1.559% vs_plain=12.98 cpu=28.15 wall-ollama_total=37.61 (2.063%)
+    shapes: [{'calls': [[707, 261, 25], [827, 300, 25], [953, 340, 3]], 'runs': 40}]
+h_stategraph_ollama      native n=40 ok=40 calls={3: 40} wall=1778.69 model=1759.26 fw=22.15 (p95 50.0) share=1.168% vs_plain=7.81 cpu=25.63 wall-ollama_total=35.39 (1.818%)
+    shapes: [{'calls': [[707, 261, 25], [827, 300, 25], [953, 340, 3]], 'runs': 40}]
+c_create_agent           v1     n=40 ok=40 calls={3: 40} wall=1766.67 model=1720.59 fw=37.62 (p95 64.24) share=2.245% vs_plain=15.62 cpu=29.64
+    shapes: [{'calls': [[696, 261, 25], [948, 300, 25], [1206, 340, 3]], 'runs': 40}]
+f_plain_ollama           native n=40 ok=40 calls={3: 40} wall=1695.93 model=1688.23 fw=11.71 (p95 25.31) share=0.731% vs_plain=0.0 cpu=11.55 wall-ollama_total=19.02 (1.09%)
+    shapes: [{'calls': [[706, 261, 25], [844, 300, 25], [993, 340, 3]], 'runs': 40}]
+a_plain_openai           v1     n=40 ok=40 calls={3: 40} wall=2031.55 model=2001.69 fw=25.11 (p95 36.33) share=1.264% vs_plain=0.0 cpu=20.47
+    shapes: [{'calls': [[679, 261, 25], [936, 300, 25], [1199, 340, 3]], 'runs': 40}]
+b_bind_tools_loop        v1     n=40 ok=40 calls={3: 40} wall=1739.17 model=1709.22 fw=29.32 (p95 45.07) share=1.719% vs_plain=6.63 cpu=23.98
+    shapes: [{'calls': [[696, 261, 25], [948, 300, 25], [1206, 340, 3]], 'runs': 40}]

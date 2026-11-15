@@ -1,6 +1,6 @@
 # Cost: the framework against a plain SDK loop
 
-> `create_agent` costs about 1.2 ms of Python per model call and sends the same tokens as a plain loop, while Deep Agents, plain checkpoints, and tracing cost far more.
+> `create_agent` adds about 5 ms per model call and no tokens to a plain loop, while Deep Agents, long plain threads, and a failing trace endpoint cost far more.
 
 Your team has a plain loop on the `openai` client that works. Someone asks what LangChain would cost before you move to it. The answer has several parts: time per call, tokens, request bytes, import time, disk, checkpoints, and traces.
 
@@ -12,55 +12,62 @@ When you finish this section, you can say what each layer of the stack adds to a
 
 | Cost | Plain loop | LangChain | Machine and count | Section |
 |---|---|---|---|---|
-| wall time of one run of three model calls, against a stub | 4.1 ms | 7.67 ms with `create_agent` | the Mac, 200 runs each | this section |
-| prompt tokens of the three calls of that run, on Qwen3 4B | 258, 297, 337 | the same | the Mac, 24 runs each | this section |
-| request bytes of those three calls, on Qwen3 4B | 668, 915, 1,168 | 685, 937, 1,195 | the Mac, 24 runs each | this section |
+| time beyond the model in one run of three Qwen3 4B calls | 25.1 ms (1.3% of the run) | 37.6 ms with `create_agent` (2.2%), 15.6 ms more in the same round | the Mac, 40 runs each | this section |
+| prompt tokens of the three calls of that run, on Qwen3 4B | 261, 300, 340 | the same | the Mac, 40 runs each | this section |
+| request bytes of those three calls, on Qwen3 4B | 679, 936, 1,199 | 696, 948, 1,206 | the Mac, 40 runs each | this section |
 | prompt tokens of a one-word answer, on Qwen3 8B | 28 | 28 with `create_agent`, 2,279 with `create_deep_agent` | the Mac, 3 runs each | [6.3](#s-deep-agents-0-7) |
 | imports, with bytecode written | 0.329 s for `openai` | 0.831 s for `create_agent` and `ChatOpenAI` | the Mac, 10 runs each | [2.1](#s-install-and-the-package-map) |
 | install | 14 packages, 26,356 KiB | 44 packages, 54,312 KiB | the Mac, one install each | [2.1](#s-install-and-the-package-map) |
 | one checkpoint write on `PostgresSaver`, median of the last 10 of 5,000 steps | none | 148.65 ms plain, 1.13 ms with `DeltaChannel` | the x86 server guest, one run | [4.5](#s-context-engineering-and-summarization) |
-| one agent run with tracing on, against a local recorder | none | 7.56 ms against 2.59 ms with tracing off | the Mac, 177 runs each | [6.4](#s-langsmith-tracing) |
+| time outside the model of one Qwen3 4B agent run with tracing on, against a local recorder | none | 26.3 ms against 17.7 ms with tracing off, 0.5% of the run | the Mac, 60 interleaved runs each | [6.4](#s-langsmith-tracing) |
 | one middleware hook, each time it runs | none | 183 to 190 µs node hook, 45 to 50 µs wrap hook, 0.2 to 0.5% of a real Qwen3 4B run | the x86 server guest under load 14 to 25, 20 runs per cell | this section |
 
 The rest of this section gives the recordings behind the first three rows and the last row, which no other section shows in full.
 
 ## Time per run
 
-The task of the recording is one question that needs two tools, `add` and then `multiply`, and three model calls. Four programs ran it against a local stub that answers each call at once, so the time is the time of the Python code. Two of them also ran against Qwen3 4B on Ollama. Every run gave the right answer, and each program called the same tools with the same arguments.
+The task of the recording is one question that needs two tools, `add` and then `multiply`, and three model calls. Eight programs ran it against Qwen3 4B on Ollama, five on the `/v1` path and three on the native path. A proxy timed each model call. Every run gave the right answer, and each program called the same tools with the same arguments.
+
+**Time outside the model:** the wall time of a run minus the time of its model calls at the proxy. It holds the HTTP client and the proxy hop too, so a plain loop also has some.
 
 - **plain `openai` loop**: the `openai` client, a list of messages, and a loop over the tool calls.
 - **`ChatOpenAI.bind_tools` loop**: the same loop, with the model of `langchain-openai` in place of the client.
 - **`create_agent`**: the agent with `ChatOpenAI` and the two tools.
 - **`create_agent` with `InMemorySaver`**: the same agent with a checkpointer and a thread.
+- **hand-built `StateGraph`**: a model node, a `ToolNode`, and `tools_condition`, the same graph as `create_agent` written by hand.
+- **native programs**: a plain `ollama` loop, `create_agent` with `ChatOllama`, and the hand-built `StateGraph` with `ChatOllama`, all on `/api/chat`.
 
 ```figure
 id: fig-7-2
 kind: chart
-title: wall time of one run of three model calls against a stub
-claim: Against a stub that answers at once, create_agent took 7.67 ms per run against 4.1 ms for a plain openai loop, and a checkpointer added 1.27 ms.
-caption: Each dot is one run on the Mac, 200 per program, and the black line is the median. The stub answers each model call at once. From capture/lab/summary/overhead-mac.json.
+title: time beyond the model in one run of three Qwen3 4B calls
+claim: In a real run of 1.7 s, create_agent spent 37.6 ms outside the model against 25.1 ms for a plain openai loop, and a hand-built StateGraph 36.7 ms.
+caption: Each dot is one run on the Mac, 40 per program, in shuffled rounds, and the black line is the median. From capture/lab/summary/overhead-mac-real.json.
 ```
 
-**We measured** 200 runs of each program on the Mac, after warm-up runs that the summary leaves out. [Figure](#fig-7-2) shows each run. The medians were 4.1 ms for the plain loop, 4.46 ms for the `bind_tools` loop, 7.67 ms for `create_agent`, and 8.94 ms with the checkpointer. So the model object of `langchain-openai` added 0.36 ms per run, the agent graph added 3.21 ms more, and the checkpointer 1.27 ms more.
+**We measured** 40 runs of each program on the Mac, in 40 shuffled rounds after 2 warm-up rounds. [Figure](#fig-7-2) shows each run. Every run gave 20 after `add(2, 3)` and `multiply(5, 4)`. The median time outside the model was 25.1 ms for the plain loop and 29.3 ms for the `bind_tools` loop. It was 37.6 ms for `create_agent`, 37.6 ms with `InMemorySaver`, and 36.7 ms for the hand-built `StateGraph`. Against the plain loop in the same round, they added 6.6, 15.6, 12.2, and 11.5 ms.
 
-Per model call, the agent layer adds about 1.2 ms. Against Ollama, 24 runs each, the medians were 1,450.99 ms for the plain loop and 1,550.32 ms for `create_agent`. That gap of about 99 ms is inside the spread of the model time on a shared machine, so read it as noise. A hosted model call of hundreds of milliseconds hides 1 ms.
+On the native path, the plain `ollama` loop spent 11.7 ms outside the model. `create_agent` with `ChatOllama` spent 29.0 ms, 13.0 ms more, and the `StateGraph` 22.2 ms, 7.8 ms more.
+
+Per model call, the agent layer adds about 4 to 5 ms, and 3 ms of CPU. On the `/v1` path, the time outside the model was 1.3 to 2.2% of a run of 1.7 to 2.0 s. The model time moved from 1.2 s to 3.7 s per run with the other load on the machine. So compare the time outside the model, not the wall time.
 
 ## Tokens and request bytes
 
-A framework could add tokens: a system prompt of its own, extra tool fields, or a schema. `create_agent` adds none. **We measured** the usage that Ollama returned for each call, through a proxy that recorded each request, 24 runs per program on the Mac. Every run of a program had the same three calls:
+A framework could add tokens: a system prompt of its own, extra tool fields, or a schema. `create_agent` adds none. **We measured** the usage that Ollama returned for each call, through a proxy that recorded each request, 40 runs per program on the Mac. Every run of a program had the same three calls:
 
 | Call | Plain loop: bytes, prompt tokens, completion tokens | `create_agent`: bytes, prompt tokens, completion tokens |
 |---|---|---|
-| 1 | 668, 258, 25 | 685, 258, 25 |
-| 2 | 915, 297, 25 | 937, 297, 25 |
-| 3 | 1,168, 337, 3 | 1,195, 337, 3 |
+| 1 | 679, 261, 25 | 696, 261, 25 |
+| 2 | 936, 300, 25 | 948, 300, 25 |
+| 3 | 1,199, 340, 3 | 1,206, 340, 3 |
 
-The tokens were the same for both programs, call by call. The request of `create_agent` was 17 to 27 bytes longer on each call. Against the stub, the bodies differed by 17 bytes on every call, and the diff shows those bytes:
+The tokens were the same for both programs, call by call. The request of `create_agent` was 7 to 17 bytes longer on each call. The first request was 17 bytes longer, as in an earlier run against a local stub, whose diff shows those bytes:
 
 ```listing
 title: the first request body of each program, as a diff
 source: capture/lab/T01-overhead-mac/09-request-body-diff.txt
 lang: text
+note: From a run against a local stub. The body that the client builds does not depend on the server.
 ---
 ### request 1: a_plain_openai (643 B) vs c_create_agent (660 B)
 --- a_plain_openai
@@ -89,7 +96,7 @@ One thread of 5,000 steps held 7,289 MB. With `DeltaChannel`, the write stayed n
 
 ## Tracing
 
-Tracing adds a cost to each run and a cost at exit. [Section 6.4](#s-langsmith-tracing) gives both with [figure](#fig-6-4). Against a local recorder that answered at once, the median agent run took 7.56 ms with tracing on and 2.59 ms with it off. The first traced run in a process took 89 to 171 ms. A failing endpoint held the exit of the process for 72 to 81 s, and a hanging endpoint kept it alive.
+Tracing adds a cost to each run and a cost at exit. [Section 6.4](#s-langsmith-tracing) gives both with [figure](#fig-6-4). Against a local recorder that answered at once, tracing added 7.4 ms to a 1.6 s agent run on Qwen3 4B. In six of seven processes, the first traced run spent 83 to 243 ms outside the model. A failing endpoint held the exit for 10 to 17 s, and a hanging endpoint kept the process alive.
 
 ## Middleware hooks
 
@@ -124,7 +131,7 @@ The framework share of the run was 0.2% with no middleware and 0.5% with 20 node
 The cost follows the node count. The retries wrap calls and add under 0.2 ms, and each middleware with a node adds 0.4 to 1.4 ms. The five PII instances added 4.8 ms to a 2.64 s run of Qwen3 4B, 0.4%. So choose middleware for what it does, and keep node hooks out of a loop that makes thousands of fast calls.
 
 ```takeaways
-- Budget about 1.2 ms of Python per model call for create_agent, and more with a checkpointer.
+- Budget about 5 ms per model call for create_agent beyond the model, under 3% of a local model run.
 - Expect the same prompt tokens from create_agent as from your plain loop.
 - Choose Deep Agents only when you need its tools, because each call carries over 2,000 more tokens.
 - Use DeltaChannel or summarization when a thread runs to thousands of steps.
@@ -133,4 +140,4 @@ The cost follows the node count. The retries wrap calls and add under 0.2 ms, an
 - Prefer a wrap hook to a node hook when a middleware runs on every call of a fast loop.
 ```
 
-Sources: capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/03-ollama-proxy-usage.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; capture/lab/summary/import-times-mac.json, capture/lab/summary/install-size-mac.json, capture/lab/summary/tokens-mac.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/tracing-mac.json; capture/lab/summary/middleware-x86.json, capture/lab/T11-middleware-cost-x86/01-cost.jsonl, capture/lab/T11-middleware-cost-x86/t11_real.py; capture/lab/summary/middleware-mac.json; libs/partners/openai/langchain_openai/chat_models/base.py at langchain-openai 1.8.0.
+Sources: capture/lab/summary/overhead-mac-real.json, capture/lab/T01-overhead-mac-real/01-runs.jsonl, capture/lab/T01-overhead-mac-real/t01_real.py, capture/lab/T01-overhead-mac-real/mr_common.py, capture/lab/T01-overhead-mac/09-request-body-diff.txt; capture/lab/summary/import-times-mac.json, capture/lab/summary/install-size-mac.json, capture/lab/summary/tokens-mac.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/tracing-mac-real.json; capture/lab/summary/middleware-x86.json, capture/lab/T11-middleware-cost-x86/01-cost.jsonl, capture/lab/T11-middleware-cost-x86/t11_real.py; capture/lab/summary/middleware-mac.json; libs/partners/openai/langchain_openai/chat_models/base.py at langchain-openai 1.8.0.

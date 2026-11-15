@@ -1,0 +1,1828 @@
+{
+ "delivery_delay": "the time the consumer saw a token minus the time the proxy passed it on, on one clock",
+ "isolation_38484": {
+  "gather_issue": {
+   "errors": 0,
+   "eval_count": [
+    830,
+    830,
+    830,
+    830,
+    830
+   ],
+   "first_reasoning_delay_ms": [
+    3.7,
+    3.1,
+    2.2,
+    2.1,
+    1.5
+   ],
+   "first_text_delay_ms": [
+    4254.9,
+    4067.7,
+    5811.6,
+    7986.5,
+    8404.8
+   ],
+   "reasoning_deltas": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "reasoning_receive_spread_ms": [
+    54925.0,
+    59448.2,
+    54617.8,
+    101668.7,
+    102302.9
+   ],
+   "runs": 5,
+   "server_reasoning_lines": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "text_deltas": [
+    62,
+    62,
+    62,
+    62,
+    62
+   ],
+   "text_emit_spread_ms": [
+    4190.0,
+    3987.0,
+    5707.9,
+    7834.3,
+    8255.1
+   ],
+   "text_receive_spread_ms": [
+    0.1,
+    0.0,
+    0.0,
+    0.1,
+    0.1
+   ],
+   "wall_s": [
+    59.7,
+    64.1,
+    61.0,
+    110.6,
+    111.6
+   ]
+  },
+  "raw_events": {
+   "errors": 0,
+   "eval_count": [
+    830,
+    830,
+    830,
+    830,
+    830
+   ],
+   "first_reasoning_delay_ms": [
+    2.7,
+    2.3,
+    4.2,
+    2.2,
+    1.4
+   ],
+   "first_text_delay_ms": [
+    1.4,
+    10.9,
+    1.6,
+    2.5,
+    0.7
+   ],
+   "reasoning_deltas": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "reasoning_receive_spread_ms": [
+    60073.7,
+    55482.5,
+    54801.4,
+    54674.9,
+    103533.2
+   ],
+   "runs": 5,
+   "server_reasoning_lines": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "text_deltas": [
+    62,
+    62,
+    62,
+    62,
+    62
+   ],
+   "text_emit_spread_ms": [
+    4468.9,
+    3983.2,
+    3966.2,
+    3851.6,
+    8492.0
+   ],
+   "text_receive_spread_ms": [
+    4468.7,
+    3977.7,
+    3965.6,
+    3851.5,
+    8491.9
+   ],
+   "wall_s": [
+    65.3,
+    60.2,
+    59.4,
+    59.2,
+    113.2
+   ]
+  },
+  "reasoning_then_text": {
+   "errors": 0,
+   "eval_count": [
+    830,
+    830,
+    830,
+    830,
+    830
+   ],
+   "first_reasoning_delay_ms": [
+    4.4,
+    3.4,
+    1.5,
+    3.7,
+    4.1
+   ],
+   "first_text_delay_ms": [
+    4391.4,
+    4037.6,
+    4047.1,
+    8023.4,
+    8467.5
+   ],
+   "reasoning_deltas": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "reasoning_receive_spread_ms": [
+    53952.4,
+    51092.5,
+    49656.9,
+    101448.3,
+    100566.8
+   ],
+   "runs": 5,
+   "server_reasoning_lines": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "text_deltas": [
+    62,
+    62,
+    62,
+    62,
+    62
+   ],
+   "text_emit_spread_ms": [
+    4330.6,
+    3955.4,
+    3978.1,
+    7902.8,
+    8330.4
+   ],
+   "text_receive_spread_ms": [
+    0.2,
+    0.1,
+    0.1,
+    0.1,
+    0.1
+   ],
+   "wall_s": [
+    58.9,
+    55.7,
+    54.2,
+    110.5,
+    110.2
+   ]
+  },
+  "text_only": {
+   "errors": 0,
+   "eval_count": [
+    830,
+    830,
+    830,
+    830,
+    830
+   ],
+   "first_reasoning_delay_ms": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "first_text_delay_ms": [
+    0.6,
+    2.5,
+    3.5,
+    2.1,
+    3.1
+   ],
+   "reasoning_deltas": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "reasoning_receive_spread_ms": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "runs": 5,
+   "server_reasoning_lines": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "text_deltas": [
+    62,
+    62,
+    62,
+    62,
+    62
+   ],
+   "text_emit_spread_ms": [
+    4416.5,
+    4301.2,
+    5581.4,
+    7992.8,
+    8405.0
+   ],
+   "text_receive_spread_ms": [
+    4417.7,
+    4299.5,
+    5580.0,
+    7992.7,
+    8402.4
+   ],
+   "wall_s": [
+    59.1,
+    60.1,
+    64.0,
+    72.8,
+    113.2
+   ]
+  },
+  "text_then_reasoning": {
+   "errors": 0,
+   "eval_count": [
+    830,
+    830,
+    830,
+    830,
+    830
+   ],
+   "first_reasoning_delay_ms": [
+    56617.7,
+    61407.8,
+    59139.8,
+    111719.2,
+    112240.7
+   ],
+   "first_text_delay_ms": [
+    2.3,
+    1.2,
+    2.0,
+    1.9,
+    3.4
+   ],
+   "reasoning_deltas": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "reasoning_receive_spread_ms": [
+    1.5,
+    1.2,
+    2.0,
+    1.4,
+    0.9
+   ],
+   "runs": 5,
+   "server_reasoning_lines": [
+    763,
+    763,
+    763,
+    763,
+    763
+   ],
+   "text_deltas": [
+    62,
+    62,
+    62,
+    62,
+    62
+   ],
+   "text_emit_spread_ms": [
+    3891.5,
+    5507.6,
+    4013.2,
+    8191.8,
+    8270.4
+   ],
+   "text_receive_spread_ms": [
+    3891.2,
+    5508.2,
+    4012.5,
+    8192.1,
+    8268.3
+   ],
+   "wall_s": [
+    57.0,
+    61.7,
+    59.6,
+    112.2,
+    112.8
+   ]
+  }
+ },
+ "isolation_note": "ChatOllama with qwen3:8b and reasoning=True, num_predict 1500, five async v3 loops, 1 warm-up run and 5 runs each",
+ "load1_isolation": [
+  2.44,
+  6.59
+ ],
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on the GPU of the Mac, temperature 0, seed 42, server default context; another agent ran API rows on the Mac at the same time; the #38484 rows use qwen3:8b with reasoning on",
+ "not_used": "rows with warmup true; the tool fields of the gather consumer, which reads no tool calls; the CPU and wall times as absolute costs, because the load was shared",
+ "phases": {
+  "text": {
+   "load1": [
+    2.16,
+    6.19
+   ],
+   "variants": {
+    "agent_messages": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 283.4,
+     "cpu_ms_median": 103.1,
+     "errors": 0,
+     "first_delay_ms": [
+      0.56,
+      2.33,
+      2.06,
+      0.53,
+      2.78,
+      0.52,
+      0.58,
+      1.19,
+      0.68,
+      1.65,
+      15.55,
+      0.58,
+      1.72,
+      6.72,
+      0.54,
+      1.84,
+      2.15,
+      2.69,
+      2.55,
+      5.21,
+      1.35,
+      2.31,
+      1.13,
+      0.54
+     ],
+     "first_delay_ms_median": 1.69,
+     "first_delay_ms_p95": 6.49,
+     "n": 24,
+     "request_overhead_ms_median": 8.0,
+     "token_delay_ms_median": 1.31,
+     "tokens": [
+      80
+     ]
+    },
+    "agent_messages_updates": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 298.0,
+     "cpu_ms_median": 102.3,
+     "errors": 0,
+     "first_delay_ms": [
+      2.22,
+      2.23,
+      2.2,
+      0.55,
+      2.34,
+      3.16,
+      1.54,
+      8.28,
+      7.68,
+      1.34,
+      2.63,
+      1.4,
+      3.95,
+      7.35,
+      2.69,
+      0.52,
+      1.99,
+      1.69,
+      0.72,
+      3.35,
+      2.76,
+      1.44,
+      1.6,
+      1.41
+     ],
+     "first_delay_ms_median": 2.21,
+     "first_delay_ms_p95": 7.63,
+     "n": 24,
+     "request_overhead_ms_median": 6.1,
+     "token_delay_ms_median": 1.3,
+     "tokens": [
+      80
+     ]
+    },
+    "astream_events_v2": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 307.2,
+     "cpu_ms_median": 115.4,
+     "errors": 0,
+     "first_delay_ms": [
+      14.07,
+      2.69,
+      2.67,
+      2.39,
+      1.26,
+      0.66,
+      0.82,
+      1.33,
+      1.4,
+      2.36,
+      0.64,
+      4.87,
+      2.59,
+      1.89,
+      5.21,
+      1.8,
+      1.51,
+      2.94,
+      0.66,
+      1.81,
+      0.69,
+      1.77,
+      2.88,
+      2.97
+     ],
+     "first_delay_ms_median": 1.85,
+     "first_delay_ms_p95": 5.16,
+     "n": 24,
+     "request_overhead_ms_median": 3.8,
+     "token_delay_ms_median": 1.4,
+     "tokens": [
+      80
+     ]
+    },
+    "astream_events_v3": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 317.4,
+     "cpu_ms_median": 134.4,
+     "errors": 0,
+     "first_delay_ms": [
+      1.66,
+      3.67,
+      7.65,
+      4.43,
+      2.28,
+      0.92,
+      5.29,
+      0.91,
+      1.92,
+      4.51,
+      2.22,
+      2.15,
+      5.22,
+      1.0,
+      3.17,
+      6.05,
+      4.37,
+      2.84,
+      4.2,
+      6.06,
+      6.05,
+      3.26,
+      3.72,
+      1.71
+     ],
+     "first_delay_ms_median": 3.46,
+     "first_delay_ms_p95": 6.06,
+     "n": 24,
+     "request_overhead_ms_median": 7.6,
+     "token_delay_ms_median": 2.01,
+     "tokens": [
+      80
+     ]
+    },
+    "astream_events_v3_gather": {
+     "burst_frac_median": 1.0,
+     "call_to_first_seen_ms_median": 2955.7,
+     "cpu_ms_median": 140.4,
+     "errors": 0,
+     "first_delay_ms": [
+      2670.04,
+      2052.26,
+      1858.57,
+      3104.55,
+      2465.96,
+      2605.04,
+      3450.78,
+      1716.85,
+      1943.67,
+      2783.91,
+      1825.3,
+      2551.34,
+      3638.74,
+      3660.0,
+      2988.52,
+      2519.22,
+      3022.23,
+      2415.34,
+      2827.94,
+      2555.65,
+      2870.26,
+      2655.8,
+      2731.93,
+      2737.48
+     ],
+     "first_delay_ms_median": 2662.92,
+     "first_delay_ms_p95": 3610.55,
+     "n": 24,
+     "request_overhead_ms_median": 9.0,
+     "token_delay_ms_median": 1358.38,
+     "tokens": [
+      80
+     ]
+    },
+    "chatopenai_stream": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 313.7,
+     "cpu_ms_median": 80.3,
+     "errors": 0,
+     "first_delay_ms": [
+      2.21,
+      1.78,
+      2.12,
+      1.81,
+      2.5,
+      2.04,
+      6.59,
+      1.73,
+      0.93,
+      0.44,
+      0.5,
+      2.03,
+      1.56,
+      1.53,
+      1.91,
+      0.8,
+      1.62,
+      2.05,
+      0.73,
+      0.44,
+      2.32,
+      1.76,
+      0.44,
+      1.62
+     ],
+     "first_delay_ms_median": 1.74,
+     "first_delay_ms_p95": 2.47,
+     "n": 24,
+     "request_overhead_ms_median": 5.9,
+     "token_delay_ms_median": 0.97,
+     "tokens": [
+      80
+     ]
+    },
+    "plain_openai": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 309.9,
+     "cpu_ms_median": 63.4,
+     "errors": 0,
+     "first_delay_ms": [
+      1.5,
+      2.11,
+      1.64,
+      1.23,
+      2.2,
+      2.16,
+      1.07,
+      0.45,
+      1.89,
+      1.11,
+      0.37,
+      1.24,
+      1.4,
+      0.38,
+      0.44,
+      0.89,
+      0.45,
+      1.53,
+      1.25,
+      0.98,
+      1.75,
+      1.41,
+      1.58,
+      1.31
+     ],
+     "first_delay_ms_median": 1.28,
+     "first_delay_ms_p95": 2.15,
+     "n": 24,
+     "request_overhead_ms_median": 4.9,
+     "token_delay_ms_median": 0.84,
+     "tokens": [
+      80
+     ]
+    },
+    "stream_events_v3": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 315.1,
+     "cpu_ms_median": 105.2,
+     "errors": 0,
+     "first_delay_ms": [
+      1.26,
+      0.61,
+      0.6,
+      4.29,
+      2.24,
+      0.58,
+      2.6,
+      2.4,
+      0.6,
+      2.21,
+      2.1,
+      0.63,
+      0.82,
+      2.95,
+      1.24,
+      1.44,
+      1.61,
+      1.84,
+      6.39,
+      1.5,
+      3.27,
+      1.03,
+      5.99,
+      0.61
+     ],
+     "first_delay_ms_median": 1.55,
+     "first_delay_ms_p95": 5.73,
+     "n": 24,
+     "request_overhead_ms_median": 6.4,
+     "token_delay_ms_median": 1.32,
+     "tokens": [
+      80
+     ]
+    },
+    "stream_events_v3_raw": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 320.1,
+     "cpu_ms_median": 113.9,
+     "errors": 0,
+     "first_delay_ms": [
+      11.77,
+      1.99,
+      0.59,
+      1.94,
+      0.58,
+      2.85,
+      1.82,
+      3.11,
+      2.42,
+      2.79,
+      2.72,
+      0.58,
+      1.91,
+      3.77,
+      1.66,
+      2.23,
+      1.44,
+      5.31,
+      2.12,
+      3.14,
+      0.62,
+      0.59,
+      3.24,
+      0.61
+     ],
+     "first_delay_ms_median": 2.05,
+     "first_delay_ms_p95": 5.08,
+     "n": 24,
+     "request_overhead_ms_median": 10.5,
+     "token_delay_ms_median": 1.46,
+     "tokens": [
+      80
+     ]
+    }
+   }
+  },
+  "tool": {
+   "load1": [
+    1.41,
+    6.22
+   ],
+   "variants": {
+    "agent_messages": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 1059.4,
+     "cpu_ms_median": 41.0,
+     "errors": 0,
+     "first_delay_ms": [
+      0.53,
+      2.89,
+      2.85,
+      2.41,
+      2.09,
+      2.32,
+      2.03,
+      2.92,
+      0.62,
+      2.31,
+      2.41,
+      1.78,
+      2.27,
+      0.52,
+      0.53,
+      2.78,
+      7.32,
+      1.76,
+      2.12,
+      1.57,
+      2.47,
+      0.53,
+      1.36,
+      2.2
+     ],
+     "first_delay_ms_median": 2.16,
+     "first_delay_ms_p95": 2.92,
+     "n": 24,
+     "request_overhead_ms_median": 4.8,
+     "token_delay_ms_median": 1.49,
+     "tokens": [
+      12
+     ],
+     "tool_first_delay_ms_median": 5.43,
+     "tool_first_delay_ms_p95": 8.83,
+     "tool_server_events": [
+      1
+     ]
+    },
+    "agent_messages_updates": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 1232.2,
+     "cpu_ms_median": 42.4,
+     "errors": 0,
+     "first_delay_ms": [
+      2.81,
+      2.12,
+      2.18,
+      3.02,
+      2.74,
+      3.86,
+      2.54,
+      4.63,
+      2.25,
+      0.54,
+      2.27,
+      2.22,
+      2.14,
+      1.33,
+      3.36,
+      1.74,
+      2.81,
+      2.21,
+      11.88,
+      2.36,
+      1.99,
+      1.94,
+      0.54,
+      2.14
+     ],
+     "first_delay_ms_median": 2.23,
+     "first_delay_ms_p95": 4.52,
+     "n": 24,
+     "request_overhead_ms_median": 7.4,
+     "token_delay_ms_median": 1.45,
+     "tokens": [
+      12
+     ],
+     "tool_first_delay_ms_median": 4.26,
+     "tool_first_delay_ms_p95": 8.41,
+     "tool_server_events": [
+      1
+     ]
+    },
+    "astream_events_v2": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 1107.6,
+     "cpu_ms_median": 48.9,
+     "errors": 0,
+     "first_delay_ms": [
+      0.66,
+      3.25,
+      2.94,
+      2.36,
+      2.55,
+      2.69,
+      2.57,
+      0.64,
+      4.75,
+      2.2,
+      0.77,
+      2.25,
+      2.6,
+      0.64,
+      0.64,
+      2.56,
+      2.11,
+      0.63,
+      2.75,
+      0.63,
+      0.61,
+      2.93,
+      0.63,
+      2.77
+     ],
+     "first_delay_ms_median": 2.3,
+     "first_delay_ms_p95": 3.2,
+     "n": 24,
+     "request_overhead_ms_median": 9.7,
+     "token_delay_ms_median": 1.7,
+     "tokens": [
+      12
+     ],
+     "tool_first_delay_ms_median": 4.39,
+     "tool_first_delay_ms_p95": 8.36,
+     "tool_server_events": [
+      1
+     ]
+    },
+    "astream_events_v3": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 1050.4,
+     "cpu_ms_median": 49.0,
+     "errors": 0,
+     "first_delay_ms": [
+      3.6,
+      3.77,
+      4.8,
+      0.92,
+      3.78,
+      3.62,
+      4.34,
+      3.17,
+      0.87,
+      0.9,
+      5.42,
+      2.02,
+      4.33,
+      2.81,
+      1.06,
+      3.85,
+      2.31,
+      2.2,
+      4.59,
+      4.08,
+      4.03,
+      2.94,
+      4.64,
+      4.42
+     ],
+     "first_delay_ms_median": 3.69,
+     "first_delay_ms_p95": 4.78,
+     "n": 24,
+     "request_overhead_ms_median": 9.2,
+     "token_delay_ms_median": 2.31,
+     "tokens": [
+      12
+     ],
+     "tool_first_delay_ms_median": 9.41,
+     "tool_first_delay_ms_p95": 20.07,
+     "tool_server_events": [
+      1
+     ]
+    },
+    "astream_events_v3_gather": {
+     "burst_frac_median": 1.0,
+     "call_to_first_seen_ms_median": 1599.5,
+     "cpu_ms_median": 48.6,
+     "errors": 0,
+     "first_delay_ms": [
+      281.01,
+      377.19,
+      417.9,
+      406.18,
+      413.62,
+      360.28,
+      229.77,
+      314.83,
+      665.68,
+      284.16,
+      254.72,
+      269.44,
+      267.2,
+      523.54,
+      359.72,
+      256.99,
+      251.08,
+      287.34,
+      254.88,
+      363.52,
+      388.43,
+      394.96,
+      370.05,
+      284.81
+     ],
+     "first_delay_ms_median": 337.28,
+     "first_delay_ms_p95": 507.7,
+     "n": 24,
+     "request_overhead_ms_median": 6.2,
+     "token_delay_ms_median": 185.61,
+     "tokens": [
+      12
+     ]
+    },
+    "chatopenai_stream": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 1219.9,
+     "cpu_ms_median": 30.7,
+     "errors": 0,
+     "first_delay_ms": [
+      2.06,
+      2.91,
+      1.78,
+      1.8,
+      1.33,
+      1.98,
+      2.18,
+      1.4,
+      1.01,
+      0.96,
+      2.09,
+      1.68,
+      2.17,
+      1.89,
+      1.52,
+      1.95,
+      2.11,
+      1.82,
+      2.02,
+      2.32,
+      1.5,
+      0.47,
+      2.84,
+      1.88
+     ],
+     "first_delay_ms_median": 1.88,
+     "first_delay_ms_p95": 2.76,
+     "n": 24,
+     "request_overhead_ms_median": 6.1,
+     "token_delay_ms_median": 1.06,
+     "tokens": [
+      12
+     ],
+     "tool_first_delay_ms_median": 3.07,
+     "tool_first_delay_ms_p95": 5.97,
+     "tool_server_events": [
+      1
+     ]
+    },
+    "plain_openai": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 1070.5,
+     "cpu_ms_median": 20.1,
+     "errors": 0,
+     "first_delay_ms": [
+      0.38,
+      1.22,
+      1.14,
+      1.94,
+      2.83,
+      1.88,
+      1.76,
+      1.81,
+      1.87,
+      1.57,
+      1.72,
+      1.52,
+      1.95,
+      1.56,
+      1.84,
+      1.58,
+      1.75,
+      1.65,
+      0.71,
+      1.82,
+      2.26,
+      2.89,
+      0.38,
+      1.61
+     ],
+     "first_delay_ms_median": 1.74,
+     "first_delay_ms_p95": 2.74,
+     "n": 24,
+     "request_overhead_ms_median": 5.4,
+     "token_delay_ms_median": 0.87,
+     "tokens": [
+      12
+     ],
+     "tool_first_delay_ms_median": 1.89,
+     "tool_first_delay_ms_p95": 3.47,
+     "tool_server_events": [
+      1
+     ]
+    },
+    "stream_events_v3": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 1081.1,
+     "cpu_ms_median": 45.4,
+     "errors": 0,
+     "first_delay_ms": [
+      1.98,
+      2.91,
+      2.6,
+      2.71,
+      2.15,
+      3.46,
+      3.0,
+      2.1,
+      2.72,
+      2.5,
+      2.42,
+      3.44,
+      2.41,
+      2.56,
+      0.6,
+      0.6,
+      2.82,
+      2.43,
+      2.66,
+      1.97,
+      0.67,
+      3.33,
+      1.96,
+      1.09
+     ],
+     "first_delay_ms_median": 2.46,
+     "first_delay_ms_p95": 3.43,
+     "n": 24,
+     "request_overhead_ms_median": 9.6,
+     "token_delay_ms_median": 1.62,
+     "tokens": [
+      12
+     ],
+     "tool_first_delay_ms_median": 7.92,
+     "tool_first_delay_ms_p95": 11.41,
+     "tool_server_events": [
+      1
+     ]
+    },
+    "stream_events_v3_raw": {
+     "burst_frac_median": 0.0,
+     "call_to_first_seen_ms_median": 1332.8,
+     "cpu_ms_median": 41.1,
+     "errors": 0,
+     "first_delay_ms": [
+      2.88,
+      2.15,
+      2.97,
+      2.56,
+      2.81,
+      0.58,
+      1.8,
+      1.88,
+      1.75,
+      2.65,
+      2.62,
+      0.89,
+      3.07,
+      2.28,
+      3.07,
+      2.49,
+      2.33,
+      0.6,
+      3.38,
+      1.96,
+      2.63,
+      2.65,
+      0.73,
+      1.11
+     ],
+     "first_delay_ms_median": 2.41,
+     "first_delay_ms_p95": 3.07,
+     "n": 24,
+     "request_overhead_ms_median": 8.0,
+     "token_delay_ms_median": 1.6,
+     "tokens": [
+      12
+     ],
+     "tool_first_delay_ms_median": 4.41,
+     "tool_first_delay_ms_p95": 11.29,
+     "tool_server_events": [
+      1
+     ]
+    }
+   }
+  }
+ },
+ "phases_note": "text: a count from 1 to 30, cut at max_tokens 80; tool: one lookup tool call, then a one-sentence answer; 4 blocks of 7 runs per API, the first of each block left out",
+ "proxy": "a stamping proxy on 127.0.0.1 that forwards the real stream of Ollama and stamps each line after writing it",
+ "sources": [
+  "capture/lab/T04-streaming-mac-real/real_text-per-run.jsonl",
+  "capture/lab/T04-streaming-mac-real/real_tool-per-run.jsonl",
+  "capture/lab/T04-streaming-mac-real/03-iso38484-qwen3-8b.jsonl",
+  "capture/lab/T04-streaming-mac-real/real_text-runs-excerpt.jsonl",
+  "capture/lab/T04-streaming-mac-real/real_text-server-excerpt.jsonl",
+  "capture/lab/T04-streaming-mac-real/t04_run.py",
+  "capture/lab/T04-streaming-mac-real/t04_stream_server.py",
+  "capture/lab/T04-streaming-mac-real/t04_analyze.py",
+  "capture/lab/T04-streaming-mac-real/t04_iso_real.py"
+ ],
+ "timeline": {
+  "astream_events_v3": {
+   "block": 2,
+   "run": 1,
+   "tokens": [
+    [
+     553.0,
+     558.2
+    ],
+    [
+     583.6,
+     585.7
+    ],
+    [
+     610.0,
+     611.7
+    ],
+    [
+     638.1,
+     639.7
+    ],
+    [
+     665.2,
+     667.4
+    ],
+    [
+     694.4,
+     696.6
+    ],
+    [
+     722.8,
+     724.9
+    ],
+    [
+     753.9,
+     755.9
+    ],
+    [
+     782.1,
+     784.8
+    ],
+    [
+     812.2,
+     814.4
+    ],
+    [
+     842.2,
+     843.6
+    ],
+    [
+     872.9,
+     875.0
+    ],
+    [
+     904.6,
+     906.5
+    ],
+    [
+     935.7,
+     937.5
+    ],
+    [
+     966.7,
+     968.1
+    ],
+    [
+     998.8,
+     1003.0
+    ],
+    [
+     1031.0,
+     1038.7
+    ],
+    [
+     1063.7,
+     1066.6
+    ],
+    [
+     1096.3,
+     1098.8
+    ],
+    [
+     1129.8,
+     1131.5
+    ],
+    [
+     1163.9,
+     1165.3
+    ],
+    [
+     1197.8,
+     1199.1
+    ],
+    [
+     1231.8,
+     1235.3
+    ],
+    [
+     1266.1,
+     1267.4
+    ],
+    [
+     1304.0,
+     1305.8
+    ],
+    [
+     1337.3,
+     1338.7
+    ],
+    [
+     1373.2,
+     1377.7
+    ],
+    [
+     1408.2,
+     1411.6
+    ],
+    [
+     1444.7,
+     1446.1
+    ],
+    [
+     1481.9,
+     1483.8
+    ],
+    [
+     1519.3,
+     1520.7
+    ],
+    [
+     1556.7,
+     1558.8
+    ],
+    [
+     1594.2,
+     1596.6
+    ],
+    [
+     1633.8,
+     1635.2
+    ],
+    [
+     1679.1,
+     1680.6
+    ],
+    [
+     1723.0,
+     1726.6
+    ],
+    [
+     1770.8,
+     1771.5
+    ],
+    [
+     1819.1,
+     1833.8
+    ],
+    [
+     1864.9,
+     1866.7
+    ],
+    [
+     1910.8,
+     1912.6
+    ],
+    [
+     1963.7,
+     1967.4
+    ],
+    [
+     2003.7,
+     2006.1
+    ],
+    [
+     2053.6,
+     2055.3
+    ],
+    [
+     2104.0,
+     2105.8
+    ],
+    [
+     2153.2,
+     2154.8
+    ],
+    [
+     2203.2,
+     2211.9
+    ],
+    [
+     2252.4,
+     2255.2
+    ],
+    [
+     2302.8,
+     2304.4
+    ],
+    [
+     2352.5,
+     2354.7
+    ],
+    [
+     2402.3,
+     2404.4
+    ],
+    [
+     2453.1,
+     2459.6
+    ],
+    [
+     2503.6,
+     2506.3
+    ],
+    [
+     2553.2,
+     2555.6
+    ],
+    [
+     2603.4,
+     2604.1
+    ],
+    [
+     2655.1,
+     2655.8
+    ],
+    [
+     2711.9,
+     2713.6
+    ],
+    [
+     2765.2,
+     2773.1
+    ],
+    [
+     2822.3,
+     2823.1
+    ],
+    [
+     2878.1,
+     2881.3
+    ],
+    [
+     2930.9,
+     2931.8
+    ],
+    [
+     2987.6,
+     2988.4
+    ],
+    [
+     3044.0,
+     3051.2
+    ],
+    [
+     3096.6,
+     3098.1
+    ],
+    [
+     3150.9,
+     3152.5
+    ],
+    [
+     3204.8,
+     3205.6
+    ],
+    [
+     3261.0,
+     3262.9
+    ],
+    [
+     3315.9,
+     3317.7
+    ],
+    [
+     3369.1,
+     3370.6
+    ],
+    [
+     3428.1,
+     3432.0
+    ],
+    [
+     3470.7,
+     3476.6
+    ],
+    [
+     3521.3,
+     3523.3
+    ],
+    [
+     3571.6,
+     3573.1
+    ],
+    [
+     3620.8,
+     3622.1
+    ],
+    [
+     3670.7,
+     3672.3
+    ],
+    [
+     3720.9,
+     3722.3
+    ],
+    [
+     3773.5,
+     3790.1
+    ],
+    [
+     3826.4,
+     3827.1
+    ],
+    [
+     3876.5,
+     3878.8
+    ],
+    [
+     3926.5,
+     3927.2
+    ],
+    [
+     3977.0,
+     3978.5
+    ]
+   ]
+  },
+  "astream_events_v3_gather": {
+   "block": 2,
+   "run": 1,
+   "tokens": [
+    [
+     413.5,
+     4052.2
+    ],
+    [
+     468.8,
+     4052.2
+    ],
+    [
+     522.8,
+     4052.2
+    ],
+    [
+     586.2,
+     4052.2
+    ],
+    [
+     651.8,
+     4052.2
+    ],
+    [
+     730.0,
+     4052.2
+    ],
+    [
+     809.3,
+     4052.2
+    ],
+    [
+     880.9,
+     4052.2
+    ],
+    [
+     964.6,
+     4052.2
+    ],
+    [
+     1046.7,
+     4052.2
+    ],
+    [
+     1145.2,
+     4052.2
+    ],
+    [
+     1230.5,
+     4052.2
+    ],
+    [
+     1322.9,
+     4052.2
+    ],
+    [
+     1431.5,
+     4052.2
+    ],
+    [
+     1519.8,
+     4052.3
+    ],
+    [
+     1597.1,
+     4052.3
+    ],
+    [
+     1680.2,
+     4052.3
+    ],
+    [
+     1763.1,
+     4052.3
+    ],
+    [
+     1836.8,
+     4052.3
+    ],
+    [
+     1905.8,
+     4052.3
+    ],
+    [
+     1969.8,
+     4052.3
+    ],
+    [
+     2031.1,
+     4052.3
+    ],
+    [
+     2095.5,
+     4052.3
+    ],
+    [
+     2154.0,
+     4052.3
+    ],
+    [
+     2208.8,
+     4052.3
+    ],
+    [
+     2259.2,
+     4052.3
+    ],
+    [
+     2305.7,
+     4052.3
+    ],
+    [
+     2351.8,
+     4052.3
+    ],
+    [
+     2398.0,
+     4052.3
+    ],
+    [
+     2437.3,
+     4052.3
+    ],
+    [
+     2474.6,
+     4052.3
+    ],
+    [
+     2512.5,
+     4052.3
+    ],
+    [
+     2549.2,
+     4052.3
+    ],
+    [
+     2584.9,
+     4052.3
+    ],
+    [
+     2620.7,
+     4052.3
+    ],
+    [
+     2655.9,
+     4052.3
+    ],
+    [
+     2691.7,
+     4052.3
+    ],
+    [
+     2725.6,
+     4052.3
+    ],
+    [
+     2759.6,
+     4052.3
+    ],
+    [
+     2793.6,
+     4052.3
+    ],
+    [
+     2827.1,
+     4052.3
+    ],
+    [
+     2859.3,
+     4052.3
+    ],
+    [
+     2893.9,
+     4052.3
+    ],
+    [
+     2924.0,
+     4052.3
+    ],
+    [
+     2956.4,
+     4052.3
+    ],
+    [
+     2988.9,
+     4052.4
+    ],
+    [
+     3020.8,
+     4052.4
+    ],
+    [
+     3051.1,
+     4052.4
+    ],
+    [
+     3082.1,
+     4052.4
+    ],
+    [
+     3113.1,
+     4052.4
+    ],
+    [
+     3144.3,
+     4052.4
+    ],
+    [
+     3175.7,
+     4052.4
+    ],
+    [
+     3206.4,
+     4052.4
+    ],
+    [
+     3236.2,
+     4052.4
+    ],
+    [
+     3266.0,
+     4052.4
+    ],
+    [
+     3295.9,
+     4052.4
+    ],
+    [
+     3325.8,
+     4052.4
+    ],
+    [
+     3356.1,
+     4052.4
+    ],
+    [
+     3385.8,
+     4052.4
+    ],
+    [
+     3417.2,
+     4052.4
+    ],
+    [
+     3447.4,
+     4052.4
+    ],
+    [
+     3477.9,
+     4052.4
+    ],
+    [
+     3507.4,
+     4052.4
+    ],
+    [
+     3537.5,
+     4052.4
+    ],
+    [
+     3567.2,
+     4052.4
+    ],
+    [
+     3597.1,
+     4052.4
+    ],
+    [
+     3627.0,
+     4052.4
+    ],
+    [
+     3656.9,
+     4052.4
+    ],
+    [
+     3687.0,
+     4052.4
+    ],
+    [
+     3717.8,
+     4052.4
+    ],
+    [
+     3749.9,
+     4052.4
+    ],
+    [
+     3776.7,
+     4052.4
+    ],
+    [
+     3806.4,
+     4052.4
+    ],
+    [
+     3836.3,
+     4052.4
+    ],
+    [
+     3866.1,
+     4052.4
+    ],
+    [
+     3896.1,
+     4052.4
+    ],
+    [
+     3927.3,
+     4052.4
+    ],
+    [
+     3957.1,
+     4052.5
+    ],
+    [
+     3987.1,
+     4052.5
+    ],
+    [
+     4016.9,
+     4052.5
+    ]
+   ]
+  }
+ }
+}

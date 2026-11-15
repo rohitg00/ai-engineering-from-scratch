@@ -1,0 +1,20 @@
+== real_text load1 2.22..6.19  (median / p95, ms; n per variant)
+plain_openai               n=24 err=0 first_delay=1.28/2.151 median_delay=0.841 max_delay=6.014 call_to_first_seen=309.869 req_reached_proxy=4.863 tool_chunk_delay=-/- burst=0.0 cpu=63.432 wall=3092.605 tokens=80.0
+chatopenai_stream          n=24 err=0 first_delay=1.744/2.471 median_delay=0.973 max_delay=6.441 call_to_first_seen=313.678 req_reached_proxy=5.928 tool_chunk_delay=-/- burst=0.0 cpu=80.299 wall=2971.097 tokens=80.0
+agent_messages             n=24 err=0 first_delay=1.685/6.493 median_delay=1.315 max_delay=8.425 call_to_first_seen=283.421 req_reached_proxy=8.027 tool_chunk_delay=-/- burst=0.0 cpu=103.135 wall=3191.331 tokens=80.0
+agent_messages_updates     n=24 err=0 first_delay=2.213/7.628 median_delay=1.303 max_delay=8.341 call_to_first_seen=298.02 req_reached_proxy=6.111 tool_chunk_delay=-/- burst=0.0 cpu=102.286 wall=3104.092 tokens=80.0
+astream_events_v2          n=24 err=0 first_delay=1.853/5.156 median_delay=1.402 max_delay=8.073 call_to_first_seen=307.247 req_reached_proxy=3.777 tool_chunk_delay=-/- burst=0.0 cpu=115.408 wall=3301.75 tokens=80.0
+stream_events_v3           n=24 err=0 first_delay=1.554/5.734 median_delay=1.317 max_delay=8.125 call_to_first_seen=315.1 req_reached_proxy=6.389 tool_chunk_delay=-/- burst=0.0 cpu=105.168 wall=3019.489 tokens=80.0
+stream_events_v3_raw       n=24 err=0 first_delay=2.054/5.079 median_delay=1.458 max_delay=9.002 call_to_first_seen=320.113 req_reached_proxy=10.479 tool_chunk_delay=-/- burst=0.0 cpu=113.915 wall=2959.591 tokens=80.0
+astream_events_v3          n=24 err=0 first_delay=3.463/6.061 median_delay=2.006 max_delay=10.71 call_to_first_seen=317.37 req_reached_proxy=7.589 tool_chunk_delay=-/- burst=0.0 cpu=134.378 wall=2996.964 tokens=80.0
+astream_events_v3_gather   n=24 err=0 first_delay=2662.921/3610.547 median_delay=1358.383 max_delay=2662.921 call_to_first_seen=2955.72 req_reached_proxy=8.986 tool_chunk_delay=-/- burst=1.0 cpu=140.416 wall=2957.048 tokens=80.0
+== real_tool load1 1.41..6.22  (median / p95, ms; n per variant)
+plain_openai               n=24 err=0 first_delay=1.736/2.743 median_delay=0.873 max_delay=1.759 call_to_first_seen=1070.496 req_reached_proxy=5.413 tool_chunk_delay=1.893/3.466 burst=0.0 cpu=20.121 wall=1378.068 tokens=12.0
+chatopenai_stream          n=24 err=0 first_delay=1.881/2.759 median_delay=1.058 max_delay=1.976 call_to_first_seen=1219.872 req_reached_proxy=6.119 tool_chunk_delay=3.074/5.972 burst=0.0 cpu=30.748 wall=1556.559 tokens=12.0
+agent_messages             n=24 err=0 first_delay=2.163/2.916 median_delay=1.492 max_delay=2.713 call_to_first_seen=1059.399 req_reached_proxy=4.824 tool_chunk_delay=5.434/8.826 burst=0.0 cpu=40.958 wall=1369.416 tokens=12.0
+agent_messages_updates     n=24 err=0 first_delay=2.231/4.517 median_delay=1.454 max_delay=2.704 call_to_first_seen=1232.249 req_reached_proxy=7.382 tool_chunk_delay=4.255/8.408 burst=0.0 cpu=42.38 wall=1624.608 tokens=12.0
+astream_events_v2          n=24 err=0 first_delay=2.302/3.203 median_delay=1.698 max_delay=2.657 call_to_first_seen=1107.608 req_reached_proxy=9.656 tool_chunk_delay=4.395/8.365 burst=0.0 cpu=48.907 wall=1451.414 tokens=12.0
+stream_events_v3           n=24 err=0 first_delay=2.464/3.426 median_delay=1.616 max_delay=2.976 call_to_first_seen=1081.074 req_reached_proxy=9.569 tool_chunk_delay=7.921/11.414 burst=0.0 cpu=45.433 wall=1393.907 tokens=12.0
+stream_events_v3_raw       n=24 err=0 first_delay=2.409/3.073 median_delay=1.599 max_delay=2.731 call_to_first_seen=1332.782 req_reached_proxy=8.042 tool_chunk_delay=4.405/11.288 burst=0.0 cpu=41.13 wall=1707.238 tokens=12.0
+astream_events_v3          n=24 err=0 first_delay=3.692/4.776 median_delay=2.308 max_delay=4.239 call_to_first_seen=1050.427 req_reached_proxy=9.156 tool_chunk_delay=9.407/20.066 burst=0.0 cpu=48.97 wall=1335.651 tokens=12.0
+astream_events_v3_gather   n=24 err=0 first_delay=337.275/507.695 median_delay=185.608 max_delay=337.275 call_to_first_seen=1599.494 req_reached_proxy=6.186 tool_chunk_delay=-/- burst=1.0 cpu=48.623 wall=1601.749 tokens=12.0

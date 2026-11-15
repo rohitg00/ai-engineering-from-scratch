@@ -1,0 +1,1199 @@
+{
+ "cells": {
+  "gpt-oss:20b ChatOllama AutoStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    81,
+    81,
+    81
+   ],
+   "errors": [],
+   "model": "gpt-oss:20b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    6.7,
+    6.8,
+    6.7
+   ]
+  },
+  "gpt-oss:20b ChatOllama ProviderStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    17,
+    17,
+    17
+   ],
+   "errors": [],
+   "model": "gpt-oss:20b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    35.2,
+    34.8,
+    35.5
+   ]
+  },
+  "gpt-oss:20b ChatOpenAI AutoStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    81,
+    81,
+    81
+   ],
+   "errors": [],
+   "model": "gpt-oss:20b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    8.3,
+    6.9,
+    6.8
+   ]
+  },
+  "gpt-oss:20b ChatOpenAI ProviderStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    17,
+    17,
+    17
+   ],
+   "errors": [],
+   "model": "gpt-oss:20b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    43.1,
+    35.5,
+    34.9
+   ]
+  },
+  "gpt-oss:20b ChatOpenAI ToolStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    81,
+    81,
+    81
+   ],
+   "errors": [],
+   "model": "gpt-oss:20b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "ToolStrategy",
+   "wall_s": [
+    7.0,
+    7.2,
+    6.9
+   ]
+  },
+  "nomic-embed-text:latest ChatOllama AutoStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    null,
+    null,
+    null
+   ],
+   "errors": [
+    "ResponseError: \"nomic-embed-text:latest\" does not support chat (status code: 400)"
+   ],
+   "model": "nomic-embed-text:latest",
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      400,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      400,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      400,
+      null,
+      false
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "nomic-embed-text:latest ChatOllama ProviderStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    null,
+    null,
+    null
+   ],
+   "errors": [
+    "ResponseError: \"nomic-embed-text:latest\" does not support chat (status code: 400)"
+   ],
+   "model": "nomic-embed-text:latest",
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      400,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      400,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      400,
+      "schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "nomic-embed-text:latest ChatOpenAI AutoStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    null,
+    null,
+    null
+   ],
+   "errors": [
+    "OpenAIInvalidRequestError: Error code: 400 - \"nomic-embed-text:latest\" does not support chat"
+   ],
+   "model": "nomic-embed-text:latest",
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "nomic-embed-text:latest ChatOpenAI ProviderStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    null,
+    null,
+    null
+   ],
+   "errors": [
+    "OpenAIInvalidRequestError: Error code: 400 - \"nomic-embed-text:latest\" does not support chat"
+   ],
+   "model": "nomic-embed-text:latest",
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      "json_schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    0.1,
+    0.1,
+    0.0
+   ]
+  },
+  "nomic-embed-text:latest ChatOpenAI ToolStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    null,
+    null,
+    null
+   ],
+   "errors": [
+    "OpenAIInvalidRequestError: Error code: 400 - \"nomic-embed-text:latest\" does not support chat"
+   ],
+   "model": "nomic-embed-text:latest",
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      400,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "ToolStrategy",
+   "wall_s": [
+    0.0,
+    0.0,
+    0.1
+   ]
+  },
+  "qwen3:0.6b ChatOllama AutoStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    207,
+    207,
+    207
+   ],
+   "errors": [],
+   "model": "qwen3:0.6b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    2.8,
+    3.5,
+    3.0
+   ]
+  },
+  "qwen3:0.6b ChatOllama ProviderStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    24,
+    24,
+    24
+   ],
+   "errors": [],
+   "model": "qwen3:0.6b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    3.3,
+    2.3,
+    2.7
+   ]
+  },
+  "qwen3:0.6b ChatOpenAI AutoStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    207,
+    207,
+    207
+   ],
+   "errors": [],
+   "model": "qwen3:0.6b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    3.7,
+    3.2,
+    2.8
+   ]
+  },
+  "qwen3:0.6b ChatOpenAI ProviderStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    24,
+    24,
+    24
+   ],
+   "errors": [],
+   "model": "qwen3:0.6b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    3.9,
+    2.6,
+    2.6
+   ]
+  },
+  "qwen3:0.6b ChatOpenAI ToolStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    207,
+    207,
+    207
+   ],
+   "errors": [],
+   "model": "qwen3:0.6b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "ToolStrategy",
+   "wall_s": [
+    2.5,
+    3.1,
+    3.2
+   ]
+  },
+  "qwen3:4b-instruct-2507-q4_K_M ChatOllama AutoStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    35,
+    35,
+    35
+   ],
+   "errors": [],
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    2.5,
+    2.9,
+    2.8
+   ]
+  },
+  "qwen3:4b-instruct-2507-q4_K_M ChatOllama ProviderStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    239,
+    239,
+    239
+   ],
+   "errors": [],
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    18.3,
+    17.9,
+    18.5
+   ]
+  },
+  "qwen3:4b-instruct-2507-q4_K_M ChatOpenAI AutoStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    35,
+    35,
+    35
+   ],
+   "errors": [],
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    3.9,
+    2.3,
+    2.5
+   ]
+  },
+  "qwen3:4b-instruct-2507-q4_K_M ChatOpenAI ProviderStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    239,
+    239,
+    239
+   ],
+   "errors": [],
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    26.7,
+    18.6,
+    18.4
+   ]
+  },
+  "qwen3:4b-instruct-2507-q4_K_M ChatOpenAI ToolStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    35,
+    35,
+    35
+   ],
+   "errors": [],
+   "model": "qwen3:4b-instruct-2507-q4_K_M",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "ToolStrategy",
+   "wall_s": [
+    3.0,
+    2.9,
+    2.6
+   ]
+  },
+  "qwen3:8b ChatOllama AutoStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    170,
+    170,
+    170
+   ],
+   "errors": [],
+   "model": "qwen3:8b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      null,
+      false
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    23.2,
+    24.1,
+    23.8
+   ]
+  },
+  "qwen3:8b ChatOllama ProviderStrategy": {
+   "client": "ChatOllama",
+   "completion_tokens": [
+    23,
+    23,
+    23
+   ],
+   "errors": [],
+   "model": "qwen3:8b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/api/chat",
+      200,
+      "schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    37.8,
+    42.2,
+    41.4
+   ]
+  },
+  "qwen3:8b ChatOpenAI AutoStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    170,
+    170,
+    170
+   ],
+   "errors": [],
+   "model": "qwen3:8b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "AutoStrategy",
+   "wall_s": [
+    24.8,
+    23.9,
+    23.9
+   ]
+  },
+  "qwen3:8b ChatOpenAI ProviderStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    23,
+    23,
+    23
+   ],
+   "errors": [],
+   "model": "qwen3:8b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      "json_schema",
+      false
+     ]
+    ]
+   ],
+   "strategy": "ProviderStrategy",
+   "wall_s": [
+    45.5,
+    39.1,
+    41.4
+   ]
+  },
+  "qwen3:8b ChatOpenAI ToolStrategy": {
+   "client": "ChatOpenAI",
+   "completion_tokens": [
+    170,
+    170,
+    170
+   ],
+   "errors": [],
+   "model": "qwen3:8b",
+   "outcomes": [
+    "valid",
+    "valid",
+    "valid"
+   ],
+   "requests": [
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ],
+    [
+     [
+      "/v1/chat/completions",
+      200,
+      null,
+      true
+     ]
+    ]
+   ],
+   "strategy": "ToolStrategy",
+   "wall_s": [
+    22.7,
+    24.2,
+    23.6
+   ]
+  }
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "model": "five models on Ollama 0.31.1 on the GPU of the Mac, temperature 0, seed 42",
+ "not_used": "the nomic-embed-text rows as a test of the format: Ollama refused the chat request, not the format",
+ "requests_note": "each request is path, status, the response_format type or the format of the body, and whether the body held tool_choice",
+ "run": "create_agent(tools=[], response_format=Contact) on one made-up line, recursion_limit 12, through a recording proxy; ChatOpenAI on /v1 with max_retries=0 and ChatOllama on /api/chat; 3 runs per cell",
+ "sources": [
+  "capture/lab/T06-structured-output-mac-real/01-provider-paths.jsonl",
+  "capture/lab/T06-structured-output-mac-real/t06_provider_real.py",
+  "capture/lab/T06-structured-output-mac-real/mr_common.py"
+ ]
+}

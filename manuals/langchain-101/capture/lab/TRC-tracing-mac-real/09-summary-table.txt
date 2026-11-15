@@ -1,0 +1,32 @@
+== latency: 3 processes x 21 runs per condition, first run of each process left out
+off    n=60 ok=60 wall_median=3072.7 ms model_median=3052.4 non_model_median=17.76 ms p95=35.05 first runs (wall, non-model)=[(13326.4, 470.3), (1150.8, 26.0), (1241.7, 24.9)]
+ok     n=60 ok=60 wall_median=2911.2 ms model_median=2884.2 non_model_median=31.74 ms p95=301.76 first runs (wall, non-model)=[(1232.2, 187.2), (4311.9, 1227.7), (1245.0, 128.7)]
+ok-fg  n=60 ok=60 wall_median=3200.6 ms model_median=3058.9 non_model_median=38.51 ms p95=813.25 first runs (wall, non-model)=[(1231.0, 144.7), (3182.9, 242.5), (892.9, 95.4)]
+   off#1    exit_lag=0.241 requests={} posted=0/147 runs_per_post=[] uptime= 12 users, load averages: 7.17 7.03 7.23
+   ok#1     exit_lag=0.223 requests={'GET /info': 1, 'POST /runs/multipart': 44} posted=147/147 runs_per_post=[1, 2, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 0] uptime= 12 users, load averages: 6.95 7.27 7.32
+   ok-fg#1  exit_lag=2.298 requests={'GET /info': 1, 'POST /runs/multipart': 46} posted=147/147 runs_per_post=[3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 2, 2, 3, 2, 2, 3, 4, 3, 4, 3, 4, 3, 4, 3, 1, 3, 3, 4, 3, 4, 3, 4, 3, 4, 0] uptime= 12 users, load averages: 4.62 6.51 7.03
+   ok-fg#2  exit_lag=0.887 requests={'GET /info': 1, 'POST /runs/multipart': 44} posted=147/147 runs_per_post=[1, 2, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 0] uptime=2 users, load averages: 27.45 12.36 9.14
+   ok#2     exit_lag=0.222 requests={'GET /info': 1, 'POST /runs/multipart': 45} posted=147/147 runs_per_post=[1, 2, 4, 0, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 0] uptime= users, load averages: 21.32 14.47 10.27
+   off#2    exit_lag=0.158 requests={} posted=0/147 runs_per_post=[] uptime= users, load averages: 13.88 14.46 10.67
+   off#3    exit_lag=0.183 requests={} posted=0/147 runs_per_post=[] uptime=2 users, load averages: 8.16 12.58 10.25
+   ok#3     exit_lag=0.176 requests={'GET /info': 1, 'POST /runs/multipart': 43} posted=147/147 runs_per_post=[3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 0] uptime=12 users, load averages: 5.77 11.01 9.85
+   ok-fg#3  exit_lag=0.205 requests={'GET /info': 1, 'POST /runs/multipart': 43} posted=147/147 runs_per_post=[3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 3, 4, 0] uptime=2 users, load averages: 9.84 11.55 10.13
+== interleaved in one process, tracing_context(enabled=True/False) alternating, first 2 runs left out
+on n=60 ok=60 non_model_median=26.33 wall=1624.6; off n=60 ok=60 non_model_median=17.70 wall=1603.6; paired on-off median=7.42 ms (n=60); first run=934.0 non-model 82.6
+   exit_lag=0.321 requests={'GET /info': 1, 'POST /runs/multipart': 183} posted=427 expected traced=427 runs_per_post median=3.5 max=4
+== failure: one process of 50 runs per endpoint state
+down       rc=0 ok=50/50 errors=0 run_median=1735.4 non_model_median=26.55 first=928.2 exit_lag=9.9 child_wall=95.133 flush_ms=None requests={} posted=0/350 timeout=300
+e500       rc=0 ok=50/50 errors=0 run_median=1638.2 non_model_median=23.58 first=952.5 exit_lag=17.123 child_wall=101.748 flush_ms=None requests={'GET /info': 1, 'POST /runs/multipart': 132} posted=350/350 timeout=300
+hang       rc=timeout ok=50/50 errors=0 run_median=1937.4 non_model_median=23.7 first=879.9 exit_lag=207.967 child_wall=300.029 flush_ms=None requests={'GET /info': 4, 'POST /runs/multipart': 6} posted=50/350 timeout=300
+slow       rc=0 ok=50/50 errors=0 run_median=1102.1 non_model_median=28.62 first=948.0 exit_lag=3.7 child_wall=61.106 flush_ms=None requests={'GET /info': 1, 'POST /runs/multipart': 28} posted=350/350 timeout=300
+slow-fg    rc=0 ok=50/50 errors=0 run_median=1291.2 non_model_median=24.21 first=929.8 exit_lag=3.713 child_wall=67.116 flush_ms=None requests={'GET /info': 1, 'POST /runs/multipart': 31} posted=350/350 timeout=300
+ok-flush   rc=0 ok=50/50 errors=0 run_median=1636.7 non_model_median=25.54 first=946.5 exit_lag=0.389 child_wall=79.442 flush_ms=68.2 requests={'GET /info': 1, 'POST /runs/multipart': 101} posted=350/350 timeout=300
+slow-flush rc=0 ok=50/50 errors=0 run_median=1891.8 non_model_median=26.1 first=919.0 exit_lag=0.383 child_wall=101.066 flush_ms=3987.4 requests={'GET /info': 1, 'POST /runs/multipart': 47} posted=350/350 timeout=300
+local: local:agent inside=local answer='2 + 3 = 5.' trees=0 recorder=['GET /info', 'POST /runs/multipart'] x4 patched=[]
+local: local:traceable inside=local answer='2 + 3 = 5.' trees=1 recorder=['GET /info', 'POST /runs/multipart'] x4 patched=[]
+local: false:agent inside=False answer='2 + 3 = 5.' trees=0 recorder=['GET /info'] x1 patched=[]
+local: true:agent inside=True answer='2 + 3 = 5.' trees=0 recorder=['GET /info', 'POST /runs/multipart'] x4 patched=[]
+local: none:agent inside=False answer='2 + 3 = 5.' trees=0 recorder=['GET /info'] x1 patched=[]
+local: local:agent:patched-requests inside=local answer='2 + 3 = 5.' trees=0 recorder=[] x0 patched=['GET https://api.smith.langchain.com/info', 'POST https://api.smith.langchain.com/runs/multipart', 'POST https://api.smith.langchain.com/runs/multipart', 'POST https://api.smith.langchain.com/runs/multipart']
+local: local:traceable:patched-requests inside=local answer='2 + 3 = 5.' trees=1 recorder=[] x0 patched=['GET https://api.smith.langchain.com/info', 'POST https://api.smith.langchain.com/runs/multipart', 'POST https://api.smith.langchain.com/runs/multipart', 'POST https://api.smith.langchain.com/runs/multipart']
+local: true:agent:patched-requests inside=True answer='2 + 3 = 5.' trees=0 recorder=[] x0 patched=['GET https://api.smith.langchain.com/info', 'POST https://api.smith.langchain.com/runs/multipart', 'POST https://api.smith.langchain.com/runs/multipart', 'POST https://api.smith.langchain.com/runs/multipart']

@@ -4,23 +4,28 @@ Each folder holds the raw files of one experiment, copied unchanged from the run
 
 | Folder | Machine | What it recorded |
 |---|---|---|
-| `T01-overhead-mac/` | the Mac | a plain `openai` loop against `create_agent` on a local stub (200 runs each) and on Ollama with Qwen3 4B (24 runs each), the bytes and tokens of each Ollama request, the request body diff, import times (10 runs each), install sizes |
+| `T01-overhead-mac/` | the Mac | a plain `openai` loop against `create_agent` on a local stub (200 runs each) and on Ollama with Qwen3 4B (24 runs each), the bytes and tokens of each Ollama request, the request body diff, import times (10 runs each), install sizes. Superseded by `T01-overhead-mac-real/` |
 | `T02-crash-resume-mac/` | the Mac | 450 trials of a SIGKILL at five points, for `sync`, `async`, and `exit` on `SqliteSaver` and `PostgresSaver`, then a resume in a new process. In 30 trials, `exit` mode never reached the `before_put_writes` kill point |
 | `T05-retries-mac/` | the Mac | `ChatOpenAI` and an HTTP tool against a stub that returns 429, 500, 400, or sleeps past the timeout, 3 runs per cell, with the lab script `t05_retries.py` |
-| `T06-structured-output-mac/` | the Mac | `ToolStrategy`, `ProviderStrategy`, and `AutoStrategy` on four Qwen3 models on Ollama with four schemas (600 runs), and 20 fake and stub cases for the strategy choice, with the lab scripts |
+| `T06-structured-output-mac/` | the Mac | `ToolStrategy`, `ProviderStrategy`, and `AutoStrategy` on four Qwen3 models on Ollama with four schemas (600 runs), and 20 fake and stub cases for the strategy choice, with the lab scripts. Its stub cases are superseded by `T06-structured-output-mac-real/` |
 | `T07-approvals-mac/` | the Mac | `HumanInTheLoopMiddleware` in batched and per-call mode, parallel interrupts in a graph and a subgraph, and strict resume, 27 cases with 3 runs each, every step in a new process on `SqliteSaver` |
 | `T13-serde-mac/` | the Mac | what `load()` and `JsonPlusSerializer` accept by default and with `LANGGRAPH_STRICT_MSGPACK=true`, and a round trip of 29 values through `JsonPlusSerializer` and `SqliteSaver`, one run each |
 | `T14-stores-mac/` | the Mac | namespace isolation of `InMemoryStore`, `SqliteStore`, and `PostgresStore` for eight user ids, semantic search with `nomic-embed-text`, and the vector rows left after a delete, one run per query |
 | `T09-tokens-mac/` | the Mac | prompt tokens of a plain `ollama` loop, `create_agent`, and `create_deep_agent` on Qwen3 8B for three tasks, 3 runs each, and the first request of a default deep agent at `deepagents` 0.6.12 and 0.7.38, counted with two tiktoken tokenizers and with Qwen3 |
 | `T11-middleware-cost-mac/` | the Mac | `create_agent` with 0 to 20 no-op middlewares of five hook types, and nine setups of built-in middleware: seven single middlewares, five `PIIMiddleware` instances, and a stack of five, 300 timed runs per cell, with the lab script `t11_run.py` |
-| `T04-streaming-mac/` | the Mac | nine stream APIs against a stamping SSE stub (50 runs each for text and for a tool call, 20 for a sub-agent) and against Qwen3 4B on Ollama (20 each), the langchain#38484 isolation runs (5 per pattern), and a reasoning model with two loop orders (3 each), with the lab scripts |
+| `T04-streaming-mac/` | the Mac | nine stream APIs against a stamping SSE stub (50 runs each for text and for a tool call, 20 for a sub-agent) and against Qwen3 4B on Ollama (20 each), the langchain#38484 isolation runs (5 per pattern), and a reasoning model with two loop orders (3 each), with the lab scripts. Superseded by `T04-streaming-mac-real/` |
 | `T08-parallel-tools-mac/` | the Mac | 1 to 16 parallel calls of a 200 ms tool under `create_agent` and `ToolNode`, `invoke` and `ainvoke`, five `max_concurrency` values, 5 runs per cell; tool calls with no id, duplicate tool names, and parallel calls on Ollama, with the lab scripts |
 | `T12-mcp-mac/` | the Mac | `langchain.mcp` against a FastMCP server over stdio and Streamable HTTP: string targets, tool errors, a timeout, a server crash, and 50 timed calls per transport; the same server under `langchain-mcp-adapters` 0.3.2 in a separate environment |
-| `TRC-tracing-mac/` | the Mac | tracing against a local recorder: 177 agent runs per condition with tracing off and on, one process of 50 runs for each endpoint state, and what `tracing_context(enabled="local")` sends |
+| `TRC-tracing-mac/` | the Mac | tracing against a local recorder: 177 agent runs per condition with tracing off and on, one process of 50 runs for each endpoint state, and what `tracing_context(enabled="local")` sends. Superseded by `TRC-tracing-mac-real/` |
 | `T17-claims-mac/` | the Mac | the default recursion limits of `StateGraph` and `create_agent`, and replay and `update_state` forks of a graph and an agent, one run each |
 | `T18-evaluate-leak-mac/` | the Mac | `evaluate(upload_results=False)` with the default client on an agent target and on the same target inside `tracing_context(enabled=False)`, with a local endpoint and with no environment, and on a plain function with a local endpoint only, five conditions of 5 processes each, with the lab scripts |
 | `T19-pytest-plugin-mac/` | the Mac | the pytest plugin of `langsmith` with pytest 8.4.2, tracking off and on, with a local endpoint and with no environment, `--langsmith-output`, and tracking off with tracing on, 3 processes per condition, with the lab scripts and tests |
 | `T20-mcp-edges-mac/` | the Mac | `langchain.mcp` against a FastMCP server: elicitation with an interrupt, with a checkpointer and without, with your own handler, on both protocol versions; an error result with structured content; progress; 27 cases, 3 runs each, with the lab scripts |
+| `T01-overhead-mac-real/` | the Mac | 8 programs on Qwen3 4B, on `/v1` and on the native path, 40 shuffled runs each. Framework time is the wall time minus the model time at a recording proxy. The tokens and bytes of each call, with `t01_real.py` and `mr_common.py` |
+| `T04-streaming-mac-real/` | the Mac | nine stream APIs on Qwen3 4B through a stamping proxy, 24 runs each for text and for a tool call, and langchain#38484 on Qwen3 8B with reasoning, 5 runs per loop, with the lab scripts |
+| `T06-structured-output-mac-real/` | the Mac | `ProviderStrategy`, `AutoStrategy`, and `ToolStrategy` on five Ollama models with `ChatOpenAI` on `/v1` and `ChatOllama`, 3 runs per case, with `t06_provider_real.py` |
+| `TRC-tracing-mac-real/` | the Mac | a Qwen3 4B agent against a local recorder: 60 interleaved runs with tracing on and off, 3 processes per condition, one process of 50 runs per endpoint state, and `enabled="local"`, with the lab scripts |
+| `_mac-real-driver/` | the Mac | `run_all.sh`, which ran T04, T06, and TRC of the `-mac-real` folders in that order, and its log. T01 ran alone before it |
 | `T03-checkpoint-cost-x86/` | the x86 server guest | checkpoint write time and thread storage for three savers and two channel types, up to 5,000 steps |
 | `T15-agent-server-x86/` | the x86 server guest | `langgraph dev`: the recursion limit, jobs per worker, a load of 1 to 100 concurrent runs, the time floor of one run, the four double texting strategies, and the start and the license error of `langgraph up`, with the lab scripts |
 | `T10-long-threads-x86/` | the x86 server guest | `create_agent` on `PostgresSaver` for 2,000 turns, without summarization and with three triggers, one run each, with a fake model with no delay |
@@ -39,11 +44,11 @@ Each folder holds the raw files of one experiment, copied unchanged from the run
 | `deep-agent/` | the Mac | the Part 8 deep agent with an editor subagent on Qwen3 8B, one run, with the tokens of each model call |
 | `failure-drill/` | the Mac | the Part 8 failure drill, seven cases with a scripted fake model and a local stub, one run. Superseded by `failure-drill-x86/` |
 
-The Mac is an Apple M1 Max with 10 cores and 64 GiB, macOS 26.2, Python 3.13.12, Ollama 0.31.1, and PostgreSQL 14.21. Other work ran on it during every timed run. The x86 server guest is a KVM guest with 32 vCPU and 48 GiB on a shared server with an AMD EPYC 7452. Its disk was in the memory of the server. It ran Ubuntu 24.04, Python 3.13.18, PostgreSQL 16.15, Redis 7.0.15, and Docker 29.1.3. `x86-guest-machine.txt` records these. In T03, T10, T15, and T16 its models are fakes with a fixed delay. The folders that end in `-x86` from T05 to T19, and `failure-drill-x86/`, use Qwen3 4B (`qwen3:4b-instruct-2507-q4_K_M`) on Ollama 0.31.1 on CPU, with temperature 0, seed 42, and a context of 8192. The counts of T07 and T08 also use Qwen3 8B with reasoning off.
+The Mac is an Apple M1 Max with 10 cores and 64 GiB, macOS 26.2, Python 3.13.12, Ollama 0.31.1, and PostgreSQL 14.21. Other work ran on it during every timed run. The x86 server guest is a KVM guest with 32 vCPU and 48 GiB on a shared server with an AMD EPYC 7452. Its disk was in the memory of the server. It ran Ubuntu 24.04, Python 3.13.18, PostgreSQL 16.15, Redis 7.0.15, and Docker 29.1.3. `x86-guest-machine.txt` records these. In T03, T10, T15, and T16 its models are fakes with a fixed delay. The folders that end in `-x86` from T05 to T19, and `failure-drill-x86/`, use Qwen3 4B (`qwen3:4b-instruct-2507-q4_K_M`) on Ollama 0.31.1 on CPU, with temperature 0, seed 42, and a context of 8192. The counts of T07 and T08 also use Qwen3 8B with reasoning off. The folders that end in `-mac-real` use Qwen3 4B on Ollama 0.31.1 on the GPU of the Mac, with temperature 0, seed 42, and the default context of the server, 262144. T04 also uses Qwen3 8B with reasoning for #38484, and T06 uses five models. Another agent ran API rows on the Mac during these runs, and each block row holds the output of `uptime`.
 
 ## Superseded rows
 
-The folders that end in `-x86` ran again, with a real model, the experiments that used a fake model or a stub provider on the Mac. The old folders stay, and the manual uses only their rows that involve no model.
+The folders that end in `-x86` and `-mac-real` ran again, with a real model, the experiments that used a fake model or a stub provider on the Mac. The old folders stay, and the manual uses only their rows that involve no model, or that ran on a real model.
 
 | Old folder | Superseded by | Rows that stay valid |
 |---|---|---|
@@ -55,6 +60,10 @@ The folders that end in `-x86` ran again, with a real model, the experiments tha
 | `T18-evaluate-leak-mac/` | `T18-evaluate-leak-x86/` | `04-info-origin.txt` |
 | `T19-pytest-plugin-mac/` | `T19-pytest-plugin-x86/` | none that the manual uses |
 | `failure-drill/` | `failure-drill-x86/` | none |
+| `T01-overhead-mac/` | `T01-overhead-mac-real/` | `06-import-times.jsonl`, `07-install-size.txt`, and the fields of `09-request-body-diff.txt` |
+| `T04-streaming-mac/` | `T04-streaming-mac-real/` | `reasoning-ollama-runs.jsonl` and `ollama-per-run.jsonl`, which ran on Qwen3 4B. The `subagent` phase has no real counterpart, and the manual uses no number from it |
+| `T06-structured-output-mac/` | `T06-structured-output-mac-real/` for the stub rows that answer 400 on `response_format` | `01-ollama-runs.jsonl` and `03-ollama-seq-n10.jsonl`, which ran on Ollama. The fake rows of `02-d209-fake-and-stub.jsonl` were not run again |
+| `TRC-tracing-mac/` | `TRC-tracing-mac-real/` | none of its numbers |
 
 ## Rows not to use in the x86 folders
 
@@ -65,6 +74,13 @@ The folders that end in `-x86` ran again, with a real model, the experiments tha
 - `T05-retries-x86/`: the 429 and 500 rows are statuses that the relay sent in place of the model, not errors of a provider. The manual names them so.
 - `T11-middleware-cost-x86/`: the absolute microseconds depend on the load of 14 to 25. The manual uses the share of the run and the ratio of node hooks to wrap hooks.
 - `T17-claims-x86/02-nolimit.jsonl`: one run, which shared Ollama for a few minutes with the G3 rerun of T07, so its pace is approximate.
+
+## Rows not to use in the -mac-real folders
+
+- `T01-overhead-mac-real/01-runs.jsonl`: the rows with `"warmup": true`, rounds 0 and 1. The wall and model times between programs, because the model time moved with the load. The manual uses the framework time, the difference to the plain loop in the same round, and the CPU time.
+- `T04-streaming-mac-real/`: the rows with `"warmup": true`, and the tool fields of the gather consumer, which reads no tool calls. The CPU and wall times depend on the shared load.
+- `T06-structured-output-mac-real/01-provider-paths.jsonl`: the `nomic-embed-text` rows as a test of the format, because Ollama refused the chat request, not the format. They do show one request, an error, and no second request.
+- `TRC-tracing-mac-real/`: the first run of `off#1`, which loaded the model cold. The process medians and p95 of `ok` and `ok-fg` as a cost of tracing, because the load reached 21 to 27 in two of those processes. The summary uses `04-interleave` for the cost. The hang counts are at 300 s.
 
 ## Changes from the raw runs
 
@@ -100,4 +116,5 @@ The folders that end in `-x86` ran again, with a real model, the experiments tha
 - `t05_retries.py` and `t08_analyze.py` import `common.py` from `T04-streaming-mac/`. `t05_retries.py` still cannot run, because its stub server `stub_server.py` is not kept. `t19_driver.py` needs its scratch environment in `_venv/`, which is not kept. No measurement logic changed.
 - No file holds a key, a token, or a personal name. The only host names are `127.0.0.1` and the public hosts that recorded requests and error texts name, such as `api.smith.langchain.com`. No request reached such a host.
 - The `-x86` folders hold the raw files, the logs, and the lab scripts of those runs, unchanged except in two places. In `T05-retries-x86/10-summary.txt` and `T19-pytest-plugin-x86/10-summary.txt`, the home folder is replaced with `<lab>` in one path each. `09-summary-table.txt` and `10-summary.txt` in each folder are the notes that the run wrote, not summaries that the manual reads.
+- The `-mac-real` folders and `_mac-real-driver/` hold the raw files, the logs, and the lab scripts of those runs, unchanged except in two places. The scripts import `mr_common.py` from their own folder, in place of a shared helper folder. In `T04-streaming-mac-real/03-iso38484-qwen3-8b.log`, the home paths are replaced with `<site-packages>` and `<scripts>`. `09-summary*.txt`, `02-summary.json` of T01, and `10-analysis-*.json` of T04 are the notes that the run wrote, not summaries that the manual reads. The smoke files of these runs are not kept.
 - `capture/demos/failure-drill/drill.py` is `failure-drill-x86/drill_real.py` with its import of `lr_common` changed to `real`, a cut of `lr_common.py`.

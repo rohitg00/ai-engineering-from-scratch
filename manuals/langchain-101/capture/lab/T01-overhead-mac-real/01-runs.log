@@ -1,0 +1,379 @@
+{"kind": "block", "label": "round 0", "uptime": "12:12  12 users, load averages: 4.83 3.79 3.47", "load": [4.8310546875, 3.78955078125, 3.47021484375], "time": 1794724966.0425951}
+d_create_agent_saver 0 1311.8 1271.2 True 
+e_stategraph 0 1318.6 1287.4 True 
+g_create_agent_ollama 0 1287.0 1272.9 True 
+h_stategraph_ollama 0 1328.5 1303.9 True 
+c_create_agent 0 1289.3 1261.1 True 
+f_plain_ollama 0 1286.5 1273.6 True 
+a_plain_openai 0 1340.9 1296.2 True 
+b_bind_tools_loop 0 1330.4 1292.1 True 
+{"kind": "block", "label": "round 1", "uptime": "12:12  12 users, load averages: 5.15 3.89 3.51", "load": [5.1513671875, 3.89453125, 3.5107421875], "time": 1794724976.994692}
+d_create_agent_saver 1 1337.3 1302.8 True 
+h_stategraph_ollama 1 1317.6 1285.6 True 
+c_create_agent 1 1297.9 1275.3 True 
+a_plain_openai 1 1315.7 1287.1 True 
+e_stategraph 1 1306.3 1286.0 True 
+g_create_agent_ollama 1 1271.3 1254.4 True 
+f_plain_ollama 1 1231.3 1224.3 True 
+b_bind_tools_loop 1 1238.7 1225.3 True 
+{"kind": "block", "label": "round 2", "uptime": "12:13  12 users, load averages: 4.68 3.83 3.49", "load": [4.67919921875, 3.83203125, 3.49267578125], "time": 1794724987.7576141}
+d_create_agent_saver 2 1243.2 1228.6 True 
+f_plain_ollama 2 1266.8 1255.4 True 
+c_create_agent 2 1387.8 1355.1 True 
+e_stategraph 2 1388.3 1349.0 True 
+b_bind_tools_loop 2 1394.0 1371.8 True 
+g_create_agent_ollama 2 1441.5 1418.9 True 
+h_stategraph_ollama 2 1562.8 1539.2 True 
+a_plain_openai 2 1505.4 1490.0 True 
+{"kind": "block", "label": "round 3", "uptime": "12:13  12 users, load averages: 4.10 3.74 3.47", "load": [4.103515625, 3.7421875, 3.46630859375], "time": 1794724999.401345}
+c_create_agent 3 1407.7 1372.7 True 
+b_bind_tools_loop 3 1383.4 1370.9 True 
+a_plain_openai 3 1399.1 1383.0 True 
+h_stategraph_ollama 3 1489.4 1479.4 True 
+e_stategraph 3 1438.5 1403.0 True 
+g_create_agent_ollama 3 1290.3 1281.0 True 
+f_plain_ollama 3 1304.6 1287.4 True 
+d_create_agent_saver 3 1330.2 1291.0 True 
+{"kind": "block", "label": "round 4", "uptime": "12:13  12 users, load averages: 3.70 3.67 3.44", "load": [3.69970703125, 3.66748046875, 3.44287109375], "time": 1794725010.898966}
+f_plain_ollama 4 1287.7 1278.8 True 
+c_create_agent 4 1325.6 1292.7 True 
+h_stategraph_ollama 4 1322.0 1308.1 True 
+d_create_agent_saver 4 1386.3 1362.7 True 
+b_bind_tools_loop 4 1429.6 1413.1 True 
+a_plain_openai 4 1390.9 1383.6 True 
+g_create_agent_ollama 4 1409.2 1400.5 True 
+e_stategraph 4 1624.6 1615.3 True 
+{"kind": "block", "label": "round 5", "uptime": "12:13  13 users, load averages: 4.14 3.76 3.48", "load": [4.1396484375, 3.7607421875, 3.47802734375], "time": 1794725022.510863}
+f_plain_ollama 5 1398.3 1394.4 True 
+d_create_agent_saver 5 1336.8 1316.2 True 
+g_create_agent_ollama 5 1325.7 1312.4 True 
+e_stategraph 5 1307.6 1290.2 True 
+a_plain_openai 5 1346.5 1337.7 True 
+h_stategraph_ollama 5 1425.2 1413.4 True 
+b_bind_tools_loop 5 1495.8 1485.2 True 
+c_create_agent 5 1448.9 1431.6 True 
+{"kind": "block", "label": "round 6", "uptime": "12:13  13 users, load averages: 3.59 3.66 3.45", "load": [3.58544921875, 3.65771484375, 3.44580078125], "time": 1794725034.041666}
+d_create_agent_saver 6 1389.4 1372.9 True 
+b_bind_tools_loop 6 1362.5 1352.6 True 
+a_plain_openai 6 1381.8 1374.6 True 
+h_stategraph_ollama 6 1384.7 1369.1 True 
+e_stategraph 6 1423.9 1406.3 True 
+c_create_agent 6 1491.9 1453.6 True 
+g_create_agent_ollama 6 1550.2 1521.5 True 
+f_plain_ollama 6 1392.2 1378.6 True 
+{"kind": "block", "label": "round 7", "uptime": "12:14  13 users, load averages: 4.31 3.80 3.50", "load": [4.31494140625, 3.80224609375, 3.49853515625], "time": 1794725045.860022}
+f_plain_ollama 7 1453.2 1449.6 True 
+h_stategraph_ollama 7 1389.1 1378.7 True 
+g_create_agent_ollama 7 1412.0 1401.9 True 
+c_create_agent 7 1374.6 1350.6 True 
+e_stategraph 7 1355.1 1336.7 True 
+a_plain_openai 7 1346.0 1334.6 True 
+d_create_agent_saver 7 1361.0 1341.8 True 
+b_bind_tools_loop 7 1388.1 1364.9 True 
+{"kind": "block", "label": "round 8", "uptime": "12:14  12 users, load averages: 4.11 3.77 3.49", "load": [4.10595703125, 3.77490234375, 3.4921875], "time": 1794725057.398813}
+c_create_agent 8 1417.6 1381.4 True 
+e_stategraph 8 1474.0 1463.1 True 
+h_stategraph_ollama 8 1465.2 1453.9 True 
+b_bind_tools_loop 8 1579.7 1551.8 True 
+g_create_agent_ollama 8 1555.5 1527.7 True 
+a_plain_openai 8 1497.0 1448.2 True 
+f_plain_ollama 8 1354.7 1337.1 True 
+d_create_agent_saver 8 1366.7 1323.8 True 
+{"kind": "block", "label": "round 9", "uptime": "12:14  12 users, load averages: 4.44 3.87 3.53", "load": [4.44384765625, 3.8662109375, 3.529296875], "time": 1794725069.575559}
+f_plain_ollama 9 1558.1 1553.6 True 
+e_stategraph 9 1337.8 1308.5 True 
+b_bind_tools_loop 9 1384.9 1356.1 True 
+c_create_agent 9 1538.3 1499.0 True 
+h_stategraph_ollama 9 1554.4 1547.2 True 
+a_plain_openai 9 1534.7 1506.8 True 
+g_create_agent_ollama 9 1451.5 1437.1 True 
+d_create_agent_saver 9 1448.6 1424.7 True 
+{"kind": "block", "label": "round 10", "uptime": "12:14  12 users, load averages: 4.43 3.89 3.54", "load": [4.4296875, 3.8857421875, 3.5400390625], "time": 1794725081.8397849}
+e_stategraph 10 1448.5 1413.7 True 
+a_plain_openai 10 1477.0 1454.8 True 
+d_create_agent_saver 10 1481.3 1446.7 True 
+f_plain_ollama 10 1485.6 1475.4 True 
+b_bind_tools_loop 10 1526.9 1520.2 True 
+g_create_agent_ollama 10 1582.0 1557.7 True 
+h_stategraph_ollama 10 1561.5 1520.6 True 
+c_create_agent 10 1497.3 1456.6 True 
+{"kind": "block", "label": "round 11", "uptime": "12:14  12 users, load averages: 4.70 3.96 3.57", "load": [4.697265625, 3.958984375, 3.57080078125], "time": 1794725094.347799}
+a_plain_openai 11 1432.1 1404.6 True 
+h_stategraph_ollama 11 1667.3 1653.9 True 
+d_create_agent_saver 11 1745.3 1708.0 True 
+g_create_agent_ollama 11 1745.0 1724.2 True 
+b_bind_tools_loop 11 1593.8 1559.8 True 
+f_plain_ollama 11 1440.5 1429.8 True 
+e_stategraph 11 1449.8 1402.6 True 
+c_create_agent 11 1481.9 1452.0 True 
+{"kind": "block", "label": "round 12", "uptime": "12:15  12 users, load averages: 4.21 3.88 3.55", "load": [4.20849609375, 3.8779296875, 3.54638671875], "time": 1794725107.369161}
+a_plain_openai 12 1524.9 1500.9 True 
+d_create_agent_saver 12 1582.9 1564.4 True 
+c_create_agent 12 1635.7 1603.0 True 
+b_bind_tools_loop 12 1563.7 1523.4 True 
+h_stategraph_ollama 12 1526.0 1484.0 True 
+g_create_agent_ollama 12 1469.2 1445.9 True 
+f_plain_ollama 12 1488.3 1473.7 True 
+e_stategraph 12 1576.9 1555.4 True 
+{"kind": "block", "label": "round 13", "uptime": "12:15  12 users, load averages: 4.14 3.88 3.55", "load": [4.1376953125, 3.88232421875, 3.5537109375], "time": 1794725120.215816}
+e_stategraph 13 1746.8 1674.8 True 
+f_plain_ollama 13 1572.8 1550.8 True 
+g_create_agent_ollama 13 1515.1 1483.5 True 
+d_create_agent_saver 13 1512.4 1474.5 True 
+c_create_agent 13 1545.2 1506.3 True 
+h_stategraph_ollama 13 1602.2 1582.8 True 
+b_bind_tools_loop 13 2245.3 2211.8 True 
+a_plain_openai 13 3619.0 3596.5 True 
+{"kind": "block", "label": "round 14", "uptime": "12:15  12 users, load averages: 5.21 4.15 3.65", "load": [5.20947265625, 4.1455078125, 3.65380859375], "time": 1794725136.022325}
+a_plain_openai 14 3669.1 3635.2 True 
+h_stategraph_ollama 14 3725.4 3670.4 True 
+g_create_agent_ollama 14 3710.3 3666.9 True 
+b_bind_tools_loop 14 3666.7 3643.2 True 
+c_create_agent 14 3695.1 3640.1 True 
+f_plain_ollama 14 3641.5 3631.5 True 
+e_stategraph 14 3730.1 3668.7 True 
+d_create_agent_saver 14 3680.7 3630.5 True 
+{"kind": "block", "label": "round 15", "uptime": "12:16  12 users, load averages: 4.57 4.10 3.65", "load": [4.568359375, 4.0966796875, 3.65283203125], "time": 1794725166.010911}
+e_stategraph 15 3718.3 3657.9 True 
+h_stategraph_ollama 15 3690.4 3666.2 True 
+a_plain_openai 15 3698.2 3666.2 True 
+c_create_agent 15 3583.8 3554.1 True 
+b_bind_tools_loop 15 3535.8 3516.4 True 
+d_create_agent_saver 15 3557.8 3512.5 True 
+f_plain_ollama 15 3515.0 3505.6 True 
+g_create_agent_ollama 15 3550.5 3536.7 True 
+{"kind": "block", "label": "round 16", "uptime": "12:16  12 users, load averages: 4.70 4.17 3.69", "load": [4.701171875, 4.1669921875, 3.69287109375], "time": 1794725195.308413}
+c_create_agent 16 3548.6 3508.3 True 
+a_plain_openai 16 3541.1 3521.4 True 
+b_bind_tools_loop 16 3521.7 3502.9 True 
+g_create_agent_ollama 16 3569.7 3553.4 True 
+d_create_agent_saver 16 3563.1 3532.2 True 
+h_stategraph_ollama 16 3558.4 3528.0 True 
+f_plain_ollama 16 3551.8 3540.5 True 
+e_stategraph 16 3561.3 3523.4 True 
+{"kind": "block", "label": "round 17", "uptime": "12:17  12 users, load averages: 4.85 4.26 3.74", "load": [4.85498046875, 4.25927734375, 3.7421875], "time": 1794725224.173783}
+b_bind_tools_loop 17 3553.4 3529.2 True 
+h_stategraph_ollama 17 3550.7 3535.1 True 
+f_plain_ollama 17 3091.7 3083.2 True 
+g_create_agent_ollama 17 1315.0 1288.2 True 
+a_plain_openai 17 2331.6 2307.4 True 
+d_create_agent_saver 17 1758.1 1719.8 True 
+e_stategraph 17 1924.9 1902.1 True 
+c_create_agent 17 1807.7 1781.9 True 
+{"kind": "block", "label": "round 18", "uptime": "12:17  12 users, load averages: 5.18 4.36 3.79", "load": [5.18212890625, 4.3603515625, 3.78662109375], "time": 1794725243.968756}
+e_stategraph 18 1670.7 1639.6 True 
+h_stategraph_ollama 18 1708.8 1686.0 True 
+b_bind_tools_loop 18 1650.1 1624.1 True 
+a_plain_openai 18 1553.8 1530.6 True 
+d_create_agent_saver 18 1553.1 1512.6 True 
+f_plain_ollama 18 1532.2 1517.2 True 
+g_create_agent_ollama 18 1656.3 1620.7 True 
+c_create_agent 18 1664.5 1623.0 True 
+{"kind": "block", "label": "round 19", "uptime": "12:17  12 users, load averages: 4.87 4.33 3.78", "load": [4.87109375, 4.32666015625, 3.78369140625], "time": 1794725257.417993}
+b_bind_tools_loop 19 1595.3 1545.3 True 
+d_create_agent_saver 19 1560.0 1504.7 True 
+f_plain_ollama 19 1523.7 1514.4 True 
+a_plain_openai 19 1636.9 1597.9 True 
+g_create_agent_ollama 19 1669.5 1640.3 True 
+c_create_agent 19 1640.1 1586.3 True 
+e_stategraph 19 1580.0 1527.1 True 
+h_stategraph_ollama 19 1573.8 1539.6 True 
+{"kind": "block", "label": "round 20", "uptime": "12:17  12 users, load averages: 4.76 4.33 3.79", "load": [4.7568359375, 4.326171875, 3.79248046875], "time": 1794725270.653758}
+d_create_agent_saver 20 1580.6 1535.2 True 
+h_stategraph_ollama 20 1611.0 1590.5 True 
+b_bind_tools_loop 20 1648.0 1610.3 True 
+a_plain_openai 20 1599.2 1576.0 True 
+c_create_agent 20 1614.5 1565.2 True 
+f_plain_ollama 20 1563.5 1548.2 True 
+g_create_agent_ollama 20 1656.5 1625.4 True 
+e_stategraph 20 1670.6 1627.8 True 
+{"kind": "block", "label": "round 21", "uptime": "12:18  12 users, load averages: 4.45 4.28 3.78", "load": [4.453125, 4.27734375, 3.78369140625], "time": 1794725284.056264}
+g_create_agent_ollama 21 1678.0 1610.2 True 
+f_plain_ollama 21 1538.3 1520.0 True 
+e_stategraph 21 1635.8 1578.2 True 
+b_bind_tools_loop 21 1675.4 1634.4 True 
+h_stategraph_ollama 21 1620.3 1603.5 True 
+a_plain_openai 21 1646.3 1625.0 True 
+d_create_agent_saver 21 1940.8 1909.2 True 
+c_create_agent 21 1925.4 1899.6 True 
+{"kind": "block", "label": "round 22", "uptime": "12:18  12 users, load averages: 4.37 4.27 3.79", "load": [4.3701171875, 4.26708984375, 3.78564453125], "time": 1794725298.187617}
+c_create_agent 22 1800.9 1729.2 True 
+d_create_agent_saver 22 1556.7 1530.4 True 
+a_plain_openai 22 1564.5 1528.2 True 
+b_bind_tools_loop 22 1636.6 1595.3 True 
+h_stategraph_ollama 22 1749.8 1738.0 True 
+f_plain_ollama 22 1693.6 1681.6 True 
+g_create_agent_ollama 22 1721.4 1672.7 True 
+e_stategraph 22 1695.1 1634.3 True 
+{"kind": "block", "label": "round 23", "uptime": "12:18  12 users, load averages: 3.76 4.14 3.75", "load": [3.7578125, 4.13818359375, 3.74755859375], "time": 1794725312.0660548}
+d_create_agent_saver 23 1628.7 1590.4 True 
+f_plain_ollama 23 1611.1 1598.2 True 
+b_bind_tools_loop 23 1752.3 1717.3 True 
+h_stategraph_ollama 23 1807.6 1793.0 True 
+a_plain_openai 23 1655.1 1639.5 True 
+g_create_agent_ollama 23 1621.0 1597.8 True 
+e_stategraph 23 1716.6 1657.0 True 
+c_create_agent 23 1749.2 1696.8 True 
+{"kind": "block", "label": "round 24", "uptime": "12:18  12 users, load averages: 3.48 4.06 3.73", "load": [3.478515625, 4.06396484375, 3.72802734375], "time": 1794725326.0623412}
+e_stategraph 24 1697.3 1655.3 True 
+f_plain_ollama 24 1618.0 1611.1 True 
+d_create_agent_saver 24 1692.3 1668.0 True 
+a_plain_openai 24 1740.1 1708.4 True 
+h_stategraph_ollama 24 1731.3 1684.9 True 
+g_create_agent_ollama 24 1694.7 1649.0 True 
+c_create_agent 24 1679.7 1634.6 True 
+b_bind_tools_loop 24 1697.5 1652.4 True 
+{"kind": "block", "label": "round 25", "uptime": "12:19  12 users, load averages: 3.00 3.93 3.69", "load": [2.99609375, 3.92919921875, 3.685546875], "time": 1794725340.0728168}
+c_create_agent 25 1740.7 1719.3 True 
+g_create_agent_ollama 25 1740.9 1713.8 True 
+e_stategraph 25 1771.9 1726.6 True 
+h_stategraph_ollama 25 1700.9 1668.9 True 
+a_plain_openai 25 1672.2 1643.7 True 
+d_create_agent_saver 25 1792.9 1728.9 True 
+f_plain_ollama 25 1723.6 1707.8 True 
+b_bind_tools_loop 25 1739.0 1702.8 True 
+{"kind": "block", "label": "round 26", "uptime": "12:19  12 users, load averages: 2.87 3.85 3.66", "load": [2.86669921875, 3.85107421875, 3.66162109375], "time": 1794725354.419894}
+b_bind_tools_loop 26 1729.6 1687.8 True 
+g_create_agent_ollama 26 1804.5 1778.2 True 
+a_plain_openai 26 2055.2 2029.0 True 
+d_create_agent_saver 26 2166.2 2134.3 True 
+f_plain_ollama 26 1931.6 1915.8 True 
+e_stategraph 26 1811.4 1777.8 True 
+h_stategraph_ollama 26 1710.7 1660.7 True 
+c_create_agent 26 1718.7 1705.5 True 
+{"kind": "block", "label": "round 27", "uptime": "12:19  12 users, load averages: 2.98 3.83 3.66", "load": [2.97509765625, 3.82568359375, 3.65576171875], "time": 1794725369.8262951}
+a_plain_openai 27 2213.7 2181.7 True 
+b_bind_tools_loop 27 2281.9 2239.5 True 
+h_stategraph_ollama 27 1837.0 1780.5 True 
+g_create_agent_ollama 27 1695.0 1656.3 True 
+c_create_agent 27 1762.3 1702.8 True 
+f_plain_ollama 27 1949.4 1944.2 True 
+d_create_agent_saver 27 2376.0 2332.3 True 
+e_stategraph 27 1892.7 1846.6 True 
+{"kind": "block", "label": "round 28", "uptime": "12:19  12 users, load averages: 3.14 3.82 3.66", "load": [3.14013671875, 3.8173828125, 3.65576171875], "time": 1794725386.3089359}
+f_plain_ollama 28 1685.4 1662.6 True 
+d_create_agent_saver 28 1745.0 1706.9 True 
+e_stategraph 28 1894.3 1871.4 True 
+c_create_agent 28 2010.0 1973.4 True 
+a_plain_openai 28 2144.9 2120.5 True 
+g_create_agent_ollama 28 2132.1 2087.2 True 
+h_stategraph_ollama 28 1916.6 1880.1 True 
+b_bind_tools_loop 28 1759.4 1721.4 True 
+{"kind": "block", "label": "round 29", "uptime": "12:20  12 users, load averages: 2.89 3.73 3.63", "load": [2.89306640625, 3.72802734375, 3.62646484375], "time": 1794725402.066439}
+h_stategraph_ollama 29 1836.5 1816.1 True 
+c_create_agent 29 2155.9 2107.8 True 
+e_stategraph 29 1907.4 1851.5 True 
+b_bind_tools_loop 29 1709.5 1665.8 True 
+f_plain_ollama 29 1698.3 1694.9 True 
+g_create_agent_ollama 29 2007.2 1975.3 True 
+a_plain_openai 29 2126.9 2098.9 True 
+d_create_agent_saver 29 1895.3 1859.4 True 
+{"kind": "block", "label": "round 30", "uptime": "12:20  12 users, load averages: 2.93 3.71 3.62", "load": [2.92919921875, 3.705078125, 3.62060546875], "time": 1794725417.860464}
+g_create_agent_ollama 30 1995.8 1973.7 True 
+h_stategraph_ollama 30 2395.0 2381.6 True 
+d_create_agent_saver 30 2286.8 2256.1 True 
+c_create_agent 30 1955.5 1890.1 True 
+b_bind_tools_loop 30 1739.4 1715.6 True 
+e_stategraph 30 1965.8 1941.2 True 
+a_plain_openai 30 2232.1 2215.5 True 
+f_plain_ollama 30 1826.0 1807.7 True 
+{"kind": "block", "label": "round 31", "uptime": "12:20  12 users, load averages: 2.95 3.66 3.60", "load": [2.95458984375, 3.65869140625, 3.60498046875], "time": 1794725434.736567}
+c_create_agent 31 1771.0 1721.8 True 
+f_plain_ollama 31 1862.2 1841.0 True 
+a_plain_openai 31 2121.3 2088.7 True 
+h_stategraph_ollama 31 1944.8 1926.5 True 
+g_create_agent_ollama 31 1982.4 1949.3 True 
+b_bind_tools_loop 31 1949.7 1905.4 True 
+e_stategraph 31 1923.7 1889.1 True 
+d_create_agent_saver 31 2201.9 2163.6 True 
+{"kind": "block", "label": "round 32", "uptime": "12:20  12 users, load averages: 3.11 3.66 3.60", "load": [3.1123046875, 3.658203125, 3.60498046875], "time": 1794725450.966312}
+e_stategraph 32 2420.5 2398.1 True 
+c_create_agent 32 2189.0 2133.5 True 
+h_stategraph_ollama 32 1900.5 1869.4 True 
+d_create_agent_saver 32 1887.4 1831.7 True 
+f_plain_ollama 32 1979.0 1958.0 True 
+a_plain_openai 32 2128.6 2101.1 True 
+b_bind_tools_loop 32 1965.0 1922.3 True 
+g_create_agent_ollama 32 1930.2 1909.5 True 
+{"kind": "block", "label": "round 33", "uptime": "12:21  12 users, load averages: 2.78 3.56 3.57", "load": [2.779296875, 3.5595703125, 3.56982421875], "time": 1794725467.8497212}
+c_create_agent 33 1984.5 1939.7 True 
+b_bind_tools_loop 33 2024.1 1996.0 True 
+h_stategraph_ollama 33 2003.4 1972.4 True 
+e_stategraph 33 2023.0 1987.4 True 
+a_plain_openai 33 2185.0 2157.6 True 
+f_plain_ollama 33 1999.5 1974.2 True 
+d_create_agent_saver 33 1984.1 1938.9 True 
+g_create_agent_ollama 33 2087.2 2042.8 True 
+{"kind": "block", "label": "round 34", "uptime": "12:21  12 users, load averages: 2.67 3.49 3.54", "load": [2.6689453125, 3.48876953125, 3.54443359375], "time": 1794725484.598201}
+c_create_agent 34 2079.8 2052.0 True 
+d_create_agent_saver 34 2066.3 1994.0 True 
+h_stategraph_ollama 34 1931.9 1922.7 True 
+e_stategraph 34 2232.3 2190.3 True 
+b_bind_tools_loop 34 2274.3 2231.3 True 
+a_plain_openai 34 2133.9 2108.1 True 
+g_create_agent_ollama 34 2014.7 1978.6 True 
+f_plain_ollama 34 2060.5 2052.0 True 
+{"kind": "block", "label": "round 35", "uptime": "12:21  12 users, load averages: 3.29 3.58 3.58", "load": [3.2890625, 3.57958984375, 3.5751953125], "time": 1794725501.860852}
+f_plain_ollama 35 2135.3 2104.5 True 
+e_stategraph 35 2194.8 2144.7 True 
+a_plain_openai 35 2093.9 2077.2 True 
+g_create_agent_ollama 35 1989.5 1952.9 True 
+h_stategraph_ollama 35 2032.5 2002.3 True 
+b_bind_tools_loop 35 2303.3 2254.1 True 
+d_create_agent_saver 35 2205.0 2141.1 True 
+c_create_agent 35 1911.1 1874.1 True 
+{"kind": "block", "label": "round 36", "uptime": "12:21  12 users, load averages: 2.92 3.48 3.54", "load": [2.91650390625, 3.48486328125, 3.54150390625], "time": 1794725519.1953988}
+b_bind_tools_loop 36 2107.6 2082.2 True 
+d_create_agent_saver 36 2356.0 2330.8 True 
+c_create_agent 36 2039.1 1974.9 True 
+f_plain_ollama 36 1884.8 1874.6 True 
+a_plain_openai 36 2240.3 2213.0 True 
+e_stategraph 36 2239.8 2188.4 True 
+g_create_agent_ollama 36 1948.9 1916.6 True 
+h_stategraph_ollama 36 2149.4 2107.8 True 
+{"kind": "block", "label": "round 37", "uptime": "12:22  12 users, load averages: 3.73 3.62 3.59", "load": [3.728515625, 3.6181640625, 3.58642578125], "time": 1794725536.6456761}
+a_plain_openai 37 2518.8 2499.3 True 
+c_create_agent 37 2614.2 2588.7 True 
+e_stategraph 37 2500.8 2473.6 True 
+d_create_agent_saver 37 2345.9 2316.3 True 
+f_plain_ollama 37 2004.3 1978.7 True 
+h_stategraph_ollama 37 2078.0 2049.5 True 
+g_create_agent_ollama 37 2359.7 2330.4 True 
+b_bind_tools_loop 37 2148.4 2137.9 True 
+{"kind": "block", "label": "round 38", "uptime": "12:22  12 users, load averages: 3.44 3.56 3.57", "load": [3.44140625, 3.560546875, 3.56591796875], "time": 1794725555.6917398}
+c_create_agent 38 2039.3 2003.4 True 
+e_stategraph 38 2187.7 2155.8 True 
+f_plain_ollama 38 2280.8 2269.6 True 
+b_bind_tools_loop 38 2339.6 2327.1 True 
+a_plain_openai 38 2215.4 2183.9 True 
+h_stategraph_ollama 38 2066.5 2035.5 True 
+g_create_agent_ollama 38 2203.8 2174.6 True 
+d_create_agent_saver 38 2345.7 2282.0 True 
+{"kind": "block", "label": "round 39", "uptime": "12:22  12 users, load averages: 3.42 3.55 3.56", "load": [3.41650390625, 3.548828125, 3.5615234375], "time": 1794725573.822731}
+a_plain_openai 39 2097.2 2063.1 True 
+b_bind_tools_loop 39 2143.2 2103.1 True 
+e_stategraph 39 2336.8 2303.6 True 
+f_plain_ollama 39 2262.5 2246.3 True 
+h_stategraph_ollama 39 2290.9 2244.3 True 
+d_create_agent_saver 39 2138.6 2082.1 True 
+c_create_agent 39 2262.2 2218.8 True 
+g_create_agent_ollama 39 2286.1 2250.9 True 
+{"kind": "block", "label": "round 40", "uptime": "12:23  12 users, load averages: 3.60 3.58 3.57", "load": [3.6044921875, 3.578125, 3.5712890625], "time": 1794725592.105016}
+e_stategraph 40 2239.5 2178.2 True 
+d_create_agent_saver 40 2162.0 2133.9 True 
+f_plain_ollama 40 2763.9 2757.0 True 
+a_plain_openai 40 2607.1 2589.6 True 
+g_create_agent_ollama 40 2694.8 2668.5 True 
+h_stategraph_ollama 40 2687.6 2670.5 True 
+b_bind_tools_loop 40 2674.8 2651.6 True 
+c_create_agent 40 2601.5 2582.5 True 
+{"kind": "block", "label": "round 41", "uptime": "12:23  12 users, load averages: 4.09 3.67 3.60", "load": [4.09033203125, 3.6728515625, 3.6044921875], "time": 1794725612.994472}
+b_bind_tools_loop 41 2142.9 2113.1 True 
+h_stategraph_ollama 41 2060.9 2039.4 True 
+c_create_agent 41 2406.1 2372.7 True 
+d_create_agent_saver 41 2285.4 2267.5 True 
+e_stategraph 41 2477.8 2434.5 True 
+g_create_agent_ollama 41 2316.9 2285.1 True 
+a_plain_openai 41 2007.9 1974.4 True 
+f_plain_ollama 41 2660.2 2650.1 True 
+{"kind": "block", "label": "end", "uptime": "12:23  12 users, load averages: 3.44 3.55 3.56", "load": [3.4404296875, 3.54833984375, 3.560546875], "time": 1794725631.8268218}

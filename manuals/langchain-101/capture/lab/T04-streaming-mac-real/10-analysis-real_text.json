@@ -1,0 +1,692 @@
+{
+ "real_text": {
+  "variants": {
+   "plain_openai": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 4.863,
+     "p95": 10.254,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 1.28,
+     "p95": 2.151,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 0.841,
+     "p95": 0.938,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 6.014,
+     "p95": 9.647,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 0.91,
+     "p95": 1.799,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 309.869,
+     "p95": 507.686,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 301.876,
+     "p95": 503.286,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 33.264,
+     "p95": 45.785,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 33.316,
+     "p95": 45.543,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 0.0,
+     "p95": 0.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 63.432,
+     "p95": 75.781,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 3092.605,
+     "p95": 3967.844,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   },
+   "chatopenai_stream": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 5.928,
+     "p95": 14.818,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 1.744,
+     "p95": 2.471,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 0.973,
+     "p95": 1.113,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 6.441,
+     "p95": 11.55,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 1.15,
+     "p95": 3.458,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 313.678,
+     "p95": 516.055,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 302.759,
+     "p95": 496.99,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 32.135,
+     "p95": 37.586,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 32.02,
+     "p95": 37.593,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 0.0,
+     "p95": 0.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 80.299,
+     "p95": 101.122,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 2971.097,
+     "p95": 3528.637,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   },
+   "agent_messages": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 8.027,
+     "p95": 13.641,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 1.685,
+     "p95": 6.493,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 1.315,
+     "p95": 1.674,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 8.425,
+     "p95": 12.57,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 1.495,
+     "p95": 2.312,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 283.421,
+     "p95": 494.918,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 271.615,
+     "p95": 489.404,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 31.978,
+     "p95": 38.609,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 31.486,
+     "p95": 37.553,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 0.0,
+     "p95": 0.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 103.135,
+     "p95": 126.151,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 3191.331,
+     "p95": 4107.333,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   },
+   "agent_messages_updates": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 6.111,
+     "p95": 16.518,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 2.213,
+     "p95": 7.628,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 1.303,
+     "p95": 1.534,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 8.341,
+     "p95": 34.948,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 1.143,
+     "p95": 2.276,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 298.02,
+     "p95": 443.447,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 294.63,
+     "p95": 434.079,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 32.737,
+     "p95": 43.177,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 32.267,
+     "p95": 44.187,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 0.0,
+     "p95": 0.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 102.286,
+     "p95": 126.516,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 3104.092,
+     "p95": 3922.193,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   },
+   "astream_events_v2": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 3.777,
+     "p95": 14.997,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 1.853,
+     "p95": 5.156,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 1.402,
+     "p95": 1.73,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 8.073,
+     "p95": 15.105,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 1.806,
+     "p95": 3.477,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 307.247,
+     "p95": 437.777,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 300.385,
+     "p95": 430.241,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 33.704,
+     "p95": 45.549,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 33.888,
+     "p95": 45.445,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 0.0,
+     "p95": 0.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 115.408,
+     "p95": 131.834,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 3301.75,
+     "p95": 4269.293,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   },
+   "stream_events_v3": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 6.389,
+     "p95": 14.482,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 1.554,
+     "p95": 5.734,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 1.317,
+     "p95": 1.615,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 8.125,
+     "p95": 15.226,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 1.569,
+     "p95": 4.308,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 315.1,
+     "p95": 599.739,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 303.283,
+     "p95": 585.343,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 32.792,
+     "p95": 49.844,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 32.719,
+     "p95": 50.095,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 0.0,
+     "p95": 0.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 105.168,
+     "p95": 117.069,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 3019.489,
+     "p95": 4299.84,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   },
+   "stream_events_v3_raw": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 10.479,
+     "p95": 19.478,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 2.054,
+     "p95": 5.079,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 1.458,
+     "p95": 1.78,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 9.002,
+     "p95": 13.172,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 1.724,
+     "p95": 3.896,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 320.113,
+     "p95": 411.295,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 305.607,
+     "p95": 392.411,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 30.489,
+     "p95": 38.592,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 30.396,
+     "p95": 38.411,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 0.0,
+     "p95": 0.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 113.915,
+     "p95": 131.906,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 2959.591,
+     "p95": 3728.432,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   },
+   "astream_events_v3": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 7.589,
+     "p95": 16.609,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 3.463,
+     "p95": 6.061,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 2.006,
+     "p95": 2.445,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 10.71,
+     "p95": 16.336,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 1.615,
+     "p95": 4.385,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 317.37,
+     "p95": 393.296,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 308.185,
+     "p95": 381.077,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 32.252,
+     "p95": 44.269,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 31.961,
+     "p95": 44.287,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 0.0,
+     "p95": 0.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 134.378,
+     "p95": 165.408,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 2996.964,
+     "p95": 3979.841,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   },
+   "astream_events_v3_gather": {
+    "n": 24,
+    "n_warmup": 4,
+    "n_error": 0,
+    "errors": [],
+    "req_overhead_ms": {
+     "median": 8.986,
+     "p95": 16.904,
+     "n": 24
+    },
+    "first_delay_ms": {
+     "median": 2662.921,
+     "p95": 3610.547,
+     "n": 24
+    },
+    "median_delay_ms": {
+     "median": 1358.383,
+     "p95": 2091.531,
+     "n": 24
+    },
+    "max_delay_ms": {
+     "median": 2662.921,
+     "p95": 3610.547,
+     "n": 24
+    },
+    "last_delay_ms": {
+     "median": 41.497,
+     "p95": 56.45,
+     "n": 24
+    },
+    "ttft_client_ms": {
+     "median": 2955.72,
+     "p95": 3939.328,
+     "n": 24
+    },
+    "server_ttft_ms": {
+     "median": 307.87,
+     "p95": 344.857,
+     "n": 24
+    },
+    "client_gap_median_ms": {
+     "median": 0.003,
+     "p95": 0.004,
+     "n": 24
+    },
+    "server_gap_median_ms": {
+     "median": 31.515,
+     "p95": 37.962,
+     "n": 24
+    },
+    "burst_frac": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    },
+    "cpu_ms": {
+     "median": 140.416,
+     "p95": 170.482,
+     "n": 24
+    },
+    "wall_ms": {
+     "median": 2957.048,
+     "p95": 3941.405,
+     "n": 24
+    },
+    "n_tokens": {
+     "median": 80.0,
+     "p95": 80.0,
+     "n": 24
+    },
+    "n_requests": {
+     "median": 1.0,
+     "p95": 1.0,
+     "n": 24
+    }
+   }
+  },
+  "load1_min": 2.22412109375,
+  "load1_max": 6.18994140625
+ }
+}

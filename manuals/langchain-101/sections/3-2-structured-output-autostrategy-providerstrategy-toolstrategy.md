@@ -25,7 +25,7 @@ id: fig-3-2
 kind: decision
 title: which strategy runs, and how it fails
 claim: An explicit strategy is never changed, and AutoStrategy chooses before each call from the profile or the name, so no failure moves a run to the other.
-caption: Read from the top. The amber boxes are choices that create_agent makes before the request. The rose boxes are the failures each strategy ends in. From capture/out/07-structured-output.txt, capture/out/08-structured-errors.txt, and capture/lab/summary/structured-output-mac.json.
+caption: Read from the top. The amber boxes are choices that create_agent makes before the request. The rose boxes are the failures each strategy ends in. From capture/out/07-structured-output.txt, capture/out/08-structured-errors.txt, capture/lab/summary/structured-output-mac.json, and capture/lab/T06-structured-output-mac-real/01-provider-paths.jsonl.
 ```
 
 The kit runs the same schema on two `ChatOllama` models with no tools of their own. The first has no profile, and the agent binds a tool named after the schema:
@@ -134,22 +134,24 @@ A union does not get that far. `ProviderStrategy(Union[Refund, Exchange])` raise
 
 The structured output page says that an agent uses tool calling in place of provider output when the model does not support structured output. It says this of a plain schema and of `ProviderStrategy` both {{docs oss/python/langchain/structured-output}}. The code keeps an explicit strategy as it is, and resolves `AutoStrategy` from the profile and the name only {{code libs/langchain_v1/langchain/agents/factory.py}}. This manual follows the code and records the disagreement as conflicts D121 and D209.
 
-We tested it against a local stub that answers a request with `response_format` with a 400:
+We ran it against five models on Ollama, with `ChatOpenAI` and `ChatOllama`, 3 runs per case. No chat model rejected the format. `ProviderStrategy` sent `response_format` `json_schema` on `/v1` and `format` on `/api/chat`, and got a valid `Contact` in 24 of 24 runs. `AutoStrategy` chose `ToolStrategy` for every Ollama model, because no profile marks them for structured output. The one real rejection came from `nomic-embed-text`, an embedding model:
 
 ```listing
-title: an explicit ProviderStrategy against a server that rejects response_format
-source: capture/lab/T06-structured-output-mac/02-d209-fake-and-stub.jsonl
+title: an explicit ProviderStrategy against a model that cannot chat
+source: capture/lab/T06-structured-output-mac-real/01-provider-paths.jsonl
 lang: json
-note: Cut to the case, the outcome, the error, and the keys of the one request.
+note: Cut to the client, the strategy, the model, the outcome, the error, and the one request.
 ---
-{"case": "ChatOpenAI(local-model) ProviderStrategy, server 400s on response_format", "user_tools": [], "outcome": "raised", "error_type": "OpenAIInvalidRequestError", "error": "Error code: 400 - response_format json_schema is not supported by this model", …"requests": [{"path": "/v1/chat/completions", "keys": ["messages", "model", "response_format", "stream", "tools"], …}]}
+{"kind": "run", "client": "ChatOpenAI", "strategy": "ProviderStrategy", "model": "nomic-embed-text:latest", …"outcome": "raised", "error_type": "OpenAIInvalidRequestError", "error": "Error code: 400 - \"nomic-embed-text:latest\" does not support chat", …"requests": [{"path": "/v1/chat/completions", "status": 400, "req_keys": ["messages", "model", "response_format", "seed", "stream", "temperature", "tools"], "response_format_type": "json_schema", …}], "n_requests": 1, …}
 ```
 
-One request, one error, and no second request with tools. `AutoStrategy` with the model name `local-model` chose `ToolStrategy` and returned a valid object. With the model name `gpt-4o`, `AutoStrategy` chose `ProviderStrategy` from the name list, and raised the same 400. So the page holds only for a model that the code already knows to lack the feature.
+One request, one error, and no second request with tools. The code does not switch strategy on an error, so the page holds only where the code already knows the model.
+
+The two paths also differ in time. On the Mac, with Qwen3 4B, `ProviderStrategy` took 18 to 27 s per run, against 2.3 to 3.9 s for the tool call. The model wrote 239 tokens under the format, against 35 for the call. With `gpt-oss:20b` and `qwen3:8b`, the format took 35 to 46 s, though the model wrote fewer tokens than for the call. `qwen3:0.6b` took 2.3 to 3.9 s on both paths.
 
 ## Two runs that end with nothing
 
-`handle_errors=True` has no retry count. With `tools=[]`, the agent graph has a `model` to `model` edge that loops until a structured response exists. Only the recursion limit stops it, and the agent default is 9999 steps. In the lab, a fake that answered in plain text made 12 model calls under `recursion_limit=12`, and raised `GraphRecursionError`.
+`handle_errors=True` has no retry count. With `tools=[]`, the agent graph has a `model` to `model` edge that loops until a structured response exists. Only the recursion limit stops it, and the agent default is 9999 steps. In the lab, a scripted fake model, which always answered in plain text, made 12 model calls under `recursion_limit=12` and raised `GraphRecursionError`.
 
 The kit ran into this loop with Qwen3 4B. With a `TypedDict` and with a dataclass, the model answered `2 + 3 = 5.` in text, twice. The agent sent the third request with two AI messages at the end, and Ollama refused it:
 
@@ -211,4 +213,4 @@ A valid object matches the schema. It can still hold the wrong values. In the en
 - Test the values of structured output against labels, because a valid object can be wrong.
 ```
 
-Sources: capture/out/07-structured-output.txt, capture/out/08-structured-errors.txt, capture/s_agents.py; libs/partners/ollama/langchain_ollama/chat_models.py at langchain-ollama 1.1.0; capture/lab/summary/structured-output-mac.json, capture/lab/T06-structured-output-mac/01-ollama-runs.jsonl, capture/lab/T06-structured-output-mac/02-d209-fake-and-stub.jsonl, capture/lab/T06-structured-output-mac/03-ollama-seq-n10.jsonl, capture/lab/T06-structured-output-mac/t06_run.py, capture/lab/T06-structured-output-mac/t06_schemas.py, capture/lab/T06-structured-output-mac/t06_d209.py; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/structured-output); libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/structured_output.py at langchain==1.5.0.
+Sources: capture/out/07-structured-output.txt, capture/out/08-structured-errors.txt, capture/s_agents.py; libs/partners/ollama/langchain_ollama/chat_models.py at langchain-ollama 1.1.0; capture/lab/summary/structured-output-mac.json, capture/lab/T06-structured-output-mac/01-ollama-runs.jsonl, capture/lab/T06-structured-output-mac/02-d209-fake-and-stub.jsonl, capture/lab/T06-structured-output-mac/03-ollama-seq-n10.jsonl, capture/lab/T06-structured-output-mac/t06_run.py, capture/lab/T06-structured-output-mac/t06_schemas.py, capture/lab/T06-structured-output-mac/t06_d209.py; capture/lab/summary/structured-output-mac-real.json, capture/lab/T06-structured-output-mac-real/01-provider-paths.jsonl, capture/lab/T06-structured-output-mac-real/t06_provider_real.py; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/structured-output); libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/structured_output.py at langchain==1.5.0.

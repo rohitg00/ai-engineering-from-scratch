@@ -175,25 +175,26 @@ The limit of 9999 steps applies to every run that does not pass its own `recursi
 
 ## What the agent layer costs
 
-**We measured** one task on the Mac: two tools and three model calls, against a local stub server and against Qwen3 4B on Ollama. A plain `openai` loop and `create_agent` sent the same tool schemas and got the same answer in every run.
+**We measured** one task on the Mac: two tools and three model calls, against Qwen3 4B on Ollama, 40 shuffled runs each. A plain `openai` loop and `create_agent` sent the same tool schemas and got the same answer in every run. A proxy timed each model call, and the time outside the model is the rest of the run.
 
-| Variant | Stub, median of 200 runs | Ollama, median of 24 runs |
+| Variant | Time outside the model, median | More than the plain loop, same round |
 |---|---|---|
-| plain `openai` loop | 4.1 ms | 1450.99 ms |
-| `ChatOpenAI.bind_tools` loop | 4.46 ms | not run |
-| `create_agent` | 7.67 ms | 1550.32 ms |
-| `create_agent` with `InMemorySaver` | 8.94 ms | not run |
+| plain `openai` loop | 25.1 ms | the baseline |
+| `ChatOpenAI.bind_tools` loop | 29.3 ms | 6.6 ms |
+| `create_agent` | 37.6 ms | 15.6 ms |
+| `create_agent` with `InMemorySaver` | 37.6 ms | 12.2 ms |
+| hand-built `StateGraph` | 36.7 ms | 11.5 ms |
 
-Against the stub, the agent layer added about 1.2 ms for each model call. Against Ollama, the gap of about 99 ms between the medians was in the model time, on a shared machine, so read it as noise. [Section 7.2](#s-cost-the-framework-against-a-plain-sdk-loop) gives the full cost story, with tokens, request bytes, and import time.
+The agent layer added about 5 ms for each model call. With `create_agent`, 2.2% of a 1.7 s run was outside the model. [Section 7.2](#s-cost-the-framework-against-a-plain-sdk-loop) gives the full cost story, with tokens, request bytes, and import time.
 
 ```takeaways
 - Expect a tools node only when the agent has a tool or a wrap_tool_call middleware.
 - Read node names such as A.before_model to find the middleware hook that ran.
 - Pass recursion_limit on each run, because the agent default is 9999 steps.
 - Stream with no mode to get updates, the default of every agent.
-- Budget about 1.2 ms of agent overhead for each model call, far below model time.
+- Budget about 5 ms of agent overhead for each model call, far below model time.
 - Set max_concurrency on the run to cap parallel tool calls.
 - Give each tool a sync body when the agent runs under invoke.
 ```
 
-Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/parallel-tools-x86.json, capture/lab/T08-parallel-tools-x86/01-counts.jsonl, capture/lab/T08-parallel-tools-x86/04-toolnode.jsonl, capture/lab/T08-parallel-tools-x86/05-agent.jsonl, capture/lab/T08-parallel-tools-x86/t08_real.py; issue langgraph#8517; capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py, libs/core/langchain_core/runnables/config.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.
+Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/parallel-tools-x86.json, capture/lab/T08-parallel-tools-x86/01-counts.jsonl, capture/lab/T08-parallel-tools-x86/04-toolnode.jsonl, capture/lab/T08-parallel-tools-x86/05-agent.jsonl, capture/lab/T08-parallel-tools-x86/t08_real.py; issue langgraph#8517; capture/lab/summary/overhead-mac-real.json, capture/lab/T01-overhead-mac-real/01-runs.jsonl, capture/lab/T01-overhead-mac-real/t01_real.py; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py, libs/core/langchain_core/runnables/config.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.

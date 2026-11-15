@@ -124,7 +124,7 @@
   "plate": {
     "figure": "plate-langchain-run",
     "title": "One invoke, two model calls, one tool call",
-    "caption": "One `invoke` of the kit's agent answers `What is 2 + 3?` with two model calls and one call of the `add` tool. `InMemorySaver` keeps five checkpoints, steps -1 to 3, and the last has no next node. With tracing on, LangSmith gets seven runs. On the Mac, `create_agent` took 7.67 ms per run against 4.10 ms for a plain `openai` loop. From capture/out/00-versions.txt, capture/out/05-agent-graph.txt, capture/out/06-agent-run.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/42-langsmith.txt, and capture/lab/summary/overhead-mac.json."
+    "caption": "One `invoke` of the kit's agent answers `What is 2 + 3?` with two model calls and one call of the `add` tool. `InMemorySaver` keeps five checkpoints, steps -1 to 3, and the last has no next node. With tracing on, LangSmith gets seven runs. On the Mac, with Qwen3 4B, `create_agent` spent 37.6 ms per run outside the model against 25.1 ms for a plain `openai` loop. From capture/out/00-versions.txt, capture/out/05-agent-graph.txt, capture/out/06-agent-run.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/42-langsmith.txt, and capture/lab/summary/overhead-mac-real.json."
   },
   "parts": [
     {

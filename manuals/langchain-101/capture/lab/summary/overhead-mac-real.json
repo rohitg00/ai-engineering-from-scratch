@@ -1,0 +1,646 @@
+{
+ "framework_note": "framework time is the wall time of a run minus the upstream time of its model calls at the proxy, so it holds the HTTP client and the proxy hop too; v1 is the /v1 path of Ollama, native is /api/chat",
+ "load1": [
+  2.67,
+  5.21
+ ],
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on the GPU of the Mac, temperature 0, seed 42, server default context; another agent ran API rows on the Mac at the same time",
+ "not_used": "rows with warmup true; wall and model time between programs, because the model time moved with the load of the machine",
+ "run": "8 programs in one process, 42 rounds in a seeded shuffled order, the first 2 rounds left out as warm-up; every request went through a recording proxy that timed its upstream time",
+ "sources": [
+  "capture/lab/T01-overhead-mac-real/01-runs.jsonl",
+  "capture/lab/T01-overhead-mac-real/t01_real.py",
+  "capture/lab/T01-overhead-mac-real/mr_common.py"
+ ],
+ "task": "Use the add tool to add 2 and 3. Wait for its result, then call the multiply tool with that result and 4. Call one tool at a time. Reply with the final number only.",
+ "variants": {
+  "a_plain_openai": {
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       679,
+       261,
+       25
+      ],
+      [
+       936,
+       300,
+       25
+      ],
+      [
+       1199,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ],
+   "cpu_ms_median": 20.47,
+   "framework_minus_plain_paired_ms_median": 0.0,
+   "framework_ms": [
+    15.41,
+    16.13,
+    7.25,
+    8.72,
+    7.18,
+    11.46,
+    48.82,
+    27.96,
+    22.14,
+    27.56,
+    24.09,
+    22.55,
+    33.88,
+    32.02,
+    19.71,
+    24.16,
+    23.2,
+    38.95,
+    23.16,
+    21.23,
+    36.33,
+    15.56,
+    31.72,
+    28.46,
+    26.19,
+    32.04,
+    24.37,
+    27.99,
+    16.58,
+    32.56,
+    27.43,
+    27.41,
+    25.84,
+    16.66,
+    27.38,
+    19.54,
+    31.51,
+    34.05,
+    17.58,
+    33.52
+   ],
+   "framework_ms_median": 25.11,
+   "framework_share_pct_median": 1.26,
+   "model_calls": [
+    3
+   ],
+   "model_ms_median": 2001.7,
+   "n": 40,
+   "ok": 40,
+   "path": "v1",
+   "wall_ms_median": 2031.5
+  },
+  "b_bind_tools_loop": {
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       696,
+       261,
+       25
+      ],
+      [
+       948,
+       300,
+       25
+      ],
+      [
+       1206,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ],
+   "cpu_ms_median": 23.98,
+   "framework_minus_plain_paired_ms_median": 6.63,
+   "framework_ms": [
+    22.26,
+    12.59,
+    16.51,
+    10.59,
+    9.83,
+    23.19,
+    27.92,
+    28.87,
+    6.77,
+    33.98,
+    40.23,
+    33.47,
+    23.56,
+    19.41,
+    18.83,
+    24.23,
+    26.04,
+    49.93,
+    37.69,
+    41.0,
+    41.25,
+    35.01,
+    45.07,
+    36.11,
+    41.87,
+    42.41,
+    37.99,
+    43.74,
+    23.79,
+    44.31,
+    42.67,
+    28.13,
+    42.96,
+    49.21,
+    25.38,
+    10.45,
+    12.53,
+    40.08,
+    23.17,
+    29.76
+   ],
+   "framework_ms_median": 29.32,
+   "framework_share_pct_median": 1.72,
+   "model_calls": [
+    3
+   ],
+   "model_ms_median": 1709.2,
+   "n": 40,
+   "ok": 40,
+   "path": "v1",
+   "wall_ms_median": 1739.2
+  },
+  "c_create_agent": {
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       696,
+       261,
+       25
+      ],
+      [
+       948,
+       300,
+       25
+      ],
+      [
+       1206,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ],
+   "cpu_ms_median": 29.64,
+   "framework_minus_plain_paired_ms_median": 15.62,
+   "framework_ms": [
+    32.68,
+    35.0,
+    32.9,
+    17.33,
+    38.27,
+    24.02,
+    36.25,
+    39.3,
+    40.69,
+    29.87,
+    32.75,
+    38.94,
+    55.03,
+    29.66,
+    40.29,
+    25.76,
+    41.45,
+    53.79,
+    49.22,
+    25.74,
+    71.73,
+    52.46,
+    45.07,
+    21.41,
+    13.19,
+    59.46,
+    36.62,
+    48.06,
+    65.38,
+    49.19,
+    55.57,
+    44.87,
+    27.78,
+    36.97,
+    64.24,
+    25.51,
+    35.94,
+    43.41,
+    18.97,
+    33.43
+   ],
+   "framework_ms_median": 37.62,
+   "framework_share_pct_median": 2.25,
+   "model_calls": [
+    3
+   ],
+   "model_ms_median": 1720.6,
+   "n": 40,
+   "ok": 40,
+   "path": "v1",
+   "wall_ms_median": 1766.7
+  },
+  "d_create_agent_saver": {
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       696,
+       261,
+       25
+      ],
+      [
+       948,
+       300,
+       25
+      ],
+      [
+       1206,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ],
+   "cpu_ms_median": 30.74,
+   "framework_minus_plain_paired_ms_median": 12.17,
+   "framework_ms": [
+    14.6,
+    39.17,
+    23.64,
+    20.61,
+    16.48,
+    19.21,
+    42.81,
+    23.87,
+    34.6,
+    37.31,
+    18.51,
+    37.96,
+    50.13,
+    45.29,
+    30.9,
+    38.25,
+    40.46,
+    55.31,
+    45.33,
+    31.53,
+    26.24,
+    38.24,
+    24.27,
+    64.04,
+    31.95,
+    43.71,
+    38.02,
+    35.91,
+    30.7,
+    38.3,
+    55.71,
+    45.26,
+    72.33,
+    63.92,
+    25.18,
+    29.59,
+    63.67,
+    56.49,
+    28.14,
+    17.98
+   ],
+   "framework_ms_median": 37.64,
+   "framework_share_pct_median": 1.79,
+   "model_calls": [
+    3
+   ],
+   "model_ms_median": 1724.3,
+   "n": 40,
+   "ok": 40,
+   "path": "v1",
+   "wall_ms_median": 1775.5
+  },
+  "e_stategraph": {
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       696,
+       261,
+       25
+      ],
+      [
+       948,
+       300,
+       25
+      ],
+      [
+       1206,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ],
+   "cpu_ms_median": 30.31,
+   "framework_minus_plain_paired_ms_median": 11.54,
+   "framework_ms": [
+    39.32,
+    35.56,
+    9.3,
+    17.42,
+    17.6,
+    18.37,
+    10.86,
+    29.35,
+    34.8,
+    47.23,
+    21.56,
+    71.93,
+    61.41,
+    60.41,
+    37.87,
+    22.77,
+    31.08,
+    52.86,
+    42.8,
+    57.52,
+    60.77,
+    59.55,
+    41.93,
+    45.27,
+    33.59,
+    46.1,
+    22.95,
+    55.89,
+    24.59,
+    34.67,
+    22.41,
+    35.52,
+    42.06,
+    50.14,
+    51.43,
+    27.18,
+    31.93,
+    33.26,
+    61.37,
+    43.27
+   ],
+   "framework_ms_median": 36.71,
+   "framework_share_pct_median": 1.86,
+   "model_calls": [
+    3
+   ],
+   "model_ms_median": 1752.2,
+   "n": 40,
+   "ok": 40,
+   "path": "v1",
+   "wall_ms_median": 1791.6
+  },
+  "f_plain_ollama": {
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       706,
+       261,
+       25
+      ],
+      [
+       844,
+       300,
+       25
+      ],
+      [
+       993,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ],
+   "cpu_ms_median": 11.55,
+   "framework_minus_plain_paired_ms_median": 0.0,
+   "framework_ms": [
+    11.4,
+    17.24,
+    8.96,
+    3.94,
+    13.57,
+    3.66,
+    17.53,
+    4.5,
+    10.17,
+    10.7,
+    14.52,
+    21.95,
+    9.98,
+    9.37,
+    11.26,
+    8.47,
+    15.07,
+    9.32,
+    15.28,
+    18.26,
+    12.02,
+    12.99,
+    6.81,
+    15.81,
+    15.82,
+    5.16,
+    22.73,
+    3.4,
+    18.3,
+    21.24,
+    21.07,
+    25.31,
+    8.56,
+    30.78,
+    10.22,
+    25.57,
+    11.24,
+    16.29,
+    6.9,
+    10.09
+   ],
+   "framework_ms_median": 11.71,
+   "framework_share_pct_median": 0.73,
+   "model_calls": [
+    3
+   ],
+   "model_ms_median": 1688.2,
+   "n": 40,
+   "ok": 40,
+   "path": "native",
+   "wall_minus_ollama_total_ms_median": 19.02,
+   "wall_ms_median": 1695.9
+  },
+  "g_create_agent_ollama": {
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       707,
+       261,
+       25
+      ],
+      [
+       827,
+       300,
+       25
+      ],
+      [
+       953,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ],
+   "cpu_ms_median": 28.15,
+   "framework_minus_plain_paired_ms_median": 12.98,
+   "framework_ms": [
+    22.54,
+    9.25,
+    8.69,
+    13.37,
+    28.7,
+    10.04,
+    27.84,
+    14.43,
+    24.35,
+    20.76,
+    23.24,
+    31.55,
+    43.4,
+    13.85,
+    16.33,
+    26.78,
+    35.53,
+    29.24,
+    31.08,
+    67.73,
+    48.69,
+    23.22,
+    45.63,
+    27.04,
+    26.24,
+    38.76,
+    44.91,
+    31.85,
+    22.14,
+    33.01,
+    20.69,
+    44.35,
+    36.14,
+    36.62,
+    32.3,
+    29.33,
+    29.24,
+    35.21,
+    26.27,
+    31.87
+   ],
+   "framework_ms_median": 28.97,
+   "framework_share_pct_median": 1.56,
+   "model_calls": [
+    3
+   ],
+   "model_ms_median": 1693.3,
+   "n": 40,
+   "ok": 40,
+   "path": "native",
+   "wall_minus_ollama_total_ms_median": 37.61,
+   "wall_ms_median": 1731.1
+  },
+  "h_stategraph_ollama": {
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       707,
+       261,
+       25
+      ],
+      [
+       827,
+       300,
+       25
+      ],
+      [
+       953,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ],
+   "cpu_ms_median": 25.63,
+   "framework_minus_plain_paired_ms_median": 7.81,
+   "framework_ms": [
+    23.68,
+    10.02,
+    13.94,
+    11.85,
+    15.57,
+    10.44,
+    11.27,
+    7.2,
+    40.88,
+    13.45,
+    42.05,
+    19.4,
+    55.0,
+    24.26,
+    30.35,
+    15.6,
+    22.79,
+    34.18,
+    20.5,
+    16.77,
+    11.79,
+    14.59,
+    46.42,
+    32.08,
+    50.0,
+    56.48,
+    36.52,
+    20.38,
+    13.36,
+    18.29,
+    31.03,
+    31.01,
+    9.18,
+    30.25,
+    41.58,
+    28.56,
+    31.01,
+    46.6,
+    17.08,
+    21.51
+   ],
+   "framework_ms_median": 22.15,
+   "framework_share_pct_median": 1.17,
+   "model_calls": [
+    3
+   ],
+   "model_ms_median": 1759.3,
+   "n": 40,
+   "ok": 40,
+   "path": "native",
+   "wall_minus_ollama_total_ms_median": 35.39,
+   "wall_ms_median": 1778.7
+  }
+ }
+}

@@ -1161,7 +1161,230 @@ def failure_drill_x86():
     }
 
 
+MAC_REAL_MODEL = "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on the GPU of the Mac, temperature 0, seed 42, server default context; another agent ran API rows on the Mac at the same time"
+
+
+def blocks_load(data):
+    loads = [row["load"][0] for row in data if row.get("kind") == "block"]
+    return [r(min(loads), 2), r(max(loads), 2)]
+
+
+def overhead_mac_real():
+    folder = "T01-overhead-mac-real"
+    data = rows(f"{folder}/01-runs.jsonl")
+    timed = [row for row in data if row["kind"] == "run" and not row["warmup"]]
+    plain = {"v1": "a_plain_openai", "native": "f_plain_ollama"}
+    by_round = {}
+    for row in timed:
+        by_round.setdefault(row["round"], {})[row["variant"]] = row
+
+    def framework(row):
+        return row["wall_ms"] - row["upstream_ms"]
+
+    variants = {}
+    for name in sorted({row["variant"] for row in timed}):
+        runs = [row for row in timed if row["variant"] == name]
+        path = runs[0]["path"]
+        base = plain[path]
+        paired = [framework(cell[name]) - framework(cell[base]) for cell in by_round.values() if name in cell and base in cell]
+        shapes = {}
+        for row in runs:
+            shape = json.dumps([[q["req_bytes"], (q.get("usage") or {}).get("prompt_tokens") or q.get("prompt_eval_count"), (q.get("usage") or {}).get("completion_tokens") or q.get("eval_count")] for q in row["requests"]])
+            shapes[shape] = shapes.get(shape, 0) + 1
+        entry = {
+            "path": path,
+            "n": len(runs),
+            "ok": sum(1 for row in runs if row["ok"]),
+            "model_calls": sorted({row["model_calls"] for row in runs}),
+            "framework_ms": [r(framework(row), 2) for row in runs],
+            "framework_ms_median": median([framework(row) for row in runs], 2),
+            "framework_share_pct_median": median([100 * framework(row) / row["wall_ms"] for row in runs], 2),
+            "framework_minus_plain_paired_ms_median": 0.0 if name == base else median(paired, 2),
+            "cpu_ms_median": median([row["cpu_ms"] for row in runs], 2),
+            "wall_ms_median": median([row["wall_ms"] for row in runs], 1),
+            "model_ms_median": median([row["upstream_ms"] for row in runs], 1),
+            "calls_bytes_prompt_completion": [{"calls": json.loads(shape), "runs": n} for shape, n in sorted(shapes.items())],
+        }
+        if path == "native":
+            entry["wall_minus_ollama_total_ms_median"] = median([row["wall_ms"] - row["ollama_total_ms"] for row in runs], 2)
+        variants[name] = entry
+    header = data[0]
+    return {
+        "machine": MAC,
+        "model": MAC_REAL_MODEL,
+        "task": header["prompt"],
+        "run": "8 programs in one process, 42 rounds in a seeded shuffled order, the first 2 rounds left out as warm-up; every request went through a recording proxy that timed its upstream time",
+        "framework_note": "framework time is the wall time of a run minus the upstream time of its model calls at the proxy, so it holds the HTTP client and the proxy hop too; v1 is the /v1 path of Ollama, native is /api/chat",
+        "not_used": "rows with warmup true; wall and model time between programs, because the model time moved with the load of the machine",
+        "load1": blocks_load(data),
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-runs.jsonl", "t01_real.py", "mr_common.py")],
+        "variants": variants,
+    }
+
+
+def streaming_mac_real():
+    folder = "T04-streaming-mac-real"
+    phases = {}
+    for phase in ("real_text", "real_tool"):
+        data = rows(f"{folder}/{phase}-per-run.jsonl")
+        good = [row for row in data if not row["warmup"] and not row["error"]]
+        variants = {}
+        for name in STREAM_VARIANTS:
+            runs = [row for row in good if row["variant"] == name]
+            entry = {
+                "n": len(runs),
+                "errors": sum(1 for row in data if row["variant"] == name and row["error"] and not row["warmup"]),
+                "tokens": sorted({row["n_tokens"] for row in runs}),
+                "first_delay_ms": [r(row["first_delay_ms"], 2) for row in runs],
+                "first_delay_ms_median": median([row["first_delay_ms"] for row in runs], 2),
+                "first_delay_ms_p95": p95([row["first_delay_ms"] for row in runs], 2),
+                "token_delay_ms_median": median([row["median_delay_ms"] for row in runs], 2),
+                "burst_frac_median": median([row["burst_frac"] for row in runs], 2),
+                "cpu_ms_median": median([row["cpu_ms"] for row in runs], 1),
+                "request_overhead_ms_median": median([row["req_overhead_ms"] for row in runs], 1),
+                "call_to_first_seen_ms_median": median([row["ttft_client_ms"] for row in runs], 1),
+            }
+            tool = [row["tool_first_delay_ms"] for row in runs if row.get("tool_first_delay_ms") is not None]
+            if phase == "real_tool" and tool and name != "astream_events_v3_gather":
+                entry["tool_first_delay_ms_median"] = median(tool, 2)
+                entry["tool_first_delay_ms_p95"] = p95(tool, 2)
+                entry["tool_server_events"] = sorted({row["tool_server_events"] for row in runs})
+            variants[name] = entry
+        loads = [row["load1"] for row in good]
+        phases[phase.split("_")[1]] = {"load1": [r(min(loads), 2), r(max(loads), 2)], "variants": variants}
+    iso_rows = rows(f"{folder}/03-iso38484-qwen3-8b.jsonl")
+    isolation = {}
+    for row in iso_rows:
+        if row["kind"] != "run" or row["warmup"]:
+            continue
+        cell = isolation.setdefault(row["pattern"], {"runs": 0, "errors": 0, "text_deltas": [], "reasoning_deltas": [], "server_reasoning_lines": [], "eval_count": [], "first_text_delay_ms": [], "text_receive_spread_ms": [], "text_emit_spread_ms": [], "first_reasoning_delay_ms": [], "reasoning_receive_spread_ms": [], "wall_s": []})
+        cell["runs"] += 1
+        cell["errors"] += 1 if row["error"] else 0
+        cell["text_deltas"].append(row["client_text_deltas"])
+        cell["reasoning_deltas"].append(row["client_reasoning_deltas"])
+        cell["server_reasoning_lines"].append(row["server_reasoning_lines"])
+        cell["eval_count"].append(row["eval_count"])
+        cell["first_text_delay_ms"].append(r(row["first_text_delay_ms"], 1))
+        cell["text_receive_spread_ms"].append(r(row["receive_spread_ms"], 1))
+        cell["text_emit_spread_ms"].append(r(row["emit_spread_ms"], 1))
+        cell["first_reasoning_delay_ms"].append(None if row.get("first_reasoning_delay_ms") is None else r(row["first_reasoning_delay_ms"], 1))
+        cell["reasoning_receive_spread_ms"].append(None if row.get("reasoning_receive_spread_ms") is None else r(row["reasoning_receive_spread_ms"], 1))
+        cell["wall_s"].append(r(row["wall_ms"] / 1000, 1))
+    servers = {row["tag"]: row for row in rows(f"{folder}/real_text-server-excerpt.jsonl")}
+    timeline = {}
+    for run in rows(f"{folder}/real_text-runs-excerpt.jsonl"):
+        sent = []
+        total = 0
+        for event in servers[run["tag"]]["events"]:
+            if event[1] == "text":
+                total += len(event[3])
+                sent.append((event[0], total))
+        seen = []
+        total = 0
+        for stamp, length, _, _ in run["text"]:
+            total += length
+            seen.append((stamp, total))
+        tokens = []
+        j = 0
+        for stamp, end in sent:
+            while j < len(seen) and seen[j][1] < end:
+                j += 1
+            tokens.append([r((stamp - run["t0"]) / 1e6, 1), r((seen[j][0] - run["t0"]) / 1e6, 1)])
+        timeline[run["variant"]] = {"block": run["block"], "run": run["i"], "tokens": tokens}
+    return {
+        "machine": MAC,
+        "model": MAC_REAL_MODEL + "; the #38484 rows use qwen3:8b with reasoning on",
+        "proxy": "a stamping proxy on 127.0.0.1 that forwards the real stream of Ollama and stamps each line after writing it",
+        "delivery_delay": "the time the consumer saw a token minus the time the proxy passed it on, on one clock",
+        "phases_note": "text: a count from 1 to 30, cut at max_tokens 80; tool: one lookup tool call, then a one-sentence answer; 4 blocks of 7 runs per API, the first of each block left out",
+        "isolation_note": "ChatOllama with qwen3:8b and reasoning=True, num_predict 1500, five async v3 loops, 1 warm-up run and 5 runs each",
+        "not_used": "rows with warmup true; the tool fields of the gather consumer, which reads no tool calls; the CPU and wall times as absolute costs, because the load was shared",
+        "load1_isolation": blocks_load(iso_rows),
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("real_text-per-run.jsonl", "real_tool-per-run.jsonl", "03-iso38484-qwen3-8b.jsonl", "real_text-runs-excerpt.jsonl", "real_text-server-excerpt.jsonl", "t04_run.py", "t04_stream_server.py", "t04_analyze.py", "t04_iso_real.py")],
+        "phases": phases,
+        "isolation_38484": isolation,
+        "timeline": timeline,
+    }
+
+
+def structured_output_mac_real():
+    folder = "T06-structured-output-mac-real"
+    data = rows(f"{folder}/01-provider-paths.jsonl")
+    cells = {}
+    for row in data:
+        if row["kind"] != "run":
+            continue
+        cell = cells.setdefault(f"{row['model']} {row['client']} {row['strategy']}", {"model": row["model"], "client": row["client"], "strategy": row["strategy"], "outcomes": [], "requests": [], "errors": [], "wall_s": [], "completion_tokens": []})
+        cell["outcomes"].append(row["outcome"])
+        cell["requests"].append([[q["path"], q["status"], q.get("response_format_type") or q.get("format"), "tool_choice" in (q.get("req_keys") or [])] for q in row["requests"]])
+        if row.get("error"):
+            cell["errors"].append(f"{row['error_type']}: {row['error']}")
+        cell["wall_s"].append(r(row["wall_s"], 1))
+        last = row["requests"][-1]
+        cell["completion_tokens"].append((last.get("usage") or {}).get("completion_tokens") or last.get("eval_count"))
+    for cell in cells.values():
+        cell["errors"] = sorted(set(cell["errors"]))
+    return {
+        "machine": MAC,
+        "model": "five models on Ollama 0.31.1 on the GPU of the Mac, temperature 0, seed 42",
+        "run": "create_agent(tools=[], response_format=Contact) on one made-up line, recursion_limit 12, through a recording proxy; ChatOpenAI on /v1 with max_retries=0 and ChatOllama on /api/chat; 3 runs per cell",
+        "requests_note": "each request is path, status, the response_format type or the format of the body, and whether the body held tool_choice",
+        "not_used": "the nomic-embed-text rows as a test of the format: Ollama refused the chat request, not the format",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-provider-paths.jsonl", "t06_provider_real.py", "mr_common.py")],
+        "cells": dict(sorted(cells.items())),
+    }
+
+
+def tracing_mac_real():
+    folder = "TRC-tracing-mac-real"
+    latency = {}
+    for row in rows(f"{folder}/03-latency-summary.jsonl"):
+        entry = latency.setdefault(row["cond"], {"non_model_ms_per_run": [], "first_run_non_model_ms": [], "wall_ms_per_run": [], "exit_lag_s": [], "requests": [], "runs_posted": [], "runs_expected": []})
+        entry["first_run_non_model_ms"].append(r(row["times"][0]["non_model_ms"], 1))
+        entry["non_model_ms_per_run"].extend(r(t["non_model_ms"], 2) for t in row["times"][1:])
+        entry["wall_ms_per_run"].extend(r(t["ms"], 1) for t in row["times"][1:])
+        entry["exit_lag_s"].append(row["exit_lag_s"])
+        entry["requests"].append(row["requests_by_path"])
+        entry["runs_posted"].append(row["runs_posted"])
+        entry["runs_expected"].append(row["expected_runs"])
+    for entry in latency.values():
+        entry["n"] = len(entry["non_model_ms_per_run"])
+        entry["non_model_ms_median"] = median(entry["non_model_ms_per_run"], 2)
+        entry["wall_ms_median"] = median(entry["wall_ms_per_run"], 1)
+        del entry["wall_ms_per_run"]
+    block = rows(f"{folder}/04-interleave-summary.jsonl")[0]
+    times = block["times"][2:]
+    paired = [times[i]["non_model_ms"] - times[i + 1]["non_model_ms"] for i in range(0, len(times) - 1, 2) if times[i]["traced"] and not times[i + 1]["traced"]]
+    interleave = {"first_run_non_model_ms": r(block["times"][0]["non_model_ms"], 1), "paired_on_minus_off_ms_median": median(paired, 2), "pairs": len(paired), "requests": block["requests_by_path"], "runs_posted": block["runs_posted"], "runs_per_post": sorted({n for n in block["posts_per_request"] if n}), "exit_lag_s": block["exit_lag_s"]}
+    for key, traced in (("on", True), ("off", False)):
+        part = [t for t in times if bool(t["traced"]) is traced]
+        interleave[key] = {"n": len(part), "ok": sum(1 for t in part if t["ok"]), "non_model_ms": [r(t["non_model_ms"], 2) for t in part], "non_model_ms_median": median([t["non_model_ms"] for t in part], 2), "non_model_ms_p95": p95([t["non_model_ms"] for t in part], 2), "wall_ms_median": median([t["ms"] for t in part], 1)}
+    failures = {}
+    for row in rows(f"{folder}/01-failure-summary.jsonl"):
+        failures[row["cond"]] = {"runs": row["n"], "runs_ok": row["ok_runs"], "errors": row["n_errors"], "requests": row["requests_by_path"], "runs_received": row["runs_posted"], "runs_expected": row["expected_runs"], "exit_lag_s": r(row["exit_lag_s"], 1), "exit": f"killed by the driver at {row['timeout_s']} s" if row["rc"] == "timeout" else f"return code {row['rc']}", "flush_ms": r(row["flush_ms"], 1) if row["flush_ms"] else None, "runs_per_post": sorted({n for n in row["posts_per_request"] if n})}
+    local = [{"case": row["case"], "tracing_is_enabled": row["tracing_is_enabled_inside"], "answer": row["answer"], "local_trees": row["local_trees"], "env": sorted(row["env"]), "requests": row["patched_requests_seen"] or row["recorder_hits"], "request_count": len(row["patched_requests_seen"]) or row["recorder_hit_count"]} for row in rows(f"{folder}/02-tracing-context-local.jsonl")]
+    return {
+        "machine": MAC,
+        "model": MAC_REAL_MODEL,
+        "agent": "create_agent with ChatOllama and one tool add, What is 2 + 3?, 2 model calls and 1 tool call, 7 traced runs per agent run",
+        "endpoint": "a local recorder on 127.0.0.1 that records each request; it answers at once, after 2 s, never, or with 500 by state; no LangSmith server was contacted",
+        "non_model_note": "non-model time is the wall time of a run minus the total_duration that Ollama reported for its two replies",
+        "latency_runs": "3 processes of 21 runs per condition, in separate processes; the first run of each process is kept apart",
+        "interleave_runs": "one process of 122 runs with tracing_context(enabled=True) and enabled=False on alternate runs; the first 2 runs are left out",
+        "not_used": "the process-level medians as a cost of tracing, because the load reached 21 to 27 in two of those processes; the hang counts are at 300 s",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("04-interleave-summary.jsonl", "03-latency-summary.jsonl", "01-failure-summary.jsonl", "02-tracing-context-local.jsonl", "trc_child_real.py", "trc_driver.py", "trc_recorder.py")],
+        "latency": latency,
+        "interleave": interleave,
+        "failures": failures,
+        "local": local,
+    }
+
+
 SUMMARIES = {
+    "overhead-mac-real.json": overhead_mac_real,
+    "streaming-mac-real.json": streaming_mac_real,
+    "structured-output-mac-real.json": structured_output_mac_real,
+    "tracing-mac-real.json": tracing_mac_real,
     "retries-x86.json": retries_x86,
     "approvals-x86.json": approvals_x86,
     "parallel-tools-x86.json": parallel_tools_x86,

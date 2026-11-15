@@ -173,7 +173,7 @@ Three cases repeat a measured result of an earlier part on a smaller scale. Comp
 |---|---|---|
 | retry layers | 9 model requests for a dropped connection on every call, 3 runs, section 2.2 | 9 requests, 3 runs |
 | crash after a side effect | the effect ran twice in 80 of 150 graph trials, section 4.3 | 3 or 4 charges without the key, 2 with it, 3 trials |
-| tracing endpoint down | the exit waited 80.7 s after 50 runs, section 6.4 | the exit waited 16.9 to 17.3 s after 1 run |
+| tracing endpoint down | the exit waited 9.9 s after 50 runs, section 6.4 | the exit waited 16.9 to 17.3 s after 1 run |
 
 The tracing numbers come from processes of different sizes, 350 traced runs against 7, so do not compare their seconds. Both show the same symptom: a process with tracing on waits at exit for an endpoint that does not answer. The probe in case 5 is our own fix. Section 6.4 gives two others: call `wait_for_all_tracers()` at a point you choose, and put a timeout on the job.
 
@@ -192,4 +192,4 @@ The tracing numbers come from processes of different sizes, 350 traced runs agai
 - Probe the tracing endpoint at start, and turn tracing off when it does not answer.
 ```
 
-Sources: capture/demos/failure-drill/drill.py, capture/demos/failure-drill/real.py, capture/demos/failure-drill/run.sh, capture/demos/failure-drill/README.md; capture/lab/failure-drill-x86/drill-run1.log, capture/lab/failure-drill-x86/drill-run1.jsonl, capture/lab/failure-drill-x86/drill-run2.jsonl, capture/lab/failure-drill-x86/drill-run3.jsonl, capture/lab/summary/failure-drill-x86.json, capture/lab/summary/retries-x86.json, capture/lab/summary/crash-resume-mac.json, capture/lab/summary/tracing-mac.json; libs/prebuilt/langgraph/prebuilt/tool_node.py at langgraph 1.2.22; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0.
+Sources: capture/demos/failure-drill/drill.py, capture/demos/failure-drill/real.py, capture/demos/failure-drill/run.sh, capture/demos/failure-drill/README.md; capture/lab/failure-drill-x86/drill-run1.log, capture/lab/failure-drill-x86/drill-run1.jsonl, capture/lab/failure-drill-x86/drill-run2.jsonl, capture/lab/failure-drill-x86/drill-run3.jsonl, capture/lab/summary/failure-drill-x86.json, capture/lab/summary/retries-x86.json, capture/lab/summary/crash-resume-mac.json, capture/lab/summary/tracing-mac-real.json; libs/prebuilt/langgraph/prebuilt/tool_node.py at langgraph 1.2.22; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0.

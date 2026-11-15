@@ -66,13 +66,14 @@ const versions = capture('out/00-versions.txt');
 const pin = name => new RegExp(`^${name}==(\\S+)$`, 'm').exec(versions)[1];
 const python = /^python (\S+)$/m.exec(versions)[1];
 
-const overhead = JSON.parse(capture('lab/summary/overhead-mac.json'));
-const stub = overhead.stub;
+const overhead = JSON.parse(capture('lab/summary/overhead-mac-real.json'));
+const real = overhead.variants;
 const machine = overhead.machine.replace(/^the Mac: /, '').split(',')[0];
 const ms = value => `${value.toFixed(2)} ms`;
-const plain = stub.a_plain_openai.median_ms;
-const agent = stub.c_create_agent.median_ms;
-const saver = stub.d_create_agent_saver.median_ms;
+const plain = real.a_plain_openai.framework_ms_median;
+const agent = real.c_create_agent.framework_ms_median;
+const added = real.c_create_agent.framework_minus_plain_paired_ms_median;
+const saver = real.d_create_agent_saver.framework_ms_median;
 
 if (!['model', 'tools'].every(name => nodes.includes(name))) throw new Error('plate-langchain-run: the graph has no model and tools nodes');
 
@@ -83,7 +84,7 @@ const DOWN = 410;
 module.exports = figure('plate-langchain-run', {
   height: 700,
   title: 'One invoke, two model calls, one tool call',
-  desc: `An isometric drawing of one create_agent run in one Python process. Above, on a LangChain layer, sit your code as a violet terminal, the chat model as a plum tower, and the tool ${toolCall.name} as a green unit. Below, the ${graphType} from create_agent is an indigo shell with the LangGraph mark. It holds the model and tools nodes and the messages channel, drawn as four sheets. Your code calls invoke with ${human.content} Model call 1 returns an AIMessage with the tool call ${callText}. The tools node runs ${toolCall.name} and returns a ToolMessage of ${tool.content}. Model call 2 returns ${answer.content} The graph puts ${history.length} checkpoints in InMemorySaver, steps ${steps[0]} to ${steps[steps.length - 1]}, and the last has no next node. Off to the right, LangSmith is a dashed tower that gets ${posts} runs only when tracing is on. On the Mac, ${machine}, create_agent took ${ms(agent)} per run against ${ms(plain)} for a plain openai loop.`,
+  desc: `An isometric drawing of one create_agent run in one Python process. Above, on a LangChain layer, sit your code as a violet terminal, the chat model as a plum tower, and the tool ${toolCall.name} as a green unit. Below, the ${graphType} from create_agent is an indigo shell with the LangGraph mark. It holds the model and tools nodes and the messages channel, drawn as four sheets. Your code calls invoke with ${human.content} Model call 1 returns an AIMessage with the tool call ${callText}. The tools node runs ${toolCall.name} and returns a ToolMessage of ${tool.content}. Model call 2 returns ${answer.content} The graph puts ${history.length} checkpoints in InMemorySaver, steps ${steps[0]} to ${steps[steps.length - 1]}, and the last has no next node. Off to the right, LangSmith is a dashed tower that gets ${posts} runs only when tracing is on. On the Mac, ${machine}, with Qwen3 4B, create_agent spent ${ms(agent)} per run outside the model against ${ms(plain)} for a plain openai loop.`,
 }, f => {
   const U = forms.isoView(f, { ox: OX, oy: UP, angle: 'true' });
   const D = forms.isoView(f, { ox: OX, oy: DOWN, angle: 'true' });
@@ -167,9 +168,9 @@ module.exports = figure('plate-langchain-run', {
   f.leader([506, 568], D.P(236, 76, 0), { hue: 'ink-mute' });
 
   f.kicker(20, 612, `measured on the Mac · ${machine}`);
-  f.text(20, 634, `create_agent ${ms(agent)} per run, plain openai loop ${ms(plain)}`, { size: 12, weight: 700, hue: 'blue' });
-  f.text(20, 654, `+${ms(agent - plain)} per run; with InMemorySaver ${ms(saver)}`, { size: 12, weight: 700, hue: 'teal' });
-  f.text(20, 674, `medians of ${stub.c_create_agent.n} runs each, stub model, three model calls per run`, { size: 11, serif: true, hue: 'ink-mute' });
+  f.text(20, 634, `outside the model: create_agent ${ms(agent)} per run, plain openai loop ${ms(plain)}`, { size: 12, weight: 700, hue: 'blue' });
+  f.text(20, 654, `+${ms(added)} in the same round; with InMemorySaver ${ms(saver)}`, { size: 12, weight: 700, hue: 'teal' });
+  f.text(20, 674, `medians of ${real.c_create_agent.n} runs each, Qwen3 4B, three model calls per run`, { size: 11, serif: true, hue: 'ink-mute' });
 
   const top = D.P(SX + SIDE / 2, SY + SIDE / 2, 3 + 3 * 12);
   const foot = term.foot;

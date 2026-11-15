@@ -98,7 +98,7 @@ Each row is one disagreement between two sources. The choice is what this manual
 | D107 | Both v1 release pages link `create_react_agent` to the function of the same name in `langchain-classic`. | the code: two functions share the name | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D108 | A LangSmith FAQ table calls checkpointers community code and streaming basic. | the current pages and the code | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D109 | The Deep Agents overview names planning as a default. The 0.7.0 changelog makes it opt in. | the changelog and the capture: add `TodoListMiddleware` | [6.3](#s-deep-agents-0-7), [7.4](#s-migration-from-0-x-and-stale-advice) | open |
-| D111 | The product page says that tracing never affects your application. The tracing docs say that `LANGCHAIN_CALLBACKS_BACKGROUND=false` makes callbacks wait. No code at the pin reads that variable. | the lab and the code: about 5 ms per agent run, and no effect from the variable at the pin | [6.4](#s-langsmith-tracing) | open at docs `04d4d4a` |
+| D111 | The product page says that tracing never affects your application. The tracing docs say that `LANGCHAIN_CALLBACKS_BACKGROUND=false` makes callbacks wait. No code at the pin reads that variable. | the lab and the code: about 7 ms per agent run on Qwen3 4B, and no effect from the variable at the pin | [6.4](#s-langsmith-tracing) | open at docs `04d4d4a` |
 | D113 | The prompt hub page teaches the hub through `langchain_classic`. | the LangSmith client methods that the same page recommends | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D114 | A tracing page leads with an LCEL chain. | trace a `create_agent` agent | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
 | D116 | The local server page prints the old name LangGraph Studio. | the current names: LangSmith Studio and Agent Server | [7.4](#s-migration-from-0-x-and-stale-advice) | open |
@@ -110,7 +110,7 @@ Each row is one disagreement between two sources. The choice is what this manual
 | D124 | The streaming page says that `tasks` mode needs a checkpointer. The kit got chunks from `tasks` and `debug` without one. | the capture | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) | not checked |
 | D130 | The built-in middleware page lists 22 classes. `langchain` has 19, and three come from `deepagents`. | the code: 19 in `langchain` | [3.4](#s-the-built-in-middleware) | open |
 | D209 | Users report errors, with no switch to tool calling, from an explicit `ProviderStrategy` on Bedrock and Ollama. The docs say that it switches. | the code and the lab: no switch | [3.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) | issue langchain #35119 |
-| D211 | A web page says that LangGraph streaming adds 100 to 300 ms to the first token, with no method. | the lab: under 2 ms at the median | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) | no upstream item |
+| D211 | A web page says that LangGraph streaming adds 100 to 300 ms to the first token, with no method. | the lab: under 3.5 ms at the median on Qwen3 4B | [4.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) | no upstream item |
 
 The ids are not continuous. The research kept one range of ids for each kind of source. D1 to D17 are the code, and D101 to D130 are the docs. D201 to D211 are posts and issues. This register holds every id that a section cites.
 
