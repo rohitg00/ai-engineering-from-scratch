@@ -1,0 +1,27 @@
+T08 parallel tool calls on a real model, the x86 server guest (32 vCPU, os.cpu_count() 32)
+Model qwen3:4b-instruct-2507-q4_K_M (and qwen3:8b for counts), temperature 0, seed 42. The tool "work" runs SELECT pg_sleep(0.2) on PostgreSQL 16
+(psycopg sync, or AsyncConnection for the async tool), a real 200 ms I/O call. Script t08_real.py. Raw 01-counts, 02-raw-ollama, 03-dupnames, 04-toolnode, 05-agent.
+Table 09-summary-table.txt.
+
+How many parallel calls the real model made when asked for N in one reply (one call per cell; deterministic at temperature 0):
+  4b, ChatOllama and ChatOpenAI on /v1:  asked 1 -> 2 (same args twice), 2 -> 2, 4 -> 4, 8 -> 8, 16 -> 16.
+  8b, both clients:                      asked 1 -> 1, 2 -> 2, 4 -> 2, 8 -> 8, 16 -> 2.
+  All calls had ids. Time for the reply: 4b 3.5 s (2 calls) to 24 s (16); 8b up to 48 s.
+Id-less calls: not producible with a real model here. Ollama 0.31.1 sends ids on /api/chat (native) and on /v1, and ChatOllama also fills UUIDs.
+  The id-less results of the Mac (TypeError after the tools ran; "" ids in v3) remain stub-only; no real model at the pin produced them.
+
+ToolNode harness, fed the AIMessage the real 4b model returned for each N (n=5 per cell, 1 warm-up pass left out):
+  invoke, sync tool: max_concurrency honoured. 16 calls: cap 1 3331 ms overlap 1; cap 2 1674; cap 4 854; cap 8 460; no cap 264 ms overlap 16.
+  ainvoke, async tool: cap ignored (langgraph#8517). 16 calls, cap 1: 233.7 ms, overlap 16.
+  ainvoke, sync tool: cap ignored too. 16 calls, cap 1: 267.1 ms, overlap 16.
+  invoke, async-only tool: NotImplementedError "StructuredTool does not support sync invocation." 125/125 rows.
+  No-cap sync: overlap 16 for 16 calls. The default pool here is min(32, 32+4) = 32, so 16 calls show no pool cap (Mac: 14).
+create_agent with the real model each run, asked for 8 calls (made 8 in 36/36 runs), n=3 per cell:
+  cap honoured in invoke/sync, ainvoke/sync, ainvoke/async: cap 1 tool span 1669-1674 ms overlap 1; cap 4 422-437 ms overlap 4; none 210-231 ms overlap 8.
+  invoke with an async-only tool: NotImplementedError 9/9, after the real model call. Run wall 12-14 s, of which tool time 0.2-1.7 s.
+Duplicate names (langgraph#7988), real model, n=3 per cell, identical in 3/3:
+  The model saw one schema: the later tool's description. The later tool ran when the model called. With the lookup request and
+  [safe, delete] the model saw "Delete an account." and refused to call (0 calls); with [delete, safe] it called and safe_lookup ran.
+  With the delete request and [safe, delete], privileged_delete ran; with [delete, safe] the model saw the lookup schema and refused.
+  So the first-listed function never ran, and the model's choice depended on the description of the later tool.
+Rows not to use: "warmup": true rows in 04. The 4b "asked 1" cell made 2 identical calls; its ToolNode rows are 2-call rows.

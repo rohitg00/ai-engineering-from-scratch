@@ -108,26 +108,28 @@ claim: With upload_results=False and the kit client, a plain function sends noth
 caption: Read each column from the examples at the top down to what the client received. The rose box is the requests that the agent target sent. The kit client sends one POST and one PATCH for each run. From capture/out/42-langsmith.txt.
 ```
 
-**We measured** the same call with the default client on the Mac, with `langsmith` 0.14.17 and `langchain-core` 1.8.0. We passed no client and left `LANGSMITH_TRACING` unset. Each condition ran in 5 new processes, with one example each. The agent made 2 model calls and 1 tool call, 7 LangChain runs. Every process of a condition sent the same requests:
+**We measured** the same call with the default client on the x86 server guest with a Qwen3 4B agent, with `langsmith` 0.14.17 and `langchain-core` 1.8.0. We passed no client and left `LANGSMITH_TRACING` unset. Each condition ran in 5 new processes, with one example each. The agent produced 7 LangChain runs. Every process of a condition sent the same requests:
 
 | Target | Environment | Requests in each of 5 processes |
 |---|---|---|
-| `create_agent` | `LANGSMITH_ENDPOINT` set to a local recorder | one `GET /info`, then one `POST /runs/multipart` with the 7 runs |
+| `create_agent` | `LANGSMITH_ENDPOINT` set to a local recorder | one `GET /info`, then three `POST /runs/multipart` that carried the 7 runs and 5 updates |
 | `create_agent` inside `tracing_context(enabled=False)` | the same | one `GET /info` |
 | a plain function | the same | one `GET /info` |
-| `create_agent` | no `LANGSMITH_` or `LANGCHAIN_` variable | the same two requests, to `api.smith.langchain.com` |
+| `create_agent` | no `LANGSMITH_` or `LANGCHAIN_` variable | the same four requests, to `api.smith.langchain.com` |
 | `create_agent` inside `tracing_context(enabled=False)` | no variable | one `GET /info` to `api.smith.langchain.com` |
 
-Every row scored `true`. The default client sent no PATCH and no `POST /runs`, because it batches the runs into one multipart post. With no environment, we replaced the HTTP layer of the child process, so no request reached the default host:
+Every row scored `true`, and the agent answered `2 + 3 equals 5.` in every process. The default client sent no PATCH request and no `POST /runs`. The updates went as patch parts inside the multipart posts. With no environment, we replaced the HTTP layer of the child process, so no request reached the default host:
 
 ```listing
 title: the requests of an agent target with no environment, in one process
-source: capture/lab/summary/evaluate-mac.json
+source: capture/lab/summary/evaluate-x86.json
 lang: json
 ---
    "requests": [
     [
      "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart",
      "POST https://api.smith.langchain.com/runs/multipart"
     ],
 ```
@@ -158,24 +160,26 @@ With the default client, the same wrap stopped the runs, but the `GET /info` sti
 
 The record is on unless `LANGSMITH_TEST_TRACKING` is exactly `false` {{code src/langsmith/utils.py:143-145}}. With `false`, the decorated test calls your function directly, and each `log_*` call logs a message and returns {{code src/langsmith/testing/_internal.py}}. The pytest page of the docs gives the same switch for running without LangSmith {{docs langsmith/pytest}}. The option `--langsmith-output` needs the `langsmith[pytest]` extra for `rich`, and it refuses to run when tracking is off {{code src/langsmith/pytest_plugin.py:311-317}}. The cache of `LANGSMITH_TEST_CACHE` needs the `langsmith[vcr]` extra.
 
-**We measured** the plugin on the Mac with `pytest` 8.4.2 in a scratch environment and `langsmith` 0.14.17. Each condition ran in 3 new pytest processes. The test file held five tests. Three were marked with `@pytest.mark.langsmith`, one used `@langsmith.test`, and one unmarked test called `log_outputs`. One marked test failed on purpose, and one ran `create_agent` with a fake model. The pytest header listed `langsmith-0.14.17` as a plugin, with no flag and no line in a conftest file.
+**We measured** the plugin on the x86 server guest with `pytest` 8.4.2 in a scratch environment and `langsmith` 0.14.17. Each condition ran in 3 new pytest processes. The test file held five tests. Three were marked with `@pytest.mark.langsmith`, one used `@langsmith.test`, and one unmarked test called `log_outputs`. One marked test failed on purpose, and one ran `create_agent` with Qwen3 4B on Ollama. That test passed in every run with tracking off.
 
-- **Tracking on, the default, with no account.** With no `LANGSMITH_` variable, a plain `pytest` run sent `GET /info` and then `GET /datasets` to `api.smith.langchain.com`. We refused the connection, and all five tests failed in 3 of 3 runs. The four tracked tests failed with `LangSmithConnectionError`, and the unmarked test raised `ValueError` from `log_outputs`.
+The pytest header listed `langsmith-0.14.17` as a plugin, with no flag and no line in a conftest file.
+
+- **Tracking on, the default, with no account.** With no `LANGSMITH_` variable, a plain `pytest` run sent `GET /info` and `GET /datasets` to `api.smith.langchain.com`. We refused the connection, and all five tests failed in 3 of 3 runs. The four tracked tests failed with `LangSmithConnectionError`, and the unmarked test raised `ValueError` from `log_outputs`.
 - **Tracking on, with a local endpoint.** The client sent `GET /info`, then `GET /datasets` and `GET /sessions` for each tracked test, 9 requests in all. The suite was named `None.test_ls_plugin`. The errors after those requests came from the empty answers of our recorder, so read only the order of the requests.
 - **Tracking off.** With `LANGSMITH_TEST_TRACKING=false`, four tests passed and the intended one failed. No request left, with or without `LANGSMITH_ENDPOINT`. The `log_*` calls logged at INFO, so you see them only with `log_cli` at that level. The unmarked test that called `log_outputs` passed.
 - **`--langsmith-output` with tracking off.** pytest stopped with `INTERNALERROR` and exit code 3 before any test ran. [Errors](#s-ref-errors) gives the message.
-- **Tracking off and `LANGSMITH_TRACING=true`.** The LangChain runs of the agent test still went to the endpoint, in one or two `POST /runs/multipart` per run, 3 of 3. Tracking off stops the test record only, and tracing is a separate switch.
+- **Tracking off and `LANGSMITH_TRACING=true`.** The LangChain runs of the agent test still went to the endpoint, in three `POST /runs/multipart` per run, 3 of 3. Tracking off stops the test record only, and tracing is a separate switch.
 
 ```listing
-title: the requests of a pytest run with tracking on, no environment, and a fake answer of 200
-source: capture/lab/summary/pytest-plugin-mac.json
+title: the requests of a pytest run with tracking on, no environment, and a guard that answers 200
+source: capture/lab/summary/pytest-plugin-x86.json
 lang: json
 note: The first of three processes.
 ---
    "requests": [
     [
-     "GET https://api.smith.langchain.com/info",
      "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/info",
      "GET https://api.smith.langchain.com/sessions",
      "GET https://api.smith.langchain.com/datasets",
      "GET https://api.smith.langchain.com/sessions",
@@ -206,4 +210,4 @@ The rest of LangSmith evaluation needs an account, which we did not use for this
 - Set LANGSMITH_TEST_TRACKING=false for marked tests, and unset LANGSMITH_TRACING too when nothing must leave.
 ```
 
-Sources: capture/s_integrations.py, capture/out/42-langsmith.txt; capture/lab/summary/evaluate-mac.json, capture/lab/T18-evaluate-leak-mac/01-evaluate-requests.jsonl, capture/lab/T18-evaluate-leak-mac/02-evaluate-noflush.jsonl, capture/lab/T18-evaluate-leak-mac/04-info-origin.txt, capture/lab/T18-evaluate-leak-mac/t18_evaluate.py; capture/lab/summary/pytest-plugin-mac.json, capture/lab/T19-pytest-plugin-mac/01-pytest-runs.jsonl, capture/lab/T19-pytest-plugin-mac/03-off-tracing-on-runs.jsonl, capture/lab/T19-pytest-plugin-mac/t19_tests/test_ls_plugin.py, the stdout files of T19; src/langsmith/evaluation/_runner.py, src/langsmith/evaluation/evaluator.py, src/langsmith/_internal/_background_thread.py, src/langsmith/pytest_plugin.py, src/langsmith/testing/_internal.py, src/langsmith/testing/__init__.py, src/langsmith/utils.py, and pyproject.toml at langsmith v0.14.17; libs/core/langchain_core/callbacks/manager.py at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (langsmith/evaluate-llm-application, langsmith/pytest, langsmith/usage-and-billing, langsmith/evaluation-concepts).
+Sources: capture/s_integrations.py, capture/out/42-langsmith.txt; capture/lab/summary/evaluate-x86.json, capture/lab/T18-evaluate-leak-x86/01-evaluate-requests.jsonl, capture/lab/T18-evaluate-leak-x86/02-evaluate-noflush.jsonl, capture/lab/T18-evaluate-leak-x86/t18_real.py, capture/lab/T18-evaluate-leak-mac/04-info-origin.txt; capture/lab/summary/pytest-plugin-x86.json, capture/lab/T19-pytest-plugin-x86/01-pytest-runs.jsonl, capture/lab/T19-pytest-plugin-x86/t19_tests/test_ls_plugin.py, the stdout files of T19; src/langsmith/evaluation/_runner.py, src/langsmith/evaluation/evaluator.py, src/langsmith/_internal/_background_thread.py, src/langsmith/pytest_plugin.py, src/langsmith/testing/_internal.py, src/langsmith/testing/__init__.py, src/langsmith/utils.py, and pyproject.toml at langsmith v0.14.17; libs/core/langchain_core/callbacks/manager.py at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (langsmith/evaluate-llm-application, langsmith/pytest, langsmith/usage-and-billing, langsmith/evaluation-concepts).

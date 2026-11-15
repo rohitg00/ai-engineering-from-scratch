@@ -126,20 +126,25 @@ A structured output tool call is not sent to `tools`. The `model` node handles i
 
 **max_concurrency:** the key of the run config that caps how many tasks of one step run at the same time.
 
-**We measured** parallel tool calls on the Mac, an Apple M1 Max with 10 cores and 64 GiB. A fake model asked for 1 to 16 calls of one tool that sleeps 200 ms, sync or async. We ran `create_agent`, and a plain `StateGraph` with one `ToolNode`, under `invoke` and `ainvoke`. `max_concurrency` was unset, 1, 2, 4, or 8. Each of the 200 cells ran 5 times, with a load average of 3.6 to 5.2.
+**We measured** parallel tool calls on the x86 server guest, 32 vCPU. Qwen3 4B was asked for 1 to 16 parallel calls and made 2, 2, 4, 8, 16. The ToolNode cells ran its real reply, 5 times each. `create_agent` called the model in every run, asked for 8, 3 times each. The tool ran a 200 ms `pg_sleep` on PostgreSQL.
 
-| Harness and call | 16 calls, cap 1 | 16 calls, cap 8 | 16 calls, no cap |
+| `ToolNode` and call | 16 calls, cap 1 | 16 calls, cap 8 | 16 calls, no cap |
 |---|---|---|---|
-| `create_agent`, `invoke`, sync tool | 3,382.0 ms, 1 at a time | 432.9 ms, 8 at a time | 426.6 ms, 14 at a time |
-| `create_agent`, `ainvoke`, async tool | 3,277.5 ms, 1 at a time | 423.5 ms, 8 at a time | 214.9 ms, 16 at a time |
-| `create_agent`, `ainvoke`, sync tool | 3,393.0 ms, 1 at a time | 444.0 ms, 8 at a time | 431.5 ms, 14 at a time |
-| `ToolNode`, `invoke`, sync tool | 3,350.1 ms, 1 at a time | 422.3 ms, 8 at a time | 419.3 ms, 14 at a time |
-| `ToolNode`, `ainvoke`, async tool | 207.3 ms, 16 at a time | 208.1 ms, 16 at a time | 208.0 ms, 16 at a time |
-| `ToolNode`, `ainvoke`, sync tool | 421.2 ms, 14 at a time | 428.2 ms, 14 at a time | 420.2 ms, 14 at a time |
+| `invoke`, sync tool | 3,331.0 ms, 1 at a time | 460.0 ms, 8 at a time | 264.2 ms, 16 at a time |
+| `ainvoke`, async tool | 233.7 ms, 16 at a time | 233.1 ms, 16 at a time | 233.7 ms, 16 at a time |
+| `ainvoke`, sync tool | 267.1 ms, 16 at a time | 266.5 ms, 16 at a time | 269.2 ms, 16 at a time |
 
-Each cell gives the median wall time and the largest number of calls that ran at one time. Every successful run executed each call once and wrote one `ToolMessage` for it.
+| `create_agent` and call | 8 calls, cap 1 | 8 calls, cap 4 | 8 calls, no cap |
+|---|---|---|---|
+| `invoke`, sync tool | 1,674.0 ms, 1 at a time | 437.2 ms, 4 at a time | 229.2 ms, 8 at a time |
+| `ainvoke`, async tool | 1,668.7 ms, 1 at a time | 421.9 ms, 4 at a time | 210.5 ms, 8 at a time |
+| `ainvoke`, sync tool | 1,669.7 ms, 1 at a time | 431.0 ms, 4 at a time | 231.2 ms, 8 at a time |
 
-`create_agent` applied the cap in every mode, because each call is its own `Send` task. With no cap, sync tools ran in a thread pool of 14 on this machine, so 16 calls took two waves. That size is the Python default for 10 cores. The `max_concurrency` key also sets the size of that pool, so a value above 14 makes it larger {{code libs/core/langchain_core/runnables/config.py:659-675}}. Async tools under `ainvoke` had no default cap. A tool with only an async body raised `NotImplementedError` under `invoke` in 125 of 125 runs for each harness.
+Each `ToolNode` cell gives the median wall time and the largest number of calls that ran at one time. Each `create_agent` cell gives the median time from the first tool start to the last tool end. A whole run took 12 to 14 s with the model. Every successful run executed each call once and wrote one `ToolMessage` for it.
+
+`create_agent` applied the cap in every mode, because each call is its own `Send` task. With no cap, sync tools run in a thread pool. The Python default pool is min(32, cpu+4). That is 14 on the 10-core Mac and 32 on the guest, where 16 sync calls ran at once in 264 ms.
+
+The `max_concurrency` key also sets the size of that pool, so a value above the default makes it larger {{code libs/core/langchain_core/runnables/config.py:659-675}}. Async tools under `ainvoke` had no default cap. A tool with only an async body raised `NotImplementedError` under `invoke` in 125 of 125 ToolNode rows and 9 of 9 agent runs.
 
 A plain `ToolNode` under `ainvoke` ignored the cap, for async tools and for sync tools. Issue langgraph#8517 reports the async case {{issue langgraph#8517}}. Our runs reproduce it and show that sync tools on the async path are affected too. Under `invoke`, `ToolNode` applied the cap. Set `max_concurrency` on the run when a tool calls a service with a rate limit, and use `create_agent` when you need the cap under `ainvoke`.
 
@@ -191,4 +196,4 @@ Against the stub, the agent layer added about 1.2 ms for each model call. Agains
 - Give each tool a sync body when the agent runs under invoke.
 ```
 
-Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/01-concurrency-runs.jsonl, capture/lab/T08-parallel-tools-mac/t08_run.py; issue langgraph#8517; capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py, libs/core/langchain_core/runnables/config.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.
+Sources: capture/out/05-agent-graph.txt, capture/out/09-middleware-order.txt; capture/lab/summary/parallel-tools-x86.json, capture/lab/T08-parallel-tools-x86/01-counts.jsonl, capture/lab/T08-parallel-tools-x86/04-toolnode.jsonl, capture/lab/T08-parallel-tools-x86/05-agent.jsonl, capture/lab/T08-parallel-tools-x86/t08_real.py; issue langgraph#8517; capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; libs/langchain_v1/langchain/agents/factory.py and libs/langchain_v1/langchain/agents/middleware/types.py, libs/core/langchain_core/runnables/config.py at langchain==1.5.0; libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22.

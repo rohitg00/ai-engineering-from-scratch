@@ -18,9 +18,9 @@ The LangChain Python stack, from the first `create_agent` call to an agent that 
 | `manual.json` | the manifest: the pin, the parts, the palette, the sources, the cover plate |
 | `front.md`, `sections/` | the text, one file per section |
 | `figures/src/` | the figure sources, built to `figures/*.svg` |
-| `capture/run.py`, `capture/s_*.py` | the capture kit: it runs offline with a scripted fake chat model and no keys, and writes the 44 files in `capture/out/` that the listings come from |
-| `capture/lab/` | 21 recorded experiments, `T01-overhead-mac` to `T20-mcp-edges-mac` and `TRC-tracing-mac`, and the recorded runs of the five demos. Each folder holds its scripts and raw output, and `capture/lab/README.md` names the rows not to use |
-| `capture/lab/summary/` | 27 summary files that the tables and charts read, rebuilt by `capture/labsum.py` |
+| `capture/run.py`, `capture/s_*.py` | the capture kit: it uses no keys and no fake chat model, calls Qwen3 4B on a local Ollama where a scenario needs a model, and writes the files in `capture/out/` that the listings come from |
+| `capture/lab/` | 21 recorded experiments, `T01-overhead-mac` to `T20-mcp-edges-mac` and `TRC-tracing-mac`, eight real-model runs again on the x86 server guest in the folders that end in `-x86`, and the recorded runs of the five demos. Each folder holds its scripts and raw output, and `capture/lab/README.md` names the rows not to use |
+| `capture/lab/summary/` | 36 summary files that the tables and charts read, rebuilt by `capture/labsum.py` |
 | `capture/demos/` | five demos with a README and a `run.sh` each: a SQL agent, a retrieval agent, an assistant with memory, a deep agent, and a failure drill |
 
 ## The pin
@@ -54,7 +54,7 @@ Start with the front matter, "How to read this manual". It installs the stack fr
 
 ## Run the recordings again
 
-The lab recordings need Ollama on the Mac and Postgres on an x86 machine, so they cannot run in CI. The scripts of each experiment are in its folder under `capture/lab/`, and section R.10 lists the experiments, the machines, the number of runs, and the method. The five demos in `capture/demos/` each have a README and a `run.sh`.
+The lab recordings need Ollama and Postgres on the Mac and on an x86 server guest, so they cannot run in CI. The scripts of each experiment are in its folder under `capture/lab/`, and section R.10 lists the experiments, the machines, the number of runs, and the method. The five demos in `capture/demos/` each have a README and a `run.sh`.
 
 The captures and the summaries rebuild offline:
 

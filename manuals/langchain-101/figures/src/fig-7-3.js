@@ -25,5 +25,5 @@ module.exports = figure('fig-7-3', {
     f.path(`M${input.x + input.w} ${better.cy} H${better.x - 1}`, { style: 'call' });
   });
   f.text(20, 428, 'Rose: the result with the default. Violet: the result after the change.', { size: 11, serif: true, hue: 'ink-soft' });
-  f.text(20, 444, 'Each result is a recorded run on the Mac or a capture of the kit.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 444, 'Each result is a recorded run on the Mac or the x86 server guest, or a capture of the kit.', { size: 11, serif: true, hue: 'ink-soft' });
 });

@@ -1,0 +1,157 @@
+== 01-counts.jsonl: calls the real model made when asked for N parallel calls (one call per cell, temperature 0)
+qwen3:4b-instruct-2507-q4_K_M | chatollama | asked 1 | made 2 | distinct args 1 | ids True | invalid 0 | 4.82 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatollama | asked 2 | made 2 | distinct args 2 | ids True | invalid 0 | 3.59 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatollama | asked 4 | made 4 | distinct args 4 | ids True | invalid 0 | 6.54 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatollama | asked 8 | made 8 | distinct args 8 | ids True | invalid 0 | 12.53 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatollama | asked 16 | made 16 | distinct args 16 | ids True | invalid 0 | 24.12 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatopenai_ollama_v1 | asked 1 | made 2 | distinct args 1 | ids True | invalid 0 | 4.37 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatopenai_ollama_v1 | asked 2 | made 2 | distinct args 2 | ids True | invalid 0 | 3.53 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatopenai_ollama_v1 | asked 4 | made 4 | distinct args 4 | ids True | invalid 0 | 6.68 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatopenai_ollama_v1 | asked 8 | made 8 | distinct args 8 | ids True | invalid 0 | 11.57 s | 
+qwen3:4b-instruct-2507-q4_K_M | chatopenai_ollama_v1 | asked 16 | made 16 | distinct args 16 | ids True | invalid 0 | 21.42 s | 
+qwen3:8b | chatollama | asked 1 | made 1 | distinct args 1 | ids True | invalid 0 | 14.42 s | 
+qwen3:8b | chatollama | asked 2 | made 2 | distinct args 2 | ids True | invalid 0 | 6.83 s | 
+qwen3:8b | chatollama | asked 4 | made 2 | distinct args 2 | ids True | invalid 0 | 12.66 s | 
+qwen3:8b | chatollama | asked 8 | made 8 | distinct args 8 | ids True | invalid 0 | 24.11 s | 
+qwen3:8b | chatollama | asked 16 | made 2 | distinct args 2 | ids True | invalid 0 | 48.42 s | 
+qwen3:8b | chatopenai_ollama_v1 | asked 1 | made 1 | distinct args 1 | ids True | invalid 0 | 3.76 s | 
+qwen3:8b | chatopenai_ollama_v1 | asked 2 | made 2 | distinct args 2 | ids True | invalid 0 | 6.5 s | 
+qwen3:8b | chatopenai_ollama_v1 | asked 4 | made 2 | distinct args 2 | ids True | invalid 0 | 12.57 s | 
+qwen3:8b | chatopenai_ollama_v1 | asked 8 | made 8 | distinct args 8 | ids True | invalid 0 | 23.15 s | 
+qwen3:8b | chatopenai_ollama_v1 | asked 16 | made 2 | distinct args 2 | ids True | invalid 0 | 46.5 s | 
+
+== 02-raw-ollama.jsonl
+/api/chat stream=false: ids ['EQTt6tqFvlKw3zafzyhdZXl8LguMlrQa', 'JQGSl4FkvEPQJG1IP1IX4l4A2424k5Vn']
+/v1/chat/completions: ids ['5Hs8HZ7r2iexhlHVCUf1b3m43aY4NnTD', 'SaFaaFowiQcxU5hkIujOelLpaanCWttm']
+
+== 03-dupnames.jsonl
+Look up the account acct-7. | order ['safe', 'priv'] | rep 0 | bound [['account_action', 'Delete an account.']] | model calls [] | ran [] | final 'I cannot look up or retrieve information about an account as no tool is availabl'
+Look up the account acct-7. | order ['safe', 'priv'] | rep 1 | bound [['account_action', 'Delete an account.']] | model calls [] | ran [] | final 'I cannot look up or retrieve information about an account as no tool is availabl'
+Look up the account acct-7. | order ['safe', 'priv'] | rep 2 | bound [['account_action', 'Delete an account.']] | model calls [] | ran [] | final 'I cannot look up or retrieve information about an account as no tool is availabl'
+Look up the account acct-7. | order ['priv', 'safe'] | rep 0 | bound [['account_action', 'Look up an account without side effects.']] | model calls [['account_action', {'account_id': 'acct-7'}]] | ran ['safe_lookup'] | final 'The account with ID "acct-7" has been successfully looked up. Let me know if you'
+Look up the account acct-7. | order ['priv', 'safe'] | rep 1 | bound [['account_action', 'Look up an account without side effects.']] | model calls [['account_action', {'account_id': 'acct-7'}]] | ran ['safe_lookup'] | final 'The account with ID "acct-7" has been successfully looked up. Let me know if you'
+Look up the account acct-7. | order ['priv', 'safe'] | rep 2 | bound [['account_action', 'Look up an account without side effects.']] | model calls [['account_action', {'account_id': 'acct-7'}]] | ran ['safe_lookup'] | final 'The account with ID "acct-7" has been successfully looked up. Let me know if you'
+Delete the account acct-7. | order ['safe', 'priv'] | rep 0 | bound [['account_action', 'Delete an account.']] | model calls [['account_action', {'account_id': 'acct-7'}]] | ran ['privileged_delete'] | final 'The account with ID "acct-7" has been successfully deleted.'
+Delete the account acct-7. | order ['safe', 'priv'] | rep 1 | bound [['account_action', 'Delete an account.']] | model calls [['account_action', {'account_id': 'acct-7'}]] | ran ['privileged_delete'] | final 'The account with ID "acct-7" has been successfully deleted.'
+Delete the account acct-7. | order ['safe', 'priv'] | rep 2 | bound [['account_action', 'Delete an account.']] | model calls [['account_action', {'account_id': 'acct-7'}]] | ran ['privileged_delete'] | final 'The account with ID "acct-7" has been successfully deleted.'
+Delete the account acct-7. | order ['priv', 'safe'] | rep 0 | bound [['account_action', 'Look up an account without side effects.']] | model calls [] | ran [] | final 'I cannot assist with deleting accounts or performing actions that involve accoun'
+Delete the account acct-7. | order ['priv', 'safe'] | rep 1 | bound [['account_action', 'Look up an account without side effects.']] | model calls [] | ran [] | final 'I cannot assist with deleting accounts or performing actions that involve accoun'
+Delete the account acct-7. | order ['priv', 'safe'] | rep 2 | bound [['account_action', 'Look up an account without side effects.']] | model calls [] | ran [] | final 'I cannot assist with deleting accounts or performing actions that involve accoun'
+
+== 04-toolnode.jsonl: ToolNode fed the real AIMessage; calls in it per asked N: {'1': 2, '2': 2, '4': 4, '8': 8, '16': 16}; n per cell = 5 (warm-up rows left out)
+mode | tool | asked | max_concurrency | wall ms median | max overlap (set) | n_exec | errors
+ainvoke | async | 1 | None | 212.0 | [2] | [2] | Counter()
+ainvoke | async | 1 | 1 | 212.0 | [2] | [2] | Counter()
+ainvoke | async | 1 | 2 | 212.5 | [2] | [2] | Counter()
+ainvoke | async | 1 | 4 | 212.3 | [2] | [2] | Counter()
+ainvoke | async | 1 | 8 | 211.8 | [2] | [2] | Counter()
+ainvoke | async | 2 | None | 212.1 | [2] | [2] | Counter()
+ainvoke | async | 2 | 1 | 212.3 | [2] | [2] | Counter()
+ainvoke | async | 2 | 2 | 212.5 | [2] | [2] | Counter()
+ainvoke | async | 2 | 4 | 212.1 | [2] | [2] | Counter()
+ainvoke | async | 2 | 8 | 212.0 | [2] | [2] | Counter()
+ainvoke | async | 4 | None | 215.1 | [4] | [4] | Counter()
+ainvoke | async | 4 | 1 | 214.6 | [4] | [4] | Counter()
+ainvoke | async | 4 | 2 | 214.7 | [4] | [4] | Counter()
+ainvoke | async | 4 | 4 | 215.2 | [4] | [4] | Counter()
+ainvoke | async | 4 | 8 | 214.5 | [4] | [4] | Counter()
+ainvoke | async | 8 | None | 219.8 | [8] | [8] | Counter()
+ainvoke | async | 8 | 1 | 219.8 | [8] | [8] | Counter()
+ainvoke | async | 8 | 2 | 220.9 | [8] | [8] | Counter()
+ainvoke | async | 8 | 4 | 220.5 | [8] | [8] | Counter()
+ainvoke | async | 8 | 8 | 220.4 | [8] | [8] | Counter()
+ainvoke | async | 16 | None | 233.7 | [16] | [16] | Counter()
+ainvoke | async | 16 | 1 | 233.7 | [16] | [16] | Counter()
+ainvoke | async | 16 | 2 | 233.0 | [16] | [16] | Counter()
+ainvoke | async | 16 | 4 | 232.7 | [16] | [16] | Counter()
+ainvoke | async | 16 | 8 | 233.1 | [16] | [16] | Counter()
+ainvoke | sync | 1 | None | 214.8 | [2] | [2] | Counter()
+ainvoke | sync | 1 | 1 | 213.9 | [2] | [2] | Counter()
+ainvoke | sync | 1 | 2 | 215.5 | [2] | [2] | Counter()
+ainvoke | sync | 1 | 4 | 214.8 | [2] | [2] | Counter()
+ainvoke | sync | 1 | 8 | 215.3 | [2] | [2] | Counter()
+ainvoke | sync | 2 | None | 215.3 | [2] | [2] | Counter()
+ainvoke | sync | 2 | 1 | 214.4 | [2] | [2] | Counter()
+ainvoke | sync | 2 | 2 | 214.1 | [2] | [2] | Counter()
+ainvoke | sync | 2 | 4 | 215.6 | [2] | [2] | Counter()
+ainvoke | sync | 2 | 8 | 215.1 | [2] | [2] | Counter()
+ainvoke | sync | 4 | None | 221.5 | [4] | [4] | Counter()
+ainvoke | sync | 4 | 1 | 220.0 | [4] | [4] | Counter()
+ainvoke | sync | 4 | 2 | 220.7 | [4] | [4] | Counter()
+ainvoke | sync | 4 | 4 | 221.3 | [4] | [4] | Counter()
+ainvoke | sync | 4 | 8 | 220.5 | [4] | [4] | Counter()
+ainvoke | sync | 8 | None | 237.5 | [8] | [8] | Counter()
+ainvoke | sync | 8 | 1 | 238.7 | [8] | [8] | Counter()
+ainvoke | sync | 8 | 2 | 238.1 | [8] | [8] | Counter()
+ainvoke | sync | 8 | 4 | 236.0 | [8] | [8] | Counter()
+ainvoke | sync | 8 | 8 | 238.8 | [8] | [8] | Counter()
+ainvoke | sync | 16 | None | 269.2 | [16] | [16] | Counter()
+ainvoke | sync | 16 | 1 | 267.1 | [16] | [16] | Counter()
+ainvoke | sync | 16 | 2 | 266.5 | [16] | [16] | Counter()
+ainvoke | sync | 16 | 4 | 265.2 | [16] | [16] | Counter()
+ainvoke | sync | 16 | 8 | 266.5 | [16] | [16] | Counter()
+invoke | async | 1 | None | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 1 | 1 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 1 | 2 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 1 | 4 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 1 | 8 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 2 | None | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 2 | 1 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 2 | 2 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 2 | 4 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 2 | 8 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 4 | None | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 4 | 1 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 4 | 2 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 4 | 4 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 4 | 8 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 8 | None | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 8 | 1 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 8 | 2 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 8 | 4 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 8 | 8 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 16 | None | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 16 | 1 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 16 | 2 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 16 | 4 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | async | 16 | 8 | None | [0] | [0] | Counter({'NotImplementedError: StructuredTool does not support sync in': 5})
+invoke | sync | 1 | None | 213.9 | [2] | [2] | Counter()
+invoke | sync | 1 | 1 | 419.7 | [1] | [2] | Counter()
+invoke | sync | 1 | 2 | 212.5 | [2] | [2] | Counter()
+invoke | sync | 1 | 4 | 214.1 | [2] | [2] | Counter()
+invoke | sync | 1 | 8 | 212.8 | [2] | [2] | Counter()
+invoke | sync | 2 | None | 213.4 | [2] | [2] | Counter()
+invoke | sync | 2 | 1 | 419.4 | [1] | [2] | Counter()
+invoke | sync | 2 | 2 | 213.2 | [2] | [2] | Counter()
+invoke | sync | 2 | 4 | 213.5 | [2] | [2] | Counter()
+invoke | sync | 2 | 8 | 213.1 | [2] | [2] | Counter()
+invoke | sync | 4 | None | 218.6 | [4] | [4] | Counter()
+invoke | sync | 4 | 1 | 835.3 | [1] | [4] | Counter()
+invoke | sync | 4 | 2 | 422.6 | [2] | [4] | Counter()
+invoke | sync | 4 | 4 | 217.9 | [4] | [4] | Counter()
+invoke | sync | 4 | 8 | 217.7 | [4] | [4] | Counter()
+invoke | sync | 8 | None | 235.7 | [8] | [8] | Counter()
+invoke | sync | 8 | 1 | 1666.9 | [1] | [8] | Counter()
+invoke | sync | 8 | 2 | 839.0 | [2] | [8] | Counter()
+invoke | sync | 8 | 4 | 433.3 | [4] | [8] | Counter()
+invoke | sync | 8 | 8 | 234.8 | [8] | [8] | Counter()
+invoke | sync | 16 | None | 264.2 | [16] | [16] | Counter()
+invoke | sync | 16 | 1 | 3331.0 | [1] | [16] | Counter()
+invoke | sync | 16 | 2 | 1673.5 | [2] | [16] | Counter()
+invoke | sync | 16 | 4 | 854.4 | [4] | [16] | Counter()
+invoke | sync | 16 | 8 | 460.0 | [8] | [16] | Counter()
+
+== 05-agent.jsonl: create_agent with the real model, asked for 8 parallel calls, n = 3 per cell
+mode | tool | max_concurrency | calls made | tool span ms median | max overlap (set) | wall s median | errors
+ainvoke | async | None | [8, 8, 8] | 210.5 | [8] | 12.3 | Counter()
+ainvoke | async | 1 | [8, 8, 8] | 1668.7 | [1] | 13.8 | Counter()
+ainvoke | async | 4 | [8, 8, 8] | 421.9 | [4] | 12.5 | Counter()
+ainvoke | sync | None | [8, 8, 8] | 231.2 | [8] | 12.0 | Counter()
+ainvoke | sync | 1 | [8, 8, 8] | 1669.7 | [1] | 13.9 | Counter()
+ainvoke | sync | 4 | [8, 8, 8] | 431.0 | [4] | 12.4 | Counter()
+invoke | async | None | [None, None, None] | None | [0] | 10.8 | Counter({'NotImplementedError: StructuredTool does not support sync invocation.': 3})
+invoke | async | 1 | [None, None, None] | None | [0] | 11.0 | Counter({'NotImplementedError: StructuredTool does not support sync invocation.': 3})
+invoke | async | 4 | [None, None, None] | None | [0] | 11.1 | Counter({'NotImplementedError: StructuredTool does not support sync invocation.': 3})
+invoke | sync | None | [8, 8, 8] | 229.2 | [8] | 12.3 | Counter()
+invoke | sync | 1 | [8, 8, 8] | 1674.0 | [1] | 13.9 | Counter()
+invoke | sync | 4 | [8, 8, 8] | 437.2 | [4] | 12.8 | Counter()

@@ -142,7 +142,7 @@ claim: A replay and an update_state from the checkpoint before b each start a br
 caption: Read from the input checkpoint at the top. Each box is one checkpoint with its step and the value of x. The amber box is the fork of the replay, and the violet box is the update. From capture/lab/summary/replay-fork-mac.json.
 ```
 
-The same lab ran an agent with one tool. A replay from step 0, whose `next` is `model`, made 2 model calls and 1 tool call. A replay from step 1, whose `next` is `tools`, made 1 model call and 1 tool call. So a replay costs what the original run cost from that point on. Make every node after the checkpoint safe to run twice before you replay.
+An agent with Qwen3 4B and one tool, 3 runs on the x86 server guest, gave the same counts in every run. A replay from step 0, whose `next` is `model`, made 2 model calls and 1 tool call. A replay from step 1, whose `next` is `tools`, made 1 model call and 1 tool call. So a replay costs what the original run cost from that point on. Make every node after the checkpoint safe to run twice before you replay.
 
 The docs say that you cannot time travel to a point between the nodes of a default subgraph {{docs oss/python/langgraph/use-time-travel}}. The lab did not run time travel inside a subgraph. It comes in the next edition, with the other open items of [section 7.6](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
@@ -154,4 +154,4 @@ The docs say that you cannot time travel to a point between the nodes of a defau
 - Pass the full config from the history to update_state, with checkpoint_ns.
 ```
 
-Sources: capture/s_persist.py, capture/out/30-state-history-forks.txt; capture/lab/summary/replay-fork-mac.json, capture/lab/T17-claims-mac/02-replay-and-fork.jsonl; libs/langgraph/langgraph/pregel/main.py and libs/checkpoint/langgraph/checkpoint/memory/__init__.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-time-travel).
+Sources: capture/s_persist.py, capture/out/30-state-history-forks.txt; capture/lab/summary/replay-fork-mac.json, capture/lab/T17-claims-mac/02-replay-and-fork.jsonl, capture/lab/summary/replay-fork-x86.json, capture/lab/T17-claims-x86/01-claims.jsonl; libs/langgraph/langgraph/pregel/main.py and libs/checkpoint/langgraph/checkpoint/memory/__init__.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-time-travel).

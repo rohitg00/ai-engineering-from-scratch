@@ -122,14 +122,16 @@ Three numbers are the default limit in different places, and they are easy to mi
 
 The graph API page gives 10,007 since `langgraph` 1.1.4, and 10,000 between 1.0.6 and 1.1.3 {{docs oss/python/langgraph/graph-api}}. Older advice names 25 as the graph default. At the pin, 25 is the default of a `langchain_core` runnable config, and a graph does not use it {{code libs/core/langchain_core/runnables/config.py}}. Pass `recursion_limit` at the top level of the config, not under `configurable` {{docs oss/python/langgraph/graph-api}}. This manual records the different numbers as conflict D105, and [section 7.1](#s-agent-server-langgraph-dev-up-and-deploy) shows the limit of Agent Server.
 
-**We measured** each default on the Mac, one run of each case, from the summary that [section 1.2](#s-one-create-agent-run) also uses. A plain loop stopped at 10007 steps. With the variable set to 25, or with `recursion_limit=25`, it stopped at 25. The agent with a model that always calls a tool stopped at 9999 steps, after 5000 model calls and 4999 tool calls. With `recursion_limit=25`, the agent made 13 model calls. [Figure](#fig-5-8b) shows each run.
+**We measured** each default of a plain loop on the Mac, one run of each case, with no model. A plain loop stopped at 10007 steps. With the variable set to 25, or with `recursion_limit=25`, it stopped at 25.
+
+The agent ran with Qwen3 4B on the x86 server guest, told to call a tool until the tool answered finished, which it never did. With `recursion_limit=25`, the agent made 13 model calls (Qwen3 4B, x86 server guest, 3 of 3). It made 51 at `recursion_limit` 101. With no limit, the lab script stopped it after 121 model calls in 21 minutes. [Figure](#fig-5-8b) shows each run.
 
 ```figure
 id: fig-5-8b
 kind: chart
 title: steps before GraphRecursionError
-claim: A plain graph stops at 10007 steps and an agent at 9999, and each agent step is one model call or one tool call.
-caption: Read one dot for each run on the Mac, on a log scale. The label beside each dot names the case and the model calls it made. From capture/lab/summary/recursion-mac.json.
+claim: A plain graph stops at 10007 steps, and each agent step is one model call or one tool call, so 25 steps allow 13 model calls.
+caption: Read one dot for each case, on a log scale. The graph runs are from the Mac and the agent runs from Qwen3 4B on the x86 server guest. The label names the case and its model calls. From capture/lab/summary/recursion-mac.json and capture/lab/summary/recursion-x86.json.
 ```
 
 So each turn of an agent is two steps, one in `model` and one in `tools`. Parallel tool calls from one model turn run as tasks of the same `tools` step {{code libs/langchain_v1/langchain/agents/factory.py}}. An agent that needs `n` sequential rounds of tool calls and one answer needs at least `2n + 1` steps.
@@ -149,4 +151,4 @@ The kit loop routes to `END` when `remaining_steps` is 2 or less. With `recursio
 - Read RemainingSteps in a loop to stop before the limit raises.
 ```
 
-Sources: capture/s_graph.py, capture/out/37-error-handler-timeout.txt, capture/out/38-recursion-limit.txt; capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/_internal/_retry.py, libs/langgraph/langgraph/_internal/_timeout.py, libs/langgraph/langgraph/_internal/_config.py, and libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22; libs/core/langchain_core/runnables/config.py and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/fault-tolerance, oss/python/langgraph/graph-api).
+Sources: capture/s_graph.py, capture/out/37-error-handler-timeout.txt, capture/out/38-recursion-limit.txt; capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl, capture/lab/summary/recursion-x86.json, capture/lab/T17-claims-x86/01-claims.jsonl, capture/lab/T17-claims-x86/02-nolimit.jsonl; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/_internal/_retry.py, libs/langgraph/langgraph/_internal/_timeout.py, libs/langgraph/langgraph/_internal/_config.py, and libs/langgraph/langgraph/graph/state.py at langgraph 1.2.22; libs/core/langchain_core/runnables/config.py and libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/fault-tolerance, oss/python/langgraph/graph-api).

@@ -138,7 +138,7 @@ note: The first and the last of four chunks.
 }
 ```
 
-The approval lab of [section 5.5](#s-human-in-the-loop-batched-and-per-call) also ran an agent in per-call mode as a subgraph. Two calls that needed approval were answered one at a time, and each tool ran once.
+The approval lab of [section 5.5](#s-human-in-the-loop-batched-and-per-call) also ran a Qwen3 4B agent in per-call mode as a subgraph, 3 runs. Two calls that needed approval were answered one at a time, and each tool ran once.
 
 ## Patterns for several agents
 
@@ -179,4 +179,4 @@ The kit runs only the subagent pattern. Captures of the other four patterns come
 - Start with one agent, and add a subagent when a task needs its own context.
 ```
 
-Sources: capture/s_graph.py, capture/out/36-subgraphs.txt, capture/out/45-subgraph-agent.txt, capture/out/41-deep-agent.txt; capture/lab/summary/approvals-mac.json; libs/langgraph/langgraph/pregel/main.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-subgraphs, oss/python/langchain/multi-agent/index, oss/python/langchain/multi-agent/subagents).
+Sources: capture/s_graph.py, capture/out/36-subgraphs.txt, capture/out/45-subgraph-agent.txt, capture/out/41-deep-agent.txt; capture/lab/summary/approvals-x86.json; libs/langgraph/langgraph/pregel/main.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-subgraphs, oss/python/langchain/multi-agent/index, oss/python/langchain/multi-agent/subagents).

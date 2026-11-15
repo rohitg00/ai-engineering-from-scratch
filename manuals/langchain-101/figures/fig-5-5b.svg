@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-5-5b-title fig-5-5b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-5-5b-title">Tool runs in each approval case</title>
-  <desc id="fig-5-5b-desc">A dot chart of tool runs for 22 approval cases on the Mac, 3 runs each, with a short line at the number of tool runs the decisions allowed. Batched cases B1 to B9 and per-call cases P1 to P8, J4, and J5 sit on their lines in all runs. The batched cases J1, J2, and J3, with a middleware that jumps to tools, each ran 1 tool in every run without an approval, and are drawn in rose.</desc>
+  <desc id="fig-5-5b-desc">A dot chart of tool runs for 22 approval cases with Qwen3 4B on the x86 server guest, 3 runs each, with a short line at the number of tool runs the decisions allowed. Batched cases B1 to B9 and per-call cases P1 to P8, J4, and J5 sit on their lines in all runs. The batched cases J1, J2, and J3, with a middleware that jumps to tools, each ran 1 tool in every run without an approval, and are drawn in rose.</desc>
   <line x1="60" y1="220" x2="620" y2="220" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
   <text x="54" y="224" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">0</text>
   <line x1="60" y1="148" x2="620" y2="148" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
@@ -126,5 +126,5 @@
   <text x="74" y="296" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">tools matched the decisions</text>
   <circle cx="290" cy="292" r="3" fill="var(--m-rose-ink, #b0344d)"/>
   <text x="300" y="296" font-size="11" fill="var(--m-rose-ink, #b0344d)">a tool ran with no approval</text>
-  <text x="60" y="322" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one run on the Mac. The grey line is the count the decisions allowed.</text>
+  <text x="60" y="322" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each dot is one run on the x86 server guest. The grey line is the allowed count.</text>
 </svg>

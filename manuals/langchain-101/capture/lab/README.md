@@ -25,13 +25,46 @@ Each folder holds the raw files of one experiment, copied unchanged from the run
 | `T15-agent-server-x86/` | the x86 server guest | `langgraph dev`: the recursion limit, jobs per worker, a load of 1 to 100 concurrent runs, the time floor of one run, the four double texting strategies, and the start and the license error of `langgraph up`, with the lab scripts |
 | `T10-long-threads-x86/` | the x86 server guest | `create_agent` on `PostgresSaver` for 2,000 turns, without summarization and with three triggers, one run each, with a fake model with no delay |
 | `T16-concurrency-x86/` | the x86 server guest | 1 to 500 threads on one `AsyncPostgresSaver` with one connection and pools of 20 and 90, two runs each, and 8 and 16 client processes |
+| `T05-retries-x86/` | the x86 server guest | `ChatOpenAI` on the `/v1` path of Ollama and `ChatOllama` on its native path, with Qwen3 4B, through a relay that drops, holds, or answers 429 or 500, and against a refused port and a real 404; a tool against a refused port and PostgreSQL with a ledger table; client, middleware, and `RetryPolicy` layers; 3 runs per cell, with `t05_real.py` and `lr_common.py` |
+| `T07-approvals-x86/` | the x86 server guest | `HumanInTheLoopMiddleware` with Qwen3 4B, 25 model cases with 3 runs each, every step in a new process on `SqliteSaver`, and a survey of 10 prompts per intent on Qwen3 4B and Qwen3 8B, with the lab scripts |
+| `T08-parallel-tools-x86/` | the x86 server guest | how many parallel calls Qwen3 4B and Qwen3 8B make when asked for 1 to 16, the raw ids of Ollama, duplicate tool names (3 runs per case), `ToolNode` fed the real reply (5 runs per cell), and `create_agent` with the model in every run (3 runs per cell), with a 200 ms `pg_sleep` tool, with `t08_real.py` |
+| `T11-middleware-cost-x86/` | the x86 server guest | `create_agent` with Qwen3 4B and 0 to 20 no-op middlewares of five hook types and nine built-in setups, 20 timed runs per cell, and 12 cases of built-in middleware set to act, 3 runs each, with `t11_real.py` |
+| `T17-claims-x86/` | the x86 server guest | the agent rows of T17 with Qwen3 4B: `recursion_limit` 25 and 101, 3 runs each, one run with no limit stopped by the script at 1200 s, and the agent replay, 3 runs, with the lab scripts |
+| `T18-evaluate-leak-x86/` | the x86 server guest | the conditions of T18 with a Qwen3 4B agent target, 5 processes per condition, with `t18_real.py` and `t18_summarize.py` |
+| `T19-pytest-plugin-x86/` | the x86 server guest | the conditions of T19 with a Qwen3 4B agent test, 3 processes per condition, with `t19_driver_real.py` and the tests |
+| `failure-drill-x86/` | the x86 server guest | the Part 8 failure drill with Qwen3 4B, seven cases, 3 runs, with `drill_real.py` and `lr_common.py` |
 | `sql-agent/` | the Mac | the Part 8 SQL agent demo on a small bakery database that the script builds, 15 fixed guard cases and five questions, one run with Qwen3 4B and one with Qwen3 8B |
 | `retrieval-agent/` | the Mac | the Part 8 retrieval demo over six lesson files with `nomic-embed-text`, five questions, one run with each model, and the SHA-256 of the corpus |
 | `assistant/` | the Mac | the Part 8 assistant, seven steps in seven processes with a SIGKILL after an approved email, one run with default durability and one with `sync` |
 | `deep-agent/` | the Mac | the Part 8 deep agent with an editor subagent on Qwen3 8B, one run, with the tokens of each model call |
-| `failure-drill/` | the Mac | the Part 8 failure drill, seven cases with a scripted fake model and a local stub, one run |
+| `failure-drill/` | the Mac | the Part 8 failure drill, seven cases with a scripted fake model and a local stub, one run. Superseded by `failure-drill-x86/` |
 
-The Mac is an Apple M1 Max with 10 cores and 64 GiB, macOS 26.2, Python 3.13.12, Ollama 0.31.1, and PostgreSQL 14.21. Other work ran on it during every timed run. The x86 server guest is a KVM guest with 32 vCPU and 48 GiB on a shared server with an AMD EPYC 7452. Its disk was in the memory of the server. It ran Ubuntu 24.04, Python 3.13.18, PostgreSQL 16.15, Redis 7.0.15, and Docker 29.1.3. `x86-guest-machine.txt` records these. All of its models are fakes with a fixed delay.
+The Mac is an Apple M1 Max with 10 cores and 64 GiB, macOS 26.2, Python 3.13.12, Ollama 0.31.1, and PostgreSQL 14.21. Other work ran on it during every timed run. The x86 server guest is a KVM guest with 32 vCPU and 48 GiB on a shared server with an AMD EPYC 7452. Its disk was in the memory of the server. It ran Ubuntu 24.04, Python 3.13.18, PostgreSQL 16.15, Redis 7.0.15, and Docker 29.1.3. `x86-guest-machine.txt` records these. In T03, T10, T15, and T16 its models are fakes with a fixed delay. The folders that end in `-x86` from T05 to T19, and `failure-drill-x86/`, use Qwen3 4B (`qwen3:4b-instruct-2507-q4_K_M`) on Ollama 0.31.1 on CPU, with temperature 0, seed 42, and a context of 8192. The counts of T07 and T08 also use Qwen3 8B with reasoning off.
+
+## Superseded rows
+
+The folders that end in `-x86` ran again, with a real model, the experiments that used a fake model or a stub provider on the Mac. The old folders stay, and the manual uses only their rows that involve no model.
+
+| Old folder | Superseded by | Rows that stay valid |
+|---|---|---|
+| `T05-retries-mac/` | `T05-retries-x86/` | none. Every row ran against a stub |
+| `T07-approvals-mac/` | `T07-approvals-x86/` | G1 and G2, the plain graphs with no model |
+| `T08-parallel-tools-mac/` | `T08-parallel-tools-x86/` | the tool calls with no id in `02-idless-and-dupnames.jsonl`, because no real model at the pin sends them |
+| `T11-middleware-cost-mac/` | `T11-middleware-cost-x86/` | the graph node counts |
+| `T17-claims-mac/` | `T17-claims-x86/` | the `StateGraph` rows, the bound config of `create_agent`, and the graph replay and fork |
+| `T18-evaluate-leak-mac/` | `T18-evaluate-leak-x86/` | `04-info-origin.txt` |
+| `T19-pytest-plugin-mac/` | `T19-pytest-plugin-x86/` | none that the manual uses |
+| `failure-drill/` | `failure-drill-x86/` | none |
+
+## Rows not to use in the x86 folders
+
+- `T07-approvals-x86/01-cases.jsonl`: the G3 rows. Their shape check never matched, because the parent state holds no subgraph messages while it waits. `02-g3-rerun.jsonl` holds G3, and the summary takes it from there. No time of T07 is used.
+- `T08-parallel-tools-x86/04-toolnode.jsonl`: the rows with `"warmup": true`, which the summary leaves out. The reply of Qwen3 4B for 1 call held 2 identical calls, so those `ToolNode` rows are 2-call rows.
+- `T18-evaluate-leak-x86/02-evaluate-noflush.jsonl`: the POST counts of `noenv:agent`, because those posts happen at exit. The summary uses 02 only for `GET /info`.
+- `T19-pytest-plugin-x86/`: with tracking on, the error types come from the `{}` answers of the recorder and the guard, as on the Mac. The run names come from a rough match on the body.
+- `T05-retries-x86/`: the 429 and 500 rows are statuses that the relay sent in place of the model, not errors of a provider. The manual names them so.
+- `T11-middleware-cost-x86/`: the absolute microseconds depend on the load of 14 to 25. The manual uses the share of the run and the ratio of node hooks to wrap hooks.
+- `T17-claims-x86/02-nolimit.jsonl`: one run, which shared Ollama for a few minutes with the G3 rerun of T07, so its pace is approximate.
 
 ## Changes from the raw runs
 
@@ -66,3 +99,5 @@ The Mac is an Apple M1 Max with 10 cores and 64 GiB, macOS 26.2, Python 3.13.12,
 - The lab scripts used the paths of the research folders. Now they find their helpers and write their output relative to their own folder. They start child processes with the Python that runs them. A run in place writes over the recorded files.
 - `t05_retries.py` and `t08_analyze.py` import `common.py` from `T04-streaming-mac/`. `t05_retries.py` still cannot run, because its stub server `stub_server.py` is not kept. `t19_driver.py` needs its scratch environment in `_venv/`, which is not kept. No measurement logic changed.
 - No file holds a key, a token, or a personal name. The only host names are `127.0.0.1` and the public hosts that recorded requests and error texts name, such as `api.smith.langchain.com`. No request reached such a host.
+- The `-x86` folders hold the raw files, the logs, and the lab scripts of those runs, unchanged except in two places. In `T05-retries-x86/10-summary.txt` and `T19-pytest-plugin-x86/10-summary.txt`, the home folder is replaced with `<lab>` in one path each. `09-summary-table.txt` and `10-summary.txt` in each folder are the notes that the run wrote, not summaries that the manual reads.
+- `capture/demos/failure-drill/drill.py` is `failure-drill-x86/drill_real.py` with its import of `lr_common` changed to `real`, a cut of `lr_common.py`.

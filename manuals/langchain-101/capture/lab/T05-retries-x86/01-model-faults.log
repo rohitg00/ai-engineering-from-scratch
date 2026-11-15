@@ -1,0 +1,219 @@
+model m_drop_once openai_client_default 0 returned model_wire 3 tool_exec 1 ledger 1 3.09 
+model m_drop_once openai_mw_only 0 returned model_wire 3 tool_exec 1 ledger 1 3.36 
+model m_drop_once openai_stacked 0 returned model_wire 3 tool_exec 1 ledger 1 3.4 
+model m_drop_once ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.0 httpx.RemoteProtocolError: Server disconnected without sending a response.
+model m_drop_once ollama_mw 0 returned model_wire 3 tool_exec 1 ledger 1 3.66 
+model m_drop_once graph_rp_openai_default 0 returned model_wire 3 tool_exec 1 ledger 1 2.87 
+model m_drop_once graph_rp_agent_stacked_error 0 returned model_wire 3 tool_exec 1 ledger 1 2.99 
+model m_drop_always openai_client_default 0 raised model_wire 3 tool_exec 0 ledger 0 1.33 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always openai_init_chat_model 0 raised model_wire 3 tool_exec 0 ledger 0 1.43 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always openai_mw_only 0 returned model_wire 3 tool_exec 0 ledger 0 2.82 
+model m_drop_always openai_stacked 0 returned model_wire 9 tool_exec 0 ledger 0 7.1 
+model m_drop_always ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 httpx.RemoteProtocolError: Server disconnected without sending a response.
+model m_drop_always ollama_mw 0 returned model_wire 3 tool_exec 0 ledger 0 2.83 
+model m_drop_always graph_rp_openai_default 0 raised model_wire 9 tool_exec 0 ledger 0 6.77 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always graph_rp_agent_stacked_error 0 raised model_wire 27 tool_exec 0 ledger 0 22.66 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always openai_client_default 0 raised model_wire 3 tool_exec 0 ledger 0 1.45 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always openai_mw_only 0 returned model_wire 3 tool_exec 0 ledger 0 3.25 
+model m_refused_always openai_stacked 0 returned model_wire 9 tool_exec 0 ledger 0 6.95 
+model m_refused_always ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.0 httpx.ConnectError: [Errno 111] Connection refused
+model m_refused_always ollama_mw 0 returned model_wire 3 tool_exec 0 ledger 0 2.67 
+model m_refused_always graph_rp_openai_default 0 raised model_wire 9 tool_exec 0 ledger 0 6.35 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always graph_rp_agent_stacked_error 0 raised model_wire 27 tool_exec 0 ledger 0 23.48 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_timeout_once openai_client_default 0 returned model_wire 3 tool_exec 1 ledger 1 18.18 
+model m_timeout_once openai_mw_only 0 returned model_wire 3 tool_exec 1 ledger 1 18.5 
+model m_timeout_once openai_stacked 0 returned model_wire 3 tool_exec 1 ledger 1 18.06 
+model m_timeout_once ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 15.02 httpx.ReadTimeout: timed out
+model m_timeout_once ollama_mw 0 returned model_wire 3 tool_exec 1 ledger 1 18.5 
+model m_timeout_once graph_rp_openai_default 0 returned model_wire 3 tool_exec 1 ledger 1 18.06 
+model m_timeout_once graph_rp_agent_stacked_error 0 returned model_wire 3 tool_exec 1 ledger 1 18.22 
+model m_timeout_always openai_client_default 0 raised model_wire 3 tool_exec 0 ledger 0 46.33 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always openai_init_chat_model 0 raised model_wire 3 tool_exec 0 ledger 0 46.31 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always openai_mw_only 0 returned model_wire 3 tool_exec 0 ledger 0 47.69 
+model m_timeout_always openai_stacked 0 returned model_wire 9 tool_exec 0 ledger 0 141.88 
+model m_timeout_always ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 15.02 httpx.ReadTimeout: timed out
+model m_timeout_always ollama_mw 0 returned model_wire 3 tool_exec 0 ledger 0 48.19 
+model m_timeout_always graph_rp_openai_default 0 raised model_wire 9 tool_exec 0 ledger 0 141.91 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always graph_rp_agent_stacked_error 0 raised model_wire 27 tool_exec 0 ledger 0 428.47 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_429_once_relay openai_client_default 0 returned model_wire 3 tool_exec 1 ledger 1 8.25 
+model m_429_once_relay openai_mw_only 0 returned model_wire 3 tool_exec 1 ledger 1 3.82 
+model m_429_once_relay openai_stacked 0 returned model_wire 3 tool_exec 1 ledger 1 3.1 
+model m_429_once_relay ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 429 (status code: 429)
+model m_429_once_relay ollama_mw 0 returned model_wire 3 tool_exec 1 ledger 1 3.77 
+model m_429_once_relay graph_rp_openai_default 0 returned model_wire 3 tool_exec 1 ledger 1 3.04 
+model m_429_once_relay graph_rp_agent_stacked_error 0 returned model_wire 3 tool_exec 1 ledger 1 3.11 
+model m_429_always_relay openai_client_default 0 raised model_wire 3 tool_exec 0 ledger 0 1.22 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_429_always_relay openai_mw_only 0 returned model_wire 3 tool_exec 0 ledger 0 3.02 
+model m_429_always_relay openai_stacked 0 returned model_wire 9 tool_exec 0 ledger 0 7.36 
+model m_429_always_relay ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 429 (status code: 429)
+model m_429_always_relay ollama_mw 0 returned model_wire 3 tool_exec 0 ledger 0 2.99 
+model m_429_always_relay graph_rp_openai_default 0 raised model_wire 9 tool_exec 0 ledger 0 6.06 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_429_always_relay graph_rp_agent_stacked_error 0 raised model_wire 27 tool_exec 0 ledger 0 22.98 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_500_once_relay openai_client_default 0 returned model_wire 3 tool_exec 1 ledger 1 3.13 
+model m_500_once_relay openai_mw_only 0 returned model_wire 3 tool_exec 1 ledger 1 4.19 
+model m_500_once_relay openai_stacked 0 returned model_wire 3 tool_exec 1 ledger 1 3.15 
+model m_500_once_relay ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 500 (status code: 500)
+model m_500_once_relay ollama_mw 0 returned model_wire 3 tool_exec 1 ledger 1 3.64 
+model m_500_once_relay graph_rp_openai_default 0 returned model_wire 3 tool_exec 1 ledger 1 3.06 
+model m_500_once_relay graph_rp_agent_stacked_error 0 returned model_wire 3 tool_exec 1 ledger 1 3.15 
+model m_500_always_relay openai_client_default 0 raised model_wire 3 tool_exec 0 ledger 0 1.43 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay openai_init_chat_model 0 raised model_wire 3 tool_exec 0 ledger 0 1.28 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay openai_mw_only 0 returned model_wire 3 tool_exec 0 ledger 0 2.98 
+model m_500_always_relay openai_stacked 0 returned model_wire 9 tool_exec 0 ledger 0 6.94 
+model m_500_always_relay ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 500 (status code: 500)
+model m_500_always_relay ollama_mw 0 returned model_wire 3 tool_exec 0 ledger 0 3.46 
+model m_500_always_relay graph_rp_openai_default 0 raised model_wire 9 tool_exec 0 ledger 0 6.55 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay graph_rp_agent_stacked_error 0 raised model_wire 27 tool_exec 0 ledger 0 22.55 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_404_always_real openai_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real openai_mw_only 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real openai_stacked 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real ollama_client_default 0 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: model 'no-such-model:1b' not found (status code: 404)
+model m_404_always_real ollama_mw 0 returned model_wire 3 tool_exec 0 ledger 0 3.31 
+model m_404_always_real graph_rp_openai_default 0 raised model_wire 3 tool_exec 0 ledger 0 3.07 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real graph_rp_agent_stacked_error 0 raised model_wire 3 tool_exec 0 ledger 0 2.69 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_drop_once openai_client_default 1 returned model_wire 3 tool_exec 1 ledger 1 3.08 
+model m_drop_once openai_mw_only 1 returned model_wire 3 tool_exec 1 ledger 1 3.71 
+model m_drop_once openai_stacked 1 returned model_wire 3 tool_exec 1 ledger 1 2.92 
+model m_drop_once ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 httpx.RemoteProtocolError: Server disconnected without sending a response.
+model m_drop_once ollama_mw 1 returned model_wire 3 tool_exec 1 ledger 1 3.51 
+model m_drop_once graph_rp_openai_default 1 returned model_wire 3 tool_exec 1 ledger 1 3.09 
+model m_drop_once graph_rp_agent_stacked_error 1 returned model_wire 3 tool_exec 1 ledger 1 3.26 
+model m_drop_always openai_client_default 1 raised model_wire 3 tool_exec 0 ledger 0 1.39 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always openai_init_chat_model 1 raised model_wire 3 tool_exec 0 ledger 0 1.28 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always openai_mw_only 1 returned model_wire 3 tool_exec 0 ledger 0 2.66 
+model m_drop_always openai_stacked 1 returned model_wire 9 tool_exec 0 ledger 0 7.36 
+model m_drop_always ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 httpx.RemoteProtocolError: Server disconnected without sending a response.
+model m_drop_always ollama_mw 1 returned model_wire 3 tool_exec 0 ledger 0 3.12 
+model m_drop_always graph_rp_openai_default 1 raised model_wire 9 tool_exec 0 ledger 0 5.3 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always graph_rp_agent_stacked_error 1 raised model_wire 27 tool_exec 0 ledger 0 21.7 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always openai_client_default 1 raised model_wire 3 tool_exec 0 ledger 0 1.33 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always openai_mw_only 1 returned model_wire 3 tool_exec 0 ledger 0 3.31 
+model m_refused_always openai_stacked 1 returned model_wire 9 tool_exec 0 ledger 0 6.95 
+model m_refused_always ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.0 httpx.ConnectError: [Errno 111] Connection refused
+model m_refused_always ollama_mw 1 returned model_wire 3 tool_exec 0 ledger 0 2.74 
+model m_refused_always graph_rp_openai_default 1 raised model_wire 9 tool_exec 0 ledger 0 6.7 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always graph_rp_agent_stacked_error 1 raised model_wire 27 tool_exec 0 ledger 0 22.47 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_timeout_once openai_client_default 1 returned model_wire 3 tool_exec 1 ledger 1 18.18 
+model m_timeout_once openai_mw_only 1 returned model_wire 3 tool_exec 1 ledger 1 18.8 
+model m_timeout_once openai_stacked 1 returned model_wire 3 tool_exec 1 ledger 1 18.18 
+model m_timeout_once ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 15.02 httpx.ReadTimeout: timed out
+model m_timeout_once ollama_mw 1 returned model_wire 3 tool_exec 1 ledger 1 18.59 
+model m_timeout_once graph_rp_openai_default 1 returned model_wire 3 tool_exec 1 ledger 1 18.12 
+model m_timeout_once graph_rp_agent_stacked_error 1 returned model_wire 3 tool_exec 1 ledger 1 18.46 
+model m_timeout_always openai_client_default 1 raised model_wire 3 tool_exec 0 ledger 0 46.31 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always openai_init_chat_model 1 raised model_wire 3 tool_exec 0 ledger 0 46.39 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always openai_mw_only 1 returned model_wire 3 tool_exec 0 ledger 0 48.11 
+model m_timeout_always openai_stacked 1 returned model_wire 9 tool_exec 0 ledger 0 142.23 
+model m_timeout_always ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 15.02 httpx.ReadTimeout: timed out
+model m_timeout_always ollama_mw 1 returned model_wire 3 tool_exec 0 ledger 0 47.96 
+model m_timeout_always graph_rp_openai_default 1 raised model_wire 9 tool_exec 0 ledger 0 142.71 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always graph_rp_agent_stacked_error 1 raised model_wire 27 tool_exec 0 ledger 0 428.23 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_429_once_relay openai_client_default 1 returned model_wire 3 tool_exec 1 ledger 1 8.25 
+model m_429_once_relay openai_mw_only 1 returned model_wire 3 tool_exec 1 ledger 1 3.41 
+model m_429_once_relay openai_stacked 1 returned model_wire 3 tool_exec 1 ledger 1 3.12 
+model m_429_once_relay ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 429 (status code: 429)
+model m_429_once_relay ollama_mw 1 returned model_wire 3 tool_exec 1 ledger 1 3.47 
+model m_429_once_relay graph_rp_openai_default 1 returned model_wire 3 tool_exec 1 ledger 1 3.09 
+model m_429_once_relay graph_rp_agent_stacked_error 1 returned model_wire 3 tool_exec 1 ledger 1 3.09 
+model m_429_always_relay openai_client_default 1 raised model_wire 3 tool_exec 0 ledger 0 1.29 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_429_always_relay openai_mw_only 1 returned model_wire 3 tool_exec 0 ledger 0 3.14 
+model m_429_always_relay openai_stacked 1 returned model_wire 9 tool_exec 0 ledger 0 6.96 
+model m_429_always_relay ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 429 (status code: 429)
+model m_429_always_relay ollama_mw 1 returned model_wire 3 tool_exec 0 ledger 0 3.19 
+model m_429_always_relay graph_rp_openai_default 1 raised model_wire 9 tool_exec 0 ledger 0 6.43 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_429_always_relay graph_rp_agent_stacked_error 1 raised model_wire 27 tool_exec 0 ledger 0 23.95 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_500_once_relay openai_client_default 1 returned model_wire 3 tool_exec 1 ledger 1 3.13 
+model m_500_once_relay openai_mw_only 1 returned model_wire 3 tool_exec 1 ledger 1 3.5 
+model m_500_once_relay openai_stacked 1 returned model_wire 3 tool_exec 1 ledger 1 3.17 
+model m_500_once_relay ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 500 (status code: 500)
+model m_500_once_relay ollama_mw 1 returned model_wire 3 tool_exec 1 ledger 1 3.77 
+model m_500_once_relay graph_rp_openai_default 1 returned model_wire 3 tool_exec 1 ledger 1 3.02 
+model m_500_once_relay graph_rp_agent_stacked_error 1 returned model_wire 3 tool_exec 1 ledger 1 3.27 
+model m_500_always_relay openai_client_default 1 raised model_wire 3 tool_exec 0 ledger 0 1.18 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay openai_init_chat_model 1 raised model_wire 3 tool_exec 0 ledger 0 1.32 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay openai_mw_only 1 returned model_wire 3 tool_exec 0 ledger 0 2.31 
+model m_500_always_relay openai_stacked 1 returned model_wire 9 tool_exec 0 ledger 0 6.66 
+model m_500_always_relay ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 500 (status code: 500)
+model m_500_always_relay ollama_mw 1 returned model_wire 3 tool_exec 0 ledger 0 2.88 
+model m_500_always_relay graph_rp_openai_default 1 raised model_wire 9 tool_exec 0 ledger 0 5.9 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay graph_rp_agent_stacked_error 1 raised model_wire 27 tool_exec 0 ledger 0 24.43 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_404_always_real openai_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real openai_mw_only 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real openai_stacked 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real ollama_client_default 1 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: model 'no-such-model:1b' not found (status code: 404)
+model m_404_always_real ollama_mw 1 returned model_wire 3 tool_exec 0 ledger 0 2.81 
+model m_404_always_real graph_rp_openai_default 1 raised model_wire 3 tool_exec 0 ledger 0 2.61 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real graph_rp_agent_stacked_error 1 raised model_wire 3 tool_exec 0 ledger 0 2.29 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_drop_once openai_client_default 2 returned model_wire 3 tool_exec 1 ledger 1 3.2 
+model m_drop_once openai_mw_only 2 returned model_wire 3 tool_exec 1 ledger 1 3.74 
+model m_drop_once openai_stacked 2 returned model_wire 3 tool_exec 1 ledger 1 3.24 
+model m_drop_once ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 httpx.RemoteProtocolError: Server disconnected without sending a response.
+model m_drop_once ollama_mw 2 returned model_wire 3 tool_exec 1 ledger 1 4.04 
+model m_drop_once graph_rp_openai_default 2 returned model_wire 3 tool_exec 1 ledger 1 3.13 
+model m_drop_once graph_rp_agent_stacked_error 2 returned model_wire 3 tool_exec 1 ledger 1 3.24 
+model m_drop_always openai_client_default 2 raised model_wire 3 tool_exec 0 ledger 0 1.4 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always openai_init_chat_model 2 raised model_wire 3 tool_exec 0 ledger 0 1.31 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always openai_mw_only 2 returned model_wire 3 tool_exec 0 ledger 0 2.9 
+model m_drop_always openai_stacked 2 returned model_wire 9 tool_exec 0 ledger 0 6.79 
+model m_drop_always ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 httpx.RemoteProtocolError: Server disconnected without sending a response.
+model m_drop_always ollama_mw 2 returned model_wire 3 tool_exec 0 ledger 0 2.87 
+model m_drop_always graph_rp_openai_default 2 raised model_wire 9 tool_exec 0 ledger 0 6.66 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_drop_always graph_rp_agent_stacked_error 2 raised model_wire 27 tool_exec 0 ledger 0 23.72 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always openai_client_default 2 raised model_wire 3 tool_exec 0 ledger 0 1.3 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always openai_mw_only 2 returned model_wire 3 tool_exec 0 ledger 0 2.89 
+model m_refused_always openai_stacked 2 returned model_wire 9 tool_exec 0 ledger 0 6.87 
+model m_refused_always ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 httpx.ConnectError: [Errno 111] Connection refused
+model m_refused_always ollama_mw 2 returned model_wire 3 tool_exec 0 ledger 0 2.84 
+model m_refused_always graph_rp_openai_default 2 raised model_wire 9 tool_exec 0 ledger 0 6.05 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_refused_always graph_rp_agent_stacked_error 2 raised model_wire 27 tool_exec 0 ledger 0 23.47 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+model m_timeout_once openai_client_default 2 returned model_wire 3 tool_exec 1 ledger 1 18.52 
+model m_timeout_once openai_mw_only 2 returned model_wire 3 tool_exec 1 ledger 1 18.62 
+model m_timeout_once openai_stacked 2 returned model_wire 3 tool_exec 1 ledger 1 18.25 
+model m_timeout_once ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 15.02 httpx.ReadTimeout: timed out
+model m_timeout_once ollama_mw 2 returned model_wire 3 tool_exec 1 ledger 1 18.75 
+model m_timeout_once graph_rp_openai_default 2 returned model_wire 3 tool_exec 1 ledger 1 18.28 
+model m_timeout_once graph_rp_agent_stacked_error 2 returned model_wire 3 tool_exec 1 ledger 1 18.5 
+model m_timeout_always openai_client_default 2 raised model_wire 3 tool_exec 0 ledger 0 46.45 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always openai_init_chat_model 2 raised model_wire 3 tool_exec 0 ledger 0 46.5 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always openai_mw_only 2 returned model_wire 3 tool_exec 0 ledger 0 47.78 
+model m_timeout_always openai_stacked 2 returned model_wire 9 tool_exec 0 ledger 0 142.47 
+model m_timeout_always ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 15.02 httpx.ReadTimeout: timed out
+model m_timeout_always ollama_mw 2 returned model_wire 3 tool_exec 0 ledger 0 47.89 
+model m_timeout_always graph_rp_openai_default 2 raised model_wire 9 tool_exec 0 ledger 0 141.88 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_timeout_always graph_rp_agent_stacked_error 2 raised model_wire 27 tool_exec 0 ledger 0 429.82 langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+model m_429_once_relay openai_client_default 2 returned model_wire 3 tool_exec 1 ledger 1 9.77 
+model m_429_once_relay openai_mw_only 2 returned model_wire 3 tool_exec 1 ledger 1 4.16 
+model m_429_once_relay openai_stacked 2 returned model_wire 3 tool_exec 1 ledger 1 3.43 
+model m_429_once_relay ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 429 (status code: 429)
+model m_429_once_relay ollama_mw 2 returned model_wire 3 tool_exec 1 ledger 1 4.17 
+model m_429_once_relay graph_rp_openai_default 2 returned model_wire 3 tool_exec 1 ledger 1 3.34 
+model m_429_once_relay graph_rp_agent_stacked_error 2 returned model_wire 3 tool_exec 1 ledger 1 3.41 
+model m_429_always_relay openai_client_default 2 raised model_wire 3 tool_exec 0 ledger 0 1.2 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_429_always_relay openai_mw_only 2 returned model_wire 3 tool_exec 0 ledger 0 3.31 
+model m_429_always_relay openai_stacked 2 returned model_wire 9 tool_exec 0 ledger 0 6.93 
+model m_429_always_relay ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 429 (status code: 429)
+model m_429_always_relay ollama_mw 2 returned model_wire 3 tool_exec 0 ledger 0 3.3 
+model m_429_always_relay graph_rp_openai_default 2 raised model_wire 9 tool_exec 0 ledger 0 6.31 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_429_always_relay graph_rp_agent_stacked_error 2 raised model_wire 27 tool_exec 0 ledger 0 24.21 langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+model m_500_once_relay openai_client_default 2 returned model_wire 3 tool_exec 1 ledger 1 3.45 
+model m_500_once_relay openai_mw_only 2 returned model_wire 3 tool_exec 1 ledger 1 4.23 
+model m_500_once_relay openai_stacked 2 returned model_wire 3 tool_exec 1 ledger 1 3.41 
+model m_500_once_relay ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 500 (status code: 500)
+model m_500_once_relay ollama_mw 2 returned model_wire 3 tool_exec 1 ledger 1 4.01 
+model m_500_once_relay graph_rp_openai_default 2 returned model_wire 3 tool_exec 1 ledger 1 3.37 
+model m_500_once_relay graph_rp_agent_stacked_error 2 returned model_wire 3 tool_exec 1 ledger 1 3.45 
+model m_500_always_relay openai_client_default 2 raised model_wire 3 tool_exec 0 ledger 0 1.31 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay openai_init_chat_model 2 raised model_wire 3 tool_exec 0 ledger 0 1.28 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay openai_mw_only 2 returned model_wire 3 tool_exec 0 ledger 0 3.4 
+model m_500_always_relay openai_stacked 2 returned model_wire 9 tool_exec 0 ledger 0 6.89 
+model m_500_always_relay ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: relay 500 (status code: 500)
+model m_500_always_relay ollama_mw 2 returned model_wire 3 tool_exec 0 ledger 0 3.23 
+model m_500_always_relay graph_rp_openai_default 2 raised model_wire 9 tool_exec 0 ledger 0 6.35 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_500_always_relay graph_rp_agent_stacked_error 2 raised model_wire 27 tool_exec 0 ledger 0 23.38 langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+model m_404_always_real openai_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real openai_mw_only 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real openai_stacked 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real ollama_client_default 2 raised model_wire 1 tool_exec 0 ledger 0 0.01 ollama._types.ResponseError: model 'no-such-model:1b' not found (status code: 404)
+model m_404_always_real ollama_mw 2 returned model_wire 3 tool_exec 0 ledger 0 3.31 
+model m_404_always_real graph_rp_openai_default 2 raised model_wire 3 tool_exec 0 ledger 0 2.6 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su
+model m_404_always_real graph_rp_agent_stacked_error 2 raised model_wire 3 tool_exec 0 ledger 0 2.81 langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-su

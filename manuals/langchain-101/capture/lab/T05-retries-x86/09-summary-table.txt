@@ -1,0 +1,109 @@
+== 01-model-faults.jsonl  (model qwen3:4b-instruct-2507-q4_K_M, load at start [3.27, 1.15, 4.62])
+fault | config | n | outcomes | model attempts on the wire | model starts (callback) | tool executions | ledger rows | wall s median | exception (first)
+m_drop_once | openai_client_default | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.09 | last AI: done
+m_drop_once | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [1, 1, 1] | [1, 1, 1] | 3.71 | last AI: done
+m_drop_once | openai_stacked | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.24 | last AI: done
+m_drop_once | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | httpx.RemoteProtocolError: Server disconnected without sending a response.
+m_drop_once | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [1, 1, 1] | [1, 1, 1] | 3.66 | last AI: done
+m_drop_once | graph_rp_openai_default | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.09 | last AI: done
+m_drop_once | graph_rp_agent_stacked_error | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.24 | last AI: done
+m_drop_always | openai_client_default | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 1.39 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_drop_always | openai_init_chat_model | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 1.31 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_drop_always | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 2.82 | last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error.
+m_drop_always | openai_stacked | 3 | ['returned'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 7.10 | last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error.
+m_drop_always | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | httpx.RemoteProtocolError: Server disconnected without sending a response.
+m_drop_always | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 2.87 | last AI: Model call failed after 3 attempts with RemoteProtocolError: Server disconnected without s
+m_drop_always | graph_rp_openai_default | 3 | ['raised'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 6.66 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_drop_always | graph_rp_agent_stacked_error | 3 | ['raised'] | [27, 27, 27] | [9, 9, 9] | [0, 0, 0] | [0, 0, 0] | 22.66 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_refused_always | openai_client_default | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 1.33 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_refused_always | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 3.25 | last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error.
+m_refused_always | openai_stacked | 3 | ['returned'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 6.95 | last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error.
+m_refused_always | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.00 | httpx.ConnectError: [Errno 111] Connection refused
+m_refused_always | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 2.74 | last AI: Model call failed after 3 attempts with ConnectError: [Errno 111] Connection refused
+m_refused_always | graph_rp_openai_default | 3 | ['raised'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 6.35 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_refused_always | graph_rp_agent_stacked_error | 3 | ['raised'] | [27, 27, 27] | [9, 9, 9] | [0, 0, 0] | [0, 0, 0] | 23.47 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_timeout_once | openai_client_default | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 18.18 | last AI: done
+m_timeout_once | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [1, 1, 1] | [1, 1, 1] | 18.62 | last AI: done
+m_timeout_once | openai_stacked | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 18.18 | last AI: done
+m_timeout_once | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 15.02 | httpx.ReadTimeout: timed out
+m_timeout_once | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [1, 1, 1] | [1, 1, 1] | 18.59 | last AI: done
+m_timeout_once | graph_rp_openai_default | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 18.12 | last AI: done
+m_timeout_once | graph_rp_agent_stacked_error | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 18.46 | last AI: done
+m_timeout_always | openai_client_default | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 46.33 | langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+m_timeout_always | openai_init_chat_model | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 46.39 | langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+m_timeout_always | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 47.78 | last AI: Model call failed after 3 attempts with OpenAITimeoutError: Request timed out.
+m_timeout_always | openai_stacked | 3 | ['returned'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 142.23 | last AI: Model call failed after 3 attempts with OpenAITimeoutError: Request timed out.
+m_timeout_always | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 15.02 | httpx.ReadTimeout: timed out
+m_timeout_always | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 47.96 | last AI: Model call failed after 3 attempts with ReadTimeout: timed out
+m_timeout_always | graph_rp_openai_default | 3 | ['raised'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 141.91 | langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+m_timeout_always | graph_rp_agent_stacked_error | 3 | ['raised'] | [27, 27, 27] | [9, 9, 9] | [0, 0, 0] | [0, 0, 0] | 428.47 | langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out.
+m_429_once_relay | openai_client_default | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 8.25 | last AI: done
+m_429_once_relay | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [1, 1, 1] | [1, 1, 1] | 3.82 | last AI: done
+m_429_once_relay | openai_stacked | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.12 | last AI: done
+m_429_once_relay | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | ollama._types.ResponseError: relay 429 (status code: 429)
+m_429_once_relay | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [1, 1, 1] | [1, 1, 1] | 3.77 | last AI: done
+m_429_once_relay | graph_rp_openai_default | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.09 | last AI: done
+m_429_once_relay | graph_rp_agent_stacked_error | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.11 | last AI: done
+m_429_always_relay | openai_client_default | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 1.22 | langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+m_429_always_relay | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 3.14 | last AI: Model call failed after 3 attempts with OpenAIRateLimitError: Error code: 429 - relay 429
+m_429_always_relay | openai_stacked | 3 | ['returned'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 6.96 | last AI: Model call failed after 3 attempts with OpenAIRateLimitError: Error code: 429 - relay 429
+m_429_always_relay | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | ollama._types.ResponseError: relay 429 (status code: 429)
+m_429_always_relay | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 3.19 | last AI: Model call failed after 3 attempts with ResponseError: relay 429 (status code: 429)
+m_429_always_relay | graph_rp_openai_default | 3 | ['raised'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 6.31 | langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+m_429_always_relay | graph_rp_agent_stacked_error | 3 | ['raised'] | [27, 27, 27] | [9, 9, 9] | [0, 0, 0] | [0, 0, 0] | 23.95 | langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429
+m_500_once_relay | openai_client_default | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.13 | last AI: done
+m_500_once_relay | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [1, 1, 1] | [1, 1, 1] | 4.19 | last AI: done
+m_500_once_relay | openai_stacked | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.17 | last AI: done
+m_500_once_relay | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | ollama._types.ResponseError: relay 500 (status code: 500)
+m_500_once_relay | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [1, 1, 1] | [1, 1, 1] | 3.77 | last AI: done
+m_500_once_relay | graph_rp_openai_default | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.06 | last AI: done
+m_500_once_relay | graph_rp_agent_stacked_error | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | 3.27 | last AI: done
+m_500_always_relay | openai_client_default | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 1.31 | langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+m_500_always_relay | openai_init_chat_model | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 1.28 | langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+m_500_always_relay | openai_mw_only | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 2.98 | last AI: Model call failed after 3 attempts with OpenAIAPIError: Error code: 500 - relay 500
+m_500_always_relay | openai_stacked | 3 | ['returned'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 6.89 | last AI: Model call failed after 3 attempts with OpenAIAPIError: Error code: 500 - relay 500
+m_500_always_relay | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | ollama._types.ResponseError: relay 500 (status code: 500)
+m_500_always_relay | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 3.23 | last AI: Model call failed after 3 attempts with ResponseError: relay 500 (status code: 500)
+m_500_always_relay | graph_rp_openai_default | 3 | ['raised'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 6.35 | langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+m_500_always_relay | graph_rp_agent_stacked_error | 3 | ['raised'] | [27, 27, 27] | [9, 9, 9] | [0, 0, 0] | [0, 0, 0] | 23.38 | langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500
+m_404_always_real | openai_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found
+m_404_always_real | openai_mw_only | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found
+m_404_always_real | openai_stacked | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found
+m_404_always_real | ollama_client_default | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 0.01 | ollama._types.ResponseError: model 'no-such-model:1b' not found (status code: 404)
+m_404_always_real | ollama_mw | 3 | ['returned'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 3.31 | last AI: Model call failed after 3 attempts with ResponseError: model 'no-such-model:1b' not found 
+m_404_always_real | graph_rp_openai_default | 3 | ['raised'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 2.61 | langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found
+m_404_always_real | graph_rp_agent_stacked_error | 3 | ['raised'] | [3, 3, 3] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 2.69 | langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found
+
+== 02-tool-faults.jsonl  (model qwen3:4b-instruct-2507-q4_K_M, load at start [2.41, 1.97, 1.38])
+fault | config | n | outcomes | model attempts on the wire | model starts (callback) | tool executions | ledger rows | wall s median | exception (first)
+t_refused_once | no_tool_mw | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | 2.26 | httpx.ConnectError: [Errno 111] Connection refused
+t_refused_once | tool_retry_mw | 3 | ['returned'] | [2, 2, 2] | [2, 2, 2] | [2, 2, 2] | [1, 1, 1] | 4.08 | last AI: done
+t_refused_once | graph_rp_toolnode | 3 | ['returned'] | [2, 2, 2] | [2, 2, 2] | [2, 2, 2] | [1, 1, 1] | 4.36 | last AI: done
+t_refused_always | no_tool_mw | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | 2.18 | httpx.ConnectError: [Errno 111] Connection refused
+t_refused_always | tool_retry_mw | 3 | ['returned'] | [2, 2, 2] | [2, 2, 2] | [3, 3, 3] | [0, 0, 0] | 8.75 | last AI: Try again. Call the tool remote_action with item 'A' exactly once. After you get its resul
+t_refused_always | graph_rp_toolnode | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [3, 3, 3] | [0, 0, 0] | 5.00 | httpx.ConnectError: [Errno 111] Connection refused
+t_sqlerror_always | no_tool_mw | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | 2.23 | psycopg.errors.UndefinedTable: relation "lr_no_such_table" does not exist
+LINE 1: select * from lr_no_such_table where item = $1
+           
+t_sqlerror_always | tool_retry_mw | 3 | ['returned'] | [2, 2, 2] | [2, 2, 2] | [3, 3, 3] | [0, 0, 0] | 6.48 | last AI: done
+t_sqlerror_always | graph_rp_toolnode | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [3, 3, 3] | [0, 0, 0] | 4.44 | psycopg.errors.UndefinedTable: relation "lr_no_such_table" does not exist
+LINE 1: select * from lr_no_such_table where item = $1
+           
+t_timeout_once | no_tool_mw | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [1, 1, 1] | [1, 1, 1] | 3.22 | psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+t_timeout_once | tool_retry_mw | 3 | ['returned'] | [2, 2, 2] | [2, 2, 2] | [2, 2, 2] | [2, 2, 2] | 5.13 | last AI: done
+t_timeout_once | graph_rp_toolnode | 3 | ['returned'] | [2, 2, 2] | [2, 2, 2] | [2, 2, 2] | [2, 2, 2] | 5.10 | last AI: done
+t_timeout_always | no_tool_mw | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [1, 1, 1] | [1, 1, 1] | 3.15 | psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+t_timeout_always | tool_retry_mw | 3 | ['returned'] | [2, 2, 2] | [2, 2, 2] | [3, 3, 3] | [3, 3, 3] | 8.96 | last AI: Try again.
+t_timeout_always | graph_rp_toolnode | 3 | ['raised'] | [1, 1, 1] | [1, 1, 1] | [3, 3, 3] | [3, 3, 3] | 7.98 | psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+
+== 03-both-faults.jsonl  (model qwen3:4b-instruct-2507-q4_K_M, load at start [10.4, 7.34, 3.78])
+fault | config | n | outcomes | model attempts on the wire | model starts (callback) | tool executions | ledger rows | wall s median | exception (first)
+m_drop_once+t_refused_once | openai_client_default | 3 | ['raised'] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | 2.64 | httpx.ConnectError: [Errno 111] Connection refused
+m_drop_once+t_refused_once | openai_stacked | 3 | ['raised'] | [2, 2, 2] | [1, 1, 1] | [1, 1, 1] | [0, 0, 0] | 2.68 | httpx.ConnectError: [Errno 111] Connection refused
+m_drop_once+t_refused_once | openai_tool_retry | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [2, 2, 2] | [1, 1, 1] | 4.32 | last AI: done
+m_drop_once+t_refused_once | openai_both_mw | 3 | ['returned'] | [3, 3, 3] | [2, 2, 2] | [2, 2, 2] | [1, 1, 1] | 4.45 | last AI: done
+m_drop_always+t_refused_always | openai_client_default | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 1.30 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_drop_always+t_refused_always | openai_stacked | 3 | ['returned'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 6.57 | last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error.
+m_drop_always+t_refused_always | openai_tool_retry | 3 | ['raised'] | [3, 3, 3] | [1, 1, 1] | [0, 0, 0] | [0, 0, 0] | 1.42 | langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+m_drop_always+t_refused_always | openai_both_mw | 3 | ['returned'] | [9, 9, 9] | [3, 3, 3] | [0, 0, 0] | [0, 0, 0] | 7.30 | last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error.
+

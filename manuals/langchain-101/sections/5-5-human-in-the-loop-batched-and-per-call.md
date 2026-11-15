@@ -192,19 +192,21 @@ id: fig-5-5
 kind: comparison
 title: batched mode and per-call mode
 claim: Batched mode answers one list for all calls of a message, and per-call mode answers each call by its interrupt id against a schema.
-caption: Read each row across the two columns. The rows are the pause, the resume, an edit to another tool, and a middleware that jumps to tools. Rose cells are where a review did not hold. From capture/out/15-mw-hitl-batched.txt, capture/out/16-mw-hitl-per-call.txt, and capture/lab/summary/approvals-mac.json.
+caption: Read each row across the two columns. The rows are the pause, the resume, an edit to another tool, and a middleware that jumps to tools. Rose cells are where a review did not hold. From capture/out/15-mw-hitl-batched.txt, capture/out/16-mw-hitl-per-call.txt, and capture/lab/summary/approvals-x86.json.
 ```
 
 ## What the lab found
 
-**We measured** the middleware on the Mac in 27 cases, 3 runs of each. The tools were `send_email` and `delete_file`, both under review, with a scripted fake model. Each start and each resume ran in a new process against `SqliteSaver`, so every resume was a restart. All 3 runs of each case gave the same tool runs, apart from the order of two calls in one step. [Figure](#fig-5-5b) shows each run.
+**We measured** the middleware on the x86 server guest in 25 model cases, 3 runs of each. The model was Qwen3 4B on Ollama (temperature 0, seed 42). The graph cases G1 and G2 have no model and come from the Mac. The tools were `send_email` and `delete_file`, both under review.
+
+Each start and each resume ran in a new process against `SqliteSaver`, so every resume was a restart. All 3 runs of each case gave the same tool runs. [Figure](#fig-5-5b) shows each run.
 
 ```figure
 id: fig-5-5b
 kind: chart
 title: tool runs in each approval case
 claim: Each case gave the same tool runs in 3 of 3 runs, and only batched cases ran a tool that no approval allowed.
-caption: Read one column for each of the 22 middleware cases. The graph and strict resume cases G1 to G3, S1, and S2 are not drawn. Each dot is one run on the Mac. A dot on the line is a run whose tools matched the decisions, and a rose dot ran a tool that no approval allowed. From capture/lab/summary/approvals-mac.json.
+caption: Read one column for each of the 22 middleware cases. The graph and strict resume cases G1 to G3, S1, and S2 are not drawn. Each dot is one run on the x86 server guest. A dot on the line is a run whose tools matched the decisions, and a rose dot ran a tool that no approval allowed. From capture/lab/summary/approvals-x86.json.
 ```
 
 The cases have short codes. `B` is batched, `P` is per call, `J` adds a middleware that jumps to `tools`, and `G` is a plain graph.
@@ -223,11 +225,13 @@ The cases have short codes. `B` is batched, `P` is per call, `J` adds a middlewa
 | J4, J5 | per call, either order, reject | nothing ran |
 | G1, G2 | two parallel interrupts in a graph and a subgraph, answered one at a time | each branch ran its side effect once |
 
+In 10 two-action requests, Qwen3 4B and Qwen3 8B each made two or more calls in 9. So a batched review of several calls is the common case.
+
 The B3 row settles conflict D102. One batched example in the docs edits a call to a new tool name, and the per-call text keeps the name. The changelog for 1.4.6 says that an edit cannot switch tools {{docs oss/python/releases/changelog}}. At the pin, batched mode still allows the switch, and per-call mode refuses it.
 
 The J rows reproduce issue langchain#40492 in batched mode {{issue langchain#40492}}. The jumping middleware returns `jump_to="tools"` from `after_model`. `after_model` hooks run in the reverse order of the middleware list. So in J1 and J3 its hook ran before the review hook and skipped it.
 
-In J2 the review ran, the call was rejected, and the jump still ran the tool. The two ToolMessages for the call `c1` in J2 break the rule of [section 2.4](#s-tools-toolruntime-and-tool-errors): one answer for each tool call. Per-call mode puts its pause in the tool call itself, and the jump did not skip it.
+In J2 the review ran, the call was rejected, and the jump still ran the tool. The two ToolMessages for one call in J2 break the rule of [section 2.4](#s-tools-toolruntime-and-tool-errors): one answer for each tool call. Per-call mode puts its pause in the tool call itself, and the jump did not skip it.
 
 Two older issues did not reproduce. Issue langchain#33787 said that an edit could still run the original call {{issue langchain#33787}}. In B2 and P2 only the edited call ran. Issue langgraph#9106 said that a resume ran a finished parallel branch again {{issue langgraph#9106}}. In G1 and G2 the finished branch did not run again. The branch still waiting ran its node up to `interrupt` on each resume, which is the rule of section 5.4.
 
@@ -253,4 +257,4 @@ The docs also warn about one invalid answer among several sent together. The too
 - Use a checkpointer that survives a restart, because the reviewer can answer hours later.
 ```
 
-Sources: capture/s_middleware.py, capture/out/15-mw-hitl-batched.txt, capture/out/16-mw-hitl-per-call.txt; capture/lab/summary/approvals-mac.json, capture/lab/T07-approvals-mac/01-cases.jsonl, capture/lab/T07-approvals-mac/01-cases.log; libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/human-in-the-loop, oss/python/releases/changelog); issues langchain-ai/langchain#40492, #33787, and langchain-ai/langgraph#9106, read 2026-11-14.
+Sources: capture/s_middleware.py, capture/out/15-mw-hitl-batched.txt, capture/out/16-mw-hitl-per-call.txt; capture/lab/summary/approvals-x86.json, capture/lab/T07-approvals-x86/00-survey.jsonl, capture/lab/T07-approvals-x86/01-cases.jsonl, capture/lab/T07-approvals-x86/02-g3-rerun.jsonl, capture/lab/T07-approvals-x86/t07_child_real.py; capture/lab/summary/approvals-mac.json, capture/lab/T07-approvals-mac/01-cases.jsonl; libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py at langchain==1.5.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/human-in-the-loop, oss/python/releases/changelog); issues langchain-ai/langchain#40492, #33787, and langchain-ai/langgraph#9106, read 2026-11-14.

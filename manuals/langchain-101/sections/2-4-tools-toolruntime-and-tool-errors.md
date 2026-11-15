@@ -180,15 +180,19 @@ note: The ToolMessage only.
 
 **Tool call id:** the id that the model gives each tool call, which the `ToolMessage` of that call carries back.
 
-**We measured** three cases on the Mac, an Apple M1 Max with 10 cores and 64 GiB. Each case ran once for each call style, because nothing in it varies.
+**We measured** three cases on the x86 server guest with Qwen3 4B, 3 runs each. Each case gave the same result in 3 of 3 runs.
 
-Two tools with the same name raised no error in `create_agent`. We passed `safe_lookup` and `privileged_delete`, both named `account_action`. The later tool in the list won: the model got only its schema, and each call ran only that tool. With `privileged_delete` second, the call of `account_action` ran `privileged_delete`. Issue langgraph#7988 reports this {{issue langgraph#7988}}. Give every tool a unique name.
+Two tools with the same name raised no error in `create_agent`. We passed `safe_lookup` and `privileged_delete`, both named `account_action`. The later tool in the list won: the model got only its schema, and each call ran only that tool. With `privileged_delete` second, the call of `account_action` ran `privileged_delete`.
+
+With a real model, the choice of the model followed the description of the later tool. It refused a lookup when it saw `Delete an account.`. It ran `privileged_delete` for a delete request. Issue langgraph#7988 reports this {{issue langgraph#7988}}. Give every tool a unique name.
 
 A server that sends tool calls with no id breaks the run in two ways. We sent two parallel calls with no id from a stub to `ChatOpenAI` and `create_agent`. Under `invoke` and `stream_mode="messages"`, both tools ran, and then the run raised `TypeError: Tool lookup returned unexpected type: <class 'str'>`. So the side effects happened, and the run failed. Under `stream_events` v3, each id became `""`, both tools ran, and both `ToolMessage` objects had the id `""`. Issue langchain#40531 reports this coercion {{issue langchain#40531}}.
 
-Qwen3 4B on Ollama sent ids. Through `ChatOllama` and through `ChatOpenAI` on the `/v1` path, 18 of 18 runs made two calls with ids, and both tools ran. That was 3 runs for each of `invoke`, `messages` mode, and v3 on each path.
+No real model produced id-less calls: Ollama 0.31.1 sends ids on both paths, so these rows come from a stub on the Mac.
 
-Under v3, a tool call piece on the last chunk of a stream is lost. A chunk with `chunk_position="last"` reports parsed tool calls from `content_blocks`, and only the calls with an id, in place of chunk blocks {{code libs/core/langchain_core/messages/ai.py}}. A fragment of arguments does not parse alone, so `chunks_to_events` gets no delta for it {{code libs/core/langchain_core/language_models/_compat_bridge.py}}. In our fake, the second call became an invalid tool call and got an error `ToolMessage`. With no ids, one of the two calls never ran.
+Asked for 1, 2, 4, 8, and 16 calls, Qwen3 4B made 2, 2, 4, 8, and 16 on the x86 server guest. Every call had an id, on both paths. The paths were `ChatOllama` and `ChatOpenAI` on the `/v1` path of Ollama.
+
+Under v3, a tool call piece on the last chunk of a stream is lost. A chunk with `chunk_position="last"` reports parsed tool calls from `content_blocks`, and only the calls with an id, in place of chunk blocks {{code libs/core/langchain_core/messages/ai.py}}. A fragment of arguments does not parse alone, so `chunks_to_events` gets no delta for it {{code libs/core/langchain_core/language_models/_compat_bridge.py}}. In a fake model (no real model produces this), the second call became an invalid tool call and got an error `ToolMessage`. With no ids, one of the two calls never ran.
 
 `ChatOpenAI` ends its stream with an empty chunk, so it is safe. Make a custom model do the same.
 
@@ -206,4 +210,4 @@ The tools page says that each tool call in the history needs a `ToolMessage` tha
 - End a custom model stream with an empty chunk marked last.
 ```
 
-Sources: capture/common.py, capture/s_start.py, capture/out/03-tools.txt, capture/out/43-tool-runtime-agent.txt, capture/out/04-tool-errors.txt, capture/out/19-mw-shell-files.txt; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/02-idless-and-dupnames.jsonl, capture/lab/T08-parallel-tools-mac/03-ollama-parallel.jsonl, capture/lab/T08-parallel-tools-mac/t08_ids.py, capture/lab/T08-parallel-tools-mac/t08_ollama.py; issue langgraph#7988, issue langchain#40531; libs/core/langchain_core/messages/ai.py and libs/core/langchain_core/language_models/_compat_bridge.py at langchain-core 1.8.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/tools); libs/prebuilt/langgraph/prebuilt/tool_node.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/core/langchain_core/tools at langchain==1.5.0.
+Sources: capture/common.py, capture/s_start.py, capture/out/03-tools.txt, capture/out/43-tool-runtime-agent.txt, capture/out/04-tool-errors.txt, capture/out/19-mw-shell-files.txt; capture/lab/summary/parallel-tools-x86.json, capture/lab/T08-parallel-tools-x86/01-counts.jsonl, capture/lab/T08-parallel-tools-x86/02-raw-ollama.jsonl, capture/lab/T08-parallel-tools-x86/03-dupnames.jsonl, capture/lab/T08-parallel-tools-x86/t08_real.py; capture/lab/summary/parallel-tools-mac.json, capture/lab/T08-parallel-tools-mac/02-idless-and-dupnames.jsonl, capture/lab/T08-parallel-tools-mac/t08_ids.py; issue langgraph#7988, issue langchain#40531; libs/core/langchain_core/messages/ai.py and libs/core/langchain_core/language_models/_compat_bridge.py at langchain-core 1.8.0; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/tools); libs/prebuilt/langgraph/prebuilt/tool_node.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/core/langchain_core/tools at langchain==1.5.0.

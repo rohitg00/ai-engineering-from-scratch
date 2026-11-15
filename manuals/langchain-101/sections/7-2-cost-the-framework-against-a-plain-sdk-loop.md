@@ -20,7 +20,7 @@ When you finish this section, you can say what each layer of the stack adds to a
 | install | 14 packages, 26,356 KiB | 44 packages, 54,312 KiB | the Mac, one install each | [2.1](#s-install-and-the-package-map) |
 | one checkpoint write on `PostgresSaver`, median of the last 10 of 5,000 steps | none | 148.65 ms plain, 1.13 ms with `DeltaChannel` | the x86 server guest, one run | [4.5](#s-context-engineering-and-summarization) |
 | one agent run with tracing on, against a local recorder | none | 7.56 ms against 2.59 ms with tracing off | the Mac, 177 runs each | [6.4](#s-langsmith-tracing) |
-| one middleware hook, each time it runs | none | 93.4 to 95.4 µs for a node hook, 18.7 to 20.5 µs for a wrap hook | the Mac, 300 runs per cell | this section |
+| one middleware hook, each time it runs | none | 183 to 190 µs node hook, 45 to 50 µs wrap hook, 0.2 to 0.5% of a real Qwen3 4B run | the x86 server guest under load 14 to 25, 20 runs per cell | this section |
 
 The rest of this section gives the recordings behind the first three rows and the last row, which no other section shows in full.
 
@@ -95,31 +95,33 @@ Tracing adds a cost to each run and a cost at exit. [Section 6.4](#s-langsmith-t
 
 Each middleware hook is one more node of the graph or one more wrapper around a call, as [section 3.3](#s-middleware-hooks-and-their-order) shows. A node hook, such as `before_model`, adds a step of the loop each time it runs. A wrap hook, such as `wrap_model_call`, adds a function call and no node.
 
-**We measured** the cost on the Mac with a fake model inside the process, so each run cost only Python time. A run was two model calls and one tool call through sync `invoke`, and it took 1,123.6 µs at the median with no middleware. For each hook type, an agent had 1, 3, 10, or 20 middlewares that do nothing. Each cell had 300 timed runs, in six shuffled blocks, and every run gave the right answer. The cost per hook call is the slope of the median over the middleware count, divided by the calls of that hook in one run.
+**We measured** the cost on the x86 server guest with Qwen3 4B on Ollama. Framework time is wall time minus time inside the model call. A run of two model calls and one tool call took 2.61 s, of which 5.88 ms was framework. Cells had 1, 10, or 20 middlewares, 20 timed runs each in shuffled rounds. Every run gave the right answer, and the middlewares did nothing. The cost per hook call is the slope of the median over the middleware count, divided by the calls of that hook in one run.
 
-| Hook | Calls in one run | Cost of each call | Median run with 20 middlewares | Graph nodes with 20 |
+| Hook | Calls in one run | Cost of each call | Framework time with 20 middlewares | Graph nodes with 20 |
 |---|---|---|---|---|
-| `before_model` | 2 | 94.5 µs | 4,916.6 µs | 24 |
-| `after_model` | 2 | 93.4 µs | 4,864.2 µs | 24 |
-| `before_agent` | 1 | 95.4 µs | 3,053.8 µs | 24 |
-| `wrap_model_call` | 2 | 20.5 µs | 1,973.4 µs | 4 |
-| `wrap_tool_call` | 1 | 18.7 µs | 1,524.6 µs | 4 |
+| `before_model` | 2 | 183 µs | 13.2 ms | 24 |
+| `after_model` | 2 | 190 µs | 13.5 ms | 24 |
+| `before_agent` | 1 | 187 µs | 9.6 ms | 24 |
+| `wrap_model_call` | 2 | 45 µs | 7.7 ms | 4 |
+| `wrap_tool_call` | 1 | 50 µs | 6.9 ms | 4 |
 
-**We measured** nine setups of built-in middleware in the same way on the Mac. Seven held one middleware, one held five `PIIMiddleware` instances, and one held a stack of five. Each cell had 300 runs and a history of 2 messages. None of them acted: no retry, no limit reached, no summary, no interrupt.
+The framework share of the run was 0.2% with no middleware and 0.5% with 20 node hooks. The load average was 14 to 25, because Ollama used every core. So read the shares and the ratio of node hooks to wrap hooks, not the microseconds.
+
+**We measured** nine setups of built-in middleware in the same way on the x86 server guest with Qwen3 4B, 20 runs per cell. Seven held one middleware, one held five `PIIMiddleware` instances, and one held a stack of five. None of them acted: no retry, no limit reached, no summary, no interrupt.
 
 | Middleware, as configured | Added to a run | Graph nodes |
 |---|---|---|
-| `ToolRetryMiddleware()` | 41 µs | 4 |
-| `ModelRetryMiddleware()` | 82 µs | 4 |
-| `SummarizationMiddleware` with a trigger that never fires | 213 µs | 5 |
-| `ToolCallLimitMiddleware(run_limit=1000)` | 217 µs | 5 |
-| `HumanInTheLoopMiddleware` with no interrupt for the tool that ran | 268 µs | 5 |
-| `PIIMiddleware("email", strategy="redact")` | 446 µs | 6 |
-| `ModelCallLimitMiddleware(run_limit=1000)` | 475 µs | 6 |
-| five `PIIMiddleware` instances, one per type | 2,243 µs | 14 |
-| a stack of summarization, PII, a model call limit, tool retry, and review | 1,492 µs | 10 |
+| `ToolRetryMiddleware()` | 0.14 ms | 4 |
+| `ModelRetryMiddleware()` | 0.15 ms | 4 |
+| `SummarizationMiddleware` with a trigger that never fires | 0.36 ms | 5 |
+| `ToolCallLimitMiddleware(run_limit=1000)` | 0.75 ms | 5 |
+| `HumanInTheLoopMiddleware` with no interrupt for the tool that ran | 0.86 ms | 5 |
+| `ModelCallLimitMiddleware(run_limit=1000)` | 1.30 ms | 6 |
+| `PIIMiddleware("email", strategy="redact")` | 1.36 ms | 6 |
+| five `PIIMiddleware` instances, one per type | 4.77 ms | 14 |
+| a stack of summarization, PII, a model call limit, tool retry, and review | 3.39 ms | 10 |
 
-The cost follows the node count. The retries wrap calls and add under 0.1 ms, and each middleware with a node adds 0.2 to 0.5 ms. A history of 60 messages changed the added time by less than 0.1 ms in each row. The five PII instances added 2,243 µs to a run of two model calls. Next to the median Ollama run of three calls, 1,450.99 ms, that is about 0.15%. So choose middleware for what it does, and keep node hooks out of a loop that makes thousands of fast calls.
+The cost follows the node count. The retries wrap calls and add under 0.2 ms, and each middleware with a node adds 0.4 to 1.4 ms. The five PII instances added 4.8 ms to a 2.64 s run of Qwen3 4B, 0.4%. So choose middleware for what it does, and keep node hooks out of a loop that makes thousands of fast calls.
 
 ```takeaways
 - Budget about 1.2 ms of Python per model call for create_agent, and more with a checkpointer.
@@ -131,4 +133,4 @@ The cost follows the node count. The retries wrap calls and add under 0.1 ms, an
 - Prefer a wrap hook to a node hook when a middleware runs on every call of a fast loop.
 ```
 
-Sources: capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/03-ollama-proxy-usage.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; capture/lab/summary/import-times-mac.json, capture/lab/summary/install-size-mac.json, capture/lab/summary/tokens-mac.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/tracing-mac.json; capture/lab/summary/middleware-mac.json, capture/lab/T11-middleware-cost-mac/01-custom-runs.jsonl, capture/lab/T11-middleware-cost-mac/02-builtin-runs.jsonl, capture/lab/T11-middleware-cost-mac/t11_run.py; libs/partners/openai/langchain_openai/chat_models/base.py at langchain-openai 1.8.0.
+Sources: capture/lab/summary/overhead-mac.json, capture/lab/T01-overhead-mac/02-stub-runs.jsonl, capture/lab/T01-overhead-mac/03-ollama-proxy-usage.jsonl, capture/lab/T01-overhead-mac/04-ollama-runs.jsonl, capture/lab/T01-overhead-mac/09-request-body-diff.txt; capture/lab/summary/import-times-mac.json, capture/lab/summary/install-size-mac.json, capture/lab/summary/tokens-mac.json, capture/lab/summary/checkpoint-cost-x86.json, capture/lab/summary/tracing-mac.json; capture/lab/summary/middleware-x86.json, capture/lab/T11-middleware-cost-x86/01-cost.jsonl, capture/lab/T11-middleware-cost-x86/t11_real.py; capture/lab/summary/middleware-mac.json; libs/partners/openai/langchain_openai/chat_models/base.py at langchain-openai 1.8.0.

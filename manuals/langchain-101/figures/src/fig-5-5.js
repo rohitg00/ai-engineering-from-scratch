@@ -22,5 +22,5 @@ module.exports = figure('fig-5-5', {
     f.box({ x: 188, y, w: 208, h: 50, hue: left[2], title: left[0], sub: left[1], align: 'left', titleSize: 12 });
     f.box({ x: 408, y, w: 212, h: 50, hue: right[2], title: right[0], sub: right[1], align: 'left', titleSize: 12 });
   });
-  f.text(20, 312, 'Rows 1 and 2 are from the capture kit. Rows 3 and 4 are lab runs on the Mac.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(20, 312, 'Rows 1 and 2 are from the capture kit. Rows 3 and 4 are lab runs on the x86 server guest.', { size: 11, serif: true, hue: 'ink-soft' });
 });

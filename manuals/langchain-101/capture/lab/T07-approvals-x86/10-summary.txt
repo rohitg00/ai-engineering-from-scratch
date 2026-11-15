@@ -1,0 +1,24 @@
+T07 HumanInTheLoopMiddleware on a real model, the x86 server guest
+Model qwen3:4b-instruct-2507-q4_K_M via ChatOllama, temperature 0, seed 42 (survey also qwen3:8b, reasoning=False). Versions as in T05.
+Each start and each resume is a new process on SqliteSaver (as on the Mac). Model calls counted with a callback. Scripts: t07_child_real.py, t07_driver_real.py, t07_survey.py.
+Raw: 00-survey.jsonl, 01-cases.jsonl (+log), 02-g3-rerun.jsonl, sinks/. Table: 09-summary-table.txt.
+
+How often the real model's calls produce each shape (00-survey, 1 call per prompt, n=10 prompts per intent per model):
+- one-action requests: 4b 9/10 one call (1/10 no call: "Write to a@x."); 8b 10/10 one call.
+- two-action requests: 4b 8/10 two calls, 1/10 one call, 1/10 three calls; 8b 8/10 two, 1/10 three, 1/10 none. All calls had ids.
+  So a batched review with 2+ actions (where one decision for two calls raises, B9, and a plain resume value raises, P8) is the normal case
+  for a two-action request: 9/10 (4b) and 9/10 (8b) replies had 2 or more calls.
+- Every tool call of the real model hit an interrupt-configured tool, so the jumping-middleware skip (J1/J3) fires on every such reply:
+  in the case runs 6 of 6 J1/J3 runs ran send_email at step 0 before any decision.
+- The edit that switches tools (B3) needs a reviewer's edit; the model cannot trigger it. Forced via the decision: 3/3.
+
+Case runs (01-cases + 02-g3-rerun), n=3 per case, 25 model cases. The real model gave the shape each case needs at the first prompt
+in 75 of 75 runs (no forcing needed). Every case gave the same tool runs in 3 of 3 runs; results equal the Mac fake run:
+B1 B2 (edited) B3 (delete_file ran) B4 B5 B6 B7 B8 B9 (ValueError, nothing ran) P1 P2 P3 (ValidationError, nothing ran) P4 P5 P6 P7 P8 (RuntimeError)
+J1 J3 (send_email ran at step 0) J2 (ran after reject; two ToolMessages for one call: error + success) J4 J5 (nothing ran)
+G3 (each call ran once, steps 1 and 2) S1 (UnknownInterruptError 3/3) S2 (nothing raised, nothing ran again).
+Model calls per case: 2 (1 for B9, P3, P8, S1, S2), the same as the fake.
+Difference vs the Mac fake: call ids are UUIDs from ChatOllama; nothing else changed.
+G1 and G2 (plain graphs, no model) were not rerun; the Mac rows stay valid as "no model involved".
+Rows not to use: 01-cases.jsonl rows of G3 (shape check bug: parent state holds no subgraph messages while paused; marked shape_never_matched);
+use 02-g3-rerun.jsonl. 02-g3-rerun ran while T17 nolimit used Ollama (no timing is used from T07).

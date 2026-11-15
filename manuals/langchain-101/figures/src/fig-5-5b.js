@@ -4,7 +4,7 @@ const path = require('path');
 const { figure } = require('../../../_shared/figkit.js');
 const { chart, load } = require('../../../_shared/chart.js');
 
-const data = load(path.join(__dirname, '../../capture/lab/summary/approvals-mac.json'));
+const data = load(path.join(__dirname, '../../capture/lab/summary/approvals-x86.json'));
 const groups = [
   ['batched', ['B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'J1', 'J2', 'J3']],
   ['per call', ['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'J4', 'J5']],
@@ -19,7 +19,7 @@ const cell = code => {
 module.exports = figure('fig-5-5b', {
   height: 330,
   title: 'Tool runs in each approval case',
-  desc: `A dot chart of tool runs for 22 approval cases on the Mac, 3 runs each, with a short line at the number of tool runs the decisions allowed. Batched cases B1 to B9 and per-call cases P1 to P8, J4, and J5 sit on their lines in all runs. The batched cases J1, J2, and J3, with a middleware that jumps to tools, each ran ${cell('J2')[0]} tool in every run without an approval, and are drawn in rose.`,
+  desc: `A dot chart of tool runs for 22 approval cases with Qwen3 4B on the x86 server guest, 3 runs each, with a short line at the number of tool runs the decisions allowed. Batched cases B1 to B9 and per-call cases P1 to P8, J4, and J5 sit on their lines in all runs. The batched cases J1, J2, and J3, with a middleware that jumps to tools, each ran ${cell('J2')[0]} tool in every run without an approval, and are drawn in rose.`,
 }, f => {
   const slots = groups.reduce((total, [, codes]) => total + codes.length, 0) + 1;
   const c = chart(f, { x: 60, y: 40, w: 560, h: 180, xDomain: [0, slots + 1], yDomain: [0, 2.5], yTicks: [0, 1, 2], yLabel: 'tools run in one case' });
@@ -40,5 +40,5 @@ module.exports = figure('fig-5-5b', {
   f.text(74, 296, 'tools matched the decisions', { size: 11, hue: 'blue' });
   f.dot(290, 292, { hue: 'rose', r: 3 });
   f.text(300, 296, 'a tool ran with no approval', { size: 11, hue: 'rose' });
-  f.text(60, 322, 'Each dot is one run on the Mac. The grey line is the count the decisions allowed.', { size: 11, serif: true, hue: 'ink-soft' });
+  f.text(60, 322, 'Each dot is one run on the x86 server guest. The grey line is the allowed count.', { size: 11, serif: true, hue: 'ink-soft' });
 });

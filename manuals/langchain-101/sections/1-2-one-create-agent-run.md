@@ -261,7 +261,7 @@ note: The config of the compiled graph, from the same file.
 
 A model that never stops asking for a tool runs until the limit. The kit told Qwen3 4B to count upward with `add` and never stop. With `recursion_limit=6` in the config, the run stopped after three model calls and two tool calls, with `GraphRecursionError: Recursion limit of 6 reached without hitting a stop condition.`
 
-**We measured** the default limit on the Mac, one run each, with a fake model that always calls a tool. The agent stopped at 9999 steps, after 5000 model calls and 4999 tool calls. That took 35.8 s with no checkpointer and 150.17 s with `InMemorySaver`. Set a limit that fits your task, because a loop costs every model call it makes.
+**We measured** a looping agent on the x86 server guest. With Qwen3 4B, it made 121 model calls in 21 minutes and showed no sign of stopping. `recursion_limit=25` stopped it after 13 model calls, in 3 of 3 runs. Set a limit that fits your task, because a loop costs every model call it makes.
 
 ```takeaways
 - Expect the model to receive the system prompt and the whole conversation on every call.
@@ -271,4 +271,4 @@ A model that never stops asking for a tool runs until the limit. The kit told Qw
 - Set recursion_limit for each run, because the agent default allows 5000 model calls.
 ```
 
-Sources: capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/21-stream-updates-values.txt, capture/out/46-recursion-agent.txt, capture/out/42-langsmith.txt; capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0, libs/langgraph/langgraph/graph/state.py and libs/langgraph/langgraph/_internal/_config.py at langgraph 1.2.22.
+Sources: capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/21-stream-updates-values.txt, capture/out/46-recursion-agent.txt, capture/out/42-langsmith.txt; capture/lab/summary/recursion-x86.json, capture/lab/T17-claims-x86/01-claims.jsonl, capture/lab/T17-claims-x86/02-nolimit.jsonl, capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0, libs/langgraph/langgraph/graph/state.py and libs/langgraph/langgraph/_internal/_config.py at langgraph 1.2.22.

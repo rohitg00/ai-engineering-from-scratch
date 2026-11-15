@@ -1,0 +1,36 @@
+agent ainvoke sync 1 0 made 8 overlap 1 span 1670.134454 None 13.6
+agent ainvoke sync None 0 made 8 overlap 8 span 229.997478 None 12.0
+agent ainvoke sync 4 0 made 8 overlap 4 span 430.990368 None 12.4
+agent invoke sync 1 0 made 8 overlap 1 span 1673.952849 None 14.0
+agent ainvoke async 1 0 made 8 overlap 1 span 1668.717133 None 13.8
+agent invoke async 4 0 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 11.4
+agent ainvoke async None 0 made 8 overlap 8 span 210.528987 None 12.0
+agent invoke async 1 0 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 11.1
+agent invoke sync 4 0 made 8 overlap 4 span 437.235027 None 12.8
+agent ainvoke async 4 0 made 8 overlap 4 span 423.157509 None 12.5
+agent invoke async None 0 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 10.8
+agent invoke sync None 0 made 8 overlap 8 span 229.185762 None 12.1
+agent ainvoke sync 4 1 made 8 overlap 4 span 431.987855 None 12.4
+agent ainvoke sync 1 1 made 8 overlap 1 span 1669.680677 None 13.9
+agent ainvoke async 4 1 made 8 overlap 4 span 420.971781 None 12.4
+agent ainvoke async None 1 made 8 overlap 8 span 210.231587 None 12.3
+agent invoke async None 1 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 10.7
+agent ainvoke async 1 1 made 8 overlap 1 span 1672.449648 None 13.7
+agent invoke sync 4 1 made 8 overlap 4 span 441.963775 None 12.8
+agent invoke async 1 1 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 10.8
+agent invoke sync None 1 made 8 overlap 8 span 228.394081 None 12.3
+agent ainvoke sync None 1 made 8 overlap 8 span 231.244481 None 12.0
+agent invoke async 4 1 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 10.9
+agent invoke sync 1 1 made 8 overlap 1 span 1678.263235 None 13.9
+agent invoke async 1 2 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 11.0
+agent invoke sync 4 2 made 8 overlap 4 span 436.286927 None 12.5
+agent ainvoke sync 4 2 made 8 overlap 4 span 431.048908 None 12.5
+agent invoke sync None 2 made 8 overlap 8 span 230.932504 None 12.5
+agent ainvoke async None 2 made 8 overlap 8 span 210.849368 None 12.5
+agent invoke async 4 2 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 11.1
+agent invoke sync 1 2 made 8 overlap 1 span 1672.086154 None 13.7
+agent invoke async None 2 made None overlap 0 span None NotImplementedError: StructuredTool does not support sync invocation. 10.8
+agent ainvoke async 4 2 made 8 overlap 4 span 421.878317 None 12.5
+agent ainvoke sync 1 2 made 8 overlap 1 span 1666.712012 None 13.9
+agent ainvoke async 1 2 made 8 overlap 1 span 1663.60779 None 13.8
+agent ainvoke sync None 2 made 8 overlap 8 span 233.455451 None 12.3

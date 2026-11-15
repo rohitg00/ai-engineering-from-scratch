@@ -45,5 +45,5 @@
   <path d="M272 339 H299" fill="none" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" stroke-linejoin="round" marker-end="url(#fig-7-3-head-rose)"/>
   <path d="M272 381 H299" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-7-3-head-ink)"/>
   <text x="20" y="428" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Rose: the result with the default. Violet: the result after the change.</text>
-  <text x="20" y="444" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each result is a recorded run on the Mac or a capture of the kit.</text>
+  <text x="20" y="444" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Each result is a recorded run on the Mac or the x86 server guest, or a capture of the kit.</text>
 </svg>

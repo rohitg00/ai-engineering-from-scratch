@@ -15,7 +15,7 @@ id: fig-7-3
 kind: decision
 title: where input crosses into code, by default and with the setting
 claim: At four boundaries our test input passed the default, and one change stopped it: three settings, and a check in your code for the store prefix.
-caption: Read each row from the input at the left, through the default result in rose, to the setting and its result. Every result is a recorded run on the Mac. From capture/lab/summary/serde-mac.json, capture/lab/summary/stores-mac.json, capture/lab/summary/approvals-mac.json, and capture/lab/summary/tracing-mac.json.
+caption: Read each row from the input at the left, through the default result in rose, to the setting and its result. Every result is a recorded run on the Mac, except the review row, which ran with Qwen3 4B on the x86 server guest. From capture/lab/summary/serde-mac.json, capture/lab/summary/stores-mac.json, capture/lab/summary/approvals-x86.json, and capture/lab/summary/tracing-mac.json.
 ```
 
 ## Checkpoint rows and load
@@ -74,7 +74,7 @@ The store permissions of Agent Server had advisory GHSA-4hm6-w6qq-w73v, for JS c
 
 ## Approvals
 
-`HumanInTheLoopMiddleware` is the control that keeps a person between the model and a tool with side effects. [Section 5.5](#s-human-in-the-loop-batched-and-per-call) gives the lab runs, 3 runs per case on the Mac. In batched mode, two of them let a tool run that no approval allowed:
+`HumanInTheLoopMiddleware` is the control that keeps a person between the model and a tool with side effects. [Section 5.5](#s-human-in-the-loop-batched-and-per-call) gives the lab runs, 3 runs per case on the x86 server guest with Qwen3 4B. In batched mode, two of them let a tool run that no approval allowed:
 
 - An edit of `send_email` into a call of `delete_file` ran `delete_file`. Per-call mode refused the same edit with a `ValidationError`.
 - A middleware that returns `jump_to="tools"` from `after_model` skipped the review, or ran a call after the reviewer rejected it. This is issue #40492 {{issue langchain#40492}}. Per-call mode kept the review in both orders.
@@ -147,4 +147,4 @@ The pattern repeats across three repositories. The loaders of checkpoints and of
 - Start MCP servers only from Path objects in your own config.
 ```
 
-Sources: capture/lab/summary/serde-mac.json, capture/lab/T13-serde-mac/01-serde-default.jsonl, capture/lab/T13-serde-mac/02-serde-strict-msgpack.jsonl; capture/lab/summary/stores-mac.json, capture/lab/T14-stores-mac/01-memory-sqlite.jsonl, capture/lab/T14-stores-mac/03-postgres.jsonl, capture/lab/T14-stores-mac/05-orphan-vectors.txt; capture/lab/summary/approvals-mac.json; capture/lab/summary/mcp-mac.json, capture/out/40-mcp.txt; capture/lab/summary/tracing-mac.json, capture/lab/summary/evaluate-mac.json, capture/lab/summary/pytest-plugin-mac.json; libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py at langgraph 1.2.22; libs/core/langchain_core/load/load.py and libs/langchain_v1/langchain/agents/middleware/shell_tool.py at langchain==1.5.0; GitHub issues langchain-ai/langgraph#8757 and langchain-ai/langchain#40492; the GitHub advisories GHSA-c67j-w6g6-q2cm, GHSA-pjwx-r37v-7724, GHSA-6qv9-48xg-fc7f, GHSA-fjqc-hq36-qh5p, GHSA-g48c-2wqr-h844, GHSA-47pj-3jcm-6whg, GHSA-6hmw-9432-67qq, GHSA-gr75-jv2w-4656, GHSA-47w2-rfrr-wvq8, GHSA-459r-276m-w72x, GHSA-f4xh-w4cj-qxq8, GHSA-3fx2-cqw9-xr3c, GHSA-fvww-7h3r-vfhp, GHSA-4hm6-w6qq-w73v, and GHSA-8prr-f582-jqq3.
+Sources: capture/lab/summary/serde-mac.json, capture/lab/T13-serde-mac/01-serde-default.jsonl, capture/lab/T13-serde-mac/02-serde-strict-msgpack.jsonl; capture/lab/summary/stores-mac.json, capture/lab/T14-stores-mac/01-memory-sqlite.jsonl, capture/lab/T14-stores-mac/03-postgres.jsonl, capture/lab/T14-stores-mac/05-orphan-vectors.txt; capture/lab/summary/approvals-x86.json; capture/lab/summary/mcp-mac.json, capture/out/40-mcp.txt; capture/lab/summary/tracing-mac.json, capture/lab/summary/evaluate-mac.json, capture/lab/summary/pytest-plugin-mac.json; libs/checkpoint/langgraph/checkpoint/serde/jsonplus.py at langgraph 1.2.22; libs/core/langchain_core/load/load.py and libs/langchain_v1/langchain/agents/middleware/shell_tool.py at langchain==1.5.0; GitHub issues langchain-ai/langgraph#8757 and langchain-ai/langchain#40492; the GitHub advisories GHSA-c67j-w6g6-q2cm, GHSA-pjwx-r37v-7724, GHSA-6qv9-48xg-fc7f, GHSA-fjqc-hq36-qh5p, GHSA-g48c-2wqr-h844, GHSA-47pj-3jcm-6whg, GHSA-6hmw-9432-67qq, GHSA-gr75-jv2w-4656, GHSA-47w2-rfrr-wvq8, GHSA-459r-276m-w72x, GHSA-f4xh-w4cj-qxq8, GHSA-3fx2-cqw9-xr3c, GHSA-fvww-7h3r-vfhp, GHSA-4hm6-w6qq-w73v, and GHSA-8prr-f582-jqq3.

@@ -220,7 +220,7 @@ def main():
             print(f"drift: {len(drift)} lab summaries differ from capture/lab/")
             return 1
         print(f"ok: {len(labsum.SUMMARIES)} lab summaries match capture/lab/")
-        print("skipped: recording the lab runs again, which needs Ollama on the Mac and Postgres on an x86 server guest")
+        print("skipped: recording the lab runs again, which needs Ollama and Postgres on the Mac and on an x86 server guest")
     elif not only:
         labsum.write(labsum.SUMMARY)
     if wrong:

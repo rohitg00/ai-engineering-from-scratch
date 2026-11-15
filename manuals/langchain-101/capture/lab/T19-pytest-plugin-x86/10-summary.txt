@@ -1,0 +1,15 @@
+T19 langsmith pytest plugin, offline, real agent test, the x86 server guest
+Scratch venv <lab>/T19/_venv: pytest 8.4.2 (+ iniconfig 2.3.1, pluggy 1.7.0, packaging 26.3, pygments 2.21.0), .pth to the lab site-packages;
+lab venv unchanged (00-lab-freeze-before.txt = 04-lab-freeze-after.txt). test_marked_agent now runs create_agent(ChatOllama qwen3:4b-instruct-2507-q4_K_M,
+temperature 0, seed 42, tools=[add]) and asserts the answer "5"; the other four tests have no model and are unchanged. n = 3 processes per condition.
+Raw 01-pytest-runs.jsonl, 02-<cond>-rep<k>-stdout.txt. Table 09-summary-table.txt. Nothing reached a real host.
+
+Identical in 3/3 per condition:
+  off-ep, off-noenv, off-noenv-logcli: 4 passed (test_marked_agent PASSED with the real model), 1 failed (intended); no request.
+  off-noenv-output: rc 3, INTERNALERROR, no test ran.
+  on-ep: 5 failed; GET /info 1, GET /datasets 4, GET /sessions 4 (9 requests). on-ep-output: same 9.
+  on-noenv-refuse: GET .../info 1, GET .../datasets 4 to api.smith.langchain.com (refused), 5 failed.
+  on-noenv-fake200: /info 1, /datasets 4, /sessions 4.
+  off-ep-tracing: 4 passed, 1 failed; GET /info 1 and POST /runs/multipart 3 with the agent's runs (ChatOllama, LangGraph, model, tools, add).
+Change vs the Mac fake: off-ep-tracing sent 3 multipart posts per process (Mac: 1 or 2). Everything else is the same.
+Rows not to use: tracking-on error types and on-ep-output table rows come from the recorder's "{}" answers (as on the Mac); run names are a rough regex.

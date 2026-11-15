@@ -1,0 +1,72 @@
+{
+ "cases": {
+  "agent_initial_run": {
+   "runs": [
+    {
+     "model": 2,
+     "tool": 1
+    },
+    {
+     "model": 2,
+     "tool": 1
+    },
+    {
+     "model": 2,
+     "tool": 1
+    }
+   ],
+   "same_final_as_first": []
+  },
+  "agent_replay_from_first_next_model": {
+   "runs": [
+    {
+     "model": 2,
+     "tool": 1
+    },
+    {
+     "model": 2,
+     "tool": 1
+    },
+    {
+     "model": 2,
+     "tool": 1
+    }
+   ],
+   "same_final_as_first": [
+    true,
+    true,
+    true
+   ]
+  },
+  "agent_replay_from_next_tools": {
+   "runs": [
+    {
+     "model": 1,
+     "tool": 1
+    },
+    {
+     "model": 1,
+     "tool": 1
+    },
+    {
+     "model": 1,
+     "tool": 1
+    }
+   ],
+   "same_final_as_first": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on CPU, temperature 0, seed 42, server context 8192",
+ "not_used": "the graph rows have no model and stay in replay-fork-mac.json",
+ "runs_per_case": 3,
+ "saver": "InMemorySaver",
+ "sources": [
+  "capture/lab/T17-claims-x86/01-claims.jsonl",
+  "capture/lab/T17-claims-x86/t17_real.py"
+ ]
+}

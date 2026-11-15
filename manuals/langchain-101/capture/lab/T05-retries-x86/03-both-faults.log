@@ -1,0 +1,24 @@
+both m_drop_once+t_refused_once openai_client_default 0 raised model_wire 2 tool_exec 1 ledger 0 2.79 httpx.ConnectError: [Errno 111] Connection refused
+both m_drop_once+t_refused_once openai_stacked 0 raised model_wire 2 tool_exec 1 ledger 0 2.68 httpx.ConnectError: [Errno 111] Connection refused
+both m_drop_once+t_refused_once openai_tool_retry 0 returned model_wire 3 tool_exec 2 ledger 1 4.21 
+both m_drop_once+t_refused_once openai_both_mw 0 returned model_wire 3 tool_exec 2 ledger 1 4.78 
+both m_drop_always+t_refused_always openai_client_default 0 raised model_wire 3 tool_exec 0 ledger 0 1.3 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+both m_drop_always+t_refused_always openai_stacked 0 returned model_wire 9 tool_exec 0 ledger 0 7.19 
+both m_drop_always+t_refused_always openai_tool_retry 0 raised model_wire 3 tool_exec 0 ledger 0 1.43 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+both m_drop_always+t_refused_always openai_both_mw 0 returned model_wire 9 tool_exec 0 ledger 0 7.3 
+both m_drop_once+t_refused_once openai_client_default 1 raised model_wire 2 tool_exec 1 ledger 0 2.64 httpx.ConnectError: [Errno 111] Connection refused
+both m_drop_once+t_refused_once openai_stacked 1 raised model_wire 2 tool_exec 1 ledger 0 2.55 httpx.ConnectError: [Errno 111] Connection refused
+both m_drop_once+t_refused_once openai_tool_retry 1 returned model_wire 3 tool_exec 2 ledger 1 4.32 
+both m_drop_once+t_refused_once openai_both_mw 1 returned model_wire 3 tool_exec 2 ledger 1 4.33 
+both m_drop_always+t_refused_always openai_client_default 1 raised model_wire 3 tool_exec 0 ledger 0 1.27 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+both m_drop_always+t_refused_always openai_stacked 1 returned model_wire 9 tool_exec 0 ledger 0 6.57 
+both m_drop_always+t_refused_always openai_tool_retry 1 raised model_wire 3 tool_exec 0 ledger 0 1.42 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+both m_drop_always+t_refused_always openai_both_mw 1 returned model_wire 9 tool_exec 0 ledger 0 7.37 
+both m_drop_once+t_refused_once openai_client_default 2 raised model_wire 2 tool_exec 1 ledger 0 2.63 httpx.ConnectError: [Errno 111] Connection refused
+both m_drop_once+t_refused_once openai_stacked 2 raised model_wire 2 tool_exec 1 ledger 0 2.7 httpx.ConnectError: [Errno 111] Connection refused
+both m_drop_once+t_refused_once openai_tool_retry 2 returned model_wire 3 tool_exec 2 ledger 1 4.59 
+both m_drop_once+t_refused_once openai_both_mw 2 returned model_wire 3 tool_exec 2 ledger 1 4.45 
+both m_drop_always+t_refused_always openai_client_default 2 raised model_wire 3 tool_exec 0 ledger 0 1.38 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+both m_drop_always+t_refused_always openai_stacked 2 returned model_wire 9 tool_exec 0 ledger 0 6.48 
+both m_drop_always+t_refused_always openai_tool_retry 2 raised model_wire 3 tool_exec 0 ledger 0 1.31 langchain_openai.chat_models.base.OpenAIConnectionError: Connection error.
+both m_drop_always+t_refused_always openai_both_mw 2 returned model_wire 9 tool_exec 0 ledger 0 6.72 

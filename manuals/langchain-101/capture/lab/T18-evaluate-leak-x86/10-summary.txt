@@ -1,0 +1,16 @@
+T18 langsmith.evaluate(upload_results=False), real agent target, the x86 server guest
+Target: create_agent(ChatOllama qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42, tools=[add]); question "What is 2 + 3? Use the add tool,
+then answer in one short sentence."; evaluator: "5" in the answer. langsmith 0.14.17. Default client, no client passed, LANGSMITH_TRACING unset.
+Conditions and guard as on the Mac (t18_real.py = t18_evaluate.py with the fake replaced). n = 5 new processes per condition. No real host reached:
+noenv children had requests.Session.send replaced and getaddrinfo refusing non-local hosts (guard_blocked empty in 25/25).
+Raw 01-evaluate-requests.jsonl, 02-evaluate-noflush.jsonl (+driver logs), 03-counts.txt (t18_summarize.py).
+
+Results, identical in 5/5 per condition; answer "2 + 3 equals 5." scored True in every agent process; process wall 5.5-6.3 s:
+  ep:agent     GET /info x1, POST /runs/multipart x3; run parts: post LangGraph 1, model 2, ChatOllama 2, tools 1, add 1 (7 runs) + patch parts for
+               LangGraph 1, model 2, ChatOllama 2 (5). The LangGraph run points to the unsent evaluate root (orphan), as on the Mac.
+  ep:quiet     GET /info x1, no runs.          ep:plain   GET /info x1, no runs.
+  noenv:agent  the same 3 multipart posts to https://api.smith.langchain.com.   noenv:quiet  GET https://api.smith.langchain.com/info x1.
+Change vs the Mac fake: the 7 runs went in 3 multipart posts with 5 patch parts, not in one post. With a 2-5 s model call, the batch thread
+flushes the run starts before the ends arrive. The conclusions (an agent target leaks its runs; GET /info always goes out; the wrap stops the runs
+but not /info) hold on the real model.
+Rows not to use: 02-evaluate-noflush.jsonl noenv:agent rows for the POST count (posts at exit after the child printed: 2 posts there); use 02 only for GET /info.

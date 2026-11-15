@@ -517,8 +517,8 @@ def tracing():
     }
 
 
-def evaluate_leak():
-    folder = "T18-evaluate-leak-mac"
+def evaluate_leak(folder="T18-evaluate-leak-mac"):
+    x86 = folder.endswith("-x86")
 
     def requests_of(row):
         return [(h["method"], h["path"], h["names"]) for h in row["recorder"]] + [(p["method"], p["url"], p["names"]) for p in row.get("patched_requests", [])]
@@ -549,9 +549,8 @@ def evaluate_leak():
     noflush = {}
     for row in rows(f"{folder}/02-evaluate-noflush.jsonl"):
         noflush.setdefault(row["case"], []).append([f"{method} {path}" for method, path, _ in requests_of(row) if path.endswith("/info")])
-    origin = [line.strip() for line in read(f"{folder}/04-info-origin.txt").splitlines() if line.strip().startswith(("REQUEST", "File"))]
-    return {
-        "machine": MAC,
+    out = {
+        "machine": X86 if x86 else MAC,
         "versions": "langsmith 0.14.17, langchain 1.5.0, langchain-core 1.8.0",
         "run": "evaluate(upload_results=False) on one example, with no client argument, so the default client; every process new",
         "target": "create_agent with a fake model and one tool add, 2 model calls and 1 tool call, 7 LangChain runs; quiet wraps it in tracing_context(enabled=False); plain is a function",
@@ -563,17 +562,22 @@ def evaluate_leak():
         "info_without_flush": noflush,
         "agent_processes": agent_processes,
         "project_differs_from_printed_name": mismatched,
-        "info_origin": origin,
     }
+    if x86:
+        out["target"] = "create_agent with ChatOllama and qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42, and one tool add, 7 LangChain runs; quiet wraps it in tracing_context(enabled=False); plain is a function"
+        out["sources"] = [f"capture/lab/{folder}/{name}" for name in ("01-evaluate-requests.jsonl", "02-evaluate-noflush.jsonl", "03-counts.txt", "t18_real.py", "t18_summarize.py")]
+    else:
+        out["info_origin"] = [line.strip() for line in read(f"{folder}/04-info-origin.txt").splitlines() if line.strip().startswith(("REQUEST", "File"))]
+    return out
 
 
 PYTEST_LINE = re.compile(r"^(?:INTERNALERROR> |E\s+)(?:\S+\.)?(ValueError: .*|LangSmithConnectionError: .*)$")
 
 
-def pytest_plugin():
-    folder = "T19-pytest-plugin-mac"
+def pytest_plugin(folder="T19-pytest-plugin-mac"):
+    x86 = folder.endswith("-x86")
     conditions = {}
-    for rel in ("01-pytest-runs.jsonl", "03-off-tracing-on-runs.jsonl"):
+    for rel in ("01-pytest-runs.jsonl",) if x86 else ("01-pytest-runs.jsonl", "03-off-tracing-on-runs.jsonl"):
         for row in rows(f"{folder}/{rel}"):
             cell = conditions.setdefault(row["cond"], {"processes": 0, "return_codes": [], "results": [], "requests": [], "agent_run_posted": [], "messages": [], "skipping_lines": [], "header": None, "suite": None})
             cell["processes"] += 1
@@ -593,7 +597,7 @@ def pytest_plugin():
                     cell["suite"] = line.strip()
             cell["messages"].append(found)
             cell["skipping_lines"].append(sum(1 for line in text.splitlines() if "Skipping" in line and line.startswith("INFO")))
-    return {
+    out = {
         "machine": MAC,
         "versions": "langsmith 0.14.17 with its pytest11 plugin, pytest 8.4.2 in a scratch environment, rich 15.0.0, no vcrpy",
         "tests": "five tests: a marked test that logs inputs, outputs, reference outputs, and feedback; a marked test that fails on purpose; a test with @langsmith.test; a marked test that runs create_agent with a fake model; an unmarked test that calls log_outputs",
@@ -603,6 +607,12 @@ def pytest_plugin():
         "sources": [f"capture/lab/{folder}/{name}" for name in ("01-pytest-runs.jsonl", "03-off-tracing-on-runs.jsonl", "t19_driver.py", "t19_tests/conftest.py", "t19_tests/test_ls_plugin.py")] + [f"capture/lab/{folder}/02-<condition>-rep<n>-stdout.txt"],
         "conditions": conditions,
     }
+    if x86:
+        out["machine"] = X86
+        out["tests"] = out["tests"].replace("create_agent with a fake model", "create_agent with ChatOllama and qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42")
+        out["not_used"] = "with tracking on, the errors after each request come from the empty answers of the recorder and the guard, so only the request order is used; the run names come from a rough match on the body, so the summary keeps only whether the LangGraph run of the agent was posted"
+        out["sources"] = [f"capture/lab/{folder}/{name}" for name in ("01-pytest-runs.jsonl", "t19_driver_real.py", "t19_tests/conftest.py", "t19_tests/test_ls_plugin.py")] + [f"capture/lab/{folder}/02-<condition>-rep<n>-stdout.txt"]
+    return out
 
 
 def mcp_edges():
@@ -882,7 +892,285 @@ def demos():
     }
 
 
+X86_MODEL = "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on CPU, temperature 0, seed 42, server context 8192"
+
+
+def data_rows(rel):
+    return [row for row in rows(rel) if row.get("kind") != "header"]
+
+
+def first_line(text):
+    return (text or "").splitlines()[0] if text else None
+
+
+def retries_x86():
+    folder = "T05-retries-x86"
+    files = ["01-model-faults.jsonl", "02-tool-faults.jsonl", "03-both-faults.jsonl"]
+    cells = {}
+    for name in files:
+        for row in data_rows(f"{folder}/{name}"):
+            cell = cells.setdefault(f"{row['fault']} {row['config']}", {"group": row["group"], "fault": row["fault"], "config": row["config"], "model_class": row["model_class"], "client_max_retries": row["client_max_retries"], "relay_injected": row["relay_injected"], "model_attempts": [], "model_starts": [], "tool_executions": [], "ledger_rows": [], "outcomes": [], "wall_s": [], "result": []})
+            cell["model_attempts"].append(row["wire_model_attempts"])
+            cell["model_starts"].append(row["model_starts_callback"])
+            cell["tool_executions"].append(row["tool_executions"])
+            cell["ledger_rows"].append(row["ledger_rows"])
+            cell["outcomes"].append(row["outcome"])
+            cell["wall_s"].append(row["wall_s"])
+            if row["outcome"] == "raised":
+                cell["result"].append(first_line(row["exception"]))
+            else:
+                cell["result"].append("last AI: " + first_line(row["final_messages"][-1][1]))
+    for cell in cells.values():
+        cell["wall_s_median"] = median(cell["wall_s"], 2)
+        cell["result"] = sorted(set(cell["result"]))
+    return {
+        "machine": X86,
+        "model": X86_MODEL,
+        "clients": "ChatOpenAI on the /v1 path of Ollama and ChatOllama on the native path, through a TCP relay on 127.0.0.1, client timeout 15 s",
+        "faults_note": "m_drop: the relay closes the connection; m_refused: nothing listens on the port; m_timeout: the relay holds 20 s; m_404_always_real: the real Ollama answer for an unknown model; m_429 and m_500: statuses injected by the relay; t_refused: a closed port; t_sqlerror: a missing PostgreSQL table; t_timeout: an INSERT into a ledger table, then pg_sleep(3) under statement_timeout 1 s",
+        "count_note": "model_attempts are relay arrivals, logged on arrival; ledger_rows are the INSERTs that landed",
+        "runs_per_cell": 3,
+        "sources": [f"capture/lab/{folder}/{name}" for name in files + ["t05_real.py", "lr_common.py"]],
+        "cells": dict(sorted(cells.items())),
+    }
+
+
+def approval_cases(data, tag):
+    cases = {}
+    for row in data:
+        spec = row["spec"]
+        cell = cases.setdefault(row["case"], {"app": spec["app"], "mode": spec.get("mode"), "calls": spec.get("calls"), "runs": 0, "prompt_tries": [], "tools_run": [], "model_calls": [], "errors": [], "c1_tool_messages": [], "source": tag})
+        cell["runs"] += 1
+        cell["prompt_tries"].append(len(row["attempts"]))
+        cell["tools_run"].append(sorted(f"{name} {json.dumps(args, sort_keys=True)} at step {step}" for name, args, step in row["tool_execs"]))
+        cell["model_calls"].append(row["model_calls"])
+        cell["errors"].append([f"step {rep['step']}: {INTERRUPT_ID.sub('<id>', (rep.get('error') or rep.get('crash')).splitlines()[0])}" for rep in row["reports"] if rep.get("error") or rep.get("crash")])
+        last = row["reports"][-1].get("messages") or []
+        first = next((m[3][0][2] for m in last if m[0] == "ai" and m[3]), None)
+        cell["c1_tool_messages"].append([m[2] for m in last if m[0] == "tool" and first and m[4] == first])
+    return cases
+
+
+def approvals_x86():
+    folder = "T07-approvals-x86"
+    first = [row for row in data_rows(f"{folder}/01-cases.jsonl") if not row["case"].startswith("G3_")]
+    cases = approval_cases(first, "01-cases.jsonl")
+    cases.update(approval_cases(data_rows(f"{folder}/02-g3-rerun.jsonl"), "02-g3-rerun.jsonl"))
+    survey = {}
+    for row in data_rows(f"{folder}/00-survey.jsonl"):
+        cell = survey.setdefault(f"{row['model']} {row['intent']}", {"prompts": 0, "calls_per_reply": {}, "all_ids": True})
+        cell["prompts"] += 1
+        key = str(row["n_calls"])
+        cell["calls_per_reply"][key] = cell["calls_per_reply"].get(key, 0) + 1
+        cell["all_ids"] = cell["all_ids"] and all(c[2] for c in row["calls"])
+    for cell in survey.values():
+        cell["calls_per_reply"] = dict(sorted(cell["calls_per_reply"].items()))
+    return {
+        "machine": X86,
+        "model": X86_MODEL + "; the survey also ran qwen3:8b with reasoning off",
+        "runs_per_case": 3,
+        "saver": "SqliteSaver, with the start and each resume in a new process",
+        "not_used": "the G3 rows of 01-cases.jsonl, whose shape check never matched; the G3 case comes from 02-g3-rerun.jsonl; G1 and G2 have no model and stay in approvals-mac.json",
+        "c1_note": "c1_tool_messages are the statuses of the ToolMessages of the first tool call id of the first AI message with calls",
+        "survey_note": "one model call per prompt with the tools bound, 10 prompts per intent per model",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("00-survey.jsonl", "01-cases.jsonl", "02-g3-rerun.jsonl", "t07_child_real.py", "t07_driver_real.py", "t07_survey.py")],
+        "survey": dict(sorted(survey.items())),
+        "cases": dict(sorted(cases.items())),
+    }
+
+
+def parallel_tools_x86():
+    folder = "T08-parallel-tools-x86"
+    counts = {}
+    for row in data_rows(f"{folder}/01-counts.jsonl"):
+        counts[f"{row['model']} {row['client']} asked {row['asked']}"] = {"made": row["made"], "distinct_args": row["distinct_q"], "all_have_id": row["all_have_id"], "invalid": row["invalid"], "secs": row["secs"]}
+    raw = {row["api"]: {"ids": [bool(c.get("id")) for c in row["message"]["tool_calls"]]} for row in data_rows(f"{folder}/02-raw-ollama.jsonl")}
+
+    def harness(rel):
+        cells = {}
+        for row in data_rows(rel):
+            if row.get("warmup"):
+                continue
+            cap = "none" if row["max_concurrency"] is None else row["max_concurrency"]
+            cell = cells.setdefault(f"{row['mode']} {row['tool']} asked={row['asked']} cap={cap}", {"runs": 0, "errors": {}, "calls_made": [], "wall_ms": [], "tool_span_ms": [], "overlap": [], "executions": []})
+            cell["runs"] += 1
+            cell["calls_made"].append(row["n_calls_made"])
+            if row["error"]:
+                key = first_line(row["error"])
+                cell["errors"][key] = cell["errors"].get(key, 0) + 1
+                continue
+            cell["wall_ms"].append(r(row["wall_ms"], 1))
+            cell["tool_span_ms"].append(r(row["tool_span_ms"], 1))
+            cell["overlap"].append(row["max_overlap"])
+            cell["executions"].append(row["n_exec"])
+        for cell in cells.values():
+            if cell["wall_ms"]:
+                cell["wall_ms_median"] = median(cell["wall_ms"], 1)
+                cell["tool_span_ms_median"] = median(cell["tool_span_ms"], 1)
+        return dict(sorted(cells.items()))
+
+    dupnames = {}
+    for row in data_rows(f"{folder}/03-dupnames.jsonl"):
+        cell = dupnames.setdefault(f"{row['prompt']} order={'+'.join(row['order'])}", {"runs": 0, "bound_to_model": row["bound_to_model"], "model_calls": [], "ran": [], "final": []})
+        cell["runs"] += 1
+        cell["model_calls"].append(len(row["model_calls"]))
+        cell["ran"].append(row["ran"])
+        cell["final"].append(row["final"][:80])
+    agent = data_rows(f"{folder}/05-agent.jsonl")
+    toolnode = rows(f"{folder}/04-toolnode.jsonl")
+    return {
+        "machine": X86,
+        "model": X86_MODEL + "; the counts also ran qwen3:8b with reasoning off",
+        "cpu_count": toolnode[0]["cpu_count"],
+        "tool": "work runs SELECT pg_sleep(0.2) on PostgreSQL 16.15, with psycopg sync or AsyncConnection",
+        "run": "toolnode: ToolNode fed the AIMessage that qwen3 4B returned for each asked count, 5 runs per cell after a warm-up pass; agent: create_agent with a model call in every run, asked for 8 calls, 3 runs per cell",
+        "made_per_asked": toolnode[0]["made"],
+        "not_used": "rows with warmup true in 04; the 4B reply for asked 1 holds 2 identical calls, so its ToolNode rows are 2-call rows",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-counts.jsonl", "02-raw-ollama.jsonl", "03-dupnames.jsonl", "04-toolnode.jsonl", "05-agent.jsonl", "t08_real.py", "lr_common.py")],
+        "counts": counts,
+        "raw_ollama_ids": raw,
+        "toolnode": harness(f"{folder}/04-toolnode.jsonl"),
+        "agent": harness(f"{folder}/05-agent.jsonl"),
+        "agent_wall_s": [r(min(row["wall_ms"] for row in agent) / 1000, 1), r(max(row["wall_ms"] for row in agent) / 1000, 1)],
+        "dupnames": dupnames,
+    }
+
+
+def middleware_x86():
+    folder = "T11-middleware-cost-x86"
+    cost = rows(f"{folder}/01-cost.jsonl")
+    cells = {}
+    for row in cost[1:]:
+        if row["warm"] or not row["ok"]:
+            continue
+        key = row["cell"] if row["k"] is None else f"{row['cell']} {row['k']}"
+        cell = cells.setdefault(key, {"cell": row["cell"], "k": row["k"], "framework_us": [], "wall_ms": [], "model_ms": [], "share_pct": []})
+        cell["framework_us"].append(r(row["framework_us"], 1))
+        cell["wall_ms"].append(r(row["wall_us"] / 1000, 1))
+        cell["model_ms"].append(r(row["model_us"] / 1000, 1))
+        cell["share_pct"].append(100 * row["framework_us"] / row["wall_us"])
+    for cell in cells.values():
+        cell["n"] = len(cell["framework_us"])
+        cell["framework_ms_median"] = r(statistics.median(cell["framework_us"]) / 1000, 2)
+        cell["wall_ms_median"] = median(cell["wall_ms"], 1)
+        cell["model_ms_median"] = median(cell["model_ms"], 1)
+        cell["share_pct_median"] = median(cell["share_pct"], 1)
+        del cell["share_pct"]
+    base = statistics.median(cells["none 0"]["framework_us"])
+    hooks = {}
+    for hook, calls in HOOK_CALLS.items():
+        points = [(0, base)] + [(cell["k"], statistics.median(cell["framework_us"])) for cell in cells.values() if cell["cell"] == hook]
+        mean_k = sum(k for k, _ in points) / len(points)
+        mean_m = sum(m for _, m in points) / len(points)
+        slope = sum((k - mean_k) * (m - mean_m) for k, m in points) / sum((k - mean_k) ** 2 for k, _ in points)
+        hooks[hook] = {"calls_per_run": calls, "us_per_hook_call": r(slope / calls, 1), "framework_ms_at_20": cells[f"{hook} 20"]["framework_ms_median"]}
+    builtin = {cell["cell"]: {"framework_ms_median": cell["framework_ms_median"], "added_ms": r((statistics.median(cell["framework_us"]) - base) / 1000, 2), "share_pct_median": cell["share_pct_median"]} for cell in cells.values() if cell["k"] is None}
+    acts = {}
+    for row in data_rows(f"{folder}/02-acts.jsonl"):
+        if "start" in row:
+            shape = {"start": row["start"]["outcome"], "action_requests": [a["name"] for i in row["start"]["interrupts"] for a in i["action_requests"]], "after_approve_last": row["after_approve"]["messages"][-1][1], "model_calls": [row["start"]["n_model_calls"], row["after_approve"]["n_model_calls"]]}
+        else:
+            last = row["messages"][-1] if row.get("messages") else None
+            shape = {"outcome": row["outcome"], "model_calls": row["n_model_calls"], "first_input_messages": len(row["model_inputs"][-1]) if row["model_inputs"] else 0, "last": last[1][:120] if last else None, "tool_messages": [m[1][:60] for m in row.get("messages", []) if m[0] == "tool"], "error": first_line(row.get("exception"))}
+            if "relay_actions" in row:
+                shape["relay_actions"] = row["relay_actions"]
+        cell = acts.setdefault(row["case"], {"runs": 0, "shapes": []})
+        cell["runs"] += 1
+        if shape not in cell["shapes"]:
+            cell["shapes"].append(shape)
+    loads = [row["load"][0] for row in cost[1:] if not row["warm"]]
+    return {
+        "machine": X86,
+        "model": X86_MODEL,
+        "run": "create_agent with ChatOllama, 2 real model calls and 1 tool call, sync invoke; framework time is wall time minus time inside ChatOllama._generate; 20 timed runs per cell in shuffled rounds after 2 warm-up rounds that the summary leaves out",
+        "load1": [r(min(loads), 1), r(max(loads), 1)],
+        "note": "the absolute microseconds depend on the load; use the share of the run and the ratio of node hooks to wrap hooks",
+        "first_input_note": "first_input_messages counts the messages of the last model call of the run",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-cost.jsonl", "02-acts.jsonl", "t11_real.py", "lr_common.py")],
+        "baseline_framework_ms": r(base / 1000, 2),
+        "cells": dict(sorted(cells.items())),
+        "hooks": hooks,
+        "builtin": dict(sorted(builtin.items())),
+        "acts": dict(sorted(acts.items())),
+    }
+
+
+def recursion_x86():
+    folder = "T17-claims-x86"
+    cases = {}
+    for row in data_rows(f"{folder}/01-claims.jsonl"):
+        if row["case"] == "create_agent_bound_config":
+            cases[row["case"]] = {"recursion_limit": row["config"]["recursion_limit"]}
+        elif row["case"].startswith("create_agent_forever"):
+            cell = cases.setdefault(row["case"], {"limit_reached": int(re.search(r"Recursion limit of (\d+)", row["message_first_line"]).group(1)), "model_calls": [], "tool_calls": [], "wall_s": []})
+            cell["model_calls"].append(row["counts"]["model"])
+            cell["tool_calls"].append(row["counts"]["tool"])
+            cell["wall_s"].append(row["wall_s"])
+    for row in data_rows(f"{folder}/02-nolimit.jsonl"):
+        cases[row["case"]] = {"result": row["result"], "model_calls": row["model_calls"], "tool_calls": row["tool_calls"], "steps": row["model_calls"] + row["tool_calls"], "wall_s": row["wall_s"], "tool_calls_at_s": row["tool_call_stamps"]}
+    return {
+        "machine": X86,
+        "model": X86_MODEL,
+        "prompt": "the model is told to call ping until it answers finished, and ping never does",
+        "runs": "3 runs for each recursion_limit; 1 run with no recursion_limit, stopped by the lab script at a 1200 s cap",
+        "not_used": "the StateGraph rows have no model and stay in recursion-mac.json",
+        "sources": [f"capture/lab/{folder}/{name}" for name in ("01-claims.jsonl", "02-nolimit.jsonl", "t17_real.py", "t17_nolimit.py")],
+        "cases": cases,
+    }
+
+
+def replay_fork_x86():
+    folder = "T17-claims-x86"
+    cases = {}
+    for row in data_rows(f"{folder}/01-claims.jsonl"):
+        if not row["case"].startswith("agent_"):
+            continue
+        cell = cases.setdefault(row["case"], {"runs": [], "same_final_as_first": []})
+        cell["runs"].append(row["counts"])
+        if "same_final_as_first" in row:
+            cell["same_final_as_first"].append(row["same_final_as_first"])
+    return {
+        "machine": X86,
+        "model": X86_MODEL,
+        "saver": "InMemorySaver",
+        "runs_per_case": 3,
+        "not_used": "the graph rows have no model and stay in replay-fork-mac.json",
+        "sources": [f"capture/lab/{folder}/01-claims.jsonl", f"capture/lab/{folder}/t17_real.py"],
+        "cases": cases,
+    }
+
+
+def failure_drill_x86():
+    folder = "failure-drill-x86"
+    runs = sorted(name[:-6] for name in os.listdir(os.path.join(LAB, folder)) if name.startswith("drill-run") and name.endswith(".jsonl"))
+    cases = {}
+    for run in runs:
+        for row in rows(f"{folder}/{run}.jsonl"):
+            cell = cases.setdefault(str(row["case"]), {"title": row["title"], "section": row["section"], "seconds": [], "runs": []})
+            cell["seconds"].append(row["seconds"])
+            cell["runs"].append({key: value for key, value in row.items() if key not in ("case", "title", "section", "seconds", "check")})
+    totals = [float(re.search(r"^total ([0-9.]+) s$", read(f"{folder}/{run}.log"), re.M).group(1)) for run in runs]
+    return {
+        "machine": X86,
+        "model": X86_MODEL + "; ChatOllama in every case except case 1, which uses ChatOpenAI on the /v1 path",
+        "failure_sources": "case 1: a relay in front of Ollama that drops every connection; case 2: a SIGKILL inside the tool on SqliteSaver, then a resume in a new process; case 5: LANGSMITH_ENDPOINT on a port where nothing listens; the other cases are the behaviour of the model",
+        "runs": len(runs),
+        "total_s": totals,
+        "sources": [f"capture/lab/{folder}/{name}" for name in [f"{run}.{ext}" for run in runs for ext in ("log", "jsonl")] + ["drill_real.py", "lr_common.py"]],
+        "cases": cases,
+    }
+
+
 SUMMARIES = {
+    "retries-x86.json": retries_x86,
+    "approvals-x86.json": approvals_x86,
+    "parallel-tools-x86.json": parallel_tools_x86,
+    "middleware-x86.json": middleware_x86,
+    "recursion-x86.json": recursion_x86,
+    "replay-fork-x86.json": replay_fork_x86,
+    "evaluate-x86.json": lambda: evaluate_leak("T18-evaluate-leak-x86"),
+    "pytest-plugin-x86.json": lambda: pytest_plugin("T19-pytest-plugin-x86"),
+    "failure-drill-x86.json": failure_drill_x86,
     "demos-mac.json": demos,
     "streaming-mac.json": streaming,
     "parallel-tools-mac.json": parallel_tools,

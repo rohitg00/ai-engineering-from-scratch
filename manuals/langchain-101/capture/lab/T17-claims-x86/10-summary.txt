@@ -1,0 +1,19 @@
+T17 claim rows that used a fake model, rerun on a real model, the x86 server guest
+Model qwen3:4b-instruct-2507-q4_K_M via ChatOllama, temperature 0, seed 42. Scripts t17_real.py (01-claims.jsonl), t17_nolimit.py (02-nolimit.jsonl).
+Forever prompt: "Call the tool ping. Each time it answers, call ping again. Keep calling ping until it answers 'finished'. Do not stop on your own."
+ping answers "pong. Not finished yet: call ping again."
+
+- create_agent bound config: recursion_limit 9999 (no model involved; same as the Mac).
+- recursion_limit=25: GraphRecursionError after 13 model calls and 12 tool calls, 23.8-24.3 s. n=3, identical in 3/3 (Mac fake: 13 model calls).
+- recursion_limit=101: GraphRecursionError after 51 model calls and 50 tool calls, 105.1-105.7 s. n=3, identical in 3/3.
+  So each agent step is one model call or one tool call with a real model too. The real model never stopped on its own before the limit.
+- No recursion_limit (default 9999), n=1, stopped by the lab script at a 1200 s cap: 121 model calls and 121 tool calls in 1260 s. The model did not stop.
+  Pace: 25 tool calls at 88 s, 50 at 146 s, 75 at 210 s, 100 at 288 s. It got slower as the history grew.
+  The 5000-call run of the Mac fake was NOT rerun. At this pace it would take many hours, and the 8192-token context fills after a few hundred turns.
+  Use it as: the default lets a real looping agent run for at least 20 minutes and 121 calls on this machine, with no error.
+  The run shared Ollama with the T07 G3 rerun for a few minutes, so its pace is approximate.
+- Replay, agent with ping once, InMemorySaver, n=3, identical in 3/3: the first run made 2 model calls and 1 tool call.
+  Replay from step 0 (next model): 2 model calls and 1 tool call. Replay from step 1 (next tools): 1 model call and 1 tool call.
+  The final answer was "final" each time, the same as the first run. Same as the fake.
+- The plain StateGraph rows (10007, env 25, the a/b/c replay and fork) have no model. The Mac rows stay valid as "no model involved".
+Rows not to use: none.

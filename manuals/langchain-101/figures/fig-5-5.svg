@@ -33,5 +33,5 @@
   <rect x="408" y="244" width="212" height="50" fill="var(--m-blue-fill, #e6edf6)" stroke="var(--m-blue-ink, #2f5d9a)"/>
   <text x="420" y="264.1" font-size="12" font-weight="700">the review held</text>
   <text x="420" y="281.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">J4, J5, nothing ran</text>
-  <text x="20" y="312" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Rows 1 and 2 are from the capture kit. Rows 3 and 4 are lab runs on the Mac.</text>
+  <text x="20" y="312" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Rows 1 and 2 are from the capture kit. Rows 3 and 4 are lab runs on the x86 server guest.</text>
 </svg>

@@ -158,7 +158,9 @@ The answer `x` went nowhere, and the caller got no sign of it. Before you resume
 
 **A stale answer.** An answer to an interrupt that a resume already used is also accepted and ignored. LangGraph can refuse it with a strict resume mode, but at the pin the only switch is the internal config key `__pregel_strict_resume` {{code libs/langgraph/langgraph/_internal/_constants.py}}. Its check for a stale answer applies only to a resume map keyed by interrupt id {{code libs/langgraph/langgraph/pregel/_loop.py:1037-1063}}. The name starts with `__pregel`, so treat it as private and do not depend on it.
 
-**We measured** both modes on the Mac, 3 runs of each case, with `SqliteSaver` and a new process for each step. An agent in `per_call` mode made two calls that needed approval. The first resume approved one call by its interrupt id, and the second resume sent the same answer again. With `__pregel_strict_resume` set, the second resume raised `UnknownInterruptError: Unknown or already-consumed interrupt` in 3 of 3 runs. Without it, the second resume raised nothing and ran nothing in 3 of 3 runs. In every run, `send_email` ran once and the model ran once.
+**We measured** both modes on the x86 server guest with Qwen3 4B, 3 runs of each case. Each step ran in a new process on `SqliteSaver`. An agent in `per_call` mode made two calls that needed approval. The first resume approved one call by its interrupt id, and the second resume sent the same answer again. With `__pregel_strict_resume` set, the second resume raised `UnknownInterruptError: Unknown or already-consumed interrupt` in 3 of 3 runs.
+
+Without it, the second resume raised nothing and ran nothing in 3 of 3 runs. In every run, `send_email` ran once and the model ran once.
 
 **NodeInterrupt.** Older code raises `NodeInterrupt` in a node. The class is deprecated at the pin, and its warning points to `interrupt` {{code libs/langgraph/langgraph/errors.py}}.
 
@@ -171,4 +173,4 @@ The answer `x` went nowhere, and the caller got no sign of it. Before you resume
 - Keep the order of interrupt calls in a node the same on every run.
 ```
 
-Sources: capture/s_persist.py, capture/out/32-interrupt-resume.txt; capture/lab/summary/approvals-mac.json, capture/lab/T07-approvals-mac/01-cases.jsonl; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/errors.py, libs/langgraph/langgraph/pregel/_loop.py, and libs/langgraph/langgraph/_internal/_constants.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/interrupts).
+Sources: capture/s_persist.py, capture/out/32-interrupt-resume.txt; capture/lab/summary/approvals-x86.json, capture/lab/T07-approvals-x86/01-cases.jsonl; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/errors.py, libs/langgraph/langgraph/pregel/_loop.py, and libs/langgraph/langgraph/_internal/_constants.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/interrupts).
