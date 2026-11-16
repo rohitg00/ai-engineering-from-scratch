@@ -107,7 +107,7 @@ claim: The client default and the middleware each made 3 attempts, and the two l
 caption: Each dot is one run, and each column is one configuration. The three groups are a dropped connection, a refused port, and a timeout on every call. The real 404 made 1 attempt with ChatOpenAI and is not drawn. From capture/lab/summary/retries-x86.json.
 ```
 
-A one-time drop, refusal, or timeout recovered inside the client in every configuration except `ChatOllama` with no middleware, which raised. The recovered runs had 3 model attempts, which includes the model call after the tool step.
+A one-time drop, refusal, or timeout recovered in every configuration except `ChatOllama` with no middleware, which raised. The client retried in the client default and with both layers. The middleware retried when it ran alone, because client retries were off there. The recovered runs had 3 model attempts, which includes the model call after the tool step.
 
 Choose one layer. Set `max_retries=0` on the model when you use `ModelRetryMiddleware`, or leave the middleware out. Then set your own timeout from the attempts that layer makes.
 

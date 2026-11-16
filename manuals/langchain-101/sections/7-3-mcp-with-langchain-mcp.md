@@ -141,7 +141,7 @@ caption: Read each row from the case on the left to the result on the right. Gre
 - **A crash over stdio.** The server called `os._exit(3)` in the middle of a call. The call raised `MCPError: Connection closed` within 0.01 s, and the agent run ended with that exception. The next call started the server again, which took 1.66 s.
 - **A crash over HTTP.** The direct call raised `RemoteProtocolError`. The agent run after it, and every later call, raised `RuntimeError: Client failed to connect`, because nothing starts an HTTP server again for you.
 
-A crash ends the whole run, and the model never sees an error message. A local tool that raises ends a run the same way, as [section 3.4](#s-tools-toolruntime-and-tool-errors) shows. Wrap the agent call in your own retry when a server can die, and resume it from its checkpoint.
+A crash ends the whole run, and the model never sees an error message. A local tool that raises ends a run the same way, as [section 3.4](#s-tools-toolruntime-and-tool-errors) shows. Wrap the agent call in your own retry when a server can die, and resume it from its checkpoint. A server can finish a write and die before it answers. Retry only idempotent tools, or send a durable idempotency key.
 
 ## The cost of a call
 

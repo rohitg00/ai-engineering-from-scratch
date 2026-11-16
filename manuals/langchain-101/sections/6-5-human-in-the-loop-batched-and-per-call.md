@@ -248,7 +248,7 @@ These settings kept every review in force in the lab runs:
 
 Agent Chat UI answers batched approvals only, and a typed message closes a pending approval as a success. See [the chat UI section](#s-agent-chat-ui-in-front-of-langgraph-dev).
 
-The docs also warn about one invalid answer among several sent together. The tools of the valid answers can run while their interrupts still look pending, and a second answer runs them twice {{docs oss/python/langchain/human-in-the-loop}}. The lab did not run that case, or any case with `PostgresSaver`. Both come in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+The docs also warn about one invalid answer among several sent together. The tools of the valid answers can run while their interrupts still look pending, and a second answer runs them twice {{docs oss/python/langchain/human-in-the-loop}}. So answer one interrupt at a time, and make the side effects idempotent. After a failed combined resume, check what the tools did before you send the answer again. The lab did not run that case, or any case with `PostgresSaver`. Both come in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Set interrupt_mode="per_call" on every new agent with review.

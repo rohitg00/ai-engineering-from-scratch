@@ -309,7 +309,7 @@ The agent layer added about 5 ms for each model call. With `create_agent`, 2.3% 
 - Pass recursion_limit on each run, because the agent default is 9999 steps.
 - Stream with no mode to get updates, the default of every agent.
 - Budget about 5 ms of agent overhead for each model call, far below model time.
-- Set max_concurrency on the run to cap parallel tool calls.
+- Set max_concurrency on the run to cap parallel tool calls of create_agent, and not of a plain ToolNode under ainvoke.
 - Give each tool a sync body when the agent runs under invoke.
 - Draw a graph from draw_mermaid, because draw_mermaid_png sends the graph text to a public service.
 ```

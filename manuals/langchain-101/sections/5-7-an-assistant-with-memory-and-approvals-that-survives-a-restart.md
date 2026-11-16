@@ -173,7 +173,8 @@ Two results come from the model. Qwen3 4B followed the rule to call `recall` bef
 - Expect the summary model call to add time to the turn that fires the trigger.
 
 ```takeaways
-- Use the tool_call_id as the idempotency key of each side effect, and check it before the effect.
+- Use the tool_call_id to stop a rerun of one call.
+- Add a key of the business action, because the model can send the same email in two calls.
 - Expect a crash after an approved effect to ask the reviewer again.
 - Read the user id from context in every tool that touches the store.
 - Set a trigger on SummarizationMiddleware, and expect one slow turn when it fires.

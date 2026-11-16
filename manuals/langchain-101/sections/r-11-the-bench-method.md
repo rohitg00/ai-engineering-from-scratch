@@ -60,7 +60,7 @@ claim: At temperature 0 three runs of Qwen3 4B gave identical outcomes on all 30
 caption: Each column is one task of the subset and each row one run. A filled square is a pass, and a rose square a fail. The amber marks are the tasks whose outcome changed between seeds. From capture/lab/bench/summary-mac.json.
 ```
 
-So the greedy result is one sample of the model, and the interval of a cell is the honest spread. A different seed or temperature moves single tasks, not the rate: 23 greedy against 23 to 24 sampled.
+So the greedy result is one sample of the model. The tasks are fixed and each ran once, so the interval of a cell is a Wilson interval for a rate over this suite. It does not measure the spread between repeated runs, and it applies to this suite only. A different seed or temperature moves single tasks, not the rate: 23 greedy against 23 to 24 sampled.
 
 ## Intervals
 

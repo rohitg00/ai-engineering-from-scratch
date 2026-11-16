@@ -113,6 +113,8 @@ Every node that ran again had the namespace of its first run: `c` in 200 of 200 
 
 So key the side effects of a node on its namespace. Store the key with the effect, as [section 5.3](#s-durability-modes-and-a-crash-between-two-steps) shows, and skip the effect when the key is there. A new turn plans new tasks with new ids, so the same request in a new turn is a new effect. Under `exit`, a crash leaves nothing to resume, so build the key from your own data there.
 
+The namespace holds only while the start checkpoint is saved. When that checkpoint is lost, the replay gets new task ids. Then only a business key that you store, such as an order id, stops a repeated effect.
+
 ```takeaways
 - Expect a node that returned just before a crash to run again, in sync and in async.
 - Key each side effect of a node on checkpoint_ns from get_config, and store the key with the effect.

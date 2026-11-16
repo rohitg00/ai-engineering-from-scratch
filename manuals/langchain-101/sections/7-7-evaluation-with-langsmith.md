@@ -207,7 +207,7 @@ lang: json
 
 A read of the trace root raised `LangSmithNotFoundError`. A list of the project with `is_root=True` returned 0 runs. So the root view of the project shows nothing, and the 70 runs appear only as child runs. The judge sent its own runs to `evaluators` with an unsent parent too. That project holds 30 `RunnableSequence` runs for its 20 judge roots.
 
-So `upload_results=False` does not keep an agent target out of your account. It stores the runs where the trace view does not show them. Wrap the target in `tracing_context(enabled=False)`, as the next part shows, when no run must leave.
+So `upload_results=False` does not keep an agent target out of your account. It stores the runs where the trace view does not show them. Wrap the target in `tracing_context(enabled=False)`, as the next part shows, when no run must leave. Wrap the model call inside a judge evaluator the same way, because the judge sends its own runs.
 
 ## Keep an agent target offline
 
@@ -314,7 +314,7 @@ These runs need more than this edition did, and [section 8.8](#s-limits-at-the-p
 - Wrap an agent target in tracing_context(enabled=False) to keep its runs out of your account.
 - Look in the evaluators project and in projects without your prefix after evaluate runs.
 - Set LANGSMITH_TRACING=true with tracking on, or every log call in a marked test raises.
-- Set LANGSMITH_TEST_TRACKING=false for marked tests, and unset LANGSMITH_TRACING too when nothing must leave.
+- Set LANGSMITH_TEST_TRACKING=false for marked tests, and wrap the target and judge in tracing_context(enabled=False) too.
 - Pull a prompt by its full commit hash when the version must not change.
 ```
 

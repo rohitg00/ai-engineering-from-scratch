@@ -1,6 +1,6 @@
 # A SQL agent over a local SQLite database
 
-> A SQL agent is safe to point at real data when the database refuses writes on the read path and every write pauses for a person, whatever the model does.
+> A SQL agent cannot change data alone when its read connection refuses writes and each write needs approval, but it can show every row it reads.
 
 Someone asks for an agent that answers questions about the sales database. The first prototype passes the model a connection string and one tool that runs any SQL. It works in the demo. Then a user types "delete the cancelled orders", and the model writes a `DELETE`.
 
@@ -115,6 +115,8 @@ note: Five accepted cases and one refused case are cut. The long cases are cut b
 ```
 
 The two `WITH` cases start like a read and still change data, so the keyword check is the step that refuses them. The `reader` lines skip the guard. SQLite itself refused the `DELETE`.
+
+The read-only connection stops writes. It does not stop the agent from reading a sensitive row and showing it to the user. Before you use real data, limit the connection to the tables and columns that the user can see.
 
 ## The write path
 

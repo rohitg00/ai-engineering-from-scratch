@@ -2,7 +2,7 @@
 
 > This page lists the 23 environment variables that the stack or its docs name at the pin, with the file and line that reads each one.
 
-Set each variable before the process starts. `LANGGRAPH_DEFAULT_RECURSION_LIMIT`, the delta setting, and `LANGGRAPH_STRICT_MSGPACK` are read when their module is imported. The LangSmith SDK caches each value after its first read {{code src/langsmith/utils.py:394}}. It reads each name with the prefix `LANGSMITH_` first and then `LANGCHAIN_` {{code src/langsmith/utils.py:377-381}}. A row that only the documentation backs says so.
+Set each variable before the process starts. `LANGGRAPH_DEFAULT_RECURSION_LIMIT`, the delta setting, and `LANGGRAPH_STRICT_MSGPACK` are read when their module is imported. The LangSmith SDK caches each value after its first read {{code src/langsmith/utils.py:394}}. It reads each name with the prefix `LANGSMITH_` first and then `LANGCHAIN_` {{code src/langsmith/utils.py:377-381}}. The tracing switch is the exception: a `TRACING_V2` variable of either prefix wins over `LANGSMITH_TRACING`. A row that only the documentation backs says so.
 
 ## LangGraph
 

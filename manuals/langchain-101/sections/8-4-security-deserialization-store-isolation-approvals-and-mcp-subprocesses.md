@@ -134,6 +134,8 @@ Four more results change how you write the rules:
 
 The fix is two patterns. Put `/**/.*` and `/**/.*/**` in a deny rule first, and add `/workspace` beside `/workspace/**` in the allow rule. With that list, every dotfile call was denied, and the agent could still list, read, and edit the workspace.
 
+The two patterns do not cover every dot path. In the matcher, `**` does not cross a folder that starts with a dot. So a path with two dot folders, such as `/workspace/.private/.secrets/token`, matches neither pattern and falls to the rules below them. Reject any path with a dot component in your own code before the rules apply.
+
 ```listing
 title: a rule list that covers dotfiles
 source: capture/lab/T22-sec-fs-permissions-mac/code/fixture.py

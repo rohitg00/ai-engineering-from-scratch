@@ -124,7 +124,7 @@ After a crash, you read the thread and decide if it needs a resume. A natural ch
 
 **We measured** this on the same agent matrix on the x86 server guest. After the kill, `next` was `()` in 217 of 1,260 killed trials, and none of those runs had finished. In each of them, `invoke(None, config)` ran the rest of the run and gave the correct final state. 177 of them were under `async`. The other 40 were under `sync` at `before_put`. The Mac graph matrix, with no model, showed it in 31 of 140 killed trials.
 
-Do not decide on `next` alone. Record in your own store that a run started and that it finished, and resume every thread that started and did not finish.
+Do not decide on `next` alone. Record in your own store that a run started and that it finished, and resume every thread that started and did not finish. A thread with no checkpoint has nothing to resume, so keep the original input in that store and start the run again.
 
 The history after a kill at `before_tool` also differs by mode. Under `sync` it held 3 checkpoints in 90 of 90 trials, and under `async` 2 in 90 of 90. Under `exit` it held none, so the driver had to start the run again from the input. The checkpointers page warns that a thread with no durable checkpoint looks like a thread that was never run {{docs oss/python/langgraph/checkpointers}}.
 
@@ -197,7 +197,7 @@ lang: text
 
 In the agent matrix, the system prompt said to call the tool once. There the model asked for exactly one call in 1,290 of 1,290 trials. A prompt lowers the rate, and the effect still needs a check.
 
-So key the effect on what it means. Use the thread and the order id, or the id of the business record that the effect changes. Check your records for that key before the effect, and return the saved result when it is there. With an outside service, send the key with the request, and let the service refuse a second request with the same key.
+So key the effect on what it means. Use the order id, or the id of the business record that the effect changes, and leave the thread id out of the key. The same order in a second thread must give the same key. Check your records for that key before the effect, and return the saved result when it is there. With an outside service, send the key with the request, and let the service refuse a second request with the same key.
 
 `AsyncSqliteSaver`, `AsyncPostgresSaver` under a crash, and Agent Server under a crash come in the next edition, as [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
 

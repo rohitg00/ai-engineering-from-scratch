@@ -51,6 +51,8 @@ lang: python
 
 A thread that belongs to someone else returns 404, the same as a thread that does not exist. A 403 would tell the caller that the id is real.
 
+The check answers who owns a thread. It does not answer who can approve a refund, so the customer who made a thread can approve its refund. A real service needs a separate approver identity. The tokens `tok-alice` and `tok-bob` in the example configuration are demo values, so set your own `AUTH_TOKENS` before you deploy.
+
 ## The user comes from the context
 
 A tool needs the user too. The model chooses an order id, and it can choose any string. So no tool takes a user id as an argument. The service puts the user in the run context, and each tool reads it from `runtime.context`.

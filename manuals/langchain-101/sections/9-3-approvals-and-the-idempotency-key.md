@@ -29,7 +29,7 @@ note: One event of the stream, cut from the case record.
       },
 ```
 
-The approve route answers that interrupt by its id. It sends a resume map, one decision for each pending interrupt.
+The approve route answers that interrupt by its id. It sends a resume map with one entry for each pending interrupt. The route reads a single decision from the request and gives it to every entry. So one approval covers every pending refund, and the approver must see each one before the click. To decide each refund apart, take one decision for each interrupt id.
 
 ```listing
 title: the approve route, with the two resume forms
@@ -104,7 +104,11 @@ note: The insert and the update after the checks are cut.
 …
 ```
 
-The key has three parts: the thread, the order, and the amount. The `SELECT ... FOR UPDATE` locks the order row, so two workers cannot both pass the check. The `refunds` table also has a unique index on the key. A replay returns the first refund with `"replayed": true`, and the model tells the customer that the refund exists.
+The key has three parts: the thread, the order, and the amount. It names no single request.
+
+The `SELECT ... FOR UPDATE` locks the order row, so two workers cannot both pass the check. The `refunds` table also has a unique index on the key. A replay returns the first refund with `"replayed": true`, and the model tells the customer that the refund exists.
+
+The same amount on the same order in the same thread also replays the first refund, even when the balance allows a second. We did not test that case. A customer can ask for two equal refunds. Then add the saved `tool_call_id` to the key. A resume repeats that id, and a new request does not.
 
 The key holds because the replay sends the same arguments. After the restart, the `tools` node runs the tool call that the checkpoint saved, from the AI message that the model wrote before the interrupt. The model is not asked again. If it were, it could choose another amount, and the key would differ. The [runtime part](#s-the-checkpoint-write-path-and-durability) shows the same rule for any node: key a side effect on what the checkpoint saved. A typed message in Agent Chat UI is a second path to a success that never ran, as [the chat UI section](#s-agent-chat-ui-in-front-of-langgraph-dev) shows.
 
@@ -160,6 +164,7 @@ One mistake stays. On the 12900-cent order, Qwen3 14B proposed 10000 cents, and 
 - Lock the row you check with SELECT FOR UPDATE, and back the key with a unique index.
 - Validate amounts in the tool against the order, and put the refundable amount in the error text.
 - Show the approver the order total next to the proposed amount.
+- Remember that one approve answers every pending refund of the thread.
 ```
 
 Sources: capture/lab/prodapp-mac/summary/crash-mac.json, capture/lab/prodapp-mac/runs/crash-map/crash-trials.json, capture/lab/prodapp-mac/runs/crash-plain/crash-trials.json, capture/lab/prodapp-mac/runs/crash-map/t01-before-kill.log.jsonl, capture/lab/prodapp-mac/runs/crash-map/t01-after-restart.log.jsonl, capture/lab/prodapp-mac/code/scripts/crash_real.py, capture/lab/prodapp-mac/code/app/server.py, capture/lab/prodapp-mac/code/app/tools.py, capture/lab/prodapp-mac/code/app/db.py, capture/lab/prodapp-mac/runs/suite/qwen3-14b/rep-1/cases/19-new_message_while_waiting_for_approval.json, capture/lab/prodapp-mac/summary/evals-mac.json, capture/lab/prodapp-mac/summary/fix-mac.json, capture/lab/prodapp-mac/runs/fix/crash-qwen3-4b/crash-trials.json, capture/lab/prodapp-mac/runs/fix/INVALID.txt, capture/lab/prodapp-mac/runs/fix/suite/qwen3-4b/rep-1/cases/19-new_message_while_waiting_for_approval.json, capture/lab/prodapp-mac/runs/fix/suite/qwen3-14b/rep-1/cases/06-refund_approved_once.json, capture/lab/prodapp-mac/code/app/agent.py; libs/langchain_v1/langchain/agents/middleware/human_in_the_loop.py at langchain==1.5.0; libs/langgraph/langgraph/pregel/_loop.py at langgraph 1.2.22.

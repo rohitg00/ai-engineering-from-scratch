@@ -67,7 +67,7 @@ The last table lists failures that raise no error. Their symptom is a wrong resu
 | Message | Cause | Fix | Section |
 |---|---|---|---|
 | `ValueError: MCP target 'server.py' is not a valid URL.` | a string target that is not an `http` or `https` URL | pass `Path('server.py')` for a stdio server | [7.3](#s-mcp-with-langchain-mcp) |
-| `MCPError: Connection closed` | the stdio server exited in the middle of a call. The run raised | retry the run. The next call starts the server again | [7.3](#s-mcp-with-langchain-mcp) |
+| `MCPError: Connection closed` | the stdio server exited in the middle of a call. The run raised | retry the run only when the tool is idempotent, and check the outside result first when it is not. The next call starts the server again | [7.3](#s-mcp-with-langchain-mcp) |
 | `RemoteProtocolError: Server disconnected without sending a response.` | the HTTP server exited in the middle of a call | restart the server, then retry the run | [7.3](#s-mcp-with-langchain-mcp) |
 | `MCPError: Request 'tools/call' timed out` | a `fastmcp.Client` timeout shorter than the tool | raise the timeout of the client. The adapter has no timeout of its own | [7.3](#s-mcp-with-langchain-mcp) |
 | `Thread is already running a task. Wait for it to finish or choose a different multitask strategy.` | Agent Server, the strategy `reject`, and a second run on a busy thread. The status is HTTP 409 | retry later, or create the run with `enqueue` | [8.1](#s-agent-server-langgraph-dev-up-and-deploy) |

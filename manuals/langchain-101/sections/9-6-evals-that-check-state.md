@@ -99,7 +99,7 @@ Greedy decoding with a fixed seed repeats itself. The three runs of Qwen3 4B pas
 The workflow in the repository runs the suite on each push with a Postgres service container. As written it uses the scripted model, and we did not run it on GitHub Actions. To run it on a real model, set `MODEL` and give the job a key or an Ollama service. Keep the two halves apart: the service tests on every push, and the model evals on a schedule with a pass-rate threshold for each case.
 
 ```takeaways
-- Assert on tool calls, tool arguments, database rows, and thread state, never on reply text.
+- Assert on tool calls, tool arguments, database rows, and thread state, not on exact reply text. Check the reply claims that matter, such as a refund status.
 - Check that the model proposed the action before the test approves it.
 - Drive service tests with requests that pin the tool call, and require every run to pass.
 - Run model evals on each deployed model, and track a pass rate per case.

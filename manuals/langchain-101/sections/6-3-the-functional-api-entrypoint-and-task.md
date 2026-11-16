@@ -105,7 +105,7 @@ claim: The resume runs workflow from its top, the three double tasks return save
 caption: Read run 1 at the top and run 2 under it. Teal arrows are saved results, and the amber row is the interrupt. The right column is the log of task bodies that ran. From capture/out/35-functional-api.txt.
 ```
 
-Code in the entrypoint itself is not a task, so it runs again on every resume, as the docs say. The sum in the kit is such code, and the kit records only the task runs. Put each side effect inside a task, so that a resume does not repeat it.
+Code in the entrypoint itself is not a task, so it runs again on every resume, as the docs say. The sum in the kit is such code, and the kit records only the task runs. Put each side effect inside a task, so that a resume starts from saved results. A crash after the effect and before the save can run the task again. Make the effect idempotent too, as [section 5.3](#s-durability-modes-and-a-crash-between-two-steps) shows.
 
 The `updates` stream of a new run yields one chunk for each finished task, keyed by the task name. The run with the input `[5]` yielded `{"double": 10}`, then the `__interrupt__` chunk.
 

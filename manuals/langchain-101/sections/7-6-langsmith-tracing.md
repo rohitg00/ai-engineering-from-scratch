@@ -170,7 +170,7 @@ So a process with no key at all still tries to send. Wrapping the agent in `trac
 
 At the pin, no environment variable and no value of `enabled` keeps LangChain runs local while tracing is on. Use one of these instead:
 
-- **Turn tracing off for LangChain code.** Leave `LANGSMITH_TRACING` unset, or wrap the call in `tracing_context(enabled=False)`. The context value comes first in the order above, so it also wins over an outer `"local"` context and over the variable.
+- **Turn tracing off for LangChain code.** Wrap the call in `tracing_context(enabled=False)`. The context value comes first in the order above, so it wins over an outer `"local"` context and over every variable. Leaving `LANGSMITH_TRACING` unset is not enough, because `LANGSMITH_TRACING_V2`, `LANGCHAIN_TRACING_V2`, or an outer context can still turn tracing on.
 - **Collect the runs in memory.** `collect_runs()` from `langchain_core.tracers.context` adds a collector that keeps every finished run, with tracing on or off.
 - **Run your own endpoint.** Set `LANGSMITH_ENDPOINT` to a LangSmith server on your own machine or network. Then the runs leave the process and stay with you.
 - **Use `"local"` for `traceable` code only.** It keeps the run trees of functions that call no LangChain code.
