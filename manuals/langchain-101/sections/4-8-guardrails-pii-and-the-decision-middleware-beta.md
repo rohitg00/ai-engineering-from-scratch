@@ -73,7 +73,7 @@ The model received `my key is [REDACTED_API_KEY]`, and it answered that the key 
 
 The four runs on input each got the same answer from Qwen3 4B: `I'm sorry, but I can't assist with that request.`. The input still held a card number, an address, or a URL, and the model refused. Redaction changes what the model reads, and it does not make the request look safe to the model.
 
-The guardrails page describes a stream transformer for `apply_to_output=True`. It holds back the last 128 characters of each text block, so a match split across chunks is not sent {{docs oss/python/langchain/guardrails}}. The kit did not stream through `PIIMiddleware`. That test is coming in the next edition, and [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
+The guardrails page describes a stream transformer for `apply_to_output=True`. It holds back the last 128 characters of each text block, so a match split across chunks is not sent {{docs oss/python/langchain/guardrails}}. The kit did not stream through `PIIMiddleware`. That test is coming in the next edition, and [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
 ## Decision models
 

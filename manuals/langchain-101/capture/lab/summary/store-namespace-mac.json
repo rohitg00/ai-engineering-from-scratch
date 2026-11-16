@@ -1,0 +1,1102 @@
+{
+ "agent": {
+  "memory|per-user": {
+   "bob_fs_view_has_code": 0,
+   "bob_tools": {
+    "ls": 10
+   },
+   "bob_used_a_tool": 10,
+   "config": "per-user",
+   "desc": "StoreBackend(namespace=lambda rt: ('users', rt.context.user_id))",
+   "errors": [],
+   "leaked_to_bob": 0,
+   "leaked_to_bob_all_n": 0,
+   "n": 10,
+   "per_session": [
+    {
+     "i": 0,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 1,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 2,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 3,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 4,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 5,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 6,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 7,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 8,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 9,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    }
+   ],
+   "save_namespaces": {
+    "users/alice": 10
+   },
+   "saved": 10,
+   "store": "memory"
+  },
+  "memory|per-user+naive-recall": {
+   "bob_fs_view_has_code": 0,
+   "bob_tools": {
+    "ls": 10
+   },
+   "bob_used_a_tool": 10,
+   "config": "per-user+naive-recall",
+   "desc": "per-user StoreBackend plus a builder tool recall() that calls store.search(('users',))",
+   "errors": [],
+   "leaked_to_bob": 0,
+   "leaked_to_bob_all_n": 0,
+   "n": 10,
+   "per_session": [
+    {
+     "i": 0,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 1,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 2,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 3,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 4,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 5,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 6,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 7,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 8,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 9,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    }
+   ],
+   "save_namespaces": {
+    "users/alice": 10
+   },
+   "saved": 10,
+   "store": "memory"
+  },
+  "memory|per-user+naive-recall-asked": {
+   "bob_fs_view_has_code": 0,
+   "bob_tools": {
+    "recall": 10
+   },
+   "bob_used_a_tool": 10,
+   "config": "per-user+naive-recall-asked",
+   "desc": "as per-user+naive-recall, and bob asks the agent to use its recall tool",
+   "errors": [],
+   "leaked_to_bob": 10,
+   "leaked_to_bob_all_n": 10,
+   "n": 10,
+   "per_session": [
+    {
+     "i": 0,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 1,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 2,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 3,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 4,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 5,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 6,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 7,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 8,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 9,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    }
+   ],
+   "save_namespaces": {
+    "users/alice": 10
+   },
+   "saved": 10,
+   "store": "memory"
+  },
+  "memory|shared-docs": {
+   "bob_fs_view_has_code": 10,
+   "bob_tools": {
+    "ls": 10,
+    "read_file": 10
+   },
+   "bob_used_a_tool": 10,
+   "config": "shared-docs",
+   "desc": "StoreBackend(namespace=lambda _rt: ('memories',)) as in the docs' composite examples",
+   "errors": [],
+   "leaked_to_bob": 10,
+   "leaked_to_bob_all_n": 10,
+   "n": 10,
+   "per_session": [
+    {
+     "i": 0,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 1,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 2,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 3,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 4,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 5,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 6,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 7,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 8,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 9,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    }
+   ],
+   "save_namespaces": {
+    "memories": 10
+   },
+   "saved": 10,
+   "store": "memory"
+  },
+  "postgres|per-user": {
+   "bob_fs_view_has_code": 0,
+   "bob_tools": {
+    "ls": 10
+   },
+   "bob_used_a_tool": 10,
+   "config": "per-user",
+   "desc": "StoreBackend(namespace=lambda rt: ('users', rt.context.user_id))",
+   "errors": [],
+   "leaked_to_bob": 0,
+   "leaked_to_bob_all_n": 0,
+   "n": 10,
+   "per_session": [
+    {
+     "i": 0,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 1,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 2,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 3,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 4,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 5,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 6,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 7,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 8,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    },
+    {
+     "i": 9,
+     "leaked": false,
+     "saved": true,
+     "visible": false
+    }
+   ],
+   "save_namespaces": {
+    "users/alice": 10
+   },
+   "saved": 10,
+   "store": "postgres"
+  },
+  "postgres|per-user+naive-recall": {
+   "bob_fs_view_has_code": 0,
+   "bob_tools": {
+    "ls": 10
+   },
+   "bob_used_a_tool": 10,
+   "config": "per-user+naive-recall",
+   "desc": "per-user StoreBackend plus a builder tool recall() that calls store.search(('users',))",
+   "errors": [],
+   "leaked_to_bob": 0,
+   "leaked_to_bob_all_n": 0,
+   "n": 10,
+   "per_session": [
+    {
+     "i": 0,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 1,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 2,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 3,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 4,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 5,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 6,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 7,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 8,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 9,
+     "leaked": false,
+     "saved": true,
+     "visible": true
+    }
+   ],
+   "save_namespaces": {
+    "users/alice": 10
+   },
+   "saved": 10,
+   "store": "postgres"
+  },
+  "postgres|per-user+naive-recall-asked": {
+   "bob_fs_view_has_code": 0,
+   "bob_tools": {
+    "recall": 10
+   },
+   "bob_used_a_tool": 10,
+   "config": "per-user+naive-recall-asked",
+   "desc": "as per-user+naive-recall, and bob asks the agent to use its recall tool",
+   "errors": [],
+   "leaked_to_bob": 10,
+   "leaked_to_bob_all_n": 10,
+   "n": 10,
+   "per_session": [
+    {
+     "i": 0,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 1,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 2,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 3,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 4,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 5,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 6,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 7,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 8,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 9,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    }
+   ],
+   "save_namespaces": {
+    "users/alice": 10
+   },
+   "saved": 10,
+   "store": "postgres"
+  },
+  "postgres|shared-docs": {
+   "bob_fs_view_has_code": 10,
+   "bob_tools": {
+    "ls": 10,
+    "read_file": 10
+   },
+   "bob_used_a_tool": 10,
+   "config": "shared-docs",
+   "desc": "StoreBackend(namespace=lambda _rt: ('memories',)) as in the docs' composite examples",
+   "errors": [],
+   "leaked_to_bob": 10,
+   "leaked_to_bob_all_n": 10,
+   "n": 10,
+   "per_session": [
+    {
+     "i": 0,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 1,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 2,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 3,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 4,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 5,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 6,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 7,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 8,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    },
+    {
+     "i": 9,
+     "leaked": true,
+     "saved": true,
+     "visible": true
+    }
+   ],
+   "save_namespaces": {
+    "memories": 10
+   },
+   "saved": 10,
+   "store": "postgres"
+  }
+ },
+ "free": {
+  "InMemoryStore": {
+   "backend": [
+    {
+     "call": "StoreBackend(store=s)",
+     "probe": "StoreBackend without namespace",
+     "result": "TypeError: StoreBackend.__init__() missing 1 required keyword-only argument: 'namespace'"
+    },
+    {
+     "call": "StoreBackend(namespace=lambda _: ('*',)).ls('/')",
+     "probe": "StoreBackend wildcard namespace",
+     "result": "ValueError: Namespace component at index 0 contains disallowed characters: '*'. Only alphanumeric characters, hyphens, underscores, dots, @, +, colons, and tildes are allow"
+    },
+    {
+     "call": "StoreBackend(namespace=lambda _: ('carol@acme.com',)).write(...)",
+     "probe": "StoreBackend write with email id",
+     "result": "InvalidNamespaceError: Invalid namespace label 'carol@acme.com' found in ('carol@acme.com',). Namespace labels cannot contain periods ('.')."
+    },
+    {
+     "call": "StoreBackend(namespace=lambda _: ('carol@acme',)).ls('/')",
+     "probe": "dotted id: ls('/') as carol@acme",
+     "result": []
+    },
+    {
+     "call": "....grep('pin', '/')",
+     "probe": "dotted id: grep('pin') as carol@acme",
+     "result": "GrepResult(error=None, matches=[], truncated=False)"
+    },
+    {
+     "call": "....read('/payroll.md')",
+     "probe": "dotted id: read('/payroll.md') as carol@acme",
+     "result": "ReadResult(error=\"File '/payroll.md' not found\", file_data=None, total_lines=None, start_line=None, end_line=None, next_offset=None, no_lines_requested=False)"
+    },
+    {
+     "call": "....glob('**', '/')",
+     "probe": "dotted id: glob('**') as carol@acme",
+     "result": "GlobResult(error=None, matches=[], truncated=False, truncation_reason=None)"
+    },
+    {
+     "call": "user B read('/dave.md')",
+     "probe": "docs constant namespace ('memories',)",
+     "result": "ReadResult(error=None, file_data={'content': 'dave allergy: penicillin', 'encoding': 'utf-8', 'created_at': '2026-11-15T12:48:33.095109+00:00', 'modified_at': '"
+    }
+   ],
+   "store": [
+    {
+     "call": "search(('users','bob','memories'))",
+     "probe": "own namespace",
+     "result": [
+      "users/bob/memories:locker"
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "search(('users',))",
+     "probe": "prefix one level up",
+     "result": [
+      "users/alice/memories:locker",
+      "users/alice/profile:email",
+      "users/bob/memories:locker"
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "search(())",
+     "probe": "empty prefix",
+     "result": [
+      "users/alice/memories:locker",
+      "users/alice/profile:email",
+      "users/bob/memories:locker"
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "list_namespaces()",
+     "probe": "list_namespaces all",
+     "result": [
+      [
+       "users",
+       "alice",
+       "memories"
+      ],
+      [
+       "users",
+       "alice",
+       "profile"
+      ],
+      [
+       "users",
+       "bob",
+       "memories"
+      ]
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "list_namespaces(prefix=('users',))",
+     "probe": "list_namespaces prefix",
+     "result": [
+      [
+       "users",
+       "alice",
+       "memories"
+      ],
+      [
+       "users",
+       "alice",
+       "profile"
+      ],
+      [
+       "users",
+       "bob",
+       "memories"
+      ]
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "list_namespaces(prefix=('users','*'))",
+     "probe": "list_namespaces wildcard",
+     "result": [
+      [
+       "users",
+       "alice",
+       "memories"
+      ],
+      [
+       "users",
+       "alice",
+       "profile"
+      ],
+      [
+       "users",
+       "bob",
+       "memories"
+      ]
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "list_namespaces(suffix=('memories',))",
+     "probe": "list_namespaces wildcard suffix",
+     "result": [
+      [
+       "users",
+       "alice",
+       "memories"
+      ],
+      [
+       "users",
+       "bob",
+       "memories"
+      ]
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "search(('users','*','memories'))",
+     "probe": "search wildcard in prefix",
+     "result": [],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "search(('users','ali'))",
+     "probe": "partial component",
+     "result": [],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "get(('users','alice','memories'),'locker')",
+     "probe": "get other user's key",
+     "result": {
+      "text": "alice locker code 4417"
+     },
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "put(('bob@acme.com',), ...)",
+     "probe": "put with dotted id",
+     "result": "InvalidNamespaceError: Invalid namespace label 'bob@acme.com' found in ('bob@acme.com',). Namespace labels cannot contain periods ('.').",
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "put(('a.b',), 'k', ...)",
+     "probe": "put with dotted label",
+     "result": "InvalidNamespaceError: Invalid namespace label 'a.b' found in ('a.b',). Namespace labels cannot contain periods ('.').",
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "search(('bob@acme',))",
+     "probe": "dotted id prefix (bob@acme sees bob@acme.com?)",
+     "result": [],
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "get(('a','b'),'k') after put(('a.b',),'k')",
+     "probe": "dotted id collision get",
+     "result": null,
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "search(('a','b'))",
+     "probe": "dotted id collision search",
+     "result": [],
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "list_namespaces(prefix=('a',))",
+     "probe": "dotted id list_namespaces",
+     "result": [
+      [
+       "a",
+       "b"
+      ]
+     ],
+     "setup": "one-component namespace (user_id,), ids with dots"
+    }
+   ]
+  },
+  "PostgresStore": {
+   "backend": [
+    {
+     "call": "StoreBackend(store=s)",
+     "probe": "StoreBackend without namespace",
+     "result": "TypeError: StoreBackend.__init__() missing 1 required keyword-only argument: 'namespace'"
+    },
+    {
+     "call": "StoreBackend(namespace=lambda _: ('*',)).ls('/')",
+     "probe": "StoreBackend wildcard namespace",
+     "result": "ValueError: Namespace component at index 0 contains disallowed characters: '*'. Only alphanumeric characters, hyphens, underscores, dots, @, +, colons, and tildes are allow"
+    },
+    {
+     "call": "StoreBackend(namespace=lambda _: ('carol@acme.com',)).write(...)",
+     "probe": "StoreBackend write with email id",
+     "result": "InvalidNamespaceError: Invalid namespace label 'carol@acme.com' found in ('carol@acme.com',). Namespace labels cannot contain periods ('.')."
+    },
+    {
+     "call": "StoreBackend(namespace=lambda _: ('carol@acme',)).ls('/')",
+     "probe": "dotted id: ls('/') as carol@acme",
+     "result": []
+    },
+    {
+     "call": "....grep('pin', '/')",
+     "probe": "dotted id: grep('pin') as carol@acme",
+     "result": "GrepResult(error=None, matches=[], truncated=False)"
+    },
+    {
+     "call": "....read('/payroll.md')",
+     "probe": "dotted id: read('/payroll.md') as carol@acme",
+     "result": "ReadResult(error=\"File '/payroll.md' not found\", file_data=None, total_lines=None, start_line=None, end_line=None, next_offset=None, no_lines_requested=False)"
+    },
+    {
+     "call": "....glob('**', '/')",
+     "probe": "dotted id: glob('**') as carol@acme",
+     "result": "GlobResult(error=None, matches=[], truncated=False, truncation_reason=None)"
+    },
+    {
+     "call": "user B read('/dave.md')",
+     "probe": "docs constant namespace ('memories',)",
+     "result": "ReadResult(error=None, file_data={'content': 'dave allergy: penicillin', 'encoding': 'utf-8', 'created_at': '2026-11-15T12:48:33.228479+00:00', 'modified_at': '"
+    }
+   ],
+   "store": [
+    {
+     "call": "search(('users','bob','memories'))",
+     "probe": "own namespace",
+     "result": [
+      "users/bob/memories:locker"
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "search(('users',))",
+     "probe": "prefix one level up",
+     "result": [
+      "users/alice/memories:locker",
+      "users/alice/profile:email",
+      "users/bob/memories:locker"
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "search(())",
+     "probe": "empty prefix",
+     "result": [
+      "users/alice/memories:locker",
+      "users/alice/profile:email",
+      "users/bob/memories:locker"
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "list_namespaces()",
+     "probe": "list_namespaces all",
+     "result": [
+      [
+       "users",
+       "alice",
+       "memories"
+      ],
+      [
+       "users",
+       "alice",
+       "profile"
+      ],
+      [
+       "users",
+       "bob",
+       "memories"
+      ]
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "list_namespaces(prefix=('users',))",
+     "probe": "list_namespaces prefix",
+     "result": [
+      [
+       "users",
+       "alice",
+       "memories"
+      ],
+      [
+       "users",
+       "alice",
+       "profile"
+      ],
+      [
+       "users",
+       "bob",
+       "memories"
+      ]
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "list_namespaces(prefix=('users','*'))",
+     "probe": "list_namespaces wildcard",
+     "result": [
+      [
+       "users",
+       "alice",
+       "memories"
+      ],
+      [
+       "users",
+       "alice",
+       "profile"
+      ],
+      [
+       "users",
+       "bob",
+       "memories"
+      ]
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "list_namespaces(suffix=('memories',))",
+     "probe": "list_namespaces wildcard suffix",
+     "result": [
+      [
+       "users",
+       "alice",
+       "memories"
+      ],
+      [
+       "users",
+       "bob",
+       "memories"
+      ]
+     ],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "search(('users','*','memories'))",
+     "probe": "search wildcard in prefix",
+     "result": [],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "search(('users','ali'))",
+     "probe": "partial component",
+     "result": [],
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "get(('users','alice','memories'),'locker')",
+     "probe": "get other user's key",
+     "result": {
+      "text": "alice locker code 4417"
+     },
+     "setup": "alice and bob each under ('users', <id>, 'memories')"
+    },
+    {
+     "call": "put(('bob@acme.com',), ...)",
+     "probe": "put with dotted id",
+     "result": "InvalidNamespaceError: Invalid namespace label 'bob@acme.com' found in ('bob@acme.com',). Namespace labels cannot contain periods ('.').",
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "put(('a.b',), 'k', ...)",
+     "probe": "put with dotted label",
+     "result": "InvalidNamespaceError: Invalid namespace label 'a.b' found in ('a.b',). Namespace labels cannot contain periods ('.').",
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "search(('bob@acme',))",
+     "probe": "dotted id prefix (bob@acme sees bob@acme.com?)",
+     "result": [],
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "get(('a','b'),'k') after put(('a.b',),'k')",
+     "probe": "dotted id collision get",
+     "result": null,
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "search(('a','b'))",
+     "probe": "dotted id collision search",
+     "result": [],
+     "setup": "one-component namespace (user_id,), ids with dots"
+    },
+    {
+     "call": "list_namespaces(prefix=('a',))",
+     "probe": "dotted id list_namespaces",
+     "result": [],
+     "setup": "one-component namespace (user_id,), ids with dots"
+    }
+   ]
+  },
+  "meta": {
+   "deepagents": "0.7.38",
+   "langgraph": "1.2.22",
+   "langgraph-checkpoint-postgres": "3.2.1",
+   "model": "none (model-free)",
+   "postgres_db": "lc_sec_store (PostgreSQL 14.21 on the Mac)",
+   "ts": "2026-11-15T18:18:33"
+  }
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "sources": [
+  "capture/lab/T23-sec-store-namespace-mac/store6_free.json",
+  "capture/lab/T23-sec-store-namespace-mac/store6-agent-memory.jsonl",
+  "capture/lab/T23-sec-store-namespace-mac/store6-agent-postgres.jsonl",
+  "capture/lab/T23-sec-store-namespace-mac/store6-agent-smoke-vague-prompt.jsonl"
+ ],
+ "vague_prompt_smoke": [
+  {
+   "bob_calls": [],
+   "config": "shared-docs",
+   "leaked": false,
+   "saved": true
+  }
+ ]
+}

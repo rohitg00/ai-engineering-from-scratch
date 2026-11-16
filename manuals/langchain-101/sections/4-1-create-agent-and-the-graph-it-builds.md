@@ -301,7 +301,7 @@ The limit of 9999 steps applies to every run that does not pass its own `recursi
 | `create_agent` with `InMemorySaver` | 37.6 ms | 12.2 ms |
 | hand-built `StateGraph` | 36.7 ms | 11.5 ms |
 
-The agent layer added about 5 ms for each model call. With `create_agent`, 2.2% of a 1.7 s run was outside the model. [Section 8.2](#s-cost-the-framework-against-a-plain-sdk-loop) gives the full cost story, with tokens, request bytes, and import time.
+The agent layer added about 5 ms for each model call. With `create_agent`, 2.2% of a 1.7 s run was outside the model. [Section 8.3](#s-cost-the-framework-against-a-plain-sdk-loop) gives the full cost story, with tokens, request bytes, and import time.
 
 ```takeaways
 - Expect a tools node only when the agent has a tool or a wrap_tool_call middleware.

@@ -1,0 +1,44 @@
+{"t": 1794745469.6893399, "kind": "model_start", "run_id": "01a1df2a-8af8-748f-a380-c8336293ae45"}
+{"t": 1794745575.240112, "kind": "model_end", "run_id": "01a1df2a-8af8-748f-a380-c8336293ae45", "tool_calls": ["get_weather"], "chars": 0}
+{"t": 1794745575.275996, "kind": "tool_run", "name": "get_weather", "args": {"city": "Paris"}}
+{"t": 1794745575.293351, "kind": "model_start", "run_id": "01a1df2c-277c-70ea-be47-7fc0361cab94"}
+{"t": 1794745576.153072, "kind": "first_token", "run_id": "01a1df2c-277c-70ea-be47-7fc0361cab94", "token": "The"}
+{"t": 1794745576.737175, "kind": "model_end", "run_id": "01a1df2c-277c-70ea-be47-7fc0361cab94", "tool_calls": [], "chars": 55}
+{"t": 1794745616.9696, "kind": "model_start", "run_id": "01a1df2c-ca48-73a4-b577-31d7eaf48110"}
+{"t": 1794745631.425042, "kind": "model_end", "run_id": "01a1df2c-ca48-73a4-b577-31d7eaf48110", "tool_calls": ["send_email"], "chars": 0}
+{"t": 1794745666.191465, "kind": "tool_run", "name": "send_email", "args": {"to": "sam@example.com", "subject": "Lunch", "body": "See you at noon."}}
+{"t": 1794745666.467505, "kind": "model_start", "run_id": "01a1df2d-8b94-72fb-b69d-f62db4a38eea"}
+{"t": 1794745667.7191072, "kind": "first_token", "run_id": "01a1df2d-8b94-72fb-b69d-f62db4a38eea", "token": "The"}
+{"t": 1794745668.3181188, "kind": "model_end", "run_id": "01a1df2d-8b94-72fb-b69d-f62db4a38eea", "tool_calls": [], "chars": 56}
+{"t": 1794745688.740766, "kind": "model_start", "run_id": "01a1df2d-e2a2-72ad-a8a4-bf703a856ab8"}
+{"t": 1794745693.9458911, "kind": "model_end", "run_id": "01a1df2d-e2a2-72ad-a8a4-bf703a856ab8", "tool_calls": ["send_email"], "chars": 0}
+{"t": 1794745909.365505, "kind": "tool_run", "name": "send_email", "args": {"to": "lee@example.com", "subject": "Report", "body": "The report is ready. Edited by the reviewer."}}
+{"t": 1794745909.441959, "kind": "model_start", "run_id": "01a1df31-40c1-724a-a4f4-ae16f68cc95c"}
+{"t": 1794745924.03306, "kind": "first_token", "run_id": "01a1df31-40c1-724a-a4f4-ae16f68cc95c", "token": "The"}
+{"t": 1794745925.684001, "kind": "model_end", "run_id": "01a1df31-40c1-724a-a4f4-ae16f68cc95c", "tool_calls": [], "chars": 56}
+{"t": 1794745943.071755, "kind": "model_start", "run_id": "01a1df31-c41f-777a-b279-64ddf8d74acd"}
+{"t": 1794745973.756742, "kind": "model_end", "run_id": "01a1df31-c41f-777a-b279-64ddf8d74acd", "tool_calls": ["send_email"], "chars": 0}
+{"t": 1794745976.371657, "kind": "model_start", "run_id": "01a1df32-4633-70f4-aac5-f0a888b32467"}
+{"t": 1794745978.0032651, "kind": "first_token", "run_id": "01a1df32-4633-70f4-aac5-f0a888b32467", "token": "I"}
+{"t": 1794745978.726621, "kind": "model_end", "run_id": "01a1df32-4633-70f4-aac5-f0a888b32467", "tool_calls": [], "chars": 76}
+{"t": 1794746002.92511, "kind": "model_start", "run_id": "01a1df32-adec-77ba-9c50-211a0b80af47"}
+{"t": 1794746003.3707361, "kind": "first_token", "run_id": "01a1df32-adec-77ba-9c50-211a0b80af47", "token": "Use"}
+{"t": 1794746003.647168, "kind": "model_end", "run_id": "01a1df32-adec-77ba-9c50-211a0b80af47", "tool_calls": [], "chars": 78}
+{"t": 1794746005.734365, "kind": "model_start", "run_id": "01a1df32-b8e6-7647-a9b6-67a372bf9ca0"}
+{"t": 1794746006.026964, "kind": "first_token", "run_id": "01a1df32-b8e6-7647-a9b6-67a372bf9ca0", "token": "Keep"}
+{"t": 1794746006.1866, "kind": "model_end", "run_id": "01a1df32-b8e6-7647-a9b6-67a372bf9ca0", "tool_calls": [], "chars": 53}
+{"t": 1794746007.197271, "kind": "model_start", "run_id": "01a1df32-be9d-751e-8a0a-5c0e2159138c"}
+{"t": 1794746007.5367, "kind": "first_token", "run_id": "01a1df32-be9d-751e-8a0a-5c0e2159138c", "token": "Include"}
+{"t": 1794746007.74469, "kind": "model_end", "run_id": "01a1df32-be9d-751e-8a0a-5c0e2159138c", "tool_calls": [], "chars": 73}
+{"t": 1794746237.775747, "kind": "model_start", "run_id": "01a1df36-434f-7584-a0be-84dff91e46e2"}
+{"t": 1794746239.832951, "kind": "model_end", "run_id": "01a1df36-434f-7584-a0be-84dff91e46e2", "tool_calls": ["send_email"], "chars": 0}
+{"t": 1794746254.872391, "kind": "model_start", "run_id": "01a1df36-8618-70b7-981f-428e945b03a2"}
+{"t": 1794746255.200453, "kind": "first_token", "run_id": "01a1df36-8618-70b7-981f-428e945b03a2", "token": "Yes"}
+{"t": 1794746255.319935, "kind": "model_end", "run_id": "01a1df36-8618-70b7-981f-428e945b03a2", "tool_calls": [], "chars": 29}
+{"t": 1794746278.385359, "kind": "model_start", "run_id": "01a1df36-e1f0-7379-80ee-3a8674529705"}
+{"t": 1794746279.193753, "kind": "model_end", "run_id": "01a1df36-e1f0-7379-80ee-3a8674529705", "tool_calls": ["send_email"], "chars": 0}
+{"t": 1794746280.7063239, "kind": "model_start", "run_id": "01a1df36-eb02-75cb-b5cb-1d9aa2fb8800"}
+{"t": 1794746281.025106, "kind": "first_token", "run_id": "01a1df36-eb02-75cb-b5cb-1d9aa2fb8800", "token": "Yes"}
+{"t": 1794746281.170767, "kind": "model_end", "run_id": "01a1df36-eb02-75cb-b5cb-1d9aa2fb8800", "tool_calls": [], "chars": 41}
+{"t": 1794746293.698596, "kind": "model_start", "run_id": "01a1df37-1dc2-704f-8e53-20e8d1ee37e9"}
+{"t": 1794746294.4016562, "kind": "model_end", "run_id": "01a1df37-1dc2-704f-8e53-20e8d1ee37e9", "tool_calls": ["send_email"], "chars": 0}

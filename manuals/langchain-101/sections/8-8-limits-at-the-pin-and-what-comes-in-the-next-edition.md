@@ -35,7 +35,7 @@ These need `langgraph up` with a key, or a deployment.
 - What Redis holds during a run, and for how long. [Section 1.1](#s-langchain-langgraph-langsmith-and-deep-agents)
 - Agent Server under a crash at the points of the library crash matrix. [Section 5.3](#s-durability-modes-and-a-crash-between-two-steps)
 - The time floor of one run, jobs per worker, and the recursion limit under `langgraph up`. [Section 8.1](#s-agent-server-langgraph-dev-up-and-deploy)
-- The store permissions of custom auth, and cross-user reads through the server. [Section 5.4](#s-stores-and-long-term-memory) and [section 8.3](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses)
+- The store permissions of custom auth, and cross-user reads through the server. [Section 5.4](#s-stores-and-long-term-memory) and [section 8.4](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses)
 - `langgraph deploy`, its serverless and dedicated types, and a cold start. [Section 8.1](#s-agent-server-langgraph-dev-up-and-deploy)
 - `langgraph up` with the key of a free account, and the license check inside the server image, which Docker must run. [Section 8.1](#s-agent-server-langgraph-dev-up-and-deploy)
 
@@ -69,7 +69,7 @@ These need no account, only a new lab run.
 ## Middleware
 
 - `PIIMiddleware` on a stream with `apply_to_output=True`, and its hold-back of 128 characters. [Section 4.8](#s-guardrails-pii-and-the-decision-middleware-beta)
-- The cost of async hooks, of `after_agent` and `dynamic_prompt`, and of built-ins when they act, such as a retry or a summary. [Section 8.2](#s-cost-the-framework-against-a-plain-sdk-loop)
+- The cost of async hooks, of `after_agent` and `dynamic_prompt`, and of built-ins when they act, such as a retry or a summary. [Section 8.3](#s-cost-the-framework-against-a-plain-sdk-loop)
 - One invalid answer among several approvals sent together, which the docs warn can run a tool twice. [Section 6.5](#s-human-in-the-loop-batched-and-per-call)
 
 ## Persistence
@@ -102,6 +102,15 @@ These need only a new scenario in the capture kit.
 - Parallel tool calls from Qwen3 8B, and the timing of parallel calls in `messages` mode. [Section 4.1](#s-create-agent-and-the-graph-it-builds)
 - A run with a thread pool larger than the default. The code lets `max_concurrency` set the pool size, and our runs used 8 at most. [Section 4.1](#s-create-agent-and-the-graph-it-builds)
 
+## Chat UI, file rules, and store namespaces
+
+- Agent Chat UI with its default telemetry on, as a production build, and as the hosted copy. [Section 8.2](#s-agent-chat-ui-in-front-of-langgraph-dev) ran a dev build with telemetry off.
+- Agent Chat UI against `langgraph up`, with a deployed graph, and with your own auth in front of its passthrough route. [Section 8.2](#s-agent-chat-ui-in-front-of-langgraph-dev)
+- More than one trial of each approval answer and of a typed message over a pending approval. Approve, edit, and reject ran once each, and the typed message ran once in each mode. [Section 8.2](#s-agent-chat-ui-in-front-of-langgraph-dev)
+- A rate for the file-rule attacks. Each of the 20 prompts ran once under each rule list, so the table counts prompts and not repeated trials. [Section 8.4](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses)
+- File rules with `interrupt` mode, with a person who answers, and with a sandbox backend that has no `execute` route. [Section 8.4](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses)
+- The namespace factory of `StoreBackend` on other models, and with prompts that do not name `/memories/`. One run with a vaguer prompt called no tool. [Section 5.4](#s-stores-and-long-term-memory)
+
 ## What holds without these runs
 
 The items above add to the manual. They do not change a recorded result. Every measured number in Parts 1 to 9 comes from a run on the Mac or the x86 server guest. Defaults, limits, and versions come from the code or the docs, and the text cites them. Every listing comes from the capture kit at the pin. When you depend on one of the open items, run it on your own stack before you rely on the docs.
@@ -112,4 +121,4 @@ The items above add to the manual. They do not change a recorded result. Every m
 - Treat the Agent Server claims on exactly once and outages as untested until you test them.
 ```
 
-Sources: sections 1.1, 3.1, 3.4, 3.5, 3.6, 4.1, 4.3, 4.4, 4.5, 4.6, 5.1 to 5.8, 6.2, 6.4, 6.5, 7.1, 7.2, 7.3, 7.6, 7.7, 8.1, and 9.1 to 9.7 of this manual; capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt; capture/lab/T21-langsmith-account-mac/07-e5-up.txt; capture/lab/README.md.
+Sources: sections 1.1, 3.1, 3.4, 3.5, 3.6, 4.1, 4.3, 4.4, 4.5, 4.6, 5.1 to 5.8, 6.2, 6.4, 6.5, 7.1, 7.2, 7.3, 7.6, 7.7, 8.1, 8.2, 8.4, and 9.1 to 9.7 of this manual; capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt; capture/lab/T21-langsmith-account-mac/07-e5-up.txt; capture/lab/README.md.

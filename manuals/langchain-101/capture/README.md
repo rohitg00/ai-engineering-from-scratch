@@ -192,7 +192,7 @@ Files `00` to `03`, `05`, `31`, `32`, `34` to `38`, and `48` to `54` are model-f
 
 ## The lab recordings
 
-`capture/lab/` holds raw recordings from runs with a real model or a real database, on the Mac and on an x86 server guest. `labsum.py` computes a summary of each data set into `capture/lab/summary/`, and the charts and the measured numbers of the manual read those summaries. A plain `run.py` writes them, and `run.py --check` computes them again and compares, then prints one `skipped:` line, because recording the runs again needs Ollama and Postgres. `capture/lab/README.md` lists each folder.
+`capture/lab/` holds raw recordings from runs with a real model or a real database, on the Mac and on an x86 server guest. `labsum.py` computes a summary of each data set into `capture/lab/summary/`, and the charts and the measured numbers of the manual read those summaries. A plain `run.py` writes them, and `run.py --check` computes them again and compares, then prints one `skipped:` line, because recording the runs again needs Ollama and Postgres. `capture/lab/README.md` lists each folder. The folders `chat-ui-mac/`, `T22-sec-fs-permissions-mac/`, and `T23-sec-store-namespace-mac/` hold the runs of Agent Chat UI and of the Deep Agents file rules and store namespaces.
 
 ## What the kit does not capture
 

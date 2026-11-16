@@ -246,7 +246,9 @@ These settings kept every review in force in the lab runs:
 5. Put no middleware that jumps to `tools` in an agent with review, unless you test it in your mode.
 6. List `HumanInTheLoopMiddleware` before tool retry and error middleware, as the docs say {{docs oss/python/langchain/human-in-the-loop}}.
 
-The docs also warn about one invalid answer among several sent together. The tools of the valid answers can run while their interrupts still look pending, and a second answer runs them twice {{docs oss/python/langchain/human-in-the-loop}}. The lab did not run that case, or any case with `PostgresSaver`. Both come in the next edition, with the other open items of [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+Agent Chat UI answers batched approvals only, and a typed message closes a pending approval as a success. See [the chat UI section](#s-agent-chat-ui-in-front-of-langgraph-dev).
+
+The docs also warn about one invalid answer among several sent together. The tools of the valid answers can run while their interrupts still look pending, and a second answer runs them twice {{docs oss/python/langchain/human-in-the-loop}}. The lab did not run that case, or any case with `PostgresSaver`. Both come in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Set interrupt_mode="per_call" on every new agent with review.

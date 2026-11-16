@@ -1,0 +1,9 @@
+{
+  "dependencies": ["."],
+  "graphs": {
+    "agent": "./graphs.py:agent",
+    "agent_percall": "./graphs.py:agent_percall"
+  },
+  "python_version": "3.13",
+  "env": {}
+}

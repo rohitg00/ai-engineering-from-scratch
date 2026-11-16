@@ -133,6 +133,59 @@ The same runs found four places where isolation depends on your code:
 
 A filter stays inside its prefix. `search(("users", "bob"), filter={"owner": "alice"})` returned nothing. Semantic search stayed inside its prefix too. With `nomic-embed-text` on Ollama, a query that matched the item of `alice` best returned only `bob` under the prefix of `bob`.
 
+## Deep Agents memory files and the namespace factory
+
+
+A deep agent reads and writes memory as files. `CompositeBackend` sends paths under `/memories/` to a `StoreBackend`, and `StoreBackend` keeps each file as one store item. The namespace of every item comes from a factory that you pass, and the agent's tools never pick it {{code libs/deepagents/deepagents/backends/store.py:98-168}}.
+
+**StoreBackend:** a Deep Agents backend that keeps files in a LangGraph store, under a namespace that a factory returns for each run.
+
+At the pin the factory is required. `StoreBackend(store=s)` raised `TypeError: missing 1 required keyword-only argument: 'namespace'`. The backends page still says that without a factory the legacy default reads `assistant_id`, so all users of an assistant share storage {{docs oss/python/deepagents/backends}}. That default is gone at 0.7.38, and this manual records the page as stale.
+
+The composite examples on the same page pass `namespace=lambda _rt: ("memories",)`. That is one namespace for every user of the agent. Copy it into a service with many users, and each user's agent reads the files of all the others.
+
+**We measured** this with a real agent. A deep agent on Qwen3 8B, on Ollama on the Mac at temperature 0, had `/memories/` on a `StoreBackend`. In each session, Alice asked it to save a locker code in `/memories/notes.md`. Then Bob, in a new thread, asked for any locker code under `/memories/`. Each session had a fresh store, and we ran 10 sessions per setup on `InMemoryStore` and on `PostgresStore`, on PostgreSQL 14. Alice's save worked in all 80 sessions.
+
+[Figure](#fig-5-4b) shows each session:
+
+- **The docs factory, `("memories",)`.** Bob's agent called `ls` and `read_file` and told him Alice's code, in 10 of 10 sessions on each store.
+- **A factory per user, `("users", rt.context.user_id)`.** Bob's agent listed an empty folder and told him there was no code, in 10 of 10 sessions on each store.
+- **The same factory, plus a `recall` tool that searches `("users",)`.** This is the naive tool from [Namespace isolation](#s-stores-and-long-term-memory): a prefix one label short. Asked about `/memories/`, the model used `ls` only, and nothing leaked in 20 sessions. Asked to use its recall tool, it called `recall` and told Bob Alice's code, in 10 of 10 sessions on each store.
+
+```figure
+id: fig-5-4b
+kind: chart
+title: two users, one deep agent, and where the memory file is kept
+claim: A constant namespace gave Bob Alice's code in 20 of 20 sessions, and a per-user factory gave it in 0 of 20.
+caption: One square per session, Qwen3 8B on the Mac, temperature 0, a fresh store per session, 10 sessions per row. Rose is a session where Bob's answer held Alice's code. From capture/lab/summary/store-namespace-mac.json.
+```
+
+The recall result is the lesson of the figure. A per-user file backend kept the users apart. One tool that searched a shorter prefix undid it, and the model used that tool as soon as a user named it. Whether a model leaks depends on the prompt, so test the data path, and not only the answers. In one more session, Bob asked the agent to "check your long-term memory" without naming `/memories/`. It called no tool and said it had no memory.
+
+The factory reads the user from the run context, which your code sets. Give the agent a `context_schema`, and pass the user with each call:
+
+```listing
+title: a namespace factory per user
+source: capture/lab/T23-sec-store-namespace-mac/code/store6_agent.py
+lang: python
+note: Four cuts from the run code. cfg["ns"] is the lambda of the per-user setup.
+---
+class Ctx:
+    user_id: str
+…
+    "per-user": {"ns": lambda rt: ("users", rt.context.user_id), "recall": False, …},
+…
+    backend = CompositeBackend(default=StateBackend(), routes={"/memories/": StoreBackend(namespace=cfg["ns"])})
+…
+    agent = create_deep_agent(model=model, backend=backend, store=store, context_schema=Ctx, system_prompt=SYSTEM, tools=tools, checkpointer=InMemorySaver())
+…
+                                    context=Ctx(user_id=user), stream_mode="updates", subgraphs=True):
+```
+
+Two validators check a namespace, and they disagree. `StoreBackend` allows letters, digits, and `-_.@+:~`, and it refused `*` {{code libs/deepagents/deepagents/backends/store.py:44-87}}. The store itself refuses a `.` in any label. So a factory that returns an email address, such as `carol@acme.com`, passed the first check and failed the write with `InvalidNamespaceError`, on both stores. The docs suggest `rt.server_info.user.identity` as the label. If your identities are email addresses, map each one to a label without a period first.
+
+We also ran the raw store calls of [Namespace isolation](#s-stores-and-long-term-memory) again, one run each on `InMemoryStore` and `PostgresStore`. With Alice and Bob under `("users", <user>, ...)`, these calls returned the items or namespaces of both users: `search(("users",))`, `search(())`, `list_namespaces()`, and `list_namespaces(prefix=("users", "*"))`. `search(("users", "*", "memories"))` returned nothing, because `*` is a wildcard in `list_namespaces` only.
+
 ## Two defects of SqliteStore
 
 The same runs found two defects in `SqliteStore` 3.1.3. They change what a store keeps and what it embeds, and they cross no user.
@@ -149,7 +202,7 @@ users.alice.memories|k1|$|3072
 users.bob.memories|k1|$|3072
 ```
 
-`PostgresStore` with an index needs pgvector, which our Postgres did not have. That run, and the store permissions of Agent Server, come in the next edition, as [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
+`PostgresStore` with an index needs pgvector, which our Postgres did not have. That run, and the store permissions of Agent Server, come in the next edition, as [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
 
 ```takeaways
 - Use a store for facts that outlive a thread, and a checkpointer for the thread itself.
@@ -158,6 +211,9 @@ users.bob.memories|k1|$|3072
 - Reject a user id of * or one with a period before it becomes a label.
 - Treat search results as ordered by the backend, and sort them yourself when order matters.
 - Delete the vector rows yourself after a delete in SqliteStore.
+- Give every StoreBackend a factory that reads the user id from the run context, never a constant.
+- Scope each memory tool you write to the same full prefix as the file backend.
+- Map an email id to a label without a period before it reaches a namespace.
 ```
 
-Sources: capture/s_persist.py, capture/out/33-store.txt, capture/out/44-store-agent.txt; capture/lab/summary/stores-mac.json, capture/lab/T14-stores-mac/01-memory-sqlite.jsonl, capture/lab/T14-stores-mac/02-inmemory-getop-side-effect.txt, capture/lab/T14-stores-mac/03-postgres.jsonl, capture/lab/T14-stores-mac/04-index.jsonl, capture/lab/T14-stores-mac/05-orphan-vectors.txt; libs/checkpoint/langgraph/store/base/__init__.py, libs/checkpoint/langgraph/store/memory/__init__.py, libs/checkpoint-sqlite/langgraph/store/sqlite/base.py, and libs/checkpoint-postgres/langgraph/store/postgres/base.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/stores, oss/python/langchain/long-term-memory); GitHub issue langchain-ai/langgraph#8757 and advisories GHSA-47pj-3jcm-6whg and GHSA-6hmw-9432-67qq.
+Sources: capture/s_persist.py, capture/out/33-store.txt, capture/out/44-store-agent.txt; capture/lab/summary/stores-mac.json, capture/lab/T14-stores-mac/01-memory-sqlite.jsonl, capture/lab/T14-stores-mac/02-inmemory-getop-side-effect.txt, capture/lab/T14-stores-mac/03-postgres.jsonl, capture/lab/T14-stores-mac/04-index.jsonl, capture/lab/T14-stores-mac/05-orphan-vectors.txt; libs/checkpoint/langgraph/store/base/__init__.py, libs/checkpoint/langgraph/store/memory/__init__.py, libs/checkpoint-sqlite/langgraph/store/sqlite/base.py, and libs/checkpoint-postgres/langgraph/store/postgres/base.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/stores, oss/python/langchain/long-term-memory); GitHub issue langchain-ai/langgraph#8757 and advisories GHSA-47pj-3jcm-6whg and GHSA-6hmw-9432-67qq; capture/lab/summary/store-namespace-mac.json, capture/lab/T23-sec-store-namespace-mac/store6_free.json, capture/lab/T23-sec-store-namespace-mac/store6-agent-memory.jsonl, capture/lab/T23-sec-store-namespace-mac/store6-agent-postgres.jsonl; libs/deepagents/deepagents/backends/store.py at deepagents 0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/deepagents/backends).

@@ -174,7 +174,7 @@ lang: json
   },
 ```
 
-`langgraph-api` puts `truststore` into the SSL layer at import, so the server checks certificates with the trust store of the operating system {{code langgraph_api/server.py:11-17}}. In a sandbox that blocks that store, no trace reaches the API. `DISABLE_TRUSTSTORE=true` turns the injection off, and our recorded run used it.
+`langgraph-api` puts `truststore` into the SSL layer at import, so the server checks certificates with the trust store of the operating system {{code langgraph_api/server.py:11-17}}. In a sandbox that blocks that store, no trace reaches the API. `DISABLE_TRUSTSTORE=true` turns the injection off, and our recorded run used it. [Section 8.2](#s-agent-chat-ui-in-front-of-langgraph-dev) puts a chat UI in front of this server, with tracing off.
 
 ## langgraph up needs a key
 
@@ -219,7 +219,7 @@ Later we had a key of a LangSmith account on the free plan. Docker was not runni
 
 The package `langgraph_license` from PyPI, which `langgraph-api` 0.18.0 installs, returns true from every check {{code langgraph_license/validation.py}}. The check that failed above runs only inside the server image. So we still do not know if a key of a free account passes it. The organization reported `can_use_langgraph_cloud` as false and 0 free deployments. That is a hint from the API, not a test.
 
-The tests of the full server stack come in the next edition, and [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them. They are a worker crash, a Redis or Postgres outage, exactly once in the task queue, and what Redis holds.
+The tests of the full server stack come in the next edition, and [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them. They are a worker crash, a Redis or Postgres outage, exactly once in the task queue, and what Redis holds.
 
 ## langgraph deploy
 

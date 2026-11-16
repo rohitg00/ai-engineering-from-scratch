@@ -1,0 +1,441 @@
+{
+ "meta": {
+  "ts": "2026-11-15T18:18:33",
+  "langgraph": "1.2.22",
+  "langgraph-checkpoint-postgres": "3.2.1",
+  "deepagents": "0.7.38",
+  "postgres_db": "lc_sec_store (PostgreSQL 14.21 on the Mac)",
+  "model": "none (model-free)"
+ },
+ "InMemoryStore": {
+  "store": [
+   {
+    "probe": "own namespace",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(('users','bob','memories'))",
+    "result": [
+     "users/bob/memories:locker"
+    ]
+   },
+   {
+    "probe": "prefix one level up",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(('users',))",
+    "result": [
+     "users/alice/memories:locker",
+     "users/alice/profile:email",
+     "users/bob/memories:locker"
+    ]
+   },
+   {
+    "probe": "empty prefix",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(())",
+    "result": [
+     "users/alice/memories:locker",
+     "users/alice/profile:email",
+     "users/bob/memories:locker"
+    ]
+   },
+   {
+    "probe": "list_namespaces all",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "list_namespaces()",
+    "result": [
+     [
+      "users",
+      "alice",
+      "memories"
+     ],
+     [
+      "users",
+      "alice",
+      "profile"
+     ],
+     [
+      "users",
+      "bob",
+      "memories"
+     ]
+    ]
+   },
+   {
+    "probe": "list_namespaces prefix",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "list_namespaces(prefix=('users',))",
+    "result": [
+     [
+      "users",
+      "alice",
+      "memories"
+     ],
+     [
+      "users",
+      "alice",
+      "profile"
+     ],
+     [
+      "users",
+      "bob",
+      "memories"
+     ]
+    ]
+   },
+   {
+    "probe": "list_namespaces wildcard",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "list_namespaces(prefix=('users','*'))",
+    "result": [
+     [
+      "users",
+      "alice",
+      "memories"
+     ],
+     [
+      "users",
+      "alice",
+      "profile"
+     ],
+     [
+      "users",
+      "bob",
+      "memories"
+     ]
+    ]
+   },
+   {
+    "probe": "list_namespaces wildcard suffix",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "list_namespaces(suffix=('memories',))",
+    "result": [
+     [
+      "users",
+      "alice",
+      "memories"
+     ],
+     [
+      "users",
+      "bob",
+      "memories"
+     ]
+    ]
+   },
+   {
+    "probe": "search wildcard in prefix",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(('users','*','memories'))",
+    "result": []
+   },
+   {
+    "probe": "partial component",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(('users','ali'))",
+    "result": []
+   },
+   {
+    "probe": "get other user's key",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "get(('users','alice','memories'),'locker')",
+    "result": {
+     "text": "alice locker code 4417"
+    }
+   },
+   {
+    "probe": "put with dotted id",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "put(('bob@acme.com',), ...)",
+    "result": "InvalidNamespaceError: Invalid namespace label 'bob@acme.com' found in ('bob@acme.com',). Namespace labels cannot contain periods ('.')."
+   },
+   {
+    "probe": "put with dotted label",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "put(('a.b',), 'k', ...)",
+    "result": "InvalidNamespaceError: Invalid namespace label 'a.b' found in ('a.b',). Namespace labels cannot contain periods ('.')."
+   },
+   {
+    "probe": "dotted id prefix (bob@acme sees bob@acme.com?)",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "search(('bob@acme',))",
+    "result": []
+   },
+   {
+    "probe": "dotted id collision get",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "get(('a','b'),'k') after put(('a.b',),'k')",
+    "result": null
+   },
+   {
+    "probe": "dotted id collision search",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "search(('a','b'))",
+    "result": []
+   },
+   {
+    "probe": "dotted id list_namespaces",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "list_namespaces(prefix=('a',))",
+    "result": [
+     [
+      "a",
+      "b"
+     ]
+    ]
+   }
+  ],
+  "backend": [
+   {
+    "probe": "StoreBackend without namespace",
+    "call": "StoreBackend(store=s)",
+    "result": "TypeError: StoreBackend.__init__() missing 1 required keyword-only argument: 'namespace'"
+   },
+   {
+    "probe": "StoreBackend wildcard namespace",
+    "call": "StoreBackend(namespace=lambda _: ('*',)).ls('/')",
+    "result": "ValueError: Namespace component at index 0 contains disallowed characters: '*'. Only alphanumeric characters, hyphens, underscores, dots, @, +, colons, and tildes are allow"
+   },
+   {
+    "probe": "StoreBackend write with email id",
+    "call": "StoreBackend(namespace=lambda _: ('carol@acme.com',)).write(...)",
+    "result": "InvalidNamespaceError: Invalid namespace label 'carol@acme.com' found in ('carol@acme.com',). Namespace labels cannot contain periods ('.')."
+   },
+   {
+    "probe": "dotted id: ls('/') as carol@acme",
+    "call": "StoreBackend(namespace=lambda _: ('carol@acme',)).ls('/')",
+    "result": []
+   },
+   {
+    "probe": "dotted id: grep('pin') as carol@acme",
+    "call": "....grep('pin', '/')",
+    "result": "GrepResult(error=None, matches=[], truncated=False)"
+   },
+   {
+    "probe": "dotted id: read('/payroll.md') as carol@acme",
+    "call": "....read('/payroll.md')",
+    "result": "ReadResult(error=\"File '/payroll.md' not found\", file_data=None, total_lines=None, start_line=None, end_line=None, next_offset=None, no_lines_requested=False)"
+   },
+   {
+    "probe": "dotted id: glob('**') as carol@acme",
+    "call": "....glob('**', '/')",
+    "result": "GlobResult(error=None, matches=[], truncated=False, truncation_reason=None)"
+   },
+   {
+    "probe": "docs constant namespace ('memories',)",
+    "call": "user B read('/dave.md')",
+    "result": "ReadResult(error=None, file_data={'content': 'dave allergy: penicillin', 'encoding': 'utf-8', 'created_at': '2026-11-15T12:48:33.095109+00:00', 'modified_at': '"
+   }
+  ]
+ },
+ "PostgresStore": {
+  "store": [
+   {
+    "probe": "own namespace",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(('users','bob','memories'))",
+    "result": [
+     "users/bob/memories:locker"
+    ]
+   },
+   {
+    "probe": "prefix one level up",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(('users',))",
+    "result": [
+     "users/alice/memories:locker",
+     "users/alice/profile:email",
+     "users/bob/memories:locker"
+    ]
+   },
+   {
+    "probe": "empty prefix",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(())",
+    "result": [
+     "users/alice/memories:locker",
+     "users/alice/profile:email",
+     "users/bob/memories:locker"
+    ]
+   },
+   {
+    "probe": "list_namespaces all",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "list_namespaces()",
+    "result": [
+     [
+      "users",
+      "alice",
+      "memories"
+     ],
+     [
+      "users",
+      "alice",
+      "profile"
+     ],
+     [
+      "users",
+      "bob",
+      "memories"
+     ]
+    ]
+   },
+   {
+    "probe": "list_namespaces prefix",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "list_namespaces(prefix=('users',))",
+    "result": [
+     [
+      "users",
+      "alice",
+      "memories"
+     ],
+     [
+      "users",
+      "alice",
+      "profile"
+     ],
+     [
+      "users",
+      "bob",
+      "memories"
+     ]
+    ]
+   },
+   {
+    "probe": "list_namespaces wildcard",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "list_namespaces(prefix=('users','*'))",
+    "result": [
+     [
+      "users",
+      "alice",
+      "memories"
+     ],
+     [
+      "users",
+      "alice",
+      "profile"
+     ],
+     [
+      "users",
+      "bob",
+      "memories"
+     ]
+    ]
+   },
+   {
+    "probe": "list_namespaces wildcard suffix",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "list_namespaces(suffix=('memories',))",
+    "result": [
+     [
+      "users",
+      "alice",
+      "memories"
+     ],
+     [
+      "users",
+      "bob",
+      "memories"
+     ]
+    ]
+   },
+   {
+    "probe": "search wildcard in prefix",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(('users','*','memories'))",
+    "result": []
+   },
+   {
+    "probe": "partial component",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "search(('users','ali'))",
+    "result": []
+   },
+   {
+    "probe": "get other user's key",
+    "setup": "alice and bob each under ('users', <id>, 'memories')",
+    "call": "get(('users','alice','memories'),'locker')",
+    "result": {
+     "text": "alice locker code 4417"
+    }
+   },
+   {
+    "probe": "put with dotted id",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "put(('bob@acme.com',), ...)",
+    "result": "InvalidNamespaceError: Invalid namespace label 'bob@acme.com' found in ('bob@acme.com',). Namespace labels cannot contain periods ('.')."
+   },
+   {
+    "probe": "put with dotted label",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "put(('a.b',), 'k', ...)",
+    "result": "InvalidNamespaceError: Invalid namespace label 'a.b' found in ('a.b',). Namespace labels cannot contain periods ('.')."
+   },
+   {
+    "probe": "dotted id prefix (bob@acme sees bob@acme.com?)",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "search(('bob@acme',))",
+    "result": []
+   },
+   {
+    "probe": "dotted id collision get",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "get(('a','b'),'k') after put(('a.b',),'k')",
+    "result": null
+   },
+   {
+    "probe": "dotted id collision search",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "search(('a','b'))",
+    "result": []
+   },
+   {
+    "probe": "dotted id list_namespaces",
+    "setup": "one-component namespace (user_id,), ids with dots",
+    "call": "list_namespaces(prefix=('a',))",
+    "result": []
+   }
+  ],
+  "backend": [
+   {
+    "probe": "StoreBackend without namespace",
+    "call": "StoreBackend(store=s)",
+    "result": "TypeError: StoreBackend.__init__() missing 1 required keyword-only argument: 'namespace'"
+   },
+   {
+    "probe": "StoreBackend wildcard namespace",
+    "call": "StoreBackend(namespace=lambda _: ('*',)).ls('/')",
+    "result": "ValueError: Namespace component at index 0 contains disallowed characters: '*'. Only alphanumeric characters, hyphens, underscores, dots, @, +, colons, and tildes are allow"
+   },
+   {
+    "probe": "StoreBackend write with email id",
+    "call": "StoreBackend(namespace=lambda _: ('carol@acme.com',)).write(...)",
+    "result": "InvalidNamespaceError: Invalid namespace label 'carol@acme.com' found in ('carol@acme.com',). Namespace labels cannot contain periods ('.')."
+   },
+   {
+    "probe": "dotted id: ls('/') as carol@acme",
+    "call": "StoreBackend(namespace=lambda _: ('carol@acme',)).ls('/')",
+    "result": []
+   },
+   {
+    "probe": "dotted id: grep('pin') as carol@acme",
+    "call": "....grep('pin', '/')",
+    "result": "GrepResult(error=None, matches=[], truncated=False)"
+   },
+   {
+    "probe": "dotted id: read('/payroll.md') as carol@acme",
+    "call": "....read('/payroll.md')",
+    "result": "ReadResult(error=\"File '/payroll.md' not found\", file_data=None, total_lines=None, start_line=None, end_line=None, next_offset=None, no_lines_requested=False)"
+   },
+   {
+    "probe": "dotted id: glob('**') as carol@acme",
+    "call": "....glob('**', '/')",
+    "result": "GlobResult(error=None, matches=[], truncated=False, truncation_reason=None)"
+   },
+   {
+    "probe": "docs constant namespace ('memories',)",
+    "call": "user B read('/dave.md')",
+    "result": "ReadResult(error=None, file_data={'content': 'dave allergy: penicillin', 'encoding': 'utf-8', 'created_at': '2026-11-15T12:48:33.228479+00:00', 'modified_at': '"
+   }
+  ]
+ }
+}

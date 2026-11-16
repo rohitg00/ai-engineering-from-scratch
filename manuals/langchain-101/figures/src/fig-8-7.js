@@ -25,7 +25,7 @@ const rows = [
   ['endless tool calls', `raised at ${c7.model_calls} model calls`, 'recursion_limit 10', `ended at ${c7.after_fix[1].model_calls} calls`, 'call limit 3, recursion 25'],
 ];
 
-module.exports = figure('fig-8-6', {
+module.exports = figure('fig-8-7', {
   height: 470,
   title: 'Seven failures of the drill, before and after each fix',
   desc: `A table of seven rows, one per case of the failure drill with Qwen3 4B on the x86 server guest, with the symptom on the left and the result after the fix on the right. Retry layers: ${c1.requests} requests against ${c1.requests_after_fix}. A crash after a charge: ${span(all(2, 'charges'))} charges against ${span(all(2, 'charges_after_fix'))} with the key, because the model asked for two charges. A middleware that jumps past review: the tool ran before any decision, and per-call mode stopped it. No structured output: None with no exception in ${c4.none_count} of ${c4.runs.length} prompts, and a check that raises. A tracing endpoint that is down: exit ${c5.exit_lag_s} s after the run against ${c5.exit_lag_s_after_fix} s. The same tool name twice: one tool bound with no error. Endless tool calls: GraphRecursionError at limit 10, and a model call limit of 3 that ends the run after 3 calls, with the recursion limit raised to 25.`,

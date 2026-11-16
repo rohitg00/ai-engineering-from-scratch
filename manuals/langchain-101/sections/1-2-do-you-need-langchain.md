@@ -86,7 +86,7 @@ caption: Each column is one task, grouped by family, and each row is one model a
 
 On Qwen3 4B and Qwen3 8B, the plain loop, `create_agent`, and the `StateGraph` gave the same outcome on 30 of 30 tasks each. They also gave the same final text, the same tool calls, and the same token counts. The kit kept the prompt tokens of each call for 42 of those task pairs, and all 198 calls matched.
 
-With greedy decoding, the same output means the model saw the same request. So `create_agent` and LangGraph add no hidden prompt, no extra tool, and no reordering. [Section 8.2](#s-cost-the-framework-against-a-plain-sdk-loop) found the same prompt tokens with a proxy.
+With greedy decoding, the same output means the model saw the same request. So `create_agent` and LangGraph add no hidden prompt, no extra tool, and no reordering. [Section 8.3](#s-cost-the-framework-against-a-plain-sdk-loop) found the same prompt tokens with a proxy.
 
 ### Deep Agents: equal on Claude, worse on small models
 

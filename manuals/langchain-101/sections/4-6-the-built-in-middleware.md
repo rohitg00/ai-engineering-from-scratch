@@ -157,7 +157,7 @@ note: The first agent model call. The agent had add, get_weather, and send_email
 
 `LLMToolEmulator` sends each listed tool call to a model and returns its text as the result. The tool body never ran. The emulator model wrote the result, and the `ToolMessage` held `Email sent successfully to ops@example.com. 📩`. Pass `model`, because the default is a named Anthropic model, and the default warns that it is deprecated {{code libs/langchain_v1/langchain/agents/middleware/tool_emulator.py}}.
 
-`ProviderToolSearchMiddleware` needs a provider with server-side tool search. On `ChatOllama` it raised `ValueError` with the text `but got 'ollama'; supported providers: anthropic, openai`. With no tools to defer, it passed the request through. We did not run it against a provider, and that test comes in the next edition. [Section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
+`ProviderToolSearchMiddleware` needs a provider with server-side tool search. On `ChatOllama` it raised `ValueError` with the text `but got 'ollama'; supported providers: anthropic, openai`. With no tools to defer, it passed the request through. We did not run it against a provider, and that test comes in the next edition. [Section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
 ## Shell and file search
 
@@ -174,7 +174,7 @@ note: The content of the first ToolMessage of the run that asked for ls.
 
 The model then said the tool had a problem of its own. So check a middleware tool with the model you will use, before you rely on it.
 
-With no `execution_policy`, the middleware uses `HostExecutionPolicy`, which runs commands on your machine with your rights {{code libs/langchain_v1/langchain/agents/middleware/shell_tool.py}}. `DockerExecutionPolicy` and `CodexSandboxExecutionPolicy` are the isolated choices. [Section 8.3](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) covers the risk.
+With no `execution_policy`, the middleware uses `HostExecutionPolicy`, which runs commands on your machine with your rights {{code libs/langchain_v1/langchain/agents/middleware/shell_tool.py}}. `DockerExecutionPolicy` and `CodexSandboxExecutionPolicy` are the isolated choices. [Section 8.4](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) covers the risk.
 
 `FilesystemFileSearchMiddleware` adds `glob_search` and `grep_search` under `root_path`. The paths in the results start at that root. With `use_ripgrep=False` it searches in Python. In the kit, `glob_search` with `**/*.py` returned `/src/app.py`. All 8 `grep_search` calls failed, because the model sent `include` as an object, such as `{'pattern': '*.py'}`. After 10 model calls it gave up and blamed the tool.
 

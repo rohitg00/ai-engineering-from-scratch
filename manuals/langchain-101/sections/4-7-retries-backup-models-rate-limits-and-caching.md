@@ -143,7 +143,7 @@ note: The message of the run.
     "content": "2 + 3 = 5.",
 ```
 
-The middleware tries each model in order, and it takes any `Exception` {{code libs/langchain_v1/langchain/agents/middleware/model_fallback.py}}. When every model raises, the run raises the last error. The kit pointed all three models at the dead port, so the run raised `httpx.ConnectError: [Errno 111] Connection refused`. The code does not check the kind of error, so a 400 from a bad request also moves to the next model. That run is coming in the next edition, and [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
+The middleware tries each model in order, and it takes any `Exception` {{code libs/langchain_v1/langchain/agents/middleware/model_fallback.py}}. When every model raises, the run raises the last error. The kit pointed all three models at the dead port, so the run raised `httpx.ConnectError: [Errno 111] Connection refused`. The code does not check the kind of error, so a 400 from a bad request also moves to the next model. That run is coming in the next edition, and [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it.
 
 A refusal is not an exception. `ModelRefusalMiddleware` raises `ModelRefusalError` only when the reply has a standard `refusal` content block, and it does not read the text {{code libs/langchain_v1/langchain/agents/middleware/model_refusal.py}}. List `ModelFallbackMiddleware` first and `ModelRefusalMiddleware` second, and a refusal block goes to the backup.
 
@@ -153,7 +153,7 @@ The kit asked Qwen3 4B how to pick the lock of a neighbour's door. The model ref
 
 A chat model takes a `rate_limiter`. `InMemoryRateLimiter` is a token bucket with `requests_per_second=1` and `max_bucket_size=1` by default, in one process {{code libs/core/langchain_core/rate_limiters.py}}. The models page warns that it counts requests and not their size {{docs oss/python/langchain/models}}. Two processes each get their own bucket.
 
-There are two caches. `set_llm_cache` caches model replies in LangChain. The `cache` argument of `create_agent` is a LangGraph node cache. We did not run either one, or the rate limiter, against a model. Those runs come in the next edition, and [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them.
+There are two caches. `set_llm_cache` caches model replies in LangChain. The `cache` argument of `create_agent` is a LangGraph node cache. We did not run either one, or the rate limiter, against a model. Those runs come in the next edition, and [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them.
 
 ```takeaways
 - Use one retry layer for model calls, and set max_retries=0 on the model if you add ModelRetryMiddleware.

@@ -38,14 +38,14 @@ The task of the recording is one question that needs two tools, `add` and then `
 - **native programs**: a plain `ollama` loop, `create_agent` with `ChatOllama`, and the hand-built `StateGraph` with `ChatOllama`, all on `/api/chat`.
 
 ```figure
-id: fig-8-2
+id: fig-8-3
 kind: chart
 title: time beyond the model in one run of three Qwen3 4B calls
 claim: In a real run of 1.7 s, create_agent spent 37.6 ms outside the model against 25.1 ms for a plain openai loop, and a hand-built StateGraph 36.7 ms.
 caption: Each dot is one run on the Mac, 40 per program, in shuffled rounds, and the black line is the median. From capture/lab/summary/overhead-mac-real.json.
 ```
 
-**We measured** 40 runs of each program on the Mac, in 40 shuffled rounds after 2 warm-up rounds. [Figure](#fig-8-2) shows each run. Every run gave 20 after `add(2, 3)` and `multiply(5, 4)`. The median time outside the model was 25.1 ms for the plain loop and 29.3 ms for the `bind_tools` loop. It was 37.6 ms for `create_agent`, 37.6 ms with `InMemorySaver`, and 36.7 ms for the hand-built `StateGraph`. Against the plain loop in the same round, they added 6.6, 15.6, 12.2, and 11.5 ms.
+**We measured** 40 runs of each program on the Mac, in 40 shuffled rounds after 2 warm-up rounds. [Figure](#fig-8-3) shows each run. Every run gave 20 after `add(2, 3)` and `multiply(5, 4)`. The median time outside the model was 25.1 ms for the plain loop and 29.3 ms for the `bind_tools` loop. It was 37.6 ms for `create_agent`, 37.6 ms with `InMemorySaver`, and 36.7 ms for the hand-built `StateGraph`. Against the plain loop in the same round, they added 6.6, 15.6, 12.2, and 11.5 ms.
 
 On the native path, the plain `ollama` loop spent 11.7 ms outside the model. `create_agent` with `ChatOllama` spent 29.0 ms, 13.0 ms more, and the `StateGraph` 22.2 ms, 7.8 ms more.
 

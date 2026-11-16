@@ -183,7 +183,7 @@ lang: python
         return self.label
 ```
 
-[Section 8.2](#s-cost-the-framework-against-a-plain-sdk-loop) gives the measured cost of each hook.
+[Section 8.3](#s-cost-the-framework-against-a-plain-sdk-loop) gives the measured cost of each hook.
 
 ```takeaways
 - Put a middleware first when it must see the raw request and the final response.

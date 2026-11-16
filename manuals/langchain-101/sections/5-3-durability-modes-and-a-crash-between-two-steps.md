@@ -180,7 +180,7 @@ In the crash runs of the runtime part, every node that ran again had the namespa
 
 ## A model that asks twice
 
-A key on the call stops the rerun of a call that the checkpoint saved. It cannot stop a second call that the model asked for. The failure drill of [section 8.6](#s-a-failure-drill) asks Qwen3 4B to charge a card once, on `SqliteSaver` with `durability="sync"`, and kills the process inside the tool:
+A key on the call stops the rerun of a call that the checkpoint saved. It cannot stop a second call that the model asked for. The failure drill of [section 8.7](#s-a-failure-drill) asks Qwen3 4B to charge a card once, on `SqliteSaver` with `durability="sync"`, and kills the process inside the tool:
 
 ```listing
 title: the crash case of the failure drill, first of three runs
@@ -199,7 +199,7 @@ In the agent matrix, the system prompt said to call the tool once. There the mod
 
 So key the effect on what it means. Use the thread and the order id, or the id of the business record that the effect changes. Check your records for that key before the effect, and return the saved result when it is there. With an outside service, send the key with the request, and let the service refuse a second request with the same key.
 
-`AsyncSqliteSaver`, `AsyncPostgresSaver` under a crash, and Agent Server under a crash come in the next edition, as [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
+`AsyncSqliteSaver`, `AsyncPostgresSaver` under a crash, and Agent Server under a crash come in the next edition, as [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
 
 ```takeaways
 - Expect a node or tool that returned just before a crash to run again, in sync and in async.

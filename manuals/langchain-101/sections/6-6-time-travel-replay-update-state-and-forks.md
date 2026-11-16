@@ -144,7 +144,7 @@ caption: Read from the input checkpoint at the top. Each box is one checkpoint w
 
 An agent with Qwen3 4B and one tool, 3 runs on the x86 server guest, gave the same counts in every run. A replay from step 0, whose `next` is `model`, made 2 model calls and 1 tool call. A replay from step 1, whose `next` is `tools`, made 1 model call and 1 tool call. So a replay costs what the original run cost from that point on. Make every node after the checkpoint safe to run twice before you replay.
 
-The docs say that you cannot time travel to a point between the nodes of a default subgraph {{docs oss/python/langgraph/use-time-travel}}. The lab did not run time travel inside a subgraph. It comes in the next edition, with the other open items of [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+The docs say that you cannot time travel to a point between the nodes of a default subgraph {{docs oss/python/langgraph/use-time-travel}}. The lab did not run time travel inside a subgraph. It comes in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Read get_state_history newest first, and use the config of an entry as its address.

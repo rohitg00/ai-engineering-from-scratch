@@ -1,0 +1,36 @@
+agent-chat-ui: no release and no tag on the repo; pinned main HEAD
+commit 0d21f7ff4c45287797e876dc6d8b150b6f277b1e
+committed 2026-11-03T14:10:39-08:00
+subject chore(deps): bump the minor-and-patch group with 12 updates (#337)
+cloned 2026-11-15T12:16:06Z
+node v22.22.0
+Done in 1m 1s using pnpm v10.5.1
+packageManager pnpm@10.5.1
+next 16.4.3
+react 19.3.1
+react-dom 19.3.1
+@langchain/langgraph-sdk 1.12.8
+@langchain/core 1.3.2
+@langchain/langgraph 1.5.3
+langgraph-nextjs-api-passthrough 0.1.4
+ui mode: next dev --webpack, WATCHPACK_POLLING=true, NEXT_TELEMETRY_DISABLED=1 (turbopack dev and next build failed in the sandbox, see ui-build.log)
+python 3.13.12
+langgraph-cli 0.4.43
+langgraph-api 0.18.0
+langgraph-runtime-inmem 0.38.0
+langgraph 1.2.22
+langgraph-checkpoint 4.3.2
+langgraph-sdk 0.4.14
+langchain 1.5.0
+langchain-core 1.8.0
+langchain-ollama 1.1.0
+ollama 0.6.3
+httpx 0.28.1
+langsmith 0.14.17
+server venv: evidence/T21-langsmith/_venv-server (lab pins plus langgraph-cli[inmem]; the lab venv has no langgraph-cli and two installs were refused)
+ollama {"version":"0.31.1"}
+model qwen3:4b-instruct-2507-q4_K_M temperature 0 seed 42 num_predict 512 reasoning False
+uptime start: 17:49  12 users, load averages: 28.39 13.40 8.43
+uptime end: 18:09  12 users, load averages: 11.29 31.04 33.60
+ollama shared with another agent; loaded model at start: qwen3:4b-instruct-2507-q4_K_M 39562 MiB vram, context 262144
+browser: gstack browse (isolated daemon, BROWSE_STATE_FILE), chrome-headless-shell from playwright chromium_headless_shell-1234

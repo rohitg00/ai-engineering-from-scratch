@@ -98,7 +98,7 @@ caption: Each row is one stream of the same agent run. Each mark is one chunk, p
 | `custom` | a value that a node or tool writes with its stream writer | 0, because `add` writes nothing |
 | `tools` | a tool event: started, an output delta, or finished | 4, from the `slow_sum` agent |
 
-The streaming page of LangGraph says that `tasks` mode needs a checkpointer {{docs oss/python/langgraph/streaming}}. The kit ran `tasks` and `debug` with no checkpointer and got six chunks from each. Without a checkpointer, the four `debug` chunks that the kit prints were `task` and `task_result` chunks. The kit does not print the last two. This manual records the disagreement as conflict D124. The `checkpoints` mode is not in the kit, and it comes in the next edition, as [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
+The streaming page of LangGraph says that `tasks` mode needs a checkpointer {{docs oss/python/langgraph/streaming}}. The kit ran `tasks` and `debug` with no checkpointer and got six chunks from each. Without a checkpointer, the four `debug` chunks that the kit prints were `task` and `task_result` chunks. The kit does not print the last two. This manual records the disagreement as conflict D124. The `checkpoints` mode is not in the kit, and it comes in the next edition, as [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) says.
 
 ## Several modes at once
 
@@ -444,7 +444,7 @@ note: The branches of the other two loops are cut.
                     got.append((now(), kind, delta.get("reasoning") or delta.get("text")))
 ```
 
-Do not read two projections of one message one after the other. A projection that you read second always waits for the end of the message. The rule holds for `message.tool_calls` too, as the tool phase above showed. A task for each projection could also work, and [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it as not run.
+Do not read two projections of one message one after the other. A projection that you read second always waits for the end of the message. The rule holds for `message.tool_calls` too, as the tool phase above showed. A task for each projection could also work, and [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists it as not run.
 
 A closed pull request for the issue, #38533, passed the run config to `model_.invoke` in `create_agent` {{code libs/langchain_v1/langchain/agents/factory.py:1509}}. That change does not touch the projection code. In the same agent, the text-only and raw loops already got every delta live. So do not wait for a fix in `create_agent`.
 

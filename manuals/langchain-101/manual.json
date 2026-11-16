@@ -376,7 +376,7 @@
       "number": 8,
       "title": "Operate",
       "thesis": "Running an agent for other people adds a server, a bill, attackers, old code, and failures at night, and each one has a recorded answer.",
-      "summary": "Agent Server under langgraph dev, up, and deploy, and the cost of each layer against a plain SDK loop. Then security at five boundaries, migration from 0.x, a table of symptoms, a failure drill, and the limits of this edition.",
+      "summary": "Agent Server under langgraph dev, up, and deploy, Agent Chat UI in front of it, and the cost of each layer. Then security, with the file rules of Deep Agents, migration from 0.x, a table of symptoms, a failure drill, and the limits of this edition.",
       "accent": "grey",
       "sections": [
         {
@@ -385,27 +385,31 @@
         },
         {
           "id": "8.2",
-          "file": "sections/8-2-cost-the-framework-against-a-plain-sdk-loop.md"
+          "file": "sections/8-2-agent-chat-ui-in-front-of-langgraph-dev.md"
         },
         {
           "id": "8.3",
-          "file": "sections/8-3-security-deserialization-store-isolation-approvals-and-mcp-subprocesses.md"
+          "file": "sections/8-3-cost-the-framework-against-a-plain-sdk-loop.md"
         },
         {
           "id": "8.4",
-          "file": "sections/8-4-migration-from-0-x-and-stale-advice.md"
+          "file": "sections/8-4-security-deserialization-store-isolation-approvals-and-mcp-subprocesses.md"
         },
         {
           "id": "8.5",
-          "file": "sections/8-5-symptom-cause-fix.md"
+          "file": "sections/8-5-migration-from-0-x-and-stale-advice.md"
         },
         {
           "id": "8.6",
-          "file": "sections/8-6-a-failure-drill.md"
+          "file": "sections/8-6-symptom-cause-fix.md"
         },
         {
           "id": "8.7",
-          "file": "sections/8-7-limits-at-the-pin-and-what-comes-in-the-next-edition.md"
+          "file": "sections/8-7-a-failure-drill.md"
+        },
+        {
+          "id": "8.8",
+          "file": "sections/8-8-limits-at-the-pin-and-what-comes-in-the-next-edition.md"
         }
       ]
     },

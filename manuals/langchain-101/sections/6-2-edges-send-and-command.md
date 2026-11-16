@@ -166,7 +166,7 @@ lang: json
 
 Use a conditional edge when the route depends only on the state. Use `Command` when the node that computes the update also knows the route, as `pick` does.
 
-`Command` has two more uses. With `resume`, it is the input that answers an interrupt, and [section 6.4](#s-interrupt-and-resume) shows it. With `graph=Command.PARENT`, a node inside a subgraph routes to a node of the parent graph {{docs oss/python/langgraph/graph-api-send-command}}. The kit does not run `Command.PARENT` yet. A capture of it comes in the next edition, with the other open items of [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+`Command` has two more uses. With `resume`, it is the input that answers an interrupt, and [section 6.4](#s-interrupt-and-resume) shows it. With `graph=Command.PARENT`, a node inside a subgraph routes to a node of the parent graph {{docs oss/python/langgraph/graph-api-send-command}}. The kit does not run `Command.PARENT` yet. A capture of it comes in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - List the possible targets of a conditional edge in its third argument.

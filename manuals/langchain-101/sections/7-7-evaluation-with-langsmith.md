@@ -302,7 +302,7 @@ So pin a prompt by its full hash in production code. A tag is a name that can mo
 
 ## Still open
 
-These runs need more than this edition did, and [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them:
+These runs need more than this edition did, and [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them:
 
 - Versions and splits of a dataset, given to `evaluate` by name.
 - A comparison of two experiments, which `evaluate` runs when the target is a pair of experiment ids.

@@ -157,7 +157,7 @@ claim: An entrypoint compiles to one node between __start__ and __end__, and its
 caption: Read from the top. The workflow node runs the whole function, and each task call runs inside it. From capture/out/51-draw-functional.txt.
 ```
 
-A task can also take `retry_policy`, `cache_policy`, and `timeout` {{code libs/langgraph/langgraph/func/__init__.py}}. A `timeout` works only on an async task, and on a sync task it raises `ValueError`. The kit does not run them on a task yet. Captures of them come in the next edition, with the other open items of [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+A task can also take `retry_policy`, `cache_policy`, and `timeout` {{code libs/langgraph/langgraph/func/__init__.py}}. A `timeout` works only on an async task, and on a sync task it raises `ValueError`. The kit does not run them on a task yet. Captures of them come in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ```takeaways
 - Put each side effect in a task, because entrypoint code runs again on every resume.

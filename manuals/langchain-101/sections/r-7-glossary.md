@@ -48,7 +48,7 @@ The meanings come from the code at the pin, the documentation at docs commit `04
 | Experiment | One call of `evaluate` over a set of examples. | [7.7](#s-evaluation-with-langsmith) |
 | Extraction call | One call of `with_structured_output` after the agent run, which reads the question and the final reply and returns the schema. | [4.3](#s-structured-output-which-strategy-on-which-provider) |
 | Failure category | The first matching reason for a failed bench task, such as `wrong_tool`, `wrong_args`, or `wrong_final_state`. | [The bench method](#s-ref-the-bench-method) |
-| Failure drill | A script that causes each known failure on purpose, on a machine you can lose, and prints what you would see. | [8.6](#s-a-failure-drill) |
+| Failure drill | A script that causes each known failure on purpose, on a machine you can lose, and prints what you would see. | [8.7](#s-a-failure-drill) |
 | `FilesystemBackend` | A backend that maps the file tools of a deep agent to a folder on disk, in place of the agent state. | [7.4](#s-deep-agents-0-7) |
 | Fork | A new checkpoint whose parent is a past checkpoint. Runs from it form a branch beside the old one. | [6.6](#s-time-travel-replay-update-state-and-forks) |
 | Framework time | The wall time of a task minus the time inside the model calls and the tool functions. | [1.2](#s-do-you-need-langchain), [2.6](#s-checkpoint-growth-and-the-cost-of-a-superstep) |

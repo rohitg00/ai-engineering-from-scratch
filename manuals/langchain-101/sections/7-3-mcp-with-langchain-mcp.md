@@ -250,7 +250,7 @@ The cause is in `_convert_call_tool_result`, which raises on an error result bef
 
 **Progress.** A server tool reported progress three times. With the default adapter, nothing about progress reached the caller. Inside an agent, `stream_mode="custom"` yielded 0 chunks, so progress does not become a stream event. A `fastmcp.Client(target, progress_handler=...)` passed to the adapter got all 3 reports, in process, over HTTP, and inside an agent. Progress, like the timeout, needs a client that you build.
 
-This edition did not record OAuth, URL-mode elicitation, or several input requests in one round. [Section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them.
+This edition did not record OAuth, URL-mode elicitation, or several input requests in one round. [Section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition) lists them.
 
 ```takeaways
 - Install langchain[mcp] and remove langchain-mcp-adapters from the same environment.

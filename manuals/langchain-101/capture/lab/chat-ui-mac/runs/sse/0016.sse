@@ -1,0 +1,138 @@
+event: metadata
+data: {"run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","attempt":1}
+id: 1794745469666-0
+
+event: values
+data: {"messages":[{"content":[{"type":"text","text":"What is the weather in Paris right now?"}],"additional_kwargs":{},"response_metadata":{},"type":"human","name":null,"id":"2685bc76-367f-40e8-867f-1070114bf25b"}]}
+id: 1794745469680-0
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+: heartbeat
+
+event: messages
+data: [{"content":"","additional_kwargs":{},"response_metadata":{"model":"qwen3:4b-instruct-2507-q4_K_M","created_at":"2026-11-15T12:26:15.204133Z","done":true,"done_reason":"stop","total_duration":105504148500,"load_duration":408573458,"prompt_eval_count":259,"prompt_eval_duration":1402638000,"eval_count":20,"eval_duration":757091000,"logprobs":null,"model_name":"qwen3:4b-instruct-2507-q4_K_M","model_provider":"ollama"},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2a-8af8-748f-a380-c8336293ae45","tool_calls":[{"name":"get_weather","args":{"city":"Paris"},"id":"3d5a3767-5de1-42d7-800b-46de1742c040","type":"tool_call"}],"invalid_tool_calls":[],"usage_metadata":{"input_tokens":259,"output_tokens":20,"total_tokens":279},"tool_call_chunks":[{"name":"get_weather","args":"{\"city\": \"Paris\"}","id":"3d5a3767-5de1-42d7-800b-46de1742c040","index":null,"type":"tool_call_chunk"}],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":1,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:e584458f-c55a-5f52-726b-b36724ee8b4c","checkpoint_ns":"model:e584458f-c55a-5f52-726b-b36724ee8b4c","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745575237-0
+
+event: messages
+data: [{"content":"","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2a-8af8-748f-a380-c8336293ae45","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":"last"},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":1,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:e584458f-c55a-5f52-726b-b36724ee8b4c","checkpoint_ns":"model:e584458f-c55a-5f52-726b-b36724ee8b4c","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745575244-0
+
+event: values
+data: {"messages":[{"content":[{"type":"text","text":"What is the weather in Paris right now?"}],"additional_kwargs":{},"response_metadata":{},"type":"human","name":null,"id":"2685bc76-367f-40e8-867f-1070114bf25b"},{"content":"","additional_kwargs":{},"response_metadata":{"model":"qwen3:4b-instruct-2507-q4_K_M","created_at":"2026-11-15T12:26:15.204133Z","done":true,"done_reason":"stop","total_duration":105504148500,"load_duration":408573458,"prompt_eval_count":259,"prompt_eval_duration":1402638000,"eval_count":20,"eval_duration":757091000,"logprobs":null,"model_name":"qwen3:4b-instruct-2507-q4_K_M","model_provider":"ollama"},"type":"ai","name":null,"id":"lc_run--01a1df2a-8af8-748f-a380-c8336293ae45","tool_calls":[{"name":"get_weather","args":{"city":"Paris"},"id":"3d5a3767-5de1-42d7-800b-46de1742c040","type":"tool_call"}],"invalid_tool_calls":[],"usage_metadata":{"input_tokens":259,"output_tokens":20,"total_tokens":279}}]}
+id: 1794745575253-0
+
+event: messages
+data: [{"content":"14 C, light rain","additional_kwargs":{},"response_metadata":{},"type":"tool","name":"get_weather","id":"4ec74f0a-1f8f-4c00-978f-5b341af1ad30","tool_call_id":"3d5a3767-5de1-42d7-800b-46de1742c040","artifact":null,"status":"success"},{"ls_integration":"langchain_create_agent","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":3,"langgraph_node":"tools","langgraph_triggers":["__pregel_push"],"langgraph_path":["__pregel_push",0,false],"langgraph_checkpoint_ns":"tools:d5dc17fa-d4d5-8afb-b08f-b7227ba140bb"}]
+id: 1794745575280-0
+
+event: values
+data: {"messages":[{"content":[{"type":"text","text":"What is the weather in Paris right now?"}],"additional_kwargs":{},"response_metadata":{},"type":"human","name":null,"id":"2685bc76-367f-40e8-867f-1070114bf25b"},{"content":"","additional_kwargs":{},"response_metadata":{"model":"qwen3:4b-instruct-2507-q4_K_M","created_at":"2026-11-15T12:26:15.204133Z","done":true,"done_reason":"stop","total_duration":105504148500,"load_duration":408573458,"prompt_eval_count":259,"prompt_eval_duration":1402638000,"eval_count":20,"eval_duration":757091000,"logprobs":null,"model_name":"qwen3:4b-instruct-2507-q4_K_M","model_provider":"ollama"},"type":"ai","name":null,"id":"lc_run--01a1df2a-8af8-748f-a380-c8336293ae45","tool_calls":[{"name":"get_weather","args":{"city":"Paris"},"id":"3d5a3767-5de1-42d7-800b-46de1742c040","type":"tool_call"}],"invalid_tool_calls":[],"usage_metadata":{"input_tokens":259,"output_tokens":20,"total_tokens":279}},{"content":"14 C, light rain","additional_kwargs":{},"response_metadata":{},"type":"tool","name":"get_weather","id":"4ec74f0a-1f8f-4c00-978f-5b341af1ad30","tool_call_id":"3d5a3767-5de1-42d7-800b-46de1742c040","artifact":null,"status":"success"}]}
+id: 1794745575288-0
+
+event: messages
+data: [{"content":"The","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576168-0
+
+event: messages
+data: [{"content":" weather","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576190-0
+
+event: messages
+data: [{"content":" in","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576233-0
+
+event: messages
+data: [{"content":" Paris","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576257-0
+
+event: messages
+data: [{"content":" is","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576293-0
+
+event: messages
+data: [{"content":" currently","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576330-0
+
+event: messages
+data: [{"content":" ","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576372-0
+
+event: messages
+data: [{"content":"1","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576410-0
+
+event: messages
+data: [{"content":"4","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576445-0
+
+event: messages
+data: [{"content":"°C","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576493-0
+
+event: messages
+data: [{"content":" with","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576550-0
+
+event: messages
+data: [{"content":" light","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576618-0
+
+event: messages
+data: [{"content":" rain","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576637-0
+
+event: messages
+data: [{"content":".","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576697-0
+
+event: messages
+data: [{"content":"","additional_kwargs":{},"response_metadata":{"model":"qwen3:4b-instruct-2507-q4_K_M","created_at":"2026-11-15T12:26:16.697974Z","done":true,"done_reason":"stop","total_duration":1398868250,"load_duration":449447959,"prompt_eval_count":298,"prompt_eval_duration":252195000,"eval_count":15,"eval_duration":560477000,"logprobs":null,"model_name":"qwen3:4b-instruct-2507-q4_K_M","model_provider":"ollama"},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":{"input_tokens":298,"output_tokens":15,"total_tokens":313},"tool_call_chunks":[],"chunk_position":null},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576734-0
+
+event: messages
+data: [{"content":"","additional_kwargs":{},"response_metadata":{},"type":"AIMessageChunk","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":null,"tool_call_chunks":[],"chunk_position":"last"},{"ls_integration":"langchain_chat_model","created_by":"system","graph_id":"agent","assistant_id":"fe096781-5601-53d2-b2f6-0d3403f7e9ca","run_attempt":1,"langgraph_version":"1.2.22","langgraph_api_version":"0.18.0","langgraph_plan":"enterprise","langgraph_host":"self-hosted","langgraph_api_url":"http://127.0.0.1:2024","run_id":"01a1df2a-870f-75e5-b90d-c18adfa6b129","thread_id":"01a1df2a-86d0-7303-9a9b-8e85faa24580","langgraph_step":4,"langgraph_node":"model","langgraph_triggers":["branch:to:model"],"langgraph_path":["__pregel_pull","model"],"langgraph_checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","checkpoint_ns":"model:46575790-c899-ad70-549c-4733164eff4a","ls_provider":"ollama","ls_model_name":"qwen3:4b-instruct-2507-q4_K_M","ls_model_type":"chat","ls_temperature":0.0,"lc_versions":{"langchain-core":"1.8.0","langchain":"1.5.0"}}]
+id: 1794745576737-0
+
+event: values
+data: {"messages":[{"content":[{"type":"text","text":"What is the weather in Paris right now?"}],"additional_kwargs":{},"response_metadata":{},"type":"human","name":null,"id":"2685bc76-367f-40e8-867f-1070114bf25b"},{"content":"","additional_kwargs":{},"response_metadata":{"model":"qwen3:4b-instruct-2507-q4_K_M","created_at":"2026-11-15T12:26:15.204133Z","done":true,"done_reason":"stop","total_duration":105504148500,"load_duration":408573458,"prompt_eval_count":259,"prompt_eval_duration":1402638000,"eval_count":20,"eval_duration":757091000,"logprobs":null,"model_name":"qwen3:4b-instruct-2507-q4_K_M","model_provider":"ollama"},"type":"ai","name":null,"id":"lc_run--01a1df2a-8af8-748f-a380-c8336293ae45","tool_calls":[{"name":"get_weather","args":{"city":"Paris"},"id":"3d5a3767-5de1-42d7-800b-46de1742c040","type":"tool_call"}],"invalid_tool_calls":[],"usage_metadata":{"input_tokens":259,"output_tokens":20,"total_tokens":279}},{"content":"14 C, light rain","additional_kwargs":{},"response_metadata":{},"type":"tool","name":"get_weather","id":"4ec74f0a-1f8f-4c00-978f-5b341af1ad30","tool_call_id":"3d5a3767-5de1-42d7-800b-46de1742c040","artifact":null,"status":"success"},{"content":"The weather in Paris is currently 14°C with light rain.","additional_kwargs":{},"response_metadata":{"model":"qwen3:4b-instruct-2507-q4_K_M","created_at":"2026-11-15T12:26:16.697974Z","done":true,"done_reason":"stop","total_duration":1398868250,"load_duration":449447959,"prompt_eval_count":298,"prompt_eval_duration":252195000,"eval_count":15,"eval_duration":560477000,"logprobs":null,"model_name":"qwen3:4b-instruct-2507-q4_K_M","model_provider":"ollama"},"type":"ai","name":null,"id":"lc_run--01a1df2c-277c-70ea-be47-7fc0361cab94","tool_calls":[],"invalid_tool_calls":[],"usage_metadata":{"input_tokens":298,"output_tokens":15,"total_tokens":313}}]}
+id: 1794745576771-0
+

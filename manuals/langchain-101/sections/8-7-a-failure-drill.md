@@ -157,10 +157,10 @@ note: The first of three runs. The rest of the GraphRecursionError message is cu
 
 Case 6 is a failure that the earlier sections do not show. The tool node of `create_agent` keeps its tools in a dict keyed by name, so the second `lookup` replaced the first {{code libs/prebuilt/langgraph/prebuilt/tool_node.py}}. The model saw one tool, the agent raised nothing, and every call went to the refunds function. So the answer said it found nothing about order 7 in the refunds table. Two instances of one middleware raise an `AssertionError`, as [section 4.5](#s-middleware-hooks-and-their-order) shows. Two tools with one name raise nothing.
 
-Case 7 shows a fix that needs a second change. `ModelCallLimitMiddleware` adds its own node to each loop of the agent, so three model calls needed more than 10 steps. With `recursion_limit` 10 the run still raised. With 25 it ended by itself after the third call. [Figure](#fig-8-6) sets each symptom beside its result after the fix.
+Case 7 shows a fix that needs a second change. `ModelCallLimitMiddleware` adds its own node to each loop of the agent, so three model calls needed more than 10 steps. With `recursion_limit` 10 the run still raised. With 25 it ended by itself after the third call. [Figure](#fig-8-7) sets each symptom beside its result after the fix.
 
 ```figure
-id: fig-8-6
+id: fig-8-7
 kind: comparison
 title: seven failures of the drill, before and after each fix
 claim: Six of the seven failures raised nothing, and each fix in the right column comes from the section that documents the failure.

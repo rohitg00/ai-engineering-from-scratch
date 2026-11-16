@@ -62,9 +62,11 @@ The other captures call no model, such as the versions, the messages, the graph 
 
 We recorded on two machines. The Mac is an Apple M1 Max with 10 cores and 64 GiB, with Ollama and PostgreSQL 14. The x86 server guest has 32 vCPU and 48 GiB, with PostgreSQL 16, Redis 7, and Ollama 0.31.1 on CPU. The two machines differ, so this manual never sets a number from one beside a number from the other.
 
-The Mac is a shared laptop, and other work ran on it during every timed run. Read each time from the Mac as an upper bound for that machine. The local models of the lab were Qwen3 0.6B, 1.7B, 4B, 8B, 14B, and 30B-A3B, and gpt-oss 20B, on Ollama, with `nomic-embed-text` for embeddings. The capture kit used Qwen3 4B Instruct on the x86 server guest. So did the failure drill of [section 8.6](#s-a-failure-drill) and the crash matrix of [section 5.3](#s-durability-modes-and-a-crash-between-two-steps). So did the lab runs T05, T07, T08, T11, T17, T18, and T19.
+The Mac is a shared laptop, and other work ran on it during every timed run. Read each time from the Mac as an upper bound for that machine. The local models of the lab were Qwen3 0.6B, 1.7B, 4B, 8B, 14B, and 30B-A3B, and gpt-oss 20B, on Ollama, with `nomic-embed-text` for embeddings. The capture kit used Qwen3 4B Instruct on the x86 server guest. So did the failure drill of [section 8.7](#s-a-failure-drill) and the crash matrix of [section 5.3](#s-durability-modes-and-a-crash-between-two-steps). So did the lab runs T05, T07, T08, T11, T17, T18, and T19.
 
-**Task-suite bench:** the 99 tasks of [section 1.2](#s-do-you-need-langchain), each checked by the state that its tools leave. Claude Haiku 5.5 (`claude-haiku-5-5`) and Claude Sonnet 5.5 (`claude-sonnet-5-5`) ran through the Anthropic API from the Mac. The budget had a cap, and every call is in a cost ledger. [The bench method](#s-ref-the-bench-method) gives the tasks, the settings, and the rows not to use. Claude Haiku 5.5 also ran the 20 evals of the production service in [section 9.6](#s-evals-that-check-state), with every call in the same kind of ledger. Every other model time in this manual is the time of a local model.
+**Task-suite bench:** the 99 tasks of [section 1.2](#s-do-you-need-langchain), each checked by the state that its tools leave. Claude Haiku 5.5 (`claude-haiku-5-5`) and Claude Sonnet 5.5 (`claude-sonnet-5-5`) ran through the Anthropic API from the Mac. The budget had a cap, and every call is in a cost ledger. [The bench method](#s-ref-the-bench-method) gives the tasks, the settings, and the rows not to use.
+
+Claude Haiku 5.5 also ran the 20 evals of the production service in [section 9.6](#s-evals-that-check-state), with every call in the same kind of ledger. It also ran 60 attacks on the file rules of [section 8.4](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses), for $0.021. The rule matrix of that section has no model. A scripted caller drives the permission layer, and the section says so. Every other model time in this manual is the time of a local model.
 
 ## Conventions
 
@@ -131,7 +133,7 @@ Part 1 is the decision. It sets each project and its claims beside our results, 
 
 Part 4 is the agent that `create_agent` builds: its graph, structured output on each provider, many tools, and middleware. Part 5 is state, memory, and durability: streams, checkpointers, crashes, stores, long threads, and serialization. Part 6 is LangGraph control flow: state and reducers, `Send` and `Command`, the functional API, interrupts, approvals, time travel, subgraphs, and error handlers.
 
-Part 7 connects retrieval, MCP, Deep Agents, and LangSmith. Part 8 operates and debugs: Agent Server, cost, security, migration from 0.x, symptoms, a failure drill, and the limits at the pin. Part 9 builds one production service end to end, with FastAPI, Postgres, approvals, OpenTelemetry spans, faults, evals, and several workers. It runs that service on Qwen3 4B, Qwen3 14B, and Claude Haiku 5.5. The table below lists every part:
+Part 7 connects retrieval, MCP, Deep Agents, and LangSmith. Part 8 operates and debugs: Agent Server, Agent Chat UI, cost, security, migration from 0.x, symptoms, a failure drill, and the limits at the pin. Part 9 builds one production service end to end, with FastAPI, Postgres, approvals, OpenTelemetry spans, faults, evals, and several workers. It runs that service on Qwen3 4B, Qwen3 14B, and Claude Haiku 5.5. The table below lists every part:
 
 ```parts
 ```

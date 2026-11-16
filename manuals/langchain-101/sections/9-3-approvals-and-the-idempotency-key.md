@@ -106,7 +106,7 @@ note: The insert and the update after the checks are cut.
 
 The key has three parts: the thread, the order, and the amount. The `SELECT ... FOR UPDATE` locks the order row, so two workers cannot both pass the check. The `refunds` table also has a unique index on the key. A replay returns the first refund with `"replayed": true`, and the model tells the customer that the refund exists.
 
-The key holds because the replay sends the same arguments. After the restart, the `tools` node runs the tool call that the checkpoint saved, from the AI message that the model wrote before the interrupt. The model is not asked again. If it were, it could choose another amount, and the key would differ. The [runtime part](#s-the-checkpoint-write-path-and-durability) shows the same rule for any node: key a side effect on what the checkpoint saved.
+The key holds because the replay sends the same arguments. After the restart, the `tools` node runs the tool call that the checkpoint saved, from the AI message that the model wrote before the interrupt. The model is not asked again. If it were, it could choose another amount, and the key would differ. The [runtime part](#s-the-checkpoint-write-path-and-durability) shows the same rule for any node: key a side effect on what the checkpoint saved. A typed message in Agent Chat UI is a second path to a success that never ran, as [the chat UI section](#s-agent-chat-ui-in-front-of-langgraph-dev) shows.
 
 ## The approver approves what you show
 

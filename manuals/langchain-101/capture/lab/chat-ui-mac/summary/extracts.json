@@ -1,0 +1,448 @@
+{
+ "request_bodies": {
+  "20 new message": {
+   "input": {
+    "messages": [
+     {
+      "id": "3752ae21-1b51-4f06-a3e3-e594304b22b8",
+      "type": "human",
+      "content": [
+       {
+        "type": "text",
+        "text": "Send an email to sam@example.com with subject Lunch and body See you at noon."
+       }
+      ]
+     }
+    ]
+   },
+   "stream_mode": [
+    "values",
+    "messages-tuple",
+    "custom"
+   ],
+   "stream_subgraphs": true,
+   "stream_resumable": true,
+   "assistant_id": "agent",
+   "checkpoint": {
+    "checkpoint_id": "1f1e0efc-1319-6874-8005-0625969a5466",
+    "checkpoint_ns": ""
+   },
+   "on_disconnect": "continue"
+  },
+  "22 approve": {
+   "input": {},
+   "command": {
+    "resume": {
+     "decisions": [
+      {
+       "type": "approve"
+      }
+     ]
+    }
+   },
+   "stream_mode": [
+    "values",
+    "messages-tuple",
+    "custom"
+   ],
+   "stream_resumable": false,
+   "assistant_id": "agent",
+   "checkpoint": {
+    "checkpoint_id": "1f1e0efe-1bd2-68ba-8008-eb26d3fb9ba6",
+    "checkpoint_ns": ""
+   },
+   "on_disconnect": "cancel"
+  },
+  "26 edit": {
+   "input": {},
+   "command": {
+    "resume": {
+     "decisions": [
+      {
+       "type": "edit",
+       "edited_action": {
+        "name": "send_email",
+        "args": {
+         "to": "lee@example.com",
+         "subject": "Report",
+         "body": "The report is ready. Edited by the reviewer."
+        }
+       }
+      }
+     ]
+    }
+   },
+   "stream_mode": [
+    "values",
+    "messages-tuple",
+    "custom"
+   ],
+   "stream_resumable": false,
+   "assistant_id": "agent",
+   "checkpoint": {
+    "checkpoint_id": "1f1e0f00-70c6-6770-800f-67cefd031ff5",
+    "checkpoint_ns": ""
+   },
+   "on_disconnect": "cancel"
+  },
+  "30 reject": {
+   "input": {},
+   "command": {
+    "resume": {
+     "decisions": [
+      {
+       "type": "reject",
+       "message": "Do not send invoices from chat."
+      }
+     ]
+    }
+   },
+   "stream_mode": [
+    "values",
+    "messages-tuple",
+    "custom"
+   ],
+   "stream_resumable": false,
+   "assistant_id": "agent",
+   "checkpoint": {
+    "checkpoint_id": "1f1e0f0a-dca0-600e-8016-d9604ec861d1",
+    "checkpoint_ns": ""
+   },
+   "on_disconnect": "cancel"
+  },
+  "66 new message over a pending approval": {
+   "input": {
+    "messages": [
+     {
+      "type": "tool",
+      "tool_call_id": "400ca6cd-13a6-460e-bf70-49ae2f6a913f",
+      "id": "do-not-render-ffe0b0fe-312b-470a-9b50-a18c7b7ac6b5",
+      "name": "send_email",
+      "content": "Successfully handled tool call."
+     },
+     {
+      "id": "89f41e3f-5d09-4143-8ed2-b2430d9c4c03",
+      "type": "human",
+      "content": [
+       {
+        "type": "text",
+        "text": "Did you send the email to Max?"
+       }
+      ]
+     }
+    ]
+   },
+   "stream_mode": [
+    "values",
+    "messages-tuple",
+    "custom"
+   ],
+   "stream_subgraphs": true,
+   "stream_resumable": true,
+   "assistant_id": "agent",
+   "checkpoint": {
+    "checkpoint_id": "1f1e0f16-3d69-6bfa-8001-39846cc07125",
+    "checkpoint_ns": ""
+   },
+   "on_disconnect": "continue"
+  }
+ },
+ "interrupts": {
+  "batched, request 20": [
+   {
+    "value": {
+     "action_requests": [
+      {
+       "name": "send_email",
+       "args": {
+        "to": "sam@example.com",
+        "subject": "Lunch",
+        "body": "See you at noon."
+       },
+       "description": "Tool execution requires approval\n\nTool: send_email\nArgs: {'to': 'sam@example.com', 'subject': 'Lunch', 'body': 'See you at noon.'}"
+      }
+     ],
+     "review_configs": [
+      {
+       "action_name": "send_email",
+       "allowed_decisions": [
+        "approve",
+        "edit",
+        "reject"
+       ]
+      }
+     ]
+    },
+    "id": "4f29116956f67e26649c65319f46c20a",
+    "response_schema": null
+   }
+  ],
+  "per_call, request 50": [
+   {
+    "value": {
+     "type": "tool_approval",
+     "tool_call_id": "1e1f026b-628e-4c7f-87d1-5a31a5bf9810",
+     "name": "send_email",
+     "args": {
+      "to": "pat@example.com",
+      "subject": "Hello",
+      "body": "Hi Pat."
+     },
+     "description": "Tool execution requires approval\n\nTool: send_email\nArgs: {'to': 'pat@example.com', 'subject': 'Hello', 'body': 'Hi Pat.'}"
+    },
+    "id": "412c1c836dd5a1fe2d1897b20b22d25b",
+    "response_schema": {
+     "$defs": {
+      "ApproveDecision": {
+       "description": "Response when a human approves the action.",
+       "properties": {
+        "type": {
+         "const": "approve",
+         "title": "Type",
+         "type": "string"
+        }
+       },
+       "required": [
+        "type"
+       ],
+       "title": "ApproveDecision",
+       "type": "object"
+      },
+      "EditDecision": {
+       "properties": {
+        "type": {
+         "const": "edit",
+         "title": "Type",
+         "type": "string"
+        },
+        "edited_action": {
+         "$ref": "#/$defs/EditedAction"
+        }
+       },
+       "required": [
+        "type",
+        "edited_action"
+       ],
+       "title": "EditDecision",
+       "type": "object"
+      },
+      "EditedAction": {
+       "properties": {
+        "name": {
+         "const": "send_email",
+         "title": "Name",
+         "type": "string"
+        },
+        "args": {
+         "$ref": "#/$defs/send_email"
+        }
+       },
+       "required": [
+        "name",
+        "args"
+       ],
+       "title": "EditedAction",
+       "type": "object"
+      },
+      "RejectDecision": {
+       "description": "Response when a human rejects the action.",
+       "properties": {
+        "type": {
+         "const": "reject",
+         "title": "Type",
+         "type": "string"
+        },
+        "message": {
+         "title": "Message",
+         "type": "string"
+        }
+       },
+       "required": [
+        "type"
+       ],
+       "title": "RejectDecision",
+       "type": "object"
+      },
+      "send_email": {
+       "description": "Send an email to one address.",
+       "properties": {
+        "to": {
+         "title": "To",
+         "type": "string"
+        },
+        "subject": {
+         "title": "Subject",
+         "type": "string"
+        },
+        "body": {
+         "title": "Body",
+         "type": "string"
+        }
+       },
+       "required": [
+        "to",
+        "subject",
+        "body"
+       ],
+       "title": "send_email",
+       "type": "object"
+      }
+     },
+     "discriminator": {
+      "mapping": {
+       "approve": "#/$defs/ApproveDecision",
+       "edit": "#/$defs/EditDecision",
+       "reject": "#/$defs/RejectDecision"
+      },
+      "propertyName": "type"
+     },
+     "oneOf": [
+      {
+       "$ref": "#/$defs/ApproveDecision"
+      },
+      {
+       "$ref": "#/$defs/EditDecision"
+      },
+      {
+       "$ref": "#/$defs/RejectDecision"
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "state_after_new_message_over_pending_approval": {
+  "per_call": [
+   {
+    "type": "human",
+    "id": "0f4e48d5-b0ee-4b57-b9c8-0f3c85af3994",
+    "content": [
+     {
+      "type": "text",
+      "text": "Send an email to pat@example.com with subject Hello and body Hi Pat."
+     }
+    ],
+    "tool_calls": null
+   },
+   {
+    "type": "ai",
+    "id": "lc_run--01a1df36-434f-7584-a0be-84dff91e46e2",
+    "content": "",
+    "tool_calls": [
+     {
+      "name": "send_email",
+      "args": {
+       "to": "pat@example.com",
+       "subject": "Hello",
+       "body": "Hi Pat."
+      }
+     }
+    ]
+   },
+   {
+    "type": "tool",
+    "id": "do-not-render-d6c2c843-5d8b-49a0-8fd3-9f4371099531",
+    "content": "Successfully handled tool call.",
+    "tool_calls": null
+   },
+   {
+    "type": "human",
+    "id": "bd24f6b1-bb67-4d55-80d1-18708407094d",
+    "content": [
+     {
+      "type": "text",
+      "text": "Did you send the email to Pat?"
+     }
+    ],
+    "tool_calls": null
+   },
+   {
+    "type": "ai",
+    "id": "lc_run--01a1df36-8618-70b7-981f-428e945b03a2",
+    "content": "Yes, I sent the email to Pat.",
+    "tool_calls": null
+   }
+  ],
+  "batched": [
+   {
+    "type": "human",
+    "id": "8e08aa5a-909a-4051-b5ac-778e6bb333f8",
+    "content": [
+     {
+      "type": "text",
+      "text": "Send an email to max@example.com with subject Visit and body See you Friday."
+     }
+    ],
+    "tool_calls": null
+   },
+   {
+    "type": "ai",
+    "id": "lc_run--01a1df36-e1f0-7379-80ee-3a8674529705",
+    "content": "",
+    "tool_calls": [
+     {
+      "name": "send_email",
+      "args": {
+       "to": "max@example.com",
+       "subject": "Visit",
+       "body": "See you Friday."
+      }
+     }
+    ]
+   },
+   {
+    "type": "tool",
+    "id": "do-not-render-ffe0b0fe-312b-470a-9b50-a18c7b7ac6b5",
+    "content": "Successfully handled tool call.",
+    "tool_calls": null
+   },
+   {
+    "type": "human",
+    "id": "89f41e3f-5d09-4143-8ed2-b2430d9c4c03",
+    "content": [
+     {
+      "type": "text",
+      "text": "Did you send the email to Max?"
+     }
+    ],
+    "tool_calls": null
+   },
+   {
+    "type": "ai",
+    "id": "lc_run--01a1df36-eb02-75cb-b5cb-1d9aa2fb8800",
+    "content": "Yes, I sent the email to max@example.com.",
+    "tool_calls": null
+   }
+  ]
+ },
+ "tool_runs": [
+  {
+   "t": 1794745575.275996,
+   "kind": "tool_run",
+   "name": "get_weather",
+   "args": {
+    "city": "Paris"
+   }
+  },
+  {
+   "t": 1794745666.191465,
+   "kind": "tool_run",
+   "name": "send_email",
+   "args": {
+    "to": "sam@example.com",
+    "subject": "Lunch",
+    "body": "See you at noon."
+   }
+  },
+  {
+   "t": 1794745909.365505,
+   "kind": "tool_run",
+   "name": "send_email",
+   "args": {
+    "to": "lee@example.com",
+    "subject": "Report",
+    "body": "The report is ready. Edited by the reviewer."
+   }
+  }
+ ]
+}

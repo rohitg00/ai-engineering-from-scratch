@@ -134,7 +134,7 @@ returned:
 }
 ```
 
-Nothing saved the pause, so it cannot resume. A `Command(resume=...)` with no checkpointer raises `RuntimeError` with the text `Cannot use Command(resume=...) without checkpointer` {{code libs/langgraph/langgraph/pregel/_loop.py}}. The kit does not record that error yet. A capture of it comes in the next edition, with the other open items of [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+Nothing saved the pause, so it cannot resume. A `Command(resume=...)` with no checkpointer raises `RuntimeError` with the text `Cannot use Command(resume=...) without checkpointer` {{code libs/langgraph/langgraph/pregel/_loop.py}}. The kit does not record that error yet. A capture of it comes in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 **Resume of a thread that is not waiting.** The kit sent `Command(resume='x')` to the review thread after it had finished. The call did not raise. It returned the finished state with no interrupts, and no node ran:
 

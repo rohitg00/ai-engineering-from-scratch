@@ -164,10 +164,6 @@ claim: One connection and a pool of 20 both give 0.22 runs per second at 64 thre
 caption: Each dot is one run, two runs per point. Each line joins the means of one connection setup. The left chart gives runs per second, and the right chart gives the p99 of aput in ms on a log scale. The x axis is the number of threads at once, on a log scale. From capture/lab/summary/concurrency-x86-real.json.
 ```
 
-An earlier run of this test used a stand-in model of 20 ms per step, so the saver itself carried the load. It ran 1 to 500 threads, with 5 steps per run. With the stand-in model of 20 ms, one connection gave 207 and 214 steps per second at 500 threads. A pool of 20 gave 326 and 341, and a pool of 90 was no faster.
-
-The limit was then the client process, at about 110 percent CPU. With the same stand-in, 8 and 16 client processes with a pool of 10 each gave 1,744 and 3,797 steps per second. At 16 processes, Postgres reached its `max_connections` of 100 and refused our monitor connection.
-
 With a model on CPU, the model limits throughput long before the saver does. Size the pool to the threads that run at once to keep the tail of checkpoint writes low. A second run on a thread that is still running is a different problem, double texting, and [section 8.1](#s-agent-server-langgraph-dev-up-and-deploy) covers it on Agent Server.
 
 ```takeaways
@@ -178,4 +174,4 @@ With a model on CPU, the model limits throughput long before the saver does. Siz
 - Use a connection pool for AsyncPostgresSaver, and expect the model, not the saver, to limit throughput.
 ```
 
-Sources: capture/s_persist.py, capture/common.py, capture/out/28-checkpoint-memory.txt, capture/out/29-checkpoint-sqlite.txt; capture/lab/summary/concurrency-x86-real.json, capture/lab/T16-concurrency-x86-real/01-levels.jsonl, capture/lab/T16-concurrency-x86-real/t16r_conc.py, capture/lab/summary/concurrency-x86.json, capture/lab/T16-concurrency-x86/01-levels.jsonl, capture/lab/T16-concurrency-x86/02-multiprocess.jsonl, capture/lab/T16-concurrency-x86/00-pg-settings.txt; capture/lab/internals/03-checkpoint/trace.txt; libs/langgraph/langgraph/pregel/_loop.py at langgraph 1.2.22; libs/checkpoint/langgraph/checkpoint/base/__init__.py, libs/checkpoint/langgraph/checkpoint/memory/__init__.py, and libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/__init__.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/persistence, oss/python/langgraph/checkpointers, oss/python/langchain/short-term-memory).
+Sources: capture/s_persist.py, capture/common.py, capture/out/28-checkpoint-memory.txt, capture/out/29-checkpoint-sqlite.txt; capture/lab/summary/concurrency-x86-real.json, capture/lab/T16-concurrency-x86-real/01-levels.jsonl, capture/lab/T16-concurrency-x86-real/t16r_conc.py, capture/lab/internals/03-checkpoint/trace.txt; libs/langgraph/langgraph/pregel/_loop.py at langgraph 1.2.22; libs/checkpoint/langgraph/checkpoint/base/__init__.py, libs/checkpoint/langgraph/checkpoint/memory/__init__.py, and libs/checkpoint-sqlite/langgraph/checkpoint/sqlite/__init__.py at langgraph 1.2.22; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/persistence, oss/python/langgraph/checkpointers, oss/python/langchain/short-term-memory).

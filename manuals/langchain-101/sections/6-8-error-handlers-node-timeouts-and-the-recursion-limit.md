@@ -95,7 +95,7 @@ claim: Every failed attempt, a timeout too, goes to retry_on first, and the erro
 caption: Read from the failed attempt at the top. Each grey box is one check, with the outcome of the kit beside its arrow. The rose box is the error that leaves invoke. From capture/out/37-error-handler-timeout.txt.
 ```
 
-A timeout applies only to async nodes. The code refuses a timeout on a sync node, because a sync Python function cannot be stopped from outside {{code libs/langgraph/langgraph/_internal/_timeout.py}}. The kit does not record that refusal yet. A capture of it comes in the next edition, with the other open items of [section 8.7](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+A timeout applies only to async nodes. The code refuses a timeout on a sync node, because a sync Python function cannot be stopped from outside {{code libs/langgraph/langgraph/_internal/_timeout.py}}. The kit does not record that refusal yet. A capture of it comes in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
 
 ## The recursion limit
 
