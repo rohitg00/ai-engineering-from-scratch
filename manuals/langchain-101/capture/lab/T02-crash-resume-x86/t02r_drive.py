@@ -3,6 +3,7 @@ import itertools
 import json
 import os
 import random
+import re
 import signal
 import subprocess
 import sys
@@ -99,7 +100,7 @@ def main():
     a = ap.parse_args()
     os.makedirs(os.path.join(HERE, "db"), exist_ok=True)
     setup()
-    jl(a.out, header("t02r_drive.py", workers=a.workers, reps=a.reps, rep_start=a.rep_start, keys=a.keys, skip=a.skip, num_predict=256, pg=DSN))
+    jl(a.out, header("t02r_drive.py", workers=a.workers, reps=a.reps, rep_start=a.rep_start, keys=a.keys, skip=a.skip, num_predict=256, pg=re.sub(r"(://[^:/@]*):[^@]*@", r"\1@", DSN)))
     skip = {tuple(x.split(":")) for x in a.skip.split(",") if x}
     cells = [c for c in itertools.product(a.savers.split(","), a.durs.split(","), a.points.split(","), a.keys.split(",")) if (c[1], c[2]) not in skip]
     for rep in range(a.rep_start, a.rep_start + a.reps):

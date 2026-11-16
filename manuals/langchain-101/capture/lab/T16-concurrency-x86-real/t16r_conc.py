@@ -90,7 +90,7 @@ class LogModel(AgentMiddleware):
 async def monitor(stop, samples):
     async with await psycopg.AsyncConnection.connect(DSN, autocommit=True) as c:
         while not stop.is_set():
-            r = await (await c.execute("select count(*), count(*) filter (where state='active') from pg_stat_activity where datname='lr2' and pid<>pg_backend_pid()")).fetchone()
+            r = await (await c.execute("select count(*), count(*) filter (where state='active') from pg_stat_activity where datname=current_database() and pid<>pg_backend_pid()")).fetchone()
             samples.append(r)
             try:
                 await asyncio.wait_for(stop.wait(), 0.25)

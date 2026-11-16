@@ -133,6 +133,9 @@ RECORDED = re.compile(r"^Recorded on \d{4}-\d{2}-\d{2} on .+ with Ollama \S+ on 
 SETTINGS = ("ChatOllama settings:", "OllamaEmbeddings settings:")
 
 
+SIDECARS = {"25-stream-events-v3": ".events.json"}
+
+
 def structure(folder, stems):
     from expect import EXPECT
     problems = []
@@ -141,6 +144,9 @@ def structure(folder, stems):
         if not os.path.exists(path):
             problems.append(f"{stem}.txt: missing")
             continue
+        sidecar = SIDECARS.get(stem)
+        if sidecar and not os.path.exists(os.path.join(folder, stem + sidecar)):
+            problems.append(f"{stem}{sidecar}: missing")
         with open(path, encoding="utf-8") as handle:
             body = handle.read()
         found = RECORDED.search(body)

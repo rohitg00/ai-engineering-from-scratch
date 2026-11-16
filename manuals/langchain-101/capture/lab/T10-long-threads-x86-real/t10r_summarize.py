@@ -26,7 +26,7 @@ def main():
         import re
         def ans_ok(r):
             t = r["answer"].replace(",", "")
-            return all(re.search(rf"(?<!\\d){n}(?!\\d)", t) for n in r["expect"])
+            return all(re.search(rf"(?<!\d){n}(?!\d)", t) for n in r["expect"])
         def used(r):
             return r["tool_msgs_this_turn"] >= len(r["expect"])
         print(f"  tool turns correct (answer has every sum and tool ran for each) {sum(1 for r in tool if r['correct'])}/{len(tool)}; answer has every sum {sum(1 for r in tool if ans_ok(r))}/{len(tool)}; tool ran for each addition {sum(1 for r in tool if used(r))}/{len(tool)}")

@@ -37,6 +37,8 @@ The first middleware in the list wraps all the others. For a tool call, the orde
 
 `ToolTimeout` is ours, and it is four lines of `asyncio.wait_for`. In LangChain 1.5.0 only the shell and file search middleware set time limits, and a general tool call has none. `refund_order` gets 15 s and the other tools 5 s. The tests set 0.5 s.
 
+A timeout cancels the wait for the tool. It does not undo the effect. A refund tool can commit its row before the limit fires. After a timeout on a tool that moves money, read the order before you tell the customer that nothing happened.
+
 **Idempotent tool:** a tool that gives the same result and the same side effects when you call it twice with the same arguments. Only `read_order`, `search_faq`, and `recall_notes` are on the retry list. `create_ticket` and `save_note` write a row with a new id on each call, so a retry after a lost reply would write two. `refund_order` has its own key, which [section 9.3](#s-approvals-and-the-idempotency-key) explains.
 
 The error text tells the model what to do with the failure.
