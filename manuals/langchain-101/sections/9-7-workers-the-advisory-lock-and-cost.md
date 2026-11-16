@@ -44,7 +44,7 @@ Three choices in that class matter.
 
 **We measured** the service under load on the Mac with Qwen3 4B, one run of each cell. Each user had one thread and sent four requests in order. They were an order question, a FAQ question, a refund with the amount and the reason, and the approval. All users started at once. The load generator ran on the same Mac with a read timeout of 120 s, and each worker had a pool of 20 connections. Requests went to the workers in turn.
 
-As a baseline, one user alone ran 5 sessions of 4 requests. A run took a median of 3.0 s, and the user finished 0.269 runs each second.
+As a baseline, one user alone ran 5 sessions of 4 requests. A run took a median of 3.0 s, and the user finished 0.269 runs each second. Leaked test servers held 66 Postgres connections during this baseline, so treat it as a rough reference.
 
 | Workers | Users at once | Requests | Client timeouts | 409 on approve | Runs each second | Median s per run | 95th percentile s | Postgres connections, max |
 |---|---|---|---|---|---|---|---|---|

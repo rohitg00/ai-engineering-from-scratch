@@ -3,9 +3,9 @@
 const { figure } = require('../../../_shared/figkit.js');
 
 const columns = [
-  { x: 16, kicker: 'v1, two modes', outer: 'a tuple', outerSub: ['(mode, data)', 'shape changes with modes'], inner: 'data', innerSub: ['(ToolMessage, metadata)', 'langgraph_node: tools'], where: 'chunk 1 of messages' },
-  { x: 222, kicker: 'v2, any modes', outer: 'a StreamPart dict', outerSub: ['type, ns, data', 'type: messages'], inner: 'data', innerSub: ['message: ToolMessage', 'metadata: node tools'], where: 'part 2' },
-  { x: 428, kicker: 'v3 event', outer: 'an event frame', outerSub: ['type, method, params, seq', 'method: tools'], inner: 'params.data', innerSub: ['event: tool-finished', 'output: ToolMessage'], where: 'seq 8' },
+  { x: 16, kicker: 'v1, two modes', outer: 'a tuple', outerSub: ['(mode, data)', 'shape changes with modes'], inner: 'data', innerSub: ['(ToolMessage, metadata)', 'langgraph_node: tools'], where: 'chunk 3 of messages' },
+  { x: 222, kicker: 'v2, any modes', outer: 'a StreamPart dict', outerSub: ['type, ns, data', 'type: messages'], inner: 'data', innerSub: ['message: ToolMessage', 'metadata: node tools'], where: 'part 3' },
+  { x: 428, kicker: 'v3 event', outer: 'an event frame', outerSub: ['type, method, params, seq', 'method: tools'], inner: 'params.data', innerSub: ['event: tool-finished', 'output: ToolMessage'], where: 'seq 9' },
 ];
 
 module.exports = figure('fig-5-1b', {

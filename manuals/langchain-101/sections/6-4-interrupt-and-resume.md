@@ -89,7 +89,7 @@ So the code before an `interrupt` must be safe to run twice. The docs ask for si
 
 A node can call `interrupt` more than once. The kit node asks for a title and then a body. The first run returned the title question. The resume with `"Release"` ran the node from its top, and the first `interrupt` returned `"Release"`. The second `interrupt` then stopped the run with the body question. The resume with `"Friday"` finished it with the draft `Release: Friday`.
 
-LangGraph matches each answer to an `interrupt` call by its position in the node. The docs warn against code that skips or reorders `interrupt` calls between runs, and against an `interrupt` inside a `while True` loop {{docs oss/python/langgraph/interrupts}}. Since `langgraph` 1.2.20, each `interrupt` in a task has its own id {{code langgraph 1.2.20 release notes}}. The kit recorded two different ids for the two questions.
+LangGraph matches each answer to an `interrupt` call by its position in the node. The docs warn against code that skips or reorders `interrupt` calls between runs, and against an `interrupt` inside a `while True` loop {{docs oss/python/langgraph/interrupts}}. Since `langgraph` 1.2.20, each `interrupt` in a task has its own id (the release notes of `langgraph` 1.2.20, not checked in the code). The kit recorded two different ids for the two questions.
 
 ## An answer with a schema
 

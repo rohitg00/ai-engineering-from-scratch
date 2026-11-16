@@ -57,7 +57,7 @@ note: Cut to the options after the input.
    "on_disconnect": "continue"
 ```
 
-The UI code asks for `values` only. The SDK adds `messages-tuple` for the tokens and `custom` for UI events {{code @langchain/langgraph-sdk/dist/react/stream.lgp.js:545-557}}. The graph id goes in `assistant_id`, and the server resolves it. After every run, the UI called `POST /history` with a limit of 10.
+The UI code asks for `values` only. The SDK adds `messages-tuple` for the tokens and `custom` for UI events {{code @langchain/langgraph-sdk/dist/react/stream.lgp.js:545-557}} {{code @langchain/langgraph-sdk/dist/react/stream.lgp.js:148}}. The graph id goes in `assistant_id`, and the server resolves it. After every run, the UI called `POST /history` with a limit of 10.
 
 The approval reached the UI inside a `values` event, under the key `__interrupt__`. The stream had no `updates` event. [Section 5.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) explains each stream mode.
 
@@ -186,7 +186,7 @@ Text streamed token by token. Each token was one `messages` event, and the UI gr
 
 For a plain question in a new thread, the first token reached the proxy 0.87 to 1.23 s after the POST, n=3. It was on screen 0.04 to 0.07 s later. The approval form came 0.145 and 0.204 s after the tool call card, n=2.
 
-The first run took 106.6 s to its tool call. Ollama reported 0.41 s of load, 1.40 s of prompt, and 0.76 s of output in that call. The rest was a queue behind another client of the same Ollama, so do not read it as UI time.
+The first run waited in a queue behind another client of the same Ollama before its tool call. Do not read its time as UI time.
 
 ## Threads, history, and what leaves the machine
 

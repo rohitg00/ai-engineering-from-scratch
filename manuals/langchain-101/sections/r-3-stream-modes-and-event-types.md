@@ -12,7 +12,7 @@ The type `StreamMode` lists seven modes {{code libs/langgraph/langgraph/types.py
 |---|---|---|---|
 | `values` | the whole state after each step | 4 | `21-stream-updates-values.txt` |
 | `updates` | a dict from the node name to the update that the node returned | 3 | `21-stream-updates-values.txt` |
-| `messages` | a tuple of a message chunk and a metadata dict | 9 | `22-stream-messages.txt` |
+| `messages` | a tuple of a message chunk and a metadata dict | 13 | `22-stream-messages.txt` |
 | `custom` | the value that a node or tool passed to `stream_writer` | 0, because no tool wrote one | `23-stream-tasks-custom-debug.txt` |
 | `tasks` | a task start with `id`, `name`, `input`, and `triggers`, or a task result with `error` and `result` | 6 | `23-stream-tasks-custom-debug.txt` |
 | `debug` | a dict with `step`, `timestamp`, a `type` of `checkpoint`, `task`, or `task_result`, and a `payload` | 6, with no checkpointer | `23-stream-tasks-custom-debug.txt` |
@@ -73,7 +73,7 @@ The `tools` mode yields one dict for each tool event. Its `event` key names the 
 | A sync `stream_events` with v1 or v2 raises `NotImplementedError`. Use `astream_events` for those versions. | {{code libs/core/langchain_core/runnables/base.py:1818}} |
 | The kit pins the event shapes with `langchain-protocol` 0.0.21. | `capture/requirements.txt` |
 
-Each raw event is a frame with `type` `event`, a `method`, `params` with `namespace`, `timestamp`, and `data`, and a `seq` number. Our run gave 21 frames: 4 `values`, 15 `messages`, and 2 `tools`.
+Each raw event is a frame with `type` `event`, a `method`, `params` with `namespace`, `timestamp`, and `data`, and a `seq` number. Our run gave 23 frames: 4 `values`, 17 `messages`, and 2 `tools`.
 
 | `method` | What `data` holds | Line in `protocol.py` |
 |---|---|---|
@@ -91,7 +91,7 @@ A `messages` frame carries one of these events for one model message:
 |---|---|---|
 | `message-start` | `role`, `id` | 2 |
 | `content-block-start` | `index`, `content` | 2 |
-| `content-block-delta` | `index`, `delta`, such as `{"type": "text-delta", "text": "The"}` | 7 |
+| `content-block-delta` | `index`, `delta`, such as `{"type": "text-delta", "text": "The"}` | 9, of which 8 are `text-delta` and 1 is `tool-call-delta` |
 | `content-block-finish` | `index`, `content`, the whole block | 2 |
 | `message-finish` | none in our run | 2 |
 | `error` | defined by the protocol | 0 |

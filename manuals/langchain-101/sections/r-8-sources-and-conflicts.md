@@ -1,6 +1,6 @@
 # Sources and conflicts
 
-> The manual ranks the code at the tags above the documentation, uses its own recorded runs for every listing and measured number, and records 26 conflicts between its sources.
+> The manual ranks the code at the tags above the documentation, uses its own recorded runs for every listing and measured number, and records 32 conflicts between its sources.
 
 The ranks are the same as in [How to read this manual](#s-front). When two sources disagree, the higher one wins, and the section says so. We read every source and checked every fact on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) describes the machines and the method.
 
@@ -59,7 +59,7 @@ The LangChain, LangGraph, and Python marks in the figures belong to their owners
 
 ## Ranks 4 and 5: the kit and the lab
 
-The capture kit writes 49 files. The lab holds 45 experiment folders, 42 summary files, and the bench with its own summary. The production service of Part 9 keeps its code, its raw runs, and nine summaries in one folder. The bench and the service priced each Claude call at the list prices of the Anthropic pricing page, read on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
+The capture kit writes 56 files: 19 model-free, 36 recorded, and 1 sidecar. The lab holds 51 experiment folders, 47 summary files, and the bench with its own summary. The production service of Part 9 keeps its code, its raw runs, and ten summaries in one folder. The bench and the service priced each Claude call at the list prices of the Anthropic pricing page, read on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
 
 ## Issues and advisories
 

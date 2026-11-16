@@ -2,7 +2,7 @@
 
 > Each error and warning in this manual has one class, one package that raises it, and one line at the pin, and the text below is copied from a capture.
 
-This page is the lookup by class. [Symptom, cause, fix](#s-symptom-cause-fix) is the lookup by symptom, with the fix for each message. Each message is copied from a capture file or a lab recording. Text in angle brackets, such as `<seconds>`, is a mask of the capture kit. A long message is cut after its first sentence, and a cut line ends where the capture continues.
+This page is the lookup by class. [Symptom, cause, fix](#s-symptom-cause-fix) is the lookup by symptom, with the fix for each message. Each message is copied from a capture file or a lab recording. A class marked "not in a capture" is copied from the source code. Text in angle brackets, such as `<seconds>`, is a mask of the capture kit. A long message is cut after its first sentence, and a cut line ends where the capture continues.
 
 ## langchain
 
@@ -10,7 +10,7 @@ This page is the lookup by class. [Symptom, cause, fix](#s-symptom-cause-fix) is
 |---|---|---|
 | `AssertionError` | `Please remove duplicate middleware instances.` | {{code libs/langchain_v1/langchain/agents/factory.py:1164}} |
 | `ValueError` | `Unable to infer model provider for model='qwen3:4b'. Please specify 'model_provider' directly.` | {{code libs/langchain_v1/langchain/chat_models/base.py:641}} |
-| `StructuredOutputValidationError` | `Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer` | {{code libs/langchain_v1/langchain/agents/structured_output.py:62-104}} |
+| `StructuredOutputValidationError`, not in a capture | `Failed to parse structured output for tool 'Answer': Failed to parse data to Answer: 1 validation error for Answer` | {{code libs/langchain_v1/langchain/agents/structured_output.py:62-104}} |
 | `StructuredOutputValidationError` | `Failed to parse structured output for tool 'Answer': Native structured output expected valid JSON for Answer, but parsing failed` | {{code libs/langchain_v1/langchain/agents/structured_output.py:426}} |
 | `MultipleStructuredOutputsError`, sent to the model as text | `Error: Model incorrectly returned multiple structured responses (Answer, Refusal) when only one is expected.` | {{code libs/langchain_v1/langchain/agents/structured_output.py:43-57}} |
 | `ValueError` | `Unsupported schema type: <class 'typing._UnionGenericAlias'>.` | {{code libs/langchain_v1/langchain/agents/structured_output.py:191}} |
@@ -29,8 +29,8 @@ The retry text of `ToolStrategy` is the template `Error: {error}\n Please fix yo
 
 | Class | Message | Raised at |
 |---|---|---|
-| `ModelRefusalError` | `Model refused to produce the requested output: I can't help with that.` | {{code libs/core/langchain_core/exceptions.py:137-154}} |
-| `ValueError` | `No generations found in stream.` | {{code libs/core/langchain_core/language_models/chat_models.py:276}} |
+| `ModelRefusalError`, not in a capture | `Model refused to produce the requested output: I can't help with that.` | {{code libs/core/langchain_core/exceptions.py:137-154}} |
+| `ValueError`, not in a capture | `No generations found in stream.` | {{code libs/core/langchain_core/language_models/chat_models.py:276}} |
 | `NotImplementedError` | `stream_events(version='v2') is not supported.` | {{code libs/core/langchain_core/runnables/base.py:1818}} |
 | `NotImplementedError`, empty text | raised by `bind_tools` on a stock fake chat model | {{code libs/core/langchain_core/language_models/chat_models.py:2409-2426}} |
 

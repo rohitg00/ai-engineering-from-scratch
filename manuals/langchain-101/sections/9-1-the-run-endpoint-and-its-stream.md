@@ -154,7 +154,9 @@ async def sse(queue):
 | without a heartbeat | 157 | 48 | 107 | 155, of which 19 `cancelled` at shutdown | 164.7 and 193.8 |
 | with a heartbeat | 200 | 0 | 192 | 192, none cancelled | 194.8 and 286.7 |
 
-With the heartbeat every session sent all four requests, and the slowest run took 286.7 s with no timeout. The other 8 requests were approves that got 409, because the model had proposed no refund. The runs took longer because more of them reached the model, and the server still finished 0.231 runs each second. The heartbeat keeps a client attached. It does not make the model faster.
+With the heartbeat every session sent all four requests, and the slowest run took 286.7 s with no timeout. The other 8 requests were approves that got 409, because the model had proposed no refund. The runs took longer because more of them reached the model, and the server still finished 0.231 runs each second.
+
+The Mac was loaded for this run, at a load average of 32.78. Read the seconds as upper bounds and the counts as the result. The heartbeat keeps a client attached. It does not make the model faster.
 
 ```figure
 id: fig-9-1c

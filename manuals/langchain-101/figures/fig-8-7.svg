@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" role="img" aria-labelledby="fig-8-7-title fig-8-7-desc" font-family="JetBrains Mono, ui-monospace, monospace">
   <title id="fig-8-7-title">Seven failures of the drill, before and after each fix</title>
-  <desc id="fig-8-7-desc">A table of seven rows, one per case of the failure drill with Qwen3 4B on the x86 server guest, with the symptom on the left and the result after the fix on the right. Retry layers: 9 requests against 3. A crash after a charge: 3 or 4 charges against 2 with the key, because the model asked for two charges. A middleware that jumps past review: the tool ran before any decision, and per-call mode stopped it. No structured output: None with no exception in 3 of 5 prompts, and a check that raises. A tracing endpoint that is down: exit 16.9 s after the run against 0.3 s. The same tool name twice: one tool bound with no error. Endless tool calls: GraphRecursionError at limit 10, and a model call limit of 3 that ends the run after 3 calls, with the recursion limit raised to 25.</desc>
+  <desc id="fig-8-7-desc">A table of seven rows, one per case of the failure drill with Qwen3 4B on the x86 server guest, with the symptom on the left and the result after the fix on the right. Retry layers: 9 requests against 3. A crash after a charge: 4 charges against 2 with the key, because the model asked for two charges. A middleware that jumps past review: the tool ran before any decision, and per-call mode stopped it. No structured output: None with no exception in 3 of 5 prompts, and a check that raises. A tracing endpoint that is down: exit 16.9 s after the run against 0.3 s. The same tool name twice: one tool bound with no error. Endless tool calls: GraphRecursionError at limit 10, and a model call limit of 3 that ends the run after 3 calls, with the recursion limit raised to 25.</desc>
   <text x="176" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE SYMPTOM</text>
   <text x="408" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AFTER THE FIX</text>
   <text x="20" y="59" font-size="11.5" font-weight="700">retry layers</text>
@@ -12,7 +12,7 @@
   <text x="420" y="67.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">max_retries=0 on the model</text>
   <text x="20" y="117" font-size="11.5" font-weight="700">crash after a charge</text>
   <rect x="176" y="90" width="220" height="46" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
-  <text x="188" y="108.1" font-size="12" font-weight="700">3 or 4 charges</text>
+  <text x="188" y="108.1" font-size="12" font-weight="700">4 charges</text>
   <text x="188" y="125.3" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">SIGKILL, then a resume</text>
   <rect x="408" y="90" width="212" height="46" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
   <text x="420" y="108.1" font-size="12" font-weight="700">2 with the key</text>

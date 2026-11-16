@@ -11,7 +11,7 @@ When you finish this section, you can predict how pass rate, tokens, time, and d
 - **Bind all your tools to a frontier model.** Claude Haiku 5.5 passed 10 of 10 tasks at 5, 20, 50, and 100 tools, and made one distractor call in 40 runs.
 - **Turn on prompt caching, because the tool list is the cost.** At 100 tools the median run sent 44,645 prompt tokens, and the cache cut the bill to 36% of list price.
 - **Leave `LLMToolSelectorMiddleware` out at `langchain` 1.5.0.** Its selection request carries no tool description in its messages. On Claude it doubled calls, time, and dollars and gained nothing. On Qwen3 4B it cut the passes to 1 of 10 at every size.
-- **On a small local model, keep the list short.** Qwen3 8B fell from 5 to 0 of 10 between 5 and 50 tools. Qwen3 4B held 5 of 10 at 100 tools, but each run took 53 s.
+- **On a small local model, keep the list short.** Qwen3 8B fell from 5 to 0 of 10 between 5 and 50 tools. Qwen3 4B held 5 of 10 at 100 tools, but a median run took 53 s.
 
 ## The experiment
 
@@ -25,7 +25,9 @@ Three settings ran at each size:
 - **Selector:** `LLMToolSelectorMiddleware` with the agent model, `max_tools=6`, and `always_include=["submit_answer"]`, with its default prompt.
 - **Selector with a list:** the same, with our own `system_prompt` that adds the name and description of every tool. Only the Qwen3 models ran it.
 
-**We measured** every run on the Mac. Qwen3 4B ran at the four sizes and Qwen3 8B at 5 and 50 tools, on Ollama at temperature 0. Claude Haiku 5.5 ran at the four sizes through the API. Each cell is the 10 tasks, once each. [Figure](#fig-4-4) shows every run.
+**We measured** every run on the Mac. Qwen3 4B ran at the four sizes and Qwen3 8B at 5 and 50 tools, on Ollama at temperature 0. Claude Haiku 5.5 ran at the four sizes through the API. Each cell is the 10 tasks, once each.
+
+A pass here is the lenient pass of the checker. A strict pass, which also needs `submit_answer`, was 0 to 2 of 10 in the Qwen3 cells. [Figure](#fig-4-4) shows every run.
 
 ```figure
 id: fig-4-4

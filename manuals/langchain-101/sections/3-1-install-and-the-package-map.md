@@ -26,7 +26,7 @@ The stack splits across these distributions at the pin:
 | `langchain-text-splitters` | 1.1.3 | `langchain_text_splitters` | the text splitters |
 | `langchain-classic` | 1.0.8 | `langchain_classic` | the 0.3 namespace: chains, legacy agents, the prompt hub module, and old memory classes |
 
-Each provider has its own package, such as `langchain-openai` 1.8.0, `langchain-anthropic` 1.7.10, and `langchain-ollama` 1.1.0. They live in the same repository as `langchain`, but each is released from its own tag. At the `langchain` 1.5.0 tag, the OpenAI package in the tree is still 1.7.4 {{code libs/partners/openai/pyproject.toml}}.
+Each provider has its own package, such as `langchain-openai` 1.8.0, `langchain-anthropic` 1.7.10, and `langchain-ollama` 1.1.0. They live in the same repository as `langchain`, but each is released from its own tag. At the `langchain` 1.5.0 tag, the OpenAI package in the tree is still 1.7.4 {{code libs/partners/openai/pyproject.toml}}. The versions of `langchain-classic` 1.0.8 and `langchain-community` 0.4.2 come from PyPI, not from the capture of versions.
 
 `langgraph`, `langgraph-prebuilt`, `langgraph-checkpoint`, and `langgraph-checkpoint-postgres` came from one commit at the pin, with four different version numbers. [Figure](#fig-3-1) shows what each package requires.
 
@@ -61,7 +61,7 @@ The same change breaks a rule of the release policy page. That page says that th
 
 ## A lockfile
 
-A minor release of one package can change what your code sees. `langchain-core` 1.7.0 changed the tool call events of a stream. Its changelog entry says to pin below 1.7 to keep the old shape {{docs oss/python/releases/changelog}}. `langgraph` released 1.2.20, 1.2.21, and 1.2.22 within nine days {{code PyPI JSON of langgraph}}.
+A minor release of one package can change what your code sees. `langchain-core` 1.7.0 changed the tool call events of a stream. Its changelog entry says to pin below 1.7 to keep the old shape {{docs oss/python/releases/changelog}}. `langgraph` released 1.2.20, 1.2.21, and 1.2.22 within nine days, by the release dates on PyPI.
 
 So pin every package of the stack to one exact version. The capture kit pins 25 of them in `capture/requirements.txt`, and it writes what it installed:
 

@@ -79,13 +79,13 @@ Two cells on the same tasks are paired, so the bench also counts the tasks where
 
 The kit times each model call from the start callback to the end callback, and each tool inside its wrapper. Framework time is the wall time minus those two. It also holds the call meter of the kit, which is the same in every harness.
 
-The Mac was shared with other work, at a load average of 1 to 7 at the starts of the runs. Treat every time as an upper bound, and compare times only inside one table.
+The Mac was shared with other work. Treat every time as an upper bound, and compare times only inside one table.
 
 ## Cost
 
 The kit wrote one ledger row for every Claude call, with the usage that the API returned and the list price of 2026-11-14. It stopped before a call when the ledger reached its cap. The whole bench used 2,589 calls and $0.93.
 
-The ledger recorded 0 cache-write tokens on every call, and it priced those tokens at the base input price. If the API billed cache writes at 1.25 times, our dollars are low. The bound is 13% for a plain loop cell and 7% for a deep agent cell. The deep agent ratio would then be lower, never higher.
+The ledger recorded 0 cache-write tokens on every call, and it priced those tokens at the base input price. If the API billed cache writes at 1.25 times, our dollars are low. The bound is 12.7% for a plain loop cell. For a deep agent cell it is about 6%: 4.6% on Haiku, 6.4% on Sonnet, and 6.1% over both. The deep agent ratio would then be lower, never higher.
 
 ## Rows not to use
 

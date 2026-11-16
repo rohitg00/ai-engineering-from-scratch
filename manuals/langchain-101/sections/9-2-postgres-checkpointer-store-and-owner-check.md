@@ -93,7 +93,7 @@ The same question from alice called `recall_notes`, which returned `["door code 
 
 ## What one conversation writes
 
-**We measured** the rows of the load test in [section 9.7](#s-workers-the-advisory-lock-and-cost), with Qwen3 4B. Each user had one thread with four runs: an order question, a FAQ question, a refund request, and the approval. With 10 users, each run wrote 27.2 rows to the three checkpoint tables, about 20 KB of row data. That held in all four 10-user cells. With 50 users it was 29.5 to 30.1 rows and 21.6 to 22.1 KB, because some runs ended early when their clients timed out.
+**We measured** the rows of the load test in [section 9.7](#s-workers-the-advisory-lock-and-cost), with Qwen3 4B. Each user had one thread with four runs: an order question, a FAQ question, a refund request, and the approval. With 10 users, each run wrote 27.2 rows to the three checkpoint tables, about 20.3 to 20.4 KB of row data. That held in all three 10-user cells. A fourth cell was run again and replaced. With 50 users it was 29.5 to 30.1 rows and 21.6 to 22.1 KB, because some runs ended early when their clients timed out.
 
 None of those rows names a user. A request for a thread reaches its rows only through the owner check, and a tool reaches a user's rows only through the context.
 

@@ -25,8 +25,8 @@ The package exports 50 names from that module. Nineteen of them are middleware c
 | `ModelRefusalMiddleware` | `wrap_model_call` | Raises `ModelRefusalError` when the reply is a refusal block. | [4.7](#s-retries-backup-models-rate-limits-and-caching) |
 | `ToolErrorMiddleware` | `wrap_tool_call` | Turns an exception inside a tool into an error `ToolMessage`. It needs `on_error`. | [3.4](#s-tools-toolruntime-and-tool-errors) |
 | `PIIMiddleware` | `before_model`, `after_model` | Finds one kind of personal data and redacts, masks, hashes, or blocks it. Input only by default. | [4.8](#s-guardrails-pii-and-the-decision-middleware-beta) |
-| `ModelRouterMiddleware` | `before_agent`, `wrap_model_call` | Asks a decision model which model to use for the run. Beta, new in 1.5.0. | [4.8](#s-guardrails-pii-and-the-decision-middleware-beta) |
-| `AutoModeMiddleware` | `wrap_tool_call` | Asks a decision model if a tool call is risky, and blocks it. Beta, new in 1.5.0. | [4.8](#s-guardrails-pii-and-the-decision-middleware-beta) |
+| `ModelRouterMiddleware` | `before_agent`, `wrap_model_call` | Asks a decision model which model to use for the run. Beta, new in 1.5.0 by the release notes. | [4.8](#s-guardrails-pii-and-the-decision-middleware-beta) |
+| `AutoModeMiddleware` | `wrap_tool_call` | Asks a decision model if a tool call is risky, and blocks it. Beta, new in 1.5.0 by the release notes. | [4.8](#s-guardrails-pii-and-the-decision-middleware-beta) |
 | `TodoListMiddleware` | `wrap_model_call`, `after_model` | Adds a `write_todos` tool and a prompt, and keeps the list in `state["todos"]`. | this section |
 | `LLMToolSelectorMiddleware` | `wrap_model_call` | Asks a model, by default the agent model itself, which tools to bind before each model call. | this section, [4.4](#s-many-tools-and-the-tool-selector) |
 | `LLMToolEmulator` | `wrap_tool_call` | Lets a model invent the result of a tool, for tests. The tool never runs. | this section |

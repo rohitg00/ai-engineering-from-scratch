@@ -9,7 +9,7 @@ const loadData = load(path.join(lab, 'load-mac.json'));
 const iso = load(path.join(lab, 'service-mac.json')).isolation;
 const cell = loadData.cells.find(c => c.workers === 1 && c.users === Math.max(...loadData.cells.map(x => x.users)));
 const per = name => (cell.checkpoint_rows[name] / cell.runs).toFixed(2);
-const kb = (cell.checkpoint_data_bytes_per_run / 1024).toFixed(1);
+const kb = (cell.checkpoint_data_bytes_per_run / 1000).toFixed(1);
 
 module.exports = figure('fig-9-2', {
   height: 430,

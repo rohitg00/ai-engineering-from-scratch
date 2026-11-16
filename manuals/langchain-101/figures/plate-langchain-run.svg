@@ -155,7 +155,7 @@
   <text x="20" y="612" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MEASURED ON THE MAC · APPLE M1 MAX</text>
   <text x="20" y="634" font-size="12" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">outside the model: create_agent 37.62 ms per run, plain openai loop 25.11 ms</text>
   <text x="20" y="654" font-size="12" font-weight="700" fill="var(--m-teal-ink, #18696a)">+15.62 ms in the same round; with InMemorySaver 37.64 ms</text>
-  <text x="20" y="674" font-size="11" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">medians of 40 runs each, Qwen3 4B, three model calls per run</text>
+  <text x="20" y="674" font-size="11" class="m-serif" fill="var(--m-ink-mute, #6f6f6a)">medians of 40 runs each, Qwen3 4B, a two-tool task with three model calls per run</text>
   <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
   <path d="M156.4 113.5L156.4 342" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#plate-langchain-run-head-ink)"/>
   <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M156.4 113.5L156.4 342" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>

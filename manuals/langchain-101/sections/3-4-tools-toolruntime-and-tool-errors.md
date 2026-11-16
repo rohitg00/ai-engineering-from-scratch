@@ -180,7 +180,7 @@ note: The ToolMessage only.
 
 **Tool call id:** the id that the model gives each tool call, which the `ToolMessage` of that call carries back.
 
-**We measured** three cases on the x86 server guest with Qwen3 4B, 3 runs each. Each case gave the same result in 3 of 3 runs.
+**We measured** three cases with Qwen3 4B. The duplicate-name case ran 3 times on the x86 server guest and gave the same result in 3 of 3 runs. The call-count case ran once for each count. The id-less case is a stub on the Mac, with one row for each case.
 
 Two tools with the same name raised no error in `create_agent`. We passed `safe_lookup` and `privileged_delete`, both named `account_action`. The later tool in the list won: the model got only its schema, and each call ran only that tool. With `privileged_delete` second, the call of `account_action` ran `privileged_delete`.
 
@@ -190,7 +190,7 @@ A server that sends tool calls with no id breaks the run in two ways. We sent tw
 
 No real model produced id-less calls: Ollama 0.31.1 sends ids on both paths, so these rows come from a stub on the Mac.
 
-Asked for 1, 2, 4, 8, and 16 calls, Qwen3 4B made 2, 2, 4, 8, and 16 on the x86 server guest. Every call had an id, on both paths. The paths were `ChatOllama` and `ChatOpenAI` on the `/v1` path of Ollama.
+Qwen3 4B made 2, 2, 4, 8, and 16 calls when asked for 1, 2, 4, 8, and 16. Each count ran once on the x86 server guest. Every call had an id, on both paths. The paths were `ChatOllama` and `ChatOpenAI` on the `/v1` path of Ollama.
 
 Under v3, a tool call piece on the last chunk of a stream is lost. A chunk with `chunk_position="last"` reports parsed tool calls from `content_blocks`, and only the calls with an id, in place of chunk blocks {{code libs/core/langchain_core/messages/ai.py}}. A fragment of arguments does not parse alone, so `chunks_to_events` gets no delta for it {{code libs/core/langchain_core/language_models/_compat_bridge.py}}. In a fake model (no real model produces this), the second call became an invalid tool call and got an error `ToolMessage`. With no ids, one of the two calls never ran.
 

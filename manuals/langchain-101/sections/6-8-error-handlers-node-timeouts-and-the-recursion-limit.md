@@ -124,7 +124,7 @@ The graph API page gives 10,007 since `langgraph` 1.1.4, and 10,000 between 1.0.
 
 **We measured** each default of a plain loop on the Mac, one run of each case, with no model. A plain loop stopped at 10007 steps. With the variable set to 25, or with `recursion_limit=25`, it stopped at 25.
 
-The agent ran with Qwen3 4B on the x86 server guest, told to call a tool until the tool answered finished, which it never did. With `recursion_limit=25`, the agent made 13 model calls (Qwen3 4B, x86 server guest, 3 of 3). It made 51 at `recursion_limit` 101. With no limit, the lab script stopped it after 121 model calls in 21 minutes. [Figure](#fig-6-8b) shows each run.
+The agent ran with Qwen3 4B on the x86 server guest, told to call a tool until the tool answered finished, which it never did. With `recursion_limit=25`, the agent made 13 model calls (Qwen3 4B, x86 server guest, 3 of 3). It made 51 at `recursion_limit` 101. With no limit, the lab script stopped it at 1200 s, after 121 model calls. [Figure](#fig-6-8b) shows each run.
 
 ```figure
 id: fig-6-8b

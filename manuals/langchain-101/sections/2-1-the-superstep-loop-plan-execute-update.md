@@ -20,7 +20,7 @@ The loop is short. `loop.tick()` plans, `runner.tick()` runs every planned task 
 
 ## One agent run, captured
 
-We patched the loop functions of `langgraph` 1.2.22 to record each call. Then we ran `create_agent` with Qwen3 4B on Ollama, on the x86 server guest, at temperature 0. The prompt was `Weather in Paris and Oslo?`. The model asked for two `get_weather` calls in its first reply, which took 3.64 s, and answered in its second, which took 1.59 s. This is step 1 and step 2 of the trace:
+We patched the loop functions of `langgraph` 1.2.22 to record each call. Then we ran `create_agent` with Qwen3 4B on Ollama, on the x86 server guest, at temperature 0. The prompt was `Weather in Paris and Oslo?`. The model asked for two `get_weather` calls in its first reply, which took 3.64 s, and answered in its second, which took 1.59 s. These times come from one run on a loaded guest, so read the order and the counts and not the seconds. This is step 1 and step 2 of the trace:
 
 ```listing
 title: plan, execute, and update for the model step and the tools step

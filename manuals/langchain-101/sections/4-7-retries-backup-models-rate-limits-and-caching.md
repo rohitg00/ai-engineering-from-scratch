@@ -41,7 +41,7 @@ tool attempts:
 ]
 ```
 
-When the retries run out under `on_failure="continue"`, the model gets an error `ToolMessage` and the run goes on:
+With `max_retries=1`, when the retries run out under `on_failure="continue"`, the model gets an error `ToolMessage` and the run goes on:
 
 ```listing
 title: the ToolMessage after the retries run out
@@ -56,7 +56,7 @@ With `on_failure="error"`, the run raised `ConnectionError: attempt 2 refused`.
 
 `ModelRetryMiddleware` retries the model call. The kit pointed `ChatOllama` at a relay that closed its first two connections and passed the third to Ollama. With `max_retries=2`, the model got three calls, and the third answered `2 + 3 = 5.`.
 
-With `continue`, the middleware returns an `AIMessage` with the error text in place of a raise. The kit pointed a model at a port where nothing listens. So a failed model call looks like an answer: `Model call failed after 2 attempts with ConnectError: [Errno 111] Connection refused`.
+With `max_retries=1` and `continue`, the middleware returns an `AIMessage` with the error text in place of a raise. The kit pointed a model at a port where nothing listens. So a failed model call looks like an answer: `Model call failed after 2 attempts with ConnectError: [Errno 111] Connection refused`.
 
 ## What each layer retries
 
@@ -76,7 +76,7 @@ A provider package that raises a `ModelError` gets no retry for an error that ca
 
 Every attempt after a timeout wrote its ledger row before the timeout. So a tool whose reply was lost ran its action again, up to 3 times. Issue langchain#40688 reports this for tools that are not idempotent {{issue langchain#40688}}. It is open at the pin, and our runs reproduce it with a real database. The default also retried the missing table, which no retry can fix.
 
-After the error `ToolMessage`, the model did not call the tool again in 9 of 9 runs. Its last message was `done` or `Try again.`, so it read like a success. [Figure](#fig-4-7) draws the timeout case.
+After the error `ToolMessage`, the model did not call the tool again in 9 of 9 runs. Its last message was `done`, or text that starts with `Try again`, so it read like a success. [Figure](#fig-4-7) draws the timeout case.
 
 ```figure
 id: fig-4-7

@@ -170,7 +170,7 @@ module.exports = figure('plate-langchain-run', {
   f.kicker(20, 612, `measured on the Mac · ${machine}`);
   f.text(20, 634, `outside the model: create_agent ${ms(agent)} per run, plain openai loop ${ms(plain)}`, { size: 12, weight: 700, hue: 'blue' });
   f.text(20, 654, `+${ms(added)} in the same round; with InMemorySaver ${ms(saver)}`, { size: 12, weight: 700, hue: 'teal' });
-  f.text(20, 674, `medians of ${real.c_create_agent.n} runs each, Qwen3 4B, three model calls per run`, { size: 11, serif: true, hue: 'ink-mute' });
+  f.text(20, 674, `medians of ${real.c_create_agent.n} runs each, Qwen3 4B, a two-tool task with three model calls per run`, { size: 11, serif: true, hue: 'ink-mute' });
 
   const top = D.P(SX + SIDE / 2, SY + SIDE / 2, 3 + 3 * 12);
   const foot = term.foot;

@@ -179,7 +179,7 @@ Both models got all five right, and each one called `describe_database` first on
 
 Read the table in two layers. The framework part held in every row. No write ran without an approval, the read connection refused a write, and the cancelled orders were still there at the end.
 
-The rest are model results, and two of them are wrong in the text only. Qwen3 4B stored a price of 450 cents and then told the user the price was 4.50 cents. Qwen3 8B read all 60 orders before its refused `DELETE`, and got 25 rows with the note that the result was cut. Then it ended its turn with a promise of a list that it never sent. LangChain did what the code asked in each case.
+The rest are model results, and two of them are wrong in the text only. Qwen3 4B stored a price of 450 cents and then told the user the price was 4.50 cents. Qwen3 8B asked for all orders before its refused `DELETE`. The tool returns at most 25 rows, and it got 25 with the note that the result was cut. Then it ended its turn with a promise of a list that it never sent. LangChain did what the code asked in each case.
 
 ```takeaways
 - Open the read path with a read-only connection, and treat a keyword check as an error message only.

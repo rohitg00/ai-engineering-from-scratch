@@ -14,7 +14,7 @@ const count = (key, outcome) => data.cells[key].outcomes.filter(o => o === outco
 module.exports = figure('fig-4-2b', {
   height: 400,
   title: 'The outcome of each structured output run',
-  desc: `A dot matrix of ${data.runs} runs on the Mac with four Qwen3 models on Ollama. Rows are the flat, nested, union, and enum schemas under ToolStrategy and ProviderStrategy, and columns are the 0.6B, 1.7B, 4B, and 8B models. Blue dots are valid on the first call, amber dots are valid after a retry, and rose dots raised. ProviderStrategy raised on every union run at build time and on ${count('qwen3:4b-instruct-2507-q4_K_M enum provider', 'raised')} enum runs on the 4B model, and was valid otherwise. ToolStrategy raised on ${count('qwen3:0.6b nested tool', 'raised')} of 20 nested runs on 0.6B and ${count('qwen3:8b nested tool', 'raised')} of 10 on 8B.`,
+  desc: `A dot matrix of 400 runs on the Mac with four Qwen3 models on Ollama. Rows are the flat, nested, union, and enum schemas under ToolStrategy and ProviderStrategy, and columns are the 0.6B, 1.7B, 4B, and 8B models. Blue dots are valid on the first call, amber dots are valid after a retry, and rose dots raised. ProviderStrategy raised on every union run at build time and on ${count('qwen3:4b-instruct-2507-q4_K_M enum provider', 'raised')} enum runs on the 4B model, and was valid otherwise. ToolStrategy raised on ${count('qwen3:0.6b nested tool', 'raised')} of 20 nested runs on 0.6B and ${count('qwen3:8b nested tool', 'raised')} of 10 on 8B. The summary holds ${data.runs} runs, and the rest use AutoStrategy.`,
 }, f => {
   const x0 = 170;
   const colW = 112;

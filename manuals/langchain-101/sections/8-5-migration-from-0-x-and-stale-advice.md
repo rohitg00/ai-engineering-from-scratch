@@ -8,9 +8,9 @@ When you finish this section, you can move 0.x code to the 1.x names, and tell a
 
 ## The support window
 
-LangChain 0.3 is in maintenance until December 2026, according to the release policy {{docs oss/python/release-policy}}. The line still gets releases: `langchain` 0.3.30 and `langchain-core` 0.3.86 came on 2026-05-07. `langchain` 0.3.30 carries the hardening of `loads` and `dumps` {{code langchain==0.3.30}}. `langchain-core` 0.3.86 fixes a path traversal, CVE-2026-34070 {{code langchain-core==0.3.86}}. So 0.3 code runs today, and its security fixes stop after 2026.
+LangChain 0.3 is in maintenance until December 2026, according to the release policy {{docs oss/python/release-policy}}. The line still gets releases: `langchain` 0.3.30 and `langchain-core` 0.3.86 came on 2026-05-07, by the release dates on PyPI. `langchain` 0.3.30 carries the hardening of `loads` and `dumps`. `langchain-core` 0.3.86 fixes a path traversal, CVE-2026-34070. So 0.3 code runs today, and its security fixes stop after 2026.
 
-The same policy says that a minor upgrade inside 1.x breaks nothing. Two minor releases changed what an upgrader must do. `langchain` 1.5.0 raised the Python floor to 3.11, as [section 3.1](#s-install-and-the-package-map) shows. `langchain-core` 1.7.0 changed streamed tool call arguments from snapshots to slices {{code langchain-core==1.7.0}}. Pin the versions in a lockfile, and read the changelog of each minor before you raise it.
+The same policy says that a minor upgrade inside 1.x breaks nothing. Two minor releases changed what an upgrader must do. `langchain` 1.5.0 raised the Python floor to 3.11, as [section 3.1](#s-install-and-the-package-map) shows. `langchain-core` 1.7.0 changed streamed tool call arguments from snapshots to slices, by the release notes of `langchain-core` 1.7.0. Pin the versions in a lockfile, and read the changelog of each minor before you raise it.
 
 | Package line | Lowest Python |
 |---|---|

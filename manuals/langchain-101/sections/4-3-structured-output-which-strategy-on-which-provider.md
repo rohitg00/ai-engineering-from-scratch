@@ -60,7 +60,7 @@ The intervals are 95% Wilson intervals.
 
 So the model does what it does without a schema. It calls the lookups, then answers in text. A text reply with no tool call ends the agent loop, and `structured_response` stays `None`. No error tells you.
 
-Qwen3 4B made every required lookup in 39 of 39 tasks and called `FinalAnswer` in none. Qwen3 8B called it in 14 of 39, and all 14 values were right. On Ollama, `AutoStrategy` resolves to `ToolStrategy`, as [section 4.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) shows. So the plain `response_format=FinalAnswer` gives the same result.
+Qwen3 4B made every required lookup in 39 of 39 tasks and called `FinalAnswer` in none. Qwen3 8B called it in 14 of 39, and all 14 values were right. On Ollama, `AutoStrategy` resolves to `ToolStrategy`, as [section 4.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) shows. So the plain `response_format=FinalAnswer` gives the same result. On `claude-haiku-5-5` at the pin, `AutoStrategy` also resolves to `ToolStrategy`, as section 4.2 explains.
 
 ## Why ProviderStrategy raises on Ollama
 

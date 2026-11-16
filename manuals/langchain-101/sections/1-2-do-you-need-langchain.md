@@ -11,7 +11,7 @@ We did. When you finish this section, you can say what a harness changes in an a
 - **The harness does not decide quality. The model does.** A plain loop, `create_agent`, and a hand-built `StateGraph` gave the same outcome on every task they shared, on two models.
 - **The frontier model does not care which harness runs it.** Claude Haiku 5.5 passed 99 of 99 tasks with a plain loop and 99 of 99 as a deep agent.
 - **A small local model does care, and Deep Agents is the harness that hurts it.** Qwen3 4B passed 70 of 99 with a plain loop and 55 of 99 as a deep agent.
-- **The framework time is noise next to the model.** Its median was 5 to 91 ms per task, and it took under 1.7% of the task time in every cell.
+- **The framework time is noise next to the model.** Its median was 5 to 91 ms per task across all models and harnesses. The first chart shows Qwen3 4B and Haiku only, where the medians run 6 to 67 ms. It took under 1.7% of the task time in every cell.
 - **Choose a harness for what it does around the model.** Persistence, streaming, approvals, and planning tools are the reasons. Quality is not one of them.
 
 ## The suite: 99 tasks, and checkers that read state
@@ -126,7 +126,7 @@ On the 30-task subset with Qwen3 4B, the plain loop took 6.2 ms at the median an
 
 As a share of the wall time, the framework took under 0.5% in every local cell. On Claude it took 0.24% for the plain loop and 1.43% for the deep agent, because a hosted model answers faster. On Claude Sonnet 5.5 the deep agent median was 90.8 ms. Over 498 model calls, the deep agent on Haiku spent about 14 ms per call more than the plain loop.
 
-The deep agent sent more tokens on every model. Over the tasks that both harnesses ran, it sent 3.6 to 4.3 times the prompt tokens of the plain loop. The cause is the schemas of its own tools on every call. It made the same median number of model calls: 4 on the local models and 5 on Claude.
+The deep agent sent more tokens on every model. Over the tasks that both harnesses ran, it sent 3.6 to 4.3 times the prompt tokens of the plain loop. The cause is the schemas of its own tools on every call. On Qwen3 4B and 8B, gpt-oss, and Claude, its median call count matched the plain loop: 4 locally and 5 on Claude. On Qwen3 14B the plain loop made 5 and the deep agent 4. On the 30B model the plain loop made 3.5 and the deep agent 4.
 
 On a local model those tokens cost time. On Qwen3 4B the median task took 22.6 s as a deep agent and 9.1 s with the plain loop.
 
@@ -163,7 +163,7 @@ Part 2 shows what `create_agent` gives you for those milliseconds: the superstep
 
 The Claude rows are at the ceiling. A suite that both Claude models pass in full cannot rank them, and it cannot show a harness effect of a few percent on them. A harder suite would. We did not run one, to keep the API spend small.
 
-Each Claude task ran once, with the default sampling of the API. Each local task ran once too, and [the method note](#s-ref-the-bench-method) shows why one greedy run is enough there. The suite tests short tasks of 2 to 10 model calls. It says nothing about threads of hundreds of turns, which [section 5.5](#s-context-engineering-and-summarization) covers. It also says nothing about a service under load, which [section 9.7](#s-workers-the-advisory-lock-and-cost) measures.
+Each Claude task ran once, with the default sampling of the API. Each local task ran once too, and [the method note](#s-ref-the-bench-method) shows why one greedy run is enough there. The suite tests short tasks of 1 to 12 model calls, with a median of 4. It says nothing about threads of hundreds of turns, which [section 5.5](#s-context-engineering-and-summarization) covers. It also says nothing about a service under load, which [section 9.7](#s-workers-the-advisory-lock-and-cost) measures.
 
 ```takeaways
 - Pick the harness for persistence, streaming, approvals, or files, never for answer quality.

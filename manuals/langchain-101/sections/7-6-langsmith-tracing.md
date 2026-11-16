@@ -212,15 +212,15 @@ With the recorder, tracing added 7.4 ms in pairs of runs. That is close to the 5
 
 With the recorder, the first run of six of seven traced processes spent 83 to 243 ms outside the model. In its first traced run, the client starts and asks the endpoint for its settings.
 
-A third traced condition set `LANGCHAIN_CALLBACKS_BACKGROUND=false`, in three processes of 21 runs against the recorder. The docs say that `false` makes callbacks wait {{docs langsmith/trace-with-langchain}}, but no code in `langchain-core` 1.8.0 or `langsmith` 0.14.17 reads it. Only two packages name it. `langgraph-cli` lists it as reserved in its deploy command {{code libs/cli/langgraph_cli/deploy.py:76}}. `langgraph-api` 0.18.0 sets it to `true` for its JS worker {{code langgraph_api/js/remote.py:119}}. No Python code reads it.
+A third traced condition set `LANGCHAIN_CALLBACKS_BACKGROUND=false`, in three processes of 21 runs against the recorder. The docs say that `false` makes callbacks wait {{docs langsmith/trace-with-langchain}}, but no code in `langchain-core` 1.8.0 or `langsmith` 0.14.17 reads it. Only two packages name it. `langgraph-cli` lists it as reserved in its deploy command {{code libs/cli/langgraph_cli/deploy.py:76}}, which is line 71 in the 0.4.43 wheel. `langgraph-api` 0.18.0 sets it to `true` for its JS worker {{code langgraph_api/js/remote.py:119}}. No Python code reads it.
 
-So that condition ran the same code as tracing on. Its median outside the model was 38.5 ms, against 31.7 ms for tracing on. They ran in separate processes under a load of 4.6 to 27.5, so no effect can be read from the gap. The register records the docs and the code as D111.
+So that condition ran the same code as tracing on. They ran in separate processes under a load of 4.6 to 27.5, so we read no effect from their times. The register records the docs and the code as D111.
 
 ## When a trace becomes readable
 
 `invoke` returns before the server has the trace. The client sends the runs from a background thread, and the server stores them later.
 
-**We measured** the delay on the 30 traced runs against the hosted API. After each `invoke` returned, the script called `read_run` on the root every 0.25 s, plus the time of each read. So the resolution is about 1 to 2 s:
+**We measured** the delay on the 30 traced runs against the hosted API. After each `invoke` returned, the script called `read_run` on the root every 0.25 s, plus the time of each read. So the resolution is set by the poll and the reads, and the numbers below are estimates:
 
 | Event | Median | p90 | Max |
 |---|---|---|---|
@@ -261,7 +261,7 @@ The same product page says that your agent keeps running normally during a LangS
 id: fig-7-6b
 kind: chart
 title: seconds from the last run to process exit, by endpoint
-claim: Every agent run answered in every case, a failing endpoint held the exit for 10 to 17 seconds, and a hanging one kept the process alive.
+claim: Every agent run answered in every case, a failing endpoint held the exit for 9.9 to 17.1 seconds, and a hanging one kept the process alive.
 caption: Each dot is one process of 50 agent runs of Qwen3 4B on the Mac. The fraction over a dot is the traced runs that reached the endpoint. The hanging endpoint is an arrow, because we killed that process at 300 s. From capture/lab/summary/tracing-mac-real.json.
 ```
 

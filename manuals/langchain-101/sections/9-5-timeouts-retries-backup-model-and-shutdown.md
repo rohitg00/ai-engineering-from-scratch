@@ -102,6 +102,8 @@ Uvicorn waits for open connections when it gets SIGTERM, up to `--timeout-gracef
 
 In the first finish trial, the first model call took 14.96 s, because Qwen3 14B loaded after the 4B trials. At 20 s uvicorn logged `Cancel 1 running task(s), timeout graceful shutdown exceeded` and closed the stream. The run task went on, and it finished during the drain at 21.58 s. The thread had its answer, and the client never saw `done`. The suite showed the same thing twice with a 10 s limit.
 
+The Mac was loaded for these trials, with a load average of 15.6 to 28.7, so read the seconds as upper bounds. The counts are the result.
+
 After each cancel, a new worker resumed the thread with `/approve` and no decision. The run finished in 7.27 to 9.10 s and answered from the FAQ, in 5 of 5 trials.
 
 So a run outlives its stream when the uvicorn timer is shorter than the drain timer. Set the uvicorn graceful timeout above your longest run, and tell clients to read the thread state after a dropped stream.

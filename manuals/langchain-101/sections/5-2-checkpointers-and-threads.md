@@ -154,17 +154,17 @@ A server runs many threads at once on one checkpointer. The question is how many
 
 **We measured** this on the x86 server guest, 32 vCPU and 48 GiB, with `AsyncPostgresSaver` on PostgreSQL 16.15 and Qwen3 4B on Ollama on CPU. One asyncio process ran 1, 4, 16, and 64 threads at once, two runs per cell, with one connection and with a pool of 20. Each thread ran two agent runs of two model calls and one tool call. All 680 runs answered right, with 0 errors. The model set the pace, at 0.42 to 0.44 model calls per second in every cell from 4 threads up. So 64 threads of two runs took 587 to 589 s, with one connection and with the pool.
 
-The saver stayed fast at the median. `aput` took 2.8 to 4.5 ms and `aput_writes` 3.7 to 5.8 ms in every cell. At 64 threads, the p99 of `aput` was 318 and 450 ms with one connection, and 254 and 273 ms with the pool. The client measured these times, so they include the wait of the event loop. The pool opened up to 21 connections and had at most 3 active at a sample.
+The saver stayed fast at the median. `aput` took 2.8 to 4.5 ms and `aput_writes` 3.7 to 5.8 ms in every cell. At 64 threads, the p99 of `aput` was 318 and 450 ms with one connection, and 254 and 273 ms with the pool. The client measured these times, so they include the wait of the event loop. Keep them as client p99 values, and do not read the gap between the two setups as an effect of the pool. The pool opened up to 21 connections and had at most 3 active at a sample.
 
 ```figure
 id: fig-5-2b
 kind: chart
 title: runs per second and checkpoint write p99 on one AsyncPostgresSaver, by threads
-claim: One connection and a pool of 20 both give 0.22 runs per second at 64 threads with Qwen3 4B, and the pool lowers the p99 of aput.
+claim: One connection and a pool of 20 both give 0.22 runs per second at 64 threads with Qwen3 4B, and the aput p99 does not separate them.
 caption: Each dot is one run, two runs per point. Each line joins the means of one connection setup. The left chart gives runs per second, and the right chart gives the p99 of aput in ms on a log scale. The x axis is the number of threads at once, on a log scale. From capture/lab/summary/concurrency-x86-real.json.
 ```
 
-With a model on CPU, the model limits throughput long before the saver does. Size the pool to the threads that run at once to keep the tail of checkpoint writes low. A second run on a thread that is still running is a different problem, double texting, and [section 8.1](#s-agent-server-langgraph-dev-up-and-deploy) covers it on Agent Server.
+With a model on CPU, the model limits throughput long before the saver does. Size the pool to the threads that run at once. Our p99 values do not show that the pool lowers the tail of checkpoint writes. A second run on a thread that is still running is a different problem, double texting, and [section 8.1](#s-agent-server-langgraph-dev-up-and-deploy) covers it on Agent Server.
 
 ```takeaways
 - Pass a checkpointer and the same thread_id on every turn of a conversation.

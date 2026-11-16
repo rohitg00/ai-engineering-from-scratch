@@ -20,7 +20,7 @@ lang: text
 warning LangChainBetaWarning: `langchain.mcp` is in beta. It is actively being worked on, so the API may change.
 ```
 
-The package exports three names: `MCPAdapter`, `MCPToolArtifact`, and `as_langchain_tool`. Do not install the old adapter in the same environment. `langchain-mcp-adapters` 0.3.2 requires `mcp` below 2.0 {{code langchain-mcp-adapters pyproject.toml}}, and `fastmcp` 4.2.0 needs `mcp` 2.3.0. We tried it: pip would downgrade `mcp` to 1.30.0.
+The package exports three names: `MCPAdapter`, `MCPToolArtifact`, and `as_langchain_tool`. Do not install the old adapter in the same environment. `langchain-mcp-adapters` 0.3.2 requires `mcp` below 2.0 {{code langchain-mcp-adapters pyproject.toml}}, and `fastmcp` 4.2.0 needs `mcp` 2.3.0. In the environment of the old adapter, the resolver picked `mcp` 1.30.0.
 
 ## From a server to an agent
 
@@ -175,7 +175,7 @@ Each stdio call started a new server, and the median call took 1,887 ms over 50 
 
 `MCPAdapter` arms each client that it builds for elicitation. For a client that you pass in, it arms a copy made with `client.new()`. It leaves a client alone when that client already has its own `elicitation_handler` {{code libs/langchain_v1/langchain/mcp/adapter.py:173-187}}. When a server returns its questions as an `InputRequiredResult`, the adapter asks them with a LangGraph `interrupt()` {{code libs/langchain_v1/langchain/mcp/elicitation.py:311-364}}. So an MCP tool can pause an agent run, like the review of [section 6.4](#s-interrupt-and-resume).
 
-**We measured** these cases on the Mac with `langchain` 1.5.0, `fastmcp` 4.2.0, `mcp` 2.3.0, and `langgraph` 1.2.22. Each case ran 3 times, each in a new process, and the 3 runs of every case gave the same result. The server ran in the same process, and five cases ran again over Streamable HTTP. The server tool `ask_name` asked for one form field, `name`. The default adapter negotiated protocol `2026-07-28`.
+**We measured** these cases on the Mac, with no model, with `langchain` 1.5.0, `fastmcp` 4.2.0, `mcp` 2.3.0, and `langgraph` 1.2.22. Each case ran 3 times, each in a new process, and the 3 runs of every case gave the same result. The server ran in the same process, and five cases ran again over Streamable HTTP. The server tool `ask_name` asked for one form field, `name`. The default adapter negotiated protocol `2026-07-28`.
 
 Inside `create_agent` with an `InMemorySaver`, the run stopped with `__interrupt__`, and the state had `next` set to `tools`. The interrupt value names the tool and each request:
 

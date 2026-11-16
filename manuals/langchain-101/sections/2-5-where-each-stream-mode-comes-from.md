@@ -6,7 +6,7 @@ You switch a chat UI to a reasoning model and to `stream_events(version="v3")`. 
 
 When you finish this section, you can name the function that produces each stream mode and the moment in the superstep when it does. You can also explain issue langchain#38484 from the code, and write a v3 consumer that shows every token when it arrives.
 
-## One queue, seven producers
+## One queue, seven modes, six producers
 
 Every stream mode of `stream()` writes to one queue. The loop drains it between task completions, and the v2 format wraps each item as a `StreamPart` with `type`, `ns`, and `data` {{code libs/langgraph/langgraph/pregel/main.py:4436-4449}}. We recorded the call stack at the moment each item went onto the queue:
 
@@ -44,7 +44,7 @@ note: The end of the first model step, the tools step, and the start of the answ
      2726.1 ms  messages    AIMessageChunk chunk text=' weather' node=model step=3
 ```
 
-The first model step took 1.89 s and streamed no text, because its reply was a tool call. The tools step took 4.5 ms. The answer then streamed one token about every 67 ms. [Figure](#fig-2-5) places each mode on the phases of the run.
+The first model step took 1.89 s and streamed no text, because its reply was a tool call. The tools step took 4.5 ms. The answer then streamed one token about every 67 ms. These times come from one run on a loaded guest, so read the order of the modes and not the times. [Figure](#fig-2-5) places each mode on the phases of the run.
 
 ```figure
 id: fig-2-5
@@ -102,7 +102,9 @@ lang: text
   run 0 raw_events           emitted r/t=211/60 received r/t=211/60 text emit [32819.0, 42027.1] spread 9208.1 ms; text receive [32819.8, 42027.8] spread 9208.0 ms; text lag median/max [0.7, 0.9]; reasoning lag median/max [0.7, 4.0]
 ```
 
-In 5 of 5 runs, the loop that read reasoning first got the first text delta 8.79 to 9.04 s after the model sent it. It got all 60 text deltas within 0.1 ms of each other, while the model had sent them over 8.6 to 8.9 s. Its reasoning deltas arrived live. The text-only loop got the text with a median lag of 0.7 ms and a maximum of 4.9 ms over 300 deltas. The raw loop got them with a median of 0.7 ms and a maximum of 0.9 ms. [Figure](#fig-2-5b) puts run 0 of each loop on one axis.
+In 5 of 5 runs, the loop that read reasoning first got all 60 text deltas within 0.1 ms of each other. The model had sent them over 8.6 to 8.9 s. This is one run on a loaded guest, so read it as an order. The Mac rows in section 5.1 give the lag as 4.0 to 8.5 s.
+
+Its reasoning deltas arrived live. The text-only loop got the text with a median lag of 0.7 ms and a maximum of 4.9 ms over 300 deltas. The raw loop got them with a median of 0.7 ms and a maximum of 0.9 ms. [Figure](#fig-2-5b) puts run 0 of each loop on one axis.
 
 ```figure
 id: fig-2-5b

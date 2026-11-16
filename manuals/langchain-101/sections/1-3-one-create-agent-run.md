@@ -224,7 +224,7 @@ With tracing on, LangChain sends one run to LangSmith for each piece of work. Th
 title: the runs of one traced agent turn
 source: capture/out/42-langsmith.txt
 lang: text
-note: The last section of the file, cut to the request counts and the tree of runs.
+note: Cut to the request counts and the tree of runs, which sit at lines 82 to 99 of the file.
 ---
   "PATCH /runs/<run-id>": 7,
   "POST /runs": 7
@@ -271,14 +271,14 @@ note: The config of the compiled graph, from the same file.
 
 A model that never stops asking for a tool runs until the limit. The kit told Qwen3 4B to count upward with `add` and never stop. With `recursion_limit=6` in the config, the run stopped after three model calls and two tool calls, with `GraphRecursionError: Recursion limit of 6 reached without hitting a stop condition.`
 
-**We measured** a looping agent on the x86 server guest. With Qwen3 4B, it made 121 model calls in 21 minutes and showed no sign of stopping. `recursion_limit=25` stopped it after 13 model calls, in 3 of 3 runs. Set a limit that fits your task, because a loop costs every model call it makes.
+**We measured** a looping agent on the x86 server guest. With Qwen3 4B, it made 121 model calls before the script stopped it at 1200 s, and it showed no sign of stopping. `recursion_limit=25` stopped it after 13 model calls, in 3 of 3 runs. Set a limit that fits your task, because a loop costs every model call it makes.
 
 ```takeaways
 - Expect the model to receive the system prompt and the whole conversation on every call.
 - Read next on a checkpoint to know which node runs on a resume.
 - Pass a checkpointer and a thread_id when you need the steps saved.
 - Stream with no mode to get one chunk for each node run.
-- Set recursion_limit for each run, because the agent default allows 5000 model calls.
+- Set recursion_limit for each run, because the default of 9999 steps allows about 5000 model calls. This is arithmetic, not a run.
 ```
 
 Sources: capture/out/06-agent-run.txt, capture/out/05-agent-graph.txt, capture/out/48-draw-agent.txt, capture/out/28-checkpoint-memory.txt, capture/out/30-state-history-forks.txt, capture/out/21-stream-updates-values.txt, capture/out/46-recursion-agent.txt, capture/out/42-langsmith.txt; capture/lab/summary/recursion-x86.json, capture/lab/T17-claims-x86/01-claims.jsonl, capture/lab/T17-claims-x86/02-nolimit.jsonl, capture/lab/summary/recursion-mac.json, capture/lab/T17-claims-mac/01-recursion-limit.jsonl; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0, libs/langgraph/langgraph/graph/state.py and libs/langgraph/langgraph/_internal/_config.py at langgraph 1.2.22.

@@ -8,7 +8,7 @@ When you finish this section, you can look up an error message from any part of 
 
 ## How to read the tables
 
-Each message below is copied from a capture file or a lab recording, as the stack printed it at the pin. A long message is cut after its first sentence or clause. Search the tables for the class name or for the first words of the message. Text in angle brackets, such as `<seconds>`, is a mask of the capture kit.
+Each message below is copied from a capture file or a lab recording, as the stack printed it at the pin. Rows marked "not in a capture" come from the code. A long message is cut after its first sentence or clause. Search the tables for the class name or for the first words of the message. Text in angle brackets, such as `<seconds>`, is a mask of the capture kit.
 
 The last table lists failures that raise no error. Their symptom is a wrong result, a slow exit, or a tool that ran when it should not.
 
@@ -33,8 +33,8 @@ The last table lists failures that raise no error. Their symptom is a wrong resu
 | `ModelCallLimitExceededError: Model call limits exceeded: run limit (1/1)` | `ModelCallLimitMiddleware` with `exit_behavior="error"` | raise the limit, or end the run with `exit_behavior="end"` | [4.6](#s-the-built-in-middleware) |
 | `ToolCallLimitExceededError: Tool call limit reached: run limit exceeded (2/1 calls).` | `ToolCallLimitMiddleware` with `exit_behavior="error"` | raise the limit, or use `continue` or `end` | [4.6](#s-the-built-in-middleware) |
 | `ValueError: ProviderToolSearchMiddleware requires a provider with server-side tool search, but got 'ollama'; supported providers: anthropic, openai` | a model from a provider without server-side tool search | use an Anthropic or OpenAI model, or remove the middleware | [4.6](#s-the-built-in-middleware) |
-| `ConnectionError: third is down` | `ModelFallbackMiddleware`, and every model in the chain failed. The run raises the last error | add a model on another provider, and read the earlier errors in the log | [4.7](#s-retries-backup-models-rate-limits-and-caching) |
-| `ModelRefusalError: Model refused to produce the requested output: I can't help with that.` | a refusal block, with `ModelRefusalMiddleware` set to raise | change the request, or let the middleware move to a backup model | [4.7](#s-retries-backup-models-rate-limits-and-caching) |
+| `ConnectionError: third is down`, not in a capture | `ModelFallbackMiddleware`, and every model in the chain failed. The run raises the last error | add a model on another provider, and read the earlier errors in the log | [4.7](#s-retries-backup-models-rate-limits-and-caching) |
+| `ModelRefusalError: Model refused to produce the requested output: I can't help with that.`, not in a capture | a refusal block, with `ModelRefusalMiddleware` set to raise | change the request, or let the middleware move to a backup model | [4.7](#s-retries-backup-models-rate-limits-and-caching) |
 | `PIIDetectionError: Detected 1 instance(s) of email in text content` | `PIIMiddleware` with the strategy `block` | use `redact`, `mask`, or `hash` when the run must go on | [4.8](#s-guardrails-pii-and-the-decision-middleware-beta) |
 
 ## Streaming and memory
@@ -43,7 +43,7 @@ The last table lists failures that raise no error. Their symptom is a wrong resu
 |---|---|---|---|
 | `TypeError: stream_events(version='v3') / astream_events(version='v3') do not accept stream_mode;` | `stream_mode` passed to v3, which builds its own modes | drop `stream_mode`, and read the projections of the v3 stream | [5.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) |
 | `NotImplementedError: stream_events(version='v2') is not supported.` | the sync `stream_events` with version v2 | use `astream_events` for v1 and v2, or v3 | [5.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) |
-| `ValueError: No generations found in stream.` | a stock fake chat model under `create_agent` with streaming | test with a real model, or with a fake that implements `bind_tools` and streams tool calls {{code libs/core/langchain_core/language_models/fake_chat_models.py}} | [5.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) |
+| `ValueError: No generations found in stream.`, not in a capture | a stock fake chat model under `create_agent` with streaming | test with a real model, or with a fake that implements `bind_tools` and streams tool calls {{code libs/core/langchain_core/language_models/fake_chat_models.py}} | [5.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) |
 | `ValueError: Checkpointer requires one or more of the following 'configurable' keys: thread_id, checkpoint_ns, checkpoint_id` | a run on a graph with a checkpointer and no `thread_id` | pass `{"configurable": {"thread_id": ...}}` | [5.2](#s-checkpointers-and-threads) |
 | `AttributeError: 'SyncPregelLoop' object has no attribute '_put_checkpoint_fut'` | `durability="sync"` on a graph with no checkpointer, issue #9267 | add a checkpointer, or leave `durability` at its default | [5.3](#s-durability-modes-and-a-crash-between-two-steps) |
 | `InvalidNamespaceError: Invalid namespace label 'bob.x' found in ('users', 'bob.x'). Namespace labels cannot contain periods ('.').` | a store label with a period | refuse or replace the period before the id becomes a label | [5.4](#s-stores-and-long-term-memory) |
@@ -93,7 +93,7 @@ The last table lists failures that raise no error. Their symptom is a wrong resu
 | the agent read `.env` or deleted a dotfile although a deny rule covers `/**` | Deep Agents passes rule patterns to `wcmatch` with no `DOTGLOB`, so `*` and `**` skip names that start with a dot | deny `/**/.*` and `/**/.*/**` first, and allow `/workspace` as well as `/workspace/**` | [8.4](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) |
 | a user of a deep agent was told the files of another user | a constant namespace factory, such as `("memories",)`, in `StoreBackend` | build the namespace from the user id in the run context | [5.4](#s-stores-and-long-term-memory) |
 | the model said that it sent the email, and no email left | a message typed over a pending approval, which Agent Chat UI closes with a placeholder tool result | make the tool safe on its own, and disable the input while an approval is pending | [8.2](#s-agent-chat-ui-in-front-of-langgraph-dev) |
-| 100 clients on `langgraph dev` each wait about 13 s | one job per worker, the default of `langgraph dev` | start it with `--n-jobs-per-worker 10` | [8.1](#s-agent-server-langgraph-dev-up-and-deploy) |
+| 20 background runs of a 2 s graph with no model took 41.0 s | one job per worker, the default of `langgraph dev` | start it with `--n-jobs-per-worker 10`, which took 5.1 s in the same test | [8.1](#s-agent-server-langgraph-dev-up-and-deploy) |
 
 ```takeaways
 - Search these tables for the class name or the first words of the message.

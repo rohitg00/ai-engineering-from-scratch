@@ -62,7 +62,7 @@ note: The first model call, cut to its messages and its format.
 
 The reply was the text `{"value": 5}`, and the agent filled `unit` from its default.
 
-`ChatOllama` has no profile, and Ollama model names are not in the list. So on Ollama a plain schema and `AutoStrategy` always run as `ToolStrategy`.
+`ChatOllama` has no profile, and Ollama model names are not in the list. So on Ollama a plain schema and `AutoStrategy` always run as `ToolStrategy`. On `claude-haiku-5-5` at the pin, `AutoStrategy` also resolves to `ToolStrategy`. Its profile has `structured_output` false, and the model name is not in the list of names that pick `ProviderStrategy`.
 
 ## ToolStrategy
 
@@ -94,7 +94,7 @@ structured_response:
 }
 ```
 
-When the arguments fail validation, `ToolStrategy` writes the error into a `ToolMessage` and calls the model again. The message ends with `Please fix your mistakes.` {{code libs/langchain_v1/langchain/agents/structured_output.py}}. Our model never sent an invalid value. Asked to put 3.5 into the integer field `value`, it sent `value` 3 and `unit` `"5"`, which is valid.
+When the arguments fail validation, `ToolStrategy` writes the error into a `ToolMessage` and calls the model again. The message ends with `Please fix your mistakes.` It is the template `STRUCTURED_OUTPUT_ERROR_TEMPLATE` {{code libs/langchain_v1/langchain/agents/factory.py:128}}. Our model never sent an invalid value. Asked to put 3.5 into the integer field `value`, it sent `value` 3 and `unit` `"5"`, which is valid.
 
 Two structured tool calls in one AI message get the same kind of retry. The kit asked for `Answer` and `Refusal` in one reply, and the model sent both:
 
@@ -112,7 +112,9 @@ note: The first of the two ToolMessages. The second has the same text.
 
 The model then sent one `Answer` call, and the run ended with `value` 5. The `status` of each retry message is `success`, though it carries an error. Code that counts error `ToolMessage` objects does not count these retries.
 
-**handle_errors:** the `ToolStrategy` parameter that sets the retry. `True`, the default, retries on every parse error. A string replaces the retry text. An exception type or a tuple retries only those errors. A callable gets the error and returns the retry text. `False` raises `StructuredOutputValidationError` on the first bad call {{code libs/langchain_v1/langchain/agents/structured_output.py}}.
+**handle_errors:** the `ToolStrategy` parameter that sets the retry. `True`, the default, retries on every parse error. A string replaces the retry text. An exception type or a tuple retries only those errors. A callable gets the error and returns the retry text. `False` raises `StructuredOutputValidationError` on the first bad call.
+
+The retry logic is `_handle_structured_output_error` {{code libs/langchain_v1/langchain/agents/factory.py:649-671}}. The two raises are in {{code libs/langchain_v1/langchain/agents/factory.py:1271}} and {{code libs/langchain_v1/langchain/agents/factory.py:1333}}. The parameter, with its type and its default `True`, is in {{code libs/langchain_v1/langchain/agents/structured_output.py:212-253}}. Its docstring says that dict schemas are not validated, so `handle_errors` does nothing for them.
 
 ## ProviderStrategy
 

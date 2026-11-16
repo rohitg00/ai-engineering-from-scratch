@@ -2,7 +2,7 @@
 
 > `init_chat_model` turns a `provider:model` string into a chat model of the provider package, and that package, not LangChain, decides how often a failed call is retried.
 
-You pass `"qwen3:4b"` to `create_agent` and get a `ValueError` before the first request. Or you set a client timeout of 1 s, and a failed call returns after 16 s. Both come from how a model string resolves and which layer retries.
+You pass `"qwen3:4b"` to `create_agent` and get a `ValueError` before the first request. Or you set a client timeout of 15 s, and a call that always times out returns after 46.3 s. Both come from how a model string resolves and which layer retries.
 
 When you finish this section, you can write a model string that resolves and read the profile of a model. You can also count the attempts of one failed model call.
 

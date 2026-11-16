@@ -32,7 +32,7 @@ const pass = (m, n, s) => (get(m, n, s) ? get(m, n, s).pass : null);
 module.exports = figure('fig-4-4', {
   height,
   title: 'Ten chain tasks at four tool counts, with and without LLMToolSelectorMiddleware',
-  desc: `A grid of the ten chain tasks for each model, tool count and selector setting, create_agent on the Mac and Claude Haiku 5.5 through the API. A blue or plum square is a pass, a solid rose square a call to a distractor or no call to the needed lookup, a light rose square another failure, and a black square a run that raised. Without the selector Haiku passed 10 of 10 at 5, 20, 50 and 100 tools, and with it ${[5, 20, 50, 100].map(n => pass('claude-haiku-5-5', n, 'on')).join(', ')}. Qwen3 4B passed ${SIZES.map(n => pass(Q4, n, 'off')).join(', ')} without it and ${SIZES.map(n => pass(Q4, n, 'on')).join(', ')} with it. Qwen3 8B ran 5 and 50 tools only.`,
+  desc: `A grid of the ten chain tasks for each model, tool count and selector setting, create_agent on the Mac and Claude Haiku 5.5 through the API. A blue or plum square is a pass, a solid rose square a call to a distractor or no call to the needed lookup, a light rose square another failure, and a black square a run that raised. Without the selector Haiku passed 10 of 10 at 5, 20, 50 and 100 tools, and with it ${[5, 20, 50, 100].map(n => pass('claude-haiku-5-5', n, 'on')).join(', ')}. Qwen3 4B passed ${SIZES.map(n => pass(Q4, n, 'off')).join(', ')} without it and ${SIZES.map(n => pass(Q4, n, 'on')).join(', ')} with it. Qwen3 8B ran 5 and 50 tools only. Passes are lenient passes.`,
 }, f => {
   f.kicker(20, 22, 'model, setting');
   SIZES.forEach((n, i) => {

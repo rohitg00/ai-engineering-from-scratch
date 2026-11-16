@@ -129,7 +129,7 @@ The same runs found four places where isolation depends on your code:
 - `list_namespaces(prefix=("users", "*"))` listed the namespaces of every user in all three stores. `*` is a wildcard in `list_namespaces` and a plain character in `search`. Refuse a user id of `*` before you build a prefix with it.
 - `search(())` with an empty prefix returned the items of every user: 9 in `InMemoryStore` and 8 in the other two. Never search with a prefix shorter than the user label.
 - A partial label matched nothing: `("users", "ali")` did not reach `alice`. The fix for advisory GHSA-47pj-3jcm-6whg holds at the pin.
-- A label with a `.` was refused with `InvalidNamespaceError` in `put`, `get`, and `search`. `SqliteStore` and `PostgresStore` also refused it in `batch`. `InMemoryStore` stored `("users", "bob.x")` through `batch`, and a `GetOp` for `("users", "alice.memories")` created an empty namespace. No item crossed users.
+- A label with a `.` was refused with `InvalidNamespaceError` in `put` and `get`. `SqliteStore` and `PostgresStore` also refused it in `batch`. `InMemoryStore` stored `("users", "bob.x")` through `batch`, and a `GetOp` for `("users", "alice.memories")` created an empty namespace. No item crossed users.
 
 A filter stays inside its prefix. `search(("users", "bob"), filter={"owner": "alice"})` returned nothing. Semantic search stayed inside its prefix too. With `nomic-embed-text` on Ollama, a query that matched the item of `alice` best returned only `bob` under the prefix of `bob`.
 

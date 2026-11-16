@@ -12,7 +12,7 @@ When you finish this section, you can say what each layer of the stack adds to a
 
 | Cost | Plain loop | LangChain | Machine and count | Section |
 |---|---|---|---|---|
-| time beyond the model in one run of three Qwen3 4B calls | 25.1 ms (1.3% of the run) | 37.6 ms with `create_agent` (2.2%), 15.6 ms more in the same round | the Mac, 40 runs each | this section |
+| time beyond the model in one run of three Qwen3 4B calls | 25.1 ms (1.3% of the run) | 37.6 ms with `create_agent` (2.3%), 15.6 ms more in the same round | the Mac, 40 runs each | this section |
 | prompt tokens of the three calls of that run, on Qwen3 4B | 261, 300, 340 | the same | the Mac, 40 runs each | this section |
 | request bytes of those three calls, on Qwen3 4B | 679, 936, 1,199 | 696, 948, 1,206 | the Mac, 40 runs each | this section |
 | prompt tokens of a one-word answer, on Qwen3 8B | 28 | 28 with `create_agent`, 2,279 with `create_deep_agent` | the Mac, 3 runs each | [7.4](#s-deep-agents-0-7) |
@@ -41,7 +41,7 @@ The task of the recording is one question that needs two tools, `add` and then `
 id: fig-8-3
 kind: chart
 title: time beyond the model in one run of three Qwen3 4B calls
-claim: In a real run of 1.7 s, create_agent spent 37.6 ms outside the model against 25.1 ms for a plain openai loop, and a hand-built StateGraph 36.7 ms.
+claim: In a real run of 1.8 s, create_agent spent 37.6 ms outside the model against 25.1 ms for a plain openai loop, and a hand-built StateGraph 36.7 ms.
 caption: Each dot is one run on the Mac, 40 per program, in shuffled rounds, and the black line is the median. From capture/lab/summary/overhead-mac-real.json.
 ```
 
@@ -49,7 +49,7 @@ caption: Each dot is one run on the Mac, 40 per program, in shuffled rounds, and
 
 On the native path, the plain `ollama` loop spent 11.7 ms outside the model. `create_agent` with `ChatOllama` spent 29.0 ms, 13.0 ms more, and the `StateGraph` 22.2 ms, 7.8 ms more.
 
-Per model call, the agent layer adds about 4 to 5 ms, and 3 ms of CPU. On the `/v1` path, the time outside the model was 1.3 to 2.2% of a run of 1.7 to 2.0 s. The model time moved from 1.2 s to 3.7 s per run with the other load on the machine. So compare the time outside the model, not the wall time.
+Per model call, the agent layer adds about 4 to 5 ms, and 3 ms of CPU. On the `/v1` path, the time outside the model was 1.3 to 2.3% of a run of 1.7 to 2.0 s. The model time moved from 1.2 s to 3.7 s per run with the other load on the machine. So compare the time outside the model, not the wall time.
 
 ## Tokens and request bytes
 

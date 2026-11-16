@@ -46,7 +46,7 @@ The model and tools nodes are the loop of [section 1.3](#s-one-create-agent-run)
 id: fig-7-4e
 kind: structure
 title: the graph of a deep agent
-claim: A deep agent adds two hook nodes around the usual loop, and its tools node holds nine built-in tools beside add.
+claim: A deep agent adds two hook nodes around the usual loop, and its tools node lists add, execute, and eight built-in tools.
 caption: Read from __start__ at the top. Blue boxes are hook nodes. The small loop on model is its conditional edge back to itself. From capture/out/53-draw-deep-agent.txt.
 ```
 

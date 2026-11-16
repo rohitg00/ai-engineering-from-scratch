@@ -79,9 +79,9 @@ The guardrails page describes a stream transformer for `apply_to_output=True`. I
 
 **Decision model:** a `BaseDecisionModel` from `langchain_core.decisions`, new in `langchain-core` 1.8.0. It answers typed questions, such as a choice among named options or the probability that a statement is true.
 
-Both decision middlewares are new in `langchain` 1.5.0, and both are in beta. The prebuilt middleware page marks both as beta {{docs oss/python/langchain/middleware/built-in}}. In the code, `ModelRouterMiddleware` has the `beta` decorator and warns when you build it. `AutoModeMiddleware` says beta in its docstring only, so it gives no warning {{code libs/langchain_v1/langchain/agents/middleware/auto_mode.py}}. LangChain has decision models for OpenAI and Google only.
+Both decision middlewares are new in `langchain` 1.5.0, by the release notes, and both are in beta. The prebuilt middleware page marks both as beta {{docs oss/python/langchain/middleware/built-in}}. In the code, `ModelRouterMiddleware` has the `beta` decorator and warns when you build it. `AutoModeMiddleware` says beta in its docstring only, so it gives no warning {{code libs/langchain_v1/langchain/agents/middleware/auto_mode.py}}. LangChain has decision models for OpenAI and Google only.
 
-So the kit answers with `OllamaDecisionModel`, about 40 lines of its own. It sends each question and the state to Qwen3 4B in JSON mode, and turns the JSON reply into the typed answer. The questions below are what the middleware sent, and the answers are what the model said.
+So the kit answers with `OllamaDecisionModel`, about 34 lines of its own. It sends each question and the state to Qwen3 4B in JSON mode, and turns the JSON reply into the typed answer. The questions below are what the middleware sent, and the answers are what the model said.
 
 ## ModelRouterMiddleware
 

@@ -12,7 +12,7 @@ When you finish this section, you can say which saver call makes each part of a 
 
 **put:** the saver call that stores one checkpoint, the state after a superstep, as one row of the `checkpoints` table.
 
-When a task finishes, the loop records its writes in memory and submits `put_writes` to a background executor {{code libs/langgraph/langgraph/pregel/_loop.py:523-551}}. Nothing waits for that future. After the update phase, `_put_checkpoint` builds the checkpoint and submits `put` {{code libs/langgraph/langgraph/pregel/_loop.py:1275-1420}}. With `durability="sync"`, the loop then waits for that one future before it plans the next superstep {{code libs/langgraph/langgraph/pregel/main.py:3103-3105}}. That is all `sync` waits for.
+When a task finishes, the loop records its writes in memory and submits `put_writes` to a background executor {{code libs/langgraph/langgraph/pregel/_loop.py:523-551}}. By default nothing waits for that future. The `DeltaChannel` writes are the exception: `_checkpointer_put_after_previous` waits for the pending write futures and for the previous put {{code libs/langgraph/langgraph/pregel/_loop.py:1748-1760}}. After the update phase, `_put_checkpoint` builds the checkpoint and submits `put` {{code libs/langgraph/langgraph/pregel/_loop.py:1275-1420}}. With `durability="sync"`, the loop then waits for that one future before it plans the next superstep {{code libs/langgraph/langgraph/pregel/main.py:3103-3105}}. That is all `sync` waits for.
 
 With `durability="exit"`, `put_writes` is never called during the run, and the intermediate `_put_checkpoint` calls skip the saver {{code libs/langgraph/langgraph/pregel/_loop.py:1325-1351}}. The one checkpoint is saved when the run exits {{code libs/langgraph/langgraph/pregel/_loop.py:1543-1553}}.
 
@@ -41,13 +41,13 @@ lang: text
 
 Read lines 34 to 39. The checkpoint of step 3 was stored at line 36, and the loop moved on. The writes of the model task of that step, `7f67758b`, reached the saver at line 39, after the checkpoint that already holds them. Here the order did no harm, because the checkpoint covers the step. It shows that the loop does not wait for `put_writes`, in `sync` too.
 
-The harm comes earlier in a superstep. A task that returned while its siblings still run has only its `put_writes` to keep its output. In this run each of the five tasks waited 3.0 to 4.4 ms for that call to finish. [Figure](#fig-2-3) zooms into the end of each superstep.
+The harm comes earlier in a superstep. A task that returned while its siblings still run has only its `put_writes` to keep its output. In one run on a loaded guest, each of the five tasks waited 3.0 to 4.4 ms for that call to finish. [Figure](#fig-2-3) zooms into the end of each superstep.
 
 ```figure
 id: fig-2-3
 kind: timeline
 title: how long each finished task waits for its put_writes, in one sync run
-claim: Each finished task was not durable for 3.0 to 4.4 ms after it returned, and sync waited only for the checkpoint put at the end of each step.
+claim: In one loaded run, a finished task was not durable for 3.0 to 4.4 ms, and sync waited only for the checkpoint put.
 caption: Each panel is the end of one superstep, zoomed to milliseconds after its last task returned. The upper lane is the loop, the lower lane is the background saver. Filled teal blocks are puts, outlined blocks are put_writes calls, and rose bands are the spans before a task is durable. The labels between panels name the next task and how long it took. From capture/lab/internals/03-checkpoint/a_sync.trace.jsonl.
 ```
 
@@ -77,11 +77,11 @@ claim: With no wait, the model node that returned last reran in 97 of 100 sync a
 caption: Each dot is one trial, 50 per cell, two runs. Rose dots reran the model node a and the crashed node c, teal dots reran only c, and grey dots had nothing to resume. From capture/lab/internals/03-checkpoint/crash.json and capture/lab/internals/03-checkpoint/taskns.json.
 ```
 
-The durability mode made no difference at zero wait. The intervals overlap, and run 2 even had more repeats under `async`. Both modes wait at the end of the step, and the crash came before the end. The risk is the window of one `put_writes` call after each task. On `SqliteSaver` in our cost runs, that call took a median of 4.6 ms under `sync` and 4.2 ms under `async` ([section 2.6](#s-checkpoint-growth-and-the-cost-of-a-superstep)). In an agent, a model node often returns while a slower sibling still runs, and that is the window.
+The durability mode made no difference at zero wait. The intervals overlap, and run 2 even had more repeats under `async`. Both modes wait at the end of the step, and the crash came before the end. The risk is the window of one `put_writes` call after each task. On `SqliteSaver`, that call took a mean of 4.6 ms under `sync` and 4.2 ms under `async`, on a loaded guest ([section 2.6](#s-checkpoint-growth-and-the-cost-of-a-superstep)). In an agent, a model node often returns while a slower sibling still runs, and that is the window.
 
 ## Why a resume finds the right tasks
 
-**Task id:** the id of one task in one superstep. The loop computes it as an `xxh3` hash of six values {{code libs/langgraph/langgraph/pregel/_algo.py:616-623}} {{code libs/langgraph/langgraph/pregel/_algo.py:990-997}}. They are the checkpoint id, the namespace, the step, the node name, PULL or PUSH, and the triggers or the `Send` index.
+**Task id:** the id of one task in one superstep. The loop computes it as an `xxh3` hash {{code libs/langgraph/langgraph/pregel/_algo.py:616-623}} {{code libs/langgraph/langgraph/pregel/_algo.py:990-997}}. A PUSH task hashes six values, and a PULL task hashes five fixed values plus its triggers. The values are the checkpoint id, the namespace, the step, the node name, PULL or PUSH, and the triggers or the `Send` index.
 
 The writes of a task are saved under the checkpoint that its superstep started from, with the task id {{code libs/langgraph/langgraph/pregel/_loop.py:523-531}}. A resume loads that checkpoint, plans the same tasks, and gets the same ids. Each task with saved writes gets them back {{code libs/langgraph/langgraph/pregel/_loop.py:841-854}}, and the runner runs only the tasks with no writes {{code libs/langgraph/langgraph/pregel/main.py:3085}}. A task that failed or stopped at an interrupt has no saved output, so it runs again {{code libs/langgraph/langgraph/pregel/_task_status.py:99-129}}.
 

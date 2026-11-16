@@ -340,7 +340,7 @@ In a stream without `tools` mode, `emit_output_delta` does nothing. The kit stre
 
 Eight of the nine APIs delivered the tokens one at a time, at the gaps that the server used. The median first-token delay of a text reply was 1.28 to 3.46 ms, and the worst p95 was 7.63 ms. The request reached the proxy 3.8 to 10.5 ms after the call. A claim on the web says that LangGraph streaming adds 100 to 300 ms to the first token. It does not hold here, and this manual records it as conflict D211.
 
-The layers cost CPU time, and they add no delay that you can see. One run of 80 tokens used 63.4 ms of CPU in a plain `openai` loop and 80.3 ms in `ChatOpenAI.stream`. Through the agent it used 102.3 to 140.4 ms. A run with a tool call and a short answer used 20.1 ms in the plain loop and 41.0 to 49.0 ms through the agent.
+The layers cost CPU time, and they add no delay that you can see. The CPU times below are indicative, not absolute costs, because other work ran on the machine. One run of 80 tokens used 63.4 ms of CPU in a plain `openai` loop and 80.3 ms in `ChatOpenAI.stream`. Through the agent it used 102.3 to 140.4 ms. A run with a tool call and a short answer used 20.1 ms in the plain loop and 41.0 to 49.0 ms through the agent.
 
 A tool call delayed the final text only by the tool round trip. Ollama sent each tool call in one chunk, and the chunk reached the loop 1.9 to 9.4 ms after the send. On the second request, the first token reached the loop 1.74 to 3.69 ms after the send. The rose row of [figure](#fig-5-1c) is the exception.
 
@@ -381,7 +381,9 @@ A projection iterator stops only when its projection is marked done. All three p
 
 So the reasoning loop cannot end before the last text token arrives. While it waits, it pulls every text delta into the list of `message.text`. When the message ends, the text loop finds all of them there at once. [Section 2.5](#s-where-each-stream-mode-comes-from) follows this path through the code.
 
-**We measured** the cause on the x86 server guest with Qwen3 8B, reasoning on, through `create_agent`. Three sync v3 loops ran 5 times each, interleaved. Each reply had 211 reasoning deltas, then 60 text deltas. In 5 of 5 runs, the loop that read reasoning first got the first text delta 8.79 to 9.04 s after the model sent it. It got all 60 within 0.1 ms, while the model sent them over 8.64 to 8.89 s.
+**We measured** the cause on the x86 server guest with Qwen3 8B, reasoning on, through `create_agent`. Three sync v3 loops ran 5 times each, interleaved. Each reply had 211 reasoning deltas, then 60 text deltas. In 5 of 5 runs, the loop that read reasoning first got all 60 text deltas within 0.1 ms. The model had sent the whole reply over 8.64 to 8.89 s. 
+
+This is one machine under load, so read it as an order. The Mac rows below give the lag as 4.0 to 8.5 s.
 
 The loop over `message.text` alone got each delta with a median lag of 0.7 ms and a maximum of 4.9 ms. The loop over the raw events of each message had a median of 0.7 ms and a maximum of 0.9 ms.
 
@@ -482,7 +484,7 @@ The kit also asked the model to write `Let me add.` before the call. Four text c
 - Test streaming against a real model, because a fake decides how a tool call is chunked.
 - Read the raw v3 events, or one projection per message, when tokens must arrive live.
 - Never read message.reasoning before message.text in one loop, because every projection ends with the message.
-- Expect about 2 ms of delivery delay from any stream API on one machine.
+- Expect about 2 ms of delivery delay from eight of the nine stream APIs on one machine.
 ```
 
 Sources: capture/s_stream.py, capture/out/21-stream-updates-values.txt, capture/out/22-stream-messages.txt, capture/out/23-stream-tasks-custom-debug.txt, capture/out/24-stream-v2.txt, capture/out/25-stream-events-v3.txt, capture/out/25-stream-events-v3.events.json, capture/out/26-stream-tools-mode.txt, capture/out/27-stream-tool-call-chunks.txt; libs/langgraph/langgraph/types.py, libs/langgraph/langgraph/pregel/main.py, and libs/langgraph/langgraph/pregel/_tools.py at langgraph 1.2.22; libs/partners/ollama/langchain_ollama/chat_models.py at langchain-ollama 1.1.0; capture/lab/summary/streaming-mac-real.json, capture/lab/T04-streaming-mac-real/real_text-per-run.jsonl, capture/lab/T04-streaming-mac-real/real_tool-per-run.jsonl, capture/lab/T04-streaming-mac-real/03-iso38484-qwen3-8b.jsonl, capture/lab/T04-streaming-mac-real/real_text-runs-excerpt.jsonl, capture/lab/T04-streaming-mac-real/real_text-server-excerpt.jsonl, capture/lab/T04-streaming-mac-real/t04_run.py, capture/lab/T04-streaming-mac-real/t04_stream_server.py, capture/lab/T04-streaming-mac-real/t04_iso_real.py; capture/lab/summary/streaming-mac.json, capture/lab/T04-streaming-mac/reasoning-ollama-runs.jsonl; capture/lab/internals/05-streaming/run.py, capture/lab/internals/05-streaming/trace.txt, capture/lab/internals/05-streaming/v3_38484.json; libs/core/langchain_core/messages/ai.py, libs/core/langchain_core/language_models/_compat_bridge.py, and libs/core/langchain_core/language_models/chat_model_stream.py at langchain-core 1.8.0; libs/langgraph/langgraph/stream/run_stream.py at langgraph 1.2.22; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; issue langchain#38484 and pull request #38533; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/streaming, oss/python/langchain/streaming, oss/python/langchain/event-streaming, oss/python/langgraph/event-streaming).

@@ -209,7 +209,7 @@ claim: Each case gave the same tool runs in 3 of 3 runs, and only batched cases 
 caption: Read one column for each of the 22 middleware cases. The graph and strict resume cases G1 to G3, S1, and S2 are not drawn. Each dot is one run on the x86 server guest. A dot on the line is a run whose tools matched the decisions, and a rose dot ran a tool that no approval allowed. From capture/lab/summary/approvals-x86.json.
 ```
 
-The cases have short codes. `B` is batched, `P` is per call, `J` adds a middleware that jumps to `tools`, and `G` is a plain graph.
+The grey line of the figure is the number of tool runs that the reviewer allowed in each case. The figure code holds these counts as constants. They come from the decisions in the table below and from the case scripts in `capture/lab/T07-approvals-x86/`. The cases have short codes. `B` is batched, `P` is per call, `J` adds a middleware that jumps to `tools`, and `G` is a plain graph.
 
 | Case | What the reviewer did | Result, in 3 of 3 runs |
 |---|---|---|
