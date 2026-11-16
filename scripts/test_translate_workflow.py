@@ -876,5 +876,24 @@ class TranslateLessonsTest(unittest.TestCase):
         self.assertIn("phases/01-alpha/09-gone/docs/en.md", self.cache("zh-TW"))
 
 
+class NllbWalkerFenceTest(unittest.TestCase):
+    def walk(self, src: str) -> str:
+        return translate_lessons.nllb_translate_doc(src, "fra_Latn", translate_fn=str.upper)
+
+    def test_tilde_art_inside_backtick_fence_stays_verbatim(self) -> None:
+        diagram = "```\nscene        grid\n    ~~~~~    +--+\n  ~ light ~  |  |\n   ~~~~~     +--+\n```"
+        out = self.walk(f"{diagram}\nprose after\n")
+        self.assertEqual(out, f"{diagram}\nPROSE AFTER\n")
+
+    def test_shorter_inner_fence_does_not_close_longer_fence(self) -> None:
+        block = "````markdown\n```python\nkeep me\n```\n````"
+        out = self.walk(f"{block}\nprose after\n")
+        self.assertEqual(out, f"{block}\nPROSE AFTER\n")
+
+    def test_tilde_fence_closes_on_tilde_fence(self) -> None:
+        out = self.walk("~~~\nkeep me\n~~~\nprose after\n")
+        self.assertEqual(out, "~~~\nkeep me\n~~~\nPROSE AFTER\n")
+
+
 if __name__ == "__main__":
     unittest.main()
