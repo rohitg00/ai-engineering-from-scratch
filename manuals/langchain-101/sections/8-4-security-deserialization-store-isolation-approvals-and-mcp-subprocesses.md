@@ -243,7 +243,7 @@ The pattern repeats across three repositories. The loaders of checkpoints and of
 8. Build MCP servers from `Path` objects in your config, and never from a string a model or a user gave.
 9. Wrap LangChain code in `tracing_context(enabled=False)` when its data must not leave the machine. Pass your own client to `evaluate`, and set `LANGSMITH_TEST_TRACKING=false` for tests.
 10. Install from a lockfile, and check the advisories of each package before you raise a version.
-11. Deny `/**/.*` and `/**/.*/**` first in every Deep Agents rule list, and allow the workspace folder as well as `/workspace/**`.
+11. Deny `/**/.*` and `/**/.*/**` first in every Deep Agents rule list, and allow the workspace folder as well as `/workspace/**`. Also reject any path with a dot component in your own code, because the two patterns miss paths such as `/workspace/.private/.secrets/token`.
 12. Never pass `permissions=[]` to a subagent unless it must have no rules, and leave `virtual_mode` at its default `True`.
 13. Treat file rules as void on any backend with `execute`, and keep secrets out of the folder that backend can reach.
 14. Build every `StoreBackend` namespace from the user id in the run context, never from a constant.

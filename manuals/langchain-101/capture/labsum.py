@@ -1891,8 +1891,8 @@ FIX_CRASH = "test_kill_mid_refund_then_resume_refunds_once"
 
 def fix_junit(path):
     out = {}
-    for attrs, failure, _ in junit_cases(str(path)):
-        out[attrs["name"].replace("test_eval[", "").rstrip("]")] = "failed" if failure is not None else "passed"
+    for attrs, failure, skipped in junit_cases(str(path)):
+        out[attrs["name"].replace("test_eval[", "").rstrip("]")] = "failed" if failure is not None else ("skipped" if skipped else "passed")
     return out
 
 

@@ -104,7 +104,7 @@ note: The insert and the update after the checks are cut.
 …
 ```
 
-The key has three parts: the thread, the order, and the amount. It names no single request.
+The key has three parts: the thread, the order, and the amount. It names no single request. A retry of the same request in a new thread gets a different key, so a client that retries must keep the thread.
 
 The `SELECT ... FOR UPDATE` locks the order row, so two workers cannot both pass the check. The `refunds` table also has a unique index on the key. A replay returns the first refund with `"replayed": true`, and the model tells the customer that the refund exists.
 

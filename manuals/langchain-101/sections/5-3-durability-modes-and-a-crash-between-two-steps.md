@@ -204,8 +204,8 @@ So key the effect on what it means. Use the order id, or the id of the business 
 ```takeaways
 - Expect a node or tool that returned just before a crash to run again, in sync and in async.
 - Expect sync to protect the step boundary only, and pass it only with a checkpointer.
-- Key each side effect on what it means, such as the thread and the order id.
-- Use checkpoint_ns or tool_call_id as a key in sync and async, and never in exit mode.
+- Key each side effect on the business record, such as the order id, and leave the thread id out.
+- Use checkpoint_ns or tool_call_id only to spot a replayed call, never to stop a repeated request.
 - Check your records before the effect, because a model can ask for one charge twice.
 - Do not read an empty next as a finished run after a crash.
 - Record run start and end in your own store, and resume every run without an end.
