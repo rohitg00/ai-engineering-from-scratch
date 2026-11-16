@@ -5,13 +5,10 @@ import requests
 
 from langchain.agents import create_agent
 from langchain.tools import tool
-from langchain_core.embeddings import DeterministicFakeEmbedding
-from langchain_core.messages import AIMessage
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from common import add, ask, model, sum_script
-from fake import call
+from common import add, ask, embeddings, llm, recorder
 
 CORPUS = {
     "checkpoints.md": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a dict. SqliteSaver writes it to a file, so a thread survives a restart.",
@@ -20,27 +17,43 @@ CORPUS = {
 }
 
 
+def corpus_store():
+    splitter = RecursiveCharacterTextSplitter(chunk_size=80, chunk_overlap=20)
+    docs = splitter.create_documents(list(CORPUS.values()), metadatas=[{"source": name} for name in CORPUS])
+    store = InMemoryVectorStore(embedding=embeddings())
+    store.add_documents(docs, ids=[f"doc-{i}" for i in range(len(docs))])
+    return docs, store
+
+
 def retrieval(cap):
     splitter = RecursiveCharacterTextSplitter(chunk_size=80, chunk_overlap=20)
     docs = splitter.create_documents(list(CORPUS.values()), metadatas=[{"source": name} for name in CORPUS])
     cap.section("RecursiveCharacterTextSplitter(chunk_size=80, chunk_overlap=20)")
     cap.json([{"source": d.metadata["source"], "chars": len(d.page_content), "text": d.page_content} for d in docs])
-    emb = DeterministicFakeEmbedding(size=16)
-    cap.section("DeterministicFakeEmbedding(size=16): the same text gives the same vector")
+    emb = embeddings()
+    cap.section("OllamaEmbeddings(model='nomic-embed-text'): one vector per text")
     first = emb.embed_query("checkpointer")
     cap.json({"dims": len(first), "first 4": [round(x, 6) for x in first[:4]], "repeat equal": first == emb.embed_query("checkpointer"), "other text equal": first == emb.embed_query("store")})
     store = InMemoryVectorStore(embedding=emb)
     ids = store.add_documents(docs, ids=[f"doc-{i}" for i in range(len(docs))])
     cap.section("InMemoryVectorStore.similarity_search_with_score")
     cap.json(ids, "ids")
-    for query in (docs[0].page_content, "Where does long-term memory live?"):
+    for query in (docs[0].page_content, "Where does long-term memory live?", "What does a checkpointer do?"):
         hits = store.similarity_search_with_score(query, k=2)
         cap.json([{"id": d.id, "source": d.metadata["source"], "score": round(s, 6), "text": d.page_content} for d, s in hits], f"query {query!r}")
-    cap.text("The fake embedding hashes the whole text, so only an exact text match scores 1.0. Scores for other queries carry no meaning.")
     cap.section("a metadata filter")
     hits = store.similarity_search("memory", k=5, filter=lambda d: d.metadata["source"] == "stores.md")
     cap.json([d.id for d in hits])
-    cap.section("as_retriever, wrapped as a tool for an agent")
+    cap.section("delete and get_by_ids")
+    store.delete(["doc-0"])
+    cap.json([d.id for d in store.get_by_ids(["doc-0", "doc-1"])])
+    cap.section("max_marginal_relevance_search")
+    cap.json([d.id for d in store.max_marginal_relevance_search("memory", k=2, fetch_k=4)])
+
+
+def retrieval_agent(cap):
+    docs, store = corpus_store()
+    cap.section("as_retriever(k=1), wrapped as a tool for an agent")
     retriever = store.as_retriever(search_kwargs={"k": 1})
 
     @tool
@@ -48,14 +61,14 @@ def retrieval(cap):
         """Search the local corpus."""
         return "\n".join(f"[{d.metadata['source']}] {d.page_content}" for d in retriever.invoke(query))
 
-    fake = model(call("search_docs", {"query": docs[0].page_content}), AIMessage("A checkpointer saves state after each step."), label="rag")
-    out = create_agent(fake, tools=[search_docs]).invoke(ask("What does a checkpointer do?"))
+    m = llm("rag")
+    out = create_agent(m, tools=[search_docs], system_prompt="Always call search_docs first, then answer only from what it returns.").invoke(ask("What does a checkpointer do? Search the docs."))
     cap.messages(out["messages"][1:])
-    cap.section("delete and get_by_ids")
-    store.delete(["doc-0"])
-    cap.json([d.id for d in store.get_by_ids(["doc-0", "doc-1"])])
-    cap.section("max_marginal_relevance_search")
-    cap.json([d.id for d in store.max_marginal_relevance_search("memory", k=2, fetch_k=4)])
+    show = [d.page_content for d in docs]
+    for msg in out["messages"]:
+        if msg.type == "tool":
+            body = msg.content.split("] ", 1)[-1]
+            cap.text(f"the hit is chunk {show.index(body) if body in show else 'none'} of {len(show)}")
 
 
 def build_server():
@@ -97,14 +110,7 @@ async def mcp_run(cap):
         cap.section("list_tools() on an in-process FastMCP server")
         cap.json([{"name": t.name, "description": t.description, "args": t.args, "response_format": t.response_format} for t in tools])
         cap.section("an agent calls multiply, divide by zero, and stats")
-        script = [
-            call("multiply", {"a": 6, "b": 7}, "call_m"),
-            call("divide", {"a": 1, "b": 0}, "call_d"),
-            call("stats", {"values": [1, 2, 3, 4]}, "call_s"),
-            AIMessage("6 x 7 = 42; 1 / 0 failed; the mean is 2.5."),
-        ]
-        fake = model(*script, label="mcp")
-        out = await create_agent(fake, tools=tools).ainvoke(ask("Use the calc tools."))
+        out = await create_agent(llm("mcp"), tools=tools).ainvoke(ask("Use the calc tools: multiply 6 by 7, divide 1 by 0, and get the stats of 1, 2, 3, 4. Then report each result."))
         cap.messages(out["messages"][1:])
         cap.section("a resource, read through adapter.client (langchain.mcp has no resource API)")
         client = adapter.client
@@ -129,36 +135,25 @@ def mcp(cap):
 
 def deep_agent(cap):
     from deepagents import create_deep_agent
-    prompts = {}
-
-    def first(messages):
-        prompts["main system prompt"] = messages[0].content
-        return call("write_file", {"file_path": "/notes.md", "content": "2 + 3 = 5\n"}, "call_w")
-
-    def sub(messages):
-        prompts["subagent system prompt"] = messages[0].content
-        return AIMessage("yes")
-
-    fake = model(
-        first,
-        call("ls", {"path": "/"}, "call_l"),
-        call("task", {"description": "Check that 2 + 3 is 5 and reply yes or no.", "subagent_type": "general-purpose"}, "call_t"),
-        sub,
-        AIMessage("I saved the sum in /notes.md and a subagent confirmed it."),
-        label="deep",
-    )
+    m = llm("deep")
     with cap.warnings():
-        agent = create_deep_agent(model=fake, tools=[add], system_prompt="You keep notes.")
+        agent = create_deep_agent(model=m, tools=[add], system_prompt="You keep notes.")
     cap.section("graph nodes")
     cap.json(list(agent.get_graph().nodes))
     cap.section("a run: write_file, ls, a general-purpose subagent, then the answer")
-    out = agent.invoke(ask("Add 2 and 3, save it, and have a subagent check it."))
+    out = agent.invoke(ask("Add 2 and 3 with the add tool. Save the result in /notes.md with write_file. Then call ls on /. Then use the task tool to have a general-purpose subagent check that 2 + 3 is 5. Then answer."), {"recursion_limit": 60})
     cap.messages(out["messages"][1:])
     cap.section("files in state")
     cap.json(out.get("files"))
     cap.section("tools bound on each model call, and what each call saw")
-    cap.json([{"call": entry["call"], "tools": entry.get("bound", {}).get("tools"), "first message": entry["messages"][0][:120], "message count": len(entry["messages"])} for entry in fake.log])
-    for label, text in prompts.items():
+    rows = recorder(m).rows
+    cap.json([{"call": row["call"], "tools": row.get("tools"), "first message": row["messages"][0][:120], "message count": len(row["messages"])} for row in rows])
+    prompts = []
+    for batch in recorder(m).raw:
+        text = batch[0].text if batch and batch[0].type == "system" else ""
+        if text and text not in prompts:
+            prompts.append(text)
+    for label, text in zip(("main system prompt", "subagent system prompt"), prompts):
         cap.section(f"{label}: {len(text)} characters, the first 600")
         cap.text(text[:600])
 
@@ -251,8 +246,7 @@ def langsmith_trace(cap):
 
     @traceable(name="agent_turn")
     def turn(text):
-        fake = model(*sum_script(), label="traced")
-        return create_agent(fake, tools=[add]).invoke(ask(text))["messages"][-1].content
+        return create_agent(llm("traced"), tools=[add]).invoke(ask(text))["messages"][-1].content
 
     with tracing_context(enabled="local", client=client):
         cap.text(f"answer: {turn('What is 2 + 3?', langsmith_extra={'on_end': agent_trees.append})}")
@@ -272,8 +266,7 @@ def langsmith_trace(cap):
     cap.section("tracing_context(enabled=False) with collect_runs: the LangChain runs stay in memory")
     with tracing_context(enabled="local", client=client):
         with tracing_context(enabled=False), collect_runs() as collector:
-            fake = model(*sum_script(), label="collected")
-            answer = create_agent(fake, tools=[add]).invoke(ask("What is 2 + 3?"))["messages"][-1].content
+            answer = create_agent(llm("collected"), tools=[add]).invoke(ask("What is 2 + 3?"))["messages"][-1].content
     client.flush()
     wait_for_all_tracers()
     cap.text(f"answer: {answer}")
@@ -324,8 +317,7 @@ def langsmith_evaluate(cap, client, session):
     question = [schemas.Example(id=uuid.UUID(int=11), dataset_id=dataset, inputs={"question": "What is 2 + 3?"}, outputs={"answer": "The sum is 5."}, created_at=created)]
 
     def agent_target(inputs: dict) -> dict:
-        fake = model(*sum_script(), label="evaluated")
-        return {"answer": create_agent(fake, tools=[add]).invoke(ask(inputs["question"]))["messages"][-1].content}
+        return {"answer": create_agent(llm("evaluated"), tools=[add]).invoke(ask(inputs["question"]))["messages"][-1].content}
 
     def same_answer(outputs: dict, reference_outputs: dict) -> dict:
         return {"key": "same_answer", "score": outputs["answer"] == reference_outputs["answer"]}
@@ -341,8 +333,12 @@ def langsmith_evaluate(cap, client, session):
 
 
 SCENARIOS = [
-    ("retrieval", "Splitter, DeterministicFakeEmbedding, and InMemoryVectorStore", retrieval),
-    ("mcp", "langchain.mcp with an in-process FastMCP server", mcp),
-    ("deep-agent", "A Deep Agents 0.7 run on the fake model", deep_agent),
-    ("langsmith", "langsmith traceable with tracing off and local run trees", langsmith_trace),
+    ("retrieval", "Splitter, OllamaEmbeddings, and InMemoryVectorStore", retrieval, True),
+    ("mcp", "langchain.mcp with an in-process FastMCP server", mcp, True),
+    ("deep-agent", "A Deep Agents 0.7 run", deep_agent, True),
+    ("langsmith", "langsmith traceable with tracing off and local run trees", langsmith_trace, True),
+]
+
+LATE = [
+    ("retrieval-agent", "A retriever wrapped as a tool for an agent", retrieval_agent, True),
 ]

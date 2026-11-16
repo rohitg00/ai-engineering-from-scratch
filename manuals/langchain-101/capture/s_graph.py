@@ -3,7 +3,7 @@ import operator
 from typing import Annotated, Literal, TypedDict
 
 from langchain.agents import create_agent
-from langchain_core.messages import AIMessage, HumanMessage, RemoveMessage
+from langchain_core.messages import HumanMessage, RemoveMessage
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.errors import GraphRecursionError, NodeError
 from langgraph.func import entrypoint, task
@@ -12,8 +12,7 @@ from langgraph.graph.message import add_messages
 from langgraph.managed import RemainingSteps
 from langgraph.types import Command, RetryPolicy, Send, interrupt
 
-from common import add, ask, model, thread
-from fake import call
+from common import add, ask, llm, recorder, thread
 
 
 class Fanout(TypedDict):
@@ -24,7 +23,7 @@ class Fanout(TypedDict):
     best: str
 
 
-def reducers_send_command(cap):
+def joke_graph():
     def plan(state):
         return {"subjects": ["cats", "dogs", "owls"], "log": ["plan"]}
 
@@ -57,6 +56,11 @@ def reducers_send_command(cap):
     graph.add_edge("publish", END)
     graph.add_edge("retry", END)
     app = graph.compile()
+    return app
+
+
+def reducers_send_command(cap):
+    app = joke_graph()
     cap.section("graph")
     cap.text(app.get_graph().draw_mermaid())
     cap.section("updates, one chunk per node run")
@@ -88,9 +92,7 @@ def reducers_send_command(cap):
     cap.messages(g.compile().invoke({"messages": [{"role": "user", "content": "hi"}]})["messages"])
 
 
-def functional(cap):
-    runs = []
-
+def functional_workflow(runs):
     @task
     def double(x: int) -> int:
         runs.append(f"double({x})")
@@ -107,6 +109,12 @@ def functional(cap):
         answer = ask_human(total).result()
         return {"total": total, "answer": answer}
 
+    return workflow
+
+
+def functional(cap):
+    runs = []
+    workflow = functional_workflow(runs)
     cfg = thread("functional")
     cap.section("first run stops at the interrupt inside a task")
     result = workflow.invoke([1, 2, 3], cfg, version="v2")
@@ -133,7 +141,7 @@ def functional(cap):
     cap.json(list(workflow.get_graph().nodes))
 
 
-def subgraphs(cap):
+def subgraph_app():
     class Inner(TypedDict):
         text: str
         steps: Annotated[list[str], operator.add]
@@ -160,6 +168,11 @@ def subgraphs(cap):
     outer.add_edge("prepare", "inner")
     outer.add_edge("inner", "finish")
     app = outer.compile(checkpointer=InMemorySaver())
+    return app
+
+
+def subgraphs(cap):
+    app = subgraph_app()
     cfg = thread("subgraph")
     cap.section("graph with xray=True")
     cap.text(app.get_graph(xray=True).draw_mermaid())
@@ -172,8 +185,11 @@ def subgraphs(cap):
     cap.section("resume")
     cap.json(app.invoke(Command(resume="yes"), cfg))
     cap.json([f"{name}" for name, _ in app.get_subgraphs()], "get_subgraphs()")
+
+
+def subgraph_agent(cap):
     cap.section("an agent as a subgraph node")
-    agent = create_agent(model(call("add", {"a": 2, "b": 3}), AIMessage("5")), tools=[add], name="adder")
+    agent = create_agent(llm("adder"), tools=[add], name="adder")
     g = StateGraph(MessagesState)
     g.add_node("adder", agent)
     g.add_edge(START, "adder")
@@ -264,12 +280,6 @@ def recursion(cap):
         cap.text("finished under the default limit")
     except GraphRecursionError as exc:
         cap.text(f"raised GraphRecursionError: {str(exc).splitlines()[0]}")
-    cap.section("create_agent sets recursion_limit 9999; a model that always calls a tool, with recursion_limit=6")
-    looping = model(*[call("add", {"a": i, "b": 1}, f"call_{i}") for i in range(10)])
-    agent = create_agent(looping, tools=[add])
-    cap.json(agent.config["recursion_limit"], "agent.config['recursion_limit']")
-    cap.attempt("invoke with recursion_limit=6", lambda: agent.invoke(ask("loop"), {"recursion_limit": 6}))
-    cap.text(f"model calls before the stop: {looping.position}")
     cap.section("RemainingSteps lets a node stop before the limit")
 
     class Guarded(TypedDict):
@@ -283,10 +293,25 @@ def recursion(cap):
     cap.json(g.compile().invoke({"n": 0}, {"recursion_limit": 5}))
 
 
+def recursion_agent(cap):
+    cap.section("create_agent sets recursion_limit 9999; a model told to keep calling a tool, with recursion_limit=6")
+    looping = llm("looping")
+    agent = create_agent(looping, tools=[add], system_prompt="You count upward with the add tool. Every reply must call add once, adding 1 to the last result. Never answer in text.")
+    cap.json(agent.config["recursion_limit"], "agent.config['recursion_limit']")
+    cap.attempt("invoke with recursion_limit=6", lambda: agent.invoke(ask("Start at 0 and never stop."), {"recursion_limit": 6}))
+    cap.text(f"model calls before the stop: {len(recorder(looping).rows)}")
+    cap.json(recorder(looping).rows[-1]["messages"], "what the model received on its last call")
+
+
 SCENARIOS = [
-    ("stategraph-reducers-send-command", "StateGraph: reducers, Send fan-out, and Command goto", reducers_send_command),
-    ("functional-api", "The functional API: @entrypoint and @task", functional),
-    ("subgraphs", "Subgraphs, their namespaces, and an interrupt inside one", subgraphs),
-    ("error-handler-timeout", "Retry policy, node error handlers, and node timeouts", errors_timeouts),
-    ("recursion-limit", "The recursion limit", recursion),
+    ("stategraph-reducers-send-command", "StateGraph: reducers, Send fan-out, and Command goto", reducers_send_command, False),
+    ("functional-api", "The functional API: @entrypoint and @task", functional, False),
+    ("subgraphs", "Subgraphs, their namespaces, and an interrupt inside one", subgraphs, False),
+    ("error-handler-timeout", "Retry policy, node error handlers, and node timeouts", errors_timeouts, False),
+    ("recursion-limit", "The recursion limit", recursion, False),
+]
+
+LATE = [
+    ("subgraph-agent", "An agent as a subgraph node", subgraph_agent, True),
+    ("recursion-agent", "An agent loop past its recursion limit", recursion_agent, True),
 ]
