@@ -3,7 +3,7 @@
 > अपने परीक्षणों को पास करने के लिए अपने परीक्षणों पर सहमति साबित करता है, तो समानता एक ग्रिड की जरूरत है कि हर किनारे तक पहुँचता है और स्थानांतरण मास्क के बाद उस मैच बाइट्स.
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 34 (lifting to pseudocode), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~110 minutes
 
@@ -271,6 +271,7 @@ AArch64 पर, `sdiv`एक ही ऑपरेन्ड के लिए -2147
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 इस तरह, डेमो में दोनों उम्मीदवार जोड़े को संकलित किया जाता है और प्रत्येक के लिए 92 कोशिकाओं को चलाया जाता है। यह आठ उम्मीदवारों को फिर से संकलित करता है, एजेंट रन को फिर से चलाता है, और सबूत रिकॉर्ड को मचाता है। बिना क्लिंग के यह प्रतिबद्ध वस्तुओं को पढ़ता है और व्यवहार के दावों को रिपोर्ट करता है।`unknown`. .
@@ -371,6 +372,9 @@ report.masked_equal, report.relocations_match, report.tables_equal, report.reaso
 GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
 JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
 python3 code/main.py --live
+GHIDRA_INSTALL_DIR=/opt/homebrew/Cellar/ghidra/12.1.4/libexec \
+JAVA_HOME=/opt/homebrew/opt/openjdk@21 \
+npx tsx code/main.ts --live
 ```
 
 पहला `analyze_function`Ghidra ऑब्जेक्ट आयात करते समय कुछ सेकंड लगते हैं। नए सबूत आईडी की तुलना किए गए रन के साथ करें। एक ही विश्लेषण प्रोफ़ाइल के तहत एक ही बाइट एक ही आईडी देते हैं, क्योंकि आईडी एक सामग्री हैश है जो फ़ाइल पथ को बाहर करता है।
@@ -404,6 +408,7 @@ python3 code/main.py --live
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 चेकर प्रत्येक अपेक्षित मूल्य की गणना करता है `code/main.py`यह प्रिंट करता है`PASS`,`FAIL`या `TODO`प्रत्येक कार्य के लिए और एक स्कोर, और यह 0 से केवल जब सभी पांच पास छोड़ देता है। `python3 code/lab.py my-answers.json`एक और फ़ाइल की जाँच करता है। `code/tests/test_lab.py`यह साबित करता है कि जांचकर्ता सही उत्तरों को स्वीकार करता है और गलत उत्तरों को अस्वीकार करता है।
@@ -423,6 +428,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/36-rebuild-and-prove-equal
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

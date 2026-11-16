@@ -3,7 +3,7 @@
 > एक कौशल एक क्रिया का सुझाव दे सकता है केवल मेजबान ही इसे अनुमोदित कर सकता है, केवल एक अलग सीमा ही इसे शामिल कर सकती है, और केवल सत्यापन ही आपको बता सकता है कि क्या यह काम किया।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 25 (Skill Invocation and Routing), Phase 13 · 15 (MCP Security I)
 **Time:** ~120 minutes
 
@@ -289,6 +289,7 @@ skill-approval-decision
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/26-skill-permissions-sandboxes-and-trust
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

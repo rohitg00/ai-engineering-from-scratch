@@ -3,7 +3,7 @@
 > परिवहन MCP संदेशों को ले जाता है. यह गायब प्रोटोकॉल राज्य प्रदान नहीं करता है.`2026-07-28`, स्थानीय स्टूडियो और रिमोट स्ट्रीम करने योग्य HTTP दोनों स्वयं वर्णित अनुरोधों को ले जाते हैं।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07 and 08
 **Time:** ~65 minutes
 
@@ -189,6 +189,7 @@ tp-transport-handshake
 ```bash
 cd code
 python3 main.py --probe
+npx tsx main.ts --probe
 python3 -m unittest discover tests -v
 ```
 

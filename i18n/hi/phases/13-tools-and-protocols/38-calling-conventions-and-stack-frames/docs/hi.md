@@ -3,7 +3,7 @@
 > एक डिमॉन्डेशन दिखाता है कि कौन सा रजिस्टर एक फ़ंक्शन पढ़ता है। केवल एबीआई बताता है कि उन रजिस्टरों का क्या अर्थ है, और एबीआई ऑब्जेक्ट हेडर द्वारा चुना जाता है, इसलिए यह सबक पहले हेडर पढ़ता है और फिर प्रत्येक रजिस्टर को उस नियम के खिलाफ जांचता है जो इसे वहां रखता है।
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and AArch64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow)
 **Time:** ~140 minutes
 
@@ -195,6 +195,7 @@ CFA कॉल से पहले स्टैक पॉइंटर है, प
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट एक JSON रिपोर्ट है। सात वस्तुओं में से प्रत्येक के लिए यह प्रारूप, मशीन और एबीआई का नाम देता है, और बारह कार्यों में से प्रत्येक के लिए यह प्रोग्यू बाइट्स, प्रविष्टि ऑफसेट के साथ सहेजे गए रजिस्टर, फ्रेम आकार, फ्रेम पॉइंटर, पैरामीटर रजिस्टर, स्टैक तर्क ऑफसेट, spill, रिटर्न रजिस्टर या छिपा पॉइंटर, कॉल गहराई, और कॉलर्स के आउटगॉउन्डिग रजिस्टर और स्टोर देता है। प्रत्येक फ़ंक्शन की जाँच उसके चेक के साथ समाप्त होती हैः नियम, हस्ताक्षर से अपेक्षित मूल्य, बाइट्स से देखे गए मूल्य, और क्या वे सहमत हैं। रिपोर्ट दो रिवाइंड क्रॉस-चेक और उपकरण कैप्चर के साथ समाप्त होती है। 84 कार्य विश्लेषणों में 489 जांचें चलती हैं और सभी 489 सहमत हैं।
@@ -331,6 +332,7 @@ for row in eh_frame_cross_check("convention-x86_64-linux-O2-eh"):
 ```bash
 cd phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > एक दूरस्थ MCP अनुरोध राज्यहीन है, लेकिन इसकी प्राधिकरण गुमनाम नहीं है. प्रत्येक क्रेडेंशियल को जारी करने वाले को जोड़ा गया है जिसने इसे बनाया और प्रत्येक टोकन को प्राप्त करने वाले संसाधन से।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 15 (security)
 **Time:** ~90 minutes
 
@@ -252,6 +252,7 @@ t3-scope-stepup
 ```bash
 cd phases/13-tools-and-protocols/16-mcp-security-oauth-2-1
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

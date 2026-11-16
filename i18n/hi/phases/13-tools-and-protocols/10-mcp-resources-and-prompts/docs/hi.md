@@ -3,7 +3,7 @@
 > उपकरण संचालन करते हैं। संसाधन पता लगा सकते हैं सामग्री का खुलासा करते हैं। उपयोगकर्ता द्वारा चयनित संदेश टेम्पलेट पैकेज को सूचित करता है। एक अच्छा एमसीपी सर्वर उन अनुबंधों को अलग और पूर्वानुमाननीय रखता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07 (Building an MCP Server), Phase 13, Lesson 09 (MCP Transports)
 **Time:** ~60 minutes
 
@@ -279,6 +279,7 @@ t3-primitive-sort
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 
@@ -304,6 +305,7 @@ python3 -m unittest discover tests -v
 ```bash
 cd phases/13-tools-and-protocols/10-mcp-resources-and-prompts/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

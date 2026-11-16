@@ -3,7 +3,7 @@
 > तीन स्वतंत्र मौसम खोजों को क्रमबद्ध किया गया है तीन राउंड-ट्रिप है। उन्हें समानांतर में चलाएं और कुल समय सबसे धीमी एकल कॉल तक गिर जाता है। प्रत्येक सीमा प्रदाता अब एक ही मोड़ में कई उपकरण कॉल जारी करता है। भुगतान वास्तविक है; पाइपलाइन सूक्ष्म है। यह सबक दोनों आधे चलता हैः समानांतर फैन-आउट और स्ट्रीम-आर्कमेंट री-एम्ब्लेड, आईडी-कोरेलेशन फंके पर जोर देते हुए।
 
 **Type:** Build
-**Languages:** Python (stdlib, thread pool + streaming harness)
+**Languages:** Python, TypeScript (stdlib, thread pool + streaming harness)
 **Prerequisites:** Phase 13 · 02 (function calling deep dive)
 **Time:** ~75 minutes
 

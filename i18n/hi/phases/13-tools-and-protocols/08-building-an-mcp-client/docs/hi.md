@@ -3,7 +3,7 @@
 > आधुनिक MCP क्लाइंट हर अनुरोध पर अपना अनुबंध दोहराता है। इसका सबसे कठिन संगतता निर्णय यह जानना है कि पुराना सर्वर कब वास्तव में पुराना है और आधुनिक सर्वर कब एक सुधार योग्य त्रुटि की रिपोर्ट कर रहा है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lesson 07
 **Time:** ~85 minutes
 
@@ -178,6 +178,7 @@ tp-client-merge
 ```bash
 cd code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

@@ -3,7 +3,7 @@
 > रजिस्ट्री में प्रवेश आपको बताता है कि एक प्रकाशक ने क्या घोषणा की। उत्पादन प्रवेश साबित करता है कि आपने क्या लिया है, आपने क्या देखा है, आपने क्या मंजूरी दी है, और आप सुरक्षित रूप से क्या बहाल कर सकते हैं।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 17 (gateways and registries), Phase 13 · 18 (production authentication)
 **Time:** ~90 minutes
 
@@ -163,6 +163,7 @@ GitHub समर्थित नामस्थान और डोमेन स
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 प्रदर्शन पांच कार्य करता हैः
@@ -288,6 +289,7 @@ c.ledger.verify()
 ```bash
 cd phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

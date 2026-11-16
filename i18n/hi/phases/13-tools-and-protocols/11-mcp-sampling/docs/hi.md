@@ -3,7 +3,7 @@
 > MCP 2026-07-28 नए डिजाइनों के लिए नमूनाकरण को अप्रचलित करता है और सर्वर-से-क्लाइंट अनुरोध चैनल को हटा देता है। यदि मौजूदा वर्कफ़्लो को अभी भी क्लाइंट के मॉडल की आवश्यकता होती है, तो सर्वर एक `input_required`परिणाम और क्लाइंट मॉडल आउटपुट के साथ मूल अनुरोध को पुनः प्रयास करता है। तर्क लूप प्रोटोकॉल परत पर स्पष्ट, सीमांत और राज्यहीन हो जाता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources and prompts)
 **Time:** ~75 minutes
 
@@ -210,6 +210,7 @@ t3-sampling-flip
 ```bash
 cd phases/13-tools-and-protocols/11-mcp-sampling/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

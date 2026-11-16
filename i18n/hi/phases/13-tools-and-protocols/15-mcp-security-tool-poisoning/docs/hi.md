@@ -3,7 +3,7 @@
 > बिना नागरिकता का मतलब विश्वासहीन नहीं है, इसका मतलब है कि प्रत्येक अनुरोध से सर्वर और गेटवे को कॉल को स्वतंत्र रूप से मान्य करने के लिए आवश्यक साक्ष्य उजागर होते हैं।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 08 (MCP client)
 **Time:** ~60 minutes
 
@@ -248,6 +248,7 @@ tp-tool-poisoning
 ```bash
 cd phases/13-tools-and-protocols/15-mcp-security-tool-poisoning
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

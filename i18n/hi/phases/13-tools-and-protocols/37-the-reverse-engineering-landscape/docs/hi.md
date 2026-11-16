@@ -3,7 +3,7 @@
 > पांच उपकरण एक ही वस्तु को पढ़ते हैं और चार पते देते हैं, तीन ब्लॉक गिनती, और एक स्विच के लिए दो उत्तर, और यह सबक एक हर्नर बनाता है जो दिखाता है कि कौन कौन है।
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, Java (one Ghidra script)
+**Languages:** Python, TypeScript, C, x86-64 assembly, Java (one Ghidra script)
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~150 minutes
 
@@ -342,6 +342,7 @@ void sym.grade (int64_t arg1) {
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट एक JSON रिपोर्ट है। यह कैप्चर के समय रिकॉर्ड किए गए उपकरण संस्करणों के साथ और आपके मशीन पर मौजूद उपकरणों के साथ खुलता है, जो सभी अनुपस्थित हो सकते हैं। फिर चार वस्तुओं में से प्रत्येक के लिए यह प्रतीक विस्तार, पैडिंग रिक्तियों, प्रत्येक उपकरण का उपयोग किया आधार, प्रत्येक उपकरण पाया या आविष्कार किया गया है, और प्रत्येक समारोह के लिए निर्देश-शुरू समझौते, ब्लॉक गिनती, किनारे गिनती, और किनारे प्रत्येक उपकरण में कमी है के लिए प्रत्येक उपकरण शुरू करता है। यह प्रति उपकरण बाइट लेखांकन, उपकरण के स्वयं के नोट्स, सादे वाक्य में निष्कर्षों की सूची और आईआर अनुभाग के साथ समाप्त होता हैः कैप्चर किए गए लिफ्ट पर मापा गए गणनाओं के बगल में तीन निर्देशों के लिए अनुवादक का आउटपुट।
@@ -472,6 +473,7 @@ report["functionStarts"]["angr"]
 ```bash
 cd phases/13-tools-and-protocols/37-the-reverse-engineering-landscape
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

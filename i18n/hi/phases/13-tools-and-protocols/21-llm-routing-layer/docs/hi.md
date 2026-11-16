@@ -3,7 +3,7 @@
 > प्रदाता लॉक-इन महंगा है। विभिन्न उपकरण-कॉल करने वाले कार्यभार अलग-अलग मॉडल के अनुरूप होते हैं। रूटिंग गेटवे एक एपीआई सतह, पुनः प्रयास, विफलता, लागत ट्रैकिंग और गार्डरेल प्रदान करते हैं। 2026 में तीन आर्चेटाइप हावी हैंः लाइटएलएलएम (ओपन सोर्स स्व-होस्ट), ओपनरॉटर (प्रबंधित सास), पोर्टकी (उत्पादन-ग्रेड, मार्च 2026 में ओपन-सोर्स) । यह पाठ निर्णय मानदंडों का नाम देता है और एक stdlib रूटिंग गेटवे पर चलता है।
 
 **Type:** Learn
-**Languages:** Python (stdlib, routing + failover + cost tracker)
+**Languages:** Python (stdlib, routing + failover + cost tracker), TypeScript
 **Prerequisites:** Phase 13 · 02 (function calling), Phase 13 · 17 (gateways)
 **Time:** ~45 minutes
 

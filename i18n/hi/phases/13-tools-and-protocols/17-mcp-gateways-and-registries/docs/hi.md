@@ -3,7 +3,7 @@
 > एक गेटवे को प्रत्येक मार्ग को स्पष्ट करना चाहिए। 2026-07-28 प्रोटोकॉल उसे परिवहन सत्र के बिना विधि, नाम, संस्करण, क्षमता, पहचान, कैश और निशान सीमाएं देता है।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 15 (security), Phase 13 · 16 (authorization)
 **Time:** ~75 minutes
 
@@ -326,6 +326,7 @@ t3-gateway-funnel
 ```bash
 cd phases/13-tools-and-protocols/17-mcp-gateways-and-registries
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

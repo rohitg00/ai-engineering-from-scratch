@@ -3,7 +3,7 @@
 > बिना राज्य के एमसीपी का मतलब यह नहीं है कि प्रत्येक ऑपरेशन को एक अनुरोध में पूरा किया जाना चाहिए। आधिकारिक कार्य विस्तार लंबे समय तक चलने वाले काम को एक स्पष्ट टिकाऊ हैंडल देता है। एक सर्वर उस हैंडल को वापस कर सकता है`tools/call`, किसी भी उदाहरण उत्तर दे सकता है `tasks/get`, और ग्राहक इनपुट के माध्यम से आता है `tasks/update`प्रोटोकॉल सत्रों को पुनर्जीवित किए बिना।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 11 (stateless MRTR), Phase 13 · 12 (elicitation)
 **Time:** ~90 minutes
 
@@ -413,6 +413,7 @@ tp-task-lifecycle
 ```bash
 cd phases/13-tools-and-protocols/13-mcp-async-tasks/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

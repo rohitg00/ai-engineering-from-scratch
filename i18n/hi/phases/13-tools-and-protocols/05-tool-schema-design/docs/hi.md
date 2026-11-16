@@ -3,7 +3,7 @@
 > एक सही उपकरण चुपचाप विफल रहता है जब मॉडल यह नहीं बता सकता कि इसका उपयोग कब करना है। नामकरण, विवरण और पैरामीटर आकार एक मॉडल द्वारा विश्वसनीय रूप से चुने गए उपकरण को एक मॉडल द्वारा गलत तरीके से फायर किए गए उपकरण से अलग करने वाले डिजाइन नियमों का नाम देते हैं।
 
 **Type:** Learn
-**Languages:** Python (stdlib, tool schema linter)
+**Languages:** Python, TypeScript (stdlib, tool schema linter)
 **Prerequisites:** Phase 13 · 01 (the tool interface), Phase 13 · 04 (structured output)
 **Time:** ~45 minutes
 

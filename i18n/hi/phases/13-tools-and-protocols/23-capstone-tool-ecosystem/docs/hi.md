@@ -3,7 +3,7 @@
 > एक उत्पादन एजेंट प्रणाली सीमाओं का एक सेट है, सुविधाओं का एक ढेर नहीं। यह कैप्सस्टोन प्रोटोकॉल क्लाइंट, प्राधिकरण सर्वर, सैंडबॉक्स और टेलीमेट्री निर्यातक से एक पठनीय प्रक्रिया सिमुलेशन को अलग करता है, जिसे अभी भी वास्तविक तैनाती की आवश्यकता है।
 
 **Type:** Build
-**Languages:** Python (stdlib, in-process simulation)
+**Languages:** Python (stdlib, in-process simulation), TypeScript
 **Prerequisites:** Phase 13 · 01 through 22, using MCP revision `2026-07-28`
 **Time:** ~120 minutes
 
@@ -203,6 +203,7 @@ t3-capstone-chain
 ```bash
 cd phases/13-tools-and-protocols/23-capstone-tool-ecosystem
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 छः बातों का निरीक्षण करें:

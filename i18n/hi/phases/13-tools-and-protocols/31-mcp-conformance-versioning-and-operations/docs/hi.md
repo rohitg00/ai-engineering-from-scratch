@@ -3,7 +3,7 @@
 > एक सर्वर अनुरूप नहीं है क्योंकि इसका खुश पथ एक एसडीके के माध्यम से काम करता है। अनुरूपता तार पर, संस्करण सीमाओं पर, मध्यस्थों के माध्यम से और रोलबैक के दौरान रहता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 09 (transports), Phase 13 · 17 (gateways), Phase 13 · 30 (registry admission)
 **Time:** ~100 minutes
 
@@ -265,6 +265,7 @@ JSON-RPC सूचना में कोई `id`. रिसीवर को JSO
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 डेमो में वैध और गलत रूप से तैयार किए गए परिणामों सहित ठीक पंद्रह स्वर्ण और नकारात्मक प्रतिलेखन चल रहे हैं, एक एसडीके दृश्य के साथ कच्चे परिणाम की तुलना करता है, एक प्रॉक्सी की जांच करता है जो एक मूल त्रुटि से ढह गया है, स्वास्थ्य का मूल्यांकन करता है, रिलबैक साक्ष्य को प्रमाणित करता है, और उस लक्ष्य का चयन करता है।
@@ -395,6 +396,7 @@ compare_sdk_view(
 ```bash
 cd phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

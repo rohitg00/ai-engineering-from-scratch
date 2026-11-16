@@ -3,7 +3,7 @@
 > एक संकलित प्रोग्राम तालिकाओं का एक सेट है जो एक दूसरे की ओर इशारा करते हैं। आपके द्वारा लिखे गए पाठक में आउटपुट दिया जाता है जिसे आप बाइट द्वारा जांच सकते हैं।
 
 **Type:** Build
-**Languages:** Python (stdlib), C (fixture only)
+**Languages:** Python (stdlib), TypeScript, C (fixture only)
 **Prerequisites:** Phase 0 · 01 (Dev Environment) with clang installed, Python 3.10 or later, hexadecimal arithmetic
 **Time:** ~120 minutes
 
@@ -275,6 +275,7 @@ rea माच-ओ के माध्यम से पढ़ता है `inspe
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 डेमो पढ़ता है `ledger-x86_64-O1.o`और अपने हेडर, अनुभागों, प्रतीकों, स्थानांतरण, और फ़ाइल ऑफसेट नक्शा प्रिंट करता है। यह फिर चार फ़ंक्शन बाइट स्ट्रिंग प्रिंट करता है, पढ़ता है `ledger-arm64-O1.o`, और तुलना तालिका प्रिंट करता है। यह कार्यक्रम के शीर्षक के साथ समाप्त होता है`tiny-x86_64`. अपेक्षित पंक्तियाँ:
@@ -395,6 +396,7 @@ macho.function_bytes("_percent_change")[:4].hex()
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 चेकर प्रत्येक अपेक्षित मूल्य की गणना करता है `code/main.py`यह प्रिंट करता है`PASS`,`FAIL`या `TODO`प्रत्येक कार्य के लिए और एक स्कोर, और यह 0 से केवल जब सभी पांच पास छोड़ देता है। `python3 code/lab.py my-answers.json`एक और फ़ाइल की जाँच करता है। `code/tests/test_lab.py`यह साबित करता है कि जांचकर्ता सही उत्तरों को स्वीकार करता है और गलत उत्तरों को अस्वीकार करता है।
@@ -414,6 +416,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

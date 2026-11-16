@@ -3,7 +3,7 @@
 > एक बाइटकोड फ़ाइल एक प्रोग्राम है इसके साथ-साथ इसके बारे में संकलक के नोट्स, और यह पाठ पाठकों को बनाता है जो दिखाता है कि प्रत्येक कंटेनर कौन से नोट रखता है।
 
 **Type:** Build
-**Languages:** Python, Java, C#, WebAssembly text
+**Languages:** Python, TypeScript, Java, C#, WebAssembly text
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow)
 **Time:** ~150 minutes
 
@@ -265,6 +265,7 @@ IL_0023: 1a 2a        ldc.i4.4, ret
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट एक JSON रिपोर्ट है. प्रत्येक pyc के लिए यह दोनों हेडर, फ़ाइल और `grade`आकार, निर्देश गिनती और कैप्चर सूची से opcode नाम, और चल रहे अनुवादक इसे पढ़ सकते हैं कि नहीं. प्रत्येक वर्ग निर्माण के लिए यह संस्करण, आकार, डिबग तालिका गिनती, और देता है `javap`प्रत्येक वासम निर्माण के लिए यह खंड, प्रकार, कार्य, नाम-खंड सामग्री और `wasm-objdump`अनुबंध. यह विधानसभा के लिए सीएलआई हेडर, धाराओं, तालिका पंक्तियों की गिनती, तरीकों और सिस्टम.रिफ्लेक्शन.मेटाडेटा समझौते को देता है। यह तालिका और व्याख्याकों की सूची के साथ समाप्त होता है जो कि `PATH`. .
@@ -378,6 +379,7 @@ asm.token_text(0x11000001)
 ```bash
 cd phases/13-tools-and-protocols/43-bytecode-and-managed-formats
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > आधुनिक MCP में कोई हाथ मिलाव और कोई प्रोटोकॉल सत्र नहीं है। प्रत्येक अनुरोध में अपने आप को समझने, अधिकृत करने, रूट करने और पुनः परीक्षण करने के लिए पर्याप्त मेटाडेटा होना चाहिए।
 
 **Type:** Learn
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 01 through 05
 **Time:** ~55 minutes
 
@@ -164,6 +164,7 @@ mcp-tool-call
 
 ```bash
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 

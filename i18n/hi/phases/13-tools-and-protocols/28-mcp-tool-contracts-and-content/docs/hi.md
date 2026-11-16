@@ -3,7 +3,7 @@
 > एक उपकरण को स्वचालित करने के लिए केवल तभी सुरक्षित है जब खोज, तर्क, परिणाम, पृष्ठीकरण और परिवहन मेटाडेटा एक अनुबंध पर सहमत हों।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 07, 09, and 10
 **Time:** ~120 minutes
 
@@ -353,6 +353,7 @@ if not result.get("nextCursor"):
 ```bash
 cd phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

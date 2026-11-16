@@ -3,7 +3,7 @@
 > एक अनुरोध आईडी संदेश से जुड़ी होती है। यह किसी दुष्प्रभाव को सुरक्षित नहीं बनाता है, एक कार्यकर्ता को रोकता है, या धीमी उपभोक्ता से धारा की रक्षा नहीं करता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13, Lessons 09 and 13
 **Time:** ~120 minutes
 
@@ -336,6 +336,7 @@ cap: 8000 ms
 ```bash
 cd phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/code
 python3 main.py
+npx tsx main.ts
 python3 -m unittest discover tests -v
 ```
 

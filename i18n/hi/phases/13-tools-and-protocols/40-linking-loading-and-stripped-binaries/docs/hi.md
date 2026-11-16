@@ -3,7 +3,7 @@
 > एक लिंक्ड प्रोग्राम फ़ंक्शन को कॉल करता है जिसमें यह शामिल नहीं है। यह पाठ उन कॉल के लिए लिंक संपादक द्वारा लिखे गए तालिकाओं को तीन प्रारूपों में पढ़ता है, लोडर भरने वाले स्लॉट पर एक कॉल का पालन करता है, और इसके नामों के बाद बिल्ड के कार्यों को ढूंढता है।
 
 **Type:** Build
-**Languages:** Python, C, x86-64 and arm64 assembly
+**Languages:** Python, TypeScript, C, x86-64 and arm64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), 33 (disassembly and control flow), 38 (calling conventions)
 **Time:** ~160 minutes
 
@@ -283,6 +283,7 @@ IDA और बाइनरी निंजा बंद हैं और यह�
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट एक JSON रिपोर्ट है जिसमें पांच भाग हैं। `elf`दो वस्तुओं की स्थानांतरण गणना, लिंक योजना और गतिशील खंड, PLT और GOT को रखता है `tiny-dyn-x86_64`. .`coff`दो वस्तुओं के खंड, स्थानान्तरण, कार्य और अनिश्चित नाम रखता है। `pe`इस सूची में मुख्य पृष्ठ, निर्देशिका, आयात, निर्यात, आधार स्थानांतरण और आईएटी कॉल शामिल हैं।`tiny-x86_64.exe`. .`macho`रखती है `ledger_main`इसके टटके, चेन फिक्सअप, फिक्सअप पंक्तियों और निर्यात के साथ, विरासत लेआउट `ledger_main_nochain`, दलिब, और दो स्ट्रिप रिपोर्ट।`identification`सत्य है, चार तरीकों के साथ स्कोर, और हस्ताक्षर के साथ उनके टकराव, पर`-O0`और `-O2`. .
@@ -412,6 +413,7 @@ match_signatures(sigs, stripped, starts)
 ```bash
 cd phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

@@ -3,7 +3,7 @@
 > एक संकलित कार्यक्रम के बारे में एक निष्कर्ष एक हैश, एक विश्वास, एक प्राधिकरण और एक सूची के साथ एक रिकॉर्ड है जो यह नहीं दिखा सकता है।
 
 **Type:** Build
-**Languages:** Python, C
+**Languages:** Python, C, TypeScript
 **Prerequisites:** Phase 13 · 32 (ELF from scratch), Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~105 minutes
 
@@ -306,6 +306,7 @@ rea में तीन चीजें हैं जो एक कैश की
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 डेमो ऑब्जेक्ट को पढ़ता है, दो वास्तविक रिकॉर्ड्स आयात करता है, वास्तविक स्नैपशॉट की पुष्टि करता है, और दो मॉडल प्राप्त करता है। फिर यह 18 भविष्यवाणियों को रिकॉर्ड करता है, 18 अज्ञात खोला जाता है, हर्नस को संकलित और चलाता है, प्रत्येक दावे की जांच करता है, और 17 अज्ञात को हल करता है। अपेक्षित आकारः
@@ -441,6 +442,7 @@ ledger.verify_unknown_chain(unknown_id)
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 चेकर प्रत्येक अपेक्षित मूल्य की गणना करता है `code/main.py`यह प्रिंट करता है`PASS`,`FAIL`या `TODO`प्रत्येक कार्य के लिए और एक स्कोर, और यह 0 से केवल जब सभी पांच पास छोड़ देता है। `python3 code/lab.py my-answers.json`एक और फ़ाइल की जाँच करता है। `code/tests/test_lab.py`यह साबित करता है कि जांचकर्ता सही उत्तरों को स्वीकार करता है और गलत उत्तरों को अस्वीकार करता है।
@@ -460,6 +462,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > एक अच्छा विवरण मॉडल को चुनने में मदद करता है; एक अच्छी नीति यह तय करती है कि क्या यह विकल्प अनुमति है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 24 (Skill Discovery and Progressive Disclosure)
 **Time:** ~105 minutes
 
@@ -258,6 +258,7 @@ Do not repeat an external write whose idempotency key is already recorded.
 ```bash
 cd phases/13-tools-and-protocols/25-skill-invocation-and-routing
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

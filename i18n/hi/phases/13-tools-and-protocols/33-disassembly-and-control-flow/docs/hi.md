@@ -3,7 +3,7 @@
 > एक डिमॉन्टेबल लिस्टिंग एक दावा है कि कौन से बाइट्स निर्देश हैं, और यह सबक डिकोडर और ग्राफ बनाता है जो दावा की जांच करता है।
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly
 **Prerequisites:** Phase 13 · 32 (ELF from scratch)
 **Time:** ~150 minutes
 
@@ -347,6 +347,7 @@ rea 6.5.0 Ghidra 12.1.4 प्रदाता के साथ एक फ़ं�
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट एक JSON रिपोर्ट है। प्रत्येक फिक्स्चर ऑब्जेक्ट के लिए यह ओरेकल समझौते देता है। प्रत्येक फ़ंक्शन के लिए यह तीन तरीकों के तहत निर्देश, ब्लॉक और किनारे गिनती देता है। यह अreachable ब्लॉक, अनसुलझा अप्रत्यक्ष कूद, बैक किनारे, तत्काल डोमिनटर्स और किसी भी तालिकाओं की सूची भी देता है। यह जाल तुलना के साथ समाप्त होता है।
@@ -486,6 +487,7 @@ analysis.cfg.back_edges()
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/lab.py
+npx tsx code/lab.ts
 ```
 
 चेकर प्रत्येक अपेक्षित मूल्य की गणना करता है `code/main.py`यह प्रिंट करता है`PASS`,`FAIL`या `TODO`प्रत्येक कार्य के लिए और एक स्कोर, और यह 0 से केवल जब सभी पांच पास छोड़ देता है। `python3 code/lab.py my-answers.json`एक और फ़ाइल की जाँच करता है। `code/tests/test_lab.py`यह साबित करता है कि जांचकर्ता सही उत्तरों को स्वीकार करता है और गलत उत्तरों को अस्वीकार करता है।
@@ -505,6 +507,7 @@ python3 code/lab.py
 ```bash
 cd phases/13-tools-and-protocols/33-disassembly-and-control-flow
 python3 code/main.py
+npx tsx code/main.ts
 python3 code/tests/test_main.py
 ```
 

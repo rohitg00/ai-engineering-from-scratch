@@ -3,7 +3,7 @@
 > एक ब्रेकपॉइंट हिट एक निर्माण के एक रन के बारे में एक अवलोकन है। यह सबक उस हर्ननेस को बनाता है जो उन अवलोकनों को स्थिर सबक के लिए किए गए दावों पर पुष्टि, खंडन और गैर-निरीक्षण किए गए फैसले में बदल देता है।
 
 **Type:** Build
-**Languages:** Python, C, arm64 assembly, lldb command language
+**Languages:** Python, TypeScript, C, arm64 assembly, lldb command language
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 35 (evidence, confidence, and unknowns)
 **Time:** ~130 minutes
 
@@ -357,6 +357,7 @@ TeamIdentifier=not set
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट सहेजे गए प्रतिलेखन पर एक JSON रिपोर्ट है। प्रत्येक बिल्ड के लिए यह उनके रिज़ॉल्यूशन और हिट गिनती के साथ ब्रेकपॉइंट्स, हार्डवेयर वॉचपॉइंट गिनती, उसके रजिस्टर और तर्कों के साथ प्रत्येक स्टॉप, आउटपुट स्थिति, प्रोग्राम का आउटपुट, छपाई गई त्रुटियों को सूचीबद्ध करता है, और उनके फैसले और सबूत रिकॉर्ड के साथ दावे। यह मूल और फिर यात्रा जोड़ता है, पायथन एपीआई परिणाम, सैंडबॉक्स विफलता, और जो बाहरी उपकरण इस मशीन पर अनुपस्थित हैं.
@@ -496,6 +497,7 @@ broken = parse_transcript(text)
 ```bash
 cd phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

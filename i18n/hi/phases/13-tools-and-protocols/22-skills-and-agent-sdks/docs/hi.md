@@ -3,7 +3,7 @@
 > एक कौशल एक बेहतर फ़ाइल नाम के साथ एक लंबा प्रॉम्प्ट नहीं है। यह निर्देशों, संसाधनों और निष्पादित करने योग्य सहायक का एक खोज योग्य पैकेज है जो रनटाइम अनुबंध के माध्यम से एक एजेंट के संदर्भ में प्रवेश करता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 01 (The Tool Interface), Phase 13 · 05 (Tool Schema Design)
 **Time:** ~90 minutes
 
@@ -362,6 +362,7 @@ If that skill is unavailable, stop and report the missing dependency.
 cd "$(git rev-parse --show-toplevel)"
 cd phases/13-tools-and-protocols/22-skills-and-agent-sdks
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

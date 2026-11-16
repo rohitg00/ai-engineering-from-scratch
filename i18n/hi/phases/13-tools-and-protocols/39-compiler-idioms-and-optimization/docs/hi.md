@@ -3,7 +3,7 @@
 > एक अनुकूलन संकलक सस्ते निर्देश आकारों के साथ स्रोत निर्माण की जगह लेता है। प्रत्येक आकार में एक व्युत्पन्न होता है, और यह पाठ पहचानकर्ता बनाता है जो व्युत्पन्न को पीछे की ओर चलाता है और स्रोत के खिलाफ इसकी जांच करता है।
 
 **Type:** Build
-**Languages:** Python, C, x86-64 assembly, AArch64 assembly
+**Languages:** Python, TypeScript, C, x86-64 assembly, AArch64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode), Phase 13 · 38 (calling conventions)
 **Time:** ~150 minutes
 
@@ -253,6 +253,7 @@ Angr 10.0.3 हमारे पर चला गया `-O2`वस्तु, त
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट एक JSON रिपोर्ट है। 18 बिल्ड में से प्रत्येक के लिए यह प्रकार, स्रोत रूप, सबूत पते, सत्यापन और विवरण क्षेत्रों के साथ प्रत्येक फ़ंक्शन और इसके बोलियों की सूची देता है। यह प्रति बिल्ड एक प्रकार मैट्रिक्स के साथ समाप्त होता है, `-O2`बनाम `-O3`दोनों वास्तुकलाओं के लिए तुलना, और `unverified`सूची।
@@ -380,6 +381,7 @@ for name in ("idioms-x86_64-O1", "idioms-arm64-O1"):
 ```bash
 cd phases/13-tools-and-protocols/39-compiler-idioms-and-optimization
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

@@ -3,7 +3,7 @@
 > तीनों सीमा प्रदाता 2024 में एक ही टूल-कॉल लूप पर एक साथ आए और फिर बाकी सब पर विभेद किया।`tools`और `tool_calls`मानवयुक्त उपयोग`tool_use`और `tool_result`ब्लाक. मिथुन उपयोग करता है`functionDeclarations`इस सबक में तीनों को अलग अलग किया गया है ताकि एक प्रदाता पर भेजे जाने वाले कोड को पोर्ट करते समय टूट न जाए।
 
 **Type:** Build
-**Languages:** Python (stdlib, schema translators)
+**Languages:** Python, TypeScript (stdlib, schema translators)
 **Prerequisites:** Phase 13 · 01 (the tool interface)
 **Time:** ~75 minutes
 

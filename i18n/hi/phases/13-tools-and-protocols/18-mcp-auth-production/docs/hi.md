@@ -5,7 +5,7 @@
 > **Spec note (2026-07-28):**डायनामिक क्लाइंट रजिस्ट्रेशन क्लाइंट आईडी मेटाडेटा डॉक्यूमेंट्स के पक्ष में अप्रचलित है। डीसीआर एक संगतता तंत्र बना रहता है। जब इसका उपयोग किया जाता है, तो क्लाइंट सही घोषित करता है `application_type`. एक ग्राहक वर्तमान आरएफसी 9207 को मान्य करता है `iss`प्राधिकरण सर्वर जारीकर्ताओं के बीच क्रेडेंशियल का मूल्य और कभी पुनः उपयोग नहीं करता है।
 
 **Type:** Build
-**Languages:** Python (stdlib)
+**Languages:** Python (stdlib), TypeScript
 **Prerequisites:** Phase 13 · 16 (OAuth 2.1 state machine), Phase 13 · 17 (gateways)
 **Time:** ~90 minutes
 
@@ -329,6 +329,7 @@ t3-jwks-rotate
 ```bash
 cd phases/13-tools-and-protocols/18-mcp-auth-production
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

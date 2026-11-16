@@ -3,7 +3,7 @@
 > एक डिसीम्पिलर प्रिंट्स `a->balance`जब इसमें टाइप टेबल है और `*(int *)(param_1 + 4)`यह पाठ पहुँचों से तालिका बनाता है, DWARF 5 से वास्तविक तालिका पढ़ता है, और दिखाता है कि दोनों कहाँ सहमत हैं।
 
 **Type:** Build
-**Languages:** Python, C, C++, x86-64 assembly
+**Languages:** Python, TypeScript, C, C++, x86-64 assembly
 **Prerequisites:** Phase 13 · 33 (disassembly and control flow), Phase 13 · 34 (lifting to pseudocode)
 **Time:** ~140 minutes
 
@@ -383,6 +383,7 @@ rea 6.5.0 अपने Ghidra प्रदाता के साथ एक र�
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 ```
 
 आउटपुट एक JSON रिपोर्ट है जिसमें पांच भाग हैं। `dwarf`इकाई हेडर, संरचनाओं और कार्यों को रखता है `-O0`वस्तु।`oracles`psABI नियम लेआउट, `ctypes`लेआउट, DWARF लेआउट, मूल रन, और एक `agree`ध्वज।`builds`प्रवेश, अनुमानित लेआउट, और तीन वस्तुओं में से प्रत्येक के लिए तुलना रखता है। `cxx`विघटित नामों, दोनों vtables, दोनों टाइपइंफो रिकॉर्ड, आभासी कॉल, और DWARF स्लॉट रखता है। `tools`कैप्चर किए गए उपकरण आउटपुट की सूची देता है।
@@ -513,6 +514,7 @@ find_virtual_calls(load_listing("shapes-x86_64-O0-g.objdump.txt"), [read_vtable(
 ```bash
 cd phases/13-tools-and-protocols/41-recovering-data-and-types
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover -s code/tests -v
 ```
 

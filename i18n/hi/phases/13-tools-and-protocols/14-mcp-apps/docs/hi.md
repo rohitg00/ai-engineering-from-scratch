@@ -3,7 +3,7 @@
 > एक इंटरैक्टिव परिणाम अभी भी एक एमसीपी उपकरण और संसाधन विनिमय है। 2026-07-28 कोर उस विनिमय को आत्मनिर्भर बनाता है, जबकि ऐप्स एक्सटेंशन सैंडबॉक्स ब्राउज़र सतह जोड़ता है।
 
 **Type:** Build
-**Languages:** Python
+**Languages:** Python, TypeScript
 **Prerequisites:** Phase 13 · 07 (MCP server), Phase 13 · 10 (resources)
 **Time:** ~75 minutes
 
@@ -265,6 +265,7 @@ t3-ui-sandbox
 ```bash
 cd phases/13-tools-and-protocols/14-mcp-apps
 python3 code/main.py
+npx tsx code/main.ts
 python3 -m unittest discover code/tests -v
 ```
 
