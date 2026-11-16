@@ -72,6 +72,16 @@ The root holds the sum of the tokens, 545 in and 29 out. `first_token_time` is s
 
 The metadata of an `llm` run holds `ls_provider`, `ls_model_name`, `ls_temperature`, and the `langgraph_*` keys of its node. The client also copies `LANGSMITH_PROJECT` and `LANGSMITH_TRACING` into the metadata of every run. `extra.runtime` holds the SDK and library versions and the platform string of the machine.
 
+The same tree shows in the trace view of the LangSmith web app. [Figure](#fig-7-6d) redraws one of the 30 traced runs against the hosted API that are timed below. The agent asked for `add(a=305, b=18)` and answered 323 in 6.13 s. The two model calls took 3.33 s and 2.79 s, and the tool call took less than 0.01 s.
+
+```figure
+id: fig-7-6d
+kind: tree
+title: one traced agent run in the LangSmith trace view
+claim: One create_agent run of Qwen3 4B is a LangGraph root with 6 child runs, and its two model calls take 3.33 s and 2.79 s of 6.13 s.
+caption: Read the run tree on the left from the top, and the messages of the root run on the right. Redrawn from a screenshot of the trace view on the hosted free plan. The run is row 58 of capture/lab/T21-langsmith-account-mac/02-e1-timing.jsonl.
+```
+
 ## The value "local" sends LangChain runs
 
 `tracing_context` accepts `True`, `False`, `None`, and the string `"local"` for `enabled` {{code src/langsmith/run_helpers.py}}. The docstring of `langsmith.configure` describes the four values {{code src/langsmith/run_trees.py}}. `True` traces and sends, `False` turns tracing off, `None` reads the environment, and `"local"` traces and keeps the data local. The `traceable` code of `langsmith` keeps that promise. It sends a run only when the value is `True` {{code src/langsmith/run_helpers.py}}.
