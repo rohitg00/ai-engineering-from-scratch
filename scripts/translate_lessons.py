@@ -168,6 +168,7 @@ _NLLB = {}
 META_RE = re.compile(r"^\s*\*\*(Type|Languages|Prerequisites|Time):\*\*")
 MARKER_RE = re.compile(r"^(\s*)((?:#{1,6}\s+|>\s+|[-*+]\s+|\d+\.\s+)*)(.*)$")
 SENT_SPLIT = re.compile(r"(?<=[.!?])\s+")
+FENCE_RE = re.compile(r"^(`{3,}|~{3,})(.*)$")
 
 
 def _nllb_pipe(tgt):
@@ -199,11 +200,15 @@ def nllb_translate_doc(src, tgt, translate_fn=None):
         translate_fn = lambda s: _nllb_sentence(pipe, s)  # noqa: E731
 
     out_lines = []
-    in_fence = in_mathblock = False
+    fence = None
+    in_mathblock = False
     for line in src.split("\n"):
         s = line.lstrip()
-        if s.startswith("```") or s.startswith("~~~"):
-            in_fence = not in_fence
+        marker = FENCE_RE.match(s)
+        if marker and (fence is None or (
+                marker.group(1)[0] == fence[0] and len(marker.group(1)) >= len(fence)
+                and not marker.group(2).strip())):
+            fence = marker.group(1) if fence is None else None
             out_lines.append(line)
             continue
         if s.startswith("$$"):  # display-math block delimiter
@@ -213,7 +218,7 @@ def nllb_translate_doc(src, tgt, translate_fn=None):
         # verbatim: code/math blocks, blanks, tables, raw-HTML lines, metadata header.
         # image spans are protected inline (NLLB_INLINE) so a line with an image plus
         # a caption still gets its caption translated.
-        if (in_fence or in_mathblock or not line.strip() or s.startswith("|")
+        if (fence is not None or in_mathblock or not line.strip() or s.startswith("|")
                 or s.startswith("<") or META_RE.match(line)):
             out_lines.append(line)
             continue
