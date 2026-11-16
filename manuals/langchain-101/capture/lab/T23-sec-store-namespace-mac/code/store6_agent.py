@@ -109,6 +109,7 @@ def main():
     ap.add_argument("--configs", default="shared-docs,per-user,per-user+naive-recall")
     ap.add_argument("--n", type=int, default=10)
     a = ap.parse_args()
+    OUT.mkdir(parents=True, exist_ok=True)
     out = OUT / f"store6-agent-{a.store}.jsonl"
     done = set()
     if out.exists():

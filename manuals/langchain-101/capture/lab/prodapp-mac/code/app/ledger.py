@@ -51,5 +51,6 @@ class Ledger(BaseCallbackHandler):
                "input_tokens": usage.get("input_tokens", 0), "output_tokens": usage.get("output_tokens", 0),
                "cache_read": details.get("cache_read", 0), "cache_creation": details.get("cache_creation", 0),
                "cost_usd": round(cost(self.model, usage), 6), "price_source": PRICES["source"]}
+        LEDGER.parent.mkdir(parents=True, exist_ok=True)
         with open(LEDGER, "a") as out:
             out.write(json.dumps(row) + "\n")

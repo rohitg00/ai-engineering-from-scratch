@@ -137,6 +137,7 @@ def main():
     ap.add_argument("--budget", type=float, default=0.30)
     a = ap.parse_args()
     tag = a.model.replace(":", "_").replace("/", "_")
+    OUT.mkdir(parents=True, exist_ok=True)
     out = OUT / f"adv5-{tag}.jsonl"
     done = set()
     if out.exists():

@@ -160,6 +160,7 @@ async def string_targets():
 
 async def main():
     sys.path.insert(0, str(Path(__file__).resolve().parent))
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "T20-mcp-edges-mac"))
     await string_targets()
     await scenario("stdio", stdio_target, lambda: Client(stdio_target(), timeout=1))
     http = start_http()
