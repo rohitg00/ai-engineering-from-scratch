@@ -37,7 +37,7 @@ module.exports = figure('fig-3-3', {
   f.beat(3);
   f.arrow([400, 214], [400, 241], { style: 'model' });
   f.text(410, 232, 'the next model call reads both', { size: 11, serif: true, hue: 'plum' });
-  card(20, 242, 600, 112, 'plum', `${reply.type}, the final answer`, [['content', show(reply.content)], ['tool_calls', 'none, so the agent stops'], ['usage', `${usage.input_tokens} in, ${usage.output_tokens} out, when the provider reports it`]]);
+  card(20, 242, 600, 112, 'plum', `${reply.type}, the final answer`, [['content', show(reply.content)], ['tool_calls', 'none, so the agent stops'], ['usage_metadata', `${usage.input_tokens} in, ${usage.output_tokens} out, when the provider reports it`]]);
   f.beat(0);
   f.text(20, 376, 'The request for a tool is in tool_calls, already parsed, and its content is empty.', { size: 11, serif: true, hue: 'ink-soft' });
   f.text(20, 392, 'The ToolMessage repeats the id of the call it answers.', { size: 11, serif: true, hue: 'ink-soft' });

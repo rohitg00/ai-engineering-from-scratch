@@ -305,7 +305,7 @@ def serde():
                         entry[path][extra] = got[extra]
         trips.append(entry)
     out["round_trip"] = trips
-    out["round_trip_changed"] = sorted(t["case"] for t in trips if "raised" in t["sqlite_graph"] or not (t["sqlite_graph"]["same_type"] and t["sqlite_graph"]["equal"] is True and t["sqlite_graph"].get("same_tzinfo_type", True)))
+    out["round_trip_changed"] = sorted(t["case"] for t in trips if "raised" in t["sqlite_graph"] or not (t["sqlite_graph"]["same_type"] and t["sqlite_graph"]["equal"] is True and t["sqlite_graph"].get("same_tzinfo_type", True) and t["sqlite_graph"].get("same_fold", True)))
     return out
 
 

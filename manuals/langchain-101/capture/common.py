@@ -152,7 +152,11 @@ class FlakyEndpoint:
             if self.accepted <= self.fail_first:
                 conn.close()
                 continue
-            upstream = socket.create_connection(self.target)
+            try:
+                upstream = socket.create_connection(self.target)
+            except OSError:
+                conn.close()
+                continue
             for a, b in ((conn, upstream), (upstream, conn)):
                 threading.Thread(target=self.pump, args=(a, b), daemon=True).start()
 

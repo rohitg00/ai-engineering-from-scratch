@@ -46,7 +46,7 @@
   <text x="148" y="292" font-size="11.5">&quot;2 + 3 = 5.&quot;</text>
   <text x="34" y="316" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">tool_calls</text>
   <text x="148" y="316" font-size="11.5">none, so the agent stops</text>
-  <text x="34" y="340" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">usage</text>
+  <text x="34" y="340" font-size="11.5" fill="var(--m-ink-soft, #4a4a4a)">usage_metadata</text>
   <text x="148" y="340" font-size="11.5">12 in, 6 out, when the provider reports it</text>
   </g>
   <text x="20" y="376" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The request for a tool is in tool_calls, already parsed, and its content is empty.</text>

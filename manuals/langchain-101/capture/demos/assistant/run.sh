@@ -13,17 +13,22 @@ export ROWS="$OUT/run${DURABILITY:+-$DURABILITY}.jsonl"
 : > "$ROWS"
 : > "$LOG"
 trap 'rm -rf "$WORK"' EXIT
+FAILED=0
 
 step() {
   ( exec "$PY" assistant.py "$@" ) 2>&1 | grep -v -E 'Warning|warnings.warn' | tee -a "$LOG"
   local code=${PIPESTATUS[0]}
   echo "  exit       $code" | tee -a "$LOG"
+  if [ "$code" != "${EXPECT:-0}" ]; then
+    echo "unexpected exit $code in step $1" >&2
+    FAILED=1
+  fi
 }
 
 echo "model $MODEL, temperature 0, seed 42; every step is a new Python process" | tee -a "$LOG"
 step 1-remember t1 say "Please remember two facts: I prefer short replies, and my manager's email address is lead@example.org."
 step 2-ask-to-send t1 say "Email my manager that the quarterly report is ready."
-CRASH_AFTER_SEND=1 step 3-approve-then-crash t1 approve
+CRASH_AFTER_SEND=1 EXPECT=137 step 3-approve-then-crash t1 approve
 step 4-resume-after-crash t1 resume
 step 5-approve-again t1 approve
 step 6-third-turn t1 say "Thanks. What is my manager's email address?"
@@ -36,3 +41,4 @@ step 7-new-thread t2 say "What do you remember about how I like replies?"
   sqlite3 "$WORK/memory.sqlite" "SELECT 'store', prefix, key, value FROM store;"
 } | tee -a "$LOG"
 curl -s http://127.0.0.1:11434/api/generate -d "{\"model\": \"$MODEL\", \"keep_alive\": 0}" > /dev/null || true
+exit "$FAILED"

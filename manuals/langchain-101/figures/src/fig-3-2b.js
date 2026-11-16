@@ -14,9 +14,9 @@ module.exports = figure('fig-3-2b', {
   title: 'Model attempts at the relay for one failing model call',
   desc: `A dot chart of model attempts at a relay in front of Ollama with Qwen3 4B on the x86 server guest, 3 runs for each cell. Three groups for a dropped connection, a refused port, and a timeout on every call. In each group the client default of ChatOpenAI made ${cell('m_drop_always', 'openai_client_default')[0]} attempts, ModelRetryMiddleware with client retries off made ${cell('m_drop_always', 'openai_mw_only')[0]}, and both layers together made ${cell('m_drop_always', 'openai_stacked')[0]}. All three runs of every cell gave the same count.`,
 }, f => {
-  const c = chart(f, { x: 70, y: 40, w: 540, h: 230, xDomain: [0, 12], yDomain: [0, 10], yTicks: [0, 1, 3, 6, 9], yLabel: 'model attempts at the relay' });
-  f.rule(c.px(0), c.py(6), c.px(12), c.py(6), { hue: 'ink-mute', dash: 'dashed' });
-  f.text(c.px(12) - 4, c.py(6) - 6, 'the documented 6 retries', { size: 11, serif: true, anchor: 'end', hue: 'ink-mute', knock: true });
+  const c = chart(f, { x: 70, y: 40, w: 540, h: 230, xDomain: [0, 12], yDomain: [0, 10], yTicks: [0, 1, 3, 7, 9], yLabel: 'model attempts at the relay' });
+  f.rule(c.px(0), c.py(7), c.px(12), c.py(7), { hue: 'ink-mute', dash: 'dashed' });
+  f.text(c.px(12) - 4, c.py(7) - 6, 'the documented 6 retries, 7 attempts', { size: 11, serif: true, anchor: 'end', hue: 'ink-mute', knock: true });
   faults.forEach(([fault, label], g) => {
     configs.forEach(([config, , hue], i) => {
       const slot = 1 + g * 4 + i;
