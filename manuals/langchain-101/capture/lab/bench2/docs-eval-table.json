@@ -1,0 +1,291 @@
+{
+ "source": "docs.langchain.com oss/python/deepagents/models at docs commit 04d4d4a (live copy 2026-11-15)",
+ "rows": [
+  {
+   "model": "google_genai:gemini-3.6-flash",
+   "scores": {
+    "overall": 0.82,
+    "file_operations": 1.0,
+    "retrieval": 1.0,
+    "tool_use": 0.9,
+    "memory": 0.54,
+    "conversation": 0.38,
+    "summarization": 0.8
+   },
+   "runs": {
+    "overall": "25455998535",
+    "file_operations": "25455998535",
+    "retrieval": "25455998535",
+    "tool_use": "25455998535",
+    "memory": "25290479270",
+    "conversation": "25455998535",
+    "summarization": "25455998535"
+   },
+   "distinct_runs": 2
+  },
+  {
+   "model": "openai:gpt-5.4",
+   "scores": {
+    "overall": 0.18,
+    "file_operations": 1.0,
+    "retrieval": 1.0,
+    "tool_use": 0.18,
+    "memory": 0.51,
+    "conversation": 0.38,
+    "summarization": 1.0
+   },
+   "runs": {
+    "overall": "24906955930",
+    "file_operations": "24172638583",
+    "retrieval": "24172638583",
+    "tool_use": "24906955930",
+    "memory": "24172638583",
+    "conversation": "24425363630",
+    "summarization": "24172638583"
+   },
+   "distinct_runs": 3
+  },
+  {
+   "model": "openai:gpt-5.5",
+   "scores": {
+    "overall": 0.8,
+    "file_operations": 0.92,
+    "retrieval": 1.0,
+    "tool_use": 0.84,
+    "memory": 0.64,
+    "conversation": 0.52,
+    "summarization": 0.8
+   },
+   "runs": {
+    "overall": "25455998535",
+    "file_operations": "25455998535",
+    "retrieval": "25455998535",
+    "tool_use": "25455998535",
+    "memory": "25345307822",
+    "conversation": "25455998535",
+    "summarization": "25455998535"
+   },
+   "distinct_runs": 2
+  },
+  {
+   "model": "anthropic:claude-opus-4-6",
+   "scores": {
+    "overall": 0.26,
+    "file_operations": 0.92,
+    "retrieval": 1.0,
+    "tool_use": 0.26,
+    "memory": 0.69,
+    "conversation": 0.22,
+    "summarization": 1.0
+   },
+   "runs": {
+    "overall": "24906955930",
+    "file_operations": "24172638583",
+    "retrieval": "24172638583",
+    "tool_use": "24906955930",
+    "memory": "24172638583",
+    "conversation": "24363491527",
+    "summarization": "24172638583"
+   },
+   "distinct_runs": 3
+  },
+  {
+   "model": "anthropic:claude-opus-4-7",
+   "scores": {
+    "overall": 0.8,
+    "file_operations": 1.0,
+    "retrieval": 1.0,
+    "tool_use": 0.82,
+    "memory": null,
+    "conversation": 0.48,
+    "summarization": 1.0
+   },
+   "runs": {
+    "overall": "25455998535",
+    "file_operations": "25455998535",
+    "retrieval": "25455998535",
+    "tool_use": "25455998535",
+    "memory": null,
+    "conversation": "25455998535",
+    "summarization": "25455998535"
+   },
+   "distinct_runs": 1
+  },
+  {
+   "model": "baseten:moonshotai/Kimi-K2.6",
+   "scores": {
+    "overall": 0.79,
+    "file_operations": 0.92,
+    "retrieval": 1.0,
+    "tool_use": 0.84,
+    "memory": null,
+    "conversation": 0.43,
+    "summarization": 0.6
+   },
+   "runs": {
+    "overall": "25475600906",
+    "file_operations": "25475600906",
+    "retrieval": "25475600906",
+    "tool_use": "25475600906",
+    "memory": null,
+    "conversation": "25475600906",
+    "summarization": "25475600906"
+   },
+   "distinct_runs": 1
+  },
+  {
+   "model": "baseten:zai-org/GLM-5",
+   "scores": {
+    "overall": 0.77,
+    "file_operations": 1.0,
+    "retrieval": 1.0,
+    "tool_use": 0.89,
+    "memory": 0.44,
+    "conversation": 0.24,
+    "summarization": 0.6
+   },
+   "runs": {
+    "overall": "25403850424",
+    "file_operations": "25403850424",
+    "retrieval": "25403850424",
+    "tool_use": "25403850424",
+    "memory": "23872647281",
+    "conversation": "25403850424",
+    "summarization": "25403850424"
+   },
+   "distinct_runs": 2
+  },
+  {
+   "model": "fireworks:accounts/fireworks/models/glm-5p1",
+   "scores": {
+    "overall": 0.81,
+    "file_operations": 1.0,
+    "retrieval": 1.0,
+    "tool_use": 0.87,
+    "memory": null,
+    "conversation": 0.33,
+    "summarization": 0.8
+   },
+   "runs": {
+    "overall": "25461031650",
+    "file_operations": "25461031650",
+    "retrieval": "25461031650",
+    "tool_use": "25461031650",
+    "memory": null,
+    "conversation": "25461031650",
+    "summarization": "25461031650"
+   },
+   "distinct_runs": 1
+  },
+  {
+   "model": "fireworks:accounts/fireworks/models/minimax-m2p7",
+   "scores": {
+    "overall": 0.79,
+    "file_operations": 1.0,
+    "retrieval": 1.0,
+    "tool_use": 0.85,
+    "memory": null,
+    "conversation": 0.43,
+    "summarization": 0.6
+   },
+   "runs": {
+    "overall": "25403894412",
+    "file_operations": "25403894412",
+    "retrieval": "25403894412",
+    "tool_use": "25403894412",
+    "memory": null,
+    "conversation": "25403894412",
+    "summarization": "25403894412"
+   },
+   "distinct_runs": 1
+  },
+  {
+   "model": "ollama:minimax-m2.7:cloud",
+   "scores": {
+    "overall": 0.73,
+    "file_operations": 0.92,
+    "retrieval": 0.9,
+    "tool_use": 0.82,
+    "memory": 0.38,
+    "conversation": 0.29,
+    "summarization": 0.6
+   },
+   "runs": {
+    "overall": "24106499785",
+    "file_operations": "24106499785",
+    "retrieval": "24106499785",
+    "tool_use": "24106499785",
+    "memory": "23872647281",
+    "conversation": "24106499785",
+    "summarization": "24106499785"
+   },
+   "distinct_runs": 2
+  },
+  {
+   "model": "openrouter:deepseek/deepseek-v4-flash",
+   "scores": {
+    "overall": 0.81,
+    "file_operations": 1.0,
+    "retrieval": 0.8,
+    "tool_use": 0.9,
+    "memory": null,
+    "conversation": 0.33,
+    "summarization": 0.8
+   },
+   "runs": {
+    "overall": "25677815395",
+    "file_operations": "25677815395",
+    "retrieval": "25677815395",
+    "tool_use": "25677815395",
+    "memory": null,
+    "conversation": "25677815395",
+    "summarization": "25677815395"
+   },
+   "distinct_runs": 1
+  },
+  {
+   "model": "openrouter:minimax/minimax-m2.7",
+   "scores": {
+    "overall": 0.8,
+    "file_operations": 0.92,
+    "retrieval": 1.0,
+    "tool_use": 0.89,
+    "memory": null,
+    "conversation": 0.43,
+    "summarization": 0.6
+   },
+   "runs": {
+    "overall": "25455998535",
+    "file_operations": "25455998535",
+    "retrieval": "25455998535",
+    "tool_use": "25455998535",
+    "memory": null,
+    "conversation": "25455998535",
+    "summarization": "25455998535"
+   },
+   "distinct_runs": 1
+  },
+  {
+   "model": "openrouter:z-ai/glm-5.1",
+   "scores": {
+    "overall": 0.89,
+    "file_operations": 0.92,
+    "retrieval": 1.0,
+    "tool_use": 0.89,
+    "memory": null,
+    "conversation": 0.33,
+    "summarization": 0.8
+   },
+   "runs": {
+    "overall": "25387853856",
+    "file_operations": "25234719085",
+    "retrieval": "25234686782",
+    "tool_use": "25387853856",
+    "memory": null,
+    "conversation": "25225620506",
+    "summarization": "25235579950"
+   },
+   "distinct_runs": 5
+  }
+ ]
+}

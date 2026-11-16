@@ -179,7 +179,55 @@ note: The fourth model call of the main agent and the ToolMessage that answered 
 
 The model call of the subagent was the fifth of six calls. It got two messages, its own system prompt and the description, and its tools had no `task`. The main agent saw one `ToolMessage` with the answer of the subagent. So a subagent keeps its work out of the context of its caller. Part 7 covers Deep Agents.
 
-The kit runs only the subagent pattern. Captures of the other four patterns come in the next edition, with the other open items of [section 8.8](#s-limits-at-the-pin-and-what-comes-in-the-next-edition).
+## Five patterns on one task suite
+
+**We measured** the five patterns on the 30-task subset of [section 1.2](#s-do-you-need-langchain), with `langchain` 1.5.0 and `deepagents` 0.7.38. Five domain agents split the tools of the suite: `shop`, `orders_db`, `docs`, `files`, and `notes`. The patterns were:
+
+- **single:** one agent with all tools and the five domain guides in its prompt.
+- **subagents:** a Deep Agents coordinator that calls each domain agent through `task`.
+- **`handoffs`:** the domain agents as graph nodes, with a `transfer_to_<agent>` tool that returns `Command(goto=..., graph=Command.PARENT)`.
+- **skills:** one agent with a `load_skill` tool that adds a domain guide to its prompt.
+- **router:** a classifier that sends parallel requests to the domain agents, then a synthesizer agent.
+
+Claude Haiku 5.5 ran through the API from the Mac. Qwen3 14B ran on Ollama 0.31.1 on the same Mac, at temperature 0 and seed 42. Each cell is one run for each of 30 tasks.
+
+The Mac was shared. The load average was between 2.7 and 9.1 in the six samples we logged. The Ollama server was busy with other jobs. We stopped a run of gpt-oss 20B before its first task, so it has no row.
+
+| Pattern | Haiku passed | Haiku calls | Haiku prompt tokens | Haiku dollars | 14B passed | 14B calls | 14B prompt tokens |
+|---|---|---|---|---|---|---|---|
+| single | 30 | 160 | 521,013 | $0.0130 | 22 | 140 | 251,620 |
+| subagents | 30 | 271 | 1,247,292 | $0.0380 | 17 | 164 | 425,288 |
+| `handoffs` | 30 | 187 | 373,993 | $0.0134 | 19 | 151 | 163,200 |
+| skills | 30 | 194 | 314,352 | $0.0129 | 15 | 159 | 151,631 |
+| router | 25 | 226 | 317,648 | $0.0237 | 18 | 187 | 105,174 |
+
+On Haiku, four patterns passed 30 of 30, and the router passed 25. The router lost 3 chain tasks and 1 each in sql and retrieval, all with the category `wrong_final_state`. The cost differs more than the score. The subagent pattern used 2.4 times the prompt tokens of the single agent and cost 2.9 times the dollars. The `handoffs` and skills patterns cost the same as the single agent. [Figure](#fig-6-7c) shows one chain task in each pattern.
+
+```figure
+id: fig-6-7c
+kind: timeline
+title: one chain task in each of five patterns on Haiku
+claim: On one chain task the five patterns used 5 to 7 model calls, and the subagent pattern ran two agents one after the other.
+caption: Each box is one model call, numbered in order, in the lane of the agent that made it. Triangles mark tool calls. From capture/lab/summary/multiagent-mac.json.
+```
+
+A task with three user turns shows the cost of a pattern more clearly. On `multi07` every pattern passed. The single agent made 9 model calls and read 30.2k prompt tokens. The subagent pattern made 16 calls and read 72.6k, and the router made 18 calls. [Figure](#fig-6-7d) draws the five runs, with the start of each user turn.
+
+```figure
+id: fig-6-7d
+kind: timeline
+title: a three-turn task in each of five patterns on Haiku
+claim: On a three-turn task the single agent made 9 model calls, and the other patterns made 12 to 18.
+caption: Each box is one model call, numbered in order, in the lane of the agent that made it. Dashed lines mark the start of a user turn. From capture/lab/summary/multiagent-mac.json.
+```
+
+On Qwen3 14B the picture is different. The single agent passed 22 of 30, and no pattern did better. Subagents passed 17 and skills passed 15. Both passed 0 of 6 file tasks and 0 of 6 multiturn tasks. Subagents failed 13 tasks and skills failed 15, most with `wrong_final_state`. The intervals of all five cells overlap, so only those zeros are clear.
+
+Each 14B cell is one run per task on a loaded shared Mac, so a second run can move single tasks.
+
+The 14B wall time per task ran from 91 s to 315 s, and it says more about the load than about the pattern.
+
+
 
 ```takeaways
 - Expect a subgraph with a shared appending key to add its input entries twice.
@@ -187,6 +235,7 @@ The kit runs only the subagent pattern. Captures of the other four patterns come
 - Read the namespace of each chunk with stream(subgraphs=True).
 - Resume an interrupt inside a subgraph on the thread of the parent.
 - Start with one agent, and add a subagent when a task needs its own context.
+- Measure the pattern on your model, because subagents and skills passed 0 of 6 multiturn tasks on Qwen3 14B.
 ```
 
-Sources: capture/s_graph.py, capture/out/36-subgraphs.txt, capture/out/52-draw-subgraph.txt, capture/out/45-subgraph-agent.txt, capture/out/41-deep-agent.txt; capture/lab/summary/approvals-x86.json; libs/langgraph/langgraph/pregel/main.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-subgraphs, oss/python/langchain/multi-agent/index, oss/python/langchain/multi-agent/subagents).
+Sources: capture/s_graph.py, capture/out/36-subgraphs.txt, capture/out/52-draw-subgraph.txt, capture/out/45-subgraph-agent.txt, capture/out/41-deep-agent.txt; capture/lab/summary/approvals-x86.json, capture/lab/summary/multiagent-mac.json, capture/lab/multiagent/runs/patterns-haiku.jsonl, capture/lab/multiagent/runs/patterns-qwen3-14b.jsonl, capture/lab/multiagent/kit/patterns.py, capture/lab/multiagent/logs/uptime.log; libs/langgraph/langgraph/pregel/main.py and libs/langgraph/langgraph/types.py at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/langgraph/use-subgraphs, oss/python/langchain/multi-agent/index, oss/python/langchain/multi-agent/subagents).

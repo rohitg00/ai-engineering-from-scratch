@@ -1,0 +1,283 @@
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_control control :: 18:26  12 users, load averages: 2.39 3.18 11.75
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_control control :: 18:35  12 users, load averages: 3.30 3.45 7.72
+chain01   deep_control  PASS                    calls= 4 tools= 3 tok=13669/477 205.9s
+chain04   deep_control  fail malformed_output   calls= 4 tools= 3 tok=13442/376 142.7s
+sql01     deep_control  fail malformed_output   calls= 4 tools= 3 tok=12307/235 108.7s
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_control control :: 18:45  12 users, load averages: 4.38 3.28 5.21
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_control control :: 18:47  up 89 days,  4:44, 12 users, load averages: 10.76 5.95 5.99
+sql04     deep_control  fail malformed_output   calls= 4 tools= 3 tok=12297/245 258.0s
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_profile profB :: 18:54  12 users, load averages: 6.76 6.71 6.33
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_profile profB :: 19:01  12 users, load averages: 5.55 5.40 5.78
+chain01   deep_profile  PASS                    calls= 4 tools= 3 tok=5425/93 182.2s
+chain02   deep_profile  fail malformed_output   calls= 4 tools= 3 tok=5425/97 145.0s
+chain03   deep_profile  PASS                    calls= 4 tools= 3 tok=5442/95 388.2s
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_profile profB :: 19:15  up 89 days,  5:12, 12 users, load averages: 5.11 6.86 6.46
+chain04   deep_profile  PASS                    calls= 4 tools= 3 tok=5418/92 64.9s
+chain07   deep_profile  fail malformed_output   calls= 4 tools= 3 tok=5413/130 85.7s
+chain10   deep_profile  fail wrong_final_state  calls= 6 tools= 5 tok=8710/170 76.8s
+chain13   deep_profile  fail wrong_final_state  calls= 3 tools= 3 tok=4147/95 50.3s
+chain16   deep_profile  fail malformed_output   calls= 4 tools= 6 tok=6174/484 225.8s
+sql01     deep_profile  fail malformed_output   calls= 4 tools= 3 tok=4611/235 109.1s
+sql04     deep_profile  PASS                    calls= 4 tools= 3 tok=4320/71 30.8s
+sql07     deep_profile  fail malformed_output   calls= 7 tools= 6 tok=8314/193 80.3s
+sql10     deep_profile  PASS                    calls= 7 tools= 6 tok=9983/692 276.9s
+sql13     deep_profile  PASS                    calls= 4 tools= 3 tok=4326/75 37.9s
+sql16     deep_profile  fail malformed_output   calls= 8 tools= 7 tok=11538/608 278.7s
+r01       deep_profile  fail malformed_output   calls= 2 tools= 1 tok=1987/49 29.7s
+r04       deep_profile  PASS                    calls= 4 tools= 3 tok=4176/75 47.1s
+r07       deep_profile  PASS                    calls= 4 tools= 3 tok=4691/87 50.5s
+r10       deep_profile  PASS                    calls= 3 tools= 2 tok=3172/66 31.4s
+r13       deep_profile  fail malformed_output   calls= 4 tools= 3 tok=4779/183 81.1s
+r16       deep_profile  fail malformed_output   calls= 3 tools= 2 tok=3334/147 56.7s
+files01   deep_profile  PASS                    calls= 2 tools= 1 tok=2015/48 26.4s
+files04   deep_profile  fail wrong_final_state  calls= 4 tools= 3 tok=4200/87 31.4s
+files07   deep_profile  fail wrong_final_state  calls= 5 tools= 4 tok=5456/205 87.2s
+files10   deep_profile  PASS                    calls= 7 tools= 6 tok=7771/159 87.2s
+files13   deep_profile  PASS                    calls= 2 tools= 1 tok=2015/47 25.4s
+files16   deep_profile  PASS                    calls= 3 tools= 2 tok=3104/93 40.3s
+multi01   deep_profile  PASS                    calls= 8 tools= 4 tok=10723/176 104.5s
+multi04   deep_profile  PASS                    calls= 8 tools= 4 tok=10723/176 77.9s
+multi07   deep_profile  PASS                    calls= 9 tools= 6 tok=12546/225 93.3s
+multi10   deep_profile  PASS                    calls= 8 tools= 4 tok=10713/186 111.7s
+multi13   deep_profile  PASS                    calls= 5 tools= 2 tok=6482/121 76.7s
+multi16   deep_profile  PASS                    calls= 4 tools= 2 tok=5107/120 49.1s
+== end ollama:qwen3:4b-instruct-2507-q4_K_M :: 19:56  up 89 days,  5:53, 12 users, load averages: 15.25 7.63 6.56
+== ollama:qwen3:8b deep_profile profB :: 19:56  up 89 days,  5:53, 12 users, load averages: 12.19 7.70 6.63
+chain01   deep_profile  PASS                    calls= 7 tools= 4 tok=6580/267 757.2s
+chain04   deep_profile  PASS                    calls= 7 tools= 4 tok=6458/247 281.5s
+chain07   deep_profile  PASS                    calls= 5 tools= 4 tok=6067/115 140.1s
+chain10   deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=1110/115 99.4s
+chain13   deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=1111/131 148.4s
+chain16   deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=1111/133 131.0s
+sql01     deep_profile  PASS                    calls= 2 tools= 1 tok=1848/44 107.9s
+sql04     deep_profile  PASS                    calls= 2 tools= 1 tok=1847/43 44.2s
+sql07     deep_profile  PASS                    calls= 7 tools= 4 tok=5228/257 223.9s
+sql10     deep_profile  fail malformed_output   calls= 4 tools= 3 tok=3876/94 132.2s
+sql13     deep_profile  PASS                    calls= 4 tools= 3 tok=4053/159 132.5s
+sql16     deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=911/78 61.3s
+r01       deep_profile  PASS                    calls= 2 tools= 1 tok=1824/40 46.9s
+r04       deep_profile  fail wrong_final_state  calls= 3 tools= 2 tok=2730/58 59.1s
+r07       deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=821/65 49.7s
+r10       deep_profile  fail gave_up            calls= 2 tools= 1 tok=1818/79 121.3s
+r13       deep_profile  fail gave_up            calls= 3 tools= 2 tok=2979/83 126.2s
+r16       deep_profile  fail malformed_output   calls= 3 tools= 2 tok=2991/91 80.9s
+files01   deep_profile  PASS                    calls= 2 tools= 1 tok=1772/45 51.1s
+files04   deep_profile  fail wrong_final_state  calls= 3 tools= 3 tok=2758/72 62.2s
+files07   deep_profile  fail wrong_final_state  calls= 2 tools= 1 tok=1775/45 98.3s
+files10   deep_profile  PASS                    calls= 3 tools= 5 tok=2846/125 141.7s
+files13   deep_profile  PASS                    calls= 2 tools= 1 tok=1772/42 38.3s
+files16   deep_profile  PASS                    calls= 3 tools= 2 tok=2739/66 52.8s
+multi01   deep_profile  PASS                    calls= 8 tools= 4 tok=9451/178 93.3s
+multi04   deep_profile  PASS                    calls= 8 tools= 4 tok=9463/174 59.5s
+multi07   deep_profile  fail wrong_final_state  calls= 9 tools= 6 tok=11116/222 133.2s
+multi10   deep_profile  PASS                    calls= 9 tools= 5 tok=10779/202 100.0s
+multi13   deep_profile  PASS                    calls= 5 tools= 2 tok=5695/116 111.8s
+multi16   deep_profile  PASS                    calls= 5 tools= 2 tok=5689/115 115.2s
+== end ollama:qwen3:8b :: 21:00  up 89 days,  6:56, 12 users, load averages: 4.45 4.57 4.47
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_profile profB :: 21:00  up 89 days,  6:57, 12 users, load averages: 4.17 4.51 4.45
+chain05   deep_profile  fail malformed_output   calls= 2 tools= 1 tok=2554/94 31.1s
+chain06   deep_profile  PASS                    calls= 4 tools= 3 tok=5875/372 70.7s
+chain08   deep_profile  fail malformed_output   calls= 3 tools= 2 tok=3928/97 20.2s
+chain09   deep_profile  fail malformed_output   calls= 3 tools= 4 tok=4184/222 40.9s
+chain11   deep_profile  fail malformed_output   calls= 3 tools= 3 tok=4143/236 48.9s
+chain12   deep_profile  PASS                    calls= 5 tools= 5 tok=7467/513 137.3s
+chain14   deep_profile  fail malformed_output   calls= 5 tools= 6 tok=7559/251 46.0s
+chain15   deep_profile  fail wrong_final_state  calls= 4 tools= 5 tok=5878/175 33.3s
+chain17   deep_profile  fail wrong_final_state  calls= 4 tools= 4 tok=5601/112 23.1s
+chain18   deep_profile  fail wrong_final_state  calls= 5 tools= 5 tok=7194/147 30.7s
+chain19   deep_profile  PASS                    calls= 6 tools= 9 tok=9220/334 60.1s
+chain20   deep_profile  fail wrong_final_state  calls= 4 tools= 4 tok=5610/113 29.5s
+sql02     deep_profile  PASS                    calls= 6 tools= 5 tok=6951/154 38.4s
+sql03     deep_profile  PASS                    calls= 5 tools= 4 tok=5641/121 27.8s
+sql05     deep_profile  PASS                    calls= 5 tools= 4 tok=5586/113 24.7s
+sql06     deep_profile  PASS                    calls= 4 tools= 3 tok=4377/78 16.5s
+sql08     deep_profile  PASS                    calls= 6 tools= 5 tok=7024/167 34.0s
+sql09     deep_profile  PASS                    calls= 7 tools= 6 tok=8415/264 78.5s
+sql11     deep_profile  fail malformed_output   calls= 6 tools= 5 tok=8051/551 108.1s
+sql12     deep_profile  fail malformed_output   calls= 5 tools= 4 tok=6540/558 105.8s
+sql14     deep_profile  PASS                    calls= 4 tools= 3 tok=4365/78 15.5s
+sql15     deep_profile  fail malformed_output   calls= 5 tools= 4 tok=5965/159 32.8s
+sql17     deep_profile  fail malformed_output   calls= 4 tools= 3 tok=4847/368 73.2s
+sql18     deep_profile  fail wrong_final_state  calls= 5 tools= 4 tok=5610/92 18.7s
+sql20     deep_profile  fail malformed_output   calls= 6 tools= 5 tok=9010/1128 198.6s
+r02       deep_profile  fail malformed_output   calls= 2 tools= 1 tok=2021/92 22.0s
+r03       deep_profile  PASS                    calls= 3 tools= 2 tok=3238/55 13.4s
+r05       deep_profile  PASS                    calls= 3 tools= 2 tok=3274/132 33.1s
+r06       deep_profile  PASS                    calls= 8 tools= 7 tok=12383/290 87.4s
+r08       deep_profile  fail malformed_output   calls= 5 tools= 4 tok=6517/295 71.1s
+r09       deep_profile  fail malformed_output   calls= 3 tools= 2 tok=3142/145 30.9s
+r11       deep_profile  PASS                    calls= 3 tools= 2 tok=3161/57 14.3s
+r12       deep_profile  fail malformed_output   calls= 6 tools= 5 tok=7852/320 67.5s
+r14       deep_profile  PASS                    calls= 2 tools= 1 tok=1979/42 21.8s
+r15       deep_profile  fail malformed_output   calls= 2 tools= 1 tok=2026/81 29.0s
+r17       deep_profile  fail gave_up            calls= 4 tools= 3 tok=4738/113 27.2s
+r18       deep_profile  PASS                    calls= 3 tools= 2 tok=3232/144 29.0s
+r19       deep_profile  PASS                    calls= 3 tools= 2 tok=3288/132 27.3s
+r20       deep_profile  PASS                    calls= 3 tools= 2 tok=3081/118 21.6s
+files02   deep_profile  PASS                    calls= 2 tools= 1 tok=2020/56 15.2s
+files03   deep_profile  PASS                    calls= 4 tools= 3 tok=4482/216 40.4s
+files05   deep_profile  fail wrong_final_state  calls= 9 tools= 8 tok=10735/1210 224.4s
+files06   deep_profile  fail wrong_final_state  calls= 3 tools= 2 tok=3127/82 19.9s
+files08   deep_profile  fail wrong_final_state  calls= 3 tools= 2 tok=3120/89 20.1s
+files09   deep_profile  PASS                    calls= 3 tools= 2 tok=3100/71 16.5s
+files11   deep_profile  PASS                    calls= 6 tools= 5 tok=6619/171 32.7s
+files12   deep_profile  PASS                    calls= 2 tools= 2 tok=2079/98 19.7s
+files14   deep_profile  PASS                    calls= 4 tools= 3 tok=4211/102 20.2s
+files15   deep_profile  PASS                    calls= 3 tools= 2 tok=3127/71 14.8s
+files17   deep_profile  PASS                    calls= 4 tools= 3 tok=4241/104 21.0s
+files18   deep_profile  fail wrong_final_state  calls= 9 tools= 8 tok=11032/513 103.4s
+files19   deep_profile  PASS                    calls= 3 tools= 2 tok=3176/87 20.8s
+files20   deep_profile  PASS                    calls= 6 tools= 5 tok=6458/144 30.0s
+multi02   deep_profile  PASS                    calls= 8 tools= 4 tok=10721/175 45.3s
+multi03   deep_profile  PASS                    calls= 8 tools= 4 tok=10721/175 50.2s
+multi05   deep_profile  fail malformed_output   calls= 8 tools= 5 tok=11040/212 57.2s
+multi06   deep_profile  fail malformed_output   calls= 8 tools= 5 tok=11029/208 42.9s
+multi08   deep_profile  fail malformed_output   calls= 9 tools= 6 tok=12669/249 50.3s
+multi09   deep_profile  PASS                    calls= 8 tools= 4 tok=10688/181 39.5s
+multi11   deep_profile  PASS                    calls= 8 tools= 4 tok=10671/185 38.9s
+multi12   deep_profile  PASS                    calls= 8 tools= 4 tok=10695/187 36.8s
+multi14   deep_profile  PASS                    calls= 5 tools= 2 tok=6479/120 28.1s
+multi15   deep_profile  PASS                    calls= 4 tools= 2 tok=5109/120 22.5s
+multi17   deep_profile  fail malformed_output   calls= 7 tools= 4 tok=9218/184 35.7s
+multi18   deep_profile  PASS                    calls= 7 tools= 4 tok=9244/173 41.2s
+multi19   deep_profile  fail malformed_output   calls= 7 tools= 4 tok=9215/178 52.6s
+multi20   deep_profile  fail malformed_output   calls= 7 tools= 4 tok=9217/173 49.7s
+== end ollama:qwen3:4b-instruct-2507-q4_K_M :: 21:50  up 89 days,  7:47, 12 users, load averages: 4.48 4.19 4.54
+== ollama:qwen3:8b deep_profile profB :: 21:50  up 89 days,  7:47, 12 users, load averages: 4.45 4.18 4.53
+chain02   deep_profile  fail wrong_final_state  calls= 7 tools= 4 tok=6627/273 201.1s
+chain03   deep_profile  PASS                    calls= 8 tools= 5 tok=7765/267 220.4s
+chain05   deep_profile  PASS                    calls= 2 tools= 1 tok=2249/66 36.5s
+chain06   deep_profile  PASS                    calls= 5 tools= 4 tok=6090/136 69.0s
+chain08   deep_profile  PASS                    calls= 5 tools= 4 tok=6078/136 102.3s
+chain09   deep_profile  fail wrong_final_state  calls= 8 tools= 7 tok=10781/228 189.1s
+chain11   deep_profile  PASS                    calls= 6 tools= 5 tok=7757/171 141.6s
+chain12   deep_profile  PASS                    calls= 8 tools= 7 tok=10869/242 34.5s
+chain14   deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=1113/143 15.2s
+chain15   deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=1113/135 13.4s
+chain17   deep_profile  PASS                    calls= 9 tools= 7 tok=8714/282 77.3s
+chain18   deep_profile  PASS                    calls=10 tools= 8 tok=10070/326 49.1s
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+chain19   deep_profile  fail loop_step_limit    calls=10 tools= 9 tok=10045/328 108.5s
+chain20   deep_profile  PASS                    calls= 8 tools= 6 tok=7665/259 109.8s
+sql02     deep_profile  fail wrong_args         calls= 3 tools= 2 tok=2895/117 19.4s
+sql03     deep_profile  PASS                    calls= 8 tools= 5 tok=5886/251 56.6s
+sql05     deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=898/49 11.1s
+sql06     deep_profile  PASS                    calls= 2 tools= 1 tok=1889/51 24.5s
+sql08     deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=916/71 53.4s
+sql09     deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=902/64 22.3s
+sql11     deep_profile  PASS                    calls=10 tools= 7 tok=7622/338 76.3s
+sql12     deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=907/51 7.7s
+sql14     deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=905/49 7.0s
+sql15     deep_profile  fail wrong_final_state  calls= 4 tools= 3 tok=4279/111 61.4s
+sql17     deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=906/72 19.8s
+sql18     deep_profile  fail wrong_final_state  calls= 5 tools= 4 tok=5937/142 181.4s
+sql20     deep_profile  PASS                    calls= 4 tools= 3 tok=3925/106 25.4s
+r02       deep_profile  fail malformed_output   calls= 3 tools= 2 tok=2955/86 23.2s
+r03       deep_profile  PASS                    calls= 2 tools= 1 tok=1847/46 7.7s
+r05       deep_profile  PASS                    calls= 2 tools= 1 tok=1824/41 5.9s
+r06       deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=818/67 6.6s
+r08       deep_profile  PASS                    calls= 6 tools= 3 tok=4212/208 31.9s
+r09       deep_profile  PASS                    calls= 3 tools= 2 tok=2798/57 26.0s
+r11       deep_profile  PASS                    calls= 3 tools= 2 tok=2911/65 11.5s
+r12       deep_profile  fail gave_up            calls= 3 tools= 2 tok=2842/69 12.2s
+r14       deep_profile  PASS                    calls= 3 tools= 2 tok=2853/66 12.3s
+r15       deep_profile  PASS                    calls= 6 tools= 3 tok=4279/189 33.8s
+r17       deep_profile  fail malformed_output   calls= 4 tools= 3 tok=4002/90 17.5s
+r18       deep_profile  PASS                    calls= 2 tools= 1 tok=1813/39 9.4s
+r19       deep_profile  fail malformed_output   calls= 3 tools= 2 tok=2980/74 13.9s
+r20       deep_profile  PASS                    calls= 2 tools= 1 tok=1761/40 10.6s
+files02   deep_profile  PASS                    calls= 2 tools= 1 tok=1777/38 8.5s
+files03   deep_profile  PASS                    calls= 3 tools= 2 tok=2806/86 12.6s
+files05   deep_profile  PASS                    calls= 5 tools= 4 tok=4791/106 16.1s
+files06   deep_profile  fail wrong_final_state  calls= 3 tools= 2 tok=2800/47 8.5s
+files08   deep_profile  PASS                    calls= 4 tools= 3 tok=3770/88 14.0s
+files09   deep_profile  PASS                    calls= 3 tools= 2 tok=2736/76 22.1s
+files11   deep_profile  fail wrong_final_state  calls= 3 tools= 3 tok=2786/91 42.1s
+files12   deep_profile  PASS                    calls= 2 tools= 2 tok=1832/68 34.0s
+files14   deep_profile  PASS                    calls= 3 tools= 2 tok=2753/79 9.7s
+files15   deep_profile  PASS                    calls= 3 tools= 2 tok=2762/68 10.8s
+files17   deep_profile  PASS                    calls= 3 tools= 2 tok=2774/74 53.0s
+files18   deep_profile  PASS                    calls= 3 tools= 3 tok=2868/113 41.5s
+files19   deep_profile  fail wrong_final_state  calls= 3 tools= 2 tok=2814/87 53.2s
+files20   deep_profile  PASS                    calls= 3 tools= 4 tok=2779/104 52.3s
+multi02   deep_profile  PASS                    calls= 8 tools= 4 tok=9463/174 53.6s
+multi03   deep_profile  PASS                    calls= 8 tools= 4 tok=9451/171 59.8s
+multi05   deep_profile  PASS                    calls= 9 tools= 6 tok=11059/208 94.0s
+multi06   deep_profile  fail wrong_final_state  calls=10 tools= 7 tok=12669/247 87.8s
+multi08   deep_profile  PASS                    calls= 9 tools= 6 tok=11242/247 61.9s
+multi09   deep_profile  PASS                    calls= 9 tools= 5 tok=10782/200 97.0s
+multi11   deep_profile  PASS                    calls= 9 tools= 5 tok=10808/207 70.5s
+multi12   deep_profile  PASS                    calls= 9 tools= 5 tok=10781/192 75.9s
+multi14   deep_profile  PASS                    calls= 5 tools= 2 tok=5692/115 27.1s
+multi15   deep_profile  PASS                    calls= 5 tools= 2 tok=5691/115 26.4s
+multi17   deep_profile  PASS                    calls= 8 tools= 5 tok=9482/180 74.4s
+multi18   deep_profile  PASS                    calls= 8 tools= 5 tok=9516/189 67.2s
+multi19   deep_profile  PASS                    calls= 8 tools= 5 tok=9484/173 63.7s
+multi20   deep_profile  PASS                    calls= 8 tools= 5 tok=9452/181 85.1s
+== end ollama:qwen3:8b :: 11:01  up 89 days, 20:58, 12 users, load averages: 12.98 47.71 59.43
+== ollama:qwen3:4b-instruct-2507-q4_K_M deep_profile profA :: 11:01  up 89 days, 20:58, 12 users, load averages: 13.06 47.15 59.17
+chain01   deep_profile  PASS                    calls= 4 tools= 3 tok=5233/93 45.1s
+chain04   deep_profile  PASS                    calls= 4 tools= 3 tok=5226/92 18.8s
+chain07   deep_profile  fail malformed_output   calls= 2 tools= 1 tok=2461/149 25.0s
+chain10   deep_profile  fail malformed_output   calls= 4 tools= 5 tok=5714/319 73.3s
+chain13   deep_profile  PASS                    calls= 2 tools= 2 tok=2569/164 29.0s
+chain16   deep_profile  fail malformed_output   calls= 3 tools= 4 tok=4083/444 97.5s
+sql01     deep_profile  PASS                    calls= 5 tools= 4 tok=5738/273 68.7s
+sql04     deep_profile  PASS                    calls= 4 tools= 3 tok=4129/73 31.6s
+sql07     deep_profile  fail malformed_output   calls= 7 tools= 6 tok=7978/193 46.9s
+sql10     deep_profile  fail malformed_output   calls= 7 tools= 6 tok=10510/906 224.3s
+sql13     deep_profile  PASS                    calls= 4 tools= 3 tok=4134/75 27.0s
+sql16     deep_profile  fail wrong_final_state  calls= 8 tools= 7 tok=10923/612 197.1s
+r01       deep_profile  PASS                    calls= 3 tools= 2 tok=3095/159 40.6s
+r04       deep_profile  fail malformed_output   calls= 6 tools= 5 tok=7580/495 132.2s
+r07       deep_profile  fail malformed_output   calls= 4 tools= 3 tok=4768/281 107.3s
+r10       deep_profile  PASS                    calls= 3 tools= 2 tok=3028/66 22.3s
+r13       deep_profile  fail malformed_output   calls= 4 tools= 3 tok=4575/197 55.9s
+r16       deep_profile  PASS                    calls= 2 tools= 1 tok=1945/134 43.1s
+files01   deep_profile  PASS                    calls= 2 tools= 1 tok=1919/48 18.6s
+files04   deep_profile  fail wrong_final_state  calls= 4 tools= 3 tok=4008/87 24.8s
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+files07   deep_profile  fail loop_step_limit    calls=10 tools=10 tok=14350/871 242.5s
+files10   deep_profile  PASS                    calls= 7 tools= 6 tok=7435/159 55.0s
+files13   deep_profile  PASS                    calls= 2 tools= 1 tok=1919/47 31.8s
+files16   deep_profile  PASS                    calls= 3 tools= 2 tok=3087/198 51.5s
+multi01   deep_profile  PASS                    calls= 8 tools= 4 tok=10339/176 58.9s
+multi04   deep_profile  PASS                    calls= 8 tools= 4 tok=10339/176 52.5s
+multi07   deep_profile  PASS                    calls= 9 tools= 6 tok=12126/229 59.2s
+multi10   deep_profile  PASS                    calls= 8 tools= 4 tok=10253/167 46.7s
+multi13   deep_profile  PASS                    calls= 5 tools= 2 tok=6242/121 31.5s
+multi16   deep_profile  PASS                    calls= 4 tools= 2 tok=4925/124 29.2s
+== end ollama:qwen3:4b-instruct-2507-q4_K_M :: 11:34  up 89 days, 21:31, 12 users, load averages: 5.78 17.80 25.37
+== ollama:qwen3:8b deep_profile profA :: 11:35  up 89 days, 21:31, 12 users, load averages: 5.48 17.54 25.23
+chain01   deep_profile  PASS                    calls= 6 tools= 4 tok=8053/234 211.7s
+chain04   deep_profile  PASS                    calls= 5 tools= 3 tok=6472/189 69.9s
+chain07   deep_profile  PASS                    calls= 6 tools= 4 tok=7868/222 75.0s
+chain10   deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=1062/115 28.2s
+chain13   deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=1063/136 32.0s
+chain16   deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=1063/136 44.4s
+sql01     deep_profile  PASS                    calls= 2 tools= 1 tok=1752/44 54.2s
+sql04     deep_profile  PASS                    calls= 2 tools= 1 tok=1751/45 25.2s
+sql07     deep_profile  PASS                    calls= 7 tools= 4 tok=4877/241 104.1s
+sql10     deep_profile  fail malformed_output   calls= 4 tools= 3 tok=3684/94 39.0s
+sql13     deep_profile  PASS                    calls= 4 tools= 3 tok=3861/159 59.5s
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql16     deep_profile  fail loop_step_limit    calls=10 tools= 9 tok=14642/450 199.6s
+r01       deep_profile  PASS                    calls= 2 tools= 1 tok=1728/40 33.7s
+r04       deep_profile  fail wrong_final_state  calls= 2 tools= 1 tok=1630/59 33.0s
+r07       deep_profile  fail wrong_tool         calls= 1 tools= 0 tok=773/46 14.5s
+r10       deep_profile  fail gave_up            calls= 2 tools= 1 tok=1722/79 26.4s
+r13       deep_profile  fail gave_up            calls= 3 tools= 2 tok=2835/83 33.7s
+r16       deep_profile  fail malformed_output   calls= 2 tools= 1 tok=1756/68 25.9s
+files01   deep_profile  PASS                    calls= 2 tools= 1 tok=1676/47 23.1s
+files04   deep_profile  fail wrong_final_state  calls= 3 tools= 3 tok=2614/78 22.3s
+files07   deep_profile  fail wrong_final_state  calls= 2 tools= 1 tok=1679/45 14.6s
+files10   deep_profile  PASS                    calls= 3 tools= 5 tok=2702/131 42.8s
+files13   deep_profile  PASS                    calls= 2 tools= 1 tok=1676/42 14.4s
+files16   deep_profile  PASS                    calls= 3 tools= 2 tok=2595/79 27.8s
+multi01   deep_profile  PASS                    calls= 8 tools= 4 tok=9067/178 67.4s
+multi04   deep_profile  PASS                    calls= 9 tools= 5 tok=10383/194 64.4s
+multi07   deep_profile  PASS                    calls= 8 tools= 5 tok=9375/198 134.6s
+multi10   deep_profile  PASS                    calls= 9 tools= 5 tok=10347/202 73.1s
+multi13   deep_profile  fail wrong_final_state  calls= 4 tools= 2 tok=4290/116 39.9s
+multi16   deep_profile  fail wrong_final_state  calls= 4 tools= 2 tok=4285/115 35.5s
+== end ollama:qwen3:8b :: 12:02  up 89 days, 21:59, 12 users, load averages: 3.10 7.82 11.68

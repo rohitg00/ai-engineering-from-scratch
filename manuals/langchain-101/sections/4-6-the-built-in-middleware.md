@@ -46,7 +46,7 @@ caption: Read from the root down. Each branch is one kind of hook, and each leaf
 
 ## The documentation lists 22
 
-The prebuilt middleware page lists 22 provider-independent middlewares {{docs oss/python/langchain/middleware/built-in}}. Nineteen of them are the classes above. The other three are `FilesystemMiddleware`, `SubAgentMiddleware`, and `RubricMiddleware`, which you import from `deepagents`. The page shows the import, but the table does not mark which package each one needs. This manual counts the 19 that are in `langchain`, and records the difference as conflict D130. Section 7.4 covers the Deep Agents middleware.
+The prebuilt middleware page lists 22 provider-independent middlewares {{docs oss/python/langchain/middleware/built-in}}. Nineteen of them are the classes above. The other three are `FilesystemMiddleware`, `SubAgentMiddleware`, and `RubricMiddleware`, which you import from `deepagents`. The page shows the import, but the table does not mark which package each one needs. This manual counts the 19 that are in `langchain`, and records the difference as conflict D130. Section 7.4 covers the Deep Agents middleware, and the section below measures `RubricMiddleware`.
 
 ## Call limits
 
@@ -178,12 +178,37 @@ With no `execution_policy`, the middleware uses `HostExecutionPolicy`, which run
 
 `FilesystemFileSearchMiddleware` adds `glob_search` and `grep_search` under `root_path`. The paths in the results start at that root. With `use_ripgrep=False` it searches in Python. In the kit, `glob_search` with `**/*.py` returned `/src/app.py`. All 8 `grep_search` calls failed, because the model sent `include` as an object, such as `{'pattern': '*.py'}`. After 10 model calls it gave up and blamed the tool.
 
+## RubricMiddleware, a grader from Deep Agents
+
+**RubricMiddleware:** a middleware of `deepagents` that grades the answer of an agent against a rubric. The caller passes the rubric as the state key `rubric`. With no rubric the middleware does nothing {{code libs/deepagents/deepagents/middleware/rubric.py}}. When the agent would finish, a grader model reads the transcript and gives one verdict per criterion. A `needs_revision` verdict sends the agent back for another round. After `max_iterations` rounds the run ends with `max_iterations_reached`.
+
+**We measured** it on the 25 tasks that a plain loop of Qwen3 8B failed in the first bench. The worker was Qwen3 8B in `create_agent` with the middleware and `max_iterations=3`. The grader was Qwen3 14B on a second Ollama 0.31.1, on the Mac.
+
+The rubric had four criteria. Every fact came from a tool result. The answer was submitted once with the right value. Every requested change was made. Every part of the request was done.
+
+Each task ran once. A cell of 25 tasks is small, and the tasks were chosen because the plain loop failed them. [Figure](#fig-4-6b) shows each run.
+
+```figure
+id: fig-4-6b
+kind: chart
+title: RubricMiddleware on the 25 tasks that Qwen3 8B failed as a plain loop
+claim: A Qwen3 14B grader said satisfied on 14 runs, and 12 of those runs still failed the state check.
+caption: Each row is one task. Squares give the grader verdicts in order, and the next column is the state check. Calls count model calls of the worker. From capture/lab/bench2/summary-bench2.json.
+```
+
+Three tasks passed: `r06`, `sql03`, and `sql09`. Twelve runs got `satisfied` at the first look, and 11 of them failed the check. Eleven runs ended at the round limit, and `r06` was one of them.
+
+The rubric raised the worker calls from 108 to 173 and the worker prompt tokens from 75,987 to 174,192. The grader added 56 calls and 113,851 prompt tokens. The three-turn task `multi13` had grader rounds in each turn, 9 grader calls and 22 worker calls in all. All 25 runs took 16,841 s, against 446 s for the plain runs, and 11,379 s of it was grader time. The Mac was shared, so those times are upper bounds.
+
+So the grader is only as good as its model. A 14B grader said satisfied on runs that the state check failed. Check a grader against your state checker before you rely on its verdict.
+
 ```takeaways
 - Set trigger on SummarizationMiddleware, because the default never summarizes.
 - Pair ToolCallLimitMiddleware with ModelCallLimitMiddleware when a loop must stop.
 - Give ModelCallLimitMiddleware a checkpointer when you use thread_limit.
 - Pass an execution_policy other than HostExecutionPolicy to ShellToolMiddleware outside a sandbox.
 - Import FilesystemMiddleware, SubAgentMiddleware, and RubricMiddleware from deepagents, not from langchain.
+- Check a RubricMiddleware grader against a state checker, because a 14B grader accepted 12 failed runs.
 ```
 
-Sources: capture/out/09-middleware-order.txt, capture/out/11-mw-call-limits.txt, capture/out/17-mw-todo-context-editing.txt, capture/out/18-mw-selection-emulation.txt, capture/out/19-mw-shell-files.txt, capture/s_middleware.py; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/middleware/built-in); libs/langchain_v1/langchain/agents/middleware at langchain==1.5.0.
+Sources: capture/out/09-middleware-order.txt, capture/out/11-mw-call-limits.txt, capture/out/17-mw-todo-context-editing.txt, capture/out/18-mw-selection-emulation.txt, capture/out/19-mw-shell-files.txt, capture/s_middleware.py; docs.langchain.com at docs commit 04d4d4a (oss/python/langchain/middleware/built-in); libs/langchain_v1/langchain/agents/middleware at langchain==1.5.0; capture/lab/bench2/summary-bench2.json, capture/lab/bench2/runs/rubric.jsonl, capture/lab/bench2/logs/q-rubric.log, capture/lab/bench2/kit2/run2.py; libs/deepagents/deepagents/middleware/rubric.py at deepagents==0.7.38.

@@ -1,0 +1,255 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 519" role="img" aria-labelledby="fig-4-6b-title fig-4-6b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-6b-title">RubricMiddleware on the 25 tasks that Qwen3 8B failed as a plain loop</title>
+  <desc id="fig-4-6b-desc">One row for each of the 25 tasks that a plain loop of Qwen3 8B failed, rerun with create_agent and RubricMiddleware with Qwen3 14B as the grader. Squares give each grader verdict in order. 14 runs ended with the verdict satisfied and 12 of those still failed the state checker. 11 runs reached the limit of three rounds. 3 tasks passed: r06, sql03, sql09.</desc>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GRADER VERDICTS, IN ORDER</text>
+  <text x="404" y="40" font-size="11" text-anchor="end" fill="var(--m-ink-mute, #6f6f6a)">worker calls</text>
+  <text x="20" y="56" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">task</text>
+  <text x="84" y="56" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">verdicts</text>
+  <text x="212" y="56" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">state check</text>
+  <text x="350" y="56" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">plain</text>
+  <text x="404" y="56" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">rubric</text>
+  <text x="466" y="56" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">grader</text>
+  <text x="486" y="56" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">failure left</text>
+  <line x1="20" y1="62" x2="620" y2="62" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="20" y="83" font-size="11" fill="var(--m-ink, #1a1a1a)">chain04</text>
+  <rect x="84" y="74" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="74" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="83" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="83" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">4</text>
+  <text x="404" y="83" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">4</text>
+  <text x="466" y="83" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="83" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">malformed_output</text>
+  <text x="20" y="98" font-size="11" fill="var(--m-ink, #1a1a1a)">chain10</text>
+  <rect x="84" y="89" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="89" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="98" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="98" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">7</text>
+  <text x="404" y="98" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">7</text>
+  <text x="466" y="98" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="98" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="113" font-size="11" fill="var(--m-ink, #1a1a1a)">chain15</text>
+  <rect x="84" y="104" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="104" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="113" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="113" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">7</text>
+  <text x="404" y="113" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">7</text>
+  <text x="466" y="113" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="113" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">malformed_output</text>
+  <text x="20" y="128" font-size="11" fill="var(--m-ink, #1a1a1a)">chain16</text>
+  <rect x="84" y="119" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="119" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="128" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="128" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">6</text>
+  <text x="404" y="128" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">6</text>
+  <text x="466" y="128" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="128" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">malformed_output</text>
+  <text x="20" y="143" font-size="11" fill="var(--m-ink, #1a1a1a)">chain20</text>
+  <rect x="84" y="134" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="134" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="143" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="143" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">7</text>
+  <text x="404" y="143" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">7</text>
+  <text x="466" y="143" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="143" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="158" font-size="11" fill="var(--m-ink, #1a1a1a)">sql02</text>
+  <rect x="84" y="149" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="149" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="149" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="149" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="158" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="158" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="158" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">6</text>
+  <text x="466" y="158" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="158" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_args</text>
+  <text x="20" y="173" font-size="11" fill="var(--m-ink, #1a1a1a)">sql03</text>
+  <rect x="84" y="164" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="164" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="164" width="10" height="10" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="228" y="173" font-size="11" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">pass</text>
+  <text x="350" y="173" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="173" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">9</text>
+  <text x="466" y="173" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">2</text>
+  <text x="486" y="173" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">none</text>
+  <text x="20" y="188" font-size="11" fill="var(--m-ink, #1a1a1a)">sql07</text>
+  <rect x="84" y="179" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="179" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="179" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="179" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="188" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="188" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="188" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">5</text>
+  <text x="466" y="188" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="188" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_args</text>
+  <text x="20" y="203" font-size="11" fill="var(--m-ink, #1a1a1a)">sql09</text>
+  <rect x="84" y="194" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="194" width="10" height="10" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="228" y="203" font-size="11" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">pass</text>
+  <text x="350" y="203" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">10</text>
+  <text x="404" y="203" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">11</text>
+  <text x="466" y="203" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="203" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">none</text>
+  <text x="20" y="218" font-size="11" fill="var(--m-ink, #1a1a1a)">sql10</text>
+  <rect x="84" y="209" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="209" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="209" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="209" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="218" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="218" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">6</text>
+  <text x="404" y="218" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">10</text>
+  <text x="466" y="218" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="218" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_args</text>
+  <text x="20" y="233" font-size="11" fill="var(--m-ink, #1a1a1a)">sql11</text>
+  <rect x="84" y="224" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="224" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="224" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="224" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="233" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="233" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">5</text>
+  <text x="404" y="233" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">9</text>
+  <text x="466" y="233" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="233" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_args</text>
+  <text x="20" y="248" font-size="11" fill="var(--m-ink, #1a1a1a)">sql12</text>
+  <rect x="84" y="239" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="239" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="248" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="248" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="248" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="466" y="248" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="248" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="263" font-size="11" fill="var(--m-ink, #1a1a1a)">sql16</text>
+  <rect x="84" y="254" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="254" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="254" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="254" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="263" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="263" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="263" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">5</text>
+  <text x="466" y="263" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="263" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_args</text>
+  <text x="20" y="278" font-size="11" fill="var(--m-ink, #1a1a1a)">sql18</text>
+  <rect x="84" y="269" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="269" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="269" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="269" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="278" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="278" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">9</text>
+  <text x="404" y="278" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">11</text>
+  <text x="466" y="278" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="278" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="293" font-size="11" fill="var(--m-ink, #1a1a1a)">r04</text>
+  <rect x="84" y="284" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="284" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="284" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="284" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="293" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="293" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="293" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">6</text>
+  <text x="466" y="293" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="293" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="308" font-size="11" fill="var(--m-ink, #1a1a1a)">r06</text>
+  <rect x="84" y="299" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="299" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="299" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="299" width="10" height="10" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="228" y="308" font-size="11" font-weight="700" fill="var(--m-blue-ink, #2f5d9a)">pass</text>
+  <text x="350" y="308" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="308" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">12</text>
+  <text x="466" y="308" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="308" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">none</text>
+  <text x="20" y="323" font-size="11" fill="var(--m-ink, #1a1a1a)">r09</text>
+  <rect x="84" y="314" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="314" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="323" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="323" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="323" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="466" y="323" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="323" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">malformed_output</text>
+  <text x="20" y="338" font-size="11" fill="var(--m-ink, #1a1a1a)">r10</text>
+  <rect x="84" y="329" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="329" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="338" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="338" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="338" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="466" y="338" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="338" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="353" font-size="11" fill="var(--m-ink, #1a1a1a)">r12</text>
+  <rect x="84" y="344" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="344" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="353" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="353" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">4</text>
+  <text x="404" y="353" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">4</text>
+  <text x="466" y="353" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="353" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">malformed_output</text>
+  <text x="20" y="368" font-size="11" fill="var(--m-ink, #1a1a1a)">r13</text>
+  <rect x="84" y="359" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="359" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="359" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="359" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="368" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="368" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="368" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">7</text>
+  <text x="466" y="368" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="368" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="383" font-size="11" fill="var(--m-ink, #1a1a1a)">r18</text>
+  <rect x="84" y="374" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="374" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="374" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="374" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="383" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="383" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="404" y="383" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">5</text>
+  <text x="466" y="383" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="383" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_tool</text>
+  <text x="20" y="398" font-size="11" fill="var(--m-ink, #1a1a1a)">files04</text>
+  <rect x="84" y="389" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="389" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="398" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="398" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="398" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="466" y="398" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="398" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="413" font-size="11" fill="var(--m-ink, #1a1a1a)">files07</text>
+  <rect x="84" y="404" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="404" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="404" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="404" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="413" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="413" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">2</text>
+  <text x="404" y="413" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">5</text>
+  <text x="466" y="413" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="486" y="413" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="428" font-size="11" fill="var(--m-ink, #1a1a1a)">files11</text>
+  <rect x="84" y="419" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <rect x="212" y="419" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="428" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="428" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="404" y="428" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">3</text>
+  <text x="466" y="428" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">1</text>
+  <text x="486" y="428" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <text x="20" y="443" font-size="11" fill="var(--m-ink, #1a1a1a)">multi13</text>
+  <rect x="84" y="434" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="96" y="434" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="108" y="434" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="120" y="434" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="132" y="434" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="144" y="434" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="156" y="434" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="168" y="434" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <rect x="180" y="434" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="212" y="434" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="228" y="443" font-size="11" font-weight="400" fill="var(--m-rose-ink, #b0344d)">fail</text>
+  <text x="350" y="443" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">4</text>
+  <text x="404" y="443" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">22</text>
+  <text x="466" y="443" font-size="11" text-anchor="end" fill="var(--m-ink, #1a1a1a)">9</text>
+  <text x="486" y="443" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">wrong_final_state</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="20" y="456" width="10" height="10" fill="var(--m-green-ink, #336b40)"/>
+  <text x="34" y="465" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">satisfied</text>
+  <rect x="150" y="456" width="10" height="10" fill="var(--m-amber-ink, #85590c)"/>
+  <text x="164" y="465" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">needs revision</text>
+  <rect x="280" y="456" width="10" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="294" y="465" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">round limit</text>
+  </g>
+  <text x="20" y="485" font-size="11" class="m-serif" fill="var(--m-ink, #1a1a1a)">14 runs ended satisfied and 12 of them failed the check. 3 of 25 tasks passed.</text>
+  <text x="20" y="501" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Worker calls 108 to 173, plus 56 grader calls.</text>
+</svg>

@@ -91,7 +91,6 @@ These need only a new scenario in the capture kit.
 - Time travel to a point inside a subgraph. [Section 6.6](#s-time-travel-replay-update-state-and-forks)
 - A subgraph called inside a node, a subgraph schema without the shared key, and a subgraph with `add_messages`. [Section 6.7](#s-subgraphs-and-multi-agent-patterns)
 - A subgraph compiled with `checkpointer=True` and with `checkpointer=False`. [Section 6.7](#s-subgraphs-and-multi-agent-patterns)
-- The four multi-agent patterns other than subagents. [Section 6.7](#s-subgraphs-and-multi-agent-patterns)
 - The refusal of a `timeout` on a sync node. [Section 6.8](#s-error-handlers-node-timeouts-and-the-recursion-limit)
 
 ## Streaming and parallel tool calls

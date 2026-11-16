@@ -83,9 +83,38 @@ The Mac was shared with other work. Treat every time as an upper bound, and comp
 
 ## Cost
 
-The kit wrote one ledger row for every Claude call, with the usage that the API returned and the list price of 2026-11-14. It stopped before a call when the ledger reached its cap. The whole bench used 2,589 calls and $0.93.
+The kit wrote one ledger row for every Claude call, with the usage that the API returned and the list price of 2026-11-14. It stopped before a call when the ledger reached its cap. The whole bench used 2,589 calls and $0.93. The later runs below are counted apart.
 
 The ledger recorded 0 cache-write tokens on every call, and it priced those tokens at the base input price. If the API billed cache writes at 1.25 times, our dollars are low. The bound is 12.7% for a plain loop cell. For a deep agent cell it is about 6%: 4.6% on Haiku, 6.4% on Sonnet, and 6.1% over both. The deep agent ratio would then be lower, never higher.
+
+## The second bench and the multi-agent runs
+
+Two later runs reuse the kit and the task data of the first bench. They changed only the harness.
+
+| Folder | What it ran | Files |
+|---|---|---|
+| `bench2/` | harness profiles A and B, the `eval` tool with and without a prompt that asks for it, and `RubricMiddleware` with a Qwen3 14B grader | `kit2/run2.py` runs, `kit2/summarize2.py` writes `summary-bench2.json`, `kit2/docs_table.py` reads the docs table into `docs-eval-table.json` |
+| `multiagent/` | five patterns on Haiku and Qwen3 14B, and the Claude Agent SDK against a deep agent on Haiku | `kit/run_patterns.py` and `kit/run_sdk.py` run, `kit/summarize_patterns.py` writes `capture/lab/summary/multiagent-mac.json` |
+
+The local rows of `bench2/` ran on a second Ollama 0.31.1 server that we started for them, with a model cache of its own. Its first start used a quantized key-value cache and flash attention. Eight control rows came from that start, four on Qwen3 4B and four on Qwen3 8B. We restarted the server with the defaults of the first bench and kept those eight rows in `bench2/runs/excluded/`. After the restart, three control tasks gave the same tool calls and prompt tokens as the first bench.
+
+The profile and eval rows of the local models all come from after the restart. The summary reads the plain loop and default deep agent rows from the first bench. The Qwen3 14B and gpt-oss 20B deep agent cells join 12 old runs and 27 new runs at the same settings.
+
+[Figure](#fig-r-11b) shows every cell of the second bench with its interval. 
+```figure
+id: fig-r-11b
+kind: chart
+title: the pass rate and its interval for every cell of the second bench
+claim: Cells of 99 tasks give intervals of 18 to 19 points, and cells of 30 tasks give intervals up to 34 points.
+caption: Each row is one cell. The dot is the pass rate and the whisker is the 95% Wilson interval. Rose counts mark cells of fewer than 30 tasks. From capture/lab/bench2/summary-bench2.json.
+```
+
+Haiku in `bench2/` ran 370 calls for $0.0695, and the rows are in `bench2/runs/cost-ledger.jsonl`. The multi-agent runs of Haiku are 1,518 ledger rows for $0.150, in `multiagent/runs/cost-ledger.jsonl`.
+
+We also started the evals of `deepagents` on Qwen3 4B. 
+We stopped it after 14 tests, 9 passed and 5 failed, and it wrote no report, so the manual uses none of it.
+
+The Qwen3 8B nudged run failed at its start. The multi-agent run of gpt-oss 20B never started a task. The Qwen3 14B cells of both runs share the Mac with other jobs. Their times are upper bounds, and each cell holds one run per task.
 
 ## Rows not to use
 
@@ -95,10 +124,12 @@ The ledger recorded 0 cache-write tokens on every call, and it priced those toke
 | `runs/excluded/anthropic-smoke-attempt1-400.jsonl` | the first Claude smoke run, which sent a temperature and got 400 errors |
 | `runs/excluded/main-30b-a3b-think-off-leaks.jsonl` | Qwen3 30B-A3B with thinking off, which wrote its reasoning into the reply and hit the output limit |
 | `runs/excluded/main-files-before-sandbox-fix.jsonl` | file tasks from before a fix to how the kit resolved the task folder path |
+| `bench2/runs/excluded/kvq8-profiles.jsonl`, `bench2/runs/excluded/kvq8-rubric.jsonl` | control rows from the first start of the second server, which did not repeat the first bench |
+| `bench2/runs/smoke.jsonl`, `bench2/runs/verify.jsonl` | smoke and check runs that the summary does not read |
 | `runs/excluded/structured-dev.jsonl`, `runs/excluded/toolscale-dev.jsonl` | rows from the runs that tested the runners |
 | the structured output rows of Claude | valid, but the runner added no prompt cache, so their dollars are list price |
 | strict pass as a quality measure | it counts the use of `submit_answer`, and the small models often wrote the answer in text |
 
 The main file keeps every other row. `summarize.py` drops `sql19` when it reads the rows, and `summarize.py --check` rebuilds the summary and compares it.
 
-Sources: capture/lab/bench/summary-mac.json, capture/lab/bench/summarize.py, capture/lab/bench/summary-with-sql19.md, capture/lab/bench/runs/main.jsonl, capture/lab/bench/runs/sampling.jsonl, capture/lab/bench/runs/structured.jsonl, capture/lab/bench/runs/toolscale.jsonl, capture/lab/bench/runs/models.jsonl, capture/lab/bench/runs/cost-ledger.jsonl, capture/lab/bench/runs/excluded, capture/lab/bench/data/tasks.jsonl, capture/lab/bench/data/subset30.txt, capture/lab/bench/data/anthropic-prices.json, capture/lab/bench/data/shop.db, capture/lab/bench/kit.
+Sources: capture/lab/bench/summary-mac.json, capture/lab/bench2/summary-bench2.json, capture/lab/bench2/kit2, capture/lab/bench2/runs, capture/lab/bench2/logs, capture/lab/summary/multiagent-mac.json, capture/lab/multiagent, capture/lab/bench/summarize.py, capture/lab/bench/summary-with-sql19.md, capture/lab/bench/runs/main.jsonl, capture/lab/bench/runs/sampling.jsonl, capture/lab/bench/runs/structured.jsonl, capture/lab/bench/runs/toolscale.jsonl, capture/lab/bench/runs/models.jsonl, capture/lab/bench/runs/cost-ledger.jsonl, capture/lab/bench/runs/excluded, capture/lab/bench/data/tasks.jsonl, capture/lab/bench/data/subset30.txt, capture/lab/bench/data/anthropic-prices.json, capture/lab/bench/data/shop.db, capture/lab/bench/kit.

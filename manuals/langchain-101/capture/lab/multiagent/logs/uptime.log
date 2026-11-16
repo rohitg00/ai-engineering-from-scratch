@@ -1,0 +1,38 @@
+2026-11-15T18:21:11 start run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=single :: 18:21  12 users, load averages: 2.69 5.38 16.17
+2026-11-15T18:21:21 start run=29bd39c6 model=ollama:qwen3:14b pattern=single :: 18:21  12 users, load averages: 3.19 5.40 16.05
+2026-11-15T18:21:31 end   run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=single :: 18:21  12 users, load averages: 2.92 5.27 15.88
+2026-11-15T18:21:31 start run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=subagents :: 18:21  12 users, load averages: 2.92 5.27 15.88
+2026-11-15T18:22:08 end   run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=subagents :: 18:22  12 users, load averages: 1.90 4.75 15.26
+2026-11-15T18:22:08 start run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=handoffs :: 18:22  12 users, load averages: 1.90 4.75 15.26
+2026-11-15T18:22:31 end   run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=handoffs :: 18:22  12 users, load averages: 2.04 4.56 14.88
+2026-11-15T18:22:31 start run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=skills :: 18:22  12 users, load averages: 2.04 4.56 14.88
+2026-11-15T18:22:57 end   run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=skills :: 18:22  12 users, load averages: 1.87 4.31 14.49
+2026-11-15T18:22:57 start run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=router :: 18:22  12 users, load averages: 1.87 4.31 14.49
+2026-11-15T18:23:15 end   run=29bd39c6 model=ollama:qwen3:14b pattern=single :: 18:23  12 users, load averages: 1.41 4.04 14.16
+2026-11-15T18:23:15 start run=29bd39c6 model=ollama:qwen3:14b pattern=subagents :: 18:23  12 users, load averages: 1.41 4.04 14.16
+2026-11-15T18:23:39 end   run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=router :: 18:23  12 users, load averages: 1.48 3.88 13.87
+2026-11-15T18:27:03 start run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=single :: 18:27  12 users, load averages: 2.25 3.03 11.35
+2026-11-15T18:27:12 start run=0e8e9d34 model=ollama:qwen3:14b pattern=single :: 18:27  12 users, load averages: 2.05 2.97 11.23
+2026-11-15T18:30:02 end   run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=single :: 18:30  12 users, load averages: 3.87 3.27 9.84
+2026-11-15T18:30:02 start run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=subagents :: 18:30  12 users, load averages: 3.87 3.27 9.84
+2026-11-15T18:36:23 end   run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=subagents :: 18:36  12 users, load averages: 2.90 3.33 7.51
+2026-11-15T18:36:23 start run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=handoffs :: 18:36  12 users, load averages: 2.90 3.33 7.51
+2026-11-15T18:39:51 end   run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=handoffs :: 18:39  12 users, load averages: 1.94 2.58 6.28
+2026-11-15T18:39:51 start run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=skills :: 18:39  12 users, load averages: 1.94 2.58 6.28
+2026-11-15T18:43:17 end   run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=skills :: 18:43  12 users, load averages: 1.84 2.30 5.36
+2026-11-15T18:43:17 start run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=router :: 18:43  12 users, load averages: 1.84 2.30 5.36
+2026-11-15T18:48:10 end   run=3b999e55 model=anthropic:claude-haiku-5-5 pattern=router :: 18:48  12 users, load averages: 10.76 6.10 6.05
+2026-11-15T18:48:15 start run=8ab4bcaf model=anthropic:claude-haiku-5-5 pattern=deep9 :: 18:48  12 users, load averages: 10.54 6.13 6.06
+2026-11-15T18:49:52 stopped parallel gpt-oss:20b runner (pid 18563) before its first task: its model load waited behind the shared Ollama queue; models now run one after another
+2026-11-15T18:50:01 stopped the parallel gpt-oss:20b runner before its first task; its model load sat in the shared Ollama queue for 25 min; the two local models now run one after the other
+2026-11-15T18:51:16 end   run=8ab4bcaf model=anthropic:claude-haiku-5-5 pattern=deep9 :: 18:51  12 users, load averages: 5.60 5.92 5.99
+2026-11-15T20:08:05 end   run=0e8e9d34 model=ollama:qwen3:14b pattern=single :: 20:08  12 users, load averages: 3.47 3.28 4.39
+2026-11-15T20:08:05 start run=0e8e9d34 model=ollama:qwen3:14b pattern=subagents :: 20:08  12 users, load averages: 3.47 3.28 4.39
+2026-11-16T12:22:18 end   run=0e8e9d34 model=ollama:qwen3:14b pattern=subagents :: 12:22  12 users, load averages: 3.55 4.30 5.94
+2026-11-16T12:22:18 start run=0e8e9d34 model=ollama:qwen3:14b pattern=handoffs :: 12:22  12 users, load averages: 3.55 4.30 5.94
+2026-11-16T12:47:51 started gpt-oss:20b alongside qwen3:14b; only qwen3:14b was resident, load average ~346 from other work on the Mac
+2026-11-16T13:09:33 end   run=0e8e9d34 model=ollama:qwen3:14b pattern=handoffs :: 13:09  12 users, load averages: 38.14 198.55 280.45
+2026-11-16T13:09:33 start run=0e8e9d34 model=ollama:qwen3:14b pattern=skills :: 13:09  12 users, load averages: 38.14 198.55 280.45
+2026-11-16T14:24:54 end   run=0e8e9d34 model=ollama:qwen3:14b pattern=skills :: 14:24  12 users, load averages: 9.05 8.47 8.06
+2026-11-16T14:24:54 start run=0e8e9d34 model=ollama:qwen3:14b pattern=router :: 14:24  12 users, load averages: 9.05 8.47 8.06
+2026-11-16T16:00:23 end   run=0e8e9d34 model=ollama:qwen3:14b pattern=router :: 16:00  12 users, load averages: 5.45 6.47 5.34

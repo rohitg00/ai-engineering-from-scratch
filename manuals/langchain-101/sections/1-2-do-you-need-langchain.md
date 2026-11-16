@@ -102,6 +102,24 @@ On Qwen3 4B they agreed on 42 of 99 tasks. The plain loop alone passed 36, and t
 
 The file loss comes from the default backend of Deep Agents, whose file tools write to the agent state and not to the disk. [Section 7.4](#s-deep-agents-0-7) shows each of those runs. In retrieval, the 4B deep agent answered 6 of 20 questions with no tool call and said that it had no access to the data. The plain loop did that in none. On the other 59 tasks the deep agent passed more: 46 against 39 on Qwen3 4B, and 47 against 44 on Qwen3 8B.
 
+### Three more settings and the Claude Agent SDK
+
+We ran more variants after the first bench. [Section 7.4](#s-deep-agents-0-7) gives the details. A harness profile hides the built-in file tools. It left the deep agent on Qwen3 4B at 55 of 99. It raised the deep agent on Qwen3 8B from 58 to 63. The plain loop passed 70 and 74. 
+
+The eval tool of `langchain-quickjs` gave no gain on four models. [Section 4.6](#s-the-built-in-middleware) measures a grader middleware.
+
+**We measured** the Claude Agent SDK 0.2.182, with its bundled Claude Code CLI 2.1.325, against the deep agent on the 30-task subset. Both ran Claude Haiku 5.5 on the Mac with the same five task tools, one run per task. The SDK got the tools through an in-process MCP server. [Figure](#fig-1-2c) shows the two.
+
+```figure
+id: fig-1-2c
+kind: chart
+title: the Claude Agent SDK and Deep Agents on the same 30 tasks
+claim: Both harnesses passed 30 of 30 tasks on Haiku, and the SDK read 9.3k input tokens for a task against 23.7k for the deep agent.
+caption: The top rows give the pass count, the median model calls, the median input tokens, and the dollars of the 30 tasks. Each dot below is one task. Counts are as each harness reported them. From capture/lab/summary/multiagent-mac.json.
+```
+
+The two harnesses gave the same outcome on 30 of 30 tasks, so the suite cannot rank them on quality. The 30 tasks cost $0.0168 as a deep agent and $0.0139 with the SDK, using the cost that each one reported.
+
 ### The model sets the score
 
 On the 30-task subset with the plain loop, the five local models passed from 15 to 28 tasks, and both Claude models passed 30. On one model, the three plain harnesses moved the score by 0 tasks. Spend your effort on the model before the harness.
@@ -143,7 +161,33 @@ On a local model those tokens cost time. On Qwen3 4B the median task took 22.6 s
 
 Prompt caching closes most of the token gap. The deep agent cost 1.16 times the plain loop on Haiku and 1.24 times on Sonnet. At list price with no cache, it would cost 3.10 and 3.14 times. [Section 7.4](#s-deep-agents-0-7) shows each task.
 
-The whole bench cost $0.93 for 2,589 API calls. The evals of [section 9.6](#s-evals-that-check-state) added 64 Claude calls for $0.011.
+The whole bench cost $0.93 for 2,589 API calls. The evals of [section 9.6](#s-evals-that-check-state) added 64 Claude calls for $0.011. The second bench added 370 calls for $0.069, and the multi-agent runs of [section 6.7](#s-subgraphs-and-multi-agent-patterns) added 1,518 calls for $0.150.
+
+### What the docs table says about models
+
+The models page of Deep Agents shows scores of an eval suite for 13 models {{docs oss/python/deepagents/models}}. We read the page on 2026-11-15 and kept its numbers. We did not run these models. The table shows three of the seven columns.
+
+| Model | Overall | Tool use | File operations | CI runs in the row |
+|---|---|---|---|---|
+| `google_genai:gemini-3.6-flash` | 0.82 | 0.90 | 1.00 | 2 |
+| `openai:gpt-5.4` | 0.18 | 0.18 | 1.00 | 3 |
+| `openai:gpt-5.5` | 0.80 | 0.84 | 0.92 | 2 |
+| `anthropic:claude-opus-4-6` | 0.26 | 0.26 | 0.92 | 3 |
+| `anthropic:claude-opus-4-7` | 0.80 | 0.82 | 1.00 | 1 |
+| `baseten:moonshotai/Kimi-K2.6` | 0.79 | 0.84 | 0.92 | 1 |
+| `baseten:zai-org/GLM-5` | 0.77 | 0.89 | 1.00 | 2 |
+| `fireworks:accounts/fireworks/models/glm-5p1` | 0.81 | 0.87 | 1.00 | 1 |
+| `fireworks:accounts/fireworks/models/minimax-m2p7` | 0.79 | 0.85 | 1.00 | 1 |
+| `ollama:minimax-m2.7:cloud` | 0.73 | 0.82 | 0.92 | 2 |
+| `openrouter:deepseek/deepseek-v4-flash` | 0.81 | 0.90 | 1.00 | 1 |
+| `openrouter:minimax/minimax-m2.7` | 0.80 | 0.89 | 0.92 | 1 |
+| `openrouter:z-ai/glm-5.1` | 0.89 | 0.89 | 0.92 | 5 |
+
+No row is a local model of 20B parameters or fewer. So the page cannot tell you how a smaller model behaves. Seven rows mix cells from two to five different CI runs. 
+
+Seven rows have no memory score. Two rows are odd: `openai:gpt-5.4` and `anthropic:claude-opus-4-6`. Their overall scores, 0.18 and 0.26, equal their tool use scores. Their file operations, retrieval, and summarization cells are 0.92 to 1.00. 
+
+The register records this as conflict D137. Read the page as a ranking of large hosted models on one suite, and run your own tasks for anything else.
 
 ## Which one to use
 
@@ -155,6 +199,7 @@ The whole bench cost $0.93 for 2,589 API calls. The evals of [section 9.6](#s-ev
 | You need branches, parallel nodes, or subgraphs | a hand-built `StateGraph` | the same requests as `create_agent` on the loop shape, and 18.5 ms per task |
 | A frontier model with prompt caching, and you want file tools and subagents | Deep Agents | 99 of 99 on Haiku, 30 of 30 on Sonnet, 1.16 to 1.24 times the dollars |
 | A local model on Ollama | a plain loop or `create_agent`, never the default deep agent | 15 and 16 fewer of 99 on Qwen3 4B and 8B, 2 to 4 fewer of 30 on 14B and 20B |
+| A frontier model, and you want the Claude tool loop with no framework | the Claude Agent SDK | 30 of 30 on Haiku, 9.3k median input tokens against 23.7k for the deep agent |
 | You want a better score | a better model | 15 to 30 of 30 across models, and 0 across the three plain harnesses |
 
 Part 2 shows what `create_agent` gives you for those milliseconds: the superstep loop, the checkpoints, and the streams. [Part 9](#p-9) puts `create_agent` in a service with approvals, a Postgres checkpointer, and spans, on three real models.
@@ -173,4 +218,4 @@ Each Claude task ran once, with the default sampling of the API. Each local task
 - Turn on prompt caching before you judge the token cost of Deep Agents.
 ```
 
-Sources: capture/lab/bench/summary-mac.json, capture/lab/bench/summarize.py, capture/lab/bench/runs/main.jsonl, capture/lab/bench/runs/models.jsonl, capture/lab/bench/runs/cost-ledger.jsonl, capture/lab/bench/data/tasks.jsonl, capture/lab/bench/data/subset30.txt, capture/lab/bench/data/anthropic-prices.json, capture/lab/bench/kit/harnesses.py, capture/lab/bench/kit/checks.py, capture/lab/bench/kit/env.py, capture/lab/bench/kit/gen_tasks.py, capture/lab/bench/kit/oracle.py, capture/lab/bench/kit/run.py, capture/lab/bench/kit/models.py; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; libs/langgraph/langgraph/prebuilt at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; the Anthropic pricing page, read 2026-11-14.
+Sources: capture/lab/bench/summary-mac.json, capture/lab/bench/summarize.py, capture/lab/bench2/docs-eval-table.json, capture/lab/bench2/summary-bench2.json, capture/lab/summary/multiagent-mac.json, capture/lab/multiagent/runs/n9-sdk-haiku.jsonl, capture/lab/multiagent/runs/n9-deep-haiku.jsonl, capture/lab/bench/runs/main.jsonl, capture/lab/bench/runs/models.jsonl, capture/lab/bench/runs/cost-ledger.jsonl, capture/lab/bench/data/tasks.jsonl, capture/lab/bench/data/subset30.txt, capture/lab/bench/data/anthropic-prices.json, capture/lab/bench/kit/harnesses.py, capture/lab/bench/kit/checks.py, capture/lab/bench/kit/env.py, capture/lab/bench/kit/gen_tasks.py, capture/lab/bench/kit/oracle.py, capture/lab/bench/kit/run.py, capture/lab/bench/kit/models.py; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; libs/langgraph/langgraph/prebuilt at langgraph 1.2.22; libs/deepagents/deepagents/graph.py at deepagents==0.7.38; the Anthropic pricing page, read 2026-11-14; docs.langchain.com at docs commit 04d4d4a (oss/python/deepagents/models).

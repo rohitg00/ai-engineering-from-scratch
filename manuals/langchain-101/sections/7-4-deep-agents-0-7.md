@@ -11,6 +11,8 @@ When you finish this section, you can say what `create_deep_agent` adds to `crea
 - **Use Deep Agents with a frontier model and a prompt cache.** On Claude it passed 99 of 99 and 30 of 30 tasks, the same as a plain loop, for 1.16 and 1.24 times the dollars.
 - **Keep the default deep agent away from small local models.** Qwen3 4B passed 55 of 99 as a deep agent and 70 of 99 with a plain loop. Qwen3 8B passed 58 and 74.
 - **Pass a `FilesystemBackend` when the work is on real files.** The default backend keeps files in the agent state. With a `FilesystemBackend` on the task folder, Qwen3 4B went from 2 to 16 of 20 file tasks.
+- **Hiding the built-in file tools helps a small model on files and loses it elsewhere.** A profile took Qwen3 4B from 2 to 14 of 20 file tasks, and its total stayed at 55 of 99.
+- **Test the eval tool before you rely on it.** Claude Haiku 5.5 passed 39 of 39 with it and never called it until the prompt asked, and three local models never called it.
 - **Budget 3.6 to 4.3 times the prompt tokens.** On a cached provider that costs little. On a local model it costs time: 22.6 s per task against 9.1 s on Qwen3 4B.
 
 ## What create_deep_agent builds
@@ -174,6 +176,67 @@ Claude Haiku 5.5 used a built-in file tool in 6 of 20 default runs, only `glob`,
 
 So the default backend hurts a model that prefers the built-in tools. Give a deep agent file tools that all act on the real folder, and pass `FilesystemBackend` on that folder. We did not test a deep agent with only the built-in tools on that backend.
 
+## A harness profile that hides the file tools
+
+**Harness profile:** a setting of `deepagents` that changes how `create_deep_agent` treats one provider. A profile can list `excluded_tools` and add text to the system prompt with `system_prompt_suffix`. You register it with `register_harness_profile`.
+
+The kit ran two profiles for the provider `ollama`. Profile A excluded the eight file tools of the earlier listing: `ls`, `read_file`, `write_file`, `edit_file`, `glob`, `grep`, `delete`, and `execute`. Profile B did the same and added one sentence to the prompt. 
+
+The sentence says three things. The task tools are the only way to reach the data. The built-in workspace is empty. The agent must not delegate. 
+
+Both profiles left `task` in place. On a chain task, the first model call listed 7 tools: `task`, the five task tools, and `submit_answer`.
+
+**We measured** profile B on the 99 tasks, and profile A on the 30-task subset, for Qwen3 4B and Qwen3 8B. The Mac was an Apple M1 Max with 64 GiB. Ollama 0.31.1 ran at temperature 0 and seed 42, with one run per task. Before the runs, three tasks gave the same tool calls and prompt tokens as the first bench on the same server.
+
+| Tasks passed | 4B plain | 4B deep | 4B deep, B | 8B plain | 8B deep | 8B deep, B |
+|---|---|---|---|---|---|---|
+| chain, 20 | 9 | 17 | 6 | 15 | 17 | 12 |
+| sql, 19 | 15 | 11 | 10 | 10 | 11 | 8 |
+| retrieval, 20 | 15 | 7 | 11 | 13 | 6 | 10 |
+| files, 20 | 16 | 2 | 14 | 17 | 5 | 15 |
+| multiturn, 20 | 15 | 18 | 14 | 19 | 19 | 18 |
+| all, 99 | 70 | 55 | 55 | 74 | 58 | 63 |
+
+Profile B did what it was made for. Files rose from 2 to 14 of 20 on Qwen3 4B and from 5 to 15 on Qwen3 8B. The total did not follow on 4B. Chain tasks fell from 17 to 6, and 30 runs wrote a tool call as text, against 12 for the default deep agent. On Qwen3 8B the total rose from 58 to 63, which is still 11 below the plain loop.
+
+The prompt shrank too. Qwen3 4B read 608,010 prompt tokens in all, against 1,591,270 for the default deep agent and 365,915 for the plain loop. Qwen3 8B read 467,536, 1,311,726, and 353,608.
+
+On the 30-task subset, profile A passed 19 of 30 on Qwen3 4B and 16 on Qwen3 8B, and profile B passed 18 and 17. The plain loop passed 23 and 18 on the same tasks. A cell of 30 tasks is wide, so treat a gap of 1 or 2 tasks as noise. The profile runs shared the Mac with other jobs, so we give no times for them.
+
+## The eval tool and programmatic tool calling
+
+**Programmatic tool calling:** the model writes one small program that calls several tools, in place of one tool call for each step. In `langchain-quickjs` 0.3.12, `CodeInterpreterMiddleware(ptc=tools)` adds an `eval` tool. The tool runs JavaScript in a QuickJS sandbox and puts the listed tools in a `tools` object.
+
+**We measured** four arms on the 39 chain and sql tasks, where one task needs several lookups and some arithmetic. The arms were a plain loop, the default deep agent, the deep agent with `CodeInterpreterMiddleware(ptc=<the task tools>)`, and the same with one more sentence in the prompt. That sentence asks the model to write one `eval` program for any task with more than one lookup or with arithmetic. Claude Haiku 5.5 ran all four arms through the API from the Mac.
+
+Qwen3 8B, Qwen3 14B, and gpt-oss 20B ran the first three on Ollama, one run per task. The plain rows of Qwen3 14B and gpt-oss 20B cover only the 12 chain and sql tasks of the 30-task subset. The nudged run of Qwen3 8B failed at its start, because the server answered 404 for the model, so it has no rows. [Figure](#fig-7-4f) shows every arm.
+
+```figure
+id: fig-7-4f
+kind: chart
+title: pass counts with and without the eval tool, four models on 39 tasks
+claim: The eval tool did not raise the pass count on any of four models, and it raised the prompt tokens by a factor of 1.8 to 2.6.
+caption: Each bar is the share of tasks passed, and the text gives the count. Calls and prompt tokens are totals over the cell, and seconds are the median task on a Mac that ran other work. From capture/lab/bench2/summary-bench2.json.
+```
+
+Claude Haiku 5.5 passed 39 of 39 in all four arms. With the plain prompt it called `eval` in 0 of 39 runs. The extra tool only added schema tokens: 1.71 million prompt tokens against 0.93 million for the default deep agent. 
+
+With the sentence in the prompt it called `eval` in 12 of 39 runs, 42 times in all. Those 12 runs were chain tasks, and all 12 passed. Three `eval` calls failed with a `SyntaxError`. [Figure](#fig-7-4g) compares the two arms.
+
+```figure
+id: fig-7-4g
+kind: chart
+title: Claude Haiku 5.5 with the eval tool, with and without a prompt that asks for it
+claim: With a prompt that asks for eval, Haiku used it in 12 of 39 runs, and the cell cost $0.038 against $0.028 for the same pass count.
+caption: Each square is one task. A dark square is a run that called eval. The paired bars give the totals of the two arms, scaled to the larger one. From capture/lab/bench2/summary-bench2.json.
+```
+
+The program did not save calls. On those 12 chain tasks the nudged runs made 67 model calls, and the runs with the plain prompt made 53. Over all 39 tasks the totals were 187 and 173 calls. The plain loop cost $0.021 and the default deep agent $0.022 on the same 39 tasks.
+
+No local model called `eval` in any of its 117 runs. Qwen3 8B and gpt-oss 20B used the built-in `glob`, `ls`, or `grep` in some runs instead. Passes were 23 of 39 on Qwen3 8B, 29 on Qwen3 14B, and 35 on gpt-oss 20B. That is 5, 2, and 2 fewer than the default deep agent. The cells hold 39 tasks, so those gaps are within the noise.
+
+The prompt tokens were 2.6, 2.2, and 2.3 times those of the default deep agent. The median task took 142.5 s on Qwen3 8B, against 14.5 s for the default deep agent. That time comes from a shared Mac with a high load, so treat it as an upper bound.
+
 ## Tokens, and what a cache does to them
 
 A deep agent sends the schemas of its own tools on every model call. Our earlier run measured that cost on single calls.
@@ -261,6 +324,8 @@ The direction of the claim holds, and the size does not: we measured a drop of 5
 | A local model of 8B or less | no | 55 and 58 of 99 against 70 and 74, and 2.5 times the time on Qwen3 4B |
 | A local model of 14B to 20B | only after a test on your tasks | 2 and 4 fewer of 30 than the plain loop |
 | Work on real files | yes, with `FilesystemBackend` on the folder | 2 to 16 of 20 on Qwen3 4B |
+| A local model of 8B or less, and you want a deep agent anyway | hide the file tools with a profile, and test | 14 of 20 file tasks on Qwen3 4B, 63 of 99 on Qwen3 8B against 74 for the plain loop |
+| You want the model to call tools from code | test it on your tasks first | 39 of 39 on Haiku with and without eval, and no eval call from three local models |
 | A provider with no prompt cache | budget the tokens | 3.10 to 3.14 times the dollars at list price |
 
 ```takeaways
@@ -269,8 +334,10 @@ The direction of the claim holds, and the size does not: we measured a drop of 5
 - Use a plain loop or create_agent on local models of 8B or less.
 - Pass FilesystemBackend with root_dir set to the folder whenever the work is on real files.
 - Add TodoListMiddleware yourself when your agent needs a todo list.
+- Pass a profile that excludes the file tools only after you test your own task mix.
+- Add CodeInterpreterMiddleware only when a test shows that your model calls eval and passes more.
 - Budget 3.6 to 4.3 times the prompt tokens, and time per task on a local model.
 - Update parsers of ls, glob, and read_file output when you move to 0.7.
 ```
 
-Sources: capture/s_integrations.py, capture/out/41-deep-agent.txt, capture/out/53-draw-deep-agent.txt, capture/s_draw.py; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; capture/lab/bench/summary-mac.json, capture/lab/bench/summarize.py, capture/lab/bench/runs/main.jsonl, capture/lab/bench/runs/cost-ledger.jsonl, capture/lab/bench/kit/harnesses.py, capture/lab/bench/kit/env.py, capture/lab/bench/kit/checks.py, capture/lab/bench/data/tasks.jsonl, capture/lab/bench/data/anthropic-prices.json; capture/lab/summary/tokens-mac.json, capture/lab/T09-tokens-mac/04-agent-runs.jsonl, capture/lab/T09-tokens-mac/04-agent-runs.log, capture/lab/T09-tokens-mac/05-analysis.txt, capture/lab/T09-tokens-mac/01-baseprompt-0.7.38.jsonl, capture/lab/T09-tokens-mac/02-baseprompt-0.6.12.jsonl, capture/lab/T09-tokens-mac/03-qwen3-token-counts.jsonl, capture/lab/T09-tokens-mac/00-venv-da06-freeze.txt; libs/deepagents/deepagents/graph.py, libs/deepagents/deepagents/backends/filesystem.py, libs/deepagents/deepagents/middleware/_prompt_caching.py, and libs/deepagents/deepagents/middleware/filesystem.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/deepagents/overview).
+Sources: capture/s_integrations.py, capture/out/41-deep-agent.txt, capture/out/53-draw-deep-agent.txt, capture/s_draw.py; libs/langchain_v1/langchain/agents/factory.py at langchain==1.5.0; capture/lab/bench/summary-mac.json, capture/lab/bench/summarize.py, capture/lab/bench/runs/main.jsonl, capture/lab/bench/runs/cost-ledger.jsonl, capture/lab/bench2/summary-bench2.json, capture/lab/bench2/kit2/run2.py, capture/lab/bench2/kit2/summarize2.py, capture/lab/bench2/runs/profiles.jsonl, capture/lab/bench2/runs/ptc.jsonl, capture/lab/bench2/runs/verify.jsonl, capture/lab/bench2/runs/cost-ledger.jsonl, capture/lab/bench2/logs/q-ptc.log, capture/lab/bench/kit/harnesses.py, capture/lab/bench/kit/env.py, capture/lab/bench/kit/checks.py, capture/lab/bench/data/tasks.jsonl, capture/lab/bench/data/anthropic-prices.json; capture/lab/summary/tokens-mac.json, capture/lab/T09-tokens-mac/04-agent-runs.jsonl, capture/lab/T09-tokens-mac/04-agent-runs.log, capture/lab/T09-tokens-mac/05-analysis.txt, capture/lab/T09-tokens-mac/01-baseprompt-0.7.38.jsonl, capture/lab/T09-tokens-mac/02-baseprompt-0.6.12.jsonl, capture/lab/T09-tokens-mac/03-qwen3-token-counts.jsonl, capture/lab/T09-tokens-mac/00-venv-da06-freeze.txt; libs/deepagents/deepagents/graph.py, libs/deepagents/deepagents/backends/filesystem.py, libs/deepagents/deepagents/middleware/_prompt_caching.py, and libs/deepagents/deepagents/middleware/filesystem.py at deepagents==0.7.38; docs.langchain.com at docs commit 04d4d4a (oss/python/releases/changelog, oss/python/deepagents/overview).

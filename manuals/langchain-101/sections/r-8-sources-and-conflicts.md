@@ -59,7 +59,7 @@ The LangChain, LangGraph, and Python marks in the figures belong to their owners
 
 ## Ranks 4 and 5: the kit and the lab
 
-The capture kit writes 56 files: 19 model-free, 36 recorded, and 1 sidecar. The lab holds 51 experiment folders, 47 summary files, and the bench with its own summary. The production service of Part 9 keeps its code, its raw runs, and ten summaries in one folder. The bench and the service priced each Claude call at the list prices of the Anthropic pricing page, read on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
+The capture kit writes 56 files: 19 model-free, 36 recorded, and 1 sidecar. The lab holds 51 experiment folders, 48 summary files, and the bench with its own summary. The production service of Part 9 keeps its code, its raw runs, and ten summaries in one folder. The bench and the service priced each Claude call at the list prices of the Anthropic pricing page, read on 2026-11-14. [How this manual was made](#s-ref-how-this-manual-was-made) lists each experiment with its machine and its count.
 
 ## Issues and advisories
 
@@ -122,9 +122,10 @@ Each row is one disagreement between two sources. The choice is what this manual
 | D134 | The backends page names a legacy default that reads `assistant_id`, and says a namespace is required from v0.5.0. | the code and the run: at 0.7.38 the namespace is required, and `StoreBackend(store=s)` raised `TypeError` | [5.4](#s-stores-and-long-term-memory) | not checked |
 | D135 | The composite backend examples pass `namespace=lambda _rt: ("memories",)`. | the run: that factory is one namespace for every user, so build it from the user id | [5.4](#s-stores-and-long-term-memory), [8.4](#s-security-deserialization-store-isolation-approvals-and-mcp-subprocesses) | not checked |
 | D136 | The backends page allows a period in a namespace label and suggests the user identity as a label. The store refuses a period with `InvalidNamespaceError`. | the run: an email address as a label fails on write, so map it to a label without a period | [5.4](#s-stores-and-long-term-memory) | not checked |
+| D137 | The models page of Deep Agents shows an overall score of 0.18 for `openai:gpt-5.4` and 0.26 for `anthropic:claude-opus-4-6`. | the page itself: each overall score equals the tool use score of its row, while the file operations, retrieval, and summarization cells are 0.92 to 1.00, and each row mixes cells from 3 CI runs | [1.2](#s-do-you-need-langchain) | no upstream item |
 | D209 | Users report errors, with no switch to tool calling, from an explicit `ProviderStrategy` on Bedrock and Ollama. The docs say that it switches. | the code and the lab: no switch | [4.2](#s-structured-output-autostrategy-providerstrategy-toolstrategy) | issue langchain #35119 |
 | D211 | A web page says that LangGraph streaming adds 100 to 300 ms to the first token, with no method. | the lab: under 3.5 ms at the median on Qwen3 4B | [5.1](#s-streaming-v1-v2-stream-events-v3-and-the-tools-mode) | no upstream item |
 
-The ids are not continuous. The research kept one range of ids for each kind of source. D1 to D17 are the code, and D101 to D136 are the docs. D201 to D211 are posts and issues. This register holds every id that a section cites.
+The ids are not continuous. The research kept one range of ids for each kind of source. D1 to D17 are the code, and D101 to D137 are the docs. D201 to D211 are posts and issues. This register holds every id that a section cites.
 
 Sources: front.md; manual.json (pin, sources); the Sources line and the citations of every file under sections/; capture/README.md, capture/lab/README.md.

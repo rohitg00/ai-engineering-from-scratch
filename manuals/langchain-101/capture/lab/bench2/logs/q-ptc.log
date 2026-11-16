@@ -1,0 +1,247 @@
+== ollama:qwen3:8b deep_ptc ptc :: 12:19  12 users, load averages: 4.59 4.47 6.33
+<lab>/additions/bench2/kit2/run2.py:123: LangChainBetaWarning: The class `CodeInterpreterMiddleware` is in beta. It is actively being worked on, so the API may change.
+  mw = [CodeInterpreterMiddleware(ptc=list(tools))]
+chain01   deep_ptc      PASS                    calls= 7 tools= 4 tok=43857/174 237.9s eval=0 jserr=0 inner=4
+chain02   deep_ptc      PASS                    calls= 7 tools= 4 tok=43857/181 85.7s eval=0 jserr=0 inner=4
+chain03   deep_ptc      PASS                    calls= 7 tools= 4 tok=43883/184 87.3s eval=0 jserr=0 inner=4
+chain04   deep_ptc      PASS                    calls= 7 tools= 4 tok=43842/173 78.8s eval=0 jserr=0 inner=4
+chain05   deep_ptc      PASS                    calls= 4 tools= 3 tok=24800/97 40.9s eval=0 jserr=0 inner=3
+chain06   deep_ptc      PASS                    calls= 5 tools= 4 tok=31190/136 65.6s eval=0 jserr=0 inner=4
+chain07   deep_ptc      PASS                    calls= 5 tools= 4 tok=31167/115 68.6s eval=0 jserr=0 inner=4
+chain08   deep_ptc      PASS                    calls= 5 tools= 4 tok=31178/136 76.0s eval=0 jserr=0 inner=4
+chain09   deep_ptc      PASS                    calls= 7 tools= 5 tok=44174/190 154.2s eval=0 jserr=0 inner=5
+chain10   deep_ptc      fail wrong_final_state  calls= 7 tools= 5 tok=44245/198 152.9s eval=0 jserr=0 inner=5
+chain11   deep_ptc      PASS                    calls= 6 tools= 5 tok=37889/176 154.8s eval=0 jserr=0 inner=5
+chain12   deep_ptc      fail wrong_final_state  calls= 6 tools= 5 tok=37890/177 138.3s eval=0 jserr=0 inner=5
+chain13   deep_ptc      PASS                    calls= 6 tools= 4 tok=37669/174 149.1s eval=0 jserr=0 inner=4
+chain14   deep_ptc      fail gave_up            calls= 9 tools= 7 tok=57471/255 163.3s eval=0 jserr=0 inner=7
+chain15   deep_ptc      fail wrong_final_state  calls= 8 tools= 6 tok=51004/256 218.4s eval=0 jserr=0 inner=6
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+chain16   deep_ptc      fail loop_step_limit    calls=10 tools= 3 tok=47469/552 498.1s eval=0 jserr=0 inner=3
+chain17   deep_ptc      fail wrong_final_state  calls= 8 tools= 8 tok=51398/245 218.4s eval=0 jserr=0 inner=8
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+chain18   deep_ptc      fail loop_step_limit    calls=10 tools= 0 tok=62931/269 202.3s eval=0 jserr=0 inner=0
+chain19   deep_ptc      PASS                    calls= 6 tools= 6 tok=38099/166 126.8s eval=0 jserr=0 inner=6
+chain20   deep_ptc      PASS                    calls= 8 tools= 8 tok=51306/224 167.8s eval=0 jserr=0 inner=8
+sql01     deep_ptc      PASS                    calls= 2 tools= 1 tok=11594/44 171.5s eval=0 jserr=0 inner=1
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql02     deep_ptc      fail loop_step_limit    calls=10 tools=10 tok=60349/365 278.7s eval=0 jserr=0 inner=10
+sql03     deep_ptc      PASS                    calls= 6 tools= 5 tok=35552/154 101.8s eval=0 jserr=0 inner=5
+sql04     deep_ptc      PASS                    calls= 3 tools= 2 tok=17455/66 58.8s eval=0 jserr=0 inner=2
+sql05     deep_ptc      fail wrong_args         calls= 6 tools= 5 tok=35716/347 328.4s eval=0 jserr=0 inner=5
+sql06     deep_ptc      PASS                    calls= 4 tools= 3 tok=23565/102 103.2s eval=0 jserr=0 inner=3
+sql07     deep_ptc      fail wrong_final_state  calls= 4 tools= 3 tok=23435/106 114.0s eval=0 jserr=0 inner=3
+sql08     deep_ptc      PASS                    calls= 8 tools= 7 tok=48250/292 215.9s eval=0 jserr=0 inner=7
+sql09     deep_ptc      PASS                    calls= 7 tools= 6 tok=41700/194 161.9s eval=0 jserr=0 inner=6
+sql10     deep_ptc      fail wrong_args         calls= 4 tools= 3 tok=23442/161 142.5s eval=0 jserr=0 inner=3
+sql11     deep_ptc      fail wrong_args         calls= 9 tools= 8 tok=54216/406 352.8s eval=0 jserr=0 inner=8
+sql12     deep_ptc      fail wrong_final_state  calls= 3 tools= 2 tok=17569/91 80.6s eval=0 jserr=0 inner=2
+sql13     deep_ptc      fail wrong_args         calls= 4 tools= 3 tok=23448/152 133.3s eval=0 jserr=0 inner=3
+sql14     deep_ptc      PASS                    calls= 5 tools= 4 tok=29419/116 119.4s eval=0 jserr=0 inner=4
+sql15     deep_ptc      PASS                    calls= 5 tools= 4 tok=29489/158 157.4s eval=0 jserr=0 inner=4
+sql16     deep_ptc      fail wrong_args         calls= 3 tools= 2 tok=17549/127 95.9s eval=0 jserr=0 inner=2
+sql17     deep_ptc      PASS                    calls= 3 tools= 2 tok=17554/107 83.6s eval=0 jserr=0 inner=2
+sql18     deep_ptc      fail wrong_args         calls= 8 tools= 7 tok=47542/224 161.7s eval=0 jserr=0 inner=7
+sql20     deep_ptc      PASS                    calls= 3 tools= 2 tok=17488/92 84.0s eval=0 jserr=0 inner=2
+== end ollama:qwen3:8b :: 14:00  12 users, load averages: 4.82 3.64 11.78
+== ollama:qwen3:14b deep_ptc ptc :: 14:00  12 users, load averages: 5.14 3.77 11.68
+<lab>/additions/bench2/kit2/run2.py:123: LangChainBetaWarning: The class `CodeInterpreterMiddleware` is in beta. It is actively being worked on, so the API may change.
+  mw = [CodeInterpreterMiddleware(ptc=list(tools))]
+chain01   deep_ptc      PASS                    calls= 5 tools= 4 tok=31268/132 382.7s eval=0 jserr=0 inner=4
+chain02   deep_ptc      PASS                    calls= 5 tools= 4 tok=31268/132 137.7s eval=0 jserr=0 inner=4
+chain03   deep_ptc      PASS                    calls= 5 tools= 4 tok=31292/135 130.3s eval=0 jserr=0 inner=4
+chain04   deep_ptc      PASS                    calls= 5 tools= 4 tok=31253/131 137.3s eval=0 jserr=0 inner=4
+chain05   deep_ptc      PASS                    calls= 4 tools= 3 tok=24800/97 124.8s eval=0 jserr=0 inner=3
+chain06   deep_ptc      PASS                    calls= 5 tools= 4 tok=31190/131 148.7s eval=0 jserr=0 inner=4
+chain07   deep_ptc      PASS                    calls= 5 tools= 4 tok=31167/129 220.5s eval=0 jserr=0 inner=4
+chain08   deep_ptc      PASS                    calls= 5 tools= 4 tok=31178/131 225.6s eval=0 jserr=0 inner=4
+chain09   deep_ptc      PASS                    calls= 7 tools= 6 tok=44333/193 265.1s eval=0 jserr=0 inner=6
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+chain10   deep_ptc      fail loop_step_limit    calls=10 tools=10 tok=64587/304 386.5s eval=0 jserr=0 inner=10
+chain11   deep_ptc      fail wrong_final_state  calls= 8 tools= 7 tok=50929/221 283.2s eval=0 jserr=0 inner=7
+chain12   deep_ptc      fail wrong_final_state  calls= 8 tools= 7 tok=51044/241 260.0s eval=0 jserr=0 inner=7
+chain13   deep_ptc      PASS                    calls= 5 tools= 4 tok=31353/148 152.2s eval=0 jserr=0 inner=4
+chain14   deep_ptc      fail wrong_final_state  calls= 8 tools= 7 tok=51176/252 265.2s eval=0 jserr=0 inner=7
+chain15   deep_ptc      PASS                    calls= 7 tools= 6 tok=44522/233 235.5s eval=0 jserr=0 inner=6
+chain16   deep_ptc      fail gave_up            calls= 7 tools= 6 tok=44492/203 225.4s eval=0 jserr=0 inner=6
+chain17   deep_ptc      fail wrong_final_state  calls= 6 tools= 6 tok=37975/156 165.0s eval=0 jserr=0 inner=6
+chain18   deep_ptc      PASS                    calls= 8 tools= 8 tok=51331/234 245.0s eval=0 jserr=0 inner=8
+chain19   deep_ptc      PASS                    calls= 5 tools= 7 tok=31719/212 234.3s eval=0 jserr=0 inner=7
+chain20   deep_ptc      fail wrong_final_state  calls= 6 tools= 6 tok=38075/171 174.7s eval=0 jserr=0 inner=6
+sql01     deep_ptc      PASS                    calls= 3 tools= 2 tok=17457/55 183.5s eval=0 jserr=0 inner=2
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql02     deep_ptc      fail loop_step_limit    calls=10 tools=10 tok=60691/411 276.3s eval=0 jserr=0 inner=10
+sql03     deep_ptc      PASS                    calls= 8 tools= 7 tok=48083/275 196.6s eval=0 jserr=0 inner=7
+sql04     deep_ptc      PASS                    calls= 3 tools= 2 tok=17455/66 47.8s eval=0 jserr=0 inner=2
+sql05     deep_ptc      PASS                    calls= 6 tools= 5 tok=35467/136 99.9s eval=0 jserr=0 inner=5
+sql06     deep_ptc      PASS                    calls= 3 tools= 2 tok=17532/77 55.3s eval=0 jserr=0 inner=2
+sql07     deep_ptc      PASS                    calls= 5 tools= 4 tok=29522/169 115.8s eval=0 jserr=0 inner=4
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql08     deep_ptc      fail loop_step_limit    calls=10 tools=10 tok=61998/773 510.3s eval=0 jserr=0 inner=10
+sql09     deep_ptc      PASS                    calls= 8 tools= 7 tok=47851/221 160.2s eval=0 jserr=0 inner=7
+sql10     deep_ptc      PASS                    calls= 6 tools= 5 tok=35381/129 95.4s eval=0 jserr=0 inner=5
+sql11     deep_ptc      PASS                    calls= 9 tools= 8 tok=54481/358 247.8s eval=0 jserr=0 inner=8
+sql12     deep_ptc      PASS                    calls= 6 tools= 5 tok=35729/234 161.1s eval=0 jserr=0 inner=5
+sql13     deep_ptc      PASS                    calls= 7 tools= 6 tok=41587/184 130.1s eval=0 jserr=0 inner=6
+sql14     deep_ptc      PASS                    calls= 2 tools= 1 tok=11634/56 41.7s eval=0 jserr=0 inner=1
+sql15     deep_ptc      PASS                    calls= 6 tools= 5 tok=35623/222 141.0s eval=0 jserr=0 inner=5
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql16     deep_ptc      fail loop_step_limit    calls=10 tools=10 tok=61706/597 375.2s eval=0 jserr=0 inner=10
+sql17     deep_ptc      PASS                    calls= 2 tools= 1 tok=11642/74 38.9s eval=0 jserr=0 inner=1
+sql18     deep_ptc      PASS                    calls= 3 tools= 2 tok=17546/82 42.7s eval=0 jserr=0 inner=2
+sql20     deep_ptc      PASS                    calls= 4 tools= 3 tok=23405/94 48.2s eval=0 jserr=0 inner=3
+== end ollama:qwen3:14b :: 16:03  12 users, load averages: 2.78 4.83 4.85
+== ollama:gpt-oss:20b deep_ptc ptc :: 16:03  12 users, load averages: 5.60 5.32 5.03
+<lab>/additions/bench2/kit2/run2.py:123: LangChainBetaWarning: The class `CodeInterpreterMiddleware` is in beta. It is actively being worked on, so the API may change.
+  mw = [CodeInterpreterMiddleware(ptc=list(tools))]
+chain01   deep_ptc      PASS                    calls= 4 tools= 3 tok=23655/177 35.6s eval=0 jserr=0 inner=3
+chain02   deep_ptc      PASS                    calls= 5 tools= 4 tok=29596/207 17.8s eval=0 jserr=0 inner=4
+chain03   deep_ptc      PASS                    calls= 4 tools= 3 tok=23597/181 14.0s eval=0 jserr=0 inner=3
+chain04   deep_ptc      PASS                    calls= 4 tools= 3 tok=23668/184 12.6s eval=0 jserr=0 inner=3
+chain05   deep_ptc      PASS                    calls= 2 tools= 1 tok=11611/89 5.8s eval=0 jserr=0 inner=1
+chain06   deep_ptc      PASS                    calls= 4 tools= 2 tok=23688/176 13.3s eval=0 jserr=0 inner=2
+chain07   deep_ptc      PASS                    calls= 4 tools= 2 tok=23606/134 11.0s eval=0 jserr=0 inner=2
+chain08   deep_ptc      PASS                    calls= 3 tools= 2 tok=17533/100 8.1s eval=0 jserr=0 inner=2
+chain09   deep_ptc      fail wrong_final_state  calls= 5 tools= 4 tok=29921/243 17.6s eval=0 jserr=0 inner=4
+chain10   deep_ptc      PASS                    calls= 7 tools= 6 tok=42742/377 26.9s eval=0 jserr=0 inner=6
+chain11   deep_ptc      PASS                    calls= 6 tools= 5 tok=36271/326 24.1s eval=0 jserr=0 inner=5
+chain12   deep_ptc      PASS                    calls= 7 tools= 6 tok=42635/387 27.3s eval=0 jserr=0 inner=6
+chain13   deep_ptc      PASS                    calls= 3 tools= 2 tok=17671/196 15.9s eval=0 jserr=0 inner=2
+chain14   deep_ptc      PASS                    calls= 5 tools= 4 tok=30043/338 20.9s eval=0 jserr=0 inner=4
+chain15   deep_ptc      PASS                    calls= 5 tools= 4 tok=30169/383 26.6s eval=0 jserr=0 inner=4
+chain16   deep_ptc      fail wrong_final_state  calls= 9 tools= 8 tok=55431/517 34.0s eval=0 jserr=0 inner=8
+chain17   deep_ptc      PASS                    calls= 8 tools= 4 tok=47908/390 27.5s eval=0 jserr=0 inner=4
+chain18   deep_ptc      PASS                    calls= 9 tools= 5 tok=54167/429 28.3s eval=0 jserr=0 inner=5
+chain19   deep_ptc      PASS                    calls= 8 tools= 3 tok=47736/374 26.1s eval=0 jserr=0 inner=3
+chain20   deep_ptc      fail wrong_tool         calls= 4 tools= 0 tok=23358/229 14.9s eval=0 jserr=0 inner=0
+sql01     deep_ptc      PASS                    calls= 2 tools= 1 tok=10987/73 21.6s eval=0 jserr=0 inner=1
+sql02     deep_ptc      PASS                    calls= 8 tools= 7 tok=45561/312 21.3s eval=0 jserr=0 inner=7
+sql03     deep_ptc      PASS                    calls= 4 tools= 3 tok=22390/189 12.1s eval=0 jserr=0 inner=3
+sql04     deep_ptc      PASS                    calls= 2 tools= 1 tok=10983/56 4.5s eval=0 jserr=0 inner=1
+sql05     deep_ptc      PASS                    calls= 4 tools= 3 tok=22340/178 13.5s eval=0 jserr=0 inner=3
+sql06     deep_ptc      PASS                    calls= 2 tools= 1 tok=11010/51 3.8s eval=0 jserr=0 inner=1
+sql07     deep_ptc      PASS                    calls= 2 tools= 1 tok=11010/73 5.4s eval=0 jserr=0 inner=1
+sql08     deep_ptc      PASS                    calls= 7 tools= 6 tok=40000/322 19.9s eval=0 jserr=0 inner=6
+sql09     deep_ptc      PASS                    calls= 6 tools= 5 tok=33996/298 18.4s eval=0 jserr=0 inner=5
+sql10     deep_ptc      PASS                    calls= 2 tools= 1 tok=10995/74 4.4s eval=0 jserr=0 inner=1
+sql11     deep_ptc      PASS                    calls= 4 tools= 3 tok=22303/172 10.0s eval=0 jserr=0 inner=3
+sql12     deep_ptc      PASS                    calls= 2 tools= 1 tok=11028/74 4.7s eval=0 jserr=0 inner=1
+sql13     deep_ptc      PASS                    calls= 5 tools= 4 tok=27911/177 13.2s eval=0 jserr=0 inner=4
+sql14     deep_ptc      PASS                    calls= 2 tools= 1 tok=11012/58 4.9s eval=0 jserr=0 inner=1
+sql15     deep_ptc      PASS                    calls= 6 tools= 5 tok=33861/242 15.7s eval=0 jserr=0 inner=5
+sql16     deep_ptc      PASS                    calls= 7 tools= 6 tok=39791/282 17.6s eval=0 jserr=0 inner=6
+sql17     deep_ptc      PASS                    calls= 2 tools= 1 tok=11027/71 4.3s eval=0 jserr=0 inner=1
+sql18     deep_ptc      PASS                    calls= 4 tools= 3 tok=22284/161 9.7s eval=0 jserr=0 inner=3
+sql20     deep_ptc      fail gave_up            calls= 2 tools= 1 tok=10993/63 3.8s eval=0 jserr=0 inner=1
+== end ollama:gpt-oss:20b :: 16:13  12 users, load averages: 2.21 4.23 4.84
+== ollama:qwen3:14b deep_control base :: 16:13  12 users, load averages: 2.04 4.16 4.81
+chain02   deep_control  PASS                    calls= 5 tools= 4 tok=14873/132 49.4s
+chain03   deep_control  PASS                    calls= 5 tools= 4 tok=14897/135 19.4s
+chain05   deep_control  PASS                    calls= 4 tools= 3 tok=11684/96 16.7s
+chain06   deep_control  PASS                    calls= 5 tools= 4 tok=14795/135 22.1s
+chain08   deep_control  PASS                    calls= 5 tools= 4 tok=14783/131 21.9s
+chain09   deep_control  PASS                    calls= 7 tools= 6 tok=21380/194 30.7s
+chain11   deep_control  PASS                    calls= 6 tools= 5 tok=18203/171 27.4s
+chain12   deep_control  PASS                    calls= 8 tools= 7 tok=24797/238 45.9s
+chain14   deep_control  PASS                    calls= 7 tools= 6 tok=21568/219 39.1s
+chain15   deep_control  PASS                    calls= 7 tools= 6 tok=21570/225 39.3s
+chain17   deep_control  fail wrong_final_state  calls= 6 tools= 6 tok=18286/156 29.7s
+chain18   deep_control  PASS                    calls= 4 tools= 5 tok=12039/144 25.6s
+chain19   deep_control  PASS                    calls= 4 tools= 5 tok=12061/147 26.3s
+chain20   deep_control  fail wrong_final_state  calls= 6 tools= 6 tok=18407/173 34.1s
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql02     deep_control  fail loop_step_limit    calls=10 tools=10 tok=29511/439 73.0s
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql03     deep_control  fail loop_step_limit    calls=10 tools=10 tok=29945/551 88.2s
+sql05     deep_control  PASS                    calls= 6 tools= 5 tok=16772/149 23.3s
+sql06     deep_control  PASS                    calls= 3 tools= 2 tok=8134/74 11.7s
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql08     deep_control  fail loop_step_limit    calls=10 tools=10 tok=30496/619 98.0s
+Error in SplitMeter.on_chat_model_start callback: StepLimit('more than 10 model calls in one turn')
+sql09     deep_control  fail loop_step_limit    calls=10 tools=10 tok=29935/603 92.8s
+sql11     deep_control  fail wrong_final_state  calls= 9 tools= 8 tok=26329/346 53.7s
+sql12     deep_control  PASS                    calls= 4 tools= 3 tok=10992/123 19.9s
+sql14     deep_control  PASS                    calls= 2 tools= 1 tok=5374/60 9.1s
+sql15     deep_control  PASS                    calls= 6 tools= 5 tok=16831/206 34.0s
+sql17     deep_control  PASS                    calls= 3 tools= 2 tok=8144/77 11.4s
+sql18     deep_control  PASS                    calls= 3 tools= 2 tok=8150/82 12.3s
+sql20     deep_control  PASS                    calls= 4 tools= 3 tok=10877/94 15.6s
+== end ollama:qwen3:14b :: 16:29  12 users, load averages: 0.75 1.83 3.09
+== ollama:gpt-oss:20b deep_control base :: 16:30  12 users, load averages: 0.71 1.79 3.06
+chain02   deep_control  PASS                    calls= 4 tools= 3 tok=10459/193 15.1s
+chain03   deep_control  PASS                    calls= 3 tools= 2 tok=7733/140 7.6s
+chain05   deep_control  PASS                    calls= 2 tools= 1 tok=5073/91 5.2s
+chain06   deep_control  PASS                    calls= 2 tools= 1 tok=5073/132 6.7s
+chain08   deep_control  PASS                    calls= 2 tools= 1 tok=5069/117 6.1s
+chain09   deep_control  fail wrong_final_state  calls= 4 tools= 3 tok=10679/236 13.3s
+chain11   deep_control  PASS                    calls= 5 tools= 4 tok=13594/250 14.3s
+chain12   deep_control  fail gave_up            calls= 7 tools= 6 tok=19494/303 17.6s
+chain14   deep_control  PASS                    calls=10 tools= 9 tok=29498/493 28.5s
+chain15   deep_control  PASS                    calls= 8 tools= 7 tok=23057/500 32.3s
+chain17   deep_control  PASS                    calls= 5 tools= 4 tok=13264/242 18.1s
+chain18   deep_control  PASS                    calls= 4 tools= 3 tok=10460/237 13.8s
+chain19   deep_control  PASS                    calls= 4 tools= 3 tok=10474/241 16.4s
+chain20   deep_control  PASS                    calls= 4 tools= 3 tok=10480/227 13.6s
+sql02     deep_control  PASS                    calls= 7 tools= 6 tok=17810/273 20.1s
+sql03     deep_control  PASS                    calls= 4 tools= 3 tok=9890/181 11.8s
+sql05     deep_control  PASS                    calls= 4 tools= 3 tok=9872/190 12.4s
+sql06     deep_control  PASS                    calls= 2 tools= 1 tok=4764/57 4.0s
+sql08     deep_control  PASS                    calls= 7 tools= 6 tok=18114/304 20.8s
+sql09     deep_control  PASS                    calls= 9 tools= 8 tok=24338/525 33.8s
+sql11     deep_control  PASS                    calls= 5 tools= 4 tok=12445/200 14.3s
+sql12     deep_control  PASS                    calls= 2 tools= 1 tok=4783/76 5.2s
+sql14     deep_control  PASS                    calls= 2 tools= 1 tok=4766/64 5.2s
+sql15     deep_control  PASS                    calls= 8 tools= 7 tok=21166/419 28.7s
+sql17     deep_control  PASS                    calls= 2 tools= 1 tok=4777/65 5.3s
+sql18     deep_control  PASS                    calls= 2 tools= 1 tok=4782/79 4.8s
+sql20     deep_control  PASS                    calls= 2 tools= 1 tok=4752/68 4.4s
+== end ollama:gpt-oss:20b :: 16:36  12 users, load averages: 4.80 3.76 3.51
+Traceback (most recent call last):
+  File "<lab>/additions/bench2/kit2/run2.py", line 371, in <module>
+    main()
+    ~~~~^^
+  File "<lab>/additions/bench2/kit2/run2.py", line 337, in main
+    model.invoke("Say ok.")
+    ~~~~~~~~~~~~^^^^^^^^^^^
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 529, in invoke
+    self.generate_prompt(
+    ~~~~~~~~~~~~~~~~~~~~^
+        [self._convert_input(input)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ).generations[0][0],
+    ^
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 1920, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 1727, in generate
+    self._generate_with_cache(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        m,
+        ^^
+    ...<2 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/langchain_core/language_models/chat_models.py", line 2065, in _generate_with_cache
+    result = self._generate(
+        messages, stop=stop, run_manager=run_manager, **kwargs
+    )
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/langchain_ollama/chat_models.py", line 1200, in _generate
+    final_chunk = self._chat_stream_with_aggregation(
+        messages, stop, run_manager, verbose=self.verbose, **kwargs
+    )
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/langchain_ollama/chat_models.py", line 1135, in _chat_stream_with_aggregation
+    for chunk in self._iterate_over_stream(messages, stop, **kwargs):
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/langchain_ollama/chat_models.py", line 1224, in _iterate_over_stream
+    for stream_resp in self._create_chat_stream(messages, stop, **kwargs):
+                       ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/langchain_ollama/chat_models.py", line 1122, in _create_chat_stream
+    yield from self._client.chat(**chat_params)
+  File "<lab>/lab/.venv/lib/python3.13/site-packages/ollama/_client.py", line 193, in inner
+    raise ResponseError(e.response.text, e.response.status_code) from None
+ollama._types.ResponseError: model 'qwen3:8b' not found (status code: 404)
