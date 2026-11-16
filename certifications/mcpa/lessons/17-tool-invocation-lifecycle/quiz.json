@@ -31,9 +31,9 @@
       "question": "publish_release is called with a missing required argument. Where does this fail and how is it reported?",
       "options": [
         "At execute, as a JSON-RPC error with code -32603",
-        "At execute, as a complete result with isError set to true",
+        "At validate, as a JSON-RPC error with code -32602",
         "At confirm, since the host should have caught it before sending the call",
-        "At validate, as a JSON-RPC error with code -32602"
+        "At execute, as a complete result with isError set to true"
       ],
       "correct": 3,
       "explanation": "Validate only confirms the tool is known; a missing or malformed argument is caught once execute checks the arguments against the tool's own schema, and it comes back as an actionable isError result."
