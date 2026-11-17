@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" role="img" aria-labelledby="fig-2-5-title fig-2-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-5-title">Where each stream mode is produced in one agent run</title>
+  <desc id="fig-2-5-desc">Seven rows, one per stream mode, on a time axis in milliseconds for one create_agent run with Qwen3 4B on the x86 server guest, all modes on and version v2. The axis has three zoomed spans with breaks: the start, the end of the first model step and the tools step around 1.9 s, and the answer from 2.6 s. The supersteps are model from 5 to 1895.5 ms, tools from 1895.5 to 1900 ms, model from 1900 to 3335.9 ms. Each tick is one item: tasks 6, messages 13, custom 1, updates 3, values 4, checkpoints 5, debug 11. messages, custom, and updates items appear while a task runs or as it finishes. A values item comes after the update phase. The checkpoints and debug items of a step appear at the start of the next superstep, together with the tasks start item. The answer tokens arrived from 2658.7 ms, about one every 67 ms.</desc>
+  <text x="20" y="30" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">STREAM MODE</text>
+  <rect x="264.6" y="48" width="91.07" height="206" fill="var(--m-code-bg, #efece0)"/>
+  <line x1="202" y1="48" x2="208" y2="44" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="202" y1="258" x2="208" y2="254" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="390" y1="48" x2="396" y2="44" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="390" y1="258" x2="396" y2="254" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="161" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">start</text>
+  <text x="214" y="40" font-size="11" fill="var(--m-plum-ink, #8a3d72)">model ends</text>
+  <text x="335.43" y="40" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">tools</text>
+  <text x="485.66" y="40" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">model answers</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="74" font-size="11.5" fill="var(--m-amber-ink, #85590c)">tasks</text>
+  <line x1="126" y1="70" x2="196" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="214" y1="70" x2="384" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="402" y1="70" x2="598" y2="70" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="169.75" y1="61" x2="169.75" y2="79" stroke="var(--m-amber-ink, #85590c)" stroke-width="2"/>
+  <line x1="246.38" y1="61" x2="246.38" y2="79" stroke="var(--m-amber-ink, #85590c)" stroke-width="2"/>
+  <line x1="264.6" y1="61" x2="264.6" y2="79" stroke="var(--m-amber-ink, #85590c)" stroke-width="2"/>
+  <line x1="347.57" y1="61" x2="347.57" y2="79" stroke="var(--m-amber-ink, #85590c)" stroke-width="2"/>
+  <line x1="355.67" y1="61" x2="355.67" y2="79" stroke="var(--m-amber-ink, #85590c)" stroke-width="2"/>
+  <line x1="577.52" y1="61" x2="577.52" y2="79" stroke="var(--m-amber-ink, #85590c)" stroke-width="2"/>
+  <text x="624" y="74" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="102" font-size="11.5" fill="var(--m-plum-ink, #8a3d72)">messages</text>
+  <line x1="126" y1="98" x2="196" y2="98" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="214" y1="98" x2="384" y2="98" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="402" y1="98" x2="598" y2="98" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="244.36" y1="89" x2="244.36" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="246.38" y1="89" x2="246.38" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="347.57" y1="89" x2="347.57" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="416.03" y1="89" x2="416.03" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="432.14" y1="89" x2="432.14" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="448.23" y1="89" x2="448.23" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="464.36" y1="89" x2="464.36" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="480.4" y1="89" x2="480.4" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="496.37" y1="89" x2="496.37" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="512.43" y1="89" x2="512.43" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="560.98" y1="89" x2="560.98" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="577.49" y1="89" x2="577.49" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <line x1="580.49" y1="89" x2="580.49" y2="107" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <text x="624" y="102" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">13</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="130" font-size="11.5" fill="var(--m-green-ink, #336b40)">custom</text>
+  <line x1="126" y1="126" x2="196" y2="126" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="214" y1="126" x2="384" y2="126" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="402" y1="126" x2="598" y2="126" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="347.57" y1="117" x2="347.57" y2="135" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <text x="624" y="130" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="158" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">updates</text>
+  <line x1="126" y1="154" x2="196" y2="154" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="214" y1="154" x2="384" y2="154" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="402" y1="154" x2="598" y2="154" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="246.38" y1="145" x2="246.38" y2="163" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <line x1="347.57" y1="145" x2="347.57" y2="163" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <line x1="577.52" y1="145" x2="577.52" y2="163" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <text x="624" y="158" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="186" font-size="11.5" fill="var(--m-indigo-ink, #4b4f9e)">values</text>
+  <line x1="126" y1="182" x2="196" y2="182" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="214" y1="182" x2="384" y2="182" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="402" y1="182" x2="598" y2="182" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="169.75" y1="173" x2="169.75" y2="191" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <line x1="264.6" y1="173" x2="264.6" y2="191" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <line x1="355.67" y1="173" x2="355.67" y2="191" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <line x1="577.9" y1="173" x2="577.9" y2="191" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <text x="624" y="186" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="214" font-size="11.5" fill="var(--m-teal-ink, #18696a)">checkpoints</text>
+  <line x1="126" y1="210" x2="196" y2="210" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="214" y1="210" x2="384" y2="210" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="402" y1="210" x2="598" y2="210" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="149.63" y1="201" x2="149.63" y2="219" stroke="var(--m-teal-ink, #18696a)" stroke-width="2"/>
+  <line x1="169.75" y1="201" x2="169.75" y2="219" stroke="var(--m-teal-ink, #18696a)" stroke-width="2"/>
+  <line x1="264.6" y1="201" x2="264.6" y2="219" stroke="var(--m-teal-ink, #18696a)" stroke-width="2"/>
+  <line x1="355.67" y1="201" x2="355.67" y2="219" stroke="var(--m-teal-ink, #18696a)" stroke-width="2"/>
+  <line x1="577.9" y1="201" x2="577.9" y2="219" stroke="var(--m-teal-ink, #18696a)" stroke-width="2"/>
+  <text x="624" y="214" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">5</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="242" font-size="11.5" fill="var(--m-ink, #1a1a1a)">debug</text>
+  <line x1="126" y1="238" x2="196" y2="238" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="214" y1="238" x2="384" y2="238" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="402" y1="238" x2="598" y2="238" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="149.63" y1="229" x2="149.63" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="169.75" y1="229" x2="169.75" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="172.75" y1="229" x2="172.75" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="246.38" y1="229" x2="246.38" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="264.6" y1="229" x2="264.6" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="267.6" y1="229" x2="267.6" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="347.57" y1="229" x2="347.57" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="355.67" y1="229" x2="355.67" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="358.67" y1="229" x2="358.67" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="577.52" y1="229" x2="577.52" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <line x1="577.9" y1="229" x2="577.9" y2="247" stroke="var(--m-ink-soft, #4a4a4a)" stroke-width="2"/>
+  <text x="624" y="242" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">11</text>
+  <line x1="126" y1="260" x2="126" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="126" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="161" y1="260" x2="161" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="161" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="196" y1="260" x2="196" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="196" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">8</text>
+  <line x1="234.24" y1="260" x2="234.24" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="234.24" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1894</text>
+  <line x1="274.71" y1="260" x2="274.71" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="274.71" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1896</text>
+  <line x1="315.19" y1="260" x2="315.19" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="315.19" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1898</text>
+  <line x1="355.67" y1="260" x2="355.67" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="355.67" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1900</text>
+  <line x1="402" y1="260" x2="402" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="402" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2600</text>
+  <line x1="449.8" y1="260" x2="449.8" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="449.8" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2800</text>
+  <line x1="497.61" y1="260" x2="497.61" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="497.61" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3000</text>
+  <line x1="545.41" y1="260" x2="545.41" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="545.41" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3200</text>
+  <line x1="593.22" y1="260" x2="593.22" y2="264" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="593.22" y="278" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3400</text>
+  <text x="20" y="278" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">ms</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="331.57" cy="112" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="331.57" y="116" font-size="11" text-anchor="middle">1</text>
+  <circle cx="331.57" cy="140" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="331.57" y="144" font-size="11" text-anchor="middle">2</text>
+  <circle cx="371.67" cy="168" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="371.67" y="172" font-size="11" text-anchor="middle">3</text>
+  <circle cx="371.67" cy="196" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="371.67" y="200" font-size="11" text-anchor="middle">4</text>
+  </g>
+  <circle cx="30" cy="306" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="30" y="310" font-size="11" text-anchor="middle">1</text>
+  <text x="46" y="310" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">custom: the tool calls stream_writer at 1899.6 ms, inside the tools task</text>
+  <circle cx="30" cy="328" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="30" y="332" font-size="11" text-anchor="middle">2</text>
+  <text x="46" y="332" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">updates: the tools task finishes at 1899.6 ms, and its writes go out at once</text>
+  <circle cx="30" cy="350" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="30" y="354" font-size="11" text-anchor="middle">3</text>
+  <text x="46" y="354" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">values: after the update phase of the superstep, at 1900 ms</text>
+  <circle cx="30" cy="372" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="30" y="376" font-size="11" text-anchor="middle">4</text>
+  <text x="46" y="376" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">checkpoints: emitted when the next superstep plans, at 1900 ms</text>
+</svg>

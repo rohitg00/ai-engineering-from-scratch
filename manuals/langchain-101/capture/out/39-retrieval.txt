@@ -1,0 +1,138 @@
+# Splitter, OllamaEmbeddings, and InMemoryVectorStore
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: nomic-embed-text. OllamaEmbeddings settings: none beyond the model name.
+
+## RecursiveCharacterTextSplitter(chunk_size=80, chunk_overlap=20)
+
+[
+  {
+    "source": "checkpoints.md",
+    "chars": 77,
+    "text": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a"
+  },
+  {
+    "source": "checkpoints.md",
+    "chars": 75,
+    "text": "keeps it in a dict. SqliteSaver writes it to a file, so a thread survives a"
+  },
+  {
+    "source": "checkpoints.md",
+    "chars": 28,
+    "text": "a thread survives a restart."
+  },
+  {
+    "source": "stores.md",
+    "chars": 75,
+    "text": "A store holds long-term memory across threads. Items live under a namespace"
+  },
+  {
+    "source": "stores.md",
+    "chars": 69,
+    "text": "under a namespace tuple and a key. Search matches a namespace prefix."
+  },
+  {
+    "source": "streaming.md",
+    "chars": 80,
+    "text": "stream_mode updates yields one chunk per node. messages yields token chunks with"
+  },
+  {
+    "source": "streaming.md",
+    "chars": 61,
+    "text": "token chunks with metadata. custom yields what a tool writes."
+  }
+]
+
+## OllamaEmbeddings(model='nomic-embed-text'): one vector per text
+
+{
+  "dims": 768,
+  "first 4": [
+    0.051004,
+    -0.024986,
+    -0.178736,
+    0.040572
+  ],
+  "repeat equal": true,
+  "other text equal": false
+}
+
+## InMemoryVectorStore.similarity_search_with_score
+
+ids:
+[
+  "doc-0",
+  "doc-1",
+  "doc-2",
+  "doc-3",
+  "doc-4",
+  "doc-5",
+  "doc-6"
+]
+
+query 'A checkpointer saves graph state after each step. InMemorySaver keeps it in a':
+[
+  {
+    "id": "doc-0",
+    "source": "checkpoints.md",
+    "score": 1.0,
+    "text": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a"
+  },
+  {
+    "id": "doc-2",
+    "source": "checkpoints.md",
+    "score": 0.556317,
+    "text": "a thread survives a restart."
+  }
+]
+
+query 'Where does long-term memory live?':
+[
+  {
+    "id": "doc-3",
+    "source": "stores.md",
+    "score": 0.683653,
+    "text": "A store holds long-term memory across threads. Items live under a namespace"
+  },
+  {
+    "id": "doc-1",
+    "source": "checkpoints.md",
+    "score": 0.455558,
+    "text": "keeps it in a dict. SqliteSaver writes it to a file, so a thread survives a"
+  }
+]
+
+query 'What does a checkpointer do?':
+[
+  {
+    "id": "doc-0",
+    "source": "checkpoints.md",
+    "score": 0.68785,
+    "text": "A checkpointer saves graph state after each step. InMemorySaver keeps it in a"
+  },
+  {
+    "id": "doc-2",
+    "source": "checkpoints.md",
+    "score": 0.507239,
+    "text": "a thread survives a restart."
+  }
+]
+
+## a metadata filter
+
+[
+  "doc-3",
+  "doc-4"
+]
+
+## delete and get_by_ids
+
+[
+  "doc-1"
+]
+
+## max_marginal_relevance_search
+
+[
+  "doc-3",
+  "doc-2"
+]

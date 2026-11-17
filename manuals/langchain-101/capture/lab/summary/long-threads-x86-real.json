@@ -1,0 +1,761 @@
+{
+ "deadline": "about 70 minutes per variant; the run without summarization stopped after turn 94",
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "model": "qwen3:4b-instruct-2507-q4_K_M via ChatOllama 1.1.0, temperature 0, seed 42, num_ctx 8192 set by the script, Ollama 0.31.1 on CPU, one request at a time; num_predict 160, and 512 for the summary model",
+ "model_calls_total": 1143,
+ "none_after_deadline": {
+  "answered": [
+   {
+    "answer": "I don't have access to any code words you may have given. Please provide more context or clarify your question.",
+    "fact": "code word",
+    "messages": 336,
+    "prompt_tokens": 8176,
+    "right": false
+   },
+   {
+    "answer": "I don't know your order number.",
+    "fact": "order number",
+    "messages": 336,
+    "prompt_tokens": 8173,
+    "right": false
+   },
+   {
+    "answer": "I don't know your cat's name.",
+    "fact": "cat name",
+    "messages": 336,
+    "prompt_tokens": 8174,
+    "right": false
+   },
+   {
+    "answer": "I don't know your favorite city.",
+    "fact": "city",
+    "messages": 336,
+    "prompt_tokens": 8173,
+    "right": false
+   }
+  ],
+  "fifth": "request (8192 tokens) exceeds the available context size (8192 tokens), try increasing it"
+ },
+ "orphan_tool_messages_total": 0,
+ "run": "create_agent, 200 turns in one thread per variant; turns 1 to 5 give five facts, then a plain answer, one add call, and two parallel add calls in turn; five recall questions every 25 turns on a fork of the thread",
+ "runs_per_variant": 1,
+ "saver": "PostgresSaver on PostgreSQL 16.15, default durability",
+ "sources": [
+  "capture/lab/T10-long-threads-x86-real/01-turns-none.jsonl",
+  "capture/lab/T10-long-threads-x86-real/01-turns-msgs60_keep7.jsonl",
+  "capture/lab/T10-long-threads-x86-real/01-turns-tok6000_keep1500.jsonl",
+  "capture/lab/T10-long-threads-x86-real/01-turns-msgs20_keep1.jsonl",
+  "capture/lab/T10-long-threads-x86-real/02-none-probe-after-deadline.log"
+ ],
+ "thread_mb": "bytes.main_total, the thread without the bytes of the recall forks",
+ "variants": {
+  "msgs20_keep1": {
+   "add_turns_right": "103/130",
+   "add_turns_sums_in_answer": "129/130",
+   "add_turns_tool_ran": "104/130",
+   "blocks": [
+    {
+     "add_turns_right": "9/13",
+     "prompt_tokens_max": 1202,
+     "summary_turns": [
+      8,
+      13,
+      18,
+      23
+     ],
+     "thread_mb": 0.51,
+     "turn_p10_ms": 1485.8,
+     "turn_p50_ms": 5516.8,
+     "turn_p90_ms": 54438.2,
+     "turns": "1-25"
+    },
+    {
+     "add_turns_right": "14/17",
+     "prompt_tokens_max": 1202,
+     "summary_turns": [
+      28,
+      33,
+      38,
+      43,
+      48
+     ],
+     "thread_mb": 1.54,
+     "turn_p10_ms": 3133.4,
+     "turn_p50_ms": 8190.8,
+     "turn_p90_ms": 56611.5,
+     "turns": "26-50"
+    },
+    {
+     "add_turns_right": "12/16",
+     "prompt_tokens_max": 1210,
+     "summary_turns": [
+      53,
+      58,
+      63,
+      68,
+      73
+     ],
+     "thread_mb": 2.23,
+     "turn_p10_ms": 2635.5,
+     "turn_p50_ms": 5271.9,
+     "turn_p90_ms": 55642.3,
+     "turns": "51-75"
+    },
+    {
+     "add_turns_right": "14/17",
+     "prompt_tokens_max": 1208,
+     "summary_turns": [
+      78,
+      83,
+      88,
+      93,
+      98
+     ],
+     "thread_mb": 3.22,
+     "turn_p10_ms": 2760.8,
+     "turn_p50_ms": 5852.6,
+     "turn_p90_ms": 61745.9,
+     "turns": "76-100"
+    },
+    {
+     "add_turns_right": "14/17",
+     "prompt_tokens_max": 1219,
+     "summary_turns": [
+      103,
+      108,
+      113,
+      118,
+      123
+     ],
+     "thread_mb": 3.85,
+     "turn_p10_ms": 2849.2,
+     "turn_p50_ms": 8078.2,
+     "turn_p90_ms": 56827.5,
+     "turns": "101-125"
+    },
+    {
+     "add_turns_right": "12/16",
+     "prompt_tokens_max": 1203,
+     "summary_turns": [
+      128,
+      133,
+      138,
+      143,
+      148
+     ],
+     "thread_mb": 4.8,
+     "turn_p10_ms": 2620.5,
+     "turn_p50_ms": 5573.2,
+     "turn_p90_ms": 56996.6,
+     "turns": "126-150"
+    },
+    {
+     "add_turns_right": "14/17",
+     "prompt_tokens_max": 1206,
+     "summary_turns": [
+      153,
+      158,
+      163,
+      168,
+      173
+     ],
+     "thread_mb": 5.45,
+     "turn_p10_ms": 2719.9,
+     "turn_p50_ms": 5313.1,
+     "turn_p90_ms": 53483.8,
+     "turns": "151-175"
+    },
+    {
+     "add_turns_right": "14/17",
+     "prompt_tokens_max": 1208,
+     "summary_turns": [
+      178,
+      183,
+      188,
+      193,
+      198
+     ],
+     "thread_mb": 6.4,
+     "turn_p10_ms": 2818.7,
+     "turn_p50_ms": 7940.1,
+     "turn_p90_ms": 51565.1,
+     "turns": "176-200"
+    }
+   ],
+   "context_full_from_turn": null,
+   "errors": 0,
+   "framework_p50_ms": 18.9,
+   "full_context_turns": [],
+   "model_calls": 330,
+   "orphan_tool_messages": 0,
+   "prompt_tokens_max": 1219,
+   "recall": [
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 25
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 50
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 75
+    },
+    {
+     "missed": [
+      "code word"
+     ],
+     "right": 4,
+     "turn": 100
+    },
+    {
+     "missed": [
+      "code word"
+     ],
+     "right": 4,
+     "turn": 125
+    },
+    {
+     "missed": [
+      "code word"
+     ],
+     "right": 4,
+     "turn": 150
+    },
+    {
+     "missed": [
+      "code word"
+     ],
+     "right": 4,
+     "turn": 175
+    },
+    {
+     "missed": [
+      "code word"
+     ],
+     "right": 4,
+     "turn": 200
+    }
+   ],
+   "summarization": {
+    "keep": [
+     "messages",
+     1
+    ],
+    "trigger": [
+     "messages",
+     20
+    ]
+   },
+   "summary_call_max_ms": 57595.4,
+   "summary_call_p50_ms": 50975.3,
+   "summary_calls": 39,
+   "thread": {
+    "mb": 6.4,
+    "turn": 200
+   },
+   "turn_p50_ms_with_summary": 57341.2,
+   "turn_p50_ms_without_summary": 5372.2,
+   "turns": 200
+  },
+  "msgs60_keep7": {
+   "add_turns_right": "126/130",
+   "add_turns_sums_in_answer": "126/130",
+   "add_turns_tool_ran": "130/130",
+   "blocks": [
+    {
+     "add_turns_right": "13/13",
+     "prompt_tokens_max": 1574,
+     "summary_turns": [
+      20
+     ],
+     "thread_mb": 0.9,
+     "turn_p10_ms": 1382.5,
+     "turn_p50_ms": 4427.2,
+     "turn_p90_ms": 7052.9,
+     "turns": "1-25"
+    },
+    {
+     "add_turns_right": "16/17",
+     "prompt_tokens_max": 2136,
+     "summary_turns": [
+      34,
+      48
+     ],
+     "thread_mb": 2.8,
+     "turn_p10_ms": 3201.3,
+     "turn_p50_ms": 5767.7,
+     "turn_p90_ms": 10149.8,
+     "turns": "26-50"
+    },
+    {
+     "add_turns_right": "16/16",
+     "prompt_tokens_max": 2101,
+     "summary_turns": [
+      62
+     ],
+     "thread_mb": 4.01,
+     "turn_p10_ms": 2753.3,
+     "turn_p50_ms": 5512.5,
+     "turn_p90_ms": 9765.7,
+     "turns": "51-75"
+    },
+    {
+     "add_turns_right": "16/17",
+     "prompt_tokens_max": 2146,
+     "summary_turns": [
+      77,
+      91
+     ],
+     "thread_mb": 5.98,
+     "turn_p10_ms": 3478.8,
+     "turn_p50_ms": 5599.5,
+     "turn_p90_ms": 9418.1,
+     "turns": "76-100"
+    },
+    {
+     "add_turns_right": "17/17",
+     "prompt_tokens_max": 2144,
+     "summary_turns": [
+      105,
+      119
+     ],
+     "thread_mb": 7.34,
+     "turn_p10_ms": 2864.3,
+     "turn_p50_ms": 5648.1,
+     "turn_p90_ms": 9708.5,
+     "turns": "101-125"
+    },
+    {
+     "add_turns_right": "16/16",
+     "prompt_tokens_max": 2135,
+     "summary_turns": [
+      134,
+      148
+     ],
+     "thread_mb": 9.23,
+     "turn_p10_ms": 3372.7,
+     "turn_p50_ms": 5516.1,
+     "turn_p90_ms": 9680.1,
+     "turns": "126-150"
+    },
+    {
+     "add_turns_right": "15/17",
+     "prompt_tokens_max": 2133,
+     "summary_turns": [
+      162
+     ],
+     "thread_mb": 10.48,
+     "turn_p10_ms": 3077.4,
+     "turn_p50_ms": 5582.4,
+     "turn_p90_ms": 9488.0,
+     "turns": "151-175"
+    },
+    {
+     "add_turns_right": "17/17",
+     "prompt_tokens_max": 2102,
+     "summary_turns": [
+      176,
+      191
+     ],
+     "thread_mb": 12.42,
+     "turn_p10_ms": 2741.7,
+     "turn_p50_ms": 5545.4,
+     "turn_p90_ms": 9942.5,
+     "turns": "176-200"
+    }
+   ],
+   "context_full_from_turn": null,
+   "errors": 0,
+   "framework_p50_ms": 19.5,
+   "full_context_turns": [],
+   "model_calls": 330,
+   "orphan_tool_messages": 0,
+   "prompt_tokens_max": 2146,
+   "recall": [
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 25
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 50
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 75
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 100
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 125
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 150
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 175
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 200
+    }
+   ],
+   "summarization": {
+    "keep": [
+     "messages",
+     7
+    ],
+    "trigger": [
+     "messages",
+     60
+    ]
+   },
+   "summary_call_max_ms": 48665.8,
+   "summary_call_p50_ms": 43598.5,
+   "summary_calls": 13,
+   "thread": {
+    "mb": 12.42,
+    "turn": 200
+   },
+   "turn_p50_ms_with_summary": 55246.7,
+   "turn_p50_ms_without_summary": 5498.1,
+   "turns": 200
+  },
+  "none": {
+   "add_turns_right": "59/59",
+   "add_turns_sums_in_answer": "59/59",
+   "add_turns_tool_ran": "59/59",
+   "blocks": [
+    {
+     "add_turns_right": "13/13",
+     "prompt_tokens_max": 2156,
+     "summary_turns": [],
+     "thread_mb": 0.91,
+     "turn_p10_ms": 1386.6,
+     "turn_p50_ms": 4681.3,
+     "turn_p90_ms": 7252.6,
+     "turns": "1-25"
+    },
+    {
+     "add_turns_right": "17/17",
+     "prompt_tokens_max": 4648,
+     "summary_turns": [],
+     "thread_mb": 6.21,
+     "turn_p10_ms": 4318.5,
+     "turn_p50_ms": 7907.0,
+     "turn_p90_ms": 11502.7,
+     "turns": "26-50"
+    },
+    {
+     "add_turns_right": "16/16",
+     "prompt_tokens_max": 7007,
+     "summary_turns": [],
+     "thread_mb": 12.33,
+     "turn_p10_ms": 5793.4,
+     "turn_p50_ms": 11239.4,
+     "turn_p90_ms": 16273.6,
+     "turns": "51-75"
+    },
+    {
+     "add_turns_right": "13/13",
+     "prompt_tokens_max": 8191,
+     "summary_turns": [],
+     "thread_mb": 20.52,
+     "turn_p10_ms": 6976.5,
+     "turn_p50_ms": 18592.7,
+     "turn_p90_ms": 619073.6,
+     "turns": "76-94"
+    }
+   ],
+   "context_full_from_turn": 88,
+   "errors": 0,
+   "framework_p50_ms": 23.9,
+   "full_context_turns": [
+    {
+     "prompt_tokens_max": 8191,
+     "turn": 88,
+     "turn_s": 621.4
+    },
+    {
+     "prompt_tokens_max": 8181,
+     "turn": 89,
+     "turn_s": 616.8
+    },
+    {
+     "prompt_tokens_max": 8182,
+     "turn": 90,
+     "turn_s": 308.1
+    },
+    {
+     "prompt_tokens_max": 8185,
+     "turn": 91,
+     "turn_s": 619.7
+    },
+    {
+     "prompt_tokens_max": 8183,
+     "turn": 92,
+     "turn_s": 618.9
+    },
+    {
+     "prompt_tokens_max": 8171,
+     "turn": 93,
+     "turn_s": 309.8
+    },
+    {
+     "prompt_tokens_max": 8189,
+     "turn": 94,
+     "turn_s": 615.9
+    }
+   ],
+   "model_calls": 153,
+   "orphan_tool_messages": 0,
+   "prompt_tokens_max": 8191,
+   "recall": [
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 25
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 50
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 75
+    }
+   ],
+   "summarization": null,
+   "summary_call_max_ms": null,
+   "summary_call_p50_ms": null,
+   "summary_calls": 0,
+   "thread": {
+    "mb": 20.52,
+    "turn": 90
+   },
+   "turn_p50_ms_with_summary": null,
+   "turn_p50_ms_without_summary": 7398.2,
+   "turns": 94
+  },
+  "tok6000_keep1500": {
+   "add_turns_right": "130/130",
+   "add_turns_sums_in_answer": "130/130",
+   "add_turns_tool_ran": "130/130",
+   "blocks": [
+    {
+     "add_turns_right": "13/13",
+     "prompt_tokens_max": 2156,
+     "summary_turns": [],
+     "thread_mb": 0.96,
+     "turn_p10_ms": 1367.1,
+     "turn_p50_ms": 4715.9,
+     "turn_p90_ms": 7277.1,
+     "turns": "1-25"
+    },
+    {
+     "add_turns_right": "17/17",
+     "prompt_tokens_max": 4648,
+     "summary_turns": [],
+     "thread_mb": 6.35,
+     "turn_p10_ms": 4304.9,
+     "turn_p50_ms": 7862.2,
+     "turn_p90_ms": 11535.5,
+     "turns": "26-50"
+    },
+    {
+     "add_turns_right": "16/16",
+     "prompt_tokens_max": 5970,
+     "summary_turns": [
+      65
+     ],
+     "thread_mb": 11.26,
+     "turn_p10_ms": 4082.1,
+     "turn_p50_ms": 8809.2,
+     "turn_p90_ms": 14768.1,
+     "turns": "51-75"
+    },
+    {
+     "add_turns_right": "17/17",
+     "prompt_tokens_max": 5541,
+     "summary_turns": [],
+     "thread_mb": 17.58,
+     "turn_p10_ms": 5126.0,
+     "turn_p50_ms": 8974.2,
+     "turn_p90_ms": 12933.4,
+     "turns": "76-100"
+    },
+    {
+     "add_turns_right": "17/17",
+     "prompt_tokens_max": 5985,
+     "summary_turns": [
+      105
+     ],
+     "thread_mb": 21.2,
+     "turn_p10_ms": 4290.0,
+     "turn_p50_ms": 7986.1,
+     "turn_p90_ms": 13681.9,
+     "turns": "101-125"
+    },
+    {
+     "add_turns_right": "16/16",
+     "prompt_tokens_max": 5977,
+     "summary_turns": [
+      144
+     ],
+     "thread_mb": 27.87,
+     "turn_p10_ms": 4911.5,
+     "turn_p50_ms": 9233.7,
+     "turn_p90_ms": 15060.8,
+     "turns": "126-150"
+    },
+    {
+     "add_turns_right": "17/17",
+     "prompt_tokens_max": 5205,
+     "summary_turns": [],
+     "thread_mb": 31.75,
+     "turn_p10_ms": 4993.7,
+     "turn_p50_ms": 8655.2,
+     "turn_p90_ms": 12349.9,
+     "turns": "151-175"
+    },
+    {
+     "add_turns_right": "17/17",
+     "prompt_tokens_max": 5964,
+     "summary_turns": [
+      184
+     ],
+     "thread_mb": 38.0,
+     "turn_p10_ms": 4316.0,
+     "turn_p50_ms": 8321.6,
+     "turn_p90_ms": 14540.0,
+     "turns": "176-200"
+    }
+   ],
+   "context_full_from_turn": null,
+   "errors": 0,
+   "framework_p50_ms": 24.7,
+   "full_context_turns": [],
+   "model_calls": 330,
+   "orphan_tool_messages": 0,
+   "prompt_tokens_max": 5985,
+   "recall": [
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 25
+    },
+    {
+     "missed": [],
+     "right": 5,
+     "turn": 50
+    },
+    {
+     "missed": [
+      "code word",
+      "order number",
+      "cat name",
+      "city",
+      "budget"
+     ],
+     "right": 0,
+     "turn": 75
+    },
+    {
+     "missed": [
+      "code word",
+      "order number",
+      "cat name",
+      "city",
+      "budget"
+     ],
+     "right": 0,
+     "turn": 100
+    },
+    {
+     "missed": [
+      "code word",
+      "order number",
+      "cat name",
+      "city",
+      "budget"
+     ],
+     "right": 0,
+     "turn": 125
+    },
+    {
+     "missed": [
+      "code word",
+      "order number",
+      "cat name",
+      "city",
+      "budget"
+     ],
+     "right": 0,
+     "turn": 150
+    },
+    {
+     "missed": [
+      "code word",
+      "order number",
+      "cat name",
+      "city",
+      "budget"
+     ],
+     "right": 0,
+     "turn": 175
+    },
+    {
+     "missed": [
+      "code word",
+      "order number",
+      "cat name",
+      "city",
+      "budget"
+     ],
+     "right": 0,
+     "turn": 200
+    }
+   ],
+   "summarization": {
+    "keep": [
+     "tokens",
+     1500
+    ],
+    "trigger": [
+     "tokens",
+     6000
+    ]
+   },
+   "summary_call_max_ms": 88850.3,
+   "summary_call_p50_ms": 84827.7,
+   "summary_calls": 4,
+   "thread": {
+    "mb": 38.0,
+    "turn": 200
+   },
+   "turn_p50_ms_with_summary": 108426.5,
+   "turn_p50_ms_without_summary": 7452.1,
+   "turns": 200
+  }
+ }
+}

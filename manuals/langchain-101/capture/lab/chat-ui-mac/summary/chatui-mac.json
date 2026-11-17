@@ -1,0 +1,1431 @@
+{
+ "machine": "the Mac",
+ "requests_after_isolated_browser": [
+  {
+   "n": 9,
+   "t": 1794745455.806,
+   "method": "GET",
+   "path": "/info",
+   "status": 200,
+   "secs": 0.0036,
+   "resp_bytes": 305,
+   "sse_events": null,
+   "body_shape": null,
+   "timing": null
+  },
+  {
+   "n": 10,
+   "t": 1794745455.807,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0055,
+   "resp_bytes": 2,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 12,
+   "t": 1794745455.811,
+   "method": "GET",
+   "path": "/info",
+   "status": 200,
+   "secs": 0.004,
+   "resp_bytes": 305,
+   "sse_events": null,
+   "body_shape": null,
+   "timing": null
+  },
+  {
+   "n": 11,
+   "t": 1794745455.808,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0075,
+   "resp_bytes": 2,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 14,
+   "t": 1794745468.621,
+   "method": "POST",
+   "path": "/threads",
+   "status": 200,
+   "secs": 0.0068,
+   "resp_bytes": 300,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {}
+   },
+   "timing": null
+  },
+  {
+   "n": 17,
+   "t": 1794745472.693,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0142,
+   "resp_bytes": 391,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 16,
+   "t": 1794745468.685,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 108.181,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 4,
+    "messages": 19,
+    "null": 21
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 16,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 108.181,
+    "model_calls": 2,
+    "tool_calls_by_model": [
+     "get_weather"
+    ],
+    "server_first_model_output_s": 106.555,
+    "server_first_token_s": 107.468,
+    "sse_first_ai_event_s": 106.554,
+    "sse_first_ai_kind": "tool_call",
+    "sse_first_ai_value": "get_weather",
+    "ui_trigger_to_request_s": 0.094,
+    "ui_first_visible_s": 106.674,
+    "ui_minus_sse_s": 0.119,
+    "ui_marks": "m1",
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 19,
+   "t": 1794745576.881,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0133,
+   "resp_bytes": 17348,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 20,
+   "t": 1794745616.229,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 15.2042,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 3,
+    "messages": 2,
+    "null": 3
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 20,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 15.2042,
+    "model_calls": 1,
+    "tool_calls_by_model": [
+     "send_email"
+    ],
+    "server_first_model_output_s": 15.196,
+    "server_first_token_s": null,
+    "sse_first_ai_event_s": 15.195,
+    "sse_first_ai_kind": "tool_call",
+    "sse_first_ai_value": "send_email",
+    "ui_trigger_to_request_s": 0.133,
+    "ui_first_visible_s": 15.29,
+    "ui_minus_sse_s": 0.094,
+    "ui_marks": "m2",
+    "ui_interrupt_form_s": 15.435
+   }
+  },
+  {
+   "n": 21,
+   "t": 1794745631.667,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0073,
+   "resp_bytes": 29914,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 22,
+   "t": 1794745665.016,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 3.4769,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 4,
+    "messages": 14,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "command": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_resumable": false,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "cancel",
+    "command.resume": {
+     "decisions": [
+      {
+       "type": "approve"
+      }
+     ]
+    }
+   },
+   "timing": {
+    "n": 22,
+    "graph": "agent",
+    "kind": "resume:approve",
+    "stream_secs": 3.4769,
+    "model_calls": 1,
+    "tool_calls_by_model": [],
+    "server_first_model_output_s": 2.703,
+    "server_first_token_s": 2.703,
+    "sse_first_ai_event_s": 2.721,
+    "sse_first_ai_kind": "text",
+    "sse_first_ai_value": "The",
+    "ui_trigger_to_request_s": 0.165,
+    "ui_first_visible_s": 2.813,
+    "ui_minus_sse_s": 0.092,
+    "ui_marks": "m2-approve",
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 23,
+   "t": 1794745668.505,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0768,
+   "resp_bytes": 42400,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 24,
+   "t": 1794745687.72,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 6.637,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 3,
+    "messages": 2,
+    "null": 1
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 24,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 6.637,
+    "model_calls": 1,
+    "tool_calls_by_model": [
+     "send_email"
+    ],
+    "server_first_model_output_s": 6.226,
+    "server_first_token_s": null,
+    "sse_first_ai_event_s": 6.213,
+    "sse_first_ai_kind": "tool_call",
+    "sse_first_ai_value": "send_email",
+    "ui_trigger_to_request_s": 0.151,
+    "ui_first_visible_s": 6.371,
+    "ui_minus_sse_s": 0.158,
+    "ui_marks": "m3",
+    "ui_interrupt_form_s": 6.575
+   }
+  },
+  {
+   "n": 25,
+   "t": 1794745694.387,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0573,
+   "resp_bytes": 51816,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 26,
+   "t": 1794745908.385,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 17.5318,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 4,
+    "messages": 14,
+    "null": 3
+   },
+   "body_shape": {
+    "input": "dict",
+    "command": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_resumable": false,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "cancel",
+    "command.resume": {
+     "decisions": [
+      {
+       "type": "edit",
+       "edited_action": {
+        "name": "send_email",
+        "args": {
+         "to": "lee@example.com",
+         "subject": "Report",
+         "body": "The report is ready. Edited by the reviewer."
+        }
+       }
+      }
+     ]
+    }
+   },
+   "timing": {
+    "n": 26,
+    "graph": "agent",
+    "kind": "resume:edit",
+    "stream_secs": 17.5318,
+    "model_calls": 1,
+    "tool_calls_by_model": [],
+    "server_first_model_output_s": 15.648,
+    "server_first_token_s": 15.648,
+    "sse_first_ai_event_s": 15.73,
+    "sse_first_ai_kind": "text",
+    "sse_first_ai_value": "The",
+    "ui_trigger_to_request_s": 0.394,
+    "ui_first_visible_s": 15.864,
+    "ui_minus_sse_s": 0.135,
+    "ui_marks": "m3-edit",
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 27,
+   "t": 1794745926.081,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0253,
+   "resp_bytes": 64960,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 28,
+   "t": 1794745942.164,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 31.6624,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 3,
+    "messages": 2,
+    "null": 6
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 28,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 31.6624,
+    "model_calls": 1,
+    "tool_calls_by_model": [
+     "send_email"
+    ],
+    "server_first_model_output_s": 31.592,
+    "server_first_token_s": null,
+    "sse_first_ai_event_s": 31.587,
+    "sse_first_ai_kind": "tool_call",
+    "sse_first_ai_value": "send_email",
+    "ui_trigger_to_request_s": null,
+    "ui_first_visible_s": null,
+    "ui_minus_sse_s": null,
+    "ui_marks": null,
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 29,
+   "t": 1794745974.245,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.1255,
+   "resp_bytes": 75853,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 30,
+   "t": 1794745975.685,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 3.0628,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 3,
+    "messages": 22,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "command": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_resumable": false,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "cancel",
+    "command.resume": {
+     "decisions": [
+      {
+       "type": "reject",
+       "message": "Do not send invoices from chat."
+      }
+     ]
+    }
+   },
+   "timing": {
+    "n": 30,
+    "graph": "agent",
+    "kind": "resume:reject",
+    "stream_secs": 3.0628,
+    "model_calls": 1,
+    "tool_calls_by_model": [],
+    "server_first_model_output_s": 2.319,
+    "server_first_token_s": 2.319,
+    "sse_first_ai_event_s": 2.325,
+    "sse_first_ai_kind": "text",
+    "sse_first_ai_value": "I",
+    "ui_trigger_to_request_s": 0.209,
+    "ui_first_visible_s": 2.448,
+    "ui_minus_sse_s": 0.123,
+    "ui_marks": "m4-reject",
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 31,
+   "t": 1794745978.945,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0212,
+   "resp_bytes": 85940,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 32,
+   "t": 1794746002.118,
+   "method": "POST",
+   "path": "/threads",
+   "status": 200,
+   "secs": 0.0132,
+   "resp_bytes": 300,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {}
+   },
+   "timing": null
+  },
+  {
+   "n": 34,
+   "t": 1794746002.165,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 1.5645,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 2,
+    "messages": 21,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 34,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 1.5645,
+    "model_calls": 1,
+    "tool_calls_by_model": [],
+    "server_first_model_output_s": 1.206,
+    "server_first_token_s": 1.206,
+    "sse_first_ai_event_s": 1.231,
+    "sse_first_ai_kind": "text",
+    "sse_first_ai_value": "Use",
+    "ui_trigger_to_request_s": 0.059,
+    "ui_first_visible_s": 1.27,
+    "ui_minus_sse_s": 0.039,
+    "ui_marks": "ttft-1",
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 36,
+   "t": 1794746003.743,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0157,
+   "resp_bytes": 7759,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 37,
+   "t": 1794746005.158,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 1.0333,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 2,
+    "messages": 14,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 37,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 1.0333,
+    "model_calls": 1,
+    "tool_calls_by_model": [],
+    "server_first_model_output_s": 0.869,
+    "server_first_token_s": 0.869,
+    "sse_first_ai_event_s": 0.869,
+    "sse_first_ai_kind": "text",
+    "sse_first_ai_value": "Keep",
+    "ui_trigger_to_request_s": 0.042,
+    "ui_first_visible_s": 0.907,
+    "ui_minus_sse_s": 0.037,
+    "ui_marks": "ttft-2",
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 38,
+   "t": 1794746006.251,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0034,
+   "resp_bytes": 19464,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 39,
+   "t": 1794746006.256,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.002,
+   "resp_bytes": 10879,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 40,
+   "t": 1794746006.585,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 1.1792,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 2,
+    "messages": 17,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 40,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 1.1792,
+    "model_calls": 1,
+    "tool_calls_by_model": [],
+    "server_first_model_output_s": 0.952,
+    "server_first_token_s": 0.952,
+    "sse_first_ai_event_s": 0.953,
+    "sse_first_ai_kind": "text",
+    "sse_first_ai_value": "Include",
+    "ui_trigger_to_request_s": 0.015,
+    "ui_first_visible_s": 1.025,
+    "ui_minus_sse_s": 0.072,
+    "ui_marks": "ttft-3",
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 41,
+   "t": 1794746007.939,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0057,
+   "resp_bytes": 31290,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 42,
+   "t": 1794746022.77,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0138,
+   "resp_bytes": 85940,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 43,
+   "t": 1794746042.961,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0047,
+   "resp_bytes": 2,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent_percall"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 44,
+   "t": 1794746042.964,
+   "method": "GET",
+   "path": "/info",
+   "status": 200,
+   "secs": 0.0055,
+   "resp_bytes": 305,
+   "sse_events": null,
+   "body_shape": null,
+   "timing": null
+  },
+  {
+   "n": 45,
+   "t": 1794746042.967,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0046,
+   "resp_bytes": 2,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent_percall"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 46,
+   "t": 1794746042.972,
+   "method": "GET",
+   "path": "/info",
+   "status": 200,
+   "secs": 0.0028,
+   "resp_bytes": 305,
+   "sse_events": null,
+   "body_shape": null,
+   "timing": null
+  },
+  {
+   "n": 48,
+   "t": 1794746236.916,
+   "method": "POST",
+   "path": "/threads",
+   "status": 200,
+   "secs": 0.003,
+   "resp_bytes": 300,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {}
+   },
+   "timing": null
+  },
+  {
+   "n": 50,
+   "t": 1794746236.94,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 2.9073,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 3,
+    "messages": 2,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent_percall",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 50,
+    "graph": "agent_percall",
+    "kind": "message",
+    "stream_secs": 2.9073,
+    "model_calls": 1,
+    "tool_calls_by_model": [
+     "send_email"
+    ],
+    "server_first_model_output_s": 2.893,
+    "server_first_token_s": null,
+    "sse_first_ai_event_s": 2.893,
+    "sse_first_ai_kind": "tool_call",
+    "sse_first_ai_value": "send_email",
+    "ui_trigger_to_request_s": null,
+    "ui_first_visible_s": null,
+    "ui_minus_sse_s": null,
+    "ui_marks": null,
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 52,
+   "t": 1794746239.934,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0059,
+   "resp_bytes": 11763,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 54,
+   "t": 1794746240.94,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0015,
+   "resp_bytes": 3266,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent_percall"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 55,
+   "t": 1794746254.213,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 1.1106,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 2,
+    "messages": 11,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent_percall",
+    "checkpoint": "dict",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "tool:do-not-render-d",
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 55,
+    "graph": "agent_percall",
+    "kind": "message",
+    "stream_secs": 1.1106,
+    "model_calls": 1,
+    "tool_calls_by_model": [],
+    "server_first_model_output_s": 0.988,
+    "server_first_token_s": 0.988,
+    "sse_first_ai_event_s": 0.989,
+    "sse_first_ai_kind": "text",
+    "sse_first_ai_value": "Yes",
+    "ui_trigger_to_request_s": null,
+    "ui_first_visible_s": null,
+    "ui_minus_sse_s": null,
+    "ui_marks": null,
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 56,
+   "t": 1794746255.396,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0034,
+   "resp_bytes": 24562,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 57,
+   "t": 1794746274.077,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0038,
+   "resp_bytes": 11786,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 58,
+   "t": 1794746274.079,
+   "method": "GET",
+   "path": "/info",
+   "status": 200,
+   "secs": 0.0033,
+   "resp_bytes": 305,
+   "sse_events": null,
+   "body_shape": null,
+   "timing": null
+  },
+  {
+   "n": 59,
+   "t": 1794746274.081,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0026,
+   "resp_bytes": 11786,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 60,
+   "t": 1794746274.083,
+   "method": "GET",
+   "path": "/info",
+   "status": 200,
+   "secs": 0.0016,
+   "resp_bytes": 305,
+   "sse_events": null,
+   "body_shape": null,
+   "timing": null
+  },
+  {
+   "n": 61,
+   "t": 1794746277.603,
+   "method": "POST",
+   "path": "/threads",
+   "status": 200,
+   "secs": 0.0017,
+   "resp_bytes": 300,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {}
+   },
+   "timing": null
+  },
+  {
+   "n": 63,
+   "t": 1794746277.63,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 1.5677,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 3,
+    "messages": 2,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 63,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 1.5677,
+    "model_calls": 1,
+    "tool_calls_by_model": [
+     "send_email"
+    ],
+    "server_first_model_output_s": 1.563,
+    "server_first_token_s": null,
+    "sse_first_ai_event_s": 1.563,
+    "sse_first_ai_kind": "tool_call",
+    "sse_first_ai_value": "send_email",
+    "ui_trigger_to_request_s": null,
+    "ui_first_visible_s": null,
+    "ui_minus_sse_s": null,
+    "ui_marks": null,
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 65,
+   "t": 1794746279.286,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0023,
+   "resp_bytes": 6758,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 66,
+   "t": 1794746279.984,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 1.1908,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 2,
+    "messages": 13,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "checkpoint": "dict",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "tool:do-not-render-f",
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 66,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 1.1908,
+    "model_calls": 1,
+    "tool_calls_by_model": [],
+    "server_first_model_output_s": 1.041,
+    "server_first_token_s": 1.041,
+    "sse_first_ai_event_s": 1.042,
+    "sse_first_ai_kind": "text",
+    "sse_first_ai_value": "Yes",
+    "ui_trigger_to_request_s": null,
+    "ui_first_visible_s": null,
+    "ui_minus_sse_s": null,
+    "ui_marks": null,
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 67,
+   "t": 1794746281.209,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0028,
+   "resp_bytes": 19617,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 68,
+   "t": 1794746281.629,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0017,
+   "resp_bytes": 14322,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 69,
+   "t": 1794746293.082,
+   "method": "POST",
+   "path": "/threads",
+   "status": 200,
+   "secs": 0.0019,
+   "resp_bytes": 300,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {}
+   },
+   "timing": null
+  },
+  {
+   "n": 71,
+   "t": 1794746293.101,
+   "method": "POST",
+   "path": "/threads/<thread>/runs/stream",
+   "status": 200,
+   "secs": 1.3044,
+   "resp_bytes": null,
+   "sse_events": {
+    "metadata": 1,
+    "values": 3,
+    "messages": 2,
+    "null": 0
+   },
+   "body_shape": {
+    "input": "dict",
+    "stream_mode": [
+     "values",
+     "messages-tuple",
+     "custom"
+    ],
+    "stream_subgraphs": true,
+    "stream_resumable": true,
+    "assistant_id": "agent",
+    "on_disconnect": "continue",
+    "input.messages": [
+     "human"
+    ]
+   },
+   "timing": {
+    "n": 71,
+    "graph": "agent",
+    "kind": "message",
+    "stream_secs": 1.3044,
+    "model_calls": 1,
+    "tool_calls_by_model": [
+     "send_email"
+    ],
+    "server_first_model_output_s": 1.3,
+    "server_first_token_s": null,
+    "sse_first_ai_event_s": 1.3,
+    "sse_first_ai_kind": "tool_call",
+    "sse_first_ai_value": "send_email",
+    "ui_trigger_to_request_s": null,
+    "ui_first_visible_s": null,
+    "ui_minus_sse_s": null,
+    "ui_marks": null,
+    "ui_interrupt_form_s": null
+   }
+  },
+  {
+   "n": 73,
+   "t": 1794746294.477,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0022,
+   "resp_bytes": 6756,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 74,
+   "t": 1794746296.062,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0027,
+   "resp_bytes": 16210,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  },
+  {
+   "n": 76,
+   "t": 1794746296.066,
+   "method": "GET",
+   "path": "/info",
+   "status": 200,
+   "secs": 0.002,
+   "resp_bytes": 305,
+   "sse_events": null,
+   "body_shape": null,
+   "timing": null
+  },
+  {
+   "n": 75,
+   "t": 1794746296.063,
+   "method": "POST",
+   "path": "/threads/<thread>/history",
+   "status": 200,
+   "secs": 0.0062,
+   "resp_bytes": 6756,
+   "sse_events": null,
+   "body_shape": {
+    "limit": 10
+   },
+   "timing": null
+  },
+  {
+   "n": 78,
+   "t": 1794746296.069,
+   "method": "GET",
+   "path": "/info",
+   "status": 200,
+   "secs": 0.0022,
+   "resp_bytes": 305,
+   "sse_events": null,
+   "body_shape": null,
+   "timing": null
+  },
+  {
+   "n": 77,
+   "t": 1794746296.067,
+   "method": "POST",
+   "path": "/threads/search",
+   "status": 200,
+   "secs": 0.0047,
+   "resp_bytes": 16210,
+   "sse_events": null,
+   "body_shape": {
+    "metadata": {
+     "graph_id": "agent"
+    },
+    "limit": 100,
+    "offset": 0
+   },
+   "timing": null
+  }
+ ],
+ "server_outbound": {
+  "hosts": [
+   "http://127.0.0.1:11434"
+  ],
+  "count": 16,
+  "by": [
+   "POST http://127.0.0.1:11434/api/chat 200"
+  ]
+ },
+ "tool_runs": [
+  {
+   "t": 1794745575.275996,
+   "kind": "tool_run",
+   "name": "get_weather",
+   "args": {
+    "city": "Paris"
+   }
+  },
+  {
+   "t": 1794745666.191465,
+   "kind": "tool_run",
+   "name": "send_email",
+   "args": {
+    "to": "sam@example.com",
+    "subject": "Lunch",
+    "body": "See you at noon."
+   }
+  },
+  {
+   "t": 1794745909.365505,
+   "kind": "tool_run",
+   "name": "send_email",
+   "args": {
+    "to": "lee@example.com",
+    "subject": "Report",
+    "body": "The report is ready. Edited by the reviewer."
+   }
+  }
+ ]
+}

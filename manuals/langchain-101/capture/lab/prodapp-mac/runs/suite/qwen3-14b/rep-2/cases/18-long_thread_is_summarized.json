@@ -1,0 +1,1104 @@
+{
+ "case": "long_thread_is_summarized",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "9042247c-a1e8-4852-8c16-d3a44823c57e",
+   "text": "How long does shipping take?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "b1bacbc5-f141-417c-9de7-d83772f6e389",
+      "name": "search_faq",
+      "args": {
+       "query": "shipping time"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}, {\"id\": \"shipping-cost\", \"answer\": \"Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Standard"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " takes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "6"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " business"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Express"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " takes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " business"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 14.6546
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9042247c-a1e8-4852-8c16-d3a44823c57e",
+   "text": "How much does shipping cost?",
+   "result": [
+    [
+     "token",
+     {
+      "text": "Standard"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " free"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " on"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " orders"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " over"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Below"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " that"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " costs"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "9"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Express"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " costs"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "4"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "9"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 12.3533
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9042247c-a1e8-4852-8c16-d3a44823c57e",
+   "text": "Do you ship internationally?",
+   "result": [
+    [
+     "token",
+     {
+      "text": "We"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " currently"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " only"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ship"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " addresses"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " within"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " United"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " States"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 4.3466
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9042247c-a1e8-4852-8c16-d3a44823c57e",
+   "text": "How do I pick the right size?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "6cfb6631-d7f8-42fd-b9ee-484c4cc15f5e",
+      "name": "search_faq",
+      "args": {
+       "query": "how to pick size"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"sizing\", \"answer\": \"Each product page has a size chart in centimetres. If you are between sizes, choose the larger one.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Each"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " product"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " page"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " has"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " size"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " chart"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " cent"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "imet"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "res"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " If"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " are"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " between"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " sizes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " choose"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " larger"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " one"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 16.012
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9042247c-a1e8-4852-8c16-d3a44823c57e",
+   "text": "Do your products have a warranty?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "a03700fa-8a8e-41bd-8fda-7960e06b03e2",
+      "name": "search_faq",
+      "args": {
+       "query": "warranty"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"warranty\", \"answer\": \"Footwear and outerwear carry a one-year warranty against defects in materials and stitching.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Foot"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "wear"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " outer"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "wear"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " carry"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " one"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-year"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " warranty"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " against"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " defects"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " materials"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " stitching"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 64.971
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "9042247c-a1e8-4852-8c16-d3a44823c57e",
+   "text": "Where is my order ORD-e18-2?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "c487d96d-8f38-457f-acd7-a5220978c242",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e18-2"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e18-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-e"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "8"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " rain"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " jacket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipped"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " The"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " total"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " was"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "8"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "9"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " no"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " has"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " been"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " processed"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 65.7446
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "9042247c-a1e8-4852-8c16-d3a44823c57e",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Here is a summary of the conversation to date:\n\n## SESSION INTENT\nThe user is inquiring about product sizing and warranty information.\n\n## SUMMARY\nThe user previously asked about shipping details, including time, cost, and international shipping availability. The response indicated that standard shipping takes 3 to 6 business days, express shipping takes 1 to 2 business days, and international shipping is not available. The user now is asking about sizing and warranty information. The response to the sizing question indicated that each product page has a size chart in centimetres, and if the user is between sizes, they should choose the larger one. The user now is asking about warranty information.\n\n## ARTIFACTS\nNone\n\n## NEXT STEPS\nDetermine whether the company offers a warranty on its products and provide the relevant information to the user.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": "summarization"
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "warranty"
+       },
+       "id": "a03700fa-8a8e-41bd-8fda-7960e06b03e2",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 745,
+      "output_tokens": 21,
+      "total_tokens": 766
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"warranty\", \"answer\": \"Footwear and outerwear carry a one-year warranty against defects in materials and stitching.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Footwear and outerwear carry a one-year warranty against defects in materials and stitching.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 808,
+      "output_tokens": 18,
+      "total_tokens": 826
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e18-2?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e18-2"
+       },
+       "id": "c487d96d-8f38-457f-acd7-a5220978c242",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 846,
+      "output_tokens": 25,
+      "total_tokens": 871
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e18-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your order ORD-e18-2 for a rain jacket is shipped. The total amount was $89.00, and no refund has been processed.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 796,
+      "output_tokens": 34,
+      "total_tokens": 830
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

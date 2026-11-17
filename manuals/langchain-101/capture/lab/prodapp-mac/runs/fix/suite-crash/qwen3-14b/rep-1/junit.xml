@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="63.579" timestamp="2026-11-15T17:59:05.528292+05:30" hostname="the-mac"><testcase classname="tests.test_durability" name="test_kill_mid_refund_then_resume_refunds_once" time="63.265"><failure message="assert (False)">async def test_kill_mid_refund_then_resume_refunds_once():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        env = {"AUTH_TOKENS": "tok-crash=crash", "REFUND_CONFIRM_DELAY": 3}
+        server = Server(RUN_DIR, "crash-1", **env)
+        reset_user("crash")
+        client = Http(server.url, "tok-crash")
+        thread = await client.thread()
+        first = await client.say(thread, "Please refund ORD-crash-2")
+        approving = asyncio.create_task(client.approve(thread))
+        committed = await wait_for(lambda: refunds("ORD-crash-2"))
+        killed_at = time.time()
+        exit_code = server.kill()
+        approve_error = None
+        try:
+            await approving
+        except Exception as exc:
+            approve_error = type(exc).__name__
+        server.log.close()
+    
+        server = Server(RUN_DIR, "crash-2", AUTH_TOKENS="tok-crash=crash")
+        client = Http(server.url, "tok-crash")
+        after_restart = await client.state(thread)
+        resumed = await client.approve(thread)
+        final = await client.state(thread)
+        server.stop()
+    
+        rows = refunds("ORD-crash-2")
+        order = sql("select total_cents, refunded_cents from orders where id = 'ORD-crash-2'")[0]
+        tool_results = [m for m in final["messages"] if m["type"] == "tool" and m["name"] == "refund_order"]
+        report("crash-test", {
+            "first_run_last_event": first[-1], "refund_committed_before_kill": committed,
+            "kill_exit_code": exit_code, "killed_at": killed_at, "approve_client_error": approve_error,
+            "after_restart_next": after_restart["next"], "after_restart_interrupts": after_restart["interrupts"],
+            "resumed_events": resumed, "refund_rows": rows, "order": order,
+            "refund_tool_messages": tool_results, "final_answer": final["messages"][-1]["content"],
+        })
+&gt;       assert committed and exit_code == -9
+E       assert (False)
+
+tests/test_durability.py:72: AssertionError</failure></testcase></testsuite></testsuites>

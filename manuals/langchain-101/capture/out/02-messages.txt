@@ -1,0 +1,213 @@
+# Messages and content blocks
+
+## message objects and their dict form
+
+[
+  {
+    "type": "SystemMessage",
+    "content": "You are terse."
+  },
+  {
+    "type": "HumanMessage",
+    "content": "What is 2 + 3?"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "call_1",
+        "type": "tool_call"
+      }
+    ]
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 5.",
+    "usage_metadata": {
+      "input_tokens": 12,
+      "output_tokens": 6,
+      "total_tokens": 18
+    }
+  }
+]
+
+## dicts and tuples coerced by convert_to_messages
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "hi"
+  },
+  {
+    "type": "AIMessage",
+    "content": "hello"
+  },
+  {
+    "type": "SystemMessage",
+    "content": "be brief"
+  }
+]
+
+## content_blocks on a string message
+
+[
+  {
+    "type": "text",
+    "text": "The sum is 5."
+  }
+]
+
+## content_blocks on an AI message with tool calls
+
+[
+  {
+    "type": "tool_call",
+    "id": "call_1",
+    "name": "add",
+    "args": {
+      "a": 2,
+      "b": 3
+    }
+  }
+]
+
+## multimodal human message with standard blocks
+
+[
+  {
+    "type": "HumanMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "Describe this image."
+      },
+      {
+        "type": "image",
+        "url": "https://example.com/cat.png"
+      },
+      {
+        "type": "file",
+        "base64": "JVBERi0=",
+        "mime_type": "application/pdf"
+      }
+    ]
+  }
+]
+
+content_blocks:
+[
+  {
+    "type": "text",
+    "text": "Describe this image."
+  },
+  {
+    "type": "image",
+    "url": "https://example.com/cat.png"
+  },
+  {
+    "type": "file",
+    "base64": "JVBERi0=",
+    "mime_type": "application/pdf"
+  }
+]
+
+## provider-shaped content parsed into standard blocks
+
+[
+  {
+    "type": "reasoning",
+    "reasoning": "Add the numbers.",
+    "extras": {
+      "signature": "sig"
+    }
+  },
+  {
+    "type": "text",
+    "text": "The sum is 5."
+  }
+]
+
+.text -> 'The sum is 5.'
+
+## chunks add up
+
+[
+  {
+    "type": "AIMessageChunk",
+    "content": "The sum is 5.",
+    "id": "run-1",
+    "chunk_position": "last"
+  }
+]
+
+## tool call chunks merge into a tool call
+
+{
+  "tool_call_chunks": [
+    {
+      "name": "add",
+      "args": "{\"a\": 2, \"b\": 3}",
+      "id": "call_1",
+      "index": 0,
+      "type": "tool_call_chunk"
+    }
+  ],
+  "tool_calls": [
+    {
+      "name": "add",
+      "args": {
+        "a": 2,
+        "b": 3
+      },
+      "id": "call_1",
+      "type": "tool_call"
+    }
+  ]
+}
+
+## trim_messages keeps the last turns that fit
+
+max_tokens=3, token_counter=len:
+[
+  {
+    "type": "SystemMessage",
+    "content": "You are terse."
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "tool_call_id": "call_1",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 5.",
+    "usage_metadata": {
+      "input_tokens": 12,
+      "output_tokens": 6,
+      "total_tokens": 18
+    }
+  }
+]
+
+the same with start_on='human':
+[
+  {
+    "type": "SystemMessage",
+    "content": "You are terse."
+  }
+]

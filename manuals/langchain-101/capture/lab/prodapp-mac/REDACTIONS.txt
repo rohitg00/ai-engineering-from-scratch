@@ -1,0 +1,5 @@
+Scrubbed on export: home directory paths, the temporary directory, the host name, and the user name.
+Each line counts replacements by their placeholder. The original values are not recorded.
+$TMPDIR: 1 replacements
+prodapp: 707 replacements
+the-mac: 19 replacements

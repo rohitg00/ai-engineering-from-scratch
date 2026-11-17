@@ -1,0 +1,55 @@
+# Retry policy, node error handlers, and node timeouts
+
+## RetryPolicy(max_attempts=3) then a node error_handler
+
+nodes:
+[
+  "__start__",
+  "__error_handler__flaky",
+  "flaky",
+  "report",
+  "__end__"
+]
+
+{
+  "status": "recovered from flaky: upstream failed on try 3",
+  "attempts": 3
+}
+
+tries:
+[
+  1,
+  2,
+  3
+]
+
+## no error_handler, RetryPolicy(max_attempts=2) with the default retry_on
+
+invoke:
+
+raised builtins.ValueError: upstream failed on try 1
+
+tries:
+[
+  1
+]
+
+## set_node_defaults(error_handler=...) covers every node
+
+{
+  "status": "default handler: KeyError in boom",
+  "attempts": 0
+}
+
+## a node timeout on an async node
+
+ainvoke:
+
+raised langgraph.errors.NodeTimeoutError: Node 'slow' exceeded its run timeout of 0.050s (elapsed: <seconds>).
+
+## a timeout with an error_handler
+
+{
+  "status": "NodeTimeoutError: Node 'slow' exceeded its run timeout of 0.050s (elapsed: <seconds>).",
+  "attempts": 0
+}

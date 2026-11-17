@@ -1,0 +1,1538 @@
+$ -m pytest <scripts>/t19_tests/test_ls_plugin.py -p no:cacheprovider -rA --color=no
+rc=1 wall=3.36s
+--- stdout
+============================= test session starts ==============================
+platform darwin -- Python 3.13.12, pytest-8.4.2, pluggy-1.7.0
+rootdir: <scripts>/t19_tests
+plugins: platformdirs-4.14.5, langsmith-0.14.17, anyio-4.16.0
+collected 5 items
+
+test_ls_plugin.py FFFFF                                                  [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_marked_pass _______________________________
+
+self = Client (API URL: https://api.smith.langchain.com), method = 'GET'
+pathname = '/datasets'
+request_kwargs = {'headers': {'Accept': 'application/json', 'User-Agent': 'langsmith-py/0.14.17-httpx2'}, 'params': {'limit': 1, 'name': 'None.test_ls_plugin'}, 'timeout': (10.0, 60.0)}
+stop_after_attempt = 1, retry_on = None, to_ignore = None
+handle_response = None, _context = ''
+kwargs = {'params': {'limit': 1, 'name': 'None.test_ls_plugin'}}
+caller_headers = {}
+
+    def request_with_retries(
+        self,
+        /,
+        method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
+        pathname: str,
+        *,
+        request_kwargs: Optional[Mapping] = None,
+        stop_after_attempt: int = 1,
+        retry_on: Optional[Sequence[type[BaseException]]] = None,
+        to_ignore: Optional[Sequence[type[BaseException]]] = None,
+        handle_response: Optional[Callable[[requests.Response, int], Any]] = None,
+        _context: str = "",
+        **kwargs: Any,
+    ) -> requests.Response:
+        """Send a request with retries.
+    
+        Args:
+            method: The HTTP request method.
+            pathname: The pathname of the request URL. Will be appended to the API URL.
+            request_kwargs: Additional request parameters.
+            stop_after_attempt: The number of attempts to make.
+            retry_on: The exceptions to retry on.
+    
+                In addition to: `[LangSmithConnectionError, LangSmithAPIError]`.
+            to_ignore: The exceptions to ignore / pass on.
+            handle_response: A function to handle the response and return whether to
+                continue retrying.
+            _context: The context of the request.
+            **kwargs: Additional keyword arguments to pass to the request.
+    
+        Returns:
+            The response object.
+    
+        Raises:
+            LangSmithAPIError: If a server error occurs.
+            LangSmithUserError: If the request fails.
+            LangSmithConnectionError: If a connection error occurs.
+            LangSmithError: If the request fails.
+        """
+        self._ensure_profile_auth()
+        request_kwargs = request_kwargs or {}
+        caller_headers = {
+            **request_kwargs.get("headers", {}),
+            **kwargs.get("headers", {}),
+        }
+        headers = {**self._headers, **caller_headers}
+        url = _construct_url(self.api_url, pathname)
+        if (
+            self._workspace_id
+            and "X-Tenant-Id" not in caller_headers
+            and headers.get(X_API_KEY) != self.api_key
+            and urllib_parse.urlsplit(url).netloc != urllib_parse.urlsplit(self.api_url).netloc
+        ):
+            # Workspace ids are per instance: a replica with its own key on another host
+            # drops the inherited one.
+            headers.pop("X-Tenant-Id", None)
+        if self._profile_auth is not None:
+            headers = self._profile_auth.prepare_request_headers(headers)
+        request_kwargs = {
+            "timeout": self._timeout,
+            **request_kwargs,
+            **kwargs,
+            "headers": headers,
+        }
+        if (
+            method != "GET"
+            and "data" in request_kwargs
+            and "files" not in request_kwargs
+            and not request_kwargs["headers"].get("Content-Type")
+        ):
+            request_kwargs["headers"]["Content-Type"] = "application/json"
+        logging_filters = [
+            ls_utils.FilterLangSmithRetry(),
+            ls_utils.FilterPoolFullWarning(host=str(self._host)),
+        ]
+        retry_on_: tuple[type[BaseException], ...] = (
+            *(retry_on or ()),
+            *(
+                ls_utils.LangSmithConnectionError,
+                ls_utils.LangSmithRequestTimeout,  # 408
+                ls_utils.LangSmithAPIError,  # 500
+            ),
+        )
+        to_ignore_: tuple[type[BaseException], ...] = (*(to_ignore or ()),)
+        response = None
+        for idx in range(stop_after_attempt):
+            try:
+                try:
+                    with ls_utils.filter_logs(_urllib3_logger, logging_filters):
+>                       response = self.session.request(
+                            method,
+                            url,
+                            stream=False,
+                            **request_kwargs,
+                        )
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:2007: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../lab/.venv/lib/python3.13/site-packages/requests/sessions.py:651: in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <requests.sessions.Session object at 0x10b50e3c0>
+request = <PreparedRequest [GET]>
+kw = {'allow_redirects': True, 'cert': None, 'proxies': OrderedDict(), 'stream': False, ...}
+stack = ['File "<site-packages>/langsmi...h/client.py", line 5634, in has_dataset\n    self.read_dataset(dataset_name=dataset_name, dataset_id=dataset_id)', ...]
+
+    def _send(self, request, **kw):
+        stack = [l.strip() for l in traceback.format_stack(limit=12)[:-1] if "langsmith" in l]
+        _log({"kind": "requests-send", "method": request.method, "url": request.url.split("?")[0], "guard": GUARD,
+              "where": stack[-1].split(", in ")[-1] if stack else None, "frames": [s.split("site-packages/")[-1][:120] for s in stack[-4:]]})
+        if GUARD == "refuse":
+>           raise requests.ConnectionError(f"t19 guard refused {request.method} {request.url}")
+E           requests.exceptions.ConnectionError: t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin
+
+conftest.py:35: ConnectionError
+
+The above exception was the direct cause of the following exception:
+
+request = <FixtureRequest for <Function test_marked_pass>>, test_args = ()
+test_kwargs = {}, i = 0
+repetition_extra = {'cache': None, 'cached_hosts': None, 'client': None, 'experiment_metadata': None, ...}
+
+    @functools.wraps(func)
+    def wrapper(*test_args: Any, request: Any = None, **test_kwargs: Any):
+        if disable_tracking:
+            return func(*test_args, **test_kwargs)
+    
+        # Run test multiple times for repetitions
+        for i in range(repetitions):
+            repetition_extra = langtest_extra.copy()
+>           _run_test(
+                func,
+                *test_args,
+                pytest_request=request,
+                **test_kwargs,
+                langtest_extra=repetition_extra,
+            )
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:399: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:986: in _run_test
+    test_case = _create_test_case(
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:947: in _create_test_case
+    test_suite = _LangSmithTestSuite.from_test(client, func, langtest_extra.get("test_suite_name"), experiment_metadata)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:603: in from_test
+    test_suite = _get_test_suite(client, test_suite_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:452: in _get_test_suite
+    if client.has_dataset(dataset_name=test_suite_name):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:5634: in has_dataset
+    self.read_dataset(dataset_name=dataset_name, dataset_id=dataset_id)
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/utils.py:164: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:5665: in read_dataset
+    response = self.request_with_retries(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Client (API URL: https://api.smith.langchain.com), method = 'GET'
+pathname = '/datasets'
+request_kwargs = {'headers': {'Accept': 'application/json', 'User-Agent': 'langsmith-py/0.14.17-httpx2'}, 'params': {'limit': 1, 'name': 'None.test_ls_plugin'}, 'timeout': (10.0, 60.0)}
+stop_after_attempt = 1, retry_on = None, to_ignore = None
+handle_response = None, _context = ''
+kwargs = {'params': {'limit': 1, 'name': 'None.test_ls_plugin'}}
+caller_headers = {}
+
+    def request_with_retries(
+        self,
+        /,
+        method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
+        pathname: str,
+        *,
+        request_kwargs: Optional[Mapping] = None,
+        stop_after_attempt: int = 1,
+        retry_on: Optional[Sequence[type[BaseException]]] = None,
+        to_ignore: Optional[Sequence[type[BaseException]]] = None,
+        handle_response: Optional[Callable[[requests.Response, int], Any]] = None,
+        _context: str = "",
+        **kwargs: Any,
+    ) -> requests.Response:
+        """Send a request with retries.
+    
+        Args:
+            method: The HTTP request method.
+            pathname: The pathname of the request URL. Will be appended to the API URL.
+            request_kwargs: Additional request parameters.
+            stop_after_attempt: The number of attempts to make.
+            retry_on: The exceptions to retry on.
+    
+                In addition to: `[LangSmithConnectionError, LangSmithAPIError]`.
+            to_ignore: The exceptions to ignore / pass on.
+            handle_response: A function to handle the response and return whether to
+                continue retrying.
+            _context: The context of the request.
+            **kwargs: Additional keyword arguments to pass to the request.
+    
+        Returns:
+            The response object.
+    
+        Raises:
+            LangSmithAPIError: If a server error occurs.
+            LangSmithUserError: If the request fails.
+            LangSmithConnectionError: If a connection error occurs.
+            LangSmithError: If the request fails.
+        """
+        self._ensure_profile_auth()
+        request_kwargs = request_kwargs or {}
+        caller_headers = {
+            **request_kwargs.get("headers", {}),
+            **kwargs.get("headers", {}),
+        }
+        headers = {**self._headers, **caller_headers}
+        url = _construct_url(self.api_url, pathname)
+        if (
+            self._workspace_id
+            and "X-Tenant-Id" not in caller_headers
+            and headers.get(X_API_KEY) != self.api_key
+            and urllib_parse.urlsplit(url).netloc != urllib_parse.urlsplit(self.api_url).netloc
+        ):
+            # Workspace ids are per instance: a replica with its own key on another host
+            # drops the inherited one.
+            headers.pop("X-Tenant-Id", None)
+        if self._profile_auth is not None:
+            headers = self._profile_auth.prepare_request_headers(headers)
+        request_kwargs = {
+            "timeout": self._timeout,
+            **request_kwargs,
+            **kwargs,
+            "headers": headers,
+        }
+        if (
+            method != "GET"
+            and "data" in request_kwargs
+            and "files" not in request_kwargs
+            and not request_kwargs["headers"].get("Content-Type")
+        ):
+            request_kwargs["headers"]["Content-Type"] = "application/json"
+        logging_filters = [
+            ls_utils.FilterLangSmithRetry(),
+            ls_utils.FilterPoolFullWarning(host=str(self._host)),
+        ]
+        retry_on_: tuple[type[BaseException], ...] = (
+            *(retry_on or ()),
+            *(
+                ls_utils.LangSmithConnectionError,
+                ls_utils.LangSmithRequestTimeout,  # 408
+                ls_utils.LangSmithAPIError,  # 500
+            ),
+        )
+        to_ignore_: tuple[type[BaseException], ...] = (*(to_ignore or ()),)
+        response = None
+        for idx in range(stop_after_attempt):
+            try:
+                try:
+                    with ls_utils.filter_logs(_urllib3_logger, logging_filters):
+                        response = self.session.request(
+                            method,
+                            url,
+                            stream=False,
+                            **request_kwargs,
+                        )
+                    ls_utils.raise_for_status_with_text(response)
+                    return response
+                except requests.exceptions.ReadTimeout as e:
+                    logger.debug("Passing on exception %s", e)
+                    if idx + 1 == stop_after_attempt:
+                        raise
+                    sleep_time = 2**idx + (random.random() * 0.5)
+                    time.sleep(sleep_time)
+                    continue
+    
+                except requests.HTTPError as e:
+                    if response is not None:
+                        if handle_response is not None:
+                            if idx + 1 < stop_after_attempt:
+                                should_continue = handle_response(response, idx + 1)
+                                if should_continue:
+                                    continue
+                        if response.status_code == 500:
+                            raise ls_utils.LangSmithAPIError(
+                                f"Server error ({response.status_code}) caused failure to {method}"
+                                f" {pathname} in"
+                                f" LangSmith API. {repr(e)}"
+                                f"{_context}"
+                            )
+                        elif response.status_code == 408:
+                            raise ls_utils.LangSmithRequestTimeout(
+                                f"Client took too long to send request to {method}{pathname} {_context}"
+                            )
+                        elif response.status_code == 429:
+                            raise ls_utils.LangSmithRateLimitError(
+                                f"Rate limit exceeded for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 401:
+                            raise ls_utils.LangSmithAuthError(
+                                f"Authentication failed for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 404:
+                            raise ls_utils.LangSmithNotFoundError(
+                                f"Resource not found for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 409:
+                            raise ls_utils.LangSmithConflictError(f"Conflict for {pathname}. {repr(e)}{_context}")
+                        elif response.status_code == 403:
+                            try:
+                                error_data = response.json()
+                                error_code = error_data.get("error", "")
+                                if error_code == "org_scoped_key_requires_workspace":
+                                    raise ls_utils.LangSmithUserError(
+                                        "This API key is org-scoped and requires workspace specification. "
+                                        "Please provide 'workspace_id' parameter, "
+                                        "or set LANGSMITH_WORKSPACE_ID environment variable."
+                                    )
+                            except (ValueError, KeyError):
+                                pass
+                            raise ls_utils.LangSmithError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+                        else:
+                            raise ls_utils.LangSmithError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+    
+                    else:
+                        raise ls_utils.LangSmithUserError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+                except requests.ConnectionError as e:
+                    recommendation = (
+                        "Please confirm your LANGCHAIN_ENDPOINT."
+                        if self.api_url != "https://api.smith.langchain.com"
+                        else "Please confirm your internet connection."
+                    )
+                    try:
+                        content_length = int(str(e.request.headers.get("Content-Length")) if e.request else "")
+                        size_rec = self._content_above_size(content_length)
+                        if size_rec:
+                            recommendation = size_rec
+                    except ValueError:
+                        content_length = None
+    
+                    api_key = e.request.headers.get("x-api-key") or "" if e.request else ""
+                    prefix, suffix = api_key[:5], api_key[-2:]
+                    filler = "*" * (max(0, len(api_key) - 7))
+                    masked_api_key = f"{prefix}{filler}{suffix}"
+    
+>                   raise ls_utils.LangSmithConnectionError(
+                        f"Connection error caused failure to {method} {pathname}"
+                        f" in LangSmith API. {recommendation}"
+                        f" {repr(e)}"
+                        f"\nContent-Length: {content_length}"
+                        f"\nAPI Key: {masked_api_key}"
+                        f"{_context}"
+                    ) from e
+E                   langsmith.utils.LangSmithConnectionError: Connection error caused failure to GET /datasets in LangSmith API. Please confirm your internet connection. ConnectionError('t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin')
+E                   Content-Length: None
+E                   API Key:
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:2092: LangSmithConnectionError
+------------------------------ Captured log call -------------------------------
+WARNING  langsmith.client:client.py:1884 Failed to get info from https://api.smith.langchain.com: LangSmithConnectionError("Connection error caused failure to GET /info in LangSmith API. Please confirm your internet connection. ConnectionError('t19 guard refused GET https://api.smith.langchain.com/info')\nContent-Length: None\nAPI Key: ")
+WARNING  langsmith.client:_background_thread.py:573 Run compression is not enabled. Please update to the latest version of LangSmith. Falling back to regular multipart ingestion.
+_______________________________ test_marked_fail _______________________________
+
+self = Client (API URL: https://api.smith.langchain.com), method = 'GET'
+pathname = '/datasets'
+request_kwargs = {'headers': {'Accept': 'application/json', 'User-Agent': 'langsmith-py/0.14.17-httpx2'}, 'params': {'limit': 1, 'name': 'None.test_ls_plugin'}, 'timeout': (10.0, 60.0)}
+stop_after_attempt = 1, retry_on = None, to_ignore = None
+handle_response = None, _context = ''
+kwargs = {'params': {'limit': 1, 'name': 'None.test_ls_plugin'}}
+caller_headers = {}
+
+    def request_with_retries(
+        self,
+        /,
+        method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
+        pathname: str,
+        *,
+        request_kwargs: Optional[Mapping] = None,
+        stop_after_attempt: int = 1,
+        retry_on: Optional[Sequence[type[BaseException]]] = None,
+        to_ignore: Optional[Sequence[type[BaseException]]] = None,
+        handle_response: Optional[Callable[[requests.Response, int], Any]] = None,
+        _context: str = "",
+        **kwargs: Any,
+    ) -> requests.Response:
+        """Send a request with retries.
+    
+        Args:
+            method: The HTTP request method.
+            pathname: The pathname of the request URL. Will be appended to the API URL.
+            request_kwargs: Additional request parameters.
+            stop_after_attempt: The number of attempts to make.
+            retry_on: The exceptions to retry on.
+    
+                In addition to: `[LangSmithConnectionError, LangSmithAPIError]`.
+            to_ignore: The exceptions to ignore / pass on.
+            handle_response: A function to handle the response and return whether to
+                continue retrying.
+            _context: The context of the request.
+            **kwargs: Additional keyword arguments to pass to the request.
+    
+        Returns:
+            The response object.
+    
+        Raises:
+            LangSmithAPIError: If a server error occurs.
+            LangSmithUserError: If the request fails.
+            LangSmithConnectionError: If a connection error occurs.
+            LangSmithError: If the request fails.
+        """
+        self._ensure_profile_auth()
+        request_kwargs = request_kwargs or {}
+        caller_headers = {
+            **request_kwargs.get("headers", {}),
+            **kwargs.get("headers", {}),
+        }
+        headers = {**self._headers, **caller_headers}
+        url = _construct_url(self.api_url, pathname)
+        if (
+            self._workspace_id
+            and "X-Tenant-Id" not in caller_headers
+            and headers.get(X_API_KEY) != self.api_key
+            and urllib_parse.urlsplit(url).netloc != urllib_parse.urlsplit(self.api_url).netloc
+        ):
+            # Workspace ids are per instance: a replica with its own key on another host
+            # drops the inherited one.
+            headers.pop("X-Tenant-Id", None)
+        if self._profile_auth is not None:
+            headers = self._profile_auth.prepare_request_headers(headers)
+        request_kwargs = {
+            "timeout": self._timeout,
+            **request_kwargs,
+            **kwargs,
+            "headers": headers,
+        }
+        if (
+            method != "GET"
+            and "data" in request_kwargs
+            and "files" not in request_kwargs
+            and not request_kwargs["headers"].get("Content-Type")
+        ):
+            request_kwargs["headers"]["Content-Type"] = "application/json"
+        logging_filters = [
+            ls_utils.FilterLangSmithRetry(),
+            ls_utils.FilterPoolFullWarning(host=str(self._host)),
+        ]
+        retry_on_: tuple[type[BaseException], ...] = (
+            *(retry_on or ()),
+            *(
+                ls_utils.LangSmithConnectionError,
+                ls_utils.LangSmithRequestTimeout,  # 408
+                ls_utils.LangSmithAPIError,  # 500
+            ),
+        )
+        to_ignore_: tuple[type[BaseException], ...] = (*(to_ignore or ()),)
+        response = None
+        for idx in range(stop_after_attempt):
+            try:
+                try:
+                    with ls_utils.filter_logs(_urllib3_logger, logging_filters):
+>                       response = self.session.request(
+                            method,
+                            url,
+                            stream=False,
+                            **request_kwargs,
+                        )
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:2007: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../lab/.venv/lib/python3.13/site-packages/requests/sessions.py:651: in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <requests.sessions.Session object at 0x10b50e3c0>
+request = <PreparedRequest [GET]>
+kw = {'allow_redirects': True, 'cert': None, 'proxies': OrderedDict(), 'stream': False, ...}
+stack = ['File "<site-packages>/langsmi...h/client.py", line 5634, in has_dataset\n    self.read_dataset(dataset_name=dataset_name, dataset_id=dataset_id)', ...]
+
+    def _send(self, request, **kw):
+        stack = [l.strip() for l in traceback.format_stack(limit=12)[:-1] if "langsmith" in l]
+        _log({"kind": "requests-send", "method": request.method, "url": request.url.split("?")[0], "guard": GUARD,
+              "where": stack[-1].split(", in ")[-1] if stack else None, "frames": [s.split("site-packages/")[-1][:120] for s in stack[-4:]]})
+        if GUARD == "refuse":
+>           raise requests.ConnectionError(f"t19 guard refused {request.method} {request.url}")
+E           requests.exceptions.ConnectionError: t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin
+
+conftest.py:35: ConnectionError
+
+The above exception was the direct cause of the following exception:
+
+request = <FixtureRequest for <Function test_marked_fail>>, test_args = ()
+test_kwargs = {}, i = 0
+repetition_extra = {'cache': None, 'cached_hosts': None, 'client': None, 'experiment_metadata': None, ...}
+
+    @functools.wraps(func)
+    def wrapper(*test_args: Any, request: Any = None, **test_kwargs: Any):
+        if disable_tracking:
+            return func(*test_args, **test_kwargs)
+    
+        # Run test multiple times for repetitions
+        for i in range(repetitions):
+            repetition_extra = langtest_extra.copy()
+>           _run_test(
+                func,
+                *test_args,
+                pytest_request=request,
+                **test_kwargs,
+                langtest_extra=repetition_extra,
+            )
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:399: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:986: in _run_test
+    test_case = _create_test_case(
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:947: in _create_test_case
+    test_suite = _LangSmithTestSuite.from_test(client, func, langtest_extra.get("test_suite_name"), experiment_metadata)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:603: in from_test
+    test_suite = _get_test_suite(client, test_suite_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:452: in _get_test_suite
+    if client.has_dataset(dataset_name=test_suite_name):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:5634: in has_dataset
+    self.read_dataset(dataset_name=dataset_name, dataset_id=dataset_id)
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/utils.py:164: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:5665: in read_dataset
+    response = self.request_with_retries(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Client (API URL: https://api.smith.langchain.com), method = 'GET'
+pathname = '/datasets'
+request_kwargs = {'headers': {'Accept': 'application/json', 'User-Agent': 'langsmith-py/0.14.17-httpx2'}, 'params': {'limit': 1, 'name': 'None.test_ls_plugin'}, 'timeout': (10.0, 60.0)}
+stop_after_attempt = 1, retry_on = None, to_ignore = None
+handle_response = None, _context = ''
+kwargs = {'params': {'limit': 1, 'name': 'None.test_ls_plugin'}}
+caller_headers = {}
+
+    def request_with_retries(
+        self,
+        /,
+        method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
+        pathname: str,
+        *,
+        request_kwargs: Optional[Mapping] = None,
+        stop_after_attempt: int = 1,
+        retry_on: Optional[Sequence[type[BaseException]]] = None,
+        to_ignore: Optional[Sequence[type[BaseException]]] = None,
+        handle_response: Optional[Callable[[requests.Response, int], Any]] = None,
+        _context: str = "",
+        **kwargs: Any,
+    ) -> requests.Response:
+        """Send a request with retries.
+    
+        Args:
+            method: The HTTP request method.
+            pathname: The pathname of the request URL. Will be appended to the API URL.
+            request_kwargs: Additional request parameters.
+            stop_after_attempt: The number of attempts to make.
+            retry_on: The exceptions to retry on.
+    
+                In addition to: `[LangSmithConnectionError, LangSmithAPIError]`.
+            to_ignore: The exceptions to ignore / pass on.
+            handle_response: A function to handle the response and return whether to
+                continue retrying.
+            _context: The context of the request.
+            **kwargs: Additional keyword arguments to pass to the request.
+    
+        Returns:
+            The response object.
+    
+        Raises:
+            LangSmithAPIError: If a server error occurs.
+            LangSmithUserError: If the request fails.
+            LangSmithConnectionError: If a connection error occurs.
+            LangSmithError: If the request fails.
+        """
+        self._ensure_profile_auth()
+        request_kwargs = request_kwargs or {}
+        caller_headers = {
+            **request_kwargs.get("headers", {}),
+            **kwargs.get("headers", {}),
+        }
+        headers = {**self._headers, **caller_headers}
+        url = _construct_url(self.api_url, pathname)
+        if (
+            self._workspace_id
+            and "X-Tenant-Id" not in caller_headers
+            and headers.get(X_API_KEY) != self.api_key
+            and urllib_parse.urlsplit(url).netloc != urllib_parse.urlsplit(self.api_url).netloc
+        ):
+            # Workspace ids are per instance: a replica with its own key on another host
+            # drops the inherited one.
+            headers.pop("X-Tenant-Id", None)
+        if self._profile_auth is not None:
+            headers = self._profile_auth.prepare_request_headers(headers)
+        request_kwargs = {
+            "timeout": self._timeout,
+            **request_kwargs,
+            **kwargs,
+            "headers": headers,
+        }
+        if (
+            method != "GET"
+            and "data" in request_kwargs
+            and "files" not in request_kwargs
+            and not request_kwargs["headers"].get("Content-Type")
+        ):
+            request_kwargs["headers"]["Content-Type"] = "application/json"
+        logging_filters = [
+            ls_utils.FilterLangSmithRetry(),
+            ls_utils.FilterPoolFullWarning(host=str(self._host)),
+        ]
+        retry_on_: tuple[type[BaseException], ...] = (
+            *(retry_on or ()),
+            *(
+                ls_utils.LangSmithConnectionError,
+                ls_utils.LangSmithRequestTimeout,  # 408
+                ls_utils.LangSmithAPIError,  # 500
+            ),
+        )
+        to_ignore_: tuple[type[BaseException], ...] = (*(to_ignore or ()),)
+        response = None
+        for idx in range(stop_after_attempt):
+            try:
+                try:
+                    with ls_utils.filter_logs(_urllib3_logger, logging_filters):
+                        response = self.session.request(
+                            method,
+                            url,
+                            stream=False,
+                            **request_kwargs,
+                        )
+                    ls_utils.raise_for_status_with_text(response)
+                    return response
+                except requests.exceptions.ReadTimeout as e:
+                    logger.debug("Passing on exception %s", e)
+                    if idx + 1 == stop_after_attempt:
+                        raise
+                    sleep_time = 2**idx + (random.random() * 0.5)
+                    time.sleep(sleep_time)
+                    continue
+    
+                except requests.HTTPError as e:
+                    if response is not None:
+                        if handle_response is not None:
+                            if idx + 1 < stop_after_attempt:
+                                should_continue = handle_response(response, idx + 1)
+                                if should_continue:
+                                    continue
+                        if response.status_code == 500:
+                            raise ls_utils.LangSmithAPIError(
+                                f"Server error ({response.status_code}) caused failure to {method}"
+                                f" {pathname} in"
+                                f" LangSmith API. {repr(e)}"
+                                f"{_context}"
+                            )
+                        elif response.status_code == 408:
+                            raise ls_utils.LangSmithRequestTimeout(
+                                f"Client took too long to send request to {method}{pathname} {_context}"
+                            )
+                        elif response.status_code == 429:
+                            raise ls_utils.LangSmithRateLimitError(
+                                f"Rate limit exceeded for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 401:
+                            raise ls_utils.LangSmithAuthError(
+                                f"Authentication failed for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 404:
+                            raise ls_utils.LangSmithNotFoundError(
+                                f"Resource not found for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 409:
+                            raise ls_utils.LangSmithConflictError(f"Conflict for {pathname}. {repr(e)}{_context}")
+                        elif response.status_code == 403:
+                            try:
+                                error_data = response.json()
+                                error_code = error_data.get("error", "")
+                                if error_code == "org_scoped_key_requires_workspace":
+                                    raise ls_utils.LangSmithUserError(
+                                        "This API key is org-scoped and requires workspace specification. "
+                                        "Please provide 'workspace_id' parameter, "
+                                        "or set LANGSMITH_WORKSPACE_ID environment variable."
+                                    )
+                            except (ValueError, KeyError):
+                                pass
+                            raise ls_utils.LangSmithError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+                        else:
+                            raise ls_utils.LangSmithError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+    
+                    else:
+                        raise ls_utils.LangSmithUserError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+                except requests.ConnectionError as e:
+                    recommendation = (
+                        "Please confirm your LANGCHAIN_ENDPOINT."
+                        if self.api_url != "https://api.smith.langchain.com"
+                        else "Please confirm your internet connection."
+                    )
+                    try:
+                        content_length = int(str(e.request.headers.get("Content-Length")) if e.request else "")
+                        size_rec = self._content_above_size(content_length)
+                        if size_rec:
+                            recommendation = size_rec
+                    except ValueError:
+                        content_length = None
+    
+                    api_key = e.request.headers.get("x-api-key") or "" if e.request else ""
+                    prefix, suffix = api_key[:5], api_key[-2:]
+                    filler = "*" * (max(0, len(api_key) - 7))
+                    masked_api_key = f"{prefix}{filler}{suffix}"
+    
+>                   raise ls_utils.LangSmithConnectionError(
+                        f"Connection error caused failure to {method} {pathname}"
+                        f" in LangSmith API. {recommendation}"
+                        f" {repr(e)}"
+                        f"\nContent-Length: {content_length}"
+                        f"\nAPI Key: {masked_api_key}"
+                        f"{_context}"
+                    ) from e
+E                   langsmith.utils.LangSmithConnectionError: Connection error caused failure to GET /datasets in LangSmith API. Please confirm your internet connection. ConnectionError('t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin')
+E                   Content-Length: None
+E                   API Key:
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:2092: LangSmithConnectionError
+_____________________________ test_decorator_form ______________________________
+
+self = Client (API URL: https://api.smith.langchain.com), method = 'GET'
+pathname = '/datasets'
+request_kwargs = {'headers': {'Accept': 'application/json', 'User-Agent': 'langsmith-py/0.14.17-httpx2'}, 'params': {'limit': 1, 'name': 'None.test_ls_plugin'}, 'timeout': (10.0, 60.0)}
+stop_after_attempt = 1, retry_on = None, to_ignore = None
+handle_response = None, _context = ''
+kwargs = {'params': {'limit': 1, 'name': 'None.test_ls_plugin'}}
+caller_headers = {}
+
+    def request_with_retries(
+        self,
+        /,
+        method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
+        pathname: str,
+        *,
+        request_kwargs: Optional[Mapping] = None,
+        stop_after_attempt: int = 1,
+        retry_on: Optional[Sequence[type[BaseException]]] = None,
+        to_ignore: Optional[Sequence[type[BaseException]]] = None,
+        handle_response: Optional[Callable[[requests.Response, int], Any]] = None,
+        _context: str = "",
+        **kwargs: Any,
+    ) -> requests.Response:
+        """Send a request with retries.
+    
+        Args:
+            method: The HTTP request method.
+            pathname: The pathname of the request URL. Will be appended to the API URL.
+            request_kwargs: Additional request parameters.
+            stop_after_attempt: The number of attempts to make.
+            retry_on: The exceptions to retry on.
+    
+                In addition to: `[LangSmithConnectionError, LangSmithAPIError]`.
+            to_ignore: The exceptions to ignore / pass on.
+            handle_response: A function to handle the response and return whether to
+                continue retrying.
+            _context: The context of the request.
+            **kwargs: Additional keyword arguments to pass to the request.
+    
+        Returns:
+            The response object.
+    
+        Raises:
+            LangSmithAPIError: If a server error occurs.
+            LangSmithUserError: If the request fails.
+            LangSmithConnectionError: If a connection error occurs.
+            LangSmithError: If the request fails.
+        """
+        self._ensure_profile_auth()
+        request_kwargs = request_kwargs or {}
+        caller_headers = {
+            **request_kwargs.get("headers", {}),
+            **kwargs.get("headers", {}),
+        }
+        headers = {**self._headers, **caller_headers}
+        url = _construct_url(self.api_url, pathname)
+        if (
+            self._workspace_id
+            and "X-Tenant-Id" not in caller_headers
+            and headers.get(X_API_KEY) != self.api_key
+            and urllib_parse.urlsplit(url).netloc != urllib_parse.urlsplit(self.api_url).netloc
+        ):
+            # Workspace ids are per instance: a replica with its own key on another host
+            # drops the inherited one.
+            headers.pop("X-Tenant-Id", None)
+        if self._profile_auth is not None:
+            headers = self._profile_auth.prepare_request_headers(headers)
+        request_kwargs = {
+            "timeout": self._timeout,
+            **request_kwargs,
+            **kwargs,
+            "headers": headers,
+        }
+        if (
+            method != "GET"
+            and "data" in request_kwargs
+            and "files" not in request_kwargs
+            and not request_kwargs["headers"].get("Content-Type")
+        ):
+            request_kwargs["headers"]["Content-Type"] = "application/json"
+        logging_filters = [
+            ls_utils.FilterLangSmithRetry(),
+            ls_utils.FilterPoolFullWarning(host=str(self._host)),
+        ]
+        retry_on_: tuple[type[BaseException], ...] = (
+            *(retry_on or ()),
+            *(
+                ls_utils.LangSmithConnectionError,
+                ls_utils.LangSmithRequestTimeout,  # 408
+                ls_utils.LangSmithAPIError,  # 500
+            ),
+        )
+        to_ignore_: tuple[type[BaseException], ...] = (*(to_ignore or ()),)
+        response = None
+        for idx in range(stop_after_attempt):
+            try:
+                try:
+                    with ls_utils.filter_logs(_urllib3_logger, logging_filters):
+>                       response = self.session.request(
+                            method,
+                            url,
+                            stream=False,
+                            **request_kwargs,
+                        )
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:2007: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../lab/.venv/lib/python3.13/site-packages/requests/sessions.py:651: in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <requests.sessions.Session object at 0x10b50e3c0>
+request = <PreparedRequest [GET]>
+kw = {'allow_redirects': True, 'cert': None, 'proxies': OrderedDict(), 'stream': False, ...}
+stack = ['File "<site-packages>/langsmi...h/client.py", line 5634, in has_dataset\n    self.read_dataset(dataset_name=dataset_name, dataset_id=dataset_id)', ...]
+
+    def _send(self, request, **kw):
+        stack = [l.strip() for l in traceback.format_stack(limit=12)[:-1] if "langsmith" in l]
+        _log({"kind": "requests-send", "method": request.method, "url": request.url.split("?")[0], "guard": GUARD,
+              "where": stack[-1].split(", in ")[-1] if stack else None, "frames": [s.split("site-packages/")[-1][:120] for s in stack[-4:]]})
+        if GUARD == "refuse":
+>           raise requests.ConnectionError(f"t19 guard refused {request.method} {request.url}")
+E           requests.exceptions.ConnectionError: t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin
+
+conftest.py:35: ConnectionError
+
+The above exception was the direct cause of the following exception:
+
+request = None, test_args = (), test_kwargs = {}, i = 0
+repetition_extra = {'cache': None, 'cached_hosts': None, 'client': None, 'experiment_metadata': None, ...}
+
+    @functools.wraps(func)
+    def wrapper(*test_args: Any, request: Any = None, **test_kwargs: Any):
+        if disable_tracking:
+            return func(*test_args, **test_kwargs)
+    
+        # Run test multiple times for repetitions
+        for i in range(repetitions):
+            repetition_extra = langtest_extra.copy()
+>           _run_test(
+                func,
+                *test_args,
+                pytest_request=request,
+                **test_kwargs,
+                langtest_extra=repetition_extra,
+            )
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:399: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:986: in _run_test
+    test_case = _create_test_case(
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:947: in _create_test_case
+    test_suite = _LangSmithTestSuite.from_test(client, func, langtest_extra.get("test_suite_name"), experiment_metadata)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:603: in from_test
+    test_suite = _get_test_suite(client, test_suite_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:452: in _get_test_suite
+    if client.has_dataset(dataset_name=test_suite_name):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:5634: in has_dataset
+    self.read_dataset(dataset_name=dataset_name, dataset_id=dataset_id)
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/utils.py:164: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:5665: in read_dataset
+    response = self.request_with_retries(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Client (API URL: https://api.smith.langchain.com), method = 'GET'
+pathname = '/datasets'
+request_kwargs = {'headers': {'Accept': 'application/json', 'User-Agent': 'langsmith-py/0.14.17-httpx2'}, 'params': {'limit': 1, 'name': 'None.test_ls_plugin'}, 'timeout': (10.0, 60.0)}
+stop_after_attempt = 1, retry_on = None, to_ignore = None
+handle_response = None, _context = ''
+kwargs = {'params': {'limit': 1, 'name': 'None.test_ls_plugin'}}
+caller_headers = {}
+
+    def request_with_retries(
+        self,
+        /,
+        method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
+        pathname: str,
+        *,
+        request_kwargs: Optional[Mapping] = None,
+        stop_after_attempt: int = 1,
+        retry_on: Optional[Sequence[type[BaseException]]] = None,
+        to_ignore: Optional[Sequence[type[BaseException]]] = None,
+        handle_response: Optional[Callable[[requests.Response, int], Any]] = None,
+        _context: str = "",
+        **kwargs: Any,
+    ) -> requests.Response:
+        """Send a request with retries.
+    
+        Args:
+            method: The HTTP request method.
+            pathname: The pathname of the request URL. Will be appended to the API URL.
+            request_kwargs: Additional request parameters.
+            stop_after_attempt: The number of attempts to make.
+            retry_on: The exceptions to retry on.
+    
+                In addition to: `[LangSmithConnectionError, LangSmithAPIError]`.
+            to_ignore: The exceptions to ignore / pass on.
+            handle_response: A function to handle the response and return whether to
+                continue retrying.
+            _context: The context of the request.
+            **kwargs: Additional keyword arguments to pass to the request.
+    
+        Returns:
+            The response object.
+    
+        Raises:
+            LangSmithAPIError: If a server error occurs.
+            LangSmithUserError: If the request fails.
+            LangSmithConnectionError: If a connection error occurs.
+            LangSmithError: If the request fails.
+        """
+        self._ensure_profile_auth()
+        request_kwargs = request_kwargs or {}
+        caller_headers = {
+            **request_kwargs.get("headers", {}),
+            **kwargs.get("headers", {}),
+        }
+        headers = {**self._headers, **caller_headers}
+        url = _construct_url(self.api_url, pathname)
+        if (
+            self._workspace_id
+            and "X-Tenant-Id" not in caller_headers
+            and headers.get(X_API_KEY) != self.api_key
+            and urllib_parse.urlsplit(url).netloc != urllib_parse.urlsplit(self.api_url).netloc
+        ):
+            # Workspace ids are per instance: a replica with its own key on another host
+            # drops the inherited one.
+            headers.pop("X-Tenant-Id", None)
+        if self._profile_auth is not None:
+            headers = self._profile_auth.prepare_request_headers(headers)
+        request_kwargs = {
+            "timeout": self._timeout,
+            **request_kwargs,
+            **kwargs,
+            "headers": headers,
+        }
+        if (
+            method != "GET"
+            and "data" in request_kwargs
+            and "files" not in request_kwargs
+            and not request_kwargs["headers"].get("Content-Type")
+        ):
+            request_kwargs["headers"]["Content-Type"] = "application/json"
+        logging_filters = [
+            ls_utils.FilterLangSmithRetry(),
+            ls_utils.FilterPoolFullWarning(host=str(self._host)),
+        ]
+        retry_on_: tuple[type[BaseException], ...] = (
+            *(retry_on or ()),
+            *(
+                ls_utils.LangSmithConnectionError,
+                ls_utils.LangSmithRequestTimeout,  # 408
+                ls_utils.LangSmithAPIError,  # 500
+            ),
+        )
+        to_ignore_: tuple[type[BaseException], ...] = (*(to_ignore or ()),)
+        response = None
+        for idx in range(stop_after_attempt):
+            try:
+                try:
+                    with ls_utils.filter_logs(_urllib3_logger, logging_filters):
+                        response = self.session.request(
+                            method,
+                            url,
+                            stream=False,
+                            **request_kwargs,
+                        )
+                    ls_utils.raise_for_status_with_text(response)
+                    return response
+                except requests.exceptions.ReadTimeout as e:
+                    logger.debug("Passing on exception %s", e)
+                    if idx + 1 == stop_after_attempt:
+                        raise
+                    sleep_time = 2**idx + (random.random() * 0.5)
+                    time.sleep(sleep_time)
+                    continue
+    
+                except requests.HTTPError as e:
+                    if response is not None:
+                        if handle_response is not None:
+                            if idx + 1 < stop_after_attempt:
+                                should_continue = handle_response(response, idx + 1)
+                                if should_continue:
+                                    continue
+                        if response.status_code == 500:
+                            raise ls_utils.LangSmithAPIError(
+                                f"Server error ({response.status_code}) caused failure to {method}"
+                                f" {pathname} in"
+                                f" LangSmith API. {repr(e)}"
+                                f"{_context}"
+                            )
+                        elif response.status_code == 408:
+                            raise ls_utils.LangSmithRequestTimeout(
+                                f"Client took too long to send request to {method}{pathname} {_context}"
+                            )
+                        elif response.status_code == 429:
+                            raise ls_utils.LangSmithRateLimitError(
+                                f"Rate limit exceeded for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 401:
+                            raise ls_utils.LangSmithAuthError(
+                                f"Authentication failed for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 404:
+                            raise ls_utils.LangSmithNotFoundError(
+                                f"Resource not found for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 409:
+                            raise ls_utils.LangSmithConflictError(f"Conflict for {pathname}. {repr(e)}{_context}")
+                        elif response.status_code == 403:
+                            try:
+                                error_data = response.json()
+                                error_code = error_data.get("error", "")
+                                if error_code == "org_scoped_key_requires_workspace":
+                                    raise ls_utils.LangSmithUserError(
+                                        "This API key is org-scoped and requires workspace specification. "
+                                        "Please provide 'workspace_id' parameter, "
+                                        "or set LANGSMITH_WORKSPACE_ID environment variable."
+                                    )
+                            except (ValueError, KeyError):
+                                pass
+                            raise ls_utils.LangSmithError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+                        else:
+                            raise ls_utils.LangSmithError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+    
+                    else:
+                        raise ls_utils.LangSmithUserError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+                except requests.ConnectionError as e:
+                    recommendation = (
+                        "Please confirm your LANGCHAIN_ENDPOINT."
+                        if self.api_url != "https://api.smith.langchain.com"
+                        else "Please confirm your internet connection."
+                    )
+                    try:
+                        content_length = int(str(e.request.headers.get("Content-Length")) if e.request else "")
+                        size_rec = self._content_above_size(content_length)
+                        if size_rec:
+                            recommendation = size_rec
+                    except ValueError:
+                        content_length = None
+    
+                    api_key = e.request.headers.get("x-api-key") or "" if e.request else ""
+                    prefix, suffix = api_key[:5], api_key[-2:]
+                    filler = "*" * (max(0, len(api_key) - 7))
+                    masked_api_key = f"{prefix}{filler}{suffix}"
+    
+>                   raise ls_utils.LangSmithConnectionError(
+                        f"Connection error caused failure to {method} {pathname}"
+                        f" in LangSmith API. {recommendation}"
+                        f" {repr(e)}"
+                        f"\nContent-Length: {content_length}"
+                        f"\nAPI Key: {masked_api_key}"
+                        f"{_context}"
+                    ) from e
+E                   langsmith.utils.LangSmithConnectionError: Connection error caused failure to GET /datasets in LangSmith API. Please confirm your internet connection. ConnectionError('t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin')
+E                   Content-Length: None
+E                   API Key:
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:2092: LangSmithConnectionError
+______________________________ test_marked_agent _______________________________
+
+self = Client (API URL: https://api.smith.langchain.com), method = 'GET'
+pathname = '/datasets'
+request_kwargs = {'headers': {'Accept': 'application/json', 'User-Agent': 'langsmith-py/0.14.17-httpx2'}, 'params': {'limit': 1, 'name': 'None.test_ls_plugin'}, 'timeout': (10.0, 60.0)}
+stop_after_attempt = 1, retry_on = None, to_ignore = None
+handle_response = None, _context = ''
+kwargs = {'params': {'limit': 1, 'name': 'None.test_ls_plugin'}}
+caller_headers = {}
+
+    def request_with_retries(
+        self,
+        /,
+        method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
+        pathname: str,
+        *,
+        request_kwargs: Optional[Mapping] = None,
+        stop_after_attempt: int = 1,
+        retry_on: Optional[Sequence[type[BaseException]]] = None,
+        to_ignore: Optional[Sequence[type[BaseException]]] = None,
+        handle_response: Optional[Callable[[requests.Response, int], Any]] = None,
+        _context: str = "",
+        **kwargs: Any,
+    ) -> requests.Response:
+        """Send a request with retries.
+    
+        Args:
+            method: The HTTP request method.
+            pathname: The pathname of the request URL. Will be appended to the API URL.
+            request_kwargs: Additional request parameters.
+            stop_after_attempt: The number of attempts to make.
+            retry_on: The exceptions to retry on.
+    
+                In addition to: `[LangSmithConnectionError, LangSmithAPIError]`.
+            to_ignore: The exceptions to ignore / pass on.
+            handle_response: A function to handle the response and return whether to
+                continue retrying.
+            _context: The context of the request.
+            **kwargs: Additional keyword arguments to pass to the request.
+    
+        Returns:
+            The response object.
+    
+        Raises:
+            LangSmithAPIError: If a server error occurs.
+            LangSmithUserError: If the request fails.
+            LangSmithConnectionError: If a connection error occurs.
+            LangSmithError: If the request fails.
+        """
+        self._ensure_profile_auth()
+        request_kwargs = request_kwargs or {}
+        caller_headers = {
+            **request_kwargs.get("headers", {}),
+            **kwargs.get("headers", {}),
+        }
+        headers = {**self._headers, **caller_headers}
+        url = _construct_url(self.api_url, pathname)
+        if (
+            self._workspace_id
+            and "X-Tenant-Id" not in caller_headers
+            and headers.get(X_API_KEY) != self.api_key
+            and urllib_parse.urlsplit(url).netloc != urllib_parse.urlsplit(self.api_url).netloc
+        ):
+            # Workspace ids are per instance: a replica with its own key on another host
+            # drops the inherited one.
+            headers.pop("X-Tenant-Id", None)
+        if self._profile_auth is not None:
+            headers = self._profile_auth.prepare_request_headers(headers)
+        request_kwargs = {
+            "timeout": self._timeout,
+            **request_kwargs,
+            **kwargs,
+            "headers": headers,
+        }
+        if (
+            method != "GET"
+            and "data" in request_kwargs
+            and "files" not in request_kwargs
+            and not request_kwargs["headers"].get("Content-Type")
+        ):
+            request_kwargs["headers"]["Content-Type"] = "application/json"
+        logging_filters = [
+            ls_utils.FilterLangSmithRetry(),
+            ls_utils.FilterPoolFullWarning(host=str(self._host)),
+        ]
+        retry_on_: tuple[type[BaseException], ...] = (
+            *(retry_on or ()),
+            *(
+                ls_utils.LangSmithConnectionError,
+                ls_utils.LangSmithRequestTimeout,  # 408
+                ls_utils.LangSmithAPIError,  # 500
+            ),
+        )
+        to_ignore_: tuple[type[BaseException], ...] = (*(to_ignore or ()),)
+        response = None
+        for idx in range(stop_after_attempt):
+            try:
+                try:
+                    with ls_utils.filter_logs(_urllib3_logger, logging_filters):
+>                       response = self.session.request(
+                            method,
+                            url,
+                            stream=False,
+                            **request_kwargs,
+                        )
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:2007: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../lab/.venv/lib/python3.13/site-packages/requests/sessions.py:651: in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <requests.sessions.Session object at 0x10b50e3c0>
+request = <PreparedRequest [GET]>
+kw = {'allow_redirects': True, 'cert': None, 'proxies': OrderedDict(), 'stream': False, ...}
+stack = ['File "<site-packages>/langsmi...h/client.py", line 5634, in has_dataset\n    self.read_dataset(dataset_name=dataset_name, dataset_id=dataset_id)', ...]
+
+    def _send(self, request, **kw):
+        stack = [l.strip() for l in traceback.format_stack(limit=12)[:-1] if "langsmith" in l]
+        _log({"kind": "requests-send", "method": request.method, "url": request.url.split("?")[0], "guard": GUARD,
+              "where": stack[-1].split(", in ")[-1] if stack else None, "frames": [s.split("site-packages/")[-1][:120] for s in stack[-4:]]})
+        if GUARD == "refuse":
+>           raise requests.ConnectionError(f"t19 guard refused {request.method} {request.url}")
+E           requests.exceptions.ConnectionError: t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin
+
+conftest.py:35: ConnectionError
+
+The above exception was the direct cause of the following exception:
+
+request = <FixtureRequest for <Function test_marked_agent>>, test_args = ()
+test_kwargs = {}, i = 0
+repetition_extra = {'cache': None, 'cached_hosts': None, 'client': None, 'experiment_metadata': None, ...}
+
+    @functools.wraps(func)
+    def wrapper(*test_args: Any, request: Any = None, **test_kwargs: Any):
+        if disable_tracking:
+            return func(*test_args, **test_kwargs)
+    
+        # Run test multiple times for repetitions
+        for i in range(repetitions):
+            repetition_extra = langtest_extra.copy()
+>           _run_test(
+                func,
+                *test_args,
+                pytest_request=request,
+                **test_kwargs,
+                langtest_extra=repetition_extra,
+            )
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:399: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:986: in _run_test
+    test_case = _create_test_case(
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:947: in _create_test_case
+    test_suite = _LangSmithTestSuite.from_test(client, func, langtest_extra.get("test_suite_name"), experiment_metadata)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:603: in from_test
+    test_suite = _get_test_suite(client, test_suite_name)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:452: in _get_test_suite
+    if client.has_dataset(dataset_name=test_suite_name):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:5634: in has_dataset
+    self.read_dataset(dataset_name=dataset_name, dataset_id=dataset_id)
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/utils.py:164: in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:5665: in read_dataset
+    response = self.request_with_retries(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = Client (API URL: https://api.smith.langchain.com), method = 'GET'
+pathname = '/datasets'
+request_kwargs = {'headers': {'Accept': 'application/json', 'User-Agent': 'langsmith-py/0.14.17-httpx2'}, 'params': {'limit': 1, 'name': 'None.test_ls_plugin'}, 'timeout': (10.0, 60.0)}
+stop_after_attempt = 1, retry_on = None, to_ignore = None
+handle_response = None, _context = ''
+kwargs = {'params': {'limit': 1, 'name': 'None.test_ls_plugin'}}
+caller_headers = {}
+
+    def request_with_retries(
+        self,
+        /,
+        method: Literal["GET", "POST", "PUT", "PATCH", "DELETE"],
+        pathname: str,
+        *,
+        request_kwargs: Optional[Mapping] = None,
+        stop_after_attempt: int = 1,
+        retry_on: Optional[Sequence[type[BaseException]]] = None,
+        to_ignore: Optional[Sequence[type[BaseException]]] = None,
+        handle_response: Optional[Callable[[requests.Response, int], Any]] = None,
+        _context: str = "",
+        **kwargs: Any,
+    ) -> requests.Response:
+        """Send a request with retries.
+    
+        Args:
+            method: The HTTP request method.
+            pathname: The pathname of the request URL. Will be appended to the API URL.
+            request_kwargs: Additional request parameters.
+            stop_after_attempt: The number of attempts to make.
+            retry_on: The exceptions to retry on.
+    
+                In addition to: `[LangSmithConnectionError, LangSmithAPIError]`.
+            to_ignore: The exceptions to ignore / pass on.
+            handle_response: A function to handle the response and return whether to
+                continue retrying.
+            _context: The context of the request.
+            **kwargs: Additional keyword arguments to pass to the request.
+    
+        Returns:
+            The response object.
+    
+        Raises:
+            LangSmithAPIError: If a server error occurs.
+            LangSmithUserError: If the request fails.
+            LangSmithConnectionError: If a connection error occurs.
+            LangSmithError: If the request fails.
+        """
+        self._ensure_profile_auth()
+        request_kwargs = request_kwargs or {}
+        caller_headers = {
+            **request_kwargs.get("headers", {}),
+            **kwargs.get("headers", {}),
+        }
+        headers = {**self._headers, **caller_headers}
+        url = _construct_url(self.api_url, pathname)
+        if (
+            self._workspace_id
+            and "X-Tenant-Id" not in caller_headers
+            and headers.get(X_API_KEY) != self.api_key
+            and urllib_parse.urlsplit(url).netloc != urllib_parse.urlsplit(self.api_url).netloc
+        ):
+            # Workspace ids are per instance: a replica with its own key on another host
+            # drops the inherited one.
+            headers.pop("X-Tenant-Id", None)
+        if self._profile_auth is not None:
+            headers = self._profile_auth.prepare_request_headers(headers)
+        request_kwargs = {
+            "timeout": self._timeout,
+            **request_kwargs,
+            **kwargs,
+            "headers": headers,
+        }
+        if (
+            method != "GET"
+            and "data" in request_kwargs
+            and "files" not in request_kwargs
+            and not request_kwargs["headers"].get("Content-Type")
+        ):
+            request_kwargs["headers"]["Content-Type"] = "application/json"
+        logging_filters = [
+            ls_utils.FilterLangSmithRetry(),
+            ls_utils.FilterPoolFullWarning(host=str(self._host)),
+        ]
+        retry_on_: tuple[type[BaseException], ...] = (
+            *(retry_on or ()),
+            *(
+                ls_utils.LangSmithConnectionError,
+                ls_utils.LangSmithRequestTimeout,  # 408
+                ls_utils.LangSmithAPIError,  # 500
+            ),
+        )
+        to_ignore_: tuple[type[BaseException], ...] = (*(to_ignore or ()),)
+        response = None
+        for idx in range(stop_after_attempt):
+            try:
+                try:
+                    with ls_utils.filter_logs(_urllib3_logger, logging_filters):
+                        response = self.session.request(
+                            method,
+                            url,
+                            stream=False,
+                            **request_kwargs,
+                        )
+                    ls_utils.raise_for_status_with_text(response)
+                    return response
+                except requests.exceptions.ReadTimeout as e:
+                    logger.debug("Passing on exception %s", e)
+                    if idx + 1 == stop_after_attempt:
+                        raise
+                    sleep_time = 2**idx + (random.random() * 0.5)
+                    time.sleep(sleep_time)
+                    continue
+    
+                except requests.HTTPError as e:
+                    if response is not None:
+                        if handle_response is not None:
+                            if idx + 1 < stop_after_attempt:
+                                should_continue = handle_response(response, idx + 1)
+                                if should_continue:
+                                    continue
+                        if response.status_code == 500:
+                            raise ls_utils.LangSmithAPIError(
+                                f"Server error ({response.status_code}) caused failure to {method}"
+                                f" {pathname} in"
+                                f" LangSmith API. {repr(e)}"
+                                f"{_context}"
+                            )
+                        elif response.status_code == 408:
+                            raise ls_utils.LangSmithRequestTimeout(
+                                f"Client took too long to send request to {method}{pathname} {_context}"
+                            )
+                        elif response.status_code == 429:
+                            raise ls_utils.LangSmithRateLimitError(
+                                f"Rate limit exceeded for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 401:
+                            raise ls_utils.LangSmithAuthError(
+                                f"Authentication failed for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 404:
+                            raise ls_utils.LangSmithNotFoundError(
+                                f"Resource not found for {pathname}. {repr(e)}{_context}"
+                            )
+                        elif response.status_code == 409:
+                            raise ls_utils.LangSmithConflictError(f"Conflict for {pathname}. {repr(e)}{_context}")
+                        elif response.status_code == 403:
+                            try:
+                                error_data = response.json()
+                                error_code = error_data.get("error", "")
+                                if error_code == "org_scoped_key_requires_workspace":
+                                    raise ls_utils.LangSmithUserError(
+                                        "This API key is org-scoped and requires workspace specification. "
+                                        "Please provide 'workspace_id' parameter, "
+                                        "or set LANGSMITH_WORKSPACE_ID environment variable."
+                                    )
+                            except (ValueError, KeyError):
+                                pass
+                            raise ls_utils.LangSmithError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+                        else:
+                            raise ls_utils.LangSmithError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+    
+                    else:
+                        raise ls_utils.LangSmithUserError(f"Failed to {method} {pathname} in LangSmith API. {repr(e)}")
+                except requests.ConnectionError as e:
+                    recommendation = (
+                        "Please confirm your LANGCHAIN_ENDPOINT."
+                        if self.api_url != "https://api.smith.langchain.com"
+                        else "Please confirm your internet connection."
+                    )
+                    try:
+                        content_length = int(str(e.request.headers.get("Content-Length")) if e.request else "")
+                        size_rec = self._content_above_size(content_length)
+                        if size_rec:
+                            recommendation = size_rec
+                    except ValueError:
+                        content_length = None
+    
+                    api_key = e.request.headers.get("x-api-key") or "" if e.request else ""
+                    prefix, suffix = api_key[:5], api_key[-2:]
+                    filler = "*" * (max(0, len(api_key) - 7))
+                    masked_api_key = f"{prefix}{filler}{suffix}"
+    
+>                   raise ls_utils.LangSmithConnectionError(
+                        f"Connection error caused failure to {method} {pathname}"
+                        f" in LangSmith API. {recommendation}"
+                        f" {repr(e)}"
+                        f"\nContent-Length: {content_length}"
+                        f"\nAPI Key: {masked_api_key}"
+                        f"{_context}"
+                    ) from e
+E                   langsmith.utils.LangSmithConnectionError: Connection error caused failure to GET /datasets in LangSmith API. Please confirm your internet connection. ConnectionError('t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin')
+E                   Content-Length: None
+E                   API Key:
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/client.py:2092: LangSmithConnectionError
+____________________________ test_unmarked_log_call ____________________________
+
+    def test_unmarked_log_call():
+>       t.log_outputs({"x": 1})
+
+test_ls_plugin.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+outputs = {'x': 1}
+
+    def log_outputs(outputs: dict, /) -> None:
+        """Log run outputs from within a pytest test run.
+    
+        Should only be used in pytest tests decorated with @pytest.mark.langsmith.
+    
+        Args:
+            outputs: Outputs to log.
+    
+        Example:
+            ```python
+            from langsmith import testing as t
+    
+    
+            @pytest.mark.langsmith
+            def test_foo() -> None:
+                x = 0
+                y = 1
+                result = foo(x, y)
+                t.log_outputs({"foo": result})
+                assert result == 2
+            ```
+        """
+        if ls_utils.test_tracking_is_disabled():
+            logger.info("LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.")
+            return
+        run_tree = rh.get_current_run_tree()
+        test_case = _TEST_CASE.get()
+        if not run_tree or not test_case:
+            msg = (
+                "log_outputs should only be called within a pytest test decorated with "
+                "@pytest.mark.langsmith, and with tracing enabled (by setting the "
+                "LANGSMITH_TRACING environment variable to 'true')."
+            )
+>           raise ValueError(msg)
+E           ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true').
+
+../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:1208: ValueError
+=========================== short test summary info ============================
+FAILED test_ls_plugin.py::test_marked_pass - langsmith.utils.LangSmithConnect...
+FAILED test_ls_plugin.py::test_marked_fail - langsmith.utils.LangSmithConnect...
+FAILED test_ls_plugin.py::test_decorator_form - langsmith.utils.LangSmithConn...
+FAILED test_ls_plugin.py::test_marked_agent - langsmith.utils.LangSmithConnec...
+FAILED test_ls_plugin.py::test_unmarked_log_call - ValueError: log_outputs sh...
+============================== 5 failed in 1.87s ===============================
+
+--- stderr

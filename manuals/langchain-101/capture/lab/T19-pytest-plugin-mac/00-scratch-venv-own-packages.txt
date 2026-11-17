@@ -1,0 +1,8 @@
+Package   Version
+--------- -------
+iniconfig 2.3.1
+packaging 26.3
+pip       26.0
+pluggy    1.7.0
+Pygments  2.21.0
+pytest    8.4.2

@@ -1,0 +1,69 @@
+T05 retries on a real model, the x86 server guest (2026-11-14, guest clock)
+
+Machine: the x86 server guest (KVM, 32 vCPU AMD EPYC 7452, 48 GiB), Ollama 0.31.1 on CPU (-np 1), Python 3.13.18, pinned venv <lab>/.venv:
+langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, langchain-ollama 1.1.0, langchain-openai 1.8.0, openai 3.51.0, ollama 0.6.3, psycopg 3.3.9, PostgreSQL 16.15.
+Model: qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42, no think option (the model has no thinking mode), server context 8192.
+Clients: ChatOpenAI(base_url=<relay>/v1, api_key dummy) on the OpenAI path of Ollama, and ChatOllama(base_url=<relay>) on the native path.
+Prompt: "Call the tool remote_action with item 'A' exactly once. After you get its result, reply with the single word: done."
+Scripts: t05_real.py, lr_common.py (relay, model factory). Raw: 01-model-faults.jsonl, 02-tool-faults.jsonl, 03-both-faults.jsonl (+ .log). Table: 09-summary-table.txt.
+n = 3 per cell, all cells. Every cell gave the same counts in 3 of 3 runs.
+
+Failure sources (no stub plays the model)
+- m_drop_*: a TCP relay in front of the real Ollama closes the connection after it reads the request (no reply). Real connection drop.
+- m_refused_always: base_url on a port where nothing listens. Attempts counted from socket.create_connection calls to that port.
+- m_timeout_*: the relay holds the request 20 s; client timeout 15 s (ChatOpenAI timeout=15, ChatOllama client_kwargs timeout=15).
+  A one-time hold is followed by real model answers (2 to 4 s each).
+- m_404_always_real: the real Ollama answer for an unknown model name ("no-such-model:1b"), 404.
+- m_429_*_relay, m_500_*_relay: the RELAY answers 429 or 500 in front of the real model. These are injected statuses, not provider errors;
+  label them so. They give the same counts as the drop rows.
+- Tool faults are real: t_refused = httpx.post to a closed port; t_sqlerror = query on a missing table in PostgreSQL (UndefinedTable);
+  t_timeout = INSERT into a ledger table (autocommit, the side effect), then pg_sleep(3) under statement_timeout 1 s (QueryCanceled).
+  Ledger rows count the side effects that landed. "once" = first attempt fails, later attempts take the normal path.
+Attempts are counted at the relay on arrival (before the action), so timeouts are not undercounted (the stub of the Mac run logged after its sleep).
+
+Model layer, persistent failure (drop, refused, timeout, relay 429, relay 500), attempts for ONE model call:
+  ChatOpenAI client default (max_retries 2)                   3, then raises (OpenAIConnectionError / OpenAITimeoutError / ...)
+  init_chat_model("openai:...")                               3, same
+  ChatOpenAI(max_retries=0) + ModelRetryMiddleware()          3, then an AIMessage "Model call failed after 3 attempts with ..." (on_failure continue)
+  ChatOpenAI default + ModelRetryMiddleware()                 9, then that AIMessage
+  ChatOllama (ollama client: no retries)                      1, then raises (httpx.RemoteProtocolError / ConnectError / ReadTimeout / ResponseError)
+  ChatOllama + ModelRetryMiddleware()                         3, then the AIMessage
+  StateGraph node calling ChatOpenAI default, RetryPolicy()   9, then raises
+  StateGraph node = create_agent(ChatOpenAI default, ModelRetryMiddleware(on_failure="error")), RetryPolicy()   27, then raises
+Times with the 15 s timeout: 3 attempts 46.3 s; 9 attempts 142 s; 27 attempts 428.5 s (median of 3).
+One-time failure: recovered in every config except ChatOllama with no middleware, which raised on the first failure. Wire count 3 for the run
+  (1 failed + 2 real model calls around the tool), tool ran once.
+
+Real 404 (unknown model):
+  ChatOpenAI default, mw only, stacked: 1 attempt, raises OpenAIModelNotFoundError (a non-retryable ModelError; the client does not retry 404).
+  ChatOllama: 1 attempt, raises ollama ResponseError.
+  ChatOllama + ModelRetryMiddleware(): 3 attempts, then the AIMessage "Model call failed after 3 attempts with ResponseError: model ... not found".
+    ChatOllama raises ollama's ResponseError, not a LangChain ModelError, so default_retry_on retries a 404 that no retry can fix.
+  RetryPolicy() around a node: 3 attempts, then raises, for ChatOpenAI and for the agent with ModelRetryMiddleware(on_failure="error")
+    (the middleware did not retry the ModelError; the graph policy did).
+
+Tool layer (ChatOllama, real model decides the call):
+  fault                 no middleware          ToolRetryMiddleware()                                     RetryPolicy() on a ToolNode
+  refused once          raised, 1 exec         2 execs, success, 1 ledger row                            2 execs, success
+  refused always        raised, 1 exec         3 execs, error ToolMessage, model answered (no new call)  3 execs, raised
+  SQL error always      raised, 1 exec         3 execs (an error no retry fixes), model answered "done"  3 execs, raised
+  timeout once          raised, 1 ledger row   2 execs, 2 ledger rows (the action landed twice), success 2 execs, 2 ledger rows
+  timeout always        raised, 1 ledger row   3 execs, 3 ledger rows, error ToolMessage                 3 execs, 3 ledger rows, raised
+  After the error ToolMessage the real model made no further tool call in 9 of 9 runs (2 model calls per run). In the "always" rows its last
+  message was not a statement of failure: "Try again. ..." (refused, timeout) or "done" (SQL error, 3 of 3).
+
+Both layers (ChatOpenAI default client):
+  drop once + refused once: client default and stacked raised at the tool (2 model attempts, 1 tool exec); with ToolRetryMiddleware, 3 model
+  attempts, 2 tool execs, success. drop always + refused always: 3 (client) or 9 (stacked) model attempts, tool never reached.
+
+Against the manual (Mac, ChatOpenAI against a stub)
+- 3 / 3 / 9 for ChatOpenAI holds on the real path (relay drop, refused port, timeout, relay 429/500). Same counts.
+- New: ChatOllama makes 1 attempt (no client retries); a one-time failure raises without the middleware.
+- New: ModelRetryMiddleware with ChatOllama retries a real 404 3 times (not a ModelError). The "400 got 1 attempt in every configuration"
+  sentence holds only for provider packages that raise LangChain ModelError (ChatOpenAI).
+- New: a graph RetryPolicy multiplies too: 9 with the client, 27 with client x middleware(on_failure=error) x policy; it retried a 404.
+- Tool timeouts: the real side effect landed once per attempt (3 ledger rows), confirming langchain#40688 with a real database.
+- The real model did not repeat the call after the error ToolMessage, and its last message could read as success ("done").
+
+Rows not to use: none. The relay-injected 429/500 rows are real-model runs with an injected status; cite them as such, not as provider errors.
+Not run: provider 429 with Retry-After from a real provider; ChatAnthropic and other packages; async (ainvoke).

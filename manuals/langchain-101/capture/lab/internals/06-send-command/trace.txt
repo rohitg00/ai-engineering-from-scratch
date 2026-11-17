@@ -1,0 +1,65 @@
+# Send and Command, real model. pin {'langgraph': '1.2.22 (tag 08a20169)', 'langchain': '1.5.0', 'langchain-core': '1.8.0', 'langgraph-checkpoint': '4.3.2', 'langgraph-checkpoint-sqlite': '3.1.3'}. {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['11.86', '4.84', '6.39'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]}
+# model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}; every node below calls the model or a tool (see run.py)
+
+## A. Send from a conditional edge -> PUSH tasks next superstep
+  UPDATE order=['__input__@()'] -> updated=['__start__'] versions={'__start__': [None, 1]}
+  PLAN step=0: pull __start__ path=('__pregel_pull', '__start__') triggers=['__start__'] id=d468b0ae
+    done __start__ writes=[('results', []), ('route', ''), ('branch:to:fan', None)]
+  UPDATE order=["__start__@('__pregel_pull', '__start__')"] -> updated=['branch:to:fan', 'results', 'route'] versions={'__start__': [1, 2], 'branch:to:fan': [None, 2], 'results': [None, 2], 'route': [None, 2]}
+  PLAN step=1: pull fan path=('__pregel_pull', 'fan') triggers=['branch:to:fan'] id=66be2ce5
+    done fan      writes=[('route', 'Paris, Berlin, Madrid'), ('__pregel_tasks', "Send(node='work', arg={'x': 'Paris', 'note': 'Send.arg is the task input, not graph state'})"), ('__pregel_tasks', "Send(node='work', arg={'x': 'Berlin', 'note': 'Send.arg is the task input, not graph state'})"), ('__pregel_tasks', "Send(node='work', arg={'x': 'Madrid', 'note': 'Send.arg is the task input, not graph state'})")]
+  UPDATE order=["fan@('__pregel_pull', 'fan')"] -> updated=['__pregel_tasks', 'route'] versions={'__pregel_tasks': [None, 3], 'branch:to:fan': [2, 3], 'route': [2, 3]}
+  PLAN step=2: push work path=('__pregel_push', 0, False) triggers=['__pregel_push'] id=8f4b6cfe; push work path=('__pregel_push', 1, False) triggers=['__pregel_push'] id=cd1a1b38; push work path=('__pregel_push', 2, False) triggers=['__pregel_push'] id=23634f15
+    done work     writes=[('results', ["work(Madrid): Madrid is Spain's capital and largest city."])]
+    done work     writes=[('results', ['work(Berlin): Berlin has the Brandenburg Gate.'])]
+    done work     writes=[('results', ['work(Paris): Eiffel Tower stands in Paris, France.'])]
+  UPDATE order=["work@('__pregel_push', 0, False)", "work@('__pregel_push', 1, False)", "work@('__pregel_push', 2, False)"] -> updated=['results'] versions={'__pregel_tasks': [3, 4], 'results': [2, 4]}
+
+  result={'results': ['work(Paris): Eiffel Tower stands in Paris, France.', 'work(Berlin): Berlin has the Brandenburg Gate.', "work(Madrid): Madrid is Spain's capital and largest city."], 'route': 'Paris, Berlin, Madrid'}
+
+## B. Command(goto=['b', Send('c', ...)], update=...) returned by a node
+  UPDATE order=['__input__@()'] -> updated=['__start__'] versions={'__start__': [None, 1]}
+  PLAN step=0: pull __start__ path=('__pregel_pull', '__start__') triggers=['__start__'] id=844eb47d
+    done __start__ writes=[('results', []), ('route', ''), ('branch:to:a', None)]
+  UPDATE order=["__start__@('__pregel_pull', '__start__')"] -> updated=['branch:to:a', 'results', 'route'] versions={'__start__': [1, 2], 'branch:to:a': [None, 2], 'results': [None, 2], 'route': [None, 2]}
+  PLAN step=1: pull a path=('__pregel_pull', 'a') triggers=['branch:to:a'] id=179f4f38
+    done a        writes=[('route', 'a->b'), ('results', ['a picked Paris']), ('branch:to:b', None), ('__pregel_tasks', "Send(node='c', arg={'x': 'Paris'})")]
+  UPDATE order=["a@('__pregel_pull', 'a')"] -> updated=['__pregel_tasks', 'branch:to:b', 'results', 'route'] versions={'__pregel_tasks': [None, 3], 'branch:to:a': [2, 3], 'branch:to:b': [None, 3], 'results': [2, 3], 'route': [2, 3]}
+  PLAN step=2: push c path=('__pregel_push', 0, False) triggers=['__pregel_push'] id=5f91e09b; pull b path=('__pregel_pull', 'b') triggers=['branch:to:b'] id=5bbd9a1a
+    done c        writes=[('results', ['c(Paris): Paris: 12 C, sunny'])]
+    done b        writes=[('results', ['b: ready'])]
+  UPDATE order=["b@('__pregel_pull', 'b')", "c@('__pregel_push', 0, False)"] -> updated=['results'] versions={'__pregel_tasks': [3, 4], 'branch:to:b': [3, 4], 'results': [3, 4]}
+
+  result={'results': ['a picked Paris', 'b: ready', 'c(Paris): Paris: 12 C, sunny'], 'route': 'a->b'}
+
+## C. Command(graph=Command.PARENT, goto='escalate') from inside a subgraph
+  UPDATE order=['__input__@()'] -> updated=['__start__'] versions={'__start__': [None, 1]}
+  PLAN step=0: pull __start__ path=('__pregel_pull', '__start__') triggers=['__start__'] id=f355c9b5
+    done __start__ writes=[('results', []), ('route', ''), ('branch:to:sub', None)]
+  UPDATE order=["__start__@('__pregel_pull', '__start__')"] -> updated=['branch:to:sub', 'results', 'route'] versions={'__start__': [1, 2], 'branch:to:sub': [None, 2], 'results': [None, 2], 'route': [None, 2]}
+  PLAN step=1: pull sub path=('__pregel_pull', 'sub') triggers=['branch:to:sub'] id=e732ca57
+  UPDATE order=['__input__@()'] -> updated=['__start__'] versions={'__start__': [None, 1]}
+  PLAN step=0: pull __start__ path=('__pregel_pull', '__start__') triggers=['__start__'] id=13bfdccf
+    done __start__ writes=[('results', []), ('route', ''), ('branch:to:child_step', None)]
+  UPDATE order=["__start__@('__pregel_pull', '__start__')"] -> updated=['branch:to:child_step', 'results', 'route'] versions={'__start__': [1, 2], 'branch:to:child_step': [None, 2], 'results': [None, 2], 'route': [None, 2]}
+  PLAN step=1: pull child_step path=('__pregel_pull', 'child_step') triggers=['branch:to:child_step'] id=bfb5ee94
+    done sub      writes=[('route', 'from child'), ('results', ['child said ESCALATE']), ('branch:to:escalate', None)]
+  UPDATE order=["sub@('__pregel_pull', 'sub')"] -> updated=['branch:to:escalate', 'results', 'route'] versions={'branch:to:escalate': [None, 3], 'branch:to:sub': [2, 3], 'results': [2, 3], 'route': [2, 3]}
+  PLAN step=2: pull escalate path=('__pregel_pull', 'escalate') triggers=['branch:to:escalate'] id=9b3f5118
+    done escalate writes=[('results', ["escalate ran: We're sorry for the inconvenience."])]
+  UPDATE order=["escalate@('__pregel_pull', 'escalate')"] -> updated=['results'] versions={'branch:to:escalate': [3, 4], 'results': [3, 4]}
+
+  exceptions leaving run_with_retry: [('child_step', 'ParentCommand', "Command(goto='escalate', update={'route': 'from child', 'results': ['child said ESCALATE']}, graph='sub:e732ca57-e98e-a363-a16e-8a1329779cfb', resume=None)")]
+  result={'results': ['child said ESCALATE', "escalate ran: We're sorry for the inconvenience."], 'route': 'from child'}
+
+## C2. Command(graph=PARENT) at the top level
+  raises ParentCommand: Command(goto='x') at ['_write.py:126', '_write.py:181', 'state.py:1766']
+
+## D. Command(goto='b', update=...) as graph input on an existing thread
+    loop.put_writes task=00000000 writes=[('branch:to:b', '__start__'), ('route', 'jumped')]
+    applied in _first before any tick: [{'task': '__input__', 'path': '()', 'channel': 'branch:to:b', 'value': '__start__'}, {'task': '__input__', 'path': '()', 'channel': 'route', 'value': 'jumped'}] -> ['branch:to:b', 'route']
+    PLAN step=2: ['b']
+    loop.put_writes task=b writes=[('results', ['b: beta'])]
+  result={'results': ['a: alpha', 'b: beta'], 'route': 'jumped'}
+
+model calls: 11, provider seconds [1.01, 1.33, 1.92, 2.71, 0.63, 0.59, 0.85, 1.03, 0.57, 0.63, 0.6]

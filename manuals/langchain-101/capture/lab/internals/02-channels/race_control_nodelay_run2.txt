@@ -1,0 +1,3 @@
+# D2 control, NO MODEL INVOLVED: the node returns AIMessage('copied: OK') without an id, after sleep(0.0). nodelay_run2: n=200, InMemorySaver, durability=async
+# {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['14.58', '21.82', '23.66'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}]}
+  {"with id": 200, "without id": 0}

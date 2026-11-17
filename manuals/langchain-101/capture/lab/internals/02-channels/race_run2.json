@@ -1,0 +1,46 @@
+{
+ "label": "run2",
+ "n_runs": 200,
+ "counts": {
+  "model reply saved with id": 200,
+  "model reply saved without id": 0,
+  "copied text saved with id": 200,
+  "copied text saved without id": 0,
+  "input dict saved without id": 200,
+  "input other": 0
+ },
+ "model replies with an id at return": 200,
+ "wall_s": 129,
+ "model_s_median": 0.6324114640010521,
+ "settings": {
+  "provider": "ollama 0.31.1 (CPU)",
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
+  "temperature": 0,
+  "seed": 42,
+  "think/reasoning": false,
+  "num_ctx": 8192
+ },
+ "machine": {
+  "name": "the x86 server guest",
+  "cpu": "AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)",
+  "platform": "Linux-6.8.0-147-generic-x86_64-with-glibc2.39",
+  "python": "3.13.18",
+  "loadavg_1_5_15": [
+   "12.67",
+   "15.35",
+   "13.24"
+  ],
+  "ollama_ps": [
+   {
+    "name": "qwen3:4b-instruct-2507-q4_K_M",
+    "size_vram": 0,
+    "context_length": 8192
+   },
+   {
+    "name": "qwen3:8b",
+    "size_vram": 0,
+    "context_length": 8192
+   }
+  ]
+ }
+}

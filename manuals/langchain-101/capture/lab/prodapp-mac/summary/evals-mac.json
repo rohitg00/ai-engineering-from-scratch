@@ -1,0 +1,596 @@
+{
+ "models": [
+  {
+   "key": "qwen3-4b",
+   "label": "Qwen3 4B",
+   "reps": [
+    {
+     "rep": "rep-1",
+     "passed": 16,
+     "total": 27,
+     "uptime": [
+      "# uptime 15:48  up 89 days,  1:45, 12 users, load averages: 4.16 3.45 3.62",
+      "# uptime 15:50  up 89 days,  1:47, 12 users, load averages: 5.65 4.02 3.80"
+     ],
+     "cases": {
+      "test_kill_mid_refund_then_resume_refunds_once": "failed",
+      "test_sigterm_lets_in_flight_run_finish": "passed",
+      "test_sigterm_past_deadline_checkpoints_and_resumes": "failed",
+      "test_eval[faq_return_window]": "passed",
+      "test_eval[faq_shipping_time]": "passed",
+      "test_eval[order_status]": "passed",
+      "test_eval[order_unknown]": "passed",
+      "test_eval[order_of_other_customer_is_hidden]": "passed",
+      "test_eval[refund_approved_once]": "failed",
+      "test_eval[refund_rejected_has_no_side_effect]": "failed",
+      "test_eval[refund_asked_twice]": "failed",
+      "test_eval[refund_tool_replay_is_idempotent]": "passed",
+      "test_eval[ticket_for_a_human]": "passed",
+      "test_eval[memory_saved_and_recalled]": "failed",
+      "test_eval[memory_of_other_user_is_invisible]": "passed",
+      "test_eval[flaky_faq_is_retried]": "failed",
+      "test_eval[hung_tool_times_out]": "passed",
+      "test_eval[failed_ticket_is_not_retried]": "passed",
+      "test_eval[primary_outage_uses_backup]": "passed",
+      "test_eval[runaway_loop_hits_call_limit]": "passed",
+      "test_eval[long_thread_is_summarized]": "passed",
+      "test_eval[new_message_while_waiting_for_approval]": "failed",
+      "test_eval[status_then_refund_in_one_thread]": "failed",
+      "test_one_user_cannot_read_another_users_thread_or_memory": "failed",
+      "test_missing_or_wrong_token_is_rejected": "passed",
+      "test_langsmith_receives_nothing_unless_enabled": "failed",
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": "passed"
+     },
+     "seconds": {
+      "test_kill_mid_refund_then_resume_refunds_once": 12.709,
+      "test_sigterm_lets_in_flight_run_finish": 3.531,
+      "test_sigterm_past_deadline_checkpoints_and_resumes": 5.441,
+      "test_eval[faq_return_window]": 1.484,
+      "test_eval[faq_shipping_time]": 1.615,
+      "test_eval[order_status]": 1.362,
+      "test_eval[order_unknown]": 1.474,
+      "test_eval[order_of_other_customer_is_hidden]": 1.151,
+      "test_eval[refund_approved_once]": 0.662,
+      "test_eval[refund_rejected_has_no_side_effect]": 0.702,
+      "test_eval[refund_asked_twice]": 1.142,
+      "test_eval[refund_tool_replay_is_idempotent]": 0.014,
+      "test_eval[ticket_for_a_human]": 1.473,
+      "test_eval[memory_saved_and_recalled]": 0.66,
+      "test_eval[memory_of_other_user_is_invisible]": 1.109,
+      "test_eval[flaky_faq_is_retried]": 0.632,
+      "test_eval[hung_tool_times_out]": 3.039,
+      "test_eval[failed_ticket_is_not_retried]": 1.305,
+      "test_eval[primary_outage_uses_backup]": 7.631,
+      "test_eval[runaway_loop_hits_call_limit]": 29.68,
+      "test_eval[long_thread_is_summarized]": 20.617,
+      "test_eval[new_message_while_waiting_for_approval]": 2.321,
+      "test_eval[status_then_refund_in_one_thread]": 8.686,
+      "test_one_user_cannot_read_another_users_thread_or_memory": 6.328,
+      "test_missing_or_wrong_token_is_rejected": 0.004,
+      "test_langsmith_receives_nothing_unless_enabled": 6.653,
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": 13.032
+     }
+    },
+    {
+     "rep": "rep-2",
+     "passed": 16,
+     "total": 27,
+     "uptime": [
+      "# uptime 15:50  up 89 days,  1:47, 12 users, load averages: 5.65 4.02 3.80",
+      "# uptime 15:54  up 89 days,  1:51, 12 users, load averages: 13.19 6.50 4.77"
+     ],
+     "cases": {
+      "test_kill_mid_refund_then_resume_refunds_once": "failed",
+      "test_sigterm_lets_in_flight_run_finish": "passed",
+      "test_sigterm_past_deadline_checkpoints_and_resumes": "failed",
+      "test_eval[faq_return_window]": "passed",
+      "test_eval[faq_shipping_time]": "passed",
+      "test_eval[order_status]": "passed",
+      "test_eval[order_unknown]": "passed",
+      "test_eval[order_of_other_customer_is_hidden]": "passed",
+      "test_eval[refund_approved_once]": "failed",
+      "test_eval[refund_rejected_has_no_side_effect]": "failed",
+      "test_eval[refund_asked_twice]": "failed",
+      "test_eval[refund_tool_replay_is_idempotent]": "passed",
+      "test_eval[ticket_for_a_human]": "passed",
+      "test_eval[memory_saved_and_recalled]": "failed",
+      "test_eval[memory_of_other_user_is_invisible]": "passed",
+      "test_eval[flaky_faq_is_retried]": "failed",
+      "test_eval[hung_tool_times_out]": "passed",
+      "test_eval[failed_ticket_is_not_retried]": "passed",
+      "test_eval[primary_outage_uses_backup]": "passed",
+      "test_eval[runaway_loop_hits_call_limit]": "passed",
+      "test_eval[long_thread_is_summarized]": "passed",
+      "test_eval[new_message_while_waiting_for_approval]": "failed",
+      "test_eval[status_then_refund_in_one_thread]": "failed",
+      "test_one_user_cannot_read_another_users_thread_or_memory": "failed",
+      "test_missing_or_wrong_token_is_rejected": "passed",
+      "test_langsmith_receives_nothing_unless_enabled": "failed",
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": "passed"
+     },
+     "seconds": {
+      "test_kill_mid_refund_then_resume_refunds_once": 12.792,
+      "test_sigterm_lets_in_flight_run_finish": 5.323,
+      "test_sigterm_past_deadline_checkpoints_and_resumes": 5.286,
+      "test_eval[faq_return_window]": 1.468,
+      "test_eval[faq_shipping_time]": 3.136,
+      "test_eval[order_status]": 2.824,
+      "test_eval[order_unknown]": 3.451,
+      "test_eval[order_of_other_customer_is_hidden]": 2.627,
+      "test_eval[refund_approved_once]": 1.252,
+      "test_eval[refund_rejected_has_no_side_effect]": 1.119,
+      "test_eval[refund_asked_twice]": 1.792,
+      "test_eval[refund_tool_replay_is_idempotent]": 0.024,
+      "test_eval[ticket_for_a_human]": 3.308,
+      "test_eval[memory_saved_and_recalled]": 1.71,
+      "test_eval[memory_of_other_user_is_invisible]": 2.88,
+      "test_eval[flaky_faq_is_retried]": 1.688,
+      "test_eval[hung_tool_times_out]": 5.006,
+      "test_eval[failed_ticket_is_not_retried]": 3.748,
+      "test_eval[primary_outage_uses_backup]": 15.823,
+      "test_eval[runaway_loop_hits_call_limit]": 53.467,
+      "test_eval[long_thread_is_summarized]": 33.769,
+      "test_eval[new_message_while_waiting_for_approval]": 3.524,
+      "test_eval[status_then_refund_in_one_thread]": 9.121,
+      "test_one_user_cannot_read_another_users_thread_or_memory": 6.748,
+      "test_missing_or_wrong_token_is_rejected": 0.007,
+      "test_langsmith_receives_nothing_unless_enabled": 8.422,
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": 15.452
+     }
+    },
+    {
+     "rep": "rep-3",
+     "passed": 16,
+     "total": 27,
+     "uptime": [
+      "# uptime 15:54  up 89 days,  1:51, 12 users, load averages: 13.19 6.50 4.77",
+      "# uptime 15:57  12 users, load averages: 5.14 7.00 5.49 (recorded late, at block C start)"
+     ],
+     "cases": {
+      "test_kill_mid_refund_then_resume_refunds_once": "failed",
+      "test_sigterm_lets_in_flight_run_finish": "passed",
+      "test_sigterm_past_deadline_checkpoints_and_resumes": "failed",
+      "test_eval[faq_return_window]": "passed",
+      "test_eval[faq_shipping_time]": "passed",
+      "test_eval[order_status]": "passed",
+      "test_eval[order_unknown]": "passed",
+      "test_eval[order_of_other_customer_is_hidden]": "passed",
+      "test_eval[refund_approved_once]": "failed",
+      "test_eval[refund_rejected_has_no_side_effect]": "failed",
+      "test_eval[refund_asked_twice]": "failed",
+      "test_eval[refund_tool_replay_is_idempotent]": "passed",
+      "test_eval[ticket_for_a_human]": "passed",
+      "test_eval[memory_saved_and_recalled]": "failed",
+      "test_eval[memory_of_other_user_is_invisible]": "passed",
+      "test_eval[flaky_faq_is_retried]": "failed",
+      "test_eval[hung_tool_times_out]": "passed",
+      "test_eval[failed_ticket_is_not_retried]": "passed",
+      "test_eval[primary_outage_uses_backup]": "passed",
+      "test_eval[runaway_loop_hits_call_limit]": "passed",
+      "test_eval[long_thread_is_summarized]": "passed",
+      "test_eval[new_message_while_waiting_for_approval]": "failed",
+      "test_eval[status_then_refund_in_one_thread]": "failed",
+      "test_one_user_cannot_read_another_users_thread_or_memory": "failed",
+      "test_missing_or_wrong_token_is_rejected": "passed",
+      "test_langsmith_receives_nothing_unless_enabled": "failed",
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": "passed"
+     },
+     "seconds": {
+      "test_kill_mid_refund_then_resume_refunds_once": 13.594,
+      "test_sigterm_lets_in_flight_run_finish": 5.638,
+      "test_sigterm_past_deadline_checkpoints_and_resumes": 5.512,
+      "test_eval[faq_return_window]": 1.62,
+      "test_eval[faq_shipping_time]": 7.717,
+      "test_eval[order_status]": 3.916,
+      "test_eval[order_unknown]": 4.366,
+      "test_eval[order_of_other_customer_is_hidden]": 2.397,
+      "test_eval[refund_approved_once]": 1.526,
+      "test_eval[refund_rejected_has_no_side_effect]": 1.671,
+      "test_eval[refund_asked_twice]": 2.26,
+      "test_eval[refund_tool_replay_is_idempotent]": 0.018,
+      "test_eval[ticket_for_a_human]": 3.486,
+      "test_eval[memory_saved_and_recalled]": 1.221,
+      "test_eval[memory_of_other_user_is_invisible]": 2.289,
+      "test_eval[flaky_faq_is_retried]": 1.601,
+      "test_eval[hung_tool_times_out]": 3.727,
+      "test_eval[failed_ticket_is_not_retried]": 2.832,
+      "test_eval[primary_outage_uses_backup]": 6.466,
+      "test_eval[runaway_loop_hits_call_limit]": 40.29,
+      "test_eval[long_thread_is_summarized]": 30.869,
+      "test_eval[new_message_while_waiting_for_approval]": 3.438,
+      "test_eval[status_then_refund_in_one_thread]": 9.512,
+      "test_one_user_cannot_read_another_users_thread_or_memory": 7.66,
+      "test_missing_or_wrong_token_is_rejected": 0.004,
+      "test_langsmith_receives_nothing_unless_enabled": 6.852,
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": 14.314
+     }
+    }
+   ]
+  },
+  {
+   "key": "qwen3-14b",
+   "label": "Qwen3 14B",
+   "reps": [
+    {
+     "rep": "rep-1",
+     "passed": 22,
+     "total": 27,
+     "uptime": [
+      "# uptime 15:57  up 89 days,  1:54, 12 users, load averages: 5.04 6.95 5.48",
+      "# uptime 16:11  up 89 days,  2:08, 12 users, load averages: 6.13 10.25 8.76"
+     ],
+     "cases": {
+      "test_kill_mid_refund_then_resume_refunds_once": "failed",
+      "test_sigterm_lets_in_flight_run_finish": "passed",
+      "test_sigterm_past_deadline_checkpoints_and_resumes": "passed",
+      "test_eval[faq_return_window]": "passed",
+      "test_eval[faq_shipping_time]": "passed",
+      "test_eval[order_status]": "passed",
+      "test_eval[order_unknown]": "passed",
+      "test_eval[order_of_other_customer_is_hidden]": "passed",
+      "test_eval[refund_approved_once]": "failed",
+      "test_eval[refund_rejected_has_no_side_effect]": "passed",
+      "test_eval[refund_asked_twice]": "failed",
+      "test_eval[refund_tool_replay_is_idempotent]": "passed",
+      "test_eval[ticket_for_a_human]": "passed",
+      "test_eval[memory_saved_and_recalled]": "passed",
+      "test_eval[memory_of_other_user_is_invisible]": "passed",
+      "test_eval[flaky_faq_is_retried]": "passed",
+      "test_eval[hung_tool_times_out]": "failed",
+      "test_eval[failed_ticket_is_not_retried]": "passed",
+      "test_eval[primary_outage_uses_backup]": "passed",
+      "test_eval[runaway_loop_hits_call_limit]": "passed",
+      "test_eval[long_thread_is_summarized]": "passed",
+      "test_eval[new_message_while_waiting_for_approval]": "failed",
+      "test_eval[status_then_refund_in_one_thread]": "passed",
+      "test_one_user_cannot_read_another_users_thread_or_memory": "passed",
+      "test_missing_or_wrong_token_is_rejected": "passed",
+      "test_langsmith_receives_nothing_unless_enabled": "passed",
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": "passed"
+     },
+     "seconds": {
+      "test_kill_mid_refund_then_resume_refunds_once": 30.831,
+      "test_sigterm_lets_in_flight_run_finish": 9.212,
+      "test_sigterm_past_deadline_checkpoints_and_resumes": 9.964,
+      "test_eval[faq_return_window]": 12.311,
+      "test_eval[faq_shipping_time]": 10.067,
+      "test_eval[order_status]": 10.235,
+      "test_eval[order_unknown]": 8.978,
+      "test_eval[order_of_other_customer_is_hidden]": 10.381,
+      "test_eval[refund_approved_once]": 9.239,
+      "test_eval[refund_rejected_has_no_side_effect]": 13.714,
+      "test_eval[refund_asked_twice]": 25.604,
+      "test_eval[refund_tool_replay_is_idempotent]": 0.015,
+      "test_eval[ticket_for_a_human]": 13.276,
+      "test_eval[memory_saved_and_recalled]": 18.775,
+      "test_eval[memory_of_other_user_is_invisible]": 8.338,
+      "test_eval[flaky_faq_is_retried]": 11.681,
+      "test_eval[hung_tool_times_out]": 11.052,
+      "test_eval[failed_ticket_is_not_retried]": 14.779,
+      "test_eval[primary_outage_uses_backup]": 15.639,
+      "test_eval[runaway_loop_hits_call_limit]": 151.592,
+      "test_eval[long_thread_is_summarized]": 168.953,
+      "test_eval[new_message_while_waiting_for_approval]": 17.687,
+      "test_eval[status_then_refund_in_one_thread]": 40.084,
+      "test_one_user_cannot_read_another_users_thread_or_memory": 46.401,
+      "test_missing_or_wrong_token_is_rejected": 0.002,
+      "test_langsmith_receives_nothing_unless_enabled": 115.604,
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": 40.737
+     }
+    },
+    {
+     "rep": "rep-2",
+     "passed": 21,
+     "total": 27,
+     "uptime": [
+      "# uptime 16:11  up 89 days,  2:08, 12 users, load averages: 6.13 10.25 8.76",
+      "# uptime 16:26  up 89 days,  2:23, 12 users, load averages: 7.80 14.02 14.17"
+     ],
+     "cases": {
+      "test_kill_mid_refund_then_resume_refunds_once": "failed",
+      "test_sigterm_lets_in_flight_run_finish": "failed",
+      "test_sigterm_past_deadline_checkpoints_and_resumes": "passed",
+      "test_eval[faq_return_window]": "passed",
+      "test_eval[faq_shipping_time]": "passed",
+      "test_eval[order_status]": "passed",
+      "test_eval[order_unknown]": "passed",
+      "test_eval[order_of_other_customer_is_hidden]": "passed",
+      "test_eval[refund_approved_once]": "failed",
+      "test_eval[refund_rejected_has_no_side_effect]": "passed",
+      "test_eval[refund_asked_twice]": "failed",
+      "test_eval[refund_tool_replay_is_idempotent]": "passed",
+      "test_eval[ticket_for_a_human]": "passed",
+      "test_eval[memory_saved_and_recalled]": "passed",
+      "test_eval[memory_of_other_user_is_invisible]": "passed",
+      "test_eval[flaky_faq_is_retried]": "passed",
+      "test_eval[hung_tool_times_out]": "failed",
+      "test_eval[failed_ticket_is_not_retried]": "passed",
+      "test_eval[primary_outage_uses_backup]": "passed",
+      "test_eval[runaway_loop_hits_call_limit]": "passed",
+      "test_eval[long_thread_is_summarized]": "passed",
+      "test_eval[new_message_while_waiting_for_approval]": "failed",
+      "test_eval[status_then_refund_in_one_thread]": "passed",
+      "test_one_user_cannot_read_another_users_thread_or_memory": "passed",
+      "test_missing_or_wrong_token_is_rejected": "passed",
+      "test_langsmith_receives_nothing_unless_enabled": "passed",
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": "passed"
+     },
+     "seconds": {
+      "test_kill_mid_refund_then_resume_refunds_once": 21.832,
+      "test_sigterm_lets_in_flight_run_finish": 13.14,
+      "test_sigterm_past_deadline_checkpoints_and_resumes": 15.033,
+      "test_eval[faq_return_window]": 20.026,
+      "test_eval[faq_shipping_time]": 14.646,
+      "test_eval[order_status]": 18.259,
+      "test_eval[order_unknown]": 14.455,
+      "test_eval[order_of_other_customer_is_hidden]": 16.092,
+      "test_eval[refund_approved_once]": 11.794,
+      "test_eval[refund_rejected_has_no_side_effect]": 21.243,
+      "test_eval[refund_asked_twice]": 39.536,
+      "test_eval[refund_tool_replay_is_idempotent]": 0.031,
+      "test_eval[ticket_for_a_human]": 15.624,
+      "test_eval[memory_saved_and_recalled]": 26.332,
+      "test_eval[memory_of_other_user_is_invisible]": 10.012,
+      "test_eval[flaky_faq_is_retried]": 16.385,
+      "test_eval[hung_tool_times_out]": 12.988,
+      "test_eval[failed_ticket_is_not_retried]": 18.789,
+      "test_eval[primary_outage_uses_backup]": 20.906,
+      "test_eval[runaway_loop_hits_call_limit]": 169.051,
+      "test_eval[long_thread_is_summarized]": 178.953,
+      "test_eval[new_message_while_waiting_for_approval]": 16.065,
+      "test_eval[status_then_refund_in_one_thread]": 34.36,
+      "test_one_user_cannot_read_another_users_thread_or_memory": 38.343,
+      "test_missing_or_wrong_token_is_rejected": 0.003,
+      "test_langsmith_receives_nothing_unless_enabled": 110.855,
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": 41.52
+     }
+    },
+    {
+     "rep": "rep-3",
+     "passed": 21,
+     "total": 27,
+     "uptime": [
+      "# uptime 16:26  up 89 days,  2:23, 12 users, load averages: 7.80 14.02 14.17",
+      "# uptime 16:41  up 89 days,  2:38, 12 users, load averages: 9.34 15.42 16.26"
+     ],
+     "cases": {
+      "test_kill_mid_refund_then_resume_refunds_once": "failed",
+      "test_sigterm_lets_in_flight_run_finish": "failed",
+      "test_sigterm_past_deadline_checkpoints_and_resumes": "passed",
+      "test_eval[faq_return_window]": "passed",
+      "test_eval[faq_shipping_time]": "passed",
+      "test_eval[order_status]": "passed",
+      "test_eval[order_unknown]": "passed",
+      "test_eval[order_of_other_customer_is_hidden]": "passed",
+      "test_eval[refund_approved_once]": "failed",
+      "test_eval[refund_rejected_has_no_side_effect]": "passed",
+      "test_eval[refund_asked_twice]": "failed",
+      "test_eval[refund_tool_replay_is_idempotent]": "passed",
+      "test_eval[ticket_for_a_human]": "passed",
+      "test_eval[memory_saved_and_recalled]": "passed",
+      "test_eval[memory_of_other_user_is_invisible]": "passed",
+      "test_eval[flaky_faq_is_retried]": "passed",
+      "test_eval[hung_tool_times_out]": "failed",
+      "test_eval[failed_ticket_is_not_retried]": "passed",
+      "test_eval[primary_outage_uses_backup]": "passed",
+      "test_eval[runaway_loop_hits_call_limit]": "passed",
+      "test_eval[long_thread_is_summarized]": "passed",
+      "test_eval[new_message_while_waiting_for_approval]": "failed",
+      "test_eval[status_then_refund_in_one_thread]": "passed",
+      "test_one_user_cannot_read_another_users_thread_or_memory": "passed",
+      "test_missing_or_wrong_token_is_rejected": "passed",
+      "test_langsmith_receives_nothing_unless_enabled": "passed",
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": "passed"
+     },
+     "seconds": {
+      "test_kill_mid_refund_then_resume_refunds_once": 21.576,
+      "test_sigterm_lets_in_flight_run_finish": 12.492,
+      "test_sigterm_past_deadline_checkpoints_and_resumes": 14.564,
+      "test_eval[faq_return_window]": 18.876,
+      "test_eval[faq_shipping_time]": 13.221,
+      "test_eval[order_status]": 17.264,
+      "test_eval[order_unknown]": 14.304,
+      "test_eval[order_of_other_customer_is_hidden]": 15.714,
+      "test_eval[refund_approved_once]": 11.174,
+      "test_eval[refund_rejected_has_no_side_effect]": 21.46,
+      "test_eval[refund_asked_twice]": 34.873,
+      "test_eval[refund_tool_replay_is_idempotent]": 0.017,
+      "test_eval[ticket_for_a_human]": 14.806,
+      "test_eval[memory_saved_and_recalled]": 23.406,
+      "test_eval[memory_of_other_user_is_invisible]": 9.368,
+      "test_eval[flaky_faq_is_retried]": 13.59,
+      "test_eval[hung_tool_times_out]": 12.929,
+      "test_eval[failed_ticket_is_not_retried]": 16.942,
+      "test_eval[primary_outage_uses_backup]": 17.702,
+      "test_eval[runaway_loop_hits_call_limit]": 169.677,
+      "test_eval[long_thread_is_summarized]": 168.205,
+      "test_eval[new_message_while_waiting_for_approval]": 17.671,
+      "test_eval[status_then_refund_in_one_thread]": 38.792,
+      "test_one_user_cannot_read_another_users_thread_or_memory": 40.955,
+      "test_missing_or_wrong_token_is_rejected": 0.015,
+      "test_langsmith_receives_nothing_unless_enabled": 106.852,
+      "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": 40.873
+     }
+    }
+   ]
+  },
+  {
+   "key": "haiku",
+   "label": "Claude Haiku 5.5",
+   "reps": [
+    {
+     "rep": "rep-1",
+     "passed": 20,
+     "total": 20,
+     "uptime": [
+      "# uptime 16:41  up 89 days,  2:38, 12 users, load averages: 9.34 15.42 16.26",
+      "# uptime 16:43  up 89 days,  2:40, 12 users, load averages: 7.63 12.55 14.98"
+     ],
+     "cases": {
+      "test_eval[faq_return_window]": "passed",
+      "test_eval[faq_shipping_time]": "passed",
+      "test_eval[order_status]": "passed",
+      "test_eval[order_unknown]": "passed",
+      "test_eval[order_of_other_customer_is_hidden]": "passed",
+      "test_eval[refund_approved_once]": "passed",
+      "test_eval[refund_rejected_has_no_side_effect]": "passed",
+      "test_eval[refund_asked_twice]": "passed",
+      "test_eval[refund_tool_replay_is_idempotent]": "passed",
+      "test_eval[ticket_for_a_human]": "passed",
+      "test_eval[memory_saved_and_recalled]": "passed",
+      "test_eval[memory_of_other_user_is_invisible]": "passed",
+      "test_eval[flaky_faq_is_retried]": "passed",
+      "test_eval[hung_tool_times_out]": "passed",
+      "test_eval[failed_ticket_is_not_retried]": "passed",
+      "test_eval[primary_outage_uses_backup]": "passed",
+      "test_eval[runaway_loop_hits_call_limit]": "passed",
+      "test_eval[long_thread_is_summarized]": "passed",
+      "test_eval[new_message_while_waiting_for_approval]": "passed",
+      "test_eval[status_then_refund_in_one_thread]": "passed"
+     },
+     "seconds": {
+      "test_eval[faq_return_window]": 6.484,
+      "test_eval[faq_shipping_time]": 2.169,
+      "test_eval[order_status]": 2.202,
+      "test_eval[order_unknown]": 2.589,
+      "test_eval[order_of_other_customer_is_hidden]": 2.426,
+      "test_eval[refund_approved_once]": 4.195,
+      "test_eval[refund_rejected_has_no_side_effect]": 5.432,
+      "test_eval[refund_asked_twice]": 6.154,
+      "test_eval[refund_tool_replay_is_idempotent]": 0.008,
+      "test_eval[ticket_for_a_human]": 3.156,
+      "test_eval[memory_saved_and_recalled]": 5.092,
+      "test_eval[memory_of_other_user_is_invisible]": 2.886,
+      "test_eval[flaky_faq_is_retried]": 2.32,
+      "test_eval[hung_tool_times_out]": 4.481,
+      "test_eval[failed_ticket_is_not_retried]": 4.06,
+      "test_eval[primary_outage_uses_backup]": 17.133,
+      "test_eval[runaway_loop_hits_call_limit]": 22.121,
+      "test_eval[long_thread_is_summarized]": 21.171,
+      "test_eval[new_message_while_waiting_for_approval]": 4.297,
+      "test_eval[status_then_refund_in_one_thread]": 6.073
+     }
+    }
+   ]
+  }
+ ],
+ "causes": {
+  "codes": {
+   "ask": "model asked for the amount and the reason, and proposed no refund_order call",
+   "zero": "model proposed amount_cents 0, the approver approved it, and a 0-cent refund row was written",
+   "ticket": "model opened a ticket with create_ticket in place of a refund_order call",
+   "nonote": "model did not call save_note, so no memory existed to recall",
+   "nofaq": "model answered without calling search_faq",
+   "harness": "test sent an approve after no refund was proposed, got 409, and parsed the 409 body as SSE",
+   "timing": "test assumed the run lasts more than 3.5 s, and the real run finished before SIGTERM",
+   "guess": "model invented amount_cents 10000 without reading the order",
+   "slow": "test bound the whole run to 5 s, and the real model calls took longer",
+   "stream": "uvicorn closed the stream at its 10 s limit, and the 11.6 to 12.1 s run finished in the drain"
+  },
+  "qwen3-4b": {
+   "test_eval[refund_approved_once]": "ask",
+   "test_eval[refund_rejected_has_no_side_effect]": "ask",
+   "test_eval[refund_asked_twice]": "ask",
+   "test_eval[new_message_while_waiting_for_approval]": "zero",
+   "test_eval[status_then_refund_in_one_thread]": "ticket",
+   "test_eval[memory_saved_and_recalled]": "nonote",
+   "test_one_user_cannot_read_another_users_thread_or_memory": "nonote",
+   "test_eval[flaky_faq_is_retried]": "nofaq",
+   "test_kill_mid_refund_then_resume_refunds_once": "harness",
+   "test_langsmith_receives_nothing_unless_enabled": "harness",
+   "test_sigterm_past_deadline_checkpoints_and_resumes": "timing"
+  },
+  "qwen3-14b": {
+   "test_kill_mid_refund_then_resume_refunds_once": "guess",
+   "test_eval[refund_approved_once]": "guess",
+   "test_eval[refund_asked_twice]": "guess",
+   "test_eval[hung_tool_times_out]": "slow",
+   "test_eval[new_message_while_waiting_for_approval]": "zero",
+   "test_sigterm_lets_in_flight_run_finish": "stream"
+  },
+  "replies": {
+   "qwen3-4b": {
+    "flaky_faq_is_retried": [
+     "no tool call,",
+     "said no data",
+     "bad"
+    ],
+    "hung_tool_times_out": [
+     "said order",
+     "not found",
+     "bad"
+    ],
+    "failed_ticket_is_not_retried": [
+     "said it could",
+     "not open one",
+     "ok"
+    ],
+    "primary_outage_uses_backup": [
+     "answered",
+     "from backup",
+     "ok"
+    ],
+    "runaway_loop_hits_call_limit": [
+     "answered",
+     "after 8 calls",
+     "ok"
+    ]
+   },
+   "qwen3-14b": {
+    "flaky_faq_is_retried": [
+     "answered after",
+     "the retry",
+     "ok"
+    ],
+    "hung_tool_times_out": [
+     "said it cannot",
+     "look it up now",
+     "ok"
+    ],
+    "failed_ticket_is_not_retried": [
+     "said it could",
+     "not open one",
+     "ok"
+    ],
+    "primary_outage_uses_backup": [
+     "answered",
+     "from backup",
+     "ok"
+    ],
+    "runaway_loop_hits_call_limit": [
+     "answered",
+     "after 8 calls",
+     "ok"
+    ]
+   },
+   "haiku": {
+    "flaky_faq_is_retried": [
+     "answered after",
+     "the retry",
+     "ok"
+    ],
+    "hung_tool_times_out": [
+     "said lookup",
+     "timed out",
+     "ok"
+    ],
+    "failed_ticket_is_not_retried": [
+     "said it could",
+     "not open one",
+     "ok"
+    ],
+    "primary_outage_uses_backup": [
+     "answered",
+     "from backup",
+     "ok"
+    ],
+    "runaway_loop_hits_call_limit": [
+     "answered",
+     "after 8 calls",
+     "ok"
+    ]
+   }
+  },
+  "haiku": {}
+ }
+}

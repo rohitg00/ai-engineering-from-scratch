@@ -1,0 +1,515 @@
+{
+ "cells": {
+  "memory delta100 10": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    0.06,
+    0.07,
+    0.08
+   ],
+   "saver": "memory",
+   "steps": 10,
+   "thread_mb": [
+    0.01,
+    0.01,
+    0.01
+   ]
+  },
+  "memory delta100 100": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    0.1,
+    0.1,
+    0.11
+   ],
+   "saver": "memory",
+   "steps": 100,
+   "thread_mb": [
+    0.18,
+    0.18,
+    0.18
+   ]
+  },
+  "memory delta100 1000": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    0.11,
+    0.14,
+    0.17
+   ],
+   "saver": "memory",
+   "steps": 1000,
+   "thread_mb": [
+    4.42,
+    4.42,
+    4.42
+   ]
+  },
+  "memory delta100 5000": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    0.07
+   ],
+   "saver": "memory",
+   "steps": 5000,
+   "thread_mb": [
+    80.39
+   ]
+  },
+  "memory delta1000 10": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    0.07,
+    0.07,
+    0.07
+   ],
+   "saver": "memory",
+   "steps": 10,
+   "thread_mb": [
+    0.01,
+    0.01,
+    0.01
+   ]
+  },
+  "memory delta1000 100": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    0.07,
+    0.1,
+    0.11
+   ],
+   "saver": "memory",
+   "steps": 100,
+   "thread_mb": [
+    0.12,
+    0.12,
+    0.12
+   ]
+  },
+  "memory delta1000 1000": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    0.12,
+    0.14,
+    0.17
+   ],
+   "saver": "memory",
+   "steps": 1000,
+   "thread_mb": [
+    1.81,
+    1.81,
+    1.81
+   ]
+  },
+  "memory delta1000 5000": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    0.04
+   ],
+   "saver": "memory",
+   "steps": 5000,
+   "thread_mb": [
+    14.9
+   ]
+  },
+  "memory plain 10": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    0.19,
+    0.16,
+    0.18
+   ],
+   "saver": "memory",
+   "steps": 10,
+   "thread_mb": [
+    0.05,
+    0.05,
+    0.05
+   ]
+  },
+  "memory plain 100": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    0.94,
+    1.0,
+    0.93
+   ],
+   "saver": "memory",
+   "steps": 100,
+   "thread_mb": [
+    3.07,
+    3.07,
+    3.07
+   ]
+  },
+  "memory plain 1000": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    8.48,
+    8.87,
+    8.87
+   ],
+   "saver": "memory",
+   "steps": 1000,
+   "thread_mb": [
+    292.44,
+    292.44,
+    292.44
+   ]
+  },
+  "memory plain 5000": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    41.96
+   ],
+   "saver": "memory",
+   "steps": 5000,
+   "thread_mb": [
+    7288.64
+   ]
+  },
+  "postgres delta100 10": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    1.13,
+    1.06,
+    1.11
+   ],
+   "saver": "postgres",
+   "steps": 10,
+   "thread_mb": [
+    0.02,
+    0.02,
+    0.02
+   ]
+  },
+  "postgres delta100 100": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    1.07,
+    1.07,
+    1.05
+   ],
+   "saver": "postgres",
+   "steps": 100,
+   "thread_mb": [
+    0.2,
+    0.2,
+    0.2
+   ]
+  },
+  "postgres delta100 1000": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    1.07,
+    1.13,
+    1.08
+   ],
+   "saver": "postgres",
+   "steps": 1000,
+   "thread_mb": [
+    4.58,
+    4.58,
+    4.59
+   ]
+  },
+  "postgres delta100 5000": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    1.13
+   ],
+   "saver": "postgres",
+   "steps": 5000,
+   "thread_mb": [
+    81.2
+   ]
+  },
+  "postgres delta1000 10": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    1.14,
+    1.15,
+    1.18
+   ],
+   "saver": "postgres",
+   "steps": 10,
+   "thread_mb": [
+    0.02,
+    0.02,
+    0.02
+   ]
+  },
+  "postgres delta1000 100": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    1.02,
+    1.08,
+    1.04
+   ],
+   "saver": "postgres",
+   "steps": 100,
+   "thread_mb": [
+    0.14,
+    0.14,
+    0.14
+   ]
+  },
+  "postgres delta1000 1000": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    1.09,
+    1.04,
+    1.05
+   ],
+   "saver": "postgres",
+   "steps": 1000,
+   "thread_mb": [
+    1.97,
+    1.97,
+    1.97
+   ]
+  },
+  "postgres delta1000 5000": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    1.04
+   ],
+   "saver": "postgres",
+   "steps": 5000,
+   "thread_mb": [
+    15.7
+   ]
+  },
+  "postgres plain 10": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    2.78,
+    2.88,
+    2.97
+   ],
+   "saver": "postgres",
+   "steps": 10,
+   "thread_mb": [
+    0.05,
+    0.05,
+    0.05
+   ]
+  },
+  "postgres plain 100": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    6.42,
+    6.6,
+    6.31
+   ],
+   "saver": "postgres",
+   "steps": 100,
+   "thread_mb": [
+    3.08,
+    3.08,
+    3.08
+   ]
+  },
+  "postgres plain 1000": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    34.65,
+    37.92,
+    34.51
+   ],
+   "saver": "postgres",
+   "steps": 1000,
+   "thread_mb": [
+    292.58,
+    292.58,
+    292.58
+   ]
+  },
+  "postgres plain 5000": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    148.65
+   ],
+   "saver": "postgres",
+   "steps": 5000,
+   "thread_mb": [
+    7289.37
+   ]
+  },
+  "sqlite delta100 10": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    1.03,
+    1.07,
+    1.15
+   ],
+   "saver": "sqlite",
+   "steps": 10,
+   "thread_mb": [
+    0.01,
+    0.01,
+    0.01
+   ]
+  },
+  "sqlite delta100 100": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    1.15,
+    1.2,
+    1.14
+   ],
+   "saver": "sqlite",
+   "steps": 100,
+   "thread_mb": [
+    0.19,
+    0.19,
+    0.19
+   ]
+  },
+  "sqlite delta100 1000": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    1.14,
+    1.06,
+    1.06
+   ],
+   "saver": "sqlite",
+   "steps": 1000,
+   "thread_mb": [
+    4.49,
+    4.49,
+    4.49
+   ]
+  },
+  "sqlite delta100 5000": {
+   "channel": "delta100",
+   "put_ms_last10_p50": [
+    1.02
+   ],
+   "saver": "sqlite",
+   "steps": 5000,
+   "thread_mb": [
+    80.71
+   ]
+  },
+  "sqlite delta1000 10": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    1.09,
+    1.09,
+    1.15
+   ],
+   "saver": "sqlite",
+   "steps": 10,
+   "thread_mb": [
+    0.01,
+    0.01,
+    0.01
+   ]
+  },
+  "sqlite delta1000 100": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    1.14,
+    1.21,
+    1.2
+   ],
+   "saver": "sqlite",
+   "steps": 100,
+   "thread_mb": [
+    0.13,
+    0.13,
+    0.13
+   ]
+  },
+  "sqlite delta1000 1000": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    1.12,
+    1.1,
+    1.06
+   ],
+   "saver": "sqlite",
+   "steps": 1000,
+   "thread_mb": [
+    1.88,
+    1.88,
+    1.88
+   ]
+  },
+  "sqlite delta1000 5000": {
+   "channel": "delta1000",
+   "put_ms_last10_p50": [
+    1.09
+   ],
+   "saver": "sqlite",
+   "steps": 5000,
+   "thread_mb": [
+    15.22
+   ]
+  },
+  "sqlite plain 10": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    2.81,
+    2.4,
+    2.65
+   ],
+   "saver": "sqlite",
+   "steps": 10,
+   "thread_mb": [
+    0.05,
+    0.05,
+    0.05
+   ]
+  },
+  "sqlite plain 100": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    3.11,
+    3.3,
+    3.31
+   ],
+   "saver": "sqlite",
+   "steps": 100,
+   "thread_mb": [
+    3.07,
+    3.07,
+    3.07
+   ]
+  },
+  "sqlite plain 1000": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    12.48,
+    12.48,
+    12.23
+   ],
+   "saver": "sqlite",
+   "steps": 1000,
+   "thread_mb": [
+    292.5,
+    292.5,
+    292.5
+   ]
+  },
+  "sqlite plain 5000": {
+   "channel": "plain",
+   "put_ms_last10_p50": [
+    63.16
+   ],
+   "saver": "sqlite",
+   "steps": 5000,
+   "thread_mb": [
+    7288.93
+   ]
+  }
+ },
+ "durability": "sync",
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "message_chars_per_step": 400,
+ "sources": [
+  "capture/lab/T03-checkpoint-cost-x86/01-steps.jsonl",
+  "capture/lab/T03-checkpoint-cost-x86/02-steps-5000.jsonl"
+ ]
+}

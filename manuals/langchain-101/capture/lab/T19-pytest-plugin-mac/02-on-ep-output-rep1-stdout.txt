@@ -1,0 +1,20 @@
+$ -m pytest <scripts>/t19_tests/test_ls_plugin.py -p no:cacheprovider -rA --color=no --langsmith-output
+rc=1 wall=3.79s
+--- stdout
+Collecting tests...
+Running tests...
+Test Suite: None.test_ls_plugin                                                 
+LangSmith URL: --                                                               
+┏━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Test        ┃ Inputs ┃ Ref outputs ┃ Outputs ┃ Status  ┃ Feedback ┃ Duration ┃
+┡━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━┩
+│ ...arked_p… │ {}     │ {}          │ {}      │ running │          │ 0.00s    │
+│ ...arked_f… │ {}     │ {}          │ {}      │ running │          │ 0.00s    │
+│ ...rked_ag… │ {}     │ {}          │ {}      │ running │          │ 0.00s    │
+│             │        │             │         │         │          │          │
+│ Averages    │        │             │         │ 0%      │ --       │ 0.00s    │
+└─────────────┴────────┴─────────────┴─────────┴─────────┴──────────┴──────────┘
+Finishing up...
+
+
+--- stderr

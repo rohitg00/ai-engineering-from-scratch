@@ -1,0 +1,34 @@
+INFO:     Started server process [62237]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:53803 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53819 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53825 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53823 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53827 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53831 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53827 - "POST /threads/9b14ef81-ce2f-455e-9baa-9ce17b6e3c07/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53831 - "POST /threads/6de93555-960b-4b5a-a54c-06804a878eb9/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53833 - "POST /threads/a30f6afa-d51f-4c56-b953-0fd255fcf2f3/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "POST /threads/620815a0-436b-4f42-8e53-d08ff45ef6b8/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53835 - "POST /threads/111cee7b-3040-429c-9591-72a3cb6d5ffb/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53976 - "POST /threads/b9cadcfd-04c3-4864-83fb-9c0ac51d5da6/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53827 - "POST /threads/9b14ef81-ce2f-455e-9baa-9ce17b6e3c07/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53835 - "POST /threads/111cee7b-3040-429c-9591-72a3cb6d5ffb/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "POST /threads/620815a0-436b-4f42-8e53-d08ff45ef6b8/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54070 - "POST /threads/fda0a4ec-28e8-452a-a797-265d08f4b394/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53976 - "POST /threads/b9cadcfd-04c3-4864-83fb-9c0ac51d5da6/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53827 - "POST /threads/9b14ef81-ce2f-455e-9baa-9ce17b6e3c07/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53835 - "POST /threads/111cee7b-3040-429c-9591-72a3cb6d5ffb/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "POST /threads/620815a0-436b-4f42-8e53-d08ff45ef6b8/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54070 - "POST /threads/fda0a4ec-28e8-452a-a797-265d08f4b394/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53976 - "POST /threads/b9cadcfd-04c3-4864-83fb-9c0ac51d5da6/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53827 - "POST /threads/9b14ef81-ce2f-455e-9baa-9ce17b6e3c07/approve HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:53835 - "POST /threads/111cee7b-3040-429c-9591-72a3cb6d5ffb/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53829 - "POST /threads/620815a0-436b-4f42-8e53-d08ff45ef6b8/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54070 - "POST /threads/fda0a4ec-28e8-452a-a797-265d08f4b394/approve HTTP/1.1" 409 Conflict
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62237]

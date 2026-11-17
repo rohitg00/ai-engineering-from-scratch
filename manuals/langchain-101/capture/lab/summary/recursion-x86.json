@@ -1,0 +1,79 @@
+{
+ "cases": {
+  "create_agent_bound_config": {
+   "recursion_limit": 9999
+  },
+  "create_agent_forever_no_config_capped": {
+   "model_calls": 121,
+   "result": "Stop: wall-clock cap of 1200.0 s reached by the lab script",
+   "steps": 242,
+   "tool_calls": 121,
+   "tool_calls_at_s": [
+    [
+     25,
+     87.8
+    ],
+    [
+     50,
+     145.9
+    ],
+    [
+     75,
+     210.4
+    ],
+    [
+     100,
+     287.8
+    ]
+   ],
+   "wall_s": 1260.4
+  },
+  "create_agent_forever_recursion_limit_101": {
+   "limit_reached": 101,
+   "model_calls": [
+    51,
+    51,
+    51
+   ],
+   "tool_calls": [
+    50,
+    50,
+    50
+   ],
+   "wall_s": [
+    105.51,
+    105.1,
+    105.72
+   ]
+  },
+  "create_agent_forever_recursion_limit_25": {
+   "limit_reached": 25,
+   "model_calls": [
+    13,
+    13,
+    13
+   ],
+   "tool_calls": [
+    12,
+    12,
+    12
+   ],
+   "wall_s": [
+    24.34,
+    23.83,
+    23.8
+   ]
+  }
+ },
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on CPU, temperature 0, seed 42, server context 8192",
+ "not_used": "the StateGraph rows have no model and stay in recursion-mac.json",
+ "prompt": "the model is told to call ping until it answers finished, and ping never does",
+ "runs": "3 runs for each recursion_limit; 1 run with no recursion_limit, stopped by the lab script at a 1200 s cap",
+ "sources": [
+  "capture/lab/T17-claims-x86/01-claims.jsonl",
+  "capture/lab/T17-claims-x86/02-nolimit.jsonl",
+  "capture/lab/T17-claims-x86/t17_real.py",
+  "capture/lab/T17-claims-x86/t17_nolimit.py"
+ ]
+}

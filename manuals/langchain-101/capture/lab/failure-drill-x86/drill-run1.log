@@ -1,0 +1,53 @@
+{"kind": "header", "script": "drill_real.py", "model": "qwen3:4b-instruct-2507-q4_K_M", "settings": {"temperature": 0, "seed": 42, "reasoning": "unset for qwen3:4b-instruct-2507 (no thinking mode); False for qwen3:8b", "num_ctx": "server default 8192", "ollama": "0.31.1 on the x86 server guest, CPU, -np 1"}, "versions": {"langchain": "1.5.0", "langchain-core": "1.8.0", "langgraph": "1.2.22", "langgraph-prebuilt": "1.1.2", "langchain-ollama": "1.1.0", "langchain-openai": "1.8.0", "ollama": "0.6.3", "openai": "3.51.0", "langsmith": "0.14.17", "httpx": "0.28.1", "psycopg": "3.3.9", "python": "3.13.18"}, "load": [8.4912109375, 14.13330078125, 18.4208984375], "cpu_count": 32, "time": "2026-11-14T22:17:09Z"}
+
+== 1 retry layers stack on one model call (section 3.5)
+  symptom   one model call sent 9 requests to a relay in front of Ollama that drops every connection, in 6.8 s
+  state     the run ended without an exception, last AIMessage: Model call failed after 3 attempts with OpenAIConnectionError: Connection error.
+  fix       ChatOpenAI(max_retries=0), so ModelRetryMiddleware is the only retry layer
+  after     3 requests in 2.3 s
+  time      9.59 s
+
+== 2 a crash between a side effect and its checkpoint (section 4.3)
+  symptom   the first process exited with -9 inside charge_card, the resume ran charge_card again: 4 charges
+  state     after the resume: next [], 5 messages, charges ['start', 'start', 'resume', 'resume'], last 'Charged'
+  fix       check runtime.tool_call_id against the charges before the charge, with durability sync
+  after     exit -9, then the resume: 2 charge, next [], last 'Charged'
+  time      14.32 s
+
+== 3 an approval skipped by a middleware that jumps to tools (section 5.5)
+  symptom   send_email ran 1 time before any decision, with 0 interrupts, to ['all-staff@example.org']
+  state     batched mode, middleware=[HumanInTheLoopMiddleware, JumpToTools], next []
+  fix       interrupt_mode="per_call", which pauses inside the tool call
+  after     send_email ran 0 times, 1 interrupt waits, next ['tools']
+  time      7.06 s
+
+== 4 a run that ends with no structured response (section 3.2)
+  symptom   3 of 5 prompts ended with no exception and structured_response None: ['Hello! How are you today?', 'Tell me a one-line joke.', 'What is the total of an empty order?']
+  state     bound tools ['add', 'Answer']; last messages of the None runs: ["Hello! I'm doing great, thanks for asking. How can I assist you today? 😊", "Why don't scientists trust atoms? Because they make up everything!", 'The total of an empty order is 0. \n\nAnswer(total=0)']
+  fix       check structured_response for None after each run, and treat None as a failure
+  after     the check raised on 3 of 5 runs
+  time      15.56 s
+
+== 5 a tracing endpoint that is down (section 6.4)
+  symptom   the agent run took 4436.9 ms, and the process exited 16.9 s after it (22.0 s in all)
+  state     LANGSMITH_TRACING=true, nothing listens on the endpoint port, 3 lines of upload errors on stderr
+  fix       probe GET /info with a 1 s timeout at start, and run inside tracing_context(enabled=False) when it fails
+  after     tracing False, exit 0.3 s after the run (5.0 s in all), 0 lines of upload errors
+  time      26.97 s
+
+== 6 two tools with the same name (section 2.4)
+  symptom   create_agent raised nothing, the model saw 1 tool named ['lookup']
+  state     the call to lookup ran: ['from the refunds table']; final answer "I'm sorry, but I couldn't find any information about order 7 in the refunds tabl"
+  fix       check that tool names are unique before create_agent
+  after     the check found duplicate names ['lookup']
+  time      5.92 s
+
+== 7 a model that calls a tool forever (section 5.8)
+  symptom   GraphRecursionError: Recursion limit of 10 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.
+  state     the model was called 5 times before the limit
+  fix       ModelCallLimitMiddleware(run_limit=3, exit_behavior="end"), first with the same recursion_limit of 10
+  after     recursion_limit 10: 3 model calls, GraphRecursionError: Recursion limit of 10 reached without hi …
+  after     recursion_limit 25: 3 model calls, no exception, last message 'Model call limits exceeded: run limit (3/3)'
+  time      23.61 s
+
+total 103.0 s

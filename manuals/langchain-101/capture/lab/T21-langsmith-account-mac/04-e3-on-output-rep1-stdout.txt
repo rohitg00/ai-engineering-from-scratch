@@ -1,0 +1,21 @@
+$ pytest <scripts>/t21_tests/test_ls_plugin.py -p no:cacheprovider -rA --color=no --langsmith-output
+rc=1 wall=6.42s
+--- stdout
+Collecting tests...
+Running tests...
+Test Suite: aiefs-lc101-pytest                                                  
+LangSmith URL:                                                                  
+https://smith.langchain.com/o/<tenant>/datasets/<dataset-id-2>/compare?selectedSessions=<project-id-11>
+┏━━━━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┓
+┃ Test         ┃ Inputs ┃ Ref outputs ┃ Outputs ┃ Status ┃ Feedback ┃ Duration ┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━┩
+│ ...arked_pa… │ {}     │ {}          │ {}      │ failed │          │ 0.00s    │
+│ ...arked_fa… │ {}     │ {}          │ {}      │ failed │          │ 0.00s    │
+│ ...rked_age… │ {}     │ {}          │ {}      │ failed │          │ 0.61s    │
+│              │        │             │         │        │          │          │
+│ Averages     │        │             │         │ 0%     │ --       │ 0.21s    │
+└──────────────┴────────┴─────────────┴─────────┴────────┴──────────┴──────────┘
+Finishing up...
+
+
+--- stderr

@@ -1,0 +1,265 @@
+{
+ "case": "failed_ticket_is_not_retried",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "14279208-0d04-4be8-9a15-dc4d8b652e67",
+   "text": "Open a ticket, I need a human",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "9549ef9d-1c11-46d8-a5d6-fe82dc1a9cdf",
+      "name": "create_ticket",
+      "args": {
+       "subject": "Need Human Support",
+       "body": "I need a human to assist me with my request."
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "create_ticket",
+      "status": "error",
+      "content": "create_ticket failed with ConnectionError. Tell the customer and do not guess."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'m"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " unable"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " open"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " support"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ticket"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " right"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " now"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " try"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " again"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " later"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " how"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " else"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assist"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 14.7641
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "14279208-0d04-4be8-9a15-dc4d8b652e67",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Open a ticket, I need a human",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "create_ticket",
+       "args": {
+        "subject": "Need Human Support",
+        "body": "I need a human to assist me with my request."
+       },
+       "id": "9549ef9d-1c11-46d8-a5d6-fe82dc1a9cdf",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 452,
+      "output_tokens": 38,
+      "total_tokens": 490
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "create_ticket failed with ConnectionError. Tell the customer and do not guess.",
+     "tool_calls": [],
+     "name": "create_ticket",
+     "status": "error",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I'm unable to open a support ticket right now. Please try again later or let me know how else I can assist you.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 513,
+      "output_tokens": 27,
+      "total_tokens": 540
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

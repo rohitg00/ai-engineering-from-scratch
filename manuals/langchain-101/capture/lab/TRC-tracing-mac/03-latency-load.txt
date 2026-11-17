@@ -1,0 +1,2 @@
+12:40  11 users, load averages: 5.84 6.42 9.37
+12:40  11 users, load averages: 5.80 6.41 9.25

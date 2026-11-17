@@ -1,0 +1,100 @@
+# Per-superstep cost with a real model. create_agent + read_page cursor tool, 10 tool round trips + final answer. n=30 runs per cell after 2 warmups. pin {'langgraph': '1.2.22 (tag 08a20169)', 'langchain': '1.5.0', 'langchain-core': '1.8.0', 'langgraph-checkpoint': '4.3.2', 'langgraph-checkpoint-sqlite': '3.1.3'}
+# {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['29.23', '29.15', '24.98'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 16384}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]}
+# model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}
+# timers: wall = agent.invoke; model_provider = ChatOllama._generate (HTTP call to Ollama incl. response parse); tool_fn = body of read_page; framework = wall - model_provider - tool_fn (LangGraph loop, LangChain model/tool wrappers, checkpointer on the loop thread). Loop function timers as on the Mac.
+
+## saver=none durability=async: clean runs 30/30; supersteps 22.0; loadavg before ['29.23', '29.15', '24.98'] after ['23.79', '25.13', '25.09']; ollama [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 16384}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]
+   wall median 25.87 s (p10 25.47, p90 26.35); model 25.84 s; tool fn 0.200 ms; framework 37.5 ms (p10 34.5, p90 38.9) = 0.144% of wall, 1.704 ms per superstep
+   model node wrapper (node:model - provider) 968.6 us per call; ToolNode wrapper (node:tools - tool fn) 1777.1 us per call
+   node:__start__         calls=  1.0 per_call=      44.1 us total=     0.044 ms
+   node:model             calls= 11.0 per_call= 2349689.0 us total= 25846.579 ms
+   node:tools             calls= 10.0 per_call=    1796.8 us total=    17.968 ms
+   prepare_next_tasks     calls= 24.0 per_call=     109.1 us total=     2.618 ms
+   apply_writes           calls= 23.0 per_call=      35.0 us total=     0.805 ms
+   tick                   calls= 23.0 per_call=     129.0 us total=     2.966 ms
+   after_tick             calls= 22.0 per_call=     153.3 us total=     3.372 ms
+   loop.put_writes        calls= 22.0 per_call=      44.9 us total=     0.988 ms
+   loop._put_checkpoint   calls= 23.0 per_call=      41.6 us total=     0.957 ms
+## saver=memory durability=async: clean runs 30/30; supersteps 22.0; loadavg before ['23.79', '25.13', '25.09'] after ['21.38', '23.51', '24.06']; ollama [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}]
+   wall median 25.82 s (p10 25.60, p90 26.18); model 25.77 s; tool fn 0.200 ms; framework 51.3 ms (p10 49.6, p90 53.3) = 0.197% of wall, 2.33 ms per superstep
+   model node wrapper (node:model - provider) 1010.0 us per call; ToolNode wrapper (node:tools - tool fn) 2537.6 us per call
+   node:__start__         calls=  1.0 per_call=      48.0 us total=     0.048 ms
+   node:model             calls= 11.0 per_call= 2343732.6 us total= 25781.059 ms
+   node:tools             calls= 10.0 per_call=    2555.8 us total=    25.558 ms
+   prepare_next_tasks     calls= 24.0 per_call=     120.4 us total=      2.89 ms
+   apply_writes           calls= 23.0 per_call=      48.3 us total=     1.111 ms
+   tick                   calls= 23.0 per_call=     144.9 us total=     3.333 ms
+   after_tick             calls= 22.0 per_call=     238.0 us total=     5.237 ms
+   loop.put_writes        calls= 22.0 per_call=     109.5 us total=     2.408 ms
+   loop._put_checkpoint   calls= 23.0 per_call=     130.1 us total=     2.992 ms
+   saver.put              calls= 23.0 per_call=     236.8 us total=     5.446 ms
+   saver.put_writes       calls= 22.0 per_call=     112.7 us total=      2.48 ms
+## saver=memory durability=sync: clean runs 30/30; supersteps 22.0; loadavg before ['21.38', '23.51', '24.06'] after ['29.07', '27.06', '25.61']; ollama [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}]
+   wall median 25.88 s (p10 25.49, p90 26.30); model 25.83 s; tool fn 0.200 ms; framework 55.3 ms (p10 54.2, p90 56.3) = 0.213% of wall, 2.514 ms per superstep
+   model node wrapper (node:model - provider) 999.2 us per call; ToolNode wrapper (node:tools - tool fn) 1778.2 us per call
+   node:__start__         calls=  1.0 per_call=      48.3 us total=     0.048 ms
+   node:model             calls= 11.0 per_call= 2348917.2 us total= 25838.089 ms
+   node:tools             calls= 10.0 per_call=    1798.1 us total=    17.981 ms
+   prepare_next_tasks     calls= 24.0 per_call=     128.8 us total=     3.092 ms
+   apply_writes           calls= 23.0 per_call=      45.6 us total=      1.05 ms
+   tick                   calls= 23.0 per_call=     158.7 us total=     3.649 ms
+   after_tick             calls= 22.0 per_call=     225.7 us total=     4.965 ms
+   loop.put_writes        calls= 22.0 per_call=     101.7 us total=     2.238 ms
+   loop._put_checkpoint   calls= 23.0 per_call=     123.5 us total=     2.841 ms
+   saver.put              calls= 23.0 per_call=     244.2 us total=     5.617 ms
+   saver.put_writes       calls= 22.0 per_call=     112.4 us total=     2.472 ms
+## saver=memory durability=exit: clean runs 30/30; supersteps 22.0; loadavg before ['29.07', '27.06', '25.61'] after ['27.36', '25.79', '25.51']; ollama [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}]
+   wall median 25.68 s (p10 25.52, p90 26.24); model 25.64 s; tool fn 0.200 ms; framework 39.4 ms (p10 37.3, p90 40.3) = 0.153% of wall, 1.791 ms per superstep
+   model node wrapper (node:model - provider) 975.0 us per call; ToolNode wrapper (node:tools - tool fn) 1794.8 us per call
+   node:__start__         calls=  1.0 per_call=      47.3 us total=     0.047 ms
+   node:model             calls= 11.0 per_call= 2331916.0 us total= 25651.076 ms
+   node:tools             calls= 10.0 per_call=    1814.9 us total=    18.149 ms
+   prepare_next_tasks     calls= 24.0 per_call=     110.9 us total=     2.662 ms
+   apply_writes           calls= 23.0 per_call=      45.2 us total=     1.039 ms
+   tick                   calls= 23.0 per_call=     134.6 us total=     3.096 ms
+   after_tick             calls= 22.0 per_call=     166.3 us total=      3.66 ms
+   loop.put_writes        calls= 22.0 per_call=      45.0 us total=      0.99 ms
+   loop._put_checkpoint   calls= 24.0 per_call=      77.9 us total=      1.87 ms
+   saver.put              calls=  1.0 per_call=     392.0 us total=     0.392 ms
+## saver=sqlite durability=async: clean runs 30/30; supersteps 22.0; loadavg before ['27.36', '25.79', '25.51'] after ['25.67', '25.22', '25.43']; ollama [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}]
+   wall median 25.79 s (p10 25.39, p90 26.32); model 25.73 s; tool fn 0.200 ms; framework 63.5 ms (p10 60.4, p90 66.0) = 0.245% of wall, 2.887 ms per superstep
+   model node wrapper (node:model - provider) 989.4 us per call; ToolNode wrapper (node:tools - tool fn) 2535.8 us per call
+   node:__start__         calls=  1.0 per_call=      47.2 us total=     0.047 ms
+   node:model             calls= 11.0 per_call= 2339606.7 us total= 25735.674 ms
+   node:tools             calls= 10.0 per_call=    2555.8 us total=    25.558 ms
+   prepare_next_tasks     calls= 24.0 per_call=     112.8 us total=     2.707 ms
+   apply_writes           calls= 23.0 per_call=      46.8 us total=     1.075 ms
+   tick                   calls= 23.0 per_call=     135.1 us total=     3.107 ms
+   after_tick             calls= 22.0 per_call=     235.3 us total=     5.176 ms
+   loop.put_writes        calls= 22.0 per_call=     116.5 us total=     2.563 ms
+   loop._put_checkpoint   calls= 23.0 per_call=     129.3 us total=     2.973 ms
+   saver.put              calls= 23.0 per_call=    3918.0 us total=    90.114 ms
+   saver.put_writes       calls= 22.0 per_call=    4228.6 us total=    93.029 ms
+## saver=sqlite durability=sync: clean runs 30/30; supersteps 22.0; loadavg before ['25.67', '25.22', '25.43'] after ['22.94', '23.89', '24.40']; ollama [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}]
+   wall median 25.92 s (p10 25.52, p90 26.42); model 25.80 s; tool fn 0.200 ms; framework 116.9 ms (p10 111.5, p90 123.5) = 0.449% of wall, 5.312 ms per superstep
+   model node wrapper (node:model - provider) 1017.3 us per call; ToolNode wrapper (node:tools - tool fn) 1815.4 us per call
+   node:__start__         calls=  1.0 per_call=      50.3 us total=      0.05 ms
+   node:model             calls= 11.0 per_call= 2346490.4 us total= 25811.394 ms
+   node:tools             calls= 10.0 per_call=    1834.6 us total=    18.346 ms
+   prepare_next_tasks     calls= 24.0 per_call=     132.0 us total=     3.169 ms
+   apply_writes           calls= 23.0 per_call=      46.4 us total=     1.067 ms
+   tick                   calls= 23.0 per_call=     161.5 us total=     3.715 ms
+   after_tick             calls= 22.0 per_call=     220.2 us total=     4.844 ms
+   loop.put_writes        calls= 22.0 per_call=     117.8 us total=     2.593 ms
+   loop._put_checkpoint   calls= 23.0 per_call=     116.2 us total=     2.672 ms
+   saver.put              calls= 23.0 per_call=    2609.0 us total=    60.006 ms
+   saver.put_writes       calls= 22.0 per_call=    4646.3 us total=   102.218 ms
+## saver=sqlite durability=exit: clean runs 30/30; supersteps 22.0; loadavg before ['22.94', '23.89', '24.40'] after ['26.01', '24.51', '24.56']; ollama [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}]
+   wall median 25.87 s (p10 25.54, p90 26.20); model 25.82 s; tool fn 0.200 ms; framework 49.2 ms (p10 47.0, p90 51.3) = 0.19% of wall, 2.236 ms per superstep
+   model node wrapper (node:model - provider) 1004.7 us per call; ToolNode wrapper (node:tools - tool fn) 1799.1 us per call
+   node:__start__         calls=  1.0 per_call=      50.4 us total=      0.05 ms
+   node:model             calls= 11.0 per_call= 2348248.7 us total= 25830.736 ms
+   node:tools             calls= 10.0 per_call=    1818.7 us total=    18.187 ms
+   prepare_next_tasks     calls= 24.0 per_call=     114.2 us total=      2.74 ms
+   apply_writes           calls= 23.0 per_call=      47.0 us total=     1.081 ms
+   tick                   calls= 23.0 per_call=     142.5 us total=     3.278 ms
+   after_tick             calls= 22.0 per_call=     176.7 us total=     3.887 ms
+   loop.put_writes        calls= 22.0 per_call=      51.6 us total=     1.134 ms
+   loop._put_checkpoint   calls= 24.0 per_call=      81.2 us total=     1.949 ms
+   saver.put              calls=  1.0 per_call=    2921.5 us total=     2.922 ms
+

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-2-3-title fig-2-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-3-title">How long each finished task waits for its put_writes, in one sync run</title>
+  <desc id="fig-2-3-desc">Four panels, one per superstep of one create_agent run with Qwen3 4B, durability sync, on SqliteSaver on the x86 server guest. Each panel spans 7 ms after the first task of the step returned. The upper lane is the loop: a dot for each task that returned and an amber line where the next superstep starts. The lower lane is the background saver: filled blocks are put calls that store a checkpoint, and outlined blocks are put_writes calls that store the writes of one task. A rose band runs from each task&#39;s return to the end of its put_writes. Those spans were 3.0 to 4.4 ms, in one run on a loaded guest. In step 3, the checkpoint put ended before the put_writes of the task 7f67758b. Between the panels the model ran for seconds.</desc>
+  <text x="20" y="100" font-size="12" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">loop</text>
+  <text x="20" y="164" font-size="12" font-weight="700" fill="var(--m-teal-ink, #18696a)">saver</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="62" y="50" width="126" height="168" fill="var(--m-code-bg, #efece0)"/>
+  <text x="125" y="42" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 0</text>
+  <line x1="62" y1="96" x2="188" y2="96" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1" stroke-opacity="0.5"/>
+  <line x1="62" y1="160" x2="188" y2="160" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.5"/>
+  <circle cx="62" cy="96" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="68.82" y="168" width="70.78" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="62" y="180" width="77.6" height="3" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="99.12" y="142" width="65.28" height="12" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="62" y="142" width="32.42" height="12" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <line x1="169.32" y1="74" x2="169.32" y2="214" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.6"/>
+  <line x1="62" y1="218" x2="62" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="62" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="98" y1="218" x2="98" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="98" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="134" y1="218" x2="134" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="134" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="170" y1="218" x2="170" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="170" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <text x="125" y="66" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">start</text>
+  <text x="196" y="264" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">model 3.55 s</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="204" y="50" width="126" height="168" fill="var(--m-code-bg, #efece0)"/>
+  <text x="267" y="42" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 1</text>
+  <line x1="204" y1="96" x2="330" y2="96" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1" stroke-opacity="0.5"/>
+  <line x1="204" y1="160" x2="330" y2="160" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.5"/>
+  <circle cx="204" cy="96" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="215.92" y="168" width="41.9" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="204" y="180" width="53.82" height="3" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="222.59" y="142" width="61.98" height="12" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <line x1="290.42" y1="74" x2="290.42" y2="214" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.6"/>
+  <line x1="204" y1="218" x2="204" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="204" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="240" y1="218" x2="240" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="240" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="276" y1="218" x2="276" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="276" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="312" y1="218" x2="312" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="312" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <text x="267" y="66" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">model</text>
+  <text x="338" y="264" font-size="11" text-anchor="middle" fill="var(--m-green-ink, #336b40)">tools 0.01 s</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="346" y="50" width="126" height="168" fill="var(--m-code-bg, #efece0)"/>
+  <text x="409" y="42" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 2</text>
+  <line x1="346" y1="96" x2="472" y2="96" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1" stroke-opacity="0.5"/>
+  <line x1="346" y1="160" x2="472" y2="160" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.5"/>
+  <circle cx="346" cy="96" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="387.94" y="168" width="37.15" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="346" y="180" width="79.09" height="3" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="384.54" cy="96" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="399.91" y="184" width="49.88" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="384.54" y="196" width="65.25" height="3" fill="var(--m-rose-ink, #b0344d)"/>
+  <line x1="346" y1="218" x2="346" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="346" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="382" y1="218" x2="382" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="382" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="418" y1="218" x2="418" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="418" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="454" y1="218" x2="454" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="454" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <text x="409" y="66" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">tools, tools</text>
+  <text x="480" y="264" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">model 1.54 s</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="488" y="50" width="126" height="168" fill="var(--m-code-bg, #efece0)"/>
+  <text x="551" y="42" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-amber-ink, #85590c)">step 3</text>
+  <line x1="488" y1="96" x2="614" y2="96" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1" stroke-opacity="0.5"/>
+  <line x1="488" y1="160" x2="614" y2="160" stroke="var(--m-teal-ink, #18696a)" stroke-width="1" stroke-opacity="0.5"/>
+  <circle cx="488" cy="96" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="503.09" y="168" width="63.37" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <rect x="488" y="180" width="78.46" height="3" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="497.5" y="142" width="43.27" height="12" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <line x1="545.26" y1="74" x2="545.26" y2="214" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.6"/>
+  <line x1="488" y1="218" x2="488" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="488" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="524" y1="218" x2="524" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="524" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <line x1="560" y1="218" x2="560" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="560" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4</text>
+  <line x1="596" y1="218" x2="596" y2="222" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="596" y="236" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6</text>
+  <text x="551" y="66" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">model</text>
+  <text x="20" y="236" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">ms</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="526.78" cy="128" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="526.78" y="132" font-size="11" text-anchor="middle">1</text>
+  <circle cx="578.46" cy="194" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="578.46" y="198" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">2</text>
+  </g>
+  <circle cx="30" cy="300" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="30" y="304" font-size="11" text-anchor="middle">1</text>
+  <text x="46" y="304" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">step 3: the checkpoint put ends, sync stops waiting, and step 4 starts</text>
+  <circle cx="30" cy="322" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="30" y="326" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">2</text>
+  <text x="46" y="326" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the put_writes of 7f67758b ends 1.4 ms later</text>
+  <circle cx="26" cy="356" r="3.5" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="36" y="360" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">task returned</text>
+  <rect x="150" y="349" width="12" height="12" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="168" y="360" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">put</text>
+  <rect x="214" y="349" width="12" height="12" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="232" y="360" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">put_writes</text>
+  <rect x="320" y="354" width="16" height="3" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="342" y="360" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">not durable, 3.0 to 4.4 ms</text>
+  <line x1="26" y1="370" x2="26" y2="384" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.6"/>
+  <text x="36" y="382" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">next superstep starts</text>
+  <text x="232" y="382" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">between panels: the next task and its seconds</text>
+</svg>

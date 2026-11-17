@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-labelledby="fig-2-2-title fig-2-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-2-title">A LastValue conflict, the reads that fail after it, and the repair</title>
+  <desc id="fig-2-2-desc">A sequence on four lifelines: your code, the Pregel loop, the nodes a and b, and InMemorySaver. invoke starts the run. The loop runs a and b, and each finished node has its write to x saved as a pending write on checkpoint step 0: x=2 from b and x=1 from a. Then apply_writes calls LastValue.update with two values and raises InvalidUpdateError. A later get_state reads the same pending writes and raises again, through [&#39;main.py:1496&#39;, &#39;main.py:1331&#39;, &#39;_algo.py:319&#39;, &#39;last_value.py:64&#39;]. invoke(None) reapplies the writes, runs no node, and raises again. In the lower block, the same saver is opened by the graph recompiled with x: Annotated[int, operator.add]. get_state returns {&#39;x&#39;: 3}, and invoke(None) finishes with the same state and runs no node.</desc>
+  <defs><marker id="fig-2-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-2-2-head-teal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-teal-ink, #18696a)"/></marker><marker id="fig-2-2-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <polygon points="42,30 86,30 86,56 42,56" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="42,30 86,30 86,56 42,56" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="42,30 86,30 86,35 42,35" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.8"/>
+  <path d="M47 40L51 43L47 46" fill="none" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.2" stroke-linejoin="round"/>
+  <polygon points="55,41.8 77,41.8 77,44.3 55,44.3" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.75"/>
+  <polygon points="47,49 67,49 67,51.5 47,51.5" fill="var(--m-violet-ink, #5b4fa3)" fill-opacity="0.4"/>
+  <polygon points="47,59 81,59 86,64 42,64" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="1.1" stroke-linejoin="round"/>
+  <polygon points="214,32 246,32 246,60 214,60" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="214,32 246,32 246,60 214,60" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="218,36 225,36 225,39.5 218,39.5" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.8"/>
+  <path d="M218 43L242 43" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="376,32 408,32 408,60 376,60" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="376,32 408,32 408,60 376,60" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="380,36 387,36 387,39.5 380,39.5" fill="var(--m-indigo-ink, #4b4f9e)" fill-opacity="0.8"/>
+  <path d="M380 43L404 43" fill="none" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8" stroke-linejoin="round"/>
+  <polygon points="540,28 540,62 541,63.9 543.8,65.5 548.2,66.9 553.8,67.7 560,68 566.2,67.7 571.8,66.9 576.2,65.5 579,63.9 580,62 580,28" fill="var(--m-panel, #f3f1e8)"/>
+  <polygon points="540,28 540,62 541,63.9 543.8,65.5 548.2,66.9 553.8,67.7 560,68 566.2,67.7 571.8,66.9 576.2,65.5 579,63.9 580,62 580,28" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="540,62 541,63.9 543.8,65.5 548.2,66.9 553.8,67.7 560,68 566.2,67.7 571.8,66.9 576.2,65.5 579,63.9 580,62 580,57 579,58.9 576.2,60.5 571.8,61.9 566.2,62.7 560,63 553.8,62.7 548.2,61.9 543.8,60.5 541,58.9 540,57" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.3"/>
+  <path d="M540 57L541 58.9L543.8 60.5L548.2 61.9L553.8 62.7L560 63L566.2 62.7L571.8 61.9L576.2 60.5L579 58.9L580 57" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <path d="M540 52L541 53.9L543.8 55.5L548.2 56.9L553.8 57.7L560 58L566.2 57.7L571.8 56.9L576.2 55.5L579 53.9L580 52" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="0.9" stroke-linejoin="round"/>
+  <polygon points="580,28 579,29.9 576.2,31.5 571.8,32.9 566.2,33.7 560,34 553.8,33.7 548.2,32.9 543.8,31.5 541,29.9 540,28 541,26.1 543.8,24.5 548.2,23.1 553.8,22.3 560,22 566.2,22.3 571.8,23.1 576.2,24.5 579,26.1" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.3" stroke-linejoin="round"/>
+  <polygon points="580,28 579,29.9 576.2,31.5 571.8,32.9 566.2,33.7 560,34 553.8,33.7 548.2,32.9 543.8,31.5 541,29.9 540,28 541,26.1 543.8,24.5 548.2,23.1 553.8,22.3 560,22 566.2,22.3 571.8,23.1 576.2,24.5 579,26.1" fill="var(--m-shine, #ffffff)" fill-opacity="0.45"/>
+  <text x="64" y="84" font-size="11.5" text-anchor="middle" fill="var(--m-violet-ink, #5b4fa3)">your code</text>
+  <text x="230" y="84" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">Pregel loop</text>
+  <text x="392" y="84" font-size="11.5" text-anchor="middle" fill="var(--m-indigo-ink, #4b4f9e)">nodes a, b</text>
+  <text x="560" y="84" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">InMemorySaver</text>
+  <line x1="64" y1="92" x2="64" y2="584" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="230" y1="92" x2="230" y2="584" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="392" y1="92" x2="392" y2="584" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <line x1="560" y1="92" x2="560" y2="584" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="2 3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="116" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="120" font-size="11" text-anchor="middle">1</text>
+  <line x1="64" y1="116" x2="228" y2="116" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M64 116 L228 116" keyPoints="0;0;1;1" keyTimes="0;0;0.688;1" calcMode="linear" dur="0.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0;0.1;0.688;1" dur="0.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="87.8" y="99.03" width="116.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="146" y="110" font-size="11.5" text-anchor="middle">invoke({&#39;x&#39;: 0})</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="150" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="20" y="154" font-size="11" text-anchor="middle">2</text>
+  <line x1="230" y1="150" x2="390" y2="150" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M230 150 L390 150" keyPoints="0;0;1;1" keyTimes="0;0.429;0.821;1" calcMode="linear" dur="1.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.429;0.486;0.821;1" dur="1.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="279.4" y="133.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="310" y="144" font-size="11.5" text-anchor="middle">run a, b</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="184" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1"/>
+  <text x="20" y="188" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">3</text>
+  <line x1="392" y1="184" x2="538" y2="184" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M392 184 L538 184" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="446.3" y="167.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="470" y="178" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">b: x=2</text>
+  <line x1="392" y1="208" x2="538" y2="208" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-teal)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-teal-ink, #18696a)" opacity="0"><animateMotion path="M392 208 L538 208" keyPoints="0;0;1;1" keyTimes="0;0.6;0.875;1" calcMode="linear" dur="2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.6;0.64;0.875;1" dur="2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="446.3" y="191.03" width="47.4" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="470" y="202" font-size="11.5" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">a: x=1</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="240" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="20" y="244" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">4</text>
+  <rect x="170" y="227" width="120" height="22" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="230" y="243" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">apply_writes</text>
+  <rect class="m-knock" x="297" y="232.42" width="154.5" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="300" y="243" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">LastValue gets two values</text>
+  <line x1="228" y1="270" x2="66" y2="270" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-2-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M228 270 L66 270" keyPoints="0;0;1;1" keyTimes="0;0.692;0.904;1" calcMode="linear" dur="2.6s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.692;0.723;0.904;1" dur="2.6s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="81.9" y="253.03" width="130.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="147" y="264" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">InvalidUpdateError</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="310" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="20" y="314" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">5</text>
+  <line x1="64" y1="310" x2="228" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M64 310 L228 310" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="111.95" y="293.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="146" y="304" font-size="11.5" text-anchor="middle">get_state</text>
+  <line x1="230" y1="310" x2="538" y2="310" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M230 310 L538 310" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="324.55" y="293.03" width="150.9" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="400" y="304" font-size="11.5" text-anchor="middle">read step 0 + pending</text>
+  <line x1="228" y1="336" x2="66" y2="336" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-2-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M228 336 L66 336" keyPoints="0;0;1;1" keyTimes="0;0.75;0.922;1" calcMode="linear" dur="3.2s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.75;0.775;0.922;1" dur="3.2s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="61.2" y="319.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="147" y="330" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">InvalidUpdateError again</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="374" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1"/>
+  <text x="20" y="378" font-size="11" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">6</text>
+  <line x1="64" y1="374" x2="228" y2="374" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M64 374 L228 374" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="101.6" y="357.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="146" y="368" font-size="11.5" text-anchor="middle">invoke(None)</text>
+  <rect class="m-knock" x="239" y="367.42" width="190.14" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="242" y="378" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">nodes run: [], writes reapplied</text>
+  <line x1="228" y1="400" x2="66" y2="400" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-2-head-rose)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-rose-ink, #b0344d)" opacity="0"><animateMotion path="M228 400 L66 400" keyPoints="0;0;1;1" keyTimes="0;0.789;0.934;1" calcMode="linear" dur="3.8s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.789;0.811;0.934;1" dur="3.8s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="61.2" y="383.03" width="171.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="147" y="394" font-size="11.5" text-anchor="middle" fill="var(--m-rose-ink, #b0344d)">InvalidUpdateError again</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <line x1="14" y1="430" x2="626" y2="430" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect class="m-knock" x="33" y="437.03" width="199.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="36" y="448" font-size="11.5" font-weight="700" fill="var(--m-teal-ink, #18696a)">same saver, graph recompiled</text>
+  <rect class="m-knock" x="33" y="455.42" width="243.6" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="36" y="466" font-size="11" fill="var(--m-teal-ink, #18696a)">with x: Annotated[int, operator.add]</text>
+  <circle cx="20" cy="492" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1"/>
+  <text x="20" y="496" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">7</text>
+  <line x1="64" y1="492" x2="228" y2="492" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M64 492 L228 492" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="111.95" y="475.03" width="68.1" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="146" y="486" font-size="11.5" text-anchor="middle">get_state</text>
+  <line x1="228" y1="516" x2="66" y2="516" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M228 516 L66 516" keyPoints="0;0;1;1" keyTimes="0;0.818;0.943;1" calcMode="linear" dur="4.4s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.818;0.836;0.943;1" dur="4.4s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="116.4" y="499.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="147" y="510" font-size="11.5" text-anchor="middle">{&#39;x&#39;: 3}</text>
+  </g>
+  <g data-beat="8"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.903;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.65s" begin="indefinite" fill="freeze"/>
+  <circle cx="20" cy="550" r="9" fill="var(--m-paper, #fafaf5)" stroke="var(--m-teal-ink, #18696a)" stroke-width="1"/>
+  <text x="20" y="554" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">8</text>
+  <line x1="64" y1="550" x2="228" y2="550" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M64 550 L228 550" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="101.6" y="533.03" width="88.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="146" y="544" font-size="11.5" text-anchor="middle">invoke(None)</text>
+  <rect class="m-knock" x="239" y="543.42" width="279.24" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="242" y="554" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">nodes run: [], saved writes reduced: 0 + 1 + 2</text>
+  <line x1="228" y1="574" x2="66" y2="574" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-2-2-head-ink)"/>
+  <circle class="m-packet" r="3.5" fill="var(--m-ink, #1a1a1a)" opacity="0"><animateMotion path="M228 574 L66 574" keyPoints="0;0;1;1" keyTimes="0;0.84;0.95;1" calcMode="linear" dur="5s" begin="indefinite" fill="freeze"/><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.84;0.856;0.95;1" dur="5s" begin="indefinite" fill="freeze"/></circle>
+  <rect class="m-knock" x="116.4" y="557.03" width="61.2" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="147" y="568" font-size="11.5" text-anchor="middle">{&#39;x&#39;: 3}</text>
+  </g>
+</svg>

@@ -1,0 +1,251 @@
+{
+ "case": "order_of_other_customer_is_hidden",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "0d7d8362-bb08-4b3f-b4df-094f5bba83f5",
+   "text": "Where is my order ORD-alice-1?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "686a5fbb-505a-4305-8bfc-aae9b0c2fb83",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-alice-1"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"error\": \"no order ORD-alice-1 on this account\"}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " couldn"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " find"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-al"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ice"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " check"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " another"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ID"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.3213
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "0d7d8362-bb08-4b3f-b4df-094f5bba83f5",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-alice-1?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-alice-1"
+       },
+       "id": "686a5fbb-505a-4305-8bfc-aae9b0c2fb83",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 557,
+      "output_tokens": 25,
+      "total_tokens": 582
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"error\": \"no order ORD-alice-1 on this account\"}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I couldn't find order ORD-alice-1. Let me know if you'd like to check another order ID.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 609,
+      "output_tokens": 25,
+      "total_tokens": 634
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

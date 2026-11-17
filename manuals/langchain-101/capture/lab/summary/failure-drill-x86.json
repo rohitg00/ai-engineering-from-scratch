@@ -1,0 +1,457 @@
+{
+ "cases": {
+  "1": {
+   "runs": [
+    {
+     "failure_source": "relay that closes every connection before Ollama answers",
+     "requests": 9,
+     "requests_after_fix": 3,
+     "run_s": 6.83,
+     "run_s_after_fix": 2.32
+    },
+    {
+     "failure_source": "relay that closes every connection before Ollama answers",
+     "requests": 9,
+     "requests_after_fix": 3,
+     "run_s": 6.87,
+     "run_s_after_fix": 3.55
+    },
+    {
+     "failure_source": "relay that closes every connection before Ollama answers",
+     "requests": 9,
+     "requests_after_fix": 3,
+     "run_s": 6.78,
+     "run_s_after_fix": 3.66
+    }
+   ],
+   "seconds": [
+    9.59,
+    10.85,
+    10.87
+   ],
+   "section": "3.5",
+   "title": "retry layers stack on one model call"
+  },
+  "2": {
+   "runs": [
+    {
+     "charges": 4,
+     "charges_after_fix": 2,
+     "exit_code": -9,
+     "resume_model_calls": 1,
+     "resume_model_calls_after_fix": 1
+    },
+    {
+     "charges": 4,
+     "charges_after_fix": 2,
+     "exit_code": -9,
+     "resume_model_calls": 1,
+     "resume_model_calls_after_fix": 1
+    },
+    {
+     "charges": 3,
+     "charges_after_fix": 2,
+     "exit_code": -9,
+     "resume_model_calls": 1,
+     "resume_model_calls_after_fix": 1
+    }
+   ],
+   "seconds": [
+    14.32,
+    13.2,
+    13.41
+   ],
+   "section": "4.3",
+   "title": "a crash between a side effect and its checkpoint"
+  },
+  "3": {
+   "runs": [
+    {
+     "interrupts_after_fix": 1,
+     "ran_after_fix": 0,
+     "ran_before_decision": 1
+    },
+    {
+     "interrupts_after_fix": 1,
+     "ran_after_fix": 0,
+     "ran_before_decision": 1
+    },
+    {
+     "interrupts_after_fix": 1,
+     "ran_after_fix": 0,
+     "ran_before_decision": 1
+    }
+   ],
+   "seconds": [
+    7.06,
+    6.51,
+    6.44
+   ],
+   "section": "5.5",
+   "title": "an approval skipped by a middleware that jumps to tools"
+  },
+  "4": {
+   "runs": [
+    {
+     "none_count": 3,
+     "runs": [
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Returning structured response: total=5",
+       "model_calls": 2,
+       "n_messages": 5,
+       "prompt": "What is 2 + 3?",
+       "structured_response": {
+        "total": 5
+       }
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Returning structured response: total=5",
+       "model_calls": 2,
+       "n_messages": 5,
+       "prompt": "Add 2 and 3 with the add tool and give the total.",
+       "structured_response": {
+        "total": 5
+       }
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Hello! I'm doing great, thanks for asking. How can I assist you today? \ud83d\ude0a",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "Hello! How are you today?",
+       "structured_response": null
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Why don't scientists trust atoms? Because they make up everything!",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "Tell me a one-line joke.",
+       "structured_response": null
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "The total of an empty order is 0. \n\nAnswer(total=0)",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "What is the total of an empty order?",
+       "structured_response": null
+      }
+     ]
+    },
+    {
+     "none_count": 3,
+     "runs": [
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Returning structured response: total=5",
+       "model_calls": 2,
+       "n_messages": 5,
+       "prompt": "What is 2 + 3?",
+       "structured_response": {
+        "total": 5
+       }
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Returning structured response: total=5",
+       "model_calls": 2,
+       "n_messages": 5,
+       "prompt": "Add 2 and 3 with the add tool and give the total.",
+       "structured_response": {
+        "total": 5
+       }
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Hello! I'm doing great, thanks for asking. How can I assist you today? \ud83d\ude0a",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "Hello! How are you today?",
+       "structured_response": null
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Why don't scientists trust atoms? Because they make up everything!",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "Tell me a one-line joke.",
+       "structured_response": null
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "The total of an empty order is 0. \n\nAnswer(total=0)",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "What is the total of an empty order?",
+       "structured_response": null
+      }
+     ]
+    },
+    {
+     "none_count": 3,
+     "runs": [
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Returning structured response: total=5",
+       "model_calls": 2,
+       "n_messages": 5,
+       "prompt": "What is 2 + 3?",
+       "structured_response": {
+        "total": 5
+       }
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Returning structured response: total=5",
+       "model_calls": 2,
+       "n_messages": 5,
+       "prompt": "Add 2 and 3 with the add tool and give the total.",
+       "structured_response": {
+        "total": 5
+       }
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Hello! I'm doing great, thanks for asking. How can I assist you today? \ud83d\ude0a",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "Hello! How are you today?",
+       "structured_response": null
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "Why don't scientists trust atoms? Because they make up everything!",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "Tell me a one-line joke.",
+       "structured_response": null
+      },
+      {
+       "bound": [
+        "add",
+        "Answer"
+       ],
+       "last": "The total of an empty order is 0. \n\nAnswer(total=0)",
+       "model_calls": 1,
+       "n_messages": 2,
+       "prompt": "What is the total of an empty order?",
+       "structured_response": null
+      }
+     ]
+    }
+   ],
+   "seconds": [
+    15.56,
+    15.4,
+    15.07
+   ],
+   "section": "3.2",
+   "title": "a run that ends with no structured response"
+  },
+  "5": {
+   "runs": [
+    {
+     "exit_lag_s": 16.9,
+     "exit_lag_s_after_fix": 0.3,
+     "run_ms": 4436.9,
+     "run_ms_after_fix": 3937.0,
+     "upload_error_lines": 3
+    },
+    {
+     "exit_lag_s": 17.3,
+     "exit_lag_s_after_fix": 0.2,
+     "run_ms": 4061.2,
+     "run_ms_after_fix": 4201.1,
+     "upload_error_lines": 3
+    },
+    {
+     "exit_lag_s": 17.2,
+     "exit_lag_s_after_fix": 0.2,
+     "run_ms": 4095.6,
+     "run_ms_after_fix": 4006.2,
+     "upload_error_lines": 3
+    }
+   ],
+   "seconds": [
+    26.97,
+    27.1,
+    26.94
+   ],
+   "section": "6.4",
+   "title": "a tracing endpoint that is down"
+  },
+  "6": {
+   "runs": [
+    {
+     "duplicates": [
+      "lookup"
+     ],
+     "ran": [
+      "from the refunds table"
+     ],
+     "tools_bound": [
+      "lookup"
+     ]
+    },
+    {
+     "duplicates": [
+      "lookup"
+     ],
+     "ran": [
+      "from the refunds table"
+     ],
+     "tools_bound": [
+      "lookup"
+     ]
+    },
+    {
+     "duplicates": [
+      "lookup"
+     ],
+     "ran": [
+      "from the refunds table"
+     ],
+     "tools_bound": [
+      "lookup"
+     ]
+    }
+   ],
+   "seconds": [
+    5.92,
+    5.5,
+    5.27
+   ],
+   "section": "2.4",
+   "title": "two tools with the same name"
+  },
+  "7": {
+   "runs": [
+    {
+     "after_fix": [
+      {
+       "graph_nodes": 4,
+       "model_calls": 3,
+       "outcome": "GraphRecursionError: Recursion limit of 10 reached without hi \u2026",
+       "recursion_limit": 10
+      },
+      {
+       "graph_nodes": 4,
+       "model_calls": 3,
+       "outcome": "no exception, last message 'Model call limits exceeded: run limit (3/3)'",
+       "recursion_limit": 25
+      }
+     ],
+     "model_calls": 5,
+     "raised": "GraphRecursionError: Recursion limit of 10 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key."
+    },
+    {
+     "after_fix": [
+      {
+       "graph_nodes": 4,
+       "model_calls": 3,
+       "outcome": "GraphRecursionError: Recursion limit of 10 reached without hi \u2026",
+       "recursion_limit": 10
+      },
+      {
+       "graph_nodes": 4,
+       "model_calls": 3,
+       "outcome": "no exception, last message 'Model call limits exceeded: run limit (3/3)'",
+       "recursion_limit": 25
+      }
+     ],
+     "model_calls": 5,
+     "raised": "GraphRecursionError: Recursion limit of 10 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key."
+    },
+    {
+     "after_fix": [
+      {
+       "graph_nodes": 4,
+       "model_calls": 3,
+       "outcome": "GraphRecursionError: Recursion limit of 10 reached without hi \u2026",
+       "recursion_limit": 10
+      },
+      {
+       "graph_nodes": 4,
+       "model_calls": 3,
+       "outcome": "no exception, last message 'Model call limits exceeded: run limit (3/3)'",
+       "recursion_limit": 25
+      }
+     ],
+     "model_calls": 5,
+     "raised": "GraphRecursionError: Recursion limit of 10 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key."
+    }
+   ],
+   "seconds": [
+    23.61,
+    23.07,
+    22.96
+   ],
+   "section": "5.8",
+   "title": "a model that calls a tool forever"
+  }
+ },
+ "failure_sources": "case 1: a relay in front of Ollama that drops every connection; case 2: a SIGKILL inside the tool on SqliteSaver, then a resume in a new process; case 5: LANGSMITH_ENDPOINT on a port where nothing listens; the other cases are the behaviour of the model",
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on CPU, temperature 0, seed 42, server context 8192; ChatOllama in every case except case 1, which uses ChatOpenAI on the /v1 path",
+ "runs": 3,
+ "sources": [
+  "capture/lab/failure-drill-x86/drill-run1.log",
+  "capture/lab/failure-drill-x86/drill-run1.jsonl",
+  "capture/lab/failure-drill-x86/drill-run2.log",
+  "capture/lab/failure-drill-x86/drill-run2.jsonl",
+  "capture/lab/failure-drill-x86/drill-run3.log",
+  "capture/lab/failure-drill-x86/drill-run3.jsonl",
+  "capture/lab/failure-drill-x86/drill_real.py",
+  "capture/lab/failure-drill-x86/lr_common.py"
+ ],
+ "total_s": [
+  103.0,
+  101.6,
+  101.0
+ ]
+}

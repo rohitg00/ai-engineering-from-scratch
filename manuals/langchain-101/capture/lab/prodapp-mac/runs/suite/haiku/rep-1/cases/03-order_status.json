@@ -1,0 +1,259 @@
+{
+ "case": "order_status",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "e75dce6b-0d9c-4223-aa81-c9cbd9a257ce",
+   "text": "Where is my order ORD-e03-2?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01979up8HKehjRfWukuNXsHN",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e03-2"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e03-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your order "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ORD-e03-2 "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "(r"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ain jacket,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $89"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ".00) has shipped."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I don't have t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "racking details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in the order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " record, so I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can't give"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you a del"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ivery date or car"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "rier location"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ". If it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " h"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "asn't arrived within"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the expected window"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ", tell me and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I can open a ticket for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a support"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " agent to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " look into it."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.1704
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "e75dce6b-0d9c-4223-aa81-c9cbd9a257ce",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e03-2?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e03-2"
+       },
+       "id": "toolu_01979up8HKehjRfWukuNXsHN",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 916,
+      "output_tokens": 56,
+      "total_tokens": 972,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e03-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your order ORD-e03-2 (rain jacket, $89.00) has shipped. I don't have tracking details in the order record, so I can't give you a delivery date or carrier location. If it hasn't arrived within the expected window, tell me and I can open a ticket for a support agent to look into it.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1031,
+      "output_tokens": 97,
+      "total_tokens": 1128,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

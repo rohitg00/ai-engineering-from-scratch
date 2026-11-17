@@ -1,0 +1,51 @@
+tool t_refused_once no_tool_mw 0 raised model_wire 1 tool_exec 1 ledger 0 2.26 httpx.ConnectError: [Errno 111] Connection refused
+tool t_refused_once tool_retry_mw 0 returned model_wire 2 tool_exec 2 ledger 1 4.54 
+tool t_refused_once graph_rp_toolnode 0 returned model_wire 2 tool_exec 2 ledger 1 3.76 
+tool t_refused_always no_tool_mw 0 raised model_wire 1 tool_exec 1 ledger 0 2.32 httpx.ConnectError: [Errno 111] Connection refused
+tool t_refused_always tool_retry_mw 0 returned model_wire 2 tool_exec 3 ledger 0 8.75 
+tool t_refused_always graph_rp_toolnode 0 raised model_wire 1 tool_exec 3 ledger 0 5.0 httpx.ConnectError: [Errno 111] Connection refused
+tool t_sqlerror_always no_tool_mw 0 raised model_wire 1 tool_exec 1 ledger 0 2.23 psycopg.errors.UndefinedTable: relation "lr_no_such_table" does not exist
+LINE 1: select *
+tool t_sqlerror_always tool_retry_mw 0 returned model_wire 2 tool_exec 3 ledger 0 6.48 
+tool t_sqlerror_always graph_rp_toolnode 0 raised model_wire 1 tool_exec 3 ledger 0 5.46 psycopg.errors.UndefinedTable: relation "lr_no_such_table" does not exist
+LINE 1: select *
+tool t_timeout_once no_tool_mw 0 raised model_wire 1 tool_exec 1 ledger 1 3.2 psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+tool t_timeout_once tool_retry_mw 0 returned model_wire 2 tool_exec 2 ledger 2 5.19 
+tool t_timeout_once graph_rp_toolnode 0 returned model_wire 2 tool_exec 2 ledger 2 5.1 
+tool t_timeout_always no_tool_mw 0 raised model_wire 1 tool_exec 1 ledger 1 3.1 psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+tool t_timeout_always tool_retry_mw 0 returned model_wire 2 tool_exec 3 ledger 3 9.08 
+tool t_timeout_always graph_rp_toolnode 0 raised model_wire 1 tool_exec 3 ledger 3 7.99 psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+tool t_refused_once no_tool_mw 1 raised model_wire 1 tool_exec 1 ledger 0 2.23 httpx.ConnectError: [Errno 111] Connection refused
+tool t_refused_once tool_retry_mw 1 returned model_wire 2 tool_exec 2 ledger 1 4.08 
+tool t_refused_once graph_rp_toolnode 1 returned model_wire 2 tool_exec 2 ledger 1 4.36 
+tool t_refused_always no_tool_mw 1 raised model_wire 1 tool_exec 1 ledger 0 2.11 httpx.ConnectError: [Errno 111] Connection refused
+tool t_refused_always tool_retry_mw 1 returned model_wire 2 tool_exec 3 ledger 0 9.07 
+tool t_refused_always graph_rp_toolnode 1 raised model_wire 1 tool_exec 3 ledger 0 5.4 httpx.ConnectError: [Errno 111] Connection refused
+tool t_sqlerror_always no_tool_mw 1 raised model_wire 1 tool_exec 1 ledger 0 2.22 psycopg.errors.UndefinedTable: relation "lr_no_such_table" does not exist
+LINE 1: select *
+tool t_sqlerror_always tool_retry_mw 1 returned model_wire 2 tool_exec 3 ledger 0 6.62 
+tool t_sqlerror_always graph_rp_toolnode 1 raised model_wire 1 tool_exec 3 ledger 0 3.82 psycopg.errors.UndefinedTable: relation "lr_no_such_table" does not exist
+LINE 1: select *
+tool t_timeout_once no_tool_mw 1 raised model_wire 1 tool_exec 1 ledger 1 3.22 psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+tool t_timeout_once tool_retry_mw 1 returned model_wire 2 tool_exec 2 ledger 2 4.8 
+tool t_timeout_once graph_rp_toolnode 1 returned model_wire 2 tool_exec 2 ledger 2 5.3 
+tool t_timeout_always no_tool_mw 1 raised model_wire 1 tool_exec 1 ledger 1 3.17 psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+tool t_timeout_always tool_retry_mw 1 returned model_wire 2 tool_exec 3 ledger 3 8.96 
+tool t_timeout_always graph_rp_toolnode 1 raised model_wire 1 tool_exec 3 ledger 3 7.98 psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+tool t_refused_once no_tool_mw 2 raised model_wire 1 tool_exec 1 ledger 0 2.31 httpx.ConnectError: [Errno 111] Connection refused
+tool t_refused_once tool_retry_mw 2 returned model_wire 2 tool_exec 2 ledger 1 3.9 
+tool t_refused_once graph_rp_toolnode 2 returned model_wire 2 tool_exec 2 ledger 1 4.53 
+tool t_refused_always no_tool_mw 2 raised model_wire 1 tool_exec 1 ledger 0 2.18 httpx.ConnectError: [Errno 111] Connection refused
+tool t_refused_always tool_retry_mw 2 returned model_wire 2 tool_exec 3 ledger 0 8.17 
+tool t_refused_always graph_rp_toolnode 2 raised model_wire 1 tool_exec 3 ledger 0 4.44 httpx.ConnectError: [Errno 111] Connection refused
+tool t_sqlerror_always no_tool_mw 2 raised model_wire 1 tool_exec 1 ledger 0 2.32 psycopg.errors.UndefinedTable: relation "lr_no_such_table" does not exist
+LINE 1: select *
+tool t_sqlerror_always tool_retry_mw 2 returned model_wire 2 tool_exec 3 ledger 0 6.02 
+tool t_sqlerror_always graph_rp_toolnode 2 raised model_wire 1 tool_exec 3 ledger 0 4.44 psycopg.errors.UndefinedTable: relation "lr_no_such_table" does not exist
+LINE 1: select *
+tool t_timeout_once no_tool_mw 2 raised model_wire 1 tool_exec 1 ledger 1 3.26 psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+tool t_timeout_once tool_retry_mw 2 returned model_wire 2 tool_exec 2 ledger 2 5.13 
+tool t_timeout_once graph_rp_toolnode 2 returned model_wire 2 tool_exec 2 ledger 2 4.63 
+tool t_timeout_always no_tool_mw 2 raised model_wire 1 tool_exec 1 ledger 1 3.15 psycopg.errors.QueryCanceled: canceling statement due to statement timeout
+tool t_timeout_always tool_retry_mw 2 returned model_wire 2 tool_exec 3 ledger 3 8.62 
+tool t_timeout_always graph_rp_toolnode 2 raised model_wire 1 tool_exec 3 ledger 3 7.57 psycopg.errors.QueryCanceled: canceling statement due to statement timeout

@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 466" role="img" aria-labelledby="fig-5-4b-title fig-5-4b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-4b-title">Two users, one deep agent, and where the memory file is kept</title>
+  <desc id="fig-5-4b-desc">Four namespace setups of StoreBackend under /memories/, each run for 10 sessions on InMemoryStore and on PostgresStore with Qwen3 8B. In each session alice asks the agent to save a locker code, then bob in a new thread asks for a locker code: under /memories/ in the first three rows, and through the recall tool in the last. One square per session. docs example: InMemoryStore 10 of 10 saved codes told to bob, PostgresStore 10 of 10 saved codes told to bob. per user: InMemoryStore 0 of 10 saved codes told to bob, PostgresStore 0 of 10 saved codes told to bob. per user + recall tool: InMemoryStore 0 of 10 saved codes told to bob, PostgresStore 0 of 10 saved codes told to bob. the same, bob asks for recall: InMemoryStore 10 of 10 saved codes told to bob, PostgresStore 10 of 10 saved codes told to bob.</desc>
+  <text x="20" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">THE NAMESPACE FACTORY</text>
+  <text x="262" y="18" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">ONE SQUARE PER SESSION, ALICE THEN BOB</text>
+  <text x="20" y="54" font-size="12.5" font-weight="700">docs example</text>
+  <text x="20" y="70" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">namespace=lambda _rt:</text>
+  <text x="20" y="84" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">(&#39;memories&#39;,)</text>
+  <text x="20" y="102" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">alice writes (&quot;memories&quot;)</text>
+  <text x="20" y="116" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bob reads (&quot;memories&quot;)</text>
+  <text x="262" y="59" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">InMemoryStore</text>
+  <rect x="366" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="386" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="406" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="426" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="446" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="466" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="486" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="506" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="526" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="546" y="46" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="572" y="59" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">10 of 10</text>
+  <text x="262" y="93" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">PostgresStore</text>
+  <rect x="366" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="386" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="406" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="426" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="446" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="466" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="486" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="506" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="526" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="546" y="80" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="572" y="93" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">10 of 10</text>
+  <text x="20" y="146" font-size="12.5" font-weight="700">per user</text>
+  <text x="20" y="162" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">namespace=lambda rt:</text>
+  <text x="20" y="176" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">(&#39;users&#39;, rt.context.user_id)</text>
+  <text x="20" y="194" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">alice writes (&quot;users&quot;,&quot;alice&quot;)</text>
+  <text x="20" y="208" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bob reads (&quot;users&quot;,&quot;bob&quot;)</text>
+  <text x="262" y="151" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">InMemoryStore</text>
+  <rect x="366" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="386" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="406" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="426" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="446" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="466" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="486" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="506" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="526" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="546" y="138" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="572" y="151" font-size="11.5" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">0 of 10</text>
+  <text x="262" y="185" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">PostgresStore</text>
+  <rect x="366" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="386" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="406" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="426" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="446" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="466" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="486" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="506" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="526" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <rect x="546" y="172" width="17" height="17" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="572" y="185" font-size="11.5" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">0 of 10</text>
+  <line x1="20" y1="126" x2="620" y2="126" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <text x="20" y="238" font-size="12.5" font-weight="700">per user + recall tool</text>
+  <text x="20" y="254" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">the same files, plus a tool</text>
+  <text x="20" y="268" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">that searches (&#39;users&#39;,)</text>
+  <text x="20" y="286" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">bob asks for /memories/;</text>
+  <text x="20" y="300" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">the model lists his folder only</text>
+  <text x="262" y="243" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">InMemoryStore</text>
+  <rect x="366" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="386" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="406" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="426" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="446" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="466" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="486" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="506" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="526" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="546" y="230" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="572" y="243" font-size="11.5" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">0 of 10</text>
+  <text x="262" y="277" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">PostgresStore</text>
+  <rect x="366" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="386" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="406" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="426" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="446" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="466" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="486" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="506" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="526" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <rect x="546" y="264" width="17" height="17" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="572" y="277" font-size="11.5" font-weight="700" fill="var(--m-ink-soft, #4a4a4a)">0 of 10</text>
+  <line x1="20" y1="218" x2="620" y2="218" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <text x="20" y="330" font-size="12.5" font-weight="700">the same, bob asks for recall</text>
+  <text x="20" y="346" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">the same files and tool;</text>
+  <text x="20" y="360" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">bob says: use your recall tool</text>
+  <text x="20" y="378" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">recall reads (&quot;users&quot;,),</text>
+  <text x="20" y="392" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">every user under it</text>
+  <text x="262" y="335" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">InMemoryStore</text>
+  <rect x="366" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="386" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="406" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="426" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="446" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="466" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="486" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="506" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="526" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="546" y="322" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="572" y="335" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">10 of 10</text>
+  <text x="262" y="369" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">PostgresStore</text>
+  <rect x="366" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="386" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="406" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="426" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="446" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="466" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="486" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="506" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="526" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="546" y="356" width="17" height="17" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="572" y="369" font-size="11.5" font-weight="700" fill="var(--m-rose-ink, #b0344d)">10 of 10</text>
+  <line x1="20" y1="310" x2="620" y2="310" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="1.5 3.5"/>
+  <text x="20" y="420" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Rose: bob&#39;s answer held alice&#39;s code. Amber: a tool of bob could reach it, unused.</text>
+  <text x="20" y="435" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Violet: bob could not reach it. Grey: alice&#39;s save failed. The count is told of saved.</text>
+  <text x="20" y="450" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Qwen3 8B on the Mac, temperature 0, one fresh store per session.</text>
+</svg>

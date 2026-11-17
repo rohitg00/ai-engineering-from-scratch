@@ -1,0 +1,212 @@
+{
+ "case": "memory_saved_and_recalled",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "error",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "dfdd5e00-9591-47b5-a607-90996d81c689",
+   "text": "Remember that I prefer email updates",
+   "result": [
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'ll"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " make"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " sure"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " send"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " email"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " updates"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " going"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " forward"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " there"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " anything"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " specific"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " help"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " now"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "?"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 0.6462
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "dfdd5e00-9591-47b5-a607-90996d81c689",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Remember that I prefer email updates",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I'll make sure to send you email updates going forward. Is there anything specific you'd like me to help you with now?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 553,
+      "output_tokens": 27,
+      "total_tokens": 580
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

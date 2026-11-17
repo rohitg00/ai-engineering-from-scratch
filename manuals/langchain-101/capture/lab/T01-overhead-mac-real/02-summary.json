@@ -1,0 +1,329 @@
+{
+ "n_runs": 336,
+ "n_timed": 320,
+ "load1_min": 2.6689453125,
+ "load1_max": 5.20947265625,
+ "variants": {
+  "d_create_agent_saver": {
+   "path": "v1",
+   "n": 40,
+   "ok": 40,
+   "errors": 0,
+   "model_calls": {
+    "3": 40
+   },
+   "wall_ms_median": 1775.48,
+   "wall_ms_p95": 3557.78,
+   "model_ms_median_proxy_upstream": 1724.33,
+   "framework_ms_median": 37.64,
+   "framework_ms_p95": 63.92,
+   "framework_share_pct_median": 1.789,
+   "framework_minus_plain_paired_ms_median": 12.17,
+   "cpu_ms_median": 30.74,
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       696,
+       261,
+       25
+      ],
+      [
+       948,
+       300,
+       25
+      ],
+      [
+       1206,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ]
+  },
+  "e_stategraph": {
+   "path": "v1",
+   "n": 40,
+   "ok": 40,
+   "errors": 0,
+   "model_calls": {
+    "3": 40
+   },
+   "wall_ms_median": 1791.63,
+   "wall_ms_p95": 3561.27,
+   "model_ms_median_proxy_upstream": 1752.2,
+   "framework_ms_median": 36.71,
+   "framework_ms_p95": 61.37,
+   "framework_share_pct_median": 1.857,
+   "framework_minus_plain_paired_ms_median": 11.54,
+   "cpu_ms_median": 30.31,
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       696,
+       261,
+       25
+      ],
+      [
+       948,
+       300,
+       25
+      ],
+      [
+       1206,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ]
+  },
+  "g_create_agent_ollama": {
+   "path": "native",
+   "n": 40,
+   "ok": 40,
+   "errors": 0,
+   "model_calls": {
+    "3": 40
+   },
+   "wall_ms_median": 1731.13,
+   "wall_ms_p95": 3550.52,
+   "model_ms_median_proxy_upstream": 1693.26,
+   "framework_ms_median": 28.97,
+   "framework_ms_p95": 45.63,
+   "framework_share_pct_median": 1.559,
+   "framework_minus_plain_paired_ms_median": 12.98,
+   "cpu_ms_median": 28.15,
+   "model_ms_median_ollama_total_duration": 1685.97,
+   "wall_minus_ollama_total_ms_median": 37.61,
+   "wall_minus_ollama_total_share_pct_median": 2.063,
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       707,
+       261,
+       25
+      ],
+      [
+       827,
+       300,
+       25
+      ],
+      [
+       953,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ]
+  },
+  "h_stategraph_ollama": {
+   "path": "native",
+   "n": 40,
+   "ok": 40,
+   "errors": 0,
+   "model_calls": {
+    "3": 40
+   },
+   "wall_ms_median": 1778.69,
+   "wall_ms_p95": 3558.39,
+   "model_ms_median_proxy_upstream": 1759.26,
+   "framework_ms_median": 22.15,
+   "framework_ms_p95": 50.0,
+   "framework_share_pct_median": 1.168,
+   "framework_minus_plain_paired_ms_median": 7.81,
+   "cpu_ms_median": 25.63,
+   "model_ms_median_ollama_total_duration": 1738.73,
+   "wall_minus_ollama_total_ms_median": 35.39,
+   "wall_minus_ollama_total_share_pct_median": 1.818,
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       707,
+       261,
+       25
+      ],
+      [
+       827,
+       300,
+       25
+      ],
+      [
+       953,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ]
+  },
+  "c_create_agent": {
+   "path": "v1",
+   "n": 40,
+   "ok": 40,
+   "errors": 0,
+   "model_calls": {
+    "3": 40
+   },
+   "wall_ms_median": 1766.67,
+   "wall_ms_p95": 3548.55,
+   "model_ms_median_proxy_upstream": 1720.59,
+   "framework_ms_median": 37.62,
+   "framework_ms_p95": 64.24,
+   "framework_share_pct_median": 2.245,
+   "framework_minus_plain_paired_ms_median": 15.62,
+   "cpu_ms_median": 29.64,
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       696,
+       261,
+       25
+      ],
+      [
+       948,
+       300,
+       25
+      ],
+      [
+       1206,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ]
+  },
+  "f_plain_ollama": {
+   "path": "native",
+   "n": 40,
+   "ok": 40,
+   "errors": 0,
+   "model_calls": {
+    "3": 40
+   },
+   "wall_ms_median": 1695.93,
+   "wall_ms_p95": 3514.99,
+   "model_ms_median_proxy_upstream": 1688.23,
+   "framework_ms_median": 11.71,
+   "framework_ms_p95": 25.31,
+   "framework_share_pct_median": 0.731,
+   "framework_minus_plain_paired_ms_median": 0.0,
+   "cpu_ms_median": 11.55,
+   "model_ms_median_ollama_total_duration": 1684.48,
+   "wall_minus_ollama_total_ms_median": 19.02,
+   "wall_minus_ollama_total_share_pct_median": 1.09,
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       706,
+       261,
+       25
+      ],
+      [
+       844,
+       300,
+       25
+      ],
+      [
+       993,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ]
+  },
+  "a_plain_openai": {
+   "path": "v1",
+   "n": 40,
+   "ok": 40,
+   "errors": 0,
+   "model_calls": {
+    "3": 40
+   },
+   "wall_ms_median": 2031.55,
+   "wall_ms_p95": 3619.0,
+   "model_ms_median_proxy_upstream": 2001.69,
+   "framework_ms_median": 25.11,
+   "framework_ms_p95": 36.33,
+   "framework_share_pct_median": 1.264,
+   "framework_minus_plain_paired_ms_median": 0.0,
+   "cpu_ms_median": 20.47,
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       679,
+       261,
+       25
+      ],
+      [
+       936,
+       300,
+       25
+      ],
+      [
+       1199,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ]
+  },
+  "b_bind_tools_loop": {
+   "path": "v1",
+   "n": 40,
+   "ok": 40,
+   "errors": 0,
+   "model_calls": {
+    "3": 40
+   },
+   "wall_ms_median": 1739.17,
+   "wall_ms_p95": 3535.78,
+   "model_ms_median_proxy_upstream": 1709.22,
+   "framework_ms_median": 29.32,
+   "framework_ms_p95": 45.07,
+   "framework_share_pct_median": 1.719,
+   "framework_minus_plain_paired_ms_median": 6.63,
+   "cpu_ms_median": 23.98,
+   "calls_bytes_prompt_completion": [
+    {
+     "calls": [
+      [
+       696,
+       261,
+       25
+      ],
+      [
+       948,
+       300,
+       25
+      ],
+      [
+       1206,
+       340,
+       3
+      ]
+     ],
+     "runs": 40
+    }
+   ]
+  }
+ }
+}

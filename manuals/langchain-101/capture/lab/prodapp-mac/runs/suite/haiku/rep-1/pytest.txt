@@ -1,0 +1,217 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.12, pytest-9.2.0, pluggy-1.7.0 -- prodapp/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: prodapp
+configfile: pytest.ini
+plugins: platformdirs-4.14.5, langsmith-0.14.17, anyio-4.16.0, asyncio-1.5.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=session
+collecting ... collected 20 items
+
+tests/test_evals.py::test_eval[faq_return_window] PASSED                 [  5%]
+tests/test_evals.py::test_eval[faq_shipping_time] PASSED                 [ 10%]
+tests/test_evals.py::test_eval[order_status] PASSED                      [ 15%]
+tests/test_evals.py::test_eval[order_unknown] PASSED                     [ 20%]
+tests/test_evals.py::test_eval[order_of_other_customer_is_hidden] PASSED [ 25%]
+tests/test_evals.py::test_eval[refund_approved_once] PASSED              [ 30%]
+tests/test_evals.py::test_eval[refund_rejected_has_no_side_effect] PASSED [ 35%]
+tests/test_evals.py::test_eval[refund_asked_twice] PASSED                [ 40%]
+tests/test_evals.py::test_eval[refund_tool_replay_is_idempotent] PASSED  [ 45%]
+tests/test_evals.py::test_eval[ticket_for_a_human] PASSED                [ 50%]
+tests/test_evals.py::test_eval[memory_saved_and_recalled] PASSED         [ 55%]
+tests/test_evals.py::test_eval[memory_of_other_user_is_invisible] PASSED [ 60%]
+tests/test_evals.py::test_eval[flaky_faq_is_retried] PASSED              [ 65%]
+tests/test_evals.py::test_eval[hung_tool_times_out] PASSED               [ 70%]
+tests/test_evals.py::test_eval[failed_ticket_is_not_retried] PASSED      [ 75%]
+tests/test_evals.py::test_eval[primary_outage_uses_backup] PASSED        [ 80%]
+tests/test_evals.py::test_eval[runaway_loop_hits_call_limit] PASSED      [ 85%]
+tests/test_evals.py::test_eval[long_thread_is_summarized] PASSED         [ 90%]
+tests/test_evals.py::test_eval[new_message_while_waiting_for_approval] PASSED [ 95%]
+tests/test_evals.py::test_eval[status_then_refund_in_one_thread] PASSED  [100%]
+
+==================================== PASSES ====================================
+_________________________ test_eval[faq_return_window] _________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________________ test_eval[faq_shipping_time] _________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+___________________________ test_eval[order_status] ____________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+___________________________ test_eval[order_unknown] ___________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________ test_eval[order_of_other_customer_is_hidden] _________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_______________________ test_eval[refund_approved_once] ________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+________________ test_eval[refund_rejected_has_no_side_effect] _________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+________________________ test_eval[refund_asked_twice] _________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+________________________ test_eval[ticket_for_a_human] _________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_____________________ test_eval[memory_saved_and_recalled] _____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________ test_eval[memory_of_other_user_is_invisible] _________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_______________________ test_eval[flaky_faq_is_retried] ________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+________________________ test_eval[hung_tool_times_out] ________________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.error
+INFO     support:telemetry.py:48 run.end
+___________________ test_eval[failed_ticket_is_not_retried] ____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.error
+INFO     support:telemetry.py:48 run.end
+____________________ test_eval[primary_outage_uses_backup] _____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+___________________ test_eval[runaway_loop_hits_call_limit] ____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_____________________ test_eval[long_thread_is_summarized] _____________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+______________ test_eval[new_message_while_waiting_for_approval] _______________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________ test_eval[status_then_refund_in_one_thread] __________________
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+- generated xml file: prodapp/runs/2026-11-15-real/suite/haiku/rep-1/junit.xml -
+============================== slowest durations ===============================
+22.12s call     tests/test_evals.py::test_eval[runaway_loop_hits_call_limit]
+21.17s call     tests/test_evals.py::test_eval[long_thread_is_summarized]
+17.13s call     tests/test_evals.py::test_eval[primary_outage_uses_backup]
+6.15s call     tests/test_evals.py::test_eval[refund_asked_twice]
+6.04s call     tests/test_evals.py::test_eval[status_then_refund_in_one_thread]
+5.43s call     tests/test_evals.py::test_eval[refund_rejected_has_no_side_effect]
+5.09s call     tests/test_evals.py::test_eval[memory_saved_and_recalled]
+4.48s call     tests/test_evals.py::test_eval[hung_tool_times_out]
+4.30s call     tests/test_evals.py::test_eval[new_message_while_waiting_for_approval]
+4.19s call     tests/test_evals.py::test_eval[refund_approved_once]
+4.06s call     tests/test_evals.py::test_eval[failed_ticket_is_not_retried]
+3.92s setup    tests/test_evals.py::test_eval[faq_return_window]
+3.16s call     tests/test_evals.py::test_eval[ticket_for_a_human]
+2.88s call     tests/test_evals.py::test_eval[memory_of_other_user_is_invisible]
+2.59s call     tests/test_evals.py::test_eval[order_unknown]
+2.57s call     tests/test_evals.py::test_eval[faq_return_window]
+2.42s call     tests/test_evals.py::test_eval[order_of_other_customer_is_hidden]
+2.32s call     tests/test_evals.py::test_eval[flaky_faq_is_retried]
+2.20s call     tests/test_evals.py::test_eval[order_status]
+2.17s call     tests/test_evals.py::test_eval[faq_shipping_time]
+0.03s teardown tests/test_evals.py::test_eval[status_then_refund_in_one_thread]
+0.01s call     tests/test_evals.py::test_eval[refund_tool_replay_is_idempotent]
+
+(38 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+PASSED tests/test_evals.py::test_eval[faq_return_window]
+PASSED tests/test_evals.py::test_eval[faq_shipping_time]
+PASSED tests/test_evals.py::test_eval[order_status]
+PASSED tests/test_evals.py::test_eval[order_unknown]
+PASSED tests/test_evals.py::test_eval[order_of_other_customer_is_hidden]
+PASSED tests/test_evals.py::test_eval[refund_approved_once]
+PASSED tests/test_evals.py::test_eval[refund_rejected_has_no_side_effect]
+PASSED tests/test_evals.py::test_eval[refund_asked_twice]
+PASSED tests/test_evals.py::test_eval[refund_tool_replay_is_idempotent]
+PASSED tests/test_evals.py::test_eval[ticket_for_a_human]
+PASSED tests/test_evals.py::test_eval[memory_saved_and_recalled]
+PASSED tests/test_evals.py::test_eval[memory_of_other_user_is_invisible]
+PASSED tests/test_evals.py::test_eval[flaky_faq_is_retried]
+PASSED tests/test_evals.py::test_eval[hung_tool_times_out]
+PASSED tests/test_evals.py::test_eval[failed_ticket_is_not_retried]
+PASSED tests/test_evals.py::test_eval[primary_outage_uses_backup]
+PASSED tests/test_evals.py::test_eval[runaway_loop_hits_call_limit]
+PASSED tests/test_evals.py::test_eval[long_thread_is_summarized]
+PASSED tests/test_evals.py::test_eval[new_message_while_waiting_for_approval]
+PASSED tests/test_evals.py::test_eval[status_then_refund_in_one_thread]
+======================== 20 passed in 124.51s (0:02:04) ========================

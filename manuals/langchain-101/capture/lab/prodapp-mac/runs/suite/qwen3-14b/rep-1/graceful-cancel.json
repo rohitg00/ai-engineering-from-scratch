@@ -1,0 +1,25 @@
+{
+  "exit_code": -15,
+  "client_events_tail": [
+    [
+      "client_error",
+      "RemoteProtocolError"
+    ]
+  ],
+  "next_after_restart": [
+    "model"
+  ],
+  "messages_after_restart": [
+    "human",
+    "ai",
+    "tool"
+  ],
+  "resumed_last_event": [
+    "done",
+    {
+      "status": "done",
+      "seconds": 2.8674
+    }
+  ],
+  "final_answer": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days."
+}

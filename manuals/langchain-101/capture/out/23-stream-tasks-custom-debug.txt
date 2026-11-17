@@ -1,0 +1,259 @@
+# Streaming v1: tasks, custom, and debug
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## stream_mode='tasks'
+
+6 chunks
+
+chunk 0:
+{
+  "id": "<uuid-1>",
+  "name": "model",
+  "input": {
+    "messages": [
+      {
+        "type": "HumanMessage",
+        "content": "What is 2 + 3?",
+        "id": "<uuid-2>"
+      }
+    ]
+  },
+  "triggers": [
+    "branch:to:model"
+  ],
+  "metadata": {
+    "ls_integration": "langchain_create_agent"
+  }
+}
+
+chunk 1:
+{
+  "id": "<uuid-1>",
+  "name": "model",
+  "error": null,
+  "result": {
+    "messages": [
+      {
+        "type": "AIMessage",
+        "content": "",
+        "id": "lc_run--<uuid-3>-0",
+        "tool_calls": [
+          {
+            "name": "add",
+            "args": {
+              "a": 2,
+              "b": 3
+            },
+            "id": "<uuid-4>",
+            "type": "tool_call"
+          }
+        ],
+        "response_metadata": {
+          "model": "qwen3:4b-instruct-2507-q4_K_M",
+          "created_at": "<time>",
+          "done": true,
+          "done_reason": "stop",
+          "total_duration": "<ns>",
+          "load_duration": "<ns>",
+          "prompt_eval_count": 162,
+          "prompt_eval_duration": "<ns>",
+          "eval_count": 25,
+          "eval_duration": "<ns>",
+          "logprobs": null,
+          "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "model_provider": "ollama"
+        },
+        "usage_metadata": {
+          "input_tokens": 162,
+          "output_tokens": 25,
+          "total_tokens": 187
+        }
+      }
+    ]
+  },
+  "interrupts": []
+}
+
+chunk 2:
+{
+  "id": "<uuid-5>",
+  "name": "tools",
+  "input": [
+    {
+      "name": "add",
+      "args": {
+        "a": 2,
+        "b": 3
+      },
+      "id": "<uuid-4>",
+      "type": "tool_call"
+    }
+  ],
+  "triggers": [
+    "__pregel_push"
+  ],
+  "metadata": {
+    "ls_integration": "langchain_create_agent"
+  }
+}
+
+chunk 3:
+{
+  "id": "<uuid-5>",
+  "name": "tools",
+  "error": null,
+  "result": {
+    "messages": [
+      {
+        "type": "ToolMessage",
+        "content": "5",
+        "name": "add",
+        "id": "<uuid-6>",
+        "tool_call_id": "<uuid-4>",
+        "status": "success"
+      }
+    ]
+  },
+  "interrupts": []
+}
+
+## stream_mode='custom'
+
+0 chunks
+
+## stream_mode='debug'
+
+6 chunks
+
+chunk 0:
+{
+  "step": 1,
+  "timestamp": "<time>",
+  "type": "task",
+  "payload": {
+    "id": "<uuid-7>",
+    "name": "model",
+    "input": {
+      "messages": [
+        {
+          "type": "HumanMessage",
+          "content": "What is 2 + 3?",
+          "id": "<uuid-8>"
+        }
+      ]
+    },
+    "triggers": [
+      "branch:to:model"
+    ],
+    "metadata": {
+      "ls_integration": "langchain_create_agent"
+    }
+  }
+}
+
+chunk 1:
+{
+  "step": 1,
+  "timestamp": "<time>",
+  "type": "task_result",
+  "payload": {
+    "id": "<uuid-7>",
+    "name": "model",
+    "error": null,
+    "result": {
+      "messages": [
+        {
+          "type": "AIMessage",
+          "content": "",
+          "id": "lc_run--<uuid-9>-0",
+          "tool_calls": [
+            {
+              "name": "add",
+              "args": {
+                "a": 2,
+                "b": 3
+              },
+              "id": "<uuid-10>",
+              "type": "tool_call"
+            }
+          ],
+          "response_metadata": {
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "created_at": "<time>",
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": "<ns>",
+            "load_duration": "<ns>",
+            "prompt_eval_count": 162,
+            "prompt_eval_duration": "<ns>",
+            "eval_count": 25,
+            "eval_duration": "<ns>",
+            "logprobs": null,
+            "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model_provider": "ollama"
+          },
+          "usage_metadata": {
+            "input_tokens": 162,
+            "output_tokens": 25,
+            "total_tokens": 187
+          }
+        }
+      ]
+    },
+    "interrupts": []
+  }
+}
+
+chunk 2:
+{
+  "step": 2,
+  "timestamp": "<time>",
+  "type": "task",
+  "payload": {
+    "id": "<uuid-11>",
+    "name": "tools",
+    "input": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-10>",
+        "type": "tool_call"
+      }
+    ],
+    "triggers": [
+      "__pregel_push"
+    ],
+    "metadata": {
+      "ls_integration": "langchain_create_agent"
+    }
+  }
+}
+
+chunk 3:
+{
+  "step": 2,
+  "timestamp": "<time>",
+  "type": "task_result",
+  "payload": {
+    "id": "<uuid-11>",
+    "name": "tools",
+    "error": null,
+    "result": {
+      "messages": [
+        {
+          "type": "ToolMessage",
+          "content": "5",
+          "name": "add",
+          "id": "<uuid-12>",
+          "tool_call_id": "<uuid-10>",
+          "status": "success"
+        }
+      ]
+    },
+    "interrupts": []
+  }
+}

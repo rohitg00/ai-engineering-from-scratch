@@ -1,0 +1,1 @@
+{'langgraph-cli': '0.4.43', 'langgraph-api': '0.18.0', 'langgraph-runtime-inmem': '0.38.0', 'langgraph': '1.2.22', 'langchain': '1.5.0', 'langchain-ollama': '1.1.0'}

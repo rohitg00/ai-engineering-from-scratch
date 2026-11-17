@@ -1,0 +1,299 @@
+# Todo list and context editing
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## TodoListMiddleware: write_todos updates state['todos']
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "write_todos",
+        "args": {
+          "todos": [
+            {
+              "content": "Understand the task: calculate 2 + 3",
+              "status": "in_progress"
+            }
+          ]
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 1457,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 43,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 1457,
+      "output_tokens": 43,
+      "total_tokens": 1500
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Updated todo list to [{'content': 'Understand the task: calculate 2 + 3', 'status': 'in_progress'}]",
+    "name": "write_todos",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-4>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-5>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 1540,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 1540,
+      "output_tokens": 25,
+      "total_tokens": 1565
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-6>",
+    "tool_call_id": "<uuid-5>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-7>-0",
+    "tool_calls": [
+      {
+        "name": "write_todos",
+        "args": {
+          "todos": [
+            {
+              "content": "Understand the task: calculate 2 + 3",
+              "status": "completed"
+            },
+            {
+              "content": "Perform the addition: 2 + 3",
+              "status": "completed"
+            }
+          ]
+        },
+        "id": "<uuid-8>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 1579,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 62,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 1579,
+      "output_tokens": 62,
+      "total_tokens": 1641
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Updated todo list to [{'content': 'Understand the task: calculate 2 + 3', 'status': 'completed'}, {'content': 'Perform the addition: 2 + 3', 'status': 'completed'}]",
+    "name": "write_todos",
+    "id": "<uuid-9>",
+    "tool_call_id": "<uuid-8>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "5",
+    "id": "lc_run--<uuid-10>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 1700,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 2,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 1700,
+      "output_tokens": 2,
+      "total_tokens": 1702
+    }
+  }
+]
+
+todos:
+[
+  {
+    "content": "Understand the task: calculate 2 + 3",
+    "status": "completed"
+  },
+  {
+    "content": "Perform the addition: 2 + 3",
+    "status": "completed"
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "todo",
+    "call": 1,
+    "messages": [
+      "system: ## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage a",
+      "human: What is 2 + 3? First write a todo list with write_todos, then use the add tool, "
+    ],
+    "tools": [
+      "write_todos",
+      "add"
+    ]
+  },
+  {
+    "model": "todo",
+    "call": 2,
+    "messages": [
+      "system: ## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage a",
+      "human: What is 2 + 3? First write a todo list with write_todos, then use the add tool, ",
+      "ai: calls write_todos",
+      "tool: Updated todo list to [{'content': 'Understand the task: calculate 2 + 3', 'statu"
+    ],
+    "tools": [
+      "write_todos",
+      "add"
+    ]
+  },
+  {
+    "model": "todo",
+    "call": 3,
+    "messages": [
+      "system: ## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage a",
+      "human: What is 2 + 3? First write a todo list with write_todos, then use the add tool, ",
+      "ai: calls write_todos",
+      "tool: Updated todo list to [{'content': 'Understand the task: calculate 2 + 3', 'statu",
+      "ai: calls add",
+      "tool: 5"
+    ],
+    "tools": [
+      "write_todos",
+      "add"
+    ]
+  },
+  {
+    "model": "todo",
+    "call": 4,
+    "messages": [
+      "system: ## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage a",
+      "human: What is 2 + 3? First write a todo list with write_todos, then use the add tool, ",
+      "ai: calls write_todos",
+      "tool: Updated todo list to [{'content': 'Understand the task: calculate 2 + 3', 'statu",
+      "ai: calls add",
+      "tool: 5",
+      "ai: calls write_todos",
+      "tool: Updated todo list to [{'content': 'Understand the task: calculate 2 + 3', 'statu"
+    ],
+    "tools": [
+      "write_todos",
+      "add"
+    ]
+  }
+]
+
+## the system prompt TodoListMiddleware adds (first 300 characters)
+
+[{'type': 'text', 'text': "## `write_todos`\n\nYou have access to the `write_todos` tool to help you manage and plan complex objectives.\nUse this tool for complex objectives to ensure that you are tracking each necessary step.\nThis tool is very helpful for planning complex objectives, and for breaking down these larger complex objectives into smaller steps.\n\nIt is critical that you mark todos as completed as soon as you are done with a step. Do not batch up multiple steps before marking them as completed.\nFor simple objectives that only require a few steps, it is better to just complete the objective directly and NOT use this tool.\nWriting todos takes time and tokens, use it when it is helpful for managing complex many-step problems! But not for simple few-step requests.\n\n## Important To-Do List Usage Notes to Remember\n\n- The `write_todos` tool should never be called multiple times in parallel.\n- Don't be afraid to revise the To-Do list as you go. New information may reveal new tasks that need to be done, or old tasks that are irrelevant.\n\n## Finishing a task\n\nWhen you finish all work, write your final answer in the message AFTER your last `write_todos` call — not in the same turn as that call. Start the final message with the substantive content the user asked for — the data, computation, summary, or analysis. The user wants the result, not confirmation that the work is done."}]
+
+## ContextEditingMiddleware(ClearToolUsesEdit(trigger=10, keep=1))
+
+message contents the model received:
+[
+  "Add three pairs: 1 + 1, 2 + 2, and 3 + 3.",
+  "",
+  "[cleared]",
+  "",
+  "[cleared]",
+  "",
+  "result 6 result 6 result 6 result 6 result 6 "
+]
+
+the answer:
+[
+  {
+    "type": "AIMessage",
+    "content": "The results of the additions are as follows:\n\n- 1 + 1 = 2\n- 2 + 2 = 4\n- _3 + 3 = 6\n\nIt seems there was a mistake in the output provided (it shows \"result 6\" multiple times). The correct results should be 2, 4, and 6 respectively.",
+    "id": "lc_run--<uuid-11>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 312,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 78,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 312,
+      "output_tokens": 78,
+      "total_tokens": 390
+    }
+  }
+]

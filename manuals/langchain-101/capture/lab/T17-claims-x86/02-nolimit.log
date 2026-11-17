@@ -1,0 +1,1 @@
+{'case': 'create_agent_forever_no_config_capped', 'result': 'Stop: wall-clock cap of 1200.0 s reached by the lab script', 'model_calls': 121, 'tool_calls': 121, 'wall_s': 1260.4, 'tool_call_stamps': [[25, 87.8], [50, 145.9], [75, 210.4], [100, 287.8]]}

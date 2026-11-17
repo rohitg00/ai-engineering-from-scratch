@@ -1,0 +1,324 @@
+[
+  {
+    "machine_before": {
+      "uptime": "16:54  up 89 days,  2:51, 12 users, load averages: 19.09 15.59 15.77",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M",
+        "qwen3:14b"
+      ]
+    },
+    "machine_after": {
+      "uptime": "16:57  up 89 days,  2:54, 12 users, load averages: 16.37 16.25 16.02",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "kinds": {
+      "runs:200:done": 22,
+      "runs:200:interrupted": 8,
+      "approve:200:done": 8,
+      "approve:409:None": 2
+    },
+    "workers": 1,
+    "users": 10,
+    "model_latency_s": 0.0,
+    "pool_max": 20,
+    "runs": 40,
+    "ok": 38,
+    "errors": 2,
+    "codes": {
+      "200": 38,
+      "409": 2
+    },
+    "wall_s": 165.04,
+    "runs_per_s": 0.2,
+    "p50_s": 41.3929,
+    "p95_s": 51.2956,
+    "max_s": 54.7818,
+    "ttft_p50_s": 38.6196,
+    "ttft_p95_s": 47.4146,
+    "pg_conn_max": 76,
+    "pg_conn_mean": 35.6,
+    "pg_samples": 1557,
+    "checkpoint_rows": {
+      "checkpoints": 378,
+      "checkpoint_blobs": 202,
+      "checkpoint_writes": 508
+    },
+    "checkpoint_rows_per_run": 27.2,
+    "checkpoint_data_bytes_per_run": 20361,
+    "checkpoint_disk_bytes_per_run": 57344,
+    "refunds": {
+      "n": 8,
+      "orders": 8
+    }
+  },
+  {
+    "machine_before": {
+      "uptime": "16:57  up 89 days,  2:54, 12 users, load averages: 16.37 16.25 16.02",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "machine_after": {
+      "uptime": "17:06  up 89 days,  3:03, 12 users, load averages: 6.03 9.26 12.67",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "kinds": {
+      "runs:200:done": 102,
+      "runs:200:interrupted": 5,
+      "error:None:None": 48,
+      "approve:409:None": 2
+    },
+    "workers": 1,
+    "users": 50,
+    "model_latency_s": 0.0,
+    "pool_max": 20,
+    "runs": 157,
+    "ok": 107,
+    "errors": 50,
+    "codes": {
+      "200": 107,
+      "409": 2,
+      "None": 48
+    },
+    "wall_s": 515.31,
+    "runs_per_s": 0.2,
+    "p50_s": 164.7382,
+    "p95_s": 192.5198,
+    "max_s": 193.7906,
+    "ttft_p50_s": 163.5932,
+    "ttft_p95_s": 191.7171,
+    "pg_conn_max": 22,
+    "pg_conn_mean": 21.0,
+    "pg_samples": 4931,
+    "checkpoint_rows": {
+      "checkpoints": 1623,
+      "checkpoint_blobs": 875,
+      "checkpoint_writes": 2146
+    },
+    "checkpoint_rows_per_run": 29.6,
+    "checkpoint_data_bytes_per_run": 21567,
+    "checkpoint_disk_bytes_per_run": 32977,
+    "refunds": {
+      "n": 5,
+      "orders": 5
+    }
+  },
+  {
+    "machine_before": {
+      "uptime": "17:06  up 89 days,  3:03, 12 users, load averages: 6.03 9.26 12.67",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "machine_after": {
+      "uptime": "17:08  up 89 days,  3:05, 12 users, load averages: 6.08 8.22 11.68",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "kinds": {
+      "runs:200:done": 22,
+      "runs:200:interrupted": 8,
+      "approve:200:done": 8,
+      "approve:409:None": 2
+    },
+    "workers": 2,
+    "users": 10,
+    "model_latency_s": 0.0,
+    "pool_max": 20,
+    "runs": 40,
+    "ok": 38,
+    "errors": 2,
+    "codes": {
+      "200": 38,
+      "409": 2
+    },
+    "wall_s": 157.02,
+    "runs_per_s": 0.2,
+    "p50_s": 38.2914,
+    "p95_s": 48.6063,
+    "max_s": 50.2899,
+    "ttft_p50_s": 37.304,
+    "ttft_p95_s": 46.7331,
+    "pg_conn_max": 15,
+    "pg_conn_mean": 14.0,
+    "pg_samples": 1500,
+    "checkpoint_rows": {
+      "checkpoints": 378,
+      "checkpoint_blobs": 202,
+      "checkpoint_writes": 508
+    },
+    "checkpoint_rows_per_run": 27.2,
+    "checkpoint_data_bytes_per_run": 20336,
+    "checkpoint_disk_bytes_per_run": 41165,
+    "refunds": {
+      "n": 8,
+      "orders": 8
+    }
+  },
+  {
+    "machine_before": {
+      "uptime": "17:08  up 89 days,  3:05, 12 users, load averages: 6.08 8.22 11.68",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "machine_after": {
+      "uptime": "17:18  up 89 days,  3:15, 12 users, load averages: 5.06 5.57 8.59",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "kinds": {
+      "runs:200:done": 104,
+      "error:None:None": 46,
+      "approve:409:None": 4,
+      "runs:200:interrupted": 9
+    },
+    "workers": 2,
+    "users": 50,
+    "model_latency_s": 0.0,
+    "pool_max": 20,
+    "runs": 163,
+    "ok": 113,
+    "errors": 50,
+    "codes": {
+      "200": 113,
+      "409": 4,
+      "None": 46
+    },
+    "wall_s": 522.34,
+    "runs_per_s": 0.2,
+    "p50_s": 152.52,
+    "p95_s": 188.6522,
+    "max_s": 189.3703,
+    "ttft_p50_s": 151.0543,
+    "ttft_p95_s": 187.7812,
+    "pg_conn_max": 35,
+    "pg_conn_mean": 34.0,
+    "pg_samples": 4988,
+    "checkpoint_rows": {
+      "checkpoints": 1671,
+      "checkpoint_blobs": 905,
+      "checkpoint_writes": 2226
+    },
+    "checkpoint_rows_per_run": 29.5,
+    "checkpoint_data_bytes_per_run": 21580,
+    "checkpoint_disk_bytes_per_run": 35030,
+    "refunds": {
+      "n": 9,
+      "orders": 9
+    }
+  },
+  {
+    "machine_before": {
+      "uptime": "17:18  up 89 days,  3:15, 12 users, load averages: 5.06 5.56 8.57",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "machine_after": {
+      "uptime": "17:20  up 89 days,  3:17, 12 users, load averages: 4.18 5.00 7.87",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "kinds": {
+      "runs:200:done": 22,
+      "runs:200:interrupted": 8,
+      "approve:200:done": 8,
+      "approve:409:None": 2
+    },
+    "workers": 4,
+    "users": 10,
+    "model_latency_s": 0.0,
+    "pool_max": 20,
+    "runs": 40,
+    "ok": 38,
+    "errors": 2,
+    "codes": {
+      "200": 38,
+      "409": 2
+    },
+    "wall_s": 147.36,
+    "runs_per_s": 0.3,
+    "p50_s": 35.5701,
+    "p95_s": 46.6912,
+    "max_s": 47.885,
+    "ttft_p50_s": 34.6969,
+    "ttft_p95_s": 44.9846,
+    "pg_conn_max": 26,
+    "pg_conn_mean": 25.0,
+    "pg_samples": 1400,
+    "checkpoint_rows": {
+      "checkpoints": 378,
+      "checkpoint_blobs": 202,
+      "checkpoint_writes": 508
+    },
+    "checkpoint_rows_per_run": 27.2,
+    "checkpoint_data_bytes_per_run": 20344,
+    "checkpoint_disk_bytes_per_run": 40141,
+    "refunds": {
+      "n": 8,
+      "orders": 8
+    }
+  },
+  {
+    "machine_before": {
+      "uptime": "17:20  up 89 days,  3:17, 12 users, load averages: 4.33 5.01 7.85",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "machine_after": {
+      "uptime": "17:30  up 89 days,  3:27, 12 users, load averages: 4.86 4.93 6.41",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M"
+      ]
+    },
+    "kinds": {
+      "runs:200:done": 101,
+      "error:None:None": 49,
+      "runs:200:interrupted": 8,
+      "approve:409:None": 1
+    },
+    "workers": 4,
+    "users": 50,
+    "model_latency_s": 0.0,
+    "pool_max": 20,
+    "runs": 159,
+    "ok": 109,
+    "errors": 50,
+    "codes": {
+      "200": 109,
+      "409": 1,
+      "None": 49
+    },
+    "wall_s": 496.46,
+    "runs_per_s": 0.2,
+    "p50_s": 145.5736,
+    "p95_s": 181.4217,
+    "max_s": 182.186,
+    "ttft_p50_s": 144.155,
+    "ttft_p95_s": 180.7069,
+    "pg_conn_max": 48,
+    "pg_conn_mean": 47.0,
+    "pg_samples": 4729,
+    "checkpoint_rows": {
+      "checkpoints": 1668,
+      "checkpoint_blobs": 903,
+      "checkpoint_writes": 2220
+    },
+    "checkpoint_rows_per_run": 30.1,
+    "checkpoint_data_bytes_per_run": 22088,
+    "checkpoint_disk_bytes_per_run": 39208,
+    "refunds": {
+      "n": 8,
+      "orders": 8
+    }
+  }
+]

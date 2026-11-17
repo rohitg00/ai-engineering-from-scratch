@@ -1,0 +1,239 @@
+{
+ "case": "hung_tool_times_out",
+ "model": "ollama:qwen3:14b",
+ "outcome": "failed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "89148ddd-4f63-471b-81b1-81c642768b02",
+   "text": "Where is my order ORD-e14-1?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "832bc17c-0566-4566-b540-88e4308af547",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e14-1"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "error",
+      "content": "read_order timed out. Tell the customer and do not guess."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'m"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " unable"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " look"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " up"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " right"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " now"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " check"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " back"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " later"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " contact"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " us"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " directly"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assistance"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 12.9057
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "89148ddd-4f63-471b-81b1-81c642768b02",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e14-1?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e14-1"
+       },
+       "id": "832bc17c-0566-4566-b540-88e4308af547",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 455,
+      "output_tokens": 26,
+      "total_tokens": 481
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "read_order timed out. Tell the customer and do not guess.",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "error",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I'm unable to look up your order right now. Please check back later or contact us directly for assistance.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 505,
+      "output_tokens": 23,
+      "total_tokens": 528
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

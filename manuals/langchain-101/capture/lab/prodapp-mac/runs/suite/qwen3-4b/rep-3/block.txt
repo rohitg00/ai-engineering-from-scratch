@@ -1,0 +1,7 @@
+# block qwen3-4b rep 3
+# model ollama:qwen3:4b-instruct-2507-q4_K_M backup ollama:qwen3:8b
+# start 2026-11-15T10:24:18Z
+# uptime 15:54  up 89 days,  1:51, 12 users, load averages: 13.19 6.50 4.77
+# end 2026-11-15T10:27:25Z (from junit.xml mtime; script tail failed after an in-place edit)
+# uptime 15:57  12 users, load averages: 5.14 7.00 5.49 (recorded late, at block C start)
+# exit 1

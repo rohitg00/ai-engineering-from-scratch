@@ -1,0 +1,421 @@
+# Model call and tool call limits
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## ModelCallLimitMiddleware(run_limit=1), exit_behavior='end'
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 162,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 162,
+      "output_tokens": 25,
+      "total_tokens": 187
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Model call limits exceeded: run limit (1/1)",
+    "id": "<uuid-4>"
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "limit-end",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]
+
+## ModelCallLimitMiddleware(run_limit=1, exit_behavior='error')
+
+invoke:
+
+raised langchain.agents.middleware.model_call_limit.ModelCallLimitExceededError: Model call limits exceeded: run limit (1/1)
+
+model calls, as the model received them:
+[
+  {
+    "model": "limit-error",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]
+
+## ModelCallLimitMiddleware(thread_limit=2) across two turns on one thread
+
+turn first: last message:
+[
+  {
+    "type": "AIMessage",
+    "content": "One.",
+    "id": "lc_run--<uuid-5>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 19,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 3,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 19,
+      "output_tokens": 3,
+      "total_tokens": 22
+    }
+  }
+]
+
+turn first: counters in the checkpoint:
+{
+  "thread_model_call_count": 1,
+  "run_model_call_count": null
+}
+
+turn second: last message:
+[
+  {
+    "type": "AIMessage",
+    "content": "Two.",
+    "id": "lc_run--<uuid-6>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 42,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 3,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 42,
+      "output_tokens": 3,
+      "total_tokens": 45
+    }
+  }
+]
+
+turn second: counters in the checkpoint:
+{
+  "thread_model_call_count": 2,
+  "run_model_call_count": null
+}
+
+turn third: last message:
+[
+  {
+    "type": "AIMessage",
+    "content": "Model call limits exceeded: thread limit (2/2)",
+    "id": "<uuid-7>"
+  }
+]
+
+turn third: counters in the checkpoint:
+{
+  "thread_model_call_count": 2,
+  "run_model_call_count": null
+}
+
+model calls, as the model received them:
+[
+  {
+    "model": "thread-limit",
+    "call": 1,
+    "messages": [
+      "human: This is the first message. Reply with one word."
+    ]
+  },
+  {
+    "model": "thread-limit",
+    "call": 2,
+    "messages": [
+      "human: This is the first message. Reply with one word.",
+      "ai: One.",
+      "human: This is the second message. Reply with one word."
+    ]
+  }
+]
+
+## ToolCallLimitMiddleware(tool_name='add', run_limit=1), two calls in one message, exit_behavior='continue'
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-8>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 1,
+          "b": 1
+        },
+        "id": "<uuid-9>",
+        "type": "tool_call"
+      },
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 2
+        },
+        "id": "<uuid-10>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 183,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 50,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 183,
+      "output_tokens": 50,
+      "total_tokens": 233
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Tool call limit exceeded. Do not call 'add' again.",
+    "name": "add",
+    "id": "<uuid-11>",
+    "tool_call_id": "<uuid-10>",
+    "status": "error"
+  },
+  {
+    "type": "ToolMessage",
+    "content": "2",
+    "name": "add",
+    "id": "<uuid-12>",
+    "tool_call_id": "<uuid-9>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The first sum (1 + 1) is 2, and the second sum (2 + 2) is 4.",
+    "id": "lc_run--<uuid-13>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 264,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 28,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 264,
+      "output_tokens": 28,
+      "total_tokens": 292
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "tool-limit",
+    "call": 1,
+    "messages": [
+      "human: Use the add tool twice in one reply: add 1 and 1, and add 2 and 2. Then report b"
+    ],
+    "tools": [
+      "add"
+    ]
+  },
+  {
+    "model": "tool-limit",
+    "call": 2,
+    "messages": [
+      "human: Use the add tool twice in one reply: add 1 and 1, and add 2 and 2. Then report b",
+      "ai: calls add, add",
+      "tool: Tool call limit exceeded. Do not call 'add' again.",
+      "tool: 2"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]
+
+## ToolCallLimitMiddleware(run_limit=1, exit_behavior='end')
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-14>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 1,
+          "b": 1
+        },
+        "id": "<uuid-15>",
+        "type": "tool_call"
+      },
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 2
+        },
+        "id": "<uuid-16>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 183,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 50,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 183,
+      "output_tokens": 50,
+      "total_tokens": 233
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Tool call limit exceeded. Do not make additional tool calls.",
+    "name": "add",
+    "id": "<uuid-17>",
+    "tool_call_id": "<uuid-16>",
+    "status": "error"
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Execution stopped before this tool call could run because another tool call in the same batch exceeded the limit.",
+    "name": "add",
+    "id": "<uuid-18>",
+    "tool_call_id": "<uuid-15>",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "Tool call limit reached: run limit exceeded (2/1 calls).",
+    "id": "<uuid-19>"
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "tool-limit-end",
+    "call": 1,
+    "messages": [
+      "human: Use the add tool twice in one reply: add 1 and 1, and add 2 and 2. Then report b"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]
+
+## ToolCallLimitMiddleware(run_limit=1, exit_behavior='error')
+
+invoke:
+
+raised langchain.agents.middleware.tool_call_limit.ToolCallLimitExceededError: Tool call limit reached: run limit exceeded (2/1 calls).
+
+model calls, as the model received them:
+[
+  {
+    "model": "tool-limit-error",
+    "call": 1,
+    "messages": [
+      "human: Use the add tool twice in one reply: add 1 and 1, and add 2 and 2. Then report b"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]

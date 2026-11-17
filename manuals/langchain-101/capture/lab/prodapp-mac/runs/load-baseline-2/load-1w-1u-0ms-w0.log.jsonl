@@ -1,0 +1,12 @@
+{"ts": 1794741782.093, "level": "INFO", "event": "startup", "model": "ollama:qwen3:4b-instruct-2507-q4_K_M", "backup": "ollama:qwen3:14b", "pool_max": 20}
+{"ts": 1794741782.38, "level": "INFO", "event": "run.start", "thread_id": "21b3ddf3-1e6f-4703-b368-b0a40148eb9d", "user_id": "u001", "trace_id": "f24d401cb23a718a2411b01380d0cf84", "span_id": "6400b0b102ea4636"}
+{"ts": 1794741787.55, "level": "INFO", "event": "tool.done", "tool": "read_order", "status": "success", "trace_id": "f24d401cb23a718a2411b01380d0cf84", "span_id": "6798ae72e06cb8d1"}
+{"ts": 1794741789.808, "level": "INFO", "event": "run.end", "thread_id": "21b3ddf3-1e6f-4703-b368-b0a40148eb9d", "status": "done", "seconds": 7.4277, "trace_id": "f24d401cb23a718a2411b01380d0cf84", "span_id": "32be788376de6671"}
+{"ts": 1794741789.89, "level": "INFO", "event": "run.start", "thread_id": "21b3ddf3-1e6f-4703-b368-b0a40148eb9d", "user_id": "u001", "trace_id": "b349e877ba03948236c3aa76e92b3330", "span_id": "47d37f732272692a"}
+{"ts": 1794741790.899, "level": "INFO", "event": "tool.done", "tool": "search_faq", "status": "success", "trace_id": "b349e877ba03948236c3aa76e92b3330", "span_id": "97fc2bcc94cdd725"}
+{"ts": 1794741792.708, "level": "INFO", "event": "run.end", "thread_id": "21b3ddf3-1e6f-4703-b368-b0a40148eb9d", "status": "done", "seconds": 2.8189, "trace_id": "b349e877ba03948236c3aa76e92b3330", "span_id": "56b48edafe7958cc"}
+{"ts": 1794741792.794, "level": "INFO", "event": "run.start", "thread_id": "21b3ddf3-1e6f-4703-b368-b0a40148eb9d", "user_id": "u001", "trace_id": "3163fa4c42c3dab37b7c6ed327b224b7", "span_id": "98a6f01632c4706a"}
+{"ts": 1794741798.586, "level": "INFO", "event": "run.end", "thread_id": "21b3ddf3-1e6f-4703-b368-b0a40148eb9d", "status": "interrupted", "seconds": 5.7913, "trace_id": "3163fa4c42c3dab37b7c6ed327b224b7", "span_id": "b26bfa53c0afb1e5"}
+{"ts": 1794741798.823, "level": "INFO", "event": "run.start", "thread_id": "21b3ddf3-1e6f-4703-b368-b0a40148eb9d", "user_id": "u001", "trace_id": "3d91ef2bef67b586b4346e384eaca318", "span_id": "e835d35748c2a8bf"}
+{"ts": 1794741799.252, "level": "INFO", "event": "tool.done", "tool": "refund_order", "status": "success", "trace_id": "3d91ef2bef67b586b4346e384eaca318", "span_id": "e6965877cd1c9cb2"}
+{"ts": 1794741801.093, "level": "INFO", "event": "run.end", "thread_id": "21b3ddf3-1e6f-4703-b368-b0a40148eb9d", "status": "done", "seconds": 2.2703, "trace_id": "3d91ef2bef67b586b4346e384eaca318", "span_id": "f5ca4a1a26515c4d"}

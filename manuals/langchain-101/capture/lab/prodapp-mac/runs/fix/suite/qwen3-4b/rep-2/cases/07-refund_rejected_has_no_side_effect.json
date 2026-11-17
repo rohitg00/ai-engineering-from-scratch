@@ -1,0 +1,248 @@
+{
+ "case": "refund_rejected_has_no_side_effect",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "error",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "9fd9b3d2-d1ae-4cb8-9ea2-946395230d9a",
+   "text": "Please refund ORD-e07-1",
+   "result": [
+    [
+     "token",
+     {
+      "text": "To"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " process"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " need"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " cents"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " reason"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Could"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " provide"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " those"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "?"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Also"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " note"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " that"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refunds"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " require"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " approval"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 0.6208
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "9fd9b3d2-d1ae-4cb8-9ea2-946395230d9a",
+   "decision": "reject",
+   "result": 409
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "9fd9b3d2-d1ae-4cb8-9ea2-946395230d9a",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Please refund ORD-e07-1",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "To process a refund, I need the amount in cents and a reason. Could you please provide those details? Also, note that refunds require human approval.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 555,
+      "output_tokens": 32,
+      "total_tokens": 587
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

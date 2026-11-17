@@ -1,0 +1,4 @@
+{'prepare_threshold': 0} SyntaxError cannot insert multiple commands into a prepared statement
+{'prepare_threshold': 0} with a parameter: SyntaxError cannot insert multiple commands into a prepared statement
+{} ok
+{} with a parameter: SyntaxError cannot insert multiple commands into a prepared statement

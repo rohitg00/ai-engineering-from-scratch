@@ -1,0 +1,362 @@
+{
+ "case": "new_message_while_waiting_for_approval",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "failed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "3edf204d-bf29-4be3-a6d5-e17e0329f1e6",
+   "text": "Refund ORD-e19-3",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "14feb33c-6ee1-4aa2-832a-e033a239f384",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0,
+       "reason": "Customer request"
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "bf0db51fc1dbb4daabc827efcdff3e1b",
+      "type": "tool_approval",
+      "tool_call_id": "14feb33c-6ee1-4aa2-832a-e033a239f384",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0,
+       "reason": "Customer request"
+      },
+      "description": "Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer request"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 0.8164
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "3edf204d-bf29-4be3-a6d5-e17e0329f1e6",
+   "text": "Hello?",
+   "result": 409
+  },
+  {
+   "op": "approve",
+   "thread_id": "3edf204d-bf29-4be3-a6d5-e17e0329f1e6",
+   "decision": "approve",
+   "result": [
+    [
+     "tool_result",
+     {
+      "name": "refund_order",
+      "status": "success",
+      "content": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "The"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " must"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " be"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " positive"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " specify"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " a"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " positive"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " cents"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ("
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "e"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ".g"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ".,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "4"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "4"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "0"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ")"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 1.0994
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "3edf204d-bf29-4be3-a6d5-e17e0329f1e6",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Refund ORD-e19-3",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e19-3",
+        "amount_cents": 0,
+        "reason": "Customer request"
+       },
+       "id": "14feb33c-6ee1-4aa2-832a-e033a239f384",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 555,
+      "output_tokens": 41,
+      "total_tokens": 596
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}",
+     "tool_calls": [],
+     "name": "refund_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "The amount to refund must be positive. Please specify a positive amount in cents (e.g., 2400 for $24.00) for the refund.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 629,
+      "output_tokens": 37,
+      "total_tokens": 666
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

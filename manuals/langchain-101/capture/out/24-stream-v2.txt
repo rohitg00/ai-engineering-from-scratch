@@ -1,0 +1,657 @@
+# Streaming v2: StreamPart dicts and GraphOutput
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## version='v2' with stream_mode=['updates', 'messages']
+
+part 0:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "",
+      "id": "lc_run--<uuid-1>",
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "id": "<uuid-2>",
+          "type": "tool_call"
+        }
+      ],
+      "tool_call_chunks": [
+        {
+          "name": "add",
+          "args": "{\"a\": 2, \"b\": 3}",
+          "id": "<uuid-2>",
+          "index": null,
+          "type": "tool_call_chunk"
+        }
+      ],
+      "response_metadata": {
+        "model": "qwen3:4b-instruct-2507-q4_K_M",
+        "created_at": "<time>",
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": "<ns>",
+        "load_duration": "<ns>",
+        "prompt_eval_count": 162,
+        "prompt_eval_duration": "<ns>",
+        "eval_count": 25,
+        "eval_duration": "<ns>",
+        "logprobs": null,
+        "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+        "model_provider": "ollama"
+      },
+      "usage_metadata": {
+        "input_tokens": 162,
+        "output_tokens": 25,
+        "total_tokens": 187
+      }
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 1:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "",
+      "id": "lc_run--<uuid-1>",
+      "chunk_position": "last"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 2:
+{
+  "type": "updates",
+  "ns": [],
+  "data": {
+    "model": {
+      "messages": [
+        {
+          "type": "AIMessage",
+          "content": "",
+          "id": "lc_run--<uuid-1>",
+          "tool_calls": [
+            {
+              "name": "add",
+              "args": {
+                "a": 2,
+                "b": 3
+              },
+              "id": "<uuid-2>",
+              "type": "tool_call"
+            }
+          ],
+          "response_metadata": {
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "created_at": "<time>",
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": "<ns>",
+            "load_duration": "<ns>",
+            "prompt_eval_count": 162,
+            "prompt_eval_duration": "<ns>",
+            "eval_count": 25,
+            "eval_duration": "<ns>",
+            "logprobs": null,
+            "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model_provider": "ollama"
+          },
+          "usage_metadata": {
+            "input_tokens": 162,
+            "output_tokens": 25,
+            "total_tokens": 187
+          }
+        }
+      ]
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 3:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "ToolMessage",
+      "content": "5",
+      "name": "add",
+      "id": "<uuid-3>",
+      "tool_call_id": "<uuid-2>",
+      "status": "success"
+    },
+    "metadata": {
+      "langgraph_node": "tools",
+      "langgraph_step": 2,
+      "langgraph_triggers": [
+        "__pregel_push"
+      ]
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 4:
+{
+  "type": "updates",
+  "ns": [],
+  "data": {
+    "tools": {
+      "messages": [
+        {
+          "type": "ToolMessage",
+          "content": "5",
+          "name": "add",
+          "id": "<uuid-3>",
+          "tool_call_id": "<uuid-2>",
+          "status": "success"
+        }
+      ]
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 5:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "2",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 6:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " +",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 7:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 8:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "3",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 9:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " =",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 10:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " ",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 11:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "5",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 12:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": ".",
+      "id": "lc_run--<uuid-4>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 13:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "",
+      "id": "lc_run--<uuid-4>",
+      "response_metadata": {
+        "model": "qwen3:4b-instruct-2507-q4_K_M",
+        "created_at": "<time>",
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": "<ns>",
+        "load_duration": "<ns>",
+        "prompt_eval_count": 201,
+        "prompt_eval_duration": "<ns>",
+        "eval_count": 9,
+        "eval_duration": "<ns>",
+        "logprobs": null,
+        "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+        "model_provider": "ollama"
+      },
+      "usage_metadata": {
+        "input_tokens": 201,
+        "output_tokens": 9,
+        "total_tokens": 210
+      }
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 14:
+{
+  "type": "messages",
+  "ns": [],
+  "data": {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "",
+      "id": "lc_run--<uuid-4>",
+      "chunk_position": "last"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 3,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+part 15:
+{
+  "type": "updates",
+  "ns": [],
+  "data": {
+    "model": {
+      "messages": [
+        {
+          "type": "AIMessage",
+          "content": "2 + 3 = 5.",
+          "id": "lc_run--<uuid-4>",
+          "response_metadata": {
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "created_at": "<time>",
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": "<ns>",
+            "load_duration": "<ns>",
+            "prompt_eval_count": 201,
+            "prompt_eval_duration": "<ns>",
+            "eval_count": 9,
+            "eval_duration": "<ns>",
+            "logprobs": null,
+            "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model_provider": "ollama"
+          },
+          "usage_metadata": {
+            "input_tokens": 201,
+            "output_tokens": 9,
+            "total_tokens": 210
+          }
+        }
+      ]
+    }
+  },
+  "keys": [
+    "data",
+    "ns",
+    "type"
+  ]
+}
+
+## version='v2' with a single mode still yields StreamPart dicts
+
+part 0:
+{
+  "type": "updates",
+  "ns": [],
+  "nodes": [
+    "model"
+  ]
+}
+
+part 1:
+{
+  "type": "updates",
+  "ns": [],
+  "nodes": [
+    "tools"
+  ]
+}
+
+part 2:
+{
+  "type": "updates",
+  "ns": [],
+  "nodes": [
+    "model"
+  ]
+}
+
+## invoke(version='v2') returns GraphOutput
+
+type GraphOutput
+interrupts ()
+
+value['messages']:
+[
+  {
+    "type": "HumanMessage",
+    "content": "What is 2 + 3?",
+    "id": "<uuid-5>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-6>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-7>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 162,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 162,
+      "output_tokens": 25,
+      "total_tokens": 187
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-8>",
+    "tool_call_id": "<uuid-7>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "2 + 3 = 5.",
+    "id": "lc_run--<uuid-9>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 201,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 9,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 201,
+      "output_tokens": 9,
+      "total_tokens": 210
+    }
+  }
+]
+
+## dict access on GraphOutput
+
+result['messages'] has 4 messages
+
+warning LangGraphDeprecatedSinceV11: Accessing GraphOutput via `result[key]` is deprecated. Use `result.value` to access the output value directly, or `result.interrupts` for interrupts. Deprecated in LangGraph V1.1 to be removed in V3.0.

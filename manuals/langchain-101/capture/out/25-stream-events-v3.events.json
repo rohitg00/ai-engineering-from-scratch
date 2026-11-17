@@ -1,0 +1,1051 @@
+[
+  {
+    "type": "event",
+    "method": "values",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "messages": [
+          {
+            "type": "HumanMessage",
+            "content": "What is 2 + 3?",
+            "id": "<uuid-1>"
+          }
+        ]
+      },
+      "interrupts": []
+    },
+    "seq": 1
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "message-start",
+          "role": "ai",
+          "id": "lc_run--<uuid-3>"
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-3>"
+        }
+      ]
+    },
+    "seq": 2
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-start",
+          "index": 0,
+          "content": {
+            "type": "tool_call_chunk",
+            "id": "<uuid-2>",
+            "name": "add",
+            "args": ""
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-3>"
+        }
+      ]
+    },
+    "seq": 3
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "tool-call-delta",
+            "args": "{\"a\": 2, \"b\": 3}"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-3>"
+        }
+      ]
+    },
+    "seq": 4
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-finish",
+          "index": 0,
+          "content": {
+            "type": "tool_call",
+            "id": "<uuid-2>",
+            "name": "add",
+            "args": {
+              "a": 2,
+              "b": 3
+            }
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-3>"
+        }
+      ]
+    },
+    "seq": 5
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "message-finish",
+          "usage": {
+            "input_tokens": 162,
+            "output_tokens": 25,
+            "total_tokens": 187
+          },
+          "metadata": {
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "created_at": "<time>",
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": "<ns>",
+            "load_duration": "<ns>",
+            "prompt_eval_count": 162,
+            "prompt_eval_duration": "<ns>",
+            "eval_count": 25,
+            "eval_duration": "<ns>",
+            "logprobs": null,
+            "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model_provider": "ollama"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 1,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-6>",
+          "checkpoint_ns": "model:<uuid-6>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-3>"
+        }
+      ]
+    },
+    "seq": 6
+  },
+  {
+    "type": "event",
+    "method": "values",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "messages": [
+          {
+            "type": "HumanMessage",
+            "content": "What is 2 + 3?",
+            "id": "<uuid-1>"
+          },
+          {
+            "type": "AIMessage",
+            "content": [
+              {
+                "type": "tool_call",
+                "id": "<uuid-2>",
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                }
+              }
+            ],
+            "id": "lc_run--<uuid-3>",
+            "tool_calls": [
+              {
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                },
+                "id": "<uuid-2>",
+                "type": "tool_call"
+              }
+            ],
+            "response_metadata": {
+              "model": "qwen3:4b-instruct-2507-q4_K_M",
+              "created_at": "<time>",
+              "done": true,
+              "done_reason": "stop",
+              "total_duration": "<ns>",
+              "load_duration": "<ns>",
+              "prompt_eval_count": 162,
+              "prompt_eval_duration": "<ns>",
+              "eval_count": 25,
+              "eval_duration": "<ns>",
+              "logprobs": null,
+              "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+              "model_provider": "ollama",
+              "output_version": "v1"
+            },
+            "usage_metadata": {
+              "input_tokens": 162,
+              "output_tokens": 25,
+              "total_tokens": 187
+            }
+          }
+        ]
+      },
+      "interrupts": []
+    },
+    "seq": 7
+  },
+  {
+    "type": "event",
+    "method": "tools",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "event": "tool-started",
+        "tool_call_id": "<uuid-2>",
+        "tool_name": "add",
+        "input": {
+          "a": 2,
+          "b": 3
+        }
+      }
+    },
+    "seq": 8
+  },
+  {
+    "type": "event",
+    "method": "tools",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "event": "tool-finished",
+        "tool_call_id": "<uuid-2>",
+        "output": {
+          "type": "ToolMessage",
+          "content": "5",
+          "name": "add",
+          "id": "<uuid-4>",
+          "tool_call_id": "<uuid-2>",
+          "status": "success"
+        }
+      }
+    },
+    "seq": 9
+  },
+  {
+    "type": "event",
+    "method": "values",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "messages": [
+          {
+            "type": "HumanMessage",
+            "content": "What is 2 + 3?",
+            "id": "<uuid-1>"
+          },
+          {
+            "type": "AIMessage",
+            "content": [
+              {
+                "type": "tool_call",
+                "id": "<uuid-2>",
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                }
+              }
+            ],
+            "id": "lc_run--<uuid-3>",
+            "tool_calls": [
+              {
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                },
+                "id": "<uuid-2>",
+                "type": "tool_call"
+              }
+            ],
+            "response_metadata": {
+              "model": "qwen3:4b-instruct-2507-q4_K_M",
+              "created_at": "<time>",
+              "done": true,
+              "done_reason": "stop",
+              "total_duration": "<ns>",
+              "load_duration": "<ns>",
+              "prompt_eval_count": 162,
+              "prompt_eval_duration": "<ns>",
+              "eval_count": 25,
+              "eval_duration": "<ns>",
+              "logprobs": null,
+              "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+              "model_provider": "ollama",
+              "output_version": "v1"
+            },
+            "usage_metadata": {
+              "input_tokens": 162,
+              "output_tokens": 25,
+              "total_tokens": 187
+            }
+          },
+          {
+            "type": "ToolMessage",
+            "content": "5",
+            "name": "add",
+            "id": "<uuid-4>",
+            "tool_call_id": "<uuid-2>",
+            "status": "success"
+          }
+        ]
+      },
+      "interrupts": []
+    },
+    "seq": 10
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "message-start",
+          "role": "ai",
+          "id": "lc_run--<uuid-5>"
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 11
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-start",
+          "index": 0,
+          "content": {
+            "type": "text",
+            "text": ""
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 12
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": "2"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 13
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": " +"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 14
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": " "
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 15
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": "3"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 16
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": " ="
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 17
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": " "
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 18
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": "5"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 19
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-delta",
+          "index": 0,
+          "delta": {
+            "type": "text-delta",
+            "text": "."
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 20
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "content-block-finish",
+          "index": 0,
+          "content": {
+            "type": "text",
+            "text": "2 + 3 = 5."
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 21
+  },
+  {
+    "type": "event",
+    "method": "messages",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": [
+        {
+          "event": "message-finish",
+          "usage": {
+            "input_tokens": 201,
+            "output_tokens": 9,
+            "total_tokens": 210
+          },
+          "metadata": {
+            "model": "qwen3:4b-instruct-2507-q4_K_M",
+            "created_at": "<time>",
+            "done": true,
+            "done_reason": "stop",
+            "total_duration": "<ns>",
+            "load_duration": "<ns>",
+            "prompt_eval_count": 201,
+            "prompt_eval_duration": "<ns>",
+            "eval_count": 9,
+            "eval_duration": "<ns>",
+            "logprobs": null,
+            "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+            "model_provider": "ollama"
+          }
+        },
+        {
+          "ls_integration": "langchain_chat_model",
+          "langgraph_step": 3,
+          "langgraph_node": "model",
+          "langgraph_triggers": [
+            "branch:to:model"
+          ],
+          "langgraph_path": [
+            "__pregel_pull",
+            "model"
+          ],
+          "langgraph_checkpoint_ns": "model:<uuid-7>",
+          "checkpoint_ns": "model:<uuid-7>",
+          "ls_provider": "ollama",
+          "ls_model_name": "qwen3:4b-instruct-2507-q4_K_M",
+          "ls_model_type": "chat",
+          "ls_temperature": 0.0,
+          "lc_versions": {
+            "langchain-core": "1.8.0",
+            "langchain": "1.5.0"
+          },
+          "run_id": "<uuid-5>"
+        }
+      ]
+    },
+    "seq": 22
+  },
+  {
+    "type": "event",
+    "method": "values",
+    "params": {
+      "namespace": [],
+      "timestamp": "<epoch-ms>",
+      "data": {
+        "messages": [
+          {
+            "type": "HumanMessage",
+            "content": "What is 2 + 3?",
+            "id": "<uuid-1>"
+          },
+          {
+            "type": "AIMessage",
+            "content": [
+              {
+                "type": "tool_call",
+                "id": "<uuid-2>",
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                }
+              }
+            ],
+            "id": "lc_run--<uuid-3>",
+            "tool_calls": [
+              {
+                "name": "add",
+                "args": {
+                  "a": 2,
+                  "b": 3
+                },
+                "id": "<uuid-2>",
+                "type": "tool_call"
+              }
+            ],
+            "response_metadata": {
+              "model": "qwen3:4b-instruct-2507-q4_K_M",
+              "created_at": "<time>",
+              "done": true,
+              "done_reason": "stop",
+              "total_duration": "<ns>",
+              "load_duration": "<ns>",
+              "prompt_eval_count": 162,
+              "prompt_eval_duration": "<ns>",
+              "eval_count": 25,
+              "eval_duration": "<ns>",
+              "logprobs": null,
+              "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+              "model_provider": "ollama",
+              "output_version": "v1"
+            },
+            "usage_metadata": {
+              "input_tokens": 162,
+              "output_tokens": 25,
+              "total_tokens": 187
+            }
+          },
+          {
+            "type": "ToolMessage",
+            "content": "5",
+            "name": "add",
+            "id": "<uuid-4>",
+            "tool_call_id": "<uuid-2>",
+            "status": "success"
+          },
+          {
+            "type": "AIMessage",
+            "content": [
+              {
+                "type": "text",
+                "text": "2 + 3 = 5.",
+                "index": 0
+              }
+            ],
+            "id": "lc_run--<uuid-5>",
+            "response_metadata": {
+              "model": "qwen3:4b-instruct-2507-q4_K_M",
+              "created_at": "<time>",
+              "done": true,
+              "done_reason": "stop",
+              "total_duration": "<ns>",
+              "load_duration": "<ns>",
+              "prompt_eval_count": 201,
+              "prompt_eval_duration": "<ns>",
+              "eval_count": 9,
+              "eval_duration": "<ns>",
+              "logprobs": null,
+              "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+              "model_provider": "ollama",
+              "output_version": "v1"
+            },
+            "usage_metadata": {
+              "input_tokens": 201,
+              "output_tokens": 9,
+              "total_tokens": 210
+            }
+          }
+        ]
+      },
+      "interrupts": []
+    },
+    "seq": 23
+  }
+]

@@ -1,0 +1,19 @@
+{"kind": "block", "label": "round 0", "uptime": "15:46  12 users, load averages: 3.72 3.33 3.65", "ollama_ps": [{"name": "qwen3:4b-instruct-2507-q4_K_M", "context_length": 262144, "size_vram": 41823428935}], "time": 1794737763.251925, "warmup": true}
+{"round": 0, "program": "a_plain_openai", "answer": "20", "error": null, "bytes": [679, 936, 1199]}
+{"round": 0, "program": "c_create_agent", "answer": "20", "error": null, "bytes": [696, 948, 1206]}
+{"kind": "block", "label": "round 1", "uptime": "15:46  12 users, load averages: 3.42 3.27 3.62", "ollama_ps": [{"name": "qwen3:4b-instruct-2507-q4_K_M", "context_length": 262144, "size_vram": 41823428935}], "time": 1794737766.153197, "warmup": false}
+{"round": 1, "program": "c_create_agent", "answer": "20", "error": null, "bytes": [696, 948, 1206]}
+{"round": 1, "program": "a_plain_openai", "answer": "20", "error": null, "bytes": [679, 936, 1199]}
+{"kind": "block", "label": "round 2", "uptime": "15:46  12 users, load averages: 3.42 3.27 3.62", "ollama_ps": [{"name": "qwen3:4b-instruct-2507-q4_K_M", "context_length": 262144, "size_vram": 41823428935}], "time": 1794737768.703219, "warmup": false}
+{"round": 2, "program": "a_plain_openai", "answer": "20", "error": null, "bytes": [679, 936, 1199]}
+{"round": 2, "program": "c_create_agent", "answer": "20", "error": null, "bytes": [696, 948, 1206]}
+{"kind": "block", "label": "round 3", "uptime": "15:46  12 users, load averages: 3.23 3.23 3.61", "ollama_ps": [{"name": "qwen3:4b-instruct-2507-q4_K_M", "context_length": 262144, "size_vram": 41823428935}], "time": 1794737771.251513, "warmup": false}
+{"round": 3, "program": "c_create_agent", "answer": "20", "error": null, "bytes": [696, 948, 1206]}
+{"round": 3, "program": "a_plain_openai", "answer": "20", "error": null, "bytes": [679, 936, 1199]}
+{"kind": "block", "label": "round 4", "uptime": "15:46  12 users, load averages: 3.23 3.23 3.61", "ollama_ps": [{"name": "qwen3:4b-instruct-2507-q4_K_M", "context_length": 262144, "size_vram": 41823428935}], "time": 1794737773.817076, "warmup": false}
+{"round": 4, "program": "a_plain_openai", "answer": "20", "error": null, "bytes": [679, 936, 1199]}
+{"round": 4, "program": "c_create_agent", "answer": "20", "error": null, "bytes": [696, 948, 1206]}
+{"kind": "block", "label": "round 5", "uptime": "15:46  12 users, load averages: 2.97 3.18 3.59", "ollama_ps": [{"name": "qwen3:4b-instruct-2507-q4_K_M", "context_length": 262144, "size_vram": 41823428935}], "time": 1794737776.3589242, "warmup": false}
+{"round": 5, "program": "c_create_agent", "answer": "20", "error": null, "bytes": [696, 948, 1206]}
+{"round": 5, "program": "a_plain_openai", "answer": "20", "error": null, "bytes": [679, 936, 1199]}
+{"kind": "block", "label": "end", "uptime": "15:46  12 users, load averages: 2.97 3.18 3.59", "ollama_ps": [{"name": "qwen3:4b-instruct-2507-q4_K_M", "context_length": 262144, "size_vram": 41823428935}], "time": 1794737778.947602}

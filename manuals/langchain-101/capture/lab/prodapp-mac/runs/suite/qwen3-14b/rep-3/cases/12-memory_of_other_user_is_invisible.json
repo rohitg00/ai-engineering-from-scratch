@@ -1,0 +1,211 @@
+{
+ "case": "memory_of_other_user_is_invisible",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "9368312d-e515-4286-8fd6-5bc4a380c547",
+   "text": "What do you remember about me?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "24ffa92f-f330-4aac-8c05-369ed986595b",
+      "name": "recall_notes",
+      "args": {}
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "recall_notes",
+      "status": "success",
+      "content": "[]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " don"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " any"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " notes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " about"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " there"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " something"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " help"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "?"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 9.3452
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "9368312d-e515-4286-8fd6-5bc4a380c547",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "What do you remember about me?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "recall_notes",
+       "args": {},
+       "id": "24ffa92f-f330-4aac-8c05-369ed986595b",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 451,
+      "output_tokens": 16,
+      "total_tokens": 467
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[]",
+     "tool_calls": [],
+     "name": "recall_notes",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I don't have any notes about you. Is there something I can help you with?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 480,
+      "output_tokens": 19,
+      "total_tokens": 499
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

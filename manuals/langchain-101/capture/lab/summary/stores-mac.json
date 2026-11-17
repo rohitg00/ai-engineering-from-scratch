@@ -1,0 +1,253 @@
+{
+ "backends": {
+  "InMemoryStore": {
+   "cases": {
+    "batch([GetOp(('users','alice.memories'),'k1')])": [
+     null
+    ],
+    "batch([ListNamespacesOp(match_conditions=None)]) count": 10,
+    "batch([PutOp(('users','bob.x'))]) bypassing put()": "ok",
+    "batch([SearchOp(('users','alice.memories'))])": [
+     []
+    ],
+    "get(('users','alice.memories'),'k1') reads ('users','alice','memories')?": {
+     "raised": "InvalidNamespaceError"
+    },
+    "list_namespaces(prefix=('users','%'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','*'))": {
+     "count": 10,
+     "distinct": 9
+    },
+    "list_namespaces(prefix=('users','[a]lice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','a_ice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','alice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(suffix=('memories',)) count": 8,
+    "put users/%/memories": "ok",
+    "put users/*/memories": "ok",
+    "put users/[a]lice/memories": "ok",
+    "put users/a_ice/memories": "ok",
+    "put users/al?ce/memories": "ok",
+    "put users/alice.memories (label with '.')": {
+     "raised": "InvalidNamespaceError"
+    },
+    "put users/alice/memories": "ok",
+    "put users/alice2/memories": "ok",
+    "put users/bob/memories": "ok",
+    "search(('users','ali')) partial label": [],
+    "search(('users','bob')) filter owner $ne bob": [],
+    "search(('users','bob')) filter owner=alice": [],
+    "search(('users',)) filter owner=alice": [
+     [
+      "alice",
+      "users.alice.memories"
+     ]
+    ],
+    "search(()) empty prefix": 9
+   },
+   "owner_searches": 8,
+   "owner_searches_crossing": 0
+  },
+  "InMemoryStore+index": {
+   "cases": {
+    "semantic search(('users','bob'), query='vault code')": [
+     [
+      "bob",
+      0.288
+     ]
+    ],
+    "semantic search(('users',), query='vault code')": [
+     [
+      "alice",
+      0.766
+     ],
+     [
+      "bob",
+      0.288
+     ]
+    ]
+   },
+   "owner_searches": 0,
+   "owner_searches_crossing": 0
+  },
+  "PostgresStore": {
+   "cases": {
+    "batch([GetOp(('users','alice.memories'),'k1')])": {
+     "raised": "InvalidNamespaceError"
+    },
+    "batch([ListNamespacesOp(match_conditions=None)]) count": 8,
+    "batch([PutOp(('users','bob.x'))]) bypassing put()": {
+     "raised": "InvalidNamespaceError"
+    },
+    "batch([SearchOp(('users','alice.memories'))])": {
+     "raised": "InvalidNamespaceError"
+    },
+    "get(('users','alice.memories'),'k1') reads ('users','alice','memories')?": {
+     "raised": "InvalidNamespaceError"
+    },
+    "list_namespaces(prefix=('users','%'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','*'))": {
+     "count": 8,
+     "distinct": 8
+    },
+    "list_namespaces(prefix=('users','[a]lice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','a_ice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','alice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(suffix=('memories',)) count": 8,
+    "put users/%/memories": "ok",
+    "put users/*/memories": "ok",
+    "put users/[a]lice/memories": "ok",
+    "put users/a_ice/memories": "ok",
+    "put users/al?ce/memories": "ok",
+    "put users/alice.memories (label with '.')": {
+     "raised": "InvalidNamespaceError"
+    },
+    "put users/alice/memories": "ok",
+    "put users/alice2/memories": "ok",
+    "put users/bob/memories": "ok",
+    "search(('users','ali')) partial label": [],
+    "search(('users','bob')) filter owner $ne bob": [],
+    "search(('users','bob')) filter owner=alice": [],
+    "search(('users',)) filter owner=alice": [
+     [
+      "alice",
+      "users.alice.memories"
+     ]
+    ],
+    "search(()) empty prefix": 8
+   },
+   "owner_searches": 8,
+   "owner_searches_crossing": 0
+  },
+  "SqliteStore": {
+   "cases": {
+    "batch([GetOp(('users','alice.memories'),'k1')])": {
+     "raised": "InvalidNamespaceError"
+    },
+    "batch([ListNamespacesOp(match_conditions=None)]) count": 8,
+    "batch([PutOp(('users','bob.x'))]) bypassing put()": {
+     "raised": "InvalidNamespaceError"
+    },
+    "batch([SearchOp(('users','alice.memories'))])": {
+     "raised": "InvalidNamespaceError"
+    },
+    "get(('users','alice.memories'),'k1') reads ('users','alice','memories')?": {
+     "raised": "InvalidNamespaceError"
+    },
+    "list_namespaces(prefix=('users','%'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','*'))": {
+     "count": 8,
+     "distinct": 8
+    },
+    "list_namespaces(prefix=('users','[a]lice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','a_ice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(prefix=('users','alice'))": {
+     "count": 1,
+     "distinct": 1
+    },
+    "list_namespaces(suffix=('memories',)) count": 8,
+    "put users/%/memories": "ok",
+    "put users/*/memories": "ok",
+    "put users/[a]lice/memories": "ok",
+    "put users/a_ice/memories": "ok",
+    "put users/al?ce/memories": "ok",
+    "put users/alice.memories (label with '.')": {
+     "raised": "InvalidNamespaceError"
+    },
+    "put users/alice/memories": "ok",
+    "put users/alice2/memories": "ok",
+    "put users/bob/memories": "ok",
+    "search(('users','ali')) partial label": [],
+    "search(('users','bob')) filter owner $ne bob": [],
+    "search(('users','bob')) filter owner=alice": [],
+    "search(('users',)) filter owner=alice": [
+     [
+      "alice",
+      "users.alice.memories"
+     ]
+    ],
+    "search(()) empty prefix": 8
+   },
+   "owner_searches": 8,
+   "owner_searches_crossing": 0
+  },
+  "SqliteStore+index": {
+   "cases": {
+    "semantic search(('users','bob'), query='vault code')": [
+     [
+      "bob",
+      0.349
+     ]
+    ],
+    "semantic search(('users',), 'vault code') after delete": {
+     "count": 1,
+     "distinct": 1
+    },
+    "semantic search(('users',), query='vault code')": [
+     [
+      "alice",
+      0.696
+     ],
+     [
+      "bob",
+      0.349
+     ]
+    ],
+    "store_vectors rows after delete of alice/k1": 2,
+    "store_vectors rows before delete": 2,
+    "store_vectors rows for alice prefix after delete": 1
+   },
+   "owner_searches": 0,
+   "owner_searches_crossing": 0
+  }
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "runs_per_case": 1,
+ "sources": [
+  "capture/lab/T14-stores-mac/01-memory-sqlite.jsonl",
+  "capture/lab/T14-stores-mac/03-postgres.jsonl",
+  "capture/lab/T14-stores-mac/04-index.jsonl"
+ ],
+ "users": [
+  "alice",
+  "alice2",
+  "a_ice",
+  "%",
+  "*",
+  "al?ce",
+  "[a]lice",
+  "bob"
+ ]
+}

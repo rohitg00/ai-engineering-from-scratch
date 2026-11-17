@@ -1,0 +1,55 @@
+[
+  {
+    "machine_before": {
+      "uptime": "16:53  up 89 days,  2:50, 12 users, load averages: 15.02 14.50 15.39",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M",
+        "qwen3:14b"
+      ]
+    },
+    "machine_after": {
+      "uptime": "16:54  up 89 days,  2:51, 12 users, load averages: 20.75 15.86 15.86",
+      "ollama_loaded": [
+        "qwen3:4b-instruct-2507-q4_K_M",
+        "qwen3:14b"
+      ]
+    },
+    "kinds": {
+      "runs:200:done": 2,
+      "runs:200:interrupted": 1,
+      "approve:200:done": 1
+    },
+    "workers": 1,
+    "users": 1,
+    "model_latency_s": 0.0,
+    "pool_max": 20,
+    "runs": 4,
+    "ok": 4,
+    "errors": 0,
+    "codes": {
+      "200": 4
+    },
+    "wall_s": 15.03,
+    "runs_per_s": 0.3,
+    "p50_s": 3.756,
+    "p95_s": 5.1251,
+    "max_s": 5.1251,
+    "ttft_p50_s": 1.7344,
+    "ttft_p95_s": 2.9322,
+    "pg_conn_max": 66,
+    "pg_conn_mean": 66,
+    "pg_samples": 130,
+    "checkpoint_rows": {
+      "checkpoints": 39,
+      "checkpoint_blobs": 21,
+      "checkpoint_writes": 53
+    },
+    "checkpoint_rows_per_run": 28.2,
+    "checkpoint_data_bytes_per_run": 21189,
+    "checkpoint_disk_bytes_per_run": 86016,
+    "refunds": {
+      "n": 1,
+      "orders": 1
+    }
+  }
+]

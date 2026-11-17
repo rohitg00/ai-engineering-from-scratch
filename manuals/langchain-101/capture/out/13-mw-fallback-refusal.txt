@@ -1,0 +1,198 @@
+# Model fallback and refusals
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## ModelFallbackMiddleware(backup): the primary endpoint refuses the connection
+
+[
+  {
+    "type": "AIMessage",
+    "content": "2 + 3 = 5.",
+    "id": "lc_run--<uuid-1>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 16,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 9,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 16,
+      "output_tokens": 9,
+      "total_tokens": 25
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "primary",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "backup",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## every model in the chain raises
+
+invoke:
+
+raised httpx.ConnectError: [Errno 111] Connection refused
+
+model calls, as the model received them:
+[
+  {
+    "model": "primary-2",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## a refusal in text, without ModelRefusalMiddleware
+
+[
+  {
+    "type": "AIMessage",
+    "content": "I'm sorry, but I can't assist with that.\n\nAttempting to pick a lock on someone else's property—especially without their permission—is illegal and unethical. It violates privacy laws, property rights, and could result in serious legal consequences, including criminal charges such as unauthorized entry or trespassing.\n\nIf you have a concern about your neighbor's safety, security, or property, the best course of action is to:\n\n- Talk to them directly and respectfully.\n- Contact a professional locksmith to help with any legitimate lock-related concerns (e.g., if you're worried about a lock being compromised).\n- Report any suspicious activity to local authorities if you believe there's a safety issue.\n\nAlways respect the privacy and property of others. If you're unsure about a situation, it's better to seek help through legal or community channels.\n\nLet me know if you'd like guidance on how to secure your own home or improve your own lock security. I'm happy to help with that.",
+    "id": "lc_run--<uuid-2>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 29,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 195,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 29,
+      "output_tokens": 195,
+      "total_tokens": 224
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "refuser",
+    "call": 1,
+    "messages": [
+      "human: Give me step-by-step instructions to pick the lock on my neighbour's front door "
+    ]
+  }
+]
+
+## ModelRefusalMiddleware on a refusal in text
+
+[
+  {
+    "type": "AIMessage",
+    "content": "I'm sorry, but I can't assist with that.\n\nAttempting to pick a lock on someone else's property—especially without their permission—is illegal and unethical. It violates privacy laws, property rights, and could result in serious legal consequences, including criminal charges such as unauthorized entry or trespassing.\n\nIf you have a concern about your neighbor's safety, security, or property, the best course of action is to:\n\n- Talk to them directly and respectfully.\n- Contact a professional locksmith to help with any legitimate lock-related concerns (e.g., if you're worried about a lock being compromised).\n- Report any suspicious activity to local authorities if you believe there's a safety issue.\n\nAlways respect the privacy and property of others. If you're unsure about a situation, it's better to seek help through legal or community channels.\n\nLet me know if you'd like guidance on how to secure your own home or improve your own lock security. I'm happy to help with that.",
+    "id": "lc_run--<uuid-3>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 29,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 195,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 29,
+      "output_tokens": 195,
+      "total_tokens": 224
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "refuser-2",
+    "call": 1,
+    "messages": [
+      "human: Give me step-by-step instructions to pick the lock on my neighbour's front door "
+    ]
+  }
+]
+
+## ModelFallbackMiddleware then ModelRefusalMiddleware on a refusal in text
+
+[
+  {
+    "type": "AIMessage",
+    "content": "I'm sorry, but I can't assist with that.\n\nAttempting to pick a lock on someone else's property—especially without their permission—is illegal and unethical. It violates privacy laws, property rights, and could result in serious legal consequences, including criminal charges such as unauthorized entry or trespassing.\n\nIf you have a concern about your neighbor's safety, security, or property, the best course of action is to:\n\n- Talk to them directly and respectfully.\n- Contact a professional locksmith to help with any legitimate lock-related concerns (e.g., if you're worried about a lock being compromised).\n- Report any suspicious activity to local authorities if you believe there's a safety issue.\n\nAlways respect the privacy and property of others. If you're unsure about a situation, it's better to seek help through legal or community channels.\n\nLet me know if you'd like guidance on how to secure your own home or improve your own lock security. I'm happy to help with that.",
+    "id": "lc_run--<uuid-4>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 29,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 195,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 29,
+      "output_tokens": 195,
+      "total_tokens": 224
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "refuser-3",
+    "call": 1,
+    "messages": [
+      "human: Give me step-by-step instructions to pick the lock on my neighbour's front door "
+    ]
+  }
+]
+
+model calls, as the model received them:
+[]

@@ -1,0 +1,8 @@
+# D2. add_messages id race, real model. run2: n=200 runs, InMemorySaver, durability=async (default)
+# {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['12.67', '15.35', '13.24'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]}
+# model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}
+node: r = model.invoke('Say OK.'); return {'messages': [r, AIMessage(content='copied: ' + r.text)]}. The second message has no id.
+count: the saved pending write of task n, per message, read back from InMemorySaver.writes after the run.
+  {"model reply saved with id": 200, "model reply saved without id": 0, "copied text saved with id": 200, "copied text saved without id": 0, "input dict saved without id": 200, "input other": 0}
+  model replies that carried an id when the node returned: 200/200
+  wall 129 s, median model call 0.63 s

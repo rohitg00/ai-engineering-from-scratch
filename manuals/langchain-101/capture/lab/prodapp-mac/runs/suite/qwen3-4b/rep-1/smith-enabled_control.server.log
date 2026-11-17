@@ -1,0 +1,17 @@
+INFO:     Started server process [92435]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:52304 (Press CTRL+C to quit)
+INFO:     127.0.0.1:52363 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52364 - "POST /threads HTTP/1.1" 200 OK
+Run compression is not enabled. Please update to the latest version of LangSmith. Falling back to regular multipart ingestion.
+INFO:     127.0.0.1:52364 - "POST /threads/e04660f6-6797-4f67-bb10-1f53a601b625/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52364 - "POST /threads/e04660f6-6797-4f67-bb10-1f53a601b625/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52364 - "POST /threads/e04660f6-6797-4f67-bb10-1f53a601b625/approve HTTP/1.1" 409 Conflict
+Failed to multipart ingest runs: Connection error caused failure to POST http://127.0.0.1:52303/runs/multipart in LangSmith API. Please confirm your LANGCHAIN_ENDPOINT. ConnectionError(MaxRetryError('HTTPConnectionPool(host=\'127.0.0.1\', port=52303): Max retries exceeded with url: /runs/multipart (Caused by NewConnectionError("HTTPConnection(host=\'127.0.0.1\', port=52303): Failed to establish a new connection: [Errno 61] Connection refused"))'))
+Content-Length: 35622
+API Key: lsv2_*****ketrace=01a1deb9-188e-7628-9b1a-44c20bc98d0e,id=01a1deb9-20af-750e-a72b-828562b1770a; trace=01a1deb9-188e-7628-9b1a-44c20bc98d0e,id=01a1deb9-20b2-7745-b4d9-2b1f29193c5b; trace=01a1deb9-188e-7628-9b1a-44c20bc98d0e,id=01a1deb9-18b7-74a7-a039-b74b4f80e92c; trace=01a1deb9-188e-7628-9b1a-44c20bc98d0e,id=01a1deb9-18b5-78c8-bd3a-20fca8617afd; trace=01a1deb9-188e-7628-9b1a-44c20bc98d0e,id=01a1deb9-18b4-761c-9ba2-45b46c864ca3; trace=01a1deb9-188e-7628-9b1a-44c20bc98d0e,id=01a1deb9-18b2-715c-ae0c-3a7f25fb988d; trace=01a1deb9-188e-7628-9b1a-44c20bc98d0e,id=01a1deb9-188e-7628-9b1a-44c20bc98d0e
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [92435]

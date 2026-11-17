@@ -1,0 +1,13 @@
+INFO:     Started server process [14677]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:59827 (Press CTRL+C to quit)
+INFO:     127.0.0.1:59841 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59842 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59842 - "POST /threads/e5f0d8cf-76b2-401e-b587-dc04a969606d/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59842 - "POST /threads/e5f0d8cf-76b2-401e-b587-dc04a969606d/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59842 - "POST /threads/e5f0d8cf-76b2-401e-b587-dc04a969606d/approve HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14677]

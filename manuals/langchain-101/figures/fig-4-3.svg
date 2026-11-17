@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 353" role="img" aria-labelledby="fig-4-3-title fig-4-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-4-3-title">Structured output: the answer of every task, by strategy and model</title>
+  <desc id="fig-4-3-desc">A grid with one row per model and strategy and one column per task: 20 chain tasks and 19 SQL tasks, each with lookup tools. A blue square is a correct structured answer, a light rose square a wrong value, an empty square no structured answer, and a solid rose square a raised error. On Qwen3 4B, ToolStrategy gave no answer in 39 of 39 tasks and ProviderStrategy raised in 10 of 10. A second model call that extracts the answer from the final text was correct in 30 of 39 on Qwen3 4B, 26 on Qwen3 8B and 39 on Claude Haiku 5.5. Free text read by its last number was correct in 15 of 39 on Haiku.</desc>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">MODEL</text>
+  <text x="110" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">STRATEGY</text>
+  <text x="620" y="22" font-size="11" text-anchor="end" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CORRECT</text>
+  <text x="310" y="42" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">chain, 20 tasks</text>
+  <text x="481.8" y="42" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">sql, 19 tasks</text>
+  <line x1="226" y1="49" x2="394" y2="49" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <line x1="402" y1="49" x2="561.6" y2="49" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="73" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 4B</text>
+  <text x="110" y="73" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">free text</text>
+  <rect x="268.5" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="276.9" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="302.1" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="335.7" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="352.5" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="369.3" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="386.1" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="419.3" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="452.9" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="503.3" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="511.7" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="520.1" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="536.9" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="545.3" y="63.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <path d="M226.0 63h6.4v12h-6.4zM234.4 63h6.4v12h-6.4zM242.8 63h6.4v12h-6.4zM251.2 63h6.4v12h-6.4zM259.6 63h6.4v12h-6.4zM284.8 63h6.4v12h-6.4zM293.2 63h6.4v12h-6.4zM310.0 63h6.4v12h-6.4zM318.4 63h6.4v12h-6.4zM326.8 63h6.4v12h-6.4zM343.6 63h6.4v12h-6.4zM360.4 63h6.4v12h-6.4zM377.2 63h6.4v12h-6.4zM402.0 63h6.4v12h-6.4zM410.4 63h6.4v12h-6.4zM427.2 63h6.4v12h-6.4zM435.6 63h6.4v12h-6.4zM444.0 63h6.4v12h-6.4zM460.8 63h6.4v12h-6.4zM469.2 63h6.4v12h-6.4zM477.6 63h6.4v12h-6.4zM486.0 63h6.4v12h-6.4zM494.4 63h6.4v12h-6.4zM528.0 63h6.4v12h-6.4zM553.2 63h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="73" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">25/39</text>
+  <text x="110" y="90" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">ToolStrategy</text>
+  <rect x="226.5" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="234.9" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="243.3" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="251.7" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="260.1" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="268.5" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="276.9" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="285.3" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="293.7" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="302.1" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="310.5" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="318.9" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="327.3" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="335.7" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="344.1" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="352.5" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="360.9" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="369.3" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="377.7" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="386.1" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="402.5" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="410.9" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="419.3" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="427.7" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="436.1" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="444.5" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="452.9" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="461.3" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="469.7" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="478.1" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="486.5" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="494.9" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="503.3" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="511.7" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="520.1" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="528.5" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="536.9" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="545.3" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="553.7" y="80.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="620" y="90" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0/39</text>
+  <text x="110" y="107" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">ProviderStrategy</text>
+  <path d="M226.0 97h6.4v12h-6.4zM259.6 97h6.4v12h-6.4zM293.2 97h6.4v12h-6.4zM326.8 97h6.4v12h-6.4zM360.4 97h6.4v12h-6.4zM402.0 97h6.4v12h-6.4zM435.6 97h6.4v12h-6.4zM469.2 97h6.4v12h-6.4zM502.8 97h6.4v12h-6.4zM536.4 97h6.4v12h-6.4z" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="620" y="107" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0/10</text>
+  <text x="110" y="124" font-size="11" fill="var(--m-plum-ink, #8a3d72)">extract call</text>
+  <rect x="268.5" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="302.1" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="335.7" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="352.5" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="369.3" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="386.1" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="452.9" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="520.1" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="545.3" y="114.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <path d="M226.0 114h6.4v12h-6.4zM234.4 114h6.4v12h-6.4zM242.8 114h6.4v12h-6.4zM251.2 114h6.4v12h-6.4zM259.6 114h6.4v12h-6.4zM276.4 114h6.4v12h-6.4zM284.8 114h6.4v12h-6.4zM293.2 114h6.4v12h-6.4zM310.0 114h6.4v12h-6.4zM318.4 114h6.4v12h-6.4zM326.8 114h6.4v12h-6.4zM343.6 114h6.4v12h-6.4zM360.4 114h6.4v12h-6.4zM377.2 114h6.4v12h-6.4zM402.0 114h6.4v12h-6.4zM410.4 114h6.4v12h-6.4zM418.8 114h6.4v12h-6.4zM427.2 114h6.4v12h-6.4zM435.6 114h6.4v12h-6.4zM444.0 114h6.4v12h-6.4zM460.8 114h6.4v12h-6.4zM469.2 114h6.4v12h-6.4zM477.6 114h6.4v12h-6.4zM486.0 114h6.4v12h-6.4zM494.4 114h6.4v12h-6.4zM502.8 114h6.4v12h-6.4zM511.2 114h6.4v12h-6.4zM528.0 114h6.4v12h-6.4zM536.4 114h6.4v12h-6.4zM553.2 114h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="124" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">30/39</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="151" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 8B</text>
+  <text x="110" y="151" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">free text</text>
+  <rect x="293.7" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="302.1" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="344.1" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="360.9" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="369.3" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="377.7" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="386.1" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="410.9" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="419.3" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="436.1" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="452.9" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="461.3" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="469.7" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="478.1" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="486.5" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="494.9" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="503.3" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="511.7" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="528.5" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="536.9" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="545.3" y="141.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <path d="M226.0 141h6.4v12h-6.4zM234.4 141h6.4v12h-6.4zM242.8 141h6.4v12h-6.4zM251.2 141h6.4v12h-6.4zM259.6 141h6.4v12h-6.4zM268.0 141h6.4v12h-6.4zM276.4 141h6.4v12h-6.4zM284.8 141h6.4v12h-6.4zM310.0 141h6.4v12h-6.4zM318.4 141h6.4v12h-6.4zM326.8 141h6.4v12h-6.4zM335.2 141h6.4v12h-6.4zM352.0 141h6.4v12h-6.4zM402.0 141h6.4v12h-6.4zM427.2 141h6.4v12h-6.4zM444.0 141h6.4v12h-6.4zM519.6 141h6.4v12h-6.4zM553.2 141h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="151" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">18/39</text>
+  <text x="110" y="168" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">ToolStrategy</text>
+  <rect x="251.7" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="327.3" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="344.1" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="352.5" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="360.9" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="369.3" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="377.7" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="386.1" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="402.5" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="410.9" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="419.3" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="427.7" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="444.5" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="452.9" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="461.3" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="478.1" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="486.5" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="494.9" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="503.3" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="520.1" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="528.5" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="536.9" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="545.3" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <rect x="553.7" y="158.5" width="5.4" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <path d="M226.0 158h6.4v12h-6.4zM234.4 158h6.4v12h-6.4zM242.8 158h6.4v12h-6.4zM259.6 158h6.4v12h-6.4zM268.0 158h6.4v12h-6.4zM276.4 158h6.4v12h-6.4zM284.8 158h6.4v12h-6.4zM293.2 158h6.4v12h-6.4zM301.6 158h6.4v12h-6.4zM310.0 158h6.4v12h-6.4zM318.4 158h6.4v12h-6.4zM335.2 158h6.4v12h-6.4zM435.6 158h6.4v12h-6.4zM511.2 158h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M469.2 158h6.4v12h-6.4z" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="620" y="168" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">14/39</text>
+  <text x="110" y="185" font-size="11" fill="var(--m-plum-ink, #8a3d72)">extract call</text>
+  <rect x="293.7" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="302.1" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="344.1" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="410.9" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="419.3" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="452.9" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="461.3" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="478.1" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="486.5" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="494.9" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="528.5" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="545.3" y="175.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <path d="M226.0 175h6.4v12h-6.4zM234.4 175h6.4v12h-6.4zM242.8 175h6.4v12h-6.4zM251.2 175h6.4v12h-6.4zM259.6 175h6.4v12h-6.4zM268.0 175h6.4v12h-6.4zM276.4 175h6.4v12h-6.4zM284.8 175h6.4v12h-6.4zM310.0 175h6.4v12h-6.4zM318.4 175h6.4v12h-6.4zM326.8 175h6.4v12h-6.4zM335.2 175h6.4v12h-6.4zM352.0 175h6.4v12h-6.4zM360.4 175h6.4v12h-6.4zM368.8 175h6.4v12h-6.4zM377.2 175h6.4v12h-6.4zM385.6 175h6.4v12h-6.4zM402.0 175h6.4v12h-6.4zM427.2 175h6.4v12h-6.4zM435.6 175h6.4v12h-6.4zM444.0 175h6.4v12h-6.4zM502.8 175h6.4v12h-6.4zM511.2 175h6.4v12h-6.4zM519.6 175h6.4v12h-6.4zM536.4 175h6.4v12h-6.4zM553.2 175h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M469.2 175h6.4v12h-6.4z" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="620" y="185" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">26/39</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="212" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Haiku 5.5</text>
+  <text x="110" y="212" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">free text</text>
+  <rect x="226.5" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="234.9" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="243.3" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="260.1" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="293.7" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="302.1" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="310.5" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="318.9" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="335.7" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="344.1" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="410.9" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="419.3" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="436.1" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="444.5" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="461.3" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="469.7" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="478.1" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="494.9" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="503.3" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="511.7" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="528.5" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="536.9" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="545.3" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <rect x="553.7" y="202.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <path d="M251.2 202h6.4v12h-6.4zM268.0 202h6.4v12h-6.4zM276.4 202h6.4v12h-6.4zM284.8 202h6.4v12h-6.4zM326.8 202h6.4v12h-6.4zM352.0 202h6.4v12h-6.4zM360.4 202h6.4v12h-6.4zM368.8 202h6.4v12h-6.4zM377.2 202h6.4v12h-6.4zM385.6 202h6.4v12h-6.4zM402.0 202h6.4v12h-6.4zM427.2 202h6.4v12h-6.4zM452.4 202h6.4v12h-6.4zM486.0 202h6.4v12h-6.4zM519.6 202h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="212" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">15/39</text>
+  <text x="110" y="229" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">ToolStrategy</text>
+  <rect x="344.1" y="219.5" width="5.4" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <path d="M226.0 219h6.4v12h-6.4zM234.4 219h6.4v12h-6.4zM242.8 219h6.4v12h-6.4zM251.2 219h6.4v12h-6.4zM259.6 219h6.4v12h-6.4zM268.0 219h6.4v12h-6.4zM276.4 219h6.4v12h-6.4zM284.8 219h6.4v12h-6.4zM293.2 219h6.4v12h-6.4zM301.6 219h6.4v12h-6.4zM310.0 219h6.4v12h-6.4zM318.4 219h6.4v12h-6.4zM326.8 219h6.4v12h-6.4zM335.2 219h6.4v12h-6.4zM352.0 219h6.4v12h-6.4zM360.4 219h6.4v12h-6.4zM368.8 219h6.4v12h-6.4zM377.2 219h6.4v12h-6.4zM385.6 219h6.4v12h-6.4zM402.0 219h6.4v12h-6.4zM410.4 219h6.4v12h-6.4zM418.8 219h6.4v12h-6.4zM427.2 219h6.4v12h-6.4zM435.6 219h6.4v12h-6.4zM444.0 219h6.4v12h-6.4zM452.4 219h6.4v12h-6.4zM460.8 219h6.4v12h-6.4zM469.2 219h6.4v12h-6.4zM477.6 219h6.4v12h-6.4zM486.0 219h6.4v12h-6.4zM494.4 219h6.4v12h-6.4zM502.8 219h6.4v12h-6.4zM511.2 219h6.4v12h-6.4zM519.6 219h6.4v12h-6.4zM528.0 219h6.4v12h-6.4zM536.4 219h6.4v12h-6.4zM544.8 219h6.4v12h-6.4zM553.2 219h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="229" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">38/39</text>
+  <text x="110" y="246" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">ProviderStrategy</text>
+  <path d="M226.0 236h6.4v12h-6.4zM234.4 236h6.4v12h-6.4zM242.8 236h6.4v12h-6.4zM251.2 236h6.4v12h-6.4zM259.6 236h6.4v12h-6.4zM268.0 236h6.4v12h-6.4zM276.4 236h6.4v12h-6.4zM284.8 236h6.4v12h-6.4zM293.2 236h6.4v12h-6.4zM301.6 236h6.4v12h-6.4zM310.0 236h6.4v12h-6.4zM318.4 236h6.4v12h-6.4zM326.8 236h6.4v12h-6.4zM335.2 236h6.4v12h-6.4zM343.6 236h6.4v12h-6.4zM352.0 236h6.4v12h-6.4zM360.4 236h6.4v12h-6.4zM368.8 236h6.4v12h-6.4zM377.2 236h6.4v12h-6.4zM385.6 236h6.4v12h-6.4zM402.0 236h6.4v12h-6.4zM410.4 236h6.4v12h-6.4zM418.8 236h6.4v12h-6.4zM427.2 236h6.4v12h-6.4zM435.6 236h6.4v12h-6.4zM444.0 236h6.4v12h-6.4zM452.4 236h6.4v12h-6.4zM460.8 236h6.4v12h-6.4zM469.2 236h6.4v12h-6.4zM477.6 236h6.4v12h-6.4zM486.0 236h6.4v12h-6.4zM494.4 236h6.4v12h-6.4zM502.8 236h6.4v12h-6.4zM511.2 236h6.4v12h-6.4zM519.6 236h6.4v12h-6.4zM528.0 236h6.4v12h-6.4zM536.4 236h6.4v12h-6.4zM544.8 236h6.4v12h-6.4zM553.2 236h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="246" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">39/39</text>
+  <text x="110" y="263" font-size="11" fill="var(--m-plum-ink, #8a3d72)">extract call</text>
+  <path d="M226.0 253h6.4v12h-6.4zM234.4 253h6.4v12h-6.4zM242.8 253h6.4v12h-6.4zM251.2 253h6.4v12h-6.4zM259.6 253h6.4v12h-6.4zM268.0 253h6.4v12h-6.4zM276.4 253h6.4v12h-6.4zM284.8 253h6.4v12h-6.4zM293.2 253h6.4v12h-6.4zM301.6 253h6.4v12h-6.4zM310.0 253h6.4v12h-6.4zM318.4 253h6.4v12h-6.4zM326.8 253h6.4v12h-6.4zM335.2 253h6.4v12h-6.4zM343.6 253h6.4v12h-6.4zM352.0 253h6.4v12h-6.4zM360.4 253h6.4v12h-6.4zM368.8 253h6.4v12h-6.4zM377.2 253h6.4v12h-6.4zM385.6 253h6.4v12h-6.4zM402.0 253h6.4v12h-6.4zM410.4 253h6.4v12h-6.4zM418.8 253h6.4v12h-6.4zM427.2 253h6.4v12h-6.4zM435.6 253h6.4v12h-6.4zM444.0 253h6.4v12h-6.4zM452.4 253h6.4v12h-6.4zM460.8 253h6.4v12h-6.4zM469.2 253h6.4v12h-6.4zM477.6 253h6.4v12h-6.4zM486.0 253h6.4v12h-6.4zM494.4 253h6.4v12h-6.4zM502.8 253h6.4v12h-6.4zM511.2 253h6.4v12h-6.4zM519.6 253h6.4v12h-6.4zM528.0 253h6.4v12h-6.4zM536.4 253h6.4v12h-6.4zM544.8 253h6.4v12h-6.4zM553.2 253h6.4v12h-6.4z" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="263" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">39/39</text>
+  </g>
+  <rect x="20" y="283" width="9" height="12" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="34" y="293" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">correct value</text>
+  <rect x="140.5" y="283.5" width="8" height="11" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="154" y="293" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">wrong value</text>
+  <rect x="250.5" y="283.5" width="8" height="11" fill="none" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="264" y="293" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">no structured answer</text>
+  <rect x="410" y="283" width="9" height="12" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="424" y="293" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">raised an error</text>
+  <text x="20" y="317" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Qwen3 4B ProviderStrategy ran 10 of the tasks. Every run on the Mac, Haiku through the API.</text>
+</svg>

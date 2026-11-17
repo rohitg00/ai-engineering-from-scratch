@@ -1,0 +1,20 @@
+Failure drill on a real model, the x86 server guest: drill_real.py (same 7 cases, same report lines and JSON rows as capture/demos/failure-drill/drill.py)
+Model qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42; ChatOllama except case 1 (ChatOpenAI on Ollama /v1). No fake model, no stub provider.
+Real failure sources: case 1 a relay in front of Ollama that drops every connection; case 2 SIGKILL inside the tool, SqliteSaver, resume in a new
+process; case 5 LANGSMITH_ENDPOINT on a port where nothing listens; others are real model behaviour. n = 3 full runs (drill-run1..3.log/.jsonl).
+Totals 103.0, 101.6, 101.0 s (Mac fake: 26.0 s).
+
+1 retries: 9 requests in 6.8-6.9 s, AIMessage "Model call failed after 3 attempts with OpenAIConnectionError: Connection error."; fix max_retries=0: 3 requests in 2.3-3.7 s. 3/3.
+2 crash: the real model sent TWO charge_card calls for the one charge in 3/3 runs (and in the keyed rounds). Without the key: 4, 4, 3 charges
+  (both parallel calls ran before the kill in 2 runs; in 1 run one call wrote before the kill and the resume ran both). With the key: 2, 2, 2 charges;
+  the key stopped every re-run of a saved call id, but not the model's second call. Resume: next [], 5 messages, last "Charged". Exit -9 3/3.
+3 approval: batched + JumpToTools: send_email to all-staff@example.org ran before any decision, 0 interrupts; per_call: 0 runs, 1 interrupt, next ['tools']. 3/3.
+4 structured output: ToolStrategy(Answer) with tools [add, Answer bound]: 3 of 5 prompts ended with structured_response None and no exception
+  ("Hello! How are you today?", "Tell me a one-line joke.", "What is the total of an empty order?" - the last wrote "Answer(total=0)" as text);
+  "What is 2 + 3?" and "Add 2 and 3 ..." gave a structured response. 3/3 runs identical.
+5 tracing down: agent run 4.06-4.44 s; process exited 16.9-17.3 s after the run (22.0 s in all); 3 lines of upload errors. With the probe: tracing off,
+  exit 0.2-0.3 s after, 0 error lines. 3/3.
+6 duplicate names: the model saw 1 tool "lookup"; its call ran the refunds function; final answer said it found nothing about order 7 "in the refunds table". 3/3.
+7 forever: recursion_limit 10 -> GraphRecursionError after 5 model calls; ModelCallLimitMiddleware(run_limit=3, end): limit 10 still raised after 3 calls;
+  limit 25 ended with "Model call limits exceeded: run limit (3/3)". 3/3.
+Rows not to use: none.

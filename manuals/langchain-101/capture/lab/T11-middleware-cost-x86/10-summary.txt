@@ -1,0 +1,27 @@
+T11 middleware cost and behaviour on a real model, the x86 server guest
+Model qwen3:4b-instruct-2507-q4_K_M via ChatOllama (subclass TimedOllama times _generate), temperature 0, seed 42. Prompt: call echo with 'hi', then reply done.
+One run = 2 real model calls + 1 tool call, sync invoke. model_us = time inside ChatOllama._generate (HTTP + inference); framework_us = wall - model_us.
+01-cost.jsonl: 21 cells, 20 timed runs per cell + 2 warm-up rounds (left out), cells shuffled per round; all 420 timed runs ok (2 calls, "done").
+Load average 14 to 25 during the runs (llama-server uses all 32 cores while it generates). Script t11_real.py. Table 09-summary-table.txt.
+
+Framework share (median per cell): 0.2% (no middleware) to 0.5% (20 node hooks). Run median 2.61-2.68 s, model 2.60-2.66 s.
+Framework time, median: none 5.88 ms; before_model k=1 6.31, 10 9.66, 20 13.20; after_model 10 9.94, 20 13.48; before_agent 10 7.74, 20 9.61;
+wrap_model_call 10 6.91, 20 7.67; wrap_tool_call 10 6.41, 20 6.88 ms.
+Cost per hook call (slope of the median over k / calls per run): before_model 183 us, after_model 190 us, before_agent 187 us,
+wrap_model_call 45 us, wrap_tool_call 50 us (the x86 server guest under load 14-25; Mac fake: 93-95 and 19-21 us).
+Built-in, not acting, framework median (added over 5.88 ms): tool_retry 6.02, model_retry 6.03, summarization_nofire 6.24, tool_call_limit 6.63,
+hitl_nointerrupt 6.74, model_call_limit 7.18, pii_email 7.24, stack5 9.27, pii_5types 10.65 ms. All 0.2-0.4% of the run.
+
+02-acts.jsonl, n=3 per case, identical in 3/3:
+- SummarizationMiddleware(trigger messages 8, keep 4), 20-message history + question: fired; 2 model calls (summary, then the answer); the answer
+  model saw 5 messages (summary + last 3 + question) and still answered 103 (correct). Control with trigger 1000: 1 call, 21 messages, 103.
+- PIIMiddleware email redact: the model saw "[REDACTED_EMAIL]" and refused to repeat anything. mask: saw "jane.doe@****.org" and echoed the prompt.
+  block: PIIDetectionError before any model call. apply_to_output only: the model's answer became "[REDACTED_EMAIL]".
+- ModelCallLimitMiddleware(run_limit=1, end): the tool ran, then the run ended with AIMessage "Model call limits exceeded: run limit (1/1)".
+  error: ModelCallLimitExceededError after the first call (the tool did not run).
+- ToolCallLimitMiddleware(run_limit=1), model made 2 parallel calls: one ran, the other got error ToolMessage
+  "Tool call limit exceeded. Do not make additional tool calls."; the model then replied "done".
+- ToolRetryMiddleware, real refused port: "Tool 'fetch' failed after 3 attempts with ConnectError"; the model reported the refusal (2 calls).
+- HITL interrupt_on echo: the real call paused with one action request; approve resumed, echo ran, "done" (1+1 model calls).
+- ModelRetryMiddleware, relay drops the first connection: wire drop, pass, pass; run succeeded.
+Rows not to use: none (smoke file deleted). Absolute us depend on the load; use the share and the node-vs-wrap ratio.

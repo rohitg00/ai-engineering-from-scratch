@@ -1,0 +1,239 @@
+{
+ "case": "faq_shipping_time",
+ "model": "ollama:qwen3:14b",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "5c4dc668-9b87-4aca-ad81-e02f87d614da",
+   "text": "How long does shipping take?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "d66bf048-bb9b-47eb-89ca-ace6409ed692",
+      "name": "search_faq",
+      "args": {
+       "query": "shipping time"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}, {\"id\": \"shipping-cost\", \"answer\": \"Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Standard"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " takes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "6"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " business"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Express"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shipping"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " takes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " business"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " days"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 14.6294
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "5c4dc668-9b87-4aca-ad81-e02f87d614da",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "How long does shipping take?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "shipping time"
+       },
+       "id": "d66bf048-bb9b-47eb-89ca-ace6409ed692",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 450,
+      "output_tokens": 22,
+      "total_tokens": 472
+     },
+     "model": "qwen3:14b",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}, {\"id\": \"shipping-cost\", \"answer\": \"Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 560,
+      "output_tokens": 23,
+      "total_tokens": 583
+     },
+     "model": "qwen3:14b",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

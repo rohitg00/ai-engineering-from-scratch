@@ -1,0 +1,6 @@
+Server launch markers in T12/_marks after the langchain-mcp-adapters 0.3.2 run: 57.
+The 01 script resets T12/_marks at the start of each scenario; its last scenario (http) launches no stdio server, so all 57 markers come from 02.
+02 stdio: 1 (get_tools) + 3 single calls + 50 timed calls + crash + call after crash = 56 stdio launches, plus 1 HTTP server process = 57.
+So langchain-mcp-adapters 0.3.2 starts one stdio subprocess per tool call (MultiServerMCPClient without an explicit session).
+langchain.mcp (01): 1 stdio launch for list_tools and all 50+ calls; 1 relaunch after the crash; the timeout client launched its own server (1).
+No t12_server process was left running after either script (pgrep -fl t12_server: no match).

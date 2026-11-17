@@ -1,0 +1,394 @@
+{
+ "case": "status_then_refund_in_one_thread",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "971fc6bf-3d58-423c-9376-f18c200783ff",
+   "text": "Where is my order ORD-e20-3?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_016bR9qSiVHVMTGnt3rBpjTr",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e20-3"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e20-3\", \"item\": \"Water bottle\", \"status\": \"processing\", \"total_cents\": 2400, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order ORD-e20-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3 ("
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "water"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " bottle, $24."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "00) is still"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " processing and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " hasn't sh"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ipped yet. It has"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " no ref"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "unds on"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.5659
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "971fc6bf-3d58-423c-9376-f18c200783ff",
+   "text": "Refund ORD-e20-3",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_012AUqpabvRRsSDWWmCinRaq",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400,
+       "reason": "Customer requested a full refund for order ORD-e20-3 (water bottle), which is still processing."
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "0cd6217024f4588e52c0413c0add834b",
+      "type": "tool_approval",
+      "tool_call_id": "toolu_012AUqpabvRRsSDWWmCinRaq",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400,
+       "reason": "Customer requested a full refund for order ORD-e20-3 (water bottle), which is still processing."
+      },
+      "description": "Tool execution requires approval\n\nTool: refund_order\nArgs: {'order_id': 'ORD-e20-3', 'amount_cents': 2400, 'reason': 'Customer requested a full refund for order ORD-e20-3 (water bottle), which is still processing.'}"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 2.3765
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "971fc6bf-3d58-423c-9376-f18c200783ff",
+   "decision": "approve",
+   "result": [
+    [
+     "tool_result",
+     {
+      "name": "refund_order",
+      "status": "success",
+      "content": "{\"refund_id\": 5, \"order_id\": \"ORD-e20-3\", \"amount_cents\": 2400, \"replayed\": false}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I've submitted a full"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund of $24.00 "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "for ORD-e20-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "3 (refund ID "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "5). It need"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "s human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " approval before it goes back"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to your"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " original payment method."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 1.0346
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "971fc6bf-3d58-423c-9376-f18c200783ff",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e20-3?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e20-3"
+       },
+       "id": "toolu_016bR9qSiVHVMTGnt3rBpjTr",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 916,
+      "output_tokens": 56,
+      "total_tokens": 972,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e20-3\", \"item\": \"Water bottle\", \"status\": \"processing\", \"total_cents\": 2400, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your order ORD-e20-3 (water bottle, $24.00) is still processing and hasn't shipped yet. It has no refunds on it.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1029,
+      "output_tokens": 49,
+      "total_tokens": 1078,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Refund ORD-e20-3",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e20-3",
+        "amount_cents": 2400,
+        "reason": "Customer requested a full refund for order ORD-e20-3 (water bottle), which is still processing."
+       },
+       "id": "toolu_012AUqpabvRRsSDWWmCinRaq",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1093,
+      "output_tokens": 262,
+      "total_tokens": 1355,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 125
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"refund_id\": 5, \"order_id\": \"ORD-e20-3\", \"amount_cents\": 2400, \"replayed\": false}",
+     "tool_calls": [],
+     "name": "refund_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I've submitted a full refund of $24.00 for ORD-e20-3 (refund ID 5). It needs human approval before it goes back to your original payment method.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1403,
+      "output_tokens": 53,
+      "total_tokens": 1456,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [
+  {
+   "order_id": "ORD-e20-3",
+   "amount_cents": 2400
+  }
+ ],
+ "tickets": []
+}

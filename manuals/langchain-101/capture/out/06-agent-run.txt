@@ -1,0 +1,117 @@
+# One full create_agent run
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## final state
+
+keys:
+[
+  "messages"
+]
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "What is 2 + 3?",
+    "id": "<uuid-1>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-2>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-3>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 166,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 166,
+      "output_tokens": 25,
+      "total_tokens": 191
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-4>",
+    "tool_call_id": "<uuid-3>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "2 + 3 = 5.",
+    "id": "lc_run--<uuid-5>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 205,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 9,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 205,
+      "output_tokens": 9,
+      "total_tokens": 214
+    }
+  }
+]
+
+## what the model received on each call
+
+model calls, as the model received them:
+[
+  {
+    "model": "agent",
+    "call": 1,
+    "messages": [
+      "system: You add numbers.",
+      "human: What is 2 + 3?"
+    ],
+    "tools": [
+      "add"
+    ]
+  },
+  {
+    "model": "agent",
+    "call": 2,
+    "messages": [
+      "system: You add numbers.",
+      "human: What is 2 + 3?",
+      "ai: calls add",
+      "tool: 5"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]

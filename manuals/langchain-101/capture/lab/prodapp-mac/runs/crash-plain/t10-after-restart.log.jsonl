@@ -1,0 +1,4 @@
+{"ts": 1794741444.088, "level": "INFO", "event": "startup", "model": "ollama:qwen3:4b-instruct-2507-q4_K_M", "backup": "ollama:qwen3:14b", "pool_max": 20}
+{"ts": 1794741444.195, "level": "INFO", "event": "run.start", "thread_id": "7e188ebf-8ddb-45f6-a87c-2f20014d0ccb", "user_id": "crash", "trace_id": "efe354e48b9b4732f3c80dd98cf327f6", "span_id": "7fe35d309d060789"}
+{"ts": 1794741444.211, "level": "INFO", "event": "tool.done", "tool": "refund_order", "status": "success", "trace_id": "efe354e48b9b4732f3c80dd98cf327f6", "span_id": "27042d554c1322f9"}
+{"ts": 1794741445.039, "level": "INFO", "event": "run.end", "thread_id": "7e188ebf-8ddb-45f6-a87c-2f20014d0ccb", "status": "done", "seconds": 0.8438, "trace_id": "efe354e48b9b4732f3c80dd98cf327f6", "span_id": "a4d34fc80a057ba8"}

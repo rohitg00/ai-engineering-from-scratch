@@ -1,0 +1,383 @@
+{
+ "case": "order_unknown",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "a56b4cb8-13f5-442d-b58e-a248d1976699",
+   "text": "Where is my order ORD-nobody-1?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "eeebc48d-c1b2-47d4-9d7f-460820f8242f",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-nobody-1"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"error\": \"no order ORD-nobody-1 on this account\"}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " couldn"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " find"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-n"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "obody"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " It"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'s"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " possible"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ID"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " is"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " incorrect"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " hasn"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " been"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " placed"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " yet"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Let"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " me"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " know"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " if"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'d"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " like"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " check"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " another"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " order"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " need"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " help"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " something"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " else"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "!"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 3.4194
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "a56b4cb8-13f5-442d-b58e-a248d1976699",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Where is my order ORD-nobody-1?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-nobody-1"
+       },
+       "id": "eeebc48d-c1b2-47d4-9d7f-460820f8242f",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 557,
+      "output_tokens": 25,
+      "total_tokens": 582
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"error\": \"no order ORD-nobody-1 on this account\"}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I couldn't find order ORD-nobody-1. It's possible the order ID is incorrect or the order hasn't been placed yet. Let me know if you'd like to check another order or need help with something else!",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 609,
+      "output_tokens": 47,
+      "total_tokens": 656
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

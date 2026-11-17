@@ -1,0 +1,336 @@
+# Tool retry and model retry
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## ToolRetryMiddleware(max_retries=2): the tool fails twice, then succeeds
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "flaky_fetch",
+        "args": {
+          "url": "http://svc.local/a"
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 168,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 168,
+      "output_tokens": 25,
+      "total_tokens": 193
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "200 OK from http://svc.local/a",
+    "name": "flaky_fetch",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The request to http://svc.local/a was successful, and the response returned \"200 OK\".",
+    "id": "lc_run--<uuid-4>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 216,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 22,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 216,
+      "output_tokens": 22,
+      "total_tokens": 238
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "tool-retry",
+    "call": 1,
+    "messages": [
+      "human: Fetch http://svc.local/a with the flaky_fetch tool and tell me the result."
+    ],
+    "tools": [
+      "flaky_fetch"
+    ]
+  },
+  {
+    "model": "tool-retry",
+    "call": 2,
+    "messages": [
+      "human: Fetch http://svc.local/a with the flaky_fetch tool and tell me the result.",
+      "ai: calls flaky_fetch",
+      "tool: 200 OK from http://svc.local/a"
+    ],
+    "tools": [
+      "flaky_fetch"
+    ]
+  }
+]
+
+tool attempts:
+[
+  "http://svc.local/a",
+  "http://svc.local/a",
+  "http://svc.local/a"
+]
+
+## ToolRetryMiddleware(max_retries=1, on_failure='continue'): retries run out
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-5>-0",
+    "tool_calls": [
+      {
+        "name": "flaky_fetch",
+        "args": {
+          "url": "http://svc.local/b"
+        },
+        "id": "<uuid-6>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 175,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 175,
+      "output_tokens": 25,
+      "total_tokens": 200
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Tool 'flaky_fetch' failed after 2 attempts with ConnectionError: attempt 2 refused. Please try again.",
+    "name": "flaky_fetch",
+    "id": "<uuid-7>",
+    "tool_call_id": "<uuid-6>",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The request to http://svc.local/b failed after two attempts. The service is currently unreachable or unresponsive. I cannot retrieve the result. Please try again later or check if the service is functioning properly.",
+    "id": "lc_run--<uuid-8>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 236,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 42,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 236,
+      "output_tokens": 42,
+      "total_tokens": 278
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "tool-retry-out",
+    "call": 1,
+    "messages": [
+      "human: Fetch http://svc.local/b with the flaky_fetch tool once and tell me the result. "
+    ],
+    "tools": [
+      "flaky_fetch"
+    ]
+  },
+  {
+    "model": "tool-retry-out",
+    "call": 2,
+    "messages": [
+      "human: Fetch http://svc.local/b with the flaky_fetch tool once and tell me the result. ",
+      "ai: calls flaky_fetch",
+      "tool: Tool 'flaky_fetch' failed after 2 attempts with ConnectionError: attempt 2 refus"
+    ],
+    "tools": [
+      "flaky_fetch"
+    ]
+  }
+]
+
+tool attempts:
+[
+  "http://svc.local/b",
+  "http://svc.local/b"
+]
+
+## ToolRetryMiddleware(max_retries=1, on_failure='error')
+
+invoke:
+
+raised builtins.ConnectionError: attempt 2 refused
+
+model calls, as the model received them:
+[
+  {
+    "model": "tool-retry-error",
+    "call": 1,
+    "messages": [
+      "human: Fetch http://svc.local/c with the flaky_fetch tool and tell me the result."
+    ],
+    "tools": [
+      "flaky_fetch"
+    ]
+  }
+]
+
+## ModelRetryMiddleware(max_retries=2): the endpoint drops two connections, then the model answers
+
+[
+  {
+    "type": "AIMessage",
+    "content": "2 + 3 = 5.",
+    "id": "lc_run--<uuid-9>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 16,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 9,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 16,
+      "output_tokens": 9,
+      "total_tokens": 25
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "model-retry",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  },
+  {
+    "model": "model-retry",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  },
+  {
+    "model": "model-retry",
+    "call": 3,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+connections the endpoint accepted: 3
+
+## ModelRetryMiddleware(max_retries=1), on_failure='continue': the error becomes an AIMessage
+
+[
+  {
+    "type": "AIMessage",
+    "content": "Model call failed after 2 attempts with ConnectError: [Errno 111] Connection refused",
+    "id": "<uuid-10>"
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "model-retry-out",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  },
+  {
+    "model": "model-retry-out",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]
+
+## ModelRetryMiddleware(retry_on=(TimeoutError,)) does not retry an httpx.ConnectError
+
+invoke:
+
+raised httpx.ConnectError: [Errno 111] Connection refused
+
+model calls, as the model received them:
+[
+  {
+    "model": "model-retry-filter",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?"
+    ]
+  }
+]

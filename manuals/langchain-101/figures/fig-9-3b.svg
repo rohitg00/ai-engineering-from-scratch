@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" role="img" aria-labelledby="fig-9-3b-title fig-9-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-3b-title">The zero-cent refund before and after the tool checks the amount</title>
+  <desc id="fig-9-3b-desc">The eval asks to refund ORD-e19-3 and approves what the model proposes. Before the fix, Qwen3 4B wrote 3 zero-cent rows in 3 runs, Qwen3 14B wrote 3 zero-cent rows in 3 runs. After the fix, Qwen3 4B wrote 0 rows in 3 runs, Qwen3 14B wrote 0 rows in 3 runs. The approval text after the fix: Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer requested a refund.</desc>
+  <text x="150" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">BEFORE THE FIX</text>
+  <text x="400" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AFTER THE FIX</text>
+  <text x="16" y="66" font-size="11.5" font-weight="700">Qwen3 4B</text>
+  <text x="16" y="82" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refund ORD-e19-3</text>
+  <rect x="150" y="44" width="74" height="52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="187" y="65.25" font-size="12.5" text-anchor="middle" font-weight="700">run 1</text>
+  <text x="187" y="82.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0-cent row</text>
+  <rect x="228" y="44" width="74" height="52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="265" y="65.25" font-size="12.5" text-anchor="middle" font-weight="700">run 2</text>
+  <text x="265" y="82.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0-cent row</text>
+  <rect x="306" y="44" width="74" height="52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="343" y="65.25" font-size="12.5" text-anchor="middle" font-weight="700">run 3</text>
+  <text x="343" y="82.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0-cent row</text>
+  <rect x="400" y="44" width="74" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="437" y="57.75" font-size="12.5" text-anchor="middle" font-weight="700">run 1</text>
+  <text x="437" y="75.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 asked</text>
+  <text x="437" y="90.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+  <rect x="478" y="44" width="74" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="515" y="57.75" font-size="12.5" text-anchor="middle" font-weight="700">run 2</text>
+  <text x="515" y="75.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 asked</text>
+  <text x="515" y="90.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+  <rect x="556" y="44" width="74" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="593" y="57.75" font-size="12.5" text-anchor="middle" font-weight="700">run 3</text>
+  <text x="593" y="75.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 asked</text>
+  <text x="593" y="90.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+  <text x="16" y="146" font-size="11.5" font-weight="700">Qwen3 14B</text>
+  <text x="16" y="162" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refund ORD-e19-3</text>
+  <rect x="150" y="124" width="74" height="52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="187" y="145.25" font-size="12.5" text-anchor="middle" font-weight="700">run 1</text>
+  <text x="187" y="162.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0-cent row</text>
+  <rect x="228" y="124" width="74" height="52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="265" y="145.25" font-size="12.5" text-anchor="middle" font-weight="700">run 2</text>
+  <text x="265" y="162.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0-cent row</text>
+  <rect x="306" y="124" width="74" height="52" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="343" y="145.25" font-size="12.5" text-anchor="middle" font-weight="700">run 3</text>
+  <text x="343" y="162.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0-cent row</text>
+  <rect x="400" y="124" width="74" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="437" y="137.75" font-size="12.5" text-anchor="middle" font-weight="700">run 1</text>
+  <text x="437" y="155.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 asked</text>
+  <text x="437" y="170.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+  <rect x="478" y="124" width="74" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="515" y="137.75" font-size="12.5" text-anchor="middle" font-weight="700">run 2</text>
+  <text x="515" y="155.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 asked</text>
+  <text x="515" y="170.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+  <rect x="556" y="124" width="74" height="52" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="593" y="137.75" font-size="12.5" text-anchor="middle" font-weight="700">run 3</text>
+  <text x="593" y="155.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">0 asked</text>
+  <text x="593" y="170.05" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">refused</text>
+  <text x="16" y="222" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">WHAT THE APPROVER READ AFTER THE FIX</text>
+  <text x="16" y="244" font-size="11" class="m-serif">Refund 0 cents on ORD-e19-3 (Water bottle).</text>
+  <text x="16" y="260" font-size="11" class="m-serif">Order total 2400 cents, refunded so far 0, refundable now 2400.</text>
+  <text x="16" y="276" font-size="11" class="m-serif">Reason: Customer requested a refund.</text>
+</svg>

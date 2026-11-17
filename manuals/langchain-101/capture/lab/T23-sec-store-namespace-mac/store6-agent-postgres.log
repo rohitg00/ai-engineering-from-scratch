@@ -1,0 +1,40 @@
+postgres shared-docs            i=0 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=25.78+29.16s
+postgres shared-docs            i=1 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=29.67+37.44s
+postgres shared-docs            i=2 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=36.98+71.93s
+postgres shared-docs            i=3 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=55.5+65.88s
+postgres shared-docs            i=4 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=59.86+108.97s
+postgres shared-docs            i=5 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=142.87+83.87s
+postgres shared-docs            i=6 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=82.36+85.91s
+postgres shared-docs            i=7 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=107.0+140.35s
+postgres shared-docs            i=8 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=163.03+245.58s
+postgres shared-docs            i=9 saved=1 ns=['memories'] bob_fs_sees=1 leaked=1 bob_calls=['ls', 'read_file'] errA=None errB=None t=288.29+343.5s
+postgres per-user               i=0 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=133.81+158.77s
+postgres per-user               i=1 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=101.81+154.54s
+postgres per-user               i=2 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=157.04+134.67s
+postgres per-user               i=3 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=102.02+145.8s
+postgres per-user               i=4 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=108.03+161.81s
+postgres per-user               i=5 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=216.53+222.89s
+postgres per-user               i=6 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=126.54+127.95s
+postgres per-user               i=7 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=161.05+167.33s
+postgres per-user               i=8 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=116.34+151.65s
+postgres per-user               i=9 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=185.15+152.37s
+postgres per-user+naive-recall  i=0 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=104.61+114.48s
+postgres per-user+naive-recall  i=1 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=176.53+152.63s
+postgres per-user+naive-recall  i=2 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=144.52+152.74s
+postgres per-user+naive-recall  i=3 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=146.09+147.77s
+postgres per-user+naive-recall  i=4 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=118.05+99.33s
+postgres per-user+naive-recall  i=5 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=107.26+100.74s
+postgres per-user+naive-recall  i=6 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=98.57+182.45s
+postgres per-user+naive-recall  i=7 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=67.87+63.09s
+postgres per-user+naive-recall  i=8 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=62.12+42.52s
+postgres per-user+naive-recall  i=9 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=0 bob_calls=['ls'] errA=None errB=None t=42.06+27.67s
+postgres per-user+naive-recall-asked i=0 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=85.12+34.6s
+postgres per-user+naive-recall-asked i=1 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=71.71+36.84s
+postgres per-user+naive-recall-asked i=2 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=69.39+34.85s
+postgres per-user+naive-recall-asked i=3 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=73.87+35.01s
+postgres per-user+naive-recall-asked i=4 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=77.33+53.78s
+postgres per-user+naive-recall-asked i=5 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=69.27+37.34s
+postgres per-user+naive-recall-asked i=6 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=66.14+39.15s
+postgres per-user+naive-recall-asked i=7 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=73.08+40.02s
+postgres per-user+naive-recall-asked i=8 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=78.51+34.19s
+postgres per-user+naive-recall-asked i=9 saved=1 ns=['users/alice'] bob_fs_sees=0 leaked=1 bob_calls=['recall'] errA=None errB=None t=69.82+39.28s

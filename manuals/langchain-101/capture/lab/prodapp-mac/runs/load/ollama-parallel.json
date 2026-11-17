@@ -1,0 +1,430 @@
+{
+ "model": "qwen3:4b-instruct-2507-q4_K_M",
+ "uptime_before": "16:51  up 89 days,  2:48, 12 users, load averages: 7.79 14.08 15.44",
+ "levels": [
+  {
+   "concurrent": 1,
+   "round": 1,
+   "wall_s": 0.514,
+   "output_tokens": 23,
+   "tokens_per_s": 44.7,
+   "requests": [
+    {
+     "seconds": 0.514,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 286.4,
+     "load_ms": 132.1
+    }
+   ]
+  },
+  {
+   "concurrent": 1,
+   "round": 2,
+   "wall_s": 0.458,
+   "output_tokens": 23,
+   "tokens_per_s": 50.2,
+   "requests": [
+    {
+     "seconds": 0.458,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 287.5,
+     "load_ms": 131.5
+    }
+   ]
+  },
+  {
+   "concurrent": 1,
+   "round": 3,
+   "wall_s": 0.467,
+   "output_tokens": 23,
+   "tokens_per_s": 49.3,
+   "requests": [
+    {
+     "seconds": 0.464,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 287.5,
+     "load_ms": 135.8
+    }
+   ]
+  },
+  {
+   "concurrent": 2,
+   "round": 1,
+   "wall_s": 0.93,
+   "output_tokens": 46,
+   "tokens_per_s": 49.5,
+   "requests": [
+    {
+     "seconds": 0.558,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 288.7,
+     "load_ms": 182.7
+    },
+    {
+     "seconds": 0.928,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 295.7,
+     "load_ms": 176.9
+    }
+   ]
+  },
+  {
+   "concurrent": 2,
+   "round": 2,
+   "wall_s": 3.743,
+   "output_tokens": 46,
+   "tokens_per_s": 12.3,
+   "requests": [
+    {
+     "seconds": 3.742,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 1039.9,
+     "load_ms": 2162.5
+    },
+    {
+     "seconds": 2.582,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 336.6,
+     "load_ms": 2160.8
+    }
+   ]
+  },
+  {
+   "concurrent": 2,
+   "round": 3,
+   "wall_s": 2.142,
+   "output_tokens": 46,
+   "tokens_per_s": 21.5,
+   "requests": [
+    {
+     "seconds": 2.141,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 785.6,
+     "load_ms": 638.5
+    },
+    {
+     "seconds": 1.217,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 448.9,
+     "load_ms": 633.0
+    }
+   ]
+  },
+  {
+   "concurrent": 4,
+   "round": 1,
+   "wall_s": 5.532,
+   "output_tokens": 92,
+   "tokens_per_s": 16.6,
+   "requests": [
+    {
+     "seconds": 2.852,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 798.4,
+     "load_ms": 811.0
+    },
+    {
+     "seconds": 1.864,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 833.0,
+     "load_ms": 792.3
+    },
+    {
+     "seconds": 5.526,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 662.2,
+     "load_ms": 790.0
+    },
+    {
+     "seconds": 4.647,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 1612.1,
+     "load_ms": 774.1
+    }
+   ]
+  },
+  {
+   "concurrent": 4,
+   "round": 2,
+   "wall_s": 5.01,
+   "output_tokens": 92,
+   "tokens_per_s": 18.4,
+   "requests": [
+    {
+     "seconds": 5.008,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 1211.7,
+     "load_ms": 926.5
+    },
+    {
+     "seconds": 2.093,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 537.0,
+     "load_ms": 924.3
+    },
+    {
+     "seconds": 1.436,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 440.2,
+     "load_ms": 924.6
+    },
+    {
+     "seconds": 3.47,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 1075.6,
+     "load_ms": 921.7
+    }
+   ]
+  },
+  {
+   "concurrent": 4,
+   "round": 3,
+   "wall_s": 4.536,
+   "output_tokens": 92,
+   "tokens_per_s": 20.3,
+   "requests": [
+    {
+     "seconds": 2.136,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 701.1,
+     "load_ms": 454.4
+    },
+    {
+     "seconds": 1.278,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 643.3,
+     "load_ms": 445.2
+    },
+    {
+     "seconds": 3.291,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 969.3,
+     "load_ms": 454.9
+    },
+    {
+     "seconds": 4.534,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 982.3,
+     "load_ms": 459.2
+    }
+   ]
+  },
+  {
+   "concurrent": 8,
+   "round": 1,
+   "wall_s": 9.904,
+   "output_tokens": 184,
+   "tokens_per_s": 18.6,
+   "requests": [
+    {
+     "seconds": 4.891,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 1353.1,
+     "load_ms": 933.2
+    },
+    {
+     "seconds": 6.003,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 872.3,
+     "load_ms": 933.6
+    },
+    {
+     "seconds": 3.256,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 822.6,
+     "load_ms": 921.2
+    },
+    {
+     "seconds": 7.015,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 822.3,
+     "load_ms": 959.3
+    },
+    {
+     "seconds": 1.571,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 500.2,
+     "load_ms": 916.4
+    },
+    {
+     "seconds": 9.901,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 1591.3,
+     "load_ms": 982.9
+    },
+    {
+     "seconds": 8.072,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 835.3,
+     "load_ms": 976.9
+    },
+    {
+     "seconds": 2.263,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 566.1,
+     "load_ms": 929.9
+    }
+   ]
+  },
+  {
+   "concurrent": 8,
+   "round": 2,
+   "wall_s": 9.737,
+   "output_tokens": 184,
+   "tokens_per_s": 18.9,
+   "requests": [
+    {
+     "seconds": 6.687,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 1392.7,
+     "load_ms": 1340.7
+    },
+    {
+     "seconds": 3.173,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 955.5,
+     "load_ms": 1327.8
+    },
+    {
+     "seconds": 1.847,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 361.8,
+     "load_ms": 1316.6
+    },
+    {
+     "seconds": 8.711,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 741.5,
+     "load_ms": 1309.9
+    },
+    {
+     "seconds": 4.12,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 880.1,
+     "load_ms": 1324.8
+    },
+    {
+     "seconds": 9.728,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 826.9,
+     "load_ms": 1304.6
+    },
+    {
+     "seconds": 7.777,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 837.3,
+     "load_ms": 1321.2
+    },
+    {
+     "seconds": 5.048,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 789.4,
+     "load_ms": 1334.3
+    }
+   ]
+  },
+  {
+   "concurrent": 8,
+   "round": 3,
+   "wall_s": 9.332,
+   "output_tokens": 184,
+   "tokens_per_s": 19.7,
+   "requests": [
+    {
+     "seconds": 2.442,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 756.2,
+     "load_ms": 704.8
+    },
+    {
+     "seconds": 5.883,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 840.2,
+     "load_ms": 754.0
+    },
+    {
+     "seconds": 1.535,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 630.1,
+     "load_ms": 700.6
+    },
+    {
+     "seconds": 6.947,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 865.9,
+     "load_ms": 766.1
+    },
+    {
+     "seconds": 9.329,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 994.6,
+     "load_ms": 809.5
+    },
+    {
+     "seconds": 8.114,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 962.5,
+     "load_ms": 797.6
+    },
+    {
+     "seconds": 3.737,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 1085.6,
+     "load_ms": 718.2
+    },
+    {
+     "seconds": 4.844,
+     "prompt_eval_count": 69,
+     "eval_count": 23,
+     "eval_ms": 894.4,
+     "load_ms": 746.1
+    }
+   ]
+  }
+ ],
+ "uptime_after": "16:52  up 89 days,  2:49, 12 users, load averages: 13.50 14.58 15.53"
+}

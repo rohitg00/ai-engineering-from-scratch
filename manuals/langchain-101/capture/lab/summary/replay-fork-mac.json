@@ -1,0 +1,248 @@
+{
+ "cases": {
+  "agent_first_run": {
+   "checkpoints": 5,
+   "runs": {
+    "a": 0,
+    "b": 0,
+    "c": 0,
+    "loop": 0,
+    "model": 2,
+    "tool": 1
+   }
+  },
+  "agent_replay_from_step_0": {
+   "runs": {
+    "a": 0,
+    "b": 0,
+    "c": 0,
+    "loop": 0,
+    "model": 2,
+    "tool": 1
+   }
+  },
+  "agent_replay_from_step_1": {
+   "runs": {
+    "a": 0,
+    "b": 0,
+    "c": 0,
+    "loop": 0,
+    "model": 1,
+    "tool": 1
+   }
+  },
+  "graph_continue_from_fork": {
+   "checkpoints_after": 11,
+   "output": {
+    "trail": [
+     "a:0",
+     "b:100",
+     "c:101"
+    ],
+    "x": 102
+   },
+   "runs": {
+    "a": 0,
+    "b": 1,
+    "c": 1,
+    "loop": 0,
+    "model": 0,
+    "tool": 0
+   }
+  },
+  "graph_first_run": {
+   "checkpoints": 5,
+   "runs": {
+    "a": 1,
+    "b": 1,
+    "c": 1,
+    "loop": 0,
+    "model": 0,
+    "tool": 0
+   }
+  },
+  "graph_replay_before_b": {
+   "checkpoints_after": 8,
+   "checkpoints_before": 5,
+   "new_sources": [
+    "loop",
+    "loop",
+    "fork"
+   ],
+   "runs": {
+    "a": 0,
+    "b": 1,
+    "c": 1,
+    "loop": 0,
+    "model": 0,
+    "tool": 0
+   }
+  },
+  "update_state_before_b": {
+   "checkpoints_after": 9,
+   "originals_kept": true,
+   "parent_is_before_b": true,
+   "runs": {
+    "a": 0,
+    "b": 0,
+    "c": 0,
+    "loop": 0,
+    "model": 0,
+    "tool": 0
+   },
+   "source": "update",
+   "step": 2
+  },
+  "update_state_thread_and_checkpoint_id_only": "KeyError: 'checkpoint_ns'"
+ },
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "runs_per_case": 1,
+ "saver": "InMemorySaver",
+ "sources": [
+  "capture/lab/T17-claims-mac/02-replay-and-fork.jsonl"
+ ],
+ "tree": [
+  {
+   "id": "c0",
+   "next": [
+    "__start__"
+   ],
+   "parent": null,
+   "source": "input",
+   "step": -1,
+   "trail": [],
+   "x": null
+  },
+  {
+   "id": "c1",
+   "next": [
+    "a"
+   ],
+   "parent": "c0",
+   "source": "loop",
+   "step": 0,
+   "trail": [],
+   "x": 0
+  },
+  {
+   "id": "c2",
+   "next": [
+    "b"
+   ],
+   "parent": "c1",
+   "source": "loop",
+   "step": 1,
+   "trail": [
+    "a:0"
+   ],
+   "x": 1
+  },
+  {
+   "id": "c3",
+   "next": [
+    "c"
+   ],
+   "parent": "c2",
+   "source": "loop",
+   "step": 2,
+   "trail": [
+    "a:0",
+    "b:1"
+   ],
+   "x": 2
+  },
+  {
+   "id": "c4",
+   "next": [],
+   "parent": "c3",
+   "source": "loop",
+   "step": 3,
+   "trail": [
+    "a:0",
+    "b:1",
+    "c:2"
+   ],
+   "x": 3
+  },
+  {
+   "id": "c5",
+   "next": [
+    "b"
+   ],
+   "parent": "c2",
+   "source": "fork",
+   "step": 2,
+   "trail": [
+    "a:0"
+   ],
+   "x": 1
+  },
+  {
+   "id": "c6",
+   "next": [
+    "c"
+   ],
+   "parent": "c5",
+   "source": "loop",
+   "step": 3,
+   "trail": [
+    "a:0",
+    "b:1"
+   ],
+   "x": 2
+  },
+  {
+   "id": "c7",
+   "next": [],
+   "parent": "c6",
+   "source": "loop",
+   "step": 4,
+   "trail": [
+    "a:0",
+    "b:1",
+    "c:2"
+   ],
+   "x": 3
+  },
+  {
+   "id": "c8",
+   "next": [
+    "b"
+   ],
+   "parent": "c2",
+   "source": "update",
+   "step": 2,
+   "trail": [
+    "a:0"
+   ],
+   "x": 100
+  },
+  {
+   "id": "c9",
+   "next": [
+    "c"
+   ],
+   "parent": "c8",
+   "source": "loop",
+   "step": 3,
+   "trail": [
+    "a:0",
+    "b:100"
+   ],
+   "x": 101
+  },
+  {
+   "id": "c10",
+   "next": [],
+   "parent": "c9",
+   "source": "loop",
+   "step": 4,
+   "trail": [
+    "a:0",
+    "b:100",
+    "c:101"
+   ],
+   "x": 102
+  }
+ ]
+}

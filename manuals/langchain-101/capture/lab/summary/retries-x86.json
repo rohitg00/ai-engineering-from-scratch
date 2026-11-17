@@ -1,0 +1,4049 @@
+{
+ "cells": {
+  "m_404_always_real graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_404_always_real",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    2.69,
+    2.29,
+    2.81
+   ],
+   "wall_s_median": 2.69
+  },
+  "m_404_always_real graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_404_always_real",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    3.07,
+    2.61,
+    2.6
+   ],
+   "wall_s_median": 2.61
+  },
+  "m_404_always_real ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_404_always_real",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "ollama._types.ResponseError: model 'no-such-model:1b' not found (status code: 404)"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_404_always_real ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_404_always_real",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with ResponseError: model 'no-such-model:1b' not found (status code: 404)"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    3.31,
+    2.81,
+    3.31
+   ],
+   "wall_s_median": 3.31
+  },
+  "m_404_always_real openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_404_always_real",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_404_always_real openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_404_always_real",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_404_always_real openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_404_always_real",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIModelNotFoundError: Error code: 404 - model 'no-such-model:1b' not found"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_429_always_relay graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_429_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    27,
+    27,
+    27
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    22.98,
+    23.95,
+    24.21
+   ],
+   "wall_s_median": 23.95
+  },
+  "m_429_always_relay graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_429_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    6.06,
+    6.43,
+    6.31
+   ],
+   "wall_s_median": 6.31
+  },
+  "m_429_always_relay ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_429_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "ollama._types.ResponseError: relay 429 (status code: 429)"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_429_always_relay ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_429_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: Model call failed after 3 attempts with ResponseError: relay 429 (status code: 429)"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    2.99,
+    3.19,
+    3.3
+   ],
+   "wall_s_median": 3.19
+  },
+  "m_429_always_relay openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_429_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIRateLimitError: Error code: 429 - relay 429"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    1.22,
+    1.29,
+    1.2
+   ],
+   "wall_s_median": 1.22
+  },
+  "m_429_always_relay openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_429_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIRateLimitError: Error code: 429 - relay 429"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    3.02,
+    3.14,
+    3.31
+   ],
+   "wall_s_median": 3.14
+  },
+  "m_429_always_relay openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_429_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIRateLimitError: Error code: 429 - relay 429"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    7.36,
+    6.96,
+    6.93
+   ],
+   "wall_s_median": 6.96
+  },
+  "m_429_once_relay graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_429_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.11,
+    3.09,
+    3.41
+   ],
+   "wall_s_median": 3.11
+  },
+  "m_429_once_relay graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_429_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.04,
+    3.09,
+    3.34
+   ],
+   "wall_s_median": 3.09
+  },
+  "m_429_once_relay ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_429_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "ollama._types.ResponseError: relay 429 (status code: 429)"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_429_once_relay ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_429_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.77,
+    3.47,
+    4.17
+   ],
+   "wall_s_median": 3.77
+  },
+  "m_429_once_relay openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_429_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    8.25,
+    8.25,
+    9.77
+   ],
+   "wall_s_median": 8.25
+  },
+  "m_429_once_relay openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_429_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.82,
+    3.41,
+    4.16
+   ],
+   "wall_s_median": 3.82
+  },
+  "m_429_once_relay openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_429_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.1,
+    3.12,
+    3.43
+   ],
+   "wall_s_median": 3.12
+  },
+  "m_500_always_relay graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_500_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    27,
+    27,
+    27
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    22.55,
+    24.43,
+    23.38
+   ],
+   "wall_s_median": 23.38
+  },
+  "m_500_always_relay graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_500_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    6.55,
+    5.9,
+    6.35
+   ],
+   "wall_s_median": 6.35
+  },
+  "m_500_always_relay ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_500_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "ollama._types.ResponseError: relay 500 (status code: 500)"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_500_always_relay ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_500_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: Model call failed after 3 attempts with ResponseError: relay 500 (status code: 500)"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    3.46,
+    2.88,
+    3.23
+   ],
+   "wall_s_median": 3.23
+  },
+  "m_500_always_relay openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_500_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    1.43,
+    1.18,
+    1.31
+   ],
+   "wall_s_median": 1.31
+  },
+  "m_500_always_relay openai_init_chat_model": {
+   "client_max_retries": 2,
+   "config": "openai_init_chat_model",
+   "fault": "m_500_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIAPIError: Error code: 500 - relay 500"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    1.28,
+    1.32,
+    1.28
+   ],
+   "wall_s_median": 1.28
+  },
+  "m_500_always_relay openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_500_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIAPIError: Error code: 500 - relay 500"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    2.98,
+    2.31,
+    3.4
+   ],
+   "wall_s_median": 2.98
+  },
+  "m_500_always_relay openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_500_always_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIAPIError: Error code: 500 - relay 500"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    6.94,
+    6.66,
+    6.89
+   ],
+   "wall_s_median": 6.89
+  },
+  "m_500_once_relay graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_500_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.15,
+    3.27,
+    3.45
+   ],
+   "wall_s_median": 3.27
+  },
+  "m_500_once_relay graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_500_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.06,
+    3.02,
+    3.37
+   ],
+   "wall_s_median": 3.06
+  },
+  "m_500_once_relay ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_500_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": true,
+   "result": [
+    "ollama._types.ResponseError: relay 500 (status code: 500)"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_500_once_relay ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_500_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.64,
+    3.77,
+    4.01
+   ],
+   "wall_s_median": 3.77
+  },
+  "m_500_once_relay openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_500_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.13,
+    3.13,
+    3.45
+   ],
+   "wall_s_median": 3.13
+  },
+  "m_500_once_relay openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_500_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    4.19,
+    3.5,
+    4.23
+   ],
+   "wall_s_median": 4.19
+  },
+  "m_500_once_relay openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_500_once_relay",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": true,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.15,
+    3.17,
+    3.41
+   ],
+   "wall_s_median": 3.17
+  },
+  "m_drop_always graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_drop_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    27,
+    27,
+    27
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    22.66,
+    21.7,
+    23.72
+   ],
+   "wall_s_median": 22.66
+  },
+  "m_drop_always graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_drop_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    6.77,
+    5.3,
+    6.66
+   ],
+   "wall_s_median": 6.66
+  },
+  "m_drop_always ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_drop_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.RemoteProtocolError: Server disconnected without sending a response."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.01,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_drop_always ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_drop_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with RemoteProtocolError: Server disconnected without sending a response."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    2.83,
+    3.12,
+    2.87
+   ],
+   "wall_s_median": 2.87
+  },
+  "m_drop_always openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_drop_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    1.33,
+    1.39,
+    1.4
+   ],
+   "wall_s_median": 1.39
+  },
+  "m_drop_always openai_init_chat_model": {
+   "client_max_retries": 2,
+   "config": "openai_init_chat_model",
+   "fault": "m_drop_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    1.43,
+    1.28,
+    1.31
+   ],
+   "wall_s_median": 1.31
+  },
+  "m_drop_always openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_drop_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    2.82,
+    2.66,
+    2.9
+   ],
+   "wall_s_median": 2.82
+  },
+  "m_drop_always openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_drop_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    7.1,
+    7.36,
+    6.79
+   ],
+   "wall_s_median": 7.1
+  },
+  "m_drop_always+t_refused_always openai_both_mw": {
+   "client_max_retries": 2,
+   "config": "openai_both_mw",
+   "fault": "m_drop_always+t_refused_always",
+   "group": "both",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    7.3,
+    7.37,
+    6.72
+   ],
+   "wall_s_median": 7.3
+  },
+  "m_drop_always+t_refused_always openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_drop_always+t_refused_always",
+   "group": "both",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    1.3,
+    1.27,
+    1.38
+   ],
+   "wall_s_median": 1.3
+  },
+  "m_drop_always+t_refused_always openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_drop_always+t_refused_always",
+   "group": "both",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    7.19,
+    6.57,
+    6.48
+   ],
+   "wall_s_median": 6.57
+  },
+  "m_drop_always+t_refused_always openai_tool_retry": {
+   "client_max_retries": 2,
+   "config": "openai_tool_retry",
+   "fault": "m_drop_always+t_refused_always",
+   "group": "both",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    1.43,
+    1.42,
+    1.31
+   ],
+   "wall_s_median": 1.42
+  },
+  "m_drop_once graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_drop_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    2.99,
+    3.26,
+    3.24
+   ],
+   "wall_s_median": 3.24
+  },
+  "m_drop_once graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_drop_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    2.87,
+    3.09,
+    3.13
+   ],
+   "wall_s_median": 3.09
+  },
+  "m_drop_once ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_drop_once",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.RemoteProtocolError: Server disconnected without sending a response."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.0,
+    0.01,
+    0.01
+   ],
+   "wall_s_median": 0.01
+  },
+  "m_drop_once ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_drop_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.66,
+    3.51,
+    4.04
+   ],
+   "wall_s_median": 3.66
+  },
+  "m_drop_once openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_drop_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.09,
+    3.08,
+    3.2
+   ],
+   "wall_s_median": 3.09
+  },
+  "m_drop_once openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_drop_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.36,
+    3.71,
+    3.74
+   ],
+   "wall_s_median": 3.71
+  },
+  "m_drop_once openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_drop_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.4,
+    2.92,
+    3.24
+   ],
+   "wall_s_median": 3.24
+  },
+  "m_drop_once+t_refused_once openai_both_mw": {
+   "client_max_retries": 2,
+   "config": "openai_both_mw",
+   "fault": "m_drop_once+t_refused_once",
+   "group": "both",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ],
+   "wall_s": [
+    4.78,
+    4.33,
+    4.45
+   ],
+   "wall_s_median": 4.45
+  },
+  "m_drop_once+t_refused_once openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_drop_once+t_refused_once",
+   "group": "both",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.ConnectError: [Errno 111] Connection refused"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    2.79,
+    2.64,
+    2.63
+   ],
+   "wall_s_median": 2.64
+  },
+  "m_drop_once+t_refused_once openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_drop_once+t_refused_once",
+   "group": "both",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.ConnectError: [Errno 111] Connection refused"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    2.68,
+    2.55,
+    2.7
+   ],
+   "wall_s_median": 2.68
+  },
+  "m_drop_once+t_refused_once openai_tool_retry": {
+   "client_max_retries": 2,
+   "config": "openai_tool_retry",
+   "fault": "m_drop_once+t_refused_once",
+   "group": "both",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ],
+   "wall_s": [
+    4.21,
+    4.32,
+    4.59
+   ],
+   "wall_s_median": 4.32
+  },
+  "m_refused_always graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_refused_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    27,
+    27,
+    27
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    23.48,
+    22.47,
+    23.47
+   ],
+   "wall_s_median": 23.47
+  },
+  "m_refused_always graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_refused_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    6.35,
+    6.7,
+    6.05
+   ],
+   "wall_s_median": 6.35
+  },
+  "m_refused_always ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_refused_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.ConnectError: [Errno 111] Connection refused"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    0.0,
+    0.0,
+    0.01
+   ],
+   "wall_s_median": 0.0
+  },
+  "m_refused_always ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_refused_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with ConnectError: [Errno 111] Connection refused"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    2.67,
+    2.74,
+    2.84
+   ],
+   "wall_s_median": 2.74
+  },
+  "m_refused_always openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_refused_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    1.45,
+    1.33,
+    1.3
+   ],
+   "wall_s_median": 1.33
+  },
+  "m_refused_always openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_refused_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    3.25,
+    3.31,
+    2.89
+   ],
+   "wall_s_median": 3.25
+  },
+  "m_refused_always openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_refused_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAIConnectionError: Connection error."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    6.95,
+    6.95,
+    6.87
+   ],
+   "wall_s_median": 6.95
+  },
+  "m_timeout_always graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_timeout_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    27,
+    27,
+    27
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    9,
+    9,
+    9
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    428.47,
+    428.23,
+    429.82
+   ],
+   "wall_s_median": 428.47
+  },
+  "m_timeout_always graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_timeout_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    141.91,
+    142.71,
+    141.88
+   ],
+   "wall_s_median": 141.91
+  },
+  "m_timeout_always ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_timeout_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.ReadTimeout: timed out"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    15.02,
+    15.02,
+    15.02
+   ],
+   "wall_s_median": 15.02
+  },
+  "m_timeout_always ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_timeout_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with ReadTimeout: timed out"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    48.19,
+    47.96,
+    47.89
+   ],
+   "wall_s_median": 47.96
+  },
+  "m_timeout_always openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_timeout_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    46.33,
+    46.31,
+    46.45
+   ],
+   "wall_s_median": 46.33
+  },
+  "m_timeout_always openai_init_chat_model": {
+   "client_max_retries": 2,
+   "config": "openai_init_chat_model",
+   "fault": "m_timeout_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "langchain_openai.chat_models.base.OpenAITimeoutError: Request timed out."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    46.31,
+    46.39,
+    46.5
+   ],
+   "wall_s_median": 46.39
+  },
+  "m_timeout_always openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_timeout_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAITimeoutError: Request timed out."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    47.69,
+    48.11,
+    47.78
+   ],
+   "wall_s_median": 47.78
+  },
+  "m_timeout_always openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_timeout_always",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    9,
+    9,
+    9
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Model call failed after 3 attempts with OpenAITimeoutError: Request timed out."
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    141.88,
+    142.23,
+    142.47
+   ],
+   "wall_s_median": 142.23
+  },
+  "m_timeout_once graph_rp_agent_stacked_error": {
+   "client_max_retries": 2,
+   "config": "graph_rp_agent_stacked_error",
+   "fault": "m_timeout_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    18.22,
+    18.46,
+    18.5
+   ],
+   "wall_s_median": 18.46
+  },
+  "m_timeout_once graph_rp_openai_default": {
+   "client_max_retries": 2,
+   "config": "graph_rp_openai_default",
+   "fault": "m_timeout_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    18.06,
+    18.12,
+    18.28
+   ],
+   "wall_s_median": 18.12
+  },
+  "m_timeout_once ollama_client_default": {
+   "client_max_retries": null,
+   "config": "ollama_client_default",
+   "fault": "m_timeout_once",
+   "group": "model",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.ReadTimeout: timed out"
+   ],
+   "tool_executions": [
+    0,
+    0,
+    0
+   ],
+   "wall_s": [
+    15.02,
+    15.02,
+    15.02
+   ],
+   "wall_s_median": 15.02
+  },
+  "m_timeout_once ollama_mw": {
+   "client_max_retries": null,
+   "config": "ollama_mw",
+   "fault": "m_timeout_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    18.5,
+    18.59,
+    18.75
+   ],
+   "wall_s_median": 18.59
+  },
+  "m_timeout_once openai_client_default": {
+   "client_max_retries": 2,
+   "config": "openai_client_default",
+   "fault": "m_timeout_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    18.18,
+    18.18,
+    18.52
+   ],
+   "wall_s_median": 18.18
+  },
+  "m_timeout_once openai_mw_only": {
+   "client_max_retries": 0,
+   "config": "openai_mw_only",
+   "fault": "m_timeout_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    3,
+    3,
+    3
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    18.5,
+    18.8,
+    18.62
+   ],
+   "wall_s_median": 18.62
+  },
+  "m_timeout_once openai_stacked": {
+   "client_max_retries": 2,
+   "config": "openai_stacked",
+   "fault": "m_timeout_once",
+   "group": "model",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    3,
+    3,
+    3
+   ],
+   "model_class": "ChatOpenAI",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    18.06,
+    18.18,
+    18.25
+   ],
+   "wall_s_median": 18.18
+  },
+  "t_refused_always graph_rp_toolnode": {
+   "client_max_retries": null,
+   "config": "graph_rp_toolnode",
+   "fault": "t_refused_always",
+   "group": "tool",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.ConnectError: [Errno 111] Connection refused"
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ],
+   "wall_s": [
+    5.0,
+    5.4,
+    4.44
+   ],
+   "wall_s_median": 5.0
+  },
+  "t_refused_always no_tool_mw": {
+   "client_max_retries": null,
+   "config": "no_tool_mw",
+   "fault": "t_refused_always",
+   "group": "tool",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.ConnectError: [Errno 111] Connection refused"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    2.32,
+    2.11,
+    2.18
+   ],
+   "wall_s_median": 2.18
+  },
+  "t_refused_always tool_retry_mw": {
+   "client_max_retries": null,
+   "config": "tool_retry_mw",
+   "fault": "t_refused_always",
+   "group": "tool",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Try again. Call the tool remote_action with item 'A' exactly once. After you get its result, reply with the single word: done."
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ],
+   "wall_s": [
+    8.75,
+    9.07,
+    8.17
+   ],
+   "wall_s_median": 8.75
+  },
+  "t_refused_once graph_rp_toolnode": {
+   "client_max_retries": null,
+   "config": "graph_rp_toolnode",
+   "fault": "t_refused_once",
+   "group": "tool",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ],
+   "wall_s": [
+    3.76,
+    4.36,
+    4.53
+   ],
+   "wall_s_median": 4.36
+  },
+  "t_refused_once no_tool_mw": {
+   "client_max_retries": null,
+   "config": "no_tool_mw",
+   "fault": "t_refused_once",
+   "group": "tool",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "httpx.ConnectError: [Errno 111] Connection refused"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    2.26,
+    2.23,
+    2.31
+   ],
+   "wall_s_median": 2.26
+  },
+  "t_refused_once tool_retry_mw": {
+   "client_max_retries": null,
+   "config": "tool_retry_mw",
+   "fault": "t_refused_once",
+   "group": "tool",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ],
+   "wall_s": [
+    4.54,
+    4.08,
+    3.9
+   ],
+   "wall_s_median": 4.08
+  },
+  "t_sqlerror_always graph_rp_toolnode": {
+   "client_max_retries": null,
+   "config": "graph_rp_toolnode",
+   "fault": "t_sqlerror_always",
+   "group": "tool",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "psycopg.errors.UndefinedTable: relation \"lr_no_such_table\" does not exist"
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ],
+   "wall_s": [
+    5.46,
+    3.82,
+    4.44
+   ],
+   "wall_s_median": 4.44
+  },
+  "t_sqlerror_always no_tool_mw": {
+   "client_max_retries": null,
+   "config": "no_tool_mw",
+   "fault": "t_sqlerror_always",
+   "group": "tool",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "psycopg.errors.UndefinedTable: relation \"lr_no_such_table\" does not exist"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    2.23,
+    2.22,
+    2.32
+   ],
+   "wall_s_median": 2.23
+  },
+  "t_sqlerror_always tool_retry_mw": {
+   "client_max_retries": null,
+   "config": "tool_retry_mw",
+   "fault": "t_sqlerror_always",
+   "group": "tool",
+   "ledger_rows": [
+    0,
+    0,
+    0
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ],
+   "wall_s": [
+    6.48,
+    6.62,
+    6.02
+   ],
+   "wall_s_median": 6.48
+  },
+  "t_timeout_always graph_rp_toolnode": {
+   "client_max_retries": null,
+   "config": "graph_rp_toolnode",
+   "fault": "t_timeout_always",
+   "group": "tool",
+   "ledger_rows": [
+    3,
+    3,
+    3
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "psycopg.errors.QueryCanceled: canceling statement due to statement timeout"
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ],
+   "wall_s": [
+    7.99,
+    7.98,
+    7.57
+   ],
+   "wall_s_median": 7.98
+  },
+  "t_timeout_always no_tool_mw": {
+   "client_max_retries": null,
+   "config": "no_tool_mw",
+   "fault": "t_timeout_always",
+   "group": "tool",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "psycopg.errors.QueryCanceled: canceling statement due to statement timeout"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.1,
+    3.17,
+    3.15
+   ],
+   "wall_s_median": 3.15
+  },
+  "t_timeout_always tool_retry_mw": {
+   "client_max_retries": null,
+   "config": "tool_retry_mw",
+   "fault": "t_timeout_always",
+   "group": "tool",
+   "ledger_rows": [
+    3,
+    3,
+    3
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: Try again."
+   ],
+   "tool_executions": [
+    3,
+    3,
+    3
+   ],
+   "wall_s": [
+    9.08,
+    8.96,
+    8.62
+   ],
+   "wall_s_median": 8.96
+  },
+  "t_timeout_once graph_rp_toolnode": {
+   "client_max_retries": null,
+   "config": "graph_rp_toolnode",
+   "fault": "t_timeout_once",
+   "group": "tool",
+   "ledger_rows": [
+    2,
+    2,
+    2
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ],
+   "wall_s": [
+    5.1,
+    5.3,
+    4.63
+   ],
+   "wall_s_median": 5.1
+  },
+  "t_timeout_once no_tool_mw": {
+   "client_max_retries": null,
+   "config": "no_tool_mw",
+   "fault": "t_timeout_once",
+   "group": "tool",
+   "ledger_rows": [
+    1,
+    1,
+    1
+   ],
+   "model_attempts": [
+    1,
+    1,
+    1
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    1,
+    1,
+    1
+   ],
+   "outcomes": [
+    "raised",
+    "raised",
+    "raised"
+   ],
+   "relay_injected": false,
+   "result": [
+    "psycopg.errors.QueryCanceled: canceling statement due to statement timeout"
+   ],
+   "tool_executions": [
+    1,
+    1,
+    1
+   ],
+   "wall_s": [
+    3.2,
+    3.22,
+    3.26
+   ],
+   "wall_s_median": 3.22
+  },
+  "t_timeout_once tool_retry_mw": {
+   "client_max_retries": null,
+   "config": "tool_retry_mw",
+   "fault": "t_timeout_once",
+   "group": "tool",
+   "ledger_rows": [
+    2,
+    2,
+    2
+   ],
+   "model_attempts": [
+    2,
+    2,
+    2
+   ],
+   "model_class": "ChatOllama",
+   "model_starts": [
+    2,
+    2,
+    2
+   ],
+   "outcomes": [
+    "returned",
+    "returned",
+    "returned"
+   ],
+   "relay_injected": false,
+   "result": [
+    "last AI: done"
+   ],
+   "tool_executions": [
+    2,
+    2,
+    2
+   ],
+   "wall_s": [
+    5.19,
+    4.8,
+    5.13
+   ],
+   "wall_s_median": 5.13
+  }
+ },
+ "clients": "ChatOpenAI on the /v1 path of Ollama and ChatOllama on the native path, through a TCP relay on 127.0.0.1, client timeout 15 s",
+ "count_note": "model_attempts are relay arrivals, logged on arrival; ledger_rows are the INSERTs that landed",
+ "faults_note": "m_drop: the relay closes the connection; m_refused: nothing listens on the port; m_timeout: the relay holds 20 s; m_404_always_real: the real Ollama answer for an unknown model; m_429 and m_500: statuses injected by the relay; t_refused: a closed port; t_sqlerror: a missing PostgreSQL table; t_timeout: an INSERT into a ledger table, then pg_sleep(3) under statement_timeout 1 s",
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on CPU, temperature 0, seed 42, server context 8192",
+ "runs_per_cell": 3,
+ "sources": [
+  "capture/lab/T05-retries-x86/01-model-faults.jsonl",
+  "capture/lab/T05-retries-x86/02-tool-faults.jsonl",
+  "capture/lab/T05-retries-x86/03-both-faults.jsonl",
+  "capture/lab/T05-retries-x86/t05_real.py",
+  "capture/lab/T05-retries-x86/lr_common.py"
+ ]
+}

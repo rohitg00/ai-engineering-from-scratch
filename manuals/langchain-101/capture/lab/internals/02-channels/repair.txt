@@ -1,0 +1,26 @@
+# Repairing a thread poisoned by a LastValue conflict, real model. langgraph 1.2.22, langgraph-checkpoint 4.3.2. {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['22.61', '19.15', '13.47'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]}
+# model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}
+graph: START -> a, START -> b; a asks the model for the digit 1 and returns {'x': it}, b the same for 2; x has no reducer; InMemorySaver
+
+## 1. same graph, after the raise
+get_state: raises InvalidUpdateError: At key 'x': Can receive only one value per step. Use an Annotated key to handle multiple v
+update_state(cfg, {'x': 9}): ok -> {'configurable': {'thread_id': 't1', 'checkpoint_ns': '', 'checkpoint_id': '1f1e04bb-5215-6627-8001-706a35b27606'}}
+invoke(None): raises InvalidUpdateError: At key 'x': Can receive only one value per step. Use an Annotated key to handle multiple v
+node bodies run by invoke(None): ['a', 'b']; model calls so far 4
+invoke({'x': 5}) as a new turn: raises InvalidUpdateError: At key 'x': Can receive only one value per step. Use an Annotated key to handle multiple v
+
+## 2. same saver, graph recompiled with x: Annotated[int, operator.add]
+get_state: ok -> {'x': 3}
+invoke(None): ok -> {'x': 3}
+node bodies run by invoke(None): []; model calls so far 8
+
+## 3. delete_thread and start again
+delete_thread: ok -> None
+get_state: ok -> {}
+
+## 4. fork from the input checkpoint with the same graph
+history: [(0, 'loop'), (-1, 'input')]
+invoke(None, config of step -1): raises InvalidUpdateError: At key 'x': Can receive only one value per step. Use an Annotated key to handle multiple v
+node bodies run: ['a', 'b']
+
+model calls in this file: 14

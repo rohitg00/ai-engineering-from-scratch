@@ -1,0 +1,341 @@
+# A Deep Agents 0.7 run
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## graph nodes
+
+[
+  "__start__",
+  "model",
+  "tools",
+  "_ParentNotifierMiddleware.after_agent",
+  "PatchToolCallsMiddleware.before_agent",
+  "__end__"
+]
+
+## a run: write_file, ls, a general-purpose subagent, then the answer
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 2601,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 2601,
+      "output_tokens": 25,
+      "total_tokens": 2626
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-4>-0",
+    "tool_calls": [
+      {
+        "name": "write_file",
+        "args": {
+          "file_path": "/notes.md",
+          "content": "5"
+        },
+        "id": "<uuid-5>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 2640,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 28,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 2640,
+      "output_tokens": 28,
+      "total_tokens": 2668
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Updated file /notes.md",
+    "name": "write_file",
+    "id": "<uuid-6>",
+    "tool_call_id": "<uuid-5>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-7>-0",
+    "tool_calls": [
+      {
+        "name": "ls",
+        "args": {
+          "path": "/"
+        },
+        "id": "<uuid-8>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 2686,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 18,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 2686,
+      "output_tokens": 18,
+      "total_tokens": 2704
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "['/notes.md']",
+    "name": "ls",
+    "id": "<uuid-9>",
+    "tool_call_id": "<uuid-8>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-10>-0",
+    "tool_calls": [
+      {
+        "name": "task",
+        "args": {
+          "description": "Verify that 2 + 3 equals 5 by performing a mathematical calculation and confirming the result.",
+          "subagent_type": "general-purpose"
+        },
+        "id": "<uuid-11>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 2721,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 46,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 2721,
+      "output_tokens": 46,
+      "total_tokens": 2767
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "2 + 3 equals 5. This is a basic arithmetic fact and can be verified through direct calculation: 2 plus 3 is indeed 5.",
+    "name": "task",
+    "id": "<uuid-12>",
+    "tool_call_id": "<uuid-11>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The result of adding 2 and 3 is 5. This has been confirmed through both the direct calculation and the verification by the general-purpose subagent. The result has also been saved in the file `/notes.md`.",
+    "id": "lc_run--<uuid-13>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 2811,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 46,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 2811,
+      "output_tokens": 46,
+      "total_tokens": 2857
+    }
+  }
+]
+
+## files in state
+
+{
+  "/notes.md": {
+    "content": "5",
+    "encoding": "utf-8",
+    "created_at": "<time>",
+    "modified_at": "<time>"
+  }
+}
+
+## tools bound on each model call, and what each call saw
+
+[
+  {
+    "call": 1,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 2
+  },
+  {
+    "call": 2,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 4
+  },
+  {
+    "call": 3,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 6
+  },
+  {
+    "call": 4,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 8
+  },
+  {
+    "call": 5,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "add"
+    ],
+    "first message": "system: In order to complete the objective that the user asks of you, you have access to",
+    "message count": 2
+  },
+  {
+    "call": 6,
+    "tools": [
+      "ls",
+      "read_file",
+      "write_file",
+      "edit_file",
+      "delete",
+      "glob",
+      "grep",
+      "task",
+      "add"
+    ],
+    "first message": "system: You keep notes.",
+    "message count": 10
+  }
+]
+
+## main system prompt: 15 characters, the first 600
+
+You keep notes.
+
+## subagent system prompt: 286 characters, the first 600
+
+In order to complete the objective that the user asks of you, you have access to a number of standard tools.
+
+The calling agent only sees your final assistant message, not your intermediate work, tool results, or status tracking. Ensure your final
+response contains the complete answer.

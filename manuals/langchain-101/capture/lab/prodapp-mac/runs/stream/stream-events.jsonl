@@ -1,0 +1,83 @@
+{"kind": "machine", "uptime": "16:49  up 89 days,  2:46, 12 users, load averages: 15.58 17.84 16.79"}
+{"turn": 1, "t_ms": 0.0, "wall": 1794741582.028691, "kind": "request", "path": "runs", "body": {"message": "Where is my order ORD-cap-2?"}, "status": 200}
+{"turn": 1, "t_ms": 13551.9, "kind": "tool_call", "data": {"id": "0743df80-d59a-4987-9800-b42abf97778f", "name": "read_order", "args": {"order_id": "ORD-cap-2"}}}
+{"turn": 1, "t_ms": 14590.0, "kind": "tool_result", "data": {"name": "read_order", "status": "success", "content": "{\"id\": \"ORD-cap-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"}}
+{"turn": 1, "t_ms": 14972.8, "kind": "token", "data": {"text": "Your"}}
+{"turn": 1, "t_ms": 14987.0, "kind": "token", "data": {"text": " order"}}
+{"turn": 1, "t_ms": 15000.9, "kind": "token", "data": {"text": " ORD"}}
+{"turn": 1, "t_ms": 15015.3, "kind": "token", "data": {"text": "-cap"}}
+{"turn": 1, "t_ms": 15029.4, "kind": "token", "data": {"text": "-"}}
+{"turn": 1, "t_ms": 15044.4, "kind": "token", "data": {"text": "2"}}
+{"turn": 1, "t_ms": 15058.1, "kind": "token", "data": {"text": " for"}}
+{"turn": 1, "t_ms": 15071.9, "kind": "token", "data": {"text": " a"}}
+{"turn": 1, "t_ms": 15086.2, "kind": "token", "data": {"text": " Rain"}}
+{"turn": 1, "t_ms": 15101.6, "kind": "token", "data": {"text": " jacket"}}
+{"turn": 1, "t_ms": 15116.2, "kind": "token", "data": {"text": " is"}}
+{"turn": 1, "t_ms": 15130.4, "kind": "token", "data": {"text": " shipped"}}
+{"turn": 1, "t_ms": 15144.9, "kind": "token", "data": {"text": "."}}
+{"turn": 1, "t_ms": 15159.6, "kind": "token", "data": {"text": " Total"}}
+{"turn": 1, "t_ms": 15174.5, "kind": "token", "data": {"text": " amount"}}
+{"turn": 1, "t_ms": 15188.5, "kind": "token", "data": {"text": ":"}}
+{"turn": 1, "t_ms": 15203.0, "kind": "token", "data": {"text": " $"}}
+{"turn": 1, "t_ms": 15217.6, "kind": "token", "data": {"text": "8"}}
+{"turn": 1, "t_ms": 15232.5, "kind": "token", "data": {"text": "9"}}
+{"turn": 1, "t_ms": 15247.5, "kind": "token", "data": {"text": "."}}
+{"turn": 1, "t_ms": 15262.1, "kind": "token", "data": {"text": "0"}}
+{"turn": 1, "t_ms": 15277.4, "kind": "token", "data": {"text": "0"}}
+{"turn": 1, "t_ms": 15292.1, "kind": "token", "data": {"text": "."}}
+{"turn": 1, "t_ms": 15306.7, "kind": "token", "data": {"text": " No"}}
+{"turn": 1, "t_ms": 15321.7, "kind": "token", "data": {"text": " refund"}}
+{"turn": 1, "t_ms": 15336.7, "kind": "token", "data": {"text": " has"}}
+{"turn": 1, "t_ms": 15354.5, "kind": "token", "data": {"text": " been"}}
+{"turn": 1, "t_ms": 15369.0, "kind": "token", "data": {"text": " processed"}}
+{"turn": 1, "t_ms": 15396.7, "kind": "token", "data": {"text": " yet"}}
+{"turn": 1, "t_ms": 15398.8, "kind": "token", "data": {"text": "."}}
+{"turn": 1, "t_ms": 15444.0, "kind": "done", "data": {"status": "done", "seconds": 15.4201}}
+{"turn": 1, "kind": "state", "next": [], "interrupts": 0, "messages": ["human", "ai", "tool", "ai"]}
+{"turn": 2, "t_ms": 0.0, "wall": 1794741597.501604, "kind": "request", "path": "runs", "body": {"message": "Please refund order ORD-cap-2 in full, 8900 cents. Reason: the rain jacket leaks."}, "status": 200}
+{"turn": 2, "t_ms": 2424.9, "kind": "tool_call", "data": {"id": "2a9ad807-d6f9-4d5a-af10-b3ee2ced8517", "name": "refund_order", "args": {"order_id": "ORD-cap-2", "amount_cents": 8900, "reason": "the rain jacket leaks"}}}
+{"turn": 2, "t_ms": 2549.9, "kind": "interrupt", "data": {"id": "77ea2072aced558a57d48a330d87c627", "type": "tool_approval", "tool_call_id": "2a9ad807-d6f9-4d5a-af10-b3ee2ced8517", "name": "refund_order", "args": {"order_id": "ORD-cap-2", "amount_cents": 8900, "reason": "the rain jacket leaks"}, "description": "Tool execution requires approval\n\nTool: refund_order\nArgs: {'order_id': 'ORD-cap-2', 'amount_cents': 8900, 'reason': 'the rain jacket leaks'}"}}
+{"turn": 2, "t_ms": 2563.0, "kind": "done", "data": {"status": "interrupted", "seconds": 2.5371}}
+{"turn": 2, "kind": "state", "next": ["tools"], "interrupts": 1, "messages": ["human", "ai", "tool", "ai", "human", "ai"]}
+{"turn": 3, "t_ms": 0.0, "wall": 1794741600.1311302, "kind": "request", "path": "approve", "body": {"decision": "approve"}, "status": 200}
+{"turn": 3, "t_ms": 360.7, "kind": "tool_result", "data": {"name": "refund_order", "status": "success", "content": "{\"refund_id\": 26, \"order_id\": \"ORD-cap-2\", \"amount_cents\": 8900, \"replayed\": false}"}}
+{"turn": 3, "t_ms": 949.4, "kind": "token", "data": {"text": "A"}}
+{"turn": 3, "t_ms": 985.3, "kind": "token", "data": {"text": " refund"}}
+{"turn": 3, "t_ms": 1013.6, "kind": "token", "data": {"text": " of"}}
+{"turn": 3, "t_ms": 1044.7, "kind": "token", "data": {"text": " $"}}
+{"turn": 3, "t_ms": 1074.5, "kind": "token", "data": {"text": "8"}}
+{"turn": 3, "t_ms": 1106.5, "kind": "token", "data": {"text": "9"}}
+{"turn": 3, "t_ms": 1139.0, "kind": "token", "data": {"text": "."}}
+{"turn": 3, "t_ms": 1172.5, "kind": "token", "data": {"text": "0"}}
+{"turn": 3, "t_ms": 1203.8, "kind": "token", "data": {"text": "0"}}
+{"turn": 3, "t_ms": 1238.0, "kind": "token", "data": {"text": " for"}}
+{"turn": 3, "t_ms": 1271.9, "kind": "token", "data": {"text": " order"}}
+{"turn": 3, "t_ms": 1306.0, "kind": "token", "data": {"text": " ORD"}}
+{"turn": 3, "t_ms": 1340.0, "kind": "token", "data": {"text": "-cap"}}
+{"turn": 3, "t_ms": 1373.8, "kind": "token", "data": {"text": "-"}}
+{"turn": 3, "t_ms": 1407.1, "kind": "token", "data": {"text": "2"}}
+{"turn": 3, "t_ms": 1443.1, "kind": "token", "data": {"text": " has"}}
+{"turn": 3, "t_ms": 1478.9, "kind": "token", "data": {"text": " been"}}
+{"turn": 3, "t_ms": 1513.8, "kind": "token", "data": {"text": " initiated"}}
+{"turn": 3, "t_ms": 1549.0, "kind": "token", "data": {"text": "."}}
+{"turn": 3, "t_ms": 1584.8, "kind": "token", "data": {"text": " The"}}
+{"turn": 3, "t_ms": 1622.1, "kind": "token", "data": {"text": " reason"}}
+{"turn": 3, "t_ms": 1658.4, "kind": "token", "data": {"text": " is"}}
+{"turn": 3, "t_ms": 1693.6, "kind": "token", "data": {"text": " \""}}
+{"turn": 3, "t_ms": 1728.5, "kind": "token", "data": {"text": "the"}}
+{"turn": 3, "t_ms": 1763.2, "kind": "token", "data": {"text": " rain"}}
+{"turn": 3, "t_ms": 1798.2, "kind": "token", "data": {"text": " jacket"}}
+{"turn": 3, "t_ms": 1836.6, "kind": "token", "data": {"text": " leaks"}}
+{"turn": 3, "t_ms": 1874.9, "kind": "token", "data": {"text": ".\""}}
+{"turn": 3, "t_ms": 1915.5, "kind": "token", "data": {"text": " Please"}}
+{"turn": 3, "t_ms": 1954.8, "kind": "token", "data": {"text": " note"}}
+{"turn": 3, "t_ms": 1993.8, "kind": "token", "data": {"text": " that"}}
+{"turn": 3, "t_ms": 2031.9, "kind": "token", "data": {"text": " a"}}
+{"turn": 3, "t_ms": 2071.1, "kind": "token", "data": {"text": " human"}}
+{"turn": 3, "t_ms": 2112.0, "kind": "token", "data": {"text": " must"}}
+{"turn": 3, "t_ms": 2152.9, "kind": "token", "data": {"text": " approve"}}
+{"turn": 3, "t_ms": 2193.7, "kind": "token", "data": {"text": " this"}}
+{"turn": 3, "t_ms": 2235.3, "kind": "token", "data": {"text": " refund"}}
+{"turn": 3, "t_ms": 2277.1, "kind": "token", "data": {"text": "."}}
+{"turn": 3, "t_ms": 2343.6, "kind": "done", "data": {"status": "done", "seconds": 2.3111}}
+{"turn": 3, "kind": "state", "next": [], "interrupts": 0, "messages": ["human", "ai", "tool", "ai", "human", "ai", "tool", "ai"]}

@@ -1,0 +1,1306 @@
+{
+ "cases": {
+  "http: E2-modern-default-agent-accept": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "step": "agent-interrupt",
+       "value": {
+        "requests": [
+         {
+          "key": "name",
+          "message": "What is your name?",
+          "mode": "form",
+          "requested_schema": {
+           "properties": {
+            "name": {
+             "type": "string"
+            }
+           },
+           "required": [
+            "name"
+           ],
+           "type": "object"
+          }
+         }
+        ],
+        "tool_name": "ask_name",
+        "type": "mcp_elicitation"
+       }
+      },
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "__interrupt__"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 1,
+       "next": [
+        "tools"
+       ],
+       "step": "agent-state"
+      },
+      {
+       "interrupt_after_resume": false,
+       "last": "final",
+       "step": "agent-resume-accept",
+       "tool_messages": [
+        {
+         "artifact": {
+          "structured_content": {
+           "result": "hello Ada"
+          }
+         },
+         "status": "success",
+         "text": [
+          "hello Ada"
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": null
+    }
+   ]
+  },
+  "http: E3-modern-handler-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "result": "hello Grace"
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "hello Grace"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 1,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": null
+    }
+   ]
+  },
+  "http: E5-legacy-handler-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "result": "hello Grace"
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "hello Grace"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 1,
+     "progress": [],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": null
+    }
+   ]
+  },
+  "http: P2-modern-phandler-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "result": "done 3"
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "done 3"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [
+      [
+       1.0,
+       3.0,
+       "step 1 of 3"
+      ],
+      [
+       2.0,
+       3.0,
+       "step 2 of 3"
+      ],
+      [
+       3.0,
+       3.0,
+       "step 3 of 3"
+      ]
+     ],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": null
+    }
+   ]
+  },
+  "http: S1-modern-error-direct-raw": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": null,
+       "status": "error",
+       "step": "direct",
+       "text": [
+        "quota exceeded, retry in 30 s"
+       ],
+       "type": "ToolMessage"
+      },
+      {
+       "is_error": true,
+       "step": "raw-fastmcp",
+       "structured_content": {
+        "code": 429,
+        "retry_after": 30
+       },
+       "text": [
+        "quota exceeded, retry in 30 s"
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": null
+    }
+   ]
+  },
+  "in-process: E1-modern-default-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "msg": "'__pregel_scratchpad'",
+       "raised": "builtins.KeyError",
+       "step": "direct"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 1
+     }
+    }
+   ]
+  },
+  "in-process: E2-modern-default-agent-accept": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "step": "agent-interrupt",
+       "value": {
+        "requests": [
+         {
+          "key": "name",
+          "message": "What is your name?",
+          "mode": "form",
+          "requested_schema": {
+           "properties": {
+            "name": {
+             "type": "string"
+            }
+           },
+           "required": [
+            "name"
+           ],
+           "type": "object"
+          }
+         }
+        ],
+        "tool_name": "ask_name",
+        "type": "mcp_elicitation"
+       }
+      },
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "__interrupt__"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 1,
+       "next": [
+        "tools"
+       ],
+       "step": "agent-state"
+      },
+      {
+       "interrupt_after_resume": false,
+       "last": "final",
+       "step": "agent-resume-accept",
+       "tool_messages": [
+        {
+         "artifact": {
+          "structured_content": {
+           "result": "hello Ada"
+          }
+         },
+         "status": "success",
+         "text": [
+          "hello Ada"
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 3
+     }
+    }
+   ]
+  },
+  "in-process: E2-modern-default-agent-cancel": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "step": "agent-interrupt",
+       "value": {
+        "requests": [
+         {
+          "key": "name",
+          "message": "What is your name?",
+          "mode": "form",
+          "requested_schema": {
+           "properties": {
+            "name": {
+             "type": "string"
+            }
+           },
+           "required": [
+            "name"
+           ],
+           "type": "object"
+          }
+         }
+        ],
+        "tool_name": "ask_name",
+        "type": "mcp_elicitation"
+       }
+      },
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "__interrupt__"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 1,
+       "next": [
+        "tools"
+       ],
+       "step": "agent-state"
+      },
+      {
+       "interrupt_after_resume": false,
+       "last": "final",
+       "step": "agent-resume-cancel",
+       "tool_messages": [
+        {
+         "artifact": {
+          "structured_content": {
+           "result": "no name (cancel)"
+          }
+         },
+         "status": "success",
+         "text": [
+          "no name (cancel)"
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 3
+     }
+    }
+   ]
+  },
+  "in-process: E2-modern-default-agent-decline": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "step": "agent-interrupt",
+       "value": {
+        "requests": [
+         {
+          "key": "name",
+          "message": "What is your name?",
+          "mode": "form",
+          "requested_schema": {
+           "properties": {
+            "name": {
+             "type": "string"
+            }
+           },
+           "required": [
+            "name"
+           ],
+           "type": "object"
+          }
+         }
+        ],
+        "tool_name": "ask_name",
+        "type": "mcp_elicitation"
+       }
+      },
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "__interrupt__"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 1,
+       "next": [
+        "tools"
+       ],
+       "step": "agent-state"
+      },
+      {
+       "interrupt_after_resume": false,
+       "last": "final",
+       "step": "agent-resume-decline",
+       "tool_messages": [
+        {
+         "artifact": {
+          "structured_content": {
+           "result": "no name (decline)"
+          }
+         },
+         "status": "success",
+         "text": [
+          "no name (decline)"
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 3
+     }
+    }
+   ]
+  },
+  "in-process: E2-modern-default-agent-nockpt": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "step": "agent-interrupt",
+       "value": {
+        "requests": [
+         {
+          "key": "name",
+          "message": "What is your name?",
+          "mode": "form",
+          "requested_schema": {
+           "properties": {
+            "name": {
+             "type": "string"
+            }
+           },
+           "required": [
+            "name"
+           ],
+           "type": "object"
+          }
+         }
+        ],
+        "tool_name": "ask_name",
+        "type": "mcp_elicitation"
+       }
+      },
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "__interrupt__"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 1
+     }
+    }
+   ]
+  },
+  "in-process: E3-modern-handler-agent": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "tools"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 0,
+       "next": [],
+       "step": "agent-state"
+      },
+      {
+       "last": "final",
+       "step": "agent-toolmessages",
+       "tool_messages": [
+        {
+         "artifact": {
+          "structured_content": {
+           "result": "hello Grace"
+          }
+         },
+         "status": "success",
+         "text": [
+          "hello Grace"
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 1,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 2
+     }
+    }
+   ]
+  },
+  "in-process: E3-modern-handler-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "result": "hello Grace"
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "hello Grace"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 1,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 2
+     }
+    }
+   ]
+  },
+  "in-process: E4-legacy-default-agent": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "tools"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 0,
+       "next": [],
+       "step": "agent-state"
+      },
+      {
+       "last": "final",
+       "step": "agent-toolmessages",
+       "tool_messages": [
+        {
+         "artifact": null,
+         "status": "error",
+         "text": [
+          "Error calling tool 'ask_legacy': This MCP server asked for input over the legacy server-initiated elicitation path, which interrupt-based elicitation cannot answer. It needs a server that returns its requests as an `InputRequiredResult`, or a pre-built client with your own `elicitation_handler`."
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 1,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: E4-legacy-default-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": null,
+       "status": "error",
+       "step": "direct",
+       "text": [
+        "Error calling tool 'ask_legacy': This MCP server asked for input over the legacy server-initiated elicitation path, which interrupt-based elicitation cannot answer. It needs a server that returns its requests as an `InputRequiredResult`, or a pre-built client with your own `elicitation_handler`."
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 1,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: E5-legacy-handler-agent": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "tools"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 0,
+       "next": [],
+       "step": "agent-state"
+      },
+      {
+       "last": "final",
+       "step": "agent-toolmessages",
+       "tool_messages": [
+        {
+         "artifact": {
+          "structured_content": {
+           "result": "hello Grace"
+          }
+         },
+         "status": "success",
+         "text": [
+          "hello Grace"
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 1,
+     "progress": [],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 1,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: E5-legacy-handler-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "result": "hello Grace"
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "hello Grace"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 1,
+     "progress": [],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 1,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: E6-legacy-noarm-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": null,
+       "status": "error",
+       "step": "direct",
+       "text": [
+        "Error calling tool 'ask_legacy': Elicitation not supported"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 1,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: E6-modern-noarm-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "msg": "Elicitation not supported",
+       "raised": "mcp.shared.exceptions.MCPError",
+       "step": "direct"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 1
+     }
+    }
+   ]
+  },
+  "in-process: E7-legacy-modernguard-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "msg": "Tool 'ask_name' returned an InputRequiredResult to request client input, but the multi-round-trip result type (SEP-2322) only exists at MCP 2026-07-28; this connection negotiated '2025-11-25'. Use ctx.elicit() for server-initiated input on handshake-era connections.",
+       "raised": "mcp.shared.exceptions.MCPError",
+       "step": "direct"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 1
+     }
+    }
+   ]
+  },
+  "in-process: P1-modern-default-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "result": "done 3"
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "done 3"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: P2-modern-phandler-agent": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "tools"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 0,
+       "next": [],
+       "step": "agent-state"
+      },
+      {
+       "last": "final",
+       "step": "agent-toolmessages",
+       "tool_messages": [
+        {
+         "artifact": {
+          "structured_content": {
+           "result": "done 3"
+          }
+         },
+         "status": "success",
+         "text": [
+          "done 3"
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [
+      [
+       1.0,
+       3.0,
+       "step 1 of 3"
+      ],
+      [
+       2.0,
+       3.0,
+       "step 2 of 3"
+      ],
+      [
+       3.0,
+       3.0,
+       "step 3 of 3"
+      ]
+     ],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: P2-modern-phandler-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "result": "done 3"
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "done 3"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [
+      [
+       1.0,
+       3.0,
+       "step 1 of 3"
+      ],
+      [
+       2.0,
+       3.0,
+       "step 2 of 3"
+      ],
+      [
+       3.0,
+       3.0,
+       "step 3 of 3"
+      ]
+     ],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: P3-legacy-phandler-direct": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "result": "done 3"
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "done 3"
+       ],
+       "type": "ToolMessage"
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [
+      [
+       1.0,
+       3.0,
+       "step 1 of 3"
+      ],
+      [
+       2.0,
+       3.0,
+       "step 2 of 3"
+      ],
+      [
+       3.0,
+       3.0,
+       "step 3 of 3"
+      ]
+     ],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: S1-modern-error-agent": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "chunks": [
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "tools"
+         ]
+        ],
+        [
+         "updates",
+         [
+          "model"
+         ]
+        ]
+       ],
+       "step": "agent-stream"
+      },
+      {
+       "n_interrupts": 0,
+       "next": [],
+       "step": "agent-state"
+      },
+      {
+       "last": "final",
+       "step": "agent-toolmessages",
+       "tool_messages": [
+        {
+         "artifact": null,
+         "status": "error",
+         "text": [
+          "quota exceeded, retry in 30 s"
+         ],
+         "type": "ToolMessage"
+        }
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: S1-modern-error-direct-raw": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": null,
+       "status": "error",
+       "step": "direct",
+       "text": [
+        "quota exceeded, retry in 30 s"
+       ],
+       "type": "ToolMessage"
+      },
+      {
+       "is_error": true,
+       "step": "raw-fastmcp",
+       "structured_content": {
+        "code": 429,
+        "retry_after": 30
+       },
+       "text": [
+        "quota exceeded, retry in 30 s"
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: S2-modern-ok-direct-raw": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": {
+        "structured_content": {
+         "code": 200
+        }
+       },
+       "status": "success",
+       "step": "direct",
+       "text": [
+        "ok"
+       ],
+       "type": "ToolMessage"
+      },
+      {
+       "is_error": false,
+       "step": "raw-fastmcp",
+       "structured_content": {
+        "code": 200
+       },
+       "text": [
+        "ok"
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2026-07-28",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 0
+     }
+    }
+   ]
+  },
+  "in-process: S3-legacy-error-direct-raw": {
+   "processes": 3,
+   "same_in_every_process": true,
+   "shapes": [
+    {
+     "events": [
+      {
+       "artifact": null,
+       "status": "error",
+       "step": "direct",
+       "text": [
+        "quota exceeded, retry in 30 s"
+       ],
+       "type": "ToolMessage"
+      },
+      {
+       "is_error": true,
+       "step": "raw-fastmcp",
+       "structured_content": {
+        "code": 429,
+        "retry_after": 30
+       },
+       "text": [
+        "quota exceeded, retry in 30 s"
+       ]
+      }
+     ],
+     "handler_calls": 0,
+     "progress": [],
+     "protocol": "2025-11-25",
+     "return_code": 0,
+     "server_calls": {
+      "ask_legacy": 0,
+      "ask_name": 0
+     }
+    }
+   ]
+  }
+ },
+ "clients_note": "modern: MCPAdapter(server), protocol 2026-07-28; legacy: MCPAdapter(fastmcp.Client(server, mode='legacy')), protocol 2025-11-25; handler: a fastmcp.Client with an elicitation_handler; phandler: a fastmcp.Client with a progress_handler; noarm: a fastmcp.Client with no handler, given to as_langchain_tool; agent: create_agent with a fake model and InMemorySaver, astream with updates and custom",
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "not_used": "00-smoke-n1.jsonl and the server stderr file, which is empty, are not kept; server_calls is counted in-process only",
+ "processes_per_case": 3,
+ "server": "a FastMCP server with ask_name, which returns an InputRequiredResult, ask_legacy, which calls ctx.elicit, fail_structured and ok_structured, which return structured content with and without is_error, and long_task, which reports progress",
+ "sources": [
+  "capture/lab/T20-mcp-edges-mac/01-mcp-edges.jsonl",
+  "capture/lab/T20-mcp-edges-mac/t20_mcp.py",
+  "capture/lab/T20-mcp-edges-mac/t20_server.py"
+ ],
+ "versions": "langchain 1.5.0, fastmcp 4.2.0, mcp 2.3.0, langgraph 1.2.22"
+}

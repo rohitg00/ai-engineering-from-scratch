@@ -1,0 +1,419 @@
+# Streaming v1: messages mode and several modes at once
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## stream_mode='messages': token chunks with metadata
+
+chunk 0:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "",
+    "id": "lc_run--<uuid-1>",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "tool_call_chunks": [
+      {
+        "name": "add",
+        "args": "{\"a\": 2, \"b\": 3}",
+        "id": "<uuid-2>",
+        "index": null,
+        "type": "tool_call_chunk"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 162,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 162,
+      "output_tokens": 25,
+      "total_tokens": 187
+    }
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 1,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 1:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "",
+    "id": "lc_run--<uuid-1>",
+    "chunk_position": "last"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 1,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 2:
+{
+  "message": {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  "metadata": {
+    "langgraph_node": "tools",
+    "langgraph_step": 2,
+    "langgraph_triggers": [
+      "__pregel_push"
+    ]
+  }
+}
+
+chunk 3:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "2",
+    "id": "lc_run--<uuid-4>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 4:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": " +",
+    "id": "lc_run--<uuid-4>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 5:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": " ",
+    "id": "lc_run--<uuid-4>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 6:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "3",
+    "id": "lc_run--<uuid-4>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 7:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": " =",
+    "id": "lc_run--<uuid-4>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 8:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": " ",
+    "id": "lc_run--<uuid-4>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 9:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "5",
+    "id": "lc_run--<uuid-4>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 10:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": ".",
+    "id": "lc_run--<uuid-4>"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 11:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "",
+    "id": "lc_run--<uuid-4>",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 201,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 9,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 201,
+      "output_tokens": 9,
+      "total_tokens": 210
+    }
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+chunk 12:
+{
+  "message": {
+    "type": "AIMessageChunk",
+    "content": "",
+    "id": "lc_run--<uuid-4>",
+    "chunk_position": "last"
+  },
+  "metadata": {
+    "langgraph_node": "model",
+    "langgraph_step": 3,
+    "langgraph_triggers": [
+      "branch:to:model"
+    ],
+    "ls_provider": "ollama",
+    "ls_model_type": "chat"
+  }
+}
+
+## stream_mode=['updates', 'messages'] yields (mode, data) tuples
+
+chunk 0:
+{
+  "mode": "messages",
+  "chunk": "",
+  "node": "model"
+}
+
+chunk 1:
+{
+  "mode": "messages",
+  "chunk": "",
+  "node": "model"
+}
+
+chunk 2:
+{
+  "mode": "updates",
+  "nodes": [
+    "model"
+  ]
+}
+
+chunk 3:
+{
+  "mode": "messages",
+  "chunk": "5",
+  "node": "tools"
+}
+
+chunk 4:
+{
+  "mode": "updates",
+  "nodes": [
+    "tools"
+  ]
+}
+
+chunk 5:
+{
+  "mode": "messages",
+  "chunk": "2",
+  "node": "model"
+}
+
+chunk 6:
+{
+  "mode": "messages",
+  "chunk": " +",
+  "node": "model"
+}
+
+chunk 7:
+{
+  "mode": "messages",
+  "chunk": " ",
+  "node": "model"
+}
+
+chunk 8:
+{
+  "mode": "messages",
+  "chunk": "3",
+  "node": "model"
+}
+
+chunk 9:
+{
+  "mode": "messages",
+  "chunk": " =",
+  "node": "model"
+}
+
+chunk 10:
+{
+  "mode": "messages",
+  "chunk": " ",
+  "node": "model"
+}
+
+chunk 11:
+{
+  "mode": "messages",
+  "chunk": "5",
+  "node": "model"
+}
+
+chunk 12:
+{
+  "mode": "messages",
+  "chunk": ".",
+  "node": "model"
+}
+
+chunk 13:
+{
+  "mode": "messages",
+  "chunk": "",
+  "node": "model"
+}
+
+chunk 14:
+{
+  "mode": "messages",
+  "chunk": "",
+  "node": "model"
+}
+
+chunk 15:
+{
+  "mode": "updates",
+  "nodes": [
+    "model"
+  ]
+}

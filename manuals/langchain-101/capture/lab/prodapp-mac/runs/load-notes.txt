@@ -1,0 +1,2 @@
+2026-11-15T11:25:24Z stopped 12 uvicorn servers leaked by failing tests (started 15:48-16:27 local); lc_prod connections before: 77
+rerun-note: pg_stat_activity count for lc_prod was 77 before, 17 after stopping them

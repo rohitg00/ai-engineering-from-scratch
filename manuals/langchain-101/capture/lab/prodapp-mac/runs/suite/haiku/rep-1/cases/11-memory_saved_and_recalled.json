@@ -1,0 +1,293 @@
+{
+ "case": "memory_saved_and_recalled",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "5d9591c3-9683-4b20-9cd0-f4e56f50a996",
+   "text": "Remember that I prefer email updates",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01RAiSxUdoLTTu2SZitzQ4qb",
+      "name": "save_note",
+      "args": {
+       "text": "Customer prefers email updates."
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "save_note",
+      "status": "success",
+      "content": "{\"saved\": true}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Got"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " it. I've"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " saved your preference for email upd"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ates."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.408
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "3336443f-29a9-4f69-a5fc-8b5b822dd9cd",
+   "text": "What do you remember about me?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01HKkPTZ3rsyeYqJjX2Hjz4D",
+      "name": "recall_notes",
+      "args": {}
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "recall_notes",
+      "status": "success",
+      "content": "[\"Customer prefers email updates.\"]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I have"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " one note sa"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ved on your account: you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " prefer email updates. I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " don't have anything else on"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " file"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.6567
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "5d9591c3-9683-4b20-9cd0-f4e56f50a996",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Remember that I prefer email updates",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "save_note",
+       "args": {
+        "text": "Customer prefers email updates."
+       },
+       "id": "toolu_01RAiSxUdoLTTu2SZitzQ4qb",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 913,
+      "output_tokens": 56,
+      "total_tokens": 969,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"saved\": true}",
+     "tool_calls": [],
+     "name": "save_note",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Got it. I've saved your preference for email updates.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 981,
+      "output_tokens": 18,
+      "total_tokens": 999,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  },
+  {
+   "thread_id": "3336443f-29a9-4f69-a5fc-8b5b822dd9cd",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "What do you remember about me?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "recall_notes",
+       "args": {},
+       "id": "toolu_01HKkPTZ3rsyeYqJjX2Hjz4D",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 910,
+      "output_tokens": 28,
+      "total_tokens": 938,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[\"Customer prefers email updates.\"]",
+     "tool_calls": [],
+     "name": "recall_notes",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I have one note saved on your account: you prefer email updates. I don't have anything else on file.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 955,
+      "output_tokens": 30,
+      "total_tokens": 985,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

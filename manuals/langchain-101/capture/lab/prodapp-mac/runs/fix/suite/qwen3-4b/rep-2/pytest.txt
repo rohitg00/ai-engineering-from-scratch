@@ -1,0 +1,304 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.12, pytest-9.2.0, pluggy-1.7.0 -- prodapp/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: prodapp
+configfile: pytest.ini
+plugins: platformdirs-4.14.5, langsmith-0.14.17, anyio-4.16.0, asyncio-1.5.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=session, asyncio_default_test_loop_scope=session
+collecting ... collected 7 items
+
+tests/test_evals.py::test_eval[refund_approved_once] FAILED              [ 14%]
+tests/test_evals.py::test_eval[refund_rejected_has_no_side_effect] FAILED [ 28%]
+tests/test_evals.py::test_eval[refund_asked_twice] FAILED                [ 42%]
+tests/test_evals.py::test_eval[refund_tool_replay_is_idempotent] PASSED  [ 57%]
+tests/test_evals.py::test_eval[new_message_while_waiting_for_approval] FAILED [ 71%]
+tests/test_evals.py::test_eval[status_then_refund_in_one_thread] FAILED  [ 85%]
+tests/test_durability.py::test_kill_mid_refund_then_resume_refunds_once FAILED [100%]
+
+=================================== FAILURES ===================================
+_______________________ test_eval[refund_approved_once] ________________________
+
+number = 6, check = <function refund_approved_once at 0x10be16200>
+client = <function client.<locals>.<lambda> at 0x10c102d40>
+sql = <function sql.<locals>.run at 0x10c178540>
+spans = <function spans.<locals>.read at 0x10c178860>
+chaos = <tests.conftest.Chaos object at 0x10c01dd30>
+app = <fastapi.applications.FastAPI object at 0x10c01e510>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10c11a900>
+t = '69f24a70-e345-405a-ad1e-94396489da59'
+x = namespace(sql=<function sql.<locals>.run at 0x10c178540>, spans=<function spans.<locals>.read at 0x10c178860>, chaos=<tests.conftest.Chaos object at 0x10c01dd30>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c118830>)
+
+    @case
+    async def refund_approved_once(c, t, x):
+        order = f"ORD-{c.user}-1"
+        events = await c.say(t, f"Please refund {order}")
+>       [pending] = interrupts(events)
+        ^^^^^^^^^
+E       ValueError: not enough values to unpack (expected 1, got 0)
+
+tests/test_evals.py:98: ValueError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+________________ test_eval[refund_rejected_has_no_side_effect] _________________
+
+number = 7, check = <function refund_rejected_has_no_side_effect at 0x10be162a0>
+client = <function client.<locals>.<lambda> at 0x10c100400>
+sql = <function sql.<locals>.run at 0x10c20f2e0>
+spans = <function spans.<locals>.read at 0x10c20efc0>
+chaos = <tests.conftest.Chaos object at 0x10c01dd30>
+app = <fastapi.applications.FastAPI object at 0x10c01e510>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_evals.py:111: in refund_rejected_has_no_side_effect
+    assert [r["status"] for r in results(events, "refund_order")] == ["error"]
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+events = 409, name = 'refund_order'
+
+    def results(events, name):
+>       return [d for e, d in events if e == "tool_result" and d["name"] == name]
+                              ^^^^^^
+E       TypeError: 'int' object is not iterable
+
+tests/test_evals.py:26: TypeError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+________________________ test_eval[refund_asked_twice] _________________________
+
+number = 8, check = <function refund_asked_twice at 0x10be16340>
+client = <function client.<locals>.<lambda> at 0x10c20fba0>
+sql = <function sql.<locals>.run at 0x10c20f6a0>
+spans = <function spans.<locals>.read at 0x10c20f1a0>
+chaos = <tests.conftest.Chaos object at 0x10c01dd30>
+app = <fastapi.applications.FastAPI object at 0x10c01e510>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10c1a5310>
+t = '006e21df-1938-4b54-ab87-9f0ba883be25'
+x = namespace(sql=<function sql.<locals>.run at 0x10c20f6a0>, spans=<function spans.<locals>.read at 0x10c20f1a0>, chaos=<tests.conftest.Chaos object at 0x10c01dd30>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c118830>)
+
+    @case
+    async def refund_asked_twice(c, t, x):
+        order = f"ORD-{c.user}-2"
+        await c.say(t, f"Refund {order} please")
+        await c.approve(t)
+        events = await c.say(t, f"Refund {order} again")
+        if interrupts(events):
+            await c.approve(t)
+>       assert await refunds(x.sql, order) == [{"amount_cents": 8900}]
+E       AssertionError: assert [] == [{'amount_cents': 8900}]
+E         
+E         Right contains one more item: {'amount_cents': 8900}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_evals.py:124: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+______________ test_eval[new_message_while_waiting_for_approval] _______________
+
+number = 19
+check = <function new_message_while_waiting_for_approval at 0x10be16a20>
+client = <function client.<locals>.<lambda> at 0x10be154e0>
+sql = <function sql.<locals>.run at 0x10c20fe20>
+spans = <function spans.<locals>.read at 0x10c20f600>
+chaos = <tests.conftest.Chaos object at 0x10c01dd30>
+app = <fastapi.applications.FastAPI object at 0x10c01e510>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10c171e00>
+t = '812f09ab-2255-48d7-9edb-c612b6f57366'
+x = namespace(sql=<function sql.<locals>.run at 0x10c20fe20>, spans=<function spans.<locals>.read at 0x10c20f600>, chaos=<tests.conftest.Chaos object at 0x10c01dd30>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c118830>)
+
+    @case
+    async def new_message_while_waiting_for_approval(c, t, x):
+        order = f"ORD-{c.user}-3"
+        events = await c.say(t, f"Refund {order}")
+        assert [i["name"] for i in interrupts(events)] == ["refund_order"]
+        assert await c.say(t, "Hello?") == 409
+        await c.approve(t)
+>       assert await refunds(x.sql, order) == [{"amount_cents": 2400}]
+E       AssertionError: assert [] == [{'amount_cents': 2400}]
+E         
+E         Right contains one more item: {'amount_cents': 2400}
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     {...
+E         
+E         ...Full output truncated, use '-vv' to show
+
+tests/test_evals.py:233: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+_________________ test_eval[status_then_refund_in_one_thread] __________________
+
+number = 20, check = <function status_then_refund_in_one_thread at 0x10be16ac0>
+client = <function client.<locals>.<lambda> at 0x10c20f2e0>
+sql = <function sql.<locals>.run at 0x10c20fce0>
+spans = <function spans.<locals>.read at 0x10c100400>
+chaos = <tests.conftest.Chaos object at 0x10c01dd30>
+app = <fastapi.applications.FastAPI object at 0x10c01e510>
+
+    @pytest.mark.parametrize("number,check", list(enumerate(CASES, start=1)), ids=[f.__name__ for f in CASES])
+    async def test_eval(number, check, client, sql, spans, chaos, app):
+        chaos.rules, chaos.attempts = {}, chaos.attempts.__class__()
+        c = client(f"e{number:02d}")
+        extras = SimpleNamespace(sql=sql, spans=spans, chaos=chaos, pool=app.state.svc.pool)
+        outcome = "error"
+        try:
+>           await check(c, await c.thread(), extras)
+
+tests/test_evals.py:255: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+c = <tests.conftest.Client object at 0x10c17f650>
+t = '02dd9d78-7de6-4a93-9968-e12c7a034463'
+x = namespace(sql=<function sql.<locals>.run at 0x10c20fce0>, spans=<function spans.<locals>.read at 0x10c100400>, chaos=<tests.conftest.Chaos object at 0x10c01dd30>, pool=<psycopg_pool.pool_async.AsyncConnectionPool 'pool-1' at 0x10c118830>)
+
+    @case
+    async def status_then_refund_in_one_thread(c, t, x):
+        order = f"ORD-{c.user}-3"
+        first = await c.say(t, f"Where is my order {order}?")
+        second = await c.say(t, f"Refund {order}")
+        await c.approve(t)
+        assert calls(first, "read_order") == [{"order_id": order}]
+>       assert [i["args"]["order_id"] for i in interrupts(second)] == [order]
+E       AssertionError: assert [] == ['ORD-e20-3']
+E         
+E         Right contains one more item: 'ORD-e20-3'
+E         
+E         Full diff: (-: missing in left side, +: extra in left side)
+E         + []
+E         - [
+E         -     'ORD-e20-3',
+E         - ]
+
+tests/test_evals.py:243: AssertionError
+------------------------------ Captured log call -------------------------------
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+INFO     support:telemetry.py:48 run.start
+INFO     support:telemetry.py:48 tool.done
+INFO     support:telemetry.py:48 run.end
+________________ test_kill_mid_refund_then_resume_refunds_once _________________
+
+    async def test_kill_mid_refund_then_resume_refunds_once():
+        RUN_DIR.mkdir(parents=True, exist_ok=True)
+        env = {"AUTH_TOKENS": "tok-crash=crash", "REFUND_CONFIRM_DELAY": 3}
+        server = Server(RUN_DIR, "crash-1", **env)
+        reset_user("crash")
+        client = Http(server.url, "tok-crash")
+        thread = await client.thread()
+        first = await client.say(thread, "Please refund ORD-crash-2")
+        approving = asyncio.create_task(client.approve(thread))
+        committed = await wait_for(lambda: refunds("ORD-crash-2"))
+        killed_at = time.time()
+        exit_code = server.kill()
+        approve_error = None
+        try:
+            await approving
+        except Exception as exc:
+            approve_error = type(exc).__name__
+        server.log.close()
+    
+        server = Server(RUN_DIR, "crash-2", AUTH_TOKENS="tok-crash=crash")
+        client = Http(server.url, "tok-crash")
+        after_restart = await client.state(thread)
+>       resumed = await client.approve(thread)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_durability.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/procs.py:90: in approve
+    return await self.post_sse(f"/threads/{thread_id}/approve", {"decision": decision})
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/procs.py:84: in post_sse
+    return parse_sse(response.text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = '{"detail":"nothing to resume"}'
+
+    def parse_sse(text):
+        events = []
+        for block in text.strip().split("\n\n"):
+            if block:
+>               lines = dict(line.split(": ", 1) for line in block.splitlines() if not line.startswith(":"))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: dictionary update sequence element #0 has length 1; 2 is required
+
+tests/procs.py:68: ValueError
+==================================== PASSES ====================================
+- generated xml file: prodapp/runs/2026-11-15-real/fix/suite/qwen3-4b/rep-2/junit.xml -
+=========================== short test summary info ============================
+PASSED tests/test_evals.py::test_eval[refund_tool_replay_is_idempotent]
+FAILED tests/test_evals.py::test_eval[refund_approved_once] - ValueError: not...
+FAILED tests/test_evals.py::test_eval[refund_rejected_has_no_side_effect] - T...
+FAILED tests/test_evals.py::test_eval[refund_asked_twice] - AssertionError: a...
+FAILED tests/test_evals.py::test_eval[new_message_while_waiting_for_approval]
+FAILED tests/test_evals.py::test_eval[status_then_refund_in_one_thread] - Ass...
+FAILED tests/test_durability.py::test_kill_mid_refund_then_resume_refunds_once
+========================= 6 failed, 1 passed in 22.71s =========================

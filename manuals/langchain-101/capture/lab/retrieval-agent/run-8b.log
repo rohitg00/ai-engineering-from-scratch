@@ -1,0 +1,60 @@
+model qwen3:8b, embeddings nomic-embed-text, temperature 0, seed 42
+corpus: 6 lesson files, 89578 characters
+chunks: 122, chunk_size 1000, overlap 150, largest 998, smallest 18
+embedded 122 chunks in 2.2 s
+
+== reducer: In LangGraph, what happens when two nodes update the messages field in the same step and the field has no reducer?
+  top-4      0.759  phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md @ 3892
+  top-4      0.737  phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md @ 10362
+  top-4      0.737  phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md @ 6401
+  top-4      0.733  phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md @ 11382
+  answer     The lessons do not cover this specific question about LangGraph.
+  cited      nothing
+  check      cited an expected source: False; every citation was returned by a search: True
+  model calls 1, prompt tokens 272, 2.6 s
+
+== matryoshka: How much storage does Matryoshka truncation from 1536 to 256 dimensions save, and what does it cost in accuracy?
+  top-4      0.791  phases/11-llm-engineering/04-embeddings/docs/en.md @ 12305
+  top-4      0.664  phases/11-llm-engineering/06-rag/docs/en.md @ 4675
+  top-4      0.658  phases/11-llm-engineering/04-embeddings/docs/en.md @ 21476
+  top-4      0.654  phases/11-llm-engineering/04-embeddings/docs/en.md @ 12982
+  search     Matryoshka truncation from 1536 to 256 dimensions
+  returned   11-llm-engineering/04-embeddings, 11-llm-engineering/06-rag, 11-llm-engineering/04-embeddings, 11-llm-engineering/04-embeddings
+  answer     Requesting 256 dimensions instead of 1536 cuts storage by 6x with roughly 3-5% accuracy loss on MTEB benchmarks [phases/11-llm-engineering/04-embeddings/docs/en.md].
+  cited      phases/11-llm-engineering/04-embeddings/docs/en.md
+  check      cited an expected source: True; every citation was returned by a search: True
+  model calls 2, prompt tokens 1802, 10.3 s
+
+== decay: After roughly how many minutes of continuous operation does agent reliability start to decay?
+  top-4      0.756  phases/15-autonomous-systems/12-durable-execution/docs/en.md @ 4649
+  top-4      0.717  phases/15-autonomous-systems/12-durable-execution/docs/en.md @ 1828
+  top-4      0.682  phases/15-autonomous-systems/12-durable-execution/docs/en.md @ 0
+  top-4      0.673  phases/15-autonomous-systems/12-durable-execution/docs/en.md @ 863
+  search     agent reliability decay
+  returned   15-autonomous-systems/12-durable-execution, 15-autonomous-systems/12-durable-execution, 15-autonomous-systems/12-durable-execution, 15-autonomous-systems/12-durable-execution
+  answer     Agent reliability starts to decay after roughly 35 minutes of continuous operation [phases/15-autonomous-systems/12-durable-execution/docs/en.md].
+  cited      phases/15-autonomous-systems/12-durable-execution/docs/en.md
+  check      cited an expected source: True; every citation was returned by a search: True
+  model calls 2, prompt tokens 1325, 6.4 s
+
+== thread: Which key identifies the conversation that a checkpoint belongs to?
+  top-4      0.699  phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md @ 11382
+  top-4      0.674  phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md @ 2565
+  top-4      0.672  phases/11-llm-engineering/17-agent-framework-tradeoffs/docs/en.md @ 3603
+  top-4      0.647  phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md @ 8247
+  search     Which key identifies the conversation that a checkpoint belongs to?
+  returned   11-llm-engineering/16-langgraph-state-machines, 11-llm-engineering/16-langgraph-state-machines, 11-llm-engineering/17-agent-framework-tradeoffs, 11-llm-engineering/16-langgraph-state-machines
+  answer     The key that identifies the conversation a checkpoint belongs to is `thread_id` [phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md].
+  cited      phases/11-llm-engineering/16-langgraph-state-machines/docs/en.md
+  check      cited an expected source: True; every citation was returned by a search: True
+  model calls 2, prompt tokens 1494, 7.9 s
+
+== outside: Which GPU should I buy to train a 70B model from scratch?
+  top-4      0.542  phases/11-llm-engineering/06-rag/docs/en.md @ 3435
+  top-4      0.536  phases/11-llm-engineering/06-rag/docs/en.md @ 1650
+  top-4      0.521  phases/11-llm-engineering/06-rag/docs/en.md @ 0
+  top-4      0.518  phases/11-llm-engineering/04-embeddings/docs/en.md @ 4072
+  answer     The lessons do not cover which GPU to buy to train a 70B model from scratch.
+  cited      nothing
+  check      cited an expected source: True; every citation was returned by a search: True
+  model calls 1, prompt tokens 264, 1.1 s

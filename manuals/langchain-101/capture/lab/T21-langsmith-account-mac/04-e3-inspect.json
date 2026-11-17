@@ -1,0 +1,386 @@
+{
+ "suite": "aiefs-lc101-pytest",
+ "dataset": {
+  "id": "<dataset-id-2>",
+  "name": "aiefs-lc101-pytest",
+  "example_count": 3,
+  "description": "Test suite",
+  "metadata": {
+   "__ls_runner": "pytest",
+   "runtime": {
+    "langchain_core_version": "1.8.0",
+    "langchain_version": "1.5.0",
+    "library": "langsmith",
+    "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+    "py_implementation": "CPython",
+    "runtime": "python",
+    "runtime_version": "3.13.12",
+    "sdk": "langsmith-py",
+    "sdk_version": "0.14.17"
+   }
+  }
+ },
+ "examples": [
+  {
+   "inputs": {
+    "question": "What is 17 + 25?"
+   },
+   "outputs": {
+    "answer": "42"
+   },
+   "metadata": {
+    "dataset_split": [
+     "base"
+    ]
+   }
+  },
+  {
+   "inputs": {
+    "a": 2,
+    "b": 3
+   },
+   "outputs": {
+    "sum": 5
+   },
+   "metadata": {
+    "dataset_split": [
+     "base"
+    ]
+   }
+  },
+  {
+   "inputs": {},
+   "outputs": null,
+   "metadata": {
+    "dataset_split": [
+     "base"
+    ]
+   }
+  }
+ ],
+ "experiments": [
+  {
+   "name": "aiefs-lc101-pytest-exp:750e4701",
+   "id": "<project-id-9>",
+   "n_runs": 11,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 2,
+    "chain:model:child": 2,
+    "tool:add:child": 1,
+    "chain:tools:child": 1,
+    "chain:LangGraph:child": 1,
+    "chain:test_marked_agent:root": 1,
+    "chain:test_decorator_form:root": 1,
+    "chain:test_marked_fail:root": 1,
+    "chain:test_marked_pass:root": 1
+   },
+   "roots": [
+    {
+     "name": "test_marked_agent",
+     "status": "success",
+     "error": "",
+     "outputs": {
+      "answer": "42"
+     },
+     "reference_example": true
+    },
+    {
+     "name": "test_decorator_form",
+     "status": "success",
+     "error": "",
+     "outputs": {
+      "ok": true
+     },
+     "reference_example": true
+    },
+    {
+     "name": "test_marked_fail",
+     "status": "error",
+     "error": "AssertionError('assert (4 + 4) == 9')\n\nTraceback (most recent call last):\nAssertionError: assert (4 + 4) == 9\n",
+     "outputs": {
+      "sum": 9
+     },
+     "reference_example": true
+    },
+    {
+     "name": "test_marked_pass",
+     "status": "success",
+     "error": "",
+     "outputs": {
+      "sum": 5
+     },
+     "reference_example": true
+    }
+   ],
+   "feedback": [
+    {
+     "key": "pass",
+     "score": 1.0
+    },
+    {
+     "key": "exact",
+     "score": 1.0
+    },
+    {
+     "key": "pass",
+     "score": 0
+    },
+    {
+     "key": "exact",
+     "score": 1.0
+    },
+    {
+     "key": "pass",
+     "score": 1.0
+    },
+    {
+     "key": "pass",
+     "score": 1.0
+    }
+   ],
+   "metadata": {
+    "__ls_runner": "pytest",
+    "author_email": null,
+    "author_name": null,
+    "branch": null,
+    "commit": null,
+    "commit_time": null,
+    "dataset_version": "2026-11-14T14:13:43.731761+00:00",
+    "dirty": null,
+    "remote_url": null,
+    "repo_name": null,
+    "revision_id": null,
+    "tags": null
+   }
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:0cca6e2a",
+   "id": "<project-id-7>",
+   "n_runs": 11,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 2,
+    "chain:model:child": 2,
+    "tool:add:child": 1,
+    "chain:tools:child": 1,
+    "chain:LangGraph:child": 1,
+    "chain:test_marked_agent:root": 1,
+    "chain:test_decorator_form:root": 1,
+    "chain:test_marked_fail:root": 1,
+    "chain:test_marked_pass:root": 1
+   },
+   "roots": [
+    {
+     "name": "test_marked_agent",
+     "status": "success",
+     "error": "",
+     "outputs": {
+      "answer": "42"
+     },
+     "reference_example": true
+    },
+    {
+     "name": "test_decorator_form",
+     "status": "success",
+     "error": "",
+     "outputs": {
+      "ok": true
+     },
+     "reference_example": true
+    },
+    {
+     "name": "test_marked_fail",
+     "status": "error",
+     "error": "AssertionError('assert (4 + 4) == 9')\n\nTraceback (most recent call last):\nAssertionError: assert (4 + 4) == 9\n",
+     "outputs": {
+      "sum": 9
+     },
+     "reference_example": true
+    },
+    {
+     "name": "test_marked_pass",
+     "status": "success",
+     "error": "",
+     "outputs": {
+      "sum": 5
+     },
+     "reference_example": true
+    }
+   ],
+   "feedback": [
+    {
+     "key": "pass",
+     "score": 1.0
+    },
+    {
+     "key": "exact",
+     "score": 1.0
+    },
+    {
+     "key": "pass",
+     "score": 1.0
+    },
+    {
+     "key": "pass",
+     "score": 0
+    },
+    {
+     "key": "exact",
+     "score": 1.0
+    },
+    {
+     "key": "pass",
+     "score": 1.0
+    }
+   ],
+   "metadata": {
+    "__ls_runner": "pytest",
+    "author_email": null,
+    "author_name": null,
+    "branch": null,
+    "commit": null,
+    "commit_time": null,
+    "dataset_version": "2026-11-14T14:13:43.731761+00:00",
+    "dirty": null,
+    "remote_url": null,
+    "repo_name": null,
+    "revision_id": null,
+    "tags": null
+   }
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:07f0b9f1",
+   "id": "<project-id-6>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "roots": [],
+   "feedback": [],
+   "metadata": {
+    "__ls_runner": "pytest",
+    "author_email": null,
+    "author_name": null,
+    "branch": null,
+    "commit": null,
+    "commit_time": null,
+    "dataset_version": "2026-11-14T14:12:51.251550+00:00",
+    "dirty": null,
+    "remote_url": null,
+    "repo_name": null,
+    "revision_id": null,
+    "tags": null
+   }
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:24c37696",
+   "id": "<project-id-8>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "roots": [],
+   "feedback": [],
+   "metadata": {
+    "__ls_runner": "pytest",
+    "author_email": null,
+    "author_name": null,
+    "branch": null,
+    "commit": null,
+    "commit_time": null,
+    "dataset_version": "2026-11-14T14:12:51.251550+00:00",
+    "dirty": null,
+    "remote_url": null,
+    "repo_name": null,
+    "revision_id": null,
+    "tags": null
+   }
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:9baa8787",
+   "id": "<project-id-11>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "roots": [],
+   "feedback": [],
+   "metadata": {
+    "__ls_runner": "pytest",
+    "author_email": null,
+    "author_name": null,
+    "branch": null,
+    "commit": null,
+    "commit_time": null,
+    "dataset_version": "2026-11-14T14:12:51.251550+00:00",
+    "dirty": null,
+    "remote_url": null,
+    "repo_name": null,
+    "revision_id": null,
+    "tags": null
+   }
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:e16e34cd",
+   "id": "<project-id-13>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "roots": [],
+   "feedback": [],
+   "metadata": {
+    "__ls_runner": "pytest",
+    "author_email": null,
+    "author_name": null,
+    "branch": null,
+    "commit": null,
+    "commit_time": null,
+    "dataset_version": "2026-11-14T14:12:51.251550+00:00",
+    "dirty": null,
+    "remote_url": null,
+    "repo_name": null,
+    "revision_id": null,
+    "tags": null
+   }
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:764d4dea",
+   "id": "<project-id-10>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "roots": [],
+   "feedback": [],
+   "metadata": {
+    "__ls_runner": "pytest",
+    "author_email": null,
+    "author_name": null,
+    "branch": null,
+    "commit": null,
+    "commit_time": null,
+    "dataset_version": "2026-11-14T14:12:51.251550+00:00",
+    "dirty": null,
+    "remote_url": null,
+    "repo_name": null,
+    "revision_id": null,
+    "tags": null
+   }
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:dd0a98b4",
+   "id": "<project-id-12>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "roots": [],
+   "feedback": [],
+   "metadata": {
+    "__ls_runner": "pytest",
+    "author_email": null,
+    "author_name": null,
+    "branch": null,
+    "commit": null,
+    "commit_time": null,
+    "dataset_version": "2026-11-14T14:12:51.251550+00:00",
+    "dirty": null,
+    "remote_url": null,
+    "repo_name": null,
+    "revision_id": null,
+    "tags": null
+   }
+  }
+ ],
+ "tracing_project": {
+  "error": "LangSmithNotFoundError"
+ }
+}

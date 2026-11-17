@@ -1,0 +1,3 @@
+t15app-langgraph-api-1 t15app-langgraph-api Exited (3) Less than a second ago
+t15app-langgraph-redis-1 redis:6 Up 11 seconds (healthy)
+t15app-langgraph-postgres-1 pgvector/pgvector:pg16 Up 11 seconds (healthy)

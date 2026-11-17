@@ -1,0 +1,734 @@
+{
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "run": "create_agent with a fake model, 2,000 turns in one thread, turns rotate a plain answer, one tool call, and two parallel tool calls",
+ "runs_per_variant": 1,
+ "saver": "PostgresSaver on PostgreSQL 16.15, default durability",
+ "sources": [
+  "capture/lab/T10-long-threads-x86/01-turns-none.jsonl",
+  "capture/lab/T10-long-threads-x86/01-turns-msgs60_keep7.jsonl",
+  "capture/lab/T10-long-threads-x86/01-turns-tok6000_keep1500.jsonl",
+  "capture/lab/T10-long-threads-x86/01-turns-msgs20_keep1.jsonl"
+ ],
+ "variants": {
+  "msgs20_keep1": {
+   "final_state_messages": 20,
+   "final_state_problems": 0,
+   "model_calls": 3334,
+   "requests_with_orphan_tool_messages": 0,
+   "rss_mb": [
+    {
+     "mb": 94,
+     "turn": 1
+    },
+    {
+     "mb": 96,
+     "turn": 500
+    },
+    {
+     "mb": 97,
+     "turn": 1000
+    },
+    {
+     "mb": 98,
+     "turn": 2000
+    }
+   ],
+   "storage": [
+    {
+     "checkpoint_rows": 61,
+     "thread_mb": 0.19,
+     "turn": 10
+    },
+    {
+     "checkpoint_rows": 601,
+     "thread_mb": 2.15,
+     "turn": 100
+    },
+    {
+     "checkpoint_rows": 3002,
+     "thread_mb": 10.92,
+     "turn": 500
+    },
+    {
+     "checkpoint_rows": 6001,
+     "thread_mb": 21.84,
+     "turn": 1000
+    },
+    {
+     "checkpoint_rows": 9000,
+     "thread_mb": 32.83,
+     "turn": 1500
+    },
+    {
+     "checkpoint_rows": 12002,
+     "thread_mb": 43.83,
+     "turn": 2000
+    }
+   ],
+   "summary_calls": 399,
+   "turns": 2000,
+   "windows": [
+    {
+     "latency_p50_ms": 32.139,
+     "request_messages_max": 19,
+     "request_tokens_max": 779,
+     "turns": "1-100"
+    },
+    {
+     "latency_p50_ms": 32.459,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "101-200"
+    },
+    {
+     "latency_p50_ms": 32.224,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "201-300"
+    },
+    {
+     "latency_p50_ms": 32.595,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "301-400"
+    },
+    {
+     "latency_p50_ms": 32.585,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "401-500"
+    },
+    {
+     "latency_p50_ms": 32.724,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "501-600"
+    },
+    {
+     "latency_p50_ms": 32.306,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "601-700"
+    },
+    {
+     "latency_p50_ms": 32.08,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "701-800"
+    },
+    {
+     "latency_p50_ms": 32.373,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "801-900"
+    },
+    {
+     "latency_p50_ms": 32.426,
+     "request_messages_max": 19,
+     "request_tokens_max": 781,
+     "turns": "901-1000"
+    },
+    {
+     "latency_p50_ms": 32.565,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1001-1100"
+    },
+    {
+     "latency_p50_ms": 32.545,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1101-1200"
+    },
+    {
+     "latency_p50_ms": 32.308,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1201-1300"
+    },
+    {
+     "latency_p50_ms": 32.851,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1301-1400"
+    },
+    {
+     "latency_p50_ms": 32.333,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1401-1500"
+    },
+    {
+     "latency_p50_ms": 32.919,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1501-1600"
+    },
+    {
+     "latency_p50_ms": 32.775,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1601-1700"
+    },
+    {
+     "latency_p50_ms": 32.423,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1701-1800"
+    },
+    {
+     "latency_p50_ms": 32.799,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1801-1900"
+    },
+    {
+     "latency_p50_ms": 32.34,
+     "request_messages_max": 19,
+     "request_tokens_max": 795,
+     "turns": "1901-2000"
+    }
+   ]
+  },
+  "msgs60_keep7": {
+   "final_state_messages": 20,
+   "final_state_problems": 0,
+   "model_calls": 3334,
+   "requests_with_orphan_tool_messages": 0,
+   "rss_mb": [
+    {
+     "mb": 94,
+     "turn": 1
+    },
+    {
+     "mb": 97,
+     "turn": 500
+    },
+    {
+     "mb": 97,
+     "turn": 1000
+    },
+    {
+     "mb": 98,
+     "turn": 2000
+    }
+   ],
+   "storage": [
+    {
+     "checkpoint_rows": 61,
+     "thread_mb": 0.29,
+     "turn": 10
+    },
+    {
+     "checkpoint_rows": 601,
+     "thread_mb": 4.49,
+     "turn": 100
+    },
+    {
+     "checkpoint_rows": 3002,
+     "thread_mb": 23.02,
+     "turn": 500
+    },
+    {
+     "checkpoint_rows": 6001,
+     "thread_mb": 46.12,
+     "turn": 1000
+    },
+    {
+     "checkpoint_rows": 9000,
+     "thread_mb": 69.32,
+     "turn": 1500
+    },
+    {
+     "checkpoint_rows": 12002,
+     "thread_mb": 92.55,
+     "turn": 2000
+    }
+   ],
+   "summary_calls": 140,
+   "turns": 2000,
+   "windows": [
+    {
+     "latency_p50_ms": 36.162,
+     "request_messages_max": 59,
+     "request_tokens_max": 2240,
+     "turns": "1-100"
+    },
+    {
+     "latency_p50_ms": 36.278,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "101-200"
+    },
+    {
+     "latency_p50_ms": 36.14,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "201-300"
+    },
+    {
+     "latency_p50_ms": 36.526,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "301-400"
+    },
+    {
+     "latency_p50_ms": 36.509,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "401-500"
+    },
+    {
+     "latency_p50_ms": 37.005,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "501-600"
+    },
+    {
+     "latency_p50_ms": 37.649,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "601-700"
+    },
+    {
+     "latency_p50_ms": 38.198,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "701-800"
+    },
+    {
+     "latency_p50_ms": 37.909,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "801-900"
+    },
+    {
+     "latency_p50_ms": 39.082,
+     "request_messages_max": 59,
+     "request_tokens_max": 2246,
+     "turns": "901-1000"
+    },
+    {
+     "latency_p50_ms": 39.37,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1001-1100"
+    },
+    {
+     "latency_p50_ms": 39.1,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1101-1200"
+    },
+    {
+     "latency_p50_ms": 39.683,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1201-1300"
+    },
+    {
+     "latency_p50_ms": 40.453,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1301-1400"
+    },
+    {
+     "latency_p50_ms": 40.581,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1401-1500"
+    },
+    {
+     "latency_p50_ms": 40.808,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1501-1600"
+    },
+    {
+     "latency_p50_ms": 41.38,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1601-1700"
+    },
+    {
+     "latency_p50_ms": 38.617,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1701-1800"
+    },
+    {
+     "latency_p50_ms": 35.461,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1801-1900"
+    },
+    {
+     "latency_p50_ms": 36.561,
+     "request_messages_max": 59,
+     "request_tokens_max": 2289,
+     "turns": "1901-2000"
+    }
+   ]
+  },
+  "none": {
+   "final_state_messages": 7335,
+   "final_state_problems": 0,
+   "model_calls": 3334,
+   "requests_with_orphan_tool_messages": 0,
+   "rss_mb": [
+    {
+     "mb": 93,
+     "turn": 1
+    },
+    {
+     "mb": 112,
+     "turn": 500
+    },
+    {
+     "mb": 117,
+     "turn": 1000
+    },
+    {
+     "mb": 140,
+     "turn": 2000
+    }
+   ],
+   "storage": [
+    {
+     "checkpoint_rows": 44,
+     "thread_mb": 0.26,
+     "turn": 10
+    },
+    {
+     "checkpoint_rows": 434,
+     "thread_mb": 20.31,
+     "turn": 100
+    },
+    {
+     "checkpoint_rows": 2168,
+     "thread_mb": 498.3,
+     "turn": 500
+    },
+    {
+     "checkpoint_rows": 4334,
+     "thread_mb": 1987.9,
+     "turn": 1000
+    },
+    {
+     "checkpoint_rows": 6500,
+     "thread_mb": 4471.86,
+     "turn": 1500
+    },
+    {
+     "checkpoint_rows": 8668,
+     "thread_mb": 7957.86,
+     "turn": 2000
+    }
+   ],
+   "summary_calls": 0,
+   "turns": 2000,
+   "windows": [
+    {
+     "latency_p50_ms": 36.917,
+     "request_messages_max": 366,
+     "request_tokens_max": 13257,
+     "turns": "1-100"
+    },
+    {
+     "latency_p50_ms": 74.022,
+     "request_messages_max": 734,
+     "request_tokens_max": 26698,
+     "turns": "101-200"
+    },
+    {
+     "latency_p50_ms": 113.226,
+     "request_messages_max": 1099,
+     "request_tokens_max": 39922,
+     "turns": "201-300"
+    },
+    {
+     "latency_p50_ms": 152.48,
+     "request_messages_max": 1466,
+     "request_tokens_max": 53257,
+     "turns": "301-400"
+    },
+    {
+     "latency_p50_ms": 193.963,
+     "request_messages_max": 1834,
+     "request_tokens_max": 66698,
+     "turns": "401-500"
+    },
+    {
+     "latency_p50_ms": 227.564,
+     "request_messages_max": 2199,
+     "request_tokens_max": 79922,
+     "turns": "501-600"
+    },
+    {
+     "latency_p50_ms": 260.789,
+     "request_messages_max": 2566,
+     "request_tokens_max": 93257,
+     "turns": "601-700"
+    },
+    {
+     "latency_p50_ms": 302.441,
+     "request_messages_max": 2934,
+     "request_tokens_max": 106698,
+     "turns": "701-800"
+    },
+    {
+     "latency_p50_ms": 322.79,
+     "request_messages_max": 3299,
+     "request_tokens_max": 119922,
+     "turns": "801-900"
+    },
+    {
+     "latency_p50_ms": 354.924,
+     "request_messages_max": 3666,
+     "request_tokens_max": 133260,
+     "turns": "901-1000"
+    },
+    {
+     "latency_p50_ms": 381.802,
+     "request_messages_max": 4034,
+     "request_tokens_max": 146969,
+     "turns": "1001-1100"
+    },
+    {
+     "latency_p50_ms": 412.177,
+     "request_messages_max": 4399,
+     "request_tokens_max": 160458,
+     "turns": "1101-1200"
+    },
+    {
+     "latency_p50_ms": 441.986,
+     "request_messages_max": 4766,
+     "request_tokens_max": 174060,
+     "turns": "1201-1300"
+    },
+    {
+     "latency_p50_ms": 480.274,
+     "request_messages_max": 5134,
+     "request_tokens_max": 187769,
+     "turns": "1301-1400"
+    },
+    {
+     "latency_p50_ms": 508.375,
+     "request_messages_max": 5499,
+     "request_tokens_max": 201258,
+     "turns": "1401-1500"
+    },
+    {
+     "latency_p50_ms": 540.302,
+     "request_messages_max": 5866,
+     "request_tokens_max": 214860,
+     "turns": "1501-1600"
+    },
+    {
+     "latency_p50_ms": 571.496,
+     "request_messages_max": 6234,
+     "request_tokens_max": 228569,
+     "turns": "1601-1700"
+    },
+    {
+     "latency_p50_ms": 601.445,
+     "request_messages_max": 6599,
+     "request_tokens_max": 242058,
+     "turns": "1701-1800"
+    },
+    {
+     "latency_p50_ms": 626.482,
+     "request_messages_max": 6966,
+     "request_tokens_max": 255660,
+     "turns": "1801-1900"
+    },
+    {
+     "latency_p50_ms": 662.9,
+     "request_messages_max": 7334,
+     "request_tokens_max": 269369,
+     "turns": "1901-2000"
+    }
+   ]
+  },
+  "tok6000_keep1500": {
+   "final_state_messages": 71,
+   "final_state_problems": 0,
+   "model_calls": 3334,
+   "requests_with_orphan_tool_messages": 0,
+   "rss_mb": [
+    {
+     "mb": 93,
+     "turn": 1
+    },
+    {
+     "mb": 98,
+     "turn": 500
+    },
+    {
+     "mb": 99,
+     "turn": 1000
+    },
+    {
+     "mb": 101,
+     "turn": 2000
+    }
+   ],
+   "storage": [
+    {
+     "checkpoint_rows": 61,
+     "thread_mb": 0.29,
+     "turn": 10
+    },
+    {
+     "checkpoint_rows": 601,
+     "thread_mb": 10.7,
+     "turn": 100
+    },
+    {
+     "checkpoint_rows": 3002,
+     "thread_mb": 59.69,
+     "turn": 500
+    },
+    {
+     "checkpoint_rows": 6001,
+     "thread_mb": 120.86,
+     "turn": 1000
+    },
+    {
+     "checkpoint_rows": 9000,
+     "thread_mb": 181.07,
+     "turn": 1500
+    },
+    {
+     "checkpoint_rows": 12002,
+     "thread_mb": 240.98,
+     "turn": 2000
+    }
+   ],
+   "summary_calls": 60,
+   "turns": 2000,
+   "windows": [
+    {
+     "latency_p50_ms": 63.246,
+     "request_messages_max": 166,
+     "request_tokens_max": 5990,
+     "turns": "1-100"
+    },
+    {
+     "latency_p50_ms": 46.83,
+     "request_messages_max": 164,
+     "request_tokens_max": 5994,
+     "turns": "101-200"
+    },
+    {
+     "latency_p50_ms": 42.619,
+     "request_messages_max": 162,
+     "request_tokens_max": 5894,
+     "turns": "201-300"
+    },
+    {
+     "latency_p50_ms": 43.461,
+     "request_messages_max": 162,
+     "request_tokens_max": 5894,
+     "turns": "301-400"
+    },
+    {
+     "latency_p50_ms": 42.972,
+     "request_messages_max": 162,
+     "request_tokens_max": 5894,
+     "turns": "401-500"
+    },
+    {
+     "latency_p50_ms": 42.888,
+     "request_messages_max": 162,
+     "request_tokens_max": 5894,
+     "turns": "501-600"
+    },
+    {
+     "latency_p50_ms": 42.57,
+     "request_messages_max": 162,
+     "request_tokens_max": 5894,
+     "turns": "601-700"
+    },
+    {
+     "latency_p50_ms": 42.279,
+     "request_messages_max": 162,
+     "request_tokens_max": 5894,
+     "turns": "701-800"
+    },
+    {
+     "latency_p50_ms": 41.622,
+     "request_messages_max": 162,
+     "request_tokens_max": 5894,
+     "turns": "801-900"
+    },
+    {
+     "latency_p50_ms": 42.71,
+     "request_messages_max": 162,
+     "request_tokens_max": 5894,
+     "turns": "901-1000"
+    },
+    {
+     "latency_p50_ms": 42.81,
+     "request_messages_max": 162,
+     "request_tokens_max": 5991,
+     "turns": "1001-1100"
+    },
+    {
+     "latency_p50_ms": 42.293,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1101-1200"
+    },
+    {
+     "latency_p50_ms": 43.109,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1201-1300"
+    },
+    {
+     "latency_p50_ms": 42.566,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1301-1400"
+    },
+    {
+     "latency_p50_ms": 41.503,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1401-1500"
+    },
+    {
+     "latency_p50_ms": 41.589,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1501-1600"
+    },
+    {
+     "latency_p50_ms": 41.52,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1601-1700"
+    },
+    {
+     "latency_p50_ms": 41.348,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1701-1800"
+    },
+    {
+     "latency_p50_ms": 42.517,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1801-1900"
+    },
+    {
+     "latency_p50_ms": 42.925,
+     "request_messages_max": 160,
+     "request_tokens_max": 5986,
+     "turns": "1901-2000"
+    }
+   ]
+  }
+ }
+}

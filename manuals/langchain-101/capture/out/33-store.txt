@@ -1,0 +1,155 @@
+# InMemoryStore: put, search, and namespaces
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: nomic-embed-text. OllamaEmbeddings settings: none beyond the model name.
+
+## put, get, and namespaces
+
+get:
+{
+  "__type__": "Item",
+  "namespace": [
+    "users",
+    "ada",
+    "memories"
+  ],
+  "key": "m1",
+  "value": {
+    "text": "prefers short answers"
+  },
+  "created_at": "<time>",
+  "updated_at": "<time>"
+}
+
+list_namespaces():
+[
+  [
+    "users",
+    "ada",
+    "memories"
+  ],
+  [
+    "users",
+    "ada",
+    "settings"
+  ],
+  [
+    "users",
+    "grace",
+    "memories"
+  ]
+]
+
+list_namespaces(prefix=('users', 'ada')):
+[
+  [
+    "users",
+    "ada",
+    "memories"
+  ],
+  [
+    "users",
+    "ada",
+    "settings"
+  ]
+]
+
+list_namespaces(max_depth=2):
+[
+  [
+    "users",
+    "ada"
+  ],
+  [
+    "users",
+    "grace"
+  ]
+]
+
+## search is a prefix match on the namespace
+
+search(('users', 'ada')):
+[
+  [
+    [
+      "users",
+      "ada",
+      "memories"
+    ],
+    "m1",
+    {
+      "text": "prefers short answers"
+    }
+  ],
+  [
+    [
+      "users",
+      "ada",
+      "memories"
+    ],
+    "m2",
+    {
+      "text": "works in Pune"
+    }
+  ],
+  [
+    [
+      "users",
+      "ada",
+      "settings"
+    ],
+    "theme",
+    {
+      "value": "dark"
+    }
+  ]
+]
+
+search(('users',), filter=...):
+[
+  [
+    [
+      "users",
+      "grace",
+      "memories"
+    ],
+    "m1",
+    {
+      "text": "prefers long answers"
+    }
+  ]
+]
+
+## delete
+
+get after delete:
+null
+
+## semantic search with an index and OllamaEmbeddings(model='nomic-embed-text')
+
+query 'works in Pune':
+[
+  {
+    "key": "b",
+    "text": "works in Pune",
+    "score": 1.0
+  },
+  {
+    "key": "c",
+    "text": "likes tea",
+    "score": 0.350555
+  }
+]
+
+query "Which city is Ada's office in?":
+[
+  {
+    "key": "b",
+    "text": "works in Pune",
+    "score": 0.484968
+  },
+  {
+    "key": "c",
+    "text": "likes tea",
+    "score": 0.386065
+  }
+]

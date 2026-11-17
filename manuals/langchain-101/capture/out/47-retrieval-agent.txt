@@ -1,0 +1,78 @@
+# A retriever wrapped as a tool for an agent
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: nomic-embed-text, qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512. OllamaEmbeddings settings: none beyond the model name.
+
+## as_retriever(k=1), wrapped as a tool for an agent
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "search_docs",
+        "args": {
+          "query": "What does a checkpointer do?"
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 169,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 26,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 169,
+      "output_tokens": 26,
+      "total_tokens": 195
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "[checkpoints.md] A checkpointer saves graph state after each step. InMemorySaver keeps it in a",
+    "name": "search_docs",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "A checkpointer saves the graph state after each step. For example, the InMemorySaver keeps the state in memory.",
+    "id": "lc_run--<uuid-4>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 231,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 26,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 231,
+      "output_tokens": 26,
+      "total_tokens": 257
+    }
+  }
+]
+
+the hit is chunk 0 of 7

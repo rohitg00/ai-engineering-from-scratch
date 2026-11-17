@@ -1,0 +1,119 @@
+{
+ "codes": {
+  "ask": "model asked for the amount and the reason, and proposed no refund_order call",
+  "zero": "model proposed amount_cents 0, the approver approved it, and a 0-cent refund row was written",
+  "ticket": "model opened a ticket with create_ticket in place of a refund_order call",
+  "nonote": "model did not call save_note, so no memory existed to recall",
+  "nofaq": "model answered without calling search_faq",
+  "harness": "test sent an approve after no refund was proposed, got 409, and parsed the 409 body as SSE",
+  "timing": "test assumed the run lasts more than 3.5 s, and the real run finished before SIGTERM",
+  "guess": "model invented amount_cents 10000 without reading the order",
+  "slow": "test bound the whole run to 5 s, and the real model calls took longer",
+  "stream": "uvicorn closed the stream at its 10 s limit, and the 11.6 to 12.1 s run finished in the drain"
+ },
+ "qwen3-4b": {
+  "test_eval[refund_approved_once]": "ask",
+  "test_eval[refund_rejected_has_no_side_effect]": "ask",
+  "test_eval[refund_asked_twice]": "ask",
+  "test_eval[new_message_while_waiting_for_approval]": "zero",
+  "test_eval[status_then_refund_in_one_thread]": "ticket",
+  "test_eval[memory_saved_and_recalled]": "nonote",
+  "test_one_user_cannot_read_another_users_thread_or_memory": "nonote",
+  "test_eval[flaky_faq_is_retried]": "nofaq",
+  "test_kill_mid_refund_then_resume_refunds_once": "harness",
+  "test_langsmith_receives_nothing_unless_enabled": "harness",
+  "test_sigterm_past_deadline_checkpoints_and_resumes": "timing"
+ },
+ "qwen3-14b": {
+  "test_kill_mid_refund_then_resume_refunds_once": "guess",
+  "test_eval[refund_approved_once]": "guess",
+  "test_eval[refund_asked_twice]": "guess",
+  "test_eval[hung_tool_times_out]": "slow",
+  "test_eval[new_message_while_waiting_for_approval]": "zero",
+  "test_sigterm_lets_in_flight_run_finish": "stream"
+ },
+ "replies": {
+  "qwen3-4b": {
+   "flaky_faq_is_retried": [
+    "no tool call,",
+    "said no data",
+    "bad"
+   ],
+   "hung_tool_times_out": [
+    "said order",
+    "not found",
+    "bad"
+   ],
+   "failed_ticket_is_not_retried": [
+    "said it could",
+    "not open one",
+    "ok"
+   ],
+   "primary_outage_uses_backup": [
+    "answered",
+    "from backup",
+    "ok"
+   ],
+   "runaway_loop_hits_call_limit": [
+    "answered",
+    "after 8 calls",
+    "ok"
+   ]
+  },
+  "qwen3-14b": {
+   "flaky_faq_is_retried": [
+    "answered after",
+    "the retry",
+    "ok"
+   ],
+   "hung_tool_times_out": [
+    "said it cannot",
+    "look it up now",
+    "ok"
+   ],
+   "failed_ticket_is_not_retried": [
+    "said it could",
+    "not open one",
+    "ok"
+   ],
+   "primary_outage_uses_backup": [
+    "answered",
+    "from backup",
+    "ok"
+   ],
+   "runaway_loop_hits_call_limit": [
+    "answered",
+    "after 8 calls",
+    "ok"
+   ]
+  },
+  "haiku": {
+   "flaky_faq_is_retried": [
+    "answered after",
+    "the retry",
+    "ok"
+   ],
+   "hung_tool_times_out": [
+    "said lookup",
+    "timed out",
+    "ok"
+   ],
+   "failed_ticket_is_not_retried": [
+    "said it could",
+    "not open one",
+    "ok"
+   ],
+   "primary_outage_uses_backup": [
+    "answered",
+    "from backup",
+    "ok"
+   ],
+   "runaway_loop_hits_call_limit": [
+    "answered",
+    "after 8 calls",
+    "ok"
+   ]
+  }
+ },
+ "haiku": {}
+}

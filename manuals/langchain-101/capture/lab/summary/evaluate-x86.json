@@ -1,0 +1,587 @@
+{
+ "agent_processes": 10,
+ "conditions": {
+  "ep:agent": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET /info",
+     "POST /runs/multipart",
+     "POST /runs/multipart",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart",
+     "POST /runs/multipart",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart",
+     "POST /runs/multipart",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart",
+     "POST /runs/multipart",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart",
+     "POST /runs/multipart",
+     "POST /runs/multipart"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    },
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    },
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    },
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    },
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    }
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "ep:plain": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {},
+    {},
+    {},
+    {},
+    {}
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "ep:quiet": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ],
+    [
+     "GET /info"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {},
+    {},
+    {},
+    {},
+    {}
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  },
+  "noenv:agent": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart",
+     "POST https://api.smith.langchain.com/runs/multipart"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    },
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    },
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    },
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    },
+    {
+     "patch:chain:LangGraph": 1,
+     "patch:chain:model": 2,
+     "patch:llm:ChatOllama": 2,
+     "post:chain:LangGraph": 1,
+     "post:chain:model": 2,
+     "post:chain:tools": 1,
+     "post:llm:ChatOllama": 2,
+     "post:tool:add": 1
+    }
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ]
+  },
+  "noenv:quiet": {
+   "blocked": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "processes": 5,
+   "reference_example_set": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "requests": [
+    [
+     "GET https://api.smith.langchain.com/info"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info"
+    ],
+    [
+     "GET https://api.smith.langchain.com/info"
+    ]
+   ],
+   "return_codes": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "runs_sent": [
+    {},
+    {},
+    {},
+    {},
+    {}
+   ],
+   "scores": [
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ],
+    [
+     true
+    ]
+   ],
+   "top_run_with_parent": [
+    0,
+    0,
+    0,
+    0,
+    0
+   ]
+  }
+ },
+ "conditions_note": "ep: LANGSMITH_ENDPOINT set to a local recorder and a dummy key, LANGSMITH_TRACING unset; noenv: no LANGSMITH_ or LANGCHAIN_ variable, the HTTP layer replaced with a recorder that answers 200",
+ "info_without_flush": {
+  "ep:agent": [
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ]
+  ],
+  "ep:plain": [
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ]
+  ],
+  "ep:quiet": [
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ],
+   [
+    "GET /info"
+   ]
+  ],
+  "noenv:agent": [
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ]
+  ],
+  "noenv:quiet": [
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ],
+   [
+    "GET https://api.smith.langchain.com/info"
+   ]
+  ]
+ },
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "not_used": "00-smoke-n1.jsonl is not kept; in 02 the noenv:agent rows miss the POST that happens at exit, so 02 is used only for GET /info",
+ "processes_per_condition": 5,
+ "project_differs_from_printed_name": 10,
+ "run": "evaluate(upload_results=False) on one example, with no client argument, so the default client; every process new",
+ "sources": [
+  "capture/lab/T18-evaluate-leak-x86/01-evaluate-requests.jsonl",
+  "capture/lab/T18-evaluate-leak-x86/02-evaluate-noflush.jsonl",
+  "capture/lab/T18-evaluate-leak-x86/03-counts.txt",
+  "capture/lab/T18-evaluate-leak-x86/t18_real.py",
+  "capture/lab/T18-evaluate-leak-x86/t18_summarize.py"
+ ],
+ "target": "create_agent with ChatOllama and qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42, and one tool add, 7 LangChain runs; quiet wraps it in tracing_context(enabled=False); plain is a function",
+ "versions": "langsmith 0.14.17, langchain 1.5.0, langchain-core 1.8.0"
+}

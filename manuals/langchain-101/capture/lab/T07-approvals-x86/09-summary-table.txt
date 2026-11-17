@@ -1,0 +1,73 @@
+== 00-survey.jsonl: tool calls of one model call per prompt (temperature 0, seed 42)
+qwen3:4b-instruct-2507-q4_K_M | single | n=10 | calls per reply {0: 1, 1: 9} | all ids True
+     1 ['send_email'] :: Send an email to a@x.
+     1 ['send_email'] :: Email a@x to say the report is ready.
+     1 ['send_email'] :: Please notify a@x by email.
+     1 ['send_email'] :: Tell a@x by email that the build passed.
+     0 [] :: Write to a@x.
+     1 ['delete_file'] :: Delete the file /tmp/f.
+     1 ['delete_file'] :: Remove /tmp/f please.
+     1 ['delete_file'] :: Clean up /tmp/f.
+     1 ['send_email'] :: Can you send a quick note to a@x?
+     1 ['delete_file'] :: Get rid of the file at /tmp/f.
+qwen3:4b-instruct-2507-q4_K_M | two_actions | n=10 | calls per reply {1: 1, 2: 8, 3: 1} | all ids True
+     2 ['send_email', 'delete_file'] :: Send an email to a@x and delete the file /tmp/f.
+     2 ['send_email', 'delete_file'] :: Email a@x, then remove /tmp/f.
+     2 ['delete_file', 'send_email'] :: Delete /tmp/f and tell a@x by email that it is gone.
+     2 ['send_email', 'delete_file'] :: Two things: notify a@x by email, and clean up /tmp/f.
+     2 ['delete_file', 'send_email'] :: Please remove /tmp/f and also send a note to a@x.
+     2 ['send_email', 'delete_file'] :: In one turn, call send_email with to='a@x' and delete_file with path='
+     1 ['send_email'] :: Email a@x and b@x.
+     2 ['delete_file', 'delete_file'] :: Delete /tmp/f and /tmp/g.
+     3 ['send_email', 'delete_file', 'delete_file'] :: Send an email to a@x, and delete /tmp/f, /tmp/g.
+     2 ['send_email', 'delete_file'] :: Do both now: email a@x, delete /tmp/f.
+qwen3:8b | single | n=10 | calls per reply {1: 10} | all ids True
+     1 ['send_email'] :: Send an email to a@x.
+     1 ['send_email'] :: Email a@x to say the report is ready.
+     1 ['send_email'] :: Please notify a@x by email.
+     1 ['send_email'] :: Tell a@x by email that the build passed.
+     1 ['send_email'] :: Write to a@x.
+     1 ['delete_file'] :: Delete the file /tmp/f.
+     1 ['delete_file'] :: Remove /tmp/f please.
+     1 ['delete_file'] :: Clean up /tmp/f.
+     1 ['send_email'] :: Can you send a quick note to a@x?
+     1 ['delete_file'] :: Get rid of the file at /tmp/f.
+qwen3:8b | two_actions | n=10 | calls per reply {0: 1, 2: 8, 3: 1} | all ids True
+     2 ['send_email', 'delete_file'] :: Send an email to a@x and delete the file /tmp/f.
+     2 ['send_email', 'delete_file'] :: Email a@x, then remove /tmp/f.
+     2 ['delete_file', 'send_email'] :: Delete /tmp/f and tell a@x by email that it is gone.
+     2 ['send_email', 'delete_file'] :: Two things: notify a@x by email, and clean up /tmp/f.
+     2 ['delete_file', 'send_email'] :: Please remove /tmp/f and also send a note to a@x.
+     2 ['send_email', 'delete_file'] :: In one turn, call send_email with to='a@x' and delete_file with path='
+     0 [] :: Email a@x and b@x.
+     2 ['delete_file', 'delete_file'] :: Delete /tmp/f and /tmp/g.
+     3 ['send_email', 'delete_file', 'delete_file'] :: Send an email to a@x, and delete /tmp/f, /tmp/g.
+     2 ['send_email', 'delete_file'] :: Do both now: email a@x, delete /tmp/f.
+
+== 01-cases.jsonl
+case | n | prompt tries until the shape fit (per rep) | tool executions (tool, args, step) | model calls | errors per step | ToolMessage status
+B1_single_approve | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 1]]': 3} | [2] | {} | {"['success']": 3}
+B2_single_edit_args | 3 | [1, 1, 1] | {'[["send_email", {"to": "b@x"}, 1]]': 3} | [2] | {} | {"['success']": 3}
+B3_single_edit_switch_tool | 3 | [1, 1, 1] | {'[["delete_file", {"path": "/tmp/g"}, 1]]': 3} | [2] | {} | {"['success']": 3}
+B4_single_reject | 3 | [1, 1, 1] | {'[]': 3} | [2] | {} | {"['error']": 3}
+B5_single_respond | 3 | [1, 1, 1] | {'[]': 3} | [2] | {} | {"['success']": 3}
+B6_parallel_approve_both | 3 | [1, 1, 1] | {'[["delete_file", {"path": "/tmp/f"}, 1], ["send_email", {"to": "a@x"}, 1]]': 3} | [2] | {} | {"['success', 'success']": 3}
+B7_parallel_approve_reject | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 1]]': 3} | [2] | {} | {"['error', 'success']": 3}
+B8_parallel_edit_approve | 3 | [1, 1, 1] | {'[["delete_file", {"path": "/tmp/f"}, 1], ["send_email", {"to": "b@x"}, 1]]': 3} | [2] | {} | {"['success', 'success']": 3}
+B9_parallel_one_decision_for_two | 3 | [1, 1, 1] | {'[]': 3} | [1] | {'step1: ValueError: Number of human decisions (1) does not match number of hanging tool calls (2).': 3} | {'[]': 3}
+P1_single_approve | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 1]]': 3} | [2] | {} | {"['success']": 3}
+P2_single_edit_args | 3 | [1, 1, 1] | {'[["send_email", {"to": "b@x"}, 1]]': 3} | [2] | {} | {"['success']": 3}
+P3_single_edit_switch_tool | 3 | [1, 1, 1] | {'[]': 3} | [1] | {'step1: ValidationError: 2 validation errors for tagged-union[ApproveDecision,function-wrap[_as_se': 3} | {'[]': 3}
+P4_single_reject | 3 | [1, 1, 1] | {'[]': 3} | [2] | {} | {"['error']": 3}
+P5_single_respond | 3 | [1, 1, 1] | {'[]': 3} | [2] | {} | {"['success']": 3}
+P6_parallel_answer_both_at_once | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 1]]': 3} | [2] | {} | {"['success', 'error']": 3}
+P7_parallel_answer_one_then_other | 3 | [1, 1, 1] | {'[["delete_file", {"path": "/tmp/f"}, 2], ["send_email", {"to": "a@x"}, 1]]': 3} | [2] | {} | {"['success', 'success']": 3}
+P8_parallel_plain_value_two_pending | 3 | [1, 1, 1] | {'[]': 3} | [1] | {'step1: RuntimeError: When there are multiple pending interrupts, you must specify the interrupt i': 3} | {'[]': 3}
+J1_batched_jumper_after_hitl_in_list_approve | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 0]]': 3} | [2] | {} | {"['success']": 3}
+J2_batched_jumper_before_hitl_in_list_reject | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 1]]': 3} | [2] | {} | {"['error', 'success']": 3}
+J3_batched_jumper_after_hitl_in_list_reject | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 0]]': 3} | [2] | {} | {"['success']": 3}
+J4_per_call_jumper_after_hitl_in_list_reject | 3 | [1, 1, 1] | {'[]': 3} | [2] | {} | {"['error']": 3}
+J5_per_call_jumper_before_hitl_in_list_reject | 3 | [1, 1, 1] | {'[]': 3} | [2] | {} | {"['error']": 3}
+G3_agent_in_subgraph_per_call_resume_one_then_other | 3 | ['never', 'never', 'never'] | {} | [] | {} | {}
+S1_strict_stale_answer | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 1]]': 3} | [1] | {'step2: UnknownInterruptError: Unknown or already-consumed interrupt: c686d7ccce6dc04beda97d56bdb5': 1, 'step2: UnknownInterruptError: Unknown or already-consumed interrupt: 2b66bcc76385683750ae2ca9abef': 1, 'step2: UnknownInterruptError: Unknown or already-consumed interrupt: fef34b9e33f1a5d86930ebb7b78c': 1} | {"['success']": 3}
+S2_nonstrict_stale_answer | 3 | [1, 1, 1] | {'[["send_email", {"to": "a@x"}, 1]]': 3} | [1] | {} | {"['success']": 3}

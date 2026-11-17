@@ -1,0 +1,210 @@
+# How a real model streams a tool call
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## stream_mode='messages': how ChatOllama streams a tool call
+
+13 chunks, 1 with tool_call_chunks
+
+the chunks that carry the tool call:
+[
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "",
+      "id": "lc_run--<uuid-1>",
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "id": "<uuid-2>",
+          "type": "tool_call"
+        }
+      ],
+      "tool_call_chunks": [
+        {
+          "name": "add",
+          "args": "{\"a\": 2, \"b\": 3}",
+          "id": "<uuid-2>",
+          "index": null,
+          "type": "tool_call_chunk"
+        }
+      ],
+      "response_metadata": {
+        "model": "qwen3:4b-instruct-2507-q4_K_M",
+        "created_at": "<time>",
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": "<ns>",
+        "load_duration": "<ns>",
+        "prompt_eval_count": 162,
+        "prompt_eval_duration": "<ns>",
+        "eval_count": 25,
+        "eval_duration": "<ns>",
+        "logprobs": null,
+        "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+        "model_provider": "ollama"
+      },
+      "usage_metadata": {
+        "input_tokens": 162,
+        "output_tokens": 25,
+        "total_tokens": 187
+      }
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  }
+]
+
+## text before a tool call in the same reply
+
+the chunks of the first model call:
+[
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "Let",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " me",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": " add",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": ".\n",
+      "id": "lc_run--<uuid-3>"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "",
+      "id": "lc_run--<uuid-3>",
+      "tool_calls": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "id": "<uuid-4>",
+          "type": "tool_call"
+        }
+      ],
+      "tool_call_chunks": [
+        {
+          "name": "add",
+          "args": "{\"a\": 2, \"b\": 3}",
+          "id": "<uuid-4>",
+          "index": null,
+          "type": "tool_call_chunk"
+        }
+      ],
+      "response_metadata": {
+        "model": "qwen3:4b-instruct-2507-q4_K_M",
+        "created_at": "<time>",
+        "done": true,
+        "done_reason": "stop",
+        "total_duration": "<ns>",
+        "load_duration": "<ns>",
+        "prompt_eval_count": 180,
+        "prompt_eval_duration": "<ns>",
+        "eval_count": 29,
+        "eval_duration": "<ns>",
+        "logprobs": null,
+        "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+        "model_provider": "ollama"
+      },
+      "usage_metadata": {
+        "input_tokens": 180,
+        "output_tokens": 29,
+        "total_tokens": 209
+      }
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  },
+  {
+    "message": {
+      "type": "AIMessageChunk",
+      "content": "",
+      "id": "lc_run--<uuid-3>",
+      "chunk_position": "last"
+    },
+    "metadata": {
+      "langgraph_node": "model",
+      "langgraph_step": 1,
+      "langgraph_triggers": [
+        "branch:to:model"
+      ],
+      "ls_provider": "ollama",
+      "ls_model_type": "chat"
+    }
+  }
+]

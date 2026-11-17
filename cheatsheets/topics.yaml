@@ -30,6 +30,7 @@
     - phases/19-capstone-projects/27-eval-harness-fixture-tasks
     - phases/19-capstone-projects/28-observability-otel-traces
     - phases/19-capstone-projects/29-end-to-end-coding-task-demo
+    - manuals/langchain-101
 
 - id: ai-safety
   title: AI Safety and Red Teaming

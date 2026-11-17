@@ -1,0 +1,162 @@
+# interrupt() and Command(resume=...)
+
+## interrupt() pauses the run
+
+interrupts:
+[
+  {
+    "value": {
+      "question": "Approve this draft?",
+      "draft": "Ship v2 on Friday."
+    },
+    "id": "<hex-1>",
+    "response_schema": null
+  }
+]
+
+state:
+{
+  "next": [
+    "review"
+  ],
+  "task interrupts": [
+    [
+      {
+        "value": {
+          "question": "Approve this draft?",
+          "draft": "Ship v2 on Friday."
+        },
+        "id": "<hex-1>",
+        "response_schema": null
+      }
+    ]
+  ]
+}
+
+## Command(resume='yes') re-runs the node from the top
+
+value:
+{
+  "draft": "Ship v2 on Friday.",
+  "verdict": "approved",
+  "edits": []
+}
+
+node runs:
+[
+  "write",
+  "review before interrupt",
+  "review before interrupt",
+  "review after interrupt: yes"
+]
+
+## two interrupts in one node, resumed one at a time
+
+runs:
+{
+  "first": [
+    {
+      "value": "Title?",
+      "id": "<hex-2>",
+      "response_schema": null
+    }
+  ],
+  "second": [
+    {
+      "value": "Body?",
+      "id": "<hex-3>",
+      "response_schema": null
+    }
+  ],
+  "ids differ": true,
+  "final": {
+    "draft": "Release: Friday",
+    "verdict": "",
+    "edits": []
+  }
+}
+
+## interrupt with a response_schema rejects a bad answer
+
+interrupt:
+[
+  {
+    "value": "Approve?",
+    "id": "<hex-4>",
+    "response_schema": {
+      "properties": {
+        "approve": {
+          "title": "Approve",
+          "type": "boolean"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        }
+      },
+      "required": [
+        "approve"
+      ],
+      "title": "Verdict",
+      "type": "object"
+    }
+  }
+]
+
+resume with {'approve': 'maybe'}:
+
+raised pydantic_core._pydantic_core.ValidationError: 1 validation error for Verdict
+approve
+  Input should be a valid boolean, unable to interpret input [type=bool_parsing, input_value='maybe', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/bool_parsing
+
+still waiting on:
+[
+  "typed"
+]
+
+resume with {'approve': True}:
+{
+  "draft": "",
+  "verdict": "approve=True",
+  "edits": []
+}
+
+## interrupt without a checkpointer
+
+returned:
+{
+  "value": {
+    "draft": "",
+    "verdict": "",
+    "edits": []
+  },
+  "interrupts": [
+    {
+      "value": "Title?",
+      "id": "<hex-5>",
+      "response_schema": null
+    }
+  ]
+}
+
+## resume a thread that is not waiting
+
+returned:
+{
+  "value": {
+    "draft": "Ship v2 on Friday.",
+    "verdict": "approved",
+    "edits": []
+  },
+  "interrupts": []
+}
+
+node runs (unchanged):
+[
+  "write",
+  "review before interrupt",
+  "review before interrupt",
+  "review after interrupt: yes"
+]

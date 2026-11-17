@@ -1,0 +1,4122 @@
+{
+ "agent": {
+  "ainvoke async asked=8 cap=1": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    1,
+    1,
+    1
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    1668.7,
+    1672.4,
+    1663.6
+   ],
+   "tool_span_ms_median": 1668.7,
+   "wall_ms": [
+    13759.1,
+    13678.7,
+    13798.3
+   ],
+   "wall_ms_median": 13759.1
+  },
+  "ainvoke async asked=8 cap=4": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    4,
+    4,
+    4
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    423.2,
+    421.0,
+    421.9
+   ],
+   "tool_span_ms_median": 421.9,
+   "wall_ms": [
+    12457.2,
+    12448.8,
+    12540.2
+   ],
+   "wall_ms_median": 12457.2
+  },
+  "ainvoke async asked=8 cap=none": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    210.5,
+    210.2,
+    210.8
+   ],
+   "tool_span_ms_median": 210.5,
+   "wall_ms": [
+    11995.8,
+    12259.2,
+    12472.5
+   ],
+   "wall_ms_median": 12259.2
+  },
+  "ainvoke sync asked=8 cap=1": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    1,
+    1,
+    1
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    1670.1,
+    1669.7,
+    1666.7
+   ],
+   "tool_span_ms_median": 1669.7,
+   "wall_ms": [
+    13637.8,
+    13944.0,
+    13938.0
+   ],
+   "wall_ms_median": 13938.0
+  },
+  "ainvoke sync asked=8 cap=4": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    4,
+    4,
+    4
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    431.0,
+    432.0,
+    431.0
+   ],
+   "tool_span_ms_median": 431.0,
+   "wall_ms": [
+    12367.1,
+    12414.4,
+    12522.2
+   ],
+   "wall_ms_median": 12414.4
+  },
+  "ainvoke sync asked=8 cap=none": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    230.0,
+    231.2,
+    233.5
+   ],
+   "tool_span_ms_median": 231.2,
+   "wall_ms": [
+    12020.5,
+    12025.8,
+    12256.1
+   ],
+   "wall_ms_median": 12025.8
+  },
+  "invoke async asked=8 cap=1": {
+   "calls_made": [
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 3
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 3,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=8 cap=4": {
+   "calls_made": [
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 3
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 3,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=8 cap=none": {
+   "calls_made": [
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 3
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 3,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke sync asked=8 cap=1": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    1,
+    1,
+    1
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    1674.0,
+    1678.3,
+    1672.1
+   ],
+   "tool_span_ms_median": 1674.0,
+   "wall_ms": [
+    14004.1,
+    13906.6,
+    13678.3
+   ],
+   "wall_ms_median": 13906.6
+  },
+  "invoke sync asked=8 cap=4": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    4,
+    4,
+    4
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    437.2,
+    442.0,
+    436.3
+   ],
+   "tool_span_ms_median": 437.2,
+   "wall_ms": [
+    12799.7,
+    12761.5,
+    12480.6
+   ],
+   "wall_ms_median": 12761.5
+  },
+  "invoke sync asked=8 cap=none": {
+   "calls_made": [
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8
+   ],
+   "runs": 3,
+   "tool_span_ms": [
+    229.2,
+    228.4,
+    230.9
+   ],
+   "tool_span_ms_median": 229.2,
+   "wall_ms": [
+    12055.6,
+    12336.8,
+    12468.5
+   ],
+   "wall_ms_median": 12336.8
+  }
+ },
+ "agent_wall_s": [
+  10.7,
+  14.0
+ ],
+ "counts": {
+  "qwen3:4b-instruct-2507-q4_K_M chatollama asked 1": {
+   "all_have_id": true,
+   "distinct_args": 1,
+   "invalid": 0,
+   "made": 2,
+   "secs": 4.82
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatollama asked 16": {
+   "all_have_id": true,
+   "distinct_args": 16,
+   "invalid": 0,
+   "made": 16,
+   "secs": 24.12
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatollama asked 2": {
+   "all_have_id": true,
+   "distinct_args": 2,
+   "invalid": 0,
+   "made": 2,
+   "secs": 3.59
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatollama asked 4": {
+   "all_have_id": true,
+   "distinct_args": 4,
+   "invalid": 0,
+   "made": 4,
+   "secs": 6.54
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatollama asked 8": {
+   "all_have_id": true,
+   "distinct_args": 8,
+   "invalid": 0,
+   "made": 8,
+   "secs": 12.53
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatopenai_ollama_v1 asked 1": {
+   "all_have_id": true,
+   "distinct_args": 1,
+   "invalid": 0,
+   "made": 2,
+   "secs": 4.37
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatopenai_ollama_v1 asked 16": {
+   "all_have_id": true,
+   "distinct_args": 16,
+   "invalid": 0,
+   "made": 16,
+   "secs": 21.42
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatopenai_ollama_v1 asked 2": {
+   "all_have_id": true,
+   "distinct_args": 2,
+   "invalid": 0,
+   "made": 2,
+   "secs": 3.53
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatopenai_ollama_v1 asked 4": {
+   "all_have_id": true,
+   "distinct_args": 4,
+   "invalid": 0,
+   "made": 4,
+   "secs": 6.68
+  },
+  "qwen3:4b-instruct-2507-q4_K_M chatopenai_ollama_v1 asked 8": {
+   "all_have_id": true,
+   "distinct_args": 8,
+   "invalid": 0,
+   "made": 8,
+   "secs": 11.57
+  },
+  "qwen3:8b chatollama asked 1": {
+   "all_have_id": true,
+   "distinct_args": 1,
+   "invalid": 0,
+   "made": 1,
+   "secs": 14.42
+  },
+  "qwen3:8b chatollama asked 16": {
+   "all_have_id": true,
+   "distinct_args": 2,
+   "invalid": 0,
+   "made": 2,
+   "secs": 48.42
+  },
+  "qwen3:8b chatollama asked 2": {
+   "all_have_id": true,
+   "distinct_args": 2,
+   "invalid": 0,
+   "made": 2,
+   "secs": 6.83
+  },
+  "qwen3:8b chatollama asked 4": {
+   "all_have_id": true,
+   "distinct_args": 2,
+   "invalid": 0,
+   "made": 2,
+   "secs": 12.66
+  },
+  "qwen3:8b chatollama asked 8": {
+   "all_have_id": true,
+   "distinct_args": 8,
+   "invalid": 0,
+   "made": 8,
+   "secs": 24.11
+  },
+  "qwen3:8b chatopenai_ollama_v1 asked 1": {
+   "all_have_id": true,
+   "distinct_args": 1,
+   "invalid": 0,
+   "made": 1,
+   "secs": 3.76
+  },
+  "qwen3:8b chatopenai_ollama_v1 asked 16": {
+   "all_have_id": true,
+   "distinct_args": 2,
+   "invalid": 0,
+   "made": 2,
+   "secs": 46.5
+  },
+  "qwen3:8b chatopenai_ollama_v1 asked 2": {
+   "all_have_id": true,
+   "distinct_args": 2,
+   "invalid": 0,
+   "made": 2,
+   "secs": 6.5
+  },
+  "qwen3:8b chatopenai_ollama_v1 asked 4": {
+   "all_have_id": true,
+   "distinct_args": 2,
+   "invalid": 0,
+   "made": 2,
+   "secs": 12.57
+  },
+  "qwen3:8b chatopenai_ollama_v1 asked 8": {
+   "all_have_id": true,
+   "distinct_args": 8,
+   "invalid": 0,
+   "made": 8,
+   "secs": 23.15
+  }
+ },
+ "cpu_count": 32,
+ "dupnames": {
+  "Delete the account acct-7. order=priv+safe": {
+   "bound_to_model": [
+    [
+     "account_action",
+     "Look up an account without side effects."
+    ]
+   ],
+   "final": [
+    "I cannot assist with deleting accounts or performing actions that involve accoun",
+    "I cannot assist with deleting accounts or performing actions that involve accoun",
+    "I cannot assist with deleting accounts or performing actions that involve accoun"
+   ],
+   "model_calls": [
+    0,
+    0,
+    0
+   ],
+   "ran": [
+    [],
+    [],
+    []
+   ],
+   "runs": 3
+  },
+  "Delete the account acct-7. order=safe+priv": {
+   "bound_to_model": [
+    [
+     "account_action",
+     "Delete an account."
+    ]
+   ],
+   "final": [
+    "The account with ID \"acct-7\" has been successfully deleted.",
+    "The account with ID \"acct-7\" has been successfully deleted.",
+    "The account with ID \"acct-7\" has been successfully deleted."
+   ],
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "ran": [
+    [
+     "privileged_delete"
+    ],
+    [
+     "privileged_delete"
+    ],
+    [
+     "privileged_delete"
+    ]
+   ],
+   "runs": 3
+  },
+  "Look up the account acct-7. order=priv+safe": {
+   "bound_to_model": [
+    [
+     "account_action",
+     "Look up an account without side effects."
+    ]
+   ],
+   "final": [
+    "The account with ID \"acct-7\" has been successfully looked up. Let me know if you",
+    "The account with ID \"acct-7\" has been successfully looked up. Let me know if you",
+    "The account with ID \"acct-7\" has been successfully looked up. Let me know if you"
+   ],
+   "model_calls": [
+    1,
+    1,
+    1
+   ],
+   "ran": [
+    [
+     "safe_lookup"
+    ],
+    [
+     "safe_lookup"
+    ],
+    [
+     "safe_lookup"
+    ]
+   ],
+   "runs": 3
+  },
+  "Look up the account acct-7. order=safe+priv": {
+   "bound_to_model": [
+    [
+     "account_action",
+     "Delete an account."
+    ]
+   ],
+   "final": [
+    "I cannot look up or retrieve information about an account as no tool is availabl",
+    "I cannot look up or retrieve information about an account as no tool is availabl",
+    "I cannot look up or retrieve information about an account as no tool is availabl"
+   ],
+   "model_calls": [
+    0,
+    0,
+    0
+   ],
+   "ran": [
+    [],
+    [],
+    []
+   ],
+   "runs": 3
+  }
+ },
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "made_per_asked": {
+  "1": 2,
+  "16": 16,
+  "2": 2,
+  "4": 4,
+  "8": 8
+ },
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on CPU, temperature 0, seed 42, server context 8192; the counts also ran qwen3:8b with reasoning off",
+ "not_used": "rows with warmup true in 04; the 4B reply for asked 1 holds 2 identical calls, so its ToolNode rows are 2-call rows",
+ "raw_ollama_ids": {
+  "/api/chat stream=false": {
+   "ids": [
+    true,
+    true
+   ]
+  },
+  "/v1/chat/completions": {
+   "ids": [
+    true,
+    true
+   ]
+  }
+ },
+ "run": "toolnode: ToolNode fed the AIMessage that qwen3 4B returned for each asked count, 5 runs per cell after a warm-up pass; agent: create_agent with a model call in every run, asked for 8 calls, 3 runs per cell",
+ "sources": [
+  "capture/lab/T08-parallel-tools-x86/01-counts.jsonl",
+  "capture/lab/T08-parallel-tools-x86/02-raw-ollama.jsonl",
+  "capture/lab/T08-parallel-tools-x86/03-dupnames.jsonl",
+  "capture/lab/T08-parallel-tools-x86/04-toolnode.jsonl",
+  "capture/lab/T08-parallel-tools-x86/05-agent.jsonl",
+  "capture/lab/T08-parallel-tools-x86/t08_real.py",
+  "capture/lab/T08-parallel-tools-x86/lr_common.py"
+ ],
+ "tool": "work runs SELECT pg_sleep(0.2) on PostgreSQL 16.15, with psycopg sync or AsyncConnection",
+ "toolnode": {
+  "ainvoke async asked=1 cap=1": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.2,
+    207.8,
+    208.3,
+    208.1,
+    207.9
+   ],
+   "tool_span_ms_median": 208.1,
+   "wall_ms": [
+    212.0,
+    211.9,
+    212.4,
+    212.4,
+    211.9
+   ],
+   "wall_ms_median": 212.0
+  },
+  "ainvoke async asked=1 cap=2": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.4,
+    207.9,
+    208.1,
+    208.6,
+    207.6
+   ],
+   "tool_span_ms_median": 208.1,
+   "wall_ms": [
+    213.2,
+    211.9,
+    212.5,
+    212.5,
+    211.5
+   ],
+   "wall_ms_median": 212.5
+  },
+  "ainvoke async asked=1 cap=4": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.4,
+    208.4,
+    208.0,
+    208.2,
+    208.0
+   ],
+   "tool_span_ms_median": 208.2,
+   "wall_ms": [
+    212.3,
+    212.3,
+    213.3,
+    212.2,
+    212.3
+   ],
+   "wall_ms_median": 212.3
+  },
+  "ainvoke async asked=1 cap=8": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    207.9,
+    207.9,
+    208.0,
+    208.0,
+    207.6
+   ],
+   "tool_span_ms_median": 207.9,
+   "wall_ms": [
+    211.8,
+    211.7,
+    212.0,
+    211.9,
+    211.4
+   ],
+   "wall_ms_median": 211.8
+  },
+  "ainvoke async asked=1 cap=none": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.2,
+    207.9,
+    207.9,
+    208.1,
+    208.0
+   ],
+   "tool_span_ms_median": 208.0,
+   "wall_ms": [
+    213.2,
+    211.8,
+    212.0,
+    213.5,
+    212.0
+   ],
+   "wall_ms_median": 212.0
+  },
+  "ainvoke async asked=16 cap=1": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    224.2,
+    220.6,
+    224.6,
+    221.4,
+    221.4
+   ],
+   "tool_span_ms_median": 221.4,
+   "wall_ms": [
+    235.6,
+    233.5,
+    237.8,
+    233.7,
+    233.5
+   ],
+   "wall_ms_median": 233.7
+  },
+  "ainvoke async asked=16 cap=2": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    219.9,
+    220.6,
+    220.6,
+    221.5,
+    222.7
+   ],
+   "tool_span_ms_median": 220.6,
+   "wall_ms": [
+    233.0,
+    233.0,
+    233.2,
+    232.8,
+    234.9
+   ],
+   "wall_ms_median": 233.0
+  },
+  "ainvoke async asked=16 cap=4": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    220.9,
+    222.5,
+    220.8,
+    222.9,
+    221.2
+   ],
+   "tool_span_ms_median": 221.2,
+   "wall_ms": [
+    232.5,
+    235.4,
+    232.4,
+    235.4,
+    232.7
+   ],
+   "wall_ms_median": 232.7
+  },
+  "ainvoke async asked=16 cap=8": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    221.2,
+    221.5,
+    220.5,
+    221.4,
+    221.5
+   ],
+   "tool_span_ms_median": 221.4,
+   "wall_ms": [
+    233.1,
+    233.0,
+    233.7,
+    233.0,
+    233.9
+   ],
+   "wall_ms_median": 233.1
+  },
+  "ainvoke async asked=16 cap=none": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    220.2,
+    221.1,
+    221.0,
+    222.2,
+    221.7
+   ],
+   "tool_span_ms_median": 221.1,
+   "wall_ms": [
+    232.4,
+    233.8,
+    232.9,
+    233.7,
+    234.4
+   ],
+   "wall_ms_median": 233.7
+  },
+  "ainvoke async asked=2 cap=1": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.3,
+    208.3,
+    208.3,
+    207.9,
+    208.8
+   ],
+   "tool_span_ms_median": 208.3,
+   "wall_ms": [
+    212.3,
+    212.0,
+    212.9,
+    211.9,
+    213.3
+   ],
+   "wall_ms_median": 212.3
+  },
+  "ainvoke async asked=2 cap=2": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.5,
+    208.5,
+    208.0,
+    209.0,
+    208.8
+   ],
+   "tool_span_ms_median": 208.5,
+   "wall_ms": [
+    212.5,
+    212.4,
+    212.5,
+    212.9,
+    213.1
+   ],
+   "wall_ms_median": 212.5
+  },
+  "ainvoke async asked=2 cap=4": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.4,
+    207.8,
+    208.2,
+    209.1,
+    208.0
+   ],
+   "tool_span_ms_median": 208.2,
+   "wall_ms": [
+    212.4,
+    211.7,
+    212.1,
+    213.0,
+    211.7
+   ],
+   "wall_ms_median": 212.1
+  },
+  "ainvoke async asked=2 cap=8": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    207.6,
+    208.2,
+    207.6,
+    208.3,
+    208.8
+   ],
+   "tool_span_ms_median": 208.2,
+   "wall_ms": [
+    211.4,
+    212.5,
+    211.3,
+    212.0,
+    213.0
+   ],
+   "wall_ms_median": 212.0
+  },
+  "ainvoke async asked=2 cap=none": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.1,
+    208.1,
+    208.0,
+    207.9,
+    208.6
+   ],
+   "tool_span_ms_median": 208.1,
+   "wall_ms": [
+    211.9,
+    212.1,
+    212.2,
+    211.8,
+    212.6
+   ],
+   "wall_ms_median": 212.1
+  },
+  "ainvoke async asked=4 cap=1": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.4,
+    209.5,
+    209.9,
+    209.0,
+    209.3
+   ],
+   "tool_span_ms_median": 209.4,
+   "wall_ms": [
+    214.3,
+    215.1,
+    214.8,
+    214.4,
+    214.6
+   ],
+   "wall_ms_median": 214.6
+  },
+  "ainvoke async asked=4 cap=2": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.1,
+    209.4,
+    209.3,
+    209.7,
+    209.8
+   ],
+   "tool_span_ms_median": 209.4,
+   "wall_ms": [
+    214.6,
+    214.5,
+    214.8,
+    214.7,
+    215.3
+   ],
+   "wall_ms_median": 214.7
+  },
+  "ainvoke async asked=4 cap=4": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    210.0,
+    210.1,
+    209.6,
+    210.2,
+    209.7
+   ],
+   "tool_span_ms_median": 210.0,
+   "wall_ms": [
+    215.2,
+    215.0,
+    215.3,
+    215.2,
+    215.1
+   ],
+   "wall_ms_median": 215.2
+  },
+  "ainvoke async asked=4 cap=8": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    210.0,
+    209.5,
+    209.3,
+    209.2,
+    208.9
+   ],
+   "tool_span_ms_median": 209.3,
+   "wall_ms": [
+    214.9,
+    214.5,
+    214.5,
+    214.0,
+    214.1
+   ],
+   "wall_ms_median": 214.5
+  },
+  "ainvoke async asked=4 cap=none": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.3,
+    209.5,
+    209.8,
+    209.0,
+    209.8
+   ],
+   "tool_span_ms_median": 209.5,
+   "wall_ms": [
+    214.3,
+    215.1,
+    215.1,
+    215.4,
+    215.5
+   ],
+   "wall_ms_median": 215.1
+  },
+  "ainvoke async asked=8 cap=1": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    212.5,
+    212.9,
+    212.6,
+    212.6,
+    213.1
+   ],
+   "tool_span_ms_median": 212.6,
+   "wall_ms": [
+    219.6,
+    221.3,
+    219.8,
+    219.5,
+    221.1
+   ],
+   "wall_ms_median": 219.8
+  },
+  "ainvoke async asked=8 cap=2": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    212.6,
+    213.0,
+    213.6,
+    211.8,
+    211.8
+   ],
+   "tool_span_ms_median": 212.6,
+   "wall_ms": [
+    220.9,
+    221.1,
+    221.2,
+    218.5,
+    220.4
+   ],
+   "wall_ms_median": 220.9
+  },
+  "ainvoke async asked=8 cap=4": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    212.3,
+    212.4,
+    212.5,
+    212.6,
+    211.8
+   ],
+   "tool_span_ms_median": 212.4,
+   "wall_ms": [
+    220.5,
+    220.3,
+    220.8,
+    220.5,
+    220.5
+   ],
+   "wall_ms_median": 220.5
+  },
+  "ainvoke async asked=8 cap=8": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    213.2,
+    213.3,
+    212.8,
+    212.8,
+    213.0
+   ],
+   "tool_span_ms_median": 213.0,
+   "wall_ms": [
+    220.4,
+    220.6,
+    221.2,
+    219.9,
+    220.1
+   ],
+   "wall_ms_median": 220.4
+  },
+  "ainvoke async asked=8 cap=none": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    212.5,
+    212.8,
+    212.4,
+    211.9,
+    212.6
+   ],
+   "tool_span_ms_median": 212.5,
+   "wall_ms": [
+    219.6,
+    219.8,
+    220.1,
+    219.2,
+    219.8
+   ],
+   "wall_ms_median": 219.8
+  },
+  "ainvoke sync asked=1 cap=1": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.5,
+    209.2,
+    208.5,
+    209.1,
+    209.9
+   ],
+   "tool_span_ms_median": 209.1,
+   "wall_ms": [
+    213.7,
+    213.9,
+    213.6,
+    214.6,
+    215.0
+   ],
+   "wall_ms_median": 213.9
+  },
+  "ainvoke sync asked=1 cap=2": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.9,
+    211.0,
+    208.3,
+    210.2,
+    210.7
+   ],
+   "tool_span_ms_median": 210.2,
+   "wall_ms": [
+    215.0,
+    218.2,
+    213.3,
+    215.5,
+    216.5
+   ],
+   "wall_ms_median": 215.5
+  },
+  "ainvoke sync asked=1 cap=4": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.6,
+    209.6,
+    210.7,
+    208.7,
+    209.5
+   ],
+   "tool_span_ms_median": 209.6,
+   "wall_ms": [
+    214.6,
+    214.8,
+    216.4,
+    213.9,
+    214.9
+   ],
+   "wall_ms_median": 214.8
+  },
+  "ainvoke sync asked=1 cap=8": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.8,
+    209.4,
+    210.0,
+    209.3,
+    209.8
+   ],
+   "tool_span_ms_median": 209.8,
+   "wall_ms": [
+    215.2,
+    214.6,
+    216.2,
+    215.4,
+    215.3
+   ],
+   "wall_ms_median": 215.3
+  },
+  "ainvoke sync asked=1 cap=none": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.6,
+    208.3,
+    209.2,
+    209.6,
+    210.1
+   ],
+   "tool_span_ms_median": 209.6,
+   "wall_ms": [
+    214.8,
+    213.0,
+    214.5,
+    214.9,
+    216.0
+   ],
+   "wall_ms_median": 214.8
+  },
+  "ainvoke sync asked=16 cap=1": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    259.6,
+    259.1,
+    257.1,
+    257.9,
+    253.4
+   ],
+   "tool_span_ms_median": 257.9,
+   "wall_ms": [
+    268.0,
+    267.8,
+    266.3,
+    267.1,
+    262.2
+   ],
+   "wall_ms_median": 267.1
+  },
+  "ainvoke sync asked=16 cap=2": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    352.6,
+    261.8,
+    257.0,
+    255.8,
+    256.3
+   ],
+   "tool_span_ms_median": 257.0,
+   "wall_ms": [
+    360.6,
+    271.4,
+    266.5,
+    265.7,
+    265.6
+   ],
+   "wall_ms_median": 266.5
+  },
+  "ainvoke sync asked=16 cap=4": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    256.3,
+    255.4,
+    261.3,
+    262.5,
+    254.8
+   ],
+   "tool_span_ms_median": 256.3,
+   "wall_ms": [
+    265.2,
+    264.4,
+    270.7,
+    271.8,
+    264.5
+   ],
+   "wall_ms_median": 265.2
+  },
+  "ainvoke sync asked=16 cap=8": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    259.3,
+    255.8,
+    259.5,
+    255.6,
+    257.4
+   ],
+   "tool_span_ms_median": 257.4,
+   "wall_ms": [
+    268.1,
+    265.3,
+    269.1,
+    265.0,
+    266.5
+   ],
+   "wall_ms_median": 266.5
+  },
+  "ainvoke sync asked=16 cap=none": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    260.3,
+    262.2,
+    255.9,
+    260.7,
+    259.7
+   ],
+   "tool_span_ms_median": 260.3,
+   "wall_ms": [
+    269.2,
+    271.3,
+    264.8,
+    270.3,
+    268.5
+   ],
+   "wall_ms_median": 269.2
+  },
+  "ainvoke sync asked=2 cap=1": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.3,
+    209.9,
+    209.0,
+    209.2,
+    209.1
+   ],
+   "tool_span_ms_median": 209.2,
+   "wall_ms": [
+    214.4,
+    215.5,
+    214.1,
+    215.2,
+    214.4
+   ],
+   "wall_ms_median": 214.4
+  },
+  "ainvoke sync asked=2 cap=2": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.9,
+    209.2,
+    209.0,
+    208.6,
+    209.5
+   ],
+   "tool_span_ms_median": 209.0,
+   "wall_ms": [
+    214.0,
+    214.5,
+    214.1,
+    214.0,
+    215.0
+   ],
+   "wall_ms_median": 214.1
+  },
+  "ainvoke sync asked=2 cap=4": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    210.4,
+    209.5,
+    209.6,
+    209.9,
+    210.5
+   ],
+   "tool_span_ms_median": 209.9,
+   "wall_ms": [
+    215.6,
+    214.9,
+    216.2,
+    215.2,
+    216.4
+   ],
+   "wall_ms_median": 215.6
+  },
+  "ainvoke sync asked=2 cap=8": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.5,
+    210.1,
+    209.5,
+    209.0,
+    209.0
+   ],
+   "tool_span_ms_median": 209.5,
+   "wall_ms": [
+    215.1,
+    215.9,
+    214.8,
+    215.5,
+    214.8
+   ],
+   "wall_ms_median": 215.1
+  },
+  "ainvoke sync asked=2 cap=none": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.4,
+    209.7,
+    209.8,
+    209.1,
+    209.6
+   ],
+   "tool_span_ms_median": 209.6,
+   "wall_ms": [
+    214.5,
+    215.3,
+    215.3,
+    214.8,
+    216.2
+   ],
+   "wall_ms_median": 215.3
+  },
+  "ainvoke sync asked=4 cap=1": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    214.3,
+    213.2,
+    215.1,
+    212.6,
+    214.5
+   ],
+   "tool_span_ms_median": 214.3,
+   "wall_ms": [
+    220.0,
+    218.9,
+    221.9,
+    218.5,
+    220.2
+   ],
+   "wall_ms_median": 220.0
+  },
+  "ainvoke sync asked=4 cap=2": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    215.2,
+    214.8,
+    213.7,
+    214.7,
+    214.2
+   ],
+   "tool_span_ms_median": 214.7,
+   "wall_ms": [
+    221.7,
+    220.7,
+    219.5,
+    221.7,
+    220.6
+   ],
+   "wall_ms_median": 220.7
+  },
+  "ainvoke sync asked=4 cap=4": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    213.2,
+    213.2,
+    216.8,
+    215.4,
+    215.4
+   ],
+   "tool_span_ms_median": 215.4,
+   "wall_ms": [
+    218.7,
+    218.9,
+    223.1,
+    221.3,
+    222.4
+   ],
+   "wall_ms_median": 221.3
+  },
+  "ainvoke sync asked=4 cap=8": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    215.1,
+    213.0,
+    214.4,
+    213.9,
+    215.9
+   ],
+   "tool_span_ms_median": 214.4,
+   "wall_ms": [
+    220.7,
+    220.1,
+    220.5,
+    219.8,
+    223.0
+   ],
+   "wall_ms_median": 220.5
+  },
+  "ainvoke sync asked=4 cap=none": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    215.1,
+    214.4,
+    213.5,
+    214.2,
+    216.3
+   ],
+   "tool_span_ms_median": 214.4,
+   "wall_ms": [
+    221.5,
+    221.5,
+    219.4,
+    220.4,
+    223.2
+   ],
+   "wall_ms_median": 221.5
+  },
+  "ainvoke sync asked=8 cap=1": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    231.5,
+    232.4,
+    230.0,
+    232.3,
+    229.5
+   ],
+   "tool_span_ms_median": 231.5,
+   "wall_ms": [
+    238.7,
+    239.1,
+    236.9,
+    239.5,
+    236.4
+   ],
+   "wall_ms_median": 238.7
+  },
+  "ainvoke sync asked=8 cap=2": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    231.1,
+    235.5,
+    229.9,
+    229.6,
+    228.3
+   ],
+   "tool_span_ms_median": 229.9,
+   "wall_ms": [
+    238.3,
+    242.8,
+    238.1,
+    236.5,
+    237.2
+   ],
+   "wall_ms_median": 238.1
+  },
+  "ainvoke sync asked=8 cap=4": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    228.8,
+    229.9,
+    230.1,
+    231.7,
+    228.3
+   ],
+   "tool_span_ms_median": 229.9,
+   "wall_ms": [
+    236.0,
+    235.4,
+    237.9,
+    238.9,
+    235.8
+   ],
+   "wall_ms_median": 236.0
+  },
+  "ainvoke sync asked=8 cap=8": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    229.3,
+    232.5,
+    228.0,
+    235.6,
+    231.8
+   ],
+   "tool_span_ms_median": 231.8,
+   "wall_ms": [
+    236.8,
+    239.5,
+    235.1,
+    242.7,
+    238.8
+   ],
+   "wall_ms_median": 238.8
+  },
+  "ainvoke sync asked=8 cap=none": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    231.1,
+    230.1,
+    233.4,
+    230.1,
+    230.8
+   ],
+   "tool_span_ms_median": 230.8,
+   "wall_ms": [
+    237.7,
+    236.9,
+    241.1,
+    237.1,
+    237.5
+   ],
+   "wall_ms_median": 237.5
+  },
+  "invoke async asked=1 cap=1": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=1 cap=2": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=1 cap=4": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=1 cap=8": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=1 cap=none": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=16 cap=1": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=16 cap=2": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=16 cap=4": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=16 cap=8": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=16 cap=none": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=2 cap=1": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=2 cap=2": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=2 cap=4": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=2 cap=8": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=2 cap=none": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=4 cap=1": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=4 cap=2": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=4 cap=4": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=4 cap=8": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=4 cap=none": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=8 cap=1": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=8 cap=2": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=8 cap=4": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=8 cap=8": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke async asked=8 cap=none": {
+   "calls_made": [
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "tool_span_ms": [],
+   "wall_ms": []
+  },
+  "invoke sync asked=1 cap=1": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    415.9,
+    415.5,
+    415.3,
+    416.3,
+    415.7
+   ],
+   "tool_span_ms_median": 415.7,
+   "wall_ms": [
+    419.7,
+    419.2,
+    419.0,
+    420.2,
+    419.8
+   ],
+   "wall_ms_median": 419.7
+  },
+  "invoke sync asked=1 cap=2": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.6,
+    209.4,
+    209.4,
+    208.5,
+    208.7
+   ],
+   "tool_span_ms_median": 208.7,
+   "wall_ms": [
+    212.4,
+    213.2,
+    213.9,
+    212.0,
+    212.5
+   ],
+   "wall_ms_median": 212.5
+  },
+  "invoke sync asked=1 cap=4": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.8,
+    209.0,
+    209.2,
+    209.4,
+    209.9
+   ],
+   "tool_span_ms_median": 209.4,
+   "wall_ms": [
+    214.2,
+    214.7,
+    213.0,
+    213.4,
+    214.1
+   ],
+   "wall_ms_median": 214.1
+  },
+  "invoke sync asked=1 cap=8": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.0,
+    209.5,
+    208.9,
+    208.8,
+    209.3
+   ],
+   "tool_span_ms_median": 209.0,
+   "wall_ms": [
+    212.8,
+    213.3,
+    212.7,
+    212.5,
+    213.2
+   ],
+   "wall_ms_median": 212.8
+  },
+  "invoke sync asked=1 cap=none": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.3,
+    209.6,
+    209.5,
+    208.7,
+    210.9
+   ],
+   "tool_span_ms_median": 209.5,
+   "wall_ms": [
+    213.9,
+    213.5,
+    214.0,
+    212.5,
+    215.2
+   ],
+   "wall_ms_median": 213.9
+  },
+  "invoke sync asked=16 cap=1": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    3326.8,
+    3327.5,
+    3325.2,
+    3327.4,
+    3324.6
+   ],
+   "tool_span_ms_median": 3326.8,
+   "wall_ms": [
+    3331.0,
+    3332.1,
+    3329.7,
+    3332.0,
+    3329.7
+   ],
+   "wall_ms_median": 3331.0
+  },
+  "invoke sync asked=16 cap=2": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    1668.3,
+    1669.1,
+    1670.4,
+    1666.0,
+    1669.6
+   ],
+   "tool_span_ms_median": 1669.1,
+   "wall_ms": [
+    1672.6,
+    1673.5,
+    1674.9,
+    1670.2,
+    1674.2
+   ],
+   "wall_ms_median": 1673.5
+  },
+  "invoke sync asked=16 cap=4": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    859.6,
+    849.3,
+    849.6,
+    849.9,
+    855.1
+   ],
+   "tool_span_ms_median": 849.9,
+   "wall_ms": [
+    864.8,
+    854.0,
+    854.4,
+    854.1,
+    860.3
+   ],
+   "wall_ms_median": 854.4
+  },
+  "invoke sync asked=16 cap=8": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    457.6,
+    454.0,
+    454.2,
+    450.1,
+    452.1
+   ],
+   "tool_span_ms_median": 454.0,
+   "wall_ms": [
+    463.2,
+    460.2,
+    460.0,
+    456.5,
+    457.3
+   ],
+   "wall_ms_median": 460.0
+  },
+  "invoke sync asked=16 cap=none": {
+   "calls_made": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    256.2,
+    257.8,
+    254.9,
+    251.6,
+    257.4
+   ],
+   "tool_span_ms_median": 256.2,
+   "wall_ms": [
+    263.4,
+    265.1,
+    264.2,
+    259.0,
+    264.4
+   ],
+   "wall_ms_median": 264.2
+  },
+  "invoke sync asked=2 cap=1": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    415.7,
+    415.9,
+    414.4,
+    414.2,
+    415.6
+   ],
+   "tool_span_ms_median": 415.6,
+   "wall_ms": [
+    419.4,
+    419.9,
+    418.6,
+    417.9,
+    420.0
+   ],
+   "wall_ms_median": 419.4
+  },
+  "invoke sync asked=2 cap=2": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    208.8,
+    208.1,
+    209.1,
+    209.8,
+    211.0
+   ],
+   "tool_span_ms_median": 209.1,
+   "wall_ms": [
+    213.2,
+    211.6,
+    212.9,
+    213.8,
+    215.4
+   ],
+   "wall_ms_median": 213.2
+  },
+  "invoke sync asked=2 cap=4": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.3,
+    209.9,
+    209.1,
+    208.8,
+    210.3
+   ],
+   "tool_span_ms_median": 209.3,
+   "wall_ms": [
+    213.1,
+    213.5,
+    213.4,
+    213.6,
+    214.9
+   ],
+   "wall_ms_median": 213.5
+  },
+  "invoke sync asked=2 cap=8": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.5,
+    209.6,
+    209.0,
+    209.8,
+    209.3
+   ],
+   "tool_span_ms_median": 209.5,
+   "wall_ms": [
+    213.9,
+    213.1,
+    213.0,
+    213.7,
+    213.1
+   ],
+   "wall_ms_median": 213.1
+  },
+  "invoke sync asked=2 cap=none": {
+   "calls_made": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    209.1,
+    209.3,
+    210.6,
+    209.3,
+    209.6
+   ],
+   "tool_span_ms_median": 209.3,
+   "wall_ms": [
+    212.8,
+    213.3,
+    214.8,
+    213.4,
+    213.8
+   ],
+   "wall_ms_median": 213.4
+  },
+  "invoke sync asked=4 cap=1": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    831.7,
+    829.8,
+    830.7,
+    831.3,
+    832.8
+   ],
+   "tool_span_ms_median": 831.3,
+   "wall_ms": [
+    835.5,
+    833.4,
+    834.2,
+    835.3,
+    836.7
+   ],
+   "wall_ms_median": 835.3
+  },
+  "invoke sync asked=4 cap=2": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    418.6,
+    418.0,
+    419.1,
+    418.9,
+    418.3
+   ],
+   "tool_span_ms_median": 418.6,
+   "wall_ms": [
+    422.6,
+    422.0,
+    422.8,
+    423.6,
+    422.3
+   ],
+   "wall_ms_median": 422.6
+  },
+  "invoke sync asked=4 cap=4": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    213.0,
+    213.5,
+    214.0,
+    213.7,
+    215.0
+   ],
+   "tool_span_ms_median": 213.7,
+   "wall_ms": [
+    216.7,
+    217.6,
+    218.2,
+    217.9,
+    219.6
+   ],
+   "wall_ms_median": 217.9
+  },
+  "invoke sync asked=4 cap=8": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    213.3,
+    212.9,
+    213.7,
+    214.1,
+    215.0
+   ],
+   "tool_span_ms_median": 213.7,
+   "wall_ms": [
+    217.5,
+    217.6,
+    217.7,
+    218.4,
+    219.9
+   ],
+   "wall_ms_median": 217.7
+  },
+  "invoke sync asked=4 cap=none": {
+   "calls_made": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    214.9,
+    213.7,
+    213.0,
+    215.3,
+    214.1
+   ],
+   "tool_span_ms_median": 214.1,
+   "wall_ms": [
+    219.1,
+    218.2,
+    217.0,
+    219.6,
+    218.6
+   ],
+   "wall_ms_median": 218.6
+  },
+  "invoke sync asked=8 cap=1": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    1657.4,
+    1662.5,
+    1662.9,
+    1662.8,
+    1668.6
+   ],
+   "tool_span_ms_median": 1662.8,
+   "wall_ms": [
+    1661.3,
+    1666.5,
+    1667.3,
+    1666.9,
+    1673.6
+   ],
+   "wall_ms_median": 1666.9
+  },
+  "invoke sync asked=8 cap=2": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    835.1,
+    833.8,
+    834.9,
+    833.0,
+    835.1
+   ],
+   "tool_span_ms_median": 834.9,
+   "wall_ms": [
+    839.0,
+    837.8,
+    839.2,
+    837.3,
+    840.6
+   ],
+   "wall_ms_median": 839.0
+  },
+  "invoke sync asked=8 cap=4": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    429.1,
+    426.4,
+    428.4,
+    427.9,
+    431.2
+   ],
+   "tool_span_ms_median": 428.4,
+   "wall_ms": [
+    434.1,
+    430.8,
+    433.3,
+    432.6,
+    436.2
+   ],
+   "wall_ms_median": 433.3
+  },
+  "invoke sync asked=8 cap=8": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    226.8,
+    229.8,
+    230.1,
+    229.1,
+    229.2
+   ],
+   "tool_span_ms_median": 229.2,
+   "wall_ms": [
+    231.7,
+    234.9,
+    235.4,
+    234.5,
+    234.8
+   ],
+   "wall_ms_median": 234.8
+  },
+  "invoke sync asked=8 cap=none": {
+   "calls_made": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "tool_span_ms": [
+    229.0,
+    231.5,
+    229.2,
+    230.3,
+    237.6
+   ],
+   "tool_span_ms_median": 230.3,
+   "wall_ms": [
+    234.6,
+    237.1,
+    234.3,
+    235.7,
+    243.2
+   ],
+   "wall_ms_median": 235.7
+  }
+ }
+}

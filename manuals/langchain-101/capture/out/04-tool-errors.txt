@@ -1,0 +1,388 @@
+# A tool that raises, bad arguments, and ToolErrorMiddleware
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## a tool raises, no middleware: the run raises
+
+invoke:
+
+raised builtins.RuntimeError: disk on fire
+
+## the model sends bad arguments: ToolNode returns an error ToolMessage and the loop continues
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "What is 2.5 + 3? Use the add tool.",
+    "id": "<uuid-1>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-2>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-3>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 169,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 169,
+      "output_tokens": 25,
+      "total_tokens": 194
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-4>",
+    "tool_call_id": "<uuid-3>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The add tool returned 5, but it only works with integers. Since 2.5 is not an integer, the tool cannot process it. Please provide integers for the addition operation.",
+    "id": "lc_run--<uuid-5>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 208,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 39,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 208,
+      "output_tokens": 39,
+      "total_tokens": 247
+    }
+  }
+]
+
+## a tool argument outside the schema: the model asks for volume 11 on a 0 to 10 tool
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Set the volume to 11.",
+    "id": "<uuid-6>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The volume cannot be set to 11 because the maximum volume level is 10. Let me know if you'd like me to adjust it to a different level within the valid range.",
+    "id": "lc_run--<uuid-7>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 160,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 40,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 160,
+      "output_tokens": 40,
+      "total_tokens": 200
+    }
+  }
+]
+
+## a tool raises, ToolErrorMiddleware turns it into a ToolMessage
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Read /etc/motd with the flaky_disk tool.",
+    "id": "<uuid-8>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-9>-0",
+    "tool_calls": [
+      {
+        "name": "flaky_disk",
+        "args": {
+          "path": "/etc/motd"
+        },
+        "id": "<uuid-10>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 163,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 24,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 163,
+      "output_tokens": 24,
+      "total_tokens": 187
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "RuntimeError in flaky_disk: disk on fire",
+    "name": "flaky_disk",
+    "id": "<uuid-11>",
+    "tool_call_id": "<uuid-10>",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The disk failed during the operation, likely due to a hardware issue (e.g., the disk is on fire). The file at /etc/motd could not be read safely. Please check the system hardware or contact support for further assistance.",
+    "id": "lc_run--<uuid-12>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 210,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 50,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 210,
+      "output_tokens": 50,
+      "total_tokens": 260
+    }
+  }
+]
+
+## ToolErrorMiddleware with no handler
+
+ToolErrorMiddleware():
+
+raised builtins.ValueError: ToolErrorMiddleware requires `on_error` and/or `aon_error`.
+
+## an unknown tool name from the model
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-13>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 5,
+          "b": -3
+        },
+        "id": "<uuid-14>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 188,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 188,
+      "output_tokens": 25,
+      "total_tokens": 213
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "2",
+    "name": "add",
+    "id": "<uuid-15>",
+    "tool_call_id": "<uuid-14>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The result of 5 - 3 is 2.",
+    "id": "lc_run--<uuid-16>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 227,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 13,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 227,
+      "output_tokens": 13,
+      "total_tokens": 240
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "unknown-tool",
+    "call": 1,
+    "messages": [
+      "system: Besides add, you have a tool named subtract that takes a and b. Use subtract for",
+      "human: What is 5 - 3? Use the subtract tool."
+    ],
+    "tools": [
+      "add"
+    ]
+  },
+  {
+    "model": "unknown-tool",
+    "call": 2,
+    "messages": [
+      "system: Besides add, you have a tool named subtract that takes a and b. Use subtract for",
+      "human: What is 5 - 3? Use the subtract tool.",
+      "ai: calls add",
+      "tool: 2"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]
+
+## a tool removed between two deploys: the saved call names a tool the new agent lacks
+
+the old agent paused before:
+[
+  "tools"
+]
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-17>-0",
+    "tool_calls": [
+      {
+        "name": "subtract",
+        "args": {
+          "a": 5,
+          "b": 3
+        },
+        "id": "<uuid-18>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 233,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 233,
+      "output_tokens": 25,
+      "total_tokens": 258
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Error: subtract is not a valid tool, try one of [add].",
+    "name": "subtract",
+    "id": "<uuid-19>",
+    "tool_call_id": "<uuid-18>",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "I apologize, but there is no \"subtract\" tool available. I can only use the \"add\" tool to perform calculations. Let me know if you'd like me to assist with something else!",
+    "id": "lc_run--<uuid-20>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 219,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 41,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 219,
+      "output_tokens": 41,
+      "total_tokens": 260
+    }
+  }
+]

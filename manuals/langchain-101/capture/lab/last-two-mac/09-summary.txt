@@ -1,0 +1,30 @@
+last-two-mac: real-model runs that replace the last two fake or stub results of LangChain 101 (3-2 recursion loop, 7-2 request body diff).
+Machine: the Mac (Apple M1 Max, 10 cores, 64 GiB, macOS 26.2), Ollama 0.31.1 on Metal, qwen3:4b-instruct-2507-q4_K_M, server default context (ollama ps: 262144), temperature 0, seed 42, no API keys, LANGSMITH_TRACING false. Pinned venv: langchain 1.5.0, langchain-core 1.8.0, langgraph 1.2.22, langgraph-prebuilt 1.1.2, langchain-openai 1.8.0, langchain-ollama 1.1.0, openai 3.51.0, ollama 0.6.3, Python 3.13.12. Every block row holds uptime and ollama ps; only Qwen3 4B was loaded in every block. 2026-11-15.
+
+== 1. ToolStrategy with tools=[] on a model that answers in text (01-toolstrategy-text.jsonl, lt1_toolstrategy_text.py) ==
+Prompt "What is 2 + 3?". ToolStrategy(AnswerDict TypedDict) and ToolStrategy(AnswerData dataclass), handle_errors default (True), tools=[]. ChatOllama on /api/chat and ChatOpenAI on /v1, through a proxy that kept every request and reply. recursion_limit 12 and 25. n=5 per cell, 8 cells, 40 runs. Load1 2.07-2.38.
+Result, 40/40 runs: 3 model calls, statuses 200, 200, 400, then the run raised. The recursion limit was never reached, and it made no difference (12 and 25 gave the same 3 calls).
+- Call 1: [user]. Reply "2 + 3 = 5." in text, no tool call.
+- Call 2: [user, assistant "2 + 3 = 5."]. Reply "2 + 3 = 5." in text again.
+- Call 3: [user, assistant, assistant]. Ollama 400: "Cannot have 2 or more assistant messages at the end of the list." (type invalid_request_error).
+- Error raised: ChatOllama -> ollama._types.ResponseError; ChatOpenAI -> langchain_openai.chat_models.base.OpenAIInvalidRequestError ("Error code: 400 - ...").
+- ChatOpenAI sent tool_choice "required" with the AnswerDict/AnswerData tool; ChatOllama sent no tool_choice. Qwen3 4B answered in text either way, so Ollama did not enforce tool_choice.
+- Confirms the x86 guest run (capture/out/07-structured-output.txt, ChatOllama): same three calls, same 400, now also on the GPU Mac and on the /v1 path.
+- Changed versus old: the scripted fake model made 12 calls under recursion_limit=12 and raised GraphRecursionError. With Qwen3 4B Instruct on Ollama the loop ends at the third call with a provider 400, whatever the limit.
+
+== 1b. The same loop on a model whose Ollama template takes several assistant messages (04-small-model-probe.jsonl, lt1b_small_model_probe.py) ==
+Why: the older real T06 set (T06-structured-output-mac/01 and 03) has GraphRecursionError rows at 10 calls on qwen3:0.6b, 1.7b, 4b and 8b, so some real runs did reach the limit; those rows do not keep the requests. This probe repeats one of them with the requests kept.
+qwen3:0.6b, ChatOllama (temperature 0, seed 42, reasoning False, num_predict 512, as t06_run.py), the T06 system prompt, ToolStrategy(Contact) from t06_schemas.py, tools=[], the T06 flat input 2 ("Email from chen.wei@example.org: 'This is Chen Wei. I turned 25 last month ..."), recursion_limit 12 and 25, n=5 each, 10 runs. Load1 3.81-5.38. Another agent had qwen3:8b loaded at the start (ollama ps in the block rows).
+Result, 10/10 runs: model calls = recursion_limit (12 in 5/5, 25 in 5/5), every status 200, then langgraph.errors.GraphRecursionError. 185 replies, 0 tool calls, 70 empty; the rest text ("None of the provided functions can extract information from the text. ...", "<none>", a ```json block with {"name": "nil", ...}). The same reply sequence in all 10 runs. The agent appended each reply as one more assistant message; Ollama accepted up to 24 assistant messages in a row for this model. Last request 1,724 B (limit 12) and 2,421 B (limit 25).
+So the 400 of 1 depends on the model (Qwen3 4B Instruct 2507 on Ollama 0.31.1), not on Ollama alone. With qwen3:0.6b the ToolStrategy text loop runs to the recursion limit, as the fake model did.
+
+== 2. Request body diff, plain openai loop vs create_agent(ChatOpenAI) (02-request-bodies.jsonl, 03-request-body-diff.txt, lt2_body_diff.py, lt2_diff.py) ==
+The T01 task (add(2,3), then multiply(5,4), answer "20"), 3 model calls, tools add and multiply. A proxy in front of Ollama /v1 kept each raw request body and the request headers. 1 warm-up round (dropped) + 5 timed rounds, alternating program order. n=5 per program, 10/10 correct ("20"), 0 errors. Load1 2.97-3.72.
+Bytes per call, identical in all 5 runs of each program: plain 679, 936, 1,199; create_agent 696, 948, 1,206; +17, +12, +7. Same as T01-overhead-mac-real (40 runs). Tool call ids: 32 characters in every request of both programs.
+Byte ledger (each item computed from the parsed bodies; the ledger sum equals the measured difference on every call):
+- every call: +15 B "stream":false (ChatOpenAI sets it; the openai client leaves it out); +2 B "temperature":0.0 against 0.
+- per earlier assistant tool-call turn in the history (calls 2 and 3): +2 B "content":null against "" (the plain loop echoes Ollama's ""); +3 B the arguments string re-serialized with spaces, {"a": 2, "b": 3} against {"a":2,"b":3} as Ollama sent it; -10 B "index":0, which the plain loop copies from tc.model_dump() and LangChain does not send. Net -5 B per turn.
+- call 1 = 17, call 2 = 17 - 5 = 12, call 3 = 17 - 10 = 7.
+- 0 B, but not the same bytes: create_agent writes "content" before "role" in every message, "type":"function" before "id" in tool calls, "name" before "arguments", and "type":"object" after "required" in each tool schema. The tool schemas are equal as parsed JSON, not as bytes; the messages differ as listed. The old line "The messages and the tool schemas are the same, byte for byte." does not hold for the real bodies.
+- Headers (every request, every timed round): create_agent sends x-stainless-raw-response: true and no x-stainless-read-timeout; the plain loop sends x-stainless-read-timeout: 600 and no x-stainless-raw-response. Same as the stub record.
+- Tokens are not part of this run; T01-overhead-mac-real already has prompt tokens 261, 300, 340 for both programs.

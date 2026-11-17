@@ -1,0 +1,466 @@
+{
+ "cells": {
+  "pool20 1": {
+   "client_cpu_pct": [
+    28,
+    26
+   ],
+   "config": "pool20",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    2,
+    2
+   ],
+   "step_p50_ms": [
+    23.6,
+    23.6
+   ],
+   "step_p99_ms": [
+    28.8,
+    29.4
+   ],
+   "steps_per_s": [
+    40.5,
+    40.5
+   ],
+   "threads": 1
+  },
+  "pool20 10": {
+   "client_cpu_pct": [
+    108,
+    108
+   ],
+   "config": "pool20",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    11,
+    10
+   ],
+   "step_p50_ms": [
+    34.3,
+    26.6
+   ],
+   "step_p99_ms": [
+    62.0,
+    60.4
+   ],
+   "steps_per_s": [
+    274.3,
+    314.5
+   ],
+   "threads": 10
+  },
+  "pool20 200": {
+   "client_cpu_pct": [
+    109,
+    109
+   ],
+   "config": "pool20",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    20,
+    21
+   ],
+   "step_p50_ms": [
+    223.4,
+    225.7
+   ],
+   "step_p99_ms": [
+    1994.9,
+    1929.6
+   ],
+   "steps_per_s": [
+    351.1,
+    353.6
+   ],
+   "threads": 200
+  },
+  "pool20 50": {
+   "client_cpu_pct": [
+    110,
+    109
+   ],
+   "config": "pool20",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    20,
+    20
+   ],
+   "step_p50_ms": [
+    96.6,
+    121.5
+   ],
+   "step_p99_ms": [
+    439.1,
+    458.5
+   ],
+   "steps_per_s": [
+    339.3,
+    331.5
+   ],
+   "threads": 50
+  },
+  "pool20 500": {
+   "client_cpu_pct": [
+    108,
+    108
+   ],
+   "config": "pool20",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    20,
+    20
+   ],
+   "step_p50_ms": [
+    499.7,
+    531.7
+   ],
+   "step_p99_ms": [
+    5691.4,
+    5830.0
+   ],
+   "steps_per_s": [
+    341.5,
+    325.5
+   ],
+   "threads": 500
+  },
+  "pool90 1": {
+   "client_cpu_pct": [
+    26,
+    26
+   ],
+   "config": "pool90",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    2,
+    2
+   ],
+   "step_p50_ms": [
+    23.6,
+    23.8
+   ],
+   "step_p99_ms": [
+    29.2,
+    28.8
+   ],
+   "steps_per_s": [
+    40.5,
+    40.6
+   ],
+   "threads": 1
+  },
+  "pool90 10": {
+   "client_cpu_pct": [
+    108,
+    109
+   ],
+   "config": "pool90",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    10,
+    10
+   ],
+   "step_p50_ms": [
+    28.7,
+    31.5
+   ],
+   "step_p99_ms": [
+    72.6,
+    58.0
+   ],
+   "steps_per_s": [
+    288.6,
+    289.9
+   ],
+   "threads": 10
+  },
+  "pool90 200": {
+   "client_cpu_pct": [
+    108,
+    109
+   ],
+   "config": "pool90",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    71,
+    71
+   ],
+   "step_p50_ms": [
+    316.8,
+    329.3
+   ],
+   "step_p99_ms": [
+    2289.2,
+    2143.4
+   ],
+   "steps_per_s": [
+    330.9,
+    319.4
+   ],
+   "threads": 200
+  },
+  "pool90 50": {
+   "client_cpu_pct": [
+    110,
+    109
+   ],
+   "config": "pool90",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    34,
+    33
+   ],
+   "step_p50_ms": [
+    117.7,
+    120.7
+   ],
+   "step_p99_ms": [
+    436.8,
+    471.0
+   ],
+   "steps_per_s": [
+    337.0,
+    332.4
+   ],
+   "threads": 50
+  },
+  "pool90 500": {
+   "client_cpu_pct": [
+    109,
+    108
+   ],
+   "config": "pool90",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    90,
+    90
+   ],
+   "step_p50_ms": [
+    682.2,
+    714.3
+   ],
+   "step_p99_ms": [
+    5612.2,
+    5872.8
+   ],
+   "steps_per_s": [
+    326.5,
+    312.7
+   ],
+   "threads": 500
+  },
+  "single 1": {
+   "client_cpu_pct": [
+    25,
+    27
+   ],
+   "config": "single",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    1,
+    1
+   ],
+   "step_p50_ms": [
+    22.3,
+    22.6
+   ],
+   "step_p99_ms": [
+    29.5,
+    27.7
+   ],
+   "steps_per_s": [
+    41.9,
+    41.9
+   ],
+   "threads": 1
+  },
+  "single 10": {
+   "client_cpu_pct": [
+    82,
+    81
+   ],
+   "config": "single",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    1,
+    1
+   ],
+   "step_p50_ms": [
+    22.3,
+    22.8
+   ],
+   "step_p99_ms": [
+    92.2,
+    103.2
+   ],
+   "steps_per_s": [
+    267.7,
+    258.0
+   ],
+   "threads": 10
+  },
+  "single 200": {
+   "client_cpu_pct": [
+    77,
+    73
+   ],
+   "config": "single",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    2,
+    1
+   ],
+   "step_p50_ms": [
+    55.4,
+    48.6
+   ],
+   "step_p99_ms": [
+    4356.4,
+    4014.7
+   ],
+   "steps_per_s": [
+    218.3,
+    236.2
+   ],
+   "threads": 200
+  },
+  "single 50": {
+   "client_cpu_pct": [
+    74,
+    73
+   ],
+   "config": "single",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    1,
+    1
+   ],
+   "step_p50_ms": [
+    47.1,
+    43.7
+   ],
+   "step_p99_ms": [
+    955.1,
+    779.2
+   ],
+   "steps_per_s": [
+    236.2,
+    248.5
+   ],
+   "threads": 50
+  },
+  "single 500": {
+   "client_cpu_pct": [
+    80,
+    75
+   ],
+   "config": "single",
+   "errors": [
+    0,
+    0
+   ],
+   "pg_conns_max": [
+    2,
+    2
+   ],
+   "step_p50_ms": [
+    48.8,
+    43.2
+   ],
+   "step_p99_ms": [
+    11236.9,
+    11890.8
+   ],
+   "steps_per_s": [
+    206.8,
+    213.8
+   ],
+   "threads": 500
+  }
+ },
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "multiprocess": [
+  {
+   "errors": 0,
+   "pg_conns_max": 88,
+   "processes": 8,
+   "steps_per_s_sum_of_processes": 1744.0,
+   "steps_per_s_with_startup": 1097.0,
+   "threads": 200
+  },
+  {
+   "errors": 0,
+   "pg_conns_max": 88,
+   "processes": 8,
+   "steps_per_s_sum_of_processes": 1762.0,
+   "steps_per_s_with_startup": 1370.0,
+   "threads": 500
+  },
+  {
+   "errors": 0,
+   "processes": 16,
+   "steps_per_s_sum_of_processes": 3797.0,
+   "steps_per_s_with_startup": 1571.0,
+   "threads": 200
+  },
+  {
+   "errors": 0,
+   "processes": 16,
+   "steps_per_s_sum_of_processes": 3876.0,
+   "steps_per_s_with_startup": 2389.0,
+   "threads": 500
+  }
+ ],
+ "not_used": "pg_conns_max of the two 16-process rows, because Postgres refused the monitor connection",
+ "reps_per_cell": 2,
+ "run": "5 steps per run, a fake model of 20 ms per step, 4 runs per thread, default durability",
+ "saver": "AsyncPostgresSaver on PostgreSQL 16.15, max_connections=100",
+ "sources": [
+  "capture/lab/T16-concurrency-x86/01-levels.jsonl",
+  "capture/lab/T16-concurrency-x86/02-multiprocess.jsonl",
+  "capture/lab/T16-concurrency-x86/00-pg-settings.txt"
+ ]
+}

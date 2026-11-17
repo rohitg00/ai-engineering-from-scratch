@@ -1,0 +1,102 @@
+# InMemorySaver across turns
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## InMemorySaver: two turns on one thread
+
+messages after turn 2:
+[
+  "human: What is 2 + 3?",
+  "ai: ",
+  "tool: 5",
+  "ai: 2 + 3 = 5.",
+  "human: What did I ask you?",
+  "ai: You asked what 2 + 3 is, and I calculated that it equals 5."
+]
+
+what the model received on turn 2:
+[
+  "human: What is 2 + 3?",
+  "ai: calls add",
+  "tool: 5",
+  "ai: 2 + 3 = 5.",
+  "human: What did I ask you?"
+]
+
+## get_state
+
+{
+  "step": 6,
+  "source": "loop",
+  "next": [],
+  "checkpoint_id": "<uuid-1>",
+  "parent_checkpoint_id": "<uuid-2>",
+  "messages": [
+    "human: What is 2 + 3?",
+    "ai: ",
+    "tool: 5",
+    "ai: 2 + 3 = 5.",
+    "human: What did I ask you?",
+    "ai: You asked what 2 + 3 is, and I calculated that it equals 5."
+  ],
+  "tasks": []
+}
+
+## the raw checkpoint tuple
+
+{
+  "config": {
+    "configurable": {
+      "thread_id": "memory-thread",
+      "checkpoint_ns": "",
+      "checkpoint_id": "<uuid-1>"
+    }
+  },
+  "metadata": {
+    "source": "loop",
+    "step": 6,
+    "parents": {},
+    "ls_integration": "langchain_create_agent"
+  },
+  "checkpoint keys": [
+    "channel_values",
+    "channel_versions",
+    "id",
+    "ts",
+    "updated_channels",
+    "v",
+    "versions_seen"
+  ],
+  "channel_values keys": [
+    "__pregel_tasks",
+    "messages"
+  ],
+  "channel_versions": {
+    "__start__": "00000000000000000000000000000007.<random>",
+    "messages": "00000000000000000000000000000008.<random>",
+    "branch:to:model": "00000000000000000000000000000008.<random>",
+    "__pregel_tasks": "00000000000000000000000000000004.<random>"
+  },
+  "v": 4
+}
+
+## checkpoints on the thread
+
+8 checkpoints
+
+## another thread starts empty
+
+[
+  "human: What did I ask you?",
+  "ai: You asked me: \"What did I ask you?\"  \n\nThis is a recursive question — you're asking me about a question you previously asked me. Since this is our first interaction, it seems you might be testing or reflecting on the nature of our conversation. If you have a specific question or need help with something, feel free to let me know! 😊"
+]
+
+## delete_thread
+
+after delete: 0 checkpoints
+
+## a thread_id is required once a checkpointer is set
+
+invoke without config:
+
+raised builtins.ValueError: Checkpointer requires one or more of the following 'configurable' keys: thread_id, checkpoint_ns, checkpoint_id

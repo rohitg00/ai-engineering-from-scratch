@@ -1,0 +1,541 @@
+{
+ "source": "stream-warm",
+ "events": [
+  {
+   "kind": "machine",
+   "uptime": "17:32  up 89 days,  3:29, 12 users, load averages: 3.90 4.70 6.09"
+  },
+  {
+   "turn": 1,
+   "t_ms": 0.0,
+   "wall": 1794744160.8027542,
+   "kind": "request",
+   "path": "runs",
+   "body": {
+    "message": "Where is my order ORD-cap-2?"
+   },
+   "status": 200
+  },
+  {
+   "turn": 1,
+   "t_ms": 681.9,
+   "kind": "tool_call",
+   "data": {
+    "id": "8c58862b-0039-4b9f-ba72-d78c27e1545a",
+    "name": "read_order",
+    "args": {
+     "order_id": "ORD-cap-2"
+    }
+   }
+  },
+  {
+   "turn": 1,
+   "t_ms": 697.8,
+   "kind": "tool_result",
+   "data": {
+    "name": "read_order",
+    "status": "success",
+    "content": "{\"id\": \"ORD-cap-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"
+   }
+  },
+  {
+   "turn": 1,
+   "t_ms": 1526.9,
+   "kind": "done",
+   "data": {
+    "status": "done",
+    "seconds": 1.5167
+   }
+  },
+  {
+   "turn": 1,
+   "kind": "state",
+   "next": [],
+   "interrupts": 0,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ]
+  },
+  {
+   "turn": 2,
+   "t_ms": 0.0,
+   "wall": 1794744162.337064,
+   "kind": "request",
+   "path": "runs",
+   "body": {
+    "message": "Please refund order ORD-cap-2 in full, 8900 cents. Reason: the rain jacket leaks."
+   },
+   "status": 200
+  },
+  {
+   "turn": 2,
+   "t_ms": 2089.5,
+   "kind": "tool_call",
+   "data": {
+    "id": "8127f8c8-57e2-41ea-89b4-c2c908d91543",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-cap-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    }
+   }
+  },
+  {
+   "turn": 2,
+   "t_ms": 2121.6,
+   "kind": "interrupt",
+   "data": {
+    "id": "2c682fceac190bd79a59a4a5be51d4fd",
+    "type": "tool_approval",
+    "tool_call_id": "8127f8c8-57e2-41ea-89b4-c2c908d91543",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-cap-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    },
+    "description": "Tool execution requires approval\n\nTool: refund_order\nArgs: {'order_id': 'ORD-cap-2', 'amount_cents': 8900, 'reason': 'the rain jacket leaks'}"
+   }
+  },
+  {
+   "turn": 2,
+   "t_ms": 2124.8,
+   "kind": "done",
+   "data": {
+    "status": "interrupted",
+    "seconds": 2.1176
+   }
+  },
+  {
+   "turn": 2,
+   "kind": "state",
+   "next": [
+    "tools"
+   ],
+   "interrupts": 1,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai",
+    "human",
+    "ai"
+   ]
+  },
+  {
+   "turn": 3,
+   "t_ms": 0.0,
+   "wall": 1794744164.473082,
+   "kind": "request",
+   "path": "approve",
+   "body": {
+    "decision": "approve"
+   },
+   "status": 200
+  },
+  {
+   "turn": 3,
+   "t_ms": 32.1,
+   "kind": "tool_result",
+   "data": {
+    "name": "refund_order",
+    "status": "success",
+    "content": "{\"refund_id\": 86, \"order_id\": \"ORD-cap-2\", \"amount_cents\": 8900, \"replayed\": false}"
+   }
+  },
+  {
+   "turn": 3,
+   "t_ms": 2157.7,
+   "kind": "done",
+   "data": {
+    "status": "done",
+    "seconds": 2.1457
+   }
+  },
+  {
+   "turn": 3,
+   "kind": "state",
+   "next": [],
+   "interrupts": 0,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai",
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ]
+  }
+ ],
+ "token_runs": {
+  "1": {
+   "tokens": 30,
+   "first_ms": 1015.9,
+   "last_ms": 1501.6
+  },
+  "3": {
+   "tokens": 38,
+   "first_ms": 764.8,
+   "last_ms": 2115.3
+  }
+ },
+ "spans": [
+  {
+   "name": "GET /healthz",
+   "start": 1794744160.769383,
+   "end": 1794744160.770328,
+   "attributes": {},
+   "status": "UNSET",
+   "trace_id": "0xff9302daa2cedb9ceaa1878b6c66ca45"
+  },
+  {
+   "name": "POST /threads",
+   "start": 1794744160.792578,
+   "end": 1794744160.802333,
+   "attributes": {},
+   "status": "UNSET",
+   "trace_id": "0x7d34317ac557d448d10ba6a0a8c1ffc6"
+  },
+  {
+   "name": "model.call",
+   "start": 1794744160.826869,
+   "end": 1794744161.482165,
+   "attributes": {
+    "gen_ai.request.model": "qwen3:4b-instruct-2507-q4_K_M",
+    "gen_ai.request.message_count": 1,
+    "gen_ai.response.model": "qwen3:4b-instruct-2507-q4_K_M",
+    "gen_ai.usage.input_tokens": 556,
+    "gen_ai.usage.output_tokens": 24,
+    "gen_ai.response.tool_calls": 1
+   },
+   "status": "UNSET",
+   "trace_id": "0x31620b7e2aed0301d32e8adcdfe176ae"
+  },
+  {
+   "name": "tool.read_order",
+   "start": 1794744161.496358,
+   "end": 1794744161.499387,
+   "attributes": {
+    "gen_ai.tool.name": "read_order",
+    "gen_ai.tool.call.id": "8c58862b-0039-4b9f-ba72-d78c27e1545a",
+    "tool.status": "success"
+   },
+   "status": "UNSET",
+   "trace_id": "0x31620b7e2aed0301d32e8adcdfe176ae"
+  },
+  {
+   "name": "model.call",
+   "start": 1794744161.510842,
+   "end": 1794744162.323138,
+   "attributes": {
+    "gen_ai.request.model": "qwen3:4b-instruct-2507-q4_K_M",
+    "gen_ai.request.message_count": 3,
+    "gen_ai.response.model": "qwen3:4b-instruct-2507-q4_K_M",
+    "gen_ai.usage.input_tokens": 635,
+    "gen_ai.usage.output_tokens": 31,
+    "gen_ai.response.tool_calls": 0
+   },
+   "status": "UNSET",
+   "trace_id": "0x31620b7e2aed0301d32e8adcdfe176ae"
+  },
+  {
+   "name": "agent.run",
+   "start": 1794744160.812417,
+   "end": 1794744162.329044,
+   "attributes": {
+    "run.status": "done"
+   },
+   "status": "UNSET",
+   "trace_id": "0x31620b7e2aed0301d32e8adcdfe176ae"
+  },
+  {
+   "name": "POST /threads/{thread_id}/runs",
+   "start": 1794744160.803228,
+   "end": 1794744162.32958,
+   "attributes": {},
+   "status": "UNSET",
+   "trace_id": "0x31620b7e2aed0301d32e8adcdfe176ae"
+  },
+  {
+   "name": "GET /threads/{thread_id}/state",
+   "start": 1794744162.330584,
+   "end": 1794744162.336559,
+   "attributes": {},
+   "status": "UNSET",
+   "trace_id": "0x3d2988ca0e49b9c4b4f925d2a4b9708f"
+  },
+  {
+   "name": "model.call",
+   "start": 1794744162.353784,
+   "end": 1794744164.418397,
+   "attributes": {
+    "gen_ai.request.model": "qwen3:4b-instruct-2507-q4_K_M",
+    "gen_ai.request.message_count": 5,
+    "gen_ai.response.model": "qwen3:4b-instruct-2507-q4_K_M",
+    "gen_ai.usage.input_tokens": 699,
+    "gen_ai.usage.output_tokens": 44,
+    "gen_ai.response.tool_calls": 1
+   },
+   "status": "UNSET",
+   "trace_id": "0x0f67b1c69a393795d51947ac54bd9c42"
+  },
+  {
+   "name": "agent.run",
+   "start": 1794744162.342987,
+   "end": 1794744164.460477,
+   "attributes": {
+    "run.status": "interrupted"
+   },
+   "status": "UNSET",
+   "trace_id": "0x0f67b1c69a393795d51947ac54bd9c42"
+  },
+  {
+   "name": "POST /threads/{thread_id}/runs",
+   "start": 1794744162.33755,
+   "end": 1794744164.46182,
+   "attributes": {},
+   "status": "UNSET",
+   "trace_id": "0x0f67b1c69a393795d51947ac54bd9c42"
+  },
+  {
+   "name": "GET /threads/{thread_id}/state",
+   "start": 1794744164.464684,
+   "end": 1794744164.471859,
+   "attributes": {},
+   "status": "UNSET",
+   "trace_id": "0x61abec996f047027570680473f817856"
+  },
+  {
+   "name": "tool.refund_order",
+   "start": 1794744164.491204,
+   "end": 1794744164.501763,
+   "attributes": {
+    "gen_ai.tool.name": "refund_order",
+    "gen_ai.tool.call.id": "8127f8c8-57e2-41ea-89b4-c2c908d91543",
+    "tool.status": "success"
+   },
+   "status": "UNSET",
+   "trace_id": "0x71d60d6baa5232c3010772ec8bc1f9eb"
+  },
+  {
+   "name": "model.call",
+   "start": 1794744164.519805,
+   "end": 1794744166.624278,
+   "attributes": {
+    "gen_ai.request.model": "qwen3:4b-instruct-2507-q4_K_M",
+    "gen_ai.request.message_count": 7,
+    "gen_ai.response.model": "qwen3:4b-instruct-2507-q4_K_M",
+    "gen_ai.usage.input_tokens": 790,
+    "gen_ai.usage.output_tokens": 39,
+    "gen_ai.response.tool_calls": 0
+   },
+   "status": "UNSET",
+   "trace_id": "0x71d60d6baa5232c3010772ec8bc1f9eb"
+  },
+  {
+   "name": "agent.run",
+   "start": 1794744164.484525,
+   "end": 1794744166.630176,
+   "attributes": {
+    "run.status": "done"
+   },
+   "status": "UNSET",
+   "trace_id": "0x71d60d6baa5232c3010772ec8bc1f9eb"
+  },
+  {
+   "name": "POST /threads/{thread_id}/approve",
+   "start": 1794744164.475162,
+   "end": 1794744166.630606,
+   "attributes": {},
+   "status": "UNSET",
+   "trace_id": "0x71d60d6baa5232c3010772ec8bc1f9eb"
+  },
+  {
+   "name": "GET /threads/{thread_id}/state",
+   "start": 1794744166.631483,
+   "end": 1794744166.634412,
+   "attributes": {},
+   "status": "UNSET",
+   "trace_id": "0x1c51aaf5e42a44844999f7887b4dfa92"
+  }
+ ],
+ "cold_capture": [
+  {
+   "kind": "machine",
+   "uptime": "16:49  up 89 days,  2:46, 12 users, load averages: 15.58 17.84 16.79"
+  },
+  {
+   "turn": 1,
+   "t_ms": 0.0,
+   "wall": 1794741582.028691,
+   "kind": "request",
+   "path": "runs",
+   "body": {
+    "message": "Where is my order ORD-cap-2?"
+   },
+   "status": 200
+  },
+  {
+   "turn": 1,
+   "t_ms": 13551.9,
+   "kind": "tool_call",
+   "data": {
+    "id": "0743df80-d59a-4987-9800-b42abf97778f",
+    "name": "read_order",
+    "args": {
+     "order_id": "ORD-cap-2"
+    }
+   }
+  },
+  {
+   "turn": 1,
+   "t_ms": 14590.0,
+   "kind": "tool_result",
+   "data": {
+    "name": "read_order",
+    "status": "success",
+    "content": "{\"id\": \"ORD-cap-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"
+   }
+  },
+  {
+   "turn": 1,
+   "t_ms": 15444.0,
+   "kind": "done",
+   "data": {
+    "status": "done",
+    "seconds": 15.4201
+   }
+  },
+  {
+   "turn": 1,
+   "kind": "state",
+   "next": [],
+   "interrupts": 0,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ]
+  },
+  {
+   "turn": 2,
+   "t_ms": 0.0,
+   "wall": 1794741597.501604,
+   "kind": "request",
+   "path": "runs",
+   "body": {
+    "message": "Please refund order ORD-cap-2 in full, 8900 cents. Reason: the rain jacket leaks."
+   },
+   "status": 200
+  },
+  {
+   "turn": 2,
+   "t_ms": 2424.9,
+   "kind": "tool_call",
+   "data": {
+    "id": "2a9ad807-d6f9-4d5a-af10-b3ee2ced8517",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-cap-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    }
+   }
+  },
+  {
+   "turn": 2,
+   "t_ms": 2549.9,
+   "kind": "interrupt",
+   "data": {
+    "id": "77ea2072aced558a57d48a330d87c627",
+    "type": "tool_approval",
+    "tool_call_id": "2a9ad807-d6f9-4d5a-af10-b3ee2ced8517",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-cap-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    },
+    "description": "Tool execution requires approval\n\nTool: refund_order\nArgs: {'order_id': 'ORD-cap-2', 'amount_cents': 8900, 'reason': 'the rain jacket leaks'}"
+   }
+  },
+  {
+   "turn": 2,
+   "t_ms": 2563.0,
+   "kind": "done",
+   "data": {
+    "status": "interrupted",
+    "seconds": 2.5371
+   }
+  },
+  {
+   "turn": 2,
+   "kind": "state",
+   "next": [
+    "tools"
+   ],
+   "interrupts": 1,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai",
+    "human",
+    "ai"
+   ]
+  },
+  {
+   "turn": 3,
+   "t_ms": 0.0,
+   "wall": 1794741600.1311302,
+   "kind": "request",
+   "path": "approve",
+   "body": {
+    "decision": "approve"
+   },
+   "status": 200
+  },
+  {
+   "turn": 3,
+   "t_ms": 360.7,
+   "kind": "tool_result",
+   "data": {
+    "name": "refund_order",
+    "status": "success",
+    "content": "{\"refund_id\": 26, \"order_id\": \"ORD-cap-2\", \"amount_cents\": 8900, \"replayed\": false}"
+   }
+  },
+  {
+   "turn": 3,
+   "t_ms": 2343.6,
+   "kind": "done",
+   "data": {
+    "status": "done",
+    "seconds": 2.3111
+   }
+  },
+  {
+   "turn": 3,
+   "kind": "state",
+   "next": [],
+   "interrupts": 0,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai",
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,256 @@
+# Human in the loop, batched
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## batched: two gated calls, one interrupt
+
+interrupts:
+[
+  {
+    "value": {
+      "action_requests": [
+        {
+          "name": "add",
+          "args": {
+            "a": 2,
+            "b": 3
+          },
+          "description": "Tool execution requires approval\n\nTool: add\nArgs: {'a': 2, 'b': 3}"
+        },
+        {
+          "name": "lookup_order",
+          "args": {
+            "order_id": "A-17"
+          },
+          "description": "Tool execution requires approval\n\nTool: lookup_order\nArgs: {'order_id': 'A-17'}"
+        }
+      ],
+      "review_configs": [
+        {
+          "action_name": "add",
+          "allowed_decisions": [
+            "approve",
+            "edit",
+            "reject",
+            "respond"
+          ]
+        },
+        {
+          "action_name": "lookup_order",
+          "allowed_decisions": [
+            "approve",
+            "reject"
+          ]
+        }
+      ]
+    },
+    "id": "<hex-1>",
+    "response_schema": null
+  }
+]
+
+state.next:
+[
+  "HumanInTheLoopMiddleware.after_model"
+]
+
+## resume with one decision per call, in order: edit add, reject lookup_order
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      },
+      {
+        "name": "lookup_order",
+        "args": {
+          "order_id": "A-17"
+        },
+        "id": "<uuid-3>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 237,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 49,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 237,
+      "output_tokens": 49,
+      "total_tokens": 286
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "User rejected the tool call for `lookup_order` with reason: Do not look up orders.",
+    "name": "lookup_order",
+    "id": "<uuid-4>",
+    "tool_call_id": "<uuid-3>",
+    "status": "error"
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Note: a human reviewer replaced this tool call before it ran. The call recorded in your message is the one you produced, not the one that executed. This was intentional and authorized. Do not re-issue your original call. Executed instead: add with arguments {\"a\": 20, \"b\": 30}.\n\nTool response:\n50",
+    "name": "add",
+    "id": "<uuid-5>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The result of the addition is 50.",
+    "id": "lc_run--<uuid-6>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 394,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 11,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 394,
+      "output_tokens": 11,
+      "total_tokens": 405
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "hitl-batched",
+    "call": 1,
+    "messages": [
+      "human: In one reply, call add with 2 and 3, and call lookup_order for order A-17."
+    ],
+    "tools": [
+      "add",
+      "lookup_order"
+    ]
+  },
+  {
+    "model": "hitl-batched",
+    "call": 2,
+    "messages": [
+      "human: In one reply, call add with 2 and 3, and call lookup_order for order A-17.",
+      "ai: calls add, lookup_order",
+      "tool: User rejected the tool call for `lookup_order` with reason: Do not look up order",
+      "tool: Note: a human reviewer replaced this tool call before it ran. The call recorded "
+    ],
+    "tools": [
+      "add",
+      "lookup_order"
+    ]
+  }
+]
+
+## a wrong number of decisions
+
+gated calls: 2
+
+resume with 1 decision(s) for 2 call(s):
+
+raised builtins.ValueError: Number of human decisions (1) does not match number of hanging tool calls (2).
+
+## respond: the human answers in place of the tool
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-7>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-8>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 162,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 162,
+      "output_tokens": 25,
+      "total_tokens": 187
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "It is 5, I checked.",
+    "name": "add",
+    "id": "<uuid-9>",
+    "tool_call_id": "<uuid-8>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "2 + 3 equals 5. Correct!",
+    "id": "lc_run--<uuid-10>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 207,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 11,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 207,
+      "output_tokens": 11,
+      "total_tokens": 218
+    }
+  }
+]

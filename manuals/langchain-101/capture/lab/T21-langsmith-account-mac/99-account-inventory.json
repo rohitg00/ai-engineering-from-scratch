@@ -1,0 +1,136 @@
+{
+ "env": {
+  "t": "2026-11-14T19:56:13+0530",
+  "load": [
+   5.013671875,
+   5.5234375,
+   5.4482421875
+  ],
+  "ollama_ps": [
+   {
+    "name": "qwen3:4b-instruct-2507-q4_K_M",
+    "expires_at": "2026-11-14T15:26:10.909483Z"
+   }
+  ],
+  "machine": "the Mac (Apple M1 Max, 10 cores, 64 GiB)",
+  "python": "3.13.12"
+ },
+ "projects": [
+  {
+   "name": "aiefs-lc101-dev",
+   "id": "<project-id-3>",
+   "n_runs": 35,
+   "experiment": false
+  },
+  {
+   "name": "aiefs-lc101-aeval-feb41559",
+   "id": "<project-id-2>",
+   "n_runs": 80,
+   "experiment": true
+  },
+  {
+   "name": "abandoned-drink-3",
+   "id": "<project-id-1>",
+   "n_runs": 70,
+   "experiment": false
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:750e4701",
+   "id": "<project-id-9>",
+   "n_runs": 11,
+   "experiment": true
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:0cca6e2a",
+   "id": "<project-id-7>",
+   "n_runs": 11,
+   "experiment": true
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:07f0b9f1",
+   "id": "<project-id-6>",
+   "n_runs": 0,
+   "experiment": true
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:24c37696",
+   "id": "<project-id-8>",
+   "n_runs": 0,
+   "experiment": true
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:9baa8787",
+   "id": "<project-id-11>",
+   "n_runs": 0,
+   "experiment": true
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:e16e34cd",
+   "id": "<project-id-13>",
+   "n_runs": 0,
+   "experiment": true
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:764d4dea",
+   "id": "<project-id-10>",
+   "n_runs": 0,
+   "experiment": true
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:dd0a98b4",
+   "id": "<project-id-12>",
+   "n_runs": 0,
+   "experiment": true
+  },
+  {
+   "name": "evaluators",
+   "id": "<project-id-16>",
+   "n_runs": 160,
+   "experiment": false
+  },
+  {
+   "name": "aiefs-lc101-eval-true-28d43a7b",
+   "id": "<project-id-4>",
+   "n_runs": 80,
+   "experiment": true
+  },
+  {
+   "name": "aiefs-lc101-local",
+   "id": "<project-id-5>",
+   "n_runs": 21,
+   "experiment": false
+  },
+  {
+   "name": "aiefs-lc101-trace",
+   "id": "<project-id-15>",
+   "n_runs": 210,
+   "experiment": false
+  },
+  {
+   "name": "aiefs-lc101-smoke",
+   "id": "<project-id-14>",
+   "n_runs": 7,
+   "experiment": false
+  }
+ ],
+ "total_runs_stored": 685,
+ "datasets": [
+  {
+   "name": "aiefs-lc101-arith-10",
+   "id": "<dataset-id-1>",
+   "examples": 10
+  },
+  {
+   "name": "aiefs-lc101-pytest",
+   "id": "<dataset-id-2>",
+   "examples": 3
+  }
+ ],
+ "prompts": [
+  {
+   "handle": "aiefs-lc101-calc-prompt",
+   "commits": 2,
+   "public": false
+  }
+ ]
+}

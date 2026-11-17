@@ -1,0 +1,2 @@
+crash results in fix/suite/*/rep-*/ (test_kill_mid_refund) and fix/invalid-parser-crash-* were recorded with a broken tests/procs.py parse_sse (events never appended); rerun in fix/suite-crash and fix/crash-*
+2026-11-15T12:42:21Z stopped crash_real qwen3-14b (trial 1 waited 9.5 min: Ollama did not load qwen3:14b while qwen3:4b held 38 GiB and another agent's 14b benchmark also waited) and 9 uvicorn servers leaked by failing crash tests

@@ -1,0 +1,142 @@
+{
+ "uptime": "16:50  up 89 days,  2:46, 12 users, load averages: 12.12 16.86 16.47",
+ "trials": [
+  {
+   "trial": 1,
+   "first_event": "token",
+   "client_closed_ms": 341.6,
+   "post_while_running": 409,
+   "finished_after_disconnect_ms": 3527.1,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ],
+   "next": [],
+   "tools": [
+    "search_faq"
+   ]
+  },
+  {
+   "trial": 2,
+   "first_event": "token",
+   "client_closed_ms": 642.2,
+   "post_while_running": 409,
+   "finished_after_disconnect_ms": 4871.0,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ],
+   "next": [],
+   "tools": [
+    "search_faq"
+   ]
+  },
+  {
+   "trial": 3,
+   "first_event": "token",
+   "client_closed_ms": 1910.4,
+   "post_while_running": 409,
+   "finished_after_disconnect_ms": 4897.3,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ],
+   "next": [],
+   "tools": [
+    "search_faq"
+   ]
+  },
+  {
+   "trial": 4,
+   "first_event": "token",
+   "client_closed_ms": 540.2,
+   "post_while_running": 409,
+   "finished_after_disconnect_ms": 4161.8,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ],
+   "next": [],
+   "tools": [
+    "search_faq"
+   ]
+  },
+  {
+   "trial": 5,
+   "first_event": "token",
+   "client_closed_ms": 244.9,
+   "post_while_running": 409,
+   "finished_after_disconnect_ms": 3616.7,
+   "messages": [
+    "human",
+    "ai",
+    "tool",
+    "ai"
+   ],
+   "next": [],
+   "tools": [
+    "search_faq"
+   ]
+  }
+ ],
+ "run_end_events": [
+  {
+   "ts": 1794741609.644,
+   "level": "INFO",
+   "event": "run.end",
+   "thread_id": "3ee4400a-0743-4d6b-8040-10046a68c1af",
+   "status": "done",
+   "seconds": 3.5633,
+   "trace_id": "ed708307a4e7b04f21f8213fe9832f0a",
+   "span_id": "1176d6d5ff939772"
+  },
+  {
+   "ts": 1794741614.264,
+   "level": "INFO",
+   "event": "run.end",
+   "thread_id": "3214965b-2636-4fc1-912e-4c90cb1abd1a",
+   "status": "done",
+   "seconds": 4.6082,
+   "trace_id": "2f120c9fc929b6a7bdaeba53bb9d4178",
+   "span_id": "385afeb4906e86de"
+  },
+  {
+   "ts": 1794741619.352,
+   "level": "INFO",
+   "event": "run.end",
+   "thread_id": "da849000-4b15-4323-a14f-a00aa1012135",
+   "status": "done",
+   "seconds": 4.7144,
+   "trace_id": "76958f2f41f35d83731864611f43a4f0",
+   "span_id": "1b62e5e7a880502d"
+  },
+  {
+   "ts": 1794741623.491,
+   "level": "INFO",
+   "event": "run.end",
+   "thread_id": "d771c5ce-a6f3-4fee-9244-cfc9ff85346d",
+   "status": "done",
+   "seconds": 4.0314,
+   "trace_id": "6a6f1680a75d564f0dcba0a880fa9244",
+   "span_id": "9bc96a2ba280f343"
+  },
+  {
+   "ts": 1794741627.251,
+   "level": "INFO",
+   "event": "run.end",
+   "thread_id": "3de5a4c5-ce1c-4ac9-8b6e-f9ad02e7fedc",
+   "status": "done",
+   "seconds": 3.5733,
+   "trace_id": "2eb9522239b86bf93daf44ad213a68c8",
+   "span_id": "8b0af9642297e5f1"
+  }
+ ]
+}

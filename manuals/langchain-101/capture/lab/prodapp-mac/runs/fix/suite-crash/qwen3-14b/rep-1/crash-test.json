@@ -1,0 +1,200 @@
+{
+  "first_run_last_event": [
+    "done",
+    {
+      "status": "interrupted",
+      "seconds": 21.5863
+    }
+  ],
+  "refund_committed_before_kill": false,
+  "kill_exit_code": -9,
+  "killed_at": 1794745782.425261,
+  "approve_client_error": "RemoteProtocolError",
+  "after_restart_next": [
+    "model"
+  ],
+  "after_restart_interrupts": [],
+  "resumed_events": [
+    [
+      "token",
+      {
+        "text": "It"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " seems"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " the"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " refund"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " amount"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " exceeds"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " what"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " can"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " be"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " refunded"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": "."
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " Let"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " me"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " check"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " the"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " order"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " details"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " to"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " see"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " what"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": "'s"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " available"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": "."
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " One"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": " moment"
+      }
+    ],
+    [
+      "token",
+      {
+        "text": "."
+      }
+    ],
+    [
+      "done",
+      {
+        "status": "done",
+        "seconds": 18.8593
+      }
+    ]
+  ],
+  "refund_rows": [],
+  "order": {
+    "total_cents": 8900,
+    "refunded_cents": 0
+  },
+  "refund_tool_messages": [
+    {
+      "type": "tool",
+      "content": "{\"error\": \"refund exceeds the 8900 cents that can still be refunded\"}",
+      "tool_calls": [],
+      "name": "refund_order",
+      "status": "success",
+      "usage": null,
+      "model": null,
+      "source": null
+    }
+  ],
+  "final_answer": "It seems the refund amount exceeds what can be refunded. Let me check the order details to see what's available. One moment."
+}

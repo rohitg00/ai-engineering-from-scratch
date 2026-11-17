@@ -1,0 +1,13 @@
+{
+  "exit_code": -15,
+  "shutdown_seconds": 2.670107841491699,
+  "last_event": [
+    "done",
+    {
+      "status": "done",
+      "seconds": 2.8078
+    }
+  ],
+  "next": [],
+  "final_answer": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days."
+}

@@ -1,0 +1,31 @@
+$ -m pytest <scripts>/t19_tests/test_ls_plugin.py -p no:cacheprovider -rA --color=no
+rc=1 wall=1.62s
+--- stdout
+============================= test session starts ==============================
+platform darwin -- Python 3.13.12, pytest-8.4.2, pluggy-1.7.0
+rootdir: <scripts>/t19_tests
+plugins: platformdirs-4.14.5, langsmith-0.14.17, anyio-4.16.0
+collected 5 items
+
+test_ls_plugin.py .F...                                                  [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_marked_fail _______________________________
+
+    @pytest.mark.langsmith
+    def test_marked_fail():
+        t.log_outputs({"sum": 9})
+>       assert 4 + 4 == 9
+E       assert (4 + 4) == 9
+
+test_ls_plugin.py:18: AssertionError
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED test_ls_plugin.py::test_marked_pass
+PASSED test_ls_plugin.py::test_decorator_form
+PASSED test_ls_plugin.py::test_marked_agent
+PASSED test_ls_plugin.py::test_unmarked_log_call
+FAILED test_ls_plugin.py::test_marked_fail - assert (4 + 4) == 9
+========================= 1 failed, 4 passed in 0.43s ==========================
+
+--- stderr

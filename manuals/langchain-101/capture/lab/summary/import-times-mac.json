@@ -1,0 +1,130 @@
+{
+ "cold": "an empty PYTHONPYCACHEPREFIX, so no bytecode; the OS file cache was not purged",
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "sources": [
+  "capture/lab/T01-overhead-mac/06-import-times.jsonl"
+ ],
+ "targets": {
+  "baseline_pass": {
+   "cold": [
+    0.066,
+    0.064,
+    0.065,
+    0.061,
+    0.061,
+    0.064,
+    0.063,
+    0.061,
+    0.061,
+    0.063
+   ],
+   "cold_median": 0.063,
+   "label": "pass",
+   "n": 10,
+   "warm": [
+    0.023,
+    0.023,
+    0.021,
+    0.023,
+    0.024,
+    0.023,
+    0.024,
+    0.024,
+    0.022,
+    0.023
+   ],
+   "warm_median": 0.023
+  },
+  "langchain_stack": {
+   "cold": [
+    2.667,
+    2.518,
+    2.583,
+    2.683,
+    2.663,
+    2.65,
+    2.671,
+    2.63,
+    2.522,
+    2.535
+   ],
+   "cold_median": 2.64,
+   "label": "create_agent and ChatOpenAI",
+   "n": 10,
+   "warm": [
+    0.836,
+    0.824,
+    0.838,
+    0.875,
+    0.829,
+    0.834,
+    0.806,
+    0.81,
+    0.829,
+    0.842
+   ],
+   "warm_median": 0.831
+  },
+  "langgraph_only": {
+   "cold": [
+    1.921,
+    1.922,
+    1.915,
+    1.971,
+    1.804,
+    1.82,
+    1.856,
+    1.844,
+    1.835,
+    1.84
+   ],
+   "cold_median": 1.85,
+   "label": "langgraph StateGraph",
+   "n": 10,
+   "warm": [
+    0.479,
+    0.481,
+    0.462,
+    0.473,
+    0.475,
+    0.476,
+    0.476,
+    0.479,
+    0.483,
+    0.492
+   ],
+   "warm_median": 0.477
+  },
+  "openai": {
+   "cold": [
+    1.127,
+    1.041,
+    1.059,
+    1.053,
+    1.07,
+    1.052,
+    1.073,
+    1.043,
+    1.069,
+    1.093
+   ],
+   "cold_median": 1.064,
+   "label": "import openai",
+   "n": 10,
+   "warm": [
+    0.328,
+    0.328,
+    0.321,
+    0.331,
+    0.338,
+    0.348,
+    0.338,
+    0.321,
+    0.321,
+    0.329
+   ],
+   "warm_median": 0.329
+  }
+ },
+ "unit": "seconds"
+}

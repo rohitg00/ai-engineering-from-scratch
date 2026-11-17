@@ -1,0 +1,135 @@
+== E1-modern-default-direct [in-process] n=3
+  x3
+    direct RAISED builtins.KeyError: '__pregel_scratchpad'
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 1, 'ask_legacy': 0} rc=0
+== E2-modern-default-agent-accept [in-process] n=3
+  x3
+    interrupt type=mcp_elicitation requests=[('name', 'form')]
+    stream model,__interrupt__ custom_chunks=0
+    state next=['tools'] interrupts=1
+    agent-resume-accept success ['hello Ada'] artifact={'structured_content': {'result': 'hello Ada'}} last='final'
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 3, 'ask_legacy': 0} rc=0
+== E2-modern-default-agent-decline [in-process] n=3
+  x3
+    interrupt type=mcp_elicitation requests=[('name', 'form')]
+    stream model,__interrupt__ custom_chunks=0
+    state next=['tools'] interrupts=1
+    agent-resume-decline success ['no name (decline)'] artifact={'structured_content': {'result': 'no name (decline)'}} last='final'
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 3, 'ask_legacy': 0} rc=0
+== E2-modern-default-agent-cancel [in-process] n=3
+  x3
+    interrupt type=mcp_elicitation requests=[('name', 'form')]
+    stream model,__interrupt__ custom_chunks=0
+    state next=['tools'] interrupts=1
+    agent-resume-cancel success ['no name (cancel)'] artifact={'structured_content': {'result': 'no name (cancel)'}} last='final'
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 3, 'ask_legacy': 0} rc=0
+== E2-modern-default-agent-nockpt [in-process] n=3
+  x3
+    interrupt type=mcp_elicitation requests=[('name', 'form')]
+    stream model,__interrupt__ custom_chunks=0
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 1, 'ask_legacy': 0} rc=0
+== E3-modern-handler-direct [in-process] n=3
+  x3
+    direct success ['hello Grace'] artifact={'structured_content': {'result': 'hello Grace'}}
+    protocol=2026-07-28 handler_calls=1 progress_calls=0 server_calls={'ask_name': 2, 'ask_legacy': 0} rc=0
+== E3-modern-handler-agent [in-process] n=3
+  x3
+    stream model,tools,model custom_chunks=0
+    state next=[] interrupts=0
+    agent-toolmessages success ['hello Grace'] artifact={'structured_content': {'result': 'hello Grace'}} last='final'
+    protocol=2026-07-28 handler_calls=1 progress_calls=0 server_calls={'ask_name': 2, 'ask_legacy': 0} rc=0
+== E4-legacy-default-direct [in-process] n=3
+  x3
+    direct error ["Error calling tool 'ask_legacy': This MCP server asked for input over the legacy server-initiated elicitation path, which interrupt-based elicitation cannot answer. It needs a server that returns its requests as an `InputRequiredResult`, or a pre-built client with your own `elicitation_handler`."] artifact=None
+    protocol=2025-11-25 handler_calls=0 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 1} rc=0
+== E4-legacy-default-agent [in-process] n=3
+  x3
+    stream model,tools,model custom_chunks=0
+    state next=[] interrupts=0
+    agent-toolmessages error ["Error calling tool 'ask_legacy': This MCP server asked for input over the legacy server-initiated elicitation path, which interrupt-based elicitation cannot answer. It needs a server that returns its requests as an `InputRequiredResult`, or a pre-built client with your own `elicitation_handler`."] artifact=None last='final'
+    protocol=2025-11-25 handler_calls=0 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 1} rc=0
+== E5-legacy-handler-direct [in-process] n=3
+  x3
+    direct success ['hello Grace'] artifact={'structured_content': {'result': 'hello Grace'}}
+    protocol=2025-11-25 handler_calls=1 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 1} rc=0
+== E5-legacy-handler-agent [in-process] n=3
+  x3
+    stream model,tools,model custom_chunks=0
+    state next=[] interrupts=0
+    agent-toolmessages success ['hello Grace'] artifact={'structured_content': {'result': 'hello Grace'}} last='final'
+    protocol=2025-11-25 handler_calls=1 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 1} rc=0
+== E6-modern-noarm-direct [in-process] n=3
+  x3
+    direct RAISED mcp.shared.exceptions.MCPError: Elicitation not supported
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 1, 'ask_legacy': 0} rc=0
+== E6-legacy-noarm-direct [in-process] n=3
+  x3
+    direct error ["Error calling tool 'ask_legacy': Elicitation not supported"] artifact=None
+    protocol=2025-11-25 handler_calls=0 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 1} rc=0
+== E7-legacy-modernguard-direct [in-process] n=3
+  x3
+    direct RAISED mcp.shared.exceptions.MCPError: Tool 'ask_name' returned an InputRequiredResult to request client input, but the multi-round-trip result type (SEP-2322) only exists at MCP 2026-07-28; this con
+    protocol=2025-11-25 handler_calls=0 progress_calls=0 server_calls={'ask_name': 1, 'ask_legacy': 0} rc=0
+== S1-modern-error-direct-raw [in-process] n=3
+  x3
+    direct error ['quota exceeded, retry in 30 s'] artifact=None
+    raw fastmcp is_error=True structured_content={'code': 429, 'retry_after': 30}
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 0} rc=0
+== S1-modern-error-agent [in-process] n=3
+  x3
+    stream model,tools,model custom_chunks=0
+    state next=[] interrupts=0
+    agent-toolmessages error ['quota exceeded, retry in 30 s'] artifact=None last='final'
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 0} rc=0
+== S2-modern-ok-direct-raw [in-process] n=3
+  x3
+    direct success ['ok'] artifact={'structured_content': {'code': 200}}
+    raw fastmcp is_error=False structured_content={'code': 200}
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 0} rc=0
+== S3-legacy-error-direct-raw [in-process] n=3
+  x3
+    direct error ['quota exceeded, retry in 30 s'] artifact=None
+    raw fastmcp is_error=True structured_content={'code': 429, 'retry_after': 30}
+    protocol=2025-11-25 handler_calls=0 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 0} rc=0
+== P1-modern-default-direct [in-process] n=3
+  x3
+    direct success ['done 3'] artifact={'structured_content': {'result': 'done 3'}}
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls={'ask_name': 0, 'ask_legacy': 0} rc=0
+== P2-modern-phandler-direct [in-process] n=3
+  x3
+    direct success ['done 3'] artifact={'structured_content': {'result': 'done 3'}}
+    protocol=2026-07-28 handler_calls=0 progress_calls=3 server_calls={'ask_name': 0, 'ask_legacy': 0} rc=0
+== P2-modern-phandler-agent [in-process] n=3
+  x3
+    stream model,tools,model custom_chunks=0
+    state next=[] interrupts=0
+    agent-toolmessages success ['done 3'] artifact={'structured_content': {'result': 'done 3'}} last='final'
+    protocol=2026-07-28 handler_calls=0 progress_calls=3 server_calls={'ask_name': 0, 'ask_legacy': 0} rc=0
+== P3-legacy-phandler-direct [in-process] n=3
+  x3
+    direct success ['done 3'] artifact={'structured_content': {'result': 'done 3'}}
+    protocol=2025-11-25 handler_calls=0 progress_calls=3 server_calls={'ask_name': 0, 'ask_legacy': 0} rc=0
+== E2-modern-default-agent-accept [http] n=3
+  x3
+    interrupt type=mcp_elicitation requests=[('name', 'form')]
+    stream model,__interrupt__ custom_chunks=0
+    state next=['tools'] interrupts=1
+    agent-resume-accept success ['hello Ada'] artifact={'structured_content': {'result': 'hello Ada'}} last='final'
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls=None rc=0
+== E3-modern-handler-direct [http] n=3
+  x3
+    direct success ['hello Grace'] artifact={'structured_content': {'result': 'hello Grace'}}
+    protocol=2026-07-28 handler_calls=1 progress_calls=0 server_calls=None rc=0
+== E5-legacy-handler-direct [http] n=3
+  x3
+    direct success ['hello Grace'] artifact={'structured_content': {'result': 'hello Grace'}}
+    protocol=2025-11-25 handler_calls=1 progress_calls=0 server_calls=None rc=0
+== S1-modern-error-direct-raw [http] n=3
+  x3
+    direct error ['quota exceeded, retry in 30 s'] artifact=None
+    raw fastmcp is_error=True structured_content={'code': 429, 'retry_after': 30}
+    protocol=2026-07-28 handler_calls=0 progress_calls=0 server_calls=None rc=0
+== P2-modern-phandler-direct [http] n=3
+  x3
+    direct success ['done 3'] artifact={'structured_content': {'result': 'done 3'}}
+    protocol=2026-07-28 handler_calls=0 progress_calls=3 server_calls=None rc=0

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430" role="img" aria-labelledby="fig-9-2-title fig-9-2-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-2-title">The Postgres rows of the service, and the two checks that keep users apart</title>
+  <desc id="fig-9-2-desc">Tables of the service and the store namespace, with the rows written for each run in the load test with 50 users and one worker: checkpoints 10.34, checkpoint_blobs 5.57, checkpoint_writes 13.67, about 21.6 KB of row data. A request for another user&#39;s thread got 404 on state, 404 on runs and 404 on approve. Tools read the user from runtime.context.</desc>
+  <defs><marker id="fig-9-2-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-9-2-head-rose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-rose-ink, #b0344d)"/></marker></defs>
+  <text x="16" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">HTTP REQUEST</text>
+  <rect x="16" y="34" width="150" height="50" fill="var(--m-violet-fill, #ebe8f5)" stroke="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="91" y="54.25" font-size="12.5" text-anchor="middle" font-weight="700">Bearer tok-bob</text>
+  <text x="91" y="71.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thread id of alice</text>
+  <rect x="16" y="118" width="150" height="65" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="91" y="138.25" font-size="12.5" text-anchor="middle" font-weight="700">owned()</text>
+  <text x="91" y="155.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">threads.user_id</text>
+  <text x="91" y="170.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">equals the caller?</text>
+  <line x1="91" y1="84" x2="91" y2="117" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-9-2-head-ink)"/>
+  <rect x="16" y="222" width="150" height="65" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="91" y="242.25" font-size="12.5" text-anchor="middle" font-weight="700">404</text>
+  <text x="91" y="259.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thread not found</text>
+  <text x="91" y="274.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">state, runs, approve</text>
+  <line x1="91" y1="183" x2="91" y2="221" stroke="var(--m-rose-ink, #b0344d)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-9-2-head-rose)"/>
+  <rect class="m-knock" x="96" y="191.03" width="19.8" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="99" y="202" font-size="11.5" fill="var(--m-rose-ink, #b0344d)">no</text>
+  <text x="214" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">POSTGRES, ONE POOL</text>
+  <rect x="214" y="34" width="230" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="226" y="53.25" font-size="12.5" font-weight="700">threads</text>
+  <text x="226" y="70.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thread_id, user_id</text>
+  <text x="452" y="64" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one row per thread</text>
+  <rect x="214" y="92" width="230" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="226" y="111.25" font-size="12.5" font-weight="700">checkpoints</text>
+  <text x="226" y="128.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thread_id, checkpoint_id</text>
+  <text x="452" y="122" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">10.34 rows per run</text>
+  <rect x="214" y="150" width="230" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="226" y="169.25" font-size="12.5" font-weight="700">checkpoint_blobs</text>
+  <text x="226" y="186.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thread_id, channel, version</text>
+  <text x="452" y="180" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">5.57 rows per run</text>
+  <rect x="214" y="208" width="230" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="226" y="227.25" font-size="12.5" font-weight="700">checkpoint_writes</text>
+  <text x="226" y="244.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">thread_id, task_id, idx</text>
+  <text x="452" y="238" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">13.67 rows per run</text>
+  <rect x="214" y="266" width="230" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="226" y="285.25" font-size="12.5" font-weight="700">store</text>
+  <text x="226" y="302.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">prefix memories.&lt;user&gt;, key</text>
+  <text x="452" y="296" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">one row per note</text>
+  <rect x="214" y="324" width="230" height="48" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="226" y="343.25" font-size="12.5" font-weight="700">orders, refunds, tickets</text>
+  <text x="226" y="360.55" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">user_id, idempotency_key</text>
+  <text x="452" y="354" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">app tables</text>
+  <line x1="166" y1="136" x2="213" y2="56" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-9-2-head-ink)"/>
+  <rect class="m-knock" x="171" y="85.03" width="33.6" height="15.5" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="174" y="96" font-size="11.5">read</text>
+  <text x="452" y="138" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">21.6 KB of rows per run</text>
+  <text x="452" y="196" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">no column names a user</text>
+  <rect x="16" y="318" width="150" height="65" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)"/>
+  <text x="91" y="338.25" font-size="12.5" text-anchor="middle" font-weight="700">tool call</text>
+  <text x="91" y="355.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">user from</text>
+  <text x="91" y="370.55" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">runtime.context</text>
+  <path d="M166 350.5 H190 V290 H213" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-9-2-head-ink)"/>
+  <path d="M190 350.5 V348 H213" fill="none" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" stroke-linejoin="round" marker-end="url(#fig-9-2-head-ink)"/>
+  <text x="196" y="410" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">recall_notes for bob returned [], and for alice 1 note</text>
+</svg>

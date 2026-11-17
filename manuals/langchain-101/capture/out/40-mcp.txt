@@ -1,0 +1,221 @@
+# langchain.mcp with an in-process FastMCP server
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+warning LangChainBetaWarning: `langchain.mcp` is in beta. It is actively being worked on, so the API may change.
+
+## list_tools() on an in-process FastMCP server
+
+[
+  {
+    "name": "multiply",
+    "description": "Multiply two integers.",
+    "args": {
+      "a": {
+        "type": "integer"
+      },
+      "b": {
+        "type": "integer"
+      }
+    },
+    "response_format": "content_and_artifact"
+  },
+  {
+    "name": "divide",
+    "description": "Divide a by b.",
+    "args": {
+      "a": {
+        "type": "integer"
+      },
+      "b": {
+        "type": "integer"
+      }
+    },
+    "response_format": "content_and_artifact"
+  },
+  {
+    "name": "stats",
+    "description": "Return the count and mean of a list.",
+    "args": {
+      "values": {
+        "items": {
+          "type": "number"
+        },
+        "type": "array"
+      }
+    },
+    "response_format": "content_and_artifact"
+  }
+]
+
+## an agent calls multiply, divide by zero, and stats
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "multiply",
+        "args": {
+          "a": 6,
+          "b": 7
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      },
+      {
+        "name": "divide",
+        "args": {
+          "a": 1,
+          "b": 0
+        },
+        "id": "<uuid-3>",
+        "type": "tool_call"
+      },
+      {
+        "name": "stats",
+        "args": {
+          "values": [
+            1,
+            2,
+            3,
+            4
+          ]
+        },
+        "id": "<uuid-4>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 327,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 79,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 327,
+      "output_tokens": 79,
+      "total_tokens": 406
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "42",
+        "id": "lc_<uuid-5>"
+      }
+    ],
+    "name": "multiply",
+    "id": "<uuid-6>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success",
+    "artifact": {
+      "structured_content": {
+        "result": 42
+      }
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "division by zero",
+        "id": "lc_<uuid-7>"
+      }
+    ],
+    "name": "divide",
+    "id": "<uuid-8>",
+    "tool_call_id": "<uuid-3>",
+    "status": "error"
+  },
+  {
+    "type": "ToolMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"count\":4,\"mean\":2.5}",
+        "id": "lc_<uuid-9>"
+      }
+    ],
+    "name": "stats",
+    "id": "<uuid-10>",
+    "tool_call_id": "<uuid-4>",
+    "status": "success",
+    "artifact": {
+      "structured_content": {
+        "count": 4,
+        "mean": 2.5
+      }
+    }
+  },
+  {
+    "type": "AIMessage",
+    "content": "- The result of multiplying 6 by 7 is 42.  \n- Division by zero is undefined, so the operation \"divide 1 by 0\" results in \"division by zero.\"  \n- The statistics for the list [1, 2, 3, 4] show a count of 4 and a mean of 2.5.",
+    "id": "lc_run--<uuid-11>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 444,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 76,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 444,
+      "output_tokens": 76,
+      "total_tokens": 520
+    }
+  }
+]
+
+## a resource, read through adapter.client (langchain.mcp has no resource API)
+
+list_resources:
+[
+  {
+    "uri": "docs://readme",
+    "name": "readme"
+  }
+]
+
+read_resource:
+[
+  {
+    "uri": "docs://readme",
+    "text": "calc server: multiply, divide, stats"
+  }
+]
+
+## a string target that is not an http(s) URL
+
+MCPAdapter('server.py'):
+
+raised builtins.ValueError: MCP target 'server.py' is not a valid URL. To run a local MCP server over stdio, ask for it explicitly with `Path('server.py')`, a `fastmcp` transport, or an `MCPConfig` — a bare string is read as a URL so that it cannot silently become a subprocess.
+
+langchain.mcp exports:
+[
+  "MCPAdapter",
+  "MCPToolArtifact",
+  "as_langchain_tool"
+]

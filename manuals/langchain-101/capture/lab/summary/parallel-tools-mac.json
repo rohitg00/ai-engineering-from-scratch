@@ -1,0 +1,4811 @@
+{
+ "cells": {
+  "agent ainvoke async N=1 cap=1": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    211.5,
+    207.3,
+    209.0,
+    212.0,
+    211.0
+   ],
+   "wall_ms_median": 211.0
+  },
+  "agent ainvoke async N=1 cap=2": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.5,
+    206.8,
+    208.8,
+    210.9,
+    207.7
+   ],
+   "wall_ms_median": 208.8
+  },
+  "agent ainvoke async N=1 cap=4": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.0,
+    210.6,
+    205.5,
+    209.3,
+    209.7
+   ],
+   "wall_ms_median": 209.7
+  },
+  "agent ainvoke async N=1 cap=8": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.5,
+    206.5,
+    207.2,
+    206.5,
+    204.8
+   ],
+   "wall_ms_median": 206.5
+  },
+  "agent ainvoke async N=1 cap=none": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.3,
+    209.4,
+    207.4,
+    204.6,
+    206.2
+   ],
+   "wall_ms_median": 206.2
+  },
+  "agent ainvoke async N=16 cap=1": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    3300.8,
+    3265.3,
+    3277.5,
+    3290.0,
+    3276.7
+   ],
+   "wall_ms_median": 3277.5
+  },
+  "agent ainvoke async N=16 cap=2": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    1656.3,
+    1659.8,
+    1641.1,
+    1650.0,
+    1656.5
+   ],
+   "wall_ms_median": 1656.3
+  },
+  "agent ainvoke async N=16 cap=4": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    836.7,
+    823.1,
+    837.7,
+    843.9,
+    832.5
+   ],
+   "wall_ms_median": 836.7
+  },
+  "agent ainvoke async N=16 cap=8": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    422.1,
+    423.5,
+    417.2,
+    425.4,
+    431.4
+   ],
+   "wall_ms_median": 423.5
+  },
+  "agent ainvoke async N=16 cap=none": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "wall_ms": [
+    213.8,
+    214.9,
+    217.5,
+    211.8,
+    215.3
+   ],
+   "wall_ms_median": 214.9
+  },
+  "agent ainvoke async N=2 cap=1": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    414.7,
+    416.7,
+    415.8,
+    410.0,
+    412.2
+   ],
+   "wall_ms_median": 414.7
+  },
+  "agent ainvoke async N=2 cap=2": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.4,
+    206.3,
+    208.5,
+    211.2,
+    211.4
+   ],
+   "wall_ms_median": 208.5
+  },
+  "agent ainvoke async N=2 cap=4": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.4,
+    212.0,
+    205.6,
+    211.5,
+    214.5
+   ],
+   "wall_ms_median": 211.5
+  },
+  "agent ainvoke async N=2 cap=8": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    211.2,
+    212.0,
+    212.9,
+    215.0,
+    204.3
+   ],
+   "wall_ms_median": 212.0
+  },
+  "agent ainvoke async N=2 cap=none": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    209.3,
+    211.9,
+    210.6,
+    213.5,
+    205.3
+   ],
+   "wall_ms_median": 210.6
+  },
+  "agent ainvoke async N=4 cap=1": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    825.4,
+    832.6,
+    818.6,
+    831.0,
+    828.2
+   ],
+   "wall_ms_median": 828.2
+  },
+  "agent ainvoke async N=4 cap=2": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    418.0,
+    413.3,
+    406.9,
+    415.4,
+    417.8
+   ],
+   "wall_ms_median": 415.4
+  },
+  "agent ainvoke async N=4 cap=4": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    207.4,
+    215.1,
+    211.6,
+    218.8,
+    219.3
+   ],
+   "wall_ms_median": 215.1
+  },
+  "agent ainvoke async N=4 cap=8": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    211.7,
+    208.6,
+    210.3,
+    213.1,
+    206.2
+   ],
+   "wall_ms_median": 210.3
+  },
+  "agent ainvoke async N=4 cap=none": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    206.0,
+    215.4,
+    218.1,
+    212.9,
+    209.2
+   ],
+   "wall_ms_median": 212.9
+  },
+  "agent ainvoke async N=8 cap=1": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    1642.0,
+    1643.3,
+    1637.5,
+    1637.3,
+    1638.5
+   ],
+   "wall_ms_median": 1638.5
+  },
+  "agent ainvoke async N=8 cap=2": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    825.4,
+    825.5,
+    823.0,
+    835.3,
+    829.1
+   ],
+   "wall_ms_median": 825.5
+  },
+  "agent ainvoke async N=8 cap=4": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    413.7,
+    420.1,
+    416.6,
+    416.7,
+    415.9
+   ],
+   "wall_ms_median": 416.6
+  },
+  "agent ainvoke async N=8 cap=8": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    215.7,
+    214.7,
+    218.5,
+    213.5,
+    214.4
+   ],
+   "wall_ms_median": 214.7
+  },
+  "agent ainvoke async N=8 cap=none": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    210.6,
+    214.2,
+    212.8,
+    213.1,
+    211.9
+   ],
+   "wall_ms_median": 212.8
+  },
+  "agent ainvoke sync N=1 cap=1": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    217.5,
+    216.8,
+    217.5,
+    217.1,
+    219.2
+   ],
+   "wall_ms_median": 217.5
+  },
+  "agent ainvoke sync N=1 cap=2": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    204.8,
+    219.7,
+    221.1,
+    216.9,
+    221.1
+   ],
+   "wall_ms_median": 219.7
+  },
+  "agent ainvoke sync N=1 cap=4": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    220.9,
+    213.3,
+    211.4,
+    217.4,
+    213.3
+   ],
+   "wall_ms_median": 213.3
+  },
+  "agent ainvoke sync N=1 cap=8": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    219.9,
+    203.3,
+    215.6,
+    221.4,
+    216.4
+   ],
+   "wall_ms_median": 216.4
+  },
+  "agent ainvoke sync N=1 cap=none": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    217.8,
+    220.7,
+    216.9,
+    217.0,
+    217.0
+   ],
+   "wall_ms_median": 217.0
+  },
+  "agent ainvoke sync N=16 cap=1": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    3393.0,
+    3397.1,
+    3365.7,
+    3340.7,
+    3403.1
+   ],
+   "wall_ms_median": 3393.0
+  },
+  "agent ainvoke sync N=16 cap=2": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    1697.2,
+    1702.1,
+    1751.6,
+    1714.8,
+    1717.8
+   ],
+   "wall_ms_median": 1714.8
+  },
+  "agent ainvoke sync N=16 cap=4": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    848.8,
+    848.9,
+    864.8,
+    849.2,
+    846.8
+   ],
+   "wall_ms_median": 848.9
+  },
+  "agent ainvoke sync N=16 cap=8": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    429.7,
+    448.5,
+    444.0,
+    434.5,
+    446.1
+   ],
+   "wall_ms_median": 444.0
+  },
+  "agent ainvoke sync N=16 cap=none": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ],
+   "runs": 5,
+   "wall_ms": [
+    431.4,
+    431.5,
+    432.9,
+    434.9,
+    419.0
+   ],
+   "wall_ms_median": 431.5
+  },
+  "agent ainvoke sync N=2 cap=1": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    426.6,
+    424.9,
+    432.0,
+    428.6,
+    427.9
+   ],
+   "wall_ms_median": 427.9
+  },
+  "agent ainvoke sync N=2 cap=2": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    206.5,
+    214.0,
+    218.8,
+    221.7,
+    209.7
+   ],
+   "wall_ms_median": 214.0
+  },
+  "agent ainvoke sync N=2 cap=4": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    207.7,
+    221.0,
+    217.0,
+    206.7,
+    214.2
+   ],
+   "wall_ms_median": 214.2
+  },
+  "agent ainvoke sync N=2 cap=8": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    217.1,
+    221.3,
+    214.9,
+    220.0,
+    219.4
+   ],
+   "wall_ms_median": 219.4
+  },
+  "agent ainvoke sync N=2 cap=none": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.0,
+    221.5,
+    216.9,
+    211.3,
+    213.3
+   ],
+   "wall_ms_median": 213.3
+  },
+  "agent ainvoke sync N=4 cap=1": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    833.4,
+    845.3,
+    851.3,
+    840.0,
+    845.6
+   ],
+   "wall_ms_median": 845.3
+  },
+  "agent ainvoke sync N=4 cap=2": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    427.9,
+    422.3,
+    430.5,
+    429.3,
+    427.3
+   ],
+   "wall_ms_median": 427.9
+  },
+  "agent ainvoke sync N=4 cap=4": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    216.8,
+    213.3,
+    218.9,
+    215.3,
+    223.8
+   ],
+   "wall_ms_median": 216.8
+  },
+  "agent ainvoke sync N=4 cap=8": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    220.3,
+    212.8,
+    219.7,
+    218.5,
+    219.0
+   ],
+   "wall_ms_median": 219.0
+  },
+  "agent ainvoke sync N=4 cap=none": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    218.6,
+    213.7,
+    216.5,
+    219.0,
+    213.7
+   ],
+   "wall_ms_median": 216.5
+  },
+  "agent ainvoke sync N=8 cap=1": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    1690.6,
+    1702.6,
+    1713.3,
+    1700.5,
+    1684.3
+   ],
+   "wall_ms_median": 1700.5
+  },
+  "agent ainvoke sync N=8 cap=2": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    857.8,
+    862.4,
+    858.1,
+    847.4,
+    850.0
+   ],
+   "wall_ms_median": 857.8
+  },
+  "agent ainvoke sync N=8 cap=4": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    429.6,
+    425.5,
+    423.1,
+    429.1,
+    429.5
+   ],
+   "wall_ms_median": 429.1
+  },
+  "agent ainvoke sync N=8 cap=8": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    219.4,
+    219.3,
+    218.5,
+    219.0,
+    219.1
+   ],
+   "wall_ms_median": 219.1
+  },
+  "agent ainvoke sync N=8 cap=none": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    219.1,
+    217.6,
+    218.0,
+    215.7,
+    221.9
+   ],
+   "wall_ms_median": 218.0
+  },
+  "agent invoke async N=1 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=1 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=1 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=1 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=1 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=16 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=16 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=16 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=16 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=16 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=2 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=2 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=2 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=2 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=2 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=4 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=4 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=4 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=4 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=4 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=8 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=8 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=8 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=8 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke async N=8 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "agent invoke sync N=1 cap=1": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    208.1,
+    222.1,
+    215.2,
+    217.6,
+    208.3
+   ],
+   "wall_ms_median": 215.2
+  },
+  "agent invoke sync N=1 cap=2": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    215.2,
+    205.4,
+    209.0,
+    216.3,
+    209.1
+   ],
+   "wall_ms_median": 209.1
+  },
+  "agent invoke sync N=1 cap=4": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    211.3,
+    215.7,
+    212.2,
+    212.5,
+    207.1
+   ],
+   "wall_ms_median": 212.2
+  },
+  "agent invoke sync N=1 cap=8": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    204.2,
+    205.0,
+    207.0,
+    214.6,
+    203.4
+   ],
+   "wall_ms_median": 205.0
+  },
+  "agent invoke sync N=1 cap=none": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.0,
+    215.6,
+    209.2,
+    206.3,
+    213.9
+   ],
+   "wall_ms_median": 212.0
+  },
+  "agent invoke sync N=16 cap=1": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    3377.4,
+    3394.1,
+    3346.8,
+    3382.0,
+    3392.6
+   ],
+   "wall_ms_median": 3382.0
+  },
+  "agent invoke sync N=16 cap=2": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    1681.5,
+    1687.1,
+    1696.7,
+    1706.8,
+    1685.4
+   ],
+   "wall_ms_median": 1687.1
+  },
+  "agent invoke sync N=16 cap=4": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    862.7,
+    844.5,
+    861.6,
+    855.7,
+    863.8
+   ],
+   "wall_ms_median": 861.6
+  },
+  "agent invoke sync N=16 cap=8": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    432.2,
+    435.1,
+    432.9,
+    435.1,
+    426.6
+   ],
+   "wall_ms_median": 432.9
+  },
+  "agent invoke sync N=16 cap=none": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ],
+   "runs": 5,
+   "wall_ms": [
+    434.3,
+    431.2,
+    422.2,
+    426.6,
+    417.5
+   ],
+   "wall_ms_median": 426.6
+  },
+  "agent invoke sync N=2 cap=1": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    411.0,
+    424.0,
+    430.7,
+    429.2,
+    410.0
+   ],
+   "wall_ms_median": 424.0
+  },
+  "agent invoke sync N=2 cap=2": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.3,
+    216.6,
+    212.1,
+    217.0,
+    215.1
+   ],
+   "wall_ms_median": 215.1
+  },
+  "agent invoke sync N=2 cap=4": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    213.1,
+    214.8,
+    218.1,
+    216.0,
+    214.6
+   ],
+   "wall_ms_median": 214.8
+  },
+  "agent invoke sync N=2 cap=8": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    207.8,
+    216.6,
+    216.7,
+    219.2,
+    215.0
+   ],
+   "wall_ms_median": 216.6
+  },
+  "agent invoke sync N=2 cap=none": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    214.4,
+    215.7,
+    215.0,
+    213.2,
+    217.3
+   ],
+   "wall_ms_median": 215.0
+  },
+  "agent invoke sync N=4 cap=1": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    839.0,
+    847.6,
+    846.0,
+    854.4,
+    845.7
+   ],
+   "wall_ms_median": 846.0
+  },
+  "agent invoke sync N=4 cap=2": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    429.3,
+    434.0,
+    429.7,
+    427.3,
+    429.5
+   ],
+   "wall_ms_median": 429.5
+  },
+  "agent invoke sync N=4 cap=4": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    216.4,
+    212.0,
+    217.8,
+    219.6,
+    218.2
+   ],
+   "wall_ms_median": 217.8
+  },
+  "agent invoke sync N=4 cap=8": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.1,
+    216.4,
+    212.9,
+    212.9,
+    218.2
+   ],
+   "wall_ms_median": 212.9
+  },
+  "agent invoke sync N=4 cap=none": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    219.7,
+    216.3,
+    215.4,
+    216.8,
+    214.3
+   ],
+   "wall_ms_median": 216.3
+  },
+  "agent invoke sync N=8 cap=1": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    1688.6,
+    1700.4,
+    1691.9,
+    1680.8,
+    1683.8
+   ],
+   "wall_ms_median": 1688.6
+  },
+  "agent invoke sync N=8 cap=2": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    861.9,
+    851.4,
+    863.7,
+    850.0,
+    861.3
+   ],
+   "wall_ms_median": 861.3
+  },
+  "agent invoke sync N=8 cap=4": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    428.3,
+    425.7,
+    419.5,
+    430.0,
+    415.9
+   ],
+   "wall_ms_median": 425.7
+  },
+  "agent invoke sync N=8 cap=8": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    217.8,
+    214.4,
+    218.5,
+    217.8,
+    218.7
+   ],
+   "wall_ms_median": 217.8
+  },
+  "agent invoke sync N=8 cap=none": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    216.8,
+    219.7,
+    221.5,
+    216.5,
+    215.8
+   ],
+   "wall_ms_median": 216.8
+  },
+  "toolnode ainvoke async N=1 cap=1": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    204.8,
+    205.4,
+    204.6,
+    205.5,
+    204.5
+   ],
+   "wall_ms_median": 204.8
+  },
+  "toolnode ainvoke async N=1 cap=2": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.9,
+    207.6,
+    207.0,
+    203.5,
+    203.6
+   ],
+   "wall_ms_median": 205.9
+  },
+  "toolnode ainvoke async N=1 cap=4": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.9,
+    208.4,
+    204.7,
+    202.7,
+    203.5
+   ],
+   "wall_ms_median": 204.7
+  },
+  "toolnode ainvoke async N=1 cap=8": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    203.7,
+    204.2,
+    204.7,
+    204.3,
+    206.0
+   ],
+   "wall_ms_median": 204.3
+  },
+  "toolnode ainvoke async N=1 cap=none": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.0,
+    210.4,
+    204.2,
+    204.2,
+    204.6
+   ],
+   "wall_ms_median": 204.6
+  },
+  "toolnode ainvoke async N=16 cap=1": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "wall_ms": [
+    213.9,
+    207.0,
+    207.3,
+    208.3,
+    204.6
+   ],
+   "wall_ms_median": 207.3
+  },
+  "toolnode ainvoke async N=16 cap=2": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "wall_ms": [
+    209.1,
+    213.3,
+    206.8,
+    208.2,
+    208.5
+   ],
+   "wall_ms_median": 208.5
+  },
+  "toolnode ainvoke async N=16 cap=4": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "wall_ms": [
+    207.4,
+    210.0,
+    207.2,
+    205.5,
+    209.1
+   ],
+   "wall_ms_median": 207.4
+  },
+  "toolnode ainvoke async N=16 cap=8": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.4,
+    204.1,
+    210.5,
+    213.5,
+    208.1
+   ],
+   "wall_ms_median": 208.1
+  },
+  "toolnode ainvoke async N=16 cap=none": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "runs": 5,
+   "wall_ms": [
+    207.1,
+    206.8,
+    214.1,
+    208.0,
+    210.5
+   ],
+   "wall_ms_median": 208.0
+  },
+  "toolnode ainvoke async N=2 cap=1": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    202.7,
+    203.9,
+    206.1,
+    206.3,
+    211.8
+   ],
+   "wall_ms_median": 206.1
+  },
+  "toolnode ainvoke async N=2 cap=2": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    220.6,
+    209.1,
+    205.5,
+    212.6,
+    205.5
+   ],
+   "wall_ms_median": 209.1
+  },
+  "toolnode ainvoke async N=2 cap=4": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    204.2,
+    202.2,
+    206.3,
+    208.1,
+    206.4
+   ],
+   "wall_ms_median": 206.3
+  },
+  "toolnode ainvoke async N=2 cap=8": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    203.8,
+    203.9,
+    205.1,
+    202.2,
+    205.9
+   ],
+   "wall_ms_median": 203.9
+  },
+  "toolnode ainvoke async N=2 cap=none": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    204.5,
+    209.3,
+    205.6,
+    207.3,
+    203.7
+   ],
+   "wall_ms_median": 205.6
+  },
+  "toolnode ainvoke async N=4 cap=1": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    204.2,
+    204.3,
+    205.3,
+    208.8,
+    207.9
+   ],
+   "wall_ms_median": 205.3
+  },
+  "toolnode ainvoke async N=4 cap=2": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    206.2,
+    207.9,
+    212.5,
+    204.0,
+    204.7
+   ],
+   "wall_ms_median": 206.2
+  },
+  "toolnode ainvoke async N=4 cap=4": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.2,
+    203.8,
+    210.0,
+    204.1,
+    206.9
+   ],
+   "wall_ms_median": 205.2
+  },
+  "toolnode ainvoke async N=4 cap=8": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    203.8,
+    208.2,
+    211.4,
+    204.0,
+    208.0
+   ],
+   "wall_ms_median": 208.0
+  },
+  "toolnode ainvoke async N=4 cap=none": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    204.3,
+    208.9,
+    210.7,
+    204.0,
+    204.8
+   ],
+   "wall_ms_median": 204.8
+  },
+  "toolnode ainvoke async N=8 cap=1": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    207.5,
+    208.1,
+    206.2,
+    214.9,
+    210.5
+   ],
+   "wall_ms_median": 208.1
+  },
+  "toolnode ainvoke async N=8 cap=2": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    206.0,
+    208.4,
+    206.8,
+    205.7,
+    207.4
+   ],
+   "wall_ms_median": 206.8
+  },
+  "toolnode ainvoke async N=8 cap=4": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    207.4,
+    205.5,
+    207.8,
+    213.6,
+    206.9
+   ],
+   "wall_ms_median": 207.4
+  },
+  "toolnode ainvoke async N=8 cap=8": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    206.9,
+    211.4,
+    208.3,
+    208.4,
+    207.5
+   ],
+   "wall_ms_median": 208.3
+  },
+  "toolnode ainvoke async N=8 cap=none": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.9,
+    203.8,
+    203.4,
+    207.3,
+    206.4
+   ],
+   "wall_ms_median": 205.9
+  },
+  "toolnode ainvoke sync N=1 cap=1": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    213.5,
+    210.9,
+    213.1,
+    207.2,
+    214.5
+   ],
+   "wall_ms_median": 213.1
+  },
+  "toolnode ainvoke sync N=1 cap=2": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    218.1,
+    213.4,
+    219.4,
+    210.8,
+    211.4
+   ],
+   "wall_ms_median": 213.4
+  },
+  "toolnode ainvoke sync N=1 cap=4": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    213.9,
+    212.2,
+    214.7,
+    207.9,
+    217.8
+   ],
+   "wall_ms_median": 213.9
+  },
+  "toolnode ainvoke sync N=1 cap=8": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    210.6,
+    214.6,
+    212.6,
+    212.5,
+    217.6
+   ],
+   "wall_ms_median": 212.6
+  },
+  "toolnode ainvoke sync N=1 cap=none": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    218.8,
+    211.3,
+    202.7,
+    215.6,
+    206.6
+   ],
+   "wall_ms_median": 211.3
+  },
+  "toolnode ainvoke sync N=16 cap=1": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ],
+   "runs": 5,
+   "wall_ms": [
+    431.0,
+    419.6,
+    428.7,
+    421.2,
+    418.9
+   ],
+   "wall_ms_median": 421.2
+  },
+  "toolnode ainvoke sync N=16 cap=2": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ],
+   "runs": 5,
+   "wall_ms": [
+    429.3,
+    429.4,
+    421.1,
+    430.5,
+    431.6
+   ],
+   "wall_ms_median": 429.4
+  },
+  "toolnode ainvoke sync N=16 cap=4": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ],
+   "runs": 5,
+   "wall_ms": [
+    425.6,
+    428.8,
+    422.1,
+    420.7,
+    427.6
+   ],
+   "wall_ms_median": 425.6
+  },
+  "toolnode ainvoke sync N=16 cap=8": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ],
+   "runs": 5,
+   "wall_ms": [
+    418.0,
+    430.6,
+    415.4,
+    428.2,
+    432.2
+   ],
+   "wall_ms_median": 428.2
+  },
+  "toolnode ainvoke sync N=16 cap=none": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ],
+   "runs": 5,
+   "wall_ms": [
+    422.1,
+    429.4,
+    416.7,
+    420.0,
+    420.2
+   ],
+   "wall_ms_median": 420.2
+  },
+  "toolnode ainvoke sync N=2 cap=1": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    210.8,
+    213.5,
+    222.1,
+    212.1,
+    216.3
+   ],
+   "wall_ms_median": 213.5
+  },
+  "toolnode ainvoke sync N=2 cap=2": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    208.0,
+    218.1,
+    216.8,
+    216.2,
+    213.5
+   ],
+   "wall_ms_median": 216.2
+  },
+  "toolnode ainvoke sync N=2 cap=4": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    211.9,
+    210.9,
+    210.7,
+    212.2,
+    213.3
+   ],
+   "wall_ms_median": 211.9
+  },
+  "toolnode ainvoke sync N=2 cap=8": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    213.9,
+    208.7,
+    212.1,
+    216.1,
+    213.1
+   ],
+   "wall_ms_median": 213.1
+  },
+  "toolnode ainvoke sync N=2 cap=none": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    214.9,
+    215.4,
+    217.5,
+    212.5,
+    214.6
+   ],
+   "wall_ms_median": 214.9
+  },
+  "toolnode ainvoke sync N=4 cap=1": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    219.2,
+    214.5,
+    214.2,
+    219.2,
+    212.8
+   ],
+   "wall_ms_median": 214.5
+  },
+  "toolnode ainvoke sync N=4 cap=2": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    209.0,
+    215.5,
+    209.2,
+    217.0,
+    215.0
+   ],
+   "wall_ms_median": 215.0
+  },
+  "toolnode ainvoke sync N=4 cap=4": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.1,
+    210.5,
+    209.0,
+    218.1,
+    217.8
+   ],
+   "wall_ms_median": 212.1
+  },
+  "toolnode ainvoke sync N=4 cap=8": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    207.9,
+    215.1,
+    216.7,
+    207.4,
+    216.1
+   ],
+   "wall_ms_median": 215.1
+  },
+  "toolnode ainvoke sync N=4 cap=none": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    214.3,
+    203.6,
+    213.7,
+    220.5,
+    211.8
+   ],
+   "wall_ms_median": 213.7
+  },
+  "toolnode ainvoke sync N=8 cap=1": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    214.1,
+    212.2,
+    214.6,
+    216.7,
+    204.4
+   ],
+   "wall_ms_median": 214.1
+  },
+  "toolnode ainvoke sync N=8 cap=2": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    215.1,
+    216.4,
+    222.9,
+    218.8,
+    215.9
+   ],
+   "wall_ms_median": 216.4
+  },
+  "toolnode ainvoke sync N=8 cap=4": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    214.8,
+    215.0,
+    208.0,
+    210.5,
+    215.4
+   ],
+   "wall_ms_median": 214.8
+  },
+  "toolnode ainvoke sync N=8 cap=8": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    211.9,
+    217.2,
+    215.8,
+    214.0,
+    224.4
+   ],
+   "wall_ms_median": 215.8
+  },
+  "toolnode ainvoke sync N=8 cap=none": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    216.9,
+    217.1,
+    216.4,
+    214.5,
+    210.1
+   ],
+   "wall_ms_median": 216.4
+  },
+  "toolnode invoke async N=1 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=1 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=1 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=1 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=1 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=16 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=16 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=16 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=16 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=16 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=2 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=2 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=2 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=2 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=2 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=4 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=4 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=4 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=4 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=4 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=8 cap=1": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=8 cap=2": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=8 cap=4": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=8 cap=8": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke async N=8 cap=none": {
+   "errors": {
+    "NotImplementedError: StructuredTool does not support sync invocation.": 5
+   },
+   "executions": [],
+   "overlap": [],
+   "runs": 5,
+   "wall_ms": []
+  },
+  "toolnode invoke sync N=1 cap=1": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    209.4,
+    212.1,
+    202.3,
+    211.7,
+    213.1
+   ],
+   "wall_ms_median": 211.7
+  },
+  "toolnode invoke sync N=1 cap=2": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    211.7,
+    209.8,
+    210.3,
+    211.7,
+    205.2
+   ],
+   "wall_ms_median": 210.3
+  },
+  "toolnode invoke sync N=1 cap=4": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    216.2,
+    206.0,
+    206.3,
+    211.8,
+    215.9
+   ],
+   "wall_ms_median": 211.8
+  },
+  "toolnode invoke sync N=1 cap=8": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.1,
+    211.2,
+    212.0,
+    216.0,
+    211.6
+   ],
+   "wall_ms_median": 212.0
+  },
+  "toolnode invoke sync N=1 cap=none": {
+   "errors": {},
+   "executions": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    203.5,
+    211.6,
+    214.8,
+    213.6,
+    207.1
+   ],
+   "wall_ms_median": 211.6
+  },
+  "toolnode invoke sync N=16 cap=1": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    3332.9,
+    3353.6,
+    3350.1,
+    3352.3,
+    3345.8
+   ],
+   "wall_ms_median": 3350.1
+  },
+  "toolnode invoke sync N=16 cap=2": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    1675.8,
+    1679.4,
+    1684.3,
+    1679.4,
+    1689.2
+   ],
+   "wall_ms_median": 1679.4
+  },
+  "toolnode invoke sync N=16 cap=4": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    852.5,
+    844.7,
+    846.7,
+    850.4,
+    850.3
+   ],
+   "wall_ms_median": 850.3
+  },
+  "toolnode invoke sync N=16 cap=8": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    422.3,
+    422.0,
+    416.6,
+    427.9,
+    431.5
+   ],
+   "wall_ms_median": 422.3
+  },
+  "toolnode invoke sync N=16 cap=none": {
+   "errors": {},
+   "executions": [
+    16,
+    16,
+    16,
+    16,
+    16
+   ],
+   "overlap": [
+    14,
+    14,
+    14,
+    14,
+    14
+   ],
+   "runs": 5,
+   "wall_ms": [
+    415.3,
+    419.2,
+    419.3,
+    423.6,
+    420.7
+   ],
+   "wall_ms_median": 419.3
+  },
+  "toolnode invoke sync N=2 cap=1": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    421.8,
+    420.9,
+    412.7,
+    427.5,
+    423.1
+   ],
+   "wall_ms_median": 421.8
+  },
+  "toolnode invoke sync N=2 cap=2": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    206.4,
+    214.5,
+    212.1,
+    203.5,
+    209.1
+   ],
+   "wall_ms_median": 209.1
+  },
+  "toolnode invoke sync N=2 cap=4": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    216.5,
+    216.1,
+    212.9,
+    207.3,
+    211.9
+   ],
+   "wall_ms_median": 212.9
+  },
+  "toolnode invoke sync N=2 cap=8": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    205.3,
+    207.3,
+    212.1,
+    213.1,
+    209.1
+   ],
+   "wall_ms_median": 209.1
+  },
+  "toolnode invoke sync N=2 cap=none": {
+   "errors": {},
+   "executions": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    210.9,
+    205.9,
+    207.5,
+    205.5,
+    208.3
+   ],
+   "wall_ms_median": 207.5
+  },
+  "toolnode invoke sync N=4 cap=1": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    841.0,
+    836.7,
+    838.5,
+    841.3,
+    852.0
+   ],
+   "wall_ms_median": 841.0
+  },
+  "toolnode invoke sync N=4 cap=2": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    434.2,
+    423.2,
+    424.7,
+    422.3,
+    423.3
+   ],
+   "wall_ms_median": 423.3
+  },
+  "toolnode invoke sync N=4 cap=4": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.3,
+    212.8,
+    213.0,
+    213.5,
+    214.9
+   ],
+   "wall_ms_median": 213.0
+  },
+  "toolnode invoke sync N=4 cap=8": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    210.7,
+    212.1,
+    213.1,
+    217.4,
+    217.4
+   ],
+   "wall_ms_median": 213.1
+  },
+  "toolnode invoke sync N=4 cap=none": {
+   "errors": {},
+   "executions": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    206.5,
+    218.3,
+    212.4,
+    211.4,
+    209.1
+   ],
+   "wall_ms_median": 211.4
+  },
+  "toolnode invoke sync N=8 cap=1": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    1,
+    1,
+    1,
+    1,
+    1
+   ],
+   "runs": 5,
+   "wall_ms": [
+    1680.0,
+    1680.5,
+    1675.9,
+    1667.9,
+    1666.1
+   ],
+   "wall_ms_median": 1675.9
+  },
+  "toolnode invoke sync N=8 cap=2": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    2,
+    2,
+    2,
+    2,
+    2
+   ],
+   "runs": 5,
+   "wall_ms": [
+    841.7,
+    849.0,
+    834.7,
+    846.6,
+    839.6
+   ],
+   "wall_ms_median": 841.7
+  },
+  "toolnode invoke sync N=8 cap=4": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    4,
+    4,
+    4,
+    4,
+    4
+   ],
+   "runs": 5,
+   "wall_ms": [
+    423.6,
+    424.2,
+    423.5,
+    422.3,
+    418.6
+   ],
+   "wall_ms_median": 423.5
+  },
+  "toolnode invoke sync N=8 cap=8": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.6,
+    214.9,
+    212.6,
+    212.3,
+    217.0
+   ],
+   "wall_ms_median": 212.6
+  },
+  "toolnode invoke sync N=8 cap=none": {
+   "errors": {},
+   "executions": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "overlap": [
+    8,
+    8,
+    8,
+    8,
+    8
+   ],
+   "runs": 5,
+   "wall_ms": [
+    212.2,
+    213.3,
+    214.3,
+    214.4,
+    212.8
+   ],
+   "wall_ms_median": 213.3
+  }
+ },
+ "cpu_count": 10,
+ "ids_and_names": [
+  {
+   "case": "chatopenai_noid=1",
+   "error": "TypeError: Tool lookup returned unexpected type: <class 'str'>",
+   "executions": 2,
+   "how": "invoke",
+   "tool_messages": []
+  },
+  {
+   "case": "chatopenai_noid=1",
+   "error": "TypeError: Tool lookup returned unexpected type: <class 'str'>",
+   "executions": 2,
+   "how": "stream_messages",
+   "tool_messages": []
+  },
+  {
+   "case": "chatopenai_noid=1",
+   "error": null,
+   "executions": 2,
+   "how": "stream_events_v3",
+   "tool_messages": [
+    [
+     "",
+     "success"
+    ],
+    [
+     "",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "chatopenai_noid=0",
+   "error": null,
+   "executions": 2,
+   "how": "invoke",
+   "tool_messages": [
+    [
+     "call_5_0",
+     "success"
+    ],
+    [
+     "call_5_1",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "chatopenai_noid=0",
+   "error": null,
+   "executions": 2,
+   "how": "stream_messages",
+   "tool_messages": [
+    [
+     "call_7_0",
+     "success"
+    ],
+    [
+     "call_7_1",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "chatopenai_noid=0",
+   "error": null,
+   "executions": 2,
+   "how": "stream_events_v3",
+   "tool_messages": [
+    [
+     "call_9_0",
+     "success"
+    ],
+    [
+     "call_9_1",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_none_x2",
+   "error": "TypeError: Tool lookup returned unexpected type: <class 'str'>",
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "invoke",
+   "tool_messages": []
+  },
+  {
+   "case": "ids_present_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "invoke",
+   "tool_messages": [
+    [
+     "call_a",
+     "success"
+    ],
+    [
+     "call_b",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_empty_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "invoke",
+   "tool_messages": [
+    [
+     "",
+     "success"
+    ],
+    [
+     "",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_none_x2",
+   "error": "TypeError: Tool lookup returned unexpected type: <class 'str'>",
+   "executions": 2,
+   "fake_last_chunk": "on_data_chunk",
+   "how": "invoke",
+   "tool_messages": []
+  },
+  {
+   "case": "ids_present_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "on_data_chunk",
+   "how": "invoke",
+   "tool_messages": [
+    [
+     "call_a",
+     "success"
+    ],
+    [
+     "call_b",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_none_x2",
+   "error": "TypeError: Tool lookup returned unexpected type: <class 'str'>",
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "stream_messages",
+   "tool_messages": []
+  },
+  {
+   "case": "ids_present_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "stream_messages",
+   "tool_messages": [
+    [
+     "call_a",
+     "success"
+    ],
+    [
+     "call_b",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_empty_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "stream_messages",
+   "tool_messages": [
+    [
+     "",
+     "success"
+    ],
+    [
+     "",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_none_x2",
+   "error": "TypeError: Tool lookup returned unexpected type: <class 'str'>",
+   "executions": 2,
+   "fake_last_chunk": "on_data_chunk",
+   "how": "stream_messages",
+   "tool_messages": []
+  },
+  {
+   "case": "ids_present_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "on_data_chunk",
+   "how": "stream_messages",
+   "tool_messages": [
+    [
+     "call_a",
+     "success"
+    ],
+    [
+     "call_b",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_none_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "stream_events_v3",
+   "tool_messages": [
+    [
+     "",
+     "success"
+    ],
+    [
+     "",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_present_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "stream_events_v3",
+   "tool_messages": [
+    [
+     "call_a",
+     "success"
+    ],
+    [
+     "call_b",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_empty_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "stream_events_v3",
+   "tool_messages": [
+    [
+     "",
+     "success"
+    ],
+    [
+     "",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_none_x2",
+   "error": null,
+   "executions": 1,
+   "fake_last_chunk": "on_data_chunk",
+   "how": "stream_events_v3",
+   "tool_messages": [
+    [
+     "",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_present_x2",
+   "error": null,
+   "executions": 1,
+   "fake_last_chunk": "on_data_chunk",
+   "how": "stream_events_v3",
+   "tool_messages": [
+    [
+     "call_b",
+     "error"
+    ],
+    [
+     "call_a",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_none_x2",
+   "error": "TypeError: Tool lookup returned unexpected type: <class 'str'>",
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "astream_events_v2",
+   "tool_messages": []
+  },
+  {
+   "case": "ids_present_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "astream_events_v2",
+   "tool_messages": [
+    [
+     "call_a",
+     "success"
+    ],
+    [
+     "call_b",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_empty_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "separate_empty",
+   "how": "astream_events_v2",
+   "tool_messages": [
+    [
+     "",
+     "success"
+    ],
+    [
+     "",
+     "success"
+    ]
+   ]
+  },
+  {
+   "case": "ids_none_x2",
+   "error": "TypeError: Tool lookup returned unexpected type: <class 'str'>",
+   "executions": 2,
+   "fake_last_chunk": "on_data_chunk",
+   "how": "astream_events_v2",
+   "tool_messages": []
+  },
+  {
+   "case": "ids_present_x2",
+   "error": null,
+   "executions": 2,
+   "fake_last_chunk": "on_data_chunk",
+   "how": "astream_events_v2",
+   "tool_messages": [
+    [
+     "call_a",
+     "success"
+    ],
+    [
+     "call_b",
+     "success"
+    ]
+   ]
+  },
+  {
+   "bound_to_model": [
+    [
+     "account_action",
+     "Delete an account."
+    ]
+   ],
+   "case": "duplicate_names",
+   "error": null,
+   "executions": 1,
+   "order": [
+    "safe",
+    "priv"
+   ],
+   "ran": [
+    "privileged_delete"
+   ],
+   "tool_messages": [
+    [
+     "c1",
+     "success"
+    ]
+   ]
+  },
+  {
+   "bound_to_model": [
+    [
+     "account_action",
+     "Look up an account without side effects."
+    ]
+   ],
+   "case": "duplicate_names",
+   "error": null,
+   "executions": 1,
+   "order": [
+    "priv",
+    "safe"
+   ],
+   "ran": [
+    "safe_lookup"
+   ],
+   "tool_messages": [
+    [
+     "c1",
+     "success"
+    ]
+   ]
+  }
+ ],
+ "load1": [
+  3.6,
+  5.2
+ ],
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "ollama": {
+  "chatollama invoke": {
+   "both_tools_ran": 3,
+   "errors": 0,
+   "runs": 3
+  },
+  "chatollama stream_events_v3": {
+   "both_tools_ran": 3,
+   "errors": 0,
+   "runs": 3
+  },
+  "chatollama stream_messages": {
+   "both_tools_ran": 3,
+   "errors": 0,
+   "runs": 3
+  },
+  "chatopenai_ollama_v1 invoke": {
+   "both_tools_ran": 3,
+   "errors": 0,
+   "runs": 3
+  },
+  "chatopenai_ollama_v1 stream_events_v3": {
+   "both_tools_ran": 3,
+   "errors": 0,
+   "runs": 3
+  },
+  "chatopenai_ollama_v1 stream_messages": {
+   "both_tools_ran": 3,
+   "errors": 0,
+   "runs": 3
+  }
+ },
+ "run": "a fake model asks for N calls of one tool that sleeps 200 ms; overlap is the largest number of calls running at one time, from the start and end stamps of each call",
+ "sources": [
+  "capture/lab/T08-parallel-tools-mac/01-concurrency-runs.jsonl",
+  "capture/lab/T08-parallel-tools-mac/02-idless-and-dupnames.jsonl",
+  "capture/lab/T08-parallel-tools-mac/03-ollama-parallel.jsonl",
+  "capture/lab/T08-parallel-tools-mac/t08_run.py",
+  "capture/lab/T08-parallel-tools-mac/t08_ids.py",
+  "capture/lab/T08-parallel-tools-mac/t08_ollama.py"
+ ]
+}

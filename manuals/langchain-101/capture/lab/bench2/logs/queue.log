@@ -1,0 +1,31 @@
+### 18:26:19 p: 4b control deep_agent no profile :: 18:26  12 users, load averages: 2.65 3.25 11.88
+### 18:31:08 r: 8b create_agent control on 25 plain failures :: 18:31  12 users, load averages: 3.60 3.32 9.37
+### 18:35:11 r: 8b create_agent control on 25 plain failures :: 18:35  12 users, load averages: 3.65 3.49 7.92
+### 18:35:11 p: 4b control deep_agent no profile :: 18:35  12 users, load averages: 3.65 3.49 7.92
+### 18:45:31 r: 8b create_agent control on 25 plain failures (shared server) :: 18:45  12 users, load averages: 5.44 3.33 5.30
+### 18:45:32 p: 4b control deep_agent no profile (private server) :: 18:45  12 users, load averages: 5.44 3.33 5.30
+### 18:47:47 p: 4b control deep_agent no profile (private server) :: 18:47  up 89 days,  4:44, 12 users, load averages: 11.83 5.90 5.98
+### 18:47:48 r: 8b create_agent control on 25 plain failures (shared server) :: 18:47  up 89 days,  4:44, 12 users, load averages: 11.44 5.91 5.98
+### 18:54:08 p: 4b profile B full 99 :: 18:54  12 users, load averages: 6.92 6.73 6.34
+### 18:54:08 e: deepagents evals qwen3:4b-instruct-2507-q4_K_M :: 18:54  12 users, load averages: 6.92 6.73 6.34
+### 18:54:09 r: 8b create_agent + RubricMiddleware(14b) on 25 :: 18:54  12 users, load averages: 6.92 6.73 6.34
+### 19:00:49 e: deepagents evals qwen3:4b-instruct-2507-q4_K_M :: 19:00  12 users, load averages: 4.88 5.28 5.74
+### 19:00:49 r: 8b create_agent + RubricMiddleware(14b) on 25 :: 19:00  12 users, load averages: 4.88 5.28 5.74
+### 19:00:49 p: 4b profile B full 99 :: 19:00  12 users, load averages: 4.88 5.28 5.74
+### 19:15:38 p: 4b profile B subset30 :: 19:15  up 89 days,  5:12, 12 users, load averages: 5.50 6.99 6.50
+### 19:25:12 r: 8b create_agent + RubricMiddleware(14b) on 25 :: 19:25  up 89 days,  5:22, 12 users, load averages: 7.71 7.32 6.73
+### 19:25:13 x: 8b deep_ptc chain+sql :: 19:25  up 89 days,  5:22, 12 users, load averages: 7.71 7.32 6.73
+### 19:25:40 r: 8b create_agent + RubricMiddleware(14b) on 25 :: 19:25  12 users, load averages: 9.12 7.71 6.89
+### 19:56:14 p: 8b profile B subset30 :: 19:56  up 89 days,  5:53, 12 users, load averages: 15.25 7.63 6.56
+### 21:00:04 p: 4b profile B rest of 99 :: 21:00  up 89 days,  6:56, 12 users, load averages: 4.45 4.57 4.47
+### 21:50:41 p: 8b profile B rest of 99 :: 21:50  up 89 days,  7:47, 12 users, load averages: 4.48 4.19 4.54
+### 11:01:39 p: 4b profile A subset30 :: 11:01  up 89 days, 20:58, 12 users, load averages: 12.98 47.71 59.43
+### 11:34:55 p: 8b profile A subset30 :: 11:34  up 89 days, 21:31, 12 users, load averages: 5.78 17.80 25.37
+### 12:02:52 p: done :: 12:02  up 89 days, 21:59, 12 users, load averages: 3.10 7.82 11.68
+### 12:19:26 x: 8b deep_ptc chain+sql :: 12:19  12 users, load averages: 4.20 4.39 6.31
+### 14:00:02 x: 14b deep_ptc 39 :: 14:00  12 users, load averages: 4.82 3.64 11.78
+### 16:03:02 x: gpt-oss deep_ptc 39 :: 16:03  12 users, load averages: 2.78 4.83 4.85
+### 16:13:42 x: 14b deep_control missing 27 :: 16:13  12 users, load averages: 2.21 4.23 4.84
+### 16:29:56 x: gpt-oss deep_control missing 27 :: 16:29  12 users, load averages: 0.75 1.83 3.09
+### 16:36:24 x: 8b deep_ptc_nudge chain+sql :: 16:36  12 users, load averages: 4.80 3.76 3.51
+### 16:36:25 x/r: done :: 16:36  12 users, load averages: 4.81 3.78 3.52

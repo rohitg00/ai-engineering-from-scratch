@@ -1,0 +1,81 @@
+=== 2026-11-15T06:55:55Z T04 real_text | 12:25  12 users, load averages: 3.23 3.26 3.42
+real_text 0 plain_openai
+real_text 0 chatopenai_stream
+real_text 0 agent_messages
+real_text 0 agent_messages_updates
+real_text 0 astream_events_v2
+real_text 0 stream_events_v3
+real_text 0 stream_events_v3_raw
+real_text 0 astream_events_v3
+real_text 0 astream_events_v3_gather
+real_text 1 astream_events_v3_gather
+real_text 1 astream_events_v3
+real_text 1 stream_events_v3_raw
+real_text 1 stream_events_v3
+real_text 1 astream_events_v2
+real_text 1 agent_messages_updates
+real_text 1 agent_messages
+real_text 1 chatopenai_stream
+real_text 1 plain_openai
+real_text 2 plain_openai
+real_text 2 chatopenai_stream
+real_text 2 agent_messages
+real_text 2 agent_messages_updates
+real_text 2 astream_events_v2
+real_text 2 stream_events_v3
+real_text 2 stream_events_v3_raw
+real_text 2 astream_events_v3
+real_text 2 astream_events_v3_gather
+real_text 3 astream_events_v3_gather
+real_text 3 astream_events_v3
+real_text 3 stream_events_v3_raw
+real_text 3 stream_events_v3
+real_text 3 astream_events_v2
+real_text 3 agent_messages_updates
+real_text 3 agent_messages
+real_text 3 chatopenai_stream
+real_text 3 plain_openai
+=== 2026-11-15T07:08:39Z T04 real_tool | 12:38  12 users, load averages: 4.89 4.11 3.73
+real_tool 0 plain_openai
+real_tool 0 chatopenai_stream
+real_tool 0 agent_messages
+real_tool 0 agent_messages_updates
+real_tool 0 astream_events_v2
+real_tool 0 stream_events_v3
+real_tool 0 stream_events_v3_raw
+real_tool 0 astream_events_v3
+real_tool 0 astream_events_v3_gather
+real_tool 1 astream_events_v3_gather
+real_tool 1 astream_events_v3
+real_tool 1 stream_events_v3_raw
+real_tool 1 stream_events_v3
+real_tool 1 astream_events_v2
+real_tool 1 agent_messages_updates
+real_tool 1 agent_messages
+real_tool 1 chatopenai_stream
+real_tool 1 plain_openai
+real_tool 2 plain_openai
+real_tool 2 chatopenai_stream
+real_tool 2 agent_messages
+real_tool 2 agent_messages_updates
+real_tool 2 astream_events_v2
+real_tool 2 stream_events_v3
+real_tool 2 stream_events_v3_raw
+real_tool 2 astream_events_v3
+real_tool 2 astream_events_v3_gather
+real_tool 3 astream_events_v3_gather
+real_tool 3 astream_events_v3
+real_tool 3 stream_events_v3_raw
+real_tool 3 stream_events_v3
+real_tool 3 astream_events_v2
+real_tool 3 agent_messages_updates
+real_tool 3 agent_messages
+real_tool 3 chatopenai_stream
+real_tool 3 plain_openai
+=== 2026-11-15T07:15:31Z T04 iso qwen3:8b | 12:45  12 users, load averages: 4.01 3.47 3.42
+=== 2026-11-15T07:52:19Z T06 provider | 13:22  12 users, load averages: 5.87 5.00 4.85
+=== 2026-11-15T08:08:02Z TRC latency | 13:38  12 users, load averages: 7.17 7.03 7.23
+=== 2026-11-15T08:18:09Z TRC interleave | 13:48  12 users, load averages: 9.02 11.32 10.11
+=== 2026-11-15T08:21:28Z TRC failure | 13:51  12 users, load averages: 2.25 6.73 8.38
+=== 2026-11-15T08:35:09Z TRC local | 14:05  12 users, load averages: 10.09 6.01 6.29
+=== 2026-11-15T08:35:30Z ALL DONE | 14:05  12 users, load averages: 7.72 5.73 6.18

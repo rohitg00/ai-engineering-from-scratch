@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 736" role="img" aria-labelledby="fig-r-11b-title fig-r-11b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-r-11b-title">The pass rate and its interval for every cell of the second bench</title>
+  <desc id="fig-r-11b-desc">Dots with 95 percent Wilson intervals for 28 cells of the second bench, in 9 groups: two profile experiments on Qwen3 4B and Qwen3 8B, the eval tool on four models, and one rubric run. 3 of the cells have fewer than 30 tasks. The widest interval is 34 points and the narrowest is 9 points.</desc>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CELL</text>
+  <text x="620" y="22" font-size="11" text-anchor="end" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">PASS OF N</text>
+  <text x="250" y="44" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0%</text>
+  <text x="380" y="44" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50%</text>
+  <text x="510" y="44" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100%</text>
+  <line x1="250" y1="50" x2="250" y2="680" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="380" y1="50" x2="380" y2="680" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="510" y1="50" x2="510" y2="680" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="69" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 4B, 99 tasks</text>
+  <text x="28" y="89" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">plain loop</text>
+  <line x1="408.87" y1="85" x2="454.79" y2="85" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2"/>
+  <rect x="430.34" y="81.5" width="7" height="7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="89" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">70/99</text>
+  <text x="28" y="103" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep agent</text>
+  <line x1="368.93" y1="99" x2="418.88" y2="99" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect x="390.94" y="95.5" width="7" height="7" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="103" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">55/99</text>
+  <text x="28" y="117" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep, profile B</text>
+  <line x1="368.93" y1="113" x2="418.88" y2="113" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <rect x="390.94" y="109.5" width="7" height="7" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="620" y="117" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">55/99</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="137" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 4B, 30-task subset</text>
+  <text x="28" y="157" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">plain loop</text>
+  <line x1="403.59" y1="153" x2="479.34" y2="153" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2"/>
+  <rect x="445.83" y="149.5" width="7" height="7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="157" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">23/30</text>
+  <text x="28" y="171" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep agent</text>
+  <line x1="321.18" y1="167" x2="408.09" y2="167" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect x="359.17" y="163.5" width="7" height="7" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="171" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">13/30</text>
+  <text x="28" y="185" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep, profile A</text>
+  <line x1="368.33" y1="181" x2="453.13" y2="181" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <rect x="411.17" y="177.5" width="7" height="7" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="620" y="185" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">19/30</text>
+  <text x="28" y="199" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep, profile B</text>
+  <line x1="360.03" y1="195" x2="446.06" y2="195" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <rect x="402.5" y="191.5" width="7" height="7" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="620" y="199" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">18/30</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="219" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 8B, 99 tasks</text>
+  <text x="28" y="239" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">plain loop</text>
+  <line x1="419.98" y1="235" x2="463.9" y2="235" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2"/>
+  <rect x="440.84" y="231.5" width="7" height="7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="239" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">74/99</text>
+  <text x="28" y="253" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep agent</text>
+  <line x1="376.72" y1="249" x2="426.26" y2="249" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect x="398.82" y="245.5" width="7" height="7" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="253" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">58/99</text>
+  <text x="28" y="267" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep, profile B</text>
+  <line x1="389.92" y1="263" x2="438.34" y2="263" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <rect x="411.95" y="259.5" width="7" height="7" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="620" y="267" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">63/99</text>
+  </g>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="287" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 8B, 30-task subset</text>
+  <text x="28" y="307" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">plain loop</text>
+  <line x1="360.03" y1="303" x2="446.06" y2="303" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2"/>
+  <rect x="402.5" y="299.5" width="7" height="7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="307" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">18/30</text>
+  <text x="28" y="321" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep agent</text>
+  <line x1="343.97" y1="317" x2="431.4" y2="317" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect x="385.17" y="313.5" width="7" height="7" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="321" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">16/30</text>
+  <text x="28" y="335" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep, profile A</text>
+  <line x1="343.97" y1="331" x2="431.4" y2="331" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <rect x="385.17" y="327.5" width="7" height="7" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="620" y="335" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">16/30</text>
+  <text x="28" y="349" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep, profile B</text>
+  <line x1="351.91" y1="345" x2="438.82" y2="345" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="2"/>
+  <rect x="393.83" y="341.5" width="7" height="7" fill="var(--m-plum-ink, #8a3d72)"/>
+  <text x="620" y="349" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">17/30</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="369" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 8B, chain and sql</text>
+  <text x="28" y="389" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">plain loop</text>
+  <line x1="375.89" y1="385" x2="450.87" y2="385" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2"/>
+  <rect x="413.17" y="381.5" width="7" height="7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="389" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">25/39</text>
+  <text x="28" y="403" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep agent</text>
+  <line x1="396.18" y1="399" x2="466.99" y2="399" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect x="433.17" y="395.5" width="7" height="7" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="403" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">28/39</text>
+  <text x="28" y="417" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep + eval tool</text>
+  <line x1="362.89" y1="413" x2="439.59" y2="413" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <rect x="399.83" y="409.5" width="7" height="7" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="417" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">23/39</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="437" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 14B, chain and sql</text>
+  <text x="28" y="457" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">plain loop</text>
+  <line x1="446.95" y1="453" x2="510" y2="453" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2"/>
+  <rect x="506.5" y="449.5" width="7" height="7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="457" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">12/12</text>
+  <text x="28" y="471" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep agent</text>
+  <line x1="417.61" y1="467" x2="481.97" y2="467" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect x="453.17" y="463.5" width="7" height="7" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="471" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">31/39</text>
+  <text x="28" y="485" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep + eval tool</text>
+  <line x1="403.19" y1="481" x2="472.12" y2="481" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <rect x="439.83" y="477.5" width="7" height="7" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="485" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">29/39</text>
+  </g>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="505" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">gpt-oss 20B, chain and sql</text>
+  <text x="28" y="525" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">plain loop</text>
+  <line x1="446.95" y1="521" x2="510" y2="521" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2"/>
+  <rect x="506.5" y="517.5" width="7" height="7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="525" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">12/12</text>
+  <text x="28" y="539" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep agent</text>
+  <line x1="466.1" y1="535" x2="506.31" y2="535" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect x="493.17" y="531.5" width="7" height="7" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="539" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">37/39</text>
+  <text x="28" y="553" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep + eval tool</text>
+  <line x1="448.69" y1="549" x2="499.44" y2="549" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <rect x="479.83" y="545.5" width="7" height="7" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="553" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">35/39</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="573" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Claude Haiku 5.5, chain and sql</text>
+  <text x="28" y="593" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">plain loop</text>
+  <line x1="486.69" y1="589" x2="510" y2="589" stroke="var(--m-violet-ink, #5b4fa3)" stroke-width="2"/>
+  <rect x="506.5" y="585.5" width="7" height="7" fill="var(--m-violet-ink, #5b4fa3)"/>
+  <text x="620" y="593" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">39/39</text>
+  <text x="28" y="607" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep agent</text>
+  <line x1="486.69" y1="603" x2="510" y2="603" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="2"/>
+  <rect x="506.5" y="599.5" width="7" height="7" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <text x="620" y="607" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">39/39</text>
+  <text x="28" y="621" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep + eval tool</text>
+  <line x1="486.69" y1="617" x2="510" y2="617" stroke="var(--m-green-ink, #336b40)" stroke-width="2"/>
+  <rect x="506.5" y="613.5" width="7" height="7" fill="var(--m-green-ink, #336b40)"/>
+  <text x="620" y="621" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">39/39</text>
+  <text x="28" y="635" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">deep + eval, asked</text>
+  <line x1="486.69" y1="631" x2="510" y2="631" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="2"/>
+  <rect x="506.5" y="627.5" width="7" height="7" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="620" y="635" font-size="11" text-anchor="end" font-weight="400" fill="var(--m-ink, #1a1a1a)">39/39</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="655" font-size="11" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">Qwen3 8B with a Qwen3 14B grader</text>
+  <text x="28" y="675" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">rubric, tasks failed before</text>
+  <line x1="260.83" y1="671" x2="327.89" y2="671" stroke="var(--m-olive-ink, #515f26)" stroke-width="2"/>
+  <rect x="277.7" y="667.5" width="7" height="7" fill="var(--m-olive-ink, #515f26)"/>
+  <text x="620" y="675" font-size="11" text-anchor="end" font-weight="700" fill="var(--m-rose-ink, #b0344d)">3/25</text>
+  </g>
+  <text x="20" y="694" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Whiskers are 95% Wilson intervals. Rose counts are cells of fewer than 30 tasks.</text>
+  <text x="20" y="710" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">The rubric cell holds only tasks that the plain loop failed, so its baseline is 0 of 25.</text>
+</svg>

@@ -1,0 +1,357 @@
+{
+ "double_texting": [
+  {
+   "done": [
+    "first:reject-A",
+    "second:reject-A"
+   ],
+   "first_run_after": "success",
+   "history": 4,
+   "node_events": [
+    {
+     "dt": 0.86,
+     "ev": "first_start",
+     "label": "reject-A"
+    },
+    {
+     "dt": 2.86,
+     "ev": "first_end",
+     "label": "reject-A"
+    },
+    {
+     "dt": 2.86,
+     "ev": "second_start",
+     "label": "reject-A"
+    },
+    {
+     "dt": 4.86,
+     "ev": "second_end",
+     "label": "reject-A"
+    }
+   ],
+   "second_run": "HTTP 409: Thread is already running a task. Wait for it to finish or choose a different multitask strategy.",
+   "strategy": "reject"
+  },
+  {
+   "done": [
+    "first:enqueue-A",
+    "second:enqueue-A",
+    "first:enqueue-B",
+    "second:enqueue-B"
+   ],
+   "first_run_after": "success",
+   "history": 8,
+   "node_events": [
+    {
+     "dt": 0.79,
+     "ev": "first_start",
+     "label": "enqueue-A"
+    },
+    {
+     "dt": 2.79,
+     "ev": "first_end",
+     "label": "enqueue-A"
+    },
+    {
+     "dt": 2.79,
+     "ev": "second_start",
+     "label": "enqueue-A"
+    },
+    {
+     "dt": 4.79,
+     "ev": "second_end",
+     "label": "enqueue-A"
+    },
+    {
+     "dt": 4.8,
+     "ev": "first_start",
+     "label": "enqueue-B"
+    },
+    {
+     "dt": 5.8,
+     "ev": "first_end",
+     "label": "enqueue-B"
+    },
+    {
+     "dt": 5.8,
+     "ev": "second_start",
+     "label": "enqueue-B"
+    },
+    {
+     "dt": 6.8,
+     "ev": "second_end",
+     "label": "enqueue-B"
+    }
+   ],
+   "second_run": "accepted",
+   "strategy": "enqueue"
+  },
+  {
+   "done": [
+    "first:interrupt-B",
+    "second:interrupt-B"
+   ],
+   "first_run_after": "interrupted",
+   "history": 6,
+   "node_events": [
+    {
+     "dt": 0.72,
+     "ev": "first_start",
+     "label": "interrupt-A"
+    },
+    {
+     "dt": 1.02,
+     "ev": "first_start",
+     "label": "interrupt-B"
+    },
+    {
+     "dt": 2.02,
+     "ev": "first_end",
+     "label": "interrupt-B"
+    },
+    {
+     "dt": 2.02,
+     "ev": "second_start",
+     "label": "interrupt-B"
+    },
+    {
+     "dt": 3.02,
+     "ev": "second_end",
+     "label": "interrupt-B"
+    }
+   ],
+   "second_run": "accepted",
+   "strategy": "interrupt"
+  },
+  {
+   "done": [
+    "first:rollback-B",
+    "second:rollback-B"
+   ],
+   "first_run_after": "NotFoundError: Not Found",
+   "history": 4,
+   "node_events": [
+    {
+     "dt": 0.98,
+     "ev": "first_start",
+     "label": "rollback-A"
+    },
+    {
+     "dt": 1.02,
+     "ev": "first_start",
+     "label": "rollback-B"
+    },
+    {
+     "dt": 2.02,
+     "ev": "first_end",
+     "label": "rollback-B"
+    },
+    {
+     "dt": 2.02,
+     "ev": "second_start",
+     "label": "rollback-B"
+    },
+    {
+     "dt": 3.02,
+     "ev": "second_end",
+     "label": "rollback-B"
+    }
+   ],
+   "second_run": "accepted",
+   "strategy": "rollback"
+  }
+ ],
+ "langgraph_up": "ValueError: License verification failed. Please ensure proper configuration:",
+ "latency_floor": {
+  "create_then_join": {
+   "client_ms_p50": 994,
+   "n": 10,
+   "server_ms_p50": 990
+  },
+  "stateless_wait": {
+   "client_ms_p50": 997,
+   "n": 10,
+   "server_ms_p50": null
+  },
+  "stream_values": {
+   "client_ms_p50": 995,
+   "n": 10,
+   "server_ms_p50": 989
+  },
+  "wait": {
+   "client_ms_p50": 994,
+   "n": 10,
+   "server_ms_p50": 990
+  }
+ },
+ "load": [
+  {
+   "concurrency": 1,
+   "errors": 0,
+   "ok": 50,
+   "p50_ms": 1117,
+   "p99_ms": 1140,
+   "runs": 50,
+   "runs_per_s": 0.9,
+   "server": "dev-default"
+  },
+  {
+   "concurrency": 10,
+   "errors": 0,
+   "ok": 50,
+   "p50_ms": 1188,
+   "p99_ms": 2118,
+   "runs": 50,
+   "runs_per_s": 7.1,
+   "server": "dev-default"
+  },
+  {
+   "concurrency": 50,
+   "errors": 0,
+   "ok": 250,
+   "p50_ms": 6039,
+   "p99_ms": 6628,
+   "runs": 250,
+   "runs_per_s": 8.0,
+   "server": "dev-default"
+  },
+  {
+   "concurrency": 100,
+   "errors": 0,
+   "ok": 500,
+   "p50_ms": 12799,
+   "p99_ms": 13364,
+   "runs": 500,
+   "runs_per_s": 7.7,
+   "server": "dev-default"
+  },
+  {
+   "concurrency": 1,
+   "errors": 0,
+   "ok": 50,
+   "p50_ms": 1001,
+   "p99_ms": 1004,
+   "runs": 50,
+   "runs_per_s": 1.0,
+   "server": "dev-njobs10"
+  },
+  {
+   "concurrency": 10,
+   "errors": 0,
+   "ok": 50,
+   "p50_ms": 1137,
+   "p99_ms": 1220,
+   "runs": 50,
+   "runs_per_s": 8.8,
+   "server": "dev-njobs10"
+  },
+  {
+   "concurrency": 50,
+   "errors": 0,
+   "ok": 250,
+   "p50_ms": 772,
+   "p99_ms": 1906,
+   "runs": 250,
+   "runs_per_s": 50.6,
+   "server": "dev-njobs10"
+  },
+  {
+   "concurrency": 100,
+   "errors": 0,
+   "ok": 500,
+   "p50_ms": 1529,
+   "p99_ms": 2642,
+   "runs": 500,
+   "runs_per_s": 56.3,
+   "server": "dev-njobs10"
+  },
+  {
+   "concurrency": 1,
+   "errors": 0,
+   "ok": 50,
+   "p50_ms": 1001,
+   "p99_ms": 1004,
+   "runs": 50,
+   "runs_per_s": 1.0,
+   "server": "dev-njobs100"
+  },
+  {
+   "concurrency": 10,
+   "errors": 0,
+   "ok": 50,
+   "p50_ms": 1012,
+   "p99_ms": 1113,
+   "runs": 50,
+   "runs_per_s": 9.8,
+   "server": "dev-njobs100"
+  },
+  {
+   "concurrency": 50,
+   "errors": 0,
+   "ok": 250,
+   "p50_ms": 1177,
+   "p99_ms": 1483,
+   "runs": 250,
+   "runs_per_s": 41.7,
+   "server": "dev-njobs100"
+  },
+  {
+   "concurrency": 100,
+   "errors": 0,
+   "ok": 500,
+   "p50_ms": 1854,
+   "p99_ms": 2229,
+   "runs": 500,
+   "runs_per_s": 52.8,
+   "server": "dev-njobs100"
+  }
+ ],
+ "load_graph": "create_agent with a fake model of 2 calls of 50 ms and 1 tool call; a new thread and runs.wait for each run; one run per level",
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "recursion": [
+  {
+   "config": null,
+   "status": "error",
+   "steps_in_state": 10007
+  },
+  {
+   "config": {
+    "recursion_limit": 50
+   },
+   "status": "error",
+   "steps_in_state": 50
+  }
+ ],
+ "server": "langgraph dev, langgraph-cli 0.4.43, langgraph-api 0.18.0, in-memory runtime",
+ "sources": [
+  "capture/lab/T15-agent-server-x86/02-recursion.jsonl",
+  "capture/lab/T15-agent-server-x86/03-workers.jsonl",
+  "capture/lab/T15-agent-server-x86/04-double-texting.jsonl",
+  "capture/lab/T15-agent-server-x86/05-load.jsonl",
+  "capture/lab/T15-agent-server-x86/10-up-license-excerpt.txt",
+  "capture/lab/T15-agent-server-x86/12-latency-floor.jsonl"
+ ],
+ "workers": [
+  {
+   "background_runs": 20,
+   "max_inflight": 1,
+   "seconds_per_run": 2.0,
+   "server": "dev-default",
+   "wall_s": 41.0
+  },
+  {
+   "background_runs": 20,
+   "max_inflight": 10,
+   "seconds_per_run": 2.0,
+   "server": "dev-njobs10",
+   "wall_s": 5.1
+  },
+  {
+   "background_runs": 20,
+   "max_inflight": 20,
+   "seconds_per_run": 2.0,
+   "server": "dev-njobs100",
+   "wall_s": 3.5
+  }
+ ]
+}

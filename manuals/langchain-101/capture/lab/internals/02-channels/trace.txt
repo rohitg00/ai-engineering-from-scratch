@@ -1,0 +1,117 @@
+# Channels capture, real model. pin {'langgraph': '1.2.22 (tag 08a20169)', 'langchain': '1.5.0', 'langchain-core': '1.8.0', 'langgraph-checkpoint': '4.3.2', 'langgraph-checkpoint-sqlite': '3.1.3'}. {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['11.45', '16.94', '12.34'], 'ollama_ps': [{'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}, {'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}]}
+# model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}
+
+# A. Channel semantics, driven directly (update = what apply_writes calls once per superstep). No model involved: this part calls the channel classes only.
+## LastValue
+  update([1]) -> returns True; available=True get=1 checkpoint()=1
+  update([]) -> returns False; available=True get=1 checkpoint()=1
+  update([2, 3]) -> RAISES InvalidUpdateError: At key 'x': Can receive only one value per step. Use an Annotated key to handle multiple values.; available=True get=1 checkpoint()=1
+
+## BinaryOperatorAggregate(list, operator.add)
+  update([[1]]) -> returns True; available=True get=[1] checkpoint()=[1]
+  update([[2], [3]]) -> returns True; available=True get=[1, 2, 3] checkpoint()=[1, 2, 3]
+  update([]) -> returns False; available=True get=[1, 2, 3] checkpoint()=[1, 2, 3]
+  update([Overwrite(value=[9], type='__overwrite__'), [10]]) -> returns True; available=True get=[9] checkpoint()=[9]
+  update([Overwrite(value=[1], type='__overwrite__'), Overwrite(value=[2], type='__overwrite__')]) -> RAISES InvalidUpdateError: Can receive only one Overwrite value per super-step.; available=True get=[1] checkpoint()=[1]
+
+## Topic(accumulate=False)  (used for __pregel_tasks)
+  update(['s1', 's2']) -> returns True; available=True get=['s1', 's2'] checkpoint()=['s1', 's2']
+  update([]) -> returns True; available=False get=<EmptyChannelError> checkpoint()=[]
+  update([]) -> returns False; available=False get=<EmptyChannelError> checkpoint()=[]
+
+## Topic(accumulate=True)
+  update(['s1']) -> returns True; available=True get=['s1'] checkpoint()=['s1']
+  update([]) -> returns False; available=True get=['s1'] checkpoint()=['s1']
+  update([['s2', 's3']]) -> returns True; available=True get=['s1', 's2', 's3'] checkpoint()=['s1', 's2', 's3']
+
+## EphemeralValue(guard=True)  (START channel)
+  update(['v']) -> returns True; available=True get=v checkpoint()=v
+  update([]) -> returns True; available=False get=<EmptyChannelError> checkpoint()=<object object at 0x751afa782400>
+  update(['a', 'b']) -> RAISES InvalidUpdateError: At key '': EphemeralValue(guard=True) can receive only one value per step. Use guard=False if you want to stor; available=False get=<EmptyChannelError> checkpoint()=<object object at 0x751afa782400>
+
+## EphemeralValue(guard=False)  (branch:to:<node>)
+  update([None, None]) -> returns True; available=True get=None checkpoint()=None
+  update([]) -> returns True; available=False get=<EmptyChannelError> checkpoint()=<object object at 0x751afa782400>
+  update([]) -> returns False; available=False get=<EmptyChannelError> checkpoint()=<object object at 0x751afa782400>
+
+## LastValueAfterFinish  (branch:to:<node> when defer=True)
+  update([None]) -> returns True; available=False get=<EmptyChannelError> checkpoint()=[None, False]
+  consume() -> returns False; available=False get=<EmptyChannelError> checkpoint()=[None, False]
+  finish() -> returns True; available=True get=None checkpoint()=[None, True]
+  consume() -> returns True; available=False get=<EmptyChannelError> checkpoint()=<object object at 0x751afa782400>
+
+## NamedBarrierValue({a,b})  (join:a+b:c)
+  update(['a']) -> returns True; available=False get=<EmptyChannelError> checkpoint()={'a'}
+  update(['b']) -> returns True; available=True get=None checkpoint()={'a', 'b'}
+  consume() -> returns True; available=False get=<EmptyChannelError> checkpoint()=set()
+
+## DeltaChannel(_messages_delta_reducer)
+  update([[HumanMessage(content='hi', additional_kwargs={}, response_metadata={}, id='h1')]]) -> returns True; available=True get=["HumanMessage(id=h1, text='hi')"] checkpoint()=<object object at 0x751afa782400>
+  update([[AIMessage(content='v1', additional_kwargs={}, response_metadata={}, id='a1', tool_calls=[], invalid_tool_calls=[])], [AIMessage(content='v2', additional_kwargs={}, response_metadata={}, id='a1', tool_calls=[], invalid_tool_calls=[])]]) -> returns True; available=True get=["HumanMessage(id=h1, text='hi')", "AIMessage(id=a1, text='v2')"] checkpoint()=<object object at 0x751afa782400>
+
+# B. Two parallel nodes write the same LastValue key. a asks the model for the digit 1, b for the digit 2.
+raised InvalidUpdateError: At key 'x': Can receive only one value per step. Use an Annotated key to handle multiple values.
+frames (innermost last, langgraph files only):
+  langgraph/pregel/main.py:4025 in invoke
+  langgraph/pregel/main.py:3101 in stream
+  langgraph/pregel/_loop.py:732 in after_tick
+  langgraph/pregel/_algo.py:319 in apply_writes
+  langgraph/channels/last_value.py:64 in update
+node bodies that ran before the raise: ['a', 'b']
+loop.put_writes calls before the raise (writes already persisted as pending): [('__start__', [('x', 0), ('branch:to:a', None), ('branch:to:b', None)]), ('b', [('x', 2)]), ('a', [('x', 1)])]
+get_state after the raise ALSO raises InvalidUpdateError via ['main.py:1496', 'main.py:1331', '_algo.py:319', 'last_value.py:64']
+get_state_history: 2 snapshots
+raw saver.get_tuple works: checkpoint step=0 pending_writes=[('26351ed0', 'x', 1), ('8f6a50fe', 'x', 2)]
+saver.writes (task_id, channel) per checkpoint: {"509197158057": [["341ded64", "x"], ["341ded64", "branch:to:a"], ["341ded64", "branch:to:b"]], "d000048c0141": [["8f6a50fe", "x"], ["26351ed0", "x"]]}
+invoke(None) resume raises again: InvalidUpdateError; node bodies re-run on resume: [] (empty means the saved writes were reapplied, not re-executed)
+model calls in part B: 2
+
+# C. Reducer order is task-path order, not finish order. Both nodes call the model; the slow node asks for a 60-word answer, the other for one word. 3 runs per case.
+slow node=a: finish order (node, model seconds)=[('a', 5.58), ('b', 5.75)]  merged list=['a', 'b']
+slow node=a: finish order (node, model seconds)=[('b', 0.6), ('a', 5.93)]  merged list=['a', 'b']
+slow node=a: finish order (node, model seconds)=[('b', 0.6), ('a', 5.85)]  merged list=['a', 'b']
+slow node=b: finish order (node, model seconds)=[('b', 5.48), ('a', 5.62)]  merged list=['a', 'b']
+slow node=b: finish order (node, model seconds)=[('b', 5.7), ('a', 5.83)]  merged list=['a', 'b']
+slow node=b: finish order (node, model seconds)=[('b', 5.67), ('a', 5.8)]  merged list=['a', 'b']
+apply_writes sorts tasks by writes_sort_key(task_path_str(t.path)) before calling update(), so the merge order is fixed by (PULL, node name) / (PUSH, index).
+
+# D. add_messages merges by id. n1-n3 write fixed messages with fixed ids; n4 wraps the text of a real model reply in a new AIMessage without an id.
+  values: [('h1', 'hi')]
+  values: [('h1', 'hi'), ('m1', 'draft v1')]
+  values: [('h1', 'hi'), ('m1', 'draft v2 (same id m1)'), ('m2', 'other')]
+  values: [('h1', 'hi'), ('m1', 'draft v2 (same id m1)')]
+  values: [('h1', 'hi'), ('m1', 'draft v2 (same id m1)'), ('d612e51f-5c9', 'no id given.')]
+  message written without id: id stored in pending write=['d612e51f-5c96-4e1c-ba5d-6ea792287eb2'] ; id in channel value=d612e51f-5c96-4e1c-ba5d-6ea792287eb2
+  add_messages assigns uuid4 by mutating the message object (graph/message.py:203-205) inside apply_writes, after loop.put_writes already submitted the write.
+
+# D2 (the id race) runs in race.py, two runs of n=200.
+
+# E. DeltaChannel vs add_messages: what each checkpoint stores (8 nodes, one model reply each, SqliteSaver)
+## DeltaChannel(snapshot_frequency=3)
+  step=-1 bytes=   396 messages=absent                 counters={'messages': [0, 1]}
+  step= 0 bytes=   467 messages=absent                 counters={'messages': [1, 2]}
+  step= 1 bytes=   601 messages=absent                 counters={'messages': [2, 3]}
+  step= 2 bytes=  1555 messages=_DeltaSnapshot[3]      counters=None
+  step= 3 bytes=   876 messages=absent                 counters={'messages': [1, 1]}
+  step= 4 bytes=  1011 messages=absent                 counters={'messages': [2, 2]}
+  step= 5 bytes=  2936 messages=_DeltaSnapshot[6]      counters=None
+  step= 6 bytes=  1283 messages=absent                 counters={'messages': [1, 1]}
+  step= 7 bytes=  1422 messages=absent                 counters={'messages': [2, 2]}
+  step= 8 bytes=  4204 messages=_DeltaSnapshot[9]      counters=None
+  total checkpoint bytes=14751; writes rows=17 bytes=2735
+  get_state messages reconstructed: 9 messages, ids=['h', 'a0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7']
+## add_messages (BinaryOperatorAggregate)
+  step=-1 bytes=   395 messages=absent                 counters=None
+  step= 0 bytes=   615 messages=list[1]                counters=None
+  step= 1 bytes=  1100 messages=list[2]                counters=None
+  step= 2 bytes=  1545 messages=list[3]                counters=None
+  step= 3 bytes=  2046 messages=list[4]                counters=None
+  step= 4 bytes=  2520 messages=list[5]                counters=None
+  step= 5 bytes=  2927 messages=list[6]                counters=None
+  step= 6 bytes=  3344 messages=list[7]                counters=None
+  step= 7 bytes=  3842 messages=list[8]                counters=None
+  step= 8 bytes=  4197 messages=list[9]                counters=None
+  total checkpoint bytes=22531; writes rows=17 bytes=2735
+  get_state messages reconstructed: 9 messages, ids=['h', 'a0', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7']
+
+model calls in this file: 31

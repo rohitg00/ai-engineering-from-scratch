@@ -1,0 +1,454 @@
+{
+ "case": "refund_asked_twice",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "95f11c9b-ac4c-4611-89ef-61ac2cd26bdc",
+   "text": "Refund ORD-e08-2 please",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_012k6duSwnCCWGDz2zA34Rck",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e08-2"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e08-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ORD-e08-2 "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "is a rain jacket,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " status"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " \"shipped,\""
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " total"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $89.00, with noth"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ing refunded yet."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "\n\nDo you want a full ref"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "und of $89.00? If"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " so, what"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'s the reason ("
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "for example, the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " jacket is dam"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "aged, it do"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "esn't fit, or you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " changed your mind)?"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Once you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " confirm, I'll subm"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "it it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " approval."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 3.351
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "95f11c9b-ac4c-4611-89ef-61ac2cd26bdc",
+   "decision": "approve",
+   "result": 409
+  },
+  {
+   "op": "say",
+   "thread_id": "95f11c9b-ac4c-4611-89ef-61ac2cd26bdc",
+   "text": "Refund ORD-e08-2 again",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01QkckrbDjRddVWhQ8B5WQMh",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e08-2",
+       "amount_cents": 8900,
+       "reason": "Customer requested full refund of ORD-e08-2 (rain jacket). No specific reason given."
+      }
+     }
+    ],
+    [
+     "interrupt",
+     {
+      "id": "1587df185a2c6c9adc990f1a496d8fa4",
+      "type": "tool_approval",
+      "tool_call_id": "toolu_01QkckrbDjRddVWhQ8B5WQMh",
+      "name": "refund_order",
+      "args": {
+       "order_id": "ORD-e08-2",
+       "amount_cents": 8900,
+       "reason": "Customer requested full refund of ORD-e08-2 (rain jacket). No specific reason given."
+      },
+      "description": "Tool execution requires approval\n\nTool: refund_order\nArgs: {'order_id': 'ORD-e08-2', 'amount_cents': 8900, 'reason': 'Customer requested full refund of ORD-e08-2 (rain jacket). No specific reason given.'}"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 1.844
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "95f11c9b-ac4c-4611-89ef-61ac2cd26bdc",
+   "decision": "approve",
+   "result": [
+    [
+     "tool_result",
+     {
+      "name": "refund_order",
+      "status": "success",
+      "content": "{\"refund_id\": 2, \"order_id\": \"ORD-e08-2\", \"amount_cents\": 8900, \"replayed\": false}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "I've submitted a full ref"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "und of $89.00 for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " ORD-e08-2"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " (rain jacket)."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " It need"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "s human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " approval before the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " money goes back"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to your original"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " payment method."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 0.9326
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "95f11c9b-ac4c-4611-89ef-61ac2cd26bdc",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Refund ORD-e08-2 please",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e08-2"
+       },
+       "id": "toolu_012k6duSwnCCWGDz2zA34Rck",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 915,
+      "output_tokens": 123,
+      "total_tokens": 1038,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 66
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e08-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "ORD-e08-2 is a rain jacket, status \"shipped,\" total $89.00, with nothing refunded yet.\n\nDo you want a full refund of $89.00? If so, what's the reason (for example, the jacket is damaged, it doesn't fit, or you changed your mind)? Once you confirm, I'll submit it for human approval.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1097,
+      "output_tokens": 266,
+      "total_tokens": 1363,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 154
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Refund ORD-e08-2 again",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "refund_order",
+       "args": {
+        "order_id": "ORD-e08-2",
+        "amount_cents": 8900,
+        "reason": "Customer requested full refund of ORD-e08-2 (rain jacket). No specific reason given."
+       },
+       "id": "toolu_01QkckrbDjRddVWhQ8B5WQMh",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1380,
+      "output_tokens": 285,
+      "total_tokens": 1665,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 148
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"refund_id\": 2, \"order_id\": \"ORD-e08-2\", \"amount_cents\": 8900, \"replayed\": false}",
+     "tool_calls": [],
+     "name": "refund_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "I've submitted a full refund of $89.00 for ORD-e08-2 (rain jacket). It needs human approval before the money goes back to your original payment method.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1713,
+      "output_tokens": 53,
+      "total_tokens": 1766,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [
+  {
+   "order_id": "ORD-e08-2",
+   "amount_cents": 8900
+  }
+ ],
+ "tickets": []
+}

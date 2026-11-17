@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" role="img" aria-labelledby="fig-2-4-title fig-2-4-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-4-title">Three calls that answer three questions in two parallel nodes</title>
+  <desc id="fig-2-4-desc">A grid of four nodes against four calls on one thread with InMemorySaver and Qwen3 4B on the x86 server guest. ask, approve, and other run in parallel after START, and after runs last. ask and approve each ask the model for a question before they call interrupt. Call 1 starts the run: ask stops at its first interrupt with id 462dc352, approve stops with id 11314d20, and other finishes. Call 2a resumes with one plain value and raises RuntimeError, because two interrupts wait, and makes no model call. Call 2b resumes with a map from id to answer: approve asks the model again, gets OK, and finishes. ask asks the model again, replays its first answer, asks for its second question, and stops with id 177b6fc6. other does not run, because its saved writes are reapplied. Call 3 resumes with A2: ask runs a third time with two model calls and finishes, and after runs. The calls made 3, 0, 3, and 3 model calls, 9 for five prompts. The thread holds 4 checkpoints, steps -1, 0, 1, 2.</desc>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">CALL</text>
+  <text x="20" y="40" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">resume value</text>
+  <text x="181" y="22" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">run 1</text>
+  <text x="181" y="40" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">invoke(input)</text>
+  <text x="294" y="22" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">run 2a</text>
+  <text x="294" y="40" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">&#39;yes&#39;</text>
+  <text x="407" y="22" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">run 2b</text>
+  <text x="407" y="40" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">{id: answer}</text>
+  <text x="554" y="22" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">run 3</text>
+  <text x="554" y="40" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--m-violet-ink, #5b4fa3)">&#39;A2&#39;</text>
+  <text x="20" y="96" font-size="12" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">ask</text>
+  <line x1="16" y1="58" x2="624" y2="58" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="20" y="172" font-size="12" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">approve</text>
+  <line x1="16" y1="134" x2="624" y2="134" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="20" y="248" font-size="12" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">other</text>
+  <line x1="16" y1="210" x2="624" y2="210" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
+  <text x="20" y="324" font-size="12" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">after</text>
+  <line x1="16" y1="286" x2="624" y2="286" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.3"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <rect x="108" y="62" width="146" height="66" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="114" y="77" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">enter, list []</text>
+  <text x="114" y="92" font-size="11" fill="var(--m-plum-ink, #8a3d72)">1 model call</text>
+  <text x="114" y="107" font-size="11" fill="var(--m-amber-ink, #85590c)">call #0 stops</text>
+  <text x="114" y="122" font-size="11" fill="var(--m-amber-ink, #85590c)">id 462dc352</text>
+  <rect x="108" y="138" width="146" height="66" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="114" y="153" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">enter, list []</text>
+  <text x="114" y="168" font-size="11" fill="var(--m-plum-ink, #8a3d72)">1 model call</text>
+  <text x="114" y="183" font-size="11" fill="var(--m-amber-ink, #85590c)">call #0 stops</text>
+  <text x="114" y="198" font-size="11" fill="var(--m-amber-ink, #85590c)">id 11314d20</text>
+  <rect x="108" y="214" width="146" height="66" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="114" y="229" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">runs once</text>
+  <text x="114" y="244" font-size="11" fill="var(--m-plum-ink, #8a3d72)">1 model call</text>
+  <text x="114" y="259" font-size="11" fill="var(--m-teal-ink, #18696a)">done</text>
+  <text x="114" y="274" font-size="11" fill="var(--m-teal-ink, #18696a)">writes saved</text>
+  <text x="181" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">-</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <rect x="334" y="62" width="146" height="66" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="340" y="77" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">enter, list [A1]</text>
+  <text x="340" y="92" font-size="11" fill="var(--m-plum-ink, #8a3d72)">2 model calls</text>
+  <text x="340" y="107" font-size="11" fill="var(--m-amber-ink, #85590c)">#0 returns A1</text>
+  <text x="340" y="122" font-size="11" fill="var(--m-amber-ink, #85590c)">#1 stops 177b6fc6</text>
+  <rect x="334" y="138" width="146" height="66" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="340" y="153" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">enter, list [OK]</text>
+  <text x="340" y="168" font-size="11" fill="var(--m-plum-ink, #8a3d72)">1 model call</text>
+  <text x="340" y="183" font-size="11" fill="var(--m-teal-ink, #18696a)">#0 returns OK</text>
+  <text x="340" y="198" font-size="11" fill="var(--m-teal-ink, #18696a)">done</text>
+  <rect x="334" y="214" width="146" height="66" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-dasharray="5 4"/>
+  <text x="340" y="229" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">not run</text>
+  <text x="340" y="244" font-size="11" fill="var(--m-plum-ink, #8a3d72)">0 model calls</text>
+  <text x="340" y="259" font-size="11" fill="var(--m-teal-ink, #18696a)">saved writes</text>
+  <text x="340" y="274" font-size="11" fill="var(--m-teal-ink, #18696a)">reapplied</text>
+  <text x="407" y="326" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">-</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <rect x="486" y="62" width="136" height="66" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="492" y="77" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">enter, list [A1]</text>
+  <text x="492" y="92" font-size="11" fill="var(--m-plum-ink, #8a3d72)">2 model calls</text>
+  <text x="492" y="107" font-size="11" fill="var(--m-teal-ink, #18696a)">#0 replays A1</text>
+  <text x="492" y="122" font-size="11" fill="var(--m-teal-ink, #18696a)">#1 gets A2, done</text>
+  <text x="554" y="174" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">-</text>
+  <text x="554" y="250" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">-</text>
+  <rect x="486" y="290" width="136" height="66" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="492" y="305" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">runs</text>
+  <text x="492" y="320" font-size="11" fill="var(--m-plum-ink, #8a3d72)">1 model call</text>
+  <text x="492" y="335" font-size="11" fill="var(--m-teal-ink, #18696a)">done</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <rect x="260" y="62" width="68" height="218" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)" stroke-dasharray="5 4"/>
+  <text x="294" y="102" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">Runtime</text>
+  <text x="294" y="118" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">Error</text>
+  <text x="294" y="150" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2 waiting</text>
+  <text x="294" y="166" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">no node</text>
+  <text x="294" y="182" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">ran</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="388" font-size="11.5" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">model calls</text>
+  <text x="20" y="414" font-size="11.5" font-weight="700" fill="var(--m-teal-ink, #18696a)">checkpoints</text>
+  <text x="181" y="388" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">3</text>
+  <text x="181" y="414" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">step -1, step 0</text>
+  <text x="294" y="388" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">0</text>
+  <text x="294" y="414" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">none</text>
+  <text x="407" y="388" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">3</text>
+  <text x="407" y="414" font-size="11" text-anchor="middle" fill="var(--m-ink-mute, #6f6f6a)">none</text>
+  <text x="554" y="388" font-size="12" text-anchor="middle" font-weight="700" fill="var(--m-plum-ink, #8a3d72)">3</text>
+  <text x="554" y="414" font-size="11" text-anchor="middle" fill="var(--m-teal-ink, #18696a)">step 1, step 2</text>
+  <text x="407" y="430" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">answers saved as writes</text>
+  <text x="407" y="444" font-size="11" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">on the step 0 checkpoint</text>
+  </g>
+  <rect x="20" y="475" width="22" height="14" fill="var(--m-amber-fill, #f5ecd9)" stroke="var(--m-amber-ink, #85590c)"/>
+  <text x="48" y="486" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">stops at an interrupt</text>
+  <rect x="220" y="475" width="22" height="14" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)"/>
+  <text x="248" y="486" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">finishes</text>
+  <rect x="340" y="475" width="22" height="14" fill="var(--m-teal-fill, #e1efee)" stroke="var(--m-teal-ink, #18696a)" stroke-dasharray="5 4"/>
+  <text x="368" y="486" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">writes reapplied, no run</text>
+  <text x="20" y="508" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">list: the resume list on entry, 9 model calls for five prompts in all</text>
+</svg>

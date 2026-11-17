@@ -1,0 +1,312 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 692" role="img" aria-labelledby="fig-9-6-title fig-9-6-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-9-6-title">The same 27 tests on three real models</title>
+  <desc id="fig-9-6-desc">Each row is one test of the reference service, and each column is one run of the whole suite. Qwen3 4B: 16 of 27, 16 of 27, 16 of 27. Qwen3 14B: 22 of 27, 21 of 27, 21 of 27. Claude Haiku 5.5: 20 of 20. A letter in a failed cell names the cause, with the key below the grid.</desc>
+  <text x="293" y="22" font-size="11" text-anchor="middle" font-weight="700">Qwen3 4B</text>
+  <text x="271" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <text x="271" y="54" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">16</text>
+  <text x="293" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <text x="293" y="54" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">16</text>
+  <text x="315" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <text x="315" y="54" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">16</text>
+  <text x="399" y="22" font-size="11" text-anchor="middle" font-weight="700">Qwen3 14B</text>
+  <text x="377" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <text x="377" y="54" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">22</text>
+  <text x="399" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2</text>
+  <text x="399" y="54" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">21</text>
+  <text x="421" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <text x="421" y="54" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">21</text>
+  <text x="483" y="22" font-size="11" text-anchor="middle" font-weight="700">Haiku 5.5</text>
+  <text x="483" y="40" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <text x="483" y="54" font-size="11" text-anchor="middle" fill="var(--m-plum-ink, #8a3d72)">20</text>
+  <text x="16" y="40" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">run of the suite</text>
+  <text x="16" y="54" font-size="11" class="m-serif" fill="var(--m-plum-ink, #8a3d72)">tests passed in the run</text>
+  <text x="16" y="73" font-size="11">faq: return window</text>
+  <rect x="262" y="63" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="63" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="63" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="63" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="63" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="63" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="63" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="89" font-size="11">faq: delivery time</text>
+  <rect x="262" y="79" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="79" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="79" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="79" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="79" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="79" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="79" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="105" font-size="11">order status</text>
+  <rect x="262" y="95" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="95" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="95" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="95" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="95" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="95" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="95" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="121" font-size="11">unknown order</text>
+  <rect x="262" y="111" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="111" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="111" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="111" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="111" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="111" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="111" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="137" font-size="11">other customer order hidden</text>
+  <rect x="262" y="127" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="127" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="127" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="127" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="127" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="127" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="127" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="153" font-size="11">refund approved once</text>
+  <rect x="262" y="143" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="153.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="284" y="143" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="153.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="306" y="143" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="153.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="368" y="143" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="377" y="153.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="390" y="143" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="399" y="153.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="412" y="143" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="421" y="153.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="474" y="143" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="169" font-size="11">refund rejected, no row</text>
+  <rect x="262" y="159" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="169.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="284" y="159" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="169.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="306" y="159" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="169.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="368" y="159" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="159" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="159" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="159" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="185" font-size="11">refund asked twice</text>
+  <rect x="262" y="175" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="185.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="284" y="175" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="185.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="306" y="175" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="185.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <rect x="368" y="175" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="377" y="185.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="390" y="175" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="399" y="185.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="412" y="175" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="421" y="185.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="474" y="175" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="201" font-size="11">refund tool replay</text>
+  <rect x="262" y="191" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="191" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="191" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="191" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="191" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="191" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="191" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="217" font-size="11">ticket for a human</text>
+  <rect x="262" y="207" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="207" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="207" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="207" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="207" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="207" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="207" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="233" font-size="11">memory saved, recalled</text>
+  <rect x="262" y="223" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="233.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">n</text>
+  <rect x="284" y="223" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="233.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">n</text>
+  <rect x="306" y="223" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="233.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">n</text>
+  <rect x="368" y="223" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="223" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="223" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="223" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="249" font-size="11">memory of other user</text>
+  <rect x="262" y="239" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="239" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="239" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="239" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="239" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="239" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="239" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="265" font-size="11">flaky faq retried</text>
+  <rect x="262" y="255" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="265.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">f</text>
+  <rect x="284" y="255" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="265.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">f</text>
+  <rect x="306" y="255" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="265.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">f</text>
+  <rect x="368" y="255" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="255" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="255" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="255" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="281" font-size="11">hung tool times out</text>
+  <rect x="262" y="271" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="271" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="271" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="271" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="377" y="281.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">s</text>
+  <rect x="390" y="271" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="399" y="281.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">s</text>
+  <rect x="412" y="271" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="421" y="281.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">s</text>
+  <rect x="474" y="271" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="297" font-size="11">failed ticket not retried</text>
+  <rect x="262" y="287" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="287" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="287" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="287" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="287" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="287" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="287" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="313" font-size="11">primary down, backup used</text>
+  <rect x="262" y="303" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="303" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="303" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="303" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="303" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="303" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="303" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="329" font-size="11">runaway loop, call limit</text>
+  <rect x="262" y="319" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="319" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="319" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="319" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="319" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="319" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="319" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="345" font-size="11">long thread summarized</text>
+  <rect x="262" y="335" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="335" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="335" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="335" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="335" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="335" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="335" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="361" font-size="11">message during approval</text>
+  <rect x="262" y="351" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="361.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">z</text>
+  <rect x="284" y="351" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="361.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">z</text>
+  <rect x="306" y="351" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="361.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">z</text>
+  <rect x="368" y="351" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="377" y="361.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">z</text>
+  <rect x="390" y="351" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="399" y="361.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">z</text>
+  <rect x="412" y="351" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="421" y="361.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">z</text>
+  <rect x="474" y="351" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <text x="16" y="377" font-size="11">status, then refund</text>
+  <rect x="262" y="367" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="377.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">t</text>
+  <rect x="284" y="367" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="377.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">t</text>
+  <rect x="306" y="367" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="377.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">t</text>
+  <rect x="368" y="367" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="367" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="367" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="367" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <line x1="16" y1="380" x2="630" y2="380" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="16" y="393" font-size="11">isolation: thread, memory</text>
+  <rect x="262" y="383" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="393.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">n</text>
+  <rect x="284" y="383" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="393.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">n</text>
+  <rect x="306" y="383" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="393.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">n</text>
+  <rect x="368" y="383" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="383" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="383" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="383" width="18" height="14" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="1.5 3.5"/>
+  <text x="16" y="409" font-size="11">isolation: bad token 401</text>
+  <rect x="262" y="399" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="399" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="399" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="399" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="399" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="399" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="399" width="18" height="14" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="1.5 3.5"/>
+  <text x="16" y="425" font-size="11">crash mid refund, resume</text>
+  <rect x="262" y="415" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="425.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">h</text>
+  <rect x="284" y="415" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="425.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">h</text>
+  <rect x="306" y="415" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="425.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">h</text>
+  <rect x="368" y="415" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="377" y="425.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="390" y="415" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="399" y="425.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="412" y="415" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="421" y="425.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <rect x="474" y="415" width="18" height="14" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="1.5 3.5"/>
+  <text x="16" y="441" font-size="11">SIGTERM, run finishes</text>
+  <rect x="262" y="431" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="431" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="431" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="431" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="431" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="399" y="441.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">c</text>
+  <rect x="412" y="431" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="421" y="441.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">c</text>
+  <rect x="474" y="431" width="18" height="14" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="1.5 3.5"/>
+  <text x="16" y="457" font-size="11">SIGTERM past deadline</text>
+  <rect x="262" y="447" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="457.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">w</text>
+  <rect x="284" y="447" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="457.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">w</text>
+  <rect x="306" y="447" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="457.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">w</text>
+  <rect x="368" y="447" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="447" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="447" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="447" width="18" height="14" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="1.5 3.5"/>
+  <text x="16" y="473" font-size="11">two workers, one thread</text>
+  <rect x="262" y="463" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="284" y="463" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="306" y="463" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="368" y="463" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="463" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="463" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="463" width="18" height="14" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="1.5 3.5"/>
+  <text x="16" y="489" font-size="11">LangSmith off</text>
+  <rect x="262" y="479" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="271" y="489.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">h</text>
+  <rect x="284" y="479" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="293" y="489.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">h</text>
+  <rect x="306" y="479" width="18" height="14" fill="var(--m-rose-fill, #f7e4e7)" stroke="var(--m-rose-ink, #b0344d)"/>
+  <text x="315" y="489.5" font-size="11" text-anchor="middle" font-weight="700" fill="var(--m-rose-ink, #b0344d)">h</text>
+  <rect x="368" y="479" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="390" y="479" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="412" y="479" width="18" height="14" fill="var(--m-plum-fill, #f4e6ef)" stroke="var(--m-plum-ink, #8a3d72)"/>
+  <rect x="474" y="479" width="18" height="14" fill="none" stroke="var(--m-ink-mute, #6f6f6a)" stroke-dasharray="1.5 3.5"/>
+  <text x="506" y="410" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">service tests,</text>
+  <text x="506" y="426" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">not run on Claude</text>
+  <text x="16" y="524" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">a</text>
+  <text x="32" y="524" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model asked for the amount and the reason, and proposed no refund_order call</text>
+  <text x="16" y="539" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">z</text>
+  <text x="32" y="539" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model proposed amount_cents 0, the approver approved it, and a 0-cent refund row was written</text>
+  <text x="16" y="554" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">t</text>
+  <text x="32" y="554" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model opened a ticket with create_ticket in place of a refund_order call</text>
+  <text x="16" y="569" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">n</text>
+  <text x="32" y="569" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model did not call save_note, so no memory existed to recall</text>
+  <text x="16" y="584" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">f</text>
+  <text x="32" y="584" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model answered without calling search_faq</text>
+  <text x="16" y="599" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">h</text>
+  <text x="32" y="599" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test sent an approve after no refund was proposed, got 409, and parsed the 409 body as SSE</text>
+  <text x="16" y="614" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">w</text>
+  <text x="32" y="614" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test assumed the run lasts more than 3.5 s, and the real run finished before SIGTERM</text>
+  <text x="16" y="629" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">g</text>
+  <text x="32" y="629" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">model invented amount_cents 10000 without reading the order</text>
+  <text x="16" y="644" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">s</text>
+  <text x="32" y="644" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">test bound the whole run to 5 s, and the real model calls took longer</text>
+  <text x="16" y="659" font-size="11" font-weight="700" fill="var(--m-rose-ink, #b0344d)">c</text>
+  <text x="32" y="659" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">uvicorn closed the stream at its 10 s limit, and the 11.6 to 12.1 s run finished in the drain</text>
+</svg>

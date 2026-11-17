@@ -1,0 +1,248 @@
+[
+ {
+  "trial": 1,
+  "resume_form": "map",
+  "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+  "uptime_before": "17:58  up 89 days,  3:54, 12 users, load averages: 80.05 47.56 29.43",
+  "marks": {
+   "start": 1794745684.399435,
+   "server_up": 1794745694.7968588,
+   "interrupt_received": 1794745699.436098,
+   "approve_sent": 1794745699.4361038,
+   "refund_row_seen": 1794745699.51374,
+   "killed": 1794745699.522815,
+   "restarted": 1794745702.379937,
+   "state_read": 1794745702.423607,
+   "second_approve_sent": 1794745702.4236212,
+   "resumed_done": 1794745704.414743
+  },
+  "first_interrupts": [
+   {
+    "id": "ed854a0d3d7a72703a534f1876162866",
+    "type": "tool_approval",
+    "tool_call_id": "7fda28aa-23f0-497e-be8d-f6e0663121d7",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-crash-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    },
+    "description": "Refund 8900 cents on ORD-crash-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: the rain jacket leaks"
+   }
+  ],
+  "first_tool_calls": [
+   {
+    "id": "7fda28aa-23f0-497e-be8d-f6e0663121d7",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-crash-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    }
+   }
+  ],
+  "refund_committed_before_kill": true,
+  "kill_exit_code": -9,
+  "approve_client_error": "RemoteProtocolError",
+  "rows_after_kill": 1,
+  "after_restart_next": [
+   "tools"
+  ],
+  "approval_re_asked": true,
+  "after_restart_interrupt_args": [
+   {
+    "order_id": "ORD-crash-2",
+    "amount_cents": 8900,
+    "reason": "the rain jacket leaks"
+   }
+  ],
+  "resumed_last_event": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 1.9659
+   }
+  ],
+  "resumed_tool_calls": [],
+  "resumed_interrupts": [],
+  "refund_rows": [
+   {
+    "refund_id": 46,
+    "amount_cents": 8900,
+    "idempotency_key": "11b4329f-232c-41c1-a595-03e96cefe09e:ORD-crash-2:8900"
+   }
+  ],
+  "refunded_cents": 8900,
+  "replayed_flags": [
+   true
+  ],
+  "final_answer": "Refund initiated for order ORD-crash-2 (8900 cents). A human must approve it.",
+  "final_next": [],
+  "outcome": "one refund",
+  "uptime_after": "17:58  up 89 days,  3:55, 12 users, load averages: 94.41 53.21 31.89"
+ },
+ {
+  "trial": 2,
+  "resume_form": "map",
+  "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+  "uptime_before": "17:58  up 89 days,  3:55, 12 users, load averages: 94.41 53.21 31.89",
+  "marks": {
+   "start": 1794745704.917801,
+   "server_up": 1794745709.429954,
+   "interrupt_received": 1794745711.7834601,
+   "approve_sent": 1794745711.783465,
+   "refund_row_seen": 1794745711.856184,
+   "killed": 1794745711.8753018,
+   "restarted": 1794745715.662573,
+   "state_read": 1794745715.71386,
+   "second_approve_sent": 1794745715.713875,
+   "resumed_done": 1794745718.148416
+  },
+  "first_interrupts": [
+   {
+    "id": "e798c1c5f2ff31343eafa99b79d62eb2",
+    "type": "tool_approval",
+    "tool_call_id": "0cc1b590-c371-40e0-8e2b-91186196b36e",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-crash-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    },
+    "description": "Refund 8900 cents on ORD-crash-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: the rain jacket leaks"
+   }
+  ],
+  "first_tool_calls": [
+   {
+    "id": "0cc1b590-c371-40e0-8e2b-91186196b36e",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-crash-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    }
+   }
+  ],
+  "refund_committed_before_kill": true,
+  "kill_exit_code": -9,
+  "approve_client_error": "RemoteProtocolError",
+  "rows_after_kill": 1,
+  "after_restart_next": [
+   "tools"
+  ],
+  "approval_re_asked": true,
+  "after_restart_interrupt_args": [
+   {
+    "order_id": "ORD-crash-2",
+    "amount_cents": 8900,
+    "reason": "the rain jacket leaks"
+   }
+  ],
+  "resumed_last_event": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 2.404
+   }
+  ],
+  "resumed_tool_calls": [],
+  "resumed_interrupts": [],
+  "refund_rows": [
+   {
+    "refund_id": 47,
+    "amount_cents": 8900,
+    "idempotency_key": "837f1319-0e34-4ae3-a927-758c23ba0ba2:ORD-crash-2:8900"
+   }
+  ],
+  "refunded_cents": 8900,
+  "replayed_flags": [
+   true
+  ],
+  "final_answer": "Refund initiated for order ORD-crash-2 (8900 cents). A human must approve it.",
+  "final_next": [],
+  "outcome": "one refund",
+  "uptime_after": "17:58  up 89 days,  3:55, 12 users, load averages: 86.75 53.49 32.36"
+ },
+ {
+  "trial": 3,
+  "resume_form": "map",
+  "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+  "uptime_before": "17:58  up 89 days,  3:55, 12 users, load averages: 86.75 53.49 32.36",
+  "marks": {
+   "start": 1794745718.604548,
+   "server_up": 1794745721.856631,
+   "interrupt_received": 1794745724.6380491,
+   "approve_sent": 1794745724.638057,
+   "refund_row_seen": 1794745724.863827,
+   "killed": 1794745724.8744252,
+   "restarted": 1794745731.71209,
+   "state_read": 1794745732.177719,
+   "second_approve_sent": 1794745732.177728,
+   "resumed_done": 1794745735.2438028
+  },
+  "first_interrupts": [
+   {
+    "id": "d8b4af93e97801d2e2f04bb2e8b19195",
+    "type": "tool_approval",
+    "tool_call_id": "6beb4d07-9016-4bfc-9f36-e9dd27818704",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-crash-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    },
+    "description": "Refund 8900 cents on ORD-crash-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: the rain jacket leaks"
+   }
+  ],
+  "first_tool_calls": [
+   {
+    "id": "6beb4d07-9016-4bfc-9f36-e9dd27818704",
+    "name": "refund_order",
+    "args": {
+     "order_id": "ORD-crash-2",
+     "amount_cents": 8900,
+     "reason": "the rain jacket leaks"
+    }
+   }
+  ],
+  "refund_committed_before_kill": true,
+  "kill_exit_code": -9,
+  "approve_client_error": "RemoteProtocolError",
+  "rows_after_kill": 1,
+  "after_restart_next": [
+   "tools"
+  ],
+  "approval_re_asked": true,
+  "after_restart_interrupt_args": [
+   {
+    "order_id": "ORD-crash-2",
+    "amount_cents": 8900,
+    "reason": "the rain jacket leaks"
+   }
+  ],
+  "resumed_last_event": [
+   "done",
+   {
+    "status": "done",
+    "seconds": 2.7485
+   }
+  ],
+  "resumed_tool_calls": [],
+  "resumed_interrupts": [],
+  "refund_rows": [
+   {
+    "refund_id": 48,
+    "amount_cents": 8900,
+    "idempotency_key": "fc6d1ff8-d7da-4744-84ef-6c0d5b78b407:ORD-crash-2:8900"
+   }
+  ],
+  "refunded_cents": 8900,
+  "replayed_flags": [
+   true
+  ],
+  "final_answer": "Refund initiated for order ORD-crash-2 (8900 cents). A human must approve it.",
+  "final_next": [],
+  "outcome": "one refund",
+  "uptime_after": "17:58  up 89 days,  3:55, 12 users, load averages: 86.83 55.12 33.31"
+ }
+]

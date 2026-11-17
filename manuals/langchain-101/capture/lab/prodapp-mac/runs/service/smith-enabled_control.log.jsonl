@@ -1,0 +1,8 @@
+{"ts": 1794741632.653, "level": "INFO", "event": "startup", "model": "ollama:qwen3:4b-instruct-2507-q4_K_M", "backup": "ollama:qwen3:14b", "pool_max": 20}
+{"ts": 1794741633.856, "level": "INFO", "event": "run.start", "thread_id": "00b4d79b-cd30-4ffc-9e4c-dbd9ea61fedc", "user_id": "smith", "trace_id": "7c4ec407fdea704d0a85c77ec6af36e4", "span_id": "7868676e8603ec8a"}
+{"ts": 1794741635.443, "level": "INFO", "event": "tool.done", "tool": "search_faq", "status": "success", "trace_id": "7c4ec407fdea704d0a85c77ec6af36e4", "span_id": "30039811607d3e30"}
+{"ts": 1794741637.776, "level": "INFO", "event": "run.end", "thread_id": "00b4d79b-cd30-4ffc-9e4c-dbd9ea61fedc", "status": "done", "seconds": 3.9206, "trace_id": "7c4ec407fdea704d0a85c77ec6af36e4", "span_id": "9668a4379600a343"}
+{"ts": 1794741637.838, "level": "INFO", "event": "run.start", "thread_id": "00b4d79b-cd30-4ffc-9e4c-dbd9ea61fedc", "user_id": "smith", "trace_id": "2dee27da6f394d5fb7150ffd3637cc9a", "span_id": "8317963b4a1a77a1"}
+{"ts": 1794741641.027, "level": "INFO", "event": "run.end", "thread_id": "00b4d79b-cd30-4ffc-9e4c-dbd9ea61fedc", "status": "interrupted", "seconds": 3.1892, "trace_id": "2dee27da6f394d5fb7150ffd3637cc9a", "span_id": "d596b0c06a3ed147"}
+{"ts": 1794741641.079, "level": "INFO", "event": "run.start", "thread_id": "00b4d79b-cd30-4ffc-9e4c-dbd9ea61fedc", "user_id": "smith", "trace_id": "7e8bf81fb4a3d786cc9f8a322e9a7f9f", "span_id": "ee23c1a5776a0ba4"}
+{"ts": 1794741643.575, "level": "INFO", "event": "run.end", "thread_id": "00b4d79b-cd30-4ffc-9e4c-dbd9ea61fedc", "status": "done", "seconds": 2.4969, "trace_id": "7e8bf81fb4a3d786cc9f8a322e9a7f9f", "span_id": "6e81e5da059339dd"}

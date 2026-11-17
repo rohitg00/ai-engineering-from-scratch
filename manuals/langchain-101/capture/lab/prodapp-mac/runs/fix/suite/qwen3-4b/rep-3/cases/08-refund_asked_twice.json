@@ -1,0 +1,346 @@
+{
+ "case": "refund_asked_twice",
+ "model": "ollama:qwen3:4b-instruct-2507-q4_K_M",
+ "outcome": "failed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "2804fabc-38e1-40bc-87d8-65831e78c77c",
+   "text": "Refund ORD-e08-2 please",
+   "result": [
+    [
+     "token",
+     {
+      "text": "Ref"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "unds"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " require"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " approval"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Could"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " provide"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " reason"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "?"
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 0.4876
+     }
+    ]
+   ]
+  },
+  {
+   "op": "approve",
+   "thread_id": "2804fabc-38e1-40bc-87d8-65831e78c77c",
+   "decision": "approve",
+   "result": 409
+  },
+  {
+   "op": "say",
+   "thread_id": "2804fabc-38e1-40bc-87d8-65831e78c77c",
+   "text": "Refund ORD-e08-2 again",
+   "result": [
+    [
+     "token",
+     {
+      "text": "Ref"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "unds"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " require"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " human"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " approval"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Please"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " provide"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " amount"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " reason"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " for"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " refund"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ","
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " and"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'ll"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " assist"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " further"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 0.5491
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "2804fabc-38e1-40bc-87d8-65831e78c77c",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Refund ORD-e08-2 please",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Refunds require human approval. Could you please provide the amount and reason for the refund?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 556,
+      "output_tokens": 19,
+      "total_tokens": 575
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Refund ORD-e08-2 again",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Refunds require human approval. Please provide the amount and reason for the refund, and I'll assist you further.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 593,
+      "output_tokens": 24,
+      "total_tokens": 617
+     },
+     "model": "qwen3:4b-instruct-2507-q4_K_M",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

@@ -1,0 +1,164 @@
+# stream_events v3
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## stream_events(version='v3') returns a GraphRunStream
+
+warning LangChainBetaWarning: The v3 streaming protocol on Pregel is experimental.
+
+public members of GraphRunStream:
+[
+  "abort",
+  "extensions",
+  "interleave",
+  "interrupted",
+  "interrupts",
+  "lifecycle",
+  "messages",
+  "output",
+  "subagents",
+  "subgraphs",
+  "tool_calls",
+  "values"
+]
+
+23 events
+
+seq, method, and event name:
+[
+  "1 values ",
+  "2 messages message-start",
+  "3 messages content-block-start",
+  "4 messages content-block-delta",
+  "5 messages content-block-finish",
+  "6 messages message-finish",
+  "7 values ",
+  "8 tools tool-started",
+  "9 tools tool-finished",
+  "10 values ",
+  "11 messages message-start",
+  "12 messages content-block-start",
+  "13 messages content-block-delta",
+  "14 messages content-block-delta",
+  "15 messages content-block-delta",
+  "16 messages content-block-delta",
+  "17 messages content-block-delta",
+  "18 messages content-block-delta",
+  "19 messages content-block-delta",
+  "20 messages content-block-delta",
+  "21 messages content-block-finish",
+  "22 messages message-finish",
+  "23 values "
+]
+
+full frames: 25-stream-events-v3.events.json
+
+## run.output after the stream ends
+
+output['messages']:
+[
+  {
+    "type": "HumanMessage",
+    "content": "What is 2 + 3?",
+    "id": "<uuid-1>"
+  },
+  {
+    "type": "AIMessage",
+    "content": [
+      {
+        "type": "tool_call",
+        "id": "<uuid-2>",
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        }
+      }
+    ],
+    "id": "lc_run--<uuid-3>",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 162,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama",
+      "output_version": "v1"
+    },
+    "usage_metadata": {
+      "input_tokens": 162,
+      "output_tokens": 25,
+      "total_tokens": 187
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-4>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": [
+      {
+        "type": "text",
+        "text": "2 + 3 = 5.",
+        "index": 0
+      }
+    ],
+    "id": "lc_run--<uuid-5>",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 201,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 9,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama",
+      "output_version": "v1"
+    },
+    "usage_metadata": {
+      "input_tokens": 201,
+      "output_tokens": 9,
+      "total_tokens": 210
+    }
+  }
+]
+
+## stream_mode is rejected under v3
+
+stream_events(version='v3', stream_mode='updates'):
+
+raised builtins.TypeError: stream_events(version='v3') / astream_events(version='v3') do not accept stream_mode; v3 owns these (stream_mode is built from the transformer mux, subgraphs is forced True so nested namespaces flow through scoped muxes).
+
+## sync stream_events with version='v2'
+
+list(stream_events(version='v2')):
+
+raised builtins.NotImplementedError: stream_events(version='v2') is not supported. Use astream_events() for v1/v2, or stream_events(version='v3') on a supported subclass.

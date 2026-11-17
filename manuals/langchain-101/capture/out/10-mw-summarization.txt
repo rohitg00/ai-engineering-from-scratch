@@ -1,0 +1,256 @@
+# SummarizationMiddleware with a trigger
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## SummarizationMiddleware(trigger=('messages', 6), keep=('messages', 2)) with 7 messages
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Here is a summary of the conversation to date:\n\n## SESSION INTENT  \nCalculate the sum of two numbers provided by the user.\n\n## SUMMARY  \n- The user requested the sum of 2 + 3, which was computed using the add tool and returned as 5. The result was confirmed with a response stating \"The sum is 5.\"  \n- The user then asked for the sum of 4 + 5, but no response was provided to this query.  \n- The decision to use the add tool was based on the need to perform arithmetic addition, which is the only operation relevant to the user's request.  \n- The option to use a different tool (e.g., multiplication or subtraction) was rejected because the user's request was explicitly about addition.  \n\n## ARTIFACTS  \n- Tool call: add with parameters {\"a\": 2, \"b\": 3} → result: 5  \n- Tool call: add with parameters {\"a\": 4, \"b\": 5} → result: not completed (query received but no response generated)  \n\n## NEXT STEPS  \nCompute and respond to the sum of 4 + 5 using the add tool.",
+    "id": "<uuid-1>",
+    "additional_kwargs": {
+      "lc_source": "summarization"
+    }
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 9.",
+    "id": "<uuid-2>"
+  },
+  {
+    "type": "HumanMessage",
+    "content": "Now 1 + 1?",
+    "id": "<uuid-3>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-4>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 1,
+          "b": 1
+        },
+        "id": "<uuid-5>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 419,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 419,
+      "output_tokens": 25,
+      "total_tokens": 444
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "2",
+    "name": "add",
+    "id": "<uuid-6>",
+    "tool_call_id": "<uuid-5>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 2.",
+    "id": "lc_run--<uuid-7>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 458,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 7,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 458,
+      "output_tokens": 7,
+      "total_tokens": 465
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "agent",
+    "call": 1,
+    "messages": [
+      "human: Here is a summary of the conversation to date:\n\n## SESSION INTENT  \nCalculate th",
+      "ai: The sum is 9.",
+      "human: Now 1 + 1?"
+    ],
+    "tools": [
+      "add"
+    ]
+  },
+  {
+    "model": "agent",
+    "call": 2,
+    "messages": [
+      "human: Here is a summary of the conversation to date:\n\n## SESSION INTENT  \nCalculate th",
+      "ai: The sum is 9.",
+      "human: Now 1 + 1?",
+      "ai: calls add",
+      "tool: 2"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "summarizer",
+    "call": 1,
+    "messages": [
+      "human: <role>\nContext Extraction Assistant\n</role>\n\n<primary_objective>\nYour sole objec"
+    ]
+  }
+]
+
+## SummarizationMiddleware with the default trigger=None never summarizes
+
+[
+  {
+    "type": "HumanMessage",
+    "content": "Now 1 + 1?",
+    "id": "<uuid-8>"
+  },
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-9>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 1,
+          "b": 1
+        },
+        "id": "<uuid-10>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 247,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 247,
+      "output_tokens": 25,
+      "total_tokens": 272
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "2",
+    "name": "add",
+    "id": "<uuid-11>",
+    "tool_call_id": "<uuid-10>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The sum is 2.",
+    "id": "lc_run--<uuid-12>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 286,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 7,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 286,
+      "output_tokens": 7,
+      "total_tokens": 293
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "agent-no-trigger",
+    "call": 1,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai: calls add",
+      "tool: 5",
+      "ai: The sum is 5.",
+      "human: And 4 + 5?",
+      "ai: The sum is 9.",
+      "human: Now 1 + 1?"
+    ],
+    "tools": [
+      "add"
+    ]
+  },
+  {
+    "model": "agent-no-trigger",
+    "call": 2,
+    "messages": [
+      "human: What is 2 + 3?",
+      "ai: calls add",
+      "tool: 5",
+      "ai: The sum is 5.",
+      "human: And 4 + 5?",
+      "ai: The sum is 9.",
+      "human: Now 1 + 1?",
+      "ai: calls add",
+      "tool: 2"
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]
+
+model calls, as the model received them:
+[]

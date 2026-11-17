@@ -1,0 +1,10 @@
+{"ts": 1794741678.628, "level": "INFO", "event": "startup", "model": "ollama:qwen3:4b-instruct-2507-q4_K_M", "backup": "ollama:qwen3:14b", "pool_max": 20}
+{"ts": 1794741679.016, "level": "INFO", "event": "run.start", "thread_id": "5eb91ff8-b738-4dd3-a5bd-00beed47c491", "user_id": "alice", "trace_id": "d530fc14eac898145feec8d8d7085193", "span_id": "b8c072add1f189e7"}
+{"ts": 1794741680.197, "level": "INFO", "event": "tool.done", "tool": "read_order", "status": "success", "trace_id": "d530fc14eac898145feec8d8d7085193", "span_id": "6f616869562ab62d"}
+{"ts": 1794741680.994, "level": "INFO", "event": "run.end", "thread_id": "5eb91ff8-b738-4dd3-a5bd-00beed47c491", "status": "done", "seconds": 1.9779, "trace_id": "d530fc14eac898145feec8d8d7085193", "span_id": "a507a273be1d2aa7"}
+{"ts": 1794741681.117, "level": "INFO", "event": "run.start", "thread_id": "ef86c0ca-1618-44fc-855b-00d062c12f70", "user_id": "bob", "trace_id": "eb2d49dc8bc0bff92d16bb53205565b6", "span_id": "dadc28015f712d7e"}
+{"ts": 1794741683.132, "level": "INFO", "event": "tool.done", "tool": "recall_notes", "status": "success", "trace_id": "eb2d49dc8bc0bff92d16bb53205565b6", "span_id": "32e29ee926e9a373"}
+{"ts": 1794741683.801, "level": "INFO", "event": "run.end", "thread_id": "ef86c0ca-1618-44fc-855b-00d062c12f70", "status": "done", "seconds": 2.6848, "trace_id": "eb2d49dc8bc0bff92d16bb53205565b6", "span_id": "0f293dbf48de4bf8"}
+{"ts": 1794741683.88, "level": "INFO", "event": "run.start", "thread_id": "224d71d5-fb61-4438-b5eb-d701ad8968d1", "user_id": "alice", "trace_id": "c29fca52b00f8a76f1dba153788657a8", "span_id": "219b5b24abdc44b8"}
+{"ts": 1794741684.654, "level": "INFO", "event": "tool.done", "tool": "recall_notes", "status": "success", "trace_id": "c29fca52b00f8a76f1dba153788657a8", "span_id": "e41c43f732a4eda3"}
+{"ts": 1794741685.64, "level": "INFO", "event": "run.end", "thread_id": "224d71d5-fb61-4438-b5eb-d701ad8968d1", "status": "done", "seconds": 1.7602, "trace_id": "c29fca52b00f8a76f1dba153788657a8", "span_id": "a4d5eb2725bf480f"}

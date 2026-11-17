@@ -1,0 +1,67 @@
+{"meta": {"langgraph": "1.2.22", "langgraph-checkpoint": "4.3.2", "langgraph-checkpoint-sqlite": "3.1.3", "langgraph-checkpoint-postgres": "3.2.1"}}
+{"backend": "InMemoryStore", "case": "put users/alice/memories", "result": "ok"}
+{"backend": "InMemoryStore", "case": "put users/alice2/memories", "result": "ok"}
+{"backend": "InMemoryStore", "case": "put users/a_ice/memories", "result": "ok"}
+{"backend": "InMemoryStore", "case": "put users/%/memories", "result": "ok"}
+{"backend": "InMemoryStore", "case": "put users/*/memories", "result": "ok"}
+{"backend": "InMemoryStore", "case": "put users/al?ce/memories", "result": "ok"}
+{"backend": "InMemoryStore", "case": "put users/[a]lice/memories", "result": "ok"}
+{"backend": "InMemoryStore", "case": "put users/bob/memories", "result": "ok"}
+{"backend": "InMemoryStore", "case": "put users/alice.memories (label with '.')", "raised": "InvalidNamespaceError: Invalid namespace label 'alice.memories' found in ('users', 'alice.memories'). Namespace labels cannot contain periods ('.')."}
+{"backend": "InMemoryStore", "case": "batch([PutOp(('users','bob.x'))]) bypassing put()", "result": "ok"}
+{"backend": "InMemoryStore", "case": "get(('users','alice.memories'),'k1') reads ('users','alice','memories')?", "raised": "InvalidNamespaceError: Invalid namespace label 'alice.memories' found in ('users', 'alice.memories'). Namespace labels cannot contain periods ('.')."}
+{"backend": "InMemoryStore", "case": "batch([GetOp(('users','alice.memories'),'k1')])", "result": [null]}
+{"backend": "InMemoryStore", "case": "search(('users','alice')) owners", "result": [["alice", "users.alice.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','alice2')) owners", "result": [["alice2", "users.alice2.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','a_ice')) owners", "result": [["a_ice", "users.a_ice.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','%')) owners", "result": [["%", "users.%.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','*')) owners", "result": [["*", "users.*.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','al?ce')) owners", "result": [["al?ce", "users.al?ce.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','[a]lice')) owners", "result": [["[a]lice", "users.[a]lice.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','bob')) owners", "result": [["bob", "users.bob.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','ali')) partial label", "result": []}
+{"backend": "InMemoryStore", "case": "search(('users',)) filter owner=alice", "result": [["alice", "users.alice.memories"]]}
+{"backend": "InMemoryStore", "case": "search(('users','bob')) filter owner=alice", "result": []}
+{"backend": "InMemoryStore", "case": "search(('users','bob')) filter owner $ne bob", "result": []}
+{"backend": "InMemoryStore", "case": "search(()) empty prefix", "result": 9}
+{"backend": "InMemoryStore", "case": "batch([SearchOp(('users','alice.memories'))])", "result": [[]]}
+{"backend": "InMemoryStore", "case": "list_namespaces(prefix=('users','alice'))", "result": ["users.alice.memories"]}
+{"backend": "InMemoryStore", "case": "list_namespaces(prefix=('users','a_ice'))", "result": ["users.a_ice.memories"]}
+{"backend": "InMemoryStore", "case": "list_namespaces(prefix=('users','%'))", "result": ["users.%.memories"]}
+{"backend": "InMemoryStore", "case": "list_namespaces(prefix=('users','*'))", "result": ["users.%.memories", "users.*.memories", "users.[a]lice.memories", "users.a_ice.memories", "users.al?ce.memories", "users.alice.memories", "users.alice.memories", "users.alice2.memories", "users.bob.memories", "users.bob.x"]}
+{"backend": "InMemoryStore", "case": "list_namespaces(prefix=('users','[a]lice'))", "result": ["users.[a]lice.memories"]}
+{"backend": "InMemoryStore", "case": "list_namespaces(suffix=('memories',)) count", "result": 8}
+{"backend": "InMemoryStore", "case": "batch([ListNamespacesOp(match_conditions=None)]) count", "result": 10}
+{"backend": "SqliteStore", "case": "put users/alice/memories", "result": "ok"}
+{"backend": "SqliteStore", "case": "put users/alice2/memories", "result": "ok"}
+{"backend": "SqliteStore", "case": "put users/a_ice/memories", "result": "ok"}
+{"backend": "SqliteStore", "case": "put users/%/memories", "result": "ok"}
+{"backend": "SqliteStore", "case": "put users/*/memories", "result": "ok"}
+{"backend": "SqliteStore", "case": "put users/al?ce/memories", "result": "ok"}
+{"backend": "SqliteStore", "case": "put users/[a]lice/memories", "result": "ok"}
+{"backend": "SqliteStore", "case": "put users/bob/memories", "result": "ok"}
+{"backend": "SqliteStore", "case": "put users/alice.memories (label with '.')", "raised": "InvalidNamespaceError: Invalid namespace label 'alice.memories' found in ('users', 'alice.memories'). Namespace labels cannot contain periods ('.')."}
+{"backend": "SqliteStore", "case": "batch([PutOp(('users','bob.x'))]) bypassing put()", "raised": "InvalidNamespaceError: Invalid namespace label 'bob.x' found in ('users', 'bob.x'). Namespace labels cannot contain periods ('.')."}
+{"backend": "SqliteStore", "case": "get(('users','alice.memories'),'k1') reads ('users','alice','memories')?", "raised": "InvalidNamespaceError: Invalid namespace label 'alice.memories' found in ('users', 'alice.memories'). Namespace labels cannot contain periods ('.')."}
+{"backend": "SqliteStore", "case": "batch([GetOp(('users','alice.memories'),'k1')])", "raised": "InvalidNamespaceError: Invalid namespace label 'alice.memories' found in ('users', 'alice.memories'). Namespace labels cannot contain periods ('.')."}
+{"backend": "SqliteStore", "case": "search(('users','alice')) owners", "result": [["alice", "users.alice.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','alice2')) owners", "result": [["alice2", "users.alice2.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','a_ice')) owners", "result": [["a_ice", "users.a_ice.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','%')) owners", "result": [["%", "users.%.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','*')) owners", "result": [["*", "users.*.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','al?ce')) owners", "result": [["al?ce", "users.al?ce.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','[a]lice')) owners", "result": [["[a]lice", "users.[a]lice.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','bob')) owners", "result": [["bob", "users.bob.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','ali')) partial label", "result": []}
+{"backend": "SqliteStore", "case": "search(('users',)) filter owner=alice", "result": [["alice", "users.alice.memories"]]}
+{"backend": "SqliteStore", "case": "search(('users','bob')) filter owner=alice", "result": []}
+{"backend": "SqliteStore", "case": "search(('users','bob')) filter owner $ne bob", "result": []}
+{"backend": "SqliteStore", "case": "search(()) empty prefix", "result": 8}
+{"backend": "SqliteStore", "case": "batch([SearchOp(('users','alice.memories'))])", "raised": "InvalidNamespaceError: Invalid namespace label 'alice.memories' found in ('users', 'alice.memories'). Namespace labels cannot contain periods ('.')."}
+{"backend": "SqliteStore", "case": "list_namespaces(prefix=('users','alice'))", "result": ["users.alice.memories"]}
+{"backend": "SqliteStore", "case": "list_namespaces(prefix=('users','a_ice'))", "result": ["users.a_ice.memories"]}
+{"backend": "SqliteStore", "case": "list_namespaces(prefix=('users','%'))", "result": ["users.%.memories"]}
+{"backend": "SqliteStore", "case": "list_namespaces(prefix=('users','*'))", "result": ["users.%.memories", "users.*.memories", "users.[a]lice.memories", "users.a_ice.memories", "users.al?ce.memories", "users.alice.memories", "users.alice2.memories", "users.bob.memories"]}
+{"backend": "SqliteStore", "case": "list_namespaces(prefix=('users','[a]lice'))", "result": ["users.[a]lice.memories"]}
+{"backend": "SqliteStore", "case": "list_namespaces(suffix=('memories',)) count", "result": 8}
+{"backend": "SqliteStore", "case": "batch([ListNamespacesOp(match_conditions=None)]) count", "result": 8}

@@ -1,0 +1,279 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" role="img" aria-labelledby="fig-5-3-title fig-5-3-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-3-title">Crash trials that charged the order twice</title>
+  <desc id="fig-5-3-desc">A grid of dots, one dot per trial, for six rows of saver and durability mode and five kill points, in two panels. The left panel is the graph on the Mac with no model, five trials per cell: 80 of 150 ran the effect twice. The right panel is the Qwen3 4B agent on the x86 server guest with no key, one bar of twenty trials per cell with the count that charged twice: 331 of 560 killed trials charged twice. Every kill inside the tool charged twice, and sync with a kill after the step charged once.</desc>
+  <text x="140" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GRAPH, THE MAC, NO MODEL</text>
+  <text x="164" y="42" font-size="11" text-anchor="middle" font-weight="700">1</text>
+  <text x="212" y="42" font-size="11" text-anchor="middle" font-weight="700">2</text>
+  <text x="260" y="42" font-size="11" text-anchor="middle" font-weight="700">3</text>
+  <text x="308" y="42" font-size="11" text-anchor="middle" font-weight="700">4</text>
+  <text x="356" y="42" font-size="11" text-anchor="middle" font-weight="700">5</text>
+  <text x="390" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">AGENT, X86, QWEN3 4B</text>
+  <text x="414" y="42" font-size="11" text-anchor="middle" font-weight="700">1</text>
+  <text x="462" y="42" font-size="11" text-anchor="middle" font-weight="700">2</text>
+  <text x="510" y="42" font-size="11" text-anchor="middle" font-weight="700">3</text>
+  <text x="558" y="42" font-size="11" text-anchor="middle" font-weight="700">4</text>
+  <text x="606" y="42" font-size="11" text-anchor="middle" font-weight="700">5</text>
+  <circle cx="148" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="394" y="61" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="394.0" y="61" width="26.0" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="423" y="70" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <circle cx="196" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="442" y="61" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="442" y="61" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="471" y="70" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="244" cy="66" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="252" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="260" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="268" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="276" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="490" y="61" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="490" y="61" width="10.4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="500.4" y="61" width="15.6" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="519" y="70" font-size="11" fill="var(--m-rose-ink, #b0344d)">8</text>
+  <circle cx="292" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="300" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="308" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="316" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="324" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="538" y="61" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="538" y="61" width="15.6" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="553.6" y="61" width="10.4" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="567" y="70" font-size="11" fill="var(--m-rose-ink, #b0344d)">12</text>
+  <circle cx="340" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="348" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="356" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="364" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="372" cy="66" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="586" y="61" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="586.0" y="61" width="26.0" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="615" y="70" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <text x="20" y="70" font-size="11.5" fill="var(--m-teal-ink, #18696a)">sqlite sync</text>
+  <circle cx="148" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="394" y="91" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="394.0" y="91" width="26.0" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="423" y="100" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <circle cx="196" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="442" y="91" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="442" y="91" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="471" y="100" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="244" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="252" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="260" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="268" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="276" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="490" y="91" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="490" y="91" width="23.4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="513.4" y="91" width="2.6" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="519" y="100" font-size="11" fill="var(--m-rose-ink, #b0344d)">18</text>
+  <circle cx="292" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="300" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="308" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="316" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="324" cy="96" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="538" y="91" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="538" y="91" width="7.8" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="545.8" y="91" width="18.2" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="567" y="100" font-size="11" fill="var(--m-rose-ink, #b0344d)">6</text>
+  <circle cx="340" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="348" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="356" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="372" cy="96" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="586" y="91" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="586" y="91" width="24.7" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="610.7" y="91" width="1.3" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="615" y="100" font-size="11" fill="var(--m-rose-ink, #b0344d)">19</text>
+  <text x="20" y="100" font-size="11.5" fill="var(--m-ink, #1a1a1a)">sqlite async</text>
+  <circle cx="148" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="126" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="394" y="121" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="394.0" y="121" width="26.0" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="423" y="130" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <circle cx="196" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="442" y="121" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="442" y="121" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="471" y="130" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="244" cy="126" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="252" cy="126" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="260" cy="126" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="268" cy="126" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="276" cy="126" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="490" y="121" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="519" y="130" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <circle cx="292" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="300" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="308" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="316" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="324" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="538" y="121" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="538" y="121" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="567" y="130" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="340" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="348" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="356" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="372" cy="126" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="586" y="121" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="586" y="121" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="615" y="130" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <text x="20" y="130" font-size="11.5" fill="var(--m-ink, #1a1a1a)">sqlite exit</text>
+  <circle cx="148" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="394" y="151" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="394.0" y="151" width="26.0" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="423" y="160" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <circle cx="196" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="442" y="151" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="442" y="151" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="471" y="160" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="244" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="252" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="260" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="268" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="276" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="490" y="151" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="490" y="151" width="20.8" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="510.8" y="151" width="5.2" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="519" y="160" font-size="11" fill="var(--m-rose-ink, #b0344d)">16</text>
+  <circle cx="292" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="300" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="308" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="316" cy="156" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="324" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="538" y="151" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="538" y="151" width="10.4" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="548.4" y="151" width="15.6" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="567" y="160" font-size="11" fill="var(--m-rose-ink, #b0344d)">8</text>
+  <circle cx="340" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="348" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="356" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="364" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="372" cy="156" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="586" y="151" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="586.0" y="151" width="26.0" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="615" y="160" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <text x="20" y="160" font-size="11.5" fill="var(--m-teal-ink, #18696a)">postgres sync</text>
+  <circle cx="148" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="394" y="181" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="394.0" y="181" width="26.0" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="423" y="190" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <circle cx="196" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="442" y="181" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="442" y="181" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="471" y="190" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="244" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="252" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="260" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="268" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="276" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="490" y="181" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="490" y="181" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="519" y="190" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="292" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="300" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="308" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="316" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="324" cy="186" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="538" y="181" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="538" y="181" width="6.5" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="544.5" y="181" width="19.5" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="567" y="190" font-size="11" fill="var(--m-rose-ink, #b0344d)">5</text>
+  <circle cx="340" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="348" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="356" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="372" cy="186" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="586" y="181" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="586" y="181" width="24.7" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="610.7" y="181" width="1.3" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="615" y="190" font-size="11" fill="var(--m-rose-ink, #b0344d)">19</text>
+  <text x="20" y="190" font-size="11.5" fill="var(--m-ink, #1a1a1a)">postgres async</text>
+  <circle cx="148" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="156" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="164" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="172" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="180" cy="216" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <rect x="394" y="211" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="394.0" y="211" width="26.0" height="10" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="423" y="220" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <circle cx="196" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="204" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="212" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="220" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="228" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="442" y="211" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="442" y="211" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="471" y="220" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="244" cy="216" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="252" cy="216" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="260" cy="216" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="268" cy="216" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <circle cx="276" cy="216" r="2.8000000000000003" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="490" y="211" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="519" y="220" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <circle cx="292" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="300" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="308" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="316" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="324" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="538" y="211" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="538" y="211" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="567" y="220" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <circle cx="340" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="348" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="356" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="364" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <circle cx="372" cy="216" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <rect x="586" y="211" width="26" height="10" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <rect x="586" y="211" width="26.0" height="10" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="615" y="220" font-size="11" fill="var(--m-rose-ink, #b0344d)">20</text>
+  <text x="20" y="220" font-size="11.5" fill="var(--m-ink, #1a1a1a)">postgres exit</text>
+  <line x1="20" y1="141" x2="620" y2="141" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="264" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">1 before_tool   2 inside_tool   3 before_put_writes   4 before_put   5 after_tool</text>
+  <circle cx="26" cy="290" r="3.2" fill="var(--m-rose-ink, #b0344d)"/>
+  <text x="36" y="294" font-size="11" class="m-serif" fill="var(--m-rose-ink, #b0344d)">charged twice</text>
+  <circle cx="140" cy="290" r="3.2" fill="var(--m-teal-ink, #18696a)"/>
+  <text x="150" y="294" font-size="11" class="m-serif" fill="var(--m-teal-ink, #18696a)">charged once</text>
+  <circle cx="250" cy="290" r="2.8" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="260" y="294" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">not killed, exit mode never reached it</text>
+  <text x="20" y="318" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Totals: graph 80 of 150, agent 331 of 560 killed with no key.</text>
+  <text x="20" y="334" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Keyed on the thread and order id: graph 0 of 150, agent 0 of 140 killed.</text>
+</svg>

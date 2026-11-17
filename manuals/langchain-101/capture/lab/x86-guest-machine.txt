@@ -1,0 +1,12 @@
+date: 2026-11-14T06:21:49Z
+guest: KVM guest, 32 vCPU, 48 GiB, disk image held in RAM, QEMU user net
+CPU(s):                                  32
+Model name:                              AMD EPYC 7452 32-Core Processor
+Mem:              47           0          44           0           2          46
+/dev/vda1        77G  3.2G   74G   5% /
+Linux 6.8.0-147-generic x86_64
+Python 3.13.18
+psql (PostgreSQL) 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)
+Redis server v=7.0.15 sha=00000000:0 malloc=jemalloc-5.3.0 bits=64 build=d064f9f48c901a92
+Docker version 29.1.3, build 29.1.3-0ubuntu3~24.04.2
+max_connections=100 shared_buffers=128MB synchronous_commit=on fsync=on

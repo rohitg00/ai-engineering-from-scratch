@@ -1,0 +1,449 @@
+# Human in the loop, per call
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## per_call: one interrupt per gated call
+
+interrupt for add(2, 3):
+{
+  "id": "<hex-1>",
+  "value": {
+    "type": "tool_approval",
+    "tool_call_id": "<uuid-1>",
+    "name": "add",
+    "args": {
+      "a": 2,
+      "b": 3
+    },
+    "description": "Tool execution requires approval\n\nTool: add\nArgs: {'a': 2, 'b': 3}"
+  }
+}
+
+response_schema:
+{
+  "$defs": {
+    "ApproveDecision": {
+      "description": "Response when a human approves the action.",
+      "properties": {
+        "type": {
+          "const": "approve",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "ApproveDecision",
+      "type": "object"
+    },
+    "EditDecision": {
+      "properties": {
+        "type": {
+          "const": "edit",
+          "title": "Type",
+          "type": "string"
+        },
+        "edited_action": {
+          "$ref": "#/$defs/EditedAction"
+        }
+      },
+      "required": [
+        "type",
+        "edited_action"
+      ],
+      "title": "EditDecision",
+      "type": "object"
+    },
+    "EditedAction": {
+      "properties": {
+        "name": {
+          "const": "add",
+          "title": "Name",
+          "type": "string"
+        },
+        "args": {
+          "$ref": "#/$defs/add"
+        }
+      },
+      "required": [
+        "name",
+        "args"
+      ],
+      "title": "EditedAction",
+      "type": "object"
+    },
+    "RejectDecision": {
+      "description": "Response when a human rejects the action.",
+      "properties": {
+        "type": {
+          "const": "reject",
+          "title": "Type",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "RejectDecision",
+      "type": "object"
+    },
+    "RespondDecision": {
+      "description": "Response when a human answers on behalf of the tool, skipping execution.\n\nUsed for \"ask user\" style tools whose real implementation is the human's\nresponse. The tool is not executed; instead, a synthetic `ToolMessage` with\n`status=\"success\"` and the provided `message` is returned to the model.",
+      "properties": {
+        "type": {
+          "const": "respond",
+          "title": "Type",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "message"
+      ],
+      "title": "RespondDecision",
+      "type": "object"
+    },
+    "add": {
+      "description": "Add two integers.",
+      "properties": {
+        "a": {
+          "title": "A",
+          "type": "integer"
+        },
+        "b": {
+          "title": "B",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "add",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "approve": "#/$defs/ApproveDecision",
+      "edit": "#/$defs/EditDecision",
+      "reject": "#/$defs/RejectDecision",
+      "respond": "#/$defs/RespondDecision"
+    },
+    "propertyName": "type"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ApproveDecision"
+    },
+    {
+      "$ref": "#/$defs/EditDecision"
+    },
+    {
+      "$ref": "#/$defs/RejectDecision"
+    },
+    {
+      "$ref": "#/$defs/RespondDecision"
+    }
+  ]
+}
+
+interrupt for add(4, 5):
+{
+  "id": "<hex-2>",
+  "value": {
+    "type": "tool_approval",
+    "tool_call_id": "<uuid-2>",
+    "name": "add",
+    "args": {
+      "a": 4,
+      "b": 5
+    },
+    "description": "Tool execution requires approval\n\nTool: add\nArgs: {'a': 4, 'b': 5}"
+  }
+}
+
+response_schema:
+{
+  "$defs": {
+    "ApproveDecision": {
+      "description": "Response when a human approves the action.",
+      "properties": {
+        "type": {
+          "const": "approve",
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "ApproveDecision",
+      "type": "object"
+    },
+    "EditDecision": {
+      "properties": {
+        "type": {
+          "const": "edit",
+          "title": "Type",
+          "type": "string"
+        },
+        "edited_action": {
+          "$ref": "#/$defs/EditedAction"
+        }
+      },
+      "required": [
+        "type",
+        "edited_action"
+      ],
+      "title": "EditDecision",
+      "type": "object"
+    },
+    "EditedAction": {
+      "properties": {
+        "name": {
+          "const": "add",
+          "title": "Name",
+          "type": "string"
+        },
+        "args": {
+          "$ref": "#/$defs/add"
+        }
+      },
+      "required": [
+        "name",
+        "args"
+      ],
+      "title": "EditedAction",
+      "type": "object"
+    },
+    "RejectDecision": {
+      "description": "Response when a human rejects the action.",
+      "properties": {
+        "type": {
+          "const": "reject",
+          "title": "Type",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "RejectDecision",
+      "type": "object"
+    },
+    "RespondDecision": {
+      "description": "Response when a human answers on behalf of the tool, skipping execution.\n\nUsed for \"ask user\" style tools whose real implementation is the human's\nresponse. The tool is not executed; instead, a synthetic `ToolMessage` with\n`status=\"success\"` and the provided `message` is returned to the model.",
+      "properties": {
+        "type": {
+          "const": "respond",
+          "title": "Type",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "message"
+      ],
+      "title": "RespondDecision",
+      "type": "object"
+    },
+    "add": {
+      "description": "Add two integers.",
+      "properties": {
+        "a": {
+          "title": "A",
+          "type": "integer"
+        },
+        "b": {
+          "title": "B",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "title": "add",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "approve": "#/$defs/ApproveDecision",
+      "edit": "#/$defs/EditDecision",
+      "reject": "#/$defs/RejectDecision",
+      "respond": "#/$defs/RespondDecision"
+    },
+    "propertyName": "type"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ApproveDecision"
+    },
+    {
+      "$ref": "#/$defs/EditDecision"
+    },
+    {
+      "$ref": "#/$defs/RejectDecision"
+    },
+    {
+      "$ref": "#/$defs/RespondDecision"
+    }
+  ]
+}
+
+state.next:
+[
+  "tools",
+  "tools"
+]
+
+## resume with a map of interrupt id to decision: approve the first, reject the rest
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-3>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-1>",
+        "type": "tool_call"
+      },
+      {
+        "name": "add",
+        "args": {
+          "a": 4,
+          "b": 5
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 178,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 50,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 178,
+      "output_tokens": 50,
+      "total_tokens": 228
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-4>",
+    "tool_call_id": "<uuid-1>",
+    "status": "success"
+  },
+  {
+    "type": "ToolMessage",
+    "content": "User rejected the tool call for `add` with reason: Not this one.",
+    "name": "add",
+    "id": "<uuid-5>",
+    "tool_call_id": "<uuid-2>",
+    "status": "error"
+  },
+  {
+    "type": "AIMessage",
+    "content": "I see that the tool call was rejected. Let me know if you'd like me to try again or assist in a different way!",
+    "id": "lc_run--<uuid-6>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 262,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 28,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 262,
+      "output_tokens": 28,
+      "total_tokens": 290
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "hitl-per-call",
+    "call": 1,
+    "messages": [
+      "human: Use the add tool twice in one reply: add 2 and 3, and add 4 and 5."
+    ],
+    "tools": [
+      "add"
+    ]
+  },
+  {
+    "model": "hitl-per-call",
+    "call": 2,
+    "messages": [
+      "human: Use the add tool twice in one reply: add 2 and 3, and add 4 and 5.",
+      "ai: calls add, add",
+      "tool: 5",
+      "tool: User rejected the tool call for `add` with reason: Not this one."
+    ],
+    "tools": [
+      "add"
+    ]
+  }
+]
+
+## a decision that does not match response_schema
+
+resume with reject when only approve is allowed:
+
+raised pydantic_core._pydantic_core.ValidationError: 1 validation error for ApproveDecision
+type
+  Input should be 'approve' [type=literal_error, input_value='reject', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.14/v/literal_error
+
+state.next after the bad answer:
+[
+  "tools"
+]

@@ -1,0 +1,17 @@
+{
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "method": "fresh uv venvs with the lockfile as constraints, du -sk of site-packages before any import",
+ "sources": [
+  "capture/lab/T01-overhead-mac/07-install-size.txt"
+ ],
+ "venvs": {
+  "venv_langchain": {
+   "packages": 44,
+   "site_packages_kib": 54312
+  },
+  "venv_openai": {
+   "packages": 14,
+   "site_packages_kib": 26356
+  }
+ }
+}

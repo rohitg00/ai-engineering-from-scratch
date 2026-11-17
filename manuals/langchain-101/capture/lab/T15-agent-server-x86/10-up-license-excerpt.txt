@@ -1,0 +1,4 @@
+ValueError: License verification failed. Please ensure proper configuration:
+- For local development, set a valid LANGSMITH_API_KEY for an account with LangGraph Cloud access in the environment defined in your langgraph.json file.
+- For production, configure the LANGGRAPH_CLOUD_LICENSE_KEY environment variable with your LangGraph Cloud license key.
+Review your configuration settings and try again. If issues persist, contact support for assistance.

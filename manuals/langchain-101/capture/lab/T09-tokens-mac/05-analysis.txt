@@ -1,0 +1,28 @@
+model qwen3:8b via Ollama 0.31.1, temperature 0, seed 42, think off, num_ctx 16384; n=3 per cell; tokens = Ollama prompt_eval_count / eval_count
+('trivial', 'plain') n 3 ok 3 calls [1, 1, 1] in_total [28] out_total [2] secs median 16.13
+    call: in 28 out 2 msgs 1 sys_chars 0 tools 0 schema_chars 2 -> []
+('trivial', 'create_agent') n 3 ok 3 calls [1, 1, 1] in_total [28] out_total [2] secs median 19.25
+    call: in 28 out 2 msgs 1 sys_chars 0 tools 0 schema_chars 2 -> []
+('trivial', 'deep_agent') n 3 ok 3 calls [1, 1, 1] in_total [2279] out_total [2] secs median 46.07
+    call: in 2279 out 2 msgs 2 sys_chars 0 tools 8 schema_chars 10527 -> []
+('tools', 'plain') n 3 ok 3 calls [2, 2, 2] in_total [480] out_total [57] secs median 49.32
+    call: in 205 out 53 msgs 1 sys_chars 0 tools 2 schema_chars 436 -> ['add', 'multiply']
+    call: in 275 out 4 msgs 4 sys_chars 0 tools 2 schema_chars 436 -> []
+('tools', 'create_agent') n 3 ok 3 calls [2, 2, 2] in_total [480] out_total [57] secs median 43.73
+    call: in 205 out 53 msgs 1 sys_chars 0 tools 2 schema_chars 436 -> ['add', 'multiply']
+    call: in 275 out 4 msgs 4 sys_chars 0 tools 2 schema_chars 436 -> []
+('tools', 'deep_agent') n 3 ok 3 calls [2, 2, 2] in_total [4818] out_total [57] secs median 95.94
+    call: in 2374 out 53 msgs 2 sys_chars 0 tools 10 schema_chars 10963 -> ['add', 'multiply']
+    call: in 2444 out 4 msgs 5 sys_chars 0 tools 10 schema_chars 10963 -> []
+('files', 'plain') n 3 ok 3 calls [3, 3, 3] in_total [773] out_total [63] secs median 57.16
+    call: in 214 out 28 msgs 1 sys_chars 0 tools 2 schema_chars 474 -> ['write_file']
+    call: in 262 out 20 msgs 3 sys_chars 0 tools 2 schema_chars 474 -> ['read_file']
+    call: in 297 out 15 msgs 5 sys_chars 0 tools 2 schema_chars 474 -> []
+('files', 'create_agent') n 3 ok 3 calls [3, 3, 3] in_total [773] out_total [63] secs median 51.9
+    call: in 214 out 28 msgs 1 sys_chars 0 tools 2 schema_chars 474 -> ['write_file']
+    call: in 262 out 20 msgs 3 sys_chars 0 tools 2 schema_chars 474 -> ['read_file']
+    call: in 297 out 15 msgs 5 sys_chars 0 tools 2 schema_chars 474 -> []
+('files', 'deep_agent') n 3 ok 3 calls [3, 3, 3] in_total [7013] out_total [68] secs median 109.46
+    call: in 2293 out 29 msgs 2 sys_chars 0 tools 8 schema_chars 10527 -> ['write_file']
+    call: in 2337 out 21 msgs 4 sys_chars 0 tools 8 schema_chars 10527 -> ['read_file']
+    call: in 2383 out 18 msgs 6 sys_chars 0 tools 8 schema_chars 10527 -> []

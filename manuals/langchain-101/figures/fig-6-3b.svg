@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 196" role="img" aria-labelledby="fig-6-3b-title fig-6-3b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-6-3b-title">The graph of an entrypoint</title>
+  <desc id="fig-6-3b-desc">The graph of the workflow entrypoint, drawn from its draw_mermaid output. It has 3 nodes: workflow, __start__, __end__. A plain edge goes from __start__ to workflow and a conditional edge goes from workflow to __end__. The tasks double and ask_human run inside the workflow node and are not in the graph.</desc>
+  <defs><marker id="fig-6-3b-head-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-ink, #1a1a1a)"/></marker><marker id="fig-6-3b-head-amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0 1 L10 5 L0 9 z" fill="var(--m-amber-ink, #85590c)"/></marker></defs>
+  <text x="20" y="20" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">GET_GRAPH() OF AN @ENTRYPOINT</text>
+  <text x="620" y="20" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3 nodes, no task nodes</text>
+  <line x1="320" y1="68" x2="320" y2="85" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3b-head-ink)"/>
+  <line x1="320" y1="110" x2="320" y2="127" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3b-head-amber)"/>
+  <rect x="274" y="44" width="92" height="24" rx="12" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="320" y="60" font-size="11.5" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">__start__</text>
+  <rect x="278" y="86" width="84" height="24" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="320" y="101.45" font-size="11.5" text-anchor="middle" font-weight="700">workflow</text>
+  <rect x="281" y="128" width="78" height="24" rx="12" fill="var(--m-paper, #fafaf5)" stroke="var(--m-ink-mute, #6f6f6a)"/>
+  <text x="320" y="144" font-size="11.5" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">__end__</text>
+  <text x="382" y="102" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">double and ask_human run in here</text>
+  <line x1="20" y1="178" x2="54" y2="178" stroke="var(--m-ink, #1a1a1a)" stroke-width="1.2" marker-end="url(#fig-6-3b-head-ink)"/>
+  <text x="62" y="182" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">plain edge</text>
+  <line x1="145.4" y1="178" x2="179.4" y2="178" stroke="var(--m-amber-ink, #85590c)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#fig-6-3b-head-amber)"/>
+  <text x="187.4" y="182" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">conditional edge, chosen at run time</text>
+</svg>

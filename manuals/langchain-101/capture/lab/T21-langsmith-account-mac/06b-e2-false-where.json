@@ -1,0 +1,283 @@
+{
+ "projects": [
+  {
+   "name": "aiefs-lc101-aeval-feb41559",
+   "id": "<project-id-2>",
+   "created": "2026-11-14 14:17:30.723996+00:00",
+   "reference_dataset_id": "<dataset-id-1>",
+   "n_runs": 80,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 20,
+    "chain:model:child": 20,
+    "tool:add:child": 10,
+    "chain:tools:child": 10,
+    "chain:LangGraph:child": 10,
+    "chain:AsyncTarget:root": 10
+   },
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "abandoned-drink-3",
+   "id": "<project-id-1>",
+   "created": "2026-11-14 14:15:03.015644+00:00",
+   "reference_dataset_id": null,
+   "n_runs": 70,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 20,
+    "chain:model:child": 20,
+    "tool:add:child": 10,
+    "chain:tools:child": 10,
+    "chain:LangGraph:child": 10
+   },
+   "children_of_unsent_target": [
+    {
+     "name": "LangGraph",
+     "id": "<id-125>",
+     "parent_run_id": "<id-114>",
+     "trace_id": "<id-114>",
+     "parent_is_unsent_target": true,
+     "dotted_order_depth": 1
+    },
+    {
+     "name": "LangGraph",
+     "id": "<id-126>",
+     "parent_run_id": "<id-113>",
+     "trace_id": "<id-113>",
+     "parent_is_unsent_target": true,
+     "dotted_order_depth": 1
+    },
+    {
+     "name": "LangGraph",
+     "id": "<id-127>",
+     "parent_run_id": "<id-112>",
+     "trace_id": "<id-112>",
+     "parent_is_unsent_target": true,
+     "dotted_order_depth": 1
+    }
+   ],
+   "n_children_of_unsent_target": 10
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:750e4701",
+   "id": "<project-id-9>",
+   "created": "2026-11-14 14:13:49.227549+00:00",
+   "reference_dataset_id": "<dataset-id-2>",
+   "n_runs": 11,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 2,
+    "chain:model:child": 2,
+    "tool:add:child": 1,
+    "chain:tools:child": 1,
+    "chain:LangGraph:child": 1,
+    "chain:test_marked_agent:root": 1,
+    "chain:test_decorator_form:root": 1,
+    "chain:test_marked_fail:root": 1,
+    "chain:test_marked_pass:root": 1
+   },
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:0cca6e2a",
+   "id": "<project-id-7>",
+   "created": "2026-11-14 14:13:34.708122+00:00",
+   "reference_dataset_id": "<dataset-id-2>",
+   "n_runs": 11,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 2,
+    "chain:model:child": 2,
+    "tool:add:child": 1,
+    "chain:tools:child": 1,
+    "chain:LangGraph:child": 1,
+    "chain:test_marked_agent:root": 1,
+    "chain:test_decorator_form:root": 1,
+    "chain:test_marked_fail:root": 1,
+    "chain:test_marked_pass:root": 1
+   },
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:07f0b9f1",
+   "id": "<project-id-6>",
+   "created": "2026-11-14 14:13:26.922063+00:00",
+   "reference_dataset_id": "<dataset-id-2>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:24c37696",
+   "id": "<project-id-8>",
+   "created": "2026-11-14 14:13:20.636522+00:00",
+   "reference_dataset_id": "<dataset-id-2>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:9baa8787",
+   "id": "<project-id-11>",
+   "created": "2026-11-14 14:13:13.595061+00:00",
+   "reference_dataset_id": "<dataset-id-2>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:e16e34cd",
+   "id": "<project-id-13>",
+   "created": "2026-11-14 14:13:06.585864+00:00",
+   "reference_dataset_id": "<dataset-id-2>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:764d4dea",
+   "id": "<project-id-10>",
+   "created": "2026-11-14 14:12:59.095069+00:00",
+   "reference_dataset_id": "<dataset-id-2>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-pytest-exp:dd0a98b4",
+   "id": "<project-id-12>",
+   "created": "2026-11-14 14:12:50.371525+00:00",
+   "reference_dataset_id": "<dataset-id-2>",
+   "n_runs": 0,
+   "runs_by_type": {},
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "evaluators",
+   "id": "<project-id-16>",
+   "created": "2026-11-14 14:12:18.443686+00:00",
+   "reference_dataset_id": null,
+   "n_runs": 160,
+   "runs_by_type": {
+    "parser:StrOutputParser:child": 30,
+    "llm:ChatOllama:child": 30,
+    "prompt:ChatPromptTemplate:child": 30,
+    "chain:RunnableSequence:child": 30,
+    "chain:judge:root": 20,
+    "chain:exact:root": 20
+   },
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-eval-true-28d43a7b",
+   "id": "<project-id-4>",
+   "created": "2026-11-14 14:12:08.726761+00:00",
+   "reference_dataset_id": "<dataset-id-1>",
+   "n_runs": 80,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 20,
+    "chain:model:child": 20,
+    "tool:add:child": 10,
+    "chain:tools:child": 10,
+    "chain:LangGraph:child": 10,
+    "chain:Target:root": 10
+   },
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-local",
+   "id": "<project-id-5>",
+   "created": "2026-11-14 14:10:55.870943+00:00",
+   "reference_dataset_id": null,
+   "n_runs": 21,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 6,
+    "chain:model:child": 6,
+    "tool:add:child": 3,
+    "chain:tools:child": 3,
+    "chain:LangGraph:root": 3
+   },
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-trace",
+   "id": "<project-id-15>",
+   "created": "2026-11-14 13:55:19.163808+00:00",
+   "reference_dataset_id": null,
+   "n_runs": 210,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 60,
+    "chain:model:child": 60,
+    "tool:add:child": 30,
+    "chain:tools:child": 30,
+    "chain:LangGraph:root": 30
+   },
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  },
+  {
+   "name": "aiefs-lc101-smoke",
+   "id": "<project-id-14>",
+   "created": "2026-11-14 13:53:44.746330+00:00",
+   "reference_dataset_id": null,
+   "n_runs": 7,
+   "runs_by_type": {
+    "llm:ChatOllama:child": 2,
+    "chain:model:child": 2,
+    "tool:add:child": 1,
+    "chain:tools:child": 1,
+    "chain:LangGraph:root": 1
+   },
+   "children_of_unsent_target": [],
+   "n_children_of_unsent_target": 0
+  }
+ ],
+ "orphan_trace_runs": [
+  {
+   "name": "ChatOllama",
+   "parent": "<id-128>",
+   "is_trace_root": false
+  },
+  {
+   "name": "model",
+   "parent": "<id-125>",
+   "is_trace_root": false
+  },
+  {
+   "name": "add",
+   "parent": "<id-129>",
+   "is_trace_root": false
+  },
+  {
+   "name": "tools",
+   "parent": "<id-125>",
+   "is_trace_root": false
+  },
+  {
+   "name": "ChatOllama",
+   "parent": "<id-130>",
+   "is_trace_root": false
+  },
+  {
+   "name": "model",
+   "parent": "<id-125>",
+   "is_trace_root": false
+  },
+  {
+   "name": "LangGraph",
+   "parent": "<id-114>",
+   "is_trace_root": false
+  }
+ ],
+ "trace_root_readable": "LangSmithNotFoundError",
+ "is_root_filter_count": 0
+}

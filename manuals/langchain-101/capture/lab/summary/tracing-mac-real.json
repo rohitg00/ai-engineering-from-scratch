@@ -1,0 +1,735 @@
+{
+ "agent": "create_agent with ChatOllama and one tool add, What is 2 + 3?, 2 model calls and 1 tool call, 7 traced runs per agent run",
+ "endpoint": "a local recorder on 127.0.0.1 that records each request; it answers at once, after 2 s, never, or with 500 by state; no LangSmith server was contacted",
+ "failures": {
+  "down": {
+   "errors": 0,
+   "exit": "return code 0",
+   "exit_lag_s": 9.9,
+   "flush_ms": null,
+   "requests": {},
+   "runs": 50,
+   "runs_expected": 350,
+   "runs_ok": 50,
+   "runs_per_post": [],
+   "runs_received": 0
+  },
+  "e500": {
+   "errors": 0,
+   "exit": "return code 0",
+   "exit_lag_s": 17.1,
+   "flush_ms": null,
+   "requests": {
+    "GET /info": 1,
+    "POST /runs/multipart": 132
+   },
+   "runs": 50,
+   "runs_expected": 350,
+   "runs_ok": 50,
+   "runs_per_post": [
+    3,
+    4,
+    28,
+    35,
+    38,
+    39,
+    49
+   ],
+   "runs_received": 350
+  },
+  "hang": {
+   "errors": 0,
+   "exit": "killed by the driver at 300 s",
+   "exit_lag_s": 208.0,
+   "flush_ms": null,
+   "requests": {
+    "GET /info": 4,
+    "POST /runs/multipart": 6
+   },
+   "runs": 50,
+   "runs_expected": 350,
+   "runs_ok": 50,
+   "runs_per_post": [
+    50
+   ],
+   "runs_received": 50
+  },
+  "ok-flush": {
+   "errors": 0,
+   "exit": "return code 0",
+   "exit_lag_s": 0.4,
+   "flush_ms": 68.2,
+   "requests": {
+    "GET /info": 1,
+    "POST /runs/multipart": 101
+   },
+   "runs": 50,
+   "runs_expected": 350,
+   "runs_ok": 50,
+   "runs_per_post": [
+    3,
+    4
+   ],
+   "runs_received": 350
+  },
+  "slow": {
+   "errors": 0,
+   "exit": "return code 0",
+   "exit_lag_s": 3.7,
+   "flush_ms": null,
+   "requests": {
+    "GET /info": 1,
+    "POST /runs/multipart": 28
+   },
+   "runs": 50,
+   "runs_expected": 350,
+   "runs_ok": 50,
+   "runs_per_post": [
+    4,
+    7,
+    10,
+    11,
+    14,
+    17
+   ],
+   "runs_received": 350
+  },
+  "slow-fg": {
+   "errors": 0,
+   "exit": "return code 0",
+   "exit_lag_s": 3.7,
+   "flush_ms": null,
+   "requests": {
+    "GET /info": 1,
+    "POST /runs/multipart": 31
+   },
+   "runs": 50,
+   "runs_expected": 350,
+   "runs_ok": 50,
+   "runs_per_post": [
+    3,
+    7,
+    10,
+    11,
+    14,
+    17,
+    18
+   ],
+   "runs_received": 350
+  },
+  "slow-flush": {
+   "errors": 0,
+   "exit": "return code 0",
+   "exit_lag_s": 0.4,
+   "flush_ms": 3987.4,
+   "requests": {
+    "GET /info": 1,
+    "POST /runs/multipart": 47
+   },
+   "runs": 50,
+   "runs_expected": 350,
+   "runs_ok": 50,
+   "runs_per_post": [
+    3,
+    4,
+    7,
+    10,
+    11,
+    14
+   ],
+   "runs_received": 350
+  }
+ },
+ "interleave": {
+  "exit_lag_s": 0.321,
+  "first_run_non_model_ms": 82.6,
+  "off": {
+   "n": 60,
+   "non_model_ms": [
+    47.9,
+    25.65,
+    16.25,
+    9.26,
+    15.54,
+    19.47,
+    31.82,
+    7.43,
+    12.37,
+    24.7,
+    13.27,
+    8.61,
+    13.56,
+    13.5,
+    23.91,
+    19.66,
+    11.75,
+    20.85,
+    23.0,
+    25.06,
+    8.91,
+    12.15,
+    17.21,
+    11.36,
+    23.42,
+    26.43,
+    18.96,
+    24.9,
+    20.96,
+    14.46,
+    16.58,
+    16.0,
+    28.75,
+    20.46,
+    12.36,
+    21.72,
+    21.94,
+    25.76,
+    17.12,
+    7.85,
+    23.9,
+    27.89,
+    25.86,
+    11.23,
+    5.8,
+    21.55,
+    28.5,
+    14.13,
+    9.25,
+    14.75,
+    7.41,
+    17.63,
+    21.0,
+    10.06,
+    20.61,
+    10.82,
+    22.85,
+    17.77,
+    15.55,
+    24.06
+   ],
+   "non_model_ms_median": 17.7,
+   "non_model_ms_p95": 28.51,
+   "ok": 60,
+   "wall_ms_median": 1603.6
+  },
+  "on": {
+   "n": 60,
+   "non_model_ms": [
+    27.48,
+    27.16,
+    29.62,
+    18.56,
+    22.78,
+    22.21,
+    38.67,
+    41.42,
+    33.17,
+    29.85,
+    23.68,
+    22.47,
+    24.43,
+    9.52,
+    16.21,
+    28.57,
+    51.08,
+    35.22,
+    29.82,
+    41.71,
+    24.97,
+    8.86,
+    10.0,
+    12.42,
+    26.61,
+    15.07,
+    25.79,
+    38.64,
+    37.7,
+    18.58,
+    24.18,
+    19.59,
+    22.28,
+    27.22,
+    28.2,
+    30.08,
+    37.64,
+    26.05,
+    32.44,
+    33.52,
+    17.76,
+    25.93,
+    34.42,
+    23.96,
+    27.24,
+    31.84,
+    13.22,
+    15.16,
+    15.9,
+    17.36,
+    28.98,
+    31.72,
+    8.73,
+    28.55,
+    45.16,
+    35.91,
+    25.73,
+    20.6,
+    31.2,
+    22.26
+   ],
+   "non_model_ms_median": 26.33,
+   "non_model_ms_p95": 41.44,
+   "ok": 60,
+   "wall_ms_median": 1624.6
+  },
+  "paired_on_minus_off_ms_median": 7.42,
+  "pairs": 60,
+  "requests": {
+   "GET /info": 1,
+   "POST /runs/multipart": 183
+  },
+  "runs_per_post": [
+   3,
+   4
+  ],
+  "runs_posted": 427
+ },
+ "interleave_runs": "one process of 122 runs with tracing_context(enabled=True) and enabled=False on alternate runs; the first 2 runs are left out",
+ "latency": {
+  "off": {
+   "exit_lag_s": [
+    0.241,
+    0.158,
+    0.183
+   ],
+   "first_run_non_model_ms": [
+    470.3,
+    26.0,
+    24.9
+   ],
+   "n": 60,
+   "non_model_ms_median": 17.77,
+   "non_model_ms_per_run": [
+    202.22,
+    20.3,
+    25.55,
+    20.64,
+    11.21,
+    35.05,
+    17.67,
+    13.04,
+    13.67,
+    17.86,
+    28.34,
+    8.27,
+    12.67,
+    18.31,
+    30.81,
+    15.33,
+    21.02,
+    15.48,
+    15.4,
+    11.44,
+    73.47,
+    13.93,
+    26.66,
+    25.79,
+    23.84,
+    22.7,
+    14.67,
+    16.42,
+    9.59,
+    21.13,
+    16.53,
+    18.91,
+    11.85,
+    16.65,
+    19.91,
+    15.28,
+    11.29,
+    13.61,
+    18.98,
+    23.96,
+    70.45,
+    14.55,
+    9.41,
+    24.98,
+    16.92,
+    16.32,
+    16.46,
+    12.17,
+    12.61,
+    18.8,
+    22.92,
+    6.47,
+    21.42,
+    27.53,
+    25.0,
+    21.46,
+    8.14,
+    20.27,
+    20.58,
+    10.67
+   ],
+   "requests": [
+    {},
+    {},
+    {}
+   ],
+   "runs_expected": [
+    147,
+    147,
+    147
+   ],
+   "runs_posted": [
+    0,
+    0,
+    0
+   ],
+   "wall_ms_median": 3072.7
+  },
+  "ok": {
+   "exit_lag_s": [
+    0.223,
+    0.222,
+    0.176
+   ],
+   "first_run_non_model_ms": [
+    187.2,
+    1227.7,
+    128.7
+   ],
+   "n": 60,
+   "non_model_ms_median": 31.74,
+   "non_model_ms_per_run": [
+    77.27,
+    21.9,
+    25.9,
+    8.48,
+    30.51,
+    41.48,
+    21.79,
+    19.48,
+    38.15,
+    29.87,
+    33.21,
+    37.14,
+    30.22,
+    16.38,
+    31.1,
+    27.79,
+    30.48,
+    40.07,
+    20.11,
+    32.12,
+    136.39,
+    423.92,
+    213.97,
+    191.7,
+    604.22,
+    404.98,
+    227.07,
+    31.37,
+    23.78,
+    25.96,
+    40.4,
+    33.7,
+    12.8,
+    13.12,
+    36.0,
+    32.11,
+    36.01,
+    35.67,
+    43.35,
+    20.83,
+    201.6,
+    301.76,
+    21.49,
+    45.37,
+    134.64,
+    41.74,
+    28.72,
+    96.81,
+    56.26,
+    95.05,
+    67.33,
+    29.31,
+    20.63,
+    19.26,
+    22.73,
+    13.56,
+    12.49,
+    15.45,
+    25.88,
+    16.92
+   ],
+   "requests": [
+    {
+     "GET /info": 1,
+     "POST /runs/multipart": 44
+    },
+    {
+     "GET /info": 1,
+     "POST /runs/multipart": 45
+    },
+    {
+     "GET /info": 1,
+     "POST /runs/multipart": 43
+    }
+   ],
+   "runs_expected": [
+    147,
+    147,
+    147
+   ],
+   "runs_posted": [
+    147,
+    147,
+    147
+   ],
+   "wall_ms_median": 2911.1
+  },
+  "ok-fg": {
+   "exit_lag_s": [
+    2.298,
+    0.887,
+    0.205
+   ],
+   "first_run_non_model_ms": [
+    144.7,
+    242.5,
+    95.4
+   ],
+   "n": 60,
+   "non_model_ms_median": 38.51,
+   "non_model_ms_per_run": [
+    230.7,
+    16.54,
+    35.44,
+    22.31,
+    20.75,
+    31.06,
+    27.68,
+    11.26,
+    31.36,
+    183.28,
+    1129.56,
+    228.44,
+    95.27,
+    147.86,
+    239.79,
+    1071.71,
+    124.08,
+    188.45,
+    860.7,
+    334.27,
+    813.25,
+    200.23,
+    138.32,
+    148.27,
+    47.79,
+    71.19,
+    80.76,
+    116.09,
+    384.92,
+    161.65,
+    140.09,
+    402.56,
+    485.9,
+    25.43,
+    21.98,
+    124.66,
+    440.35,
+    42.93,
+    29.78,
+    36.44,
+    24.14,
+    21.67,
+    27.13,
+    32.04,
+    39.66,
+    25.05,
+    18.25,
+    15.18,
+    14.35,
+    19.13,
+    18.56,
+    18.3,
+    29.62,
+    31.01,
+    26.8,
+    20.37,
+    28.01,
+    37.36,
+    43.45,
+    33.57
+   ],
+   "requests": [
+    {
+     "GET /info": 1,
+     "POST /runs/multipart": 46
+    },
+    {
+     "GET /info": 1,
+     "POST /runs/multipart": 44
+    },
+    {
+     "GET /info": 1,
+     "POST /runs/multipart": 43
+    }
+   ],
+   "runs_expected": [
+    147,
+    147,
+    147
+   ],
+   "runs_posted": [
+    147,
+    147,
+    147
+   ],
+   "wall_ms_median": 3200.6
+  }
+ },
+ "latency_runs": "3 processes of 21 runs per condition, in separate processes; the first run of each process is kept apart",
+ "local": [
+  {
+   "answer": "2 + 3 = 5.",
+   "case": "local:agent",
+   "env": [
+    "LANGSMITH_API_KEY",
+    "LANGSMITH_ENDPOINT",
+    "LANGSMITH_TRACING"
+   ],
+   "local_trees": 0,
+   "request_count": 4,
+   "requests": [
+    "GET /info",
+    "POST /runs/multipart"
+   ],
+   "tracing_is_enabled": "local"
+  },
+  {
+   "answer": "2 + 3 = 5.",
+   "case": "local:traceable",
+   "env": [
+    "LANGSMITH_API_KEY",
+    "LANGSMITH_ENDPOINT",
+    "LANGSMITH_TRACING"
+   ],
+   "local_trees": 1,
+   "request_count": 4,
+   "requests": [
+    "GET /info",
+    "POST /runs/multipart"
+   ],
+   "tracing_is_enabled": "local"
+  },
+  {
+   "answer": "2 + 3 = 5.",
+   "case": "false:agent",
+   "env": [
+    "LANGSMITH_API_KEY",
+    "LANGSMITH_ENDPOINT",
+    "LANGSMITH_TRACING"
+   ],
+   "local_trees": 0,
+   "request_count": 1,
+   "requests": [
+    "GET /info"
+   ],
+   "tracing_is_enabled": false
+  },
+  {
+   "answer": "2 + 3 = 5.",
+   "case": "true:agent",
+   "env": [
+    "LANGSMITH_API_KEY",
+    "LANGSMITH_ENDPOINT",
+    "LANGSMITH_TRACING"
+   ],
+   "local_trees": 0,
+   "request_count": 4,
+   "requests": [
+    "GET /info",
+    "POST /runs/multipart"
+   ],
+   "tracing_is_enabled": true
+  },
+  {
+   "answer": "2 + 3 = 5.",
+   "case": "none:agent",
+   "env": [
+    "LANGSMITH_API_KEY",
+    "LANGSMITH_ENDPOINT",
+    "LANGSMITH_TRACING"
+   ],
+   "local_trees": 0,
+   "request_count": 1,
+   "requests": [
+    "GET /info"
+   ],
+   "tracing_is_enabled": false
+  },
+  {
+   "answer": "2 + 3 = 5.",
+   "case": "local:agent:patched-requests",
+   "env": [
+    "LANGSMITH_TRACING"
+   ],
+   "local_trees": 0,
+   "request_count": 4,
+   "requests": [
+    "GET https://api.smith.langchain.com/info",
+    "POST https://api.smith.langchain.com/runs/multipart",
+    "POST https://api.smith.langchain.com/runs/multipart",
+    "POST https://api.smith.langchain.com/runs/multipart"
+   ],
+   "tracing_is_enabled": "local"
+  },
+  {
+   "answer": "2 + 3 = 5.",
+   "case": "local:traceable:patched-requests",
+   "env": [
+    "LANGSMITH_TRACING"
+   ],
+   "local_trees": 1,
+   "request_count": 4,
+   "requests": [
+    "GET https://api.smith.langchain.com/info",
+    "POST https://api.smith.langchain.com/runs/multipart",
+    "POST https://api.smith.langchain.com/runs/multipart",
+    "POST https://api.smith.langchain.com/runs/multipart"
+   ],
+   "tracing_is_enabled": "local"
+  },
+  {
+   "answer": "2 + 3 = 5.",
+   "case": "true:agent:patched-requests",
+   "env": [
+    "LANGSMITH_TRACING"
+   ],
+   "local_trees": 0,
+   "request_count": 4,
+   "requests": [
+    "GET https://api.smith.langchain.com/info",
+    "POST https://api.smith.langchain.com/runs/multipart",
+    "POST https://api.smith.langchain.com/runs/multipart",
+    "POST https://api.smith.langchain.com/runs/multipart"
+   ],
+   "tracing_is_enabled": true
+  }
+ ],
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "model": "qwen3:4b-instruct-2507-q4_K_M on Ollama 0.31.1 on the GPU of the Mac, temperature 0, seed 42, server default context; another agent ran API rows on the Mac at the same time",
+ "non_model_note": "non-model time is the wall time of a run minus the total_duration that Ollama reported for its two replies",
+ "not_used": "the process-level medians as a cost of tracing, because the load reached 21 to 27 in two of those processes; the hang counts are at 300 s",
+ "sources": [
+  "capture/lab/TRC-tracing-mac-real/04-interleave-summary.jsonl",
+  "capture/lab/TRC-tracing-mac-real/03-latency-summary.jsonl",
+  "capture/lab/TRC-tracing-mac-real/01-failure-summary.jsonl",
+  "capture/lab/TRC-tracing-mac-real/02-tracing-context-local.jsonl",
+  "capture/lab/TRC-tracing-mac-real/trc_child_real.py",
+  "capture/lab/TRC-tracing-mac-real/trc_driver.py",
+  "capture/lab/TRC-tracing-mac-real/trc_recorder.py"
+ ]
+}

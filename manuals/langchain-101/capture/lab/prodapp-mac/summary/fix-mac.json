@@ -1,0 +1,1140 @@
+{
+ "after": {
+  "qwen3-4b": [
+   {
+    "rep": "rep-1",
+    "outcomes": {
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "failed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "failed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [],
+     "status_then_refund_in_one_thread": []
+    },
+    "approvals_and_results": [
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "amount_cents": 0,
+      "description": "Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer request"
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "result": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}"
+     }
+    ],
+    "block": [
+     "# block fix qwen3-4b rep 1",
+     "# model ollama:qwen3:4b-instruct-2507-q4_K_M backup ollama:qwen3:8b",
+     "# start 2026-11-15T12:07:12Z",
+     "# uptime 17:37  up 89 days,  3:34, 12 users, load averages: 4.29 4.61 5.62",
+     "# end 2026-11-15T12:07:36Z",
+     "# uptime 17:37  up 89 days,  3:34, 12 users, load averages: 3.86 4.49 5.55",
+     "# exit 1"
+    ]
+   },
+   {
+    "rep": "rep-2",
+    "outcomes": {
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "failed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "failed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [],
+     "status_then_refund_in_one_thread": []
+    },
+    "approvals_and_results": [
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "amount_cents": 0,
+      "description": "Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer request"
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "result": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}"
+     }
+    ],
+    "block": [
+     "# block fix qwen3-4b rep 2",
+     "# model ollama:qwen3:4b-instruct-2507-q4_K_M backup ollama:qwen3:8b",
+     "# start 2026-11-15T12:07:36Z",
+     "# uptime 17:37  up 89 days,  3:34, 12 users, load averages: 3.86 4.49 5.55",
+     "# end 2026-11-15T12:08:00Z",
+     "# uptime 17:38  up 89 days,  3:34, 12 users, load averages: 4.06 4.48 5.52",
+     "# exit 1"
+    ]
+   },
+   {
+    "rep": "rep-3",
+    "outcomes": {
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "failed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "failed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [],
+     "status_then_refund_in_one_thread": []
+    },
+    "approvals_and_results": [
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "amount_cents": 0,
+      "description": "Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer request"
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "result": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}"
+     }
+    ],
+    "block": [
+     "# block fix qwen3-4b rep 3",
+     "# model ollama:qwen3:4b-instruct-2507-q4_K_M backup ollama:qwen3:8b",
+     "# start 2026-11-15T12:08:00Z",
+     "# uptime 17:38  up 89 days,  3:34, 12 users, load averages: 4.06 4.48 5.52",
+     "# end 2026-11-15T12:08:23Z",
+     "# uptime 17:38  up 89 days,  3:35, 12 users, load averages: 4.56 4.56 5.52",
+     "# exit 1"
+    ]
+   }
+  ],
+  "qwen3-14b": [
+   {
+    "rep": "rep-1",
+    "outcomes": {
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "passed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "passed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [],
+     "status_then_refund_in_one_thread": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ]
+    },
+    "approvals_and_results": [
+     {
+      "case": "refund_approved_once",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e06-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+     },
+     {
+      "case": "refund_rejected_has_no_side_effect",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e07-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+     },
+     {
+      "case": "refund_rejected_has_no_side_effect",
+      "result": "User rejected the tool call for `refund_order` with id c2e580b0-cacd-40b4-9c2a-894932d74677. The tool was not executed. Do not retry this tool call unless the user explicitly requests it."
+     },
+     {
+      "case": "refund_asked_twice",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e08-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: Customer requested a refund."
+     },
+     {
+      "case": "refund_asked_twice",
+      "result": "{\"error\": \"refund exceeds the 8900 cents that can still be refunded\"}"
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "amount_cents": 0,
+      "description": "Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer requested a refund."
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "result": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}"
+     },
+     {
+      "case": "status_then_refund_in_one_thread",
+      "amount_cents": 2400,
+      "description": "Refund 2400 cents on ORD-e20-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer requested refund"
+     },
+     {
+      "case": "status_then_refund_in_one_thread",
+      "result": "{\"refund_id\": 2, \"order_id\": \"ORD-e20-3\", \"amount_cents\": 2400, \"replayed\": false}"
+     }
+    ],
+    "block": [
+     "# block fix qwen3-14b rep 1",
+     "# model ollama:qwen3:14b backup ollama:qwen3:4b-instruct-2507-q4_K_M",
+     "# start 2026-11-15T12:08:23Z",
+     "# uptime 17:38  up 89 days,  3:35, 12 users, load averages: 4.56 4.56 5.52",
+     "# end 2026-11-15T12:09:27Z",
+     "# uptime 17:39  up 89 days,  3:36, 12 users, load averages: 3.09 4.12 5.28",
+     "# exit 1"
+    ]
+   },
+   {
+    "rep": "rep-2",
+    "outcomes": {
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "passed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "passed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [],
+     "status_then_refund_in_one_thread": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ]
+    },
+    "approvals_and_results": [
+     {
+      "case": "refund_approved_once",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e06-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+     },
+     {
+      "case": "refund_rejected_has_no_side_effect",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e07-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+     },
+     {
+      "case": "refund_rejected_has_no_side_effect",
+      "result": "User rejected the tool call for `refund_order` with id 061a53db-868e-4637-a50e-95dd272ba66f. The tool was not executed. Do not retry this tool call unless the user explicitly requests it."
+     },
+     {
+      "case": "refund_asked_twice",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e08-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: Customer requested a refund."
+     },
+     {
+      "case": "refund_asked_twice",
+      "result": "{\"error\": \"refund exceeds the 8900 cents that can still be refunded\"}"
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "amount_cents": 0,
+      "description": "Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer requested a refund."
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "result": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}"
+     },
+     {
+      "case": "status_then_refund_in_one_thread",
+      "amount_cents": 2400,
+      "description": "Refund 2400 cents on ORD-e20-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer requested refund"
+     },
+     {
+      "case": "status_then_refund_in_one_thread",
+      "result": "{\"refund_id\": 2, \"order_id\": \"ORD-e20-3\", \"amount_cents\": 2400, \"replayed\": false}"
+     }
+    ],
+    "block": [
+     "# block fix qwen3-14b rep 2",
+     "# model ollama:qwen3:14b backup ollama:qwen3:4b-instruct-2507-q4_K_M",
+     "# start 2026-11-15T12:09:27Z",
+     "# uptime 17:39  up 89 days,  3:36, 12 users, load averages: 3.09 4.12 5.28",
+     "# end 2026-11-15T12:10:28Z",
+     "# uptime 17:40  up 89 days,  3:37, 12 users, load averages: 3.55 4.10 5.20",
+     "# exit 1"
+    ]
+   },
+   {
+    "rep": "rep-3",
+    "outcomes": {
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "passed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "passed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [],
+     "status_then_refund_in_one_thread": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ]
+    },
+    "approvals_and_results": [
+     {
+      "case": "refund_approved_once",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e06-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+     },
+     {
+      "case": "refund_rejected_has_no_side_effect",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e07-1 (Trail running shoes). Order total 12900 cents, refunded so far 0, refundable now 12900. Reason: Customer requested a refund"
+     },
+     {
+      "case": "refund_rejected_has_no_side_effect",
+      "result": "User rejected the tool call for `refund_order` with id 98d80708-46b3-4cf4-ad75-822d9a512c9a. The tool was not executed. Do not retry this tool call unless the user explicitly requests it."
+     },
+     {
+      "case": "refund_asked_twice",
+      "amount_cents": 10000,
+      "description": "Refund 10000 cents on ORD-e08-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: Customer requested a refund."
+     },
+     {
+      "case": "refund_asked_twice",
+      "result": "{\"error\": \"refund exceeds the 8900 cents that can still be refunded\"}"
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "amount_cents": 0,
+      "description": "Refund 0 cents on ORD-e19-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer requested a refund."
+     },
+     {
+      "case": "new_message_while_waiting_for_approval",
+      "result": "{\"error\": \"amount_cents must be positive; 2400 cents can be refunded\"}"
+     },
+     {
+      "case": "status_then_refund_in_one_thread",
+      "amount_cents": 2400,
+      "description": "Refund 2400 cents on ORD-e20-3 (Water bottle). Order total 2400 cents, refunded so far 0, refundable now 2400. Reason: Customer requested refund"
+     },
+     {
+      "case": "status_then_refund_in_one_thread",
+      "result": "{\"refund_id\": 2, \"order_id\": \"ORD-e20-3\", \"amount_cents\": 2400, \"replayed\": false}"
+     }
+    ],
+    "block": [
+     "# block fix qwen3-14b rep 3",
+     "# model ollama:qwen3:14b backup ollama:qwen3:4b-instruct-2507-q4_K_M",
+     "# start 2026-11-15T12:10:28Z",
+     "# uptime 17:40  up 89 days,  3:37, 12 users, load averages: 3.55 4.10 5.20",
+     "# end 2026-11-15T12:11:41Z",
+     "# uptime 17:41  up 89 days,  3:38, 12 users, load averages: 3.37 3.88 5.01",
+     "# exit 1"
+    ]
+   }
+  ]
+ },
+ "before": {
+  "qwen3-4b": [
+   {
+    "rep": "rep-1",
+    "outcomes": {
+     "test_kill_mid_refund_then_resume_refunds_once": "failed",
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "failed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "failed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "status_then_refund_in_one_thread": []
+    }
+   },
+   {
+    "rep": "rep-2",
+    "outcomes": {
+     "test_kill_mid_refund_then_resume_refunds_once": "failed",
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "failed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "failed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "status_then_refund_in_one_thread": []
+    }
+   },
+   {
+    "rep": "rep-3",
+    "outcomes": {
+     "test_kill_mid_refund_then_resume_refunds_once": "failed",
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "failed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "failed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "status_then_refund_in_one_thread": []
+    }
+   }
+  ],
+  "qwen3-14b": [
+   {
+    "rep": "rep-1",
+    "outcomes": {
+     "test_kill_mid_refund_then_resume_refunds_once": "failed",
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "passed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "passed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "status_then_refund_in_one_thread": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ]
+    }
+   },
+   {
+    "rep": "rep-2",
+    "outcomes": {
+     "test_kill_mid_refund_then_resume_refunds_once": "failed",
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "passed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "passed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "status_then_refund_in_one_thread": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ]
+    }
+   },
+   {
+    "rep": "rep-3",
+    "outcomes": {
+     "test_kill_mid_refund_then_resume_refunds_once": "failed",
+     "refund_approved_once": "failed",
+     "refund_rejected_has_no_side_effect": "passed",
+     "refund_asked_twice": "failed",
+     "refund_tool_replay_is_idempotent": "passed",
+     "new_message_while_waiting_for_approval": "failed",
+     "status_then_refund_in_one_thread": "passed"
+    },
+    "refund_rows": {
+     "refund_approved_once": [],
+     "refund_rejected_has_no_side_effect": [],
+     "refund_asked_twice": [],
+     "refund_tool_replay_is_idempotent": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "new_message_while_waiting_for_approval": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "status_then_refund_in_one_thread": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "crash_after": {
+  "qwen3-4b": [
+   {
+    "trial": 1,
+    "outcome": "one refund",
+    "approval_re_asked": true,
+    "after_restart_next": [
+     "tools"
+    ],
+    "replayed_flags": [
+     true
+    ],
+    "refunded_cents": 8900,
+    "refund_rows": 1,
+    "first_interrupt_description": "Refund 8900 cents on ORD-crash-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: the rain jacket leaks"
+   },
+   {
+    "trial": 2,
+    "outcome": "one refund",
+    "approval_re_asked": true,
+    "after_restart_next": [
+     "tools"
+    ],
+    "replayed_flags": [
+     true
+    ],
+    "refunded_cents": 8900,
+    "refund_rows": 1,
+    "first_interrupt_description": "Refund 8900 cents on ORD-crash-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: the rain jacket leaks"
+   },
+   {
+    "trial": 3,
+    "outcome": "one refund",
+    "approval_re_asked": true,
+    "after_restart_next": [
+     "tools"
+    ],
+    "replayed_flags": [
+     true
+    ],
+    "refunded_cents": 8900,
+    "refund_rows": 1,
+    "first_interrupt_description": "Refund 8900 cents on ORD-crash-2 (Rain jacket). Order total 8900 cents, refunded so far 0, refundable now 8900. Reason: the rain jacket leaks"
+   }
+  ]
+ },
+ "crash_suite_after": {
+  "qwen3-4b": [
+   {
+    "rep": "rep-1",
+    "outcome": "failed",
+    "first_run_last_event": null,
+    "refund_rows": 0,
+    "after_restart_next": null
+   },
+   {
+    "rep": "rep-2",
+    "outcome": "failed",
+    "first_run_last_event": null,
+    "refund_rows": 0,
+    "after_restart_next": null
+   },
+   {
+    "rep": "rep-3",
+    "outcome": "failed",
+    "first_run_last_event": null,
+    "refund_rows": 0,
+    "after_restart_next": null
+   }
+  ],
+  "qwen3-14b": [
+   {
+    "rep": "rep-1",
+    "outcome": "failed",
+    "first_run_last_event": [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 21.5863
+     }
+    ],
+    "refund_rows": 0,
+    "after_restart_next": [
+     "model"
+    ]
+   },
+   {
+    "rep": "rep-2",
+    "outcome": "failed",
+    "first_run_last_event": [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 26.4741
+     }
+    ],
+    "refund_rows": 0,
+    "after_restart_next": [
+     "model"
+    ]
+   },
+   {
+    "rep": "rep-3",
+    "outcome": "failed",
+    "first_run_last_event": [
+     "done",
+     {
+      "status": "interrupted",
+      "seconds": 24.702
+     }
+    ],
+    "refund_rows": 0,
+    "after_restart_next": [
+     "model"
+    ]
+   }
+  ]
+ },
+ "load": {
+  "after": {
+   "machine_before": {
+    "uptime": "17:42  up 89 days,  3:39, 12 users, load averages: 6.37 4.52 5.19",
+    "ollama_loaded": [
+     "qwen3:14b"
+    ]
+   },
+   "machine_after": {
+    "uptime": "17:56  up 89 days,  3:53, 12 users, load averages: 32.78 40.46 25.26",
+    "ollama_loaded": [
+     "qwen3:4b-instruct-2507-q4_K_M"
+    ]
+   },
+   "kinds": {
+    "runs:200:done": 108,
+    "runs:200:interrupted": 42,
+    "approve:200:done": 42,
+    "approve:409:None": 8
+   },
+   "workers": 1,
+   "users": 50,
+   "model_latency_s": 0.0,
+   "pool_max": 20,
+   "runs": 200,
+   "ok": 192,
+   "errors": 8,
+   "codes": {
+    "200": 192,
+    "409": 8
+   },
+   "wall_s": 830.8,
+   "runs_per_s": 0.2,
+   "p50_s": 194.7985,
+   "p95_s": 274.1077,
+   "max_s": 286.656,
+   "ttft_p50_s": 193.2561,
+   "ttft_p95_s": 269.3478,
+   "pg_conn_max": 58,
+   "pg_conn_mean": 54.1,
+   "pg_samples": 7593,
+   "checkpoint_rows": {
+    "checkpoints": 1902,
+    "checkpoint_blobs": 1018,
+    "checkpoint_writes": 2562
+   },
+   "checkpoint_rows_per_run": 27.4,
+   "checkpoint_data_bytes_per_run": 20352,
+   "checkpoint_disk_bytes_per_run": 31744,
+   "refunds": {
+    "n": 42,
+    "orders": 42
+   },
+   "client_errors": {},
+   "server_run_end": {
+    "done": 150,
+    "interrupted": 42
+   },
+   "runs_per_s_exact": 0.231,
+   "run_seconds": [
+    0.008,
+    0.01,
+    0.011,
+    0.013,
+    0.015,
+    0.02,
+    0.277,
+    0.278,
+    64.143,
+    65.826,
+    67.425,
+    69.056,
+    70.519,
+    72.127,
+    74.165,
+    75.711,
+    77.001,
+    78.449,
+    80.456,
+    81.904,
+    83.273,
+    84.994,
+    87.09,
+    88.755,
+    90.532,
+    92.45,
+    94.335,
+    96.257,
+    98.067,
+    99.877,
+    101.71,
+    103.489,
+    105.449,
+    107.464,
+    109.338,
+    111.174,
+    113.039,
+    114.899,
+    116.765,
+    118.681,
+    120.663,
+    122.654,
+    122.85,
+    124.492,
+    126.235,
+    126.46,
+    128.369,
+    129.538,
+    130.073,
+    130.761,
+    131.545,
+    133.322,
+    134.678,
+    135.567,
+    137.32,
+    137.984,
+    139.047,
+    140.715,
+    141.877,
+    142.819,
+    142.994,
+    144.879,
+    146.031,
+    146.813,
+    148.282,
+    149.586,
+    149.831,
+    151.928,
+    153.205,
+    154.258,
+    157.847,
+    161.577,
+    164.928,
+    168.238,
+    171.623,
+    172.556,
+    176.241,
+    179.904,
+    182.191,
+    182.837,
+    183.574,
+    183.884,
+    184.281,
+    184.725,
+    185.004,
+    185.995,
+    186.531,
+    186.76,
+    187.536,
+    187.631,
+    188.815,
+    188.881,
+    189.765,
+    190.271,
+    190.506,
+    191.01,
+    191.367,
+    192.285,
+    192.457,
+    193.003,
+    193.039,
+    193.315,
+    194.182,
+    194.671,
+    194.926,
+    195.084,
+    195.767,
+    196.036,
+    196.141,
+    196.827,
+    197.043,
+    197.46,
+    198.131,
+    198.68,
+    199.116,
+    199.224,
+    199.355,
+    199.861,
+    200.36,
+    200.832,
+    200.888,
+    201.323,
+    201.527,
+    201.768,
+    202.602,
+    203.442,
+    203.485,
+    203.739,
+    204.337,
+    204.547,
+    204.562,
+    204.84,
+    205.444,
+    205.62,
+    205.9,
+    206.45,
+    206.945,
+    206.966,
+    207.473,
+    208.127,
+    208.268,
+    208.667,
+    208.766,
+    208.774,
+    208.954,
+    209.56,
+    209.883,
+    210.329,
+    210.566,
+    210.906,
+    212.073,
+    213.337,
+    214.905,
+    217.663,
+    220.508,
+    221.164,
+    222.044,
+    223.951,
+    224.004,
+    225.711,
+    226.135,
+    228.012,
+    229.358,
+    233.247,
+    234.116,
+    234.998,
+    237.696,
+    237.828,
+    241.578,
+    243.118,
+    244.588,
+    245.687,
+    246.26,
+    248.31,
+    249.943,
+    249.975,
+    253.862,
+    255.131,
+    256.465,
+    257.89,
+    257.899,
+    259.058,
+    260.697,
+    261.812,
+    265.766,
+    266.056,
+    267.835,
+    269.339,
+    269.63,
+    274.108,
+    274.291,
+    276.195,
+    277.395,
+    277.87,
+    281.508,
+    282.662,
+    284.052,
+    285.242,
+    285.354,
+    286.656
+   ]
+  },
+  "before": {
+   "machine_before": {
+    "uptime": "16:57  up 89 days,  2:54, 12 users, load averages: 16.37 16.25 16.02",
+    "ollama_loaded": [
+     "qwen3:4b-instruct-2507-q4_K_M"
+    ]
+   },
+   "machine_after": {
+    "uptime": "17:06  up 89 days,  3:03, 12 users, load averages: 6.03 9.26 12.67",
+    "ollama_loaded": [
+     "qwen3:4b-instruct-2507-q4_K_M"
+    ]
+   },
+   "kinds": {
+    "runs:200:done": 102,
+    "runs:200:interrupted": 5,
+    "error:None:None": 48,
+    "approve:409:None": 2
+   },
+   "workers": 1,
+   "users": 50,
+   "model_latency_s": 0.0,
+   "pool_max": 20,
+   "runs": 157,
+   "ok": 107,
+   "errors": 50,
+   "codes": {
+    "200": 107,
+    "409": 2,
+    "None": 48
+   },
+   "wall_s": 515.31,
+   "runs_per_s": 0.2,
+   "p50_s": 164.7382,
+   "p95_s": 192.5198,
+   "max_s": 193.7906,
+   "ttft_p50_s": 163.5932,
+   "ttft_p95_s": 191.7171,
+   "pg_conn_max": 22,
+   "pg_conn_mean": 21.0,
+   "pg_samples": 4931,
+   "checkpoint_rows": {
+    "checkpoints": 1623,
+    "checkpoint_blobs": 875,
+    "checkpoint_writes": 2146
+   },
+   "checkpoint_rows_per_run": 29.6,
+   "checkpoint_data_bytes_per_run": 21567,
+   "checkpoint_disk_bytes_per_run": 32977,
+   "refunds": {
+    "n": 5,
+    "orders": 5
+   },
+   "client_errors": {
+    "ReadTimeout": 48
+   },
+   "server_run_end": {
+    "done": 107,
+    "interrupted": 29,
+    "cancelled": 19
+   },
+   "runs_per_s_exact": 0.208,
+   "run_seconds": [
+    0.004,
+    0.01,
+    70.232,
+    72.561,
+    74.824,
+    77.086,
+    79.164,
+    80.855,
+    82.606,
+    84.597,
+    86.894,
+    88.906,
+    91.107,
+    93.494,
+    95.551,
+    97.395,
+    99.689,
+    101.827,
+    104.193,
+    106.571,
+    108.966,
+    109.39,
+    111.336,
+    113.263,
+    113.317,
+    114.177,
+    115.038,
+    116.235,
+    116.794,
+    116.825,
+    119.453,
+    119.838,
+    121.729,
+    122.025,
+    123.8,
+    125.547,
+    127.166,
+    129.337,
+    131.36,
+    132.848,
+    134.57,
+    136.914,
+    138.845,
+    140.485,
+    142.163,
+    144.113,
+    146.517,
+    148.754,
+    151.106,
+    153.528,
+    155.64,
+    157.68,
+    159.383,
+    161.193,
+    163.028,
+    164.738,
+    166.656,
+    168.689,
+    170.219,
+    188.563,
+    188.901,
+    189.007,
+    189.358,
+    189.467,
+    189.785,
+    189.797,
+    190.099,
+    190.196,
+    190.382,
+    190.409,
+    190.454,
+    190.515,
+    190.752,
+    190.776,
+    190.811,
+    190.87,
+    190.877,
+    190.923,
+    190.926,
+    190.95,
+    190.993,
+    191.012,
+    191.082,
+    191.098,
+    191.193,
+    191.24,
+    191.296,
+    191.317,
+    191.478,
+    191.495,
+    191.508,
+    191.52,
+    191.561,
+    191.571,
+    191.575,
+    191.579,
+    191.605,
+    191.797,
+    191.833,
+    191.975,
+    192.186,
+    192.278,
+    192.502,
+    192.52,
+    192.541,
+    192.998,
+    193.144,
+    193.216,
+    193.791
+   ]
+  }
+ },
+ "note": "crash test results inside fix/suite were recorded with a broken parser and are replaced by fix/suite-crash"
+}

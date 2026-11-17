@@ -1,0 +1,482 @@
+{
+ "conditions": {
+  "off-ep": {
+   "agent_run_posted": [
+    false,
+    false,
+    false
+   ],
+   "header": "plugins: anyio-4.16.0, langsmith-0.14.17, platformdirs-4.14.5",
+   "messages": [
+    [],
+    [],
+    []
+   ],
+   "processes": 3,
+   "requests": [
+    [],
+    [],
+    []
+   ],
+   "results": [
+    "1 failed, 4 passed",
+    "1 failed, 4 passed",
+    "1 failed, 4 passed"
+   ],
+   "return_codes": [
+    1,
+    1,
+    1
+   ],
+   "skipping_lines": [
+    0,
+    0,
+    0
+   ],
+   "suite": null
+  },
+  "off-ep-tracing": {
+   "agent_run_posted": [
+    true,
+    true,
+    true
+   ],
+   "header": "plugins: anyio-4.16.0, langsmith-0.14.17, platformdirs-4.14.5",
+   "messages": [
+    [],
+    [],
+    []
+   ],
+   "processes": 3,
+   "requests": [
+    [
+     "GET /info",
+     "POST /runs/multipart",
+     "POST /runs/multipart",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart",
+     "POST /runs/multipart",
+     "POST /runs/multipart"
+    ],
+    [
+     "GET /info",
+     "POST /runs/multipart",
+     "POST /runs/multipart",
+     "POST /runs/multipart"
+    ]
+   ],
+   "results": [
+    "1 failed, 4 passed",
+    "1 failed, 4 passed",
+    "1 failed, 4 passed"
+   ],
+   "return_codes": [
+    1,
+    1,
+    1
+   ],
+   "skipping_lines": [
+    0,
+    0,
+    0
+   ],
+   "suite": null
+  },
+  "off-noenv": {
+   "agent_run_posted": [
+    false,
+    false,
+    false
+   ],
+   "header": "plugins: anyio-4.16.0, langsmith-0.14.17, platformdirs-4.14.5",
+   "messages": [
+    [],
+    [],
+    []
+   ],
+   "processes": 3,
+   "requests": [
+    [],
+    [],
+    []
+   ],
+   "results": [
+    "1 failed, 4 passed",
+    "1 failed, 4 passed",
+    "1 failed, 4 passed"
+   ],
+   "return_codes": [
+    1,
+    1,
+    1
+   ],
+   "skipping_lines": [
+    0,
+    0,
+    0
+   ],
+   "suite": null
+  },
+  "off-noenv-logcli": {
+   "agent_run_posted": [
+    false,
+    false,
+    false
+   ],
+   "header": "plugins: anyio-4.16.0, langsmith-0.14.17, platformdirs-4.14.5",
+   "messages": [
+    [],
+    [],
+    []
+   ],
+   "processes": 3,
+   "requests": [
+    [],
+    [],
+    []
+   ],
+   "results": [
+    "1 failed, 4 passed",
+    "1 failed, 4 passed",
+    "1 failed, 4 passed"
+   ],
+   "return_codes": [
+    1,
+    1,
+    1
+   ],
+   "skipping_lines": [
+    23,
+    23,
+    23
+   ],
+   "suite": null
+  },
+  "off-noenv-output": {
+   "agent_run_posted": [
+    false,
+    false,
+    false
+   ],
+   "header": null,
+   "messages": [
+    [
+     "ValueError: --langsmith-output not supported when env varLANGSMITH_TEST_TRACKING='false'. Please remove the'--langsmith-output' option or enable test tracking."
+    ],
+    [
+     "ValueError: --langsmith-output not supported when env varLANGSMITH_TEST_TRACKING='false'. Please remove the'--langsmith-output' option or enable test tracking."
+    ],
+    [
+     "ValueError: --langsmith-output not supported when env varLANGSMITH_TEST_TRACKING='false'. Please remove the'--langsmith-output' option or enable test tracking."
+    ]
+   ],
+   "processes": 3,
+   "requests": [
+    [],
+    [],
+    []
+   ],
+   "results": [
+    "",
+    "",
+    ""
+   ],
+   "return_codes": [
+    3,
+    3,
+    3
+   ],
+   "skipping_lines": [
+    0,
+    0,
+    0
+   ],
+   "suite": null
+  },
+  "on-ep": {
+   "agent_run_posted": [
+    false,
+    false,
+    false
+   ],
+   "header": "plugins: anyio-4.16.0, langsmith-0.14.17, platformdirs-4.14.5",
+   "messages": [
+    [
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ],
+    [
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ],
+    [
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ]
+   ],
+   "processes": 3,
+   "requests": [
+    [
+     "GET /info",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions"
+    ],
+    [
+     "GET /info",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions"
+    ],
+    [
+     "GET /info",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions"
+    ]
+   ],
+   "results": [
+    "5 failed",
+    "5 failed",
+    "5 failed"
+   ],
+   "return_codes": [
+    1,
+    1,
+    1
+   ],
+   "skipping_lines": [
+    0,
+    0,
+    0
+   ],
+   "suite": null
+  },
+  "on-ep-output": {
+   "agent_run_posted": [
+    false,
+    false,
+    false
+   ],
+   "header": null,
+   "messages": [
+    [],
+    [],
+    []
+   ],
+   "processes": 3,
+   "requests": [
+    [
+     "GET /datasets",
+     "GET /info",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions"
+    ],
+    [
+     "GET /datasets",
+     "GET /info",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions"
+    ],
+    [
+     "GET /datasets",
+     "GET /info",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions",
+     "GET /datasets",
+     "GET /sessions"
+    ]
+   ],
+   "results": [
+    "Finishing up...",
+    "Finishing up...",
+    "Finishing up..."
+   ],
+   "return_codes": [
+    1,
+    1,
+    1
+   ],
+   "skipping_lines": [
+    0,
+    0,
+    0
+   ],
+   "suite": "Test Suite: None.test_ls_plugin"
+  },
+  "on-noenv-fake200": {
+   "agent_run_posted": [
+    false,
+    false,
+    false
+   ],
+   "header": "plugins: anyio-4.16.0, langsmith-0.14.17, platformdirs-4.14.5",
+   "messages": [
+    [
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ],
+    [
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ],
+    [
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ]
+   ],
+   "processes": 3,
+   "requests": [
+    [
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/info",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions"
+    ],
+    [
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/info",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions"
+    ],
+    [
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/info",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/sessions"
+    ]
+   ],
+   "results": [
+    "5 failed",
+    "5 failed",
+    "5 failed"
+   ],
+   "return_codes": [
+    1,
+    1,
+    1
+   ],
+   "skipping_lines": [
+    0,
+    0,
+    0
+   ],
+   "suite": null
+  },
+  "on-noenv-refuse": {
+   "agent_run_posted": [
+    false,
+    false,
+    false
+   ],
+   "header": "plugins: anyio-4.16.0, langsmith-0.14.17, platformdirs-4.14.5",
+   "messages": [
+    [
+     "LangSmithConnectionError: Connection error caused failure to GET /datasets in LangSmith API. Please confirm your internet connection. ConnectionError('t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin')",
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ],
+    [
+     "LangSmithConnectionError: Connection error caused failure to GET /datasets in LangSmith API. Please confirm your internet connection. ConnectionError('t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin')",
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ],
+    [
+     "LangSmithConnectionError: Connection error caused failure to GET /datasets in LangSmith API. Please confirm your internet connection. ConnectionError('t19 guard refused GET https://api.smith.langchain.com/datasets?limit=1&name=None.test_ls_plugin')",
+     "ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true')."
+    ]
+   ],
+   "processes": 3,
+   "requests": [
+    [
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/info",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/datasets"
+    ],
+    [
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/info",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/datasets"
+    ],
+    [
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/info",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/datasets",
+     "GET https://api.smith.langchain.com/datasets"
+    ]
+   ],
+   "results": [
+    "5 failed",
+    "5 failed",
+    "5 failed"
+   ],
+   "return_codes": [
+    1,
+    1,
+    1
+   ],
+   "skipping_lines": [
+    0,
+    0,
+    0
+   ],
+   "suite": null
+  }
+ },
+ "conditions_note": "off: LANGSMITH_TEST_TRACKING=false; on: the variable unset, the default; ep: LANGSMITH_ENDPOINT set to a local recorder and a dummy key; noenv: no LANGSMITH_ variable, with the HTTP layer replaced by a guard that refuses or answers 200; output: --langsmith-output; logcli: log_cli at INFO; tracing: LANGSMITH_TRACING=true",
+ "machine": "an x86 server guest: 32 vCPU, 48 GiB, Ubuntu 24.04, Python 3.13.18",
+ "not_used": "with tracking on, the errors after each request come from the empty answers of the recorder and the guard, so only the request order is used; the run names come from a rough match on the body, so the summary keeps only whether the LangGraph run of the agent was posted",
+ "processes_per_condition": 3,
+ "sources": [
+  "capture/lab/T19-pytest-plugin-x86/01-pytest-runs.jsonl",
+  "capture/lab/T19-pytest-plugin-x86/t19_driver_real.py",
+  "capture/lab/T19-pytest-plugin-x86/t19_tests/conftest.py",
+  "capture/lab/T19-pytest-plugin-x86/t19_tests/test_ls_plugin.py",
+  "capture/lab/T19-pytest-plugin-x86/02-<condition>-rep<n>-stdout.txt"
+ ],
+ "tests": "five tests: a marked test that logs inputs, outputs, reference outputs, and feedback; a marked test that fails on purpose; a test with @langsmith.test; a marked test that runs create_agent with ChatOllama and qwen3:4b-instruct-2507-q4_K_M, temperature 0, seed 42; an unmarked test that calls log_outputs",
+ "versions": "langsmith 0.14.17 with its pytest11 plugin, pytest 8.4.2 in a scratch environment, rich 15.0.0, no vcrpy"
+}

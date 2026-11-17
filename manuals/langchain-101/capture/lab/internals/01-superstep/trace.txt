@@ -1,0 +1,94 @@
+# Superstep trace, create_agent, 1 run, InMemorySaver, durability=async (default), real model
+# pin {'langgraph': '1.2.22 (tag 08a20169)', 'langchain': '1.5.0', 'langchain-core': '1.8.0', 'langgraph-checkpoint': '4.3.2', 'langgraph-checkpoint-sqlite': '3.1.3'}
+# {'name': 'the x86 server guest', 'cpu': 'AMD EPYC 7452 (KVM guest, 32 vCPU, 48 GiB, no GPU)', 'platform': 'Linux-6.8.0-147-generic-x86_64-with-glibc2.39', 'python': '3.13.18', 'loadavg_1_5_15': ['0.33', '2.04', '5.58'], 'ollama_ps': [{'name': 'qwen3:4b-instruct-2507-q4_K_M', 'size_vram': 0, 'context_length': 8192}, {'name': 'qwen3:8b', 'size_vram': 0, 'context_length': 8192}]}
+# model {'provider': 'ollama 0.31.1 (CPU)', 'model': 'qwen3:4b-instruct-2507-q4_K_M', 'temperature': 0, 'seed': 42, 'think/reasoning': False, 'num_ctx': 8192}
+# prompt: 'Weather in Paris and Oslo?'
+
+[  0] PLAN step=-1 stop=9999 updated_channels=[]
+        versions_seen(before)={}
+[  1] UPDATE order=['__input__@()']
+        apply __input__  __start__              {'messages': [{'role': 'user', 'content': 'Weather in Paris and Oslo?'}]}
+        versions_changed={'__start__': [None, 1]}
+        versions_seen_updated={'__input__': {}}
+        updated_channels=['__start__']
+[  2]     saver.put id=...b237fd067e41 parent=...None source=input step=-1 new_versions=['__start__']
+[  3] CHECKPOINT source=input exiting=False id=...b237fd067e41 step->0
+[  4] PLAN step=0 stop=9999 updated_channels=['__start__']
+        task __pregel_pull __start__ id=cd0ddab7 path=('__pregel_pull', '__start__') triggers=['__start__']
+        versions_seen(before)={'__input__': {}}
+[  5] TICK step=0 returns=True status=pending run=['__start__']
+        channel_versions={'__start__': 1}
+[  6]   EXEC-DONE step=0 task=__start__ id=cd0ddab7 writes=[('messages', [{'role': 'user', 'content': 'Weather in Paris and Oslo?'}]), ('branch:to:model', None)]
+[  7] UPDATE order=["__start__@('__pregel_pull', '__start__')"]
+        apply __start__  messages               [{'role': 'user', 'content': 'Weather in Paris and Oslo?'}]
+        apply __start__  branch:to:model        None
+        versions_changed={'__start__': [1, 2], 'branch:to:model': [None, 2], 'messages': [None, 2]}
+        versions_seen_updated={'__start__': {'__start__': 1}}
+        updated_channels=['branch:to:model', 'messages']
+[  8]     saver.put_writes against ckpt ...b237fd067e41 task=cd0ddab7 path='~__pregel_pull, __start__' channels=['messages', 'branch:to:model']
+[  9]     saver.put id=...d3af2b94abc0 parent=...b237fd067e41 source=loop step=0 new_versions=['__start__', 'branch:to:model', 'messages']
+[ 10] CHECKPOINT source=loop exiting=False id=...d3af2b94abc0 step->1
+[ 11] AFTER_TICK ran step 0 -> next 1 updated_channels(ckpt)=['branch:to:model', 'messages']
+
+[ 12] PLAN step=1 stop=9999 updated_channels=['branch:to:model', 'messages']
+        task __pregel_pull model  id=c716c241 path=('__pregel_pull', 'model') triggers=['branch:to:model']
+        versions_seen(before)={'__input__': {}, '__start__': {'__start__': 1}}
+[ 13] TICK step=1 returns=True status=pending run=['model']
+        channel_versions={'__start__': 2, 'branch:to:model': 2, 'messages': 2}
+[ 14]   EXEC-DONE step=1 task=model id=c716c241 writes=[('messages', ["AIMessage(id=lc_run--01a1, tool_calls=['get_weather:d5a00645-23cc-49e0-a214-817cce262e5d', 'get_weather:51c2d811-058b-488e-bfb4-b29334940116'])"]), ('__pregel_tasks', "Send(node='tools', arg=[{'name': 'get_weather', 'args': '{1 keys}', 'id': 'd5a00645-23cc-49e0-a214-817cce262e5d', 'type': 'tool_call'}])"), ('__pregel_tasks', "Send(node='tools', arg=[{'name': 'get_weather', 'args': '{1 keys}', 'id': '51c2d811-058b-488e-bfb4-b29334940116', 'type': 'tool_call'}])")]
+[ 15] UPDATE order=["model@('__pregel_pull', 'model')"]
+        apply model      messages               ["AIMessage(id=lc_run--01a1, tool_calls=['get_weather:d5a00645-23cc-49e0-a214-817cce262e5d', 'get_weather:51c2d811-058b-488e-bfb4-b29334940116'])"]
+        apply model      __pregel_tasks         Send(node='tools', arg=[{'name': 'get_weather', 'args': '{1 keys}', 'id': 'd5a00645-23cc-49e0-a214-817cce262e5d', 'type': 'tool_call'}])
+        apply model      __pregel_tasks         Send(node='tools', arg=[{'name': 'get_weather', 'args': '{1 keys}', 'id': '51c2d811-058b-488e-bfb4-b29334940116', 'type': 'tool_call'}])
+        versions_changed={'__pregel_tasks': [None, 3], 'branch:to:model': [2, 3], 'messages': [2, 3]}
+        versions_seen_updated={'model': {'branch:to:model': 2}}
+        updated_channels=['__pregel_tasks', 'messages']
+[ 16] CHECKPOINT source=loop exiting=False id=...a32e8ad1cf82 step->2
+[ 17] AFTER_TICK ran step 1 -> next 2 updated_channels(ckpt)=['__pregel_tasks', 'messages']
+
+[ 18] PLAN step=2 stop=9999 updated_channels=['__pregel_tasks', 'messages']
+        task __pregel_push tools  id=7bd87c87 path=('__pregel_push', 0, False) triggers=['__pregel_push']
+        task __pregel_push tools  id=81e79e5c path=('__pregel_push', 1, False) triggers=['__pregel_push']
+        versions_seen(before)={'__input__': {}, '__start__': {'__start__': 1}, 'model': {'branch:to:model': 2}}
+[ 19] TICK step=2 returns=True status=pending run=['tools', 'tools']
+        channel_versions={'__pregel_tasks': 3, '__start__': 2, 'branch:to:model': 3, 'messages': 3}
+[ 20]     saver.put_writes against ckpt ...d3af2b94abc0 task=c716c241 path='~__pregel_pull, model' channels=['messages', '__pregel_tasks', '__pregel_tasks']
+[ 21]     saver.put id=...a32e8ad1cf82 parent=...d3af2b94abc0 source=loop step=1 new_versions=['__pregel_tasks', 'branch:to:model', 'messages']
+[ 22]   EXEC-DONE step=2 task=tools id=7bd87c87 writes=[('messages', ["ToolMessage(id=275551f6-c0a, tool_call_id=d5a00645-23cc-49e0-a214-817cce262e5d, text='Paris: sunny')"]), ('branch:to:model', None)]
+[ 23]   EXEC-DONE step=2 task=tools id=81e79e5c writes=[('messages', ["ToolMessage(id=0ea4b968-524, tool_call_id=51c2d811-058b-488e-bfb4-b29334940116, text='Oslo: sunny')"]), ('branch:to:model', None)]
+[ 24]     saver.put_writes against ckpt ...a32e8ad1cf82 task=7bd87c87 path='~__pregel_push, 0000000000, 0000000000' channels=['messages', 'branch:to:model']
+[ 25] UPDATE order=["tools@('__pregel_push', 0, False)", "tools@('__pregel_push', 1, False)"]
+        apply tools      messages               ["ToolMessage(id=275551f6-c0a, tool_call_id=d5a00645-23cc-49e0-a214-817cce262e5d, text='Paris: sunny')"]
+        apply tools      branch:to:model        None
+        apply tools      messages               ["ToolMessage(id=0ea4b968-524, tool_call_id=51c2d811-058b-488e-bfb4-b29334940116, text='Oslo: sunny')"]
+        apply tools      branch:to:model        None
+        versions_changed={'__pregel_tasks': [3, 4], 'branch:to:model': [3, 4], 'messages': [3, 4]}
+        versions_seen_updated={'tools': {}}
+        updated_channels=['branch:to:model', 'messages']
+[ 26] CHECKPOINT source=loop exiting=False id=...bf173dfdf51e step->3
+[ 27] AFTER_TICK ran step 2 -> next 3 updated_channels(ckpt)=['branch:to:model', 'messages']
+
+[ 28] PLAN step=3 stop=9999 updated_channels=['branch:to:model', 'messages']
+        task __pregel_pull model  id=cc8a9148 path=('__pregel_pull', 'model') triggers=['branch:to:model']
+        versions_seen(before)={'__input__': {}, '__start__': {'__start__': 1}, 'model': {'branch:to:model': 2}, 'tools': {}}
+[ 29] TICK step=3 returns=True status=pending run=['model']
+        channel_versions={'__pregel_tasks': 4, '__start__': 2, 'branch:to:model': 4, 'messages': 4}
+[ 30]     saver.put id=...bf173dfdf51e parent=...a32e8ad1cf82 source=loop step=2 new_versions=['__pregel_tasks', 'branch:to:model', 'messages']
+[ 31]     saver.put_writes against ckpt ...a32e8ad1cf82 task=81e79e5c path='~__pregel_push, 0000000001, 0000000000' channels=['messages', 'branch:to:model']
+[ 32]   EXEC-DONE step=3 task=model id=cc8a9148 writes=[('messages', ["AIMessage(id=lc_run--01a1, text='Both Paris and Oslo are currently sunny!')"])]
+[ 33] UPDATE order=["model@('__pregel_pull', 'model')"]
+        apply model      messages               ["AIMessage(id=lc_run--01a1, text='Both Paris and Oslo are currently sunny!')"]
+        versions_changed={'branch:to:model': [4, 5], 'messages': [4, 5]}
+        versions_seen_updated={'model': {'branch:to:model': 4}}
+        updated_channels=['messages']
+[ 34] CHECKPOINT source=loop exiting=False id=...fe71fddeb5f2 step->4
+[ 35] AFTER_TICK ran step 3 -> next 4 updated_channels(ckpt)=['messages']
+
+[ 36] PLAN step=4 stop=9999 updated_channels=['messages']
+        versions_seen(before)={'__input__': {}, '__start__': {'__start__': 1}, 'model': {'branch:to:model': 4}, 'tools': {}}
+[ 37] TICK step=4 returns=False status=done run=[]
+        channel_versions={'__pregel_tasks': 4, '__start__': 2, 'branch:to:model': 5, 'messages': 5}
+[ 38]     saver.put_writes against ckpt ...bf173dfdf51e task=cc8a9148 path='~__pregel_pull, model' channels=['messages']
+[ 39]     saver.put id=...fe71fddeb5f2 parent=...bf173dfdf51e source=loop step=3 new_versions=['branch:to:model', 'messages']
+model calls (provider time per call, s): [3.635, 1.59] tool calls per model call: [2, 0] tokens in/out: [[152, 41], [218, 12]]
+final messages: ["human:Weather in Paris and Oslo?", "ai:", "tool:Paris: sunny", "tool:Oslo: sunny", "ai:Both Paris and Oslo are currently sunny! \ud83c\udf1e"]

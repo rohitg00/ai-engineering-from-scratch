@@ -1,0 +1,105 @@
+# uptime 16:43  up 89 days,  2:40, 12 users, load averages: 9.07 12.70 15.01
+# three identical /api/chat calls to qwen3:4b-instruct-2507-q4_K_M
+call prompt_eval_count eval_count prompt_eval_ms total_ms
+1 65 7 1401.9 2076.1
+2 65 7 68.6 683.4
+3 65 7 28.7 523.1
+{"trial": 1, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 2, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 3, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 4, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 5, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 6, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 7, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 8, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 9, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 10, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 1, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 2, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 3, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 4, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 5, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 6, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 7, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 8, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 9, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 10, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"mode": "finish", "trial": 1, "client_tail": ["client_error", "RemoteProtocolError"], "shutdown_events": ["shutdown.drain", "shutdown.done0"], "next_after_restart": [], "resumed": null, "answered": true}
+{"mode": "finish", "trial": 2, "client_tail": ["done", {"status": "done", "seconds": 9.1573}], "shutdown_events": [], "next_after_restart": [], "resumed": null, "answered": true}
+{"mode": "finish", "trial": 3, "client_tail": ["done", {"status": "done", "seconds": 8.8628}], "shutdown_events": [], "next_after_restart": [], "resumed": null, "answered": true}
+{"mode": "finish", "trial": 4, "client_tail": ["done", {"status": "done", "seconds": 8.278}], "shutdown_events": [], "next_after_restart": [], "resumed": null, "answered": true}
+{"mode": "finish", "trial": 5, "client_tail": ["done", {"status": "done", "seconds": 8.7934}], "shutdown_events": [], "next_after_restart": [], "resumed": null, "answered": true}
+{"mode": "cancel", "trial": 1, "client_tail": ["client_error", "RemoteProtocolError"], "shutdown_events": ["shutdown.drain", "shutdown.done1"], "next_after_restart": ["model"], "resumed": true, "answered": false}
+{"mode": "cancel", "trial": 2, "client_tail": ["client_error", "RemoteProtocolError"], "shutdown_events": ["shutdown.drain", "shutdown.done1"], "next_after_restart": ["model"], "resumed": true, "answered": false}
+{"mode": "cancel", "trial": 3, "client_tail": ["client_error", "RemoteProtocolError"], "shutdown_events": ["shutdown.drain", "shutdown.done1"], "next_after_restart": ["model"], "resumed": true, "answered": false}
+{"mode": "cancel", "trial": 4, "client_tail": ["client_error", "RemoteProtocolError"], "shutdown_events": ["shutdown.drain", "shutdown.done1"], "next_after_restart": ["model"], "resumed": true, "answered": false}
+{"mode": "cancel", "trial": 5, "client_tail": ["client_error", "RemoteProtocolError"], "shutdown_events": ["shutdown.drain", "shutdown.done1"], "next_after_restart": ["model"], "resumed": true, "answered": false}
+82 lines
+{"trial": 1, "first_event": "token", "client_closed_ms": 341.6, "post_while_running": 409, "finished_after_disconnect_ms": 3527.1, "messages": ["human", "ai", "tool", "ai"], "next": [], "tools": ["search_faq"]}
+{"trial": 2, "first_event": "token", "client_closed_ms": 642.2, "post_while_running": 409, "finished_after_disconnect_ms": 4871.0, "messages": ["human", "ai", "tool", "ai"], "next": [], "tools": ["search_faq"]}
+{"trial": 3, "first_event": "token", "client_closed_ms": 1910.4, "post_while_running": 409, "finished_after_disconnect_ms": 4897.3, "messages": ["human", "ai", "tool", "ai"], "next": [], "tools": ["search_faq"]}
+{"trial": 4, "first_event": "token", "client_closed_ms": 540.2, "post_while_running": 409, "finished_after_disconnect_ms": 4161.8, "messages": ["human", "ai", "tool", "ai"], "next": [], "tools": ["search_faq"]}
+{"trial": 5, "first_event": "token", "client_closed_ms": 244.9, "post_while_running": 409, "finished_after_disconnect_ms": 3616.7, "messages": ["human", "ai", "tool", "ai"], "next": [], "tools": ["search_faq"]}
+{
+ "uptime_before": "16:50  up 89 days,  2:47, 12 users, load averages: 11.68 16.40 16.32",
+ "smith": {
+  "enabled_control": {
+   "requests": 10,
+   "paths": [
+    "/info",
+    "/runs/multipart"
+   ],
+   "bytes": 337363,
+   "refund_proposed": true,
+   "tool_calls": [
+    "search_faq",
+    "refund_order"
+   ]
+  },
+  "disabled": {
+   "requests": 0,
+   "paths": [],
+   "bytes": 0,
+   "refund_proposed": true,
+   "tool_calls": [
+    "search_faq",
+    "refund_order"
+   ]
+  },
+  "unset": {
+   "requests": 0,
+   "paths": [],
+   "bytes": 0,
+   "refund_proposed": true,
+   "tool_calls": [
+    "search_faq",
+    "refund_order"
+   ]
+  }
+ },
+ "isolation": {
+  "bob_state": 404,
+  "bob_run": 404,
+  "bob_approve": 404,
+  "bob_memories": [],
+  "alice_memories": [
+   "door code is 4471"
+  ],
+  "bob_tool_calls": [
+   "recall_notes"
+  ],
+  "bob_recall_results": [
+   "[]"
+  ],
+  "bob_sees_4471": false,
+  "alice_tool_calls": [
+   "recall_notes"
+  ],
+  "alice_recall_results": [
+   "[\"door code is 4471\"]"
+  ],
+  "alice_reply": "I remember that your door code is 4471."
+ },
+ "uptime_after": "16:51  up 89 days,  2:48, 12 users, load averages: 7.34 14.40 15.58"
+}
+chain-c-done

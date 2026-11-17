@@ -1,0 +1,43 @@
+== ollama:qwen3:8b agent_control control :: 18:31  12 users, load averages: 4.08 3.46 9.28
+chain04   agent_control fail malformed_output   calls= 4 tools= 3 tok=3088/108 105.3s
+== ollama:qwen3:8b agent_control control :: 18:35  12 users, load averages: 3.95 3.57 7.87
+chain10   agent_control fail wrong_final_state  calls= 7 tools= 6 tok=6306/221 156.1s
+chain15   agent_control fail wrong_final_state  calls= 7 tools= 6 tok=6517/207 100.5s
+chain16   agent_control fail malformed_output   calls= 6 tools= 5 tok=5283/187 297.1s
+== ollama:qwen3:8b agent_control control :: 18:46  12 users, load averages: 4.35 3.30 5.20
+== ollama:qwen3:8b agent_control control :: 18:48  up 89 days,  4:45, 12 users, load averages: 8.41 5.99 6.01
+chain20   agent_control PASS                    calls= 3 tools= 2 tok=2207/59 182.3s
+== ollama:qwen3:8b agent_rubric rubric14 :: 18:54  12 users, load averages: 6.94 6.74 6.35
+== ollama:qwen3:8b agent_rubric rubric14 :: 19:01  12 users, load averages: 5.92 5.51 5.80
+usage: run2.py [-h] --models MODELS --harness HARNESS [--tasks TASKS]
+               --out OUT --tag TAG [--profile PROFILE] [--judge JUDGE]
+               [--max-calls MAX_CALLS] [--max-tokens MAX_TOKENS]
+               [--stop-usd STOP_USD]
+run2.py: error: unrecognized arguments: --judge-host http://127.0.0.1:11434
+== ollama:qwen3:8b agent_rubric rubric14 :: 19:25  12 users, load averages: 8.99 7.74 6.91
+chain04   agent_rubric  fail malformed_output   calls= 4 tools= 3 tok=3088/108 290.5s judge=1 res=['satisfied']
+chain10   agent_rubric  fail wrong_final_state  calls= 7 tools= 6 tok=6306/219 545.6s judge=1 res=['satisfied']
+chain15   agent_rubric  fail malformed_output   calls= 7 tools= 6 tok=6407/234 536.8s judge=1 res=['satisfied']
+chain16   agent_rubric  fail malformed_output   calls= 6 tools= 5 tok=5283/187 455.0s judge=1 res=['satisfied']
+chain20   agent_rubric  fail wrong_final_state  calls= 7 tools= 7 tok=6498/196 1210.1s judge=1 res=['satisfied']
+sql02     agent_rubric  fail wrong_args         calls= 6 tools= 3 tok=5321/246 1668.8s judge=3 res=['needs_revision', 'needs_revision', 'satisfied']
+sql03     agent_rubric  PASS                    calls= 9 tools= 7 tok=8594/247 828.0s judge=2 res=['needs_revision', 'satisfied']
+sql07     agent_rubric  fail wrong_args         calls= 5 tools= 2 tok=3614/159 1129.9s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+sql09     agent_rubric  PASS                    calls=11 tools=10 tok=9692/554 899.8s judge=1 res=['satisfied']
+sql10     agent_rubric  fail wrong_args         calls=10 tools= 7 tok=8930/325 1290.7s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+sql11     agent_rubric  fail wrong_args         calls= 9 tools= 6 tok=7888/402 894.0s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+sql12     agent_rubric  fail wrong_final_state  calls= 3 tools= 2 tok=1658/87 93.4s judge=1 res=['satisfied']
+sql16     agent_rubric  fail wrong_args         calls= 5 tools= 2 tok=3864/186 496.9s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+sql18     agent_rubric  fail wrong_final_state  calls=11 tools= 8 tok=12187/532 658.2s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+r04       agent_rubric  fail wrong_final_state  calls= 6 tools= 3 tok=5079/155 595.4s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+r06       agent_rubric  PASS                    calls=12 tools= 9 tok=16413/284 548.2s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+r09       agent_rubric  fail malformed_output   calls= 3 tools= 2 tok=1514/67 137.1s judge=1 res=['satisfied']
+r10       agent_rubric  fail wrong_final_state  calls= 3 tools= 2 tok=1719/66 101.1s judge=1 res=['satisfied']
+r12       agent_rubric  fail malformed_output   calls= 4 tools= 3 tok=2305/92 122.9s judge=1 res=['satisfied']
+r13       agent_rubric  fail wrong_final_state  calls= 7 tools= 4 tok=6727/179 496.3s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+r18       agent_rubric  fail wrong_tool         calls= 5 tools= 2 tok=3632/126 405.9s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+files04   agent_rubric  fail wrong_final_state  calls= 3 tools= 3 tok=1474/72 118.5s judge=1 res=['satisfied']
+files07   agent_rubric  fail wrong_final_state  calls= 5 tools= 2 tok=3596/129 407.3s judge=3 res=['needs_revision', 'needs_revision', 'max_iterations_reached']
+files11   agent_rubric  fail wrong_final_state  calls= 3 tools= 3 tok=1502/90 118.3s judge=1 res=['satisfied']
+multi13   agent_rubric  fail wrong_final_state  calls=22 tools=13 tok=40901/623 2791.8s judge=9 res=['needs_revision', 'needs_revision', 'max_iterations_reached', 'needs_revision', 'needs_revision', 'max_iterations_reached', 'needs_revision', 'needs_revision', 'max_iterations_reached']
+== end ollama:qwen3:8b :: 12:19  12 users, load averages: 4.20 4.39 6.31

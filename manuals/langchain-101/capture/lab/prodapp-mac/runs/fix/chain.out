@@ -1,0 +1,15 @@
+========================= 6 failed, 1 passed in 23.42s =========================
+========================= 6 failed, 1 passed in 22.71s =========================
+========================= 6 failed, 1 passed in 22.43s =========================
+==================== 4 failed, 3 passed in 62.23s (0:01:02) ====================
+==================== 4 failed, 3 passed in 60.60s (0:01:00) ====================
+==================== 4 failed, 3 passed in 71.84s (0:01:11) ====================
+{"trial": 1, "outcome": "no refund proposed", "approval_re_asked": null, "after_restart_next": null, "replayed_flags": null, "refunded_cents": null}
+{"trial": 2, "outcome": "no refund proposed", "approval_re_asked": null, "after_restart_next": null, "replayed_flags": null, "refunded_cents": null}
+{"trial": 3, "outcome": "no refund proposed", "approval_re_asked": null, "after_restart_next": null, "replayed_flags": null, "refunded_cents": null}
+{"trial": 1, "outcome": "no refund proposed", "approval_re_asked": null, "after_restart_next": null, "replayed_flags": null, "refunded_cents": null}
+{"trial": 2, "outcome": "no refund proposed", "approval_re_asked": null, "after_restart_next": null, "replayed_flags": null, "refunded_cents": null}
+{"trial": 3, "outcome": "no refund proposed", "approval_re_asked": null, "after_restart_next": null, "replayed_flags": null, "refunded_cents": null}
+{"machine_before": {"uptime": "17:42  up 89 days,  3:39, 12 users, load averages: 6.37 4.52 5.19", "ollama_loaded": ["qwen3:14b"]}, "machine_after": {"uptime": "17:56  up 89 days,  3:53, 12 users, load averages: 32.78 40.46 25.26", "ollama_loaded": ["qwen3:4b-instruct-2507-q4_K_M"]}, "kinds": {"runs:200:done": 108, "runs:200:interrupted": 42, "approve:200:done": 42, "approve:409:None": 8}, "workers": 1, "users": 50, "model_latency_s": 0.0, "pool_max": 20, "runs": 200, "ok": 192, "errors": 8, "codes": {"200": 192, "409": 8}, "wall_s": 830.8, "runs_per_s": 0.2, "p50_s": 194.7985, "p95_s": 274.1077, "max_s": 286.656, "ttft_p50_s": 193.2561, "ttft_p95_s": 269.3478, "pg_conn_max": 58, "pg_conn_mean": 54.1, "pg_samples": 7593, "checkpoint_rows": {"checkpoints": 1902, "checkpoint_blobs": 1018, "checkpoint_writes": 2562}, "checkpoint_rows_per_run": 27.4, "checkpoint_data_bytes_per_run": 20352, "checkpoint_disk_bytes_per_run": 31744, "refunds": {"n": 42, "orders": 42}}
+82 lines
+chain-fix-done

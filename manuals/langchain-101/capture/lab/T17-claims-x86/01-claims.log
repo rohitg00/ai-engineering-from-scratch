@@ -1,0 +1,15 @@
+{"case": "create_agent_forever_recursion_limit_25", "result": "GraphRecursionError", "message_first_line": "Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.", "counts": {"model": 13, "tool": 12}, "wall_s": 24.34, "rep": 0}
+{"case": "create_agent_forever_recursion_limit_101", "result": "GraphRecursionError", "message_first_line": "Recursion limit of 101 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.", "counts": {"model": 51, "tool": 50}, "wall_s": 105.51, "rep": 0}
+{"case": "create_agent_forever_recursion_limit_25", "result": "GraphRecursionError", "message_first_line": "Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.", "counts": {"model": 13, "tool": 12}, "wall_s": 23.83, "rep": 1}
+{"case": "create_agent_forever_recursion_limit_101", "result": "GraphRecursionError", "message_first_line": "Recursion limit of 101 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.", "counts": {"model": 51, "tool": 50}, "wall_s": 105.1, "rep": 1}
+{"case": "create_agent_forever_recursion_limit_25", "result": "GraphRecursionError", "message_first_line": "Recursion limit of 25 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.", "counts": {"model": 13, "tool": 12}, "wall_s": 23.8, "rep": 2}
+{"case": "create_agent_forever_recursion_limit_101", "result": "GraphRecursionError", "message_first_line": "Recursion limit of 101 reached without hitting a stop condition. You can increase the limit by setting the `recursion_limit` config key.", "counts": {"model": 51, "tool": 50}, "wall_s": 105.72, "rep": 2}
+initial 0 {'model': 2, 'tool': 1} [[], ['model'], ['tools'], ['model'], ['__start__']]
+agent_replay_from_first_next_model 0 0 {'model': 2, 'tool': 1}
+agent_replay_from_next_tools 0 1 {'model': 1, 'tool': 1}
+initial 1 {'model': 2, 'tool': 1} [[], ['model'], ['tools'], ['model'], ['__start__']]
+agent_replay_from_first_next_model 1 0 {'model': 2, 'tool': 1}
+agent_replay_from_next_tools 1 1 {'model': 1, 'tool': 1}
+initial 2 {'model': 2, 'tool': 1} [[], ['model'], ['tools'], ['model'], ['__start__']]
+agent_replay_from_first_next_model 2 0 {'model': 2, 'tool': 1}
+agent_replay_from_next_tools 2 1 {'model': 1, 'tool': 1}

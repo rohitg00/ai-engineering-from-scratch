@@ -1,0 +1,803 @@
+{
+ "map": [
+  {
+   "trial": 1,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741243.896791,
+    "server_up": 1794741246.6677241,
+    "interrupt_received": 1794741249.9771469,
+    "approve_sent": 1794741249.977172,
+    "refund_row_seen": 1794741250.2154381,
+    "killed": 1794741250.236597,
+    "restarted": 1794741253.057873,
+    "state_read": 1794741253.0917141,
+    "second_approve_sent": 1794741253.091733,
+    "resumed_done": 1794741254.2902908
+   },
+   "uptime_before": "16:44  up 89 days,  2:40, 12 users, load averages: 9.23 12.67 14.98",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 2,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741255.699696,
+    "server_up": 1794741258.190785,
+    "interrupt_received": 1794741260.902133,
+    "approve_sent": 1794741260.90214,
+    "refund_row_seen": 1794741261.063224,
+    "killed": 1794741261.086398,
+    "restarted": 1794741264.053756,
+    "state_read": 1794741264.100781,
+    "second_approve_sent": 1794741264.100802,
+    "resumed_done": 1794741265.80525
+   },
+   "uptime_before": "16:44  up 89 days,  2:41, 12 users, load averages: 9.03 12.51 14.90",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 3,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741266.819763,
+    "server_up": 1794741269.154463,
+    "interrupt_received": 1794741273.920068,
+    "approve_sent": 1794741273.920104,
+    "refund_row_seen": 1794741275.236375,
+    "killed": 1794741275.247333,
+    "restarted": 1794741277.43429,
+    "state_read": 1794741277.479629,
+    "second_approve_sent": 1794741277.47964,
+    "resumed_done": 1794741278.944345
+   },
+   "uptime_before": "16:44  up 89 days,  2:41, 12 users, load averages: 9.98 12.61 14.91",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 4,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741279.79877,
+    "server_up": 1794741282.113041,
+    "interrupt_received": 1794741287.6198459,
+    "approve_sent": 1794741287.6198652,
+    "refund_row_seen": 1794741287.725543,
+    "killed": 1794741287.750314,
+    "restarted": 1794741289.957629,
+    "state_read": 1794741290.031426,
+    "second_approve_sent": 1794741290.0314372,
+    "resumed_done": 1794741292.940664
+   },
+   "uptime_before": "16:44  up 89 days,  2:41, 12 users, load averages: 11.64 12.84 14.95",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 5,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741293.560309,
+    "server_up": 1794741296.27109,
+    "interrupt_received": 1794741299.6170602,
+    "approve_sent": 1794741299.617088,
+    "refund_row_seen": 1794741299.720633,
+    "killed": 1794741299.742466,
+    "restarted": 1794741301.513654,
+    "state_read": 1794741301.9352,
+    "second_approve_sent": 1794741301.9353018,
+    "resumed_done": 1794741304.0199502
+   },
+   "uptime_before": "16:44  up 89 days,  2:41, 12 users, load averages: 10.86 12.62 14.83",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 6,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741304.754768,
+    "server_up": 1794741307.569651,
+    "interrupt_received": 1794741310.733849,
+    "approve_sent": 1794741310.733946,
+    "refund_row_seen": 1794741310.923774,
+    "killed": 1794741310.947476,
+    "restarted": 1794741313.5650508,
+    "state_read": 1794741313.6073148,
+    "second_approve_sent": 1794741313.6073768,
+    "resumed_done": 1794741314.5909529
+   },
+   "uptime_before": "16:45  up 89 days,  2:41, 12 users, load averages: 19.25 14.42 15.45",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 7,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741315.0743308,
+    "server_up": 1794741318.701081,
+    "interrupt_received": 1794741322.6004858,
+    "approve_sent": 1794741322.600592,
+    "refund_row_seen": 1794741323.07458,
+    "killed": 1794741323.085307,
+    "restarted": 1794741326.984315,
+    "state_read": 1794741327.078433,
+    "second_approve_sent": 1794741327.078468,
+    "resumed_done": 1794741328.6457999
+   },
+   "uptime_before": "16:45  up 89 days,  2:42, 12 users, load averages: 17.59 14.23 15.37",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 8,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741329.463354,
+    "server_up": 1794741332.088892,
+    "interrupt_received": 1794741334.8557272,
+    "approve_sent": 1794741334.8557389,
+    "refund_row_seen": 1794741335.12545,
+    "killed": 1794741335.169867,
+    "restarted": 1794741338.021261,
+    "state_read": 1794741338.0571818,
+    "second_approve_sent": 1794741338.0571961,
+    "resumed_done": 1794741339.484572
+   },
+   "uptime_before": "16:45  up 89 days,  2:42, 12 users, load averages: 15.83 13.99 15.26",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 9,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741340.033121,
+    "server_up": 1794741342.761373,
+    "interrupt_received": 1794741345.294728,
+    "approve_sent": 1794741345.29474,
+    "refund_row_seen": 1794741345.6188211,
+    "killed": 1794741345.6418188,
+    "restarted": 1794741349.7179468,
+    "state_read": 1794741350.338777,
+    "second_approve_sent": 1794741350.338807,
+    "resumed_done": 1794741351.314841
+   },
+   "uptime_before": "16:45  up 89 days,  2:42, 12 users, load averages: 14.64 13.79 15.18",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 10,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741351.8313768,
+    "server_up": 1794741355.9150138,
+    "interrupt_received": 1794741359.3323798,
+    "approve_sent": 1794741359.332408,
+    "refund_row_seen": 1794741359.6901278,
+    "killed": 1794741359.7008069,
+    "restarted": 1794741362.563741,
+    "state_read": 1794741362.6017458,
+    "second_approve_sent": 1794741362.601768,
+    "resumed_done": 1794741364.021356
+   },
+   "uptime_before": "16:45  up 89 days,  2:42, 12 users, load averages: 13.47 13.57 15.08",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  }
+ ],
+ "plain": [
+  {
+   "trial": 1,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741365.5598269,
+    "server_up": 1794741367.812387,
+    "interrupt_received": 1794741370.41278,
+    "approve_sent": 1794741370.4127932,
+    "refund_row_seen": 1794741370.531423,
+    "killed": 1794741370.542119,
+    "restarted": 1794741373.489253,
+    "state_read": 1794741373.5302951,
+    "second_approve_sent": 1794741373.530306,
+    "resumed_done": 1794741374.521127
+   },
+   "uptime_before": "16:46  up 89 days,  2:43, 12 users, load averages: 18.51 14.68 15.45",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 2,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741375.985158,
+    "server_up": 1794741378.079678,
+    "interrupt_received": 1794741381.4646678,
+    "approve_sent": 1794741381.464709,
+    "refund_row_seen": 1794741381.847921,
+    "killed": 1794741381.869301,
+    "restarted": 1794741384.746149,
+    "state_read": 1794741384.825245,
+    "second_approve_sent": 1794741384.825259,
+    "resumed_done": 1794741387.073361
+   },
+   "uptime_before": "16:46  up 89 days,  2:43, 12 users, load averages: 17.30 14.55 15.40",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 3,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741387.475786,
+    "server_up": 1794741389.1811001,
+    "interrupt_received": 1794741392.705162,
+    "approve_sent": 1794741392.705183,
+    "refund_row_seen": 1794741393.030387,
+    "killed": 1794741393.053068,
+    "restarted": 1794741395.16384,
+    "state_read": 1794741395.8269289,
+    "second_approve_sent": 1794741395.8269398,
+    "resumed_done": 1794741396.832631
+   },
+   "uptime_before": "16:46  up 89 days,  2:43, 12 users, load averages: 15.64 14.28 15.29",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 4,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741397.66336,
+    "server_up": 1794741400.1566248,
+    "interrupt_received": 1794741402.8876438,
+    "approve_sent": 1794741402.887657,
+    "refund_row_seen": 1794741403.107533,
+    "killed": 1794741403.118297,
+    "restarted": 1794741404.9057658,
+    "state_read": 1794741404.9367812,
+    "second_approve_sent": 1794741404.936789,
+    "resumed_done": 1794741405.656655
+   },
+   "uptime_before": "16:46  up 89 days,  2:43, 12 users, load averages: 14.40 14.06 15.20",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 5,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741405.979583,
+    "server_up": 1794741407.924211,
+    "interrupt_received": 1794741408.900203,
+    "approve_sent": 1794741408.900214,
+    "refund_row_seen": 1794741410.283822,
+    "killed": 1794741410.2945511,
+    "restarted": 1794741411.860855,
+    "state_read": 1794741411.88694,
+    "second_approve_sent": 1794741411.8869472,
+    "resumed_done": 1794741412.618022
+   },
+   "uptime_before": "16:46  up 89 days,  2:43, 12 users, load averages: 18.88 15.00 15.52",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 6,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741412.822365,
+    "server_up": 1794741414.4576268,
+    "interrupt_received": 1794741416.860353,
+    "approve_sent": 1794741416.860366,
+    "refund_row_seen": 1794741416.939709,
+    "killed": 1794741416.9502778,
+    "restarted": 1794741418.5964742,
+    "state_read": 1794741418.621691,
+    "second_approve_sent": 1794741418.621697,
+    "resumed_done": 1794741419.4261389
+   },
+   "uptime_before": "16:46  up 89 days,  2:43, 12 users, load averages: 18.79 15.10 15.55",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 7,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741419.697668,
+    "server_up": 1794741421.1990788,
+    "interrupt_received": 1794741423.61157,
+    "approve_sent": 1794741423.61158,
+    "refund_row_seen": 1794741423.6836421,
+    "killed": 1794741423.694323,
+    "restarted": 1794741425.236423,
+    "state_read": 1794741425.259947,
+    "second_approve_sent": 1794741425.259954,
+    "resumed_done": 1794741426.041394
+   },
+   "uptime_before": "16:46  up 89 days,  2:43, 12 users, load averages: 18.17 15.03 15.52",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 8,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741426.33858,
+    "server_up": 1794741428.10816,
+    "interrupt_received": 1794741430.288605,
+    "approve_sent": 1794741430.288617,
+    "refund_row_seen": 1794741430.473312,
+    "killed": 1794741430.483194,
+    "restarted": 1794741432.14226,
+    "state_read": 1794741432.168559,
+    "second_approve_sent": 1794741432.168566,
+    "resumed_done": 1794741432.918976
+   },
+   "uptime_before": "16:47  up 89 days,  2:44, 12 users, load averages: 29.28 17.39 16.35",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 9,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741433.233324,
+    "server_up": 1794741434.7376509,
+    "interrupt_received": 1794741435.809165,
+    "approve_sent": 1794741435.8091772,
+    "refund_row_seen": 1794741436.9605172,
+    "killed": 1794741437.067643,
+    "restarted": 1794741438.5287209,
+    "state_read": 1794741438.5507898,
+    "second_approve_sent": 1794741438.550796,
+    "resumed_done": 1794741439.290685
+   },
+   "uptime_before": "16:47  up 89 days,  2:44, 12 users, load averages: 25.55 16.98 16.22",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  },
+  {
+   "trial": 10,
+   "outcome": "one refund",
+   "refund_committed_before_kill": true,
+   "kill_exit_code": -9,
+   "approve_client_error": "RemoteProtocolError",
+   "rows_after_kill": 1,
+   "after_restart_next": [
+    "tools"
+   ],
+   "approval_re_asked": true,
+   "replayed_flags": [
+    true
+   ],
+   "refunded_cents": 8900,
+   "final_next": [],
+   "marks": {
+    "start": 1794741439.5548,
+    "server_up": 1794741440.705785,
+    "interrupt_received": 1794741441.7264938,
+    "approve_sent": 1794741441.7265038,
+    "refund_row_seen": 1794741441.809369,
+    "killed": 1794741441.820832,
+    "restarted": 1794741444.163407,
+    "state_read": 1794741444.187638,
+    "second_approve_sent": 1794741444.187646,
+    "resumed_done": 1794741445.045234
+   },
+   "uptime_before": "16:47  up 89 days,  2:44, 12 users, load averages: 25.02 17.01 16.23",
+   "refund_rows": 1,
+   "first_tool_calls": [
+    "refund_order"
+   ],
+   "resumed_tool_calls": []
+  }
+ ],
+ "trial1_timeline": [
+  {
+   "file": "t01-before-kill",
+   "ts": 1794741246.522,
+   "event": "startup"
+  },
+  {
+   "file": "t01-before-kill",
+   "ts": 1794741247.25,
+   "event": "run.start"
+  },
+  {
+   "file": "t01-before-kill",
+   "ts": 1794741249.969,
+   "event": "run.end",
+   "status": "interrupted",
+   "seconds": 2.7208
+  },
+  {
+   "file": "t01-before-kill",
+   "ts": 1794741250.126,
+   "event": "run.start"
+  },
+  {
+   "file": "t01-after-restart",
+   "ts": 1794741253.02,
+   "event": "startup"
+  },
+  {
+   "file": "t01-after-restart",
+   "ts": 1794741253.106,
+   "event": "run.start"
+  },
+  {
+   "file": "t01-after-restart",
+   "ts": 1794741253.126,
+   "event": "tool.done",
+   "status": "success",
+   "tool": "refund_order"
+  },
+  {
+   "file": "t01-after-restart",
+   "ts": 1794741254.281,
+   "event": "run.end",
+   "status": "done",
+   "seconds": 1.1753
+  },
+  {
+   "file": "t01-after-restart",
+   "span": "GET /healthz",
+   "start": 1794741253.05582,
+   "end": 1794741253.05691,
+   "status": "UNSET"
+  },
+  {
+   "file": "t01-after-restart",
+   "span": "GET /threads/{thread_id}/state",
+   "start": 1794741253.066834,
+   "end": 1794741253.091053,
+   "status": "UNSET"
+  },
+  {
+   "file": "t01-after-restart",
+   "span": "tool.refund_order",
+   "start": 1794741253.115641,
+   "end": 1794741253.125782,
+   "status": "UNSET"
+  },
+  {
+   "file": "t01-after-restart",
+   "span": "model.call",
+   "start": 1794741253.138557,
+   "end": 1794741254.247373,
+   "status": "UNSET"
+  },
+  {
+   "file": "t01-after-restart",
+   "span": "agent.run",
+   "start": 1794741253.105923,
+   "end": 1794741254.281025,
+   "status": "UNSET"
+  },
+  {
+   "file": "t01-after-restart",
+   "span": "POST /threads/{thread_id}/approve",
+   "start": 1794741253.092442,
+   "end": 1794741254.284887,
+   "status": "UNSET"
+  },
+  {
+   "file": "t01-after-restart",
+   "span": "GET /threads/{thread_id}/state",
+   "start": 1794741254.301919,
+   "end": 1794741254.352257,
+   "status": "UNSET"
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+# SqliteSaver across turns and a restart
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## SqliteSaver: two turns, then close the connection
+
+messages after turn 2:
+[
+  "human: What is 2 + 3?",
+  "ai: ",
+  "tool: 5",
+  "ai: 2 + 3 = 5.",
+  "human: What did I ask you?",
+  "ai: You asked what 2 + 3 is, and I calculated that it equals 5."
+]
+
+what the model received on turn 2:
+[
+  "human: What is 2 + 3?",
+  "ai: calls add",
+  "tool: 5",
+  "ai: 2 + 3 = 5.",
+  "human: What did I ask you?"
+]
+
+## a new process opens the same file and continues the thread
+
+[
+  "human: What is 2 + 3?",
+  "ai: ",
+  "tool: 5",
+  "ai: 2 + 3 = 5.",
+  "human: What did I ask you?",
+  "ai: You asked what 2 + 3 is, and I calculated that it equals 5.",
+  "human: Remind me what my first question was.",
+  "ai: Your first question was, \"What is 2 + 3?\" I answered that 2 + 3 = 5."
+]
+
+## what is in the file
+
+checkpoints: 11 rows, columns ['thread_id', 'checkpoint_ns', 'checkpoint_id', 'parent_checkpoint_id', 'type', 'checkpoint', 'metadata']
+
+writes: 13 rows, columns ['thread_id', 'checkpoint_ns', 'checkpoint_id', 'task_id', 'task_path', 'idx', 'channel', 'type', 'value']
+
+checkpoints rows: thread_id, checkpoint_ns, type, step, source:
+[
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    -1,
+    "input"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    0,
+    "loop"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    1,
+    "loop"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    2,
+    "loop"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    3,
+    "loop"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    4,
+    "input"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    5,
+    "loop"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    6,
+    "loop"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    7,
+    "input"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    8,
+    "loop"
+  ],
+  [
+    "sqlite-thread",
+    "",
+    "msgpack",
+    9,
+    "loop"
+  ]
+]
+
+database file: <tmp>/m101/checkpoints.db

@@ -1,0 +1,21 @@
+INFO:     Started server process [80040]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:56776 (Press CTRL+C to quit)
+INFO:     127.0.0.1:56786 - "GET /healthz HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56805 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56801 - "POST /threads HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56805 - "POST /threads/0514e8bf-f3cc-44c7-ac99-6b0b4b897e56/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56801 - "POST /threads/a47e9fe8-4be2-43be-b0aa-e52db3491e7c/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56813 - "POST /threads/2f206c73-8d5b-4f9d-9519-1775c1779b2d/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56813 - "POST /threads/2f206c73-8d5b-4f9d-9519-1775c1779b2d/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56801 - "POST /threads/a47e9fe8-4be2-43be-b0aa-e52db3491e7c/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57067 - "POST /threads/20296035-d450-44bc-8ca7-35734ff959cf/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57108 - "POST /threads/a6e3ffb7-9b2e-492a-8af9-9140fd917bf5/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57163 - "POST /threads/b5306f13-c2e6-4673-8f62-c5279e550542/runs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57205 - "POST /threads/2f206c73-8d5b-4f9d-9519-1775c1779b2d/approve HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57245 - "POST /threads/a47e9fe8-4be2-43be-b0aa-e52db3491e7c/approve HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [80040]

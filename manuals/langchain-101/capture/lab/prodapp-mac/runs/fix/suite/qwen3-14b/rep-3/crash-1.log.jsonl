@@ -1,0 +1,6 @@
+{"ts": 1794744685.145, "level": "INFO", "event": "startup", "model": "ollama:qwen3:14b", "backup": "ollama:qwen3:4b-instruct-2507-q4_K_M", "pool_max": 20}
+{"ts": 1794744685.253, "level": "INFO", "event": "run.start", "thread_id": "9e86e724-f514-4837-aab9-90c0350731c6", "user_id": "crash", "trace_id": "b27e5b5e787b5a929a94e448a243a910", "span_id": "0a722ac1b28ca0f0"}
+{"ts": 1794744690.423, "level": "INFO", "event": "run.end", "thread_id": "9e86e724-f514-4837-aab9-90c0350731c6", "status": "interrupted", "seconds": 5.1699, "trace_id": "b27e5b5e787b5a929a94e448a243a910", "span_id": "23b658214e17b956"}
+{"ts": 1794744690.441, "level": "INFO", "event": "run.start", "thread_id": "9e86e724-f514-4837-aab9-90c0350731c6", "user_id": "crash", "trace_id": "82acbdc98effa5309683f916cf54230d", "span_id": "d790900c8c6c9964"}
+{"ts": 1794744690.448, "level": "INFO", "event": "tool.done", "tool": "refund_order", "status": "success", "trace_id": "82acbdc98effa5309683f916cf54230d", "span_id": "2eef7d4af9fb859c"}
+{"ts": 1794744694.443, "level": "INFO", "event": "run.end", "thread_id": "9e86e724-f514-4837-aab9-90c0350731c6", "status": "done", "seconds": 4.0027, "trace_id": "82acbdc98effa5309683f916cf54230d", "span_id": "3f831211da60a4cd"}

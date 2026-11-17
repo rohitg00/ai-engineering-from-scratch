@@ -1,0 +1,307 @@
+Source: 02-request-bodies.jsonl. Timed rounds: 5 per program (warm-up rounds left out). Tool call ids (call_...) are replaced by call_<id> before the bodies are compared across runs.
+a_plain_openai: request bytes per run {(679, 936, 1199): 5}; distinct bodies after id masking: 5; answers {'20': 5}; errors 0
+c_create_agent: request bytes per run {(696, 948, 1206): 5}; distinct bodies after id masking: 5; answers {'20': 5}; errors 0
+byte difference per call, paired by round: call 1: 679 vs 696 (+17) in 5 rounds; call 2: 936 vs 948 (+12) in 5 rounds; call 3: 1199 vs 1206 (+7) in 5 rounds
+
+### request 1: a_plain_openai (679 B) vs c_create_agent (696 B), round 1, raw bodies as sent
+top-level key order a: ['model', 'messages', 'seed', 'temperature', 'tools']
+top-level key order c: ['model', 'stream', 'messages', 'seed', 'temperature', 'tools']
+pretty-printed JSON diff (key order kept as sent):
+--- a_plain_openai
++++ c_create_agent
+@@ -2,6 +2,7 @@
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
++ "stream": false,
+  "messages": [
+   {
+-   "role": "user",
+-   "content": "Use the add tool to add 2 and 3. Wait for its result, then call the multiply tool with that result and 4. Call one tool at a time. Reply with the final number only."
++   "content": "Use the add tool to add 2 and 3. Wait for its result, then call the multiply tool with that result and 4. Call one tool at a time. Reply with the final number only.",
++   "role": "user"
+   }
+@@ -9,3 +10,3 @@
+  "seed": 42,
+- "temperature": 0,
++ "temperature": 0.0,
+  "tools": [
+@@ -17,3 +18,2 @@
+     "parameters": {
+-     "type": "object",
+      "properties": {
+@@ -29,3 +29,4 @@
+       "b"
+-     ]
++     ],
++     "type": "object"
+     }
+@@ -39,3 +40,2 @@
+     "parameters": {
+-     "type": "object",
+      "properties": {
+@@ -51,3 +51,4 @@
+       "b"
+-     ]
++     ],
++     "type": "object"
+     }
+tool call ids: a [] chars, c [] chars; for the byte edits below the ids of c are replaced by the ids of a (same length), so only the other bytes show
+raw byte edits (a -> c), with the byte count of each:
+  insert  a[42:42]='' -> c[42:57]='stream":false,"'  (+15 B)
+  delete  a[54:68]='"role":"user",' -> c[69:69]=''  (-14 B)
+  insert  a[244:244]='' -> c[245:259]=',"role":"user"'  (+14 B)
+  insert  a[271:271]='' -> c[286:288]='0.'  (+2 B)
+  delete  a[375:391]='type":"object","' -> c[392:392]=''  (-16 B)
+  insert  a[471:471]='' -> c[472:488]=',"type":"object"'  (+16 B)
+  delete  a[578:594]='type":"object","' -> c[595:595]=''  (-16 B)
+  insert  a[674:674]='' -> c[675:691]=',"type":"object"'  (+16 B)
+  sum of edits: +17 B (len c - len a = +17 B)
+messages equal after id masking: False; tools equal as parsed JSON: True; tools equal as bytes: False
+byte ledger (everything else is the same keys and values in another order, 0 B):
+  +15 B  "stream":false added
+  +2 B  "temperature":0 -> "temperature":0.0
+  ledger sum +17 B; measured +17 B
+
+### request 2: a_plain_openai (936 B) vs c_create_agent (948 B), round 1, raw bodies as sent
+top-level key order a: ['model', 'messages', 'seed', 'temperature', 'tools']
+top-level key order c: ['model', 'stream', 'messages', 'seed', 'temperature', 'tools']
+pretty-printed JSON diff (key order kept as sent):
+--- a_plain_openai
++++ c_create_agent
+@@ -2,19 +2,19 @@
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
++ "stream": false,
+  "messages": [
+   {
+-   "role": "user",
+-   "content": "Use the add tool to add 2 and 3. Wait for its result, then call the multiply tool with that result and 4. Call one tool at a time. Reply with the final number only."
++   "content": "Use the add tool to add 2 and 3. Wait for its result, then call the multiply tool with that result and 4. Call one tool at a time. Reply with the final number only.",
++   "role": "user"
+   },
+   {
++   "content": null,
+    "role": "assistant",
+-   "content": "",
+    "tool_calls": [
+     {
+-     "id": "eB1i3Upe2jm7g2OdCAzvvOlIZ1YRP5Jd",
++     "type": "function",
++     "id": "dsraixQbieeNSu6lODZlsqWTLsuwfGpn",
+      "function": {
+-      "arguments": "{\"a\":2,\"b\":3}",
+-      "name": "add"
+-     },
+-     "type": "function",
+-     "index": 0
++      "name": "add",
++      "arguments": "{\"a\": 2, \"b\": 3}"
++     }
+     }
+@@ -23,5 +23,5 @@
+   {
++   "content": "5",
+    "role": "tool",
+-   "tool_call_id": "eB1i3Upe2jm7g2OdCAzvvOlIZ1YRP5Jd",
+-   "content": "5"
++   "tool_call_id": "dsraixQbieeNSu6lODZlsqWTLsuwfGpn"
+   }
+@@ -29,3 +29,3 @@
+  "seed": 42,
+- "temperature": 0,
++ "temperature": 0.0,
+  "tools": [
+@@ -37,3 +37,2 @@
+     "parameters": {
+-     "type": "object",
+      "properties": {
+@@ -49,3 +48,4 @@
+       "b"
+-     ]
++     ],
++     "type": "object"
+     }
+@@ -59,3 +59,2 @@
+     "parameters": {
+-     "type": "object",
+      "properties": {
+@@ -71,3 +70,4 @@
+       "b"
+-     ]
++     ],
++     "type": "object"
+     }
+tool call ids: a [32] chars, c [32] chars; for the byte edits below the ids of c are replaced by the ids of a (same length), so only the other bytes show
+raw byte edits (a -> c), with the byte count of each:
+  insert  a[42:42]='' -> c[42:57]='stream":false,"'  (+15 B)
+  delete  a[54:68]='"role":"user",' -> c[69:69]=''  (-14 B)
+  insert  a[244:244]='' -> c[245:259]=',"role":"user"'  (+14 B)
+  insert  a[247:247]='' -> c[262:277]='"content":null,'  (+15 B)
+  delete  a[267:280]='content":"","' -> c[297:297]=''  (-13 B)
+  insert  a[294:294]='' -> c[311:329]='"type":"function",'  (+18 B)
+  insert  a[347:347]='' -> c[382:395]='name":"add","'  (+13 B)
+  insert  a[366:366]='' -> c[414:415]=' '  (+1 B)
+  insert  a[368:368]='' -> c[417:418]=' '  (+1 B)
+  insert  a[374:374]='' -> c[424:425]=' '  (+1 B)
+  delete  a[377:390]=',"name":"add"' -> c[428:428]=''  (-13 B)
+  delete  a[391:419]=',"type":"function","index":0' -> c[429:429]=''  (-28 B)
+  insert  a[424:424]='' -> c[434:448]='"content":"5",'  (+14 B)
+  delete  a[487:501]=',"content":"5"' -> c[511:511]=''  (-14 B)
+  insert  a[528:528]='' -> c[538:540]='0.'  (+2 B)
+  delete  a[632:648]='type":"object","' -> c[644:644]=''  (-16 B)
+  insert  a[728:728]='' -> c[724:740]=',"type":"object"'  (+16 B)
+  delete  a[835:851]='type":"object","' -> c[847:847]=''  (-16 B)
+  insert  a[931:931]='' -> c[927:943]=',"type":"object"'  (+16 B)
+  sum of edits: +12 B (len c - len a = +12 B)
+messages equal after id masking: False; tools equal as parsed JSON: True; tools equal as bytes: False
+byte ledger (everything else is the same keys and values in another order, 0 B):
+  +15 B  "stream":false added
+  +2 B  "temperature":0 -> "temperature":0.0
+  +2 B  assistant turn 1: "content":"" -> "content":null
+  +3 B  assistant turn 1: arguments {"a":2,"b":3} -> {"a": 2, "b": 3}
+  -10 B  assistant turn 1: "index":0 dropped
+  ledger sum +12 B; measured +12 B
+
+### request 3: a_plain_openai (1199 B) vs c_create_agent (1206 B), round 1, raw bodies as sent
+top-level key order a: ['model', 'messages', 'seed', 'temperature', 'tools']
+top-level key order c: ['model', 'stream', 'messages', 'seed', 'temperature', 'tools']
+pretty-printed JSON diff (key order kept as sent):
+--- a_plain_openai
++++ c_create_agent
+@@ -2,19 +2,19 @@
+  "model": "qwen3:4b-instruct-2507-q4_K_M",
++ "stream": false,
+  "messages": [
+   {
+-   "role": "user",
+-   "content": "Use the add tool to add 2 and 3. Wait for its result, then call the multiply tool with that result and 4. Call one tool at a time. Reply with the final number only."
++   "content": "Use the add tool to add 2 and 3. Wait for its result, then call the multiply tool with that result and 4. Call one tool at a time. Reply with the final number only.",
++   "role": "user"
+   },
+   {
++   "content": null,
+    "role": "assistant",
+-   "content": "",
+    "tool_calls": [
+     {
+-     "id": "eB1i3Upe2jm7g2OdCAzvvOlIZ1YRP5Jd",
++     "type": "function",
++     "id": "dsraixQbieeNSu6lODZlsqWTLsuwfGpn",
+      "function": {
+-      "arguments": "{\"a\":2,\"b\":3}",
+-      "name": "add"
+-     },
+-     "type": "function",
+-     "index": 0
++      "name": "add",
++      "arguments": "{\"a\": 2, \"b\": 3}"
++     }
+     }
+@@ -23,18 +23,17 @@
+   {
++   "content": "5",
+    "role": "tool",
+-   "tool_call_id": "eB1i3Upe2jm7g2OdCAzvvOlIZ1YRP5Jd",
+-   "content": "5"
++   "tool_call_id": "dsraixQbieeNSu6lODZlsqWTLsuwfGpn"
+   },
+   {
++   "content": null,
+    "role": "assistant",
+-   "content": "",
+    "tool_calls": [
+     {
+-     "id": "5lgvlQyinrmlBfut7Yo7vQociUnzayzV",
++     "type": "function",
++     "id": "kLw2umZVsFpmrGYRaJyGYuTMBVuwCHbq",
+      "function": {
+-      "arguments": "{\"a\":5,\"b\":4}",
+-      "name": "multiply"
+-     },
+-     "type": "function",
+-     "index": 0
++      "name": "multiply",
++      "arguments": "{\"a\": 5, \"b\": 4}"
++     }
+     }
+@@ -43,5 +42,5 @@
+   {
++   "content": "20",
+    "role": "tool",
+-   "tool_call_id": "5lgvlQyinrmlBfut7Yo7vQociUnzayzV",
+-   "content": "20"
++   "tool_call_id": "kLw2umZVsFpmrGYRaJyGYuTMBVuwCHbq"
+   }
+@@ -49,3 +48,3 @@
+  "seed": 42,
+- "temperature": 0,
++ "temperature": 0.0,
+  "tools": [
+@@ -57,3 +56,2 @@
+     "parameters": {
+-     "type": "object",
+      "properties": {
+@@ -69,3 +67,4 @@
+       "b"
+-     ]
++     ],
++     "type": "object"
+     }
+@@ -79,3 +78,2 @@
+     "parameters": {
+-     "type": "object",
+      "properties": {
+@@ -91,3 +89,4 @@
+       "b"
+-     ]
++     ],
++     "type": "object"
+     }
+tool call ids: a [32, 32] chars, c [32, 32] chars; for the byte edits below the ids of c are replaced by the ids of a (same length), so only the other bytes show
+raw byte edits (a -> c), with the byte count of each:
+  insert  a[42:42]='' -> c[42:57]='stream":false,"'  (+15 B)
+  delete  a[54:68]='"role":"user",' -> c[69:69]=''  (-14 B)
+  insert  a[244:244]='' -> c[245:259]=',"role":"user"'  (+14 B)
+  insert  a[247:247]='' -> c[262:277]='"content":null,'  (+15 B)
+  delete  a[267:280]='content":"","' -> c[297:297]=''  (-13 B)
+  insert  a[294:294]='' -> c[311:329]='"type":"function",'  (+18 B)
+  insert  a[347:347]='' -> c[382:395]='name":"add","'  (+13 B)
+  insert  a[366:366]='' -> c[414:415]=' '  (+1 B)
+  insert  a[368:368]='' -> c[417:418]=' '  (+1 B)
+  insert  a[374:374]='' -> c[424:425]=' '  (+1 B)
+  delete  a[377:390]=',"name":"add"' -> c[428:428]=''  (-13 B)
+  delete  a[391:419]=',"type":"function","index":0' -> c[429:429]=''  (-28 B)
+  insert  a[424:424]='' -> c[434:448]='"content":"5",'  (+14 B)
+  insert  a[487:487]='' -> c[511:512]='}'  (+1 B)
+  insert  a[488:488]='' -> c[513:514]='{'  (+1 B)
+  replace a[498:502]='"5"}' -> c[524:528]='null'  (+0 B)
+  delete  a[503:504]='{' -> c[529:529]=''  (-1 B)
+  delete  a[524:537]='content":"","' -> c[549:549]=''  (-13 B)
+  insert  a[551:551]='' -> c[563:581]='"type":"function",'  (+18 B)
+  insert  a[604:604]='' -> c[634:652]='name":"multiply","'  (+18 B)
+  insert  a[623:623]='' -> c[671:672]=' '  (+1 B)
+  insert  a[625:625]='' -> c[674:675]=' '  (+1 B)
+  insert  a[631:631]='' -> c[681:682]=' '  (+1 B)
+  delete  a[634:652]=',"name":"multiply"' -> c[685:685]=''  (-18 B)
+  delete  a[653:681]=',"type":"function","index":0' -> c[686:686]=''  (-28 B)
+  insert  a[686:686]='' -> c[691:706]='"content":"20",'  (+15 B)
+  delete  a[749:764]=',"content":"20"' -> c[769:769]=''  (-15 B)
+  insert  a[791:791]='' -> c[796:798]='0.'  (+2 B)
+  delete  a[895:911]='type":"object","' -> c[902:902]=''  (-16 B)
+  insert  a[991:991]='' -> c[982:998]=',"type":"object"'  (+16 B)
+  delete  a[1098:1114]='type":"object","' -> c[1105:1105]=''  (-16 B)
+  insert  a[1194:1194]='' -> c[1185:1201]=',"type":"object"'  (+16 B)
+  sum of edits: +7 B (len c - len a = +7 B)
+messages equal after id masking: False; tools equal as parsed JSON: True; tools equal as bytes: False
+byte ledger (everything else is the same keys and values in another order, 0 B):
+  +15 B  "stream":false added
+  +2 B  "temperature":0 -> "temperature":0.0
+  +2 B  assistant turn 1: "content":"" -> "content":null
+  +3 B  assistant turn 1: arguments {"a":2,"b":3} -> {"a": 2, "b": 3}
+  -10 B  assistant turn 1: "index":0 dropped
+  +2 B  assistant turn 2: "content":"" -> "content":null
+  +3 B  assistant turn 2: arguments {"a":5,"b":4} -> {"a": 5, "b": 4}
+  -10 B  assistant turn 2: "index":0 dropped
+  ledger sum +7 B; measured +7 B
+
+### request headers that differ between the programs (every request of every timed round)
+  x-stainless-raw-response: a_plain_openai absent | c_create_agent ['true']
+  x-stainless-read-timeout: a_plain_openai ['600'] | c_create_agent absent

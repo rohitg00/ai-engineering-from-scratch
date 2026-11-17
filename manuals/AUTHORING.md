@@ -276,6 +276,7 @@ Keep the two modules out of `figures/src`, because the build treats every file t
 
 - A JSON, HTTP, SSE, or JSONL block must be a `listing` with a `source`. The audit fails a `json` fence that is not a listing.
 - The capture kit lives in `capture/`. It runs offline, needs no network and no keys, and follows the repository dependency allowlist.
+- One exception: a manual about a library may install that library and its pinned companion packages in the kit's own environment, listed with exact versions in `capture/requirements.txt`. Its lab scripts and demos may use them too. Everything else stays on the allowlist, and the kit's `check` prints `skipped` with the reason when the packages are not installed.
 - A subject that is a proprietary binary or a hosted service cannot run offline in CI. Its kit records on the author's machine with the pinned binaries installed. Its `check` compares stored outputs after masking, and when the subject is not installed it prints `skipped` with the reason and exits 0. The front matter names the captures recorded that way and the machine they were recorded on.
 - `capture.run` writes `capture/out/`. `capture.check` writes to a temporary directory and compares with `capture/out/` after masking values that change on every run, such as timestamps and generated ids. The audit runs `capture.check` and fails on drift.
 - A listing names its source file in the `source:` field, so the build and the audit can check the excerpt. The reader view shows the title and the language, not the file path.

@@ -1,0 +1,69 @@
+# Tools, schemas, and ToolRuntime
+
+## schema the model sees for @tool add
+
+name=add description='Add two integers.'
+
+{
+  "description": "Add two integers.",
+  "properties": {
+    "a": {
+      "title": "A",
+      "type": "integer"
+    },
+    "b": {
+      "title": "B",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "a",
+    "b"
+  ],
+  "title": "add",
+  "type": "object"
+}
+
+## lookup_order: the ToolRuntime parameter is hidden from the model
+
+lookup_order.args:
+[
+  "order_id"
+]
+
+tool_call_schema:
+{
+  "description": "Look up an order by its id.",
+  "properties": {
+    "order_id": {
+      "title": "Order Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_id"
+  ],
+  "title": "lookup_order",
+  "type": "object"
+}
+
+## invoke a tool with a ToolCall dict
+
+[
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "tool_call_id": "call_9",
+    "status": "success"
+  }
+]
+
+## invoke a ToolRuntime tool outside an agent
+
+lookup_order.invoke({'order_id': 'A-17'}):
+
+raised pydantic_core._pydantic_core.ValidationError: 1 validation error for lookup_order
+runtime
+  Field required [type=missing, input_value={'order_id': 'A-17'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.14/v/missing

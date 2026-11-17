@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" role="img" aria-labelledby="fig-2-6b-title fig-2-6b-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-2-6b-title">Framework time per superstep, by saver and durability mode</title>
+  <desc id="fig-2-6b-desc">Seven horizontal bars, one per saver and durability mode, for one create_agent run of 10 tool round trips with Qwen3 4B on the x86 server guest, 22 supersteps, 30 runs per row, medians. The guest was loaded, so read the share and the order of the bars, not the milliseconds. The framework time is the wall time minus the time inside the Ollama call and the tool function. Each bar gives milliseconds per superstep: no saver async 1.70, InMemorySaver async 2.33, InMemorySaver sync 2.51, InMemorySaver exit 1.79, SqliteSaver async 2.89, SqliteSaver sync 5.31, SqliteSaver exit 2.24. The indigo part is the loop functions: planning, applying, building the checkpoint, and recording task writes. The grey part is the rest: node wrappers and the saver work that the loop waits for. The right column is the framework share of the wall time, 0.144 to 0.449 percent, in runs of about 25.9 s that the model filled.</desc>
+  <text x="20" y="24" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SAVER, MODE</text>
+  <text x="200" y="24" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">framework ms per superstep</text>
+  <text x="620" y="24" font-size="11" text-anchor="end" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">SHARE</text>
+  <text x="620" y="40" font-size="11" text-anchor="end" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">of wall</text>
+  <line x1="200" y1="50" x2="200" y2="292" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="200" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0 ms</text>
+  <line x1="306.67" y1="50" x2="306.67" y2="292" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="306.67" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">2 ms</text>
+  <line x1="413.33" y1="50" x2="413.33" y2="292" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="413.33" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">4 ms</text>
+  <line x1="520" y1="50" x2="520" y2="292" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="520" y="308" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">6 ms</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="68" font-size="11.5" fill="var(--m-teal-ink, #18696a)">no saver</text>
+  <text x="134" y="68" font-size="11.5" fill="var(--m-amber-ink, #85590c)">async</text>
+  <rect x="200" y="56" width="13.01" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="213.01" y="56" width="77.87" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect class="m-knock" x="293.88" y="57.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="296.88" y="68" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">1.70 ms</text>
+  <text x="620" y="68" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0.144 %</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="102" font-size="11.5" fill="var(--m-teal-ink, #18696a)">InMemorySaver</text>
+  <text x="134" y="102" font-size="11.5" fill="var(--m-amber-ink, #85590c)">async</text>
+  <rect x="200" y="90" width="22.79" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="222.79" y="90" width="101.48" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect class="m-knock" x="327.27" y="91.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="330.27" y="102" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">2.33 ms</text>
+  <text x="620" y="102" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0.197 %</text>
+  </g>
+  <g data-beat="3"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.727;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.65s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="136" font-size="11.5" fill="var(--m-teal-ink, #18696a)">InMemorySaver</text>
+  <text x="134" y="136" font-size="11.5" fill="var(--m-amber-ink, #85590c)">sync</text>
+  <rect x="200" y="124" width="22.35" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="222.35" y="124" width="111.73" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect class="m-knock" x="337.08" y="125.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="340.08" y="136" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">2.51 ms</text>
+  <text x="620" y="136" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0.213 %</text>
+  </g>
+  <g data-beat="4"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.8;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.25s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="170" font-size="11.5" fill="var(--m-teal-ink, #18696a)">InMemorySaver</text>
+  <text x="134" y="170" font-size="11.5" fill="var(--m-amber-ink, #85590c)">exit</text>
+  <rect x="200" y="158" width="15.91" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="215.91" y="158" width="79.61" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect class="m-knock" x="298.52" y="159.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="301.52" y="170" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">1.79 ms</text>
+  <text x="620" y="170" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0.153 %</text>
+  </g>
+  <g data-beat="5"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.842;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="2.85s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="204" font-size="11.5" fill="var(--m-teal-ink, #18696a)">SqliteSaver</text>
+  <text x="134" y="204" font-size="11.5" fill="var(--m-amber-ink, #85590c)">async</text>
+  <rect x="200" y="192" width="22.59" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="222.59" y="192" width="131.38" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect class="m-knock" x="356.97" y="193.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="359.97" y="204" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">2.89 ms</text>
+  <text x="620" y="204" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0.245 %</text>
+  </g>
+  <g data-beat="6"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.87;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="3.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="238" font-size="11.5" fill="var(--m-teal-ink, #18696a)">SqliteSaver</text>
+  <text x="134" y="238" font-size="11.5" fill="var(--m-amber-ink, #85590c)">sync</text>
+  <rect x="200" y="226" width="23.03" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="223.03" y="226" width="260.27" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect class="m-knock" x="486.31" y="227.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="489.31" y="238" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">5.31 ms</text>
+  <text x="620" y="238" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0.449 %</text>
+  </g>
+  <g data-beat="7"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.889;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="4.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="272" font-size="11.5" fill="var(--m-teal-ink, #18696a)">SqliteSaver</text>
+  <text x="134" y="272" font-size="11.5" fill="var(--m-amber-ink, #85590c)">exit</text>
+  <rect x="200" y="260" width="16.74" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="216.74" y="260" width="102.52" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <rect class="m-knock" x="322.25" y="261.42" width="52.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="325.25" y="272" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">2.24 ms</text>
+  <text x="620" y="272" font-size="11.5" text-anchor="end" font-weight="700" fill="var(--m-ink, #1a1a1a)">0.190 %</text>
+  </g>
+  <rect x="20" y="331" width="22" height="14" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="48" y="342" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">loop: plan, apply, checkpoint, task writes</text>
+  <rect x="20" y="353" width="22" height="14" fill="var(--m-grey-fill, #ecebe3)" stroke="var(--m-grey-ink, #5e5e59)"/>
+  <text x="48" y="364" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">rest: node wrappers, saver waits on the loop</text>
+  <text x="20" y="392" font-size="11" fill="var(--m-plum-ink, #8a3d72)">the model filled the other 99.55 percent or more of each 25.9 s run</text>
+</svg>

@@ -1,0 +1,357 @@
+# Tool selection, tool emulation, provider tool search, dynamic prompt
+
+Recorded on 2026-11-14 on the x86 server guest with Ollama 0.31.1 on CPU. Models: qwen3:4b-instruct-2507-q4_K_M. ChatOllama settings: temperature 0, seed 42, num_ctx 16384, num_predict 512.
+
+## LLMToolSelectorMiddleware(model=selector, max_tools=1)
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-1>-0",
+    "tool_calls": [
+      {
+        "name": "get_weather",
+        "args": {
+          "city": "Pune"
+        },
+        "id": "<uuid-2>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 150,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 21,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 150,
+      "output_tokens": 21,
+      "total_tokens": 171
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Sunny in Pune",
+    "name": "get_weather",
+    "id": "<uuid-3>",
+    "tool_call_id": "<uuid-2>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The weather in Pune is sunny! 🌞",
+    "id": "lc_run--<uuid-4>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 188,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 11,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 188,
+      "output_tokens": 11,
+      "total_tokens": 199
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "agent",
+    "call": 1,
+    "messages": [
+      "human: Weather in Pune?"
+    ],
+    "tools": [
+      "get_weather"
+    ]
+  },
+  {
+    "model": "agent",
+    "call": 2,
+    "messages": [
+      "human: Weather in Pune?",
+      "ai: calls get_weather",
+      "tool: Sunny in Pune"
+    ],
+    "tools": [
+      "get_weather"
+    ]
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "selector",
+    "call": 1,
+    "messages": [
+      "system: Your goal is to select the most relevant tools for answering the user's query.\nI",
+      "human: Weather in Pune?"
+    ],
+    "format": "json schema"
+  },
+  {
+    "model": "selector",
+    "call": 2,
+    "messages": [
+      "system: Your goal is to select the most relevant tools for answering the user's query.\nI",
+      "human: Weather in Pune?"
+    ],
+    "format": "json schema"
+  }
+]
+
+## LLMToolEmulator(tools=['send_email'], model=emulator): the tool body never runs
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-5>-0",
+    "tool_calls": [
+      {
+        "name": "send_email",
+        "args": {
+          "to": "ops@example.com",
+          "body": "hi"
+        },
+        "id": "<uuid-6>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 163,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 28,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 163,
+      "output_tokens": 28,
+      "total_tokens": 191
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "Email sent successfully to ops@example.com. 📩",
+    "name": "send_email",
+    "id": "<uuid-7>",
+    "tool_call_id": "<uuid-6>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "The email has been successfully sent to ops@example.com. 📩",
+    "id": "lc_run--<uuid-8>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 215,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 15,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 215,
+      "output_tokens": 15,
+      "total_tokens": 230
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "agent-emulated",
+    "call": 1,
+    "messages": [
+      "human: Email ops@example.com the word hi."
+    ],
+    "tools": [
+      "send_email"
+    ]
+  },
+  {
+    "model": "agent-emulated",
+    "call": 2,
+    "messages": [
+      "human: Email ops@example.com the word hi.",
+      "ai: calls send_email",
+      "tool: Email sent successfully to ops@example.com. 📩"
+    ],
+    "tools": [
+      "send_email"
+    ]
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "emulator",
+    "call": 1,
+    "messages": [
+      "human: You are emulating a tool call for testing purposes.\n\nTool: send_email\nDescriptio"
+    ]
+  }
+]
+
+## ProviderToolSearchMiddleware on ChatOllama
+
+invoke:
+
+raised builtins.ValueError: ProviderToolSearchMiddleware requires a provider with server-side tool search, but got 'ollama'; supported providers: anthropic, openai
+
+## ProviderToolSearchMiddleware with nothing deferred passes the request through
+
+[
+  {
+    "type": "AIMessage",
+    "content": "",
+    "id": "lc_run--<uuid-9>-0",
+    "tool_calls": [
+      {
+        "name": "add",
+        "args": {
+          "a": 2,
+          "b": 3
+        },
+        "id": "<uuid-10>",
+        "type": "tool_call"
+      }
+    ],
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 162,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 25,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 162,
+      "output_tokens": 25,
+      "total_tokens": 187
+    }
+  },
+  {
+    "type": "ToolMessage",
+    "content": "5",
+    "name": "add",
+    "id": "<uuid-11>",
+    "tool_call_id": "<uuid-10>",
+    "status": "success"
+  },
+  {
+    "type": "AIMessage",
+    "content": "2 + 3 = 5.",
+    "id": "lc_run--<uuid-12>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 201,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 9,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 201,
+      "output_tokens": 9,
+      "total_tokens": 210
+    }
+  }
+]
+
+## dynamic_prompt sets the system prompt from runtime context
+
+[
+  {
+    "type": "AIMessage",
+    "content": "Hi! I'm here to help you with any questions or tasks you might have. Whether it's about technology, science, literature, or just everyday things, I'm ready to assist! 😊 How can I help you today?",
+    "id": "lc_run--<uuid-13>-0",
+    "response_metadata": {
+      "model": "qwen3:4b-instruct-2507-q4_K_M",
+      "created_at": "<time>",
+      "done": true,
+      "done_reason": "stop",
+      "total_duration": "<ns>",
+      "load_duration": "<ns>",
+      "prompt_eval_count": 25,
+      "prompt_eval_duration": "<ns>",
+      "eval_count": 48,
+      "eval_duration": "<ns>",
+      "logprobs": null,
+      "model_name": "qwen3:4b-instruct-2507-q4_K_M",
+      "model_provider": "ollama"
+    },
+    "usage_metadata": {
+      "input_tokens": 25,
+      "output_tokens": 48,
+      "total_tokens": 73
+    }
+  }
+]
+
+model calls, as the model received them:
+[
+  {
+    "model": "dynamic",
+    "call": 1,
+    "messages": [
+      "system: You are helping Ada.",
+      "human: hi, who are you helping?"
+    ]
+  }
+]

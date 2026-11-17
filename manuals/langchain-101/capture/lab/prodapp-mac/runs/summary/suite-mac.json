@@ -1,0 +1,6952 @@
+{
+ "haiku": [
+  {
+   "rep": "rep-1",
+   "block": [
+    "# block haiku rep 1",
+    "# model anthropic:claude-haiku-5-5 backup ollama:qwen3:4b-instruct-2507-q4_K_M",
+    "# start 2026-11-15T11:11:43Z",
+    "# uptime 16:41  up 89 days,  2:38, 12 users, load averages: 9.34 15.42 16.26",
+    "# end 2026-11-15T11:13:50Z",
+    "# uptime 16:43  up 89 days,  2:40, 12 users, load averages: 7.63 12.55 14.98",
+    "# exit 0"
+   ],
+   "cases": {
+    "test_eval[faq_return_window]": {
+     "outcome": "passed",
+     "seconds": 6.484,
+     "message": null
+    },
+    "test_eval[faq_shipping_time]": {
+     "outcome": "passed",
+     "seconds": 2.169,
+     "message": null
+    },
+    "test_eval[order_status]": {
+     "outcome": "passed",
+     "seconds": 2.202,
+     "message": null
+    },
+    "test_eval[order_unknown]": {
+     "outcome": "passed",
+     "seconds": 2.589,
+     "message": null
+    },
+    "test_eval[order_of_other_customer_is_hidden]": {
+     "outcome": "passed",
+     "seconds": 2.426,
+     "message": null
+    },
+    "test_eval[refund_approved_once]": {
+     "outcome": "passed",
+     "seconds": 4.195,
+     "message": null
+    },
+    "test_eval[refund_rejected_has_no_side_effect]": {
+     "outcome": "passed",
+     "seconds": 5.432,
+     "message": null
+    },
+    "test_eval[refund_asked_twice]": {
+     "outcome": "passed",
+     "seconds": 6.154,
+     "message": null
+    },
+    "test_eval[refund_tool_replay_is_idempotent]": {
+     "outcome": "passed",
+     "seconds": 0.008,
+     "message": null
+    },
+    "test_eval[ticket_for_a_human]": {
+     "outcome": "passed",
+     "seconds": 3.156,
+     "message": null
+    },
+    "test_eval[memory_saved_and_recalled]": {
+     "outcome": "passed",
+     "seconds": 5.092,
+     "message": null
+    },
+    "test_eval[memory_of_other_user_is_invisible]": {
+     "outcome": "passed",
+     "seconds": 2.886,
+     "message": null
+    },
+    "test_eval[flaky_faq_is_retried]": {
+     "outcome": "passed",
+     "seconds": 2.32,
+     "message": null
+    },
+    "test_eval[hung_tool_times_out]": {
+     "outcome": "passed",
+     "seconds": 4.481,
+     "message": null
+    },
+    "test_eval[failed_ticket_is_not_retried]": {
+     "outcome": "passed",
+     "seconds": 4.06,
+     "message": null
+    },
+    "test_eval[primary_outage_uses_backup]": {
+     "outcome": "passed",
+     "seconds": 17.133,
+     "message": null
+    },
+    "test_eval[runaway_loop_hits_call_limit]": {
+     "outcome": "passed",
+     "seconds": 22.121,
+     "message": null
+    },
+    "test_eval[long_thread_is_summarized]": {
+     "outcome": "passed",
+     "seconds": 21.171,
+     "message": null
+    },
+    "test_eval[new_message_while_waiting_for_approval]": {
+     "outcome": "passed",
+     "seconds": 4.297,
+     "message": null
+    },
+    "test_eval[status_then_refund_in_one_thread]": {
+     "outcome": "passed",
+     "seconds": 6.073,
+     "message": null
+    }
+   },
+   "details": {
+    "faq_return_window": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long do I have to return an item?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "return window how long to return an item"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "You can return most items within 30 days of delivery. They must be unused and in the original box. To start a return, open your order in your account and choose \"Start a return.\"",
+       "done": {
+        "status": "done",
+        "seconds": 2.5334
+       }
+      }
+     ]
+    },
+    "faq_shipping_time": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how long does shipping take"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 2.1496
+       }
+      }
+     ]
+    },
+    "order_status": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e03-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e03-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e03-2 (rain jacket, $89.00) has shipped. I don't have tracking details in the order record, so I can't give you a delivery date or carrier location. If it hasn't arrived within the expected window, tell me and I can open a ticket for a support agent to look into it.",
+       "done": {
+        "status": "done",
+        "seconds": 2.1704
+       }
+      }
+     ]
+    },
+    "order_unknown": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-nobody-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-nobody-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find order ORD-nobody-1 on your account. Please check the order number, which should look like ORD-yourname-1. If you have a different number, send it over and I'll look it up.",
+       "done": {
+        "status": "done",
+        "seconds": 2.5484
+       }
+      }
+     ]
+    },
+    "order_of_other_customer_is_hidden": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-alice-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-alice-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find order ORD-alice-1 on this account. Please check the order number for typos, or make sure you're signed in to the account you placed the order with. If you have a different order number, send it and I'll look it up.",
+       "done": {
+        "status": "done",
+        "seconds": 2.4027
+       }
+      }
+     ]
+    },
+    "refund_approved_once": {
+     "refunds": [
+      {
+       "order_id": "ORD-e06-1",
+       "amount_cents": 12900
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e06-1",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e06-1"
+         }
+        ],
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e06-1",
+          "amount_cents": 12900,
+          "reason": "Customer requested a full refund for ORD-e06-1 (trail running shoes, delivered)."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 3.0367
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I've submitted a full refund of $129.00 for order ORD-e06-1 (trail running shoes). It's pending human approval, so it isn't final yet. Once approved, it goes back to your original payment method.",
+       "done": {
+        "status": "done",
+        "seconds": 1.1307
+       }
+      }
+     ]
+    },
+    "refund_rejected_has_no_side_effect": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e07-1",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e07-1"
+         }
+        ],
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e07-1",
+          "amount_cents": 12900,
+          "reason": "Customer requested full refund for ORD-e07-1 (trail running shoes, delivered, $129.00)."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 3.2645
+       }
+      },
+      {
+       "op": "approve",
+       "say": "reject",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "The refund for ORD-e07-1 (trail running shoes, $129.00) was not submitted, so no money has moved. Did you mean to cancel it, or would you like a different amount or a fresh request? If you want to proceed with the full $129.00, just confirm.",
+       "done": {
+        "status": "done",
+        "seconds": 2.1481
+       }
+      }
+     ]
+    },
+    "refund_asked_twice": {
+     "refunds": [
+      {
+       "order_id": "ORD-e08-2",
+       "amount_cents": 8900
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 please",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e08-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "ORD-e08-2 is a rain jacket, status \"shipped,\" total $89.00, with nothing refunded yet.\n\nDo you want a full refund of $89.00? If so, what's the reason (for example, the jacket is damaged, it doesn't fit, or you changed your mind)? Once you confirm, I'll submit it for human approval.",
+       "done": {
+        "status": "done",
+        "seconds": 3.351
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 again",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e08-2",
+          "amount_cents": 8900,
+          "reason": "Customer requested full refund of ORD-e08-2 (rain jacket). No specific reason given."
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 1.844
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I've submitted a full refund of $89.00 for ORD-e08-2 (rain jacket). It needs human approval before the money goes back to your original payment method.",
+       "done": {
+        "status": "done",
+        "seconds": 0.9326
+       }
+      }
+     ]
+    },
+    "refund_tool_replay_is_idempotent": {
+     "refunds": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": []
+    },
+    "ticket_for_a_human": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Customer reports damaged item - requests human agent"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "I want to talk to a human about a damaged item",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Customer reports damaged item - requests human agent",
+          "body": "Customer asked to speak with a human about a damaged item. No order ID provided yet. Please follow up with the customer to collect the order number and details of the damage."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I've opened a ticket (#1) and a human support agent will follow up with you.\n\nTo help them move faster, please reply with your order number (it looks like ORD-xxxx-1) and a brief description of the damage. If you have a photo, include that too.",
+       "done": {
+        "status": "done",
+        "seconds": 3.1453
+       }
+      }
+     ]
+    },
+    "memory_saved_and_recalled": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Remember that I prefer email updates",
+       "tool_calls": [
+        [
+         "save_note",
+         {
+          "text": "Customer prefers email updates."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "save_note",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Got it. I've saved your preference for email updates.",
+       "done": {
+        "status": "done",
+        "seconds": 2.408
+       }
+      },
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I have one note saved on your account: you prefer email updates. I don't have anything else on file.",
+       "done": {
+        "status": "done",
+        "seconds": 2.6567
+       }
+      }
+     ]
+    },
+    "memory_of_other_user_is_invisible": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I don't have any saved notes about you yet, so there's nothing stored from previous conversations. If you tell me something you'd like me to remember, such as a preferred shipping address or sizing info, I can save it for future chats.",
+       "done": {
+        "status": "done",
+        "seconds": 2.866
+       }
+      }
+     ]
+    },
+    "flaky_faq_is_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping cost rates"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping is free on orders over $50. Orders under $50 pay $5.95. Express shipping is $14.95.",
+       "done": {
+        "status": "done",
+        "seconds": 2.3055
+       }
+      }
+     ]
+    },
+    "hung_tool_times_out": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e14-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e14-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't retrieve order ORD-e14-1 because our order system timed out. I don't have its status or shipping details, and I don't want to guess. Please try again in a few minutes. If it still fails, I can open a ticket for a human agent to check it.",
+       "done": {
+        "status": "done",
+        "seconds": 4.468
+       }
+      }
+     ]
+    },
+    "failed_ticket_is_not_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Open a ticket, I need a human",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Customer requests human support agent",
+          "body": "The customer asked to speak with a human support agent. No further details were provided in the chat. Please reach out to the customer to assist them."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't open a ticket because of a connection error on our end. Would you like me to try again? If it keeps failing, please try contacting us again in a few minutes.",
+       "done": {
+        "status": "done",
+        "seconds": 4.0441
+       }
+      }
+     ]
+    },
+    "primary_outage_uses_backup": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e16-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e16-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount was $129.00, and no refund has been processed yet.",
+       "done": {
+        "status": "done",
+        "seconds": 16.9554
+       }
+      }
+     ]
+    },
+    "runaway_loop_hits_call_limit": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Can you check the shipping options for me?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Here are our shipping options:\n\n- **Standard:** 3 to 6 business days. Free on orders over $50; otherwise $5.95.\n- **Express:** 1 to 2 business days. $14.95.\n\nDo you have a specific order you'd like me to check?Here are our shipping options:\n\n- **Standard:** 3 to 6 business days. Free on orders over ",
+       "done": {
+        "status": "done",
+        "seconds": 20.8922
+       }
+      }
+     ]
+    },
+    "long_thread_is_summarized": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how long does shipping take"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 2.6427
+       }
+      },
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how much does shipping cost"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping is free on orders over $50; below that it's $5.95. Express shipping costs $14.95.",
+       "done": {
+        "status": "done",
+        "seconds": 2.4024
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do you ship internationally?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "do you ship internationally"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Yes, we ship to the EU, the UK, Canada, and Australia. Duties are shown at checkout and included in the price.",
+       "done": {
+        "status": "done",
+        "seconds": 2.5897
+       }
+      },
+      {
+       "op": "say",
+       "say": "How do I pick the right size?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how to pick the right size"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Each product page has a size chart in centimetres. If you're between sizes, choose the larger one.",
+       "done": {
+        "status": "done",
+        "seconds": 5.0834
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do your products have a warranty?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "warranty"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Yes. Footwear and outerwear come with a one-year warranty against defects in materials and stitching.",
+       "done": {
+        "status": "done",
+        "seconds": 5.1632
+       }
+      },
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e18-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e18-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e18-2 (rain jacket, $89.00) has shipped. I don't have tracking details in my system, so I can't give you an exact delivery date.",
+       "done": {
+        "status": "done",
+        "seconds": 2.5466
+       }
+      }
+     ]
+    },
+    "new_message_while_waiting_for_approval": {
+     "refunds": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e19-3",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e19-3"
+         }
+        ],
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e19-3",
+          "amount_cents": 2400,
+          "reason": "Customer requested a full refund for the water bottle order."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 3.0593
+       }
+      },
+      {
+       "op": "say",
+       "http": 409
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I've submitted a full refund of $24.00 for order ORD-e19-3 (water bottle). It needs human approval before it goes through to your original payment method.",
+       "done": {
+        "status": "done",
+        "seconds": 1.1938
+       }
+      }
+     ]
+    },
+    "status_then_refund_in_one_thread": {
+     "refunds": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e20-3?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e20-3"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e20-3 (water bottle, $24.00) is still processing and hasn't shipped yet. It has no refunds on it.",
+       "done": {
+        "status": "done",
+        "seconds": 2.5659
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e20-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e20-3",
+          "amount_cents": 2400,
+          "reason": "Customer requested a full refund for order ORD-e20-3 (water bottle), which is still processing."
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 2.3765
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I've submitted a full refund of $24.00 for ORD-e20-3 (refund ID 5). It needs human approval before it goes back to your original payment method.",
+       "done": {
+        "status": "done",
+        "seconds": 1.0346
+       }
+      }
+     ]
+    }
+   },
+   "passed": 20,
+   "total": 20
+  }
+ ],
+ "qwen3-14b": [
+  {
+   "rep": "rep-1",
+   "block": [
+    "# block qwen3-14b rep 1",
+    "# model ollama:qwen3:14b backup ollama:qwen3:4b-instruct-2507-q4_K_M",
+    "# start 2026-11-15T10:27:48Z",
+    "# uptime 15:57  up 89 days,  1:54, 12 users, load averages: 5.04 6.95 5.48",
+    "# end 2026-11-15T10:41:34Z",
+    "# uptime 16:11  up 89 days,  2:08, 12 users, load averages: 6.13 10.25 8.76",
+    "# exit 1"
+   ],
+   "cases": {
+    "test_kill_mid_refund_then_resume_refunds_once": {
+     "outcome": "failed",
+     "seconds": 30.831,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_sigterm_lets_in_flight_run_finish": {
+     "outcome": "passed",
+     "seconds": 9.212,
+     "message": null
+    },
+    "test_sigterm_past_deadline_checkpoints_and_resumes": {
+     "outcome": "passed",
+     "seconds": 9.964,
+     "message": null
+    },
+    "test_eval[faq_return_window]": {
+     "outcome": "passed",
+     "seconds": 12.311,
+     "message": null
+    },
+    "test_eval[faq_shipping_time]": {
+     "outcome": "passed",
+     "seconds": 10.067,
+     "message": null
+    },
+    "test_eval[order_status]": {
+     "outcome": "passed",
+     "seconds": 10.235,
+     "message": null
+    },
+    "test_eval[order_unknown]": {
+     "outcome": "passed",
+     "seconds": 8.978,
+     "message": null
+    },
+    "test_eval[order_of_other_customer_is_hidden]": {
+     "outcome": "passed",
+     "seconds": 10.381,
+     "message": null
+    },
+    "test_eval[refund_approved_once]": {
+     "outcome": "failed",
+     "seconds": 9.239,
+     "message": "AssertionError: assert ('refund_orde...e06-1', 10000) == ('refund_orde...e06-1', 12900)\n  \n  At index 2 diff: 10000 != 12900\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    (\n        'refund_order',\n        'ORD-e06-1',...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_rejected_has_no_side_effect]": {
+     "outcome": "passed",
+     "seconds": 13.714,
+     "message": null
+    },
+    "test_eval[refund_asked_twice]": {
+     "outcome": "failed",
+     "seconds": 25.604,
+     "message": "AssertionError: assert [] == [{'amount_cents': 8900}]\n  \n  Right contains one more item: {'amount_cents': 8900}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     {...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_tool_replay_is_idempotent]": {
+     "outcome": "passed",
+     "seconds": 0.015,
+     "message": null
+    },
+    "test_eval[ticket_for_a_human]": {
+     "outcome": "passed",
+     "seconds": 13.276,
+     "message": null
+    },
+    "test_eval[memory_saved_and_recalled]": {
+     "outcome": "passed",
+     "seconds": 18.775,
+     "message": null
+    },
+    "test_eval[memory_of_other_user_is_invisible]": {
+     "outcome": "passed",
+     "seconds": 8.338,
+     "message": null
+    },
+    "test_eval[flaky_faq_is_retried]": {
+     "outcome": "passed",
+     "seconds": 11.681,
+     "message": null
+    },
+    "test_eval[hung_tool_times_out]": {
+     "outcome": "failed",
+     "seconds": 11.052,
+     "message": "assert (3969606.330429166 - 3969595.287803625) < 5\n +  where 3969606.330429166 = <built-in function perf_counter>()\n +    where <built-in function perf_counter> = time.perf_counter"
+    },
+    "test_eval[failed_ticket_is_not_retried]": {
+     "outcome": "passed",
+     "seconds": 14.779,
+     "message": null
+    },
+    "test_eval[primary_outage_uses_backup]": {
+     "outcome": "passed",
+     "seconds": 15.639,
+     "message": null
+    },
+    "test_eval[runaway_loop_hits_call_limit]": {
+     "outcome": "passed",
+     "seconds": 151.592,
+     "message": null
+    },
+    "test_eval[long_thread_is_summarized]": {
+     "outcome": "passed",
+     "seconds": 168.953,
+     "message": null
+    },
+    "test_eval[new_message_while_waiting_for_approval]": {
+     "outcome": "failed",
+     "seconds": 17.687,
+     "message": "AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]\n  \n  At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    [\n        {\n  -         'amount_cents': 2400,...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[status_then_refund_in_one_thread]": {
+     "outcome": "passed",
+     "seconds": 40.084,
+     "message": null
+    },
+    "test_one_user_cannot_read_another_users_thread_or_memory": {
+     "outcome": "passed",
+     "seconds": 46.401,
+     "message": null
+    },
+    "test_missing_or_wrong_token_is_rejected": {
+     "outcome": "passed",
+     "seconds": 0.002,
+     "message": null
+    },
+    "test_langsmith_receives_nothing_unless_enabled": {
+     "outcome": "passed",
+     "seconds": 115.604,
+     "message": null
+    },
+    "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": {
+     "outcome": "passed",
+     "seconds": 40.737,
+     "message": null
+    }
+   },
+   "details": {
+    "faq_return_window": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long do I have to return an item?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "return period"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "You can return most items within 30 days of delivery. Items must be unused and in the original box. To start a return, open the order in your account and choose \"Start a return.\" We'll email a prepaid label within one hour.",
+       "done": {
+        "status": "done",
+        "seconds": 12.017
+       }
+      }
+     ]
+    },
+    "faq_shipping_time": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping time"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 10.0397
+       }
+      }
+     ]
+    },
+    "order_status": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e03-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e03-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e03-2 for the Rain jacket is shipped. The total amount was $89.00, and there have been no refunds.",
+       "done": {
+        "status": "done",
+        "seconds": 10.219
+       }
+      }
+     ]
+    },
+    "order_unknown": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-nobody-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-nobody-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "We couldn't find an order with the ID \"ORD-nobody-1\" on your account. Could you double-check the order ID or provide more details?",
+       "done": {
+        "status": "done",
+        "seconds": 8.9538
+       }
+      }
+     ]
+    },
+    "order_of_other_customer_is_hidden": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-alice-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-alice-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "We couldn't find an order with the ID \"ORD-alice-1\" on your account. Could you double-check the order ID or provide more details?",
+       "done": {
+        "status": "done",
+        "seconds": 10.3501
+       }
+      }
+     ]
+    },
+    "refund_approved_once": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e06-1",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e06-1",
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 9.2209
+       }
+      }
+     ]
+    },
+    "refund_rejected_has_no_side_effect": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e07-1",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e07-1",
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 8.1603
+       }
+      },
+      {
+       "op": "approve",
+       "say": "reject",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm sorry, but I can't process the refund automatically. Let me check with our team to see what options we have available for you.",
+       "done": {
+        "status": "done",
+        "seconds": 5.5175
+       }
+      }
+     ]
+    },
+    "refund_asked_twice": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 please",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund.",
+          "order_id": "ORD-e08-2"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 9.1718
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "It seems the refund amount would exceed the order total. Could you please provide more details so we can assist you further?",
+       "done": {
+        "status": "done",
+        "seconds": 4.0905
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 again",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e08-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "The order total is $89.00, and no refund has been processed yet. Would you like to proceed with a refund for part or all of this order?",
+       "done": {
+        "status": "done",
+        "seconds": 12.3163
+       }
+      }
+     ]
+    },
+    "refund_tool_replay_is_idempotent": {
+     "refunds": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": []
+    },
+    "ticket_for_a_human": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Damaged Item"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "I want to talk to a human about a damaged item",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Damaged Item",
+          "body": "The customer wants to talk to a human about a damaged item."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "A human support agent will contact you shortly regarding your damaged item. Thank you for your patience!",
+       "done": {
+        "status": "done",
+        "seconds": 13.2556
+       }
+      }
+     ]
+    },
+    "memory_saved_and_recalled": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Remember that I prefer email updates",
+       "tool_calls": [
+        [
+         "save_note",
+         {
+          "text": "Customer prefers email updates."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "save_note",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Got it! We'll send you email updates. Let us know if there's anything else we can assist with.",
+       "done": {
+        "status": "done",
+        "seconds": 8.3192
+       }
+      },
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I remember that you prefer to receive email updates. Let me know if there's anything else I can remember or if you'd like to share more preferences!",
+       "done": {
+        "status": "done",
+        "seconds": 10.4141
+       }
+      }
+     ]
+    },
+    "memory_of_other_user_is_invisible": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I don't have any notes about you. Is there something I can help you with?",
+       "done": {
+        "status": "done",
+        "seconds": 8.3193
+       }
+      }
+     ]
+    },
+    "flaky_faq_is_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping cost"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping is free on orders over $50. Below that, it costs $5.95. Express shipping costs $14.95.",
+       "done": {
+        "status": "done",
+        "seconds": 11.6643
+       }
+      }
+     ]
+    },
+    "hung_tool_times_out": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e14-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e14-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to look up your order right now. Please check back later or contact us directly for assistance.",
+       "done": {
+        "status": "done",
+        "seconds": 11.0397
+       }
+      }
+     ]
+    },
+    "failed_ticket_is_not_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Open a ticket, I need a human",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Need Human Support",
+          "body": "I need a human to assist me with my request."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to open a support ticket right now. Please try again later or let me know how else I can assist you.",
+       "done": {
+        "status": "done",
+        "seconds": 14.7641
+       }
+      }
+     ]
+    },
+    "primary_outage_uses_backup": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e16-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e16-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount was $129.00, and no refund has been processed yet.",
+       "done": {
+        "status": "done",
+        "seconds": 13.5526
+       }
+      }
+     ]
+    },
+    "runaway_loop_hits_call_limit": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Can you check the shipping options for me?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Sure, let me check the shipping options for you.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 busines",
+       "done": {
+        "status": "done",
+        "seconds": 151.3353
+       }
+      }
+     ]
+    },
+    "long_thread_is_summarized": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping time"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 12.4988
+       }
+      },
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.",
+       "done": {
+        "status": "done",
+        "seconds": 9.7931
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do you ship internationally?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "We currently only ship to addresses within the United States.",
+       "done": {
+        "status": "done",
+        "seconds": 3.0211
+       }
+      },
+      {
+       "op": "say",
+       "say": "How do I pick the right size?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how to pick size"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Each product page has a size chart in centimetres. If you are between sizes, choose the larger one.",
+       "done": {
+        "status": "done",
+        "seconds": 13.7374
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do your products have a warranty?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "warranty"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Footwear and outerwear carry a one-year warranty against defects in materials and stitching.",
+       "done": {
+        "status": "done",
+        "seconds": 63.5858
+       }
+      },
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e18-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e18-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e18-2 for a rain jacket is shipped. The total amount was $89.00, and no refund has been processed.",
+       "done": {
+        "status": "done",
+        "seconds": 64.7214
+       }
+      }
+     ]
+    },
+    "new_message_while_waiting_for_approval": {
+     "refunds": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e19-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e19-3",
+          "amount_cents": 0,
+          "reason": "Customer requested a refund."
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 10.5649
+       }
+      },
+      {
+       "op": "say",
+       "http": 409
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "The refund for order ORD-e19-3 has been processed. A human will review it shortly.",
+       "done": {
+        "status": "done",
+        "seconds": 7.0864
+       }
+      }
+     ]
+    },
+    "status_then_refund_in_one_thread": {
+     "refunds": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e20-3?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e20-3"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e20-3 is processing. You ordered a water bottle for $24.00, and no refund has been issued yet.",
+       "done": {
+        "status": "done",
+        "seconds": 17.7688
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e20-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "reason": "Customer requested refund",
+          "order_id": "ORD-e20-3",
+          "amount_cents": 2400
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 12.9998
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your refund for ORD-e20-3 is being processed. It may take a few days to appear on your statement.",
+       "done": {
+        "status": "done",
+        "seconds": 9.2817
+       }
+      }
+     ]
+    }
+   },
+   "passed": 22,
+   "total": 27
+  },
+  {
+   "rep": "rep-2",
+   "block": [
+    "# block qwen3-14b rep 2",
+    "# model ollama:qwen3:14b backup ollama:qwen3:4b-instruct-2507-q4_K_M",
+    "# start 2026-11-15T10:41:34Z",
+    "# uptime 16:11  up 89 days,  2:08, 12 users, load averages: 6.13 10.25 8.76",
+    "# end 2026-11-15T10:56:53Z",
+    "# uptime 16:26  up 89 days,  2:23, 12 users, load averages: 7.80 14.02 14.17",
+    "# exit 1"
+   ],
+   "cases": {
+    "test_kill_mid_refund_then_resume_refunds_once": {
+     "outcome": "failed",
+     "seconds": 21.832,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_sigterm_lets_in_flight_run_finish": {
+     "outcome": "failed",
+     "seconds": 13.14,
+     "message": "httpx.RemoteProtocolError: peer closed connection without sending complete message body (incomplete chunked read)"
+    },
+    "test_sigterm_past_deadline_checkpoints_and_resumes": {
+     "outcome": "passed",
+     "seconds": 15.033,
+     "message": null
+    },
+    "test_eval[faq_return_window]": {
+     "outcome": "passed",
+     "seconds": 20.026,
+     "message": null
+    },
+    "test_eval[faq_shipping_time]": {
+     "outcome": "passed",
+     "seconds": 14.646,
+     "message": null
+    },
+    "test_eval[order_status]": {
+     "outcome": "passed",
+     "seconds": 18.259,
+     "message": null
+    },
+    "test_eval[order_unknown]": {
+     "outcome": "passed",
+     "seconds": 14.455,
+     "message": null
+    },
+    "test_eval[order_of_other_customer_is_hidden]": {
+     "outcome": "passed",
+     "seconds": 16.092,
+     "message": null
+    },
+    "test_eval[refund_approved_once]": {
+     "outcome": "failed",
+     "seconds": 11.794,
+     "message": "AssertionError: assert ('refund_orde...e06-1', 10000) == ('refund_orde...e06-1', 12900)\n  \n  At index 2 diff: 10000 != 12900\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    (\n        'refund_order',\n        'ORD-e06-1',...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_rejected_has_no_side_effect]": {
+     "outcome": "passed",
+     "seconds": 21.243,
+     "message": null
+    },
+    "test_eval[refund_asked_twice]": {
+     "outcome": "failed",
+     "seconds": 39.536,
+     "message": "AssertionError: assert [] == [{'amount_cents': 8900}]\n  \n  Right contains one more item: {'amount_cents': 8900}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     {...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_tool_replay_is_idempotent]": {
+     "outcome": "passed",
+     "seconds": 0.031,
+     "message": null
+    },
+    "test_eval[ticket_for_a_human]": {
+     "outcome": "passed",
+     "seconds": 15.624,
+     "message": null
+    },
+    "test_eval[memory_saved_and_recalled]": {
+     "outcome": "passed",
+     "seconds": 26.332,
+     "message": null
+    },
+    "test_eval[memory_of_other_user_is_invisible]": {
+     "outcome": "passed",
+     "seconds": 10.012,
+     "message": null
+    },
+    "test_eval[flaky_faq_is_retried]": {
+     "outcome": "passed",
+     "seconds": 16.385,
+     "message": null
+    },
+    "test_eval[hung_tool_times_out]": {
+     "outcome": "failed",
+     "seconds": 12.988,
+     "message": "assert (3970507.372476958 - 3970494.393008291) < 5\n +  where 3970507.372476958 = <built-in function perf_counter>()\n +    where <built-in function perf_counter> = time.perf_counter"
+    },
+    "test_eval[failed_ticket_is_not_retried]": {
+     "outcome": "passed",
+     "seconds": 18.789,
+     "message": null
+    },
+    "test_eval[primary_outage_uses_backup]": {
+     "outcome": "passed",
+     "seconds": 20.906,
+     "message": null
+    },
+    "test_eval[runaway_loop_hits_call_limit]": {
+     "outcome": "passed",
+     "seconds": 169.051,
+     "message": null
+    },
+    "test_eval[long_thread_is_summarized]": {
+     "outcome": "passed",
+     "seconds": 178.953,
+     "message": null
+    },
+    "test_eval[new_message_while_waiting_for_approval]": {
+     "outcome": "failed",
+     "seconds": 16.065,
+     "message": "AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]\n  \n  At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    [\n        {\n  -         'amount_cents': 2400,...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[status_then_refund_in_one_thread]": {
+     "outcome": "passed",
+     "seconds": 34.36,
+     "message": null
+    },
+    "test_one_user_cannot_read_another_users_thread_or_memory": {
+     "outcome": "passed",
+     "seconds": 38.343,
+     "message": null
+    },
+    "test_missing_or_wrong_token_is_rejected": {
+     "outcome": "passed",
+     "seconds": 0.003,
+     "message": null
+    },
+    "test_langsmith_receives_nothing_unless_enabled": {
+     "outcome": "passed",
+     "seconds": 110.855,
+     "message": null
+    },
+    "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": {
+     "outcome": "passed",
+     "seconds": 41.52,
+     "message": null
+    }
+   },
+   "details": {
+    "faq_return_window": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long do I have to return an item?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "return period"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "You can return most items within 30 days of delivery. Items must be unused and in the original box. To start a return, open the order in your account and choose \"Start a return.\" We'll email a prepaid label within one hour.",
+       "done": {
+        "status": "done",
+        "seconds": 19.5874
+       }
+      }
+     ]
+    },
+    "faq_shipping_time": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping time"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 14.6294
+       }
+      }
+     ]
+    },
+    "order_status": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e03-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e03-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e03-2 for the Rain jacket is shipped. The total amount was $89.00, and there have been no refunds.",
+       "done": {
+        "status": "done",
+        "seconds": 18.2055
+       }
+      }
+     ]
+    },
+    "order_unknown": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-nobody-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-nobody-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "We couldn't find an order with the ID \"ORD-nobody-1\" on your account. Could you double-check the order ID or provide more details?",
+       "done": {
+        "status": "done",
+        "seconds": 14.415
+       }
+      }
+     ]
+    },
+    "order_of_other_customer_is_hidden": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-alice-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-alice-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "We couldn't find an order with the ID \"ORD-alice-1\" on your account. Could you double-check the order ID or provide more details?",
+       "done": {
+        "status": "done",
+        "seconds": 16.0659
+       }
+      }
+     ]
+    },
+    "refund_approved_once": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e06-1",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e06-1",
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 11.7814
+       }
+      }
+     ]
+    },
+    "refund_rejected_has_no_side_effect": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e07-1",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e07-1",
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 13.0463
+       }
+      },
+      {
+       "op": "approve",
+       "say": "reject",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm sorry, but I can't process the refund automatically. Let me escalate this to a human support agent for further assistance.",
+       "done": {
+        "status": "done",
+        "seconds": 8.1421
+       }
+      }
+     ]
+    },
+    "refund_asked_twice": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 please",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e08-2",
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund."
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 11.8194
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "It seems the refund amount would exceed the order total. Could you please provide more details so we can assist you further?",
+       "done": {
+        "status": "done",
+        "seconds": 8.1565
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 again",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e08-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "The order total is $89.00, and no refund has been processed yet. Would you like to proceed with a refund for part or all of this order?",
+       "done": {
+        "status": "done",
+        "seconds": 19.506
+       }
+      }
+     ]
+    },
+    "refund_tool_replay_is_idempotent": {
+     "refunds": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": []
+    },
+    "ticket_for_a_human": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Damaged Item"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "I want to talk to a human about a damaged item",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Damaged Item",
+          "body": "The customer wants to talk to a human about a damaged item."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "A human support agent will contact you shortly regarding your damaged item. Thank you for your patience!",
+       "done": {
+        "status": "done",
+        "seconds": 15.595
+       }
+      }
+     ]
+    },
+    "memory_saved_and_recalled": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Remember that I prefer email updates",
+       "tool_calls": [
+        [
+         "save_note",
+         {
+          "text": "Customer prefers email updates."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "save_note",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Got it! We'll send you email updates. Let us know if there's anything else we can assist with.",
+       "done": {
+        "status": "done",
+        "seconds": 13.0238
+       }
+      },
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I remember that you prefer to receive email updates. Let me know if there's anything else I can remember or if you'd like to share more preferences!",
+       "done": {
+        "status": "done",
+        "seconds": 13.2641
+       }
+      }
+     ]
+    },
+    "memory_of_other_user_is_invisible": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I don't have any notes about you. Is there something I can help you with?",
+       "done": {
+        "status": "done",
+        "seconds": 9.9902
+       }
+      }
+     ]
+    },
+    "flaky_faq_is_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping cost"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping is free on orders over $50. Below that, it costs $5.95. Express shipping costs $14.95.",
+       "done": {
+        "status": "done",
+        "seconds": 16.3556
+       }
+      }
+     ]
+    },
+    "hung_tool_times_out": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e14-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e14-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to look up your order right now. Please check back later or contact us directly for assistance.",
+       "done": {
+        "status": "done",
+        "seconds": 12.9764
+       }
+      }
+     ]
+    },
+    "failed_ticket_is_not_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Open a ticket, I need a human",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Need Human Support",
+          "body": "I need a human to assist me with my request."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to open a support ticket right now. Please try again later or let me know how else I can assist you.",
+       "done": {
+        "status": "done",
+        "seconds": 18.7604
+       }
+      }
+     ]
+    },
+    "primary_outage_uses_backup": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e16-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e16-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount was $129.00, and no refund has been processed yet.",
+       "done": {
+        "status": "done",
+        "seconds": 20.7024
+       }
+      }
+     ]
+    },
+    "runaway_loop_hits_call_limit": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Can you check the shipping options for me?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Sure, let me check the shipping options for you.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 busines",
+       "done": {
+        "status": "done",
+        "seconds": 168.8381
+       }
+      }
+     ]
+    },
+    "long_thread_is_summarized": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping time"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 14.6546
+       }
+      },
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.",
+       "done": {
+        "status": "done",
+        "seconds": 12.3533
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do you ship internationally?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "We currently only ship to addresses within the United States.",
+       "done": {
+        "status": "done",
+        "seconds": 4.3466
+       }
+      },
+      {
+       "op": "say",
+       "say": "How do I pick the right size?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how to pick size"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Each product page has a size chart in centimetres. If you are between sizes, choose the larger one.",
+       "done": {
+        "status": "done",
+        "seconds": 16.012
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do your products have a warranty?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "warranty"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Footwear and outerwear carry a one-year warranty against defects in materials and stitching.",
+       "done": {
+        "status": "done",
+        "seconds": 64.971
+       }
+      },
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e18-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e18-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e18-2 for a rain jacket is shipped. The total amount was $89.00, and no refund has been processed.",
+       "done": {
+        "status": "done",
+        "seconds": 65.7446
+       }
+      }
+     ]
+    },
+    "new_message_while_waiting_for_approval": {
+     "refunds": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e19-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "reason": "Customer requested a refund.",
+          "order_id": "ORD-e19-3",
+          "amount_cents": 0
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 10.536
+       }
+      },
+      {
+       "op": "say",
+       "http": 409
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "The refund for order ORD-e19-3 has been processed. A human will review it shortly.",
+       "done": {
+        "status": "done",
+        "seconds": 5.4662
+       }
+      }
+     ]
+    },
+    "status_then_refund_in_one_thread": {
+     "refunds": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e20-3?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e20-3"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e20-3 is processing. You ordered a water bottle for $24.00, and no refund has been issued yet.",
+       "done": {
+        "status": "done",
+        "seconds": 15.8109
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e20-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e20-3",
+          "amount_cents": 2400,
+          "reason": "Customer requested refund"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 11.5686
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your refund for ORD-e20-3 is being processed. It may take a few days to appear on your statement.",
+       "done": {
+        "status": "done",
+        "seconds": 6.9231
+       }
+      }
+     ]
+    }
+   },
+   "passed": 21,
+   "total": 27
+  },
+  {
+   "rep": "rep-3",
+   "block": [
+    "# block qwen3-14b rep 3",
+    "# model ollama:qwen3:14b backup ollama:qwen3:4b-instruct-2507-q4_K_M",
+    "# start 2026-11-15T10:56:53Z",
+    "# uptime 16:26  up 89 days,  2:23, 12 users, load averages: 7.80 14.02 14.17",
+    "# end 2026-11-15T11:11:42Z",
+    "# uptime 16:41  up 89 days,  2:38, 12 users, load averages: 9.34 15.42 16.26",
+    "# exit 1"
+   ],
+   "cases": {
+    "test_kill_mid_refund_then_resume_refunds_once": {
+     "outcome": "failed",
+     "seconds": 21.576,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_sigterm_lets_in_flight_run_finish": {
+     "outcome": "failed",
+     "seconds": 12.492,
+     "message": "httpx.RemoteProtocolError: peer closed connection without sending complete message body (incomplete chunked read)"
+    },
+    "test_sigterm_past_deadline_checkpoints_and_resumes": {
+     "outcome": "passed",
+     "seconds": 14.564,
+     "message": null
+    },
+    "test_eval[faq_return_window]": {
+     "outcome": "passed",
+     "seconds": 18.876,
+     "message": null
+    },
+    "test_eval[faq_shipping_time]": {
+     "outcome": "passed",
+     "seconds": 13.221,
+     "message": null
+    },
+    "test_eval[order_status]": {
+     "outcome": "passed",
+     "seconds": 17.264,
+     "message": null
+    },
+    "test_eval[order_unknown]": {
+     "outcome": "passed",
+     "seconds": 14.304,
+     "message": null
+    },
+    "test_eval[order_of_other_customer_is_hidden]": {
+     "outcome": "passed",
+     "seconds": 15.714,
+     "message": null
+    },
+    "test_eval[refund_approved_once]": {
+     "outcome": "failed",
+     "seconds": 11.174,
+     "message": "AssertionError: assert ('refund_orde...e06-1', 10000) == ('refund_orde...e06-1', 12900)\n  \n  At index 2 diff: 10000 != 12900\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    (\n        'refund_order',\n        'ORD-e06-1',...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_rejected_has_no_side_effect]": {
+     "outcome": "passed",
+     "seconds": 21.46,
+     "message": null
+    },
+    "test_eval[refund_asked_twice]": {
+     "outcome": "failed",
+     "seconds": 34.873,
+     "message": "AssertionError: assert [] == [{'amount_cents': 8900}]\n  \n  Right contains one more item: {'amount_cents': 8900}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     {...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_tool_replay_is_idempotent]": {
+     "outcome": "passed",
+     "seconds": 0.017,
+     "message": null
+    },
+    "test_eval[ticket_for_a_human]": {
+     "outcome": "passed",
+     "seconds": 14.806,
+     "message": null
+    },
+    "test_eval[memory_saved_and_recalled]": {
+     "outcome": "passed",
+     "seconds": 23.406,
+     "message": null
+    },
+    "test_eval[memory_of_other_user_is_invisible]": {
+     "outcome": "passed",
+     "seconds": 9.368,
+     "message": null
+    },
+    "test_eval[flaky_faq_is_retried]": {
+     "outcome": "passed",
+     "seconds": 13.59,
+     "message": null
+    },
+    "test_eval[hung_tool_times_out]": {
+     "outcome": "failed",
+     "seconds": 12.929,
+     "message": "assert (3971407.756173583 - 3971394.84572425) < 5\n +  where 3971407.756173583 = <built-in function perf_counter>()\n +    where <built-in function perf_counter> = time.perf_counter"
+    },
+    "test_eval[failed_ticket_is_not_retried]": {
+     "outcome": "passed",
+     "seconds": 16.942,
+     "message": null
+    },
+    "test_eval[primary_outage_uses_backup]": {
+     "outcome": "passed",
+     "seconds": 17.702,
+     "message": null
+    },
+    "test_eval[runaway_loop_hits_call_limit]": {
+     "outcome": "passed",
+     "seconds": 169.677,
+     "message": null
+    },
+    "test_eval[long_thread_is_summarized]": {
+     "outcome": "passed",
+     "seconds": 168.205,
+     "message": null
+    },
+    "test_eval[new_message_while_waiting_for_approval]": {
+     "outcome": "failed",
+     "seconds": 17.671,
+     "message": "AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]\n  \n  At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    [\n        {\n  -         'amount_cents': 2400,...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[status_then_refund_in_one_thread]": {
+     "outcome": "passed",
+     "seconds": 38.792,
+     "message": null
+    },
+    "test_one_user_cannot_read_another_users_thread_or_memory": {
+     "outcome": "passed",
+     "seconds": 40.955,
+     "message": null
+    },
+    "test_missing_or_wrong_token_is_rejected": {
+     "outcome": "passed",
+     "seconds": 0.015,
+     "message": null
+    },
+    "test_langsmith_receives_nothing_unless_enabled": {
+     "outcome": "passed",
+     "seconds": 106.852,
+     "message": null
+    },
+    "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": {
+     "outcome": "passed",
+     "seconds": 40.873,
+     "message": null
+    }
+   },
+   "details": {
+    "faq_return_window": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long do I have to return an item?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "return period"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "You can return most items within 30 days of delivery. Items must be unused and in the original box. To start a return, open the order in your account and choose \"Start a return.\" We'll email a prepaid label within one hour.",
+       "done": {
+        "status": "done",
+        "seconds": 18.5247
+       }
+      }
+     ]
+    },
+    "faq_shipping_time": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping time"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 13.172
+       }
+      }
+     ]
+    },
+    "order_status": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e03-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e03-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e03-2 for the Rain jacket is shipped. The total amount was $89.00, and there have been no refunds.",
+       "done": {
+        "status": "done",
+        "seconds": 17.2257
+       }
+      }
+     ]
+    },
+    "order_unknown": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-nobody-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-nobody-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "We couldn't find an order with the ID \"ORD-nobody-1\" on your account. Could you double-check the order ID or provide more details?",
+       "done": {
+        "status": "done",
+        "seconds": 14.2678
+       }
+      }
+     ]
+    },
+    "order_of_other_customer_is_hidden": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-alice-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-alice-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "We couldn't find an order with the ID \"ORD-alice-1\" on your account. Could you double-check the order ID or provide more details?",
+       "done": {
+        "status": "done",
+        "seconds": 15.6882
+       }
+      }
+     ]
+    },
+    "refund_approved_once": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e06-1",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e06-1",
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 11.1574
+       }
+      }
+     ]
+    },
+    "refund_rejected_has_no_side_effect": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e07-1",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e07-1",
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 12.7394
+       }
+      },
+      {
+       "op": "approve",
+       "say": "reject",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm sorry, but I can't process the refund automatically. Let me check with our team to see what options we have available for you.",
+       "done": {
+        "status": "done",
+        "seconds": 8.6976
+       }
+      }
+     ]
+    },
+    "refund_asked_twice": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 please",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e08-2",
+          "amount_cents": 10000,
+          "reason": "Customer requested a refund."
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 10.5573
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "It seems the refund amount would exceed the order total. Could you please provide more details so we can assist you further?",
+       "done": {
+        "status": "done",
+        "seconds": 6.5544
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 again",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e08-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "The order total is $89.00, and no refund has been processed yet. Would you like to proceed with a refund for part or all of this order?",
+       "done": {
+        "status": "done",
+        "seconds": 17.7159
+       }
+      }
+     ]
+    },
+    "refund_tool_replay_is_idempotent": {
+     "refunds": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": []
+    },
+    "ticket_for_a_human": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Damaged Item"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "I want to talk to a human about a damaged item",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "body": "The customer wants to talk to a human about a damaged item.",
+          "subject": "Damaged Item"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "A human support agent will contact you shortly regarding your damaged item. Thank you for your patience!",
+       "done": {
+        "status": "done",
+        "seconds": 14.7888
+       }
+      }
+     ]
+    },
+    "memory_saved_and_recalled": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Remember that I prefer email updates",
+       "tool_calls": [
+        [
+         "save_note",
+         {
+          "text": "Customer prefers email updates."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "save_note",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Got it! We'll send you email updates. Let us know if there's anything else we can assist with.",
+       "done": {
+        "status": "done",
+        "seconds": 11.584
+       }
+      },
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I remember that you prefer to receive email updates. Let me know if there's anything else I can remember or if you'd like to share more preferences!",
+       "done": {
+        "status": "done",
+        "seconds": 11.7758
+       }
+      }
+     ]
+    },
+    "memory_of_other_user_is_invisible": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I don't have any notes about you. Is there something I can help you with?",
+       "done": {
+        "status": "done",
+        "seconds": 9.3452
+       }
+      }
+     ]
+    },
+    "flaky_faq_is_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping cost"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping is free on orders over $50. Below that, it costs $5.95. Express shipping costs $14.95.",
+       "done": {
+        "status": "done",
+        "seconds": 13.5779
+       }
+      }
+     ]
+    },
+    "hung_tool_times_out": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e14-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e14-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to look up your order right now. Please check back later or contact us directly for assistance.",
+       "done": {
+        "status": "done",
+        "seconds": 12.9057
+       }
+      }
+     ]
+    },
+    "failed_ticket_is_not_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Open a ticket, I need a human",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Need Human Support",
+          "body": "I need a human to assist me with my request."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to open a support ticket right now. Please try again later or let me know how else I can assist you.",
+       "done": {
+        "status": "done",
+        "seconds": 16.9209
+       }
+      }
+     ]
+    },
+    "primary_outage_uses_backup": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e16-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e16-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount was $129.00, and no refund has been processed yet.",
+       "done": {
+        "status": "done",
+        "seconds": 17.624
+       }
+      }
+     ]
+    },
+    "runaway_loop_hits_call_limit": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Can you check the shipping options for me?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Sure, let me check the shipping options for you.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days and is free on orders over $50. Express shipping takes 1 to 2 busines",
+       "done": {
+        "status": "done",
+        "seconds": 169.4876
+       }
+      }
+     ]
+    },
+    "long_thread_is_summarized": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping time"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 14.3971
+       }
+      },
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.",
+       "done": {
+        "status": "done",
+        "seconds": 9.924
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do you ship internationally?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "We currently only ship to addresses within the United States.",
+       "done": {
+        "status": "done",
+        "seconds": 4.8432
+       }
+      },
+      {
+       "op": "say",
+       "say": "How do I pick the right size?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how to pick size"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Each product page has a size chart in centimetres. If you are between sizes, choose the larger one.",
+       "done": {
+        "status": "done",
+        "seconds": 14.6907
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do your products have a warranty?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "warranty"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Footwear and outerwear carry a one-year warranty against defects in materials and stitching.",
+       "done": {
+        "status": "done",
+        "seconds": 62.1662
+       }
+      },
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e18-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e18-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e18-2 for a rain jacket is shipped. The total amount was $89.00, and no refund has been processed.",
+       "done": {
+        "status": "done",
+        "seconds": 61.7147
+       }
+      }
+     ]
+    },
+    "new_message_while_waiting_for_approval": {
+     "refunds": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e19-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "amount_cents": 0,
+          "reason": "Customer requested a refund.",
+          "order_id": "ORD-e19-3"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 11.5761
+       }
+      },
+      {
+       "op": "say",
+       "http": 409
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "The refund for order ORD-e19-3 has been processed. A human will review it shortly.",
+       "done": {
+        "status": "done",
+        "seconds": 6.0669
+       }
+      }
+     ]
+    },
+    "status_then_refund_in_one_thread": {
+     "refunds": [
+      {
+       "order_id": "ORD-e20-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e20-3?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e20-3"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e20-3 is processing. You ordered a water bottle for $24.00, and no refund has been issued yet.",
+       "done": {
+        "status": "done",
+        "seconds": 17.0693
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e20-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e20-3",
+          "amount_cents": 2400,
+          "reason": "Customer requested refund"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 12.5434
+       }
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your refund for ORD-e20-3 is being processed. It may take a few days to appear on your statement.",
+       "done": {
+        "status": "done",
+        "seconds": 9.1494
+       }
+      }
+     ]
+    }
+   },
+   "passed": 21,
+   "total": 27
+  }
+ ],
+ "qwen3-4b": [
+  {
+   "rep": "rep-1",
+   "block": [
+    "# block qwen3-4b rep 1",
+    "# model ollama:qwen3:4b-instruct-2507-q4_K_M backup ollama:qwen3:8b",
+    "# start 2026-11-15T10:18:34Z",
+    "# uptime 15:48  up 89 days,  1:45, 12 users, load averages: 4.16 3.45 3.62",
+    "# end 2026-11-15T10:20:50Z",
+    "# uptime 15:50  up 89 days,  1:47, 12 users, load averages: 5.65 4.02 3.80",
+    "# exit 1"
+   ],
+   "cases": {
+    "test_kill_mid_refund_then_resume_refunds_once": {
+     "outcome": "failed",
+     "seconds": 12.709,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_sigterm_lets_in_flight_run_finish": {
+     "outcome": "passed",
+     "seconds": 3.531,
+     "message": null
+    },
+    "test_sigterm_past_deadline_checkpoints_and_resumes": {
+     "outcome": "failed",
+     "seconds": 5.441,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_eval[faq_return_window]": {
+     "outcome": "passed",
+     "seconds": 1.484,
+     "message": null
+    },
+    "test_eval[faq_shipping_time]": {
+     "outcome": "passed",
+     "seconds": 1.615,
+     "message": null
+    },
+    "test_eval[order_status]": {
+     "outcome": "passed",
+     "seconds": 1.362,
+     "message": null
+    },
+    "test_eval[order_unknown]": {
+     "outcome": "passed",
+     "seconds": 1.474,
+     "message": null
+    },
+    "test_eval[order_of_other_customer_is_hidden]": {
+     "outcome": "passed",
+     "seconds": 1.151,
+     "message": null
+    },
+    "test_eval[refund_approved_once]": {
+     "outcome": "failed",
+     "seconds": 0.662,
+     "message": "ValueError: not enough values to unpack (expected 1, got 0)"
+    },
+    "test_eval[refund_rejected_has_no_side_effect]": {
+     "outcome": "failed",
+     "seconds": 0.702,
+     "message": "TypeError: 'int' object is not iterable"
+    },
+    "test_eval[refund_asked_twice]": {
+     "outcome": "failed",
+     "seconds": 1.142,
+     "message": "AssertionError: assert [] == [{'amount_cents': 8900}]\n  \n  Right contains one more item: {'amount_cents': 8900}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     {...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_tool_replay_is_idempotent]": {
+     "outcome": "passed",
+     "seconds": 0.014,
+     "message": null
+    },
+    "test_eval[ticket_for_a_human]": {
+     "outcome": "passed",
+     "seconds": 1.473,
+     "message": null
+    },
+    "test_eval[memory_saved_and_recalled]": {
+     "outcome": "failed",
+     "seconds": 0.66,
+     "message": "IndexError: list index out of range"
+    },
+    "test_eval[memory_of_other_user_is_invisible]": {
+     "outcome": "passed",
+     "seconds": 1.109,
+     "message": null
+    },
+    "test_eval[flaky_faq_is_retried]": {
+     "outcome": "failed",
+     "seconds": 0.632,
+     "message": "assert 0 == 2"
+    },
+    "test_eval[hung_tool_times_out]": {
+     "outcome": "passed",
+     "seconds": 3.039,
+     "message": null
+    },
+    "test_eval[failed_ticket_is_not_retried]": {
+     "outcome": "passed",
+     "seconds": 1.305,
+     "message": null
+    },
+    "test_eval[primary_outage_uses_backup]": {
+     "outcome": "passed",
+     "seconds": 7.631,
+     "message": null
+    },
+    "test_eval[runaway_loop_hits_call_limit]": {
+     "outcome": "passed",
+     "seconds": 29.68,
+     "message": null
+    },
+    "test_eval[long_thread_is_summarized]": {
+     "outcome": "passed",
+     "seconds": 20.617,
+     "message": null
+    },
+    "test_eval[new_message_while_waiting_for_approval]": {
+     "outcome": "failed",
+     "seconds": 2.321,
+     "message": "AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]\n  \n  At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    [\n        {\n  -         'amount_cents': 2400,...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[status_then_refund_in_one_thread]": {
+     "outcome": "failed",
+     "seconds": 8.686,
+     "message": "AssertionError: assert [] == ['ORD-e20-3']\n  \n  Right contains one more item: 'ORD-e20-3'\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     'ORD-e20-3',\n  - ]"
+    },
+    "test_one_user_cannot_read_another_users_thread_or_memory": {
+     "outcome": "failed",
+     "seconds": 6.328,
+     "message": "assert '4471' in \"{'user_id': 'alice', 'memories': []}\"\n +  where \"{'user_id': 'alice', 'memories': []}\" = str({'user_id': 'alice', 'memories': []})\n +    where {'user_id': 'alice', 'memories': []} = json()\n +      where json = <Response [200 OK]>.json"
+    },
+    "test_missing_or_wrong_token_is_rejected": {
+     "outcome": "passed",
+     "seconds": 0.004,
+     "message": null
+    },
+    "test_langsmith_receives_nothing_unless_enabled": {
+     "outcome": "failed",
+     "seconds": 6.653,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": {
+     "outcome": "passed",
+     "seconds": 13.032,
+     "message": null
+    }
+   },
+   "details": {
+    "faq_return_window": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long do I have to return an item?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "return policy duration"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "You have 30 days from delivery to return most items, as long as they are unused and in the original box.",
+       "done": {
+        "status": "done",
+        "seconds": 1.2993
+       }
+      }
+     ]
+    },
+    "faq_shipping_time": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how long does shipping take"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can look up information about shipping times for you. Let me search the help center for that. \n\nStandard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 1.5884
+       }
+      }
+     ]
+    },
+    "order_status": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e03-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e03-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e03-2 for a Rain jacket is shipped. Total amount: $89.00. No refund has been processed yet.",
+       "done": {
+        "status": "done",
+        "seconds": 1.3458
+       }
+      }
+     ]
+    },
+    "order_unknown": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-nobody-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-nobody-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find order ORD-nobody-1. It's possible the order ID is incorrect or the order hasn't been placed yet. Let me know if you'd like to check another order or need help with something else!",
+       "done": {
+        "status": "done",
+        "seconds": 1.4583
+       }
+      }
+     ]
+    },
+    "order_of_other_customer_is_hidden": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-alice-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-alice-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find order ORD-alice-1. Let me know if you'd like to check another order ID.",
+       "done": {
+        "status": "done",
+        "seconds": 1.1362
+       }
+      }
+     ]
+    },
+    "refund_approved_once": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e06-1",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "To process a refund, I need more details such as the amount in cents and the reason for the refund. Could you please provide that information?",
+       "done": {
+        "status": "done",
+        "seconds": 0.6348
+       }
+      }
+     ]
+    },
+    "refund_rejected_has_no_side_effect": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e07-1",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "To process a refund, I need the amount in cents and a reason. Could you please provide those details? Also, note that refunds require human approval.",
+       "done": {
+        "status": "done",
+        "seconds": 0.6646
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      }
+     ]
+    },
+    "refund_asked_twice": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 please",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Refunds require human approval. Could you please provide the amount and reason for the refund?",
+       "done": {
+        "status": "done",
+        "seconds": 0.5303
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 again",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Refunds require human approval. Please provide the amount and reason for the refund, and I'll assist you further.",
+       "done": {
+        "status": "done",
+        "seconds": 0.5842
+       }
+      }
+     ]
+    },
+    "refund_tool_replay_is_idempotent": {
+     "refunds": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": []
+    },
+    "ticket_for_a_human": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Damaged Item"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "I want to talk to a human about a damaged item",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Damaged Item",
+          "body": "Customer wants to talk to a human about a damaged item."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "A support ticket has been created with ID 1. A human agent will contact you shortly.",
+       "done": {
+        "status": "done",
+        "seconds": 1.4502
+       }
+      }
+     ]
+    },
+    "memory_saved_and_recalled": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Remember that I prefer email updates",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I'll make sure to send you email updates going forward. Is there anything specific you'd like me to help you with now?",
+       "done": {
+        "status": "done",
+        "seconds": 0.6462
+       }
+      }
+     ]
+    },
+    "memory_of_other_user_is_invisible": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I don't have any saved notes about you yet. Is there something specific you'd like to share or ask about?",
+       "done": {
+        "status": "done",
+        "seconds": 1.0841
+       }
+      }
+     ]
+    },
+    "flaky_faq_is_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I can't provide shipping costs as it's not available in the system. Please check the website or contact customer support for details.",
+       "done": {
+        "status": "done",
+        "seconds": 0.6236
+       }
+      }
+     ]
+    },
+    "hung_tool_times_out": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e14-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e14-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find your order. Please check the order ID and try again, or contact support for assistance.",
+       "done": {
+        "status": "done",
+        "seconds": 3.0217
+       }
+      }
+     ]
+    },
+    "failed_ticket_is_not_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Open a ticket, I need a human",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Need Human Support",
+          "body": "Customer needs to speak with a human support agent."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to open a ticket at this time. Please try again later or contact our support team directly.",
+       "done": {
+        "status": "done",
+        "seconds": 1.2909
+       }
+      }
+     ]
+    },
+    "primary_outage_uses_backup": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e16-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e16-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount is $129.00, and no refunds have been processed.",
+       "done": {
+        "status": "done",
+        "seconds": 7.5966
+       }
+      }
+     ]
+    },
+    "runaway_loop_hits_call_limit": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Can you check the shipping options for me?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can help with that. Let me search the help center for information on shipping options. \n\nStandard shipping takes 3 to 6 business days and is free on orders over $50 (costs $5.95 otherwise). Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days an",
+       "done": {
+        "status": "done",
+        "seconds": 29.6091
+       }
+      }
+     ]
+    },
+    "long_thread_is_summarized": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how long does shipping take"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can look up information about shipping times for you. Let me search the help center for that. \n\nStandard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 2.1662
+       }
+      },
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about shipping costs in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 0.968
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do you ship internationally?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about international shipping in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 0.9982
+       }
+      },
+      {
+       "op": "say",
+       "say": "How do I pick the right size?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about sizing guides in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 1.0523
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do your products have a warranty?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about product warranties in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 1.0704
+       }
+      },
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e18-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e18-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e18-2 for a Rain jacket is shipped. The total amount was $89.00, and no refund has been processed.",
+       "done": {
+        "status": "done",
+        "seconds": 14.2604
+       }
+      }
+     ]
+    },
+    "new_message_while_waiting_for_approval": {
+     "refunds": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e19-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e19-3",
+          "amount_cents": 0,
+          "reason": "Customer request"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 1.2627
+       }
+      },
+      {
+       "op": "say",
+       "http": 409
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Refund initiated for order ORD-e19-3. A human must approve it.",
+       "done": {
+        "status": "done",
+        "seconds": 1.0372
+       }
+      }
+     ]
+    },
+    "status_then_refund_in_one_thread": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Refund Request for Order ORD-e20-3"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e20-3?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e20-3"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e20-3 for a Water bottle is currently in \"processing\" status. The total amount is $24.00, and no refund has been applied yet.",
+       "done": {
+        "status": "done",
+        "seconds": 2.8836
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e20-3",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Refund Request for Order ORD-e20-3",
+          "body": "Customer requests a refund for order ORD-e20-3. Order status is processing. Total amount: $24.00. No refund has been applied yet."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Refunding orders requires human approval. I'll need to open a ticket for a support agent to review and approve this request.  \n\nA refund request for order ORD-e20-3 has been submitted. Ticket ID: 2. It will be reviewed by a human support agent.",
+       "done": {
+        "status": "done",
+        "seconds": 5.7769
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      }
+     ]
+    }
+   },
+   "passed": 16,
+   "total": 27
+  },
+  {
+   "rep": "rep-2",
+   "block": [
+    "# block qwen3-4b rep 2",
+    "# model ollama:qwen3:4b-instruct-2507-q4_K_M backup ollama:qwen3:8b",
+    "# start 2026-11-15T10:20:50Z",
+    "# uptime 15:50  up 89 days,  1:47, 12 users, load averages: 5.65 4.02 3.80",
+    "# end 2026-11-15T10:24:18Z",
+    "# uptime 15:54  up 89 days,  1:51, 12 users, load averages: 13.19 6.50 4.77",
+    "# exit 1"
+   ],
+   "cases": {
+    "test_kill_mid_refund_then_resume_refunds_once": {
+     "outcome": "failed",
+     "seconds": 12.792,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_sigterm_lets_in_flight_run_finish": {
+     "outcome": "passed",
+     "seconds": 5.323,
+     "message": null
+    },
+    "test_sigterm_past_deadline_checkpoints_and_resumes": {
+     "outcome": "failed",
+     "seconds": 5.286,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_eval[faq_return_window]": {
+     "outcome": "passed",
+     "seconds": 1.468,
+     "message": null
+    },
+    "test_eval[faq_shipping_time]": {
+     "outcome": "passed",
+     "seconds": 3.136,
+     "message": null
+    },
+    "test_eval[order_status]": {
+     "outcome": "passed",
+     "seconds": 2.824,
+     "message": null
+    },
+    "test_eval[order_unknown]": {
+     "outcome": "passed",
+     "seconds": 3.451,
+     "message": null
+    },
+    "test_eval[order_of_other_customer_is_hidden]": {
+     "outcome": "passed",
+     "seconds": 2.627,
+     "message": null
+    },
+    "test_eval[refund_approved_once]": {
+     "outcome": "failed",
+     "seconds": 1.252,
+     "message": "ValueError: not enough values to unpack (expected 1, got 0)"
+    },
+    "test_eval[refund_rejected_has_no_side_effect]": {
+     "outcome": "failed",
+     "seconds": 1.119,
+     "message": "TypeError: 'int' object is not iterable"
+    },
+    "test_eval[refund_asked_twice]": {
+     "outcome": "failed",
+     "seconds": 1.792,
+     "message": "AssertionError: assert [] == [{'amount_cents': 8900}]\n  \n  Right contains one more item: {'amount_cents': 8900}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     {...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_tool_replay_is_idempotent]": {
+     "outcome": "passed",
+     "seconds": 0.024,
+     "message": null
+    },
+    "test_eval[ticket_for_a_human]": {
+     "outcome": "passed",
+     "seconds": 3.308,
+     "message": null
+    },
+    "test_eval[memory_saved_and_recalled]": {
+     "outcome": "failed",
+     "seconds": 1.71,
+     "message": "IndexError: list index out of range"
+    },
+    "test_eval[memory_of_other_user_is_invisible]": {
+     "outcome": "passed",
+     "seconds": 2.88,
+     "message": null
+    },
+    "test_eval[flaky_faq_is_retried]": {
+     "outcome": "failed",
+     "seconds": 1.688,
+     "message": "assert 0 == 2"
+    },
+    "test_eval[hung_tool_times_out]": {
+     "outcome": "passed",
+     "seconds": 5.006,
+     "message": null
+    },
+    "test_eval[failed_ticket_is_not_retried]": {
+     "outcome": "passed",
+     "seconds": 3.748,
+     "message": null
+    },
+    "test_eval[primary_outage_uses_backup]": {
+     "outcome": "passed",
+     "seconds": 15.823,
+     "message": null
+    },
+    "test_eval[runaway_loop_hits_call_limit]": {
+     "outcome": "passed",
+     "seconds": 53.467,
+     "message": null
+    },
+    "test_eval[long_thread_is_summarized]": {
+     "outcome": "passed",
+     "seconds": 33.769,
+     "message": null
+    },
+    "test_eval[new_message_while_waiting_for_approval]": {
+     "outcome": "failed",
+     "seconds": 3.524,
+     "message": "AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]\n  \n  At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    [\n        {\n  -         'amount_cents': 2400,...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[status_then_refund_in_one_thread]": {
+     "outcome": "failed",
+     "seconds": 9.121,
+     "message": "AssertionError: assert [] == ['ORD-e20-3']\n  \n  Right contains one more item: 'ORD-e20-3'\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     'ORD-e20-3',\n  - ]"
+    },
+    "test_one_user_cannot_read_another_users_thread_or_memory": {
+     "outcome": "failed",
+     "seconds": 6.748,
+     "message": "assert '4471' in \"{'user_id': 'alice', 'memories': []}\"\n +  where \"{'user_id': 'alice', 'memories': []}\" = str({'user_id': 'alice', 'memories': []})\n +    where {'user_id': 'alice', 'memories': []} = json()\n +      where json = <Response [200 OK]>.json"
+    },
+    "test_missing_or_wrong_token_is_rejected": {
+     "outcome": "passed",
+     "seconds": 0.007,
+     "message": null
+    },
+    "test_langsmith_receives_nothing_unless_enabled": {
+     "outcome": "failed",
+     "seconds": 8.422,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": {
+     "outcome": "passed",
+     "seconds": 15.452,
+     "message": null
+    }
+   },
+   "details": {
+    "faq_return_window": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long do I have to return an item?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "return policy duration"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "You have 30 days from delivery to return most items, as long as they are unused and in the original box.",
+       "done": {
+        "status": "done",
+        "seconds": 1.275
+       }
+      }
+     ]
+    },
+    "faq_shipping_time": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how long does shipping take"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can look up information about shipping times for you. Let me search the help center for that. \n\nStandard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 3.0726
+       }
+      }
+     ]
+    },
+    "order_status": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e03-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e03-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e03-2 for a Rain jacket is shipped. Total amount: $89.00. No refund has been processed yet.",
+       "done": {
+        "status": "done",
+        "seconds": 2.73
+       }
+      }
+     ]
+    },
+    "order_unknown": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-nobody-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-nobody-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find order ORD-nobody-1. It's possible the order ID is incorrect or the order hasn't been placed yet. Let me know if you'd like to check another order or need help with something else!",
+       "done": {
+        "status": "done",
+        "seconds": 3.4194
+       }
+      }
+     ]
+    },
+    "order_of_other_customer_is_hidden": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-alice-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-alice-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find order ORD-alice-1. Let me know if you'd like to check another order ID.",
+       "done": {
+        "status": "done",
+        "seconds": 2.6056
+       }
+      }
+     ]
+    },
+    "refund_approved_once": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e06-1",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "To process a refund, I need more details such as the amount in cents and the reason for the refund. Could you please provide that information?",
+       "done": {
+        "status": "done",
+        "seconds": 1.2401
+       }
+      }
+     ]
+    },
+    "refund_rejected_has_no_side_effect": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e07-1",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "To process a refund, I need the amount in cents and a reason. Could you please provide those details? Also, note that refunds require human approval.",
+       "done": {
+        "status": "done",
+        "seconds": 1.1014
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      }
+     ]
+    },
+    "refund_asked_twice": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 please",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Refunds require human approval. Could you please provide the amount and reason for the refund?",
+       "done": {
+        "status": "done",
+        "seconds": 0.7544
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 again",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Refunds require human approval. Please provide the amount and reason for the refund, and I'll assist you further.",
+       "done": {
+        "status": "done",
+        "seconds": 1.01
+       }
+      }
+     ]
+    },
+    "refund_tool_replay_is_idempotent": {
+     "refunds": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": []
+    },
+    "ticket_for_a_human": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Damaged Item"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "I want to talk to a human about a damaged item",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Damaged Item",
+          "body": "Customer wants to talk to a human about a damaged item."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "A support ticket has been created with ID 1. A human agent will contact you shortly.",
+       "done": {
+        "status": "done",
+        "seconds": 3.2927
+       }
+      }
+     ]
+    },
+    "memory_saved_and_recalled": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Remember that I prefer email updates",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I'll make sure to send you email updates going forward. Is there anything specific you'd like me to help you with now?",
+       "done": {
+        "status": "done",
+        "seconds": 1.6905
+       }
+      }
+     ]
+    },
+    "memory_of_other_user_is_invisible": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I don't have any saved notes about you yet. Is there something specific you'd like to share or ask about?",
+       "done": {
+        "status": "done",
+        "seconds": 2.8581
+       }
+      }
+     ]
+    },
+    "flaky_faq_is_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I can't provide shipping costs as it's not available in the system. Please check the website or contact customer support for details.",
+       "done": {
+        "status": "done",
+        "seconds": 1.6732
+       }
+      }
+     ]
+    },
+    "hung_tool_times_out": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e14-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e14-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find your order. Please check the order ID and try again, or contact support for assistance.",
+       "done": {
+        "status": "done",
+        "seconds": 4.9835
+       }
+      }
+     ]
+    },
+    "failed_ticket_is_not_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Open a ticket, I need a human",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Need Human Support",
+          "body": "Customer needs to speak with a human support agent."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to open a ticket at this time. Please try again later or contact our support team directly.",
+       "done": {
+        "status": "done",
+        "seconds": 3.7241
+       }
+      }
+     ]
+    },
+    "primary_outage_uses_backup": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e16-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e16-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount is $129.00, and no refunds have been processed.",
+       "done": {
+        "status": "done",
+        "seconds": 15.7879
+       }
+      }
+     ]
+    },
+    "runaway_loop_hits_call_limit": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Can you check the shipping options for me?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can help with that. Let me search the help center for information on shipping options. \n\nStandard shipping takes 3 to 6 business days and is free on orders over $50 (costs $5.95 otherwise). Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days an",
+       "done": {
+        "status": "done",
+        "seconds": 53.4014
+       }
+      }
+     ]
+    },
+    "long_thread_is_summarized": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how long does shipping take"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can look up information about shipping times for you. Let me search the help center for that. \n\nStandard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 4.6236
+       }
+      },
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about shipping costs in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 2.0157
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do you ship internationally?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about international shipping in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 2.0289
+       }
+      },
+      {
+       "op": "say",
+       "say": "How do I pick the right size?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about sizing guides in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 1.7106
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do your products have a warranty?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about product warranties in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 1.8438
+       }
+      },
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e18-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e18-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e18-2 for a Rain jacket is shipped. The total amount was $89.00, and no refund has been processed. For tracking details, please check the carrier information in your order confirmation email.",
+       "done": {
+        "status": "done",
+        "seconds": 21.4199
+       }
+      }
+     ]
+    },
+    "new_message_while_waiting_for_approval": {
+     "refunds": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e19-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e19-3",
+          "amount_cents": 0,
+          "reason": "Customer request"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 2.3114
+       }
+      },
+      {
+       "op": "say",
+       "http": 409
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Refund initiated for order ORD-e19-3. A human must approve it.",
+       "done": {
+        "status": "done",
+        "seconds": 1.1823
+       }
+      }
+     ]
+    },
+    "status_then_refund_in_one_thread": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Refund Request for Order ORD-e20-3"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e20-3?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e20-3"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e20-3 for a Water bottle is currently in \"processing\" status. The total amount is $24.00, and no refund has been applied yet.",
+       "done": {
+        "status": "done",
+        "seconds": 2.844
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e20-3",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Refund Request for Order ORD-e20-3",
+          "body": "Customer requests a refund for order ORD-e20-3. Order status is processing. Total amount: $24.00. No refund has been applied yet."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Refunding orders requires human approval. I'll need to open a ticket for a support agent to review and approve this request.  \n\nA refund request for order ORD-e20-3 has been submitted. Ticket ID: 2. It will be reviewed by a human support agent.",
+       "done": {
+        "status": "done",
+        "seconds": 6.2313
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      }
+     ]
+    }
+   },
+   "passed": 16,
+   "total": 27
+  },
+  {
+   "rep": "rep-3",
+   "block": [
+    "# block qwen3-4b rep 3",
+    "# model ollama:qwen3:4b-instruct-2507-q4_K_M backup ollama:qwen3:8b",
+    "# start 2026-11-15T10:24:18Z",
+    "# uptime 15:54  up 89 days,  1:51, 12 users, load averages: 13.19 6.50 4.77",
+    "# end 2026-11-15T10:27:25Z (from junit.xml mtime; script tail failed after an in-place edit)",
+    "# uptime 15:57  12 users, load averages: 5.14 7.00 5.49 (recorded late, at block C start)",
+    "# exit 1"
+   ],
+   "cases": {
+    "test_kill_mid_refund_then_resume_refunds_once": {
+     "outcome": "failed",
+     "seconds": 13.594,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_sigterm_lets_in_flight_run_finish": {
+     "outcome": "passed",
+     "seconds": 5.638,
+     "message": null
+    },
+    "test_sigterm_past_deadline_checkpoints_and_resumes": {
+     "outcome": "failed",
+     "seconds": 5.512,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_eval[faq_return_window]": {
+     "outcome": "passed",
+     "seconds": 1.62,
+     "message": null
+    },
+    "test_eval[faq_shipping_time]": {
+     "outcome": "passed",
+     "seconds": 7.717,
+     "message": null
+    },
+    "test_eval[order_status]": {
+     "outcome": "passed",
+     "seconds": 3.916,
+     "message": null
+    },
+    "test_eval[order_unknown]": {
+     "outcome": "passed",
+     "seconds": 4.366,
+     "message": null
+    },
+    "test_eval[order_of_other_customer_is_hidden]": {
+     "outcome": "passed",
+     "seconds": 2.397,
+     "message": null
+    },
+    "test_eval[refund_approved_once]": {
+     "outcome": "failed",
+     "seconds": 1.526,
+     "message": "ValueError: not enough values to unpack (expected 1, got 0)"
+    },
+    "test_eval[refund_rejected_has_no_side_effect]": {
+     "outcome": "failed",
+     "seconds": 1.671,
+     "message": "TypeError: 'int' object is not iterable"
+    },
+    "test_eval[refund_asked_twice]": {
+     "outcome": "failed",
+     "seconds": 2.26,
+     "message": "AssertionError: assert [] == [{'amount_cents': 8900}]\n  \n  Right contains one more item: {'amount_cents': 8900}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     {...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[refund_tool_replay_is_idempotent]": {
+     "outcome": "passed",
+     "seconds": 0.018,
+     "message": null
+    },
+    "test_eval[ticket_for_a_human]": {
+     "outcome": "passed",
+     "seconds": 3.486,
+     "message": null
+    },
+    "test_eval[memory_saved_and_recalled]": {
+     "outcome": "failed",
+     "seconds": 1.221,
+     "message": "IndexError: list index out of range"
+    },
+    "test_eval[memory_of_other_user_is_invisible]": {
+     "outcome": "passed",
+     "seconds": 2.289,
+     "message": null
+    },
+    "test_eval[flaky_faq_is_retried]": {
+     "outcome": "failed",
+     "seconds": 1.601,
+     "message": "assert 0 == 2"
+    },
+    "test_eval[hung_tool_times_out]": {
+     "outcome": "passed",
+     "seconds": 3.727,
+     "message": null
+    },
+    "test_eval[failed_ticket_is_not_retried]": {
+     "outcome": "passed",
+     "seconds": 2.832,
+     "message": null
+    },
+    "test_eval[primary_outage_uses_backup]": {
+     "outcome": "passed",
+     "seconds": 6.466,
+     "message": null
+    },
+    "test_eval[runaway_loop_hits_call_limit]": {
+     "outcome": "passed",
+     "seconds": 40.29,
+     "message": null
+    },
+    "test_eval[long_thread_is_summarized]": {
+     "outcome": "passed",
+     "seconds": 30.869,
+     "message": null
+    },
+    "test_eval[new_message_while_waiting_for_approval]": {
+     "outcome": "failed",
+     "seconds": 3.438,
+     "message": "AssertionError: assert [{'amount_cents': 0}] == [{'amount_cents': 2400}]\n  \n  At index 0 diff: {'amount_cents': 0} != {'amount_cents': 2400}\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n    [\n        {\n  -         'amount_cents': 2400,...\n  \n  ...Full output truncated, use '-vv' to show"
+    },
+    "test_eval[status_then_refund_in_one_thread]": {
+     "outcome": "failed",
+     "seconds": 9.512,
+     "message": "AssertionError: assert [] == ['ORD-e20-3']\n  \n  Right contains one more item: 'ORD-e20-3'\n  \n  Full diff: (-: missing in left side, +: extra in left side)\n  + []\n  - [\n  -     'ORD-e20-3',\n  - ]"
+    },
+    "test_one_user_cannot_read_another_users_thread_or_memory": {
+     "outcome": "failed",
+     "seconds": 7.66,
+     "message": "assert '4471' in \"{'user_id': 'alice', 'memories': []}\"\n +  where \"{'user_id': 'alice', 'memories': []}\" = str({'user_id': 'alice', 'memories': []})\n +    where {'user_id': 'alice', 'memories': []} = json()\n +      where json = <Response [200 OK]>.json"
+    },
+    "test_missing_or_wrong_token_is_rejected": {
+     "outcome": "passed",
+     "seconds": 0.004,
+     "message": null
+    },
+    "test_langsmith_receives_nothing_unless_enabled": {
+     "outcome": "failed",
+     "seconds": 6.852,
+     "message": "ValueError: dictionary update sequence element #0 has length 1; 2 is required"
+    },
+    "test_two_workers_racing_on_one_thread_give_one_run_and_one_409": {
+     "outcome": "passed",
+     "seconds": 14.314,
+     "message": null
+    }
+   },
+   "details": {
+    "faq_return_window": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long do I have to return an item?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "return policy duration"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "You have 30 days from delivery to return most items, as long as they are unused and in the original box.",
+       "done": {
+        "status": "done",
+        "seconds": 1.4193
+       }
+      }
+     ]
+    },
+    "faq_shipping_time": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how long does shipping take"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can look up information about shipping times for you. Let me search the help center for that. \n\nStandard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 7.2928
+       }
+      }
+     ]
+    },
+    "order_status": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e03-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e03-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e03-2 for a Rain jacket is shipped. Total amount: $89.00. No refund has been processed yet.",
+       "done": {
+        "status": "done",
+        "seconds": 3.8181
+       }
+      }
+     ]
+    },
+    "order_unknown": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-nobody-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-nobody-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find order ORD-nobody-1. It's possible the order ID is incorrect or the order hasn't been placed yet. Let me know if you'd like to check another order or need help with something else!",
+       "done": {
+        "status": "done",
+        "seconds": 3.9478
+       }
+      }
+     ]
+    },
+    "order_of_other_customer_is_hidden": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-alice-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-alice-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find order ORD-alice-1. Let me know if you'd like to check another order ID.",
+       "done": {
+        "status": "done",
+        "seconds": 2.3213
+       }
+      }
+     ]
+    },
+    "refund_approved_once": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e06-1",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "To process a refund, I need more details such as the amount in cents and the reason for the refund. Could you please provide that information?",
+       "done": {
+        "status": "done",
+        "seconds": 1.5017
+       }
+      }
+     ]
+    },
+    "refund_rejected_has_no_side_effect": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Please refund ORD-e07-1",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "To process a refund, I need the amount in cents and a reason. Could you please provide those details? Also, note that refunds require human approval.",
+       "done": {
+        "status": "done",
+        "seconds": 1.5639
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      }
+     ]
+    },
+    "refund_asked_twice": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 please",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Refunds require human approval. Could you please provide the amount and reason for the refund?",
+       "done": {
+        "status": "done",
+        "seconds": 1.0685
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e08-2 again",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "Refunds require human approval. Please provide the amount and reason for the refund, and I'll assist you further.",
+       "done": {
+        "status": "done",
+        "seconds": 1.1533
+       }
+      }
+     ]
+    },
+    "refund_tool_replay_is_idempotent": {
+     "refunds": [
+      {
+       "order_id": "ORD-e09-3",
+       "amount_cents": 2400
+      }
+     ],
+     "tickets": [],
+     "transcript": []
+    },
+    "ticket_for_a_human": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Damaged Item"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "I want to talk to a human about a damaged item",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Damaged Item",
+          "body": "Customer wants to talk to a human about a damaged item."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "A support ticket has been created with ID 1. A human agent will contact you shortly.",
+       "done": {
+        "status": "done",
+        "seconds": 3.4673
+       }
+      }
+     ]
+    },
+    "memory_saved_and_recalled": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Remember that I prefer email updates",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I'll make sure to send you email updates going forward. Is there anything specific you'd like me to help you with now?",
+       "done": {
+        "status": "done",
+        "seconds": 1.2112
+       }
+      }
+     ]
+    },
+    "memory_of_other_user_is_invisible": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "What do you remember about me?",
+       "tool_calls": [
+        [
+         "recall_notes",
+         {}
+        ]
+       ],
+       "tool_results": [
+        [
+         "recall_notes",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I don't have any saved notes about you yet. Is there something specific you'd like to share or ask about?",
+       "done": {
+        "status": "done",
+        "seconds": 2.1885
+       }
+      }
+     ]
+    },
+    "flaky_faq_is_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I can't provide shipping costs as it's not available in the system. Please check the website or contact customer support for details.",
+       "done": {
+        "status": "done",
+        "seconds": 1.5752
+       }
+      }
+     ]
+    },
+    "hung_tool_times_out": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e14-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e14-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I couldn't find your order. Please check the order ID and try again, or contact support for assistance.",
+       "done": {
+        "status": "done",
+        "seconds": 3.7067
+       }
+      }
+     ]
+    },
+    "failed_ticket_is_not_retried": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Open a ticket, I need a human",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Need Human Support",
+          "body": "Customer needs to speak with a human support agent."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "error"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I'm unable to open a ticket at this time. Please try again later or contact our support team directly.",
+       "done": {
+        "status": "done",
+        "seconds": 2.7906
+       }
+      }
+     ]
+    },
+    "primary_outage_uses_backup": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e16-1?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e16-1"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e16-1 for Trail running shoes has been delivered. The total amount is $129.00, and no refunds have been processed.",
+       "done": {
+        "status": "done",
+        "seconds": 6.3706
+       }
+      }
+     ]
+    },
+    "runaway_loop_hits_call_limit": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Can you check the shipping options for me?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ],
+        [
+         "search_faq",
+         {
+          "query": "shipping"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ],
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can help with that. Let me search the help center for information on shipping options. \n\nStandard shipping takes 3 to 6 business days and is free on orders over $50 (costs $5.95 otherwise). Express shipping takes 1 to 2 business days and costs $14.95.Standard shipping takes 3 to 6 business days an",
+       "done": {
+        "status": "done",
+        "seconds": 40.2642
+       }
+      }
+     ]
+    },
+    "long_thread_is_summarized": {
+     "refunds": [],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "How long does shipping take?",
+       "tool_calls": [
+        [
+         "search_faq",
+         {
+          "query": "how long does shipping take"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "search_faq",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "I can look up information about shipping times for you. Let me search the help center for that. \n\nStandard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.",
+       "done": {
+        "status": "done",
+        "seconds": 3.1564
+       }
+      },
+      {
+       "op": "say",
+       "say": "How much does shipping cost?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about shipping costs in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 1.7089
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do you ship internationally?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about international shipping in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 1.4978
+       }
+      },
+      {
+       "op": "say",
+       "say": "How do I pick the right size?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about sizing guides in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 1.5307
+       }
+      },
+      {
+       "op": "say",
+       "say": "Do your products have a warranty?",
+       "tool_calls": [],
+       "tool_results": [],
+       "interrupts": [],
+       "reply": "I don't have specific information about product warranties in my current data. Let me know if you'd like me to look up more details or assist with something else.",
+       "done": {
+        "status": "done",
+        "seconds": 1.6793
+       }
+      },
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e18-2?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e18-2"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e18-2 (Rain jacket) is shipped. The total amount was $89.00, and no refund has been processed. For tracking details, please check the carrier information in your order confirmation email.",
+       "done": {
+        "status": "done",
+        "seconds": 21.2193
+       }
+      }
+     ]
+    },
+    "new_message_while_waiting_for_approval": {
+     "refunds": [
+      {
+       "order_id": "ORD-e19-3",
+       "amount_cents": 0
+      }
+     ],
+     "tickets": [],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Refund ORD-e19-3",
+       "tool_calls": [
+        [
+         "refund_order",
+         {
+          "order_id": "ORD-e19-3",
+          "amount_cents": 0,
+          "reason": "Customer request"
+         }
+        ]
+       ],
+       "tool_results": [],
+       "interrupts": [
+        "refund_order"
+       ],
+       "reply": "",
+       "done": {
+        "status": "interrupted",
+        "seconds": 2.0587
+       }
+      },
+      {
+       "op": "say",
+       "http": 409
+      },
+      {
+       "op": "approve",
+       "say": "approve",
+       "tool_calls": [],
+       "tool_results": [
+        [
+         "refund_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Refund initiated for order ORD-e19-3. A human must approve it.",
+       "done": {
+        "status": "done",
+        "seconds": 1.3433
+       }
+      }
+     ]
+    },
+    "status_then_refund_in_one_thread": {
+     "refunds": [],
+     "tickets": [
+      {
+       "subject": "Refund Request for Order ORD-e20-3"
+      }
+     ],
+     "transcript": [
+      {
+       "op": "say",
+       "say": "Where is my order ORD-e20-3?",
+       "tool_calls": [
+        [
+         "read_order",
+         {
+          "order_id": "ORD-e20-3"
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "read_order",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Your order ORD-e20-3 for a Water bottle is currently in \"processing\" status. The total amount is $24.00, and no refund has been applied yet.",
+       "done": {
+        "status": "done",
+        "seconds": 3.0664
+       }
+      },
+      {
+       "op": "say",
+       "say": "Refund ORD-e20-3",
+       "tool_calls": [
+        [
+         "create_ticket",
+         {
+          "subject": "Refund Request for Order ORD-e20-3",
+          "body": "Customer requests a refund for order ORD-e20-3. Order status is processing. Total amount: $24.00. No refund has been applied yet."
+         }
+        ]
+       ],
+       "tool_results": [
+        [
+         "create_ticket",
+         "success"
+        ]
+       ],
+       "interrupts": [],
+       "reply": "Refunding orders requires human approval. I'll need to open a ticket for a support agent to review and approve this request.  \n\nA refund request for order ORD-e20-3 has been submitted. Ticket ID: 2. It will be reviewed by a human support agent.",
+       "done": {
+        "status": "done",
+        "seconds": 6.4147
+       }
+      },
+      {
+       "op": "approve",
+       "http": 409
+      }
+     ]
+    }
+   },
+   "passed": 16,
+   "total": 27
+  }
+ ]
+}

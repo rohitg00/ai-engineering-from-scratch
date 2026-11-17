@@ -1,0 +1,681 @@
+{
+ "case": "long_thread_is_summarized",
+ "model": "anthropic:claude-haiku-5-5",
+ "outcome": "passed",
+ "log": [
+  {
+   "op": "say",
+   "thread_id": "704ec118-8ada-4c0d-9aed-c94dfb828886",
+   "text": "How long does shipping take?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01DRMLcDvudbJBVHqXcgREBQ",
+      "name": "search_faq",
+      "args": {
+       "query": "how long does shipping take"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}, {\"id\": \"returns-window\", \"answer\": \"You can return most items within 30 days of delivery. Items must be unused and in the original box.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Standard shipping takes"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " 3 "
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "to 6 business days."
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Express shipping takes 1"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " to 2 business days."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.6427
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "704ec118-8ada-4c0d-9aed-c94dfb828886",
+   "text": "How much does shipping cost?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01XR1A2DheFhF179w2XDVzAo",
+      "name": "search_faq",
+      "args": {
+       "query": "how much does shipping cost"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"shipping-cost\", \"answer\": \"Standard shipping is free on orders over $50. Below that it costs $5.95. Express costs $14.95.\"}, {\"id\": \"shipping-times\", \"answer\": \"Standard shipping takes 3 to 6 business days. Express shipping takes 1 to 2 business days.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Stand"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ard shipping is free on or"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ders over $50;"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " below that it"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "'s $5.95. Express"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " sh"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ipping costs $14.95"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.4024
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "704ec118-8ada-4c0d-9aed-c94dfb828886",
+   "text": "Do you ship internationally?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01TLhKVPCKmy5T78MZjor2tQ",
+      "name": "search_faq",
+      "args": {
+       "query": "do you ship internationally"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"international\", \"answer\": \"We ship to the EU, the UK, Canada, and Australia. Duties are shown at checkout and included in the price.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Yes, we ship to"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " the EU, the UK,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " Canada, and Australia"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": ". Duties are"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " shown at checkout and included"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in the price."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.5897
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "704ec118-8ada-4c0d-9aed-c94dfb828886",
+   "text": "How do I pick the right size?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_0143UrFQgGvmM1ekn7jQdmxu",
+      "name": "search_faq",
+      "args": {
+       "query": "how to pick the right size"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"sizing\", \"answer\": \"Each product page has a size chart in centimetres. If you are between sizes, choose the larger one.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Each product page has a size ch"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "art in centimetres. If"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you're between sizes, cho"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ose the larger one."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 5.0834
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "704ec118-8ada-4c0d-9aed-c94dfb828886",
+   "text": "Do your products have a warranty?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_019Ra3WHnKcuNoeCpxiFfBfv",
+      "name": "search_faq",
+      "args": {
+       "query": "warranty"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "search_faq",
+      "status": "success",
+      "content": "[{\"id\": \"warranty\", \"answer\": \"Footwear and outerwear carry a one-year warranty against defects in materials and stitching.\"}]"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Y"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "es. Footwear and out"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "erwear come"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " with a one-year warranty"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " against defects in materials and st"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "itching."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 5.1632
+     }
+    ]
+   ]
+  },
+  {
+   "op": "say",
+   "thread_id": "704ec118-8ada-4c0d-9aed-c94dfb828886",
+   "text": "Where is my order ORD-e18-2?",
+   "result": [
+    [
+     "tool_call",
+     {
+      "id": "toolu_01TMjqBhkzGzANCF7qqaRbaM",
+      "name": "read_order",
+      "args": {
+       "order_id": "ORD-e18-2"
+      }
+     }
+    ],
+    [
+     "tool_result",
+     {
+      "name": "read_order",
+      "status": "success",
+      "content": "{\"id\": \"ORD-e18-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "Your order ORD-e18"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "-2 ("
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "r"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ain jacket,"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " $89.00) has ship"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "ped. I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " don't have t"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "racking details"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " in my"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " system, so I"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " can't give"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " you an"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": " exact delivery date"
+     }
+    ],
+    [
+     "token",
+     {
+      "text": "."
+     }
+    ],
+    [
+     "done",
+     {
+      "status": "done",
+      "seconds": 2.5466
+     }
+    ]
+   ]
+  }
+ ],
+ "states": [
+  {
+   "thread_id": "704ec118-8ada-4c0d-9aed-c94dfb828886",
+   "next": [],
+   "interrupts": [],
+   "messages": [
+    {
+     "type": "human",
+     "content": "Here is a summary of the conversation to date:\n\n## SESSION INTENT\n\nThe user is asking FAQ-style customer questions about shipping, delivery, and related policies. The goal is to answer each accurately using the `search_faq` knowledge base. The current open question is how to pick the right size.\n\n## SUMMARY\n\n- **Shipping time:** The user asked how long shipping takes. The `search_faq` results were standard shipping at 3 to 6 business days and express at 1 to 2 business days. This answer was delivered. The search also returned an unrelated returns policy (returns accepted within 30 days of delivery, items unused and in original box), which the user did not ask about and which should be offered only if they ask.\n- **Shipping cost:** The user asked how much shipping costs. Standard shipping is free on orders over $50, otherwise $5.95. Express is $14.95. This answer was delivered.\n- **International shipping:** The user asked whether the store ships internationally. Results: the store ships to the EU, the UK, Canada, and Australia. Duties are shown at checkout and included in the price. This answer was delivered.\n- **Current question (unanswered):** The user has asked \"How do I pick the right size?\" No search has been run yet for this question.\n\n## ARTIFACTS\n\n- None. Only the `search_faq` knowledge base tool was called (three times: shipping time, shipping cost, international shipping). No files were created or modified.\n\n## NEXT STEPS\n\n- Run `search_faq` for the sizing question (e.g., \"how do I pick the right size\") and relay the accurate answer to the user.\n- If the FAQ has no sizing",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": "summarization"
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "how to pick the right size"
+       },
+       "id": "toolu_0143UrFQgGvmM1ekn7jQdmxu",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1565,
+      "output_tokens": 54,
+      "total_tokens": 1619,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"sizing\", \"answer\": \"Each product page has a size chart in centimetres. If you are between sizes, choose the larger one.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Each product page has a size chart in centimetres. If you're between sizes, choose the larger one.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1671,
+      "output_tokens": 32,
+      "total_tokens": 1703,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Do your products have a warranty?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "search_faq",
+       "args": {
+        "query": "warranty"
+       },
+       "id": "toolu_019Ra3WHnKcuNoeCpxiFfBfv",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1717,
+      "output_tokens": 50,
+      "total_tokens": 1767,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "[{\"id\": \"warranty\", \"answer\": \"Footwear and outerwear carry a one-year warranty against defects in materials and stitching.\"}]",
+     "tool_calls": [],
+     "name": "search_faq",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Yes. Footwear and outerwear come with a one-year warranty against defects in materials and stitching.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1682,
+      "output_tokens": 35,
+      "total_tokens": 1717,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "human",
+     "content": "Where is my order ORD-e18-2?",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "",
+     "tool_calls": [
+      {
+       "name": "read_order",
+       "args": {
+        "order_id": "ORD-e18-2"
+       },
+       "id": "toolu_01TMjqBhkzGzANCF7qqaRbaM",
+       "type": "tool_call"
+      }
+     ],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1735,
+      "output_tokens": 56,
+      "total_tokens": 1791,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    },
+    {
+     "type": "tool",
+     "content": "{\"id\": \"ORD-e18-2\", \"item\": \"Rain jacket\", \"status\": \"shipped\", \"total_cents\": 8900, \"refunded_cents\": 0}",
+     "tool_calls": [],
+     "name": "read_order",
+     "status": "success",
+     "usage": null,
+     "model": null,
+     "source": null
+    },
+    {
+     "type": "ai",
+     "content": "Your order ORD-e18-2 (rain jacket, $89.00) has shipped. I don't have tracking details in my system, so I can't give you an exact delivery date.",
+     "tool_calls": [],
+     "name": null,
+     "status": null,
+     "usage": {
+      "input_tokens": 1850,
+      "output_tokens": 57,
+      "total_tokens": 1907,
+      "input_token_details": {
+       "cache_creation": 0,
+       "cache_read": 0
+      },
+      "output_token_details": {
+       "reasoning": 0
+      }
+     },
+     "model": "claude-haiku-5-5",
+     "source": null
+    }
+   ]
+  }
+ ],
+ "refunds": [],
+ "tickets": []
+}

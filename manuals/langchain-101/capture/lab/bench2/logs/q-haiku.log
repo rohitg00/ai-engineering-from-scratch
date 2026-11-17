@@ -1,0 +1,86 @@
+ledger before 1.0484
+== anthropic:claude-haiku-5-5 deep_ptc ptc :: 18:36  12 users, load averages: 2.90 3.33 7.51
+chain01   deep_ptc      PASS                    calls= 5 tools= 4 tok=49746/319 5.7s eval=0 jserr=0 inner=4
+chain02   deep_ptc      PASS                    calls= 5 tools= 4 tok=49734/313 5.1s eval=0 jserr=0 inner=4
+chain03   deep_ptc      PASS                    calls= 5 tools= 4 tok=49717/305 5.8s eval=0 jserr=0 inner=4
+chain04   deep_ptc      PASS                    calls= 5 tools= 4 tok=49714/314 5.4s eval=0 jserr=0 inner=4
+chain05   deep_ptc      PASS                    calls= 3 tools= 2 tok=29511/189 2.9s eval=0 jserr=0 inner=2
+chain06   deep_ptc      PASS                    calls= 4 tools= 3 tok=39609/322 4.3s eval=0 jserr=0 inner=3
+chain07   deep_ptc      PASS                    calls= 3 tools= 2 tok=29562/250 3.7s eval=0 jserr=0 inner=2
+chain08   deep_ptc      PASS                    calls= 4 tools= 3 tok=39605/277 4.2s eval=0 jserr=0 inner=3
+chain09   deep_ptc      PASS                    calls= 5 tools= 5 tok=51142/590 6.2s eval=0 jserr=0 inner=5
+chain10   deep_ptc      PASS                    calls= 5 tools= 6 tok=51859/734 7.4s eval=0 jserr=0 inner=6
+chain11   deep_ptc      PASS                    calls= 5 tools= 5 tok=51050/559 6.0s eval=0 jserr=0 inner=5
+chain12   deep_ptc      PASS                    calls= 5 tools= 6 tok=51764/715 7.7s eval=0 jserr=0 inner=6
+chain13   deep_ptc      PASS                    calls= 4 tools= 4 tok=40303/385 5.1s eval=0 jserr=0 inner=4
+chain14   deep_ptc      PASS                    calls= 5 tools= 6 tok=51868/829 6.9s eval=0 jserr=0 inner=6
+chain15   deep_ptc      PASS                    calls= 5 tools= 7 tok=51866/725 7.3s eval=0 jserr=0 inner=7
+chain16   deep_ptc      PASS                    calls= 5 tools= 6 tok=51549/640 6.2s eval=0 jserr=0 inner=6
+chain17   deep_ptc      PASS                    calls= 4 tools= 5 tok=40927/606 5.2s eval=0 jserr=0 inner=5
+chain18   deep_ptc      PASS                    calls= 3 tools= 3 tok=29973/334 4.2s eval=0 jserr=0 inner=3
+chain19   deep_ptc      PASS                    calls= 3 tools= 3 tok=30093/404 4.1s eval=0 jserr=0 inner=3
+chain20   deep_ptc      PASS                    calls= 4 tools= 5 tok=40599/530 6.1s eval=0 jserr=0 inner=5
+sql01     deep_ptc      PASS                    calls= 5 tools= 5 tok=47459/372 5.2s eval=0 jserr=0 inner=5
+sql02     deep_ptc      PASS                    calls= 5 tools= 7 tok=48761/470 5.7s eval=0 jserr=0 inner=7
+sql03     deep_ptc      PASS                    calls= 4 tools= 4 tok=37919/293 4.9s eval=0 jserr=0 inner=4
+sql04     deep_ptc      PASS                    calls= 3 tools= 3 tok=28207/261 4.0s eval=0 jserr=0 inner=3
+sql05     deep_ptc      PASS                    calls= 4 tools= 5 tok=38355/334 4.4s eval=0 jserr=0 inner=5
+sql06     deep_ptc      PASS                    calls= 4 tools= 4 tok=37742/266 4.6s eval=0 jserr=0 inner=4
+sql07     deep_ptc      PASS                    calls= 4 tools= 6 tok=38607/454 4.5s eval=0 jserr=0 inner=6
+sql08     deep_ptc      PASS                    calls= 5 tools= 8 tok=50025/615 6.6s eval=0 jserr=0 inner=8
+sql09     deep_ptc      PASS                    calls= 6 tools= 8 tok=59103/588 7.1s eval=0 jserr=0 inner=8
+sql10     deep_ptc      PASS                    calls= 4 tools= 5 tok=38096/323 4.7s eval=0 jserr=0 inner=5
+sql11     deep_ptc      PASS                    calls= 5 tools= 8 tok=49220/525 6.4s eval=0 jserr=0 inner=8
+sql12     deep_ptc      PASS                    calls= 4 tools= 5 tok=38554/350 3.6s eval=0 jserr=0 inner=5
+sql13     deep_ptc      PASS                    calls= 5 tools= 5 tok=47438/374 5.5s eval=0 jserr=0 inner=5
+sql14     deep_ptc      PASS                    calls= 4 tools= 4 tok=37829/250 4.0s eval=0 jserr=0 inner=4
+sql15     deep_ptc      PASS                    calls= 4 tools= 4 tok=38223/513 5.3s eval=0 jserr=0 inner=4
+sql16     deep_ptc      PASS                    calls= 5 tools= 7 tok=48953/633 6.0s eval=0 jserr=0 inner=7
+sql17     deep_ptc      PASS                    calls= 5 tools= 4 tok=47237/388 5.7s eval=0 jserr=0 inner=4
+sql18     deep_ptc      PASS                    calls= 6 tools= 6 tok=57528/489 6.5s eval=0 jserr=0 inner=6
+sql20     deep_ptc      PASS                    calls= 4 tools= 5 tok=38160/332 4.4s eval=0 jserr=0 inner=5
+== end anthropic:claude-haiku-5-5 :: 18:39  12 users, load averages: 1.79 2.54 6.25
+ledger after 1.0906
+ledger before 1.108
+== anthropic:claude-haiku-5-5 deep_ptc_nudge nudge :: 18:44  12 users, load averages: 2.99 2.43 5.18
+chain01   deep_ptc_nudge PASS                    calls= 5 tools= 4 tok=50106/319 6.7s eval=0 jserr=0 inner=4
+chain02   deep_ptc_nudge PASS                    calls= 5 tools= 4 tok=50094/325 5.1s eval=0 jserr=0 inner=4
+chain03   deep_ptc_nudge PASS                    calls= 5 tools= 4 tok=50099/310 4.9s eval=0 jserr=0 inner=4
+chain04   deep_ptc_nudge PASS                    calls= 5 tools= 4 tok=50224/390 7.1s eval=0 jserr=0 inner=4
+chain05   deep_ptc_nudge PASS                    calls= 3 tools= 2 tok=29735/194 3.5s eval=0 jserr=0 inner=2
+chain06   deep_ptc_nudge PASS                    calls= 4 tools= 3 tok=39987/343 4.7s eval=0 jserr=0 inner=3
+chain07   deep_ptc_nudge PASS                    calls= 3 tools= 3 tok=29946/325 3.6s eval=0 jserr=0 inner=3
+chain08   deep_ptc_nudge PASS                    calls= 4 tools= 3 tok=39891/296 5.8s eval=0 jserr=0 inner=3
+chain09   deep_ptc_nudge PASS                    calls= 7 tools= 9 tok=78076/1555 12.6s eval=5 jserr=1 inner=9
+chain10   deep_ptc_nudge PASS                    calls= 6 tools=10 tok=67810/1561 10.5s eval=4 jserr=0 inner=10
+chain11   deep_ptc_nudge PASS                    calls= 6 tools= 6 tok=63659/839 8.4s eval=4 jserr=0 inner=6
+chain12   deep_ptc_nudge PASS                    calls= 6 tools= 6 tok=62635/756 8.1s eval=3 jserr=1 inner=6
+chain13   deep_ptc_nudge PASS                    calls= 3 tools= 3 tok=30422/479 4.6s eval=2 jserr=0 inner=3
+chain14   deep_ptc_nudge PASS                    calls= 5 tools= 7 tok=54438/1280 8.6s eval=3 jserr=0 inner=7
+chain15   deep_ptc_nudge PASS                    calls= 7 tools=13 tok=81718/2227 13.7s eval=5 jserr=1 inner=13
+chain16   deep_ptc_nudge PASS                    calls= 5 tools= 5 tok=52786/969 6.7s eval=3 jserr=0 inner=5
+chain17   deep_ptc_nudge PASS                    calls= 6 tools= 8 tok=66338/1276 9.6s eval=4 jserr=0 inner=8
+chain18   deep_ptc_nudge PASS                    calls= 4 tools= 5 tok=43897/1058 8.2s eval=1 jserr=0 inner=5
+chain19   deep_ptc_nudge PASS                    calls= 5 tools= 6 tok=52524/792 7.1s eval=3 jserr=0 inner=6
+chain20   deep_ptc_nudge PASS                    calls= 7 tools= 5 tok=78393/1736 12.7s eval=5 jserr=0 inner=5
+sql01     deep_ptc_nudge PASS                    calls= 5 tools= 5 tok=47809/367 6.1s eval=0 jserr=0 inner=5
+sql02     deep_ptc_nudge PASS                    calls= 5 tools= 7 tok=49403/527 6.4s eval=0 jserr=0 inner=7
+sql03     deep_ptc_nudge PASS                    calls= 4 tools= 5 tok=38609/339 4.6s eval=0 jserr=0 inner=5
+sql04     deep_ptc_nudge PASS                    calls= 3 tools= 3 tok=28670/393 4.2s eval=0 jserr=0 inner=3
+sql05     deep_ptc_nudge PASS                    calls= 4 tools= 5 tok=38607/330 4.6s eval=0 jserr=0 inner=5
+sql06     deep_ptc_nudge PASS                    calls= 4 tools= 4 tok=38188/325 4.8s eval=0 jserr=0 inner=4
+sql07     deep_ptc_nudge PASS                    calls= 4 tools= 6 tok=39018/488 5.3s eval=0 jserr=0 inner=6
+sql08     deep_ptc_nudge PASS                    calls= 6 tools= 8 tok=61056/1047 9.0s eval=0 jserr=0 inner=8
+sql09     deep_ptc_nudge PASS                    calls= 5 tools= 9 tok=50582/728 6.8s eval=0 jserr=0 inner=9
+sql10     deep_ptc_nudge PASS                    calls= 4 tools= 5 tok=38456/343 4.7s eval=0 jserr=0 inner=5
+sql11     deep_ptc_nudge PASS                    calls= 5 tools= 7 tok=49491/538 6.2s eval=0 jserr=0 inner=7
+sql12     deep_ptc_nudge PASS                    calls= 4 tools= 5 tok=38812/367 4.2s eval=0 jserr=0 inner=5
+sql13     deep_ptc_nudge PASS                    calls= 5 tools= 5 tok=48172/428 5.6s eval=0 jserr=0 inner=5
+sql14     deep_ptc_nudge PASS                    calls= 4 tools= 4 tok=38117/250 4.1s eval=0 jserr=0 inner=4
+sql15     deep_ptc_nudge PASS                    calls= 4 tools= 4 tok=38688/571 5.2s eval=0 jserr=0 inner=4
+sql16     deep_ptc_nudge PASS                    calls= 5 tools= 8 tok=51810/796 7.5s eval=0 jserr=0 inner=8
+sql17     deep_ptc_nudge PASS                    calls= 5 tools= 4 tok=48318/449 5.5s eval=0 jserr=0 inner=4
+sql18     deep_ptc_nudge PASS                    calls= 6 tools= 7 tok=58723/569 6.6s eval=0 jserr=0 inner=7
+sql20     deep_ptc_nudge PASS                    calls= 4 tools= 5 tok=38493/347 4.6s eval=0 jserr=0 inner=5
+== end anthropic:claude-haiku-5-5 :: 18:48  12 users, load averages: 8.41 5.99 6.01
+ledger after 1.1724

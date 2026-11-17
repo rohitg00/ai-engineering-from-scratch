@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 490" role="img" aria-labelledby="fig-7-4g-title fig-7-4g-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-7-4g-title">Claude Haiku 5.5 with the eval tool, with and without a prompt that asks for it</title>
+  <desc id="fig-7-4g-desc">Two strips of the 39 chain and sql tasks, one square per task, show which runs called the eval tool: 0 runs without the prompt and 12 runs with it. Every task passed in both arms. Below, paired bars compare model calls, prompt tokens, output tokens, dollars, eval calls and eval errors of the two arms: 173 and 187 calls, and $0.028 and $0.038.</desc>
+  <text x="20" y="22" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">EACH SQUARE IS ONE TASK</text>
+  <text x="620" y="22" font-size="11" text-anchor="end" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">39 TASKS, ALL PASSED</text>
+  <line x1="20" y1="32" x2="620" y2="32" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="64" font-size="11" font-weight="700" fill="var(--m-green-ink, #336b40)">eval tool, plain prompt: 0 of 39 runs called eval</text>
+  <rect x="20" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="34.4" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="48.8" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="63.2" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="77.6" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="92" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="106.4" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="120.8" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="135.2" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="149.6" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="164" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="178.4" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="192.8" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="207.2" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="221.6" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="236" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="250.4" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="264.8" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="279.2" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="293.6" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="308" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="322.4" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="336.8" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="351.2" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="365.6" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="380" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="394.4" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="408.8" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="423.2" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="437.6" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="452" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="466.4" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="480.8" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="495.2" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="509.6" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="524" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="538.4" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="552.8" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  <rect x="567.2" y="70" width="11" height="11" fill="var(--m-green-fill, #e5f0e4)" stroke="var(--m-green-ink, #336b40)" stroke-width="0.8"/>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="114" font-size="11" font-weight="700" fill="var(--m-indigo-ink, #4b4f9e)">eval tool, prompt asks for it: 12 of 39 runs called eval</text>
+  <rect x="20" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="34.4" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="48.8" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="63.2" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="77.6" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="92" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="106.4" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="120.8" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="135.2" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="149.6" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="164" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="178.4" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="192.8" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="207.2" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="221.6" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="236" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="250.4" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="264.8" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="279.2" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="293.6" y="120" width="11" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <rect x="308" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="322.4" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="336.8" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="351.2" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="365.6" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="380" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="394.4" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="408.8" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="423.2" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="437.6" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="452" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="466.4" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="480.8" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="495.2" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="509.6" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="524" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="538.4" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="552.8" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  <rect x="567.2" y="120" width="11" height="11" fill="var(--m-indigo-fill, #e9e9f6)" stroke="var(--m-indigo-ink, #4b4f9e)" stroke-width="0.8"/>
+  </g>
+  <text x="20" y="152" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Dark square: the run called eval. Pale square: it used the task tools directly.</text>
+  <text x="20" y="180" font-size="11" letter-spacing="1.2" fill="var(--m-ink-mute, #6f6f6a)">TWO ARMS, SAME 39 TASKS</text>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="205" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">model calls</text>
+  <rect x="150" y="188" width="277.54" height="11" fill="var(--m-green-ink, #336b40)"/>
+  <text x="435.54" y="197" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">173</text>
+  <rect x="150" y="203" width="300" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="458" y="212" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">187</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="247" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">prompt tokens</text>
+  <rect x="150" y="230" width="267.68" height="11" fill="var(--m-green-ink, #336b40)"/>
+  <text x="425.68" y="239" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">1.71M</text>
+  <rect x="150" y="245" width="300" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="458" y="254" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">1.91M</text>
+  </g>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="289" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">output tokens</text>
+  <rect x="150" y="272" width="196.36" height="11" fill="var(--m-green-ink, #336b40)"/>
+  <text x="354.36" y="281" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">17.2k</text>
+  <rect x="150" y="287" width="300" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="458" y="296" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">26.2k</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="331" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">dollars</text>
+  <rect x="150" y="314" width="224.33" height="11" fill="var(--m-green-ink, #336b40)"/>
+  <text x="382.33" y="323" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">$0.028</text>
+  <rect x="150" y="329" width="300" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="458" y="338" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">$0.038</text>
+  </g>
+  <g data-beat="1"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="0.45s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="373" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">eval calls</text>
+  <line x1="150" y1="356" x2="150" y2="367" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="158" y="365" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">0</text>
+  <rect x="150" y="371" width="300" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="458" y="380" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">42</text>
+  </g>
+  <g data-beat="2"><animate attributeName="opacity" values="0;0;1" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/><animateTransform attributeName="transform" type="translate" values="0 4;0 4;0 0" keyTimes="0;0.571;1" calcMode="spline" keySplines="0 0 1 1;0.23 1 0.32 1" dur="1.05s" begin="indefinite" fill="freeze"/>
+  <text x="20" y="415" font-size="11" fill="var(--m-ink-soft, #4a4a4a)">eval errors</text>
+  <line x1="150" y1="398" x2="150" y2="409" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1"/>
+  <text x="158" y="407" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">0</text>
+  <rect x="150" y="413" width="300" height="11" fill="var(--m-indigo-ink, #4b4f9e)"/>
+  <text x="458" y="422" font-size="11" font-weight="700" fill="var(--m-ink, #1a1a1a)">3</text>
+  </g>
+  <text x="20" y="442" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">Green is the plain prompt and indigo is the prompt that asks for eval.</text>
+</svg>

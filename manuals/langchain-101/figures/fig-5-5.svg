@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380" role="img" aria-labelledby="fig-5-5-title fig-5-5-desc" font-family="JetBrains Mono, ui-monospace, monospace">
+  <title id="fig-5-5-title">Turn time over 200 turns on Qwen3 4B, with and without summarization</title>
+  <desc id="fig-5-5-desc">A dot chart of the median turn time of each block of 25 turns, on a log scale from 1 to 1,000 seconds, for one run per variant on the x86 server guest. Without summarization the median grows from 4.7 s to 18.6 s, and the run stops after turn 94. Open rings mark its turns 88 to 94, after the prompt reached 8,191 tokens, which took 308 to 621 s each. With a trigger, every block median stays between 4.4 and 9.2 s over 200 turns. A shaded band behind each line spans the 10th to the 90th percentile of the turns in each block, and its top holds the turns with a summary call.</desc>
+  <line x1="70" y1="290" x2="450" y2="290" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="294" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1</text>
+  <line x1="70" y1="250.24" x2="450" y2="250.24" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="254.24" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">3</text>
+  <line x1="70" y1="206.67" x2="450" y2="206.67" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="210.67" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">10</text>
+  <line x1="70" y1="166.91" x2="450" y2="166.91" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="170.91" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">30</text>
+  <line x1="70" y1="123.33" x2="450" y2="123.33" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="127.33" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="70" y1="83.57" x2="450" y2="83.57" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="87.57" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">300</text>
+  <line x1="70" y1="40" x2="450" y2="40" stroke="var(--m-ink-mute, #6f6f6a)" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="64" y="44" font-size="11" text-anchor="end" fill="var(--m-ink-soft, #4a4a4a)">1000</text>
+  <line x1="70" y1="290" x2="450" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="40" x2="70" y2="290" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <line x1="70" y1="290" x2="70" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="70" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">0</text>
+  <line x1="117.5" y1="290" x2="117.5" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="117.5" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">25</text>
+  <line x1="165" y1="290" x2="165" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="165" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">50</text>
+  <line x1="212.5" y1="290" x2="212.5" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="212.5" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">75</text>
+  <line x1="260" y1="290" x2="260" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="260" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">100</text>
+  <line x1="307.5" y1="290" x2="307.5" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="307.5" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">125</text>
+  <line x1="355" y1="290" x2="355" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="355" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">150</text>
+  <line x1="402.5" y1="290" x2="402.5" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="402.5" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">175</text>
+  <line x1="450" y1="290" x2="450" y2="294" stroke="var(--m-ink, #1a1a1a)" stroke-width="1"/>
+  <text x="450" y="307" font-size="11" text-anchor="middle" fill="var(--m-ink-soft, #4a4a4a)">200</text>
+  <text x="260" y="324" font-size="11.5" text-anchor="middle" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">turn number</text>
+  <text x="70" y="28" font-size="11.5" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">median turn, seconds</text>
+  <path d="M94.7 218.3 L142.2 201.6 L189.7 189.0 L231.5 57.4 L231.5 219.7 L189.7 226.4 L142.2 237.1 L94.7 278.2 Z" fill="var(--m-plum-ink, #8a3d72)" fill-opacity="0.12" stroke="none"/>
+  <path d="M94.7 218.2 L142.2 201.5 L189.7 192.6 L237.2 197.4 L284.7 195.3 L332.2 191.8 L379.7 199.0 L427.2 193.1 L427.2 237.1 L379.7 231.8 L332.2 232.4 L284.7 237.3 L237.2 230.9 L189.7 239.1 L142.2 237.2 L94.7 278.7 Z" fill="var(--m-blue-ink, #2f5d9a)" fill-opacity="0.12" stroke="none"/>
+  <path d="M94.7 219.3 L142.2 206.1 L189.7 207.5 L237.2 208.8 L284.7 207.7 L332.2 207.8 L379.7 208.6 L427.2 206.9 L427.2 253.5 L379.7 249.3 L332.2 246.0 L284.7 251.9 L237.2 244.9 L189.7 253.3 L142.2 247.9 L94.7 278.3 Z" fill="var(--m-teal-ink, #18696a)" fill-opacity="0.12" stroke="none"/>
+  <path d="M94.7 145.3 L142.2 143.9 L189.7 144.5 L237.2 140.8 L284.7 143.8 L332.2 143.7 L379.7 146.0 L427.2 147.3 L427.2 252.5 L379.7 253.8 L332.2 255.1 L284.7 252.1 L237.2 253.2 L189.7 254.9 L142.2 248.7 L94.7 275.7 Z" fill="var(--m-green-ink, #336b40)" fill-opacity="0.12" stroke="none"/>
+  <path d="M94.7 234.1 L142.2 215.2 L189.7 202.4 L231.5 184.2" fill="none" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="94.7" cy="234.14" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="142.2" cy="215.17" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="189.7" cy="202.44" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <circle cx="231.5" cy="184.22" r="2.8" fill="var(--m-plum-ink, #8a3d72)"/>
+  <path d="M94.7 233.9 L142.2 215.4 L189.7 211.3 L237.2 210.6 L284.7 214.8 L332.2 209.6 L379.7 211.9 L427.2 213.3" fill="none" stroke="var(--m-blue-ink, #2f5d9a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="94.7" cy="233.87" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="142.2" cy="215.37" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="189.7" cy="211.26" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="237.2" cy="210.58" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="284.7" cy="214.81" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="332.2" cy="209.55" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="379.7" cy="211.89" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <circle cx="427.2" cy="213.32" r="2.8" fill="var(--m-blue-ink, #2f5d9a)"/>
+  <path d="M94.7 236.2 L142.2 226.6 L189.7 228.2 L237.2 227.7 L284.7 227.3 L332.2 228.2 L379.7 227.8 L427.2 228.0" fill="none" stroke="var(--m-teal-ink, #18696a)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="94.7" cy="236.16" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="142.2" cy="226.58" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="189.7" cy="228.22" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="237.2" cy="227.65" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="284.7" cy="227.34" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="332.2" cy="228.2" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="379.7" cy="227.76" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <circle cx="427.2" cy="228.01" r="2.8" fill="var(--m-teal-ink, #18696a)"/>
+  <path d="M94.7 228.2 L142.2 213.9 L189.7 229.8 L237.2 226.1 L284.7 214.4 L332.2 227.8 L379.7 229.6 L427.2 215.0" fill="none" stroke="var(--m-green-ink, #336b40)" stroke-width="1.8" stroke-linejoin="round"/>
+  <circle cx="94.7" cy="228.19" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="142.2" cy="213.89" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="189.7" cy="229.84" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="237.2" cy="226.05" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="284.7" cy="214.39" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="332.2" cy="227.82" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="379.7" cy="229.55" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="427.2" cy="215.01" r="2.8" fill="var(--m-green-ink, #336b40)"/>
+  <circle cx="237.2" cy="57.2" r="3.2" fill="var(--m-paper, #fafaf5)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4"/>
+  <circle cx="239.1" cy="57.5" r="3.2" fill="var(--m-paper, #fafaf5)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4"/>
+  <circle cx="241.0" cy="82.6" r="3.2" fill="var(--m-paper, #fafaf5)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4"/>
+  <circle cx="242.9" cy="57.3" r="3.2" fill="var(--m-paper, #fafaf5)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4"/>
+  <circle cx="244.8" cy="57.4" r="3.2" fill="var(--m-paper, #fafaf5)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4"/>
+  <circle cx="246.7" cy="82.4" r="3.2" fill="var(--m-paper, #fafaf5)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4"/>
+  <circle cx="248.6" cy="57.5" r="3.2" fill="var(--m-paper, #fafaf5)" stroke="var(--m-plum-ink, #8a3d72)" stroke-width="1.4"/>
+  <rect class="m-knock" x="255.6" y="50.64" width="217.2" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="258.6" y="61.22" font-size="11" fill="var(--m-plum-ink, #8a3d72)">no summarization, turns 88 to 94</text>
+  <rect class="m-knock" x="255.6" y="64.64" width="171" height="15" fill="var(--m-panel, #f3f1e8)"/>
+  <text x="258.6" y="75.22" font-size="11" fill="var(--m-plum-ink, #8a3d72)">context full, run stopped</text>
+  <text x="460" y="217.32" font-size="11" fill="var(--m-blue-ink, #2f5d9a)">6,000 tokens, keep 1,500</text>
+  <text x="460" y="231.32" font-size="11" fill="var(--m-green-ink, #336b40)">20 messages, keep 1</text>
+  <text x="460" y="245.32" font-size="11" fill="var(--m-teal-ink, #18696a)">60 messages, keep 7</text>
+  <text x="20" y="340" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">One run per variant on PostgresSaver with Qwen3 4B on CPU. Each dot is the median of 25 turns,</text>
+  <text x="20" y="356" font-size="11" class="m-serif" fill="var(--m-ink-soft, #4a4a4a)">and each open ring is one turn. The band spans the 10th to the 90th percentile of each block.</text>
+</svg>

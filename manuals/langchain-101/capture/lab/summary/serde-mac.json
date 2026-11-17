@@ -1,0 +1,656 @@
+{
+ "load_default": [
+  {
+   "advisory": "GHSA-c67j-w6g6-q2cm",
+   "case": "loads(top-level secret envelope), defaults",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-c67j-w6g6-q2cm",
+   "case": "loads(top-level secret envelope), secrets_from_env=True",
+   "ran_code": false,
+   "secret_leaked": true
+  },
+  {
+   "advisory": "GHSA-c67j-w6g6-q2cm",
+   "case": "dumps() of a message carrying a user dict shaped like a secret: is it escaped?",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-c67j-w6g6-q2cm",
+   "case": "round trip dumps->loads, secrets_from_env=True",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-c67j-w6g6-q2cm",
+   "case": "pre-fix payload shape (unescaped nested secret), defaults",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-c67j-w6g6-q2cm",
+   "case": "pre-fix payload shape, secrets_from_env=True",
+   "ran_code": false,
+   "secret_leaked": true
+  },
+  {
+   "advisory": "GHSA-c67j-w6g6-q2cm",
+   "case": "pre-fix payload shape, secrets_map given",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-pjwx-r37v-7724",
+   "case": "loads(ChatOpenAI constructor), defaults (allowed_objects=None -> 'core')",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-pjwx-r37v-7724",
+   "case": "loads(ChatOpenAI constructor), allowed_objects='all', secrets_from_env=True",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-pjwx-r37v-7724",
+   "case": "loads(PromptTemplate template_format=jinja2), defaults",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-pjwx-r37v-7724",
+   "case": "loads(PromptTemplate jinja2), allowed_objects='all'",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-6qv9-48xg-fc7f",
+   "case": "loads(PromptTemplate f-string with attribute access), defaults",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-pjwx-r37v-7724",
+   "case": "loads(constructor id outside langchain namespaces: os.system)",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-pjwx-r37v-7724",
+   "case": "loads(lab_marker.Marker), valid_namespaces=['lab_marker']",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-pjwx-r37v-7724",
+   "case": "loads(lab_marker.Marker), valid_namespaces=['lab_marker'], allowed_objects='all'",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "info",
+   "case": "loads(messages AIMessage), allowed_objects='messages'",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-fjqc-hq36-qh5p",
+   "case": "JsonPlusSerializer().loads_typed(('json', lc:2 constructor lab_marker.Marker))",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-fjqc-hq36-qh5p",
+   "case": "loads_typed json lc:2 with method='make'",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-fjqc-hq36-qh5p",
+   "case": "JsonPlusSerializer(allowed_json_modules=True) json lc:2 Marker",
+   "ran_code": true,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844",
+   "case": "JsonPlusSerializer().loads_typed(('msgpack', EXT_CONSTRUCTOR_KW_ARGS lab_marker.Marker))",
+   "ran_code": true,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844",
+   "case": "msgpack EXT_CONSTRUCTOR_POS_ARGS lab_marker.Marker",
+   "ran_code": true,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844",
+   "case": "msgpack EXT_METHOD_SINGLE_ARG lab_marker.Marker.make",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844",
+   "case": "JsonPlusSerializer(allowed_msgpack_modules=None) msgpack KW Marker",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "pickle",
+   "case": "JsonPlusSerializer() loads_typed(('pickle', ...)), pickle_fallback=False",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "pickle",
+   "case": "JsonPlusSerializer(pickle_fallback=True) loads_typed(('pickle', ...))",
+   "ran_code": true,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844 / fjqc",
+   "case": "SqliteSaver: checkpoint row edited to hold a msgpack Marker, then get_state",
+   "ran_code": true,
+   "secret_leaked": false
+  }
+ ],
+ "load_strict_msgpack": [
+  {
+   "advisory": "GHSA-fjqc-hq36-qh5p",
+   "case": "JsonPlusSerializer().loads_typed(('json', lc:2 constructor lab_marker.Marker))",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-fjqc-hq36-qh5p",
+   "case": "loads_typed json lc:2 with method='make'",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-fjqc-hq36-qh5p",
+   "case": "JsonPlusSerializer(allowed_json_modules=True) json lc:2 Marker",
+   "ran_code": true,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844",
+   "case": "JsonPlusSerializer().loads_typed(('msgpack', EXT_CONSTRUCTOR_KW_ARGS lab_marker.Marker))",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844",
+   "case": "msgpack EXT_CONSTRUCTOR_POS_ARGS lab_marker.Marker",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844",
+   "case": "msgpack EXT_METHOD_SINGLE_ARG lab_marker.Marker.make",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844",
+   "case": "JsonPlusSerializer(allowed_msgpack_modules=None) msgpack KW Marker",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "pickle",
+   "case": "JsonPlusSerializer() loads_typed(('pickle', ...)), pickle_fallback=False",
+   "ran_code": false,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "pickle",
+   "case": "JsonPlusSerializer(pickle_fallback=True) loads_typed(('pickle', ...))",
+   "ran_code": true,
+   "secret_leaked": false
+  },
+  {
+   "advisory": "GHSA-g48c-2wqr-h844 / fjqc",
+   "case": "SqliteSaver: checkpoint row edited to hold a msgpack Marker, then get_state",
+   "ran_code": false,
+   "secret_leaked": false
+  }
+ ],
+ "machine": "the Mac: Apple M1 Max, 10 cores, 64 GiB, macOS 26.2, Python 3.13.12",
+ "round_trip": [
+  {
+   "before": "str",
+   "case": "str",
+   "serde": {
+    "after": "str",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "str",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "int",
+   "case": "int",
+   "serde": {
+    "after": "int",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "int",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "float",
+   "case": "float",
+   "serde": {
+    "after": "float",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "float",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "bool",
+   "case": "bool",
+   "serde": {
+    "after": "bool",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "bool",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "NoneType",
+   "case": "None",
+   "serde": {
+    "after": "NoneType",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "NoneType",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "list",
+   "case": "list",
+   "serde": {
+    "after": "list",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "list",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "tuple",
+   "case": "tuple",
+   "serde": {
+    "after": "list",
+    "equal": false,
+    "same_type": false
+   },
+   "sqlite_graph": {
+    "after": "list",
+    "equal": false,
+    "same_type": false
+   }
+  },
+  {
+   "before": "dict",
+   "case": "dict with int keys",
+   "serde": {
+    "after": "dict",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "dict",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "set",
+   "case": "set of int",
+   "serde": {
+    "after": "set",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "set",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "frozenset",
+   "case": "frozenset of int",
+   "serde": {
+    "after": "frozenset",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "frozenset",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "set",
+   "case": "set of tuples",
+   "serde": {
+    "after": "list",
+    "equal": false,
+    "same_type": false
+   },
+   "sqlite_graph": {
+    "after": "list",
+    "equal": false,
+    "same_type": false
+   }
+  },
+  {
+   "before": "frozenset",
+   "case": "frozenset of tuples",
+   "serde": {
+    "after": "list",
+    "equal": false,
+    "same_type": false
+   },
+   "sqlite_graph": {
+    "after": "list",
+    "equal": false,
+    "same_type": false
+   }
+  },
+  {
+   "before": "bytes",
+   "case": "bytes",
+   "serde": {
+    "after": "bytes",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "bytes",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "Decimal",
+   "case": "Decimal",
+   "serde": {
+    "after": "Decimal",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "Decimal",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "UUID",
+   "case": "UUID",
+   "serde": {
+    "after": "UUID",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "UUID",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "PosixPath",
+   "case": "Path",
+   "serde": {
+    "after": "PosixPath",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "PosixPath",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "datetime",
+   "case": "datetime UTC",
+   "serde": {
+    "after": "datetime",
+    "equal": true,
+    "same_fold": true,
+    "same_type": true,
+    "same_tzinfo_type": true
+   },
+   "sqlite_graph": {
+    "after": "datetime",
+    "equal": true,
+    "same_fold": true,
+    "same_type": true,
+    "same_tzinfo_type": true
+   }
+  },
+  {
+   "before": "datetime",
+   "case": "datetime ZoneInfo",
+   "serde": {
+    "after": "datetime",
+    "equal": true,
+    "same_fold": true,
+    "same_type": true,
+    "same_tzinfo_type": false
+   },
+   "sqlite_graph": {
+    "after": "datetime",
+    "equal": true,
+    "same_fold": true,
+    "same_type": true,
+    "same_tzinfo_type": false
+   }
+  },
+  {
+   "before": "datetime",
+   "case": "datetime fold=1",
+   "serde": {
+    "after": "datetime",
+    "equal": false,
+    "same_fold": false,
+    "same_type": true,
+    "same_tzinfo_type": false
+   },
+   "sqlite_graph": {
+    "after": "datetime",
+    "equal": false,
+    "same_fold": false,
+    "same_type": true,
+    "same_tzinfo_type": false
+   }
+  },
+  {
+   "before": "date",
+   "case": "date",
+   "serde": {
+    "after": "date",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "date",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "timedelta",
+   "case": "timedelta",
+   "serde": {
+    "after": "timedelta",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "timedelta",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "Color",
+   "case": "Enum",
+   "serde": {
+    "after": "Color",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "Color",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "Point",
+   "case": "dataclass",
+   "serde": {
+    "after": "Point",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "Point",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "Card",
+   "case": "pydantic model",
+   "serde": {
+    "after": "Card",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "Card",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "AIMessage",
+   "case": "AIMessage",
+   "serde": {
+    "after": "AIMessage",
+    "equal": true,
+    "same_type": true
+   },
+   "sqlite_graph": {
+    "after": "AIMessage",
+    "equal": true,
+    "same_type": true
+   }
+  },
+  {
+   "before": "defaultdict",
+   "case": "defaultdict",
+   "serde": {
+    "after": "dict",
+    "equal": true,
+    "same_type": false
+   },
+   "sqlite_graph": {
+    "after": "dict",
+    "equal": true,
+    "same_type": false
+   }
+  },
+  {
+   "before": "Counter",
+   "case": "Counter",
+   "serde": {
+    "after": "dict",
+    "equal": true,
+    "same_type": false
+   },
+   "sqlite_graph": {
+    "after": "dict",
+    "equal": true,
+    "same_type": false
+   }
+  },
+  {
+   "before": "OrderedDict",
+   "case": "OrderedDict",
+   "serde": {
+    "after": "dict",
+    "equal": true,
+    "same_type": false
+   },
+   "sqlite_graph": {
+    "after": "dict",
+    "equal": true,
+    "same_type": false
+   }
+  },
+  {
+   "before": "Plain",
+   "case": "plain class",
+   "serde": {
+    "raised": "TypeError: Type is not msgpack serializable: Plain"
+   },
+   "sqlite_graph": {
+    "raised": "TypeError: Type is not msgpack serializable: Plain"
+   }
+  }
+ ],
+ "round_trip_changed": [
+  "Counter",
+  "OrderedDict",
+  "datetime ZoneInfo",
+  "datetime fold=1",
+  "defaultdict",
+  "frozenset of tuples",
+  "plain class",
+  "set of tuples",
+  "tuple"
+ ],
+ "runs_per_case": 1,
+ "sources": [
+  "capture/lab/T13-serde-mac/01-serde-default.jsonl",
+  "capture/lab/T13-serde-mac/02-serde-strict-msgpack.jsonl",
+  "capture/lab/T13-serde-mac/03-round-trip.jsonl"
+ ]
+}

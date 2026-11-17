@@ -1,0 +1,260 @@
+$ pytest <scripts>/t21_tests/test_ls_plugin.py -p no:cacheprovider -rA --color=no
+rc=1 wall=9.15s
+--- stdout
+============================= test session starts ==============================
+platform darwin -- Python 3.13.12, pytest-8.4.2, pluggy-1.7.0
+rootdir: <scripts>/t21_tests
+plugins: platformdirs-4.14.5, langsmith-0.14.17, anyio-4.16.0
+collected 5 items
+
+test_ls_plugin.py FFFFF                                                  [100%]
+
+=================================== FAILURES ===================================
+_______________________________ test_marked_pass _______________________________
+
+    @pytest.mark.langsmith
+    def test_marked_pass():
+>       t.log_inputs({"a": 2, "b": 3})
+
+test_ls_plugin.py:8: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+inputs = {'a': 2, 'b': 3}
+
+    def log_inputs(inputs: dict, /) -> None:
+        """Log run inputs from within a pytest test run.
+    
+        Should only be used in pytest tests decorated with @pytest.mark.langsmith.
+    
+        Args:
+            inputs: Inputs to log.
+    
+        Example:
+            ```python
+            from langsmith import testing as t
+    
+    
+            @pytest.mark.langsmith
+            def test_foo() -> None:
+                x = 0
+                y = 1
+                t.log_inputs({"x": x, "y": y})
+                assert foo(x, y) == 2
+            ```
+        """
+        if ls_utils.test_tracking_is_disabled():
+            logger.info("LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_inputs.")
+            return
+        run_tree = rh.get_current_run_tree()
+        test_case = _TEST_CASE.get()
+        if not run_tree or not test_case:
+            msg = (
+                "log_inputs should only be called within a pytest test decorated with "
+                "@pytest.mark.langsmith, and with tracing enabled (by setting the "
+                "LANGSMITH_TRACING environment variable to 'true')."
+            )
+>           raise ValueError(msg)
+E           ValueError: log_inputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true').
+
+../../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:1170: ValueError
+_______________________________ test_marked_fail _______________________________
+
+    @pytest.mark.langsmith
+    def test_marked_fail():
+>       t.log_outputs({"sum": 9})
+
+test_ls_plugin.py:17: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+outputs = {'sum': 9}
+
+    def log_outputs(outputs: dict, /) -> None:
+        """Log run outputs from within a pytest test run.
+    
+        Should only be used in pytest tests decorated with @pytest.mark.langsmith.
+    
+        Args:
+            outputs: Outputs to log.
+    
+        Example:
+            ```python
+            from langsmith import testing as t
+    
+    
+            @pytest.mark.langsmith
+            def test_foo() -> None:
+                x = 0
+                y = 1
+                result = foo(x, y)
+                t.log_outputs({"foo": result})
+                assert result == 2
+            ```
+        """
+        if ls_utils.test_tracking_is_disabled():
+            logger.info("LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.")
+            return
+        run_tree = rh.get_current_run_tree()
+        test_case = _TEST_CASE.get()
+        if not run_tree or not test_case:
+            msg = (
+                "log_outputs should only be called within a pytest test decorated with "
+                "@pytest.mark.langsmith, and with tracing enabled (by setting the "
+                "LANGSMITH_TRACING environment variable to 'true')."
+            )
+>           raise ValueError(msg)
+E           ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true').
+
+../../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:1208: ValueError
+_____________________________ test_decorator_form ______________________________
+
+    @langsmith.test
+    def test_decorator_form():
+>       t.log_outputs({"ok": True})
+
+test_ls_plugin.py:23: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+outputs = {'ok': True}
+
+    def log_outputs(outputs: dict, /) -> None:
+        """Log run outputs from within a pytest test run.
+    
+        Should only be used in pytest tests decorated with @pytest.mark.langsmith.
+    
+        Args:
+            outputs: Outputs to log.
+    
+        Example:
+            ```python
+            from langsmith import testing as t
+    
+    
+            @pytest.mark.langsmith
+            def test_foo() -> None:
+                x = 0
+                y = 1
+                result = foo(x, y)
+                t.log_outputs({"foo": result})
+                assert result == 2
+            ```
+        """
+        if ls_utils.test_tracking_is_disabled():
+            logger.info("LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.")
+            return
+        run_tree = rh.get_current_run_tree()
+        test_case = _TEST_CASE.get()
+        if not run_tree or not test_case:
+            msg = (
+                "log_outputs should only be called within a pytest test decorated with "
+                "@pytest.mark.langsmith, and with tracing enabled (by setting the "
+                "LANGSMITH_TRACING environment variable to 'true')."
+            )
+>           raise ValueError(msg)
+E           ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true').
+
+../../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:1208: ValueError
+______________________________ test_marked_agent _______________________________
+
+    @pytest.mark.langsmith
+    def test_marked_agent():
+        from t21_agent import ask, make_agent
+    
+>       t.log_inputs({"question": "What is 17 + 25?"})
+
+test_ls_plugin.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+inputs = {'question': 'What is 17 + 25?'}
+
+    def log_inputs(inputs: dict, /) -> None:
+        """Log run inputs from within a pytest test run.
+    
+        Should only be used in pytest tests decorated with @pytest.mark.langsmith.
+    
+        Args:
+            inputs: Inputs to log.
+    
+        Example:
+            ```python
+            from langsmith import testing as t
+    
+    
+            @pytest.mark.langsmith
+            def test_foo() -> None:
+                x = 0
+                y = 1
+                t.log_inputs({"x": x, "y": y})
+                assert foo(x, y) == 2
+            ```
+        """
+        if ls_utils.test_tracking_is_disabled():
+            logger.info("LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_inputs.")
+            return
+        run_tree = rh.get_current_run_tree()
+        test_case = _TEST_CASE.get()
+        if not run_tree or not test_case:
+            msg = (
+                "log_inputs should only be called within a pytest test decorated with "
+                "@pytest.mark.langsmith, and with tracing enabled (by setting the "
+                "LANGSMITH_TRACING environment variable to 'true')."
+            )
+>           raise ValueError(msg)
+E           ValueError: log_inputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true').
+
+../../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:1170: ValueError
+____________________________ test_unmarked_log_call ____________________________
+
+    def test_unmarked_log_call():
+>       t.log_outputs({"x": 1})
+
+test_ls_plugin.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+outputs = {'x': 1}
+
+    def log_outputs(outputs: dict, /) -> None:
+        """Log run outputs from within a pytest test run.
+    
+        Should only be used in pytest tests decorated with @pytest.mark.langsmith.
+    
+        Args:
+            outputs: Outputs to log.
+    
+        Example:
+            ```python
+            from langsmith import testing as t
+    
+    
+            @pytest.mark.langsmith
+            def test_foo() -> None:
+                x = 0
+                y = 1
+                result = foo(x, y)
+                t.log_outputs({"foo": result})
+                assert result == 2
+            ```
+        """
+        if ls_utils.test_tracking_is_disabled():
+            logger.info("LANGSMITH_TEST_TRACKING is set to 'false'. Skipping log_outputs.")
+            return
+        run_tree = rh.get_current_run_tree()
+        test_case = _TEST_CASE.get()
+        if not run_tree or not test_case:
+            msg = (
+                "log_outputs should only be called within a pytest test decorated with "
+                "@pytest.mark.langsmith, and with tracing enabled (by setting the "
+                "LANGSMITH_TRACING environment variable to 'true')."
+            )
+>           raise ValueError(msg)
+E           ValueError: log_outputs should only be called within a pytest test decorated with @pytest.mark.langsmith, and with tracing enabled (by setting the LANGSMITH_TRACING environment variable to 'true').
+
+../../../../lab/.venv/lib/python3.13/site-packages/langsmith/testing/_internal.py:1208: ValueError
+=========================== short test summary info ============================
+FAILED test_ls_plugin.py::test_marked_pass - ValueError: log_inputs should on...
+FAILED test_ls_plugin.py::test_marked_fail - ValueError: log_outputs should o...
+FAILED test_ls_plugin.py::test_decorator_form - ValueError: log_outputs shoul...
+FAILED test_ls_plugin.py::test_marked_agent - ValueError: log_inputs should o...
+FAILED test_ls_plugin.py::test_unmarked_log_call - ValueError: log_outputs sh...
+============================== 5 failed in 3.67s ===============================
+
+--- stderr

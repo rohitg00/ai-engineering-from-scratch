@@ -1,0 +1,9 @@
+============================== 1 failed in 19.01s ==============================
+============================== 1 failed in 18.62s ==============================
+============================== 1 failed in 30.67s ==============================
+{"trial": 1, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 2, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+{"trial": 3, "outcome": "one refund", "approval_re_asked": true, "after_restart_next": ["tools"], "replayed_flags": [true], "refunded_cents": 8900}
+========================= 1 failed in 63.57s (0:01:03) =========================
+========================= 1 failed in 72.94s (0:01:12) =========================
+========================= 1 failed in 71.37s (0:01:11) =========================

@@ -1,0 +1,8077 @@
+{
+ "pins": {
+  "langchain": "1.5.0",
+  "langchain-core": "1.8.0",
+  "langgraph": "1.2.22",
+  "deepagents": "0.7.38",
+  "langchain-ollama": "1.1.0",
+  "langchain-anthropic": "1.7.10",
+  "claude-agent-sdk": "0.2.182",
+  "claude-code-cli (bundled)": "2.1.325"
+ },
+ "patterns": [
+  "single",
+  "subagents",
+  "handoffs",
+  "skills",
+  "router"
+ ],
+ "models": [
+  "qwen3:14b",
+  "gpt-oss:20b",
+  "claude-haiku-5-5"
+ ],
+ "cells": {
+  "qwen3:14b|single": {
+   "n": 30,
+   "pass": 22,
+   "ci": [
+    0.556,
+    0.858
+   ],
+   "strict": 10,
+   "calls_med": 4.0,
+   "calls_sum": 140,
+   "in_med": 6891.5,
+   "in_sum": 251620,
+   "out_sum": 3440,
+   "wall_med": 130.853,
+   "wall_sum": 6053.1,
+   "fw_med_ms": 57.25,
+   "cost_sum": 0,
+   "by_family": {
+    "chain": [
+     4,
+     6
+    ],
+    "sql": [
+     5,
+     6
+    ],
+    "retrieval": [
+     5,
+     6
+    ],
+    "files": [
+     3,
+     6
+    ],
+    "multiturn": [
+     5,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 17,
+    "calls_med": 3.0,
+    "in_med": 5419.0
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 5,
+    "calls_med": 8.0,
+    "turn1_calls_med": 2.0,
+    "later_turn_calls_med": 2,
+    "in_med": 14295.0
+   },
+   "categories": {
+    "wrong_final_state": 7,
+    "wrong_tool": 1
+   },
+   "errors": {},
+   "agents_per_task_med": 1.0,
+   "tasks": {
+    "chain01": {
+     "p": 0,
+     "calls": 5,
+     "in": 8968,
+     "out": 127,
+     "wall": 131.538,
+     "turn_calls": [
+      5
+     ],
+     "cat": "wrong_final_state"
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 4,
+     "in": 7052,
+     "out": 107,
+     "wall": 93.372,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 5,
+     "in": 8882,
+     "out": 130,
+     "wall": 118.878,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 7,
+     "in": 13261,
+     "out": 193,
+     "wall": 176.502,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 5,
+     "in": 9086,
+     "out": 153,
+     "wall": 235.26,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 0,
+     "calls": 7,
+     "in": 13263,
+     "out": 217,
+     "wall": 301.851,
+     "turn_calls": [
+      7
+     ],
+     "cat": "wrong_final_state"
+    },
+    "sql01": {
+     "p": 0,
+     "calls": 3,
+     "in": 5378,
+     "out": 102,
+     "wall": 138.67,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_tool"
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 2,
+     "in": 3331,
+     "out": 33,
+     "wall": 67.97,
+     "turn_calls": [
+      2
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 7,
+     "in": 12662,
+     "out": 161,
+     "wall": 204.483,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 5,
+     "in": 8700,
+     "out": 97,
+     "wall": 106.965,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 4,
+     "in": 6859,
+     "out": 78,
+     "wall": 139.138,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 9,
+     "in": 17042,
+     "out": 290,
+     "wall": 219.317,
+     "turn_calls": [
+      9
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 3,
+     "in": 5409,
+     "out": 52,
+     "wall": 63.839,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 3,
+     "in": 5215,
+     "out": 58,
+     "wall": 86.809,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 3,
+     "in": 5429,
+     "out": 73,
+     "wall": 141.004,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 0,
+     "calls": 3,
+     "in": 5388,
+     "out": 63,
+     "wall": 125.436,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "r13": {
+     "p": 1,
+     "calls": 3,
+     "in": 5367,
+     "out": 57,
+     "wall": 104.006,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 1,
+     "calls": 3,
+     "in": 5463,
+     "out": 56,
+     "wall": 116.19,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 1,
+     "calls": 2,
+     "in": 3328,
+     "out": 32,
+     "wall": 68.935,
+     "turn_calls": [
+      2
+     ],
+     "cat": null
+    },
+    "files04": {
+     "p": 0,
+     "calls": 3,
+     "in": 5122,
+     "out": 89,
+     "wall": 130.168,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files07": {
+     "p": 0,
+     "calls": 2,
+     "in": 3331,
+     "out": 51,
+     "wall": 81.798,
+     "turn_calls": [
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files10": {
+     "p": 0,
+     "calls": 2,
+     "in": 3470,
+     "out": 139,
+     "wall": 166.959,
+     "turn_calls": [
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files13": {
+     "p": 1,
+     "calls": 2,
+     "in": 3328,
+     "out": 39,
+     "wall": 54.814,
+     "turn_calls": [
+      2
+     ],
+     "cat": null
+    },
+    "files16": {
+     "p": 1,
+     "calls": 3,
+     "in": 5073,
+     "out": 66,
+     "wall": 123.244,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 8,
+     "in": 14295,
+     "out": 153,
+     "wall": 256.894,
+     "turn_calls": [
+      2,
+      2,
+      2,
+      2
+     ],
+     "cat": null
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 8,
+     "in": 14295,
+     "out": 153,
+     "wall": 147.03,
+     "turn_calls": [
+      2,
+      2,
+      2,
+      2
+     ],
+     "cat": null
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 10,
+     "in": 18800,
+     "out": 237,
+     "wall": 1101.427,
+     "turn_calls": [
+      2,
+      4,
+      4
+     ],
+     "cat": null
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 9,
+     "in": 16232,
+     "out": 180,
+     "wall": 1077.929,
+     "turn_calls": [
+      2,
+      3,
+      3,
+      1
+     ],
+     "cat": null
+    },
+    "multi13": {
+     "p": 0,
+     "calls": 4,
+     "in": 6924,
+     "out": 111,
+     "wall": 111.469,
+     "turn_calls": [
+      1,
+      1,
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi16": {
+     "p": 1,
+     "calls": 6,
+     "in": 10667,
+     "out": 143,
+     "wall": 161.217,
+     "turn_calls": [
+      1,
+      1,
+      4
+     ],
+     "cat": null
+    }
+   }
+  },
+  "qwen3:14b|subagents": {
+   "n": 30,
+   "pass": 17,
+   "ci": [
+    0.392,
+    0.726
+   ],
+   "strict": 2,
+   "calls_med": 5.0,
+   "calls_sum": 164,
+   "in_med": 13332.5,
+   "in_sum": 425288,
+   "out_sum": 5153,
+   "wall_med": 315.263,
+   "wall_sum": 14480.0,
+   "fw_med_ms": 201.4,
+   "cost_sum": 0,
+   "by_family": {
+    "chain": [
+     6,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     5,
+     6
+    ],
+    "files": [
+     0,
+     6
+    ],
+    "multiturn": [
+     0,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 17,
+    "calls_med": 5.0,
+    "in_med": 13332.5
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 0,
+    "calls_med": 5.0,
+    "turn1_calls_med": 1.0,
+    "later_turn_calls_med": 1,
+    "in_med": 13334.5
+   },
+   "categories": {
+    "wrong_final_state": 10,
+    "gave_up": 3
+   },
+   "errors": {},
+   "agents_per_task_med": 2.0,
+   "tasks": {
+    "chain01": {
+     "p": 1,
+     "calls": 6,
+     "in": 15704,
+     "out": 201,
+     "wall": 832.87,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 6,
+     "in": 15696,
+     "out": 199,
+     "wall": 981.557,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 7,
+     "in": 18601,
+     "out": 247,
+     "wall": 905.93,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 9,
+     "in": 24395,
+     "out": 386,
+     "wall": 1457.616,
+     "turn_calls": [
+      9
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 6,
+     "in": 15852,
+     "out": 235,
+     "wall": 1446.826,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 1,
+     "calls": 9,
+     "in": 24350,
+     "out": 339,
+     "wall": 1203.099,
+     "turn_calls": [
+      9
+     ],
+     "cat": null
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 6,
+     "in": 14514,
+     "out": 119,
+     "wall": 425.959,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 5,
+     "in": 12189,
+     "out": 106,
+     "wall": 112.758,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 9,
+     "in": 22058,
+     "out": 223,
+     "wall": 452.877,
+     "turn_calls": [
+      9
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 7,
+     "in": 16990,
+     "out": 155,
+     "wall": 70.665,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 6,
+     "in": 14577,
+     "out": 140,
+     "wall": 39.376,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 12,
+     "in": 30964,
+     "out": 505,
+     "wall": 762.728,
+     "turn_calls": [
+      12
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 4,
+     "in": 9863,
+     "out": 103,
+     "wall": 385.089,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 5,
+     "in": 12263,
+     "out": 114,
+     "wall": 129.555,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 5,
+     "in": 12335,
+     "out": 161,
+     "wall": 188.747,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 0,
+     "calls": 4,
+     "in": 9852,
+     "out": 97,
+     "wall": 247.072,
+     "turn_calls": [
+      4
+     ],
+     "cat": "wrong_final_state"
+    },
+    "r13": {
+     "p": 1,
+     "calls": 5,
+     "in": 12228,
+     "out": 116,
+     "wall": 216.632,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 1,
+     "calls": 5,
+     "in": 12317,
+     "out": 111,
+     "wall": 152.058,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 0,
+     "calls": 2,
+     "in": 5430,
+     "out": 46,
+     "wall": 136.764,
+     "turn_calls": [
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files04": {
+     "p": 0,
+     "calls": 2,
+     "in": 5424,
+     "out": 41,
+     "wall": 24.314,
+     "turn_calls": [
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files07": {
+     "p": 0,
+     "calls": 2,
+     "in": 5437,
+     "out": 56,
+     "wall": 152.397,
+     "turn_calls": [
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files10": {
+     "p": 0,
+     "calls": 5,
+     "in": 14330,
+     "out": 208,
+     "wall": 444.05,
+     "turn_calls": [
+      5
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files13": {
+     "p": 0,
+     "calls": 1,
+     "in": 2693,
+     "out": 30,
+     "wall": 122.074,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files16": {
+     "p": 0,
+     "calls": 2,
+     "in": 5435,
+     "out": 55,
+     "wall": 115.482,
+     "turn_calls": [
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi01": {
+     "p": 0,
+     "calls": 4,
+     "in": 10946,
+     "out": 140,
+     "wall": 277.056,
+     "turn_calls": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "cat": "gave_up"
+    },
+    "multi04": {
+     "p": 0,
+     "calls": 4,
+     "in": 10946,
+     "out": 140,
+     "wall": 353.47,
+     "turn_calls": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "cat": "gave_up"
+    },
+    "multi07": {
+     "p": 0,
+     "calls": 10,
+     "in": 27529,
+     "out": 421,
+     "wall": 1013.943,
+     "turn_calls": [
+      1,
+      1,
+      8
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi10": {
+     "p": 0,
+     "calls": 4,
+     "in": 10921,
+     "out": 108,
+     "wall": 1019.926,
+     "turn_calls": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "cat": "gave_up"
+    },
+    "multi13": {
+     "p": 0,
+     "calls": 6,
+     "in": 15726,
+     "out": 175,
+     "wall": 673.057,
+     "turn_calls": [
+      1,
+      1,
+      4
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi16": {
+     "p": 0,
+     "calls": 6,
+     "in": 15723,
+     "out": 176,
+     "wall": 136.077,
+     "turn_calls": [
+      1,
+      1,
+      4
+     ],
+     "cat": "wrong_final_state"
+    }
+   }
+  },
+  "qwen3:14b|handoffs": {
+   "n": 30,
+   "pass": 19,
+   "ci": [
+    0.455,
+    0.781
+   ],
+   "strict": 9,
+   "calls_med": 5.0,
+   "calls_sum": 151,
+   "in_med": 5248.5,
+   "in_sum": 163200,
+   "out_sum": 3541,
+   "wall_med": 90.705,
+   "wall_sum": 2835.0,
+   "fw_med_ms": 5514.9,
+   "cost_sum": 0,
+   "by_family": {
+    "chain": [
+     5,
+     6
+    ],
+    "sql": [
+     5,
+     6
+    ],
+    "retrieval": [
+     4,
+     6
+    ],
+    "files": [
+     2,
+     6
+    ],
+    "multiturn": [
+     3,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 16,
+    "calls_med": 4.5,
+    "in_med": 4425.0
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 3,
+    "calls_med": 8.0,
+    "turn1_calls_med": 2.0,
+    "later_turn_calls_med": 2,
+    "in_med": 8573.0
+   },
+   "categories": {
+    "wrong_final_state": 7,
+    "wrong_tool": 3,
+    "gave_up": 1
+   },
+   "errors": {},
+   "agents_per_task_med": 2.0,
+   "tasks": {
+    "chain01": {
+     "p": 1,
+     "calls": 5,
+     "in": 5988,
+     "out": 132,
+     "wall": 119.415,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 5,
+     "in": 5973,
+     "out": 131,
+     "wall": 94.766,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 5,
+     "in": 5887,
+     "out": 128,
+     "wall": 92.032,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 7,
+     "in": 9068,
+     "out": 220,
+     "wall": 170.603,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 5,
+     "in": 6091,
+     "out": 153,
+     "wall": 108.219,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 0,
+     "calls": 7,
+     "in": 9070,
+     "out": 217,
+     "wall": 142.479,
+     "turn_calls": [
+      7
+     ],
+     "cat": "wrong_final_state"
+    },
+    "sql01": {
+     "p": 0,
+     "calls": 1,
+     "in": 1036,
+     "out": 4,
+     "wall": 9.769,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_tool"
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 4,
+     "in": 3830,
+     "out": 68,
+     "wall": 75.501,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 8,
+     "in": 8415,
+     "out": 186,
+     "wall": 89.378,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 6,
+     "in": 5976,
+     "out": 115,
+     "wall": 94.572,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 5,
+     "in": 4890,
+     "out": 96,
+     "wall": 58.649,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 9,
+     "in": 9885,
+     "out": 245,
+     "wall": 132.441,
+     "turn_calls": [
+      9
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 4,
+     "in": 3896,
+     "out": 71,
+     "wall": 80.718,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 4,
+     "in": 3700,
+     "out": 75,
+     "wall": 54.257,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 5,
+     "in": 5049,
+     "out": 111,
+     "wall": 73.627,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 0,
+     "calls": 1,
+     "in": 1042,
+     "out": 4,
+     "wall": 8.887,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_tool"
+    },
+    "r13": {
+     "p": 0,
+     "calls": 1,
+     "in": 1039,
+     "out": 4,
+     "wall": 8.023,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_tool"
+    },
+    "r16": {
+     "p": 1,
+     "calls": 4,
+     "in": 3954,
+     "out": 73,
+     "wall": 64.75,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 0,
+     "calls": 2,
+     "in": 1976,
+     "out": 52,
+     "wall": 66.498,
+     "turn_calls": [
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files04": {
+     "p": 0,
+     "calls": 5,
+     "in": 4996,
+     "out": 83,
+     "wall": 72.87,
+     "turn_calls": [
+      5
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files07": {
+     "p": 0,
+     "calls": 3,
+     "in": 2935,
+     "out": 58,
+     "wall": 46.0,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files10": {
+     "p": 0,
+     "calls": 3,
+     "in": 3080,
+     "out": 138,
+     "wall": 96.792,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files13": {
+     "p": 1,
+     "calls": 3,
+     "in": 2932,
+     "out": 56,
+     "wall": 46.532,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "files16": {
+     "p": 1,
+     "calls": 4,
+     "in": 3960,
+     "out": 82,
+     "wall": 75.759,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 9,
+     "in": 9600,
+     "out": 180,
+     "wall": 208.415,
+     "turn_calls": [
+      3,
+      2,
+      2,
+      2
+     ],
+     "cat": null
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 9,
+     "in": 9648,
+     "out": 192,
+     "wall": 173.514,
+     "turn_calls": [
+      3,
+      2,
+      2,
+      2
+     ],
+     "cat": null
+    },
+    "multi07": {
+     "p": 0,
+     "calls": 7,
+     "in": 7546,
+     "out": 165,
+     "wall": 160.156,
+     "turn_calls": [
+      2,
+      3,
+      2
+     ],
+     "cat": "gave_up"
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 10,
+     "in": 10831,
+     "out": 194,
+     "wall": 169.127,
+     "turn_calls": [
+      2,
+      3,
+      3,
+      2
+     ],
+     "cat": null
+    },
+    "multi13": {
+     "p": 0,
+     "calls": 5,
+     "in": 5459,
+     "out": 157,
+     "wall": 129.06,
+     "turn_calls": [
+      1,
+      1,
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi16": {
+     "p": 0,
+     "calls": 5,
+     "in": 5448,
+     "out": 151,
+     "wall": 112.147,
+     "turn_calls": [
+      1,
+      1,
+      3
+     ],
+     "cat": "wrong_final_state"
+    }
+   }
+  },
+  "qwen3:14b|skills": {
+   "n": 30,
+   "pass": 15,
+   "ci": [
+    0.332,
+    0.668
+   ],
+   "strict": 7,
+   "calls_med": 4.5,
+   "calls_sum": 159,
+   "in_med": 2861.5,
+   "in_sum": 151631,
+   "out_sum": 3974,
+   "wall_med": 118.159,
+   "wall_sum": 4520.8,
+   "fw_med_ms": 36.0,
+   "cost_sum": 0,
+   "by_family": {
+    "chain": [
+     4,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     5,
+     6
+    ],
+    "files": [
+     0,
+     6
+    ],
+    "multiturn": [
+     0,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 15,
+    "calls_med": 4.5,
+    "in_med": 3295.5
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 0,
+    "calls_med": 4.5,
+    "turn1_calls_med": 1.0,
+    "later_turn_calls_med": 1,
+    "in_med": 2222.5
+   },
+   "categories": {
+    "wrong_final_state": 12,
+    "gave_up": 2,
+    "loop_step_limit": 1
+   },
+   "errors": {
+    "StepLimit": 1
+   },
+   "agents_per_task_med": 1.0,
+   "tasks": {
+    "chain01": {
+     "p": 0,
+     "calls": 8,
+     "in": 8734,
+     "out": 227,
+     "wall": 202.891,
+     "turn_calls": [
+      8
+     ],
+     "cat": "wrong_final_state"
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 7,
+     "in": 7253,
+     "out": 164,
+     "wall": 163.606,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 6,
+     "in": 5883,
+     "out": 130,
+     "wall": 134.448,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 8,
+     "in": 8901,
+     "out": 235,
+     "wall": 216.759,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 6,
+     "in": 6109,
+     "out": 173,
+     "wall": 200.937,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 0,
+     "calls": 8,
+     "in": 8964,
+     "out": 237,
+     "wall": 228.304,
+     "turn_calls": [
+      8
+     ],
+     "cat": "wrong_final_state"
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 5,
+     "in": 3687,
+     "out": 92,
+     "wall": 100.297,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 3,
+     "in": 1974,
+     "out": 54,
+     "wall": 73.103,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 8,
+     "in": 6808,
+     "out": 181,
+     "wall": 165.084,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 7,
+     "in": 5658,
+     "out": 143,
+     "wall": 139.834,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 5,
+     "in": 3709,
+     "out": 99,
+     "wall": 127.619,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 10,
+     "in": 9426,
+     "out": 316,
+     "wall": 359.173,
+     "turn_calls": [
+      10
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 4,
+     "in": 2848,
+     "out": 71,
+     "wall": 100.723,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 4,
+     "in": 2654,
+     "out": 68,
+     "wall": 92.762,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 4,
+     "in": 2875,
+     "out": 76,
+     "wall": 106.587,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 0,
+     "calls": 5,
+     "in": 3934,
+     "out": 139,
+     "wall": 135.51,
+     "turn_calls": [
+      5
+     ],
+     "cat": "gave_up"
+    },
+    "r13": {
+     "p": 1,
+     "calls": 4,
+     "in": 2806,
+     "out": 68,
+     "wall": 78.51,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 1,
+     "calls": 4,
+     "in": 2904,
+     "out": 72,
+     "wall": 85.001,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 0,
+     "calls": 1,
+     "in": 444,
+     "out": 31,
+     "wall": 27.511,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files04": {
+     "p": 0,
+     "calls": 1,
+     "in": 446,
+     "out": 23,
+     "wall": 16.381,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files07": {
+     "p": 0,
+     "calls": 1,
+     "in": 445,
+     "out": 30,
+     "wall": 22.258,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files10": {
+     "p": 0,
+     "calls": 1,
+     "in": 456,
+     "out": 145,
+     "wall": 108.699,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files13": {
+     "p": 0,
+     "calls": 1,
+     "in": 445,
+     "out": 31,
+     "wall": 22.624,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files16": {
+     "p": 0,
+     "calls": 1,
+     "in": 447,
+     "out": 29,
+     "wall": 20.642,
+     "turn_calls": [
+      1
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi01": {
+     "p": 0,
+     "calls": 5,
+     "in": 2516,
+     "out": 136,
+     "wall": 103.742,
+     "turn_calls": [
+      1,
+      1,
+      1,
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi04": {
+     "p": 0,
+     "calls": 5,
+     "in": 2516,
+     "out": 136,
+     "wall": 226.901,
+     "turn_calls": [
+      1,
+      1,
+      1,
+      2
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi07": {
+     "p": 0,
+     "calls": 27,
+     "in": 43866,
+     "out": 616,
+     "wall": 854.504,
+     "turn_calls": [
+      1,
+      1,
+      25
+     ],
+     "cat": "loop_step_limit"
+    },
+    "multi10": {
+     "p": 0,
+     "calls": 4,
+     "in": 1929,
+     "out": 108,
+     "wall": 188.044,
+     "turn_calls": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "cat": "gave_up"
+    },
+    "multi13": {
+     "p": 0,
+     "calls": 3,
+     "in": 1499,
+     "out": 69,
+     "wall": 84.675,
+     "turn_calls": [
+      1,
+      1,
+      1
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi16": {
+     "p": 0,
+     "calls": 3,
+     "in": 1495,
+     "out": 75,
+     "wall": 133.67,
+     "turn_calls": [
+      1,
+      1,
+      1
+     ],
+     "cat": "wrong_final_state"
+    }
+   }
+  },
+  "qwen3:14b|router": {
+   "n": 30,
+   "pass": 18,
+   "ci": [
+    0.423,
+    0.754
+   ],
+   "strict": 13,
+   "calls_med": 5.5,
+   "calls_sum": 187,
+   "in_med": 3084.5,
+   "in_sum": 105174,
+   "out_sum": 5423,
+   "wall_med": 181.333,
+   "wall_sum": 5728.2,
+   "fw_med_ms": 58.6,
+   "cost_sum": 0,
+   "by_family": {
+    "chain": [
+     1,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     6,
+     6
+    ],
+    "files": [
+     3,
+     6
+    ],
+    "multiturn": [
+     2,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 16,
+    "calls_med": 4.5,
+    "in_med": 2432.0
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 2,
+    "calls_med": 10.5,
+    "turn1_calls_med": 3.0,
+    "later_turn_calls_med": 3,
+    "in_med": 5504.0
+   },
+   "categories": {
+    "wrong_tool": 2,
+    "wrong_final_state": 10
+   },
+   "errors": {},
+   "agents_per_task_med": 2.0,
+   "tasks": {
+    "chain01": {
+     "p": 0,
+     "calls": 9,
+     "in": 3709,
+     "out": 277,
+     "wall": 358.144,
+     "turn_calls": [
+      9
+     ],
+     "cat": "wrong_tool"
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 6,
+     "in": 4756,
+     "out": 172,
+     "wall": 219.849,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 0,
+     "calls": 6,
+     "in": 3404,
+     "out": 150,
+     "wall": 193.892,
+     "turn_calls": [
+      6
+     ],
+     "cat": "wrong_tool"
+    },
+    "chain10": {
+     "p": 0,
+     "calls": 3,
+     "in": 1994,
+     "out": 198,
+     "wall": 288.432,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "chain13": {
+     "p": 0,
+     "calls": 3,
+     "in": 1994,
+     "out": 207,
+     "wall": 301.361,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "chain16": {
+     "p": 0,
+     "calls": 7,
+     "in": 6225,
+     "out": 367,
+     "wall": 513.724,
+     "turn_calls": [
+      7
+     ],
+     "cat": "wrong_final_state"
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 6,
+     "in": 3337,
+     "out": 117,
+     "wall": 195.962,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 3,
+     "in": 1298,
+     "out": 59,
+     "wall": 81.574,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 8,
+     "in": 5291,
+     "out": 227,
+     "wall": 340.711,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 7,
+     "in": 4294,
+     "out": 164,
+     "wall": 257.748,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 6,
+     "in": 3369,
+     "out": 127,
+     "wall": 168.774,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 9,
+     "in": 6232,
+     "out": 271,
+     "wall": 221.747,
+     "turn_calls": [
+      9
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 5,
+     "in": 2805,
+     "out": 113,
+     "wall": 99.942,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 4,
+     "in": 1820,
+     "out": 80,
+     "wall": 73.013,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 5,
+     "in": 2832,
+     "out": 129,
+     "wall": 113.739,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 1,
+     "calls": 5,
+     "in": 2784,
+     "out": 118,
+     "wall": 106.959,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r13": {
+     "p": 1,
+     "calls": 4,
+     "in": 1970,
+     "out": 77,
+     "wall": 72.875,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 1,
+     "calls": 4,
+     "in": 2074,
+     "out": 92,
+     "wall": 82.431,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 1,
+     "calls": 3,
+     "in": 1372,
+     "out": 100,
+     "wall": 102.177,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "files04": {
+     "p": 0,
+     "calls": 4,
+     "in": 2080,
+     "out": 131,
+     "wall": 100.026,
+     "turn_calls": [
+      4
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files07": {
+     "p": 0,
+     "calls": 3,
+     "in": 1368,
+     "out": 93,
+     "wall": 70.294,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files10": {
+     "p": 0,
+     "calls": 3,
+     "in": 1510,
+     "out": 199,
+     "wall": 158.364,
+     "turn_calls": [
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files13": {
+     "p": 1,
+     "calls": 3,
+     "in": 1357,
+     "out": 80,
+     "wall": 61.975,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "files16": {
+     "p": 1,
+     "calls": 4,
+     "in": 2032,
+     "out": 108,
+     "wall": 81.758,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "multi01": {
+     "p": 0,
+     "calls": 11,
+     "in": 5692,
+     "out": 284,
+     "wall": 268.535,
+     "turn_calls": [
+      3,
+      2,
+      2,
+      4
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi04": {
+     "p": 0,
+     "calls": 10,
+     "in": 4907,
+     "out": 250,
+     "wall": 217.89,
+     "turn_calls": [
+      3,
+      2,
+      2,
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 14,
+     "in": 7839,
+     "out": 399,
+     "wall": 388.163,
+     "turn_calls": [
+      3,
+      5,
+      6
+     ],
+     "cat": null
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 13,
+     "in": 7004,
+     "out": 326,
+     "wall": 235.321,
+     "turn_calls": [
+      3,
+      3,
+      4,
+      3
+     ],
+     "cat": null
+    },
+    "multi13": {
+     "p": 0,
+     "calls": 9,
+     "in": 4509,
+     "out": 224,
+     "wall": 148.282,
+     "turn_calls": [
+      3,
+      3,
+      3
+     ],
+     "cat": "wrong_final_state"
+    },
+    "multi16": {
+     "p": 0,
+     "calls": 10,
+     "in": 5316,
+     "out": 284,
+     "wall": 204.548,
+     "turn_calls": [
+      3,
+      3,
+      4
+     ],
+     "cat": "wrong_final_state"
+    }
+   }
+  },
+  "claude-haiku-5-5|single": {
+   "n": 30,
+   "pass": 30,
+   "ci": [
+    0.886,
+    1.0
+   ],
+   "strict": 30,
+   "calls_med": 5.0,
+   "calls_sum": 160,
+   "in_med": 15611.0,
+   "in_sum": 521013,
+   "out_sum": 11464,
+   "wall_med": 5.272,
+   "wall_sum": 179.0,
+   "fw_med_ms": 160.15,
+   "cost_sum": 0.013043,
+   "by_family": {
+    "chain": [
+     6,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     6,
+     6
+    ],
+    "files": [
+     6,
+     6
+    ],
+    "multiturn": [
+     6,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 24,
+    "calls_med": 4.5,
+    "in_med": 14409.0
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 6,
+    "calls_med": 10.0,
+    "turn1_calls_med": 2.5,
+    "later_turn_calls_med": 3,
+    "in_med": 33204.0
+   },
+   "categories": {},
+   "errors": {},
+   "agents_per_task_med": 1.0,
+   "tasks": {
+    "chain01": {
+     "p": 1,
+     "calls": 5,
+     "in": 15764,
+     "out": 305,
+     "wall": 5.422,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 5,
+     "in": 15730,
+     "out": 293,
+     "wall": 4.773,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 4,
+     "in": 12367,
+     "out": 238,
+     "wall": 3.906,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 5,
+     "in": 17312,
+     "out": 575,
+     "wall": 6.411,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 4,
+     "in": 13149,
+     "out": 386,
+     "wall": 4.697,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 1,
+     "calls": 5,
+     "in": 17872,
+     "out": 679,
+     "wall": 6.694,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 5,
+     "in": 15492,
+     "out": 301,
+     "wall": 5.544,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 5,
+     "in": 15488,
+     "out": 232,
+     "wall": 6.294,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 5,
+     "in": 16773,
+     "out": 469,
+     "wall": 6.066,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 5,
+     "in": 16044,
+     "out": 312,
+     "wall": 4.816,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 5,
+     "in": 15466,
+     "out": 246,
+     "wall": 6.005,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 5,
+     "in": 17444,
+     "out": 572,
+     "wall": 5.758,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 4,
+     "in": 13016,
+     "out": 211,
+     "wall": 3.866,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 4,
+     "in": 12898,
+     "out": 228,
+     "wall": 4.072,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 4,
+     "in": 12891,
+     "out": 208,
+     "wall": 3.82,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 1,
+     "calls": 5,
+     "in": 16765,
+     "out": 355,
+     "wall": 5.106,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r13": {
+     "p": 1,
+     "calls": 4,
+     "in": 12855,
+     "out": 184,
+     "wall": 3.616,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 1,
+     "calls": 4,
+     "in": 13064,
+     "out": 214,
+     "wall": 4.994,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 1,
+     "calls": 4,
+     "in": 12459,
+     "out": 351,
+     "wall": 4.523,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files04": {
+     "p": 1,
+     "calls": 4,
+     "in": 12740,
+     "out": 546,
+     "wall": 5.123,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files07": {
+     "p": 1,
+     "calls": 4,
+     "in": 13352,
+     "out": 562,
+     "wall": 5.075,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files10": {
+     "p": 1,
+     "calls": 5,
+     "in": 16028,
+     "out": 412,
+     "wall": 6.077,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files13": {
+     "p": 1,
+     "calls": 3,
+     "in": 9137,
+     "out": 223,
+     "wall": 3.527,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "files16": {
+     "p": 1,
+     "calls": 3,
+     "in": 9049,
+     "out": 175,
+     "wall": 3.318,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 12,
+     "in": 40057,
+     "out": 612,
+     "wall": 12.972,
+     "turn_calls": [
+      3,
+      3,
+      3,
+      3
+     ],
+     "cat": null
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 12,
+     "in": 39762,
+     "out": 583,
+     "wall": 13.574,
+     "turn_calls": [
+      3,
+      3,
+      3,
+      3
+     ],
+     "cat": null
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 9,
+     "in": 30163,
+     "out": 565,
+     "wall": 10.249,
+     "turn_calls": [
+      2,
+      3,
+      4
+     ],
+     "cat": null
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 11,
+     "in": 36245,
+     "out": 615,
+     "wall": 11.317,
+     "turn_calls": [
+      3,
+      3,
+      3,
+      2
+     ],
+     "cat": null
+    },
+    "multi13": {
+     "p": 1,
+     "calls": 5,
+     "in": 15820,
+     "out": 415,
+     "wall": 5.707,
+     "turn_calls": [
+      1,
+      1,
+      3
+     ],
+     "cat": null
+    },
+    "multi16": {
+     "p": 1,
+     "calls": 5,
+     "in": 15811,
+     "out": 397,
+     "wall": 5.638,
+     "turn_calls": [
+      1,
+      1,
+      3
+     ],
+     "cat": null
+    }
+   }
+  },
+  "claude-haiku-5-5|subagents": {
+   "n": 30,
+   "pass": 30,
+   "ci": [
+    0.886,
+    1.0
+   ],
+   "strict": 30,
+   "calls_med": 7.0,
+   "calls_sum": 271,
+   "in_med": 31164.5,
+   "in_sum": 1247292,
+   "out_sum": 36412,
+   "wall_med": 9.616,
+   "wall_sum": 381.2,
+   "fw_med_ms": 457.65,
+   "cost_sum": 0.038024,
+   "by_family": {
+    "chain": [
+     6,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     6,
+     6
+    ],
+    "files": [
+     6,
+     6
+    ],
+    "multiturn": [
+     6,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 24,
+    "calls_med": 7.0,
+    "in_med": 30675.5
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 6,
+    "calls_med": 17.5,
+    "turn1_calls_med": 5.0,
+    "later_turn_calls_med": 5,
+    "in_med": 78432.5
+   },
+   "categories": {},
+   "errors": {},
+   "agents_per_task_med": 2.0,
+   "tasks": {
+    "chain01": {
+     "p": 1,
+     "calls": 7,
+     "in": 32426,
+     "out": 720,
+     "wall": 9.693,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 7,
+     "in": 32178,
+     "out": 657,
+     "wall": 8.894,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 7,
+     "in": 32692,
+     "out": 797,
+     "wall": 9.724,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 8,
+     "in": 40124,
+     "out": 1660,
+     "wall": 13.098,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 6,
+     "in": 29206,
+     "out": 1100,
+     "wall": 9.538,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 1,
+     "calls": 8,
+     "in": 40511,
+     "out": 1511,
+     "wall": 12.725,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 7,
+     "in": 30005,
+     "out": 465,
+     "wall": 7.601,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 6,
+     "in": 26195,
+     "out": 510,
+     "wall": 7.671,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 7,
+     "in": 31124,
+     "out": 669,
+     "wall": 9.231,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 7,
+     "in": 30615,
+     "out": 588,
+     "wall": 8.12,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 7,
+     "in": 30736,
+     "out": 1029,
+     "wall": 9.864,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 19,
+     "in": 109154,
+     "out": 8968,
+     "wall": 50.354,
+     "turn_calls": [
+      19
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 6,
+     "in": 25804,
+     "out": 463,
+     "wall": 7.304,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 6,
+     "in": 26175,
+     "out": 732,
+     "wall": 8.063,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 8,
+     "in": 38192,
+     "out": 1316,
+     "wall": 12.086,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 1,
+     "calls": 8,
+     "in": 36477,
+     "out": 1066,
+     "wall": 12.238,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "r13": {
+     "p": 1,
+     "calls": 6,
+     "in": 26394,
+     "out": 799,
+     "wall": 8.521,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 1,
+     "calls": 6,
+     "in": 26048,
+     "out": 449,
+     "wall": 6.623,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 1,
+     "calls": 6,
+     "in": 26560,
+     "out": 855,
+     "wall": 11.597,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "files04": {
+     "p": 1,
+     "calls": 7,
+     "in": 32668,
+     "out": 1568,
+     "wall": 12.106,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "files07": {
+     "p": 1,
+     "calls": 6,
+     "in": 26417,
+     "out": 769,
+     "wall": 7.554,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "files10": {
+     "p": 1,
+     "calls": 7,
+     "in": 32071,
+     "out": 1154,
+     "wall": 10.165,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "files13": {
+     "p": 1,
+     "calls": 6,
+     "in": 25564,
+     "out": 496,
+     "wall": 5.954,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "files16": {
+     "p": 1,
+     "calls": 6,
+     "in": 25853,
+     "out": 626,
+     "wall": 6.374,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 24,
+     "in": 106837,
+     "out": 1670,
+     "wall": 28.365,
+     "turn_calls": [
+      7,
+      6,
+      6,
+      5
+     ],
+     "cat": null
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 24,
+     "in": 108073,
+     "out": 1616,
+     "wall": 28.818,
+     "turn_calls": [
+      7,
+      5,
+      7,
+      5
+     ],
+     "cat": null
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 16,
+     "in": 72604,
+     "out": 1430,
+     "wall": 19.079,
+     "turn_calls": [
+      5,
+      5,
+      6
+     ],
+     "cat": null
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 19,
+     "in": 84261,
+     "out": 1314,
+     "wall": 21.653,
+     "turn_calls": [
+      5,
+      6,
+      6,
+      2
+     ],
+     "cat": null
+    },
+    "multi13": {
+     "p": 1,
+     "calls": 7,
+     "in": 31123,
+     "out": 693,
+     "wall": 8.974,
+     "turn_calls": [
+      1,
+      1,
+      5
+     ],
+     "cat": null
+    },
+    "multi16": {
+     "p": 1,
+     "calls": 7,
+     "in": 31205,
+     "out": 722,
+     "wall": 9.224,
+     "turn_calls": [
+      1,
+      1,
+      5
+     ],
+     "cat": null
+    }
+   }
+  },
+  "claude-haiku-5-5|handoffs": {
+   "n": 30,
+   "pass": 30,
+   "ci": [
+    0.886,
+    1.0
+   ],
+   "strict": 30,
+   "calls_med": 5.0,
+   "calls_sum": 187,
+   "in_med": 10703.5,
+   "in_sum": 373993,
+   "out_sum": 13276,
+   "wall_med": 6.186,
+   "wall_sum": 207.6,
+   "fw_med_ms": 249.5,
+   "cost_sum": 0.013397,
+   "by_family": {
+    "chain": [
+     6,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     6,
+     6
+    ],
+    "files": [
+     6,
+     6
+    ],
+    "multiturn": [
+     6,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 24,
+    "calls_med": 5.0,
+    "in_med": 9699.0
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 6,
+    "calls_med": 12.0,
+    "turn1_calls_med": 4.0,
+    "later_turn_calls_med": 3,
+    "in_med": 25234.5
+   },
+   "categories": {},
+   "errors": {},
+   "agents_per_task_med": 2.0,
+   "tasks": {
+    "chain01": {
+     "p": 1,
+     "calls": 5,
+     "in": 10526,
+     "out": 319,
+     "wall": 6.402,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 5,
+     "in": 10494,
+     "out": 311,
+     "wall": 5.614,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 4,
+     "in": 8309,
+     "out": 313,
+     "wall": 4.716,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 5,
+     "in": 12110,
+     "out": 592,
+     "wall": 6.096,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 4,
+     "in": 9015,
+     "out": 445,
+     "wall": 4.616,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 1,
+     "calls": 5,
+     "in": 12632,
+     "out": 661,
+     "wall": 7.479,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 6,
+     "in": 11002,
+     "out": 424,
+     "wall": 7.254,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 6,
+     "in": 10881,
+     "out": 299,
+     "wall": 6.542,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 6,
+     "in": 11954,
+     "out": 453,
+     "wall": 6.589,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 6,
+     "in": 11431,
+     "out": 374,
+     "wall": 6.147,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 6,
+     "in": 10896,
+     "out": 321,
+     "wall": 5.941,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 6,
+     "in": 13003,
+     "out": 752,
+     "wall": 6.711,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 5,
+     "in": 8892,
+     "out": 272,
+     "wall": 5.52,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 5,
+     "in": 8858,
+     "out": 311,
+     "wall": 6.597,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 5,
+     "in": 8755,
+     "out": 257,
+     "wall": 5.327,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 1,
+     "calls": 6,
+     "in": 11301,
+     "out": 436,
+     "wall": 6.424,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "r13": {
+     "p": 1,
+     "calls": 5,
+     "in": 8774,
+     "out": 267,
+     "wall": 5.251,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 1,
+     "calls": 5,
+     "in": 8975,
+     "out": 264,
+     "wall": 4.401,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 1,
+     "calls": 5,
+     "in": 9280,
+     "out": 366,
+     "wall": 5.456,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files04": {
+     "p": 1,
+     "calls": 5,
+     "in": 9470,
+     "out": 467,
+     "wall": 6.225,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files07": {
+     "p": 1,
+     "calls": 4,
+     "in": 7406,
+     "out": 272,
+     "wall": 4.453,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files10": {
+     "p": 1,
+     "calls": 5,
+     "in": 9928,
+     "out": 443,
+     "wall": 5.663,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files13": {
+     "p": 1,
+     "calls": 4,
+     "in": 7156,
+     "out": 208,
+     "wall": 4.193,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files16": {
+     "p": 1,
+     "calls": 4,
+     "in": 7536,
+     "out": 322,
+     "wall": 4.003,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 13,
+     "in": 26449,
+     "out": 622,
+     "wall": 12.493,
+     "turn_calls": [
+      4,
+      3,
+      3,
+      3
+     ],
+     "cat": null
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 13,
+     "in": 26955,
+     "out": 667,
+     "wall": 14.155,
+     "turn_calls": [
+      4,
+      3,
+      3,
+      3
+     ],
+     "cat": null
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 12,
+     "in": 26932,
+     "out": 764,
+     "wall": 11.464,
+     "turn_calls": [
+      4,
+      3,
+      5
+     ],
+     "cat": null
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 12,
+     "in": 24020,
+     "out": 588,
+     "wall": 13.496,
+     "turn_calls": [
+      4,
+      3,
+      3,
+      2
+     ],
+     "cat": null
+    },
+    "multi13": {
+     "p": 1,
+     "calls": 8,
+     "in": 16794,
+     "out": 801,
+     "wall": 10.046,
+     "turn_calls": [
+      1,
+      1,
+      6
+     ],
+     "cat": null
+    },
+    "multi16": {
+     "p": 1,
+     "calls": 7,
+     "in": 14259,
+     "out": 685,
+     "wall": 8.294,
+     "turn_calls": [
+      1,
+      1,
+      5
+     ],
+     "cat": null
+    }
+   }
+  },
+  "claude-haiku-5-5|skills": {
+   "n": 30,
+   "pass": 30,
+   "ci": [
+    0.886,
+    1.0
+   ],
+   "strict": 30,
+   "calls_med": 6.0,
+   "calls_sum": 194,
+   "in_med": 8905.0,
+   "in_sum": 314352,
+   "out_sum": 12779,
+   "wall_med": 5.75,
+   "wall_sum": 206.1,
+   "fw_med_ms": 179.55,
+   "cost_sum": 0.012947,
+   "by_family": {
+    "chain": [
+     6,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     6,
+     6
+    ],
+    "files": [
+     6,
+     6
+    ],
+    "multiturn": [
+     6,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 24,
+    "calls_med": 5.0,
+    "in_med": 7600.0
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 6,
+    "calls_med": 12.5,
+    "turn1_calls_med": 4.0,
+    "later_turn_calls_med": 3,
+    "in_med": 21504.5
+   },
+   "categories": {},
+   "errors": {},
+   "agents_per_task_med": 1.0,
+   "tasks": {
+    "chain01": {
+     "p": 1,
+     "calls": 6,
+     "in": 10627,
+     "out": 374,
+     "wall": 6.086,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 6,
+     "in": 10594,
+     "out": 366,
+     "wall": 5.66,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 6,
+     "in": 10651,
+     "out": 401,
+     "wall": 5.573,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 6,
+     "in": 12147,
+     "out": 628,
+     "wall": 6.64,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 5,
+     "in": 9226,
+     "out": 459,
+     "wall": 7.042,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 1,
+     "calls": 6,
+     "in": 12752,
+     "out": 755,
+     "wall": 6.774,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 5,
+     "in": 7297,
+     "out": 399,
+     "wall": 5.381,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 5,
+     "in": 7246,
+     "out": 285,
+     "wall": 4.631,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 6,
+     "in": 9594,
+     "out": 445,
+     "wall": 5.932,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 6,
+     "in": 9004,
+     "out": 351,
+     "wall": 7.423,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 6,
+     "in": 8479,
+     "out": 300,
+     "wall": 5.587,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 7,
+     "in": 12376,
+     "out": 680,
+     "wall": 7.987,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "r01": {
+     "p": 1,
+     "calls": 5,
+     "in": 6879,
+     "out": 291,
+     "wall": 4.403,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 5,
+     "in": 6793,
+     "out": 309,
+     "wall": 5.126,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 5,
+     "in": 6775,
+     "out": 285,
+     "wall": 5.214,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 1,
+     "calls": 6,
+     "in": 8806,
+     "out": 383,
+     "wall": 6.424,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "r13": {
+     "p": 1,
+     "calls": 5,
+     "in": 6685,
+     "out": 264,
+     "wall": 5.091,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 1,
+     "calls": 5,
+     "in": 6856,
+     "out": 266,
+     "wall": 5.074,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files01": {
+     "p": 1,
+     "calls": 5,
+     "in": 7142,
+     "out": 317,
+     "wall": 5.117,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files04": {
+     "p": 1,
+     "calls": 5,
+     "in": 7401,
+     "out": 487,
+     "wall": 5.84,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files07": {
+     "p": 1,
+     "calls": 5,
+     "in": 7386,
+     "out": 327,
+     "wall": 5.114,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files10": {
+     "p": 1,
+     "calls": 5,
+     "in": 7799,
+     "out": 432,
+     "wall": 4.689,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files13": {
+     "p": 1,
+     "calls": 4,
+     "in": 5324,
+     "out": 205,
+     "wall": 4.217,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "files16": {
+     "p": 1,
+     "calls": 4,
+     "in": 5587,
+     "out": 281,
+     "wall": 4.203,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 13,
+     "in": 22370,
+     "out": 631,
+     "wall": 14.322,
+     "turn_calls": [
+      4,
+      3,
+      3,
+      3
+     ],
+     "cat": null
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 13,
+     "in": 22604,
+     "out": 654,
+     "wall": 13.078,
+     "turn_calls": [
+      4,
+      3,
+      3,
+      3
+     ],
+     "cat": null
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 13,
+     "in": 26216,
+     "out": 770,
+     "wall": 13.202,
+     "turn_calls": [
+      4,
+      4,
+      5
+     ],
+     "cat": null
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 12,
+     "in": 20639,
+     "out": 696,
+     "wall": 15.814,
+     "turn_calls": [
+      4,
+      3,
+      3,
+      2
+     ],
+     "cat": null
+    },
+    "multi13": {
+     "p": 1,
+     "calls": 7,
+     "in": 9549,
+     "out": 369,
+     "wall": 8.539,
+     "turn_calls": [
+      1,
+      1,
+      5
+     ],
+     "cat": null
+    },
+    "multi16": {
+     "p": 1,
+     "calls": 7,
+     "in": 9548,
+     "out": 369,
+     "wall": 5.867,
+     "turn_calls": [
+      1,
+      1,
+      5
+     ],
+     "cat": null
+    }
+   }
+  },
+  "claude-haiku-5-5|router": {
+   "n": 30,
+   "pass": 25,
+   "ci": [
+    0.664,
+    0.927
+   ],
+   "strict": 25,
+   "calls_med": 6.0,
+   "calls_sum": 226,
+   "in_med": 9100.5,
+   "in_sum": 317648,
+   "out_sum": 25985,
+   "wall_med": 7.926,
+   "wall_sum": 293.4,
+   "fw_med_ms": 290.3,
+   "cost_sum": 0.023679,
+   "by_family": {
+    "chain": [
+     3,
+     6
+    ],
+    "sql": [
+     5,
+     6
+    ],
+    "retrieval": [
+     5,
+     6
+    ],
+    "files": [
+     6,
+     6
+    ],
+    "multiturn": [
+     6,
+     6
+    ]
+   },
+   "oneshot": {
+    "n": 24,
+    "pass": 19,
+    "calls_med": 6.0,
+    "in_med": 8281.0
+   },
+   "multiturn": {
+    "n": 6,
+    "pass": 6,
+    "calls_med": 16.0,
+    "turn1_calls_med": 4.0,
+    "later_turn_calls_med": 4,
+    "in_med": 19326.5
+   },
+   "categories": {
+    "wrong_final_state": 5
+   },
+   "errors": {},
+   "agents_per_task_med": 2.0,
+   "tasks": {
+    "chain01": {
+     "p": 0,
+     "calls": 6,
+     "in": 9577,
+     "out": 537,
+     "wall": 6.956,
+     "turn_calls": [
+      6
+     ],
+     "cat": "wrong_final_state"
+    },
+    "chain04": {
+     "p": 0,
+     "calls": 6,
+     "in": 9846,
+     "out": 586,
+     "wall": 7.678,
+     "turn_calls": [
+      6
+     ],
+     "cat": "wrong_final_state"
+    },
+    "chain07": {
+     "p": 0,
+     "calls": 6,
+     "in": 9580,
+     "out": 582,
+     "wall": 7.8,
+     "turn_calls": [
+      6
+     ],
+     "cat": "wrong_final_state"
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 8,
+     "in": 16386,
+     "out": 1089,
+     "wall": 10.599,
+     "turn_calls": [
+      8
+     ],
+     "cat": null
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 6,
+     "in": 11185,
+     "out": 956,
+     "wall": 8.799,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "chain16": {
+     "p": 1,
+     "calls": 7,
+     "in": 14845,
+     "out": 1246,
+     "wall": 9.994,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 6,
+     "in": 7086,
+     "out": 532,
+     "wall": 8.087,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 6,
+     "in": 6957,
+     "out": 323,
+     "wall": 6.868,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 6,
+     "in": 8662,
+     "out": 826,
+     "wall": 8.817,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 6,
+     "in": 7751,
+     "out": 548,
+     "wall": 7.843,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 7,
+     "in": 9167,
+     "out": 707,
+     "wall": 8.935,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "sql16": {
+     "p": 0,
+     "calls": 8,
+     "in": 22543,
+     "out": 3376,
+     "wall": 19.45,
+     "turn_calls": [
+      8
+     ],
+     "cat": "wrong_final_state"
+    },
+    "r01": {
+     "p": 1,
+     "calls": 5,
+     "in": 5627,
+     "out": 453,
+     "wall": 5.752,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r04": {
+     "p": 1,
+     "calls": 5,
+     "in": 5560,
+     "out": 401,
+     "wall": 5.632,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "r07": {
+     "p": 1,
+     "calls": 7,
+     "in": 11201,
+     "out": 677,
+     "wall": 8.009,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "r10": {
+     "p": 1,
+     "calls": 6,
+     "in": 7900,
+     "out": 500,
+     "wall": 6.628,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "r13": {
+     "p": 1,
+     "calls": 7,
+     "in": 9688,
+     "out": 678,
+     "wall": 8.944,
+     "turn_calls": [
+      7
+     ],
+     "cat": null
+    },
+    "r16": {
+     "p": 0,
+     "calls": 5,
+     "in": 5628,
+     "out": 321,
+     "wall": 5.022,
+     "turn_calls": [
+      5
+     ],
+     "cat": "wrong_final_state"
+    },
+    "files01": {
+     "p": 1,
+     "calls": 3,
+     "in": 3168,
+     "out": 205,
+     "wall": 3.561,
+     "turn_calls": [
+      3
+     ],
+     "cat": null
+    },
+    "files04": {
+     "p": 1,
+     "calls": 6,
+     "in": 7777,
+     "out": 623,
+     "wall": 7.019,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "files07": {
+     "p": 1,
+     "calls": 6,
+     "in": 7491,
+     "out": 517,
+     "wall": 7.03,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "files10": {
+     "p": 1,
+     "calls": 6,
+     "in": 9034,
+     "out": 816,
+     "wall": 7.771,
+     "turn_calls": [
+      6
+     ],
+     "cat": null
+    },
+    "files13": {
+     "p": 1,
+     "calls": 5,
+     "in": 5793,
+     "out": 348,
+     "wall": 5.736,
+     "turn_calls": [
+      5
+     ],
+     "cat": null
+    },
+    "files16": {
+     "p": 1,
+     "calls": 4,
+     "in": 4466,
+     "out": 452,
+     "wall": 5.034,
+     "turn_calls": [
+      4
+     ],
+     "cat": null
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 16,
+     "in": 19395,
+     "out": 1332,
+     "wall": 19.049,
+     "turn_calls": [
+      4,
+      4,
+      4,
+      4
+     ],
+     "cat": null
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 16,
+     "in": 19981,
+     "out": 1737,
+     "wall": 20.696,
+     "turn_calls": [
+      4,
+      4,
+      4,
+      4
+     ],
+     "cat": null
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 18,
+     "in": 23455,
+     "out": 2376,
+     "wall": 23.15,
+     "turn_calls": [
+      4,
+      6,
+      8
+     ],
+     "cat": null
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 16,
+     "in": 19258,
+     "out": 1319,
+     "wall": 19.21,
+     "turn_calls": [
+      4,
+      4,
+      4,
+      4
+     ],
+     "cat": null
+    },
+    "multi13": {
+     "p": 1,
+     "calls": 8,
+     "in": 8352,
+     "out": 850,
+     "wall": 10.817,
+     "turn_calls": [
+      2,
+      2,
+      4
+     ],
+     "cat": null
+    },
+    "multi16": {
+     "p": 1,
+     "calls": 9,
+     "in": 10289,
+     "out": 1072,
+     "wall": 12.562,
+     "turn_calls": [
+      2,
+      2,
+      5
+     ],
+     "cat": null
+    }
+   }
+  }
+ },
+ "lanes": {
+  "chain01|single": {
+   "task": "chain01",
+   "pattern": "single",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 5,
+   "in": 15764,
+   "out": 305,
+   "wall": 5.422,
+   "turn_calls": [
+    5
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 0.293,
+     "t1": 1.429,
+     "in": 2935,
+     "out": 53,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 1.43,
+     "t1": 1.431,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 1.466,
+     "t1": 2.5,
+     "in": 3042,
+     "out": 82,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 2.502,
+     "t1": 2.503,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 2.539,
+     "t1": 3.488,
+     "in": 3177,
+     "out": 61,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 3.491,
+     "t1": 3.492,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 3.53,
+     "t1": 4.379,
+     "in": 3273,
+     "out": 52,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 4.38,
+     "t1": 4.38,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 4.412,
+     "t1": 5.421,
+     "in": 3337,
+     "out": 57,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|single": {
+   "task": "multi07",
+   "pattern": "single",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 9,
+   "in": 30163,
+   "out": 565,
+   "wall": 10.249,
+   "turn_calls": [
+    2,
+    3,
+    4
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 0.05,
+     "t1": 1.199,
+     "in": 2933,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 1.202,
+     "t1": 1.203,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 1.227,
+     "t1": 2.148,
+     "in": 3017,
+     "out": 29,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 2.167,
+     "t1": 3.465,
+     "in": 3087,
+     "out": 124,
+     "asks": [
+      "kv_get",
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 3.47,
+     "t1": 3.471,
+     "name": "kv_get"
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 3.472,
+     "t1": 3.473,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 3.502,
+     "t1": 4.567,
+     "in": 3287,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 4.568,
+     "t1": 4.568,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 4.584,
+     "t1": 5.576,
+     "in": 3371,
+     "out": 42,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 5.598,
+     "t1": 6.855,
+     "in": 3450,
+     "out": 83,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 6.856,
+     "t1": 6.856,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 6.876,
+     "t1": 7.88,
+     "in": 3588,
+     "out": 61,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 7.883,
+     "t1": 7.884,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 7.915,
+     "t1": 9.286,
+     "in": 3683,
+     "out": 52,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 9.287,
+     "t1": 9.288,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 9.315,
+     "t1": 10.248,
+     "in": 3747,
+     "out": 28,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|subagents": {
+   "task": "chain01",
+   "pattern": "subagents",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 7,
+   "in": 32426,
+   "out": 720,
+   "wall": 9.693,
+   "turn_calls": [
+    7
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 0.178,
+     "t1": 2.059,
+     "in": 4539,
+     "out": 296,
+     "asks": [
+      "task"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 2.064,
+     "t1": 6.386,
+     "name": "task"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 2.1,
+     "t1": 3.239,
+     "in": 4324,
+     "out": 53,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 3.239,
+     "t1": 3.24,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 3.257,
+     "t1": 4.292,
+     "in": 4431,
+     "out": 82,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 4.301,
+     "t1": 4.302,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 4.333,
+     "t1": 5.339,
+     "in": 4566,
+     "out": 67,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 5.341,
+     "t1": 5.341,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 5.358,
+     "t1": 6.385,
+     "in": 4673,
+     "out": 57,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 6.419,
+     "t1": 8.023,
+     "in": 4895,
+     "out": 91,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 8.024,
+     "t1": 8.024,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 8.049,
+     "t1": 9.688,
+     "in": 4998,
+     "out": 74,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|subagents": {
+   "task": "multi07",
+   "pattern": "subagents",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 16,
+   "in": 72604,
+   "out": 1430,
+   "wall": 19.079,
+   "turn_calls": [
+    5,
+    5,
+    6
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 0.104,
+     "t1": 1.557,
+     "in": 4537,
+     "out": 150,
+     "asks": [
+      "task"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 1.559,
+     "t1": 5.189,
+     "name": "task"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 1.596,
+     "t1": 3.111,
+     "in": 3915,
+     "out": 104,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 3.112,
+     "t1": 3.112,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 3.137,
+     "t1": 4.184,
+     "in": 4039,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 4.185,
+     "t1": 4.185,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 4.206,
+     "t1": 5.188,
+     "in": 4123,
+     "out": 44,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 5.216,
+     "t1": 6.092,
+     "in": 4734,
+     "out": 32,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 6.118,
+     "t1": 7.347,
+     "in": 4807,
+     "out": 161,
+     "asks": [
+      "task"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 7.349,
+     "t1": 10.711,
+     "name": "task"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 7.383,
+     "t1": 8.669,
+     "in": 3926,
+     "out": 163,
+     "asks": [
+      "kv_get",
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 8.671,
+     "t1": 8.672,
+     "name": "kv_get"
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 8.672,
+     "t1": 8.673,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 8.716,
+     "t1": 9.646,
+     "in": 4165,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 9.648,
+     "t1": 9.649,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 9.7,
+     "t1": 10.71,
+     "in": 4249,
+     "out": 49,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 10.761,
+     "t1": 11.72,
+     "in": 5020,
+     "out": 41,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 11.781,
+     "t1": 13.289,
+     "in": 5098,
+     "out": 194,
+     "asks": [
+      "task"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 13.291,
+     "t1": 17.119,
+     "name": "task"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 13.343,
+     "t1": 14.998,
+     "in": 4268,
+     "out": 83,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 15.0,
+     "t1": 15.001,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 15.04,
+     "t1": 16.021,
+     "in": 4406,
+     "out": 61,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 16.022,
+     "t1": 16.022,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 16.047,
+     "t1": 17.118,
+     "in": 4501,
+     "out": 81,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 17.146,
+     "t1": 18.021,
+     "in": 5376,
+     "out": 52,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 18.022,
+     "t1": 18.022,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 18.05,
+     "t1": 19.078,
+     "in": 5440,
+     "out": 69,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|handoffs": {
+   "task": "chain01",
+   "pattern": "handoffs",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 5,
+   "in": 10526,
+   "out": 319,
+   "wall": 6.402,
+   "turn_calls": [
+    5
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 0.121,
+     "t1": 1.24,
+     "in": 1883,
+     "out": 53,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 1.241,
+     "t1": 1.242,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 1.268,
+     "t1": 2.763,
+     "in": 1990,
+     "out": 82,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 2.764,
+     "t1": 2.764,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 2.785,
+     "t1": 3.82,
+     "in": 2125,
+     "out": 67,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 3.831,
+     "t1": 3.832,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 3.864,
+     "t1": 4.834,
+     "in": 2232,
+     "out": 52,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 4.835,
+     "t1": 4.835,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 4.852,
+     "t1": 6.401,
+     "in": 2296,
+     "out": 65,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|handoffs": {
+   "task": "multi07",
+   "pattern": "handoffs",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 12,
+   "in": 26932,
+   "out": 764,
+   "wall": 11.464,
+   "turn_calls": [
+    4,
+    3,
+    5
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 0.131,
+     "t1": 1.416,
+     "in": 1881,
+     "out": 90,
+     "asks": [
+      "transfer_to_notes"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 1.417,
+     "t1": 1.417,
+     "name": "transfer_to_notes"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 1.442,
+     "t1": 2.223,
+     "in": 1710,
+     "out": 52,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 2.226,
+     "t1": 2.227,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 2.263,
+     "t1": 3.135,
+     "in": 1782,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 3.136,
+     "t1": 3.136,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 3.164,
+     "t1": 3.982,
+     "in": 1866,
+     "out": 30,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 4.013,
+     "t1": 5.053,
+     "in": 1937,
+     "out": 101,
+     "asks": [
+      "kv_get",
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 5.059,
+     "t1": 5.059,
+     "name": "calculator"
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 5.059,
+     "t1": 5.059,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 5.087,
+     "t1": 6.043,
+     "in": 2114,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 6.044,
+     "t1": 6.044,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 6.063,
+     "t1": 6.936,
+     "in": 2198,
+     "out": 45,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 6.957,
+     "t1": 7.799,
+     "in": 2280,
+     "out": 55,
+     "asks": [
+      "transfer_to_shop"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 7.8,
+     "t1": 7.8,
+     "name": "transfer_to_shop"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 7.821,
+     "t1": 8.784,
+     "in": 2624,
+     "out": 83,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 8.785,
+     "t1": 8.785,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 8.804,
+     "t1": 9.731,
+     "in": 2762,
+     "out": 61,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 9.731,
+     "t1": 9.732,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 9.754,
+     "t1": 10.573,
+     "in": 2857,
+     "out": 52,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 10.574,
+     "t1": 10.574,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 10.593,
+     "t1": 11.463,
+     "in": 2921,
+     "out": 49,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|skills": {
+   "task": "chain01",
+   "pattern": "skills",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 6,
+   "in": 10627,
+   "out": 374,
+   "wall": 6.086,
+   "turn_calls": [
+    6
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 0.108,
+     "t1": 1.143,
+     "in": 846,
+     "out": 52,
+     "asks": [
+      "load_skill"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 1.143,
+     "t1": 1.144,
+     "name": "load_skill"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 1.164,
+     "t1": 2.2,
+     "in": 1734,
+     "out": 53,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 2.201,
+     "t1": 2.201,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 2.22,
+     "t1": 3.142,
+     "in": 1841,
+     "out": 82,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 3.144,
+     "t1": 3.144,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 3.174,
+     "t1": 4.141,
+     "in": 1976,
+     "out": 67,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 4.142,
+     "t1": 4.142,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 4.169,
+     "t1": 4.976,
+     "in": 2083,
+     "out": 52,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 4.977,
+     "t1": 4.977,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 4.997,
+     "t1": 6.085,
+     "in": 2147,
+     "out": 68,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|skills": {
+   "task": "multi07",
+   "pattern": "skills",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 13,
+   "in": 26216,
+   "out": 770,
+   "wall": 13.202,
+   "turn_calls": [
+    4,
+    4,
+    5
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 0.032,
+     "t1": 1.066,
+     "in": 844,
+     "out": 52,
+     "asks": [
+      "load_skill"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 1.067,
+     "t1": 1.067,
+     "name": "load_skill"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 1.089,
+     "t1": 2.17,
+     "in": 1419,
+     "out": 79,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 2.171,
+     "t1": 2.172,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 2.2,
+     "t1": 3.14,
+     "in": 1518,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 3.141,
+     "t1": 3.141,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 3.171,
+     "t1": 4.128,
+     "in": 1602,
+     "out": 29,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 4.158,
+     "t1": 5.151,
+     "in": 1672,
+     "out": 52,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 5.152,
+     "t1": 5.153,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 5.175,
+     "t1": 6.174,
+     "in": 1747,
+     "out": 52,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 6.175,
+     "t1": 6.175,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 6.2,
+     "t1": 7.198,
+     "in": 1805,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 7.199,
+     "t1": 7.199,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 7.226,
+     "t1": 8.22,
+     "in": 1889,
+     "out": 42,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 8.25,
+     "t1": 9.353,
+     "in": 1968,
+     "out": 73,
+     "asks": [
+      "load_skill"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 9.356,
+     "t1": 9.357,
+     "name": "load_skill"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 9.397,
+     "t1": 10.3,
+     "in": 2771,
+     "out": 83,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 10.307,
+     "t1": 10.308,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 10.353,
+     "t1": 11.395,
+     "in": 2909,
+     "out": 61,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 11.396,
+     "t1": 11.396,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 11.416,
+     "t1": 12.239,
+     "in": 3004,
+     "out": 52,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 12.24,
+     "t1": 12.24,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 12.264,
+     "t1": 13.199,
+     "in": 3068,
+     "out": 49,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|router": {
+   "task": "chain01",
+   "pattern": "router",
+   "model": "claude-haiku-5-5",
+   "passed": false,
+   "calls": 6,
+   "in": 9577,
+   "out": 537,
+   "wall": 6.956,
+   "turn_calls": [
+    6
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "router",
+     "t0": 0.054,
+     "t1": 1.87,
+     "in": 853,
+     "out": 171,
+     "asks": [
+      "Routes"
+     ]
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 1.909,
+     "t1": 3.036,
+     "in": 1513,
+     "out": 53,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 3.037,
+     "t1": 3.037,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 3.058,
+     "t1": 3.977,
+     "in": 1620,
+     "out": 82,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 3.978,
+     "t1": 3.978,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 3.998,
+     "t1": 4.962,
+     "in": 1755,
+     "out": 67,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 4.962,
+     "t1": 4.963,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 4.983,
+     "t1": 5.986,
+     "in": 1862,
+     "out": 100,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 5.987,
+     "t1": 5.987,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 6.009,
+     "t1": 6.955,
+     "in": 1974,
+     "out": 64,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|router": {
+   "task": "multi07",
+   "pattern": "router",
+   "model": "claude-haiku-5-5",
+   "passed": true,
+   "calls": 18,
+   "in": 23455,
+   "out": 2376,
+   "wall": 23.15,
+   "turn_calls": [
+    4,
+    6,
+    8
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "router",
+     "t0": 0.047,
+     "t1": 1.331,
+     "in": 851,
+     "out": 97,
+     "asks": [
+      "Routes"
+     ]
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 1.376,
+     "t1": 2.535,
+     "in": 1104,
+     "out": 79,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 2.536,
+     "t1": 2.536,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 2.568,
+     "t1": 4.004,
+     "in": 1203,
+     "out": 130,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 4.014,
+     "t1": 4.015,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 4.134,
+     "t1": 5.074,
+     "in": 1344,
+     "out": 24,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "router",
+     "t0": 5.153,
+     "t1": 6.68,
+     "in": 927,
+     "out": 146,
+     "asks": [
+      "Routes"
+     ]
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 6.74,
+     "t1": 8.37,
+     "in": 1211,
+     "out": 184,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 8.372,
+     "t1": 8.372,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 8.436,
+     "t1": 9.407,
+     "in": 1401,
+     "out": 80,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 9.409,
+     "t1": 9.41,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 9.473,
+     "t1": 10.538,
+     "in": 1504,
+     "out": 73,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 10.54,
+     "t1": 10.542,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 10.62,
+     "t1": 11.477,
+     "in": 1588,
+     "out": 52,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 11.48,
+     "t1": 11.481,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 11.555,
+     "t1": 12.472,
+     "in": 1646,
+     "out": 35,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "router",
+     "t0": 12.551,
+     "t1": 14.164,
+     "in": 1002,
+     "out": 159,
+     "asks": [
+      "Routes"
+     ]
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 14.368,
+     "t1": 16.079,
+     "in": 1380,
+     "out": 200,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 14.383,
+     "t1": 16.203,
+     "in": 1027,
+     "out": 204,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 16.081,
+     "t1": 16.081,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 16.161,
+     "t1": 17.091,
+     "in": 1635,
+     "out": 61,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 16.205,
+     "t1": 16.206,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 16.278,
+     "t1": 17.506,
+     "in": 1237,
+     "out": 81,
+     "asks": []
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 17.093,
+     "t1": 17.094,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 17.167,
+     "t1": 18.812,
+     "in": 1730,
+     "out": 190,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "synthesize",
+     "t0": 18.898,
+     "t1": 21.701,
+     "in": 1101,
+     "out": 451,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "synthesize",
+     "t0": 21.704,
+     "t1": 21.705,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "synthesize",
+     "t0": 21.77,
+     "t1": 23.144,
+     "in": 1564,
+     "out": 130,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|single|qwen3:14b": {
+   "task": "chain01",
+   "pattern": "single",
+   "model": "qwen3:14b",
+   "passed": false,
+   "calls": 5,
+   "in": 8968,
+   "out": 127,
+   "wall": 131.538,
+   "turn_calls": [
+    5
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 0.193,
+     "t1": 21.443,
+     "in": 1651,
+     "out": 22,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 21.444,
+     "t1": 21.445,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 21.446,
+     "t1": 92.446,
+     "in": 1721,
+     "out": 27,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 92.45,
+     "t1": 92.451,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 92.455,
+     "t1": 110.966,
+     "in": 1802,
+     "out": 31,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 110.968,
+     "t1": 110.969,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 110.971,
+     "t1": 121.173,
+     "in": 1878,
+     "out": 23,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 121.174,
+     "t1": 121.174,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 121.176,
+     "t1": 131.537,
+     "in": 1916,
+     "out": 24,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|subagents|qwen3:14b": {
+   "task": "chain01",
+   "pattern": "subagents",
+   "model": "qwen3:14b",
+   "passed": true,
+   "calls": 6,
+   "in": 15704,
+   "out": 201,
+   "wall": 832.87,
+   "turn_calls": [
+    6
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 0.253,
+     "t1": 261.352,
+     "in": 2703,
+     "out": 48,
+     "asks": [
+      "task"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 261.358,
+     "t1": 794.093,
+     "name": "task"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 261.373,
+     "t1": 578.2,
+     "in": 2431,
+     "out": 22,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 578.201,
+     "t1": 578.201,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 578.204,
+     "t1": 633.785,
+     "in": 2501,
+     "out": 27,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 633.786,
+     "t1": 633.786,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 633.789,
+     "t1": 694.768,
+     "in": 2582,
+     "out": 34,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 694.768,
+     "t1": 694.769,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 694.771,
+     "t1": 794.088,
+     "in": 2665,
+     "out": 63,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 794.109,
+     "t1": 832.869,
+     "in": 2822,
+     "out": 7,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|handoffs|qwen3:14b": {
+   "task": "chain01",
+   "pattern": "handoffs",
+   "model": "qwen3:14b",
+   "passed": true,
+   "calls": 5,
+   "in": 5988,
+   "out": 132,
+   "wall": 119.415,
+   "turn_calls": [
+    5
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 0.095,
+     "t1": 47.413,
+     "in": 1052,
+     "out": 22,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 47.415,
+     "t1": 47.415,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 47.416,
+     "t1": 66.112,
+     "in": 1122,
+     "out": 27,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 66.113,
+     "t1": 66.113,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 66.114,
+     "t1": 87.855,
+     "in": 1203,
+     "out": 34,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 87.856,
+     "t1": 87.856,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 87.857,
+     "t1": 103.348,
+     "in": 1286,
+     "out": 24,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 103.349,
+     "t1": 103.349,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 103.35,
+     "t1": 119.411,
+     "in": 1325,
+     "out": 25,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|skills|qwen3:14b": {
+   "task": "chain01",
+   "pattern": "skills",
+   "model": "qwen3:14b",
+   "passed": false,
+   "calls": 8,
+   "in": 8734,
+   "out": 227,
+   "wall": 202.891,
+   "turn_calls": [
+    8
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 0.075,
+     "t1": 30.132,
+     "in": 455,
+     "out": 21,
+     "asks": [
+      "load_skill"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 30.139,
+     "t1": 30.145,
+     "name": "load_skill"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 30.158,
+     "t1": 62.242,
+     "in": 960,
+     "out": 21,
+     "asks": [
+      "get_item_info"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 62.458,
+     "t1": 62.458,
+     "name": "get_item_info"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 62.499,
+     "t1": 82.155,
+     "in": 1030,
+     "out": 27,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 82.16,
+     "t1": 82.161,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 82.175,
+     "t1": 103.495,
+     "in": 1111,
+     "out": 31,
+     "asks": [
+      "convert_units"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 103.501,
+     "t1": 103.512,
+     "name": "convert_units"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 103.521,
+     "t1": 124.424,
+     "in": 1173,
+     "out": 28,
+     "asks": [
+      "get_shipping_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 124.433,
+     "t1": 124.434,
+     "name": "get_shipping_rate"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 124.441,
+     "t1": 157.939,
+     "in": 1246,
+     "out": 50,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 157.943,
+     "t1": 157.945,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 157.948,
+     "t1": 180.767,
+     "in": 1360,
+     "out": 24,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 180.769,
+     "t1": 180.77,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 180.773,
+     "t1": 202.89,
+     "in": 1399,
+     "out": 25,
+     "asks": []
+    }
+   ]
+  },
+  "chain01|router|qwen3:14b": {
+   "task": "chain01",
+   "pattern": "router",
+   "model": "qwen3:14b",
+   "passed": false,
+   "calls": 9,
+   "in": 3709,
+   "out": 277,
+   "wall": 358.144,
+   "turn_calls": [
+    9
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "router",
+     "t0": 0.13,
+     "t1": 83.656,
+     "in": 183,
+     "out": 83,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "orders_db",
+     "t0": 83.668,
+     "t1": 131.333,
+     "in": 414,
+     "out": 17,
+     "asks": [
+      "sql_list_tables"
+     ]
+    },
+    {
+     "k": "m",
+     "lane": "docs",
+     "t0": 83.675,
+     "t1": 179.584,
+     "in": 332,
+     "out": 24,
+     "asks": [
+      "search_docs"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "orders_db",
+     "t0": 131.334,
+     "t1": 131.336,
+     "name": "sql_list_tables"
+    },
+    {
+     "k": "m",
+     "lane": "orders_db",
+     "t0": 131.337,
+     "t1": 203.26,
+     "in": 456,
+     "out": 21,
+     "asks": [
+      "sql_describe"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "docs",
+     "t0": 179.585,
+     "t1": 179.586,
+     "name": "search_docs"
+    },
+    {
+     "k": "m",
+     "lane": "docs",
+     "t0": 179.588,
+     "t1": 253.193,
+     "in": 368,
+     "out": 40,
+     "asks": []
+    },
+    {
+     "k": "t",
+     "lane": "orders_db",
+     "t0": 203.261,
+     "t1": 203.261,
+     "name": "sql_describe"
+    },
+    {
+     "k": "m",
+     "lane": "orders_db",
+     "t0": 203.262,
+     "t1": 277.511,
+     "in": 512,
+     "out": 29,
+     "asks": [
+      "sql_query"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "orders_db",
+     "t0": 277.526,
+     "t1": 277.533,
+     "name": "sql_query"
+    },
+    {
+     "k": "m",
+     "lane": "orders_db",
+     "t0": 277.556,
+     "t1": 296.866,
+     "in": 569,
+     "out": 15,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "synthesize",
+     "t0": 296.874,
+     "t1": 334.701,
+     "in": 419,
+     "out": 23,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "synthesize",
+     "t0": 334.716,
+     "t1": 334.721,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "synthesize",
+     "t0": 334.738,
+     "t1": 358.138,
+     "in": 456,
+     "out": 25,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|single|qwen3:14b": {
+   "task": "multi07",
+   "pattern": "single",
+   "model": "qwen3:14b",
+   "passed": true,
+   "calls": 10,
+   "in": 18800,
+   "out": 237,
+   "wall": 1101.427,
+   "turn_calls": [
+    2,
+    4,
+    4
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 0.03,
+     "t1": 27.598,
+     "in": 1650,
+     "out": 30,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 27.605,
+     "t1": 27.607,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 27.613,
+     "t1": 44.922,
+     "in": 1694,
+     "out": 22,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 44.941,
+     "t1": 234.361,
+     "in": 1748,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 234.372,
+     "t1": 234.375,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 234.397,
+     "t1": 453.135,
+     "in": 1785,
+     "out": 24,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 453.14,
+     "t1": 453.142,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 453.144,
+     "t1": 573.546,
+     "in": 1841,
+     "out": 27,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 573.566,
+     "t1": 573.569,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 573.577,
+     "t1": 805.836,
+     "in": 1885,
+     "out": 25,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 805.873,
+     "t1": 867.872,
+     "in": 1939,
+     "out": 27,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 867.884,
+     "t1": 867.887,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 867.891,
+     "t1": 927.433,
+     "in": 2023,
+     "out": 30,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 927.453,
+     "t1": 927.46,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 927.478,
+     "t1": 980.964,
+     "in": 2098,
+     "out": 24,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "single",
+     "t0": 980.97,
+     "t1": 980.971,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "single",
+     "t0": 980.973,
+     "t1": 1101.367,
+     "in": 2137,
+     "out": 7,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|subagents|qwen3:14b": {
+   "task": "multi07",
+   "pattern": "subagents",
+   "model": "qwen3:14b",
+   "passed": false,
+   "calls": 10,
+   "in": 27529,
+   "out": 421,
+   "wall": 1013.943,
+   "turn_calls": [
+    1,
+    1,
+    8
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 0.053,
+     "t1": 21.182,
+     "in": 2702,
+     "out": 29,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 21.185,
+     "t1": 38.08,
+     "in": 2735,
+     "out": 29,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 38.088,
+     "t1": 79.393,
+     "in": 2765,
+     "out": 52,
+     "asks": [
+      "task"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 79.396,
+     "t1": 120.476,
+     "name": "task"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 79.566,
+     "t1": 120.474,
+     "in": 2435,
+     "out": 39,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 120.479,
+     "t1": 157.909,
+     "in": 2864,
+     "out": 49,
+     "asks": [
+      "task"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 158.174,
+     "t1": 190.31,
+     "name": "task"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 158.435,
+     "t1": 190.308,
+     "in": 2435,
+     "out": 39,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 190.315,
+     "t1": 225.544,
+     "in": 2963,
+     "out": 49,
+     "asks": [
+      "task"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 225.568,
+     "t1": 516.625,
+     "name": "task"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 225.615,
+     "t1": 516.613,
+     "in": 2435,
+     "out": 39,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 516.671,
+     "t1": 563.678,
+     "in": 3062,
+     "out": 57,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "coordinator",
+     "t0": 563.689,
+     "t1": 563.691,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "coordinator",
+     "t0": 563.71,
+     "t1": 1013.933,
+     "in": 3133,
+     "out": 39,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|handoffs|qwen3:14b": {
+   "task": "multi07",
+   "pattern": "handoffs",
+   "model": "qwen3:14b",
+   "passed": false,
+   "calls": 7,
+   "in": 7546,
+   "out": 165,
+   "wall": 160.156,
+   "turn_calls": [
+    2,
+    3,
+    2
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 1.959,
+     "t1": 22.923,
+     "in": 1051,
+     "out": 31,
+     "asks": [
+      "transfer_to_notes"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 22.925,
+     "t1": 22.926,
+     "name": "transfer_to_notes"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 22.948,
+     "t1": 46.44,
+     "in": 937,
+     "out": 22,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 46.539,
+     "t1": 70.325,
+     "in": 991,
+     "out": 22,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 70.33,
+     "t1": 70.331,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 70.338,
+     "t1": 93.314,
+     "in": 1033,
+     "out": 27,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 93.319,
+     "t1": 93.32,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 93.324,
+     "t1": 116.92,
+     "in": 1077,
+     "out": 25,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 116.938,
+     "t1": 134.725,
+     "in": 1131,
+     "out": 17,
+     "asks": [
+      "transfer_to_shop"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 134.731,
+     "t1": 134.732,
+     "name": "transfer_to_shop"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 134.82,
+     "t1": 160.148,
+     "in": 1326,
+     "out": 21,
+     "asks": []
+    }
+   ]
+  },
+  "multi07|skills|qwen3:14b": {
+   "task": "multi07",
+   "pattern": "skills",
+   "model": "qwen3:14b",
+   "passed": false,
+   "calls": 27,
+   "in": 43866,
+   "out": 616,
+   "wall": 854.504,
+   "turn_calls": [
+    1,
+    1,
+    25
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 0.011,
+     "t1": 50.009,
+     "in": 454,
+     "out": 35,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 50.01,
+     "t1": 89.419,
+     "in": 487,
+     "out": 35,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 89.421,
+     "t1": 139.117,
+     "in": 517,
+     "out": 42,
+     "asks": [
+      "load_skill",
+      "load_skill"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 139.118,
+     "t1": 139.118,
+     "name": "load_skill"
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 139.119,
+     "t1": 139.119,
+     "name": "load_skill"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 139.124,
+     "t1": 233.904,
+     "in": 1284,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 233.905,
+     "t1": 233.905,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 233.906,
+     "t1": 265.831,
+     "in": 1326,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 265.832,
+     "t1": 265.833,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 265.834,
+     "t1": 294.093,
+     "in": 1368,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 294.094,
+     "t1": 294.094,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 294.095,
+     "t1": 323.599,
+     "in": 1410,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 323.6,
+     "t1": 323.6,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 323.601,
+     "t1": 355.488,
+     "in": 1452,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 355.489,
+     "t1": 355.489,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 355.49,
+     "t1": 386.18,
+     "in": 1494,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 386.181,
+     "t1": 386.181,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 386.182,
+     "t1": 415.28,
+     "in": 1536,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 415.281,
+     "t1": 415.281,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 415.282,
+     "t1": 447.922,
+     "in": 1578,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 447.923,
+     "t1": 447.923,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 447.924,
+     "t1": 481.579,
+     "in": 1620,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 481.582,
+     "t1": 481.582,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 481.583,
+     "t1": 520.27,
+     "in": 1662,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 520.271,
+     "t1": 520.271,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 520.272,
+     "t1": 557.579,
+     "in": 1704,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 557.584,
+     "t1": 557.584,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 557.585,
+     "t1": 595.312,
+     "in": 1746,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 595.313,
+     "t1": 595.313,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 595.315,
+     "t1": 619.553,
+     "in": 1788,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 619.555,
+     "t1": 619.555,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 619.557,
+     "t1": 644.385,
+     "in": 1830,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 644.392,
+     "t1": 644.394,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 644.401,
+     "t1": 670.353,
+     "in": 1872,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 670.355,
+     "t1": 670.356,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 670.359,
+     "t1": 693.844,
+     "in": 1914,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 693.85,
+     "t1": 693.854,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 693.865,
+     "t1": 717.701,
+     "in": 1956,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 717.704,
+     "t1": 717.705,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 717.712,
+     "t1": 740.466,
+     "in": 1998,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 740.47,
+     "t1": 740.472,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 740.478,
+     "t1": 765.746,
+     "in": 2040,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 765.748,
+     "t1": 765.749,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 765.751,
+     "t1": 786.841,
+     "in": 2082,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 786.845,
+     "t1": 786.845,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 786.849,
+     "t1": 811.982,
+     "in": 2124,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 811.985,
+     "t1": 811.986,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 811.993,
+     "t1": 829.702,
+     "in": 2166,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 829.711,
+     "t1": 829.719,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 829.738,
+     "t1": 843.446,
+     "in": 2208,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 843.474,
+     "t1": 843.486,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "skills",
+     "t0": 843.494,
+     "t1": 854.431,
+     "in": 2250,
+     "out": 21,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "skills",
+     "t0": 854.439,
+     "t1": 854.442,
+     "name": "kv_get"
+    }
+   ]
+  },
+  "multi07|router|qwen3:14b": {
+   "task": "multi07",
+   "pattern": "router",
+   "model": "qwen3:14b",
+   "passed": true,
+   "calls": 14,
+   "in": 7839,
+   "out": 399,
+   "wall": 388.163,
+   "turn_calls": [
+    3,
+    5,
+    6
+   ],
+   "events": [
+    {
+     "k": "m",
+     "lane": "router",
+     "t0": 0.028,
+     "t1": 27.805,
+     "in": 182,
+     "out": 35,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 27.808,
+     "t1": 50.094,
+     "in": 579,
+     "out": 31,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 50.096,
+     "t1": 50.097,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 50.102,
+     "t1": 65.547,
+     "in": 624,
+     "out": 20,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "router",
+     "t0": 65.552,
+     "t1": 96.336,
+     "in": 232,
+     "out": 38,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 96.341,
+     "t1": 118.21,
+     "in": 635,
+     "out": 22,
+     "asks": [
+      "kv_get"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 118.211,
+     "t1": 118.211,
+     "name": "kv_get"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 118.211,
+     "t1": 137.177,
+     "in": 673,
+     "out": 24,
+     "asks": [
+      "calculator"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 137.178,
+     "t1": 137.178,
+     "name": "calculator"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 137.179,
+     "t1": 157.088,
+     "in": 729,
+     "out": 29,
+     "asks": [
+      "kv_set"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "notes",
+     "t0": 157.091,
+     "t1": 157.091,
+     "name": "kv_set"
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 157.093,
+     "t1": 169.238,
+     "in": 774,
+     "out": 19,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "router",
+     "t0": 169.251,
+     "t1": 206.393,
+     "in": 274,
+     "out": 57,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "notes",
+     "t0": 206.396,
+     "t1": 254.247,
+     "in": 554,
+     "out": 16,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 206.399,
+     "t1": 320.226,
+     "in": 733,
+     "out": 30,
+     "asks": [
+      "get_exchange_rate"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "shop",
+     "t0": 320.228,
+     "t1": 320.228,
+     "name": "get_exchange_rate"
+    },
+    {
+     "k": "m",
+     "lane": "shop",
+     "t0": 320.229,
+     "t1": 343.358,
+     "in": 817,
+     "out": 37,
+     "asks": []
+    },
+    {
+     "k": "m",
+     "lane": "synthesize",
+     "t0": 343.368,
+     "t1": 373.936,
+     "in": 497,
+     "out": 25,
+     "asks": [
+      "submit_answer"
+     ]
+    },
+    {
+     "k": "t",
+     "lane": "synthesize",
+     "t0": 373.936,
+     "t1": 373.937,
+     "name": "submit_answer"
+    },
+    {
+     "k": "m",
+     "lane": "synthesize",
+     "t0": 373.938,
+     "t1": 388.162,
+     "in": 536,
+     "out": 16,
+     "asks": []
+    }
+   ]
+  }
+ },
+ "models_meta": {
+  "claude-haiku-5-5": {
+   "tag": null,
+   "model": "claude-haiku-5-5",
+   "digest": null,
+   "quantization": null,
+   "parameters": null,
+   "temperature": "omitted (API rejects temperature for this model: 400 Extra inputs are not permitted)",
+   "seed": "not supported",
+   "num_ctx": null,
+   "num_predict": null,
+   "think": null,
+   "max_tokens": 1024,
+   "max_calls_per_turn": 10
+  },
+  "qwen3:14b": {
+   "tag": "qwen3:14b",
+   "model": null,
+   "digest": "bdbd181c33f2",
+   "quantization": "Q4_K_M",
+   "parameters": "14.8B",
+   "temperature": 0.0,
+   "seed": 42,
+   "num_ctx": 16384,
+   "num_predict": 1024,
+   "think": false,
+   "max_tokens": null,
+   "max_calls_per_turn": 25
+  }
+ },
+ "uptime_samples": [
+  "2026-11-15T18:21:11 start run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=single :: 18:21  12 users, load averages: 2.69 5.38 16.17",
+  "2026-11-15T18:21:21 start run=29bd39c6 model=ollama:qwen3:14b pattern=single :: 18:21  12 users, load averages: 3.19 5.40 16.05",
+  "2026-11-15T18:21:31 end   run=fa149a02 model=anthropic:claude-haiku-5-5 pattern=single :: 18:21  12 users, load averages: 2.92 5.27 15.88",
+  "2026-11-16T14:24:54 end   run=0e8e9d34 model=ollama:qwen3:14b pattern=skills :: 14:24  12 users, load averages: 9.05 8.47 8.06",
+  "2026-11-16T14:24:54 start run=0e8e9d34 model=ollama:qwen3:14b pattern=router :: 14:24  12 users, load averages: 9.05 8.47 8.06",
+  "2026-11-16T16:00:23 end   run=0e8e9d34 model=ollama:qwen3:14b pattern=router :: 16:00  12 users, load averages: 5.45 6.47 5.34"
+ ],
+ "n9": {
+  "n_common": 30,
+  "agree": 30,
+  "deep_agent": {
+   "n": 30,
+   "pass": 30,
+   "ci": [
+    0.886,
+    1.0
+   ],
+   "strict": 30,
+   "calls_med": 5.0,
+   "calls_sum": 149,
+   "in_med": 23714.5,
+   "in_sum": 732221,
+   "out_sum": 11172,
+   "cost_sum": 0.016761,
+   "wall_med": 5.431,
+   "wall_sum": 180.3,
+   "by_family": {
+    "chain": [
+     6,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     6,
+     6
+    ],
+    "files": [
+     6,
+     6
+    ],
+    "multiturn": [
+     6,
+     6
+    ]
+   },
+   "categories": {},
+   "cache_note": "AnthropicPromptCachingMiddleware, added by create_deep_agent",
+   "tasks": {
+    "chain01": {
+     "p": 1,
+     "calls": 5,
+     "in": 25176,
+     "out": 302,
+     "cost": 0.000874,
+     "wall": 7.053
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 5,
+     "in": 25228,
+     "out": 364,
+     "cost": 0.000484,
+     "wall": 6.086
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 4,
+     "in": 20053,
+     "out": 316,
+     "cost": 0.000403,
+     "wall": 4.636
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 5,
+     "in": 26964,
+     "out": 653,
+     "cost": 0.000689,
+     "wall": 6.854
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 4,
+     "in": 20793,
+     "out": 435,
+     "cost": 0.00049,
+     "wall": 5.202
+    },
+    "chain16": {
+     "p": 1,
+     "calls": 5,
+     "in": 27278,
+     "out": 717,
+     "cost": 0.000733,
+     "wall": 6.576
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 6,
+     "in": 28336,
+     "out": 387,
+     "cost": 0.000929,
+     "wall": 6.945
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 3,
+     "in": 14056,
+     "out": 190,
+     "cost": 0.000276,
+     "wall": 3.509
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 5,
+     "in": 24328,
+     "out": 388,
+     "cost": 0.000513,
+     "wall": 5.659
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 4,
+     "in": 19320,
+     "out": 298,
+     "cost": 0.000403,
+     "wall": 4.844
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 5,
+     "in": 23211,
+     "out": 238,
+     "cost": 0.000392,
+     "wall": 4.974
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 6,
+     "in": 31925,
+     "out": 714,
+     "cost": 0.000828,
+     "wall": 8.415
+    },
+    "r01": {
+     "p": 1,
+     "calls": 4,
+     "in": 18729,
+     "out": 263,
+     "cost": 0.000763,
+     "wall": 4.56
+    },
+    "r04": {
+     "p": 1,
+     "calls": 4,
+     "in": 18506,
+     "out": 228,
+     "cost": 0.000353,
+     "wall": 4.347
+    },
+    "r07": {
+     "p": 1,
+     "calls": 4,
+     "in": 18570,
+     "out": 272,
+     "cost": 0.000381,
+     "wall": 4.431
+    },
+    "r10": {
+     "p": 1,
+     "calls": 5,
+     "in": 24495,
+     "out": 403,
+     "cost": 0.000552,
+     "wall": 6.053
+    },
+    "r13": {
+     "p": 1,
+     "calls": 4,
+     "in": 18463,
+     "out": 184,
+     "cost": 0.000329,
+     "wall": 4.176
+    },
+    "r16": {
+     "p": 1,
+     "calls": 4,
+     "in": 18772,
+     "out": 264,
+     "cost": 0.000384,
+     "wall": 4.706
+    },
+    "files01": {
+     "p": 1,
+     "calls": 2,
+     "in": 9053,
+     "out": 166,
+     "cost": 0.000589,
+     "wall": 2.352
+    },
+    "files04": {
+     "p": 1,
+     "calls": 4,
+     "in": 19185,
+     "out": 573,
+     "cost": 0.000554,
+     "wall": 5.013
+    },
+    "files07": {
+     "p": 1,
+     "calls": 3,
+     "in": 13756,
+     "out": 258,
+     "cost": 0.0003,
+     "wall": 3.484
+    },
+    "files10": {
+     "p": 1,
+     "calls": 5,
+     "in": 24218,
+     "out": 508,
+     "cost": 0.000571,
+     "wall": 5.907
+    },
+    "files13": {
+     "p": 1,
+     "calls": 2,
+     "in": 9108,
+     "out": 227,
+     "cost": 0.000234,
+     "wall": 3.043
+    },
+    "files16": {
+     "p": 1,
+     "calls": 3,
+     "in": 13745,
+     "out": 262,
+     "cost": 0.000301,
+     "wall": 4.113
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 9,
+     "in": 44705,
+     "out": 436,
+     "cost": 0.001138,
+     "wall": 10.193
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 9,
+     "in": 44708,
+     "out": 435,
+     "cost": 0.000723,
+     "wall": 9.807
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 9,
+     "in": 45428,
+     "out": 512,
+     "cost": 0.000784,
+     "wall": 13.439
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 11,
+     "in": 55233,
+     "out": 513,
+     "cost": 0.000876,
+     "wall": 11.013
+    },
+    "multi13": {
+     "p": 1,
+     "calls": 5,
+     "in": 24448,
+     "out": 329,
+     "cost": 0.000456,
+     "wall": 6.161
+    },
+    "multi16": {
+     "p": 1,
+     "calls": 5,
+     "in": 24431,
+     "out": 337,
+     "cost": 0.000459,
+     "wall": 6.707
+    }
+   }
+  },
+  "claude_agent_sdk": {
+   "n": 30,
+   "pass": 30,
+   "ci": [
+    0.886,
+    1.0
+   ],
+   "strict": 30,
+   "calls_med": 4.5,
+   "calls_sum": 148,
+   "in_med": 9252.5,
+   "in_sum": 300222,
+   "out_sum": 11841,
+   "cost_sum": 0.013868,
+   "wall_med": 6.362,
+   "wall_sum": 204.2,
+   "by_family": {
+    "chain": [
+     6,
+     6
+    ],
+    "sql": [
+     6,
+     6
+    ],
+    "retrieval": [
+     6,
+     6
+    ],
+    "files": [
+     6,
+     6
+    ],
+    "multiturn": [
+     6,
+     6
+    ]
+   },
+   "categories": {},
+   "cache_read_sum": 257157,
+   "cache_creation_sum": 42769,
+   "sdk_reported_cost_sum": 0.013868,
+   "residual_cost_sum": 0.004766,
+   "sdk_version": "0.2.182",
+   "cli_version": "2.1.325",
+   "tasks": {
+    "chain01": {
+     "p": 1,
+     "calls": 4,
+     "in": 8546,
+     "out": 412,
+     "cost": 0.00057,
+     "wall": 7.355
+    },
+    "chain04": {
+     "p": 1,
+     "calls": 5,
+     "in": 11013,
+     "out": 424,
+     "cost": 0.000451,
+     "wall": 6.455
+    },
+    "chain07": {
+     "p": 1,
+     "calls": 3,
+     "in": 6178,
+     "out": 272,
+     "cost": 0.000296,
+     "wall": 4.516
+    },
+    "chain10": {
+     "p": 1,
+     "calls": 5,
+     "in": 12744,
+     "out": 696,
+     "cost": 0.000658,
+     "wall": 7.416
+    },
+    "chain13": {
+     "p": 1,
+     "calls": 4,
+     "in": 9222,
+     "out": 419,
+     "cost": 0.000438,
+     "wall": 6.392
+    },
+    "chain16": {
+     "p": 1,
+     "calls": 5,
+     "in": 12896,
+     "out": 736,
+     "cost": 0.00069,
+     "wall": 8.018
+    },
+    "sql01": {
+     "p": 1,
+     "calls": 6,
+     "in": 10953,
+     "out": 423,
+     "cost": 0.000574,
+     "wall": 9.15
+    },
+    "sql04": {
+     "p": 1,
+     "calls": 4,
+     "in": 7306,
+     "out": 320,
+     "cost": 0.000359,
+     "wall": 6.131
+    },
+    "sql07": {
+     "p": 1,
+     "calls": 5,
+     "in": 9984,
+     "out": 533,
+     "cost": 0.00054,
+     "wall": 8.928
+    },
+    "sql10": {
+     "p": 1,
+     "calls": 5,
+     "in": 9283,
+     "out": 336,
+     "cost": 0.000399,
+     "wall": 6.139
+    },
+    "sql13": {
+     "p": 1,
+     "calls": 6,
+     "in": 11303,
+     "out": 469,
+     "cost": 0.000506,
+     "wall": 8.596
+    },
+    "sql16": {
+     "p": 1,
+     "calls": 6,
+     "in": 14117,
+     "out": 701,
+     "cost": 0.000751,
+     "wall": 9.143
+    },
+    "r01": {
+     "p": 1,
+     "calls": 4,
+     "in": 6906,
+     "out": 264,
+     "cost": 0.000432,
+     "wall": 5.172
+    },
+    "r04": {
+     "p": 1,
+     "calls": 4,
+     "in": 6724,
+     "out": 247,
+     "cost": 0.000317,
+     "wall": 4.886
+    },
+    "r07": {
+     "p": 1,
+     "calls": 4,
+     "in": 7814,
+     "out": 385,
+     "cost": 0.000445,
+     "wall": 5.618
+    },
+    "r10": {
+     "p": 1,
+     "calls": 5,
+     "in": 10649,
+     "out": 582,
+     "cost": 0.000629,
+     "wall": 7.494
+    },
+    "r13": {
+     "p": 1,
+     "calls": 4,
+     "in": 6673,
+     "out": 221,
+     "cost": 0.000302,
+     "wall": 5.205
+    },
+    "r16": {
+     "p": 1,
+     "calls": 4,
+     "in": 7030,
+     "out": 308,
+     "cost": 0.000366,
+     "wall": 5.662
+    },
+    "files01": {
+     "p": 1,
+     "calls": 2,
+     "in": 3112,
+     "out": 107,
+     "cost": 0.000271,
+     "wall": 2.452
+    },
+    "files04": {
+     "p": 1,
+     "calls": 4,
+     "in": 7015,
+     "out": 456,
+     "cost": 0.00043,
+     "wall": 5.116
+    },
+    "files07": {
+     "p": 1,
+     "calls": 3,
+     "in": 4802,
+     "out": 175,
+     "cost": 0.000222,
+     "wall": 3.218
+    },
+    "files10": {
+     "p": 1,
+     "calls": 4,
+     "in": 7157,
+     "out": 354,
+     "cost": 0.000375,
+     "wall": 5.941
+    },
+    "files13": {
+     "p": 1,
+     "calls": 2,
+     "in": 3112,
+     "out": 113,
+     "cost": 0.000161,
+     "wall": 2.807
+    },
+    "files16": {
+     "p": 1,
+     "calls": 3,
+     "in": 4837,
+     "out": 198,
+     "cost": 0.000235,
+     "wall": 3.976
+    },
+    "multi01": {
+     "p": 1,
+     "calls": 9,
+     "in": 19333,
+     "out": 443,
+     "cost": 0.000705,
+     "wall": 10.199
+    },
+    "multi04": {
+     "p": 1,
+     "calls": 9,
+     "in": 19343,
+     "out": 458,
+     "cost": 0.000568,
+     "wall": 10.775
+    },
+    "multi07": {
+     "p": 1,
+     "calls": 9,
+     "in": 20092,
+     "out": 564,
+     "cost": 0.000649,
+     "wall": 11.343
+    },
+    "multi10": {
+     "p": 1,
+     "calls": 10,
+     "in": 21961,
+     "out": 554,
+     "cost": 0.000656,
+     "wall": 12.272
+    },
+    "multi13": {
+     "p": 1,
+     "calls": 5,
+     "in": 10043,
+     "out": 341,
+     "cost": 0.000439,
+     "wall": 6.331
+    },
+    "multi16": {
+     "p": 1,
+     "calls": 5,
+     "in": 10074,
+     "out": 330,
+     "cost": 0.000434,
+     "wall": 7.45
+    }
+   }
+  }
+ }
+}
