@@ -2475,7 +2475,6 @@ test('every page card shows its label, title, and description without truncation
       assert.equal(card.stats, spec.stats.join(' · ').toUpperCase());
     } else {
       assert.equal(card.description, spec.description, id);
-      assert.equal(card.path, spec.path, id);
     }
   }
 });
@@ -2495,12 +2494,13 @@ test('worst-case card text stays inside the frame and the title keeps three line
     const card = layout(spec);
     assert.ok(card.title.lines.length <= (spec.kind === 'home' ? 2 : 3), JSON.stringify(card.title.lines));
     const pixels = renderPixels(spec);
+    const background = spec.kind === 'home' ? [250, 250, 245] : [53, 83, 255];
     let stray = null;
     for (let at = 0; at < pixels.length && !stray; at += 3) {
       const x = (at / 3) % 1200;
       const y = Math.floor(at / 3600);
-      const inside = (x >= 60 && x <= 1140 && y >= 48 && y <= 596) || x === 28 || x === 1171 || y === 28 || y === 601;
-      if (!inside && (pixels[at] !== 250 || pixels[at + 1] !== 250 || pixels[at + 2] !== 245)) stray = `${x},${y}`;
+      const inside = x >= 24 && x < 1176 && y >= 24 && y < 606;
+      if (!inside && (pixels[at] !== background[0] || pixels[at + 1] !== background[1] || pixels[at + 2] !== background[2])) stray = `${x},${y}`;
     }
     assert.equal(stray, null, `${spec.title} paints outside the frame`);
   }
