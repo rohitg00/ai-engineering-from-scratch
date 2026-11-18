@@ -353,7 +353,7 @@ const html = `<!DOCTYPE html>
       });
     })();
   </script>
-  <script src="header.js?v=20261114a" defer></script>
+  <script src="header.js?v=20261118a" defer></script>
   <script>${wrapped.replace(/<\/(script)/gi, "<\\/$1")}</script>
 </body>
 </html>
