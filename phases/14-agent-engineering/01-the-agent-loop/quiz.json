@@ -15,18 +15,6 @@
       "explanation": "An LLM with no loop and no tools can only produce text from its weights; it cannot observe state or act on it."
     },
     {
-      "stage": "pre",
-      "question": "Which three labels appear in the canonical ReAct trace from Yao et al. 2022?",
-      "options": [
-        "Prompt, Response, Reward",
-        "Plan, Execute, Reflect",
-        "Thought, Action, Observation",
-        "System, User, Assistant"
-      ],
-      "correct": 2,
-      "explanation": "ReAct interleaves Thought, Action, and Observation lines in a single stream."
-    },
-    {
       "stage": "check",
       "question": "Which item is NOT one of the five ingredients the lesson lists for an agent loop?",
       "options": [
