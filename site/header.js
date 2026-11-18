@@ -239,7 +239,7 @@
     stylesheet.href = 'newsletter.css?v=20260926b';
     document.head.appendChild(stylesheet);
     var script = document.createElement('script');
-    script.src = 'newsletter.js?v=20261114a';
+    script.src = 'newsletter.js?v=20261118a';
     script.async = true;
     script.setAttribute('data-aifs-newsletter', 'true');
     document.head.appendChild(script);
