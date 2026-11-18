@@ -31,7 +31,7 @@
     {
       "stage": "post",
       "question": "What happens when you exceed an API's rate limit?",
-      "options": ["Your request is queued and processed later automatically", "The server returns an error (typically HTTP 429) and you must wait before retrying", "Your API key is permanently revoked", "The API silently drops your request with no response"],
+      "options": ["Your request is queued and processed later automatically once busier callers finish, with no error", "The server returns an error (typically HTTP 429) and you must wait before retrying", "Your API key is permanently revoked as a penalty for the excess traffic", "The API silently drops your request with no response"],
       "correct": 1,
       "explanation": "Rate limiting returns HTTP 429 (Too Many Requests). You need to wait and retry, typically with exponential backoff. Rate limits prevent abuse and ensure fair usage."
     }
