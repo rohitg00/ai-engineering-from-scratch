@@ -24,8 +24,11 @@ TIMELINE = [
     ("2026-01-00", "Korean AI Framework Act effective"),
     ("2026-03-00", "Transparency Code second draft"),
     ("2026-06-00", "Transparency Code final version"),
-    ("2026-08-02", "EU AI Act: full applicability + Article 50 transparency + penalties"),
-    ("2027-08-02", "EU AI Act: legacy GPAI + embedded high-risk systems"),
+    ("2026-07-27", "Regulation (EU) 2026/1744 in force: high-risk dates moved"),
+    ("2026-08-02", "EU AI Act: general application + Article 50 transparency + penalties"),
+    ("2027-08-02", "EU AI Act: legacy GPAI models comply"),
+    ("2027-12-02", "EU AI Act: high-risk obligations, Annex III systems"),
+    ("2028-08-02", "EU AI Act: high-risk obligations, Annex I systems"),
 ]
 
 
@@ -36,7 +39,7 @@ def main() -> None:
     for date, event in TIMELINE:
         print(f"  {date}  {event}")
     print("\n" + "=" * 78)
-    print("TAKEAWAY: EU AI Act sets the global bar. full enforcement August 2026.")
+    print("TAKEAWAY: EU AI Act sets the global bar. high-risk duties from Dec 2027.")
     print("UK narrowed to frontier security. US pivoted pro-growth. Korea is the")
     print("first Asian comprehensive framework. deployers in multiple jurisdictions")
     print("comply with the strictest, which is usually the EU.")
