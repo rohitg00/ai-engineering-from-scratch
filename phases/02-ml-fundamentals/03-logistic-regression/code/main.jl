@@ -119,10 +119,10 @@ end
 
 
 function build_metrics(y_true::Vector{Int}, y_pred::Vector{Int})
-    tp = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 1)
-    tn = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 0)
-    fp = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 1)
-    fn = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 0)
+    tp = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 1; init=0)
+    tn = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 0; init=0)
+    fp = sum(1 for i in 1:length(y_true) if y_true[i] == 0 && y_pred[i] == 1; init=0)
+    fn = sum(1 for i in 1:length(y_true) if y_true[i] == 1 && y_pred[i] == 0; init=0)
     return ClassificationMetrics(tp, tn, fp, fn)
 end
 
