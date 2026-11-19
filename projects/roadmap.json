@@ -193,36 +193,6 @@
       "originalFixture": "An original three-slide talk with two independently authored timed rehearsal transcripts"
     },
     {
-      "id": "semantic-cache-correctness-lab",
-      "title": "Semantic Cache Correctness Lab",
-      "level": 3,
-      "source": "core",
-      "status": "planned",
-      "track": "platform",
-      "languages": [
-        "Go",
-        "Python"
-      ],
-      "tagline": "Measure when a similar question can reuse an answer and when it must miss.",
-      "summary": "Build an opt-in answer cache that binds entries to tenant, model, source revision and expiry. Compare exact and semantic candidate matching using authored near-miss questions, including changed numbers and negation. Export a local HTTP adapter and a false-hit report; similarity alone must not authorize cross-user reuse.",
-      "output": "Local cache adapter and false-hit, latency and invalidation report",
-      "prerequisiteProjects": [
-        "semantic-notes-search",
-        "rag-freshness-pipeline"
-      ],
-      "milestones": [
-        "Define identity, freshness and privacy boundaries",
-        "Implement exact-match lookup and invalidation",
-        "Evaluate semantic candidates against adversarial pairs",
-        "Export a bounded HTTP adapter and reuse evidence"
-      ],
-      "references": [
-        "https://www.rfc-editor.org/rfc/rfc9111.html"
-      ],
-      "distinctFrom": "RAG Freshness Pipeline versions source content; this decides whether a prior answer can be reused for a new query under identity and freshness constraints.",
-      "firstDemo": "Show a cache hit for a paraphrase and a miss when the question changes a critical number or tenant."
-    },
-    {
       "id": "video-highlight-storyboard",
       "title": "Video Highlight Storyboard",
       "level": 3,
