@@ -8,6 +8,6 @@
     "evals/cases.json": "sha256:ab96a4f1af5c96e0adb64a6b3620e407e7e5a1952fb1bfb6599ec83426c22aff",
     "evals/evidence.json": "sha256:8466ec1c250699f4652191e7f3298aec40c485dc0e6d88311da7b724194b263a",
     "references/eval-contract.md": "sha256:280d5afab9be15c6e8c5efd57d9e41dc0ee591368af27f735f10fda3d35126a9",
-    "scripts/evaluate_skill.py": "sha256:0143d2fc9440e697992980292d86d90142af4ef0572c515cfdcf47de639a906c"
+    "scripts/evaluate_skill.py": "sha256:2230fabf137dea3c0da0cd05652d37dec1cd6415b6f213b998ca4dc08a24f3fd"
   }
 }
