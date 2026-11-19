@@ -1,0 +1,78 @@
+{
+  "lesson": "08-ppo",
+  "title": "Proximal Policy Optimization (PPO)",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A new policy is updated from data collected by an older policy. What comparison measures the new policy's change for a sampled action?",
+      "options": [
+        "The difference between rewards and state values.",
+        "The ratio of new-policy probability to old-policy probability.",
+        "The ratio of value estimates from two critics.",
+        "The sum of new-policy and old-policy probabilities."
+      ],
+      "correct": 1,
+      "explanation": "PPO compares πθ(a|s) with πθold(a|s) using their probability ratio; a ratio of 1 means the sampled action is equally likely under both policies. Reward-minus-value is an advantage signal, not a measure of policy change."
+    },
+    {
+      "stage": "check",
+      "question": "The old policy assigned an action probability of 0.2 and the new policy assigns 0.3. What importance ratio does PPO use?",
+      "options": [
+        "0.06, from multiplying the two probabilities together.",
+        "About 0.67, from dividing the old probability by the new one.",
+        "1.5, from the new probability divided by the old probability.",
+        "0.1, from subtracting old probability from new probability."
+      ],
+      "correct": 2,
+      "explanation": "The importance ratio is new divided by old, so 0.3/0.2=1.5. Multiplying gives 0.06, reversing gives about 0.67, and subtracting gives 0.1; these are distinct mistakes, not interchangeable ratio calculations."
+    },
+    {
+      "stage": "check",
+      "question": "With epsilon = 0.2, an action has positive advantage and its probability ratio rises to 1.3. What does the clipped surrogate do on this sample?",
+      "options": [
+        "Flatten the beneficial gradient once the ratio exceeds 1.2.",
+        "Increase the gradient because positive-advantage actions are always pushed further.",
+        "Reverse the advantage because the ratio exceeds one.",
+        "Clip the ratio to zero because it is above the old probability."
+      ],
+      "correct": 0,
+      "explanation": "For positive advantage, the upper clip bound is 1+ε=1.2. At ratio 1.3, the clipped term caps the beneficial surrogate at 1.2A, flattening further policy-gradient incentive; it does not reverse the advantage."
+    },
+    {
+      "stage": "check",
+      "question": "Why does PPO normalize advantages to zero mean and unit standard deviation within a batch?",
+      "options": [
+        "It prevents the rollout policy from ever changing.",
+        "It changes the old-policy probabilities to match the new policy.",
+        "It stabilizes policy updates across batches with different advantage scales.",
+        "It makes the critic unnecessary for computing target values."
+      ],
+      "correct": 2,
+      "explanation": "Batch normalization subtracts the batch mean and divides by its standard deviation, keeping update magnitudes more comparable across rollouts. It rescales advantages; it does not change the frozen old-policy probabilities or remove the critic’s value target."
+    },
+    {
+      "stage": "post",
+      "question": "During several PPO epochs on one rollout, what should log_pi_old refer to?",
+      "options": [
+        "The frozen policy snapshot that collected the rollout.",
+        "The target critic value stored at the final episode step.",
+        "The current policy probability recomputed after each minibatch.",
+        "The policy after the final gradient epoch has completed."
+      ],
+      "correct": 0,
+      "explanation": "log_pi_old is captured once when the rollout is collected and stays fixed through the update epochs. The ratio then compares the changing current policy with its data-collecting snapshot; recomputing both sides would make the comparison collapse toward one."
+    },
+    {
+      "stage": "post",
+      "question": "A PPO run has a clip fraction above 0.5 for several updates. Which adjustment matches the lesson's diagnostic guidance?",
+      "options": [
+        "Remove clipping so every sample always contributes a gradient.",
+        "Lower the learning rate or epoch count to reduce rollout overfitting.",
+        "Stop collecting new rollouts and keep training on the same batch.",
+        "Raise both learning rate and epoch count to use the rollout more fully."
+      ],
+      "correct": 1,
+      "explanation": "A clip fraction above roughly 0.5 means many rollout samples are beyond the permitted ratio range, signaling overfitting to that batch. Lowering learning rate or epochs reduces drift; raising either would push more samples outside the clip interval."
+    }
+  ]
+}

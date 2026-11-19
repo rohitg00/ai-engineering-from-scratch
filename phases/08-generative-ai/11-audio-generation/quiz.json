@@ -1,0 +1,78 @@
+{
+  "lesson": "11-audio-generation",
+  "title": "Audio Generation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why do production audio generators use neural codecs before a transformer models the sound?",
+      "options": [
+        "They compress long waveforms into discrete token sequences",
+        "They remove the need for a decoder or vocoder",
+        "They make every audio sample independent of its neighbors",
+        "They convert the waveform directly into natural-language captions"
+      ],
+      "correct": 0,
+      "explanation": "Neural codecs compress a long waveform into lower-rate discrete codebook tokens, giving an autoregressive model a tractable sequence to predict. A codec still needs decoding to turn generated tokens back into sound."
+    },
+    {
+      "stage": "check",
+      "question": "At 75 frames per second with 8 RVQ codebooks, how many codec tokens are emitted each second?",
+      "options": [
+        "8 tokens per second",
+        "75 tokens per second",
+        "6,000 tokens per second",
+        "600 tokens per second"
+      ],
+      "correct": 3,
+      "explanation": "Each of 75 codec frames contributes an index from each of 8 RVQ codebooks, so 75 frames/s × 8 indices/frame = 600 tokens/s. A rate of 6,000 would require ten times as many indices per second."
+    },
+    {
+      "stage": "check",
+      "question": "Which audio-generation approach is naturally suited to live streaming?",
+      "options": [
+        "A classifier that predicts the next speaker label",
+        "Token-autoregressive generation over codec codes",
+        "Latent diffusion over a fixed-length clip",
+        "A one-shot GAN over raw audio samples"
+      ],
+      "correct": 1,
+      "explanation": "Token-autoregressive generation emits codec codes causally, one step after its available context, which supports streaming playback. The described latent flow-matching systems generate a fixed clip and need chunking and overlap to stream."
+    },
+    {
+      "stage": "check",
+      "question": "What does MusicGen’s delayed-parallel strategy do with RVQ codebook streams?",
+      "options": [
+        "Combines all codebooks into one continuous waveform first",
+        "Uses one codebook and discards the remaining residuals",
+        "Predicts each audio sample independently at 24 kHz",
+        "Emits the streams in parallel with staggered offsets"
+      ],
+      "correct": 3,
+      "explanation": "MusicGen’s delayed-parallel method emits multiple RVQ codebook streams with staggered time offsets, rather than serially flattening all streams. That reduces the effective sequence length while preserving their temporal alignment."
+    },
+    {
+      "stage": "post",
+      "question": "A live voice-chat product needs audio to arrive as it is produced. Which model family should the team prioritize?",
+      "options": [
+        "Fixed-clip flow matching",
+        "Offline VAE reconstruction",
+        "Image-conditioned diffusion only",
+        "Codec autoregressive generation"
+      ],
+      "correct": 3,
+      "explanation": "For live voice chat, codec AR can produce tokens incrementally at the playback rate; the production note recommends it for real-time streaming. Flow matching renders a fixed clip and is better suited to on-submit generation."
+    },
+    {
+      "stage": "post",
+      "question": "A generator produces artifacts because its codec cannot represent a particular sound faithfully. What is the likely ceiling?",
+      "options": [
+        "Higher sampling temperature will restore the missing detail",
+        "A longer text prompt will add unsupported waveform detail",
+        "Generator quality cannot exceed the codec’s representation",
+        "More transformer layers will change the codec’s codebook"
+      ],
+      "correct": 2,
+      "explanation": "Output fidelity is bounded by what the codec representation can encode: discarded acoustic detail is unavailable to the later generator. More transformer layers cannot change the codec codebook or recover information removed before modeling."
+    }
+  ]
+}

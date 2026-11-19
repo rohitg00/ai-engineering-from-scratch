@@ -1,0 +1,78 @@
+{
+  "lesson": "05-ai-scientist-v2",
+  "title": "AI Scientist v2 — Workshop-Level Autonomous Research",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is an autonomous research result harder to verify than a candidate program in a tightly specified search task?",
+      "options": [
+        "A paper is judged by reviewers rather than a deterministic correctness test",
+        "A research paper cannot contain executable code, tests, or figures",
+        "A benchmark task always has more possible outputs",
+        "A research loop never retries when an experiment fails"
+      ],
+      "correct": 0,
+      "explanation": "Research papers may contain code, but their broad claims still rely on methods and reviewer judgment rather than a deterministic correctness oracle. The hard part is validating novelty and interpretation, not the absence of executable tests."
+    },
+    {
+      "stage": "check",
+      "question": "Which order best matches the research-loop stages described in the lesson?",
+      "options": [
+        "Generate idea, check novelty, plan and run experiments, write up, review",
+        "Run experiments first, then choose a topic from the results",
+        "Ask a reviewer to generate code and omit literature checks",
+        "Write a paper, publish it, then decide which idea it tested"
+      ],
+      "correct": 0,
+      "explanation": "The workflow checks novelty before planning and running experiments, then produces figures and a writeup before optional submission. Omitting the literature check can relabel an established method as novel."
+    },
+    {
+      "stage": "check",
+      "question": "An experiment fails because of a coding error, and the retry succeeds. What caution does the lesson give?",
+      "options": [
+        "A recovered run can still contain a residual flaw requiring verification",
+        "A successful retry proves the original result was correct after rerunning",
+        "The retry should be counted as a novel research discovery",
+        "Retries eliminate the need for a sandbox or review"
+      ],
+      "correct": 0,
+      "explanation": "A retry can recover execution yet leave silent numerical or validation errors, so success on the retry is not proof the experiment is sound. The simulator deliberately models residual flaws after retry recovery."
+    },
+    {
+      "stage": "check",
+      "question": "What does one workshop paper accepted after disclosure support about AI Scientist v2?",
+      "options": [
+        "It shows that reviewers no longer need human authors",
+        "It is a proof of concept, not a broad reliability claim",
+        "It proves the system reliably conducts independent research",
+        "It establishes that all generated papers pass peer review"
+      ],
+      "correct": 1,
+      "explanation": "One disclosed workshop acceptance is a proof of concept, not a reliability estimate across research problems and venues. It does not establish that every generated paper passes peer review."
+    },
+    {
+      "stage": "post",
+      "question": "An agent runs LLM-written experiment code with web access and filesystem permissions. What operational control addresses the risk described in the lesson?",
+      "options": [
+        "Let the code inherit the operator's full machine permissions",
+        "Trust the paper's generated figures as a safety check",
+        "Run it in an isolated sandbox with restricted resources",
+        "Disable experiment logging so code stays private"
+      ],
+      "correct": 2,
+      "explanation": "LLM-written code can exercise whatever permissions its process has, so isolate filesystem, network, and process access in a sandbox. Full machine permissions increase the consequence of a flawed generated program."
+    },
+    {
+      "stage": "post",
+      "question": "The loop can submit persuasive papers even when experiments or novelty checks are flawed. Which review priority follows?",
+      "options": [
+        "Evaluate underlying claims and methods, not presentation quality alone",
+        "Optimize paper fluency before checking the experiment data",
+        "Accept clean figures as sufficient evidence for experimental soundness",
+        "Skip literature review when the internal reviewer approves"
+      ],
+      "correct": 0,
+      "explanation": "A polished paper can mask a flawed experiment or novelty claim, so review underlying methods and evidence rather than stopping at the figures. Clean presentation is not evidence of experimental soundness."
+    }
+  ]
+}

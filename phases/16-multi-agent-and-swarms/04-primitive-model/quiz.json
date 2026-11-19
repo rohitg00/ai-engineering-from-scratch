@@ -1,0 +1,78 @@
+{
+  "lesson": "04-primitive-model",
+  "title": "The Multi-Agent Primitive Model",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "In a multi-agent system, which component decides who speaks or runs next?",
+      "options": [
+        "The shared state store",
+        "The current model weights",
+        "The handoff payload alone",
+        "The orchestrator"
+      ],
+      "correct": 3,
+      "explanation": "The orchestrator controls scheduling: it selects the next agent or node, whether the rule is a graph edge, selector, handoff, or queue. The shared store supplies state to that decision, but data availability alone does not choose who runs next."
+    },
+    {
+      "stage": "check",
+      "question": "Which of the four primitives does the lesson describe as the only stateful part of the system?",
+      "options": [
+        "Orchestrator",
+        "Shared state",
+        "Agent",
+        "Handoff"
+      ],
+      "correct": 1,
+      "explanation": "The lesson separates transient operations—agents, handoffs, and routing—from the shared state that carries messages and artifacts across steps. Calling the agent itself the sole stateful part confuses computation with the persisted data that enables continuity."
+    },
+    {
+      "stage": "check",
+      "question": "A handoff is implemented as an agent returning another Agent object. Which orchestration style does that match?",
+      "options": [
+        "A queue-driven worker pool",
+        "Handoff-driven routing",
+        "A round-robin speaker selector",
+        "A fixed static graph"
+      ],
+      "correct": 1,
+      "explanation": "When an agent returns another Agent object, the active agent is selecting its own successor through a handoff. A queue-driven pool instead lets workers pull queued tasks, so it is not the routing mechanism in this example."
+    },
+    {
+      "stage": "check",
+      "question": "A team needs each role to see only relevant messages, rather than the full shared conversation. Which state topology fits?",
+      "options": [
+        "A stateless handoff with no shared memory",
+        "A global transcript copied into every prompt",
+        "A full pool where every agent reads everything",
+        "Projected state with a role-scoped view"
+      ],
+      "correct": 3,
+      "explanation": "Projection computes a role-scoped view so a worker receives only relevant state. A full pool exposes the entire log to each reader; that is simpler to implement, but it does not meet the prompt’s need to hide irrelevant messages."
+    },
+    {
+      "stage": "post",
+      "question": "A workflow must be deterministic and easy to replay. Which orchestrator choice best fits the lesson's comparison?",
+      "options": [
+        "A handoff choice generated from free-form reasoning",
+        "A static graph with declared edges",
+        "A worker that pulls any task from an unordered queue",
+        "An unconstrained LLM-selected speaker each turn"
+      ],
+      "correct": 1,
+      "explanation": "Declared edges make a static graph’s next step reproducible from the same state, which supports deterministic replay. An unconstrained LLM speaker choice may adapt to context, but its sampled decision can vary across runs."
+    },
+    {
+      "stage": "post",
+      "question": "An agent writes an unverified claim to a full shared message pool. What downstream risk follows?",
+      "options": [
+        "The orchestrator automatically deletes the original message",
+        "A static graph converts the claim into a typed artifact",
+        "The shared pool prevents the same claim from being read twice",
+        "Other agents may inherit the claim as if it were verified"
+      ],
+      "correct": 3,
+      "explanation": "A full message pool exposes the claim to later agents, but shared storage does not validate it. The option that says a static graph converts it to a typed artifact mixes routing with data validation; a claim can propagate unchanged through either topology."
+    }
+  ]
+}

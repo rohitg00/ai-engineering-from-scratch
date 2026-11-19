@@ -1,0 +1,78 @@
+{
+  "lesson": "10-internvl3-native-multimodal",
+  "title": "InternVL3: Native Multimodal Pretraining",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "What distinguishes InternVL3's native multimodal pretraining from a post-hoc VLM recipe?",
+      "options": [
+        "The model trains only on image-caption pairs and no text-only data.",
+        "A vision encoder is attached after all language training has finished.",
+        "Mix text and multimodal tokens during pretraining from the start.",
+        "A frozen text LLM receives a projector trained only after pretraining."
+      ],
+      "correct": 2,
+      "explanation": "Native multimodal pretraining mixes text, interleaved image-text, captions, and video in the base run from the first training steps. Post-hoc VLMs first train the text LLM, then attach a vision encoder and adapter, creating a later alignment step."
+    },
+    {
+      "stage": "check",
+      "question": "For 500,000 training steps and the stated mix of 40% text, 35% interleaved, 20% caption, and 5% video, how many text-only steps are allocated?",
+      "options": [
+        "200,000 steps allocated to text-only data.",
+        "175,000 steps, from the interleaved share.",
+        "100,000 steps, from the caption share.",
+        "25,000 steps, from the video share."
+      ],
+      "correct": 0,
+      "explanation": "Text receives 40% of 500,000 steps, so 0.40×500,000=200,000 text-only steps. The 175,000 option applies the interleaved 35% share instead; the other modality shares account for different portions of the corpus."
+    },
+    {
+      "stage": "check",
+      "question": "Which distinction correctly describes InternVL3’s V2PE versus Qwen2-VL’s M-RoPE?",
+      "options": [
+        "V2PE gives visual tokens identical positions; M-RoPE uses only the text position axis.",
+        "V2PE uses smaller variable visual increments; M-RoPE separates time, height, and width.",
+        "V2PE uses unit visual increments; M-RoPE removes image and video position coordinates.",
+        "V2PE separates time, height, and width; M-RoPE uses smaller variable visual increments."
+      ],
+      "correct": 1,
+      "explanation": "V2PE uses smaller, variable position increments for visual tokens, allowing longer multimodal sequences within the position window. M-RoPE decomposes rotary embeddings into temporal, height, and width components. Reversing those mechanisms confuses position-step size with coordinate-axis encoding; neither is learned allocation of hidden-dimension bands."
+    },
+    {
+      "stage": "check",
+      "question": "A ViR traffic mix is 50% low-res at 256 tokens, 30% medium at 576, and 20% high at 2048. What average token count per request results?",
+      "options": [
+        "About 960 tokens, from an unweighted mean of the three tiers.",
+        "About 256 tokens, if every request used only the low tier.",
+        "About 710 tokens, using the stated request fractions.",
+        "About 410 tokens, counting only the high-resolution share."
+      ],
+      "correct": 2,
+      "explanation": "Weight each tier’s token count by its traffic fraction: 0.5×256=128, 0.3×576=172.8, and 0.2×2048=409.6, totaling 710.4 (about 710). The unweighted mean ignores the stated request mix, especially the half of requests using low resolution."
+    },
+    {
+      "stage": "post",
+      "question": "A project can reuse an existing LLM and has limited training compute. Which strategy fits the lesson's stated tradeoff?",
+      "options": [
+        "Native pretraining, which avoids the multimodal-data scarcity problem.",
+        "Native pretraining, which reuses the existing LLM without additional multimodal data.",
+        "Post-hoc adaptation, which guarantees no text-skill regression.",
+        "Post-hoc adaptation, which reuses base LLM weights and costs less than training from scratch."
+      ],
+      "correct": 3,
+      "explanation": "Post-hoc adaptation starts from existing LLM weights and reuses their text training, avoiding the compute and multimodal-data cost of training a new model from scratch. It can incur alignment debt, so it does not guarantee zero regression."
+    },
+    {
+      "stage": "post",
+      "question": "A post-hoc VLM answers similar visual questions inconsistently and loses text-only benchmark points. Which term names this class of risk?",
+      "options": [
+        "Patch-n'-pack waste from padding variable-length images.",
+        "Decoder drift from using a low-temperature sampling setting.",
+        "M-RoPE aliasing from assigning row and column positions.",
+        "Alignment debt from bolting vision onto a text-pretrained LLM."
+      ],
+      "correct": 3,
+      "explanation": "The lesson groups text-skill regression, inconsistent answers to similar visual questions, and contradictions between visual description and answers as alignment debt. Padding, positional encoding, or temperature may cause other issues but do not name this post-hoc multimodal penalty."
+    }
+  ]
+}

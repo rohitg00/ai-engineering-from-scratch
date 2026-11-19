@@ -1,0 +1,78 @@
+{
+  "lesson": "16-anti-spoofing-audio-watermarking",
+  "title": "Voice Anti-Spoofing & Audio Watermarking — ASVspoof 5, AudioSeal, WaveVerify",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A service must identify whether generated speech came from an artificial source. Which defense answers this?",
+      "options": [
+        "Anti-spoofing detection",
+        "Speaker diarization",
+        "Voice activity detection",
+        "Audio provenance signing"
+      ],
+      "correct": 0,
+      "explanation": "An anti-spoofing detector classifies an incoming clip as real or synthetic/converted, including clips that carry no watermark. A signed manifest records claimed origin; it does not classify the acoustic signal as genuine or synthesized."
+    },
+    {
+      "stage": "check",
+      "question": "What distinction does the lesson make between a watermark and a C2PA manifest?",
+      "options": [
+        "A watermark is a model benchmark; C2PA is a speaker encoder",
+        "A watermark is a transcript token; C2PA is an audio codec",
+        "A watermark detects speech; C2PA estimates an EER",
+        "A watermark is perceptual audio data; C2PA is signed metadata"
+      ],
+      "correct": 3,
+      "explanation": "A watermark is embedded in the perceptual audio signal, while C2PA stores cryptographically signed creation metadata alongside the file. Neither is a transcript or codec: one marks the waveform, and the other signs provenance metadata."
+    },
+    {
+      "stage": "check",
+      "question": "Why should production voice systems combine watermarking with a detector?",
+      "options": [
+        "Watermarks cannot identify any generated audio",
+        "Aggressive pitch shift can remove watermarks",
+        "Signed manifests preserve audio through every re-encode",
+        "Detectors work only when a watermark is present"
+      ],
+      "correct": 1,
+      "explanation": "Pitch shifting can reduce watermark bit recovery below 0.6, so an independent detector is needed when the watermark is removed or unreadable. Anti-spoofing analyzes the audio itself; its detection role complements the watermark rather than depending on it."
+    },
+    {
+      "stage": "check",
+      "question": "What information can AudioSeal place in its documented payload?",
+      "options": [
+        "A complete C2PA manifest inside every frame",
+        "A 16-bit model, time, or user identifier",
+        "A 1,000-token audio codec sequence",
+        "A 32-byte transcript and speaker embedding"
+      ],
+      "correct": 1,
+      "explanation": "AudioSeal carries a compact 16-bit payload, or two bytes, suitable for identifiers such as model, time, or user codes. Thirty-two bytes is 256 bits, far larger than the documented payload and not a complete signed manifest."
+    },
+    {
+      "stage": "post",
+      "question": "A TTS service needs an authenticity layer that remains detectable after common compression. What integration matches the lesson?",
+      "options": [
+        "Use energy VAD as the watermark verifier",
+        "Embed AudioSeal and run its detector in CI",
+        "Sign C2PA metadata and skip all audio detection",
+        "Add a transcript tag after the WAV file is uploaded"
+      ],
+      "correct": 1,
+      "explanation": "The production path embeds AudioSeal and runs its detector in CI so the watermark can be checked after common compression tests. The lesson notes re-encoding can strip metadata, so provenance signing does not replace the perceptual watermark and detector."
+    },
+    {
+      "stage": "post",
+      "question": "An AASIST detector performs well on ASVspoof LA but poorly on phone audio. What is the next step?",
+      "options": [
+        "Keep the benchmark threshold unchanged in production",
+        "Calibrate and evaluate it on the target domain",
+        "Replace detection with a watermark lookup alone",
+        "Report its benchmark result as real-world accuracy"
+      ],
+      "correct": 1,
+      "explanation": "Good ASVspoof benchmark performance can overfit its recording conditions; calibrate and evaluate the detector on the phone-audio domain before deployment. The benchmark score alone does not establish error rates under a different channel and noise distribution."
+    }
+  ]
+}

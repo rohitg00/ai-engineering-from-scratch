@@ -1,0 +1,78 @@
+{
+  "lesson": "17-video-language-temporal-grounding",
+  "title": "Video-Language Models: Temporal Tokens and Grounding",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "Why is a video not adequately represented as an unordered stack of still images?",
+      "options": [
+        "A video model must predict image pixels before it can answer questions.",
+        "Video frames do not contain spatial information about objects.",
+        "Temporal order and event timing determine what actions happened and when.",
+        "Every frame has a different vocabulary that a text encoder cannot read."
+      ],
+      "correct": 2,
+      "explanation": "Video meaning depends on event order and timing: the same still frames can describe different actions depending on which came first. An unordered image set loses before/after relations and cannot answer when an event occurred."
+    },
+    {
+      "stage": "check",
+      "question": "What does Qwen2.5-VL's TMRoPE provide that a simple frame-index embedding does not?",
+      "options": [
+        "Only the order of frames, without any row or column information.",
+        "Actual timestamps for each visual token, along with spatial coordinates.",
+        "A class label for every sampled frame.",
+        "A single learned position for the entire video clip."
+      ],
+      "correct": 1,
+      "explanation": "TMRoPE associates each patch with temporal, height, and width coordinates, using actual time rather than only frame index. When FPS varies, frame indices do not preserve the same elapsed-time spacing."
+    },
+    {
+      "stage": "check",
+      "question": "A 5-minute clip is sampled at 1 FPS with 576 tokens per frame. How many visual tokens does it contain before compression?",
+      "options": [
+        "2,880 tokens, treating five minutes as five sampled frames.",
+        "300 tokens, from one token per second.",
+        "576 tokens, because one frame represents the whole clip.",
+        "172,800 tokens, from 300 seconds*1 frame/second*576."
+      ],
+      "correct": 3,
+      "explanation": "Five minutes=5×60=300 seconds; 1 FPS gives 300 frames, and 300×576=172,800 tokens before compression. The 2,880 option counts only five frames, while 576 counts a single frame."
+    },
+    {
+      "stage": "check",
+      "question": "What sampling behavior distinguishes dynamic-FPS from uniform frame sampling?",
+      "options": [
+        "Sample every frame at the source video's full FPS.",
+        "Allocate more frames to high-motion segments and fewer to static segments.",
+        "Choose equally spaced frames regardless of motion in the clip.",
+        "Keep only frames at detected shot boundaries and discard the rest."
+      ],
+      "correct": 1,
+      "explanation": "Dynamic-FPS allocates more samples to high-motion seconds and fewer to static ones, guided by motion intensity and a frame budget. Uniform sampling spaces frames evenly, which can miss brief action peaks between samples."
+    },
+    {
+      "stage": "post",
+      "question": "A downstream event detector needs precise start and end times for a jump. Which output format is easiest to consume reliably?",
+      "options": [
+        "Structured JSON with event name, start time, and end time fields.",
+        "A class label for the whole video with no timestamps.",
+        "An image caption with no event interval or coordinates.",
+        "Free text such as 'the jump happens near the middle of the clip.'"
+      ],
+      "correct": 0,
+      "explanation": "Structured JSON exposes event, start, and end fields for direct downstream parsing; an interval such as start=4.1,end=4.3 is machine-actionable. “Near the middle” lacks a precise interval and requires ambiguous natural-language interpretation."
+    },
+    {
+      "stage": "post",
+      "question": "A long clip keeps the sampled frame sequence but needs fewer tokens per frame. Which approach sacrifices some spatial detail to reduce context cost?",
+      "options": [
+        "Remove temporal positions and keep all original patch tokens.",
+        "Pool each frame's patch grid before passing frames to the LLM.",
+        "Run a separate text encoder on each frame without pooling.",
+        "Use full-resolution patches for every frame at 30 FPS."
+      ],
+      "correct": 1,
+      "explanation": "Pooling reduces the patch grid within each sampled frame, lowering spatial tokens while retaining a coarser visual representation. Removing temporal positions or using full-resolution high-FPS frames does not reduce the per-frame spatial token cost."
+    }
+  ]
+}

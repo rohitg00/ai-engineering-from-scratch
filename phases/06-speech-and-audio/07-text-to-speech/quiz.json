@@ -1,0 +1,78 @@
+{
+  "lesson": "07-text-to-speech",
+  "title": "Text-to-Speech (TTS) — From Tacotron to F5 and Kokoro",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A voice system receives text and must produce a waveform. Which pipeline direction describes its task?",
+      "options": [
+        "Mel filterbank, classifier, then speaker embedding",
+        "Waveform encoder, transcript decoder, then tokenizer",
+        "Text frontend, acoustic model, then vocoder",
+        "Speaker verifier, language model, then diarizer"
+      ],
+      "correct": 2,
+      "explanation": "TTS starts with text, converts it to phonemes or tokens, predicts mels with an acoustic model, then uses a vocoder to create waveform samples. The “waveform encoder, transcript decoder, then tokenizer” option reverses the text-to-audio direction rather than synthesizing speech."
+    },
+    {
+      "stage": "check",
+      "question": "What makes FastSpeech 2 faster than autoregressive Tacotron 2 in the lesson?",
+      "options": [
+        "A speaker encoder searches a bank for each output word",
+        "A vocoder predicts phonemes from waveform samples",
+        "A duration predictor assigns frames and generates in one pass",
+        "An attention decoder emits each mel frame sequentially"
+      ],
+      "correct": 2,
+      "explanation": "FastSpeech 2 predicts how many mel frames each phoneme receives and generates them non-autoregressively in one pass. Sequential frame emission is Tacotron’s autoregressive pattern and incurs repeated decoding steps."
+    },
+    {
+      "stage": "check",
+      "question": "Which component turns the acoustic model’s mel spectrogram into audio samples?",
+      "options": [
+        "The text normalizer",
+        "The vocoder",
+        "The phonemizer",
+        "The duration predictor"
+      ],
+      "correct": 1,
+      "explanation": "The vocoder consumes mel features from the acoustic model and reconstructs the time-domain waveform that can be played as audio. A phonemizer converts text into sound units near the start of the pipeline; it does not turn mels into samples."
+    },
+    {
+      "stage": "check",
+      "question": "What information does F5-TTS require for the reference audio used in this lesson’s cloning example?",
+      "options": [
+        "A target speaker label and a mel filterbank",
+        "A reference clip and its matching transcript",
+        "A clean transcript without the reference audio",
+        "A word-level alignment and a waveform classifier"
+      ],
+      "correct": 1,
+      "explanation": "The F5 example supplies a reference audio clip with its matching transcript, then a separate generation text to speak in that voice. Text alone cannot provide the reference voice timbre and prosody that the clone conditions on."
+    },
+    {
+      "stage": "post",
+      "question": "Kokoro emits audio at 24 kHz, while the next stage expects 16 kHz. What is the safe integration choice?",
+      "options": [
+        "Keep the rate and shorten the waveform duration",
+        "Resample the waveform to the expected rate",
+        "Run the 24 kHz samples through a 16 kHz FFT",
+        "Change the sample-rate label without changing samples"
+      ],
+      "correct": 1,
+      "explanation": "Resampling creates a waveform on the downstream 16 kHz sample clock while preserving its intended duration and content. Relabeling changes playback interpretation but leaves the original 24 kHz spacing intact, causing timing and frequency errors."
+    },
+    {
+      "stage": "post",
+      "question": "A test should check whether generated words remain intelligible. Which evaluation proxy does the lesson suggest?",
+      "options": [
+        "Run output through ASR and compare text error",
+        "Ask listeners only to rate naturalness from one to five",
+        "Measure Fréchet distance between music embeddings",
+        "Compare speaker embeddings against an enrollment sample"
+      ],
+      "correct": 0,
+      "explanation": "To probe intelligibility, run synthesized speech through Whisper and compare recognized characters with the input using CER; mismatches indicate words the recognizer could not recover. A MOS naturalness rating answers a different question about perceived quality, not whether the requested words remained intelligible."
+    }
+  ]
+}

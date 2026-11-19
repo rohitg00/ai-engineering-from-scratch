@@ -1,0 +1,78 @@
+{
+  "lesson": "08-t5-bart-encoder-decoder",
+  "title": "T5, BART — Encoder-Decoder Models",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A system must read a source sequence and generate a related output sequence. Which architecture matches that task?",
+      "options": [
+        "A bidirectional encoder alone",
+        "A decoder-only next-token model",
+        "A convolutional image classifier",
+        "An encoder-decoder transformer"
+      ],
+      "correct": 3,
+      "explanation": "Encoder-decoder models encode the input once, then autoregressively generate a related output while cross-attending to that source representation. An encoder alone produces representations but has no decoder to emit the target sequence."
+    },
+    {
+      "stage": "check",
+      "question": "In T5 span corruption, what does the decoder target contain?",
+      "options": [
+        "Only the uncorrupted tokens from the source sequence",
+        "A class label for every masked position in sequence",
+        "The complete clean source sentence, including unmasked tokens",
+        "Sentinel markers followed by the removed source text spans"
+      ],
+      "correct": 3,
+      "explanation": "T5 replaces each selected input span with a sentinel and trains the decoder to emit the sentinels followed by only the removed text. Returning every uncorrupted token would reconstruct the full source instead of the span-corruption target."
+    },
+    {
+      "stage": "check",
+      "question": "How does BART’s denoising target differ from T5’s span-corruption target?",
+      "options": [
+        "BART predicts the next sentence label only",
+        "BART predicts only the masked spans",
+        "BART outputs a speaker or source identifier",
+        "BART reconstructs the original full sequence"
+      ],
+      "correct": 3,
+      "explanation": "BART applies noise to the input and trains its decoder to reconstruct the complete original sequence. T5’s target contains only corrupted spans, so the full-sequence BART objective asks the decoder to produce more output tokens."
+    },
+    {
+      "stage": "check",
+      "question": "During autoregressive decoding, what happens to the encoder output after it is computed?",
+      "options": [
+        "It becomes the decoder’s next-token label sequence",
+        "It is reused at each decoder step for cross-attention",
+        "It is recomputed from the growing target each step",
+        "It is discarded after the first output token"
+      ],
+      "correct": 1,
+      "explanation": "The encoder processes the source once; each autoregressive decoder step reuses that same encoded output as keys and values for cross-attention. Recomputing it from the growing target would repeat source work without changing the source representation."
+    },
+    {
+      "stage": "post",
+      "question": "A speech recognizer maps audio features to text tokens. Which architecture does the lesson cite as a natural fit?",
+      "options": [
+        "A patch classifier with one output per image",
+        "An encoder-decoder model such as Whisper",
+        "An encoder-only model with a sentence label",
+        "A decoder-only model with no source representation"
+      ],
+      "correct": 1,
+      "explanation": "Whisper is the lesson’s example of an encoder-decoder mapping from audio input to text output: the encoder represents the audio while the decoder generates transcript tokens. A sentence-label encoder does not produce a transcript."
+    },
+    {
+      "stage": "post",
+      "question": "A translation task has a narrow output distribution. Which decoding strategy does the lesson call standard?",
+      "options": [
+        "Greedy decoding with no candidate comparison",
+        "High-temperature sampling with a broad distribution",
+        "Beam search with width around four or five",
+        "Random sampling from the source vocabulary"
+      ],
+      "correct": 2,
+      "explanation": "Translation has a relatively narrow output distribution, so the lesson calls beam search with width four or five standard: it compares several partial sequences. High-temperature sampling favors variety rather than the best-scoring candidate sequence."
+    }
+  ]
+}

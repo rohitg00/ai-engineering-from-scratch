@@ -1,0 +1,78 @@
+{
+  "lesson": "15-voting-debate-topology",
+  "title": "Voting, Self-Consistency, and Debate Topology",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A team wants to combine several sampled answers from one model before adding more agents. What is the name of that baseline?",
+      "options": [
+        "Value decomposition",
+        "Self-consistency",
+        "Contract Net",
+        "Speaker projection"
+      ],
+      "correct": 1,
+      "explanation": "Self-consistency samples multiple reasoning paths from the same model and aggregates their answers, making it the single-model baseline before adding heterogeneous agents. Value decomposition combines per-agent reward values; it is a different MARL method."
+    },
+    {
+      "stage": "check",
+      "question": "What distinguishes a graph debate topology from a star topology?",
+      "options": [
+        "Graph hides all peer outputs; star shares every message",
+        "Graph allows any-to-any communication; star routes through a hub",
+        "Graph is a fixed chain; star has no coordinator",
+        "Graph uses one agent; star uses only peer voting"
+      ],
+      "correct": 1,
+      "explanation": "Graph topology allows any-to-any peer exchange, whereas a star routes communication through its hub. A fixed chain describes one path through agents, not the general graph’s peer links."
+    },
+    {
+      "stage": "check",
+      "question": "Which topology does the lesson associate with a stepwise-refinement coding pipeline?",
+      "options": [
+        "Star",
+        "Graph",
+        "Chain",
+        "Fully shared blackboard"
+      ],
+      "correct": 2,
+      "explanation": "A chain passes each stage’s result to the next, matching ordered refinement such as sequential code review and repair. A graph’s peer links are more flexible, but they do not encode the simple one-after-another pipeline as directly."
+    },
+    {
+      "stage": "check",
+      "question": "What does the lesson call the coordination tax in graph debate?",
+      "options": [
+        "Accuracy always falls when a graph has three agents",
+        "A star topology requires more tokens than every graph",
+        "Cost and latency grow faster than quality beyond a small team",
+        "A chain cannot share information between consecutive agents"
+      ],
+      "correct": 2,
+      "explanation": "The coordination tax is the empirical point where graph communication’s extra context, tokens, and latency grow faster than quality gains as agents are added. It is not a rule that accuracy always falls at three agents."
+    },
+    {
+      "stage": "post",
+      "question": "Agents agree strongly after several rounds, but they all use the same base model. What risk remains?",
+      "options": [
+        "Model similarity proves their errors are independent",
+        "A high agreement rate verifies the external ground truth",
+        "Monoculture can make their shared answer confidently wrong",
+        "More rounds automatically remove the shared bias"
+      ],
+      "correct": 2,
+      "explanation": "Copies of one base model can repeat one systematic mistake, so their agreement may reflect correlated error rather than independent support. A high agreement rate therefore cannot verify an external fact."
+    },
+    {
+      "stage": "post",
+      "question": "A debate system claims better accuracy but uses far more tokens and wall-clock time. What should an evaluation report alongside accuracy?",
+      "options": [
+        "The agent names and their order in the list",
+        "The number of prompts in the system message",
+        "Only the final majority answer",
+        "Token cost and wall-clock performance"
+      ],
+      "correct": 3,
+      "explanation": "Report token use and wall-clock time with accuracy, because added debate rounds can improve quality while raising deployment cost. Agent names or the final majority alone cannot show whether the gain is worth the added expense."
+    }
+  ]
+}

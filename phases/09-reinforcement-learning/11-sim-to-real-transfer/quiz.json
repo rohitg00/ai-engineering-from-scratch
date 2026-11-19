@@ -1,0 +1,78 @@
+{
+  "lesson": "11-sim-to-real-transfer",
+  "title": "Sim-to-Real Transfer",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A controller performs well in simulation but fails on hardware because friction and sensing differ. What is this deployment mismatch called?",
+      "options": [
+        "The reality gap, a distribution shift between simulation and the real system.",
+        "The exploration gap, a shortage of random actions during deployment.",
+        "The reward gap, a disagreement between two human preference labels.",
+        "The value gap, a difference between actor and critic estimates."
+      ],
+      "correct": 0,
+      "explanation": "The reality gap is the systematic distribution difference between simulator and hardware, including physics such as friction and sensors such as cameras. More random actions address exploration, but they do not make the simulator’s dynamics or observations match reality."
+    },
+    {
+      "stage": "check",
+      "question": "During each training episode, a simulator samples friction and motor gains from ranges expected on hardware. Which method is being applied?",
+      "options": [
+        "Domain randomization across plausible simulator parameters.",
+        "System identification from measured hardware parameters only.",
+        "Policy distillation from a privileged teacher.",
+        "Observation adaptation from a learned pixel translator."
+      ],
+      "correct": 0,
+      "explanation": "Sampling friction and motor gains across a plausible range changes simulator parameters during training, which is domain randomization. System identification instead measures real parameters and fits the simulator to them rather than sampling broadly."
+    },
+    {
+      "stage": "check",
+      "question": "You can measure the real robot's joint friction before training. Which transfer step uses that measurement directly?",
+      "options": [
+        "Randomize camera lighting while leaving friction unchanged.",
+        "Train a student using ground-truth terrain unavailable on hardware.",
+        "Fit the simulator's friction parameter to the measured real value.",
+        "Fine-tune only the policy after ignoring the simulator parameters."
+      ],
+      "correct": 2,
+      "explanation": "System identification uses a real measurement to set the matching simulator parameter before training; here that means fitting simulated joint friction to the measured hardware friction. Randomizing lighting changes a different source of mismatch."
+    },
+    {
+      "stage": "check",
+      "question": "A simulation teacher sees ground-truth terrain, but the deployed robot only has joint encoders. What should the student learn from?",
+      "options": [
+        "Real-sensor observations and their history, without privileged teacher-only inputs.",
+        "The teacher's global terrain map as a required runtime observation.",
+        "The exact simulator random seed used to generate every rollout.",
+        "The full joint action of every other robot in the training batch."
+      ],
+      "correct": 0,
+      "explanation": "The teacher can use privileged terrain truth during simulation, but the student must act from inputs available on hardware, such as joint encoders and their history. Requiring the hidden map at deployment makes the student policy unrealizable."
+    },
+    {
+      "stage": "post",
+      "question": "A domain-randomized policy becomes overly cautious after training over slip values from 0.0 to 0.9, far wider than expected hardware conditions. What adjustment fits the lesson?",
+      "options": [
+        "Match randomization to expected real-world variability.",
+        "Expand the slip range further so every physically possible event appears.",
+        "Deploy the cautious policy without measuring hardware variability.",
+        "Remove all randomization and assume the simulator is exact."
+      ],
+      "correct": 0,
+      "explanation": "Randomizing slip over 0.0–0.9 exposes the policy to conditions far beyond expected hardware variability and can act like excessive regularization, making behavior overly cautious. Narrow the training distribution to measured or expected reality rather than widening it further."
+    },
+    {
+      "stage": "post",
+      "question": "Before deploying a sim-trained controller, which validation pair directly addresses the lesson's transfer and hardware risks?",
+      "options": [
+        "Fine-tune on hardware first and skip the emergency-stop checks.",
+        "Evaluate only on the training simulator and increase the policy's action range.",
+        "Test a held-out simulator variant and enforce a non-learned safety envelope.",
+        "Measure training return and remove joint limits from the controller."
+      ],
+      "correct": 2,
+      "explanation": "A held-out simulator variant checks whether the policy generalizes beyond its training parameters, while a non-learned safety envelope limits hardware actions. Training return alone can hide simulator-specific behavior and does not protect joints or torque limits."
+    }
+  ]
+}

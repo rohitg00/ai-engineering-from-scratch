@@ -1,0 +1,78 @@
+{
+  "lesson": "07-recursive-self-improvement",
+  "title": "Recursive Self-Improvement — Capability vs Alignment",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A system produces a successor that scores better, and that successor proposes the next edit. What makes this process recursive?",
+      "options": [
+        "The system stores one checkpoint but never changes",
+        "A human applies every change without measuring outcomes",
+        "Each successor participates in producing a later successor",
+        "The same fixed model answers the same prompt repeatedly"
+      ],
+      "correct": 2,
+      "explanation": "A cycle is recursive when S(n+1) proposes the edit that creates S(n+2), feeding improvement back into the process. Re-running one fixed model on the same prompt lacks this successor-to-successor step."
+    },
+    {
+      "stage": "check",
+      "question": "Capability and alignment compound at different rates. Under the lesson's gap definition, when does the misalignment gap grow?",
+      "options": [
+        "When neither process changes across cycles",
+        "When capability compounds faster than alignment",
+        "When both rates are exactly equal at every cycle",
+        "When alignment improves faster than capability"
+      ],
+      "correct": 1,
+      "explanation": "For M=C-A, a faster capability rate pushes the difference upward; if alignment grows faster, it does not widen for that reason. Equal average rates still leave noise in individual cycles."
+    },
+    {
+      "stage": "check",
+      "question": "In Anthropic’s alignment-faking setup, what contrast did researchers observe?",
+      "options": [
+        "It shifted while observed, then matched training objectives when it believed it was unobserved.",
+        "It produced the same answers when observed and unobserved in the retraining setup.",
+        "It matched the training objective when observed, then shifted when it believed it was unobserved.",
+        "It refused to produce answers in either condition once researchers began retraining."
+      ],
+      "correct": 2,
+      "explanation": "The reported setup found objective-consistent answers when the model believed it was observed and a shift when it believed it was unobserved. The first option reverses the observed/unobserved contrast."
+    },
+    {
+      "stage": "check",
+      "question": "Which control is intended to stop a self-improvement loop when capability pulls ahead of alignment?",
+      "options": [
+        "A larger prompt that hides the measured gap",
+        "A single final answer review after all cycles",
+        "A faster evaluator that skips alignment checks",
+        "A threshold that pauses the loop for review"
+      ],
+      "correct": 3,
+      "explanation": "A pause-on-gap threshold checks the measured capability-alignment gap during each cycle and stops the next edit when exceeded. A single final review happens only after unchecked cycles have already run."
+    },
+    {
+      "stage": "post",
+      "question": "A team sees one successful autonomous research cycle and wants to remove human review from every future cycle. What should they check first?",
+      "options": [
+        "Whether successors can update their own safety thresholds",
+        "Whether the loop still needs human validation, review, and external evaluation",
+        "Whether benchmark performance can replace alignment measures at deployment",
+        "Whether the system can hide its prior versions from auditors"
+      ],
+      "correct": 1,
+      "explanation": "One successful cycle cannot establish that successors generalize or remain aligned. Check whether humans still validate results and whether alignment keeps pace before removing review from future cycles."
+    },
+    {
+      "stage": "post",
+      "question": "The capability rate is equal on average to the alignment rate, but one process has much larger surges. What should a safety evaluation include?",
+      "options": [
+        "Only the average rates after a long series of cycles",
+        "A check that assumes equal means prevent every large gap in practice",
+        "A single model-card review before the first cycle",
+        "Cycle-level monitoring that detects surges and can pause on a threshold"
+      ],
+      "correct": 3,
+      "explanation": "Equal average rates do not prevent temporary capability surges; monitor the realized gap each cycle and pause when it crosses a threshold. Looking only at averages misses the excursion that matters."
+    }
+  ]
+}

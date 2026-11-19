@@ -1,0 +1,78 @@
+{
+  "lesson": "21-llm-routing-layer",
+  "title": "LLM Routing Layer — LiteLLM, OpenRouter, Portkey",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A primary model provider returns a server error during a request. What routing feature can keep the request moving?",
+      "options": [
+        "A semantic cache that ignores every new request",
+        "A per-tool schema that prevents provider outages",
+        "An ordered fallback chain that tries another provider",
+        "A model alias that always points to the same unavailable endpoint"
+      ],
+      "correct": 2,
+      "explanation": "A fallback chain tries providers in priority order after a retryable failure, allowing a later backend to serve the request. A semantic cache only helps with eligible repeated prompts; it cannot make every new request succeed during an outage."
+    },
+    {
+      "stage": "check",
+      "question": "What does a model alias allow application code to do?",
+      "options": [
+        "Request a stable name while the gateway maps it to a concrete model",
+        "Change providers by editing every caller's pinned model id",
+        "Ask the model to choose a random registered tool",
+        "Store each provider response in a shared prompt cache"
+      ],
+      "correct": 0,
+      "explanation": "Application code uses a stable logical alias such as `smart`; the gateway maps it to a concrete provider model and can change that mapping centrally. Editing pinned identifiers in every caller recreates the rollout coupling aliases are meant to remove."
+    },
+    {
+      "stage": "check",
+      "question": "The smart route lists three providers in priority order. If the first returns a simulated 5xx, where should the request go next?",
+      "options": [
+        "To the second provider in the configured chain",
+        "To an unrelated model chosen without route configuration",
+        "Back to the same primary until it succeeds",
+        "Directly to the last provider while skipping the middle"
+      ],
+      "correct": 0,
+      "explanation": "The `smart` route is ordered, so a 5xx from `openai/gpt-4o` advances to the second configured entry. Retrying the same failed primary does not implement failover, and skipping the middle backend ignores the route’s priority."
+    },
+    {
+      "stage": "check",
+      "question": "A user message contains an SSN-shaped value and the route has PII redaction enabled. What happens in the sample gateway?",
+      "options": [
+        "The request is converted into an A2A task artifact",
+        "The gateway stores the original value in the model alias",
+        "The matching text is replaced before provider dispatch",
+        "The provider is asked to classify the number after dispatch"
+      ],
+      "correct": 2,
+      "explanation": "Redact the SSN-shaped text before provider dispatch so the backend never receives the original value. Asking the provider to classify it after dispatch exposes the sensitive number first, defeating the gateway’s pre-dispatch guardrail."
+    },
+    {
+      "stage": "post",
+      "question": "Assume 1,000 input tokens at $2 per million and 1,000 output tokens at $6 per million. What is the request cost?",
+      "options": [
+        "$0.008: $0.002 input plus $0.006 output.",
+        "$0.004: both token groups priced at $2 per million.",
+        "$0.006: output tokens only; input cost is omitted.",
+        "$8.000: rates are treated as dollars per token."
+      ],
+      "correct": 0,
+      "explanation": "Compute each usage group at its own per-million rate: 1,000/1,000,000*$2=$0.002 and 1,000/1,000,000*$6=$0.006, totaling $0.008. The $0.006 option omits input cost; $0.004 prices output at the input rate."
+    },
+    {
+      "stage": "post",
+      "question": "Every provider in a configured route fails. What result should the caller receive from the lesson's gateway?",
+      "options": [
+        "A zero-cost response containing an empty assistant answer",
+        "A successful response from the first failed provider",
+        "An invocation with an all-providers-failed error",
+        "A model alias that silently changes to a random route"
+      ],
+      "correct": 2,
+      "explanation": "After every configured provider fails, the gateway returns an invocation with an explicit all-providers-failed error rather than fabricating a response. Returning a successful empty answer would claim a model replied when no provider did."
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "lesson": "14-show-o-discrete-diffusion-unified",
+  "title": "Show-o and Discrete-Diffusion Unified Models",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "How does Show-o generate an image with masked discrete diffusion?",
+      "options": [
+        "Decode continuous pixels with a separate diffusion model and no shared transformer.",
+        "Sample one codebook token and copy it across every image position.",
+        "Generate every image token autoregressively from left to right.",
+        "Start with masked image tokens, predict them in parallel, and iteratively keep confident tokens."
+      ],
+      "correct": 3,
+      "explanation": "Show-o starts with every image token masked, predicts masked positions in parallel, commits the most confident tokens, and repeats until the sequence is filled. Left-to-right decoding would require a sequential pass per token and is the alternative it improves on."
+    },
+    {
+      "stage": "check",
+      "question": "What attention mask does Show-o use for a mixed text and image-token sequence?",
+      "options": [
+        "Bidirectional attention over all text and image tokens in the sequence.",
+        "Causal attention over image tokens and no attention over text tokens.",
+        "Separate masks that prevent any text-image interaction.",
+        "Causal attention over text and bidirectional attention within an image block."
+      ],
+      "correct": 3,
+      "explanation": "Text tokens retain causal attention so next-token prediction cannot see future text; image tokens within the same block attend bidirectionally to support simultaneous masked-token recovery. Making all text bidirectional would leak future text targets."
+    },
+    {
+      "stage": "check",
+      "question": "Which statement distinguishes Show-o's image sampling from Chameleon or Emu3?",
+      "options": [
+        "Show-o fills masked image tokens in parallel over a small number of iterations.",
+        "Show-o predicts each image token sequentially with one pass per token.",
+        "Show-o uses continuous image patches and a separate text model.",
+        "Show-o requires a new model checkpoint for inpainting."
+      ],
+      "correct": 0,
+      "explanation": "Show-o uses MaskGIT-style masked prediction, filling many image positions per transformer pass over roughly 8–16 iterations. Chameleon or Emu3 generates image tokens autoregressively, requiring a sequential step for each token."
+    },
+    {
+      "stage": "check",
+      "question": "Why does Show-o support image inpainting without a separate training objective?",
+      "options": [
+        "The model copies unmasked pixels into the missing region.",
+        "The model uses an image classifier to label each masked patch.",
+        "The text decoder predicts image pixels from a diffusion schedule.",
+        "The same masked-token prediction objective learns to fill missing image tokens."
+      ],
+      "correct": 3,
+      "explanation": "Training on random masked subsets teaches the model to recover missing image tokens from visible context. Inpainting supplies a partially masked image and uses the same prediction task; copying visible pixels cannot infer the hidden region."
+    },
+    {
+      "stage": "post",
+      "question": "A product needs one open checkpoint for VQA, text-to-image, and inpainting with relatively fast generation. Which model family fits the lesson's recommendation?",
+      "options": [
+        "Show-o, which combines understanding and masked discrete image generation.",
+        "A pure Chameleon decoder, which generates images autoregressively only.",
+        "Transfusion, which uses continuous images and a two-loss diffusion objective.",
+        "CLIP, which returns image-text similarity without image generation."
+      ],
+      "correct": 0,
+      "explanation": "Show-o combines VQA and text generation with text-to-image and inpainting using one checkpoint and masked discrete image sampling. Transfusion is also unified but uses continuous-image diffusion/flow and a more complex two-loss training path."
+    },
+    {
+      "stage": "post",
+      "question": "Image quality is the highest priority and extra training complexity is acceptable. Which alternative does the lesson favor over Show-o?",
+      "options": [
+        "A CLIP dual encoder, because retrieval embeddings directly render pixels.",
+        "Show-o with one sampling step, because parallel prediction is exact.",
+        "Transfusion or MMDiT, which use continuous image representations and diffusion/flow.",
+        "Chameleon, because VQ quantization has no reconstruction ceiling."
+      ],
+      "correct": 2,
+      "explanation": "For maximum image fidelity with added training complexity acceptable, Transfusion/MMDiT keep image representations continuous and train diffusion or flow objectives. Show-o is faster, but its discrete tokenizer imposes a reconstruction ceiling."
+    }
+  ]
+}

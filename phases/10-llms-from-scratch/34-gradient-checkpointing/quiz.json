@@ -1,0 +1,78 @@
+{
+  "lesson": "34-gradient-checkpointing",
+  "title": "Gradient Checkpointing and Activation Recomputation",
+  "questions": [
+    {
+      "stage": "pre",
+      "question": "A transformer backward pass exceeds GPU memory because it retained many forward intermediates. What does gradient checkpointing change?",
+      "options": [
+        "Move the model weights to the output layer and discard the residual stream.",
+        "Skip computing gradients for checkpointed layers during the backward pass.",
+        "Save every activation and recompute the optimizer state during forward.",
+        "Save segment inputs, then recompute intermediate activations during backward."
+      ],
+      "correct": 3,
+      "explanation": "Checkpointing stores selected segment inputs instead of every intermediate activation, then reruns the segment’s forward during backward to recreate values needed for derivatives. It trades extra computation for lower memory; it does not skip gradient computation."
+    },
+    {
+      "stage": "check",
+      "question": "At long sequence length, which activation is the main target of selective checkpointing in the lesson?",
+      "options": [
+        "FFN hidden activation, whose size grows quadratically with sequence length.",
+        "Attention softmax output, whose size grows quadratically with sequence length.",
+        "Optimizer state, whose size grows quadratically with sequence length.",
+        "Residual input, whose size grows quadratically with sequence length."
+      ],
+      "correct": 1,
+      "explanation": "The attention softmax tensor scales as B×L×L×heads, so its size grows quadratically with sequence length; FFN hidden activations grow linearly. Selective checkpointing targets that costly attention storage rather than the linear FFN tensor."
+    },
+    {
+      "stage": "check",
+      "question": "For uniform-cost layers and L=64, what checkpoint spacing follows the lesson's sqrt(L) rule?",
+      "options": [
+        "4 layers per segment, since 64 divided by 16 is 4.",
+        "8 layers per segment, since sqrt(64)=8.",
+        "16 layers per segment, since 64 divided by 4 is 16.",
+        "64 layers per segment, since every layer is one segment."
+      ],
+      "correct": 1,
+      "explanation": "The classical uniform-layer rule uses segment spacing √L. For L=64, √64=8, so checkpoints are spaced every eight layers; 16 is a different divisor, not the square-root balance. This spacing balances stored checkpoints against recomputation."
+    },
+    {
+      "stage": "check",
+      "question": "The lesson compares full-activation and checkpointed backward on the same toy model. What result should a correct recomputation implementation preserve?",
+      "options": [
+        "Matching forward output and parameter gradients within the tested tolerance.",
+        "A different forward output but identical optimizer learning rate.",
+        "Matching activation memory but reversed parameter gradients.",
+        "A larger loss because recomputation changes the model function."
+      ],
+      "correct": 0,
+      "explanation": "Checkpointed execution recomputes the same layer functions, so its forward output and parameter gradients should match the full-activation run within numerical tolerance. The code verifies output equivalence and maximum gradient difference."
+    },
+    {
+      "stage": "post",
+      "question": "A transformer already uses FlashAttention, which recomputes softmax efficiently. What checkpointing choice follows the lesson's guidance?",
+      "options": [
+        "Checkpoint only the tokenizer because it has the largest activation tensor.",
+        "Avoid extra layer-level checkpointing around attention if it adds little memory benefit.",
+        "Replace FlashAttention with full attention before recomputing any layers.",
+        "Checkpoint every attention layer again because FlashAttention stores all softmax matrices."
+      ],
+      "correct": 1,
+      "explanation": "FlashAttention already recomputes softmax efficiently instead of retaining its full matrix, so wrapping the same attention in another layer-level checkpoint may save little additional memory while adding recompute work. Do not add it solely to save that softmax storage."
+    },
+    {
+      "stage": "post",
+      "question": "A run is GPU-memory-bound, and CPU-GPU transfer bandwidth has headroom. When can activation offload be preferable to recomputation?",
+      "options": [
+        "When the model has no backward pass and stores no activations.",
+        "When transfer cost is lower than the recompute cost and GPU memory is the bottleneck.",
+        "When the GPU is compute-bound and PCIe transfer is slower than recomputation.",
+        "When all activations are already small enough to fit without recomputation."
+      ],
+      "correct": 1,
+      "explanation": "Offload stores activations in CPU memory when GPU memory is the bottleneck and PCIe bandwidth has headroom. It is preferable when transfer time is below rematerialization cost; a slow transfer path makes recomputation better."
+    }
+  ]
+}
