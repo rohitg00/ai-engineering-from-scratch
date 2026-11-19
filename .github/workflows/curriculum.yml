@@ -309,15 +309,19 @@ jobs:
         run: |
           npm install --prefix "$RUNNER_TEMP/ts" --no-save --no-package-lock tsx@4.19.2 typescript@5.6.3 @types/node@22.10.2
           bin="$RUNNER_TEMP/ts/node_modules/.bin"
-          for file in $(git grep -l 'TypeScript port of .*Node standard library only' -- 'phases/*/code/*.ts'); do
-            echo "::group::$file"
-            "$bin/tsc" --strict --noEmit --target es2022 --module nodenext --moduleResolution nodenext --types node --typeRoots "$RUNNER_TEMP/ts/node_modules/@types" "$file"
-            case "$file" in
-              */code/lab.ts|*/code/experiments/*.ts) ;;
-              *) timeout 120 "$bin/tsx" "$file" > /dev/null ;;
-            esac
-            echo "::endgroup::"
-          done
+          mapfile -t ports < <(git grep -l 'TypeScript port of .*Node standard library only' -- 'phases/*/code/*.ts')
+          [ "${#ports[@]}" -gt 0 ] || exit 0
+          echo "::group::tsc --strict on ${#ports[@]} ports"
+          "$bin/tsc" --strict --noEmit --target es2022 --module nodenext --moduleResolution nodenext --moduleDetection force --types node --typeRoots "$RUNNER_TEMP/ts/node_modules/@types" "${ports[@]}"
+          echo "::endgroup::"
+          printf '%s\0' "${ports[@]}" | grep -zEv '/code/lab\.ts$|/code/experiments/' | xargs -0 -P "$(nproc)" -I {} bash -c '
+            out=$(timeout 120 "$1" "$2" 2>&1 > /dev/null) || {
+              status=$?
+              echo "::error file=$2::$2 exited with status $status"
+              printf "%s\n" "$out"
+              exit 1
+            }
+          ' _ "$bin/tsx" {}
 
   readme-counts-sync:
     name: README counts auto-fix (main only)
