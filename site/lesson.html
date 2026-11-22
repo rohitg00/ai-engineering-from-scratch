@@ -1937,6 +1937,11 @@
       gap: 8px;
     }
 
+    .code-card--dir .code-card-actions {
+      grid-row: 3;
+      align-self: end;
+    }
+
     .output-cards:not(.single) .output-card:last-child:nth-child(odd),
     .code-cards:not(.single) .code-card:last-child:nth-child(odd) {
       grid-column: 1 / -1;
@@ -5282,7 +5287,7 @@
 
       function langIcon(filename) {
         var ext = filename.split('.').pop().toLowerCase();
-        var map = { py: 'PY', python: 'PY', ts: 'TS', js: 'JS', rust: 'RS', rs: 'RS', jl: 'JL', julia: 'JL', sh: 'SH', bash: 'SH' };
+        var map = { py: 'PY', python: 'PY', ts: 'TS', js: 'JS', rust: 'RS', rs: 'RS', go: 'GO', jl: 'JL', julia: 'JL', sh: 'SH', bash: 'SH' };
         return map[ext] || '··';
       }
 
@@ -5295,7 +5300,8 @@
         if (ext === 'py') return 'python3 ' + pathArg;
         if (ext === 'ts') return 'npx tsx ' + pathArg;
         if (ext === 'js') return 'node ' + pathArg;
-        if (ext === 'rs') return 'rustc ' + pathArg + ' -o /tmp/aiefs-lesson-main && /tmp/aiefs-lesson-main';
+        if (ext === 'rs') return 'rustc --edition 2021 ' + pathArg + ' -o /tmp/aiefs-lesson-main && /tmp/aiefs-lesson-main';
+        if (ext === 'go') return 'go run ' + pathArg;
         if (ext === 'jl') return 'julia ' + pathArg;
         if (ext === 'sh') return 'bash ' + pathArg;
         return 'test -e ' + pathArg;
@@ -5488,8 +5494,17 @@
 
         var html = '<div class="code-cards' + (data.length === 1 ? ' single' : '') + '">';
         data.forEach(function (file) {
-          var icon = langIcon(file.name);
           var filePath = file.path || (lessonPath + '/code/' + file.name);
+          if (file.type === 'dir') {
+            html += '<div class="code-card code-card--dir">';
+            html += '<div class="code-card-header"><span class="code-lang-icon">/</span><span class="code-card-name">' + escapeHtml(file.name) + '/</span><span class="code-card-size">folder</span></div>';
+            html += '<div class="code-card-actions">';
+            html += '<a class="code-card-btn" href="' + escapeAttr(lessonFileViewUrl(file)) + '" target="_blank" rel="noopener">Browse folder</a>';
+            html += '</div>';
+            html += '</div>';
+            return;
+          }
+          var icon = langIcon(file.name);
           var runCmd = repoRootCommand(file.name, filePath);
           html += '<div class="code-card">';
           html += '<div class="code-card-header"><span class="code-lang-icon">' + icon + '</span><span class="code-card-name">' + escapeHtml(file.name) + '</span><span class="code-card-size">' + formatSize(Number(file.size || 0)) + '</span></div>';
