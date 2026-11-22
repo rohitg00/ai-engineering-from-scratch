@@ -151,3 +151,8 @@ manuals/*/capture/demos/**/*.db
 .project-validation/
 projects/*/solution/output/
 projects/*/solution/demo-output/
+
+# Ignore all these files 
+*.pt
+*.pth
+*.safetensors
