@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "node scripts/build-content.mjs",
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/content/:path*", "destination": "/public/content/:path*" },
+    { "source": "/favicon.svg", "destination": "/public/favicon.svg" }
+  ]
+}

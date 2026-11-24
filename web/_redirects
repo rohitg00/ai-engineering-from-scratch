@@ -1,0 +1,2 @@
+/content/*    /public/content/:splat    200
+/favicon.svg  /public/favicon.svg      200
