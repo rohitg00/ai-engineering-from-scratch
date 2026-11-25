@@ -44,7 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          mapfile -t files < <(git diff --name-only --diff-filter=AM HEAD^1 HEAD -- 'landscape/entries/*.json')
+          mapfile -t files < <(git diff --name-only --diff-filter=AMR HEAD^1 HEAD -- 'landscape/entries/*.json')
           if [ "${#files[@]}" -eq 0 ]; then
             echo "no added or changed entries"
             exit 0

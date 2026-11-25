@@ -24,16 +24,24 @@ const VALID = {
   logo_url: 'https://acme.dev/logo.svg'
 };
 
+function crc32(bytes) {
+  let crc = 0xffffffff;
+  for (const byte of bytes) {
+    crc ^= byte;
+    for (let bit = 0; bit < 8; bit += 1) crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0);
+  }
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
 function chunk(type, data) {
   const head = Buffer.alloc(8);
   head.writeUInt32BE(data.length, 0);
   head.write(type, 4, 'ascii');
   const crc = Buffer.alloc(4);
-  crc.writeUInt32BE(zlib.crc32(Buffer.concat([Buffer.from(type, 'ascii'), data])), 0);
+  crc.writeUInt32BE(crc32(Buffer.concat([Buffer.from(type, 'ascii'), data])), 0);
   return Buffer.concat([head, data, crc]);
 }
 
-// A real RGBA PNG: a header, deflated scanlines for every row, and an end chunk.
 function makePng(width, height, { pixels } = {}) {
   const header = Buffer.alloc(13);
   header.writeUInt32BE(width, 0);

@@ -291,7 +291,7 @@
       button.setAttribute('aria-pressed', String(button.getAttribute('data-license') === 'all'));
     });
     renderGrid();
-    if (history.replaceState) history.replaceState(null, '', '#category-' + id);
+    if (history.pushState) history.pushState(null, '', '#category-' + id);
     var section = document.getElementById('category-' + id);
     if (section) section.scrollIntoView();
   }

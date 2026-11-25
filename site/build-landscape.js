@@ -20,6 +20,7 @@ const LOGO_WEB_PATH = 'logos/landscape';
 const OUTPUT_PATH = path.join(__dirname, 'landscape-data.js');
 const FETCH_TIMEOUT_MS = 15000;
 const PACK_PREFIX = 'landscape-logos-';
+const STAR_BATCH = 50;
 const MAX_REDIRECTS = 5;
 const USER_AGENT = 'ai-engineering-from-scratch-landscape';
 const DEFAULT_DIRS = { entryDir: ENTRY_DIR, categoryPath: CATEGORY_PATH, logoDir: LOGO_DIR };
@@ -62,7 +63,6 @@ function logoType(name) {
   return match ? match[1].toLowerCase() : null;
 }
 
-// The file the entry shows: exactly its "logo", or for a "logo_url" entry the file automation saved for that URL.
 function chosenLogo(slug, entry) {
   if (typeof entry.logo === 'string') return entry.logo;
   if (typeof entry.logo_url !== 'string') return null;
@@ -198,7 +198,6 @@ function readSiteLogo(entry) {
   return fs.readFileSync(path.join(__dirname, entry.logo));
 }
 
-// Records [pack, offset, length] on every entry with a logo and returns the bytes of each pack.
 function packLogos(data, readLogo = readSiteLogo) {
   const groups = [...new Set(data.categories.map((category) => category.group))];
   const groupOf = new Map(data.categories.map((category) => [category.id, groups.indexOf(category.group)]));
@@ -247,8 +246,6 @@ function isPublicAddress(address) {
   return !BLOCKED_ADDRESSES.check(address, family === 6 ? 'ipv6' : 'ipv4');
 }
 
-// Wraps a dns.lookup-style resolver so a connection can only reach public addresses.
-// The check runs on the address the socket connects to, so a DNS answer that changes between checks cannot slip through.
 function publicLookup(resolve = dns.lookup) {
   return function lookup(hostname, options, callback) {
     if (typeof options === 'function') {
@@ -269,7 +266,6 @@ function publicLookup(resolve = dns.lookup) {
   };
 }
 
-// Reads a response body and stops as soon as it passes the logo size limit.
 function readCapped(stream, limit) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -299,7 +295,11 @@ function requestLogo(url, { lookup, signal }) {
       const status = response.statusCode;
       if (status >= 300 && status < 400 && response.headers.location) {
         response.resume();
-        resolve({ redirect: new URL(response.headers.location, url).href });
+        try {
+          resolve({ redirect: new URL(response.headers.location, url).href });
+        } catch (_) {
+          reject(new Error('logo_url redirects to an address that is not valid'));
+        }
         return;
       }
       if (status < 200 || status >= 300) {
@@ -362,10 +362,34 @@ async function repoStars(repo) {
   return { found: true, stars: Number(stars) || 0, open };
 }
 
-// Checks the listing threshold for the given entry files, for example the ones a pull request adds or changes.
+async function githubStars(repos) {
+  const found = new Map();
+  for (let start = 0; start < repos.length; start += STAR_BATCH) {
+    const batch = repos.slice(start, start + STAR_BATCH);
+    const fields = batch.map((repo, index) => {
+      const [owner, name] = new URL(repo).pathname.slice(1).split('/');
+      return `r${index}: repository(owner: ${JSON.stringify(owner)}, name: ${JSON.stringify(name)}) { stargazerCount isPrivate }`;
+    });
+    const response = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: { authorization: `Bearer ${process.env.GITHUB_TOKEN}`, 'content-type': 'application/json', 'user-agent': USER_AGENT },
+      body: JSON.stringify({ query: `query { ${fields.join(' ')} }` }),
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)
+    });
+    if (!response.ok) throw new Error(`github.com answered HTTP ${response.status}`);
+    const { data } = await response.json();
+    if (!data) throw new Error('github.com answered without data');
+    batch.forEach((repo, index) => {
+      const node = data[`r${index}`];
+      found.set(repo, node ? { found: true, stars: node.stargazerCount, open: !node.isPrivate } : { found: false });
+    });
+  }
+  return found;
+}
+
 async function checkStars(files, lookupStars = repoStars) {
   const errors = [];
-  let checked = 0;
+  const entries = [];
   for (const file of files) {
     const slug = path.basename(file).replace(/\.json$/, '');
     let entry;
@@ -375,16 +399,27 @@ async function checkStars(files, lookupStars = repoStars) {
       continue;
     }
     if (!entry || entry.open_source !== true || typeof entry.repo !== 'string' || rules.validateEntry(slug, { ...entry, category: 'x' }, ['x']).some((problem) => /"repo"/.test(problem))) continue;
-    checked += 1;
+    entries.push({ slug, entry });
+  }
+  let known = new Map();
+  if (lookupStars === repoStars && process.env.GITHUB_TOKEN) {
+    const repos = entries.map(({ entry }) => entry.repo).filter((repo) => new URL(repo).hostname === 'github.com');
     try {
-      const result = await lookupStars(entry.repo);
+      known = await githubStars([...new Set(repos)]);
+    } catch (_) {
+      known = new Map();
+    }
+  }
+  for (const { slug, entry } of entries) {
+    try {
+      const result = known.get(entry.repo) || await lookupStars(entry.repo);
       if (!result.found || !result.open) errors.push(`${rules.entryPath(slug)}: ${entry.repo} is not a public repository`);
       else if (result.stars < rules.MIN_STARS) errors.push(`${rules.entryPath(slug)}: ${entry.repo} has ${result.stars} stars; open source tools need ${rules.MIN_STARS} or more`);
     } catch (error) {
       errors.push(`${rules.entryPath(slug)}: could not read stars (${error.message})`);
     }
   }
-  return { errors, checked };
+  return { errors, checked: entries.length };
 }
 
 async function resolveRemoteLogos({ write }) {

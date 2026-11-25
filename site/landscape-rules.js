@@ -148,7 +148,6 @@
     return ((bytes[at] << 24) | (bytes[at + 1] << 16) | (bytes[at + 2] << 8) | bytes[at + 3]) >>> 0;
   }
 
-  // Walks the PNG chunk list and returns the header and the IDAT chunks, or { error }.
   function readPng(bytes) {
     var signature = [137, 80, 78, 71, 13, 10, 26, 10];
     var notPng = { error: 'logo is not a PNG file' };
@@ -193,7 +192,6 @@
     return { error: 'PNG logo is cut short or damaged' };
   }
 
-  // Bytes of filtered scanlines the IDAT stream must inflate to (PNG spec, section 7 and Adam7 in 8.2).
   function pngDataLength(header) {
     var bits = PNG_CHANNELS[header.colorType] * header.bitDepth;
     var passes = header.interlace
