@@ -315,6 +315,21 @@ test('the form output is the same shape the check accepts', () => {
   assert.equal(closed.repo, undefined);
   assert.equal(rules.buildEntry({ ...VALID, x: 'https://x.com/acme/' }).x, 'acme');
   assert.equal(rules.buildEntry({ ...VALID, x: '@acme' }).x, 'acme');
+  const loose = rules.buildEntry({ ...VALID, url: 'acme.dev', repo: 'www.github.com/acme/evals/tree/main', logo_url: 'http://acme.dev/logo.svg?v=2' });
+  assert.equal(loose.url, 'https://acme.dev');
+  assert.equal(loose.repo, 'https://github.com/acme/evals');
+  assert.equal(loose.logo_url, 'https://acme.dev/logo.svg?v=2');
+  assert.deepEqual(rules.validateEntry('acme-evals', loose, CATEGORY_IDS), []);
+  assert.equal(rules.buildEntry({ ...VALID, url: '' }).url, '');
+  assert.equal(rules.buildEntry({ ...VALID, url: 'https:acme.dev' }).url, 'https:acme.dev');
+  const repoOf = (repo) => rules.buildEntry({ ...VALID, repo }).repo;
+  assert.equal(repoOf('https://github.com/acme/evals/issues/5?x=1'), 'https://github.com/acme/evals');
+  assert.equal(repoOf('https://gitlab.com/acme/evals/-/tree/main'), 'https://gitlab.com/acme/evals');
+  assert.equal(repoOf('https://gitlab.com/group/subgroup/project'), 'https://gitlab.com/group/subgroup/project');
+  assert.ok(rules.validateEntry('acme-evals', rules.buildEntry({ ...VALID, repo: 'https://gitlab.com/group/subgroup/project' }), CATEGORY_IDS).some((problem) => /"repo" is required/.test(problem)));
+  assert.equal(repoOf('https://github.com/acme/evals/extra'), 'https://github.com/acme/evals/extra');
+  const blank = rules.validateEntry('your-tool', rules.buildEntry({ category: 'evaluation' }), CATEGORY_IDS);
+  assert.ok(blank.length >= 4 && !blank.some((problem) => /file name/.test(problem)));
 });
 
 test('the pull request link opens the right new file', () => {

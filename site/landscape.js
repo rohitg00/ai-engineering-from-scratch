@@ -414,6 +414,13 @@
     };
   }
 
+  var FORM_LABELS = { name: 'Tool name', url: 'Website', category: 'Category', description: 'Description', repo: 'Source repository', logo_url: 'Link to your logo', x: 'X account' };
+
+  function formProblem(problem) {
+    if (/^give "logo_url"/.test(problem)) return 'Link to your logo is required';
+    return problem.replace(/^"([a-z_]+)"/, function (match, field) { return FORM_LABELS[field] || match; });
+  }
+
   function updateForm() {
     var form = document.getElementById('addForm');
     if (!form || !rules) return;
@@ -421,7 +428,7 @@
     var entry = rules.buildEntry(values);
     var slug = rules.slugify(entry.name);
     var categoryIds = data.categories.map(function (category) { return category.id; });
-    var errors = slug ? rules.validateEntry(slug, entry, categoryIds) : ['"name" is required'];
+    var errors = rules.validateEntry(slug || 'your-tool', entry, categoryIds);
     var taken = data.entries.some(function (existing) { return existing.slug === slug; });
     if (taken) errors.unshift('"' + entry.name + '" is already listed. Open its file on GitHub to change it.');
 
@@ -433,7 +440,9 @@
     var touched = form.getAttribute('data-touched') === 'true';
     var list = document.getElementById('addErrors');
     list.textContent = '';
-    if (touched) errors.forEach(function (problem) { list.appendChild(el('li', '', problem)); });
+    if (touched) errors.forEach(function (problem) { list.appendChild(el('li', '', formProblem(problem))); });
+    var status = document.getElementById('addStatus');
+    if (status) status.textContent = errors.length ? 'The button turns on when the form has no problems. ' + errors.length + ' left.' : 'Ready. GitHub opens in a new tab.';
 
     var submit = document.getElementById('addSubmit');
     var ready = errors.length === 0;
