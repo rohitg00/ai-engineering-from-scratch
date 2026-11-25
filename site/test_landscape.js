@@ -360,6 +360,7 @@ test('GitHub stars are read in batches of 50', async () => {
   try {
     const found = await githubStars(repos);
     assert.equal(queries.length, 2);
+    assert.deepEqual(queries.map((query) => query.match(/repository\(/g).length), [50, 1]);
     assert.equal(found.size, 51);
     assert.deepEqual(found.get(repos[0]), { found: true, stars: 9000, open: true });
     assert.deepEqual(found.get(repos[1]), { found: false });
