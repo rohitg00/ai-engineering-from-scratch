@@ -1,0 +1,8 @@
+{
+  "name": "ElevenLabs",
+  "url": "https://elevenlabs.io",
+  "category": "voice-apis",
+  "description": "Speech synthesis, transcription and voice agents.",
+  "open_source": false,
+  "logo": "elevenlabs.png"
+}

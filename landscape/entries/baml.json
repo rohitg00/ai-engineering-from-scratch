@@ -1,0 +1,9 @@
+{
+  "name": "BAML",
+  "url": "https://boundaryml.com",
+  "category": "agents",
+  "description": "Language for typed prompts and structured output.",
+  "open_source": true,
+  "repo": "https://github.com/BoundaryML/baml",
+  "logo": "baml.png"
+}

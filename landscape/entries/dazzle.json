@@ -1,0 +1,9 @@
+{
+  "name": "Dazzle",
+  "url": "https://dazzle.ai/",
+  "category": "personal-assistants",
+  "description": "A personal agent guided through pictures.",
+  "open_source": false,
+  "x": "itsdazzleai",
+  "logo": "dazzle.png"
+}

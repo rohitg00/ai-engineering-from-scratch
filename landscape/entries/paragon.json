@@ -1,0 +1,8 @@
+{
+  "name": "Paragon",
+  "url": "https://useparagon.com",
+  "category": "connectors",
+  "description": "Embedded integrations and agent actions.",
+  "open_source": false,
+  "logo": "paragon.png"
+}

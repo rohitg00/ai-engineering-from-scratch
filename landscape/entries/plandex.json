@@ -1,0 +1,9 @@
+{
+  "name": "Plandex",
+  "url": "https://github.com/plandex-ai/plandex",
+  "category": "coding",
+  "description": "Terminal agent for large coding tasks.",
+  "open_source": true,
+  "repo": "https://github.com/plandex-ai/plandex",
+  "logo": "plandex.png"
+}

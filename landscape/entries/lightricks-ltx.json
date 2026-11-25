@@ -1,0 +1,9 @@
+{
+  "name": "Lightricks LTX",
+  "url": "https://ltx.io",
+  "category": "media",
+  "description": "Open-weight video generation models.",
+  "open_source": true,
+  "repo": "https://github.com/Lightricks/LTX-Video",
+  "logo": "lightricks-ltx.png"
+}

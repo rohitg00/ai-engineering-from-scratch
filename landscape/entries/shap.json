@@ -1,0 +1,9 @@
+{
+  "name": "SHAP",
+  "url": "https://shap.readthedocs.io",
+  "category": "interpretability",
+  "description": "Explains model output with Shapley values.",
+  "open_source": true,
+  "repo": "https://github.com/shap/shap",
+  "logo": "shap.png"
+}

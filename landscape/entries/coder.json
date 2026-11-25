@@ -1,0 +1,9 @@
+{
+  "name": "Coder",
+  "url": "https://coder.com",
+  "category": "sandboxes",
+  "description": "Self-hosted cloud development environments.",
+  "open_source": true,
+  "repo": "https://github.com/coder/coder",
+  "logo": "coder.png"
+}

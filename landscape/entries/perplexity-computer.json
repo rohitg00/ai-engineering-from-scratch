@@ -1,0 +1,9 @@
+{
+  "name": "Perplexity Computer",
+  "url": "https://www.perplexity.ai/products/computer",
+  "category": "lab-assistants",
+  "description": "Perplexity's general-purpose digital worker for research and real-world tasks.",
+  "open_source": false,
+  "x": "perplexity_ai",
+  "logo": "perplexity-computer.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Mixedbread",
+  "url": "https://mixedbread.com",
+  "category": "embeddings",
+  "description": "Embedding and rerank models with a search API.",
+  "open_source": false,
+  "logo": "mixedbread.png"
+}

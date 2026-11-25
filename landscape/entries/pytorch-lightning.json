@@ -1,0 +1,9 @@
+{
+  "name": "PyTorch Lightning",
+  "url": "https://lightning.ai",
+  "category": "training",
+  "description": "Training loop framework on top of PyTorch.",
+  "open_source": true,
+  "repo": "https://github.com/Lightning-AI/pytorch-lightning",
+  "logo": "pytorch-lightning.png"
+}

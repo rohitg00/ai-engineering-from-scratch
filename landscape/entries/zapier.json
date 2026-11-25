@@ -1,0 +1,8 @@
+{
+  "name": "Zapier",
+  "url": "https://zapier.com",
+  "category": "agent-platforms",
+  "description": "Automation across apps with agents and AI steps.",
+  "open_source": false,
+  "logo": "zapier.png"
+}

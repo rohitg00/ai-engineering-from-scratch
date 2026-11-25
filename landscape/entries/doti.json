@@ -1,0 +1,9 @@
+{
+  "name": "Doti",
+  "url": "https://heydoti.co/",
+  "category": "personal-assistants",
+  "description": "The AI assistant you can text, in iMessage and RCS.",
+  "open_source": false,
+  "x": "heydoti",
+  "logo": "doti.png"
+}

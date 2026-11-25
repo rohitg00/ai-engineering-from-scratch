@@ -1,0 +1,9 @@
+{
+  "name": "MCP Registry",
+  "url": "https://registry.modelcontextprotocol.io",
+  "category": "protocols",
+  "description": "Community registry of public MCP servers.",
+  "open_source": true,
+  "repo": "https://github.com/modelcontextprotocol/registry",
+  "logo": "mcp-registry.png"
+}

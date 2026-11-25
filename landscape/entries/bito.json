@@ -1,0 +1,8 @@
+{
+  "name": "Bito",
+  "url": "https://bito.ai",
+  "category": "review",
+  "description": "Code review agent for pull requests.",
+  "open_source": false,
+  "logo": "bito.png"
+}

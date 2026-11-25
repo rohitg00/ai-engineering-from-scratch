@@ -1,0 +1,8 @@
+{
+  "name": "LMArena",
+  "url": "https://lmarena.ai",
+  "category": "evaluation",
+  "description": "Public model comparison by human votes.",
+  "open_source": false,
+  "logo": "lmarena.png"
+}

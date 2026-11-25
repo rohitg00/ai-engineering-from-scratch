@@ -1,0 +1,8 @@
+{
+  "name": "HoneyHive",
+  "url": "https://honeyhive.ai",
+  "category": "evaluation",
+  "description": "Observability and evaluation for agents.",
+  "open_source": false,
+  "logo": "honeyhive.png"
+}

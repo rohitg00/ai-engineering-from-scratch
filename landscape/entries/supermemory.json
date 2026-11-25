@@ -1,0 +1,10 @@
+{
+  "name": "supermemory",
+  "url": "https://supermemory.ai/",
+  "category": "memory",
+  "description": "Memory and continual learning for AI agents.",
+  "open_source": true,
+  "repo": "https://github.com/supermemoryai/supermemory",
+  "x": "supermemory",
+  "logo": "supermemory.png"
+}

@@ -1,0 +1,416 @@
+[
+  {
+    "id": "models",
+    "group": "Models and compute",
+    "name": "Model labs and APIs",
+    "summary": "Foundation models, model hubs and the gateways that route requests to them.",
+    "phase": "10-llms-from-scratch"
+  },
+  {
+    "id": "model-clouds",
+    "group": "Models and compute",
+    "name": "Cloud AI platforms",
+    "summary": "Cloud services that host many models with tuning and deployment.",
+    "phase": "17-infrastructure-and-production"
+  },
+  {
+    "id": "inference-providers",
+    "group": "Models and compute",
+    "name": "Inference providers",
+    "summary": "Hosted APIs that run open models for you.",
+    "phase": "17-infrastructure-and-production"
+  },
+  {
+    "id": "gateways",
+    "group": "Models and compute",
+    "name": "LLM gateways and routers",
+    "summary": "One endpoint that routes, caches and tracks calls to many models.",
+    "phase": "11-llm-engineering"
+  },
+  {
+    "id": "inference",
+    "group": "Models and compute",
+    "name": "Inference engines and local runtimes",
+    "summary": "Engines that load a model and answer requests, on a laptop or a cluster.",
+    "phase": "17-infrastructure-and-production"
+  },
+  {
+    "id": "gpu-clouds",
+    "group": "Models and compute",
+    "name": "GPU clouds",
+    "summary": "Rented GPUs and clusters for training and inference.",
+    "phase": "17-infrastructure-and-production"
+  },
+  {
+    "id": "training",
+    "group": "Models and compute",
+    "name": "Training frameworks",
+    "summary": "Frameworks that train models and tools that record what each run did.",
+    "phase": "03-deep-learning-core"
+  },
+  {
+    "id": "finetuning",
+    "group": "Models and compute",
+    "name": "Fine-tuning",
+    "summary": "Tools that adapt a pretrained model to your data.",
+    "phase": "10-llms-from-scratch"
+  },
+  {
+    "id": "tracking",
+    "group": "Models and compute",
+    "name": "Experiment tracking and MLOps",
+    "summary": "Tools that record runs, version models and manage pipelines.",
+    "phase": "17-infrastructure-and-production"
+  },
+  {
+    "id": "interpretability",
+    "group": "Models and compute",
+    "name": "Interpretability",
+    "summary": "Libraries that show what happens inside a model.",
+    "phase": "18-ethics-safety-alignment"
+  },
+  {
+    "id": "coding",
+    "group": "Developer tools",
+    "name": "Coding assistants and IDEs",
+    "summary": "Editors and agents that write, edit and run code with a model.",
+    "phase": "15-autonomous-systems"
+  },
+  {
+    "id": "agents",
+    "group": "Developer tools",
+    "name": "Agent frameworks",
+    "summary": "Libraries that run the agent loop, state and multi-agent work.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "harnesses",
+    "group": "Developer tools",
+    "name": "Agent harnesses",
+    "summary": "The loop, tools and context management that turn a model into a working agent.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "orchestrators",
+    "group": "Developer tools",
+    "name": "Agent orchestrators",
+    "summary": "Tools that run many agents in parallel and coordinate their work.",
+    "phase": "16-multi-agent-and-swarms"
+  },
+  {
+    "id": "agent-workflows",
+    "group": "Developer tools",
+    "name": "Spec workflows and skill packs",
+    "summary": "Specs, task systems and skills that steer how a coding agent works.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "agent-platforms",
+    "group": "Developer tools",
+    "name": "Agent builders and automation",
+    "summary": "Visual and low-code platforms for building agents and workflows.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "orchestration",
+    "group": "Developer tools",
+    "name": "Workflow orchestration",
+    "summary": "Engines that run long, multi-step work and survive failure.",
+    "phase": "17-infrastructure-and-production"
+  },
+  {
+    "id": "protocols",
+    "group": "Developer tools",
+    "name": "Protocols and gateways",
+    "summary": "Standards and gateways that connect models to tools and to other agents.",
+    "phase": "13-tools-and-protocols"
+  },
+  {
+    "id": "builders",
+    "group": "Developer tools",
+    "name": "App builders and UI",
+    "summary": "Tools that turn a prompt or a model into a working interface.",
+    "phase": "11-llm-engineering"
+  },
+  {
+    "id": "review",
+    "group": "Developer tools",
+    "name": "Code review and testing",
+    "summary": "Automated review, test generation and verification of generated code.",
+    "phase": "15-autonomous-systems"
+  },
+  {
+    "id": "evaluation",
+    "group": "Developer tools",
+    "name": "Observability and evaluation",
+    "summary": "Tracing, evals and monitoring for model and agent behavior.",
+    "phase": "17-infrastructure-and-production"
+  },
+  {
+    "id": "security",
+    "group": "Developer tools",
+    "name": "Security and governance",
+    "summary": "Guardrails, policy, red teaming and controls for models and agents.",
+    "phase": "18-ethics-safety-alignment"
+  },
+  {
+    "id": "databases",
+    "group": "Data and retrieval",
+    "name": "Databases and vector search",
+    "summary": "Stores that index embeddings and records for retrieval.",
+    "phase": "11-llm-engineering"
+  },
+  {
+    "id": "embeddings",
+    "group": "Data and retrieval",
+    "name": "Embeddings and rerankers",
+    "summary": "Models and servers that turn text into vectors and rank results.",
+    "phase": "11-llm-engineering"
+  },
+  {
+    "id": "rag",
+    "group": "Data and retrieval",
+    "name": "RAG and enterprise search",
+    "summary": "Systems that retrieve from your documents and ground answers.",
+    "phase": "11-llm-engineering"
+  },
+  {
+    "id": "docs",
+    "group": "Data and retrieval",
+    "name": "Document parsing and OCR",
+    "summary": "Tools that turn files and scans into text a model can use.",
+    "phase": "11-llm-engineering"
+  },
+  {
+    "id": "search",
+    "group": "Data and retrieval",
+    "name": "Search and web data APIs",
+    "summary": "Search, crawl and extraction APIs that give an agent current web data.",
+    "phase": "11-llm-engineering",
+    "pinned": [
+      "serpapi"
+    ],
+    "featured": [
+      "serpapi"
+    ],
+    "sponsors": [
+      "serpapi"
+    ]
+  },
+  {
+    "id": "data",
+    "group": "Data and retrieval",
+    "name": "Datasets, labeling and synthetic data",
+    "summary": "Tools and services that create and clean training data.",
+    "phase": "02-ml-fundamentals"
+  },
+  {
+    "id": "data-platforms",
+    "group": "Data and retrieval",
+    "name": "Data platforms and pipelines",
+    "summary": "Engines and formats that move and transform data.",
+    "phase": "02-ml-fundamentals"
+  },
+  {
+    "id": "notebooks",
+    "group": "Data and retrieval",
+    "name": "Notebooks",
+    "summary": "Interactive environments for code, data and research.",
+    "phase": "00-setup-and-tooling"
+  },
+  {
+    "id": "browser-infra",
+    "group": "Agent infrastructure",
+    "name": "Browser infrastructure",
+    "summary": "Cloud browsers and browser agents that let an agent use the web.",
+    "phase": "15-autonomous-systems",
+    "pinned": [
+      "anchor-browser"
+    ],
+    "featured": [
+      "anchor-browser"
+    ]
+  },
+  {
+    "id": "computers",
+    "group": "Agent infrastructure",
+    "name": "Computers and phones for agents",
+    "summary": "Desktops, cloud computers and real phones that an agent can operate.",
+    "phase": "15-autonomous-systems"
+  },
+  {
+    "id": "sandboxes",
+    "group": "Agent infrastructure",
+    "name": "Sandboxes and code runtime",
+    "summary": "Isolated environments where agents run generated code.",
+    "phase": "15-autonomous-systems"
+  },
+  {
+    "id": "memory",
+    "group": "Agent infrastructure",
+    "name": "Memory",
+    "summary": "Layers that store what an agent learned and bring it back in later sessions.",
+    "phase": "14-agent-engineering",
+    "pinned": [
+      "agentmemory",
+      "ai-memory"
+    ],
+    "featured": [
+      "agentmemory"
+    ]
+  },
+  {
+    "id": "context",
+    "group": "Agent infrastructure",
+    "name": "Context APIs",
+    "summary": "Outside context, user preferences and personal data that an agent can read.",
+    "phase": "11-llm-engineering"
+  },
+  {
+    "id": "connectors",
+    "group": "Agent infrastructure",
+    "name": "Connectors and tool marketplaces",
+    "summary": "Integrations and hosted tools that let an agent act in other apps.",
+    "phase": "13-tools-and-protocols"
+  },
+  {
+    "id": "identity",
+    "group": "Agent infrastructure",
+    "name": "Identity, auth and credentials",
+    "summary": "Login, token and authorization services built for agents.",
+    "phase": "13-tools-and-protocols"
+  },
+  {
+    "id": "messaging",
+    "group": "Agent infrastructure",
+    "name": "Email, messaging and phone APIs",
+    "summary": "Inboxes, chat channels and phone numbers that an agent can use.",
+    "phase": "13-tools-and-protocols"
+  },
+  {
+    "id": "payments",
+    "group": "Agent infrastructure",
+    "name": "Payments and billing",
+    "summary": "Cards, billing and payment rails for purchases an agent makes.",
+    "phase": "13-tools-and-protocols"
+  },
+  {
+    "id": "commerce",
+    "group": "Agent infrastructure",
+    "name": "Checkout and commerce APIs",
+    "summary": "Product catalogs and checkout APIs for shopping agents.",
+    "phase": "13-tools-and-protocols"
+  },
+  {
+    "id": "hosting",
+    "group": "Agent infrastructure",
+    "name": "Hosting and deployment",
+    "summary": "Clouds and platforms that run apps and agents.",
+    "phase": "17-infrastructure-and-production"
+  },
+  {
+    "id": "voice-apis",
+    "group": "Voice and media",
+    "name": "Voice and speech APIs",
+    "summary": "Speech recognition and synthesis models and services.",
+    "phase": "06-speech-and-audio"
+  },
+  {
+    "id": "voice-platforms",
+    "group": "Voice and media",
+    "name": "Voice agent platforms",
+    "summary": "Real-time infrastructure and platforms for agents that talk.",
+    "phase": "06-speech-and-audio"
+  },
+  {
+    "id": "media",
+    "group": "Voice and media",
+    "name": "Image, video and audio generation",
+    "summary": "Models and tools that generate and edit media.",
+    "phase": "08-generative-ai"
+  },
+  {
+    "id": "chat-assistants",
+    "group": "Agent products",
+    "name": "Chat assistants",
+    "summary": "General chat apps that answer, write and search.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "lab-assistants",
+    "group": "Agent products",
+    "name": "Agents from big labs",
+    "summary": "Agent products from the large model labs that act on delegated tasks.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "personal-assistants",
+    "group": "Agent products",
+    "name": "Personal assistants",
+    "summary": "Consumer agents that handle everyday tasks for one person.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "work-assistants",
+    "group": "Agent products",
+    "name": "Work and productivity agents",
+    "summary": "Agents that do research, operations and other knowledge work.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "open-assistants",
+    "group": "Agent products",
+    "name": "Open source assistants",
+    "summary": "Assistants you can read, run and host yourself.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "email-calendar-agents",
+    "group": "Agent products",
+    "name": "Email and calendar agents",
+    "summary": "Agents that triage mail and manage schedules.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "finance-agents",
+    "group": "Agent products",
+    "name": "Finance and money agents",
+    "summary": "Agents for budgets, investing and financial research.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "shopping-agents",
+    "group": "Agent products",
+    "name": "Shopping agents",
+    "summary": "Agents that find and buy products.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "travel-agents",
+    "group": "Agent products",
+    "name": "Travel agents",
+    "summary": "Agents that plan and book trips.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "home-health-agents",
+    "group": "Agent products",
+    "name": "Home, family and health agents",
+    "summary": "Agents for households, families and personal health.",
+    "phase": "14-agent-engineering"
+  },
+  {
+    "id": "group-chat-agents",
+    "group": "Agent products",
+    "name": "Group chat agents",
+    "summary": "Agents that take part in shared conversations.",
+    "phase": "16-multi-agent-and-swarms"
+  },
+  {
+    "id": "voice-agents",
+    "group": "Agent products",
+    "name": "Voice and phone agents",
+    "summary": "Agents you talk to, or that make calls for you.",
+    "phase": "14-agent-engineering"
+  }
+]

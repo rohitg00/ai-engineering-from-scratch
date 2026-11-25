@@ -1,0 +1,8 @@
+{
+  "name": "WorkOS",
+  "url": "https://workos.com",
+  "category": "identity",
+  "description": "Enterprise authentication, SSO and directory sync.",
+  "open_source": false,
+  "logo": "workos.png"
+}

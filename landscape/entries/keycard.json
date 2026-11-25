@@ -1,0 +1,9 @@
+{
+  "name": "Keycard",
+  "url": "https://www.keycard.ai/",
+  "category": "identity",
+  "description": "Runtime authorization for agents: identity, authority and policy-scoped access.",
+  "open_source": false,
+  "x": "keycardai",
+  "logo": "keycard.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Retool",
+  "url": "https://retool.com",
+  "category": "agent-platforms",
+  "description": "Builder for internal tools and agents.",
+  "open_source": false,
+  "logo": "retool.png"
+}

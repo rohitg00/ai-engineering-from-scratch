@@ -1,0 +1,9 @@
+{
+  "name": "Howie",
+  "url": "https://howie.com/",
+  "category": "email-calendar-agents",
+  "description": "A calendar assistant that schedules meetings through email and text.",
+  "open_source": false,
+  "x": "howie_ai",
+  "logo": "howie.png"
+}

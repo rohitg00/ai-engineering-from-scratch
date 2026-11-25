@@ -1,0 +1,9 @@
+{
+  "name": "Turso",
+  "url": "https://turso.tech",
+  "category": "databases",
+  "description": "SQLite-compatible database for agents and edge apps.",
+  "open_source": true,
+  "repo": "https://github.com/tursodatabase/turso",
+  "logo": "turso.png"
+}

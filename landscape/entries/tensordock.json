@@ -1,0 +1,8 @@
+{
+  "name": "TensorDock",
+  "url": "https://tensordock.com",
+  "category": "gpu-clouds",
+  "description": "Marketplace for on-demand GPU servers.",
+  "open_source": false,
+  "logo": "tensordock.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Opik",
+  "url": "https://comet.com/site/products/opik",
+  "category": "evaluation",
+  "description": "Tracing and evaluation for model applications.",
+  "open_source": true,
+  "repo": "https://github.com/comet-ml/opik",
+  "logo": "opik.png"
+}

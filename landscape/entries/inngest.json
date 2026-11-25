@@ -1,0 +1,9 @@
+{
+  "name": "Inngest",
+  "url": "https://inngest.com",
+  "category": "orchestration",
+  "description": "Durable functions and workflows triggered by events.",
+  "open_source": true,
+  "repo": "https://github.com/inngest/inngest",
+  "logo": "inngest.png"
+}

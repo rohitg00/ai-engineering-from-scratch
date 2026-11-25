@@ -1,0 +1,8 @@
+{
+  "name": "Diffbot",
+  "url": "https://diffbot.com",
+  "category": "search",
+  "description": "Knowledge graph and extraction APIs for the web.",
+  "open_source": false,
+  "logo": "diffbot.png"
+}

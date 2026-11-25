@@ -1,0 +1,9 @@
+{
+  "name": "Zep",
+  "url": "https://www.getzep.com/",
+  "category": "memory",
+  "description": "Enterprise context layer for agents.",
+  "open_source": false,
+  "x": "zep_ai",
+  "logo": "zep.png"
+}

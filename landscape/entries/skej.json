@@ -1,0 +1,9 @@
+{
+  "name": "Skej",
+  "url": "https://skej.com/",
+  "category": "email-calendar-agents",
+  "description": "Assistant in email, SMS and Slack that schedules, drafts and follows up.",
+  "open_source": false,
+  "x": "ccskej",
+  "logo": "skej.png"
+}

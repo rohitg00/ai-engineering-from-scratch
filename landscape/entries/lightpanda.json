@@ -1,0 +1,9 @@
+{
+  "name": "Lightpanda",
+  "url": "https://lightpanda.io",
+  "category": "browser-infra",
+  "description": "Headless browser built for automation.",
+  "open_source": true,
+  "repo": "https://github.com/lightpanda-io/browser",
+  "logo": "lightpanda.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Northflank",
+  "url": "https://northflank.com",
+  "category": "sandboxes",
+  "description": "Platform for workloads, sandboxes and GPUs.",
+  "open_source": false,
+  "logo": "northflank.png"
+}

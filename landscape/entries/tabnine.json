@@ -1,0 +1,8 @@
+{
+  "name": "Tabnine",
+  "url": "https://tabnine.com",
+  "category": "coding",
+  "description": "Code assistant with private deployment options.",
+  "open_source": false,
+  "logo": "tabnine.png"
+}

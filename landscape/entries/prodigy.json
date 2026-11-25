@@ -1,0 +1,8 @@
+{
+  "name": "Prodigy",
+  "url": "https://prodi.gy",
+  "category": "data",
+  "description": "Scriptable annotation tool for NLP and vision.",
+  "open_source": false,
+  "logo": "prodigy.png"
+}

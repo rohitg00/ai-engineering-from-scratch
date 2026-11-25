@@ -1,0 +1,9 @@
+{
+  "name": "Atlas",
+  "url": "https://atlas.voyagelabs.ai/",
+  "category": "travel-agents",
+  "description": "Voyage Labs' personal agent for trips, dining and experiences.",
+  "open_source": false,
+  "x": "voyagelabshq",
+  "logo": "atlas.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Hugging Face Hub",
+  "url": "https://huggingface.co/docs/hub",
+  "category": "tracking",
+  "description": "Repository for models, datasets and demo apps.",
+  "open_source": false,
+  "logo": "hugging-face-hub.png"
+}

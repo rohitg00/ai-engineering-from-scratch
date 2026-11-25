@@ -1,0 +1,8 @@
+{
+  "name": "Replicate",
+  "url": "https://replicate.com",
+  "category": "inference-providers",
+  "description": "Runs open models behind an API, billed per second.",
+  "open_source": false,
+  "logo": "replicate.png"
+}

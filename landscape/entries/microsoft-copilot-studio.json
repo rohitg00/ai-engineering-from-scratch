@@ -1,0 +1,8 @@
+{
+  "name": "Microsoft Copilot Studio",
+  "url": "https://microsoft.com/microsoft-copilot/microsoft-copilot-studio",
+  "category": "agent-platforms",
+  "description": "Low-code builder for agents on Microsoft 365.",
+  "open_source": false,
+  "logo": "microsoft-copilot-studio.png"
+}

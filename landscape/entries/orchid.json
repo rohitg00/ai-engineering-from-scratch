@@ -1,0 +1,9 @@
+{
+  "name": "Orchid",
+  "url": "https://orchid.ai/",
+  "category": "personal-assistants",
+  "description": "A personal assistant that lives in your messages.",
+  "open_source": false,
+  "x": "orchid_hq",
+  "logo": "orchid.png"
+}

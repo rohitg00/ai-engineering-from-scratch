@@ -1,0 +1,9 @@
+{
+  "name": "Vestra",
+  "url": "https://vestra.ai/",
+  "category": "work-assistants",
+  "description": "An agent workspace designed to build out its own operations.",
+  "open_source": false,
+  "x": "vestra_ai",
+  "logo": "vestra.png"
+}

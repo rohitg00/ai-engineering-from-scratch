@@ -1,0 +1,9 @@
+{
+  "name": "Terraform",
+  "url": "https://developer.hashicorp.com/terraform",
+  "category": "hosting",
+  "description": "Infrastructure as code tool.",
+  "open_source": true,
+  "repo": "https://github.com/hashicorp/terraform",
+  "logo": "terraform.png"
+}

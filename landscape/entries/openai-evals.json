@@ -1,0 +1,9 @@
+{
+  "name": "OpenAI Evals",
+  "url": "https://github.com/openai/evals",
+  "category": "evaluation",
+  "description": "Framework and registry of model evaluations.",
+  "open_source": true,
+  "repo": "https://github.com/openai/evals",
+  "logo": "openai-evals.png"
+}

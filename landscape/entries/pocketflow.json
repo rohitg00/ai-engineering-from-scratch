@@ -1,0 +1,9 @@
+{
+  "name": "PocketFlow",
+  "url": "https://the-pocket.github.io/PocketFlow",
+  "category": "agents",
+  "description": "Minimal graph framework for agents.",
+  "open_source": true,
+  "repo": "https://github.com/The-Pocket/PocketFlow",
+  "logo": "pocketflow.png"
+}

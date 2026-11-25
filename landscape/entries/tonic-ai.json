@@ -1,0 +1,8 @@
+{
+  "name": "Tonic.ai",
+  "url": "https://tonic.ai",
+  "category": "data",
+  "description": "Synthetic and de-identified data for development.",
+  "open_source": false,
+  "logo": "tonic-ai.png"
+}

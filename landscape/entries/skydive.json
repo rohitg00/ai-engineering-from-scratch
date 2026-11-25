@@ -1,0 +1,9 @@
+{
+  "name": "Skydive",
+  "url": "https://www.skydive.com/",
+  "category": "work-assistants",
+  "description": "Cloud agents you talk to in Slack, email or iMessage.",
+  "open_source": false,
+  "x": "getskydive",
+  "logo": "skydive.png"
+}

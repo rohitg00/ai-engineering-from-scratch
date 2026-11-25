@@ -1,0 +1,9 @@
+{
+  "name": "RAGFlow",
+  "url": "https://ragflow.io",
+  "category": "rag",
+  "description": "RAG engine with deep document understanding.",
+  "open_source": true,
+  "repo": "https://github.com/infiniflow/ragflow",
+  "logo": "ragflow.png"
+}

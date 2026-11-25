@@ -1,0 +1,9 @@
+{
+  "name": "Pulumi",
+  "url": "https://pulumi.com",
+  "category": "hosting",
+  "description": "Infrastructure as code in general languages.",
+  "open_source": true,
+  "repo": "https://github.com/pulumi/pulumi",
+  "logo": "pulumi.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Lindy",
+  "url": "https://www.lindy.ai/",
+  "category": "work-assistants",
+  "description": "An AI employee that connects to your tools and does real work for the team.",
+  "open_source": false,
+  "x": "getlindy",
+  "logo": "lindy.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "DeepSpeed",
+  "url": "https://deepspeed.ai",
+  "category": "training",
+  "description": "Optimization library for large-scale training.",
+  "open_source": true,
+  "repo": "https://github.com/deepspeedai/DeepSpeed",
+  "logo": "deepspeed.png"
+}

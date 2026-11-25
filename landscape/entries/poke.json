@@ -1,0 +1,9 @@
+{
+  "name": "Poke",
+  "url": "https://poke.com/",
+  "category": "personal-assistants",
+  "description": "A proactive assistant available through Messages, WhatsApp, and Telegram.",
+  "open_source": false,
+  "x": "interaction",
+  "logo": "poke.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Papr",
+  "url": "https://papr.ai",
+  "category": "memory",
+  "description": "Predictive memory layer for agents.",
+  "open_source": false,
+  "logo": "papr.png"
+}

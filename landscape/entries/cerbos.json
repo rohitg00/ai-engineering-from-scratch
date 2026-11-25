@@ -1,0 +1,9 @@
+{
+  "name": "Cerbos",
+  "url": "https://cerbos.dev",
+  "category": "identity",
+  "description": "Policy-based access control.",
+  "open_source": true,
+  "repo": "https://github.com/cerbos/cerbos",
+  "logo": "cerbos.png"
+}

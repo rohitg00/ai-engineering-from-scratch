@@ -1,0 +1,9 @@
+{
+  "name": "Veeza AI",
+  "url": "https://www.veeza.ai/en",
+  "category": "travel-agents",
+  "description": "AI that fills tourist-visa forms, prepares documents and handles appointments.",
+  "open_source": false,
+  "x": "veezaai",
+  "logo": "veeza-ai.png"
+}

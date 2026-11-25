@@ -1,0 +1,9 @@
+{
+  "name": "MemoryLake",
+  "url": "https://memorylake.ai/",
+  "category": "memory",
+  "description": "A memory layer for AI systems.",
+  "open_source": false,
+  "x": "Memorylake_ai",
+  "logo": "memorylake.png"
+}

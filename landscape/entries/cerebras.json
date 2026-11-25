@@ -1,0 +1,8 @@
+{
+  "name": "Cerebras",
+  "url": "https://cerebras.ai",
+  "category": "inference-providers",
+  "description": "Model inference on wafer-scale processors.",
+  "open_source": false,
+  "logo": "cerebras.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Lance",
+  "url": "https://github.com/lancedb/lance",
+  "category": "data-platforms",
+  "description": "Columnar data format for AI workloads.",
+  "open_source": true,
+  "repo": "https://github.com/lancedb/lance",
+  "logo": "lance.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Arcjet",
+  "url": "https://arcjet.com",
+  "category": "identity",
+  "description": "Bot protection and rate limiting for applications.",
+  "open_source": false,
+  "logo": "arcjet.png"
+}

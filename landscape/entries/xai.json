@@ -1,0 +1,8 @@
+{
+  "name": "xAI",
+  "url": "https://x.ai",
+  "category": "models",
+  "description": "Grok models available through an API.",
+  "open_source": false,
+  "logo": "xai.png"
+}

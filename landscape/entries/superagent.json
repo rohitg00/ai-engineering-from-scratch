@@ -1,0 +1,9 @@
+{
+  "name": "Superagent",
+  "url": "https://base44.com/superagents",
+  "category": "work-assistants",
+  "description": "A Base44 platform for building and deploying agents.",
+  "open_source": false,
+  "x": "base44",
+  "logo": "superagent.png"
+}

@@ -1,0 +1,97 @@
+name: Landscape
+
+on:
+  pull_request:
+    paths:
+      - 'landscape/**'
+      - 'site/logos/landscape/**'
+      - 'site/*landscape*'
+      - '.github/workflows/landscape.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'landscape/**'
+      - 'site/logos/landscape/**'
+      - 'site/*landscape*'
+      - '.github/workflows/landscape.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: landscape-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Check entries and logos
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check every entry
+        run: node site/build-landscape.js --check
+      - name: Check logo links
+        run: node site/build-landscape.js --check --remote
+      - name: Check stars for added or changed entries
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          mapfile -t files < <(git diff --name-only --diff-filter=AMR HEAD^1 HEAD -- 'landscape/entries/*.json')
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "no added or changed entries"
+            exit 0
+          fi
+          node site/build-landscape.js --stars "${files[@]}"
+      - name: Run landscape tests
+        run: node --test site/test_landscape.js
+
+  save-logos:
+    name: Save linked logos (main only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: check
+    if: github.event_name == 'push'
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Download and check linked logos
+        run: node site/build-landscape.js --fetch-logos
+      - name: Commit new logo files
+        env:
+          BOT_COMMIT_PREFIX: "chore(landscape): save linked logos"
+        run: |
+          git add site/logos/landscape
+          if git diff --cached --quiet; then
+            echo "no new logos"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "$BOT_COMMIT_PREFIX"
+          branch="${GITHUB_REF#refs/heads/}"
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:${branch}"; then
+              exit 0
+            fi
+            git fetch origin "${branch}"
+            if ! git rebase "origin/${branch}"; then
+              git rebase --abort || true
+              exit 0
+            fi
+            sleep "$((attempt * 2))"
+          done

@@ -1,0 +1,9 @@
+{
+  "name": "SWE-bench",
+  "url": "https://swebench.com",
+  "category": "evaluation",
+  "description": "Benchmark of real software engineering tasks.",
+  "open_source": true,
+  "repo": "https://github.com/SWE-bench/SWE-bench",
+  "logo": "swe-bench.png"
+}

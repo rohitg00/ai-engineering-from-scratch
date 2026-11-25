@@ -1,0 +1,9 @@
+{
+  "name": "Whisper",
+  "url": "https://github.com/openai/whisper",
+  "category": "voice-apis",
+  "description": "Speech recognition model from OpenAI.",
+  "open_source": true,
+  "repo": "https://github.com/openai/whisper",
+  "logo": "whisper.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Fly.io",
+  "url": "https://fly.io",
+  "category": "sandboxes",
+  "description": "Runs apps and machines close to users.",
+  "open_source": false,
+  "logo": "fly-io.png"
+}

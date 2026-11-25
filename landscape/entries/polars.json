@@ -1,0 +1,9 @@
+{
+  "name": "Polars",
+  "url": "https://pola.rs",
+  "category": "data-platforms",
+  "description": "DataFrame library written in Rust.",
+  "open_source": true,
+  "repo": "https://github.com/pola-rs/polars",
+  "logo": "polars.png"
+}

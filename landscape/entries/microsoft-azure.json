@@ -1,0 +1,8 @@
+{
+  "name": "Microsoft Azure",
+  "url": "https://azure.microsoft.com",
+  "category": "hosting",
+  "description": "Cloud platform with compute, data and AI services.",
+  "open_source": false,
+  "logo": "microsoft-azure.png"
+}

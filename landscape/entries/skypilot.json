@@ -1,0 +1,9 @@
+{
+  "name": "SkyPilot",
+  "url": "https://skypilot.co",
+  "category": "gpu-clouds",
+  "description": "Runs AI workloads on any cloud or cluster.",
+  "open_source": true,
+  "repo": "https://github.com/skypilot-org/skypilot",
+  "logo": "skypilot.png"
+}

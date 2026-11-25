@@ -1,0 +1,9 @@
+{
+  "name": "heyclicky",
+  "url": "https://www.heyclicky.com/",
+  "category": "work-assistants",
+  "description": "An AI buddy for Mac and Windows that sees your screen and runs agents.",
+  "open_source": false,
+  "x": "heyclicky",
+  "logo": "heyclicky.png"
+}

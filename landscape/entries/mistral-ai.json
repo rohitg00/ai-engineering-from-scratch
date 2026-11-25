@@ -1,0 +1,8 @@
+{
+  "name": "Mistral AI",
+  "url": "https://mistral.ai",
+  "category": "models",
+  "description": "Open-weight and hosted language models with an API.",
+  "open_source": false,
+  "logo": "mistral-ai.png"
+}

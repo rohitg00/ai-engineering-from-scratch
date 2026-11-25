@@ -1,0 +1,9 @@
+{
+  "name": "Supervision",
+  "url": "https://supervision.roboflow.com",
+  "category": "media",
+  "description": "Reusable computer vision tools.",
+  "open_source": true,
+  "repo": "https://github.com/roboflow/supervision",
+  "logo": "supervision.png"
+}

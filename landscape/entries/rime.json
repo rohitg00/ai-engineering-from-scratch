@@ -1,0 +1,8 @@
+{
+  "name": "Rime",
+  "url": "https://rime.ai",
+  "category": "voice-apis",
+  "description": "Text-to-speech for conversational applications.",
+  "open_source": false,
+  "logo": "rime.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Flowise",
+  "url": "https://flowiseai.com",
+  "category": "agent-platforms",
+  "description": "Visual builder for agents and model flows.",
+  "open_source": true,
+  "repo": "https://github.com/FlowiseAI/Flowise",
+  "logo": "flowise.png"
+}

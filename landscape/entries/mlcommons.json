@@ -1,0 +1,8 @@
+{
+  "name": "MLCommons",
+  "url": "https://mlcommons.org",
+  "category": "evaluation",
+  "description": "Industry benchmarks for AI performance and safety.",
+  "open_source": false,
+  "logo": "mlcommons.png"
+}

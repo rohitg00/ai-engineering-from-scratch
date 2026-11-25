@@ -1,0 +1,8 @@
+{
+  "name": "Patronus AI",
+  "url": "https://patronus.ai",
+  "category": "evaluation",
+  "description": "Evaluation and guardrails for agents.",
+  "open_source": false,
+  "logo": "patronus-ai.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Poe",
+  "url": "https://poe.com",
+  "category": "chat-assistants",
+  "description": "Chat app with access to many models and bots.",
+  "open_source": false,
+  "logo": "poe.png"
+}

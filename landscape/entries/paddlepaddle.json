@@ -1,0 +1,9 @@
+{
+  "name": "PaddlePaddle",
+  "url": "https://paddlepaddle.org.cn",
+  "category": "training",
+  "description": "Deep learning framework from Baidu.",
+  "open_source": true,
+  "repo": "https://github.com/PaddlePaddle/Paddle",
+  "logo": "paddlepaddle.png"
+}

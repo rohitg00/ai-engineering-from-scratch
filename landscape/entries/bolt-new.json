@@ -1,0 +1,9 @@
+{
+  "name": "Bolt.new",
+  "url": "https://bolt.new",
+  "category": "builders",
+  "description": "Builds and deploys web apps from prompts in the browser.",
+  "open_source": true,
+  "repo": "https://github.com/stackblitz/bolt.new",
+  "logo": "bolt-new.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Depot",
+  "url": "https://depot.dev",
+  "category": "sandboxes",
+  "description": "Fast container builds and CI runners.",
+  "open_source": false,
+  "logo": "depot.png"
+}

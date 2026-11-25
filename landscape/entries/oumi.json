@@ -1,0 +1,9 @@
+{
+  "name": "Oumi",
+  "url": "https://oumi.ai",
+  "category": "finetuning",
+  "description": "Platform to train, evaluate and deploy foundation models.",
+  "open_source": true,
+  "repo": "https://github.com/oumi-ai/oumi",
+  "logo": "oumi.png"
+}

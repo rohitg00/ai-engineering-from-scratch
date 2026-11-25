@@ -1,0 +1,9 @@
+{
+  "name": "JAX",
+  "url": "https://docs.jax.dev",
+  "category": "training",
+  "description": "Composable transformations for numerical computing on accelerators.",
+  "open_source": true,
+  "repo": "https://github.com/jax-ml/jax",
+  "logo": "jax.png"
+}

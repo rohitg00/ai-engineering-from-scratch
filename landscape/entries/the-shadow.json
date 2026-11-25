@@ -1,0 +1,9 @@
+{
+  "name": "The Shadow",
+  "url": "https://theshadow.io/",
+  "category": "personal-assistants",
+  "description": "Shadow, your personal assistant for real life: bookings, shopping and everyday to-dos.",
+  "open_source": false,
+  "x": "get_shadow_ai",
+  "logo": "the-shadow.png"
+}

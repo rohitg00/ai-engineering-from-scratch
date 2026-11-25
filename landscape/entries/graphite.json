@@ -1,0 +1,8 @@
+{
+  "name": "Graphite",
+  "url": "https://graphite.dev",
+  "category": "review",
+  "description": "Stacked pull requests with AI review.",
+  "open_source": false,
+  "logo": "graphite.png"
+}

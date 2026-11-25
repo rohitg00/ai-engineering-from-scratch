@@ -1,0 +1,9 @@
+{
+  "name": "Spider",
+  "url": "https://spider.cloud",
+  "category": "search",
+  "description": "Web crawler and scraper written in Rust.",
+  "open_source": true,
+  "repo": "https://github.com/spider-rs/spider",
+  "logo": "spider.png"
+}

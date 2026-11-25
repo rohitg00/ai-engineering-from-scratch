@@ -1,0 +1,12 @@
+{
+  "name": "OpenHands",
+  "url": "https://all-hands.dev",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Platform for software development agents.",
+  "open_source": true,
+  "repo": "https://github.com/All-Hands-AI/OpenHands",
+  "logo": "openhands.png"
+}

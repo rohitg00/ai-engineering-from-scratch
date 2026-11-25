@@ -1,0 +1,8 @@
+{
+  "name": "Groq",
+  "url": "https://groq.com",
+  "category": "inference-providers",
+  "description": "Model inference on custom language processing hardware.",
+  "open_source": false,
+  "logo": "groq.png"
+}

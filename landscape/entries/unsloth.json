@@ -1,0 +1,9 @@
+{
+  "name": "Unsloth",
+  "url": "https://unsloth.ai",
+  "category": "finetuning",
+  "description": "Fine-tuning library with low memory use.",
+  "open_source": true,
+  "repo": "https://github.com/unslothai/unsloth",
+  "logo": "unsloth.png"
+}

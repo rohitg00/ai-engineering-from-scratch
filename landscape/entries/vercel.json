@@ -1,0 +1,8 @@
+{
+  "name": "Vercel",
+  "url": "https://vercel.com",
+  "category": "hosting",
+  "description": "Cloud for web apps and agents.",
+  "open_source": false,
+  "logo": "vercel.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "AgentEmail",
+  "url": "https://www.agentemail.co/",
+  "category": "messaging",
+  "description": "Email infrastructure for AI agents.",
+  "open_source": false,
+  "logo": "agentemail.png"
+}

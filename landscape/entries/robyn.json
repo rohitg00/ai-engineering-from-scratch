@@ -1,0 +1,9 @@
+{
+  "name": "Robyn",
+  "url": "https://www.meetrobyn.com/",
+  "category": "personal-assistants",
+  "description": "A personal agent platform accessed through text messages.",
+  "open_source": false,
+  "x": "meetrobyn",
+  "logo": "robyn.png"
+}

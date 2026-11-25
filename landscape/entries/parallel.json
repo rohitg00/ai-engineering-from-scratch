@@ -1,0 +1,9 @@
+{
+  "name": "Parallel",
+  "url": "https://parallel.ai/",
+  "category": "search",
+  "description": "Web infrastructure for AI agents.",
+  "open_source": false,
+  "x": "p0",
+  "logo": "parallel.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Gemini",
+  "url": "https://gemini.google.com",
+  "category": "chat-assistants",
+  "description": "Chat assistant from Google across the web and Android.",
+  "open_source": false,
+  "logo": "gemini.png"
+}

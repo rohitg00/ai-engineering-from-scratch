@@ -1,0 +1,10 @@
+{
+  "name": "OpenClaw",
+  "url": "https://openclaw.ai/",
+  "category": "open-assistants",
+  "description": "An open-source assistant for taking action on tasks.",
+  "open_source": true,
+  "repo": "https://github.com/openclaw/openclaw",
+  "x": "openclaw",
+  "logo": "openclaw.png"
+}

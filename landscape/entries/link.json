@@ -1,0 +1,9 @@
+{
+  "name": "Link",
+  "url": "https://docs.stripe.com/agentic-commerce/agents/link-agent-wallet",
+  "category": "payments",
+  "description": "Stripe's Link Agent Wallet: agents request a payment, the user approves.",
+  "open_source": false,
+  "x": "link",
+  "logo": "link.png"
+}

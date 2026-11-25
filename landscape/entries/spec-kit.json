@@ -1,0 +1,9 @@
+{
+  "name": "Spec Kit",
+  "url": "https://github.com/github/spec-kit",
+  "category": "agent-workflows",
+  "description": "Toolkit for spec-driven development with coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/github/spec-kit",
+  "logo": "spec-kit.png"
+}

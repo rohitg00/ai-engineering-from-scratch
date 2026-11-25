@@ -1,0 +1,9 @@
+{
+  "name": "Memobase",
+  "url": "https://github.com/memodb-io/memobase",
+  "category": "memory",
+  "description": "User profile memory for AI applications.",
+  "open_source": true,
+  "repo": "https://github.com/memodb-io/memobase",
+  "logo": "memobase.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "SGLang",
+  "url": "https://sglang.ai",
+  "category": "inference",
+  "description": "Serving framework for language and vision models.",
+  "open_source": true,
+  "repo": "https://github.com/sgl-project/sglang",
+  "logo": "sglang.png"
+}

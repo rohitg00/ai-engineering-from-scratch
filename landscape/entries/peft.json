@@ -1,0 +1,9 @@
+{
+  "name": "PEFT",
+  "url": "https://huggingface.co/docs/peft",
+  "category": "finetuning",
+  "description": "Parameter-efficient fine-tuning methods such as LoRA.",
+  "open_source": true,
+  "repo": "https://github.com/huggingface/peft",
+  "logo": "peft.png"
+}

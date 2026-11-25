@@ -1,0 +1,9 @@
+{
+  "name": "DSPy",
+  "url": "https://dspy.ai",
+  "category": "agents",
+  "description": "Programs language models and optimizes their prompts.",
+  "open_source": true,
+  "repo": "https://github.com/stanfordnlp/dspy",
+  "logo": "dspy.png"
+}

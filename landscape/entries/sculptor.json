@@ -1,0 +1,8 @@
+{
+  "name": "Sculptor",
+  "url": "https://imbue.com/sculptor",
+  "category": "orchestrators",
+  "description": "Runs parallel coding agents in isolated containers.",
+  "open_source": false,
+  "logo": "sculptor.png"
+}

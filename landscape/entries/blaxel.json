@@ -1,0 +1,8 @@
+{
+  "name": "Blaxel",
+  "url": "https://blaxel.ai",
+  "category": "sandboxes",
+  "description": "Compute platform for agents with fast sandboxes.",
+  "open_source": false,
+  "logo": "blaxel.png"
+}

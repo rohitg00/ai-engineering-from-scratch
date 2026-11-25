@@ -1,0 +1,9 @@
+{
+  "name": "oh-my-openagent",
+  "url": "https://omo.dev",
+  "category": "harnesses",
+  "description": "Agent harness and plugin pack for OpenCode.",
+  "open_source": true,
+  "repo": "https://github.com/code-yeongyu/oh-my-openagent",
+  "logo": "oh-my-openagent.png"
+}

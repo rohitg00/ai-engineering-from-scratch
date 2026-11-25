@@ -1,0 +1,8 @@
+{
+  "name": "Anyscale",
+  "url": "https://anyscale.com",
+  "category": "inference-providers",
+  "description": "Managed Ray platform for training and serving models.",
+  "open_source": false,
+  "logo": "anyscale.png"
+}

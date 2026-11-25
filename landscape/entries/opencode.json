@@ -1,0 +1,12 @@
+{
+  "name": "OpenCode",
+  "url": "https://opencode.ai",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Terminal coding agent that works with many model providers.",
+  "open_source": true,
+  "repo": "https://github.com/sst/opencode",
+  "logo": "opencode.png"
+}

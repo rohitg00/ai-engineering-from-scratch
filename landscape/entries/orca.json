@@ -1,0 +1,9 @@
+{
+  "name": "Orca",
+  "url": "https://orca.dev",
+  "category": "orchestrators",
+  "description": "Runs a fleet of coding agents in parallel on your own subscriptions.",
+  "open_source": true,
+  "repo": "https://github.com/stablyai/orca",
+  "logo": "orca.png"
+}

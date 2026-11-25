@@ -1,0 +1,8 @@
+{
+  "name": "Gemini API",
+  "url": "https://ai.google.dev",
+  "category": "models",
+  "description": "Multimodal model family from Google, available through an API and AI Studio.",
+  "open_source": false,
+  "logo": "gemini-api.png"
+}

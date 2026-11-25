@@ -1,0 +1,8 @@
+{
+  "name": "Mathpix",
+  "url": "https://mathpix.com",
+  "category": "docs",
+  "description": "OCR for math, tables and scientific documents.",
+  "open_source": false,
+  "logo": "mathpix.png"
+}

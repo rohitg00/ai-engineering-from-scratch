@@ -1,0 +1,8 @@
+{
+  "name": "Encord",
+  "url": "https://encord.com",
+  "category": "data",
+  "description": "Data platform for annotating and curating multimodal data.",
+  "open_source": false,
+  "logo": "encord.png"
+}

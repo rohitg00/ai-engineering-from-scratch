@@ -1,0 +1,9 @@
+{
+  "name": "Basic Memory",
+  "url": "https://basicmemory.com",
+  "category": "memory",
+  "description": "Local memory in markdown files over MCP.",
+  "open_source": true,
+  "repo": "https://github.com/basicmachines-co/basic-memory",
+  "logo": "basic-memory.png"
+}

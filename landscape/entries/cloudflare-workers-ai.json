@@ -1,0 +1,8 @@
+{
+  "name": "Cloudflare Workers AI",
+  "url": "https://developers.cloudflare.com/workers-ai",
+  "category": "model-clouds",
+  "description": "Serverless model inference on the Cloudflare network.",
+  "open_source": false,
+  "logo": "cloudflare-workers-ai.png"
+}

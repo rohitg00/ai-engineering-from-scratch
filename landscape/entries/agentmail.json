@@ -1,0 +1,9 @@
+{
+  "name": "AgentMail",
+  "url": "https://www.agentmail.to/",
+  "category": "messaging",
+  "description": "Email inbox API for AI agents.",
+  "open_source": false,
+  "x": "agentmail",
+  "logo": "agentmail.png"
+}

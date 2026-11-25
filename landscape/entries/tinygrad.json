@@ -1,0 +1,9 @@
+{
+  "name": "tinygrad",
+  "url": "https://tinygrad.org",
+  "category": "training",
+  "description": "Small deep learning framework with many backends.",
+  "open_source": true,
+  "repo": "https://github.com/tinygrad/tinygrad",
+  "logo": "tinygrad.png"
+}

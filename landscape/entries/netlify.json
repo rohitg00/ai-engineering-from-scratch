@@ -1,0 +1,8 @@
+{
+  "name": "Netlify",
+  "url": "https://netlify.com",
+  "category": "hosting",
+  "description": "Platform for web projects and agent workflows.",
+  "open_source": false,
+  "logo": "netlify.png"
+}

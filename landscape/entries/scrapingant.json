@@ -1,0 +1,8 @@
+{
+  "name": "ScrapingAnt",
+  "url": "https://scrapingant.com",
+  "category": "search",
+  "description": "Web scraping API with headless browsers.",
+  "open_source": false,
+  "logo": "scrapingant.png"
+}

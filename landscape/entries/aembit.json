@@ -1,0 +1,8 @@
+{
+  "name": "Aembit",
+  "url": "https://aembit.io",
+  "category": "identity",
+  "description": "Identity and access for workloads and agents.",
+  "open_source": false,
+  "logo": "aembit.png"
+}

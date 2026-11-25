@@ -1,0 +1,9 @@
+{
+  "name": "ArangoDB",
+  "url": "https://arangodb.com",
+  "category": "databases",
+  "description": "Graph, document and vector database.",
+  "open_source": true,
+  "repo": "https://github.com/arangodb/arangodb",
+  "logo": "arangodb.png"
+}

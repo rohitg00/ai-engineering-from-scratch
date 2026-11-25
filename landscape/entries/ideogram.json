@@ -1,0 +1,8 @@
+{
+  "name": "Ideogram",
+  "url": "https://ideogram.ai",
+  "category": "media",
+  "description": "Image generation with accurate text rendering.",
+  "open_source": false,
+  "logo": "ideogram.png"
+}

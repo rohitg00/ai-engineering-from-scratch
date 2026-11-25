@@ -1,0 +1,9 @@
+{
+  "name": "Continue",
+  "url": "https://continue.dev",
+  "category": "coding",
+  "description": "Assistant for editors and continuous AI workflows.",
+  "open_source": true,
+  "repo": "https://github.com/continuedev/continue",
+  "logo": "continue.png"
+}

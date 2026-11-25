@@ -1,0 +1,9 @@
+{
+  "name": "ChatGPT Work",
+  "url": "https://chatgpt.com/work/",
+  "category": "lab-assistants",
+  "description": "A workspace for turning team requests into completed work.",
+  "open_source": false,
+  "x": "OpenAI",
+  "logo": "chatgpt-work.png"
+}

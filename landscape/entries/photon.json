@@ -1,0 +1,9 @@
+{
+  "name": "Photon",
+  "url": "https://photon.codes/",
+  "category": "messaging",
+  "description": "Brings agents to iMessage, WhatsApp, Telegram, Slack and more.",
+  "open_source": false,
+  "x": "photonhq",
+  "logo": "photon.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "R2R",
+  "url": "https://github.com/SciPhi-AI/R2R",
+  "category": "rag",
+  "description": "Retrieval system with a REST API.",
+  "open_source": true,
+  "repo": "https://github.com/SciPhi-AI/R2R",
+  "logo": "r2r.png"
+}

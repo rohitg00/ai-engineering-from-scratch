@@ -1,0 +1,9 @@
+{
+  "name": "ExecuTorch",
+  "url": "https://executorch.ai",
+  "category": "inference",
+  "description": "Runtime for PyTorch models on mobile and edge devices.",
+  "open_source": true,
+  "repo": "https://github.com/pytorch/executorch",
+  "logo": "executorch.png"
+}

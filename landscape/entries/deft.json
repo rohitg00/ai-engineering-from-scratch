@@ -1,0 +1,9 @@
+{
+  "name": "Deft",
+  "url": "https://heydeft.ai/",
+  "category": "voice-agents",
+  "description": "A personal assistant for phone calls and WhatsApp tasks.",
+  "open_source": false,
+  "x": "heydeftai",
+  "logo": "deft.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Infisical",
+  "url": "https://infisical.com",
+  "category": "identity",
+  "description": "Secrets management platform.",
+  "open_source": true,
+  "repo": "https://github.com/Infisical/infisical",
+  "logo": "infisical.png"
+}

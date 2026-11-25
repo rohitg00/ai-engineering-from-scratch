@@ -1,0 +1,8 @@
+{
+  "name": "CodeRabbit",
+  "url": "https://www.coderabbit.ai",
+  "category": "review",
+  "description": "Automated code review on pull requests.",
+  "open_source": false,
+  "logo": "coderabbit.png"
+}

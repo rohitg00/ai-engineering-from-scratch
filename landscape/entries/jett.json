@@ -1,0 +1,9 @@
+{
+  "name": "Jett",
+  "url": "https://www.usejett.com/",
+  "category": "travel-agents",
+  "description": "Personal AI travel agent that searches, scores and books flights and hotels.",
+  "open_source": false,
+  "x": "useJett",
+  "logo": "jett.png"
+}

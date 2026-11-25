@@ -1,0 +1,9 @@
+{
+  "name": "Happy",
+  "url": "https://happy.engineering",
+  "category": "orchestrators",
+  "description": "Mobile and web client for controlling coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/slopus/happy",
+  "logo": "happy.png"
+}

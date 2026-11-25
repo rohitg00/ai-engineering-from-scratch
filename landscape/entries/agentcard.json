@@ -1,0 +1,9 @@
+{
+  "name": "Agentcard",
+  "url": "https://agentcard.com/",
+  "category": "payments",
+  "description": "Payment tools that let agents make online purchases.",
+  "open_source": false,
+  "x": "agentcardhq",
+  "logo": "agentcard.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "LitServe",
+  "url": "https://lightning.ai/litserve",
+  "category": "inference",
+  "description": "Serving engine for models built on FastAPI.",
+  "open_source": true,
+  "repo": "https://github.com/Lightning-AI/LitServe",
+  "logo": "litserve.png"
+}

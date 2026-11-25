@@ -1,0 +1,8 @@
+{
+  "name": "Krisp",
+  "url": "https://krisp.ai",
+  "category": "voice-platforms",
+  "description": "Noise removal and turn-taking for voice AI.",
+  "open_source": false,
+  "logo": "krisp.png"
+}

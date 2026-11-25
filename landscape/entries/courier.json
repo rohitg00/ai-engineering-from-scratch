@@ -1,0 +1,8 @@
+{
+  "name": "Courier",
+  "url": "https://courier.com",
+  "category": "messaging",
+  "description": "Notification API across channels.",
+  "open_source": false,
+  "logo": "courier.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Apache Arrow",
+  "url": "https://arrow.apache.org",
+  "category": "data-platforms",
+  "description": "Columnar memory format and libraries.",
+  "open_source": true,
+  "repo": "https://github.com/apache/arrow",
+  "logo": "apache-arrow.png"
+}

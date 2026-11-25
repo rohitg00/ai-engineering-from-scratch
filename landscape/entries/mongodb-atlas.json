@@ -1,0 +1,8 @@
+{
+  "name": "MongoDB Atlas",
+  "url": "https://mongodb.com",
+  "category": "databases",
+  "description": "Document database with vector search.",
+  "open_source": false,
+  "logo": "mongodb-atlas.png"
+}

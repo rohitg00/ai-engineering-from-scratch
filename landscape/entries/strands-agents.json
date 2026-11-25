@@ -1,0 +1,9 @@
+{
+  "name": "Strands Agents",
+  "url": "https://strandsagents.com",
+  "category": "agents",
+  "description": "Model-driven agent SDK from AWS.",
+  "open_source": true,
+  "repo": "https://github.com/strands-agents/sdk-python",
+  "logo": "strands-agents.png"
+}

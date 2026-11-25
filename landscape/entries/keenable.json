@@ -1,0 +1,9 @@
+{
+  "name": "Keenable",
+  "url": "https://keenable.ai/",
+  "category": "search",
+  "description": "Independent web search API for AI.",
+  "open_source": false,
+  "x": "keenableai",
+  "logo": "keenable.png"
+}

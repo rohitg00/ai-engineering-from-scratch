@@ -1,0 +1,9 @@
+{
+  "name": "SearXNG",
+  "url": "https://docs.searxng.org",
+  "category": "search",
+  "description": "Self-hosted metasearch engine.",
+  "open_source": true,
+  "repo": "https://github.com/searxng/searxng",
+  "logo": "searxng.png"
+}

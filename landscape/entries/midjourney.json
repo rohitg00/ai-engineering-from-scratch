@@ -1,0 +1,8 @@
+{
+  "name": "Midjourney",
+  "url": "https://midjourney.com",
+  "category": "media",
+  "description": "Image and video generation.",
+  "open_source": false,
+  "logo": "midjourney.png"
+}

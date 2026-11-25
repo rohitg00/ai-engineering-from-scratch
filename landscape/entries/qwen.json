@@ -1,0 +1,9 @@
+{
+  "name": "Qwen",
+  "url": "https://qwen.ai",
+  "category": "models",
+  "description": "Open-weight model family from Alibaba Cloud.",
+  "open_source": true,
+  "repo": "https://github.com/QwenLM/Qwen3",
+  "logo": "qwen.png"
+}

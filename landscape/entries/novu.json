@@ -1,0 +1,9 @@
+{
+  "name": "Novu",
+  "url": "https://novu.co",
+  "category": "messaging",
+  "description": "Notification infrastructure.",
+  "open_source": true,
+  "repo": "https://github.com/novuhq/novu",
+  "logo": "novu.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Orkes",
+  "url": "https://orkes.io",
+  "category": "orchestration",
+  "description": "Managed Conductor for workflow and agent orchestration.",
+  "open_source": false,
+  "logo": "orkes.png"
+}

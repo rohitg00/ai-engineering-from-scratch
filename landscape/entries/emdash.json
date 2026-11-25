@@ -1,0 +1,9 @@
+{
+  "name": "Emdash",
+  "url": "https://emdash.com",
+  "category": "orchestrators",
+  "description": "Desktop app that runs several coding agents in parallel.",
+  "open_source": true,
+  "repo": "https://github.com/generalaction/emdash",
+  "logo": "emdash.png"
+}

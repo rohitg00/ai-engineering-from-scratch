@@ -1,0 +1,9 @@
+{
+  "name": "Chunkr",
+  "url": "https://chunkr.ai",
+  "category": "docs",
+  "description": "Document layout analysis and chunking.",
+  "open_source": true,
+  "repo": "https://github.com/lumina-ai-inc/chunkr",
+  "logo": "chunkr.png"
+}

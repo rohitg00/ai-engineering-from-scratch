@@ -1,0 +1,124 @@
+name: Add a tool to the landscape
+description: Ask a maintainer to list your tool on the AI Engineering Landscape.
+title: "landscape: add <tool name>"
+labels: ["landscape"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The fastest path is the [form on the site](https://aiengineeringfromscratch.com/landscape#add). It opens a pull request for you in about two minutes.
+        Use this issue only when you cannot open a pull request. Listing is free.
+  - type: input
+    id: name
+    attributes:
+      label: Tool name
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: Website
+      placeholder: https://
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Model labs and APIs
+        - Cloud AI platforms
+        - Inference providers
+        - LLM gateways and routers
+        - Inference engines and local runtimes
+        - GPU clouds
+        - Training frameworks
+        - Fine-tuning
+        - Experiment tracking and MLOps
+        - Interpretability
+        - Coding assistants and IDEs
+        - Agent frameworks
+        - Agent harnesses
+        - Agent orchestrators
+        - Spec workflows and skill packs
+        - Agent builders and automation
+        - Workflow orchestration
+        - Protocols and gateways
+        - App builders and UI
+        - Code review and testing
+        - Observability and evaluation
+        - Security and governance
+        - Databases and vector search
+        - Embeddings and rerankers
+        - RAG and enterprise search
+        - Document parsing and OCR
+        - Search and web data APIs
+        - Datasets, labeling and synthetic data
+        - Data platforms and pipelines
+        - Notebooks
+        - Browser infrastructure
+        - Computers and phones for agents
+        - Sandboxes and code runtime
+        - Memory
+        - Context APIs
+        - Connectors and tool marketplaces
+        - Identity, auth and credentials
+        - Email, messaging and phone APIs
+        - Payments and billing
+        - Checkout and commerce APIs
+        - Hosting and deployment
+        - Voice and speech APIs
+        - Voice agent platforms
+        - Image, video and audio generation
+        - Chat assistants
+        - Agents from big labs
+        - Personal assistants
+        - Work and productivity agents
+        - Open source assistants
+        - Email and calendar agents
+        - Finance and money agents
+        - Shopping agents
+        - Travel agents
+        - Home, family and health agents
+        - Group chat agents
+        - Voice and phone agents
+    validations:
+      required: true
+  - type: input
+    id: description
+    attributes:
+      label: What it does, in one sentence
+      description: 200 characters or fewer. Say what the tool does. No rankings and no claims.
+    validations:
+      required: true
+  - type: dropdown
+    id: license
+    attributes:
+      label: Open source or closed source
+      options:
+        - Open source
+        - Closed source
+    validations:
+      required: true
+  - type: input
+    id: repo
+    attributes:
+      label: Source repository
+      description: Open source tools only.
+      placeholder: https://github.com/owner/name
+  - type: input
+    id: logo
+    attributes:
+      label: Link to your logo (SVG or PNG)
+      placeholder: https://
+    validations:
+      required: true
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirm
+      options:
+        - label: I work on this tool, and I have the right to share its logo.
+          required: true
+        - label: I have read the [listing rules](https://github.com/rohitg00/ai-engineering-from-scratch/blob/main/landscape/README.md#listing-rules).
+          required: true

@@ -1,0 +1,9 @@
+{
+  "name": "Void",
+  "url": "https://voideditor.com",
+  "category": "coding",
+  "description": "Code editor with built-in model chat and agents.",
+  "open_source": true,
+  "repo": "https://github.com/voideditor/void",
+  "logo": "void.png"
+}

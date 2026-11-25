@@ -1,0 +1,9 @@
+{
+  "name": "Model Context Protocol",
+  "url": "https://modelcontextprotocol.io",
+  "category": "protocols",
+  "description": "Open protocol that connects models to tools and data through a standard interface.",
+  "open_source": true,
+  "repo": "https://github.com/modelcontextprotocol/modelcontextprotocol",
+  "logo": "model-context-protocol.png"
+}

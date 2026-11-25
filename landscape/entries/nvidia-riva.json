@@ -1,0 +1,8 @@
+{
+  "name": "NVIDIA Riva",
+  "url": "https://nvidia.com/en-us/ai-data-science/products/riva",
+  "category": "voice-apis",
+  "description": "Speech and translation microservices.",
+  "open_source": false,
+  "logo": "nvidia-riva.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Encore",
+  "url": "https://encore.dev",
+  "category": "hosting",
+  "description": "Backend framework with automated infrastructure.",
+  "open_source": true,
+  "repo": "https://github.com/encoredev/encore",
+  "logo": "encore.png"
+}

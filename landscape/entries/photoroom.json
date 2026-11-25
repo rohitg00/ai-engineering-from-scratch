@@ -1,0 +1,8 @@
+{
+  "name": "Photoroom",
+  "url": "https://photoroom.com",
+  "category": "media",
+  "description": "Image editing and background generation API.",
+  "open_source": false,
+  "logo": "photoroom.png"
+}

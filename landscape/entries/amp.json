@@ -1,0 +1,11 @@
+{
+  "name": "Amp",
+  "url": "https://ampcode.com",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Coding agent for the terminal and editor.",
+  "open_source": false,
+  "logo": "amp.png"
+}

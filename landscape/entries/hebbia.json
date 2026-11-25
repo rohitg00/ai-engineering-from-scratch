@@ -1,0 +1,8 @@
+{
+  "name": "Hebbia",
+  "url": "https://hebbia.com",
+  "category": "rag",
+  "description": "Document analysis agents for finance and law.",
+  "open_source": false,
+  "logo": "hebbia.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "USearch",
+  "url": "https://github.com/unum-cloud/usearch",
+  "category": "databases",
+  "description": "Compact library for vector search.",
+  "open_source": true,
+  "repo": "https://github.com/unum-cloud/usearch",
+  "logo": "usearch.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Speechify",
+  "url": "https://speechify.com",
+  "category": "voice-apis",
+  "description": "Text-to-speech apps and API.",
+  "open_source": false,
+  "logo": "speechify.png"
+}

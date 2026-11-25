@@ -1,0 +1,8 @@
+{
+  "name": "Google Document AI",
+  "url": "https://cloud.google.com/document-ai",
+  "category": "docs",
+  "description": "Document processing service on Google Cloud.",
+  "open_source": false,
+  "logo": "google-document-ai.png"
+}

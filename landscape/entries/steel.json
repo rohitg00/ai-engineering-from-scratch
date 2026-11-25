@@ -1,0 +1,9 @@
+{
+  "name": "Steel",
+  "url": "https://steel.dev",
+  "category": "browser-infra",
+  "description": "Browser API for agents.",
+  "open_source": true,
+  "repo": "https://github.com/steel-dev/steel-browser",
+  "logo": "steel.png"
+}

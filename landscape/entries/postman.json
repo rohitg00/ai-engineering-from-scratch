@@ -1,0 +1,8 @@
+{
+  "name": "Postman",
+  "url": "https://postman.com",
+  "category": "connectors",
+  "description": "API platform with agent building tools.",
+  "open_source": false,
+  "logo": "postman.png"
+}

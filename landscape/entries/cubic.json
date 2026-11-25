@@ -1,0 +1,8 @@
+{
+  "name": "cubic",
+  "url": "https://cubic.dev",
+  "category": "review",
+  "description": "Code review for teams that ship with agents.",
+  "open_source": false,
+  "logo": "cubic.png"
+}

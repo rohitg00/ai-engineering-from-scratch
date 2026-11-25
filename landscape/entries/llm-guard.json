@@ -1,0 +1,9 @@
+{
+  "name": "LLM Guard",
+  "url": "https://github.com/protectai/llm-guard",
+  "category": "security",
+  "description": "Scanners for prompt and output security.",
+  "open_source": true,
+  "repo": "https://github.com/protectai/llm-guard",
+  "logo": "llm-guard.png"
+}

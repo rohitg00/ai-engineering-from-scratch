@@ -1,0 +1,9 @@
+{
+  "name": "FlagEmbedding",
+  "url": "https://bge-model.com",
+  "category": "embeddings",
+  "description": "BGE embedding and rerank models.",
+  "open_source": true,
+  "repo": "https://github.com/FlagOpen/FlagEmbedding",
+  "logo": "flagembedding.png"
+}

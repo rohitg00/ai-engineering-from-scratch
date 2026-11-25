@@ -1,0 +1,8 @@
+{
+  "name": "Graphlit",
+  "url": "https://graphlit.com",
+  "category": "rag",
+  "description": "Platform that ingests content for agents.",
+  "open_source": false,
+  "logo": "graphlit.png"
+}

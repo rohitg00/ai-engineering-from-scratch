@@ -1,0 +1,8 @@
+{
+  "name": "Rev AI",
+  "url": "https://rev.ai",
+  "category": "voice-apis",
+  "description": "Speech-to-text API.",
+  "open_source": false,
+  "logo": "rev-ai.png"
+}

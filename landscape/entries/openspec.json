@@ -1,0 +1,9 @@
+{
+  "name": "OpenSpec",
+  "url": "https://openspec.dev",
+  "category": "agent-workflows",
+  "description": "Spec-driven development workflow for coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/Fission-AI/OpenSpec",
+  "logo": "openspec.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Reducto",
+  "url": "https://reducto.ai",
+  "category": "docs",
+  "description": "Document parsing API for complex layouts.",
+  "open_source": false,
+  "logo": "reducto.png"
+}

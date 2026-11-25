@@ -1,0 +1,8 @@
+{
+  "name": "T3 Chat",
+  "url": "https://t3.chat",
+  "category": "chat-assistants",
+  "description": "Fast chat app with access to many models.",
+  "open_source": false,
+  "logo": "t3-chat.png"
+}

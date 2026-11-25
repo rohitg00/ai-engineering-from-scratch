@@ -1,0 +1,9 @@
+{
+  "name": "Siri",
+  "url": "https://www.apple.com/siri/",
+  "category": "chat-assistants",
+  "description": "Apple's assistant, rebuilt for Apple Intelligence, across iPhone, iPad and Mac.",
+  "open_source": false,
+  "x": "Apple",
+  "logo": "siri.png"
+}

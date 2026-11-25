@@ -1,0 +1,8 @@
+{
+  "name": "Lovable",
+  "url": "https://lovable.dev",
+  "category": "builders",
+  "description": "Builds web apps from chat prompts.",
+  "open_source": false,
+  "logo": "lovable.png"
+}

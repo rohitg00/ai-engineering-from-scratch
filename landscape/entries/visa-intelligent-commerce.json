@@ -1,0 +1,9 @@
+{
+  "name": "Visa Intelligent Commerce",
+  "url": "https://www.visa.com/en-us/solutions/intelligent-commerce",
+  "category": "payments",
+  "description": "Visa infrastructure for agent-initiated commerce.",
+  "open_source": false,
+  "x": "Visa",
+  "logo": "visa-intelligent-commerce.png"
+}

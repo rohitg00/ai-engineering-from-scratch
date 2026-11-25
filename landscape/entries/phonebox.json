@@ -1,0 +1,8 @@
+{
+  "name": "Phonebox",
+  "url": "https://phonebox.dev/",
+  "category": "computers",
+  "description": "Cloud phones for AI agents.",
+  "open_source": false,
+  "logo": "phonebox.png"
+}

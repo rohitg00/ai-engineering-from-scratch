@@ -1,0 +1,8 @@
+{
+  "name": "Upstash",
+  "url": "https://upstash.com",
+  "category": "databases",
+  "description": "Serverless Redis, vector and queue services.",
+  "open_source": false,
+  "logo": "upstash.png"
+}

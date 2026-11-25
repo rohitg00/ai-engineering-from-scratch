@@ -1,0 +1,8 @@
+{
+  "name": "Emergent",
+  "url": "https://emergent.sh",
+  "category": "builders",
+  "description": "Builds and deploys apps with agents.",
+  "open_source": false,
+  "logo": "emergent.png"
+}

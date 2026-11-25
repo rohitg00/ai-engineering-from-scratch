@@ -1,0 +1,9 @@
+{
+  "name": "agentmemory",
+  "url": "https://agent-memory.dev",
+  "category": "memory",
+  "description": "Persistent memory for AI coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/rohitg00/agentmemory",
+  "logo": "agentmemory.png"
+}

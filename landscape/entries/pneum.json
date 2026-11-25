@@ -1,0 +1,9 @@
+{
+  "name": "Pneum",
+  "url": "https://pneum.ai/",
+  "category": "voice-agents",
+  "description": "An assistant that takes requests by voice or text.",
+  "open_source": false,
+  "x": "Pneum_ai",
+  "logo": "pneum.png"
+}

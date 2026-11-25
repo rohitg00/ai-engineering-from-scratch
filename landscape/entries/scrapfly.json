@@ -1,0 +1,8 @@
+{
+  "name": "Scrapfly",
+  "url": "https://scrapfly.io",
+  "category": "search",
+  "description": "Web scraping API with anti-bot handling.",
+  "open_source": false,
+  "logo": "scrapfly.png"
+}

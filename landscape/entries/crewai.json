@@ -1,0 +1,9 @@
+{
+  "name": "CrewAI",
+  "url": "https://www.crewai.com",
+  "category": "agents",
+  "description": "Framework for running groups of role-based agents on shared tasks.",
+  "open_source": true,
+  "repo": "https://github.com/crewAIInc/crewAI",
+  "logo": "crewai.svg"
+}

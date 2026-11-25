@@ -1,0 +1,9 @@
+{
+  "name": "Muse",
+  "url": "https://muse.ai/",
+  "category": "lab-assistants",
+  "description": "A personal AI agent from Meta for getting everyday tasks done.",
+  "open_source": false,
+  "x": "Muse",
+  "logo": "muse.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Agno",
+  "url": "https://agno.com",
+  "category": "agents",
+  "description": "Framework and runtime for multi-agent systems.",
+  "open_source": true,
+  "repo": "https://github.com/agno-agi/agno",
+  "logo": "agno.png"
+}

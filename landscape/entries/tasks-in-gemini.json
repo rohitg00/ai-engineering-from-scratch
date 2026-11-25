@@ -1,0 +1,9 @@
+{
+  "name": "Tasks in Gemini",
+  "url": "https://gemini.google/overview/productivity/",
+  "category": "lab-assistants",
+  "description": "Task delegation in Gemini for handling routine work.",
+  "open_source": false,
+  "x": "GeminiApp",
+  "logo": "tasks-in-gemini.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Sourcegraph",
+  "url": "https://sourcegraph.com",
+  "category": "coding",
+  "description": "Code search and coding agents across repositories.",
+  "open_source": false,
+  "logo": "sourcegraph.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "MetaGPT",
+  "url": "https://deepwisdom.ai",
+  "category": "agents",
+  "description": "Multi-agent framework modeled on a software company.",
+  "open_source": true,
+  "repo": "https://github.com/FoundationAgents/MetaGPT",
+  "logo": "metagpt.png"
+}

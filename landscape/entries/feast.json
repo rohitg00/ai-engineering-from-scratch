@@ -1,0 +1,9 @@
+{
+  "name": "Feast",
+  "url": "https://feast.dev",
+  "category": "data-platforms",
+  "description": "Feature store for machine learning.",
+  "open_source": true,
+  "repo": "https://github.com/feast-dev/feast",
+  "logo": "feast.png"
+}

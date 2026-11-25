@@ -1,0 +1,8 @@
+{
+  "name": "Azure AI Foundry",
+  "url": "https://ai.azure.com",
+  "category": "model-clouds",
+  "description": "Model catalog, deployment and agent services on Azure.",
+  "open_source": false,
+  "logo": "azure-ai-foundry.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Vectara",
+  "url": "https://vectara.com",
+  "category": "rag",
+  "description": "Managed retrieval and grounded generation platform.",
+  "open_source": false,
+  "logo": "vectara.png"
+}

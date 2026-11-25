@@ -1,0 +1,9 @@
+{
+  "name": "PyTorch",
+  "url": "https://pytorch.org",
+  "category": "training",
+  "description": "Tensor library with automatic differentiation for building and training neural networks.",
+  "open_source": true,
+  "repo": "https://github.com/pytorch/pytorch",
+  "logo": "pytorch.png"
+}

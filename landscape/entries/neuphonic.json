@@ -1,0 +1,8 @@
+{
+  "name": "Neuphonic",
+  "url": "https://neuphonic.com",
+  "category": "voice-apis",
+  "description": "Low-latency speech synthesis for agents.",
+  "open_source": false,
+  "logo": "neuphonic.png"
+}

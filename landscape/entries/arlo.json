@@ -1,0 +1,9 @@
+{
+  "name": "Arlo",
+  "url": "https://www.arlo.sh/",
+  "category": "personal-assistants",
+  "description": "Personal AI assistant for calls, bookings and everyday tasks.",
+  "open_source": false,
+  "x": "arlo_agent",
+  "logo": "arlo.png"
+}

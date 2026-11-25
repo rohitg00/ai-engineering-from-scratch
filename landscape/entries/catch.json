@@ -1,0 +1,9 @@
+{
+  "name": "Catch",
+  "url": "https://catchagent.ai/",
+  "category": "personal-assistants",
+  "description": "An assistant for scheduling, email, and calls.",
+  "open_source": false,
+  "x": "catchagent",
+  "logo": "catch.png"
+}

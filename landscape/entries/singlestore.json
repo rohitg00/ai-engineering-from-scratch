@@ -1,0 +1,8 @@
+{
+  "name": "SingleStore",
+  "url": "https://singlestore.com",
+  "category": "databases",
+  "description": "Distributed SQL database with vector search.",
+  "open_source": false,
+  "logo": "singlestore.png"
+}

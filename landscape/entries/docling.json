@@ -1,0 +1,9 @@
+{
+  "name": "Docling",
+  "url": "https://docling.ai",
+  "category": "docs",
+  "description": "Converts documents to structured formats.",
+  "open_source": true,
+  "repo": "https://github.com/docling-project/docling",
+  "logo": "docling.png"
+}

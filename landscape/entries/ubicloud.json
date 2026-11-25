@@ -1,0 +1,9 @@
+{
+  "name": "Ubicloud",
+  "url": "https://ubicloud.com",
+  "category": "hosting",
+  "description": "Open source cloud that runs on bare metal.",
+  "open_source": true,
+  "repo": "https://github.com/ubicloud/ubicloud",
+  "logo": "ubicloud.png"
+}

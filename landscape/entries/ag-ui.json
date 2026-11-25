@@ -1,0 +1,9 @@
+{
+  "name": "AG-UI",
+  "url": "https://ag-ui.com",
+  "category": "protocols",
+  "description": "Protocol that connects agents to user interfaces.",
+  "open_source": true,
+  "repo": "https://github.com/ag-ui-protocol/ag-ui",
+  "logo": "ag-ui.png"
+}

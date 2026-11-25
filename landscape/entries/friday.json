@@ -1,0 +1,8 @@
+{
+  "name": "Friday",
+  "url": "https://askfriday.io/",
+  "category": "work-assistants",
+  "description": "Autonomous workspace agent that picks up research, analysis and first drafts.",
+  "open_source": false,
+  "logo": "friday.png"
+}

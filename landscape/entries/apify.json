@@ -1,0 +1,9 @@
+{
+  "name": "Apify",
+  "url": "https://apify.com/",
+  "category": "search",
+  "description": "Marketplace of ready-to-run tools and web data for AI agents.",
+  "open_source": false,
+  "x": "apify",
+  "logo": "apify.png"
+}

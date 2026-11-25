@@ -1,0 +1,9 @@
+{
+  "name": "Meilisearch",
+  "url": "https://meilisearch.com",
+  "category": "databases",
+  "description": "Search engine with hybrid search.",
+  "open_source": true,
+  "repo": "https://github.com/meilisearch/meilisearch",
+  "logo": "meilisearch.png"
+}

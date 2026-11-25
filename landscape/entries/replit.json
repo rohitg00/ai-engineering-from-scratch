@@ -1,0 +1,8 @@
+{
+  "name": "Replit",
+  "url": "https://replit.com",
+  "category": "coding",
+  "description": "Online IDE with an agent that builds and deploys apps.",
+  "open_source": false,
+  "logo": "replit.png"
+}

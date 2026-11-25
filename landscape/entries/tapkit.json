@@ -1,0 +1,9 @@
+{
+  "name": "Tapkit",
+  "url": "https://tapkit.ai/",
+  "category": "computers",
+  "description": "Infrastructure for agents that tap and control phones.",
+  "open_source": false,
+  "x": "tapkit",
+  "logo": "tapkit.png"
+}

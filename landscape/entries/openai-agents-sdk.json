@@ -1,0 +1,9 @@
+{
+  "name": "OpenAI Agents SDK",
+  "url": "https://openai.github.io/openai-agents-python",
+  "category": "agents",
+  "description": "SDK for agents with handoffs, guardrails and tracing.",
+  "open_source": true,
+  "repo": "https://github.com/openai/openai-agents-python",
+  "logo": "openai-agents-sdk.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "OpenAI",
+  "url": "https://openai.com",
+  "category": "models",
+  "description": "Model provider with APIs for text, image, audio and embedding models.",
+  "open_source": false,
+  "logo": "openai.png"
+}

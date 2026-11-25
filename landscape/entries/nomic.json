@@ -1,0 +1,8 @@
+{
+  "name": "Nomic",
+  "url": "https://nomic.ai",
+  "category": "embeddings",
+  "description": "Embedding models and tools for exploring datasets.",
+  "open_source": false,
+  "logo": "nomic.png"
+}

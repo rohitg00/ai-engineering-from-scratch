@@ -1,0 +1,9 @@
+{
+  "name": "Trigger.dev",
+  "url": "https://trigger.dev",
+  "category": "orchestration",
+  "description": "Background jobs and durable workflows in TypeScript.",
+  "open_source": true,
+  "repo": "https://github.com/triggerdotdev/trigger.dev",
+  "logo": "trigger-dev.png"
+}

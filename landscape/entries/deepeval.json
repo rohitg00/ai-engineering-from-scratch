@@ -1,0 +1,9 @@
+{
+  "name": "DeepEval",
+  "url": "https://deepeval.com",
+  "category": "evaluation",
+  "description": "Evaluation framework for model applications.",
+  "open_source": true,
+  "repo": "https://github.com/confident-ai/deepeval",
+  "logo": "deepeval.png"
+}

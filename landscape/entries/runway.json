@@ -1,0 +1,8 @@
+{
+  "name": "Runway",
+  "url": "https://runwayml.com",
+  "category": "media",
+  "description": "Video generation models and tools.",
+  "open_source": false,
+  "logo": "runway.png"
+}

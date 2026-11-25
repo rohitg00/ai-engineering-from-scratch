@@ -1,0 +1,9 @@
+{
+  "name": "Dana",
+  "url": "https://heydana.ai/",
+  "category": "personal-assistants",
+  "description": "Personal AI on WhatsApp and iMessage that can shop and move money.",
+  "open_source": false,
+  "x": "heydana_ai",
+  "logo": "dana.png"
+}

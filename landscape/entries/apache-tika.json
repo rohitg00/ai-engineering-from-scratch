@@ -1,0 +1,9 @@
+{
+  "name": "Apache Tika",
+  "url": "https://tika.apache.org",
+  "category": "docs",
+  "description": "Detects and extracts text from many file types.",
+  "open_source": true,
+  "repo": "https://github.com/apache/tika",
+  "logo": "apache-tika.png"
+}

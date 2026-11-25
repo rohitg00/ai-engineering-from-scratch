@@ -1,0 +1,9 @@
+{
+  "name": "oh-my-pi",
+  "url": "https://github.com/can1357/oh-my-pi",
+  "category": "harnesses",
+  "description": "Coding agent harness built on Pi, with extra tools and subagents.",
+  "open_source": true,
+  "repo": "https://github.com/can1357/oh-my-pi",
+  "logo": "oh-my-pi.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Meta AI",
+  "url": "https://meta.ai",
+  "category": "chat-assistants",
+  "description": "Chat assistant from Meta across its apps.",
+  "open_source": false,
+  "logo": "meta-ai.png"
+}

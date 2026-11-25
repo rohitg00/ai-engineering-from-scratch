@@ -1,0 +1,9 @@
+{
+  "name": "MLX LM",
+  "url": "https://github.com/ml-explore/mlx-lm",
+  "category": "finetuning",
+  "description": "Runs and fine-tunes language models on Apple silicon.",
+  "open_source": true,
+  "repo": "https://github.com/ml-explore/mlx-lm",
+  "logo": "mlx-lm.png"
+}

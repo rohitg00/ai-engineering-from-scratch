@@ -1,0 +1,8 @@
+{
+  "name": "Checksum",
+  "url": "https://checksum.ai",
+  "category": "review",
+  "description": "Generates and maintains end-to-end tests.",
+  "open_source": false,
+  "logo": "checksum.png"
+}

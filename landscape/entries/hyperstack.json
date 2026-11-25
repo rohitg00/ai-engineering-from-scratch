@@ -1,0 +1,8 @@
+{
+  "name": "Hyperstack",
+  "url": "https://hyperstack.cloud",
+  "category": "gpu-clouds",
+  "description": "GPU cloud for AI training and inference.",
+  "open_source": false,
+  "logo": "hyperstack.png"
+}

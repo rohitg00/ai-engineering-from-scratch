@@ -1,0 +1,9 @@
+{
+  "name": "Stagehand",
+  "url": "https://stagehand.dev",
+  "category": "browser-infra",
+  "description": "Browser automation framework for agents.",
+  "open_source": true,
+  "repo": "https://github.com/browserbase/stagehand",
+  "logo": "stagehand.png"
+}

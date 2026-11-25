@@ -1,0 +1,9 @@
+{
+  "name": "Lithic",
+  "url": "https://www.lithic.com/solutions/agentic-commerce",
+  "category": "payments",
+  "description": "Card and payments infrastructure for agentic commerce.",
+  "open_source": false,
+  "x": "lithic",
+  "logo": "lithic.png"
+}

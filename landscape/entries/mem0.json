@@ -1,0 +1,10 @@
+{
+  "name": "Mem0",
+  "url": "https://mem0.ai/",
+  "category": "memory",
+  "description": "Persistent memory layer for AI agents and apps.",
+  "open_source": true,
+  "repo": "https://github.com/mem0ai/mem0",
+  "x": "mem0ai",
+  "logo": "mem0.png"
+}

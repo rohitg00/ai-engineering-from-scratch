@@ -1,0 +1,9 @@
+{
+  "name": "Tomo",
+  "url": "https://tomo.ai/",
+  "category": "personal-assistants",
+  "description": "A personal AI assistant accessed through text messages.",
+  "open_source": false,
+  "x": "tomo",
+  "logo": "tomo.png"
+}

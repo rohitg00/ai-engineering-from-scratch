@@ -1,0 +1,9 @@
+{
+  "name": "Label Studio",
+  "url": "https://labelstud.io",
+  "category": "data",
+  "description": "Data labeling tool for many data types.",
+  "open_source": true,
+  "repo": "https://github.com/HumanSignal/label-studio",
+  "logo": "label-studio.png"
+}

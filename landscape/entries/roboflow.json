@@ -1,0 +1,8 @@
+{
+  "name": "Roboflow",
+  "url": "https://roboflow.com",
+  "category": "data",
+  "description": "Computer vision datasets, labeling and deployment.",
+  "open_source": false,
+  "logo": "roboflow.png"
+}

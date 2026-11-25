@@ -1,0 +1,9 @@
+{
+  "name": "BMAD Method",
+  "url": "https://github.com/bmad-code-org/BMAD-METHOD",
+  "category": "agent-workflows",
+  "description": "Agent roles and workflows for agile development.",
+  "open_source": true,
+  "repo": "https://github.com/bmad-code-org/BMAD-METHOD",
+  "logo": "bmad-method.png"
+}

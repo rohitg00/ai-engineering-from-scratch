@@ -1,0 +1,8 @@
+{
+  "name": "Diffblue",
+  "url": "https://diffblue.com",
+  "category": "review",
+  "description": "Generates Java unit tests.",
+  "open_source": false,
+  "logo": "diffblue.png"
+}

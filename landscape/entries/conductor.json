@@ -1,0 +1,8 @@
+{
+  "name": "Conductor",
+  "url": "https://conductor.build",
+  "category": "orchestrators",
+  "description": "Runs many coding agents in parallel on a Mac.",
+  "open_source": false,
+  "logo": "conductor.png"
+}

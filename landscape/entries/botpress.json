@@ -1,0 +1,8 @@
+{
+  "name": "Botpress",
+  "url": "https://botpress.com",
+  "category": "agent-platforms",
+  "description": "Platform for building conversational agents.",
+  "open_source": false,
+  "logo": "botpress.png"
+}

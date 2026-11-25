@@ -1,0 +1,9 @@
+{
+  "name": "Portkey",
+  "url": "https://portkey.ai",
+  "category": "gateways",
+  "description": "Gateway with routing, caching and guardrails for model calls.",
+  "open_source": true,
+  "repo": "https://github.com/Portkey-AI/gateway",
+  "logo": "portkey.png"
+}

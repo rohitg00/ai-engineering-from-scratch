@@ -1,0 +1,8 @@
+{
+  "name": "Comet",
+  "url": "https://comet.com",
+  "category": "tracking",
+  "description": "Experiment tracking and model management.",
+  "open_source": false,
+  "logo": "comet.png"
+}

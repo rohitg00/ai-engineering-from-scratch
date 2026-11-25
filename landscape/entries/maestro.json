@@ -1,0 +1,9 @@
+{
+  "name": "Maestro",
+  "url": "https://runmaestro.ai",
+  "category": "orchestrators",
+  "description": "Command center for orchestrating many coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/RunMaestro/Maestro",
+  "logo": "maestro.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Great Expectations",
+  "url": "https://greatexpectations.io",
+  "category": "data-platforms",
+  "description": "Data quality testing.",
+  "open_source": true,
+  "repo": "https://github.com/great-expectations/great_expectations",
+  "logo": "great-expectations.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Google Cloud",
+  "url": "https://cloud.google.com",
+  "category": "hosting",
+  "description": "Cloud platform with compute, data and AI services.",
+  "open_source": false,
+  "logo": "google-cloud.png"
+}

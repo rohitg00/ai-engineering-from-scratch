@@ -1,0 +1,9 @@
+{
+  "name": "LlamaIndex",
+  "url": "https://llamaindex.ai",
+  "category": "agents",
+  "description": "Framework for agents and retrieval over your data.",
+  "open_source": true,
+  "repo": "https://github.com/run-llama/llama_index",
+  "logo": "llamaindex.png"
+}

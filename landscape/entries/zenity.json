@@ -1,0 +1,8 @@
+{
+  "name": "Zenity",
+  "url": "https://zenity.io",
+  "category": "security",
+  "description": "Security and governance for enterprise agents.",
+  "open_source": false,
+  "logo": "zenity.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Metaflow",
+  "url": "https://metaflow.org",
+  "category": "tracking",
+  "description": "Framework for building and managing ML projects.",
+  "open_source": true,
+  "repo": "https://github.com/Netflix/metaflow",
+  "logo": "metaflow.png"
+}

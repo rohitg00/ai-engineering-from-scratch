@@ -1,0 +1,8 @@
+{
+  "name": "messages.dev",
+  "url": "https://messages.dev/",
+  "category": "messaging",
+  "description": "iMessage API for AI agents.",
+  "open_source": false,
+  "logo": "messages-dev.png"
+}

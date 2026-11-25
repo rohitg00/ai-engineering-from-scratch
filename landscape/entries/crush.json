@@ -1,0 +1,12 @@
+{
+  "name": "Crush",
+  "url": "https://charm.land",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Terminal coding agent from Charm.",
+  "open_source": true,
+  "repo": "https://github.com/charmbracelet/crush",
+  "logo": "crush.png"
+}

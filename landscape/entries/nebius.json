@@ -1,0 +1,8 @@
+{
+  "name": "Nebius",
+  "url": "https://nebius.com",
+  "category": "inference-providers",
+  "description": "AI cloud with GPU clusters and hosted model inference.",
+  "open_source": false,
+  "logo": "nebius.png"
+}

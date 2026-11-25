@@ -1,0 +1,9 @@
+{
+  "name": "MarkItDown",
+  "url": "https://github.com/microsoft/markitdown",
+  "category": "docs",
+  "description": "Converts files and office documents to markdown.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/markitdown",
+  "logo": "markitdown.png"
+}

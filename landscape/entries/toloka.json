@@ -1,0 +1,8 @@
+{
+  "name": "Toloka",
+  "url": "https://toloka.ai",
+  "category": "data",
+  "description": "Human data for training and evaluating models.",
+  "open_source": false,
+  "logo": "toloka.png"
+}

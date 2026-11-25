@@ -1,0 +1,9 @@
+{
+  "name": "Argilla",
+  "url": "https://argilla.io",
+  "category": "data",
+  "description": "Tool for building and reviewing datasets with humans.",
+  "open_source": true,
+  "repo": "https://github.com/argilla-io/argilla",
+  "logo": "argilla.png"
+}

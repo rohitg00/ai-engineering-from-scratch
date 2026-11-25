@@ -1,0 +1,8 @@
+{
+  "name": "Perplexity",
+  "url": "https://perplexity.ai",
+  "category": "chat-assistants",
+  "description": "Answer engine that cites web sources.",
+  "open_source": false,
+  "logo": "perplexity.png"
+}

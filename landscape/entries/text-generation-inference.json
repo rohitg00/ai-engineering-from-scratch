@@ -1,0 +1,9 @@
+{
+  "name": "Text Generation Inference",
+  "url": "https://huggingface.co/docs/text-generation-inference",
+  "category": "inference",
+  "description": "Rust and Python server for text generation models.",
+  "open_source": true,
+  "repo": "https://github.com/huggingface/text-generation-inference",
+  "logo": "text-generation-inference.png"
+}

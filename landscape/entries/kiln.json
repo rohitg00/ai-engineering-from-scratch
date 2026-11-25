@@ -1,0 +1,9 @@
+{
+  "name": "Kiln",
+  "url": "https://kiln.tech",
+  "category": "finetuning",
+  "description": "Desktop tool for datasets, evals and fine-tuning.",
+  "open_source": true,
+  "repo": "https://github.com/Kiln-AI/Kiln",
+  "logo": "kiln.png"
+}

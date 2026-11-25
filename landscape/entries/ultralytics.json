@@ -1,0 +1,9 @@
+{
+  "name": "Ultralytics",
+  "url": "https://ultralytics.com",
+  "category": "media",
+  "description": "YOLO models for detection and segmentation.",
+  "open_source": true,
+  "repo": "https://github.com/ultralytics/ultralytics",
+  "logo": "ultralytics.png"
+}

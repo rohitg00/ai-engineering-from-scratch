@@ -1,0 +1,9 @@
+{
+  "name": "Playwright",
+  "url": "https://playwright.dev",
+  "category": "review",
+  "description": "Browser automation and end-to-end testing.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/playwright",
+  "logo": "playwright.png"
+}

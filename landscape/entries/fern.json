@@ -1,0 +1,9 @@
+{
+  "name": "Fern",
+  "url": "https://buildwithfern.com",
+  "category": "connectors",
+  "description": "Generates SDKs and docs from API definitions.",
+  "open_source": true,
+  "repo": "https://github.com/fern-api/fern",
+  "logo": "fern.png"
+}

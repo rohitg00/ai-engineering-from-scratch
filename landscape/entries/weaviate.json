@@ -1,0 +1,9 @@
+{
+  "name": "Weaviate",
+  "url": "https://weaviate.io",
+  "category": "databases",
+  "description": "Vector database with hybrid search.",
+  "open_source": true,
+  "repo": "https://github.com/weaviate/weaviate",
+  "logo": "weaviate.png"
+}

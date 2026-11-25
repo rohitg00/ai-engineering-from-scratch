@@ -1,0 +1,8 @@
+{
+  "name": "Snorkel AI",
+  "url": "https://snorkel.ai",
+  "category": "data",
+  "description": "Programmatic data labeling and evaluation.",
+  "open_source": false,
+  "logo": "snorkel-ai.png"
+}

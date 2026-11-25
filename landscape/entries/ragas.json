@@ -1,0 +1,9 @@
+{
+  "name": "Ragas",
+  "url": "https://ragas.io",
+  "category": "evaluation",
+  "description": "Evaluation toolkit for RAG and agents.",
+  "open_source": true,
+  "repo": "https://github.com/explodinggradients/ragas",
+  "logo": "ragas.png"
+}

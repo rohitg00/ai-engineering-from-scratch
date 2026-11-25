@@ -1,0 +1,9 @@
+{
+  "name": "Gigi",
+  "url": "https://gigi.co/",
+  "category": "connectors",
+  "description": "An agent network for finding people and relationship-based introductions.",
+  "open_source": false,
+  "x": "gigi_network",
+  "logo": "gigi.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Gretel",
+  "url": "https://gretel.ai",
+  "category": "data",
+  "description": "Synthetic data generation with privacy controls.",
+  "open_source": false,
+  "logo": "gretel.png"
+}

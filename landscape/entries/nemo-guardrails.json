@@ -1,0 +1,9 @@
+{
+  "name": "NeMo Guardrails",
+  "url": "https://github.com/NVIDIA/NeMo-Guardrails",
+  "category": "security",
+  "description": "Toolkit for programmable guardrails.",
+  "open_source": true,
+  "repo": "https://github.com/NVIDIA/NeMo-Guardrails",
+  "logo": "nemo-guardrails.png"
+}

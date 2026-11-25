@@ -1,0 +1,9 @@
+{
+  "name": "Langflow",
+  "url": "https://langflow.org",
+  "category": "agent-platforms",
+  "description": "Visual builder for agents and retrieval flows.",
+  "open_source": true,
+  "repo": "https://github.com/langflow-ai/langflow",
+  "logo": "langflow.png"
+}

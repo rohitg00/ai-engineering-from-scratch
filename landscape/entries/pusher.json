@@ -1,0 +1,8 @@
+{
+  "name": "Pusher",
+  "url": "https://pusher.com",
+  "category": "messaging",
+  "description": "Real-time channels and push notifications.",
+  "open_source": false,
+  "logo": "pusher.png"
+}

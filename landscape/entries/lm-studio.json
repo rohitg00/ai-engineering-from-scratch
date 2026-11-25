@@ -1,0 +1,8 @@
+{
+  "name": "LM Studio",
+  "url": "https://lmstudio.ai",
+  "category": "inference",
+  "description": "Desktop app that downloads and runs local models.",
+  "open_source": false,
+  "logo": "lm-studio.png"
+}

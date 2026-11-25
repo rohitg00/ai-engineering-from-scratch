@@ -1,0 +1,8 @@
+{
+  "name": "LlamaParse",
+  "url": "https://llamaindex.ai/llamaparse",
+  "category": "docs",
+  "description": "Document parsing service for complex files.",
+  "open_source": false,
+  "logo": "llamaparse.png"
+}

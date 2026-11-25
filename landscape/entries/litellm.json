@@ -1,0 +1,9 @@
+{
+  "name": "LiteLLM",
+  "url": "https://litellm.ai",
+  "category": "gateways",
+  "description": "Proxy and SDK that calls many model APIs in one format.",
+  "open_source": true,
+  "repo": "https://github.com/BerriAI/litellm",
+  "logo": "litellm.png"
+}

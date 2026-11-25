@@ -1,0 +1,9 @@
+{
+  "name": "Conductor OSS",
+  "url": "https://conductor-oss.org",
+  "category": "orchestration",
+  "description": "Workflow engine for microservices and agents.",
+  "open_source": true,
+  "repo": "https://github.com/conductor-oss/conductor",
+  "logo": "conductor-oss.png"
+}

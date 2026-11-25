@@ -1,0 +1,9 @@
+{
+  "name": "AutoGen",
+  "url": "https://microsoft.github.io/autogen",
+  "category": "agents",
+  "description": "Framework for multi-agent applications.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/autogen",
+  "logo": "autogen.png"
+}

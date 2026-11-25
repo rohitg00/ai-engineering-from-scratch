@@ -1,0 +1,9 @@
+{
+  "name": "Locus",
+  "url": "https://paywithlocus.com/",
+  "category": "connectors",
+  "description": "Paid APIs and tools for agents, metered and billed per user.",
+  "open_source": false,
+  "x": "paywithlocus",
+  "logo": "locus.png"
+}

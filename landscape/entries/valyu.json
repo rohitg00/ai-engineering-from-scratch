@@ -1,0 +1,8 @@
+{
+  "name": "Valyu",
+  "url": "https://valyu.ai",
+  "category": "search",
+  "description": "Search API over web and proprietary data.",
+  "open_source": false,
+  "logo": "valyu.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Kyutai",
+  "url": "https://kyutai.org",
+  "category": "voice-apis",
+  "description": "Open research lab for speech models.",
+  "open_source": true,
+  "repo": "https://github.com/kyutai-labs/moshi",
+  "logo": "kyutai.png"
+}

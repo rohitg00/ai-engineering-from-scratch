@@ -1,0 +1,9 @@
+{
+  "name": "Apache Spark",
+  "url": "https://spark.apache.org",
+  "category": "data-platforms",
+  "description": "Engine for large-scale data processing.",
+  "open_source": true,
+  "repo": "https://github.com/apache/spark",
+  "logo": "apache-spark.png"
+}

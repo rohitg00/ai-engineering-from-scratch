@@ -1,0 +1,9 @@
+{
+  "name": "Dyad",
+  "url": "https://dyad.sh",
+  "category": "builders",
+  "description": "Local app builder that runs on your machine.",
+  "open_source": true,
+  "repo": "https://github.com/dyad-sh/dyad",
+  "logo": "dyad.png"
+}

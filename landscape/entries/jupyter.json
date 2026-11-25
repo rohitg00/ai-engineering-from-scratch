@@ -1,0 +1,9 @@
+{
+  "name": "Jupyter",
+  "url": "https://jupyter.org",
+  "category": "notebooks",
+  "description": "Interactive notebooks for code and data.",
+  "open_source": true,
+  "repo": "https://github.com/jupyter/notebook",
+  "logo": "jupyter.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "RisingWave",
+  "url": "https://risingwave.com",
+  "category": "data-platforms",
+  "description": "Streaming database with SQL.",
+  "open_source": true,
+  "repo": "https://github.com/risingwavelabs/risingwave",
+  "logo": "risingwave.png"
+}

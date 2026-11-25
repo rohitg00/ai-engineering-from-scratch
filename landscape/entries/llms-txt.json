@@ -1,0 +1,9 @@
+{
+  "name": "llms.txt",
+  "url": "https://llmstxt.org",
+  "category": "protocols",
+  "description": "Proposed file that tells models how to read a website.",
+  "open_source": true,
+  "repo": "https://github.com/AnswerDotAI/llms-txt",
+  "logo": "llms-txt.png"
+}

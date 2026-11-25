@@ -1,0 +1,8 @@
+{
+  "name": "v0",
+  "url": "https://v0.app",
+  "category": "builders",
+  "description": "Generates web interfaces and applications from text prompts.",
+  "open_source": false,
+  "logo": "v0.png"
+}

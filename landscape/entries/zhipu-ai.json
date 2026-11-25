@@ -1,0 +1,8 @@
+{
+  "name": "Zhipu AI",
+  "url": "https://z.ai",
+  "category": "models",
+  "description": "GLM language models with a developer API.",
+  "open_source": false,
+  "logo": "zhipu-ai.png"
+}

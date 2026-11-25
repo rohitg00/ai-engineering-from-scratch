@@ -1,0 +1,9 @@
+{
+  "name": "Instructor",
+  "url": "https://python.useinstructor.com",
+  "category": "agents",
+  "description": "Structured outputs from language models.",
+  "open_source": true,
+  "repo": "https://github.com/567-labs/instructor",
+  "logo": "instructor.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Tesseract",
+  "url": "https://github.com/tesseract-ocr/tesseract",
+  "category": "docs",
+  "description": "Optical character recognition engine.",
+  "open_source": true,
+  "repo": "https://github.com/tesseract-ocr/tesseract",
+  "logo": "tesseract.png"
+}

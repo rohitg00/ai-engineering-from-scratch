@@ -1,0 +1,8 @@
+{
+  "name": "Knock",
+  "url": "https://knock.app",
+  "category": "messaging",
+  "description": "Notification infrastructure across channels.",
+  "open_source": false,
+  "logo": "knock.png"
+}

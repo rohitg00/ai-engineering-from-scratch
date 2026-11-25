@@ -1,0 +1,9 @@
+{
+  "name": "LangChain",
+  "url": "https://www.langchain.com",
+  "category": "agents",
+  "description": "Framework for building applications and agents on top of language models.",
+  "open_source": true,
+  "repo": "https://github.com/langchain-ai/langchain",
+  "logo": "langchain.png"
+}

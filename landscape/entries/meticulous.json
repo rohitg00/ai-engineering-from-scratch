@@ -1,0 +1,8 @@
+{
+  "name": "Meticulous",
+  "url": "https://meticulous.ai",
+  "category": "review",
+  "description": "Generates visual tests from recorded sessions.",
+  "open_source": false,
+  "logo": "meticulous.png"
+}

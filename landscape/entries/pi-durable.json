@@ -1,0 +1,9 @@
+{
+  "name": "Pi Durable",
+  "url": "https://earendil.com/posts/pi-durable/",
+  "category": "harnesses",
+  "description": "Harness library for long-running agents that keep their state through failures and restarts.",
+  "open_source": true,
+  "repo": "https://github.com/earendil-works/pi",
+  "logo": "pi-durable.png"
+}

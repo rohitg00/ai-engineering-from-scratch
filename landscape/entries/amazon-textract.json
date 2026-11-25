@@ -1,0 +1,8 @@
+{
+  "name": "Amazon Textract",
+  "url": "https://aws.amazon.com/textract",
+  "category": "docs",
+  "description": "Text and table extraction from documents on AWS.",
+  "open_source": false,
+  "logo": "amazon-textract.png"
+}

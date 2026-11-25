@@ -1,0 +1,8 @@
+{
+  "name": "Stability AI",
+  "url": "https://stability.ai",
+  "category": "media",
+  "description": "Image, video and audio generation models.",
+  "open_source": false,
+  "logo": "stability-ai.png"
+}

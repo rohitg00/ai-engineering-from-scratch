@@ -1,0 +1,9 @@
+{
+  "name": "Soar",
+  "url": "https://joinsoar.co/",
+  "category": "travel-agents",
+  "description": "Personal travel companion that turns your inbox into trips.",
+  "open_source": false,
+  "x": "soarapp",
+  "logo": "soar.png"
+}

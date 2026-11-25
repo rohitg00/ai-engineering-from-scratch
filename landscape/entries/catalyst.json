@@ -1,0 +1,9 @@
+{
+  "name": "Catalyst",
+  "url": "https://catalyst.app/",
+  "category": "finance-agents",
+  "description": "Researches investment ideas, builds strategies, and executes trades.",
+  "open_source": false,
+  "x": "catalystapp",
+  "logo": "catalyst.png"
+}

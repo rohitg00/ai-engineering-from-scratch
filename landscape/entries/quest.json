@@ -1,0 +1,9 @@
+{
+  "name": "Quest",
+  "url": "https://new.quest/",
+  "category": "personal-assistants",
+  "description": "Personal AI advisor for life goals and memory.",
+  "open_source": false,
+  "x": "personal_quest",
+  "logo": "quest.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Morphik",
+  "url": "https://morphik.ai",
+  "category": "rag",
+  "description": "Retrieval over visually rich documents.",
+  "open_source": true,
+  "repo": "https://github.com/morphik-org/morphik-core",
+  "logo": "morphik.png"
+}

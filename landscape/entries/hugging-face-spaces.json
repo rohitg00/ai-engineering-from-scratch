@@ -1,0 +1,8 @@
+{
+  "name": "Hugging Face Spaces",
+  "url": "https://huggingface.co/spaces",
+  "category": "hosting",
+  "description": "Hosting for machine learning demo apps.",
+  "open_source": false,
+  "logo": "hugging-face-spaces.png"
+}

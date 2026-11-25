@@ -1,0 +1,8 @@
+{
+  "name": "Fireworks AI",
+  "url": "https://fireworks.ai",
+  "category": "inference-providers",
+  "description": "Hosted inference for open models with low latency.",
+  "open_source": false,
+  "logo": "fireworks-ai.png"
+}

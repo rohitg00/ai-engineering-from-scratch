@@ -1,0 +1,9 @@
+{
+  "name": "Marqo",
+  "url": "https://marqo.ai",
+  "category": "databases",
+  "description": "Vector search engine for text and images.",
+  "open_source": true,
+  "repo": "https://github.com/marqo-ai/marqo",
+  "logo": "marqo.png"
+}

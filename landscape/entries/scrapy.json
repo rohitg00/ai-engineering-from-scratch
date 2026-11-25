@@ -1,0 +1,9 @@
+{
+  "name": "Scrapy",
+  "url": "https://scrapy.org",
+  "category": "search",
+  "description": "Web crawling framework for Python.",
+  "open_source": true,
+  "repo": "https://github.com/scrapy/scrapy",
+  "logo": "scrapy.png"
+}

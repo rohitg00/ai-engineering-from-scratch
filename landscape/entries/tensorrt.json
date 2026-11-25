@@ -1,0 +1,9 @@
+{
+  "name": "TensorRT",
+  "url": "https://developer.nvidia.com/tensorrt",
+  "category": "inference",
+  "description": "SDK for optimized inference on NVIDIA GPUs.",
+  "open_source": true,
+  "repo": "https://github.com/NVIDIA/TensorRT",
+  "logo": "tensorrt.png"
+}

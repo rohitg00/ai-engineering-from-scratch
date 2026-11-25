@@ -1,0 +1,9 @@
+{
+  "name": "Seaworthy",
+  "url": "https://getseaworthy.ai/",
+  "category": "connectors",
+  "description": "One API so agents can make phone calls, payments and real-world errands.",
+  "open_source": false,
+  "x": "getseaworthy",
+  "logo": "seaworthy.png"
+}

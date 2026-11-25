@@ -1,0 +1,9 @@
+{
+  "name": "Zed",
+  "url": "https://zed.dev",
+  "category": "coding",
+  "description": "Code editor written in Rust with built-in model and agent support.",
+  "open_source": true,
+  "repo": "https://github.com/zed-industries/zed",
+  "logo": "zed.png"
+}

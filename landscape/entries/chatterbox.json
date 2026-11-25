@@ -1,0 +1,9 @@
+{
+  "name": "Chatterbox",
+  "url": "https://resemble.ai/chatterbox",
+  "category": "voice-apis",
+  "description": "Open-weight text-to-speech model.",
+  "open_source": true,
+  "repo": "https://github.com/resemble-ai/chatterbox",
+  "logo": "chatterbox.png"
+}

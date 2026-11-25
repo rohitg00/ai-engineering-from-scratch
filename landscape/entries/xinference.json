@@ -1,0 +1,9 @@
+{
+  "name": "Xinference",
+  "url": "https://inference.readthedocs.io",
+  "category": "inference",
+  "description": "Server for language, speech and multimodal models.",
+  "open_source": true,
+  "repo": "https://github.com/xorbitsai/inference",
+  "logo": "xinference.png"
+}

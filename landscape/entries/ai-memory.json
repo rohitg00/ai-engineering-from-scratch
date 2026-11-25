@@ -1,0 +1,9 @@
+{
+  "name": "ai-memory",
+  "url": "https://github.com/akitaonrails/ai-memory",
+  "category": "memory",
+  "description": "Long-term memory for coding agent CLIs, with handoff between agent vendors.",
+  "open_source": true,
+  "repo": "https://github.com/akitaonrails/ai-memory",
+  "logo": "ai-memory.png"
+}

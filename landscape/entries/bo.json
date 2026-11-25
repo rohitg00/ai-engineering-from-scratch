@@ -1,0 +1,9 @@
+{
+  "name": "Bo",
+  "url": "https://www.getbo.com/",
+  "category": "home-health-agents",
+  "description": "A health-focused assistant accessed through text messages.",
+  "open_source": false,
+  "x": "boappofficial",
+  "logo": "bo.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "GitHub Copilot",
+  "url": "https://github.com/features/copilot",
+  "category": "coding",
+  "description": "Code completion, chat and coding agents inside editors and GitHub.",
+  "open_source": false,
+  "logo": "github-copilot.svg"
+}

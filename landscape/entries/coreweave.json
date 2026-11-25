@@ -1,0 +1,8 @@
+{
+  "name": "CoreWeave",
+  "url": "https://coreweave.com",
+  "category": "gpu-clouds",
+  "description": "Cloud built for GPU workloads at large scale.",
+  "open_source": false,
+  "logo": "coreweave.png"
+}

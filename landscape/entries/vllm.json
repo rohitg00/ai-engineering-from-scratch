@@ -1,0 +1,9 @@
+{
+  "name": "vLLM",
+  "url": "https://docs.vllm.ai",
+  "category": "inference",
+  "description": "Inference and serving engine for language models with an OpenAI-compatible server.",
+  "open_source": true,
+  "repo": "https://github.com/vllm-project/vllm",
+  "logo": "vllm.svg"
+}

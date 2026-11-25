@@ -1,0 +1,8 @@
+{
+  "name": "Smithery",
+  "url": "https://smithery.ai",
+  "category": "protocols",
+  "description": "Registry and hosting for MCP servers.",
+  "open_source": false,
+  "logo": "smithery.png"
+}

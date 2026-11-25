@@ -1,0 +1,9 @@
+{
+  "name": "treg",
+  "url": "https://treg.to/",
+  "category": "connectors",
+  "description": "OpenRouter for agent tools and data, billed per call.",
+  "open_source": false,
+  "x": "treg_ai",
+  "logo": "treg.png"
+}

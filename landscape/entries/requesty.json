@@ -1,0 +1,8 @@
+{
+  "name": "Requesty",
+  "url": "https://requesty.ai",
+  "category": "gateways",
+  "description": "Gateway that routes and monitors model requests.",
+  "open_source": false,
+  "logo": "requesty.png"
+}

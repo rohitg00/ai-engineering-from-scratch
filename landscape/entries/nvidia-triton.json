@@ -1,0 +1,9 @@
+{
+  "name": "NVIDIA Triton",
+  "url": "https://developer.nvidia.com/triton-inference-server",
+  "category": "inference",
+  "description": "Inference server for many frameworks and hardware types.",
+  "open_source": true,
+  "repo": "https://github.com/triton-inference-server/server",
+  "logo": "nvidia-triton.png"
+}

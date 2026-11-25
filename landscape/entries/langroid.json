@@ -1,0 +1,9 @@
+{
+  "name": "Langroid",
+  "url": "https://langroid.github.io/langroid",
+  "category": "agents",
+  "description": "Multi-agent framework for Python.",
+  "open_source": true,
+  "repo": "https://github.com/langroid/langroid",
+  "logo": "langroid.png"
+}

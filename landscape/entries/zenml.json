@@ -1,0 +1,9 @@
+{
+  "name": "ZenML",
+  "url": "https://zenml.io",
+  "category": "tracking",
+  "description": "Pipeline framework for ML and LLM workflows.",
+  "open_source": true,
+  "repo": "https://github.com/zenml-io/zenml",
+  "logo": "zenml.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "RunPod",
+  "url": "https://runpod.io",
+  "category": "gpu-clouds",
+  "description": "GPU pods and serverless endpoints for AI workloads.",
+  "open_source": false,
+  "logo": "runpod.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Amazon SageMaker",
+  "url": "https://aws.amazon.com/sagemaker",
+  "category": "tracking",
+  "description": "Managed service to build, train and deploy models.",
+  "open_source": false,
+  "logo": "amazon-sagemaker.png"
+}

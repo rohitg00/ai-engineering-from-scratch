@@ -1,0 +1,9 @@
+{
+  "name": "Pathway",
+  "url": "https://pathway.com",
+  "category": "rag",
+  "description": "Stream processing framework with live RAG pipelines.",
+  "open_source": true,
+  "repo": "https://github.com/pathwaycom/pathway",
+  "logo": "pathway.png"
+}

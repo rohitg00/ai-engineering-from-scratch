@@ -1,0 +1,9 @@
+{
+  "name": "marimo",
+  "url": "https://marimo.io",
+  "category": "notebooks",
+  "description": "Reactive Python notebooks stored as code.",
+  "open_source": true,
+  "repo": "https://github.com/marimo-team/marimo",
+  "logo": "marimo.png"
+}

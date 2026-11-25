@@ -1,0 +1,10 @@
+{
+  "name": "Cognee",
+  "url": "https://www.cognee.ai/",
+  "category": "memory",
+  "description": "Open-source agent memory platform.",
+  "open_source": true,
+  "repo": "https://github.com/topoteretes/cognee",
+  "x": "cognee_",
+  "logo": "cognee.png"
+}

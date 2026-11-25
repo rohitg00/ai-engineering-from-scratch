@@ -1,0 +1,9 @@
+{
+  "name": "Rig",
+  "url": "https://rig.rs",
+  "category": "agents",
+  "description": "Rust library for model applications and agents.",
+  "open_source": true,
+  "repo": "https://github.com/0xPlaygrounds/rig",
+  "logo": "rig.png"
+}

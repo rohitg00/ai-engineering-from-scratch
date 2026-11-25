@@ -1,0 +1,9 @@
+{
+  "name": "Mesop",
+  "url": "https://mesop-dev.github.io/mesop",
+  "category": "builders",
+  "description": "Python framework for building web UIs.",
+  "open_source": true,
+  "repo": "https://github.com/mesop-dev/mesop",
+  "logo": "mesop.png"
+}

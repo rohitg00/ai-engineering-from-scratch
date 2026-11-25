@@ -1,0 +1,10 @@
+{
+  "name": "Daytona",
+  "url": "https://www.daytona.io/",
+  "category": "sandboxes",
+  "description": "Secure infrastructure for running AI-generated code.",
+  "open_source": true,
+  "repo": "https://github.com/daytonaio/daytona",
+  "x": "daytonaio",
+  "logo": "daytona.png"
+}

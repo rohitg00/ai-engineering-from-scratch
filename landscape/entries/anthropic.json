@@ -1,0 +1,8 @@
+{
+  "name": "Anthropic",
+  "url": "https://www.anthropic.com",
+  "category": "models",
+  "description": "Claude model family, available through an API and on major clouds.",
+  "open_source": false,
+  "logo": "anthropic.svg"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Sellee",
+  "url": "https://www.sellee.ai/",
+  "category": "shopping-agents",
+  "description": "Uses a product photo to price an item, list it, and negotiate a sale.",
+  "open_source": false,
+  "x": "selleeai",
+  "logo": "sellee.png"
+}

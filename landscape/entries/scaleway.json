@@ -1,0 +1,8 @@
+{
+  "name": "Scaleway",
+  "url": "https://scaleway.com",
+  "category": "gpu-clouds",
+  "description": "European cloud with GPU instances and managed inference.",
+  "open_source": false,
+  "logo": "scaleway.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "ParadeDB",
+  "url": "https://paradedb.com",
+  "category": "databases",
+  "description": "Search and analytics inside Postgres.",
+  "open_source": true,
+  "repo": "https://github.com/paradedb/paradedb",
+  "logo": "paradedb.png"
+}

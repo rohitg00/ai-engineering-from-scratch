@@ -1,0 +1,8 @@
+{
+  "name": "Telnyx",
+  "url": "https://telnyx.com",
+  "category": "voice-platforms",
+  "description": "Voice, messaging and voice AI infrastructure.",
+  "open_source": false,
+  "logo": "telnyx.png"
+}

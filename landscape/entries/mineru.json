@@ -1,0 +1,9 @@
+{
+  "name": "MinerU",
+  "url": "https://mineru.net",
+  "category": "docs",
+  "description": "Extracts structured content from PDFs.",
+  "open_source": true,
+  "repo": "https://github.com/opendatalab/MinerU",
+  "logo": "mineru.png"
+}

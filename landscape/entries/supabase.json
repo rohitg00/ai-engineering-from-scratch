@@ -1,0 +1,9 @@
+{
+  "name": "Supabase",
+  "url": "https://supabase.com",
+  "category": "databases",
+  "description": "Postgres platform with auth, storage and vectors.",
+  "open_source": true,
+  "repo": "https://github.com/supabase/supabase",
+  "logo": "supabase.png"
+}

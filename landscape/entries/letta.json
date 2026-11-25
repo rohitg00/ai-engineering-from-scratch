@@ -1,0 +1,10 @@
+{
+  "name": "Letta",
+  "url": "https://www.letta.com/agent/",
+  "category": "open-assistants",
+  "description": "A personalized agent that remembers and learns.",
+  "open_source": true,
+  "repo": "https://github.com/letta-ai/letta",
+  "x": "Letta_AI",
+  "logo": "letta.png"
+}

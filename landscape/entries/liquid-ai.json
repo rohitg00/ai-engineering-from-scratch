@@ -1,0 +1,8 @@
+{
+  "name": "Liquid AI",
+  "url": "https://liquid.ai",
+  "category": "models",
+  "description": "Small foundation models built for on-device use.",
+  "open_source": false,
+  "logo": "liquid-ai.png"
+}

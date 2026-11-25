@@ -1,0 +1,8 @@
+{
+  "name": "Azure AI Speech",
+  "url": "https://azure.microsoft.com/products/ai-services/ai-speech",
+  "category": "voice-apis",
+  "description": "Speech recognition and synthesis on Azure.",
+  "open_source": false,
+  "logo": "azure-ai-speech.png"
+}

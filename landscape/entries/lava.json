@@ -1,0 +1,9 @@
+{
+  "name": "Lava",
+  "url": "https://www.lava.so/",
+  "category": "work-assistants",
+  "description": "An agent that works across the tools you use.",
+  "open_source": false,
+  "x": "trylava",
+  "logo": "lava.png"
+}

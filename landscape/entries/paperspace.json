@@ -1,0 +1,8 @@
+{
+  "name": "Paperspace",
+  "url": "https://paperspace.com",
+  "category": "gpu-clouds",
+  "description": "GPU machines and notebooks from DigitalOcean.",
+  "open_source": false,
+  "logo": "paperspace.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Voltage Park",
+  "url": "https://voltagepark.com",
+  "category": "gpu-clouds",
+  "description": "GPU cloud with on-demand and reserved clusters.",
+  "open_source": false,
+  "logo": "voltage-park.png"
+}

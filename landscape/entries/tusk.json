@@ -1,0 +1,8 @@
+{
+  "name": "Tusk",
+  "url": "https://usetusk.ai",
+  "category": "review",
+  "description": "Generates unit and integration tests for pull requests.",
+  "open_source": false,
+  "logo": "tusk.png"
+}

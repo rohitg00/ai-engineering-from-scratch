@@ -1,0 +1,9 @@
+{
+  "name": "Agent OS",
+  "url": "https://buildermethods.com/agent-os",
+  "category": "agent-workflows",
+  "description": "System of standards and specs for coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/buildermethods/agent-os",
+  "logo": "agent-os.png"
+}

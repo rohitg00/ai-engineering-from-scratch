@@ -1,0 +1,8 @@
+{
+  "name": "Inference.net",
+  "url": "https://inference.net",
+  "category": "inference-providers",
+  "description": "Hosted inference for open models with batch pricing.",
+  "open_source": false,
+  "logo": "inference-net.png"
+}

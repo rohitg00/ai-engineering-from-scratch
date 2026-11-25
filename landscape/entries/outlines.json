@@ -1,0 +1,9 @@
+{
+  "name": "Outlines",
+  "url": "https://dottxt.co",
+  "category": "agents",
+  "description": "Structured text generation with guaranteed formats.",
+  "open_source": true,
+  "repo": "https://github.com/dottxt-ai/outlines",
+  "logo": "outlines.png"
+}

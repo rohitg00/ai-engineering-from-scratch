@@ -1,0 +1,9 @@
+{
+  "name": "olmOCR",
+  "url": "https://olmocr.allenai.org",
+  "category": "docs",
+  "description": "Toolkit for converting PDFs into clean text.",
+  "open_source": true,
+  "repo": "https://github.com/allenai/olmocr",
+  "logo": "olmocr.png"
+}

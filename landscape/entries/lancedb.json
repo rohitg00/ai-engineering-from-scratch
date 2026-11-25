@@ -1,0 +1,9 @@
+{
+  "name": "LanceDB",
+  "url": "https://lancedb.com",
+  "category": "databases",
+  "description": "Embedded vector database built on the Lance format.",
+  "open_source": true,
+  "repo": "https://github.com/lancedb/lancedb",
+  "logo": "lancedb.png"
+}

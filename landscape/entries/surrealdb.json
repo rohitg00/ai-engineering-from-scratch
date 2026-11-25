@@ -1,0 +1,9 @@
+{
+  "name": "SurrealDB",
+  "url": "https://surrealdb.com",
+  "category": "databases",
+  "description": "Multi-model database for documents, graphs and vectors.",
+  "open_source": true,
+  "repo": "https://github.com/surrealdb/surrealdb",
+  "logo": "surrealdb.png"
+}

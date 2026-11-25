@@ -1,0 +1,8 @@
+{
+  "name": "Gladia",
+  "url": "https://gladia.io",
+  "category": "voice-apis",
+  "description": "Speech-to-text API for real-time and batch audio.",
+  "open_source": false,
+  "logo": "gladia.png"
+}

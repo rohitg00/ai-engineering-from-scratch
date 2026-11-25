@@ -1,0 +1,8 @@
+{
+  "name": "Modal",
+  "url": "https://modal.com",
+  "category": "sandboxes",
+  "description": "Serverless cloud for running code, GPUs and sandboxes from Python.",
+  "open_source": false,
+  "logo": "modal.png"
+}

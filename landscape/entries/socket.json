@@ -1,0 +1,8 @@
+{
+  "name": "Socket",
+  "url": "https://socket.dev",
+  "category": "security",
+  "description": "Supply chain security for dependencies.",
+  "open_source": false,
+  "logo": "socket.png"
+}

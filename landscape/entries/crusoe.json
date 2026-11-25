@@ -1,0 +1,8 @@
+{
+  "name": "Crusoe",
+  "url": "https://crusoe.ai",
+  "category": "gpu-clouds",
+  "description": "AI cloud with GPU clusters and managed inference.",
+  "open_source": false,
+  "logo": "crusoe.png"
+}

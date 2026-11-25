@@ -1,0 +1,9 @@
+{
+  "name": "Sesame",
+  "url": "https://www.sesame.com/",
+  "category": "voice-agents",
+  "description": "Voice agents for conversation, research, planning and everyday tasks.",
+  "open_source": false,
+  "x": "sesame",
+  "logo": "sesame.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Ragie",
+  "url": "https://ragie.ai",
+  "category": "rag",
+  "description": "Managed RAG service for developers.",
+  "open_source": false,
+  "logo": "ragie.png"
+}

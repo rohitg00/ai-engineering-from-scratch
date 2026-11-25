@@ -1,0 +1,9 @@
+{
+  "name": "Pro Workflow",
+  "url": "https://github.com/rohitg00/pro-workflow",
+  "category": "agent-workflows",
+  "description": "Workflow plugin with hooks, agents and skills for coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/rohitg00/pro-workflow",
+  "logo": "pro-workflow.png"
+}

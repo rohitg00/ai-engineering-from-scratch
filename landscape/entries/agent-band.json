@@ -1,0 +1,8 @@
+{
+  "name": "Agent Band",
+  "url": "https://meetagent.com/",
+  "category": "voice-agents",
+  "description": "A voice-controlled assistant for bookings and calls.",
+  "open_source": false,
+  "logo": "agent-band.png"
+}

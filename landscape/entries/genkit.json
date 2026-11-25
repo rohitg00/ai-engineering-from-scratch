@@ -1,0 +1,9 @@
+{
+  "name": "Genkit",
+  "url": "https://genkit.dev",
+  "category": "agents",
+  "description": "Framework for AI features in web and mobile apps.",
+  "open_source": true,
+  "repo": "https://github.com/firebase/genkit",
+  "logo": "genkit.png"
+}

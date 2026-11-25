@@ -1,0 +1,9 @@
+{
+  "name": "Agenta",
+  "url": "https://agenta.ai",
+  "category": "evaluation",
+  "description": "Prompt management and evaluation platform.",
+  "open_source": true,
+  "repo": "https://github.com/Agenta-AI/agenta",
+  "logo": "agenta.png"
+}

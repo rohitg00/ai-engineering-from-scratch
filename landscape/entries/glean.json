@@ -1,0 +1,8 @@
+{
+  "name": "Glean",
+  "url": "https://glean.com",
+  "category": "rag",
+  "description": "Enterprise search and agents over company data.",
+  "open_source": false,
+  "logo": "glean.png"
+}

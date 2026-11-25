@@ -1,0 +1,9 @@
+{
+  "name": "Stiled",
+  "url": "https://www.stiled.app/",
+  "category": "shopping-agents",
+  "description": "A fashion-shopping assistant accessed through text messages.",
+  "open_source": false,
+  "x": "stiledapp",
+  "logo": "stiled.png"
+}

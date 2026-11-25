@@ -1,0 +1,8 @@
+{
+  "name": "PayPal",
+  "url": "https://paypal.ai",
+  "category": "payments",
+  "description": "Agent toolkit and commerce APIs.",
+  "open_source": false,
+  "logo": "paypal.png"
+}

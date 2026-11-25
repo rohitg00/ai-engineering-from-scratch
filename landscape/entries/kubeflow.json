@@ -1,0 +1,9 @@
+{
+  "name": "Kubeflow",
+  "url": "https://kubeflow.org",
+  "category": "tracking",
+  "description": "Machine learning toolkit for Kubernetes.",
+  "open_source": true,
+  "repo": "https://github.com/kubeflow/kubeflow",
+  "logo": "kubeflow.png"
+}

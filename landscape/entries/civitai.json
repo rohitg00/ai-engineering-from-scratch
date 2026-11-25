@@ -1,0 +1,8 @@
+{
+  "name": "Civitai",
+  "url": "https://civitai.com",
+  "category": "media",
+  "description": "Community hub for image models.",
+  "open_source": false,
+  "logo": "civitai.png"
+}

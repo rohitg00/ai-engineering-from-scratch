@@ -1,0 +1,8 @@
+{
+  "name": "Thunder Compute",
+  "url": "https://thundercompute.com",
+  "category": "gpu-clouds",
+  "description": "On-demand GPU instances for development.",
+  "open_source": false,
+  "logo": "thunder-compute.png"
+}

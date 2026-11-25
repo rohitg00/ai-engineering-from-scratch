@@ -1,0 +1,9 @@
+{
+  "name": "Semgrep",
+  "url": "https://semgrep.dev",
+  "category": "security",
+  "description": "Static analysis for finding bugs and vulnerabilities.",
+  "open_source": true,
+  "repo": "https://github.com/semgrep/semgrep",
+  "logo": "semgrep.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Distilabel",
+  "url": "https://distilabel.argilla.io",
+  "category": "data",
+  "description": "Framework for synthetic data and AI feedback.",
+  "open_source": true,
+  "repo": "https://github.com/argilla-io/distilabel",
+  "logo": "distilabel.png"
+}

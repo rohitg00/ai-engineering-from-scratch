@@ -1,0 +1,9 @@
+{
+  "name": "OpenAPI",
+  "url": "https://openapis.org",
+  "category": "protocols",
+  "description": "Standard description format for HTTP APIs.",
+  "open_source": true,
+  "repo": "https://github.com/OAI/OpenAPI-Specification",
+  "logo": "openapi.png"
+}

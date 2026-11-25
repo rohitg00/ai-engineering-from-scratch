@@ -1,0 +1,8 @@
+{
+  "name": "Mintlify",
+  "url": "https://mintlify.com",
+  "category": "connectors",
+  "description": "Documentation platform built for AI readers.",
+  "open_source": false,
+  "logo": "mintlify.png"
+}

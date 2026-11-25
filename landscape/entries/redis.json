@@ -1,0 +1,9 @@
+{
+  "name": "Redis",
+  "url": "https://redis.io",
+  "category": "databases",
+  "description": "In-memory data store with vector search.",
+  "open_source": true,
+  "repo": "https://github.com/redis/redis",
+  "logo": "redis.png"
+}

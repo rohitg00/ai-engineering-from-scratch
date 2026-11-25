@@ -1,0 +1,8 @@
+{
+  "name": "NVIDIA NIM",
+  "url": "https://build.nvidia.com",
+  "category": "model-clouds",
+  "description": "Packaged inference microservices for models on NVIDIA hardware.",
+  "open_source": false,
+  "logo": "nvidia-nim.png"
+}

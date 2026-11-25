@@ -1,0 +1,9 @@
+{
+  "name": "Kubernetes",
+  "url": "https://kubernetes.io",
+  "category": "hosting",
+  "description": "Container orchestration system.",
+  "open_source": true,
+  "repo": "https://github.com/kubernetes/kubernetes",
+  "logo": "kubernetes.png"
+}

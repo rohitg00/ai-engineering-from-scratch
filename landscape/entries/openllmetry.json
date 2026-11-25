@@ -1,0 +1,9 @@
+{
+  "name": "OpenLLMetry",
+  "url": "https://traceloop.com",
+  "category": "evaluation",
+  "description": "OpenTelemetry instrumentation for model applications.",
+  "open_source": true,
+  "repo": "https://github.com/traceloop/openllmetry",
+  "logo": "openllmetry.png"
+}

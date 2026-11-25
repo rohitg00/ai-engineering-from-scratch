@@ -1,0 +1,9 @@
+{
+  "name": "pgvector",
+  "url": "https://github.com/pgvector/pgvector",
+  "category": "databases",
+  "description": "Vector similarity search inside Postgres.",
+  "open_source": true,
+  "repo": "https://github.com/pgvector/pgvector",
+  "logo": "pgvector.png"
+}

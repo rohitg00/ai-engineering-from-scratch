@@ -1,0 +1,9 @@
+{
+  "name": "RAGatouille",
+  "url": "https://github.com/AnswerDotAI/RAGatouille",
+  "category": "embeddings",
+  "description": "Late-interaction retrieval with ColBERT models.",
+  "open_source": true,
+  "repo": "https://github.com/AnswerDotAI/RAGatouille",
+  "logo": "ragatouille.png"
+}

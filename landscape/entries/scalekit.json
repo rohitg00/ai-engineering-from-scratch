@@ -1,0 +1,9 @@
+{
+  "name": "Scalekit",
+  "url": "https://www.scalekit.com/",
+  "category": "protocols",
+  "description": "An MCP gateway connecting agents to tools with per-user authentication.",
+  "open_source": false,
+  "x": "scalekitinc",
+  "logo": "scalekit.png"
+}

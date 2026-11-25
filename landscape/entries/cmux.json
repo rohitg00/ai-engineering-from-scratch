@@ -1,0 +1,9 @@
+{
+  "name": "cmux",
+  "url": "https://cmux.com",
+  "category": "orchestrators",
+  "description": "Terminal built for running many coding agents.",
+  "open_source": true,
+  "repo": "https://github.com/manaflow-ai/cmux",
+  "logo": "cmux.png"
+}

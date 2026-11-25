@@ -1,0 +1,8 @@
+{
+  "name": "Amazon S3 Vectors",
+  "url": "https://aws.amazon.com/s3/features/vectors",
+  "category": "databases",
+  "description": "Vector storage and query in Amazon S3.",
+  "open_source": false,
+  "logo": "amazon-s3-vectors.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Valohai",
+  "url": "https://valohai.com",
+  "category": "tracking",
+  "description": "MLOps platform for pipelines and versioning.",
+  "open_source": false,
+  "logo": "valohai.png"
+}

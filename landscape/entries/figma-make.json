@@ -1,0 +1,8 @@
+{
+  "name": "Figma Make",
+  "url": "https://figma.com/make",
+  "category": "builders",
+  "description": "Turns prompts and designs into working prototypes.",
+  "open_source": false,
+  "logo": "figma-make.png"
+}

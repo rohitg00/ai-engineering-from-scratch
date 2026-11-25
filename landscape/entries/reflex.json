@@ -1,0 +1,9 @@
+{
+  "name": "Reflex",
+  "url": "https://reflex.dev",
+  "category": "builders",
+  "description": "Builds web apps in pure Python.",
+  "open_source": true,
+  "repo": "https://github.com/reflex-dev/reflex",
+  "logo": "reflex.png"
+}

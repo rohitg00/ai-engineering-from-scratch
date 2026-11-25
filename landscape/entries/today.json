@@ -1,0 +1,9 @@
+{
+  "name": "Today",
+  "url": "https://today.ai/",
+  "category": "personal-assistants",
+  "description": "A proactive assistant that uses personal context to anticipate tasks.",
+  "open_source": false,
+  "x": "TodayAIofficial",
+  "logo": "today.png"
+}

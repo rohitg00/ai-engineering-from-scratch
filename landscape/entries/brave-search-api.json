@@ -1,0 +1,8 @@
+{
+  "name": "Brave Search API",
+  "url": "https://brave.com/search/api",
+  "category": "search",
+  "description": "Web search API from an independent index.",
+  "open_source": false,
+  "logo": "brave-search-api.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Atomic Agents",
+  "url": "https://github.com/BrainBlend-AI/atomic-agents",
+  "category": "agents",
+  "description": "Modular framework for building agents.",
+  "open_source": true,
+  "repo": "https://github.com/BrainBlend-AI/atomic-agents",
+  "logo": "atomic-agents.png"
+}

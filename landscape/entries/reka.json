@@ -1,0 +1,8 @@
+{
+  "name": "Reka",
+  "url": "https://reka.ai",
+  "category": "models",
+  "description": "Multimodal models for text, image, video and audio.",
+  "open_source": false,
+  "logo": "reka.png"
+}

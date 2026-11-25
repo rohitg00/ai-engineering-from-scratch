@@ -1,0 +1,9 @@
+{
+  "name": "Quarto",
+  "url": "https://quarto.org",
+  "category": "notebooks",
+  "description": "Publishing system for technical documents.",
+  "open_source": true,
+  "repo": "https://github.com/quarto-dev/quarto-cli",
+  "logo": "quarto.png"
+}

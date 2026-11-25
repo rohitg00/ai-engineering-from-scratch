@@ -1,0 +1,9 @@
+{
+  "name": "Hyperagent",
+  "url": "https://www.hyperagent.com/",
+  "category": "work-assistants",
+  "description": "Agents for executing work tasks.",
+  "open_source": false,
+  "x": "hyperagentapp",
+  "logo": "hyperagent.png"
+}

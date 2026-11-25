@@ -1,0 +1,9 @@
+{
+  "name": "Agency Swarm",
+  "url": "https://agency-swarm.ai",
+  "category": "agents",
+  "description": "Framework for agent teams with defined roles.",
+  "open_source": true,
+  "repo": "https://github.com/VRSEN/agency-swarm",
+  "logo": "agency-swarm.png"
+}

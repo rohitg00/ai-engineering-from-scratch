@@ -1,0 +1,9 @@
+{
+  "name": "XGBoost",
+  "url": "https://xgboost.ai",
+  "category": "training",
+  "description": "Gradient boosting library for tabular data.",
+  "open_source": true,
+  "repo": "https://github.com/dmlc/xgboost",
+  "logo": "xgboost.png"
+}

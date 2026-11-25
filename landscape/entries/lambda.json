@@ -1,0 +1,8 @@
+{
+  "name": "Lambda",
+  "url": "https://lambda.ai",
+  "category": "gpu-clouds",
+  "description": "GPU cloud and clusters for training and inference.",
+  "open_source": false,
+  "logo": "lambda.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Vercel Sandbox",
+  "url": "https://vercel.com/sandbox",
+  "category": "sandboxes",
+  "description": "Isolated compute for running untrusted code.",
+  "open_source": false,
+  "logo": "vercel-sandbox.png"
+}

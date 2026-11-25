@@ -1,0 +1,8 @@
+{
+  "name": "Contextual AI",
+  "url": "https://contextual.ai",
+  "category": "embeddings",
+  "description": "Grounded language models, rerankers and a RAG platform.",
+  "open_source": false,
+  "logo": "contextual-ai.png"
+}

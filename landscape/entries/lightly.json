@@ -1,0 +1,9 @@
+{
+  "name": "Lightly",
+  "url": "https://lightly.ai",
+  "category": "data",
+  "description": "Data curation and self-supervised learning for vision.",
+  "open_source": true,
+  "repo": "https://github.com/lightly-ai/lightly",
+  "logo": "lightly.png"
+}

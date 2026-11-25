@@ -1,0 +1,9 @@
+{
+  "name": "Tavily",
+  "url": "https://tavily.com/",
+  "category": "search",
+  "description": "Search and web-extraction API built for AI agents.",
+  "open_source": false,
+  "x": "tavilyai",
+  "logo": "tavily.png"
+}

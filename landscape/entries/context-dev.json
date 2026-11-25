@@ -1,0 +1,9 @@
+{
+  "name": "Context.dev",
+  "url": "https://www.context.dev/",
+  "category": "search",
+  "description": "Web scraping, search and crawl API for AI agents.",
+  "open_source": false,
+  "x": "getcontextdev",
+  "logo": "context-dev.png"
+}

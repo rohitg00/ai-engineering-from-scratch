@@ -1,0 +1,9 @@
+{
+  "name": "idem",
+  "url": "https://idem.so/",
+  "category": "work-assistants",
+  "description": "A personal assistant that learns your context and preferences.",
+  "open_source": false,
+  "x": "tryidem",
+  "logo": "idem.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Daft",
+  "url": "https://daft.ai",
+  "category": "data-platforms",
+  "description": "Distributed query engine for multimodal data.",
+  "open_source": true,
+  "repo": "https://github.com/Eventual-Inc/Daft",
+  "logo": "daft.png"
+}

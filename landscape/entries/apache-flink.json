@@ -1,0 +1,9 @@
+{
+  "name": "Apache Flink",
+  "url": "https://flink.apache.org",
+  "category": "data-platforms",
+  "description": "Stream processing framework.",
+  "open_source": true,
+  "repo": "https://github.com/apache/flink",
+  "logo": "apache-flink.png"
+}

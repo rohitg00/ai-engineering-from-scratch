@@ -1,0 +1,9 @@
+{
+  "name": "opcode",
+  "url": "https://opcode.sh",
+  "category": "orchestrators",
+  "description": "Desktop app for managing Claude Code sessions and custom agents.",
+  "open_source": true,
+  "repo": "https://github.com/winfunc/opcode",
+  "logo": "opcode.png"
+}

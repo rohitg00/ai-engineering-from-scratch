@@ -1,0 +1,9 @@
+{
+  "name": "Arcade",
+  "url": "https://www.arcade.dev/",
+  "category": "connectors",
+  "description": "Actions runtime that governs every action for enterprise AI agents.",
+  "open_source": false,
+  "x": "tryarcade",
+  "logo": "arcade.png"
+}

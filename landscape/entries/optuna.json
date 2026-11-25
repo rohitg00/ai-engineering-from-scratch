@@ -1,0 +1,9 @@
+{
+  "name": "Optuna",
+  "url": "https://optuna.org",
+  "category": "tracking",
+  "description": "Hyperparameter optimization framework.",
+  "open_source": true,
+  "repo": "https://github.com/optuna/optuna",
+  "logo": "optuna.png"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "Aider",
+  "url": "https://aider.chat",
+  "category": "coding",
+  "also": [
+    "harnesses"
+  ],
+  "description": "Pair programming with language models in the terminal.",
+  "open_source": true,
+  "repo": "https://github.com/Aider-AI/aider",
+  "logo": "aider.png"
+}

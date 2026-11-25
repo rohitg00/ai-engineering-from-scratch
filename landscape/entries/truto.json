@@ -1,0 +1,8 @@
+{
+  "name": "Truto",
+  "url": "https://truto.one",
+  "category": "connectors",
+  "description": "Unified API and MCP servers for integrations.",
+  "open_source": false,
+  "logo": "truto.png"
+}

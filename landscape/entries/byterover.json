@@ -1,0 +1,8 @@
+{
+  "name": "ByteRover",
+  "url": "https://byterover.dev",
+  "category": "memory",
+  "description": "Shared memory layer for coding agents.",
+  "open_source": false,
+  "logo": "byterover.png"
+}

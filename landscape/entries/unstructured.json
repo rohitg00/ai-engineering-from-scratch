@@ -1,0 +1,9 @@
+{
+  "name": "Unstructured",
+  "url": "https://unstructured.io",
+  "category": "docs",
+  "description": "Turns documents into data ready for models.",
+  "open_source": true,
+  "repo": "https://github.com/Unstructured-IO/unstructured",
+  "logo": "unstructured.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Ultravox",
+  "url": "https://ultravox.ai",
+  "category": "voice-platforms",
+  "description": "Speech language model and voice agent platform.",
+  "open_source": true,
+  "repo": "https://github.com/fixie-ai/ultravox",
+  "logo": "ultravox.png"
+}

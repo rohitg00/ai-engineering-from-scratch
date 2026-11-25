@@ -1,0 +1,9 @@
+{
+  "name": "Polar",
+  "url": "https://polar.sh",
+  "category": "payments",
+  "description": "Payments and billing for software.",
+  "open_source": true,
+  "repo": "https://github.com/polarsource/polar",
+  "logo": "polar.png"
+}

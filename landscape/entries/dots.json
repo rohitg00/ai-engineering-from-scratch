@@ -1,0 +1,9 @@
+{
+  "name": "Dots",
+  "url": "https://openai.com/index/introducing-dots/",
+  "category": "lab-assistants",
+  "description": "Personal agents from OpenAI that can work independently on delegated tasks.",
+  "open_source": false,
+  "x": "OpenAI",
+  "logo": "dots.png"
+}

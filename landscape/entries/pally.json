@@ -1,0 +1,9 @@
+{
+  "name": "Pally",
+  "url": "https://pally.com/",
+  "category": "personal-assistants",
+  "description": "A personal assistant accessed through text messages.",
+  "open_source": false,
+  "x": "pally",
+  "logo": "pally.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "dbt",
+  "url": "https://getdbt.com",
+  "category": "data-platforms",
+  "description": "Transforms data in the warehouse with SQL.",
+  "open_source": true,
+  "repo": "https://github.com/dbt-labs/dbt-core",
+  "logo": "dbt.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "LibreChat",
+  "url": "https://librechat.ai",
+  "category": "builders",
+  "description": "Self-hosted chat app for many model providers.",
+  "open_source": true,
+  "repo": "https://github.com/danny-avila/LibreChat",
+  "logo": "librechat.png"
+}

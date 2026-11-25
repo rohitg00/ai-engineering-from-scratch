@@ -1,0 +1,9 @@
+{
+  "name": "Manus",
+  "url": "https://manus.im/",
+  "category": "work-assistants",
+  "description": "A general-purpose agent for creating slides, websites, games, and other deliverables.",
+  "open_source": false,
+  "x": "ManusAI",
+  "logo": "manus.png"
+}

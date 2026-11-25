@@ -1,0 +1,8 @@
+{
+  "name": "Galileo",
+  "url": "https://galileo.ai",
+  "category": "evaluation",
+  "description": "Evaluation and observability for agents.",
+  "open_source": false,
+  "logo": "galileo.png"
+}

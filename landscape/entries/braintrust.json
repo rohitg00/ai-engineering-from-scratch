@@ -1,0 +1,8 @@
+{
+  "name": "Braintrust",
+  "url": "https://braintrust.dev",
+  "category": "evaluation",
+  "description": "Evals, tracing and prompt iteration.",
+  "open_source": false,
+  "logo": "braintrust.png"
+}

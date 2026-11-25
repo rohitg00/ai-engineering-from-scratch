@@ -1,0 +1,9 @@
+{
+  "name": "PostHog",
+  "url": "https://posthog.com",
+  "category": "evaluation",
+  "description": "Product analytics with LLM observability.",
+  "open_source": true,
+  "repo": "https://github.com/PostHog/posthog",
+  "logo": "posthog.png"
+}

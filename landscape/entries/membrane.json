@@ -1,0 +1,8 @@
+{
+  "name": "Membrane",
+  "url": "https://getmembrane.com",
+  "category": "connectors",
+  "description": "Integration layer for products and agents.",
+  "open_source": false,
+  "logo": "membrane.png"
+}

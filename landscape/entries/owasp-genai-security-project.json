@@ -1,0 +1,8 @@
+{
+  "name": "OWASP GenAI Security Project",
+  "url": "https://genai.owasp.org",
+  "category": "security",
+  "description": "Security guidance and top ten risks for AI applications.",
+  "open_source": false,
+  "logo": "owasp-genai-security-project.png"
+}

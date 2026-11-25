@@ -1,0 +1,8 @@
+{
+  "name": "Toolhouse",
+  "url": "https://toolhouse.ai",
+  "category": "connectors",
+  "description": "Backend and tools for deploying agents.",
+  "open_source": false,
+  "logo": "toolhouse.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "JetBrains AI",
+  "url": "https://jetbrains.com/ai",
+  "category": "coding",
+  "description": "Assistant and coding agent inside JetBrains IDEs.",
+  "open_source": false,
+  "logo": "jetbrains-ai.png"
+}

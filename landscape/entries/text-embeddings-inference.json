@@ -1,0 +1,9 @@
+{
+  "name": "Text Embeddings Inference",
+  "url": "https://huggingface.co/docs/text-embeddings-inference",
+  "category": "embeddings",
+  "description": "Server for text embedding models.",
+  "open_source": true,
+  "repo": "https://github.com/huggingface/text-embeddings-inference",
+  "logo": "text-embeddings-inference.png"
+}

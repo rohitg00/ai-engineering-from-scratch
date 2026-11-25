@@ -1,0 +1,9 @@
+{
+  "name": "Grafana",
+  "url": "https://grafana.com",
+  "category": "evaluation",
+  "description": "Dashboards and observability for systems and AI.",
+  "open_source": true,
+  "repo": "https://github.com/grafana/grafana",
+  "logo": "grafana.png"
+}

@@ -1,0 +1,8 @@
+{
+  "name": "NotebookLM",
+  "url": "https://notebooklm.google.com",
+  "category": "notebooks",
+  "description": "Research assistant grounded in your sources.",
+  "open_source": false,
+  "logo": "notebooklm.png"
+}

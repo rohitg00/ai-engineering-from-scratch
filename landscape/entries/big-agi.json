@@ -1,0 +1,9 @@
+{
+  "name": "big-AGI",
+  "url": "https://big-agi.com",
+  "category": "builders",
+  "description": "Web chat client for many models.",
+  "open_source": true,
+  "repo": "https://github.com/enricoros/big-AGI",
+  "logo": "big-agi.png"
+}

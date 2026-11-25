@@ -1,0 +1,8 @@
+{
+  "name": "Kling AI",
+  "url": "https://klingai.com",
+  "category": "media",
+  "description": "Video generation models from Kuaishou.",
+  "open_source": false,
+  "logo": "kling-ai.png"
+}

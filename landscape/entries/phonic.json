@@ -1,0 +1,8 @@
+{
+  "name": "Phonic",
+  "url": "https://phonic.co",
+  "category": "voice-platforms",
+  "description": "Speech-to-speech models for voice agents.",
+  "open_source": false,
+  "logo": "phonic.png"
+}

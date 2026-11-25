@@ -1,0 +1,8 @@
+{
+  "name": "Cloudflare AI Gateway",
+  "url": "https://developers.cloudflare.com/ai-gateway",
+  "category": "gateways",
+  "description": "Caching, rate limits and logs for model requests.",
+  "open_source": false,
+  "logo": "cloudflare-ai-gateway.png"
+}

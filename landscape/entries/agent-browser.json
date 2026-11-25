@@ -1,0 +1,9 @@
+{
+  "name": "agent-browser",
+  "url": "https://agent-browser.dev",
+  "category": "browser-infra",
+  "description": "Browser automation command line tool for agents.",
+  "open_source": true,
+  "repo": "https://github.com/vercel-labs/agent-browser",
+  "logo": "agent-browser.png"
+}

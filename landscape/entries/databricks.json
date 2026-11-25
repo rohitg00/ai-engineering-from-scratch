@@ -1,0 +1,8 @@
+{
+  "name": "Databricks",
+  "url": "https://databricks.com",
+  "category": "model-clouds",
+  "description": "Data and AI platform with model serving and agent tools.",
+  "open_source": false,
+  "logo": "databricks.png"
+}

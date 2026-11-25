@@ -1,0 +1,9 @@
+{
+  "name": "Agent2Agent Protocol",
+  "url": "https://a2a-protocol.org",
+  "category": "protocols",
+  "description": "Open protocol for communication between agents.",
+  "open_source": true,
+  "repo": "https://github.com/a2aproject/A2A",
+  "logo": "agent2agent-protocol.png"
+}

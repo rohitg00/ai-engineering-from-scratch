@@ -1,0 +1,9 @@
+{
+  "name": "Skyvern",
+  "url": "https://skyvern.com",
+  "category": "browser-infra",
+  "description": "Automates browser workflows with vision models.",
+  "open_source": true,
+  "repo": "https://github.com/Skyvern-AI/skyvern",
+  "logo": "skyvern.png"
+}

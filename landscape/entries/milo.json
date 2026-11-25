@@ -1,0 +1,9 @@
+{
+  "name": "Milo",
+  "url": "https://joinhexagon.com/milo",
+  "category": "work-assistants",
+  "description": "An AI teammate from Hexagon for delegated work.",
+  "open_source": false,
+  "x": "hexagonlabs_",
+  "logo": "milo.png"
+}

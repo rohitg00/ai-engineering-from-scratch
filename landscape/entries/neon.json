@@ -1,0 +1,9 @@
+{
+  "name": "Neon",
+  "url": "https://neon.com",
+  "category": "databases",
+  "description": "Serverless Postgres with branching.",
+  "open_source": true,
+  "repo": "https://github.com/neondatabase/neon",
+  "logo": "neon.png"
+}

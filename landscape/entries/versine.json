@@ -1,0 +1,9 @@
+{
+  "name": "Versine",
+  "url": "https://versine.com/",
+  "category": "payments",
+  "description": "Lets an AI agent send and receive money.",
+  "open_source": false,
+  "x": "VersineApp",
+  "logo": "versine.png"
+}

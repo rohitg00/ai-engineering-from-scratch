@@ -1,0 +1,9 @@
+{
+  "name": "Rocker",
+  "url": "https://www.rocker.ai/",
+  "category": "work-assistants",
+  "description": "A work assistant that uses company context.",
+  "open_source": false,
+  "x": "rocker_hq",
+  "logo": "rocker.png"
+}

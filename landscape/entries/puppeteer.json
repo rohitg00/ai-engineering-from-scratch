@@ -1,0 +1,9 @@
+{
+  "name": "Puppeteer",
+  "url": "https://pptr.dev",
+  "category": "browser-infra",
+  "description": "Node library that controls Chrome.",
+  "open_source": true,
+  "repo": "https://github.com/puppeteer/puppeteer",
+  "logo": "puppeteer.png"
+}

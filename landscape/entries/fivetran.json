@@ -1,0 +1,8 @@
+{
+  "name": "Fivetran",
+  "url": "https://fivetran.com",
+  "category": "connectors",
+  "description": "Managed data pipelines.",
+  "open_source": false,
+  "logo": "fivetran.png"
+}

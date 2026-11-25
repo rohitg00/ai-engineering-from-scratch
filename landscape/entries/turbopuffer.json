@@ -1,0 +1,8 @@
+{
+  "name": "turbopuffer",
+  "url": "https://turbopuffer.com",
+  "category": "databases",
+  "description": "Serverless vector and full-text search on object storage.",
+  "open_source": false,
+  "logo": "turbopuffer.png"
+}

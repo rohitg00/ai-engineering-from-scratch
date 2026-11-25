@@ -1,0 +1,9 @@
+{
+  "name": "Sentry",
+  "url": "https://sentry.io",
+  "category": "evaluation",
+  "description": "Error tracking and agent monitoring.",
+  "open_source": true,
+  "repo": "https://github.com/getsentry/sentry",
+  "logo": "sentry.png"
+}

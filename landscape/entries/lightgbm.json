@@ -1,0 +1,9 @@
+{
+  "name": "LightGBM",
+  "url": "https://lightgbm.readthedocs.io",
+  "category": "training",
+  "description": "Gradient boosting framework based on tree learners.",
+  "open_source": true,
+  "repo": "https://github.com/microsoft/LightGBM",
+  "logo": "lightgbm.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Sim",
+  "url": "https://sim.ai",
+  "category": "agent-platforms",
+  "description": "Visual builder for agent workflows.",
+  "open_source": true,
+  "repo": "https://github.com/simstudioai/sim",
+  "logo": "sim.png"
+}

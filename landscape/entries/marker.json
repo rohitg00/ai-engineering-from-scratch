@@ -1,0 +1,9 @@
+{
+  "name": "Marker",
+  "url": "https://datalab.to",
+  "category": "docs",
+  "description": "Converts PDFs to markdown and JSON.",
+  "open_source": true,
+  "repo": "https://github.com/datalab-to/marker",
+  "logo": "marker.png"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Linq",
+  "url": "https://linqapp.com/",
+  "category": "messaging",
+  "description": "Texting and calling infrastructure behind agents like Poke.",
+  "open_source": false,
+  "x": "thelinqapp",
+  "logo": "linq.png"
+}

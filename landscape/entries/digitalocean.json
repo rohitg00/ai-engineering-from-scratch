@@ -1,0 +1,8 @@
+{
+  "name": "DigitalOcean",
+  "url": "https://digitalocean.com",
+  "category": "hosting",
+  "description": "Cloud with GPU droplets and an agent platform.",
+  "open_source": false,
+  "logo": "digitalocean.png"
+}
