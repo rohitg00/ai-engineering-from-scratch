@@ -278,6 +278,24 @@
     return link;
   }
 
+  function showCategory(id) {
+    if (state.category !== 'all') state.category = id;
+    var select = document.getElementById('landscapeCategory');
+    if (select) select.value = state.category;
+    state.query = '';
+    var search = document.getElementById('landscapeSearch');
+    if (search) search.value = '';
+    state.license = 'all';
+    var license = document.querySelectorAll('[data-license]');
+    Array.prototype.forEach.call(license, function (button) {
+      button.setAttribute('aria-pressed', String(button.getAttribute('data-license') === 'all'));
+    });
+    renderGrid();
+    if (history.replaceState) history.replaceState(null, '', '#category-' + id);
+    var section = document.getElementById('category-' + id);
+    if (section) section.scrollIntoView();
+  }
+
   function openDetail(entry) {
     var dialog = document.getElementById('landscapeDetail');
     if (!dialog || !dialog.showModal) return false;
@@ -304,7 +322,12 @@
       var item = categoryById(id);
       var categoryLink = el('a', '', item.name);
       categoryLink.href = '#category-' + item.id;
-      categoryLink.addEventListener('click', function () { dialog.close(); });
+      categoryLink.addEventListener('click', function (event) {
+        dialog.close();
+        if (document.getElementById('category-' + item.id)) return;
+        event.preventDefault();
+        showCategory(item.id);
+      });
       categoryLinks.appendChild(categoryLink);
     });
     list.appendChild(detailRow(entry.categories.length > 1 ? 'Categories' : 'Category', categoryLinks));
