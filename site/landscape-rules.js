@@ -218,18 +218,33 @@
     return errors;
   }
 
+  function normalizeUrl(value) {
+    var text = String(value || '').trim();
+    if (!text) return '';
+    if (/^http:\/\//i.test(text)) return 'https://' + text.slice(7);
+    if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(text)) return 'https://' + text.replace(/^\/+/, '');
+    return text;
+  }
+
+  function normalizeRepo(value) {
+    var text = normalizeUrl(value);
+    var known = /^https:\/\/(?:www\.)?(github\.com|gitlab\.com|codeberg\.org)\/([^\/?#]+)\/([^\/?#]+)/i.exec(text);
+    if (known) return 'https://' + known[1].toLowerCase() + '/' + known[2] + '/' + known[3].replace(/\.git$/, '');
+    return text.replace(/\/+$/, '').replace(/\.git$/, '');
+  }
+
   function buildEntry(form) {
     var entry = {
       name: String(form.name || '').trim(),
-      url: String(form.url || '').trim(),
+      url: normalizeUrl(form.url),
       category: String(form.category || ''),
       description: String(form.description || '').trim(),
       open_source: Boolean(form.open_source)
     };
-    if (entry.open_source) entry.repo = String(form.repo || '').trim().replace(/\/+$/, '').replace(/\.git$/, '');
+    if (entry.open_source) entry.repo = normalizeRepo(form.repo);
     var handle = String(form.x || '').trim().replace(/^@/, '').replace(/^https?:\/\/(www\.)?(x|twitter)\.com\//i, '').replace(/\/+$/, '');
     if (handle) entry.x = handle;
-    entry.logo_url = String(form.logo_url || '').trim();
+    entry.logo_url = normalizeUrl(form.logo_url);
     return entry;
   }
 

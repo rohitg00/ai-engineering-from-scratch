@@ -315,6 +315,12 @@ test('the form output is the same shape the check accepts', () => {
   assert.equal(closed.repo, undefined);
   assert.equal(rules.buildEntry({ ...VALID, x: 'https://x.com/acme/' }).x, 'acme');
   assert.equal(rules.buildEntry({ ...VALID, x: '@acme' }).x, 'acme');
+  const loose = rules.buildEntry({ ...VALID, url: 'acme.dev', repo: 'www.github.com/acme/evals/tree/main', logo_url: 'http://acme.dev/logo.svg?v=2' });
+  assert.equal(loose.url, 'https://acme.dev');
+  assert.equal(loose.repo, 'https://github.com/acme/evals');
+  assert.equal(loose.logo_url, 'https://acme.dev/logo.svg?v=2');
+  assert.deepEqual(rules.validateEntry('acme-evals', loose, CATEGORY_IDS), []);
+  assert.equal(rules.buildEntry({ ...VALID, url: '' }).url, '');
 });
 
 test('the pull request link opens the right new file', () => {
