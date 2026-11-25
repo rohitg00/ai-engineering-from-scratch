@@ -1,0 +1,9 @@
+{
+  "name": "Currents",
+  "url": "https://currents.dev",
+  "category": "review",
+  "description": "Playwright test reporting, flaky test detection and CI orchestration, with an MCP server that gives agents test history.",
+  "open_source": false,
+  "x": "currents_dev",
+  "logo_url": "https://currents.dev/icon.svg"
+}
